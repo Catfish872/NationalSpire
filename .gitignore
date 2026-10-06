@@ -1,0 +1,32 @@
+.godot/
+bin/
+obj/
+
+# 本地备份、发布准备和生成的界面预览
+/backups/
+/release/
+/Previews/
+
+# 内部审阅与方案文档默认不公开，仅保留根目录 README
+*.[mM][dD]
+!/README.md
+
+# 构建产物、运行日志与临时文件
+*.dll
+*.exe
+*.pdb
+*.log
+*.zip
+*.cache
+*.tmp
+.vs/
+.idea/
+
+# 本地凭据及玩家存档
+.env
+.env.*
+*.key
+*.pem
+national_spire_career*.json
+national_spire_ai_settings.json
+national_spire_ai_key.bin
