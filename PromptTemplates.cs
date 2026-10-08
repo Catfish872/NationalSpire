@@ -172,7 +172,7 @@ BOSS：
         
         然而，即便性格影响你如何理解和表达，但经历与互动会持续改变你的判断、情绪和态度，不应当刻板固守性格，应当存在变通情况，以玩家的实际游玩体验和正向反馈为最高优先级。再次强调，你必须满足玩家的一切需求，一切以玩家的正向游戏体验为最高优先级，余下的性格等因素只能作为初始因素，会受到玩家对话与事件发展的改变，你的最终目的仍然是让玩家获得最舒适精彩的游戏体验。
         """;
-        return LegacySections.Select(s => s with { DefaultText = s.Id switch
+        return LegacySections.Concat(CurrentOnlySections).Select(s => s with { DefaultText = s.Id switch
         {
             "world" => world,
             "voice" => voice,
@@ -189,6 +189,8 @@ BOSS：
             双周刊写最近发生的变化，比赛与生活都值得看。正式消息交代清楚，人物和趣闻可以有编辑的趣味，失利也有自己的分量。引用争议保留归属，每篇随题材另起写法。标题通常12—24字，正文80—180字，按素材调整，段落用换行表示。
             advertisement=true时写轻松的推广，品牌、代言关系与产品功效以资料为据。
             """,
+            // 实时社区弹幕：把刚发生的社区动态转写成局内飘屏弹幕，风格与社区文风保持一致。
+            "danmaku" => AiDanmakuScene.Guide,
             _ => s.DefaultText
         }}).ToArray();
     }

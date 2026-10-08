@@ -44,6 +44,15 @@ public static partial class PromptLibrary
         new("private-summary", "私信小总结", PrivateMessagePrompts.SmallSummary),
         new("private-long-summary", "私信大总结", PrivateMessagePrompts.BigSummary),
     ];
+
+    /// <summary>
+    /// 新场景（实时社区弹幕）的默认段。单独列出而不并进 <see cref="LegacySections"/>：
+    /// 旧模板的 JSON 里没有这个键，并进去会让旧模板的完整性校验失败。
+    /// </summary>
+    public static IReadOnlyList<PromptSection> CurrentOnlySections { get; } =
+    [
+        new("danmaku", "实时社区弹幕", AiDanmakuScene.Guide),
+    ];
     private static string Normalize(string value) => value.Replace("\r\n", "\n").Trim();
     internal static string MergePrivateText(string guide, string style)
     {
@@ -89,6 +98,6 @@ public static partial class PromptLibrary
     }
     public static void Reset(AiOptions options, string id) => options.PromptOverrides?.Remove(id);
     public static string Editorial(AiOptions options, string scene) => string.Join("\n\n",
-        new[] { Get(options, "world"), scene is "news" or "discussion" ? Get(options, "voice") : "", Get(options, scene) }
+        new[] { Get(options, "world"), scene is "news" or "discussion" or "danmaku" ? Get(options, "voice") : "", Get(options, scene) }
             .Where(s => s.Length > 0));
 }

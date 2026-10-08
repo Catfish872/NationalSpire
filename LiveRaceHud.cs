@@ -208,8 +208,13 @@ public partial class LiveRaceHud : PanelContainer
     }
     private void PublishLayout()
     {
+        // 原地更新布局字段，而不是重建对象：重建会丢掉同一对象上的弹幕等配置，
+        // 拖动或单击面板就会把玩家设置整段重置为默认值。
         var area = Area.Max(Vector2.One);
-        _layout = new BroadcastUiState { Floating = _layout.Floating, PositionVersion = 2, Collapsed = _collapsed, X = Math.Clamp(Position.X / area.X, 0, 1), Y = Math.Clamp(Position.Y / area.Y, 0, 1) };
+        _layout.PositionVersion = 2;
+        _layout.Collapsed = _collapsed;
+        _layout.X = Math.Clamp(Position.X / area.X, 0, 1);
+        _layout.Y = Math.Clamp(Position.Y / area.Y, 0, 1);
         LayoutChanged?.Invoke(_layout);
     }
     private void FitHeight() => Size = new Vector2(_collapsed ? 90 : ExpandedWidth, GetCombinedMinimumSize().Y);

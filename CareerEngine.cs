@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CareerEngine
 {
@@ -86,9 +86,14 @@ public static class CareerEngine
     {
         foreach (var missed in d.Matches.Where(m => m.Status == "待赛" && !m.Registered && m.Day <= d.Day)) missed.Status = "未报名";
         EsportsWorld.EndDay(d, d.Day);
-        WeeklyJournal.CloseWeek(d);
+        // 先把这一段里被跳过的周报补齐（读档跳天、回滚存档都可能导致缺期），再推进日期。
+        WeeklyJournal.ClosePending(d, d.Day);
         d.Day++;
         SocialAppointments.Expire(d);
+        // 实时社区弹幕每 7 个生涯日清理一次过时条目：社区话题一周后基本就凉了，
+        // 旧条目留着会一直占着加权抽取的名额，让弹幕和当前局势脱节。
+        // 放在日期推进处（而不是局内更新里），这样不依赖 AI 当前是否在跑、也不要求玩家正在打比赛。
+        AiDanmakuStore.PurgeStale(d.Day);
         if (d.Day > SeasonCalendar.End(d))
         {
             AwardSeason(d); d.Season++;
@@ -104,6 +109,8 @@ public static class CareerEngine
         AvatarHonors.Capture(d);
         CareerCommerce.RefreshOffers(d);
         if (d.Esports.EcosystemVersion >= 1) CircuitWorld.AutoEntry(d);
+        // 世界赛状态在这天所有赛事结算完之后刷新：开始时置 true，结束时置 false。
+        WorldStage.Refresh(d);
     }
     public static int AdvanceToMatch(CareerData d)
     {

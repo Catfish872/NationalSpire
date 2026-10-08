@@ -1,12 +1,23 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class BroadcastUiState
 {
     public bool Floating { get; set; }
+    private DanmakuOptions _danmaku = new();
     public int PositionVersion { get; set; }
     public bool Collapsed { get; set; }
     public float X { get; set; } = -1;
     public float Y { get; set; }
+    /// <summary>
+    /// 局内弹幕层配置；旧存档缺少该字段时按默认值补齐。
+    /// 用属性体兜住 null：JSON 里的 <c>"Danmaku": null</c> 会把属性初始化器覆盖掉，
+    /// 而任何一处 null 都会让局内播报整体降级（不只弹幕）。
+    /// </summary>
+    public DanmakuOptions Danmaku
+    {
+        get => _danmaku;
+        set => _danmaku = value ?? new DanmakuOptions();
+    }
 }
 
 public sealed class LiveMatchState

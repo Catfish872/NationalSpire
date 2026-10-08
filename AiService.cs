@@ -131,6 +131,54 @@ public static partial class AiService
     }
     public static Task RetryNewsAsync(string postId) => ProcessNewsAsync(postId);
     public static Task RetryFailedNewsAsync() => ProcessNewsAsync("*");
+
+    /// <summary>
+    /// 实时社区弹幕：把最近这批社区动态交给 AI 转写成局内弹幕，补进社区库。
+    /// 与帖子生成共用队列与限流；失败只记录，不影响社区内容本身。
+    /// </summary>
+    public static async Task ProcessDanmakuAsync(CareerData? requestedData = null)
+    {
+        var data = requestedData ?? CareerStore.Data;
+        if (!data.Ai.Enabled || !data.Ai.CommunityDanmaku) return;
+        try
+        {
+            using var lease = await EnterQueueAsync(data, ["danmaku:latest"], []);
+            string? key = CurrentKey;
+            string endpoint = data.Ai.Endpoint;
+            var recent = CommunityThreads.All(data).OrderByDescending(post => post.Day).ThenByDescending(post => post.Revision).Take(8).ToList();
+            if (recent.Count == 0) return;
+            if (!TryGetEndpoint(endpoint, out var uri)) return;
+            if (string.IsNullOrWhiteSpace(key)) return;
+            int tier = SituationDanmaku.Tier(data);
+            bool worlds = data.WorldStageActive;
+            var payload = JsonSerializer.Serialize(new
+            {
+                model = data.Ai.Model,
+                stream = false,
+                messages = new[]
+                {
+                    new { role = "system", content = AiDanmakuScene.ComposeSystem(data.Ai, tier, worlds) },
+                    new { role = "user", content = AiDanmakuScene.ComposeUser(data, recent, AiDanmakuScene.MaximumRequested, worlds) }
+                }
+            }, Json);
+            using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", key);
+            request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
+            using var response = await SendAsync(request, data, Guid.NewGuid().ToString("N"), "danmaku", ["community"]);
+            if (!response.IsSuccessStatusCode) return;
+            if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || key != CurrentKey || endpoint != data.Ai.Endpoint) return;
+            var content = await ReadResponseCompletion(response);
+            var entries = AiDanmakuScene.Parse(content, tier);
+            int added = AiDanmakuStore.Merge(entries, data.Day);
+            Diagnostics.Record("danmaku.community.updated", new { tier, generated = entries.Count, added, total = AiDanmakuStore.Stats().Count });
+            Status = added > 0 ? $"社区弹幕已更新 {added} 条" : "社区弹幕没有新增";
+        }
+        catch (Exception e)
+        {
+            Diagnostics.Error("danmaku.community", e);
+            GD.PushWarning("[NationalSpire] 社区弹幕生成失败：" + e.Message);
+        }
+    }
     internal static List<CommunityPost> SelectNewsBatch(IEnumerable<CommunityPost> candidates, int count)
     {
         return PublicationBacklog.Select(candidates, count);
@@ -200,6 +248,8 @@ public static partial class AiService
             ApplyNewsResponse(data, pending, content, snapshots, allowed);
             Diagnostics.Record("ai.applied", new { trace, kind = "news", posts = pending.Select(p => p.Id).ToArray() });
             Status = $"已发布 {pending.Count} 篇 AI 更新"; CareerStore.Save(data);
+            // 社区内容更新后，把这一批动态转写成局内弹幕，补进实时社区库。
+            _ = ProcessDanmakuAsync(data);
         }
         catch (Exception e) { Diagnostics.Error("ai.news:" + trace, e); Fail(FailureReason(e)); GD.PushWarning("[NationalSpire] 新闻生成：" + failure); }
         finally
