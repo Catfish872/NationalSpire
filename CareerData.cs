@@ -109,6 +109,11 @@ public sealed class CareerMatch
     public string FixtureId { get; set; } = "";
     public int Round { get; set; }
     public string Decider { get; set; } = "";
+    /// <summary>
+    /// 本轮对阵与晋级情况的摘要（谁对谁、谁晋级）。淘汰赛的对阵要等上一轮打完才知道，
+    /// 用这个字段把结果落到日历与日程详情上，玩家没参赛也能看到。
+    /// </summary>
+    public string Summary { get; set; } = "";
     public bool Draw { get; set; }
     public int? PlayedAscension { get; set; }
     public int? ChosenAscension { get; set; }

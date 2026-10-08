@@ -5,8 +5,18 @@ public static class CircuitWorld
 {
     public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
     public static string TeamName(CareerData d, WorldCompetition c, string team) => c.Kind == "worldcup" ? team : EsportsWorld.ClubName(d, team);
-    public static int RoundCount(WorldCompetition c) => c.Kind == "league" ? Math.Max(5, c.Fixtures.Select(f => f.Round).DefaultIfEmpty(5).Max()) : c.Kind == "worldfinal" ? 5 : c.Kind == "worldcup" ? 3 : 4;
-    public static string RoundName(WorldCompetition c, int round) => c.Kind == "league" ? $"第 {round} 轮" : (1 << (RoundCount(c) - round + 1)) switch
+    public static int RoundCount(WorldCompetition c) => c.Kind == "league" ? Math.Max(5, c.Fixtures.Select(f => f.Round).DefaultIfEmpty(5).Max())
+        : c.Kind == "worldfinal" ? 5
+        : GroupRounds(c) ? WorldCupGroupDays + 3
+        : 4;
+    /// <summary>世界杯淘汰赛的轮次标签：小组赛 5 轮之后依次是八强、半决赛、决赛。</summary>
+    public static string KnockoutName(int round) => (1 << (WorldCupGroupDays + 3 - round + 1)) switch
+    { 2 => "决赛", 4 => "半决赛", 8 => "八强赛", _ => "淘汰赛" };
+    public static string RoundName(WorldCompetition c, int round) => c.Kind == "league" ? $"第 {round} 轮"
+        // 世界杯：前 5 轮是小组赛，之后 3 轮是八强/半决赛/决赛。
+        : GroupRounds(c) ? round <= WorldCupGroupDays ? $"小组赛第 {round} 轮" : KnockoutName(round)
+        // 世界总决赛与洲际杯仍是纯淘汰赛：轮次 → 三十二强 / 十六强 / 八强 / 半决赛 / 决赛
+        : (1 << (RoundCount(c) - round + 1)) switch
     { 2 => "决赛", 4 => "半决赛", 8 => "八强赛", 16 => "十六强赛", _ => "三十二强赛" };
     public static List<CareerStanding> TeamTable(WorldCompetition c)
     {
@@ -100,14 +110,18 @@ public static class CircuitWorld
                 OpponentId = opponent.Id, Seed = $"NS{d.Season}-{kind}-{day}-{d.WorldId}" });
         }
         // 独立固定办赛日；玩家选择参赛，比赛资格并不消耗后续机会。
+        // 世界大赛窗口（联赛结束次日到世界杯决赛）不排公开赛，避免玩家同一天被排到两场比赛。
+        int cupOpen = SeasonCalendar.LeagueEnd(d) + 1;
+        int cupClose = cupOpen + WorldCupGroupDays + 6;
         for (int offset = 0; offset < length; offset += 14)
         {
-            if (offset + 3 <= length) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 45, p => p.Role == "普通玩家" && !ClubCoaching.IsCoach(p));
-            if (offset + 6 <= length) Add(offset + 6, "city", "城市新秀公开赛", 3, 100, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
-            if (offset + 9 <= length) Add(offset + 9, "academy", "职业青训选拔赛", 6, 180, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
-            if (offset + 11 <= length) Add(offset + 11, "open", "赛区巡回公开赛", 7, 190, EsportsWorld.IsProfessional);
+            bool Clash(int day) => day >= cupOpen && day <= cupClose;
+            if (offset + 3 <= length && !Clash(offset + 3)) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 45, p => p.Role == "普通玩家" && !ClubCoaching.IsCoach(p));
+            if (offset + 6 <= length && !Clash(offset + 6)) Add(offset + 6, "city", "城市新秀公开赛", 3, 100, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
+            if (offset + 9 <= length && !Clash(offset + 9)) Add(offset + 9, "academy", "职业青训选拔赛", 6, 180, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
+            if (offset + 11 <= length && !Clash(offset + 11)) Add(offset + 11, "open", "赛区巡回公开赛", 7, 190, EsportsWorld.IsProfessional);
         }
-        Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
+        if (!(length >= cupOpen && length <= cupClose)) Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
     }
     public static void EnrollLeague(CareerData d, WorldCompetition c)
@@ -143,8 +157,14 @@ public static class CircuitWorld
         c.EntrantClubs.Remove(oldId); c.EntrantCountries.Remove(oldId);
         c.EntrantClubs[newId] = EsportsWorld.ClubOf(d, newId); c.EntrantCountries[newId] = EsportsWorld.CountryOf(d, newId);
     }
-    private static int DayOf(WorldCompetition c, int round) => c.CalendarDays == 84 ? c.CalendarStart + (c.Kind == "worldfinal" ? 63 + round * 4 : 64 + round * 4)
-        : (c.Season - 1) * 28 + (c.Kind == "worldfinal" ? 17 + round * 2 : 18 + round * 2);
+    /// <summary>
+    /// 纯淘汰赛赛事的轮次日：世界总决赛 5 轮、洲际杯 4 轮。
+    /// 长赛季用「赛季起始 + 63/64 + 轮次×4」，短赛季用「赛季起始 + 17/18 + 轮次×2」。
+    /// 短赛季长度已从 28 天改为 34 天，所以这里用 SeasonCalendar 的常量而不是写死的 28。
+    /// </summary>
+    private static int DayOf(WorldCompetition c, int round) => c.CalendarDays == 84
+        ? c.CalendarStart + (c.Kind == "worldfinal" ? 63 + round * 4 : 64 + round * 4)
+        : (c.Season - 1) * SeasonCalendar.ShortLength + (c.Kind == "worldfinal" ? 17 + round * 2 : 18 + round * 2);
     private static void AddTie(WorldCompetition c, string home, string away, int round, int day)
     {
         int asc = c.Kind != "league" && round == RoundCount(c) ? 9 : 8;
@@ -160,17 +180,34 @@ public static class CircuitWorld
     {
         foreach (var f in c.Fixtures.Where(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player")))
         {
+            // 淘汰赛占位（FixtureId 为空）只是日历上的行程提示，不是可参加的比赛，跳过。
+            if (f.Id.Length == 0) continue;
             if (d.Matches.Any(m => m.FixtureId == f.Id)) continue;
-            d.Matches.Add(new() { CompetitionId = c.Id, FixtureId = f.Id, Round = f.Round, Day = f.Day, Kind = c.Kind,
+            bool finished = f.Finished;
+            string winner = f.WinnerId.Length == 0 ? "待定" : CareerEngine.DisplayName(d, f.WinnerId);
+            var entry = new CareerMatch
+            {
+                CompetitionId = c.Id, FixtureId = f.Id, Round = f.Round, Day = f.Day, Kind = c.Kind,
                 Event = c.Name + " · " + RoundName(c, f.Round), OpponentId = f.HomeId == "player" ? f.AwayId : f.HomeId,
                 RequiredAscension = f.Ascension, Prize = c.Kind == "league" ? 260 : c.Kind == "worldfinal" ? c.PrizeVersion >= 1 ? 0 : 600 + f.Round * 200 : 400 + f.Round * 180,
-                Registered = true, Seed = $"NS-{d.WorldId}-{f.Id}" });
+                Registered = true, Seed = $"NS-{d.WorldId}-{f.Id}",
+                Summary = finished
+                    ? $"{CareerEngine.DisplayName(d, f.HomeId)} vs {CareerEngine.DisplayName(d, f.AwayId)} —— {winner}晋级"
+                    : $"{CareerEngine.DisplayName(d, f.HomeId)} vs {CareerEngine.DisplayName(d, f.AwayId)}"
+            };
+            d.Matches.Add(entry);
         }
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
     }
     public static void AdvanceCompetition(CareerData d, WorldCompetition c, int day, bool publish)
     {
         if (c.Finished) return;
+        // 世界杯：小组赛全部打完后先开八强（每天一场、逐轮推进），此时当天没有比赛。
+        if (GroupFormat(c) && c.GroupStage)
+        {
+            if (TryStartWorldCupKnockout(d, c)) { SchedulePlayer(d, c); return; }
+            if (c.Fixtures.Any(f => !f.Finished)) return;
+        }
         var today = c.Fixtures.Where(f => f.Day == day).ToList();
         if (today.Count == 0 || today.Any(f => !f.Finished)) return;
         if (c.Kind == "league")
@@ -181,13 +218,39 @@ public static class CircuitWorld
         }
         else
         {
-            var winners = c.TeamEvent ? today.GroupBy(f => (f.HomeTeam, f.AwayTeam))
+            // 淘汰赛改为「每场单独一天」后，同一天只打 1 场，不能再拿当天的场次判定是否打完一轮：
+            // 必须等同一轮（Round）的所有场次都结束，才由这一轮的胜者生成下一轮。
+            int round = today[0].Round;
+            var roundFixtures = c.Fixtures.Where(f => f.Round == round).ToList();
+            if (GroupFormat(c) && roundFixtures.Any(f => !f.Finished)) return;
+            // 胜者取自整轮而不是当天：每场单独一天时，当天只有 1 场，只取当天会把单个胜者误判成最终冠军。
+            var decided = GroupFormat(c) ? roundFixtures : today;
+            var winners = c.TeamEvent ? decided.GroupBy(f => (f.HomeTeam, f.AwayTeam))
                 .Select(g => g.Count(f => f.WinnerId == f.HomeId) > g.Count(f => f.WinnerId == f.AwayId) ? g.Key.HomeTeam : g.Key.AwayTeam).ToList()
-                : today.Select(f => f.WinnerId).ToList();
+                : decided.Select(f => f.WinnerId).ToList();
             if (winners.Count > 1)
             {
-                AddRound(c, winners, today[0].Round + 1); SchedulePlayer(d, c); return;
+                int nextRound = round + 1;
+                if (GroupFormat(c))
+                {
+                    // 长赛季每天一场：本轮最后一场的次日开始逐场铺开。
+                    // 短赛季一轮跨多天：下一轮从本轮最后一天的次日开始，每天摊 perDay 场
+                    // （八强 2 天 × 2 场、半决赛 1 天 × 2 场），这样 9 天赛程刚好收在赛季最后一天。
+                    int day2 = roundFixtures.Max(f => f.Day) + 1;
+                    int span = KnockoutSpan(d, nextRound);
+                    int total = winners.Count / 2;
+                    int perDay = (int)Math.Ceiling(total / (double)span);
+                    for (int i = 0; i + 1 < winners.Count; i += 2)
+                    {
+                        AddTie(c, winners[i], winners[i + 1], nextRound, day2 + (i / 2) / perDay);
+                    }
+                    ResolveKnockoutPlaceholders(d, c, nextRound);
+                }
+                else AddRound(c, winners, nextRound);
+                SchedulePlayer(d, c); return;
             }
+            // 只剩一场且已是决赛：把决赛占位换成真实对阵，日历上就能看到决赛结果对应的那一场。
+            if (GroupFormat(c)) ResolveKnockoutPlaceholders(d, c, round);
             c.ChampionTeam = c.TeamEvent ? winners[0] : "";
             c.ChampionId = c.TeamEvent ? c.Rosters[winners[0]].OrderByDescending(id => c.Fixtures.Count(f => f.WinnerId == id)).First() : winners[0];
         }
@@ -209,6 +272,7 @@ public static class CircuitWorld
         var final = new WorldCompetition { Id = $"worldfinal-{d.Season}", Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
             CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, Entrants = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + id)).ToList(), PlayerEntered = qualified.Contains("player") };
         bool finalSeason = d.Season % 2 == 1;
+        // 世界总决赛保持原来的 32 人纯淘汰赛：抽一次签，胜者逐轮晋级，每轮隔 2 天。
         if (finalSeason) { Snapshot(d, final); AddRound(final, final.Entrants, 1); d.Esports.Competitions.Add(final); SchedulePlayer(d, final); }
         string kind = d.Season % 2 == 0 ? "worldcup" : "continental";
         var cup = new WorldCompetition { Id = $"{kind}-{d.Season}", Kind = kind, Name = EsportsWorld.StageName(kind), Country = "国际", Season = d.Season, CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, TeamEvent = true };
@@ -229,6 +293,8 @@ public static class CircuitWorld
                 selection.AddRange(d.People.Where(p => p.Country == league.Country && EsportsWorld.IsProfessional(p) && !d.HumanIds.Contains(p.Id) && !selection.Contains(p.Id))
                     .OrderByDescending(p => p.Rating).Take(Math.Max(0, needed - selection.Count)).Select(p => p.Id));
                 cup.Rosters[league.Country] = selection;
+                // 世界杯是个人赛：入选的 3 人各自为战，按国籍记入国家队。
+                foreach (string id in selection) if (!cup.Entrants.Contains(id)) cup.Entrants.Add(id);
             }
             else foreach (var team in TeamTable(league).Take(2))
             {
@@ -240,13 +306,238 @@ public static class CircuitWorld
                 cup.Rosters[team.PersonId] = roster;
             }
         }
+        // 世界杯改为个人赛：不设团队胜负，也不再有 TeamEvent 的三人三场。
+        if (GroupFormat(cup)) { cup.TeamEvent = false; cup.Entrants = cup.Entrants.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + "cup" + id)).ToList(); }
         cup.Teams = cup.Teams.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + kind + id)).ToList();
         Snapshot(d, cup); cup.PlayerEntered = cup.Entrants.Contains("player");
         d.Esports.NationalTeam = kind == "worldcup" && cup.PlayerEntered;
-        AddRound(cup, cup.Teams, 1); d.Esports.Competitions.Add(cup); SchedulePlayer(d, cup);
+        if (GroupFormat(cup)) CreateWorldCupSchedule(d, cup);
+        else AddRound(cup, cup.Teams, 1);
+        d.Esports.Competitions.Add(cup); SchedulePlayer(d, cup);
+        // 只有走小组赛赛制的世界杯需要铺淘汰赛占位；世界总决赛是纯淘汰赛，按原样处理。
+        if (GroupFormat(cup)) ScheduleKnockoutPlaceholders(d, cup);
         if (publish) CareerEngine.Publish(d, "draw-" + d.Season, "世界大赛签表公布", (finalSeason ? "世界总决赛32位选手就位。" : "") + $"{cup.Name}公布阵容。"
             + (finalSeason && final.PlayerEntered ? $"{CareerEngine.Name(d)}取得世界总决赛席位。" : "") + (cup.PlayerEntered ? $"{CareerEngine.Name(d)}入选{(kind == "worldcup" ? d.Esports.Country : EsportsWorld.ClubName(d, d.Esports.ClubId))}首发阵容。" : ""), "国际赛事", true,
             finalSeason && final.PlayerEntered || cup.PlayerEntered ? ["player"] : []);
+    }
+
+    // ── 世界杯赛程：4 组 × 6 人小组赛 5 天 + 八强 4 天 + 半决赛 2 天 + 决赛 1 天 = 12 天 ──
+
+    /// <summary>小组数量与每组人数（24 人 = 4 组 × 6 人）。</summary>
+    public const int WorldCupGroups = 4, WorldCupGroupSize = 6;
+    /// <summary>参赛人数：4 组 × 6 人 = 24 人。世界总决赛仍是 32 人纯淘汰赛，不用这个规模。</summary>
+    public const int WorldCupPlayers = WorldCupGroups * WorldCupGroupSize;
+    /// <summary>小组赛占用的天数（组内单循环：每人 5 场，每轮每组 3 场同时进行）。</summary>
+    public const int WorldCupGroupDays = 5;
+    /// <summary>
+    /// 世界杯淘汰赛总天数。长赛季（84 天）时间充裕，每天一场：八强 4 + 半决赛 2 + 决赛 1 = 7 天，全程 12 天。
+    /// 短赛季（28 天）联赛第 18 天结束、赛季第 28 天收尾，只剩 10 天可用，因此压缩为
+    /// 八强 2 天（每天 2 场）+ 半决赛 1 天（2 场同时）+ 决赛 1 天 = 4 天，全程 9 天（第 19—27 天）。
+    /// </summary>
+    public static int KnockoutDays(CareerData d) => SeasonCalendar.Length(d) == SeasonCalendar.LongLength ? 7 : 4;
+    /// <summary>淘汰赛每轮在短赛季里跨几天；下标 = round - WorldCupGroupDays - 1（八强、半决赛、决赛）。</summary>
+    private static readonly int[] ShortKnockoutSpan = [2, 1, 1];
+    /// <summary>某一轮在短赛季里占用的天数；长赛季固定 1 天。</summary>
+    private static int KnockoutSpan(CareerData d, int round) =>
+        SeasonCalendar.Length(d) == SeasonCalendar.LongLength ? 1 : ShortKnockoutSpan[Math.Clamp(round - WorldCupGroupDays - 1, 0, 2)];
+    /// <summary>
+    /// 是否采用「小组赛 + 淘汰赛」新赛制：只有国家队世界杯改成了个人赛，
+    /// 世界总决赛保持原来的 32 人纯淘汰赛。
+    /// </summary>
+    public static bool GroupFormat(WorldCompetition c) => c.Kind == "worldcup";
+    /// <summary>是否按「小组赛 + 淘汰赛」读轮次（与 <see cref="GroupFormat"/> 区分：后者决定建赛方式）。</summary>
+    private static bool GroupRounds(WorldCompetition c) => c.Kind == "worldcup";
+
+    /// <summary>世界杯开赛日：联赛结束的次日。短赛季第 18 天结束 → 第 19 天开打；长赛季第 62 天 → 第 63 天。</summary>
+    private static int WorldCupStart(CareerData d) => SeasonCalendar.StartOfSeason(d, d.Season) + SeasonCalendar.LeagueEnd(d) + 1;
+
+    /// <summary>是否在世界大赛里看到淘汰赛的日程占位（供界面与日历标注）。</summary>
+    public static bool WaitingKnockout(WorldCompetition c, int day) =>
+        GroupFormat(c) && c.GroupStage && day >= c.GroupStartDay + WorldCupGroupDays
+        && day < c.GroupStartDay + WorldCupGroupDays + 7;
+
+    /// <summary>淘汰赛占位场次的对手标记：对阵要等上一轮打完才能确定。</summary>
+    public const string KnockoutTbd = "tbd";
+
+    /// <summary>
+    /// 淘汰赛赛程占位：对阵要等上一轮打完才知道，但每一轮占用的日子是固定的。
+    /// 这里把整届淘汰赛的 7 个比赛日全部写进玩家日程——不管他有没有出线——
+    /// 日历上就能看到"八强赛 / 半决赛 / 决赛"的轮次，点进去还能看到对决双方与晋级情况，
+    /// 不会出现"某几天只显示赛事名"的空白。对阵与胜者在每轮打完后由
+    /// <see cref="ResolveKnockoutPlaceholders"/> 回填。
+    /// </summary>
+    public static void ScheduleKnockoutPlaceholders(CareerData d, WorldCompetition c)
+    {
+        if (!GroupFormat(c)) return;
+        d.Matches.RemoveAll(m => m.CompetitionId == c.Id && m.FixtureId.Length == 0);
+        int[] counts = [4, 2, 1];
+        int day = c.GroupStartDay + WorldCupGroupDays;
+        for (int round = WorldCupGroupDays + 1; round <= WorldCupGroupDays + counts.Length; round++)
+        {
+            int matches = counts[round - WorldCupGroupDays - 1];
+            string label = KnockoutName(round);
+            // 短赛季里一轮跨多天：每天摊几场由 KnockoutSpan 决定（八强 2 天 × 2 场，半决赛 1 天 × 2 场）。
+            int span = KnockoutSpan(d, round);
+            int perDay = (int)Math.Ceiling(matches / (double)span);
+            for (int offset = 0; offset < matches; offset++)
+            {
+                d.Matches.Add(new CareerMatch
+                {
+                    CompetitionId = c.Id, FixtureId = "", Round = round, Day = day + offset / perDay, Kind = c.Kind,
+                    Event = $"{c.Name} · {label}（第 {offset + 1} 场，签表待定）", OpponentId = KnockoutTbd,
+                    RequiredAscension = round == WorldCupGroupDays + 3 ? 9 : 8,
+                    Prize = 400 + round * 180, Registered = false,
+                    Seed = $"NS-{d.WorldId}-{c.Id}-{label}-{offset}"
+                });
+            }
+            day += span;
+        }
+        d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
+    }
+
+    /// <summary>
+    /// 小组赛出线后用真实对阵替换占位：
+    /// 玩家参与的那一场变成正式比赛（待报名），其余同轮场次从日程里移除——
+    /// 否则一次八强会在日历上列出四场，看起来像要连打四场。
+    /// 玩家已被淘汰时整轮移除。
+    /// </summary>
+    /// <summary>
+    /// 一轮打完后回填对阵与晋级结果：日历与详情页都能看到谁对谁、谁赢了。
+    /// 玩家参与的场次变成可报名的正式比赛；没参与的场次保留为赛程记录（不报名，只作展示）。
+    /// </summary>
+    public static void ResolveKnockoutPlaceholders(CareerData d, WorldCompetition c, int round)
+    {
+        var real = c.Fixtures.Where(f => f.Round == round).ToList();
+        if (real.Count == 0) return;
+        var rows = d.Matches.Where(m => m.CompetitionId == c.Id && m.FixtureId.Length == 0 && m.Round == round).ToList();
+        foreach (var fixture in real)
+        {
+            // 玩家那一场在 SchedulePlayer 里已经建过日程，不能重复添加。
+            if (d.Matches.Any(m => m.FixtureId == fixture.Id)) continue;
+            var row = rows.FirstOrDefault(m => m.Day == fixture.Day);
+            if (row == null)
+            {
+                row = new CareerMatch
+                {
+                    CompetitionId = c.Id, Round = round, Day = fixture.Day, Kind = c.Kind,
+                    Prize = 400 + round * 180, Registered = false, Seed = $"NS-{d.WorldId}-{fixture.Id}"
+                };
+                d.Matches.Add(row);
+            }
+            bool mine = fixture.HomeId == "player" || fixture.AwayId == "player";
+            bool finished = fixture.Finished;
+            string winner = fixture.WinnerId;
+            string winnerName = winner.Length == 0 ? "待定" : CareerEngine.DisplayName(d, winner);
+            row.FixtureId = fixture.Id;
+            row.Event = $"{c.Name} · {KnockoutName(round)}";
+            row.OpponentId = mine ? (fixture.HomeId == "player" ? fixture.AwayId : fixture.HomeId) : KnockoutTbd;
+            row.RequiredAscension = fixture.Ascension;
+            // 已经打完的那一轮直接把结果写进摘要，日历与详情页不点开也能看到晋级情况。
+            string home = CareerEngine.DisplayName(d, fixture.HomeId), away = CareerEngine.DisplayName(d, fixture.AwayId);
+            row.Summary = finished
+                ? $"{home} vs {away} —— {winnerName}晋级"
+                : $"{home} vs {away} —— 胜者晋级下一轮";
+            row.Registered = false;
+        }
+        // 占位比真实场次多出的部分（正常情况下不会出现）直接清掉，避免留下空壳。
+        foreach (var row in rows.Where(m => m.FixtureId.Length == 0)) d.Matches.Remove(row);
+        d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
+    }
+
+    /// <summary>按小组赛 + 淘汰赛铺排世界杯全部场次。</summary>
+    private static void CreateWorldCupSchedule(CareerData d, WorldCompetition c)
+    {
+        c.CalendarDays = SeasonCalendar.Length(d);
+        // 开赛日记录在赛事自身上：长赛季联赛到第 62 天，开赛日必须跟着缩放。
+        c.GroupStartDay = WorldCupStart(d);
+        var pool = c.Entrants.Distinct().ToList();
+        // 按稳定哈希分组，保证同一存档每次构造分组一致。
+        var ordered = pool.OrderBy(id => CareerEngine.StableHash(d.WorldId + c.Season + "group" + id)).ToList();
+        c.Groups.Clear(); c.GroupOfPlayer.Clear();
+        for (int g = 0; g < WorldCupGroups; g++)
+        {
+            string name = ((char)('A' + g)).ToString();
+            var members = ordered.Skip(g * WorldCupGroupSize).Take(WorldCupGroupSize).ToList();
+            if (members.Count < 2) continue;
+            c.Groups[name] = members;
+            foreach (string id in members) c.GroupOfPlayer[id] = name;
+        }
+        c.GroupStage = true;
+        // 小组赛还没打，先把淘汰赛的日子占上，日历上就能看到完整的 12 天赛程。
+        ScheduleKnockoutPlaceholders(d, c);
+        // 组内单循环：用轮转法排 5 轮，每轮每组 3 场同时开打。
+        foreach (var (name, members) in c.Groups)
+        {
+            var rotation = members.ToList();
+            if (rotation.Count % 2 != 0) rotation.Add("");
+            int rounds = rotation.Count - 1;
+            for (int r = 0; r < rounds; r++)
+            {
+                int day = c.GroupStartDay + r;
+                for (int i = 0; i < rotation.Count / 2; i++)
+                {
+                    string home = rotation[i], away = rotation[^(i + 1)];
+                    if (home.Length == 0 || away.Length == 0) continue;
+                    c.Fixtures.Add(new WorldFixture
+                    {
+                        Id = $"{c.Id}-g{r + 1}-{c.Fixtures.Count}", Day = day, Round = r + 1,
+                        HomeId = home, AwayId = away, Ascension = 8, HomeTeam = name, AwayTeam = name
+                    });
+                }
+                rotation.Insert(1, rotation[^1]); rotation.RemoveAt(rotation.Count - 1);
+            }
+        }
+    }
+
+    /// <summary>小组赛积分榜：按小组分别统计，胜 3 分、平 1 分。</summary>
+    public static List<CareerStanding> GroupTable(WorldCompetition c, string group)
+    {
+        if (!c.Groups.TryGetValue(group, out var members)) return [];
+        var table = members.Select(id => new CareerStanding { PersonId = id }).ToList();
+        foreach (var f in c.Fixtures.Where(f => f.Round <= WorldCupGroupDays && f.Finished && c.GroupOfPlayer.GetValueOrDefault(f.HomeId) == group))
+        {
+            var home = table.FirstOrDefault(t => t.PersonId == f.HomeId);
+            var away = table.FirstOrDefault(t => t.PersonId == f.AwayId);
+            if (f.Draw)
+            {
+                if (home != null) { home.Draws++; home.Points++; }
+                if (away != null) { away.Draws++; away.Points++; }
+                continue;
+            }
+            bool homeWon = f.WinnerId == f.HomeId;
+            var winner = homeWon ? home : away;
+            var loser = homeWon ? away : home;
+            if (winner != null) { winner.Wins++; winner.Points += 3; }
+            if (loser != null) loser.Losses++;
+        }
+        return table.OrderByDescending(t => t.Points)
+            .ThenByDescending(t => t.Wins)
+            .ThenByDescending(t => CareerEngine.StableHash(c.Id + t.PersonId))
+            .ToList();
+    }
+
+    /// <summary>小组赛是否已全部结束（该打的日子都打完、没有未完成场次）。</summary>
+    private static bool GroupPhaseFinished(WorldCompetition c) =>
+        c.Fixtures.Where(f => f.Round <= WorldCupGroupDays).All(f => f.Finished);
+
+    /// <summary>
+    /// 小组赛结束后生成八强：每组前二出线，随机配对（不按组固定交叉）。
+    /// 之后八强、半决赛、决赛各占一天，每场单独一天。
+    /// </summary>
+    private static bool TryStartWorldCupKnockout(CareerData d, WorldCompetition c)
+    {
+        if (!c.GroupStage || !GroupPhaseFinished(c)) return false;
+        var qualified = c.Groups.Keys.OrderBy(name => name, StringComparer.Ordinal)
+            .SelectMany(group => GroupTable(c, group).Take(2).Select(t => t.PersonId)).ToList();
+        // 出线人数不足 2 人时不要清掉小组赛标记，否则该赛事会永久卡在无法推进的状态。
+        if (qualified.Count < 2) return false;
+        c.GroupStage = false;
+        int day = c.GroupStartDay + WorldCupGroupDays;
+        var shuffled = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + c.Season + "ko" + id)).ToList();
+        // 八强 4 场也每场单独一天，之后半决赛、决赛各自继续往后顺延。
+        for (int i = 0; i + 1 < shuffled.Count; i += 2) { AddTie(c, shuffled[i], shuffled[i + 1], WorldCupGroupDays + 1, day); day++; }
+        ResolveKnockoutPlaceholders(d, c, WorldCupGroupDays + 1);
+        return true;
     }
     public static bool ReplayTie(CareerData d, CareerMatch m)
     {

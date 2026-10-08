@@ -79,6 +79,17 @@ public sealed class WorldCompetition
     public string ChampionId { get; set; } = "";
     public bool Finished { get; set; }
     public bool PlayerEntered { get; set; }
+    /// <summary>
+    /// 小组赛分组：组名 → 该组选手。世界杯改为个人赛后启用（4 组 × 6 人）。
+    /// 为空表示该赛事没有小组赛阶段。
+    /// </summary>
+    public Dictionary<string, List<string>> Groups { get; set; } = [];
+    /// <summary>选手 → 所属小组，便于快速查组。</summary>
+    public Dictionary<string, string> GroupOfPlayer { get; set; } = [];
+    /// <summary>是否还在小组赛阶段（小组赛结束后转入淘汰赛）。</summary>
+    public bool GroupStage { get; set; }
+    /// <summary>小组赛第一个比赛日的绝对日；世界杯赛程后续轮次都从它推算。</summary>
+    public int GroupStartDay { get; set; }
 }
 public sealed class WorldFixture
 {
@@ -145,8 +156,7 @@ public sealed class NationalLegacy
     public int Treasury { get; set; }
     public int Development { get; set; }
     public int Titles { get; set; }
-}
-public sealed class ClubOffer
+}public sealed class ClubOffer
 {
     public int SeasonPay { get; set; }
     public int WinBonus { get; set; }

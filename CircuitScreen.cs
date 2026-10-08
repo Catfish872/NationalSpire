@@ -110,6 +110,8 @@ public partial class CareerScreen
         _content.AddChild(Text($"第 {c.Season} 赛季 · {c.Name}", 28, _gold));
         _content.AddChild(Text(c.TeamEvent ? "每队三名选手各打一场，先赢两场的队伍获胜。你只需完成自己的比赛。" : "每轮一场，获胜晋级。通关优先，双方通关比较用时，双方失败比较楼层，同成绩加赛。", 17, _muted));
         if (c.Finished) _content.AddChild(Text("◆ 冠军：" + (c.TeamEvent ? CircuitWorld.TeamName(data, c, c.ChampionTeam) : CareerEngine.DisplayName(data, c.ChampionId)), 25, _gold));
+        // 小组赛赛制：先给出分组与各组积分榜，否则玩家只能从逐场对阵里自己去数谁出线。
+        if (c.Groups.Count > 0) GroupSection(data, c);
         if (c.Kind == "league")
         {
             _content.AddChild(Text("俱乐部积分：胜3分、平1分、负0分；同分比较个人对决胜场。前二进入洲际杯。", 17, _ink));
@@ -139,6 +141,48 @@ public partial class CareerScreen
             }
         }
     }
+    /// <summary>
+    /// 小组赛分组与积分榜：4 组各列名次、胜负平、积分与是否出线。
+    /// 世界大赛改成「小组赛 + 淘汰赛」后，光看逐场对阵看不出谁出线，这一区补上。
+    /// </summary>
+    private void GroupSection(CareerData data, WorldCompetition c)
+    {
+        bool done = c.Fixtures.Where(f => f.Round <= CircuitWorld.WorldCupGroupDays).All(f => f.Finished);
+        _content.AddChild(Text("小组赛分组" + (done ? "（已结束，每组前二出线）" : "（进行中，每组前二出线）"), 23, _gold));
+        var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        grid.AddThemeConstantOverride("h_separation", 16); grid.AddThemeConstantOverride("v_separation", 16);
+        _content.AddChild(grid);
+        foreach (string group in c.Groups.Keys.OrderBy(name => name, StringComparer.Ordinal))
+        {
+            var card = Card(); grid.AddChild(card); var box = Inner(card);
+            box.AddChild(Text($"{group} 组", 22, _gold));
+            var table = CircuitWorld.GroupTable(c, group);
+            int rank = 0;
+            foreach (var row in table)
+            {
+                rank++;
+                bool mine = row.PersonId == "player";
+                bool qualified = done && rank <= 2;
+                string mark = qualified ? "出线 " : rank <= 2 ? "    " : "    ";
+                box.AddChild(PersonLink(data, row.PersonId,
+                    $"{mark}{rank}. {CareerEngine.DisplayName(data, row.PersonId)}   {row.Points}分  {row.Wins}胜{row.Draws}平{row.Losses}负", 34));
+                if (mine) box.AddChild(Text("    ↑ 你在这个小组", 14, CareerVisuals.Teal));
+            }
+            // 组内尚未打完时提示还剩多少场，避免玩家以为积分榜是最终结果。
+            int left = c.Fixtures.Count(f => f.Round <= CircuitWorld.WorldCupGroupDays && !f.Finished
+                && c.GroupOfPlayer.GetValueOrDefault(f.HomeId) == group);
+            if (left > 0) box.AddChild(Text($"    本组还有 {left} 场未打", 14, _muted));
+        }
+        if (done)
+        {
+            var qualified = c.Groups.Keys.OrderBy(name => name, StringComparer.Ordinal)
+                .SelectMany(g => CircuitWorld.GroupTable(c, g).Take(2).Select(t => t.PersonId)).ToList();
+            _content.AddChild(Text("小组赛出线名单：" + string.Join("、", qualified.Select(id => CareerEngine.DisplayName(data, id)))
+                + (qualified.Contains("player") ? "。你已出线，接下来的淘汰赛每场单独一天。" : "。你未能出线，本届世界大赛到此结束。"), 17,
+                qualified.Contains("player") ? CareerVisuals.Teal : _muted));
+        }
+    }
+
     private void ModernRules()
     {
         AddHeading("赛事指南", "从社区赛出发，一路赢到世界赛场。获得参赛资格后，日程里就会出现下一场比赛。");

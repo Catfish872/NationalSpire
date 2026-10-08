@@ -37,7 +37,9 @@ public partial class CareerScreen
         int sponsors = data.Esports.SponsorOffers.Count(o => o.ExpiresDay >= data.Day);
         if (sponsors > 0) _content.AddChild(Button($"收到 {sponsors} 份赞助邀请 · 前往查看   →", () => OpenWorldSection("俱乐部"), 410));
         _content.AddChild(Text(data.Season % 2 == 0 ? "本赛季焦点：国家队世界杯" : "本赛季焦点：洲际俱乐部冠军杯", 24, _gold));
-        _content.AddChild(Text(data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern) ? SeasonCalendar.Length(data) == 84 ? $"本赛区联赛共 {CircuitWorld.RoundCount(EsportsWorld.PlayerLeague(data)!)} 轮，世界大赛在赛季末举行。获得资格后，可在日程查看比赛。" : "比赛日期可在日程查看。" : "比赛日期可在日程查看。", 16, _muted));
+        _content.AddChild(Text(data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)
+            ? $"本赛区联赛共 {CircuitWorld.RoundCount(EsportsWorld.PlayerLeague(data)!)} 轮，第 {SeasonCalendar.LeagueEnd(data)} 天收官；世界大赛随后开打，世界杯为小组赛加淘汰赛共 12 天。获得资格后，可在日程查看比赛。"
+            : "比赛日期可在日程查看。", 16, _muted));
         var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 16); grid.AddThemeConstantOverride("v_separation", 16); _content.AddChild(grid);
         foreach (var c in data.Esports.Competitions.Where(c => c.Season == data.Season).OrderBy(c => c.Kind == "league" ? 1 : 0).ThenBy(c => c.Country == data.Esports.Country ? 0 : 1))
         {

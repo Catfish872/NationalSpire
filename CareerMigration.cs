@@ -22,7 +22,7 @@ public static class CareerMigration
             int? official = match?.RequiredAscension ?? result.Kind switch
             {
                 "local" => 0, "city" => 3, "academy" => 6, "league" => 8,
-                "masters" => 10, "continental" or "worldcup" => (result.Day - 1) % 28 + 1 == 26 ? 9 : 8, _ => null
+                "masters" => 10, "continental" or "worldcup" => (result.Day - 1) % SeasonCalendar.ShortLength + 1 == 26 ? 9 : 8, _ => null
             };
             result.OfficialAscensionVerified = official.HasValue;
             if (official.HasValue) result.Ascension = official.Value;
@@ -38,7 +38,7 @@ public static class CareerMigration
             string id = "clear-" + result.Ascension;
             data.Esports.Milestones.Add(id);
             data.Esports.Honors.Add(new CareerHonor { Id = id, Title = $"进阶 {result.Ascension} 通关认证", Day = result.Day,
-                Season = Math.Max(1, (result.Day - 1) / 28 + 1), Detail = "根据赛事规定进阶核实的通关履历。" });
+                Season = Math.Max(1, (result.Day - 1) / SeasonCalendar.ShortLength + 1), Detail = "根据赛事规定进阶核实的通关履历。" });
         }
         // 旧社区可能引用实际挑战进阶；完整旧讨论保留在升级备份中。
         data.Posts.RemoveAll(p => p.EventKey.StartsWith("honor-clear-") || p.EventKey.StartsWith("match")

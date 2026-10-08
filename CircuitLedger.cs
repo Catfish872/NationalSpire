@@ -45,9 +45,11 @@ public static class CircuitLedger
             int rank = c.Kind == "league" ? EsportsWorld.Ranked(c).ToList().FindIndex(t => t.PersonId == id) + 1 : champion ? 1 : 1 << (roundCount - lastRound + 1);
             string place = c.Kind == "league" ? $"个人第{rank}名" : champion ? "冠军" : rank == 2 ? "亚军" : $"{rank}强";
             int points = c.Kind == "league" ? rank switch { 1 => 300, 2 => 180, <= 4 => 105, <= 8 => 54, _ => 20 }
-                : c.Kind == "worldfinal" ? rank switch { 1 => 1500, 2 => 900, 4 => 525, 8 => 270, 16 => 120, _ => 50 } : 0;
+                : c.Kind == "worldfinal" ? rank switch { 1 => 1500, 2 => 900, 4 => 525, 8 => 270, 16 => 120, _ => 50 }
+                // 世界杯个人赛：小组赛止步（rank 16）也要给分，否则打进正赛却零收获。
+                : c.Kind == "worldcup" ? rank switch { 1 => 900, 2 => 450, 4 => 200, 8 => 100, 16 => 40, _ => 20 } : 0;
             int fortune = c.Kind == "league" ? 0 : c.Kind == "worldfinal" ? rank switch { 1 => 600, 2 => 300, 4 => 150, 8 => 60, _ => 15 }
-                : (c.Kind == "worldcup" ? 2 : 1) * (rank switch { 1 => 180, 2 => 90, 4 => 45, _ => 15 });
+                : (c.Kind == "worldcup" ? 2 : 1) * (rank switch { 1 => 180, 2 => 90, 4 => 45, 8 => 30, _ => 15 });
             var award = new CircuitAward { CompetitionId = c.Id, PersonId = id, Country = c.EntrantCountries[id], ClubId = c.EntrantClubs[id],
                 Season = c.Season, Day = d.Day, Event = c.Name, Kind = c.Kind, Stage = rank, Place = place, Points = points, Fortune = fortune };
             d.Esports.CircuitAwards.Add(award);

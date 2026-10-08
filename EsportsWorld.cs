@@ -69,7 +69,7 @@ public static class EsportsWorld
         // 升级存档保留已完成赛事及正在进行的种子；只替换尚未开始的旧赛程。
         d.Matches.RemoveAll(m => m.Kind == "legacy" && m.Status == "待赛" && m.Id != d.PendingMatchId);
         StartSeason(d, true);
-        for (int day = (d.Season - 1) * 28 + 1; day < d.Day; day++) EndDay(d, day, false);
+        for (int day = SeasonCalendar.StartOfSeason(d, d.Season) + 1; day < d.Day; day++) EndDay(d, day, false);
         if (d.Esports.License >= 3) MakeOffers(d, false);
         CareerEngine.Publish(d, "ecosystem", "新的职业赛制公布：从社区走向世界", "社区杯→城市公开赛→青训选拔→职业俱乐部。国内联赛前二获得洲际杯候选资格；每两个赛季举行国家队世界杯，国家队还要求进阶八通关履历。所有国家的赛事都会独立进行。", "赛事公告", false);
     }
@@ -83,7 +83,7 @@ public static class EsportsWorld
             if (d.Esports.License >= 3) MakeOffers(d, d.Esports.Honors.Any(h => h.Id.StartsWith("worldfinal-") || h.Id.StartsWith("continental-") || h.Id.StartsWith("worldcup-")));
             return;
         }
-        int start = (d.Season - 1) * 28;
+        int start = SeasonCalendar.StartOfSeason(d, d.Season);
         d.Esports.NationalTeam = false;
         d.Esports.Competitions.RemoveAll(c => c.Season < d.Season - 4);
         d.Esports.Offers.RemoveAll(o => o.ExpiresDay < d.Day);
@@ -113,7 +113,7 @@ public static class EsportsWorld
         string cup = d.Season % 2 == 0 ? "worldcup" : "continental";
         int rounds = cup == "worldcup" ? 3 : 4;
         for (int r = 1; r <= rounds; r++) Add(26 - (rounds - r) * 2, cup, StageName(cup) + " · " + CupRound(cup, r), r == rounds ? 9 : 8, 400 + r * 180, round: r);
-        Add(28, "masters", "世界纪录邀请赛", 10, 1200, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
+        Add(SeasonCalendar.Length(d), "masters", "世界纪录邀请赛", 10, 1200, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
         RefreshLeagueMatches(d);
         if (!migrating && d.Season > 1) TransferWindow(d);
@@ -125,7 +125,7 @@ public static class EsportsWorld
     {
         var c = PlayerLeague(d); if (c == null) return;
         if (c.Modern) { if (c.PlayerEntered) CircuitWorld.SchedulePlayer(d, c); return; }
-        foreach (var m in d.Matches.Where(m => m.Kind == "league" && m.Day > (d.Season - 1) * 28 && m.Day <= d.Season * 28 && m.Status == "待赛"))
+        foreach (var m in d.Matches.Where(m => m.Kind == "league" && m.Day > SeasonCalendar.StartOfSeason(d, d.Season) && m.Day <= SeasonCalendar.End(d) && m.Status == "待赛"))
         {
             var f = c.Fixtures.FirstOrDefault(f => f.Round == m.Round && (f.HomeId == LeagueSlot(d, c) || f.AwayId == LeagueSlot(d, c)));
             if (f == null) continue;
@@ -152,7 +152,7 @@ public static class EsportsWorld
             if (w.ClubId == "") return "先在赛事与俱乐部接受一份俱乐部合同。";
             var league = PlayerLeague(d);
             if (league?.PlayerEntered == true) return null;
-            return d.Day <= (d.Season - 1) * 28 + 12 ? null : "本赛季联赛报名已经截止，下赛季可以再次报名。";
+            return d.Day <= SeasonCalendar.StartOfSeason(d, d.Season) + 12 ? null : "本赛季联赛报名已经截止，下赛季可以再次报名。";
         }
         if (m.Kind is "continental" or "worldcup")
         {
@@ -281,7 +281,7 @@ public static class EsportsWorld
             return;
         }
         bool walkover = f.HomeId == "player" || f.AwayId == "player";
-        int asc = c.Modern ? f.Ascension : c.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8;
+        int asc = c.Modern ? f.Ascension : c.Kind != "league" && (f.Day - 1) % SeasonCalendar.ShortLength + 1 == 26 ? 9 : 8;
         RunPerformance Run(string id, string seed) => id == "player" ? new(false, 0, 0)
             : MatchRules.Simulate(d, id, asc, seed, f.Day, d.CooperativeMembers > 1, c, f.Id);
         var a = Run(f.HomeId, d.WorldId + ":" + f.Id); var b = Run(f.AwayId, d.WorldId + ":" + f.Id);
@@ -331,7 +331,7 @@ public static class EsportsWorld
             {
             bool clear = f.HomeId == id ? f.HomeCleared : f.AwayCleared;
             if (clear) person.Wins++; else person.Losses++;
-            if (clear) person.MaxAscension = Math.Max(person.MaxAscension, c.Modern ? f.Ascension : (f.Day - 1) % 28 + 1 == 26 && c.Kind != "league" ? 9 : 8);
+            if (clear) person.MaxAscension = Math.Max(person.MaxAscension, c.Modern ? f.Ascension : (f.Day - 1) % SeasonCalendar.ShortLength + 1 == 26 && c.Kind != "league" ? 9 : 8);
             if (person.MaxAscension >= 9) person.Role = "世界顶尖";
             person.Rating = Math.Clamp(person.Rating + (draw ? 2 : winner == id ? 12 : -5), 900, 2100);
             person.Form = (person.Form + (draw ? "平" : winner == id ? "胜" : "负")); if (person.Form.Length > 5) person.Form = person.Form[^5..];
@@ -364,7 +364,7 @@ public static class EsportsWorld
         entrants = entrants.OrderByDescending(id => RatingOf(d, id)).ThenBy(id => id, StringComparer.Ordinal).ToList();
         var cup = new WorldCompetition { Id = kind + "-" + d.Season, Kind = kind, Name = StageName(kind), Season = d.Season, Country = "国际", Entrants = entrants };
         SnapshotEntrants(d, cup);
-        AddCupRound(cup, entrants, 1, (d.Season - 1) * 28 + (kind == "worldcup" ? 22 : 20));
+        AddCupRound(cup, entrants, 1, SeasonCalendar.StartOfSeason(d, d.Season) + (kind == "worldcup" ? 22 : 20));
         d.Esports.Competitions.Add(cup); RefreshCupMatches(d, cup);
         if (publish) CareerEngine.Publish(d, "draw-" + d.Season, cup.Name + "抽签揭晓", $"{entrants.Count} 个席位已经确定。{(kind == "worldcup" ? "各国代表为国家荣誉出战" : "各俱乐部代表争夺洲际最高荣誉")}。签表可在电竞世界查看，国内联赛前二可确认自己的候选席位。", "国际赛事", true);
     }
@@ -374,7 +374,7 @@ public static class EsportsWorld
     }
     private static void RefreshCupMatches(CareerData d, WorldCompetition c)
     {
-        foreach (var m in d.Matches.Where(m => m.Kind == c.Kind && m.Day > (d.Season - 1) * 28 && m.Status == "待赛"))
+        foreach (var m in d.Matches.Where(m => m.Kind == c.Kind && m.Day > SeasonCalendar.StartOfSeason(d, d.Season) && m.Status == "待赛"))
         {
             m.CompetitionId = c.Id;
             string slot = c.PlayerEntered ? "player" : CupSlot(d, c);

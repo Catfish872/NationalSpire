@@ -127,7 +127,7 @@ public static class WeeklyJournal
                 {
                     if (id == "player" && results.Any(r => data.Matches.Any(m => m.Id == r.MatchId && m.FixtureId == fixture.Id))) continue;
                     bool home = id == fixture.HomeId;
-                    int asc = competition.Modern ? fixture.Ascension : competition.Kind != "league" && (fixture.Day - 1) % 28 + 1 == 26 ? 9 : 8;
+                    int asc = competition.Modern ? fixture.Ascension : competition.Kind != "league" && (fixture.Day - 1) % SeasonCalendar.ShortLength + 1 == 26 ? 9 : 8;
                     performances.Add(new(id, fixture.Day, competition.Name, CareerEngine.DisplayName(data, home ? fixture.AwayId : fixture.HomeId),
                         home ? fixture.HomeCleared : fixture.AwayCleared, home ? fixture.HomeFloor : fixture.AwayFloor,
                         home ? fixture.HomeSeconds : fixture.AwaySeconds, fixture.Draw ? "平局" : fixture.WinnerId == id ? "胜" : "负", asc));
@@ -187,7 +187,7 @@ public static class WeeklyJournal
                 Facts = (competition.Finished ? $"冠军：{(competition.TeamEvent ? CircuitWorld.TeamName(data, competition, competition.ChampionTeam) : CareerEngine.DisplayName(data, competition.ChampionId))}。" : "比赛仍在进行。")
                     + string.Join("；", fixtures.Select(f => $"第{f.Day}天 {CareerEngine.DisplayName(data, f.HomeId)} vs {CareerEngine.DisplayName(data, f.AwayId)}："
                         + (f.Draw ? "平局" : CareerEngine.DisplayName(data, f.WinnerId) + "胜") + (f.Walkover ? "（弃权判定）" : "")
-                        + $"；赛事进阶{(competition.Modern ? f.Ascension : competition.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8)}，双方表现 {MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)} / {MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)}")) });
+                        + $"；赛事进阶{(competition.Modern ? f.Ascension : competition.Kind != "league" && (f.Day - 1) % SeasonCalendar.ShortLength + 1 == 26 ? 9 : 8)}，双方表现 {MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)} / {MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)}")) });
         }
         var representedPosts = data.Posts.Where(p => p.EventKey.StartsWith("match")).Select(p => p.Id).ToHashSet();
         var events = data.CommunityMemories.Where(m => m.Kind == "fact" && !m.Id.StartsWith("life-fact:") && m.Day >= start && m.Day <= data.Day && !m.Id.EndsWith(":result") && !representedPosts.Contains(m.PostId))

@@ -447,7 +447,14 @@ public partial class CareerScreen : Control, IScreenContext
             var world = data.Esports.Competitions.FirstOrDefault(c => c.Fixtures.Any(f => f.Day == day));
             var appointment = SocialAppointments.All(data).FirstOrDefault(x => x.Offer.State is "已确认" or "已赴约" && PrivateAppointments.Date(data, x.Offer) == day);
             string badge = match == null ? world == null ? "·" : "◇" : "◆";
-            var b = Button($"{day - start + 1:00}  {badge}\n{(match?.Event ?? appointment.Offer?.Title ?? world?.Name ?? "训练 / 新闻")}", () => { _selectedDay = day; Render(); }, 0);
+            // 日历格子要带上轮次，否则八强/半决赛/决赛的那几天只显示赛事名，看不出当天打的是哪一轮。
+            string label = match?.Event ?? appointment.Offer?.Title ?? world?.Name ?? "训练 / 新闻";
+            if (match == null && appointment.Offer == null && world != null)
+            {
+                var fixture = world.Fixtures.FirstOrDefault(f => f.Day == day);
+                if (fixture != null) label = $"{world.Name} · {CircuitWorld.RoundName(world, fixture.Round)}";
+            }
+            var b = Button($"{day - start + 1:00}  {badge}\n{label}", () => { _selectedDay = day; Render(); }, 0);
             b.CustomMinimumSize = new Vector2(0, 88);
             b.SizeFlagsHorizontal = SizeFlags.ExpandFill; b.AutowrapMode = TextServer.AutowrapMode.WordSmart; b.AddThemeFontSizeOverride("font_size", 16);
             b.Modulate = day < data.Day ? new Color("8591a0") : day == data.Day ? _gold : Colors.White;
@@ -464,15 +471,29 @@ public partial class CareerScreen : Control, IScreenContext
         foreach (var selected in data.Matches.Where(m => m.Day == shown))
         {
             box.AddChild(Text($"{selected.Event}  ·  {selected.Status}  ·  对手 {CareerEngine.DisplayName(data, selected.OpponentId)}  ·  最低进阶 {selected.RequiredAscension}", 18, _ink));
+            if (selected.Summary.Length > 0) box.AddChild(Text(selected.Summary, 16, CareerVisuals.Teal));
             var reason = EsportsWorld.EntryReason(data, selected);
             if (reason != null && !selected.Registered) box.AddChild(Text(reason, 14, _muted));
             if (selected.Status == "待赛" && shown >= data.Day && selected.CompetitionId.Length == 0 && (reason == null || selected.Registered))
                 box.AddChild(TeamButton(selected.Registered ? "取消报名" : "报名这场比赛", () => { if (MultiplayerCommand("propose-register", selected.Id, number: selected.Registered ? 0 : 1)) return; var error = CareerEngine.SetRegistration(data, selected, !selected.Registered); Render(); if (error != null) Notice(error, true); }, 180));
         }
+        // 当天所有世界赛场次都列出来：玩家没参加的八强/半决赛/决赛也能看到谁对谁、谁晋级。
         foreach (var competition in data.Esports.Competitions.Where(c => c.Fixtures.Any(f => f.Day == shown)))
         {
             var fixtures = competition.Fixtures.Where(f => f.Day == shown).ToList();
             box.AddChild(Text($"世界赛场 · {competition.Name} · {fixtures.Count(f => f.Finished)}/{fixtures.Count} 场已结束", 16, _muted));
+            foreach (var fixture in fixtures)
+            {
+                string home = CareerEngine.DisplayName(data, fixture.HomeId);
+                string away = CareerEngine.DisplayName(data, fixture.AwayId);
+                bool mine = fixture.HomeId == "player" || fixture.AwayId == "player";
+                string outcome = fixture.Finished
+                    ? $"{(fixture.Walkover ? "弃权判定" : MatchRules.Performance(fixture.HomeCleared, fixture.HomeFloor, fixture.HomeSeconds) + " / " + MatchRules.Performance(fixture.AwayCleared, fixture.AwayFloor, fixture.AwaySeconds))}   →   {CareerEngine.DisplayName(data, fixture.WinnerId)}晋级"
+                    : "尚未开赛";
+                box.AddChild(Text($"    {CircuitWorld.RoundName(competition, fixture.Round)}：{(fixture.WinnerId == fixture.HomeId ? "◆ " : "")}{home}  vs  {(fixture.WinnerId == fixture.AwayId ? "◆ " : "")}{away}{(mine ? "（你）" : "")}", 17,
+                    mine ? _gold : _ink));
+                box.AddChild(Text($"        {outcome}", 15, _muted));
+            }
         }
         if (shown > data.Day) box.AddChild(TeamButton("跳转到此日", () => { if (MultiplayerCommand("propose-advance", number: shown)) return; CareerEngine.AdvanceToDay(data, shown); Render(); }, 180));
     }
