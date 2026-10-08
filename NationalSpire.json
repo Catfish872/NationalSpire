@@ -1,9 +1,9 @@
-﻿{
+{
   "id": "NationalSpire",
   "name": "国运尖塔：当全世界的尖塔水平下降 1000 倍，只有你保持不变【生涯与社区】",
   "author": "NationalSpire",
   "description": "从社区选拔走向世界总决赛。国运榜、俱乐部联赛、国家队世界杯、持续赞助与千人社区共同组成职业生涯。",
-  "version": "0.25.31",
+  "version": "0.25.37",
   "min_game_version": "0.107.1",
   "has_pck": false,
   "has_dll": true,

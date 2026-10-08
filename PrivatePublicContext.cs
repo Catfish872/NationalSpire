@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 namespace NationalSpire;
 
@@ -37,6 +37,7 @@ public static partial class PrivatePublicContext
         if (p.Form.Length > 0) b.AppendLine($"{p.PublicName}近期比赛结果（从旧到新）：{string.Join("、", p.Form.ToCharArray())}。");
         Awards(p.Id, p.PublicName);
         var clubs = new HashSet<string>();
+        if (ClubCoaching.IsCoach(p)) b.AppendLine($"{p.PublicName}担任俱乐部教练，不兼任选手；陪练系数×{ClubCoaching.Factor(p):0.#}。");
         Club(p.ClubId, p.PublicName);
         if (p.AiIntroduction.Length > 0 && p.IntroductionDay <= d.Day)
             b.AppendLine($"{PrivateAppointments.DateText(d, p.IntroductionDay)}的{p.PublicName}周刊档案：{p.AiIntroduction}");
@@ -51,11 +52,15 @@ public static partial class PrivatePublicContext
         // 实际爬塔通关与赛事胜负分别统计，避免把未通关获胜或加赛进阶混为一谈。
         if (results.Length > 0)
         {
+            int recentStart = b.Length;
             b.AppendLine($"{player}已记录的公开比赛，按实际挑战进阶统计：" + string.Join("；", results.GroupBy(ActualAscension).OrderByDescending(g => g.Key).Select(g =>
                 $"{(g.Key < 0 ? "实际进阶未记录" : "进阶" + g.Key)}，{g.Count()}场，通关{g.Count(r => r.Win)}场，赛事获胜{g.Count(r => r.Outcome == "获胜")}场")) + "。");
-            b.AppendLine($"{player}的近期公开赛果：");
-            foreach (var r in results.OrderByDescending(r => r.Day).Take(3))
+            // 与当前人物的比赛在共同经历中展示双方结果，避免重复注入同一场。
+            var recent = results.OrderByDescending(r => r.Day).Take(3).Where(r => r.OpponentId != p.Id && !r.OpponentParticipants.Contains(p.Id)).ToArray();
+            if (recent.Length > 0) b.AppendLine($"{player}的近期公开赛果：");
+            foreach (var r in recent)
                 b.AppendLine($"{PrivateAppointments.DateText(d, r.Day)}，{player}在{r.Event}对阵{r.Opponent}，赛果{r.Outcome}；{(r.OfficialAscensionVerified ? "赛事规定进阶" + r.Ascension : "赛事规定进阶未核实")}，{player}{(ActualAscension(r) >= 0 ? "实际挑战进阶" + ActualAscension(r) : "实际挑战进阶未记录")}，使用{CharacterIdentity.ForResult(r)}，{MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}。");
+            if (b.Length > recentStart) changing?.Add((recentStart, b.Length - recentStart, "results"));
         }
         if (d.PlayerCard is { } card)
         {
@@ -72,6 +77,8 @@ public static partial class PrivatePublicContext
         if (d.SelectedCharacter.Length > 0) b.AppendLine($"{player}当前选择的角色：{CharacterIdentity.Aliases(d).GetValueOrDefault(d.SelectedCharacter, d.SelectedCharacter)}。");
         if (d.PlayerNameAliases.Count > 0) b.AppendLine($"{player}的曾用游戏名：{string.Join("、", d.PlayerNameAliases)}。");
         b.AppendLine($"{player}所属俱乐部：{EsportsWorld.ClubName(d, d.Esports.ClubId)}。" + (OwnedClubs.CanOperate(d) ? $"{player}是这家自建俱乐部的管理者。" : ""));
+        if (ClubCoaching.PlayerFeatures(d))
+            b.AppendLine($"{player}在俱乐部的岗位：{(ClubCoaching.PlayerReserve(d) ? "轮换" : "首发")}{(ClubCoaching.PlayerCoach(d) ? "，兼任教练" : "")}。");
         Club(d.Esports.ClubId, player);
         if (d.Esports.NationalTeam) b.AppendLine($"{player}入选{d.Esports.Country}国家队。");
         if (d.LocalHumanId.Length == 0) b.AppendLine($"{player}当前连胜{d.Esports.WinStreak}场，世界积分{WorldPoints(d, "player")}。");
@@ -94,7 +101,7 @@ public static partial class PrivatePublicContext
         {
             if (!clubs.Add(id) || EsportsWorld.Club(d, id) is not { } club) return;
             b.AppendLine($"{name}所属的{club.Name}来自{club.Country}，累计冠军{club.Titles}次。{club.Motto}");
-            AppendClubDetails(b, d, club);
+            AppendClubDetails(b, d, club, p.Id, changing);
         }
     }
 

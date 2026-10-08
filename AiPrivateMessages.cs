@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -23,10 +23,10 @@ public static partial class AiService
     public static async Task ProcessPrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person,
         Action<string, string>? progress = null)
     {
-        var data = current(); if (data == null) return;
+        var data = current(); if (data == null || !PrivateMessages.CanChat(data, person)) return;
         string key = PrivateKey(data, person);
         var resolve = current;
-        current = () => resolve() is { } latest && PrivateKey(latest, person) == key ? latest : null;
+        current = () => resolve() is { } latest && PrivateMessages.CanChat(latest, person) && PrivateKey(latest, person) == key ? latest : null;
         if (PrivateRequests.ContainsKey(key)) return;
         var conversation = PrivateMessages.Conversation(data, person);
         var turn = conversation.Turns.FirstOrDefault(t => t.Status == "queued"); if (turn == null) return;
@@ -84,7 +84,7 @@ public static partial class AiService
             }
             await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking);
             cancel.Token.ThrowIfCancellationRequested(); parser.Finish();
-            data = current(); if (data == null || PrivateKey(data, person) != key) return;
+            data = current(); if (data == null || PrivateKey(data, person) != key || !PrivateMessages.CanChat(data, person)) return;
             conversation = PrivateMessages.Conversation(data, person);
             turn = conversation.Turns.First(t => t.Id == turnId);
             if (turn.Status != "sending") return;
@@ -101,7 +101,7 @@ public static partial class AiService
         catch (Exception e)
         {
             data = current();
-            if (data != null && PrivateKey(data, person) == key)
+            if (data != null && PrivateKey(data, person) == key && PrivateMessages.CanChat(data, person))
             {
                 var failed = PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == turnId);
                 if (failed != null && failed.Status != "complete")
@@ -205,10 +205,10 @@ public static partial class AiService
 
     private static async Task SummarizePrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person)
     {
-        var data = current(); if (data == null) return;
+        var data = current(); if (data == null || !PrivateMessages.CanChat(data, person)) return;
         string key = PrivateKey(data, person); if (!PrivateSummaries.Add(key)) return;
         var resolve = current;
-        current = () => resolve() is { } latest && PrivateKey(latest, person) == key ? latest : null;
+        current = () => resolve() is { } latest && PrivateMessages.CanChat(latest, person) && PrivateKey(latest, person) == key ? latest : null;
         long revision = PrivateMessages.Conversation(data, person).MemoryRevision;
         try
         {
@@ -219,7 +219,8 @@ public static partial class AiService
             {
                 c.SummaryStatus = "正在整理聊天记忆"; save(data);
                 int end = c.Turns.FindLastIndex(t => t.Status == "complete") + 1;
-                var snapshot = c.Turns.Skip(c.ContextStart).Take(end - c.ContextStart).Where(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted)).Select(t => new { 日期 = $"第 {t.Season} 赛季第 {t.Day - SeasonCalendar.Start(data, t.Season)} 天", 玩家 = t.UserDeleted ? null : PrivateMessagePrompts.UserText(t), 你 = t.ReplyDeleted ? null : t.Reply }).ToArray();
+                PrivateInteractionIds.Ensure(c);
+                var snapshot = c.Turns.Skip(c.ContextStart).Take(end - c.ContextStart).Where(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted)).Select(t => new { 日期 = $"第 {t.Season} 赛季第 {t.Day - SeasonCalendar.Start(data, t.Season)} 天", 玩家 = t.UserDeleted ? null : PrivateMessagePrompts.UserText(t, c), 你 = t.ReplyDeleted ? null : t.Reply }).ToArray();
                 string text = await Summarize(data, person, "private-summary", JsonSerializer.Serialize(snapshot, Json));
                 data = current(); if (data == null) return; c = PrivateMessages.Conversation(data, person);
                 if (c.MemoryRevision != revision) return;

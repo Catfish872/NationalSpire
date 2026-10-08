@@ -22,7 +22,8 @@ public static class CareerStore
     private static string? _loadedPath;
     private static readonly Dictionary<CareerData, string> Paths = new();
     public static string LoadNotice { get; private set; } = "";
-    private static string FilePath => ProjectSettings.GlobalizePath(SaveManager.Instance.GetProfileScopedPath("national_spire_career.json"));
+    public static string DefaultPath => ProjectSettings.GlobalizePath(SaveManager.Instance.GetProfileScopedPath("national_spire_career.json"));
+    private static string FilePath => CareerLibrary.SelectedPath(DefaultPath);
     public static bool IsCurrent(CareerData data) => data.ExternalCurrent?.Invoke() ?? ReferenceEquals(Data, data);
     public static CareerData Data
     {
@@ -94,7 +95,7 @@ public static class CareerStore
                 bool personalityUpgrade = PersonalityLibrary.NeedsUpgrade(_data);
                 bool recordsUpgrade = NpcRecords.Ensure(_data);
                 bool repairedContracts = OwnedClubs.RepairContractRoster(_data);
-                CareerEngine.NormalizeRoster(_data);
+                repairedContracts |= CareerEngine.NormalizeRoster(_data);
                 PublicationBacklog.Compact(_data, false);
                 bool editedNews = CareerNarrative.RepairNews(_data);
                 bool upgradedCommunity = CommunityThreads.Normalize(_data);
@@ -152,7 +153,7 @@ public static class CareerStore
                 }
                 File.Move(temp, path, true);
                 ValidatedFiles[path] = Stamp(path);
-                AiSettingsStore.Save(data.Ai);
+                if (ReferenceEquals(_data, data)) AiSettingsStore.Save(data.Ai);
             }
         }
         catch (Exception e) { Diagnostics.Error("career.save", e); throw; }
@@ -171,6 +172,33 @@ public static class CareerStore
             Paths[_data] = path;
             Save(_data);
             return _data;
+        }
+    }
+
+    public static CareerData SwitchCareer(string path)
+    {
+        lock (Gate)
+        {
+            if (Data.Failure != null) throw new InvalidOperationException(MatchFailure.Locked(Data));
+            var previous = Data;
+            if (Path.GetFullPath(path) == Path.GetFullPath(Paths[previous])) return previous;
+            Save(previous);
+            var incoming = Read(path);
+            string native = GameBridge.NativeCareerPath;
+            byte[]? run = File.Exists(native) ? File.ReadAllBytes(native) : null;
+            byte[]? backup = File.Exists(native + ".backup") ? File.ReadAllBytes(native + ".backup") : null;
+            string previousPath = Paths[previous];
+            try
+            {
+                CareerLibrary.SwitchNative(previous, previousPath, incoming, path, native); CareerLibrary.Select(DefaultPath, path);
+                _data = null; _loadedPath = null;
+                return Data;
+            }
+            catch
+            {
+                CareerLibrary.RestoreNative(native, run, backup); CareerLibrary.Select(DefaultPath, previousPath);
+                _data = previous; _loadedPath = previousPath; throw;
+            }
         }
     }
 

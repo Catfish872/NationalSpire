@@ -30,6 +30,9 @@ public sealed class PrivateRelation
 }
 public sealed class PrivateConversation
 {
+    // 简短编号属于会话，删除或重新生成不回收，内部关联仍使用原始 Id。
+    public long LastInteractionNumber { get; set; }
+    public Dictionary<string, long> InteractionNumbers { get; set; } = [];
     public long LastReplyOrder { get; set; }
     public long MemoryRevision { get; set; }
     public string SummaryStatus { get; set; } = "";
@@ -101,6 +104,8 @@ public sealed class PrivateSummary
 }
 public sealed class PrivateOffer
 {
+    public string FirstPerson { get; set; } = "";
+    public string SecondPerson { get; set; } = "";
     public string ReplacesOfferId { get; set; } = "";
     public long PostRevision { get; set; }
     public string Title { get; set; } = "";
@@ -120,4 +125,39 @@ public sealed class PrivateOffer
     public int Weeks { get; set; } = 8;
     public string Role { get; set; } = "轮换";
     public string MatchId { get; set; } = "";
+}
+
+public static class PrivateInteractionIds
+{
+    public static string Number(PrivateConversation conversation, PrivateOffer offer)
+    {
+        if (!conversation.InteractionNumbers.TryGetValue(offer.Id, out long number))
+        {
+            number = ++conversation.LastInteractionNumber;
+            conversation.InteractionNumbers.Add(offer.Id, number);
+        }
+        return number.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    }
+
+    public static void Ensure(PrivateConversation conversation)
+    {
+        var offers = conversation.Offers.ToLookup(o => o.TurnId);
+        foreach (var turn in conversation.Turns)
+        {
+            foreach (var attachment in turn.Attachments.Where(a => a.Kind is "training" or "lineup")) Number(conversation, attachment);
+            if (turn.Request is { Kind: "training" or "lineup" or "activity" } request) Number(conversation, request);
+            foreach (var offer in offers[turn.Id].Where(o => o.Kind == "activity")) Number(conversation, offer);
+        }
+        foreach (var offer in conversation.Offers.Where(o => o.Kind == "activity")) Number(conversation, offer);
+    }
+
+    public static string? Resolve(PrivateConversation conversation, string? number)
+    {
+        if (number == null) return null;
+        // 旧回复和旧存档仍可使用完整编号。
+        if (conversation.InteractionNumbers.ContainsKey(number)) return number;
+        if (long.TryParse(number, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out long value))
+            return conversation.InteractionNumbers.FirstOrDefault(p => p.Value == value).Key ?? number;
+        return number;
+    }
 }

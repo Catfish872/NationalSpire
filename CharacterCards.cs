@@ -91,7 +91,7 @@ public static class CharacterCards
         if (edit.Person == null) return "角色资料为空。";
         var p = edit.Person;
         if (edit.Create && (edit.Target.Length != 39 || !edit.Target.StartsWith("custom-", StringComparison.Ordinal) || d.People.Any(x => x.Id == edit.Target))) return "新角色编号无效。";
-        if (!edit.Create && edit.Target != "player" && CareerEngine.Person(d, edit.Target) == null) return "人物已不存在。";
+        if (!edit.Create && edit.Target != "player" && !d.People.Any(p => p.Id == edit.Target)) return "人物已不存在。";
         string[] fields = [p.Handle, p.Name, p.Role, p.Country, p.Character, p.Style, p.Temperament, p.Voice, p.Biography, p.SupportedClubId, p.ClubId, p.AbilityTemplate];
         if (fields.Any(s => s == null || s.Length > 1200 || s.Any(c => char.IsControl(c) && c != '\n'))) return "文字过长或包含无效字符。";
         if (string.IsNullOrWhiteSpace(p.Handle) || new StringInfo(p.Handle.Trim()).LengthInTextElements > 32 || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)) return "游戏 ID 请填写 1—32 个可见字符。";
@@ -108,13 +108,6 @@ public static class CharacterCards
         bool changedClub = old?.ClubId != p.ClubId;
         if (old != null && (changedClub || edit.Target == "player" && p.Country != old.Country) && ClubLock(d, edit.Target) is { } locked) return locked;
         if (changedClub && p.ClubId.Length > 0 && p.ClubId == d.Esports.OwnedClub?.ClubId) return "加入自建俱乐部请在自由市场签约。";
-        if (old != null && edit.Target != "player" && old.ClubId.Length > 0 && EsportsWorld.IsProfessional(old)
-            && (changedClub || !EsportsWorld.IsProfessional(p)))
-        {
-            int needed = Math.Max(3, d.CooperativeMembers);
-            if (d.People.Count(x => x.Id != old.Id && x.ClubId == old.ClubId && EsportsWorld.IsProfessional(x)) < needed)
-                return $"原俱乐部至少需要 {needed} 名可出战选手，请先补充成员。";
-        }
         try { p.Avatar.Validate(); } catch { return "头像数据无效，请重新选择。"; }
         return null;
     }
@@ -145,6 +138,7 @@ public static class CharacterCards
         else
         {
             d.People = d.People.Where(x => x.Id != p.Id).Append(p).ToList();
+            CircuitPeople.Replenish(d);
             foreach (var m in d.Matches.Where(m => m.OpponentId == p.Id && m.Status == "待赛"))
             { m.OpponentPrepared = false; m.OpponentSeconds = null; m.Live = null; }
         }

@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class PrivateAppointments
 {
@@ -42,7 +42,9 @@ public static class PrivateAppointments
             .Where(f => !data.Matches.Any(m => m.Day == date && m.CompetitionId == c.Id && m.FixtureId == f.Id
                 && m.Status is "待赛" or "进行中" && (m.Registered || m.Id == data.PendingMatchId)))
             .Select(f => new ScheduleEntry(date, c.Name, FixtureText(f, c))));
-        return matches.Concat(fixtures).Distinct().ToList();
+        var activities = SocialAppointments.All(data).Where(x => x.Offer.State == "已确认" && Date(data, x.Offer) == date)
+            .Select(x => new ScheduleEntry(date, x.Offer.Title, $"{player}与{CareerEngine.DisplayName(data, x.Conversation.PersonId)}已约定《{x.Offer.Title}》。{x.Offer.Detail}"));
+        return matches.Concat(fixtures).Concat(activities).Distinct().ToList();
     }
     public static string DateText(CareerData data, int date)
     {
@@ -147,7 +149,7 @@ public static class PrivateContracts
     {
         if (OwnedClubs.TransferReserved(data, p.Id)) return $"{p.PublicName}已经签订加盟合同，具体条款和加盟时间见当前资料。";
         var q = OwnedClubs.Quote(p, "steady");
-        return $"参考报价为签字费 {q.Signing * 10} 美元，周薪 {q.Wage * 10} 美元，胜场奖金 {q.WinBonus * 10} 美元。金额、合同周数及首发、轮换或青训席位均按双方商谈确定。"
+        return $"参考报价为签字费 {q.Signing * 10} 美元，周薪 {q.Wage * 10} 美元，胜场奖金 {q.WinBonus * 10} 美元。金额、合同周数及首发、轮换、青训或教练岗位均按双方商谈确定。"
             + (p.ClubId.Length > 0 ? $"转会费另付 {OwnedClubs.TransferFee(p) * 10} 美元，下赛季加盟。" : "自由选手确认签约后立即加入。")
             + $"当前好感 {PrivateMessages.Favour(data, p.Id)}。";
     }
@@ -156,7 +158,7 @@ public static class PrivateContracts
         if (!OwnedClubs.CanOperate(data)) return "合同由自建俱乐部管理者确认。";
         var p = CareerEngine.Person(data, person);
         if (p == null || !PrivateMessages.CanChat(data, person) || p.ClubId == data.Esports.ClubId) return "该选手暂不接受签约。";
-        if (offer.Weeks <= 0 || offer.Weeks > (int.MaxValue - data.Day) / 7 || offer.Role is not ("首发" or "轮换" or "青训")) return "合同需要有效的正数周数及阵容席位。";
+        if (offer.Weeks <= 0 || offer.Weeks > (int.MaxValue - data.Day) / 7 || offer.Role is not ("首发" or "轮换" or "青训" or "教练")) return "合同需要有效的正数周数及阵容席位。";
         return OwnedClubs.SigningError(data, new() { PersonId = person, Plan = "steady", Position = offer.Role }, p.ClubId.Length > 0);
     }
     public static string? Confirm(CareerData data, string person, PrivateOffer offer, string replacement)
@@ -172,6 +174,8 @@ public static class PrivateContracts
         if (result == null)
         {
             offer.State = "已确认";
+            if (data.Esports.OwnedClub!.Transfers.LastOrDefault(t => !t.Arrived && t.Contract.PersonId == person) is { } transfer)
+            { transfer.SourceTurnId = offer.TurnId; transfer.SourceHumanId = data.LocalHumanId; }
             if (PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
                 PrivateInteractionHistory.Record(data, person, turn, before, true);
         }

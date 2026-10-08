@@ -22,6 +22,15 @@ public sealed class OwnedClubState
     public List<string> Starters { get; set; } = [];
     public List<string> Reserves { get; set; } = [];
     public List<string> Youth { get; set; } = [];
+    public List<string> Coaches { get; set; } = [];
+    public List<CoachAppointment> CoachAppointments { get; set; } = [];
+    public List<CoachTrainingPlan> CoachTraining { get; set; } = [];
+    public bool PlayerCoach { get; set; }
+    public bool PlayerReserve { get; set; }
+    public int PlayerPositionSeason { get; set; }
+    public string PlayerNextPosition { get; set; } = "";
+    public string PlayerReplacement { get; set; } = "";
+    public string PlayerPositionRequest { get; set; } = "";
     public List<OwnedPlayerContract> Contracts { get; set; } = [];
     public List<OwnedTransfer> Transfers { get; set; } = [];
     public OwnedSponsor? Sponsor { get; set; }
@@ -69,6 +78,8 @@ public sealed class ClubSigning
 
 public sealed class OwnedTransfer
 {
+    public string SourceTurnId { get; set; } = "";
+    public string SourceHumanId { get; set; } = "";
     public string SellerId { get; set; } = "";
     public string ReplaceId { get; set; } = "";
     public string Position { get; set; } = "轮换";

@@ -89,6 +89,7 @@ public static class CareerLife
         Ensure(d);
         if (d.Esports.EcosystemVersion < 1) return;
         CareerRelics.Advance(d);
+        ClubCoaching.Advance(d);
         foreach (var item in d.Life.Activities.Where(a => a.Status == "进行中").ToList())
         {
             if (ClubPrograms.IsTraining(item)) ClubPrograms.Advance(d, item);

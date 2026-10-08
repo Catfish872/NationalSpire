@@ -2,6 +2,7 @@
 
 public sealed class BroadcastUiState
 {
+    public bool Floating { get; set; }
     public int PositionVersion { get; set; }
     public bool Collapsed { get; set; }
     public float X { get; set; } = -1;

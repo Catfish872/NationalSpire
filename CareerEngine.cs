@@ -5,7 +5,7 @@ public static class CareerEngine
     public const string RandomCharacterChoice = "__random__";
     public static Func<string> PlayerNameSource { get; set; } = () => "参赛选手";
     public static string PlayerName { get { try { var name = PlayerNameSource(); return string.IsNullOrWhiteSpace(name) ? "参赛选手" : name; } catch { return "参赛选手"; } } }
-    public static void NormalizeRoster(CareerData data)
+    public static bool NormalizeRoster(CareerData data)
     {
         CareerMigration.UpgradeRules(data);
         EsportsWorld.Initialize(data);
@@ -15,6 +15,8 @@ public static class CareerEngine
         CareerCommerce.Upgrade(data);
         SeasonCalendar.Upgrade(data);
         CareerLife.Ensure(data);
+        bool changed = CircuitPeople.Replenish(data);
+        changed |= EsportsWorld.ClearInvalidRegistrations(data);
         if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) CircuitWorld.EnsureOpenEvents(data);
         PlayerIdentity.Ensure(data);
         CameoContent.Ensure(data);
@@ -26,6 +28,7 @@ public static class CareerEngine
         EsportsWorld.RefreshLeagueMatches(data);
         WeeklyJournal.Initialize(data);
         AvatarHonors.Capture(data);
+        return changed;
     }
     public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1)
     {
@@ -70,13 +73,13 @@ public static class CareerEngine
     }
     public static CareerMatch? NextMatch(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).OrderBy(m => m.Day).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
     public static CareerMatch? NextAvailable(CareerData d) => d.Matches.FirstOrDefault(m => m.Status == "待赛" && m.Day >= d.Day && EsportsWorld.EntryReason(d, m) == null);
-    public static CareerPerson? Person(CareerData d, string id) => d.People.FirstOrDefault(p => p.Id == id);
+    public static CareerPerson? Person(CareerData d, string id) => d.People.FirstOrDefault(p => p.Id == id) ?? d.DeletedPeople.GetValueOrDefault(id);
     public static string Name(CareerData d) => string.IsNullOrWhiteSpace(d.PlayerAlias) ? PlayerName : d.PlayerAlias;
     public static string DisplayName(CareerData d, string id) => id == "player" ? Name(d) : Person(d, id)?.PublicName ?? "待抽签";
 
     public static bool AdvanceOneDay(CareerData d)
     {
-        if (d.PendingMatchId != null || NextMatch(d) is { } next && next.Day <= d.Day) return false;
+        if (d.Failure != null || d.PendingMatchId != null || NextMatch(d) is { } next && next.Day <= d.Day) return false;
         MoveToNextDay(d); PublishMatchDay(d); CareerStore.Save(d); return true;
     }
     private static void MoveToNextDay(CareerData d)
@@ -85,6 +88,7 @@ public static class CareerEngine
         EsportsWorld.EndDay(d, d.Day);
         WeeklyJournal.CloseWeek(d);
         d.Day++;
+        SocialAppointments.Expire(d);
         if (d.Day > SeasonCalendar.End(d))
         {
             AwardSeason(d); d.Season++;
@@ -111,16 +115,17 @@ public static class CareerEngine
         int count = 0;
         try
         {
-            while (d.Day < target && count < 84 && d.PendingMatchId == null && !(NextMatch(d) is { } next && next.Day <= d.Day))
-            { MoveToNextDay(d); count++; }
+            while (d.Day < target && count < 84 && d.Failure == null && d.PendingMatchId == null && !(NextMatch(d) is { } next && next.Day <= d.Day))
+            { MoveToNextDay(d); count++; if (SocialAppointments.Due(d).Any()) break; }
         }
         finally { if (count > 0) { PublishMatchDay(d); PublicationBacklog.Compact(d); CareerStore.Save(d); } }
         return count;
     }
     public static void PublishMatchDay(CareerData d)
     {
+        EsportsWorld.ClearInvalidRegistrations(d);
         var match = NextMatch(d);
-        if (d.PendingMatchId != null || match == null || match.Day != d.Day) return;
+        if (d.PendingMatchId != null || match == null || match.Day != d.Day || match.Kind == "private-friendly") return;
         string key = "prematch-" + match.Id;
         if (CommunityThreads.All(d).Any(p => p.EventKey == key)) return;
         var opponent = Person(d, match.OpponentId);
@@ -129,8 +134,17 @@ public static class CareerEngine
         if (d.CooperativeMembers > 1) body += $"双方以{d.CooperativeMembers}人队伍参赛。";
         Publish(d, key, title, body, "赛前讨论", true, ["player", match.OpponentId]);
     }
+    public static bool ExcludedAutomaticPreview(CareerData d, CommunityPost post)
+    {
+        if (!post.EventKey.StartsWith("prematch-", StringComparison.Ordinal)) return false;
+        var match = d.Matches.FirstOrDefault(m => post.EventKey == "prematch-" + m.Id);
+        if (post.MatchKind == "private-friendly" || match?.Kind == "private-friendly") return true;
+        return match is { Registered: false, Status: "待赛", Kind: "local" or "city" or "academy" }
+            && EsportsWorld.EntryReason(d, match) != null;
+    }
     public static string? SetRegistration(CareerData d, CareerMatch match, bool registered)
     {
+        if (MatchFailure.Locked(d) is { } failure) return failure;
         if (!d.Matches.Contains(match) || match.Status != "待赛" || match.Day < d.Day || d.PendingMatchId != null) return "比赛已经关闭，或当前对局尚未结束。";
         var error = EsportsWorld.Register(d, match, registered);
         if (error == null) CareerStore.Save(d);
@@ -194,10 +208,11 @@ public static class CareerEngine
         double local = skill switch { 0 => .56, 1 => .49, 2 => .44, 5 => .43, _ => .42 };
         return Math.Clamp(local + (skill - ascension) * .09, .03, .88);
     }
-    public static void FinishMatch(CareerData d, CareerMatch m, bool runClear, bool abandoned, int floor, string character, int ascension, List<string> cards, double runSeconds, List<string>? deckSummary = null, RunEvidence? evidence = null, string characterId = "", bool forfeit = false)
+    public static void FinishMatch(CareerData d, CareerMatch m, bool runClear, bool abandoned, int floor, string character, int ascension, List<string> cards, double runSeconds, List<string>? deckSummary = null, RunEvidence? evidence = null, string characterId = "", bool forfeit = false, bool confirmFailure = false)
     {
         // 局内放弃按未通关及当前层数比较成绩；未出场退赛由大厅显式传入。
         runClear = runClear && !abandoned && !forfeit;
+        if (d.Failure != null && !confirmFailure) return;
         if (!d.Matches.Contains(m) || m.Status != "待赛" || !m.Registered || m.Day != d.Day || ascension < m.RequiredAscension || ascension > 10) return;
         var opponent = Person(d, m.OpponentId); if (opponent == null) return;
         if (!double.IsFinite(runSeconds) || runSeconds < 0 || runClear && !forfeit && runSeconds == 0) return;
@@ -210,6 +225,17 @@ public static class CareerEngine
             new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value));
         m.Draw = comparison == 0;
         m.PlayerWon = comparison > 0;
+        if (!confirmFailure && !forfeit && comparison < 0)
+        {
+            if (d.Failure != null) return;
+            d.Failure = new() { Abandoned = abandoned, Result = new() { MatchId = m.Id, Kind = m.Kind,
+                CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
+                Day = d.Day, Event = m.Event, Outcome = "失利", Character = character, CharacterId = characterId,
+                Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = m.PlayerSeconds,
+                Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
+            d.PendingMatchId = null; d.PendingSince = 0;
+            CareerStore.Save(d); return;
+        }
         if (runClear && !forfeit) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, ascension);
         if (CircuitWorld.ReplayTie(d, m)) return;
         m.Decider = runClear && m.OpponentWon && !forfeit ? "双方通关，按游戏记录的通关用时比较，较快者获胜。" : "";
@@ -287,7 +313,7 @@ public static class CareerEngine
     }
     public static void Forfeit(CareerData d, CareerMatch m)
     {
-        if (d.PendingMatchId != null) return;
+        if (d.Failure != null || d.PendingMatchId != null) return;
         FinishMatch(d, m, false, false, 0, "未出场", m.RequiredAscension, [], 0, forfeit: true);
     }
     public static void Publish(CareerData d, string key, string title, string body, string category, bool aiPending, List<string>? related = null, CareerMatch? match = null)

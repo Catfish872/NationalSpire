@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 // 世界存档仅保存数值与去重摘要，私信原话和变化原因留在各自信箱。
 public sealed class NpcLearning
@@ -53,7 +53,7 @@ public static class CareerTraining
         mood.After = MatchRules.ClearChance(data, person, person.MaxAscension);
         InvalidateForecast(data); return true;
     }
-    private static void InvalidateForecast(CareerData data)
+    public static void InvalidateForecast(CareerData data)
     {
         // 学习也会影响陪练贡献和多人队伍，未开赛预估统一失效；进行中的成绩保持不变。
         foreach (var match in data.Matches.Where(m => m.Status == "待赛" && m.Live == null && m.Id != data.PendingMatchId
@@ -200,7 +200,7 @@ public static class CareerTraining
         $"{CareerEngine.DisplayName(d, p.Key)}永久通关率 +{p.Value / 100.0:0.##}%"));
     public static int Grow(CareerData d, string id, int amount, int season)
     {
-        if (CareerEngine.Person(d, id) == null) return 0;
+        if (CareerEngine.Person(d, id) is not { } person || ClubCoaching.IsCoach(person)) return 0;
         if (!d.Development.TryGetValue(id, out var state)) d.Development[id] = state = new();
         int gained = ApplyGrowth(state, amount, season);
         if (gained > 0) InvalidateForecast(d);

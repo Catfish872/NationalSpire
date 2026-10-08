@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -20,6 +20,7 @@ public static class PrivateMessageCommands
         if (kind == "dm-settings") { command.Settings!.Validate(); PrivateMessages.Mailbox(data).Settings = command.Settings; return null; }
         if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
         var c = PrivateMessages.Conversation(data, person);
+        if (MatchFailure.Locked(data) is { } failure) return failure;
         if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary")
             return PrivateMessages.Manage(data, c, kind, command);
         switch (kind)
@@ -65,13 +66,34 @@ public static class PrivateMessageCommands
             case "dm-confirm": case "dm-decline":
                 var offer = c.Offers.FirstOrDefault(o => o.Id == command.Offer);
                 if (offer == null) return "这项邀约已不存在。";
+                if (offer.Kind == "activity")
+                {
+                    if (kind == "dm-decline") { if (offer.State is not ("待确认" or "已确认")) return "这项活动已处理。"; offer.State = "已取消"; return null; }
+                    return SocialAppointments.Confirm(data, c, offer);
+                }
                 if (offer.Kind == "publish" && kind == "dm-decline")
                 { if (offer.State != "待确认") return "已发布的帖子请在社区查看。"; offer.State = "已取消"; return null; }
                 if (kind == "dm-decline") return offer.Kind == "contract" && offer.State != "待确认" ? "已签订的合同请在选手档案中管理。" : PrivateAppointments.Cancel(data, offer);
                 if (offer.Kind == "publish") { var result = PrivateProfileChanges.Publish(data, person, offer); if (result == null) SpireArbitration.Merge(data, PrivateMessages.Mailbox(data)); return result; }
-                return offer.Kind == "match" ? PrivateAppointments.Confirm(data, person, offer) : PrivateContracts.Confirm(data, person, offer, command.Replacement);
+                string? confirmationError = offer.Kind == "match" ? PrivateAppointments.Confirm(data, person, offer) : PrivateContracts.Confirm(data, person, offer, command.Replacement);
+                if (confirmationError != null) RecordFailure(data, person, command, confirmationError);
+                else offer.Detail = "";
+                return confirmationError;
+            case "dm-training-cancel": ClubCoaching.StopTraining(data, person); return null;
+            case "dm-lineup-cancel": return CoachLineups.Cancel(data, person, command.Offer);
+            case "dm-attend":
+                var activity = c.Offers.FirstOrDefault(o => o.Id == command.Offer);
+                return activity == null ? "活动已不存在。" : SocialAppointments.Attend(data, activity);
             default: return "私信操作无效。";
         }
+    }
+    public static bool RecordFailure(CareerData data, string person, PrivateMessageCommand command, string error)
+    {
+        if (!PrivateMessages.Mailbox(data).Conversations.TryGetValue(person, out var conversation)) return false;
+        var offer = conversation.Offers.FirstOrDefault(o => o.Id == command.Offer && o.State == "待确认" && o.Kind is "contract" or "match");
+        if (offer == null || offer.Detail == error) return false;
+        offer.Detail = error;
+        return true;
     }
     public static void RestoreInterrupted(PrivateTurn turn, string error)
     {

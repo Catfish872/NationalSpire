@@ -2,6 +2,7 @@
 
 public sealed class CareerData
 {
+    public FailureDecision? Failure { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
     public Dictionary<string, Dictionary<string, int>> HumanFavours { get; set; } = [];
     public Dictionary<string, string> PrivatePromptSnapshot { get; set; } = [];
@@ -64,6 +65,10 @@ public sealed class CareerData
     public string? PendingMatchId { get; set; }
     public List<CareerMatch> Matches { get; set; } = [];
     public List<CareerPerson> People { get; set; } = [];
+    public Dictionary<string, CareerPerson> DeletedPeople { get; set; } = [];
+    public List<string> MatchHumanIds { get; set; } = [];
+    public HashSet<string> PendingHistoryExcluded { get; set; } = [];
+    public List<TeamPreparation> TeamPreparations { get; set; } = [];
     public List<CommunityPost> Posts { get; set; } = [];
     public List<CareerResult> Results { get; set; } = [];
     public List<CareerStanding> Standings { get; set; } = [];
@@ -234,6 +239,8 @@ public sealed class CommunityMemory
 
 public sealed class CareerResult
 {
+    public List<string> PlayerParticipants { get; set; } = [];
+    public List<string> OpponentParticipants { get; set; } = [];
     public List<string> LifeEffects { get; set; } = [];
     public SettlementRecord? Settlement { get; set; }
     public string WorldImpact { get; set; } = "";

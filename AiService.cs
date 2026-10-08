@@ -141,7 +141,7 @@ public static partial class AiService
         var data = requestedData ?? CareerStore.Data;
         if (!data.Ai.Enabled) { Status = "离线社区模式"; return; }
         PublicationBacklog.Compact(data, false);
-        var candidates = CommunityThreads.All(data).Where(p => !CommunityThreads.IsHuman(data, p.AuthorId)
+        var candidates = CommunityThreads.All(data).Where(p => !CareerEngine.ExcludedAutomaticPreview(data, p) && !CommunityThreads.IsHuman(data, p.AuthorId)
             && (retryId != null ? (retryId == "*" || p.Id == retryId) && p.NewsGeneration.State == "failed"
                 : p.AiPending && p.Day >= data.Day - 7 && p.NewsGeneration.State == "idle" && !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId))))
             .ToList();

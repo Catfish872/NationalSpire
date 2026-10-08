@@ -53,7 +53,7 @@ public static class ClubOperations
         if (roster.Count >= 8) return;
         int weakest = roster.Select(p => p.Rating).DefaultIfEmpty(1000).Min();
         var candidate = d.People.Where(p => p.Country == buyer.Country && !OwnedClubs.TransferReserved(d, p.Id) && p.ClubId != d.Esports.OwnedClub?.ClubId && p.ClubId != buyer.Id && EsportsWorld.IsProfessional(p)
-            && p.Rating > weakest + 20 && OwnedClubs.CanSparePlayer(d, p)
+            && p.Rating > weakest + 20
             && d.Esports.Clubs.Any(c => c.Id == p.ClubId && c.LastTransferSeason < d.Season))
             .OrderBy(p => p.Rating).FirstOrDefault();
         if (candidate == null) return;
@@ -71,5 +71,6 @@ public static class ClubOperations
         CareerEngine.Publish(d, key, title, fact, "转会", true, [candidate.Id]);
         if (d.Posts.FirstOrDefault(p => p.EventKey == key) is { } post)
             d.Life.Events.Single(e => e.Id == key).PostId = post.Id;
+        CircuitPeople.Replenish(d);
     }
 }

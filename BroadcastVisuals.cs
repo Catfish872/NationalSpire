@@ -216,7 +216,7 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 26); panel.AddChild(row);
         row.AddChild(Avatar(data, id, 104, false));
         var words = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; words.AddThemeConstantOverride("separation", 10); row.AddChild(words);
-        words.AddChild(Text(profile?.Role ?? EsportsWorld.LicenseName(data), 14, CareerVisuals.Teal));
+        words.AddChild(Text((profile?.Role ?? EsportsWorld.LicenseName(data)) + (person != null && ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : ""), 14, CareerVisuals.Teal));
         words.AddChild(Text(CareerEngine.DisplayName(data, id), 32, _ink));
         if (id != "player" && profile is { Handle.Length: > 0, Name.Length: > 0 }) words.AddChild(Text("姓名  " + profile.Name, 15, _muted));
         words.AddChild(Text((person?.Country ?? data.Esports.Country) + "   /   " + EsportsWorld.ClubName(data, person?.ClubId ?? data.Esports.ClubId), 17, _gold));

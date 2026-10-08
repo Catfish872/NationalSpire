@@ -137,6 +137,7 @@ public partial class CareerScreen : Control, IScreenContext
     private void Close()
     {
         if (_starting) return;
+        if (ViewData.Failure != null) return;
         if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); }
         _open = null;
         foreach (var (node, visible) in _hidden) if (GodotObject.IsInstanceValid(node)) node.Visible = visible;
@@ -211,6 +212,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Render()
     {
+        if (ViewData.Failure != null) _tab = "结算";
         if (ViewData.PendingCeremonySeason is > 0 and var pending && _noticedCeremonySeason != pending)
         {
             _noticedCeremonySeason = pending;
@@ -229,12 +231,15 @@ public partial class CareerScreen : Control, IScreenContext
         UpdateNavigation();
         foreach (var (name, button) in _navButtons)
         {
+            button.Disabled = ViewData.Failure != null && name != "结算";
             var style = CareerVisuals.Box(name == _tab ? "28434c" : "0d1825", name == _tab ? "658c91" : "0d1825", 5, 14);
             style.ContentMarginTop = style.ContentMarginBottom = 8;
             button.AddThemeStyleboxOverride("normal", style);
             button.AddThemeColorOverride("font_color", name == _tab ? _ink : _muted);
         }
         var data = ViewData;
+        _backButton.Disabled |= data.Failure != null;
+        if (data.Failure != null) { Settlement(data); AnimatePage(); return; }
         _seasonLabel.Text = "赛季  " + data.Season.ToString("00");
         string? latestEvent = data.Posts.FirstOrDefault()?.Id;
         bool newEvent = _latestEvent != null && _latestEvent != latestEvent;
@@ -285,6 +290,14 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Home(CareerData data)
     {
+        foreach (var (conversation, activity) in SocialAppointments.Due(data))
+        {
+            var reminder = Card(); _content.AddChild(reminder); var body = Inner(reminder);
+            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); body.AddChild(row);
+            var words = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(words);
+            words.AddChild(Text(activity.Title, 23, _gold)); words.AddChild(Text("今天 · " + CareerEngine.DisplayName(data, conversation.PersonId), 16, _muted));
+            row.AddChild(Button("前往私信  →", () => OpenPrivateMessages(conversation.PersonId), 175));
+        }
         ClubInvitation(data);
         if (data.Ceremonies.Count > 0) CeremonyInvitation(data);
         var archive = PlayerArchive.Read(false);
@@ -310,6 +323,7 @@ public partial class CareerScreen : Control, IScreenContext
         poster.AddChild(new BroadcastPortrait { Art = AvatarAssets.Load(CareerAvatars.MainCharacter(data, "player"), CareerAvatars.HomeCardVariation(data), true), CustomMinimumSize = new Vector2(276, 192), SizeFlagsVertical = SizeFlags.ExpandFill });
         var playerTag = Button(CareerEngine.Name(data) + "   ↗", () => OpenPerson("player")); playerTag.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         playerTag.ClipText = true; playerTag.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; poster.AddChild(playerTag);
+        RenderTeamPreparations(data);
         var metrics = new HBoxContainer(); _content.AddChild(metrics);
         Metric(metrics, "世界积分", CircuitLedger.Points(data, "player").ToString(), $"{data.Wins} 胜 · {data.Draws} 平 · {data.Losses} 负");
         Metric(metrics, "世界关注", data.Fans.ToString("N0"), "你的表现正在被看见");
@@ -420,8 +434,9 @@ public partial class CareerScreen : Control, IScreenContext
             int day = blockStart + i;
             var match = data.Matches.Where(m => m.Day == day).OrderByDescending(m => m.Registered).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
             var world = data.Esports.Competitions.FirstOrDefault(c => c.Fixtures.Any(f => f.Day == day));
+            var appointment = SocialAppointments.All(data).FirstOrDefault(x => x.Offer.State is "已确认" or "已赴约" && PrivateAppointments.Date(data, x.Offer) == day);
             string badge = match == null ? world == null ? "·" : "◇" : "◆";
-            var b = Button($"{day - start + 1:00}  {badge}\n{(match?.Event ?? world?.Name ?? "训练 / 新闻")}", () => { _selectedDay = day; Render(); }, 0);
+            var b = Button($"{day - start + 1:00}  {badge}\n{(match?.Event ?? appointment.Offer?.Title ?? world?.Name ?? "训练 / 新闻")}", () => { _selectedDay = day; Render(); }, 0);
             b.CustomMinimumSize = new Vector2(0, 88);
             b.SizeFlagsHorizontal = SizeFlags.ExpandFill; b.AutowrapMode = TextServer.AutowrapMode.WordSmart; b.AddThemeFontSizeOverride("font_size", 16);
             b.Modulate = day < data.Day ? new Color("8591a0") : day == data.Day ? _gold : Colors.White;
@@ -429,6 +444,12 @@ public partial class CareerScreen : Control, IScreenContext
         }
         var detail = Card(); _content.AddChild(detail);
         var box = Inner(detail); box.AddChild(Text($"第 {shown - start + 1} 天", 24, _gold));
+        foreach (var (conversation, activity) in SocialAppointments.All(data).Where(x => PrivateAppointments.Date(data, x.Offer) == shown && x.Offer.State is "已确认" or "已赴约" or "未赴约"))
+        {
+            var activityRow = new HBoxContainer(); box.AddChild(activityRow);
+            activityRow.AddChild(Text(activity.Title + " · " + CareerEngine.DisplayName(data, conversation.PersonId) + " · " + activity.State, 18, CareerVisuals.Teal));
+            activityRow.AddChild(Button("查看私信 →", () => OpenPrivateMessages(conversation.PersonId), 160));
+        }
         foreach (var selected in data.Matches.Where(m => m.Day == shown))
         {
             box.AddChild(Text($"{selected.Event}  ·  {selected.Status}  ·  对手 {CareerEngine.DisplayName(data, selected.OpponentId)}  ·  最低进阶 {selected.RequiredAscension}", 18, _ink));
@@ -677,7 +698,7 @@ public partial class CareerScreen : Control, IScreenContext
         search.TextSubmitted += _ => Search(); searchRow.AddChild(Button("搜索", Search, 100));
         var people = data.People.Where(p => _profileQuery.Length > 0 || (_profileFilter switch { "真人队员" => data.HumanIds.Contains(p.Id), "国内职业" => EsportsWorld.IsProfessional(p) && p.Country == data.Esports.Country,
             "国际职业" => EsportsWorld.IsProfessional(p) && p.Country != data.Esports.Country, "青训" => p.Role == "青训选手",
-            "主播与媒体" => p.Role is "主播" or "解说员" or "赛事记者", "退役与教练" => p.Role is "退役选手" or "教练", "自建角色" => p.CreatedCard, _ => p.Role == "普通玩家" }))
+            "主播与媒体" => p.Role is "主播" or "解说员" or "赛事记者", "退役与教练" => p.Role is "退役选手" or "教练" || ClubCoaching.IsCoach(p), "自建角色" => p.CreatedCard, _ => p.Role == "普通玩家" }))
             .Where(p => _profileQuery.Length == 0 || (p.Handle + string.Join(" ", p.HandleAliases) + p.Name + p.Country + EsportsWorld.ClubName(data, p.ClubId)).Contains(_profileQuery, StringComparison.OrdinalIgnoreCase)).OrderByDescending(p => p.Rating).ToList();
         _content.AddChild(Text($"当前：{(_profileQuery.Length > 0 ? "全名录搜索" : _profileFilter)} · 找到 {people.Count} 人 / 世界共 {data.People.Count} 人 · 当前显示 {Math.Min(_profileLimit, people.Count)} 人", 15, _muted));
         var grid = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 14); grid.AddThemeConstantOverride("v_separation", 14); _content.AddChild(grid);
@@ -723,9 +744,10 @@ public partial class CareerScreen : Control, IScreenContext
         _aiStatus = AiSettingsPanel.Build(box, data.Ai,
             () => { SaveAiSettings(data); AiService.RefreshConcurrency(data.Ai); },
             () => GenerateContent(() => { _ = AiService.ProcessPendingAsync(data); }), () => OpenPromptSettings(data), Notice, () => _aiSettingsDirty = true);
-        if (_multiplayer != null) { AddMultiplayerReportButton(box); return; }
+        if (_multiplayer != null) { box.AddChild(Button("导入与导出生涯", OpenCareerLibrary, 280)); AddMultiplayerReportButton(box); return; }
         var debug = Card(); _content.AddChild(debug); var db = Inner(debug);
         db.AddChild(Text("生涯管理", 24, _gold));
+        db.AddChild(Button("切换、导入与导出生涯", OpenCareerLibrary, 310));
         db.AddChild(Text("重新开始生涯会保留原版战绩、角色解锁和 AI 设置。", 16, _muted));
         var actions = new HBoxContainer(); db.AddChild(actions);
         actions.AddChild(Button("刷新游戏战绩", () => { PlayerArchive.Invalidate(); Notice("游戏战绩已刷新。", false); }, 190));

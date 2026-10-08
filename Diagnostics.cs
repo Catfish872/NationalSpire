@@ -8,7 +8,7 @@ namespace NationalSpire;
 /// <summary>保留有界的运行记录；导出时合并生涯、请求和游戏日志，统一隐藏凭据。</summary>
 public static partial class Diagnostics
 {
-    public const string ModVersion = "0.25.31";
+    public const string ModVersion = "0.25.32";
 
     // 开赛失败逐次记录；读取诊断资料失败时仍保留最初的异常及其余资料。
     public static string RecordStartFailure(string stage, Exception error,

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -25,13 +25,14 @@ public static class PrivateMessages
                 ["关系"] = relation?.Relationship ?? "初识", ["好感"] = relation?.Favour ?? 0, ["印象"] = relation?.Impression ?? "" };
             if (conversation != null)
             {
+                PrivateInteractionIds.Ensure(conversation);
                 var messages = conversation.Turns.Select((t, i) => (t, i)).Reverse().SelectMany(item =>
                 {
                     var (t, i) = item;
                     var lines = new List<(int Index, int Season, int Day, string Speaker, string Text)>();
                     if (t.Status != "complete" || t.Day > day) return lines;
                     if (!t.ReplyDeleted) lines.Add((i, t.Season, t.Day, person.PublicName, t.Reply));
-                    if (!t.UserDeleted) lines.Add((i, t.Season, t.Day, name, PrivateMessagePrompts.UserText(t)));
+                    if (!t.UserDeleted) lines.Add((i, t.Season, t.Day, name, PrivateMessagePrompts.UserText(t, conversation)));
                     return lines;
                 }).Take(10).Reverse().ToArray();
                 bool Available(PrivateSummary s) => s.Through > 0 && s.Through <= conversation.Turns.Count && conversation.Turns[s.Through - 1].Day <= day;
@@ -77,7 +78,7 @@ public static class PrivateMessages
     public static void RemoveDeletedOffers(PrivateConversation c)
     {
         // 已确认事项已进入赛程或合同，删除文字不能替代取消赛事、解约等操作。
-        int removed = c.Offers.RemoveAll(o => o.State != "已确认" &&
+        int removed = c.Offers.RemoveAll(o => o.State is not ("已确认" or "已赴约") &&
             !c.Turns.Any(t => t.Id == o.TurnId && !t.UserDeleted && !t.ReplyDeleted));
         if (removed > 0) c.MemoryRevision++;
     }
@@ -109,7 +110,7 @@ public static class PrivateMessages
         var c = Conversation(data, id);
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
         var turn = new PrivateTurn { User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
-        c.Turns.Add(turn); return turn;
+        c.Turns.Add(turn); PrivateInteractionIds.Ensure(c); return turn;
     }
     public static int Completed(PrivateConversation c) => c.Turns.Skip(c.ContextStart).Count(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted));
 
@@ -119,6 +120,8 @@ public static class PrivateMessages
         foreach (var a in attachments)
         {
             if (a.Kind == "match") { if (PrivateAppointments.Error(data, person, a) is { } error) return error; }
+            else if (a.Kind == "training") { if (ClubCoaching.TrainingError(data, person, a) is { } error) return error; }
+            else if (a.Kind == "lineup") { if (CoachLineups.Error(data, person, a) is { } error) return error; a.Detail = CoachLineups.Prepare(data, a); }
             else if (a.Kind == "contract") { if (!OwnedClubs.CanOperate(data)) return "请先组建并管理自己的俱乐部。"; }
             else if (a.Kind == "result")
             {
@@ -139,7 +142,7 @@ public static class PrivateMessages
     public static string AttachmentTitle(PrivateOffer a) => a.Kind switch
     {
         "match" => $"{a.Mode} · 第{a.Season}赛季第{a.Day}天 · A{a.Ascension}",
-        "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子", "advice" => "附加文字", _ => "附件"
+        "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子", "advice" => "附加文字", _ => "附件"
     };
     public static string? Manage(CareerData data, PrivateConversation c, string kind, PrivateMessageCommand command)
     {
@@ -196,10 +199,14 @@ public static class PrivateMessages
     public static void Apply(CareerData data, PrivateConversation c, PrivateTurn turn, IReadOnlyList<Dictionary<string, string>> directives, int? originalFavour = null)
     {
         if (turn.Applied) return;
+        PrivateInteractionIds.Ensure(c);
         var before = PrivateInteractionHistory.Capture(data, c.PersonId);
         foreach (var fields in directives)
         {
-            if (fields.TryGetValue("Post", out var publication) && publication == "发布")
+            if (fields.ContainsKey("Activity")) SocialAppointments.Respond(data, c, turn, fields);
+            if (fields.ContainsKey("Training")) ClubCoaching.AcceptTraining(data, c, turn, fields);
+            if (fields.ContainsKey("Lineup")) CoachLineups.Respond(data, c, turn, fields);
+            else if (fields.TryGetValue("Post", out var publication) && publication == "发布")
             {
                 string title = fields.GetValueOrDefault("Title", ""), body = fields.GetValueOrDefault("Body", "");
                 if (turn.Status != "complete" || turn.ReplyDeleted || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(body)) { turn.Error = "帖子缺少标题或正文，未发布。"; continue; }
@@ -257,6 +264,7 @@ public static class PrivateMessages
                 c.Offers.Add(offer);
             }
         }
+        PrivateInteractionIds.Ensure(c);
         turn.Applied = true;
         PrivateInteractionHistory.Record(data, c.PersonId, turn, before);
     }
@@ -272,7 +280,7 @@ public sealed class PrivateStreamParser
     public string Text => _visible.ToString();
     public List<Dictionary<string, string>> Directives { get; } = [];
     public string Error { get; private set; } = "";
-    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase);
+    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup)\s*[:：]", RegexOptions.IgnoreCase);
     public void Feed(string text)
     {
         foreach (char ch in text)
@@ -290,7 +298,8 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
+            string[] allowed = fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day"]
+                : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]
                 : fields.ContainsKey("Skill") ? ["Skill", "Topic", "Evidence", "Reason"]

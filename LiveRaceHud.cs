@@ -8,17 +8,21 @@ public partial class LiveRaceHud : PanelContainer
     public event Action<BroadcastUiState>? LayoutChanged;
     private Label _status = null!, _title = null!;
     private VBoxContainer _details = null!, _speechStack = null!;
-    private sealed class Speech(PanelContainer panel, string topic, double remaining)
-    { public PanelContainer Panel = panel; public string Topic = topic; public double Remaining = remaining; public Tween? Fade; public bool Expiring; }
+    private sealed class Speech(PanelContainer panel, string topic, double remaining, string speaker, string text, AvatarArt? art, AvatarIdentity? identity)
+    { public PanelContainer Panel = panel; public string Topic = topic; public double Remaining = remaining; public Tween? Fade; public bool Expiring;
+      public string Speaker = speaker, Text = text; public AvatarArt? Art = art; public AvatarIdentity? Identity = identity; public float Travel;
+      public float Speed = Random.Shared.Next(81, 100) * 1.3f, OffsetY = Random.Shared.Next(-5, 6); public int Lane; }
     private readonly List<Speech> _speeches = [];
     private Button _toggle = null!;
+    private Button _mode = null!;
+    private Control _floating = null!;
     private bool _collapsed, _dragging, _resizePending;
     private Vector2 _dragStart, _positionStart;
     private BroadcastUiState _layout = new();
     private const float ExpandedWidth = 326;
     public override void _Ready()
     {
-        Name = "NationalSpireLive"; MouseFilter = MouseFilterEnum.Ignore; Theme = CareerVisuals.CreateTheme();
+        Name = "NationalSpireLive"; MouseFilter = MouseFilterEnum.Ignore; Theme = CareerVisuals.CreateTheme(); ZIndex = 101;
         AddThemeStyleboxOverride("panel", CareerVisuals.Box("10212bdc", "426372", 6, 7));
         SetAnchorsAndOffsetsPreset(LayoutPreset.TopLeft);
         var body = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; body.AddThemeConstantOverride("separation", 3); AddChild(body);
@@ -33,6 +37,11 @@ public partial class LiveRaceHud : PanelContainer
         foreach (var state in new[] { "normal", "hover", "pressed", "focus" })
             _toggle.AddThemeStyleboxOverride(state, CareerVisuals.Box(state == "normal" ? "172b3500" : "25404a", "426372", 3, 2));
         _toggle.Pressed += () => { _layout.Collapsed = !_collapsed; SetCollapsed(_layout.Collapsed); RestorePosition(); LayoutChanged?.Invoke(_layout); }; heading.AddChild(_toggle);
+        _mode = new Button { Name = "BroadcastMode", Text = "弹幕", TooltipText = "切换为上方弹幕", FocusMode = FocusModeEnum.None, CustomMinimumSize = new(52, 23) };
+        _mode.AddThemeFontSizeOverride("font_size", 13); heading.AddChild(_mode);
+        _mode.Pressed += () => { SetMode(!_layout.Floating); LayoutChanged?.Invoke(_layout); };
+        _floating = new Control { Name = "NationalSpireFloatingComments", MouseFilter = MouseFilterEnum.Ignore, ClipContents = true, ZIndex = 100, Theme = Theme };
+        GetParent().AddChild(_floating); _floating.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         // 隐藏时仍保留正文排版宽度，展开后的最小高度始终按正常宽度计算。
         _details = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new Vector2(ExpandedWidth - 14, 0) }; body.AddChild(_details);
         _status = Label("正在连接赛场", 13, CareerVisuals.Ink); _details.AddChild(_status);
@@ -51,7 +60,7 @@ public partial class LiveRaceHud : PanelContainer
     }
     public void Restore(BroadcastUiState layout)
     {
-        _layout = layout; SetCollapsed(layout.Collapsed); RestorePosition();
+        _layout = layout; SetMode(layout.Floating); SetCollapsed(layout.Collapsed); RestorePosition();
         Callable.From(RestorePosition).CallDeferred();
     }
     private Vector2 Area => ((Control)GetParent()).Size;
@@ -66,7 +75,8 @@ public partial class LiveRaceHud : PanelContainer
     private void ClampPosition() => Position = Position.Clamp(Vector2.Zero, (Area - Size).Max(Vector2.Zero));
     private void SetCollapsed(bool value)
     {
-        _collapsed = value; _details.Visible = !value; _title.Text = value ? "转播" : "⠿ " + _raceName;
+        _collapsed = value; _details.Visible = !value; _mode.Visible = !value; _title.Text = value ? "转播" : "⠿ " + _raceName;
+        _floating.Visible = _layout.Floating && !value;
         _toggle.Text = value ? "+" : "−"; _toggle.TooltipText = value ? "展开转播" : "收起转播";
         FitHeight(); ClampPosition();
         Callable.From(() => { FitHeight(); ClampPosition(); }).CallDeferred();
@@ -82,6 +92,30 @@ public partial class LiveRaceHud : PanelContainer
         _raceName = name; if (!_collapsed) _title.Text = "⠿ " + name;
         _status.Text = status + $" · 生命 {hp}/{maxHp}" + (otherAct ? " · 不同幕" : "");
     }
+    private PanelContainer SpeechPanel(string speaker, string text, string topic, AvatarArt? art, AvatarIdentity? identity, bool floating)
+    {
+        var panel = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore };
+        bool audience = topic.StartsWith("audience_") || topic.StartsWith("reply_");
+        bool thought = topic.StartsWith("thought_");
+        panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box(audience ? "18383df5" : thought ? "273149f5" : topic == "rival_dead" || topic == "player_danger" ? "493139f5" : "382d48f5", audience ? "5b9e99" : thought ? "8592b8" : "b99467", 5, 9));
+        BoxContainer words = floating ? new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore } : new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; panel.AddChild(words);
+        words.AddThemeConstantOverride("separation", floating ? 12 : 4);
+        var byline = Label(speaker, 13, thought ? new Color("c4b1f0") : audience ? new Color("9ddbd0") : CareerVisuals.Gold);
+        var content = Label(floating ? text.Replace("\r", "").Replace("\n", " ") : text, 16, thought ? new Color("ded3f4") : CareerVisuals.Ink);
+        if (floating) { byline.AutowrapMode = content.AutowrapMode = TextServer.AutowrapMode.Off; byline.SizeFlagsHorizontal = content.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; }
+        byline.CustomMinimumSize = content.CustomMinimumSize = new Vector2(ExpandedWidth - 32, 0);
+        if (floating) byline.CustomMinimumSize = content.CustomMinimumSize = Vector2.Zero;
+        if (art != null)
+        {
+            byline.CustomMinimumSize = floating ? Vector2.Zero : new Vector2(ExpandedWidth - 74, 0);
+            var heading = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
+            heading.AddThemeConstantOverride("separation", 6);
+            heading.AddChild(new CareerAvatar { Art = art, Identity = identity, CustomMinimumSize = new Vector2(30, 30), SizeFlagsVertical = SizeFlags.ShrinkCenter });
+            heading.AddChild(byline); words.AddChild(heading);
+        }
+        else words.AddChild(byline);
+        words.AddChild(content); return panel;
+    }
     public void Say(string speaker, string text, string topic = "", AvatarArt? art = null, AvatarIdentity? identity = null)
     {
         if (topic is "player_champion" or "player_finished")
@@ -90,38 +124,61 @@ public partial class LiveRaceHud : PanelContainer
             foreach (var old in _speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")).ToList()) RemoveSpeech(old);
         while (_speeches.Count >= 3)
             RemoveSpeech(_speeches.FirstOrDefault(s => s.Topic is not ("rival_dead" or "rival_clear" or "player_champion" or "player_finished")) ?? _speeches[0]);
-        var panel = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore };
-        bool audience = topic.StartsWith("audience_") || topic.StartsWith("reply_");
-        bool thought = topic.StartsWith("thought_");
-        panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box(audience ? "18383df5" : thought ? "273149f5" : topic == "rival_dead" || topic == "player_danger" ? "493139f5" : "382d48f5", audience ? "5b9e99" : thought ? "8592b8" : "b99467", 5, 9));
-        var words = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; panel.AddChild(words);
-        var byline = Label(speaker, 13, thought ? new Color("c4b1f0") : audience ? new Color("9ddbd0") : CareerVisuals.Gold);
-        var content = Label(text, 16, thought ? new Color("ded3f4") : CareerVisuals.Ink);
-        byline.CustomMinimumSize = content.CustomMinimumSize = new Vector2(ExpandedWidth - 32, 0);
-        if (art != null)
-        {
-            byline.CustomMinimumSize = new Vector2(ExpandedWidth - 74, 0);
-            var heading = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
-            heading.AddThemeConstantOverride("separation", 6);
-            heading.AddChild(new CareerAvatar { Art = art, Identity = identity, CustomMinimumSize = new Vector2(30, 30), SizeFlagsVertical = SizeFlags.ShrinkCenter });
-            heading.AddChild(byline); words.AddChild(heading);
-        }
-        else words.AddChild(byline);
-        words.AddChild(content); _speechStack.AddChild(panel); _speechStack.Show();
-        var item = new Speech(panel, topic, Math.Clamp(text.Length * .19 + 5, 14, 21)); _speeches.Add(item);
+        var panel = SpeechPanel(speaker, text, topic, art, identity, _layout.Floating);
+        (_layout.Floating ? _floating : _speechStack).AddChild(panel);
+        _speechStack.Visible = !_layout.Floating;
+        var item = new Speech(panel, topic, Math.Clamp(text.Length * .19 + 5, 14, 21), speaker, text, art, identity);
+        var lanes = Enumerable.Range(0, 3).Where(i => !_speeches.Any(s => s.Lane == i)).ToArray();
+        item.Lane = lanes[Random.Shared.Next(lanes.Length)]; _speeches.Add(item);
+        if (_layout.Floating) PlaceFloating(item);
         panel.Modulate = new Color(1, 1, 1, .2f); item.Fade = CreateTween(); item.Fade.TweenProperty(panel, "modulate:a", 1f, .18);
         _resizePending = true;
     }
+    private void SetMode(bool floating)
+    {
+        bool changed = _layout.Floating != floating || _speeches.Any(s => (s.Panel.GetParent() == _floating) != floating);
+        _layout.Floating = floating; _mode.Text = floating ? "列表" : "弹幕"; _mode.TooltipText = floating ? "切换为列表显示" : "切换为上方弹幕";
+        _floating.Visible = floating && !_collapsed; _speechStack.Visible = !floating && _speeches.Count > 0;
+        if (!changed) return;
+        foreach (var item in _speeches)
+        {
+            item.Fade?.Kill(); item.Expiring = false;
+            item.Panel.GetParent().RemoveChild(item.Panel); item.Panel.QueueFree();
+            item.Panel = SpeechPanel(item.Speaker, item.Text, item.Topic, item.Art, item.Identity, floating);
+            (floating ? _floating : _speechStack).AddChild(item.Panel);
+            if (floating) { item.Travel = 0; PlaceFloating(item); }
+        }
+        _resizePending = true;
+    }
+    private void PlaceFloating(Speech item)
+    {
+        item.Panel.Size = item.Panel.GetCombinedMinimumSize();
+        float top = 32 + item.OffsetY;
+        for (int lane = 0; lane <= item.Lane; lane++)
+        {
+            // 弹幕轨道避开可拖动的选手信息，避免正文经过面板时受到遮挡。
+            if (!_collapsed && top < Position.Y + Size.Y && top + item.Panel.Size.Y > Position.Y)
+                top = Position.Y + Size.Y + 12 + Math.Abs(item.OffsetY);
+            if (lane < item.Lane) top += 58;
+        }
+        item.Panel.Position = new Vector2(Area.X - item.Travel, top);
+    }
     private void RemoveSpeech(Speech item)
     {
-        item.Fade?.Kill(); _speeches.Remove(item); _speechStack.RemoveChild(item.Panel); item.Panel.QueueFree();
-        _speechStack.Visible = _speeches.Count > 0; _resizePending = true;
+        item.Fade?.Kill(); _speeches.Remove(item); item.Panel.GetParent().RemoveChild(item.Panel); item.Panel.QueueFree();
+        _speechStack.Visible = !_layout.Floating && _speeches.Count > 0; _resizePending = true;
     }
     public override void _Process(double delta)
     {
         if (_resizePending && !_dragging) { _resizePending = false; RestorePosition(); }
         foreach (var item in _speeches.ToList())
         {
+            if (_layout.Floating)
+            {
+                item.Travel += (float)delta * item.Speed; PlaceFloating(item);
+                if (item.Panel.Position.X + item.Panel.Size.X < 0) RemoveSpeech(item);
+                continue;
+            }
             item.Remaining -= delta;
             if (item.Remaining > 0 || item.Expiring) continue;
             item.Expiring = true; item.Fade?.Kill(); item.Fade = CreateTween(); item.Fade.TweenProperty(item.Panel, "modulate:a", 0f, .25);
@@ -142,7 +199,7 @@ public partial class LiveRaceHud : PanelContainer
     {
         if (!IsVisibleInTree()) { _dragging = false; return; }
         if (input is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true } press
-            && !Hit(_toggle, press.Position) && (Hit(_title, press.Position) || Hit(_status, press.Position)))
+            && !Hit(_toggle, press.Position) && !Hit(_mode, press.Position) && (Hit(_title, press.Position) || Hit(_status, press.Position)))
             BeginDrag(press.Position);
         if (!_dragging) return;
         if (input is InputEventMouseMotion motion) { Position = _positionStart + ParentPoint(motion.Position) - _dragStart; ClampPosition(); }
@@ -152,11 +209,11 @@ public partial class LiveRaceHud : PanelContainer
     private void PublishLayout()
     {
         var area = Area.Max(Vector2.One);
-        _layout = new BroadcastUiState { PositionVersion = 2, Collapsed = _collapsed, X = Math.Clamp(Position.X / area.X, 0, 1), Y = Math.Clamp(Position.Y / area.Y, 0, 1) };
+        _layout = new BroadcastUiState { Floating = _layout.Floating, PositionVersion = 2, Collapsed = _collapsed, X = Math.Clamp(Position.X / area.X, 0, 1), Y = Math.Clamp(Position.Y / area.Y, 0, 1) };
         LayoutChanged?.Invoke(_layout);
     }
     private void FitHeight() => Size = new Vector2(_collapsed ? 90 : ExpandedWidth, GetCombinedMinimumSize().Y);
-    public override void _ExitTree() { foreach (var item in _speeches) item.Fade?.Kill(); if (GetParent() is Control parent) parent.Resized -= RestorePosition; }
+    public override void _ExitTree() { foreach (var item in _speeches) item.Fade?.Kill(); if (GetParent() is Control parent) parent.Resized -= RestorePosition; if (GodotObject.IsInstanceValid(_floating)) _floating.QueueFree(); }
 }
 
 /// <summary>仅绘制已走路线，地图缩放和拖动由原生父控件处理。</summary>

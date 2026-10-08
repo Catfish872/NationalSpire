@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -20,7 +20,7 @@ public partial class CareerScreen
         var name = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };
         name.AddThemeConstantOverride("separation", 9); identity.AddChild(name);
         name.AddChild(PrivateText(person.PublicName, 26, _ink));
-        name.AddChild(PrivateText(person.Role + "  /  " + person.Country, 14, _muted));
+        name.AddChild(PrivateText(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + "  /  " + person.Country, 14, _muted));
         double mood = CareerTraining.MoodLevel(person, data.Day);
         if (mood != 0) name.AddChild(PrivateText($"{(mood > 0 ? "状态振奋" : "状态低落")} · 剩余 {CareerTraining.MoodUntil(person, data.Day) - data.Day} 天", 15, mood > 0 ? CareerVisuals.Teal : new Color("ffb6b6")));
         if (showProfile) identity.AddChild(PrivateButton("选手档案 ↗", () => { ClosePrivateMessages(); Visit(() => { _tab = "选手档案"; _personId = id; }); }, 130));
@@ -123,7 +123,7 @@ public partial class CareerScreen
     }
     private static string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is "post" or "result"
         ? a.Detail.Split('\n', 2)[0] is { Length: > 0 } title ? title : PrivateMessages.AttachmentTitle(a)
-        : PrivateMessages.AttachmentTitle(a);
+        : a.Kind == "lineup" ? "调整阵容" : a.Kind == "training" ? $"训练计划 · {a.Weeks}周" : PrivateMessages.AttachmentTitle(a);
     private PanelContainer PrivateAttachmentCard(PrivateOffer a, bool draft)
     {
         var card = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
@@ -131,7 +131,7 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); card.AddChild(row);
         var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; copy.AddThemeConstantOverride("separation", 4); row.AddChild(copy);
         var title = PrivateLine(PrivateAttachmentHeading(a), 17, _ink); title.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; title.TooltipText = PrivateAttachmentHeading(a); copy.AddChild(title);
-        string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : "合同邀约";
+        string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : a.Kind == "lineup" ? "阵容调整" : a.Kind == "training" ? "训练内容" : "合同邀约";
         string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
         var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
         row.AddChild(PrivateButton("查看", () => PreviewPrivateAttachment(a), 60));
@@ -153,7 +153,8 @@ public partial class CareerScreen
     private void AttachPrivate(PrivateOffer attachment)
     {
         if (PrivateAttachments.Count >= 8) { _privateStatus!.Text = "每条消息最多附加 8 项。"; return; }
-        PrivateAttachments.Add(attachment); RefreshPrivateAttachments(); _privateInput?.GrabFocus();
+        PrivateAttachments.Add(attachment); RefreshPrivateAttachments();
+        Callable.From(() => { if (IsInstanceValid(_privateInput) && _privateInput!.IsVisibleInTree()) _privateInput.GrabFocus(); }).CallDeferred();
     }
     private void RefreshPrivateAttachments()
     {

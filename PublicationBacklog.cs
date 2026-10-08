@@ -19,6 +19,12 @@ public static class PublicationBacklog
     }
     public static void Compact(CareerData data, bool selectNews = true)
     {
+        foreach (var post in CommunityThreads.All(data).Where(p => CareerEngine.ExcludedAutomaticPreview(data, p)
+            && p.NewsGeneration.State != "completed"))
+        {
+            post.AiPending = false;
+            CommunityThreads.SetWork(post.NewsGeneration, "superseded");
+        }
         foreach (var issue in data.WeeklyEditions.Where(w => !Latest(data, w)))
             foreach (var work in new[] { issue.ProfilesWork, issue.NewsWork })
                 if (work.State is "idle" or "queued" or "sending" or "failed") CommunityThreads.SetWork(work, "superseded");

@@ -16,9 +16,19 @@ public partial class CareerScreen
     }
     private void Settlement(CareerData data)
     {
-        var result = data.Results.LastOrDefault();
+        bool pendingFailure = data.Failure != null;
+        if (pendingFailure && _multiplayer?.ProposalId.Length > 0)
+        {
+            var preparation = Card(); _content.AddChild(preparation); var ready = Inner(preparation);
+            ready.AddChild(Text(_multiplayer.ProposalText, 19, _ink));
+            var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); ready.AddChild(actions);
+            var approval = Button(_multiplayer.HasVoted ? "已准备，等待队友" : "准备重赛", () => MultiplayerCommand("confirm", _multiplayer.ProposalId), 240);
+            approval.Disabled = _multiplayer.HasVoted; actions.AddChild(approval);
+            if (_multiplayer.Host) actions.AddChild(Button("取消准备", () => MultiplayerCommand("cancel", _multiplayer.ProposalId), 160));
+        }
+        var result = data.Failure?.Result ?? data.Results.LastOrDefault();
         if (result == null) { AddHeading("尚无比赛结算", "完成一场已报名赛事后，战报会显示在这里。"); return; }
-        if (data.PendingSettlementId == result.MatchId) { data.PendingSettlementId = ""; CareerStore.Save(data); }
+        if (!pendingFailure && data.PendingSettlementId == result.MatchId) { data.PendingSettlementId = ""; CareerStore.Save(data); }
         var match = data.Matches.LastOrDefault(m => m.Id == result.MatchId);
         bool draw = result.Outcome == "平局" || match?.Draw == true;
         bool won = result.Outcome == "获胜" || result.Outcome.Length == 0 && (match?.PlayerWon ?? result.Win);
@@ -31,7 +41,7 @@ public partial class CareerScreen
         intro.AddChild(Text("MATCH RESULT   /   " + result.Event, 16, accent));
         intro.AddChild(Text(draw ? "势均力敌" : won ? "赢下这一场" : result.Outcome == "退赛" ? "本场退赛" : "本场失利", 42, _ink));
         intro.AddChild(Text($"第 {SeasonCalendar.Day(data, result.Day)} 天 · {MatchRules.AscensionLabel(result)}", 17, _muted));
-        intro.AddChild(Text(draw ? "双方成绩相同，等待下一次交锋。" : won ? "这场胜利，记入你的生涯。" : "本场成绩已记录，赛季仍在继续。", 19, accent));
+        intro.AddChild(Text(pendingFailure ? "选择重赛，或确认本场成绩。" : draw ? "双方成绩相同，等待下一次交锋。" : won ? "这场胜利，记入你的生涯。" : "本场成绩已记录，赛季仍在继续。", 19, accent));
         RenderTeam();
         var contenders = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         contenders.AddThemeConstantOverride("h_separation", 18); _content.AddChild(contenders);
@@ -52,6 +62,21 @@ public partial class CareerScreen
             ?? (match != null ? MatchRules.Performance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds) : "对手详细成绩未记录"), "");
         string decider = result.Settlement?.Decider ?? match?.Decider ?? "";
         if (decider.Length > 0) _content.AddChild(Text(decider, 15, _muted));
+        if (pendingFailure)
+        {
+            var choices = Card(); choices.Name = "FailureChoices"; _content.AddChild(choices);
+            var body = Inner(choices); body.AddThemeConstantOverride("separation", 16);
+            var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 16); body.AddChild(actions);
+            foreach (var choice in new[] { ("同种子重赛", "same"), ("新种子重赛", "new"), ("确认失败", "confirm") })
+            {
+                var button = Button(choice.Item1, () => ResolveFailure(choice.Item2), 0);
+                button.SizeFlagsHorizontal = SizeFlags.ExpandFill; button.CustomMinimumSize = new(0, 58);
+                button.Disabled = _starting || _multiplayer is { Host: false } || _multiplayer?.ProposalId.Length > 0; actions.AddChild(button);
+                if (choice.Item2 == "confirm") button.AddThemeStyleboxOverride("normal", CareerVisuals.Box("263b49", "71889b", 8, 16));
+            }
+            if (_multiplayer is { Host: false }) body.AddChild(Text("等待房主选择。", 16, _muted));
+            return;
+        }
         var rewards = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; rewards.AddThemeConstantOverride("h_separation", 18); _content.AddChild(rewards);
         void Reward(string title, string value, string description)
         { var card = Card(); rewards.AddChild(card); var box = Inner(card); box.AddChild(Text(title, 16, _muted)); box.AddChild(Text(value, 29, accent)); box.AddChild(Text(description, 14, _muted)); }

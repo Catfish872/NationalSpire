@@ -4,6 +4,7 @@ public sealed class EsportsCareer
 {
     public int OrganizationContentVersion { get; set; }
     public OwnedClubState? OwnedClub { get; set; }
+    public List<CoachLineupRequest> LineupRequests { get; set; } = [];
     public int FreeAgentVersion { get; set; }
     public int CommerceVersion { get; set; }
     public List<SponsorContract> SponsorOffers { get; set; } = [];
@@ -36,6 +37,7 @@ public sealed class EsportsCareer
 }
 public sealed class CareerClub
 {
+    public List<string> PreferredStarters { get; set; } = [];
     public int NextOperatingDay { get; set; }
     public int LastTransferSeason { get; set; }
     public List<FinanceEntry> Ledger { get; set; } = [];

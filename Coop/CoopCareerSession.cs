@@ -16,13 +16,13 @@ public sealed class CoopCareerSession : ICareerSession
     public bool Host => _session.Host;
     public bool Alive => CoopRuntime.Current?.Session == _session && _session.World != null;
     public event Action<string, bool>? Message;
-    public string Status => $"多人模式 · 在线 {_session.Online.Count}/{_session.World!.Capacity} · " + (Host ? "你是房主，开赛时全员准备" : "房主负责团队安排，你可以处理个人事务");
+    public string Status => $"多人模式 · 在线 {_session.Online.Count}人 · " + (Host ? "你是房主，开赛时全员准备" : "房主负责团队安排，你可以处理个人事务");
     public bool CanResume => Host && _session.Full && _session.World?.Run is { Phase: "paused", Terminal: null } && _session.World.Proposal == null;
     public string RunStatus => _session.World?.Run is { } run
         ? run.Phase == "paused" ? (run.FailureReason.Length > 0 ? "连接失败：" + run.FailureReason : "比赛已暂停，等待全队继续。")
         : CoopRuntime.Current?.Native?.Status is { Length: > 0 } status ? status : "正在连接比赛，请稍候。" : "";
     public string ProposalId => _session.World?.Proposal?.Id ?? "";
-    public IReadOnlyList<CareerTeamMember> Team => _session.World!.Members.Select(m =>
+    public IReadOnlyList<CareerTeamMember> Team => _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>
     {
         var last = m.Results.LastOrDefault();
         string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;
@@ -35,7 +35,7 @@ public sealed class CoopCareerSession : ICareerSession
         CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList();
     public bool HasVoted => _session.World?.Proposal?.Votes.Contains(_session.Self) == true
         || _pending is { Kind: "confirm" } pending && pending.Target == ProposalId;
-    public string ProposalText => _session.World?.Proposal is { } p ? p.Label + "\n" + string.Join("  /  ", _session.World.Members.Select(m => m.Name + (p.Votes.Contains(m.SteamId) ? " 已同意" : " 等待确认"))) : "";
+    public string ProposalText => _session.World?.Proposal is { } p ? p.Label + "\n" + string.Join("  /  ", _session.World.Members.Where(m => p.Participants.Contains(m.SteamId)).Select(m => m.Name + (p.Votes.Contains(m.SteamId) ? " 已同意" : " 等待确认"))) : "";
     public CoopCareerSession(CoopCoordinator session, Control menu)
     { _session = session; _menu = menu; _session.Replied += Replied; Refresh(); }
     public bool Refresh()
@@ -52,7 +52,7 @@ public sealed class CoopCareerSession : ICareerSession
         var member = w.Members.Single(m => m.SteamId == _session.Self);
         Data = CoopRules.View(w, member);
         Data.Esports.PlayerContract = w.World.Esports.PlayerContract == null ? null : CoopJson.Copy(w.World.Esports.PlayerContract);
-        Data.PendingMatchId = w.Run?.MatchId;
+        Data.PendingMatchId = w.World.Failure == null ? w.Run?.MatchId : null;
         foreach (var thread in CommunityThreads.All(Data))
         {
             if (thread.AuthorId == member.PersonId) thread.AuthorId = "player";

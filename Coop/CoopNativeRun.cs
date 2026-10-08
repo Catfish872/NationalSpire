@@ -147,13 +147,13 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         PumpPendingNetwork();
         if (session.Host && !_launched && session.Full)
         {
-            if (_start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Capacity && !NativeLobbyApi.Local(_start).Ready
+            if (_start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Run!.Characters.Count && !NativeLobbyApi.Local(_start).Ready
                 && starting.Where(p => p.Id != session.Self).All(p => p.Ready)) _start.SetReady(true);
-            if (_load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Capacity && !loading.First(p => p.Id == session.Self).Ready
+            if (_load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Run!.Characters.Count && !loading.First(p => p.Id == session.Self).Ready
                 && loading.Where(p => p.Id != session.Self).All(p => p.Ready)) _load.SetReady(true);
         }
         if (session.World?.Run == null) { if (_launched && !RunManager.Instance.IsInProgress) Close(); return; }
-        if (session.World.Run.Terminal != null || session.World.Run.Phase == "paused") return;
+        if (session.World.Run.Terminal != null || session.World.Run.Phase == "paused" || !session.World.Run.Characters.ContainsKey(session.Self)) return;
         if (session.Host && session.Full && CoopRuntime.Current?.ResumeRequired != true && !_busy && _service == null && !RunManager.Instance.IsInProgress) _ = Host();
         if (_launched && !session.Full) NeedsPause = true;
         if (_service != null && !_launched && DateTime.UtcNow - _checkedStage > TimeSpan.FromSeconds(2))
@@ -177,7 +177,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         if (_entering) return "正在载入对局场景";
         var players = _start != null ? NativeLobbyApi.Players(_start) : _load != null ? NativeLobbyApi.Players(_load) : null;
         if (players == null) return "等待原版大厅响应";
-        int capacity = session.World!.Capacity;
+        int capacity = session.World!.Run!.Characters.Count;
         if (players.Count < capacity) return $"等待原版大厅成员同步（{players.Count}/{capacity}）";
         var waiting = players.Where(p => !p.Ready).Select(p => session.World.Members.FirstOrDefault(m => m.SteamId == p.Id)?.Name ?? "队员");
         string names = string.Join("、", waiting);
@@ -193,9 +193,9 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             _attempt = session.World!.Run!.Attempt;
             NativeLobbyApi.Validate();
             var service = NativeLobbyApi.Service<NetHostGameService>(_platform.Version()); _service = service;
-            service.ClientConnected += id => { if (!session.World!.Members.Any(m => m.SteamId == id)) service.DisconnectClient(id, NetError.Quit); };
+            service.ClientConnected += id => { if (!session.World!.Run!.Characters.ContainsKey(id)) service.DisconnectClient(id, NetError.Quit); };
             service.ClientDisconnected += (_, _) => { if (!_stopping && generation == _generation && ReferenceEquals(service, _service) && (_launched || _entering)) NeedsPause = true; };
-            string lobbyId = await _platform.Host(service, session.World.Capacity);
+            string lobbyId = await _platform.Host(service, session.World.Run!.Characters.Count);
             if (generation != _generation) { if (service.IsConnected) service.Disconnect(NetError.Quit); return; }
             if (session.NativeSave is { } bytes)
             {
@@ -204,7 +204,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             }
             else
             {
-                _start = new(GameMode.Standard, service, StartListener, session.World.Capacity);
+                _start = new(GameMode.Standard, service, StartListener, session.World.Run!.Characters.Count);
                 NativeLobbyApi.AddLocal(_start, UnlockState.all, 10); _start.SetLocalCharacter(Character());
                 _start.SetSeed(session.World.Run.Seed); _start.SyncAscensionChange(session.World.Run.Ascension);
             }
@@ -232,7 +232,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         if (wire.Kind == "run-pause" && session.Host && run.Phase != "paused" && session.World.Members.Any(m => m.SteamId == sender)) { NeedsPause = true; return; }
         if (wire.Kind == "run-return" && !session.Host && sender == session.World.Owner)
         { if (!_stopping && HasConnection) { PauseRequestedByHost = true; NeedsPause = true; } return; }
-        if (wire.Kind == "run-host" && !session.Host && sender == session.World.Owner && run.Phase != "paused" && CoopRuntime.Current?.ResumeRequired != true && !_busy && !_launched && _service == null)
+        if (wire.Kind == "run-host" && !session.Host && run.Characters.ContainsKey(session.Self) && sender == session.World.Owner && run.Phase != "paused" && CoopRuntime.Current?.ResumeRequired != true && !_busy && !_launched && _service == null)
             _ = Join(value.GetProperty("lobby").GetString()!, value.GetProperty("load").GetBoolean());
     }
     private async Task Join(string lobby, bool load)
@@ -255,7 +255,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             });
             else service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>((message, _) =>
             {
-                try { _start = new(GameMode.Standard, service, StartListener, session.World.Capacity); _start.InitializeFromMessage(message); _start.SetLocalCharacter(Character()); _start.SetReady(true); }
+                try { _start = new(GameMode.Standard, service, StartListener, session.World.Run!.Characters.Count); _start.InitializeFromMessage(message); _start.SetLocalCharacter(Character()); _start.SetReady(true); }
                 catch (Exception e) { Fail(e); }
             });
             using var timeout = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token); timeout.CancelAfter(TimeSpan.FromSeconds(30));

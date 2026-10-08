@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>按固定日期运行联赛、团队杯赛和个人总决赛；资格自动落实到日程。</summary>
 public static class CircuitWorld
@@ -31,8 +31,12 @@ public static class CircuitWorld
         d.Esports.Competitions.RemoveAll(c => c.Season < d.Season - 4);
         OwnedClubSchedule.ApplyNextRegion(d);
         OwnedClubs.ArriveTransfers(d);
+        ClubCoaching.SeasonStart(d);
+        CircuitPeople.Replenish(d);
         CircuitLedger.SeasonStart(d);
         CircuitPeople.SeasonChange(d);
+        CircuitPeople.Replenish(d);
+        CoachLineups.SeasonStart(d);
         foreach (string nation in EsportsWorld.Countries)
         {
             var c = BuildLeague(d, nation, $"league-{d.Season}-{nation}");
@@ -49,9 +53,7 @@ public static class CircuitWorld
             Cooperative = d.CooperativeMembers > 1, TeamEvent = true, Teams = d.Esports.Clubs.Where(t => t.Country == nation).Select(t => t.Id).ToList() };
         foreach (string team in c.Teams)
             c.Rosters[team] = d.Esports.OwnedClub?.ClubId == team ? OwnedClubSchedule.OfficialRoster(d)
-                : d.People.Where(p => p.ClubId == team && EsportsWorld.IsProfessional(p))
-                    .OrderByDescending(p => p.Rating + CareerEngine.StableHash(d.WorldId + p.Id + d.Season) % 180)
-                    .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList();
+                : CoachLineups.Roster(d, team);
         Snapshot(d, c);
         var rotation = c.Teams.ToList(); if (rotation.Count % 2 != 0) rotation.Add("");
         int rounds = rotation.Count - 1;
@@ -66,6 +68,7 @@ public static class CircuitWorld
     }
     public static void AutoEntry(CareerData d)
     {
+        EsportsWorld.ClearInvalidRegistrations(d);
         if (d.Esports.EcosystemVersion < 1) return;
         string stage = d.Esports.License switch { 0 => "local", 1 => "city", 2 => "academy", _ => "league" };
         var league = EsportsWorld.PlayerLeague(d);
@@ -99,17 +102,17 @@ public static class CircuitWorld
         // 独立固定办赛日；玩家选择参赛，比赛资格并不消耗后续机会。
         for (int offset = 0; offset < length; offset += 14)
         {
-            if (offset + 3 <= length) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 45, p => p.Role == "普通玩家");
-            if (offset + 6 <= length) Add(offset + 6, "city", "城市新秀公开赛", 3, 100, p => p.Role == "青训选手");
-            if (offset + 9 <= length) Add(offset + 9, "academy", "职业青训选拔赛", 6, 180, p => p.Role == "青训选手");
+            if (offset + 3 <= length) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 45, p => p.Role == "普通玩家" && !ClubCoaching.IsCoach(p));
+            if (offset + 6 <= length) Add(offset + 6, "city", "城市新秀公开赛", 3, 100, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
+            if (offset + 9 <= length) Add(offset + 9, "academy", "职业青训选拔赛", 6, 180, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
             if (offset + 11 <= length) Add(offset + 11, "open", "赛区巡回公开赛", 7, 190, EsportsWorld.IsProfessional);
         }
-        Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9);
+        Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
     }
     public static void EnrollLeague(CareerData d, WorldCompetition c)
     {
-        if (c.PlayerEntered || !c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)) return;
+        if (ClubCoaching.PlayerReserve(d) || c.PlayerEntered || !c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)) return;
         c.PlayerReplacedId = roster[0] == "player" ? "" : roster[0];
         if (roster[0] != "player") Replace(d, c, roster[0], "player");
         c.PlayerEntered = true; d.Standings = c.Table; SchedulePlayer(d, c);
@@ -196,13 +199,13 @@ public static class CircuitWorld
         var leagues = d.Esports.Competitions.Where(c => c.Season == d.Season && c.Modern && c.Kind == "league").ToList();
         if (leagues.Count != 8 || leagues.Any(c => !c.Finished)) return;
         // 国内个人表现前二自动进入总决赛，其余席位按有效积分和本季表现补齐。
-        var qualified = leagues.SelectMany(c => EsportsWorld.Ranked(c).Take(2).Select(t => t.PersonId)).Distinct().ToList();
+        var qualified = leagues.SelectMany(c => EsportsWorld.Ranked(c).Where(t => !d.DeletedPeople.ContainsKey(t.PersonId)).Take(2).Select(t => t.PersonId)).Distinct().ToList();
         string previousChampion = d.Esports.CircuitAwards.LastOrDefault(a => a.Kind == "worldfinal" && a.Place == "冠军")?.PersonId ?? "";
-        if (previousChampion.Length > 0 && (previousChampion == "player" ? leagues.Any(c => c.PlayerEntered) : CareerEngine.Person(d, previousChampion) is { } defending && EsportsWorld.IsProfessional(defending))) qualified.Add(previousChampion);
+        if (previousChampion.Length > 0 && !d.DeletedPeople.ContainsKey(previousChampion) && (previousChampion == "player" ? leagues.Any(c => c.PlayerEntered) : CareerEngine.Person(d, previousChampion) is { } defending && EsportsWorld.IsProfessional(defending))) qualified.Add(previousChampion);
         qualified = qualified.Distinct().ToList();
         var candidates = leagues.SelectMany(c => c.Table).OrderByDescending(t => CircuitLedger.Points(d, t.PersonId))
             .ThenByDescending(t => t.Wins).ThenByDescending(t => EsportsWorld.RatingOf(d, t.PersonId)).Select(t => t.PersonId);
-        qualified.AddRange(candidates.Where(id => !qualified.Contains(id)).Take(32 - qualified.Count));
+        qualified.AddRange(candidates.Where(id => !d.DeletedPeople.ContainsKey(id) && !qualified.Contains(id)).Take(32 - qualified.Count));
         var final = new WorldCompetition { Id = $"worldfinal-{d.Season}", Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
             CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, Entrants = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + id)).ToList(), PlayerEntered = qualified.Contains("player") };
         bool finalSeason = d.Season % 2 == 1;
@@ -216,16 +219,26 @@ public static class CircuitWorld
                 cup.Teams.Add(league.Country);
                 // 代表资格按照国籍和本季个人赛果计算，支持海外俱乐部选手归队。
                 var selection = leagues.SelectMany(c => c.Table.Select(t => (Table: t, Country: c.EntrantCountries.GetValueOrDefault(t.PersonId))))
-                    .Where(x => x.Country == league.Country && (x.Table.PersonId != "player" || d.Esports.BestClear >= 8))
+                    .Where(x => x.Country == league.Country && !d.DeletedPeople.ContainsKey(x.Table.PersonId) && (x.Table.PersonId != "player" || d.Esports.BestClear >= 8))
                     .OrderByDescending(x => x.Table.Points).ThenByDescending(x => x.Table.Clears).Take(d.CooperativeMembers > 1 ? 1 : 3).Select(x => x.Table.PersonId).ToList();
-                if (d.CooperativeMembers > 1 && selection[0] == "player")
-                    selection.AddRange(OwnedClubs.Humans(d).Skip(1));
-                else if (d.CooperativeMembers > 1)
+                if (d.CooperativeMembers > 1 && selection.FirstOrDefault() == "player")
+                    selection.AddRange(OwnedClubs.ActiveHumans(d).Skip(1));
+                else if (d.CooperativeMembers > 1 && selection.Count > 0)
                     selection.AddRange(d.People.Where(p => p.Country == league.Country && EsportsWorld.IsProfessional(p) && p.Id != selection[0] && !d.HumanIds.Contains(p.Id)).OrderByDescending(p => p.Rating).Take(d.CooperativeMembers - 1).Select(p => p.Id));
+                int needed = d.CooperativeMembers > 1 ? d.CooperativeMembers : 3;
+                selection.AddRange(d.People.Where(p => p.Country == league.Country && EsportsWorld.IsProfessional(p) && !d.HumanIds.Contains(p.Id) && !selection.Contains(p.Id))
+                    .OrderByDescending(p => p.Rating).Take(Math.Max(0, needed - selection.Count)).Select(p => p.Id));
                 cup.Rosters[league.Country] = selection;
             }
             else foreach (var team in TeamTable(league).Take(2))
-            { cup.Teams.Add(team.PersonId); cup.Rosters[team.PersonId] = league.Rosters[team.PersonId].ToList(); }
+            {
+                cup.Teams.Add(team.PersonId);
+                var roster = league.Rosters[team.PersonId].ToList();
+                for (int i = 0; i < roster.Count; i++)
+                    if (d.DeletedPeople.ContainsKey(roster[i]) && d.People.Where(p => p.ClubId == team.PersonId && EsportsWorld.IsProfessional(p) && !roster.Contains(p.Id))
+                        .OrderByDescending(p => p.Rating).FirstOrDefault() is { } replacement) roster[i] = replacement.Id;
+                cup.Rosters[team.PersonId] = roster;
+            }
         }
         cup.Teams = cup.Teams.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + kind + id)).ToList();
         Snapshot(d, cup); cup.PlayerEntered = cup.Entrants.Contains("player");
@@ -248,22 +261,23 @@ public static class CircuitWorld
         var official = c?.Rosters.Values.FirstOrDefault(r => r.Contains(leaderId));
         if (official != null)
         {
-            var members = new[] { leaderId }.Concat(official).Distinct().Where(id => !d.HumanIds.Contains(id) && id != "player")
+            var members = new[] { leaderId }.Concat(official).Distinct().Where(id => !d.DeletedPeople.ContainsKey(id) && !d.HumanIds.Contains(id) && id != "player")
                 .Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().Take(d.CooperativeMembers).ToList();
             if (members.Count == d.CooperativeMembers) return members;
         }
-        var pool = d.People.Where(p => p.Id != leaderId && !d.HumanIds.Contains(p.Id) && p.Country == leader.Country);
+        var pool = d.People.Where(p => p.Id != leaderId && !d.HumanIds.Contains(p.Id) && p.Country == leader.Country && !ClubCoaching.IsCoach(p));
         if (c?.Kind is "league" or "continental" or "worldfinal") pool = pool.Where(p => p.ClubId == leader.ClubId && EsportsWorld.IsProfessional(p));
         if (c?.Kind == "worldcup") pool = pool.Where(EsportsWorld.IsProfessional);
         return new[] { leader }.Concat(pool.OrderBy(p => Math.Abs(p.MaxAscension - leader.MaxAscension)).ThenBy(p => CareerEngine.StableHash(seed + p.Id)).Take(d.CooperativeMembers - 1)).ToList();
     }
     public static void EnsureHumanRosters(CareerData d)
     {
-        if (d.CooperativeMembers < 2 || d.HumanIds.Count != d.CooperativeMembers) return;
+        var active = OwnedClubs.ActiveHumans(d);
+        if (d.CooperativeMembers < 2 || active.Count != d.CooperativeMembers) return;
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && c.Cooperative && c.TeamEvent && !c.Finished))
         foreach (string team in c.Rosters.Where(pair => pair.Value.Contains("player")).Select(pair => pair.Key).ToList())
         {
-            c.Rosters[team] = new[] { "player" }.Concat(d.HumanIds.Skip(1)).ToList();
+            c.Rosters[team] = active.ToList();
             foreach (string id in c.Rosters[team])
             { c.EntrantCountries[id] = EsportsWorld.CountryOf(d, id); c.EntrantClubs[id] = EsportsWorld.ClubOf(d, id); }
         }

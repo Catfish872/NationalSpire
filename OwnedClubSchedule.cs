@@ -54,7 +54,7 @@ public static class OwnedClubSchedule
         own.NextRegion = "";
     }
     public static List<string> OfficialRoster(CareerData d) => d.CooperativeMembers > 1
-        ? new[] { "player" }.Concat(OwnedClubs.Humans(d).Skip(1)).ToList()
+        ? new[] { "player" }.Concat(OwnedClubs.ActiveHumans(d).Where(id => id != (d.Esports.OwnedClub?.ManagerId ?? d.HumanIds.FirstOrDefault()))).ToList()
         : d.Esports.OwnedClub!.Starters.ToList();
     public static void UpdateLineup(CareerData d)
     {

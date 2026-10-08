@@ -18,6 +18,7 @@ namespace NationalSpire;
 
 public static class GameBridge
 {
+    public static string NativeCareerPath => ProjectSettings.GlobalizePath(MegaCrit.Sts2.Core.Saves.Managers.RunSaveManager.GetRunSavePath(SaveManager.Instance.CurrentProfileId, "current_run.save"));
     public static string RecoveryMessageFor(bool multiplayer) => multiplayer
         ? MatchRecovery.Message(true, false, false)
         : MatchRecovery.Message(false, SaveManager.Instance.HasRunSave, RunManager.Instance.IsInProgress);
@@ -30,6 +31,7 @@ public static class GameBridge
     public static async Task<string?> StartMatch(CareerMatch match, CharacterModel character, int ascension)
     {
         var data = CareerStore.Data;
+        if (data.Failure is { } pending && (!pending.RetryRequested || pending.Result.MatchId != match.Id)) return MatchFailure.Locked(data);
         if (SaveManager.Instance.HasRunSave || RunManager.Instance.IsInProgress) return "请先在主菜单继续并完成当前对局。";
         if (data.PendingMatchId != null) return "已有一场生涯比赛进行中。";
         if (!data.Matches.Contains(match) || match.Status != "待赛" || !match.Registered || match.Day != data.Day) return "请先报名并前往比赛日。";
@@ -73,12 +75,14 @@ public static class GameBridge
             match.ChosenAscension = ascension;
             data.PendingMatchId = match.Id;
             data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            data.PendingHistoryExcluded = SaveManager.Instance.GetAllRunHistoryNames().ToHashSet();
             data.SelectedCharacter = character.Id.ToString();
             data.SelectedAscension = ascension;
             CareerStore.Save(data);
             long savedAt = clock.ElapsedMilliseconds;
             stage = "执行原生开局";
             await (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!;
+            data.Failure = null; CareerStore.Save(data);
             GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");
             Diagnostics.Record("match.started", new { match.Id, match.Seed, ascension, saveMs = savedAt - preparedAt, prepareMs = preparedAt, startMs = clock.ElapsedMilliseconds - savedAt });
             return null;
@@ -221,7 +225,7 @@ public static class GameBridge
         if (data.PendingMatchId == null) return;
         var save = SaveManager.Instance;
         int checkedCount = 0, unreadable = 0;
-        foreach (string file in MatchRecovery.HistoryCandidates(save.GetAllRunHistoryNames(), data.PendingSince))
+        foreach (string file in MatchRecovery.HistoryCandidates(save.GetAllRunHistoryNames(), data.PendingSince).Where(file => !data.PendingHistoryExcluded.Contains(file)))
         {
             try
             {

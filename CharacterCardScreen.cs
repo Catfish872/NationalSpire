@@ -43,6 +43,17 @@ public partial class CareerScreen
         var subtitle = Text(imported != null ? "已读取角色卡，确认资料后创建。" : create ? "从预设开始，填写你的人物档案。" : draft.PublicName, 18, _muted); heading.AddChild(subtitle);
         header.AddChild(Button("选择头像", () => OpenAvatarSettings(data, draft.Avatar, avatar =>
         { draft.Avatar = avatar; portrait.Art = AvatarImages.Read(avatar) ?? AutomaticPortrait(); }, draft.Id, AutomaticPortrait()), 165));
+        if (!create && draft.CreatedCard)
+        {
+            var delete = Button("删除角色", () => ShowCareerDialog("删除" + draft.PublicName, "取消未完成的安排，历史帖子和赛果保留。", () =>
+            {
+                if (MultiplayerCommand("character-delete", draft.Id, accepted: () => { _multiplayer!.Refresh(); _closeCharacterCard?.Invoke(); Render(); })) return true;
+                var error = CharacterDeletion.Delete(data, draft.Id);
+                if (error != null) { Notice(error, true); return false; }
+                CareerStore.Save(data); _closeCharacterCard?.Invoke(); ResetNavigation(); Render(); return true;
+            }, "删除角色", compact: true), 145);
+            delete.Name = "DeleteCustomCharacter"; delete.AddThemeColorOverride("font_color", new Color("e9a799")); header.AddChild(delete);
+        }
         var tabs = new HBoxContainer(); tabs.AddThemeConstantOverride("separation", 12); root.AddChild(tabs);
         var scroll = new BroadcastScroll { Name = "CharacterCardScroll", SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; root.AddChild(scroll);
         var pages = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; scroll.AddChild(pages);

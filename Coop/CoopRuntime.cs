@@ -50,6 +50,7 @@ public partial class CoopRuntime : Node
     private bool _busy, _pausing;
     private Task? _pauseTask;
     private string _completedPause = "";
+    private string _nativeAttempt = "";
     public ICoopPauseScene PauseScene { get; set; } = new CoopGamePauseScene();
     public bool Pausing => _pausing;
     private int _connectionGeneration;
@@ -83,7 +84,7 @@ public partial class CoopRuntime : Node
                 if (checkpoint.World.Run is { Terminal: null } savedRun) savedRun.Phase = "paused";
                 checkpoint.World.CareerStarted |= checkpoint.World.RosterLocked || checkpoint.World.World.Day > 1;
                 checkpoint.World.World.Ai.Enabled = AiSettingsStore.Load(new()).Enabled;
-                await _connecting.Host(checkpoint.World.Capacity);
+                await _connecting.Host(4);
             }
             else await _connecting.Join(code);
             if (generation != _connectionGeneration) throw new OperationCanceledException("已取消连接。");
@@ -93,7 +94,8 @@ public partial class CoopRuntime : Node
             Session.CaptureDiagnostics = () => Diagnostics.CapturePeerLogs(ProjectSettings.GlobalizePath("user://logs"), Native?.Status ?? Status, Session.World?.World.WorldId);
             _resumeRequired = Session.World?.Run != null; _pausedCount = Session.World?.Run?.ResumeCount ?? 0;
             Session.RunMessage += Native.Message;
-            Session.TriggerAi += kind => { if (kind is "confirm" or "post" or "reply" or "dm-confirm" or "dm-arbitration-apology") _ = Ai.Process(); };
+            _nativeAttempt = Session.World?.Run?.Attempt ?? "";
+            Session.TriggerAi += kind => { if (kind is "confirm" or "failure-confirm" or "post" or "reply" or "dm-confirm" or "dm-arbitration-apology") _ = Ai.Process(); };
             _live = new(Session); Status = "房间已连接";
             if (host && checkpoint?.World.CareerStarted == true) _ = Ai.Process();
         }
@@ -112,8 +114,11 @@ public partial class CoopRuntime : Node
             if (Session == null) return;
             // 等待转场结束时仍处理大厅通信，但不触发新的开赛和界面更新。
             if (_pausing) { Native?.PumpPendingNetwork(); return; }
+            string attempt = Session.World?.Run?.Attempt ?? "";
+            if (attempt != _nativeAttempt && !RunManager.Instance.IsInProgress && !ReturningToMenu)
+            { Native?.Close(); _nativeAttempt = attempt; _resumeRequired = Session.World?.Run?.Phase == "paused"; _completedPause = ""; }
             if (Session.World?.Run == null) _resumeRequired = false;
-            if (Session.Host && Session.Full && Session.World?.Run?.Terminal != null) FinishTerminal();
+            if (Session.Host && Session.World?.Run is { Terminal: not null, Phase: not "decision" }) FinishTerminal();
             if (_resumeRequired && (Session.World?.Run?.ResumeCount ?? 0) > _pausedCount) _resumeRequired = false;
             if (Session.World?.Run is { Phase: "paused" } paused)
             {
@@ -199,6 +204,8 @@ public partial class CoopRuntime : Node
     {
         if (Session?.World?.Run is not { } run || history.Seed != run.Seed || history.Ascension != run.Ascension) return;
         if (!history.Players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) return;
+        string historyKey = history.StartTime + "/" + history.Seed + "/" + history.Ascension + "/" + string.Join(',', history.Players.Select(p => p.Id).Order());
+        if (Session.World.NativeHistoryReceipts.Contains(historyKey)) return;
         if (history.WasAbandoned && (_pausing || _resumeRequired || run.Phase == "paused" || !Session.Full || Native?.NeedsPause == true))
         { Status = "比赛已暂停，等待全队恢复后继续。"; return; }
         Diagnostics.RecordMatch(Session.World, "native-completed", new
@@ -222,17 +229,17 @@ public partial class CoopRuntime : Node
             return new CoopLivePlayer(p.Id, p.Character.ToString(), evidence.FinalHp ?? 0, evidence.MaxHp ?? 0, evidence.FinalHp == 0);
         }).ToList();
         var recorded = CoopJson.Copy(Session.World);
+        recorded.NativeHistoryReceipts.Add(historyKey);
         recorded.Run!.Terminal = new(history.Win && !history.WasAbandoned, history.MapPointHistory.Sum(a => a.Count), history.RunTime, players) { Details = details };
         recorded.Revision++;
         Session.Commit(recorded, Session.NativeSave);
-        if (Session.Full) FinishTerminal();
-        else Status = "比赛结果已保存，队员全部返回后统一结算。";
+        FinishTerminal();
     }
     private void FinishTerminal()
     {
-        if (Session?.World?.Run is not { Terminal: { } result } run || !Session.Host || !Session.Full) return;
+        if (Session?.World?.Run is not { Terminal: { } result } run || !Session.Host || run.Phase == "decision") return;
         var next = CoopRules.Settle(Session.World, run.Attempt, result.Win, false, result.Floor, result.Seconds, result.Players, result.Details);
-        Session.Commit(next, null); _ = Ai!.Process(); Status = "比赛已经结算";
+        Session.Commit(next, null); if (next.World.Failure == null) _ = Ai!.Process(); Status = next.World.Failure == null ? "比赛已经结算" : "请选择重赛或确认失败";
     }
 }
 

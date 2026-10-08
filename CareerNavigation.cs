@@ -26,6 +26,7 @@ public partial class CareerScreen
     private void RememberTab() => _tabVisits[_tab] = new(CaptureLocation(), _backHistory.ToArray());
     private void Visit(Action destination)
     {
+        if (ViewData.Failure != null) return;
         _confirmReset = false;
         RememberTab();
         _backHistory.Push(CaptureLocation());
@@ -38,6 +39,7 @@ public partial class CareerScreen
     }
     private void SwitchTab(string tab)
     {
+        if (ViewData.Failure != null) { _tab = "结算"; Render(); return; }
         _confirmReset = false;
         if (tab == _tab) { int position = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(position, _renderVersion); return; }
         RememberTab(); _backHistory.Clear();
@@ -82,6 +84,7 @@ public partial class CareerScreen
         || _tab == "选手档案" && _personId != null || _tab == "赛事与俱乐部" && (_competitionId != null || _worldSection == "颁奖盛典");
     private void Back()
     {
+        if (ViewData.Failure != null) return;
         if (_confirmReset) { _confirmReset = false; Render(); return; }
         RememberTab();
         if (_backHistory.TryPop(out var previous))

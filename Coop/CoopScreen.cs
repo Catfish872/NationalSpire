@@ -24,6 +24,11 @@ public partial class CoopScreen : Control, IScreenContext
     private Control? _dialog;
     private CoopCommand? _pending;
     private CoopCoordinator? _replySession;
+    public static void OpenSaved(Control menu, string id)
+    {
+        CoopRuntime.Current?.Disconnect(); Open(menu);
+        if (Current is { } screen) screen.Connect(true, CareerEngine.Name(CareerStore.Data), saved: id);
+    }
     public static void Open(Control menu, bool stayInRoom = false)
     {
         if (Current != null && IsInstanceValid(Current)) return;
@@ -75,7 +80,7 @@ public partial class CoopScreen : Control, IScreenContext
     public override void _Process(double delta)
     {
         _tick += delta; if (_tick < .3) return; _tick = 0;
-        _status.Text = _message.Length > 0 ? _message : _working ? "正在连接 Steam 房间……" : Session?.World is { } w ? $"等待房间 · 在线 {Session.Online.Count}/{w.Capacity} · " + (w.Run != null ? "已载入未完成的比赛" : w.CareerStarted ? "生涯进度已载入" : "等待开始生涯") : "2—4 人组队 · 房主保存进度 · 单人存档保持独立";
+        _status.Text = _message.Length > 0 ? _message : _working ? "正在连接 Steam 房间……" : Session?.World is { } w ? $"等待房间 · 在线 {Session.Online.Count} 人 · " + (w.Run != null ? "已载入未完成的比赛" : w.CareerStarted ? "生涯进度已载入" : "等待开始生涯") : "2—4 人组队 · 房主保存进度 · 单人存档保持独立";
         if (Session?.World is { } world)
         {
             if (_entrySequence < 0) _entrySequence = world.EntrySequence;
@@ -164,13 +169,13 @@ public partial class CoopScreen : Control, IScreenContext
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); join.AddChild(actions);
         Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190);
         Button(actions, "加入房间", () => Connect(false, name.Text, code: code.Text), 180);
-        var saves = Card(_body, "已有多人生涯"); Text(saves, "房主重新打开存档后，需要再次邀请原来的队友。删除只移除本机这份多人存档。", 17, CareerVisuals.Muted);
+        var saves = Card(_body, "已有多人生涯"); Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted);
         var checkpoints = CoopSettings.Storage.List().ToList();
         if (checkpoints.Count == 0) Text(saves, "尚无多人存档。创建房间后会自动保存。", 18, CareerVisuals.Muted);
         foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day))
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
-            Text(row, $"{cp.World.Name} · 第 {cp.World.World.Day} 天 · {cp.World.Members.Count}/{cp.World.Capacity} 人", 18);
+            Text(row, $"{cp.World.Name} · 第 {cp.World.World.Day} 天 · {cp.World.Members.Count} 位成员", 18);
             Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
             Button(row, "删除", () => Confirm("删除多人存档", $"删除“{cp.World.Name}”的本机存档？单人生涯不受影响。", () => { CoopSettings.Storage.Delete(cp.World.Id); Render(); }), 100);
         }
@@ -185,9 +190,10 @@ public partial class CoopScreen : Control, IScreenContext
         Button(inviteActions, "复制邀请码", () => { DisplayServer.ClipboardSet(Runtime.InviteCode); _message = "邀请码已复制，现在可以发送给朋友。"; }, 210);
         Text(inviteActions, "每次重新打开房间都会生成新的邀请码。", 16, CareerVisuals.Muted);
         var members = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; members.AddThemeConstantOverride("h_separation", 20); members.AddThemeConstantOverride("v_separation", 20); _body.AddChild(members);
-        for (int i = 0; i < world.Capacity; i++)
+        var displayed = world.Members.OrderByDescending(m => Session!.Online.Contains(m.SteamId)).ThenBy(m => m.SteamId != world.Owner).ToList();
+        for (int i = 0; i < Math.Max(2, displayed.Count); i++)
         {
-            var member = world.Members.ElementAtOrDefault(i); var card = Card(members, member == null ? "等待队友加入" : member.Name + (member.SteamId == world.Owner ? " · 房主" : ""));
+            var member = displayed.ElementAtOrDefault(i); var card = Card(members, member == null ? "等待队友加入" : member.Name + (member.SteamId == world.Owner ? " · 房主" : "") + (Session!.Online.Contains(member.SteamId) ? " · 在线" : " · 轮换"));
             if (member == null) { Text(card, "将邀请码发给朋友，这个位置正在等他。", 18, CareerVisuals.Muted); continue; }
             var row = new HBoxContainer(); card.AddChild(row);
             row.AddChild(new CareerAvatar { Art = CareerAvatars.ForPerson(world.World, member.PersonId), Identity = AvatarHonors.ForPerson(world.World, member.PersonId), CustomMinimumSize = new(72,72) });
@@ -210,7 +216,7 @@ public partial class CoopScreen : Control, IScreenContext
         var ready = _footer;
         if (world.Proposal is { } proposal)
         {
-            Text(ready, proposal.Label); Text(ready, string.Join("  /  ", world.Members.Select(m => m.Name + (proposal.Votes.Contains(m.SteamId) ? " 已同意" : " 等待确认"))), 17, CareerVisuals.Teal);
+            Text(ready, proposal.Label); Text(ready, string.Join("  /  ", world.Members.Where(m => proposal.Participants.Contains(m.SteamId)).Select(m => m.Name + (proposal.Votes.Contains(m.SteamId) ? " 已同意" : " 等待确认"))), 17, CareerVisuals.Teal);
             bool voted = proposal.Votes.Contains(Session!.Self) || _pending is { Kind: "confirm" } pending && pending.Target == proposal.Id;
             var approve = Button(ready, voted ? "已准备，等待队友" : proposal.Kind == "resume" ? "准备继续比赛" : "准备开赛", () => Submit("confirm", proposal.Id)); approve.Disabled = voted;
             Button(ready, "取消这项安排", () => Submit("cancel"));
@@ -222,6 +228,12 @@ public partial class CoopScreen : Control, IScreenContext
             {
                 var resume = Button(ready, "继续已保存的比赛", () => Submit("propose-resume"), 300);
                 resume.Disabled = !Session.Full || savedRun.Phase != "paused" || savedRun.Terminal != null;
+                if (savedRun.Phase == "paused" && !Session.Full)
+                {
+                    var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 12); ready.AddChild(choices);
+                    Button(choices, "按当前队伍重赛", () => Submit("restart-run"), 240);
+                    Button(choices, "弃赛", () => Confirm("确认弃赛", "本场记为弃赛，保留生涯成员。", () => Submit("abandon-run")), 110);
+                }
                 if (Session.Full && savedRun.Phase != "paused" && savedRun.Terminal == null)
                     Text(ready, "正在完成比赛转场，请稍候。", 17, CareerVisuals.Teal);
             }

@@ -66,7 +66,7 @@ public static class SeasonCeremony
         string id = home ? f.HomeId : f.AwayId;
         if (id.Length == 0) return [];
         if (d.CooperativeMembers <= 1 && !c.Cooperative) return [id];
-        if (id == "player") return d.HumanIds.Count > 0 ? d.HumanIds.ToList() : [id];
+        if (id == "player") return d.MatchHumanIds.Count > 0 ? d.MatchHumanIds.ToList() : d.HumanIds.Count > 0 ? d.HumanIds.ToList() : [id];
         if (CareerEngine.Person(d, id) == null) return [id];
         return c.Rosters.Values.FirstOrDefault(r => r.Contains(id))?.ToList()
             ?? CircuitWorld.CooperativeRoster(d,c,id,f.Id).Select(p=>p.Id).ToList();

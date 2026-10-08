@@ -67,6 +67,49 @@ public static class CircuitPeople
             Biography = WorldPeople.Biography(role, seed) });
         NpcRecords.Initialize(d.People[^1], CareerEngine.StableHash(d.WorldId + ":records:" + id));
     }
+    /// <summary>实际缺员时补足 AI 俱乐部原有规模；预约离队者到加盟日才形成缺额。</summary>
+    public static bool Replenish(CareerData d)
+    {
+        if (d.Esports.EcosystemVersion < 1) return false;
+        bool changed = false;
+        foreach (var club in d.Esports.Clubs.Where(c => c.Id != d.Esports.OwnedClub?.ClubId))
+        {
+            var members = d.People.Where(p => p.ClubId == club.Id).ToList();
+            int professionals = Math.Max(CareerCommerce.ProfessionalCount(d, club.Id), Math.Max(d.CooperativeMembers, d.HumanIds.Count));
+            var added = new List<CareerPerson>();
+            Fill("职业选手", professionals - members.Count(EsportsWorld.IsProfessional), _ => 8);
+            Fill("青训选手", CareerCommerce.YouthCount(d, club.Id) - members.Count(p => p.Role == "青训选手" || p.ClubPosition == "青训"), i => 6 + i % 2);
+            Fill("教练", members.Any(p => p.Role == "教练" || p.Identities.Contains("教练")) ? 0 : 1, _ => 7);
+            if (added.Count == 0) continue;
+            changed = true;
+            PlayerIdentity.Ensure(d);
+            string key = "transfer-refill-" + club.Id + "-" + added[0].Id;
+            string title = club.Name + "补充队伍成员";
+            string fact = club.Name + "补充" + string.Join("、", added.Select(p => p.PublicName + "（" + p.Role + "）")) + "。已有赛事名单保持有效，新成员用于之后编排的赛事。";
+            CareerLife.AddEvent(d, key, "俱乐部", title, fact, added.Select(p => p.Id).ToList(), true);
+            CareerEngine.Publish(d, key, title, fact, "俱乐部", true, added.Select(p => p.Id).ToList());
+            if (d.Posts.FirstOrDefault(p => p.EventKey == key) is { } post)
+                d.Life.Events.Single(e => e.Id == key).PostId = post.Id;
+
+            void Fill(string role, int missing, Func<int, int> level)
+            {
+                string prefix = "refill-" + club.Id + "-";
+                int next = d.People.Count(p => p.Id.StartsWith(prefix, StringComparison.Ordinal));
+                for (int i = 0; i < missing; i++)
+                {
+                    string id;
+                    do { id = prefix + next++; } while (CareerEngine.Person(d, id) != null);
+                    Add(d, id, club.Country, club.Id, role, level(i));
+                    var person = d.People[^1];
+                    PersonalityLibrary.Ensure(d, person);
+                    person.Identities = [role]; person.SupportedClubId = club.Id;
+                    person.Connections = members.OrderBy(p => CareerEngine.StableHash(id + p.Id)).Take(2).Select(p => p.Id).ToList();
+                    added.Add(person);
+                }
+            }
+        }
+        return changed;
+    }
     public static void SeasonChange(CareerData d)
     {
         if (d.Season <= 1 || d.Esports.LastRosterSeason >= d.Season) return;

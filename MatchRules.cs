@@ -118,7 +118,7 @@ public static class MatchRules
         int date = day ?? data.Day;
         return new(BaseChance(person, ascension), CareerTraining.Permanent(data, person.Id, ascension),
             includePractice ? OwnedClubs.PracticeBonus(data, person.Id, ascension, date) : 0,
-            CareerTraining.Temporary(data, person.Id, date), CareerTraining.SkillBonus(person),
+            Math.Max(CareerTraining.Temporary(data, person.Id, date), TeamPreparations.Bonus(data, person.Id, date)), CareerTraining.SkillBonus(person),
             CareerTraining.MoodBonus(person, date), CareerTraining.Temporary(data, person.Id, date, true));
     }
 

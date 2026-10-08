@@ -44,6 +44,7 @@ public sealed class CoopWorld
     public CoopProposal? Proposal { get; set; }
     public CoopRun? Run { get; set; }
     public List<CoopSettlement> Settlements { get; set; } = [];
+    public HashSet<string> NativeHistoryReceipts { get; set; } = [];
     public Dictionary<string, CoopReceipt> Receipts { get; set; } = [];
     public string LatestCheckpoint { get; set; } = "";
     // 仅同步保存流程使用浅副本；序列化完成前不异步访问共享集合。
@@ -94,6 +95,7 @@ public sealed class CoopProposal
     public int Number { get; set; }
     public string Label { get; set; } = "";
     public HashSet<ulong> Votes { get; set; } = [];
+    public HashSet<ulong> Participants { get; set; } = [];
 }
 public sealed class CoopRun
 {

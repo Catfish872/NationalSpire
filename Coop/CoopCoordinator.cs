@@ -27,7 +27,7 @@ public sealed partial class CoopCoordinator : IDisposable
     public ulong Self => _transport.Self;
     public bool Host => Self == _transport.Owner;
     public HashSet<ulong> Online => _seen.Where(p => DateTime.UtcNow - p.Value < TimeSpan.FromSeconds(15) && _transport.Peers.Contains(p.Key)).Select(p => p.Key).Append(Self).ToHashSet();
-    public bool Full => World is { } w && w.Members.Count == w.Capacity && w.Members.All(m => Online.Contains(m.SteamId));
+    public bool Full => World is { } w && (w.Run != null ? w.Run.Characters.Keys.All(Online.Contains) : Online.Count is >= 2 and <= 4);
     public string Status { get; private set; } = "正在同步共同生涯";
     public event Action? Changed;
     public event Action<string>? TriggerAi;
@@ -45,6 +45,8 @@ public sealed partial class CoopCoordinator : IDisposable
             foreach (var member in World.Members) PrivateMessageCommands.Recover(member.Life);
             OwnedClubs.RepairContractRoster(World.World, World.Members.Select(m => m.Life.Mailbox));
             OwnedClubs.EnsureMarket(World.World);
+            CircuitPeople.Replenish(World.World);
+            EsportsWorld.ClearInvalidRegistrations(World.World);
             PlayerIdentity.Ensure(World.World);
             PersonalityLibrary.EnsureAll(World.World);
             NpcRecords.Ensure(World.World);
@@ -67,6 +69,12 @@ public sealed partial class CoopCoordinator : IDisposable
         if (DateTime.UtcNow - _lastHeartbeat > TimeSpan.FromSeconds(3))
         {
             _lastHeartbeat = DateTime.UtcNow;
+            if (Host && World is { Run: null, Proposal: null } idle &&
+                !idle.World.MatchHumanIds.ToHashSet().SetEquals(idle.Members.Where(m => Online.Contains(m.SteamId)).Select(m => m.PersonId)))
+            {
+                var copy = CoopJson.Copy(idle); CoopJson.Detached(copy.World);
+                CoopRules.SetParticipants(copy, Online); copy.Revision++; Commit(copy, null);
+            }
             if (Host && World != null) foreach (var m in World.Members.Where(m => m.SteamId != Self)) Send(m.SteamId, "ping", new CoopHeartbeat(World.Epoch, Online.ToArray()));
             else if (World != null) Send(_transport.Owner, "pong", World.Epoch);
             Changed?.Invoke();
@@ -98,7 +106,7 @@ public sealed partial class CoopCoordinator : IDisposable
                     Send(sender, "error", error); return;
                 }
                 var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
-                CoopRules.AddMember(copy, sender, hello.Name); _seen[sender] = DateTime.UtcNow;
+                CoopRules.AddMember(copy, sender, hello.Name); copy.Proposal = null; _seen[sender] = DateTime.UtcNow;
                 Commit(copy, NativeSave); return;
             }
             if (!Host && sender != _transport.Owner) return;
@@ -194,8 +202,8 @@ public sealed partial class CoopCoordinator : IDisposable
         if (World == null) return;
         var result = CoopRules.Apply(World, sender, command, Online, _characters);
         Diagnostics.Record("coop.command", new { world = World.Id, sender, command.Id, command.Kind, command.Revision, result.Outcome.Accepted, result.Outcome.Duplicate, result.Outcome.Message });
-        bool changed = result.Outcome.Accepted && !result.Outcome.Duplicate;
-        if (changed) Commit(result.World, NativeSave, false);
+        bool changed = !result.Outcome.Duplicate && (result.Outcome.Accepted || result.World.Revision > World.Revision);
+        if (changed) Commit(result.World, result.World.Run?.Attempt == World.Run?.Attempt && result.World.Run != null ? NativeSave : null, false);
         // 持久化后先回执，再发送完整世界；客机收到相应版本后才继续后续操作。
         var reply = new CoopReply(command.Id, result.Outcome, World.Revision); Status = reply.Outcome.Message;
         if (sender != Self) Send(sender, "reply", reply); else Replied?.Invoke(reply);

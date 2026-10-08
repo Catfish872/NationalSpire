@@ -2,6 +2,8 @@
 
 namespace NationalSpire.Coop;
 
+using System.IO.Compression;
+
 /// <summary>清单最后提交；任何中断都只能恢复一组经过校验的世界与原版对局。</summary>
 public sealed class CoopStorage(string root)
 {
@@ -26,6 +28,34 @@ public sealed class CoopStorage(string root)
     public static CoopWorld PublicCopy(CoopWorld world)
     {
         return CoopJson.Read<CoopWorld>(CoopJson.PublicBytes(world));
+    }
+    public static bool IsArchive(byte[] bytes)
+    {
+        using var zip = new ZipArchive(new MemoryStream(bytes), ZipArchiveMode.Read);
+        return zip.GetEntry("world.json") != null;
+    }
+    public byte[] ExportArchive(string id)
+    {
+        var checkpoint = Load(id);
+        using var buffer = new MemoryStream();
+        using (var zip = new ZipArchive(buffer, ZipArchiveMode.Create, true))
+        {
+            using (var stream = zip.CreateEntry("world.json").Open()) stream.Write(CoopJson.PublicBytes(checkpoint.World));
+            if (checkpoint.Run != null) { using var stream = zip.CreateEntry("run.bin").Open(); stream.Write(checkpoint.Run); }
+        }
+        return buffer.ToArray();
+    }
+    public string ImportArchive(byte[] bytes)
+    {
+        using var zip = new ZipArchive(new MemoryStream(bytes), ZipArchiveMode.Read);
+        using var source = (zip.GetEntry("world.json") ?? throw new InvalidDataException("没有多人生涯内容。")).Open();
+        using var buffer = new MemoryStream(); source.CopyTo(buffer); var world = CoopJson.Read<CoopWorld>(buffer.ToArray());
+        if (world.Schema != 1 || !Guid.TryParseExact(world.Id, "N", out _) || world.Owner == 0 || world.Members.Count < 2 || world.Members.Select(m => m.SteamId).Distinct().Count() != world.Members.Count || world.World.People.Count == 0) throw new InvalidDataException("多人生涯结构无效。");
+        byte[]? run = null;
+        if (zip.GetEntry("run.bin") is { } native) { using var stream = native.Open(); using var target = new MemoryStream(); stream.CopyTo(target); run = target.ToArray(); }
+        if (world.Run is { Phase: "running", Terminal: null } && run == null) throw new InvalidDataException("比赛存档缺失。");
+        if (Directory.Exists(DirectoryFor(world.Id))) { world.Id = Guid.NewGuid().ToString("N"); world.World.WorldId = world.Id; }
+        world.Proposal = null; Save(world, run); return world.Id;
     }
     public void BackupBeforeDevelopment(CoopWorld world, byte[]? run)
     {

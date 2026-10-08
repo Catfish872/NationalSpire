@@ -49,6 +49,7 @@ public sealed partial class CoopCoordinator
             CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);
             PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);
             SpireArbitration.Merge(copy.World, member.Life.Mailbox);
+            CoachLineups.Merge(copy.World, data);
             foreach (var match in data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == command.Target))
             {
                 int index = copy.World.Matches.FindIndex(m => m.Id == match.Id);
@@ -77,6 +78,18 @@ public sealed partial class CoopCoordinator
 
 public static partial class CoopRules
 {
+    private static CoopWorld SavePrivateFailure(CoopWorld original, ulong sender, CoopCommand command, string error)
+    {
+        if (command.Kind != "dm-confirm") return original;
+        var copy = CoopJson.Copy(original); CoopJson.Detached(copy.World);
+        var member = copy.Members.Single(m => m.SteamId == sender);
+        var payload = JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options) ?? new();
+        var view = View(copy, member);
+        if (!PrivateMessageCommands.RecordFailure(view, command.Target, payload, error)) return original;
+        member.Life.Mailbox = view.Life.Mailbox;
+        copy.Revision++;
+        return copy;
+    }
     private static string? PrivateCommand(CoopWorld w, CoopMember member, CoopCommand command)
     {
         var payload = JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options) ?? new();

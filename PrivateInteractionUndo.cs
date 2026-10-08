@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace NationalSpire;
@@ -26,6 +26,10 @@ public static class PrivateInteractionHistory
             ["mood"] = Node(new { p.Learning.MoodDay, p.Learning.MoodUntil, p.Learning.MoodStrength }),
             ["relation"] = Node(PrivateMessages.Relation(d, id)),
             ["offers"] = Node(PrivateMessages.Conversation(d, id).Offers),
+            ["coachTraining"] = Node(d.Esports.OwnedClub?.CoachTraining.Where(p => p.PersonId == id).ToList() ?? []),
+            ["lineups"] = Node(d.Esports.LineupRequests),
+            ["playerSeat"] = d.Esports.OwnedClub is { } seats ? Node(new { seats.ClubId, seats.PlayerPositionSeason,
+                seats.PlayerNextPosition, seats.PlayerReplacement, seats.PlayerPositionRequest }) : null,
             ["privateMatches"] = Node(d.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == id).ToList())
         };
         if (!contract) return snapshot;
@@ -58,7 +62,7 @@ public static class PrivateInteractionHistory
     private static (JsonNode? Before, JsonNode? After)? Difference(JsonNode? before, JsonNode? after, string path = "")
     {
         if (JsonNode.DeepEquals(before, after)) return null;
-        if (path == "/mood") return (before?.DeepClone(), after?.DeepClone());
+        if (path is "/mood" or "/playerSeat") return (before?.DeepClone(), after?.DeepClone());
         if (before is JsonObject a && after is JsonObject b)
         {
             var left = new JsonObject(); var right = new JsonObject();
@@ -83,7 +87,7 @@ public static class PrivateInteractionHistory
     private static JsonNode? Revert(JsonNode? current, JsonNode? before, JsonNode? after, string path = "")
     {
         // 状态等级与起止日期属于同一项效果；后续独立状态不能只回退其中一个字段。
-        if (path == "/mood") return (JsonNode.DeepEquals(current, after) ? before : current)?.DeepClone();
+        if (path is "/mood" or "/playerSeat") return (JsonNode.DeepEquals(current, after) ? before : current)?.DeepClone();
         if (before is JsonObject listBefore && after is JsonObject listAfter && current is JsonArray list
             && listBefore["$items"] is JsonArray oldItems && listAfter["$items"] is JsonArray newItems)
         {
@@ -161,6 +165,27 @@ public static class PrivateInteractionHistory
             d.Matches.RemoveAll(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == id);
             d.Matches.AddRange(state["privateMatches"]!.Deserialize<List<CareerMatch>>()!);
         }
+        if (state["coachTraining"] != null && d.Esports.OwnedClub is { } own)
+        {
+            var restored = state["coachTraining"]!.Deserialize<List<CoachTrainingPlan>>()!;
+            own.CoachTraining.RemoveAll(p => p.PersonId == id); own.CoachTraining.AddRange(restored);
+        }
+        if (state["lineups"] != null)
+        {
+            var applied = d.Esports.LineupRequests.Where(r => r.State == "已生效").ToList();
+            d.Esports.LineupRequests = state["lineups"]!.Deserialize<List<CoachLineupRequest>>()!;
+            foreach (var request in applied) { d.Esports.LineupRequests.RemoveAll(r => r.Id == request.Id); d.Esports.LineupRequests.Add(request); }
+            foreach (var request in d.Esports.LineupRequests.Where(r => r.State == "待生效" && applied.Any(a => a.ClubId == r.ClubId && a.Season >= r.Season
+                && (a.First == r.First || a.First == r.Second || a.Second == r.First || a.Second == r.Second)))) request.State = "已替换";
+        }
+        if (state["playerSeat"] is JsonObject seat && d.Esports.OwnedClub is { } seatClub && seat["ClubId"]!.GetValue<string>() == seatClub.ClubId)
+        {
+            seatClub.PlayerPositionSeason = seat["PlayerPositionSeason"]!.GetValue<int>();
+            seatClub.PlayerNextPosition = seat["PlayerNextPosition"]!.GetValue<string>();
+            seatClub.PlayerReplacement = seat["PlayerReplacement"]!.GetValue<string>();
+            seatClub.PlayerPositionRequest = seat["PlayerPositionRequest"]!.GetValue<string>();
+            if (d.Esports.LineupRequests.Any(r => r.Id == seatClub.PlayerPositionRequest && r.State == "已生效")) ClubCoaching.ClearPlayerPosition(seatClub);
+        }
         if (!contract) return;
         p.ClubId = state["club"]!.GetValue<string>(); p.Role = state["role"]!.GetValue<string>();
         p.ClubPosition = state["position"]?.GetValue<string>() ?? p.ClubPosition;
@@ -181,6 +206,8 @@ public static class PrivateInteractionHistory
     public static string? Rewind(CareerData d, PrivateConversation c, PrivateTurn turn)
     {
         var offers = c.Offers.Where(o => o.TurnId == turn.Id).ToList();
+        if (offers.Any(o => o.Kind == "activity" && o.State == "已赴约"))
+            return "这条回复的活动已经赴约，无法通过重新生成撤回。";
         if (offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消")))))
             return "这条回复的约战已经开始或结算，无法通过重新生成撤回赛果。";
         if (offers.Any(o => o.Kind == "contract" && o.State == "已确认") && !turn.InteractionUndo.Any(u => u.Contract))

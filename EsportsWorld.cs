@@ -170,6 +170,15 @@ public static class EsportsWorld
         return "赛事尚未开放。";
     }
 
+    public static bool ClearInvalidRegistrations(CareerData d)
+    {
+        bool changed = false;
+        foreach (var match in d.Matches.Where(m => m.Registered && m.Status == "待赛" && m.Id != d.PendingMatchId
+            && m.Kind is "local" or "city" or "academy"))
+            if (EntryReason(d, match) != null) { match.Registered = false; match.RegistrationDeclined = true; changed = true; }
+        return changed;
+    }
+
     public static string? Register(CareerData d, CareerMatch m, bool value)
     {
         if (d.Esports.Competitions.FirstOrDefault(c => c.Id == m.CompetitionId)?.Modern == true)
@@ -229,6 +238,7 @@ public static class EsportsWorld
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season).ToList())
         {
             foreach (var f in c.Fixtures.Where(f => f.Day == day && !f.Finished).ToList()) SimulateFixture(d, c, f);
+            TeamPreparations.Complete(d, c, day);
             if (c.Modern) { CircuitWorld.AdvanceCompetition(d, c, day, publish); continue; }
             if (c.Kind == "league" && !c.Finished && c.Fixtures.All(f => f.Finished))
             {
@@ -263,6 +273,13 @@ public static class EsportsWorld
 
     private static void SimulateFixture(CareerData d, WorldCompetition c, WorldFixture f)
     {
+        if (d.DeletedPeople.ContainsKey(f.HomeId) || d.DeletedPeople.ContainsKey(f.AwayId))
+        {
+            f.Walkover = true;
+            bool missingHome = d.DeletedPeople.ContainsKey(f.HomeId), missingAway = d.DeletedPeople.ContainsKey(f.AwayId);
+            FinishFixture(d, c, f, missingHome && missingAway ? "" : missingHome ? f.AwayId : f.HomeId, missingHome && missingAway);
+            return;
+        }
         bool walkover = f.HomeId == "player" || f.AwayId == "player";
         int asc = c.Modern ? f.Ascension : c.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8;
         RunPerformance Run(string id, string seed) => id == "player" ? new(false, 0, 0)
@@ -304,6 +321,7 @@ public static class EsportsWorld
         f.Finished = true; f.WinnerId = winner; f.Draw = draw;
         foreach (string id in new[] { f.HomeId, f.AwayId })
         {
+            if (d.DeletedPeople.ContainsKey(id)) continue;
             var table = c.Table.FirstOrDefault(x => x.PersonId == id);
             if (table != null) { if (f.HomeId == id ? f.HomeCleared : f.AwayCleared) table.Clears++; if (draw) { table.Draws++; table.Points++; } else if (winner == id) { table.Wins++; table.Points += 3; } else table.Losses++; }
             var people = c.Cooperative && id != "player" ? CircuitWorld.CooperativeRoster(d, c, id, f.Id)
@@ -338,9 +356,10 @@ public static class EsportsWorld
         var entrants = new List<string>();
         foreach (var league in d.Esports.Competitions.Where(c => c.Season == d.Season && c.Kind == "league"))
         {
-            var eligible = Ranked(league).Where(s => s.PersonId != "player").Select(s => s.PersonId).ToList();
-            if (kind == "worldcup") entrants.Add(eligible.First());
-            else foreach (var club in d.Esports.Clubs.Where(c => c.Country == league.Country && league.EntrantClubs.Values.Contains(c.Id))) entrants.Add(eligible.First(id => ClubOf(d, id) == club.Id));
+            var eligible = Ranked(league).Where(s => s.PersonId != "player" && !d.DeletedPeople.ContainsKey(s.PersonId)).Select(s => s.PersonId).ToList();
+            if (kind == "worldcup") { if (eligible.FirstOrDefault() is { } selected) entrants.Add(selected); }
+            else foreach (var club in d.Esports.Clubs.Where(c => c.Country == league.Country && league.EntrantClubs.Values.Contains(c.Id)))
+                if (eligible.FirstOrDefault(id => ClubOf(d, id) == club.Id) is { } selected) entrants.Add(selected);
         }
         entrants = entrants.OrderByDescending(id => RatingOf(d, id)).ThenBy(id => id, StringComparer.Ordinal).ToList();
         var cup = new WorldCompetition { Id = kind + "-" + d.Season, Kind = kind, Name = StageName(kind), Season = d.Season, Country = "国际", Entrants = entrants };
@@ -398,6 +417,7 @@ public static class EsportsWorld
         if (passed && target > w.License)
         {
             w.License = target;
+            ClearInvalidRegistrations(d);
             Milestone(d, "license-" + target, target == 3 ? "取得职业资格" : target == 2 ? "获得青训邀请" : "走出社区赛场", $"{m.Event}的成绩通过认证，你现在是{LicenseName(d)}。", target * 65, target * 50);
             if (target == 3) MakeOffers(d, false);
         }
