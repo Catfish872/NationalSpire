@@ -25,7 +25,13 @@ public partial class LiveRunBridge : Node
         battle = _battle, faulted = _faulted, commentaryFaulted = _commentaryFaulted, ended = _ended,
         healthPlanVersion = _match.Live?.HealthPlanVersion,
         mapCompatible = _mapCompatible, mapPoints = _mapPoints?.Count, mapRetryAt = _mapRetryAt,
-        hudVisible = IsInstanceValid(_hud) && _hud.Visible, overlayVisible = IsInstanceValid(_mapOverlay) && _mapOverlay!.Visible };
+        hudVisible = IsInstanceValid(_hud) && _hud.Visible, overlayVisible = IsInstanceValid(_mapOverlay) && _mapOverlay!.Visible,
+        // 与其他两个节点一致：Godot 对象可能已被释放但引用仍非 null，必须走 IsInstanceValid。
+        danmaku = IsInstanceValid(_danmaku) ? new { enabled = _danmaku!.Options.Enabled, lanes = _danmaku.LaneCount,
+            active = _danmaku.ActiveCount, pending = _danmaku.PendingCount,
+            spawned = _danmaku.SpawnedTotal, dropped = _danmaku.DroppedTotal,
+            droppedLane = _danmaku.DroppedLaneTotal, droppedWide = _danmaku.DroppedWideTotal, starved = _danmaku.StarvedRounds,
+            library = SituationDanmaku.Count, librarySource = SituationDanmaku.Source, tier = SituationDanmaku.Tier(_data) } : null };
     private RunState _run = null!;
     private CareerData _data = null!;
     private CareerMatch _match = null!;
@@ -33,6 +39,9 @@ public partial class LiveRunBridge : Node
     private Player _player = null!;
     private BattleObservation? _battle;
     private LiveRaceHud _hud = null!;
+    private LiveDanmakuLayer? _danmaku;
+    /// <summary>本场开始时重置总库的单场统计（片哥配额）。</summary>
+    private void ResetDanmakuCounters() => SituationDanmaku.ResetMatchCounters();
     private RivalMapOverlay? _mapOverlay;
     private double _tick;
     private double _mapCheck;
@@ -75,6 +84,18 @@ public partial class LiveRunBridge : Node
         _hud = new LiveRaceHud(); ((NRun)GetParent()).GlobalUi.AddChild(_hud);
         _hud.Restore(_data.BroadcastUi);
         _hud.LayoutChanged += layout => { _data.BroadcastUi = layout; CareerStore.Save(_data); };
+        // 弹幕层与转播面板同级，只做显示；配置随生涯存档保存，局内即时生效。
+        if (_data.BroadcastUi.Danmaku.Normalized().Enabled)
+        {
+            _danmaku = new LiveDanmakuLayer(); ((NRun)GetParent()).GlobalUi.AddChild(_danmaku);
+            _danmaku.Apply(_data.BroadcastUi.Danmaku);
+            // 队列空了时由这里补内容，用来凑够「最低同时生成数量」。
+            _danmaku.TopUp = TopUpDanmaku;
+            ResetDanmakuCounters();
+            GD.Print($"[NationalSpire] 弹幕层就绪：词条 {SituationDanmaku.Count} 条（{SituationDanmaku.Source}），" +
+                $"当前知名度 {SituationDanmaku.TierName(SituationDanmaku.Tier(_data))}（T{SituationDanmaku.Tier(_data)}），" +
+                $"粉丝 {_data.Fans}，荣誉 {_data.Esports.Honors.Count} 项");
+        }
         CombatManager.Instance.CombatSetUp += OnCombat;
         CombatManager.Instance.CombatWon += OnWon;
         CombatManager.Instance.History.Changed += OnHistoryChanged;
@@ -95,6 +116,7 @@ public partial class LiveRunBridge : Node
         _player.Creature.CurrentHpChanged -= HpChanged;
         if (Current == this) Current = null;
         if (IsInstanceValid(_hud)) _hud.QueueFree();
+        if (IsInstanceValid(_danmaku)) _danmaku!.QueueFree();
         if (IsInstanceValid(_mapOverlay)) _mapOverlay!.QueueFree();
     }
     internal static void Guard(Action action, bool commentaryOnly = false)
@@ -115,13 +137,21 @@ public partial class LiveRunBridge : Node
     {
         if (_ended) return;
         if (_faulted || !CareerStore.IsCurrent(_data) || _data.PendingMatchId != _match.Id)
-        { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
+        { _hud.Hide(); _danmaku?.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
         _tick += delta;
         _mapCheck += delta;
+        // 词库文件被改动后自动重载，方便直接改 situation/lib-*.json 试词；弹幕层不存在时不做无谓探测。
+        if (_danmaku != null) SituationDanmaku.Refresh();
         if (_tick < .2) return;
         _tick = 0;
         Guard(UpdateRace);
     }
+
+    /// <summary>
+    /// 弹幕层凑不够「最低同时生成数量」时向这里要一条内容。
+    /// 直接走总库：片哥、社区库、通用噪音与静态分库按内置比例抽取，不再有单独的广告/噪音开关。
+    /// </summary>
+    private string? TopUpDanmaku() => SituationDanmaku.PickAnyFill(Facts(new BroadcastLine("mock", "", false)), _data);
     private static List<RouteNode> CopyMap(ActMap map, int act, bool secondBoss)
     {
         var all = map.GetAllMapPoints().Append(map.StartingMapPoint).Append(map.BossMapPoint);
@@ -372,7 +402,50 @@ public partial class LiveRunBridge : Node
         }
         _hud.Say(LiveVoices.Byline(speaker, line.Role), line.Text, line.Topic, person != null ? CareerAvatars.ForPerson(_data, person.Id) : null,
             person != null ? AvatarHonors.ForPerson(_data, person.Id) : null);
+        PushDanmaku(line, speaker);
     }
+    /// <summary>
+    /// 把一条局内发言转成弹幕。解说（含现场与分析席）与观众分属两个通道，可分别关闭。
+    /// 弹幕文本优先取自局面弹幕库（按知名度分档的串子词条），词库没有覆盖这个话题时才回退到
+    /// 观众原话——这样弹幕不会变成解说的复读。弹幕层缺失、关闭或去重命中时静默跳过。
+    /// </summary>
+    private void PushDanmaku(BroadcastLine line, string speaker)
+    {
+        if (_danmaku is not { } danmaku || !IsInstanceValid(danmaku)) return;
+        bool audience = line.Topic.StartsWith("audience_") || line.Topic.StartsWith("reply_");
+        bool thought = line.Topic.StartsWith("thought_");
+        if (audience ? !danmaku.Options.Crowd : !danmaku.Options.Commentary) return;
+        try
+        {
+            if (SituationDanmaku.EventFor(line.Topic) is { } evt)
+            {
+                var picked = SituationDanmaku.Pick(_data, evt, danmaku.Options.FanOut, Facts(line));
+                // 泛化嘲讽/护主属于观众口吻，走观众配色；其余按解说配色。
+                if (picked.Count > 0) { danmaku.Burst(picked, evt is "mock" or "praise" or "target" ? "audience_danmaku" : "danmaku"); return; }
+            }
+            // 词库未覆盖的话题：观众与内心独白本身就是弹幕口吻，直接发；解说保留署名以便分辨发言者。
+            string text = audience || thought ? line.Text : LiveVoices.Byline(speaker, line.Role) + "：" + line.Text;
+            danmaku.Spawn(text, line.Analyst, line.Topic);
+        }
+        catch (Exception e) { Diagnostics.Error("live.danmaku", e); }
+    }
+
+    /// <summary>收集替换弹幕词条占位符所需的事实，全部来自当前对局与生涯数据。</summary>
+    private DanmakuFacts Facts(BroadcastLine line) => new()
+    {
+        Player = CareerEngine.Name(_data),
+        Rival = _rival.PublicName,
+        Country = _data.Esports.Country,
+        Club = _data.Esports.ClubId.Length > 0 ? EsportsWorld.ClubName(_data, _data.Esports.ClubId) : "自建俱乐部",
+        Gap = Math.Abs(_run.TotalFloor - (_match.Live?.Steps.LastOrDefault()?.Floor ?? _run.TotalFloor)),
+        Loss = _pendingLoss,
+        Cards = _battle?.Cards ?? 0,
+        Draws = _battle?.Draws ?? 0,
+        Turn = _battle?.Turn ?? 0,
+        Card = _battle?.LastCard ?? "",
+        Hp = _player.Creature.CurrentHp,
+        Time = TimeSpan.FromSeconds(RunManager.Instance.RunTime).ToString(@"mm\:ss")
+    };
 }
 
 [HarmonyPatch(typeof(NRun), nameof(NRun._Ready))]

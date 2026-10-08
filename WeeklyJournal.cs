@@ -78,6 +78,36 @@ public static class WeeklyJournal
     public static void CloseWeek(CareerData data)
     {
         if (data.Day % 14 != 0 || data.WeeklyEditions.Any(w => w.EndDay == data.Day)) return;
+        CloseNow(data);
+    }
+
+    /// <summary>
+    /// 补齐被跳过的周报。原来只在「恰好走到 14 的倍数那一天」才出报，
+    /// 读档跳天、回滚存档、或一次推进多天时，中间那些周期会被永久跳过，周报栏就一直空着。
+    /// 这里按绝对日从生涯第 1 天起每 14 天一期，把到当前天为止缺的期数依次补上。
+    /// </summary>
+    public static int ClosePending(CareerData data, int pass)
+    {
+        int target = Math.Min(data.Day, pass);
+        if (target < 14) return 0;
+        int closed = 0;
+        int day = data.Day;
+        // 从生涯第 1 期开始逐期检查：已有的跳过，缺的按那一期的日期补上。
+        // 注意不能拿"已有期数的最大值"当起点——列表为空时那样会从很靠后的期数起算，一期都补不出来。
+        for (int end = 14; end <= target; end += 14)
+        {
+            if (data.WeeklyEditions.Any(w => w.EndDay == end)) continue;
+            // 补发时要按那一期的日期生成内容，否则会把当前的战绩塞进历史周报里。
+            data.Day = end;
+            try { CloseNow(data); closed++; }
+            catch (Exception e) { Diagnostics.Error("weekly.backfill", e); }
+        }
+        data.Day = day;
+        return closed;
+    }
+
+    private static void CloseNow(CareerData data)
+    {
         int start = data.Day - 13;
         var issue = new WeeklyEdition { ArtVersion = 1, Week = data.Day / 7, EndDay = data.Day, PeriodDays = 14, Cooperation = CareerCommerce.PublicState(data, data.Day) };
         var performances = new List<Performance>();

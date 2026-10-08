@@ -32,6 +32,9 @@ public static class Entry
         CharacterIdentity.Source = () => GameBridge.Characters().Select(c => new CharacterDefinition(c.Id.ToString(), PlayerArchive.CharacterName(c.Id))).ToArray();
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         LiveCompatibility.Install(new Harmony("nationalspire.career"), typeof(Entry).Assembly);
-        GD.Print("[NationalSpire] 生涯与社区模块已加载");
+        // 同时装了创意工坊版时，游戏会按版本号二选一；这条标识用于在日志里确认加载的是本地构建。
+        GD.Print($"[NationalSpire] 生涯与社区模块已加载（本地构建 v{Diagnostics.ModVersion} · 含局内弹幕）");
+        // 启动自检：弹幕词库读不到时局内只剩解说，这条日志能直接定位。
+        GD.Print($"[NationalSpire] 弹幕词库：{SituationDanmaku.Count} 条（{SituationDanmaku.Source}）");
     }
 }

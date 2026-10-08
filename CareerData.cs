@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class CareerData
 {
@@ -36,6 +36,11 @@ public sealed class CareerData
     public Dictionary<string, string> AvatarFrames { get; set; } = [];
     public int LongSeasonsFrom { get; set; }
     public bool AutoQualifiers { get; set; } = true;
+    /// <summary>
+    /// 世界赛是否已经开始：世界大赛开始时置 true、结束时置 false。
+    /// 由 <see cref="WorldStage.Refresh"/> 在每日推进时刷新；弹幕层据此优先抽取世界赛专用词条。
+    /// </summary>
+    public bool WorldStageActive { get; set; }
     public BroadcastUiState BroadcastUi { get; set; } = new();
     public List<WeeklyEdition> WeeklyEditions { get; set; } = [];
     public Dictionary<string, string> WeeklyPersonBaselines { get; set; } = [];
@@ -294,6 +299,11 @@ public sealed class AiOptions : System.Text.Json.Serialization.IJsonOnDeserializ
     }
 
     public string Model { get; set; } = "deepseek-flash";
+    /// <summary>
+    /// 实时社区弹幕：每次 AI 社区内容更新后，额外调用一次 AI，把刚发生的社区动态转写成局内弹幕，
+    /// 风格跟随当前提示词模板。会多消耗一次 API 调用，可按需关闭。
+    /// </summary>
+    public bool CommunityDanmaku { get; set; } = true;
     public const int MaximumNewsPostCount = 20;
     public int MaxNewsPosts { get; set; } = 3;
     public int RequestsToday { get; set; }

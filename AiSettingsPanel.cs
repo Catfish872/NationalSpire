@@ -67,6 +67,18 @@ public static class AiSettingsPanel
         Button("提示词配置", prompts);
         var enabled = new CheckBox { Text = "启用 AI 社区", ButtonPressed = options.Enabled };
         enabled.Toggled += value => { editing?.Invoke(); options.Enabled = value; Save(); }; box.AddChild(enabled);
+        var communityDanmaku = new CheckBox { Text = "实时社区弹幕", ButtonPressed = options.CommunityDanmaku };
+        communityDanmaku.TooltipText = "每次社区内容更新后，额外调用一次 AI，把刚发生的社区动态转写成局内飘屏弹幕，风格跟随当前提示词模板。会多消耗一次 API 调用。";
+        communityDanmaku.Toggled += value => { editing?.Invoke(); options.CommunityDanmaku = value; Save(); };
+        box.AddChild(communityDanmaku);
+        Text("开启后，AI 每次生成社区内容都会顺手写一批弹幕，存进实时社区库；局内会与静态词库一起抽取。");
+        var communityStats = AiDanmakuStore.Stats();
+        var communitySpan = AiDanmakuStore.Span();
+        Text(communityStats.Count == 0
+            ? $"社区库当前为空。库里的弹幕每 {AiDanmakuStore.ExpiryDays} 天清理一轮过时内容，避免旧话题一直占着抽取名额。"
+            : $"社区库当前 {communityStats.Count} 条，覆盖生涯第 {communitySpan.Oldest}—{communitySpan.Newest} 天；"
+              + $"每 {AiDanmakuStore.ExpiryDays} 天清理一轮，超过 {AiDanmakuStore.ExpiryDays} 天未更新的弹幕会被淘汰（全过期时保留最新 {AiDanmakuStore.MinimumKept} 条）。");
+
         var endpoint = Input("服务地址（自动补全 /chat/completions）", options.Endpoint, "AiEndpoint");
         var model = Input("模型名称", options.Model, "AiModel");
         Text("API 密钥（加密保存在本机）");

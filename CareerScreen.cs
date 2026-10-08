@@ -397,7 +397,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Calendar(CareerData data)
     {
-        AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
+        AddHeading("赛季日程", $"本赛季共 {(SeasonCalendar.Length(data) + 6) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); _content.AddChild(row);
         row.AddChild(TeamButton("推进一天", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 1)) return; bool advanced = CareerEngine.AdvanceOneDay(data); Render(); if (!advanced) Notice("比赛日需先完成或放弃比赛。", true); }, 180));
         var nextMatchButton = TeamButton("跳转到下一场比赛", () => { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); }, 260);
@@ -416,20 +416,31 @@ public partial class CareerScreen : Control, IScreenContext
             CareerStore.Save(data); Render();
         }, 290));
         int start = SeasonCalendar.Start(data) + 1;
-        int shown = _selectedDay >= start && _selectedDay < start + SeasonCalendar.Length(data) ? _selectedDay : data.Day;
-        int block = (shown - start) / 28, blockStart = start + block * 28;
+        int seasonLength = SeasonCalendar.Length(data);
+        int shown = _selectedDay >= start && _selectedDay < start + seasonLength ? _selectedDay : data.Day;
+        // 日历每页 4 周 = 28 天，但赛季长度不一定是 28 的整数倍（34 天赛季 = 2 页，第 2 页 6 天）：
+        // 页数向上取整、块号夹进有效页范围，末页只渲染赛季内真实存在的天数。
+        int pages = (seasonLength + 27) / 28;
+        int block = Math.Clamp((shown - start) / 28, 0, pages - 1);
+        int blockStart = start + block * 28;
         var periods = new HBoxContainer(); _content.AddChild(periods);
-        for (int page = 0; page < SeasonCalendar.Length(data) / 28; page++)
+        for (int page = 0; page < pages; page++)
         {
             int target = start + page * 28;
-            var period = Button($"第 {page * 4 + 1}—{page * 4 + 4} 周", () => { _selectedDay = target; Render(); }, 170);
+            // 周次按本页实际覆盖的天数推算，末页不足 4 周时不会写成赛季里不存在的周。
+            int firstWeek = page * 28 / 7 + 1;
+            int lastWeek = (Math.Min(seasonLength, (page + 1) * 28) - 1) / 7 + 1;
+            var period = Button(firstWeek == lastWeek ? $"第 {firstWeek} 周" : $"第 {firstWeek}—{lastWeek} 周",
+                () => { _selectedDay = target; Render(); }, 170);
             if (page == block) Emphasize(period);
             periods.AddChild(period);
         }
         var grid = new GridContainer { Columns = 7, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         grid.AddThemeConstantOverride("h_separation", 8); grid.AddThemeConstantOverride("v_separation", 8);
         _content.AddChild(grid);
-        for (int i = 0; i < 28; i++)
+        // 末页只画到赛季最后一天，既不显示赛季外的日期，也不会越界访问比赛/赛事数组。
+        int cells = Math.Min(28, seasonLength - block * 28);
+        for (int i = 0; i < cells; i++)
         {
             int day = blockStart + i;
             var match = data.Matches.Where(m => m.Day == day).OrderByDescending(m => m.Registered).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
@@ -740,6 +751,8 @@ public partial class CareerScreen : Control, IScreenContext
         matchBox.AddChild(Text("各类选手用时同比调整，通关率不变。" + (data.PendingMatchId != null ? "本场结束后可修改。" : _multiplayer != null ? "由房主设置，全队同步。" : "对本生涯后续比赛生效。"), 16, _muted));
         var card = Card(); _content.AddChild(card); var box = Inner(card);
         box.AddChild(Text("AI 内容设置", 24, _gold));
+        // 弹幕只影响本机显示，因此先于 AI 分支处理，客机也能自行调整。
+        DanmakuSettings(data);
         if (_multiplayer is { Host: false }) { box.AddChild(Text("AI 由主机统一生成，你无需配置服务或密钥。帖子、解说与周刊会自动同步。", 20, _ink)); AddMultiplayerReportButton(box); return; }
         _aiStatus = AiSettingsPanel.Build(box, data.Ai,
             () => { SaveAiSettings(data); AiService.RefreshConcurrency(data.Ai); },
@@ -809,6 +822,127 @@ public partial class CareerScreen : Control, IScreenContext
         button.AddThemeFontSizeOverride("font_size", 17);
         button.Pressed += action;
         return button;
+    }
+
+    private static void Section(VBoxContainer box, string title)
+    {
+        box.AddChild(Text(title, 24, new Color("eed39b")));
+    }
+
+    /// <summary>勾选项：切换后立即生效，回调只负责落盘与提示。</summary>
+    private static void CheckRow(VBoxContainer box, string title, string hint, bool value, Action<bool> changed)
+    {
+        var check = new CheckBox { Text = title, ButtonPressed = value };
+        check.AddThemeFontSizeOverride("font_size", 17);
+        check.Toggled += v => changed(v);
+        box.AddChild(check);
+        box.AddChild(Text(hint, 16, new Color("bbcad6")));
+    }
+
+    /// <summary>数字行：失焦或回车提交，越界回退原值；上下限来自与运行时同一份常量。</summary>
+    private static void NumberRow(VBoxContainer box, string title, string hint, int value, int min, int max, Action<int> changed)
+    {
+        box.AddChild(Text($"{title}（{min}—{max}）", 17, new Color("bbcad6")));
+        var row = new HBoxContainer(); box.AddChild(row);
+        int saved = Math.Clamp(value, min, max);
+        var input = new LineEdit { Text = saved.ToString(), CustomMinimumSize = new Vector2(140, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        row.AddChild(input);
+        void Commit()
+        {
+            if (!int.TryParse(input.Text.Trim(), out int number) || number < min || number > max)
+            {
+                input.Text = saved.ToString();
+                return;
+            }
+            input.Text = number.ToString();
+            if (number != saved) { saved = number; changed(number); }
+        }
+        input.FocusExited += Commit; input.TextSubmitted += _ => Commit();
+        foreach (int delta in new[] { -1, 1 })
+        {
+            var step = new BroadcastButton { Text = delta < 0 ? "−" : "+", CustomMinimumSize = new Vector2(44, 44), FocusMode = FocusModeEnum.None };
+            step.Pressed += () => { input.Text = Math.Clamp(saved + delta, min, max).ToString(); Commit(); };
+            row.AddChild(step);
+        }
+        box.AddChild(Text(hint, 16, new Color("bbcad6")));
+    }
+
+    /// <summary>整数档位；内部转成小数档位处理，避免为每种数值类型各写一份。</summary>
+    private static void ChoiceRow(VBoxContainer box, string title, string hint, string[] labels, int[] values, int current, Action<int> changed)
+        => ChoiceRow(box, title, hint, labels, values.Select(value => (float)value).ToArray(), current, value => changed((int)value));
+
+    /// <summary>小数档位；当前值不在档位内时如实提示。</summary>
+    private static void ChoiceRow(VBoxContainer box, string title, string hint, string[] labels, float[] values, float current, Action<float> changed)
+    {
+        box.AddChild(Text(title, 17, new Color("bbcad6")));
+        var picker = new OptionButton { CustomMinimumSize = new Vector2(0, 48), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        foreach (string label in labels) picker.AddItem(label);
+        int index = Array.FindIndex(values, value => Math.Abs(value - current) < .001f);
+        picker.Select(index >= 0 ? index : 0);
+        picker.ItemSelected += choice => changed(values[(int)choice]);
+        box.AddChild(picker);
+        // 旧档可能存着档位以外的值；此时下拉框显示第一档并不代表已生效，必须说明。
+        if (index < 0) hint += $"当前存档值为 {current:0.##}，不在上述档位中；选择任一档位后会覆盖为档位值。";
+        box.AddChild(Text(hint, 16, new Color("bbcad6")));
+    }
+
+    /// <summary>局内弹幕设置；保存即写入当前生涯存档，下一场进入局内后沿用。</summary>
+    private void DanmakuSettings(CareerData data)
+    {
+        var card = Card(); _content.AddChild(card); var box = Inner(card);
+        Section(box, "局内弹幕");
+        // 多人客机拿到的是房间视图副本，写盘会被 ExternalSave 拦成只读回执，且客机局内不创建弹幕层；
+        // 这里如实说明，不提供一个点了没用的开关。
+        if (_multiplayer is { Host: false })
+        {
+            box.AddChild(Text("局内弹幕目前只在单人比赛的局内生效；多人比赛中由主机侧的播报面板显示解说，弹幕层暂未接入。", 16, _muted));
+            return;
+        }
+        var options = data.BroadcastUi.Danmaku.Normalized();
+        box.AddChild(Text("把解说与观众的反应做成多轨道横向飘动的弹幕，显示在画面顶部。只改变显示方式，不影响比赛结算与存档数据。", 16, _muted));
+        void SaveNow(string message, bool error = false)
+        {
+            try { CareerStore.Save(data); Notice(message, error); }
+            catch (Exception e) { GD.PushWarning(e.ToString()); Notice("弹幕设置未能保存，请检查存档文件夹的写入权限。", true); }
+        }
+        CheckRow(box, "开启局内弹幕", "关闭后不创建弹幕层，与未安装该功能时完全一致。", options.Enabled, value => { options.Enabled = value; SaveNow(value ? "局内弹幕已开启。" : "局内弹幕已关闭。"); });
+        CheckRow(box, "解说飘弹幕", "解说、分析席、现场发言与内心独白以「名字 · 解说：内容」的形式上屏。", options.Commentary, value => { options.Commentary = value; SaveNow("解说弹幕已更新。"); });
+        CheckRow(box, "观众飘弹幕", "局面弹幕库的串子词条与观众反应；只显示内容本身，不加署名。", options.Crowd, value => { options.Crowd = value; SaveNow("观众弹幕已更新。"); });
+        // 数量参数直接输入具体数值，不再用档位；轨道数由同屏上限自动推算。
+        NumberRow(box, "最大同时产生数", "同屏同时在飘的弹幕上限。不限制单场总量，重复由去重窗口与冷却控制；这一项只防弹幕糊满屏幕与拖慢帧率。", options.MaxOnScreen,
+            DanmakuOptions.MinimumOnScreen, DanmakuOptions.MaximumOnScreen, value => { options.MaxOnScreen = value; SaveNow($"最大同时产生数已设为 {value}（约 {options.Lanes} 条轨道）。"); });
+        NumberRow(box, "生成间距（秒）", $"两次发射之间至少间隔多少秒：数值越小弹幕越密。范围 {DanmakuOptions.MinimumEmitInterval}—{DanmakuOptions.MaximumEmitInterval}。", options.EmitIntervalSeconds,
+            DanmakuOptions.MinimumEmitInterval, DanmakuOptions.MaximumEmitInterval, value => { options.EmitIntervalSeconds = value; SaveNow($"生成间距已设为 {value} 秒。"); });
+        NumberRow(box, "最低同时生成数量", "每到生成间隔，一次至少放出这么多条弹幕；场上事件不够时由观众噪音与广告补足，保证画面不空着。注意它会很快吃掉「最大总量」——总量发完后本场就停了。", options.MinPerBurst,
+            DanmakuOptions.MinimumMinPerBurst, DanmakuOptions.MaximumMinPerBurst, value => { options.MinPerBurst = value; SaveNow($"每次至少生成 {value} 条弹幕。"); });
+        ChoiceRow(box, "滚动速度", "速度越快越接近直播弹幕，越慢越容易读清。",
+            ["慢", "标准", "快", "极快"], [1, 2, 3, 4], options.SpeedLevel, value =>
+            {
+                options.SpeedLevel = value;
+                SaveNow($"弹幕速度已设为「{DanmakuOptions.SpeedName(value)}」（{DanmakuOptions.SpeedPresets[value - 1]:0.#} 倍）。");
+            });
+        NumberRow(box, "弹幕字号", "字号越大单条弹幕越宽；如果弹幕被整条丢弃，说明这条在当前分辨率下放不下，可以调小字号或提高单条宽度上限。", options.FontSize,
+            DanmakuOptions.MinimumFontSize, DanmakuOptions.MaximumFontSize, value => { options.FontSize = value; SaveNow($"弹幕字号已设为 {value}。"); });
+        NumberRow(box, "不透明度（%）", "100 为完全不透明；数值越低弹幕越透，压住战斗画面的程度越小，但也不容易看清。", options.Opacity,
+            DanmakuOptions.MinimumOpacity, DanmakuOptions.MaximumOpacity, value => { options.Opacity = value; SaveNow($"弹幕不透明度已设为 {value}%。"); });
+        // 生成范围按屏幕高度百分比设定，弹幕只在这个纵向区间内随机出现。
+        NumberRow(box, "生成范围上边界（屏幕高度 %）", "弹幕只会在这条线以下出现；调大可以把弹幕整体往下压。", options.RangeTop,
+            DanmakuOptions.MinimumRangeTop, DanmakuOptions.MaximumRangeTop, value => { options.RangeTop = value; SaveNow($"生成范围上边界已设为屏幕高度的 {value}%。"); });
+        NumberRow(box, "生成范围下边界（屏幕高度 %）", "弹幕只会在这条线以上出现；与上边界一起决定弹幕出现的纵向区间。", options.RangeBottom,
+            DanmakuOptions.MinimumRangeBottom, DanmakuOptions.MaximumRangeBottom, value => { options.RangeBottom = value; SaveNow($"生成范围下边界已设为屏幕高度的 {value}%。"); });
+        // 片哥、社区库、噪音与静态分库合成一个总库，按内置比例抽取，不再有单独的比例设置。
+        bool worlds = data.WorldStageActive;
+        var weights = SituationDanmaku.WeightsFor(SituationDanmaku.Tier(data), worlds);
+        box.AddChild(Text($"所有弹幕合成一个总库，按内置比例混合抽取：本档词条 {weights[4]}%、相邻档 {weights[0]}%、" +
+            $"AI 实时社区库 {SituationDanmaku.CommunityPercent}%、片哥广告 {weights[2]}%、观众噪音 {weights[3]}%" +
+            (worlds ? $"、世界赛专用 {weights[5]}%（当前正在世界大赛期间：{WorldStage.Name(data)}）" : "（世界大赛期间会额外加入世界赛专用词条）") +
+            "。AI 每次更新社区内容后，新弹幕会并入社区库立刻参与抽取，因此弹幕与社区动态保持同步。", 16, new Color("bbcad6")));
+        CheckRow(box, "颜色随机", "每条弹幕从高饱和调色板里随机取色，同屏颜色更杂；关闭后按来源固定配色（解说金、观众青、分析席蓝、内心紫）。", options.RandomColor, value => { options.RandomColor = value; SaveNow(value ? "弹幕颜色改为随机。" : "弹幕颜色改为按来源固定。"); });
+        NumberRow(box, $"单条宽度上限（约 {Math.Max(1, options.MaxChars / 2)} 个汉字）",
+            "按显示宽度计算：一个汉字或 emoji 记 2，半角字符记 1。超出后按标点切成多条连续发射。", options.MaxChars,
+            DanmakuOptions.MinimumChars, DanmakuOptions.MaximumChars, value => { options.MaxChars = value; SaveNow($"单条宽度上限已设为 {value}（约 {Math.Max(1, value / 2)} 个汉字）。"); });
+        NumberRow(box, "重复过滤窗口", "按条数滑动：最近这么多条弹幕里出现过的相同文本不再重复上屏，0 表示不过滤。", options.DedupWindow,
+            DanmakuOptions.MinimumDedup, DanmakuOptions.MaximumDedup, value => { options.DedupWindow = value; SaveNow("重复过滤窗口已更新。"); });
     }
 }
 
