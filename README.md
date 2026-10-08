@@ -102,6 +102,8 @@ dotnet build NationalSpire.csproj -c Release `
 
 ## 源码结构
 
+所有 PR 提交者必须阅读[贡献说明](CONTRIBUTING.md)和[架构与功能意图](ARCHITECTURE.md)，并在 PR 中勾选阅读确认。调整赛制、经济、存档或交互规则前，请先讨论具体行为；提交 PR 时说明相关功能的验证结果与未完成部分。
+
 | 位置 | 内容 |
 | --- | --- |
 | `Career*.cs`、`Esports*.cs` | 生涯、赛事与世界数据 |

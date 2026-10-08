@@ -7,9 +7,12 @@ obj/
 /release/
 /Previews/
 
-# 内部审阅与方案文档默认不公开，仅保留根目录 README
+# Markdown 默认不公开，仅放行明确批准的公开文档
 *.[mM][dD]
 !/README.md
+!/CONTRIBUTING.md
+!/ARCHITECTURE.md
+!/.github/PULL_REQUEST_TEMPLATE.md
 
 # 构建产物、运行日志与临时文件
 *.dll
