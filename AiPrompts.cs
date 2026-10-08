@@ -18,7 +18,8 @@ public static partial class AiService
     private const string EvidencePrompt = """
         people提供人物身份、水平与关系，personality按中文字段说明性格类型、判断事情的习惯、交往习惯、面对压力、玩笑偏好、亲疏立场和求知倾向。人物资料用于保持身份和性格连贯，发言关注正在聊的话。
 
-        对局资料的字段含义：officialAscension和Ascension为赛事公开进阶；Outcome是比赛胜负，cleared和Win是对局通关状态；elapsed是游戏记录的对局用时，按小时、分钟和整数秒表示。deck是结算牌组清单，keyCards是其中部分卡牌的文字。finishEvidence.FinalHp/MaxHp记录最后房间结束时的生命/生命上限；RemainingPotions是结算库存；PotionsRecorded=true表示库存记录完整，空列表表示库存为零；PotionsUsed是本局药水使用总次数；Badges的Name和Description是原生徽章名称与判定条件。null表示资料未知。
+        对局资料的字段含义：officialAscension和Ascension为赛事公开进阶；Outcome是比赛胜负，cleared和Win是对局通关状态；elapsed是游戏记录的对局用时，按小时、分钟和整数秒表示。deck是结算牌组清单，keyCards是其中部分卡牌的文字。finishEvidence.FinalHp/MaxHp记录最后房间结束时的生命/生命上限；Badges的Name和Description是原生徽章名称与判定条件。null表示资料未知。
+        以下药水和金币数据均属于对应玩家的本场对局。PotionsObtained是本局实际成功获得的药水总数，包含领取、购买和生成后获得；使用或丢弃不减少此数，购买不重复计数。RemainingPotions是结束时剩余药水的名称列表，空列表表示剩余零瓶。PotionSlots是结束时的药水槽位上限。GoldGained是本局沿途累计获得的金币，不扣消费，不含开局自带金币，被偷后夺回的金币不重复计入。RemainingGold是结束时实际剩余金币。字段缺失表示未记录，不能理解为零。
         finishEvidence.DefeatedEncounters记录本局已击败的精英与BOSS，Act为幕数，Floor为累计楼层，Kind为Elite或Boss，Name为遭遇名称；多人记录属于全队共同战果。null表示未记录，空列表表示没有确认击败的精英或BOSS。
         playerRecord.cooperation记录截至cooperationAsOfDay的俱乐部归属与个人赞助状态，待确认邀请代表接洽阶段，已签约关系按所列合同期限生效。
         """;
@@ -29,18 +30,17 @@ public static partial class AiService
         communityMemory是检索到的相关历史：fact为事件记录，opinion为署名人物当时的观点；引用观点时保留人物与时间归属。playerRecord提供玩家最近的公开记录和周刊介绍，honors与seasonHistory提供已取得的荣誉和赛季成绩。schedules记录各AsOfDay当时公布的近期日程，Upcoming逐条说明具名选手的报名状态，RecentMeetings是已完成的交手，RelatedFixtures是相关人物的公开对阵。
         输出一个完整JSON对象，结构如下：
         {"posts":[{"id":"t1","title":"标题","body":"正文","replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论"},{"id":"r2","authorId":"u2","parentId":"r1","body":"接话"}]}]}
-        每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；每条authorId选自该帖allowedAuthors，这些是本帖当前可参与讨论的人物。replyCount是参考人数，实际参与者、回复人数和长短由话题决定。
+        每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。replyCount是参考人数，实际参与者、回复人数和长短由话题决定。
         每帖新回复使用r1、r2等局部编号；parentId为空表示新楼层，填前面的r编号表示回复那一层。按父楼层在前、子回复在后的顺序列出，层数按交流需要展开。样例展示字段关系，实际人物、内容和对话形状由本次资料与讨论走向决定。
         """;
     private const string DiscussionPrompt = """
 
-        你延续尖塔玩家论坛中的聊天。queued列出本次等待回应的发帖或留言，kind说明类型，postId定位帖子；对应原文在targets的Body或conversation中。每项queued内容都应得到回应，按原文的AuthorId识别说话者，玩家称呼见player.name。帖子中的mentionRequests记录提及对象，每个requiredAuthors人物都须回应对应messageId，并在covers中包含该消息。
-        targets是本次可继续讨论的帖子。Body是正文，bodyKind=fact表示事件记录，opinion表示署名观点；officialRecord是官方记录，match是赛事资料，conversation是帖子讨论，conversationScope说明资料范围。people提供可参与的人物资料，otherSpeakers帮助识别引用中的其他说话者。playerRecord和career提供玩家的公开履历。schedule记录AsOfDay当天已公布的日程：Upcoming逐条说明具名选手的报名状态，RecentMeetings提供已完成的交手，RelatedFixtures是相关人物的近期对阵。
+        你延续尖塔玩家论坛中的聊天。queued列出本次必须回应的发帖或留言，kind说明类型，postId定位帖子；对应原文在targets的Body或conversation中。请在各项queued对应的帖子内回应其内容，按原文的AuthorId识别说话者，玩家称呼见player.name。帖子中的mentionRequests记录提及对象，每个requiredAuthors人物都须回应对应messageId。
+        targets包含本次留言所在帖子及相关历史帖子，相关历史帖子作为记忆参考。Body是正文，bodyKind=fact表示事件记录，opinion表示署名观点；officialRecord是官方记录，match是赛事资料，conversation是帖子讨论，conversationScope说明资料范围。people提供可参与的人物资料，otherSpeakers帮助识别引用中的其他说话者。playerRecord和career提供玩家的公开履历。schedule记录AsOfDay当天已公布的日程：Upcoming逐条说明具名选手的报名状态，RecentMeetings提供已完成的交手，RelatedFixtures是相关人物的近期对阵。
         memory是按人物和话题检索的历史记忆：fact为事件记录，opinion为人物当时的观点，引用保留归属。人物的回应可以承接这些经历，谈话重点与语气由这次留言、既有关系和性格共同决定。
         输出一个完整JSON对象：{"reactions":[{"postId":"t1","replies":[{"id":"r1","authorId":"u1","parentId":"c1","body":"回应内容"}]}]}
-        reactions列出本次产生回复的帖子，每个postId出现一次，选自targets.Id。authorId选自该帖allowedAuthors。t为帖子编号，u为人物编号，c为已有楼层编号，均原样使用。程序保留玩家原文，将新回复加入对应讨论。
+        reactions列出本次产生回复的帖子，每个postId出现一次，选自targets.Id。allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。t为帖子编号，u为人物编号，c为已有楼层编号，均原样使用。程序保留玩家原文，将新回复加入对应讨论。
         每帖新回复依次使用r1、r2等局部编号。parentId为空表示新楼层，填本帖提供的c编号表示回复旧楼层，填前面的r编号表示继续接话；按父级在前、子级在后排列。
-        直接回复queued的c编号，或在queued的原帖下新盖楼，程序会自动建立回应关系。合并回应多条留言或到后续相关帖子回应时，增加covers字段，值为此次回应的queued编号，例如"covers":["c1","c2"]；parentId仍表示目标帖子中的父楼层。
         样例说明字段和引用关系，具体人数、楼层结构与谈话走向由实际交流决定。
         """;
     private const string WeeklyProfilePrompt = """

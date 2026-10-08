@@ -66,7 +66,7 @@ public static class CharacterIdentity
                 {
                     // 标识与姓名承担引用关系，不作为职业名称处理。
                     bool keep = key.Equals("name", StringComparison.OrdinalIgnoreCase) || key.EndsWith("Id", StringComparison.OrdinalIgnoreCase)
-                        || key is "allowedAuthors" or "People" or "covers" or "原ID" or "现ID";
+                        || key is "allowedAuthors" or "People" or "原ID" or "现ID";
                     if (keep) continue;
                     if (obj[key] is JsonValue item && item.TryGetValue<string>(out var text)) obj[key] = Convert(text);
                     else if (obj[key] is { } child) Visit(child);

@@ -156,15 +156,6 @@ public partial class CareerScreen
             }
             box.AddChild(MentionText(data, reply.Body, 17, _ink, post.RelatedPeople.Append(post.AuthorId).Append(reply.AuthorId)));
             if (reply.NeedsReaction) RenderWorkStatus(box, reply.ReactionGeneration, () => GenerateContent(() => { _ = AiService.ProcessInteractionsAsync([reply.Id]); }, true), reply.Id);
-            foreach (string covered in reply.Covers)
-            {
-                var source = CommunityThreads.All(data).FirstOrDefault(p => p.Id != post.Id && (p.Id == covered || p.Replies.Any(r => r.Id == covered)));
-                if (source != null)
-                {
-                    var link = Button("回应之前的讨论：" + source.Title, () => OpenPost(source)); link.AutowrapMode = TextServer.AutowrapMode.WordSmart;
-                    link.SizeFlagsHorizontal = SizeFlags.ExpandFill; box.AddChild(link); break;
-                }
-            }
         }
     }
     private void BeginReply(CommunityPost post, string parent)

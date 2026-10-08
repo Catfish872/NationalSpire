@@ -545,7 +545,7 @@ public static partial class CoopRules
             post.SourceBody += "\n本场为合作队伍赛，全体真人共同爬塔。队员为" + string.Join("、", played.Select(m => m.Name)) + "。对手全队为" + string.Join("、", run.Opponents.Select(id => CareerEngine.DisplayName(d, id))) + "。";
             if (details != null) foreach (var member in played)
                 if (details.TryGetValue(member.SteamId, out var detail))
-                    post.SourceBody += $"\n{member.Name}使用{detail.Character}，结束生命{detail.Evidence.FinalHp}/{detail.Evidence.MaxHp}，使用药水{detail.Evidence.PotionsUsed}次，牌组为{string.Join("、", detail.DeckSummary)}。";
+                    post.SourceBody += $"\n{member.Name}使用{detail.Character}，{detail.Evidence.ResourceSummary()}，牌组为{string.Join("、", detail.DeckSummary)}。";
             post.RelatedPeople.AddRange(played.Select(m => m.PersonId)); CommunityThreads.Remember(d, post);
         }
         w.Run = null; w.LatestCheckpoint = ""; w.Revision++; RefreshPeople(w); return w;

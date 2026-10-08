@@ -19,11 +19,11 @@ public static partial class AiService
         string failure = "请求中断或配置已改变，可重试";
         void Fail(string message) { failure = message; Status = message; }
         CommunityThreads.SetInteractionState(data, requested, "queued"); CareerStore.Save(data);
-        // 入队时固定涉及的帖子；发送前读取这些帖子的最新内容，保持同帖回应顺序。
+        // 每条留言独立排队，发送前读取帖子内容；不同留言按配置并发。
         var targets = ReactionTargets(data, requested);
         var works = targets.Where(p => requested.Contains(p.Id)).Select(p => p.ReactionGeneration)
             .Concat(targets.SelectMany(p => p.Replies).Where(r => requested.Contains(r.Id)).Select(r => r.ReactionGeneration)).ToArray();
-        using var lease = await EnterQueueAsync(data, targets.Select(p => "post:" + p.Id), works);
+        using var lease = await EnterQueueAsync(data, requested.Select(id => "reply:" + id), works);
         try
         {
             if (!CareerStore.IsCurrent(data)) return;
@@ -55,6 +55,7 @@ public static partial class AiService
             string content = wire.Decode(await ReadResponseCompletion(response), expectedArray: "reactions");
             if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
             ApplyDiscussionCore(data, requested, targets, content, permissions);
+            if (CommunityThreads.PendingIds(data).Any(requested.Contains)) { Fail("本次未生成社区回复，可重试"); return; }
             Diagnostics.Record("ai.applied", new { trace, kind = "discussion", targets = requested.ToArray() });
             Status = "社区回应已更新"; CareerStore.Save(data);
         }
@@ -185,15 +186,16 @@ public static partial class AiService
             career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak,
                 honors = data.Esports.Honors.TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }) } }, Json);
     }
-    private sealed record DiscussionPermission(HashSet<string> Authors, HashSet<string> Parents);
+    private static HashSet<string> ReplyAuthors(CareerData data) => data.People
+        .Where(p => !CommunityThreads.IsHuman(data, p.Id)).Select(p => p.Id).ToHashSet();
+    private sealed record DiscussionPermission(HashSet<string> Parents);
     private static Dictionary<string, DiscussionPermission> ReadDiscussionPermissions(string context)
     {
         using var document = JsonDocument.Parse(context);
         return document.RootElement.GetProperty("targets").EnumerateArray().ToDictionary(p => p.GetProperty("Id").GetString()!,
-            p => new DiscussionPermission(p.GetProperty("allowedAuthors").EnumerateArray().Select(a => a.GetString()!).ToHashSet(),
-                p.GetProperty("conversation").EnumerateArray().Select(r => r.GetProperty("Id").GetString()!).ToHashSet()));
+            p => new DiscussionPermission(p.GetProperty("conversation").EnumerateArray().Select(r => r.GetProperty("Id").GetString()!).ToHashSet()));
     }
-    internal static List<CommunityReply> ParseReplies(JsonElement array, CommunityPost post, ISet<string> allowed, bool existingParents, int day, ISet<string>? requested = null, ISet<string>? suppliedParents = null)
+    internal static List<CommunityReply> ParseReplies(JsonElement array, CommunityPost post, ISet<string> allowed, bool existingParents, int day, ISet<string>? suppliedParents = null)
     {
         var result = new List<CommunityReply>(); var aliases = new Dictionary<string, string>();
         var existing = existingParents ? post.Replies.Select(r => r.Id).ToHashSet() : new HashSet<string>();
@@ -207,12 +209,7 @@ public static partial class AiService
             if (string.IsNullOrWhiteSpace(localId) || existing.Contains(localId) || aliases.ContainsKey(localId) || !allowed.Contains(author) || author == "player" || string.IsNullOrWhiteSpace(body))
                 throw new InvalidDataException("回复标识或人物无效");
             if (parent.Length > 0 && !existing.Contains(parent) && !aliases.ContainsKey(parent)) throw new InvalidDataException("回复目标无效或顺序错误");
-            var covers = requested == null ? new List<string>()
-                : item.TryGetProperty("covers", out var covered) ? covered.EnumerateArray().Select(x => x.GetString() ?? "").Distinct().ToList()
-                : requested.Contains(parent) ? new List<string> { parent }
-                : parent.Length == 0 && requested.Contains(post.Id) ? new List<string> { post.Id } : [];
-            if (covers.Any(id => !requested!.Contains(id))) throw new InvalidDataException("回应了不在本轮队列中的留言");
-            var reply = new CommunityReply { AiGenerated = true, AuthorId = author, ParentId = aliases.GetValueOrDefault(parent, parent), Body = body, Day = day, Covers = covers };
+            var reply = new CommunityReply { AiGenerated = true, AuthorId = author, ParentId = aliases.GetValueOrDefault(parent, parent), Body = body, Day = day };
             aliases[localId] = reply.Id; result.Add(reply);
         }
         if (result.Count == 0) throw new InvalidDataException("缺少回复");
@@ -224,25 +221,18 @@ public static partial class AiService
     {
         using var parsed = JsonDocument.Parse(content);
         var staged = new List<(CommunityPost Post, List<CommunityReply> Replies)>(); var seen = new HashSet<string>();
+        var replyAuthors = ReplyAuthors(data);
         foreach (var item in parsed.RootElement.GetProperty("reactions").EnumerateArray())
         {
             string id = item.GetProperty("postId").GetString() ?? "";
             var post = targets.FirstOrDefault(p => p.Id == id);
             if (post == null || !seen.Add(id) || !CommunityThreads.All(data).Contains(post)) throw new InvalidDataException("回应帖子无效");
             if (!permissions.TryGetValue(id, out var permission)) throw new InvalidDataException("帖子未包含于请求");
-            staged.Add((post, ParseReplies(item.GetProperty("replies"), post, permission.Authors, true, data.Day, requested, permission.Parents)));
+            staged.Add((post, ParseReplies(item.GetProperty("replies"), post, replyAuthors, true, data.Day, permission.Parents)));
         }
+        if (staged.Count == 0) return;
         if (staged.SelectMany(s => s.Replies).Any(r => CareerEngine.Person(data, r.AuthorId) is { } p && SpireArbitration.Muted(p)))
             throw new InvalidDataException("回复期间有人受到封号处分，请重新生成其他选手的回应。");
-        if (!requested.SetEquals(staged.SelectMany(s => s.Replies).SelectMany(r => r.Covers))) throw new InvalidDataException("留言批次未完整回应");
-        foreach (var item in staged)
-        {
-            var mentions = item.Post.Replies.Where(r => requested.Contains(r.Id)).Select(r => (r.Id, r.MentionedPeople))
-                .Concat(requested.Contains(item.Post.Id) ? [(item.Post.Id, item.Post.MentionedPeople)] : []);
-            foreach (var (id, authors) in mentions)
-                foreach (string author in authors.Where(a => CareerEngine.Person(data, a) is { } p && !SpireArbitration.Muted(p)))
-                    if (!item.Replies.Any(r => r.AuthorId == author && r.Covers.Contains(id))) throw new InvalidDataException("被 @ 的选手尚未完整回应，可以重试。");
-        }
         var awaiting = CommunityThreads.PendingIds(data).ToHashSet();
         if (!requested.All(awaiting.Contains)) throw new InvalidDataException("本轮留言状态已变化");
         foreach (var item in staged) { item.Post.Replies.AddRange(item.Replies); item.Post.Revision++; CommunityThreads.Remember(data, item.Post); }

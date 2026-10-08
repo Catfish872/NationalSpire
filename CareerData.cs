@@ -214,7 +214,6 @@ public sealed class CommunityReply
     public string ParentId { get; set; } = "";
     public int Day { get; set; }
     public bool NeedsReaction { get; set; }
-    public List<string> Covers { get; set; } = [];
     public string AuthorId { get; set; } = "";
     public string Body { get; set; } = "";
 }

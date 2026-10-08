@@ -79,7 +79,7 @@ public static class CircuitWorld
             var next = d.Matches.OrderBy(m => m.Day).FirstOrDefault(m => m.Kind == stage && m.Day >= d.Day && m.Status == "待赛" && !m.RegistrationDeclined);
             if (next != null) next.Registered = true;
         }
-        if (d.Esports.Honors.Any(h => h.Id.StartsWith("worldfinal-") || h.Id.StartsWith("continental-") || h.Id.StartsWith("worldcup-")) && d.Esports.BestClear >= 9)
+        if (EsportsWorld.CanEnterMasters(d))
         {
             var record = d.Matches.FirstOrDefault(m => m.Kind == "masters" && m.Day >= d.Day && m.Status == "待赛");
             if (record != null) record.Registered = true;

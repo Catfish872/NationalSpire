@@ -120,11 +120,7 @@ public static partial class AiService
         {
             var post = CommunityThreads.All(data).Single(p => p.Id == test.Source.Id);
             var oldIds = post.Replies.Select(r => r.Id).ToHashSet();
-            if (test.Source.Scene == "news")
-            {
-                var before = TestCopy(post);
-                ApplyNewsResponse(data, [post], content, [before], PromptPeople(data, [before]).Select(p => p.Id).ToHashSet());
-            }
+            if (test.Source.Scene == "news") ApplyNewsResponse(data, [post], content);
             else ApplyDiscussionCore(data, new HashSet<string> { test.TargetId }, [post], content, ReadDiscussionPermissions(test.Context));
             var lines = new List<string> { post.Title, CareerEngine.DisplayName(data, post.AuthorId), post.Body };
             if (test.Source.Scene == "discussion") lines.Add("测试留言：" + test.Message);

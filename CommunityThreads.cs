@@ -93,7 +93,7 @@ public static class CommunityThreads
     {
         int count = 0;
         foreach (var post in All(data).Where(p => !CommunityThreads.IsHuman(data, p.AuthorId) && p.NewsGeneration.State != "completed"
-            && !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated || r.Covers.Count > 0) && p.Revision > p.SeenRevision))
+            && !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated) && p.Revision > p.SeenRevision))
         { post.SeenRevision = post.Revision; count++; }
         if (count > 0) CareerStore.Save(data);
         return count;
@@ -155,14 +155,16 @@ public static class CommunityThreads
             var requests = post.Replies.Where(r => r.NeedsReaction && requested.Contains(r.Id)).ToList();
             bool root = (CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost) && post.NeedsReaction && requested.Contains(post.Id);
             if (requests.Count == 0 && !root) continue;
+            var answered = new HashSet<(string Author, string Request)>();
             if (root)
             {
                 var person = Audience(data, post).OrderBy(p => CareerEngine.StableHash(post.Id + p.Id)).FirstOrDefault();
                 if (person != null)
                 {
-                    post.Replies.Add(new CommunityReply { AuthorId = person.Id, Day = data.Day, Covers = [post.Id],
+                    post.Replies.Add(new CommunityReply { AuthorId = person.Id, Day = data.Day,
                         Body = new[] { "看到本人发帖了，先来留个位置。我也在这个赛区玩，平时主要看社区杯。", "楼主也逛这里啊。我刚结束自己的对局，过来看看大家在聊什么。", "来了，这边熟悉的名字越来越多了。" }[CareerEngine.StableHash(post.Id) % 3] });
                     post.NeedsReaction = false;
+                    answered.Add((person.Id, post.Id));
                 }
             }
             foreach (var group in requests.GroupBy(r => Position(post, r).Floor))
@@ -180,14 +182,14 @@ public static class CommunityThreads
                     "热情直率" => $"{name}本人也来聊了！我平时就在这个区看比赛，没想到能在评论区碰见。",
                     _ => new[] { "这层有意思，平时光顾着看战报，很少看到当事人来聊。", "看到了。我自己还经常在前面几层翻车，先听大家聊。", "刚翻到这里，前面的讨论也补看了。" }[CareerEngine.StableHash(last.Id) % 3]
                 };
-                post.Replies.Add(new CommunityReply { AuthorId = person.Id, ParentId = last.Id, Day = data.Day, Body = body, Covers = group.Select(r => r.Id).ToList() });
-                foreach (var r in group) r.NeedsReaction = false;
+                post.Replies.Add(new CommunityReply { AuthorId = person.Id, ParentId = last.Id, Day = data.Day, Body = body });
+                foreach (var r in group) { r.NeedsReaction = false; answered.Add((person.Id, r.Id)); }
             }
             var mentionRequests = requests.Select(r => (r.Id, r.MentionedPeople)).Concat(root ? [(post.Id, post.MentionedPeople)] : []);
             foreach (var (id, authors) in mentionRequests)
                 foreach (string author in authors.Where(a => data.People.Any(p => p.Id == a && !SpireArbitration.Muted(p)) && !IsHuman(data, a)))
-                    if (!post.Replies.Any(r => r.AuthorId == author && r.Covers.Contains(id)))
-                        post.Replies.Add(new() { AuthorId = author, ParentId = id == post.Id ? "" : id, Day = data.Day, Covers = [id], Body = "看到你叫我了，我过来看看。" });
+                    if (!answered.Contains((author, id)))
+                        post.Replies.Add(new() { AuthorId = author, ParentId = id == post.Id ? "" : id, Day = data.Day, Body = "看到你叫我了，我过来看看。" });
             post.Revision++; Remember(data, post);
         }
     }

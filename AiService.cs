@@ -181,11 +181,10 @@ public static partial class AiService
             if (pending.Count == 0) return;
             int today = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"));
             if (data.Ai.RequestDay != today) { data.Ai.RequestDay = today; data.Ai.RequestsToday = 0; }
-            // 发送时固定可用人物和原楼层，响应期间新增留言不会改变校验权限。
+            // 发送时固定帖子资料，响应期间新增留言不会改变本轮生成内容。
             var snapshots = pending.Select(p => JsonSerializer.Deserialize<CommunityPost>(JsonSerializer.Serialize(p, Json))!).ToList();
             var wire = new AiWireProtocol(data);
             var payload = BuildNewsPayload(data, snapshots, wire);
-            var allowed = PromptPeople(data, snapshots).Select(p => p.Id).ToHashSet();
             foreach (var post in pending) CommunityThreads.SetWork(post.NewsGeneration, "sending");
             data.Ai.RequestsToday++; CareerStore.Save(data); Status = "正在生成社区讨论";
             using var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -197,7 +196,7 @@ public static partial class AiService
             if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
             if (pending.Any(p => p.NewsGeneration.State == "superseded"))
             { foreach (var p in pending) { p.AiPending = false; CommunityThreads.SetWork(p.NewsGeneration, "superseded"); } return; }
-            ApplyNewsResponse(data, pending, content, snapshots, allowed);
+            ApplyNewsResponse(data, pending, content);
             Diagnostics.Record("ai.applied", new { trace, kind = "news", posts = pending.Select(p => p.Id).ToArray() });
             Status = $"已发布 {pending.Count} 篇 AI 更新"; CareerStore.Save(data);
         }
@@ -230,12 +229,13 @@ public static partial class AiService
     }
 
     private static void ApplyResponse(CareerData data, List<CommunityPost> pending, string content)
-        => ApplyNewsResponse(data, pending, content, pending, PromptPeople(data, pending).Select(p => p.Id).ToHashSet());
-    private static void ApplyNewsResponse(CareerData data, List<CommunityPost> pending, string content, List<CommunityPost> snapshots, HashSet<string> allowed)
+        => ApplyNewsResponse(data, pending, content);
+    private static void ApplyNewsResponse(CareerData data, List<CommunityPost> pending, string content)
     {
         using var parsed = JsonDocument.Parse(content);
         var staged = new List<(CommunityPost Post, string Title, string Body, List<CommunityReply> Replies)>();
         var seen = new HashSet<string>();
+        var authors = ReplyAuthors(data);
         foreach (var item in parsed.RootElement.GetProperty("posts").EnumerateArray())
         {
             string id = item.GetProperty("id").GetString() ?? "";
@@ -245,9 +245,7 @@ public static partial class AiService
             string title = item.GetProperty("title").GetString() ?? "";
             if (string.IsNullOrWhiteSpace(title)) throw new InvalidDataException("标题无效");
             if (string.IsNullOrWhiteSpace(body)) throw new InvalidDataException("正文无效");
-            var original = snapshots.Single(p => p.Id == id);
-            var permitted = original.Replies.Select(r => r.AuthorId).Append(original.AuthorId).Where(allowed.Contains).ToHashSet();
-            var replies = ParseReplies(item.GetProperty("replies"), post, permitted, false, data.Day);
+            var replies = ParseReplies(item.GetProperty("replies"), post, authors, false, data.Day);
             if (replies.Any(r => CareerEngine.Person(data, r.AuthorId) is { } p && SpireArbitration.Muted(p))
                 || CareerEngine.Person(data, post.AuthorId) is { } author && SpireArbitration.Muted(author))
                 throw new InvalidDataException("发言者受到封号处分，本次内容未发布。");

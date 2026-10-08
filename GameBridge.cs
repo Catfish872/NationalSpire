@@ -18,7 +18,7 @@ namespace NationalSpire;
 
 public static class GameBridge
 {
-    public static string NativeCareerPath => ProjectSettings.GlobalizePath(MegaCrit.Sts2.Core.Saves.Managers.RunSaveManager.GetRunSavePath(SaveManager.Instance.CurrentProfileId, "current_run.save"));
+    public static string NativeCareerPath => CareerStore.NativeRunPath;
     public static string RecoveryMessageFor(bool multiplayer) => multiplayer
         ? MatchRecovery.Message(true, false, false)
         : MatchRecovery.Message(false, SaveManager.Instance.HasRunSave, RunManager.Instance.IsInProgress);
@@ -32,7 +32,7 @@ public static class GameBridge
     {
         var data = CareerStore.Data;
         if (data.Failure is { } pending && (!pending.RetryRequested || pending.Result.MatchId != match.Id)) return MatchFailure.Locked(data);
-        if (SaveManager.Instance.HasRunSave || RunManager.Instance.IsInProgress) return "请先在主菜单继续并完成当前对局。";
+        if (SaveManager.Instance.HasRunSave || RunManager.Instance.IsInProgress) return MatchRecovery.SingleplayerInUse;
         if (data.PendingMatchId != null) return "已有一场生涯比赛进行中。";
         if (!data.Matches.Contains(match) || match.Status != "待赛" || !match.Registered || match.Day != data.Day) return "请先报名并前往比赛日。";
         if (EsportsWorld.EntryReason(data, match) is { } locked) return locked;
@@ -157,6 +157,12 @@ public static class GameBridge
         var roomStats = history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList();
         if (roomStats.LastOrDefault() is { MaxHp: > 0 } last)
         { evidence.FinalHp = last.CurrentHp; evidence.MaxHp = last.MaxHp; evidence.PotionsUsed = roomStats.Sum(s => s.PotionUsed.Count); }
+        if (roomStats.LastOrDefault() is { } finalStats)
+        {
+            evidence.PotionsObtained = roomStats.Sum(s => s.PotionChoices.Count(p => p.wasPicked));
+            evidence.GoldGained = roomStats.Sum(s => s.GoldGained);
+            evidence.RemainingGold = finalStats.CurrentGold;
+        }
         foreach (var potion in player.Potions.Where(p => p.Id != null))
         {
             try { evidence.RemainingPotions.Add(GameText.Plain(PotionModel.FromSerializable(potion).Title.GetFormattedText())); }

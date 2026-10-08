@@ -16,6 +16,9 @@ public static class EsportsWorld
     public static string HistoricClub(CareerData d, WorldCompetition c, string id) => c.EntrantClubs.GetValueOrDefault(id, ClubOf(d, id));
     public static string HistoricCountry(CareerData d, WorldCompetition c, string id) => c.EntrantCountries.GetValueOrDefault(id, CountryOf(d, id));
     public static int RatingOf(CareerData d, string id) => id == "player" ? d.Rating : CareerEngine.Person(d, id)?.Rating ?? 0;
+    public static bool CanEnterMasters(CareerData d) => d.Esports.BestClear >= 9 &&
+        (d.Esports.CircuitAwards.Any(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind is "worldfinal" or "continental" or "worldcup")
+        || d.Esports.Honors.Any(h => h.Id.StartsWith("worldfinal-") || h.Id.StartsWith("continental-") || h.Id.StartsWith("worldcup-")));
     public static bool IsProfessional(CareerPerson p) => p.ClubPosition.Length > 0 ? p.ClubPosition is "首发" or "轮换"
         : p.Role is "职业选手" or "世界顶尖" || p.AbilityTemplate is "职业选手" or "世界顶尖";
     public static string StageName(string kind) => kind switch { "local" => "社区赛事", "city" => "城市公开赛", "academy" => "青训选拔", "open" => "赛区巡回公开赛", "league" => "国内职业联赛", "continental" => "洲际俱乐部冠军杯", "worldcup" => "国家队世界杯", "worldfinal" => "世界总决赛", "masters" => "世界纪录邀请赛", _ => "历史赛事" };
@@ -166,7 +169,7 @@ public static class EsportsWorld
             if (m.Round > 1 && !cup.Fixtures.Any(f => f.Id == m.FixtureId && (f.HomeId == "player" || f.AwayId == "player"))) return "必须赢得上一轮淘汰赛才能晋级。";
             return null;
         }
-        if (m.Kind == "masters") return w.Honors.Any(h => h.Id.StartsWith("continental-") || h.Id.StartsWith("worldcup-") || h.Id.StartsWith("worldfinal-")) && w.BestClear >= 9 ? null : "仅邀请国际赛事冠军，且需要进阶九通关履历。";
+        if (m.Kind == "masters") return CanEnterMasters(d) ? null : "仅邀请国际赛事冠军，且需要进阶九通关履历。";
         return "赛事尚未开放。";
     }
 

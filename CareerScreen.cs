@@ -570,7 +570,7 @@ public partial class CareerScreen : Control, IScreenContext
                 if (IsInstanceValid(this) && !IsQueuedForDeletion() && error != null) Notice(error, true);
             }, 220); Emphasize(enter); controls.AddChild(enter);
             if (_multiplayer == null && due && data.PendingMatchId == null) controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
-            if (SaveManager.Instance.HasRunSave) box.AddChild(Text("还有一局尚未结束，请先返回主菜单继续或放弃。", 16, new Color("e7a6a6")));
+            if (SaveManager.Instance.HasRunSave) box.AddChild(Text(MatchRecovery.SingleplayerInUse, 16, new Color("e7a6a6")));
             box.AddChild(Matchup(data, match));
         }
         else

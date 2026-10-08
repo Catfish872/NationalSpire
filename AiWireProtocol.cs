@@ -11,7 +11,7 @@ internal sealed class AiWireProtocol
     private readonly Dictionary<string, string> _decode = new();
     private readonly Dictionary<string, string> _characters;
     private readonly List<(string Earlier, string Current)> _names = [];
-    private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "allowedAuthors", "requiredAuthors", "messageId", "People", "covers"];
+    private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
     internal AiWireProtocol(CareerData data)
     {
         void Add(string id, string shortId)
@@ -159,7 +159,7 @@ internal sealed class AiWireProtocol
                 string canonical = key.ToLowerInvariant() switch
                 {
                     "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId",
-                    "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", "covers" => "covers", _ => key
+                    "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", _ => key
                 };
                 var value = obj[key];
                 if (canonical != key)

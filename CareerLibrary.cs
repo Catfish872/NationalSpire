@@ -37,31 +37,6 @@ public static class CareerLibrary
         string path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(original)!, "national_spire_career-" + Guid.NewGuid().ToString("N") + ".json");
         Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!); File.WriteAllBytes(path, CoopJson.PublicBytes(data)); return path;
     }
-    public static void SwitchNative(CareerData current, string currentPath, CareerData target, string targetPath, string native)
-    {
-        if (current.PendingMatchId == null && (File.Exists(native) || File.Exists(native + ".backup"))) throw new InvalidOperationException("请先完成当前原版对局。");
-        if (current.PendingMatchId != null && File.Exists(native)) File.Copy(native, currentPath + ".run", true);
-        if (current.PendingMatchId != null && File.Exists(native + ".backup")) File.Copy(native + ".backup", currentPath + ".run.backup", true);
-        byte[]? oldNative = File.Exists(native) ? File.ReadAllBytes(native) : null;
-        byte[]? oldBackup = File.Exists(native + ".backup") ? File.ReadAllBytes(native + ".backup") : null;
-        try
-        {
-            if (target.PendingMatchId != null && File.Exists(targetPath + ".run"))
-            { Directory.CreateDirectory(System.IO.Path.GetDirectoryName(native)!); File.Copy(targetPath + ".run", native, true); }
-            else if (target.PendingMatchId != null && File.Exists(targetPath + ".run.backup")) File.Copy(targetPath + ".run.backup", native, true);
-            else if (target.PendingMatchId != null) throw new InvalidDataException("这份生涯缺少未完成对局的原版存档。");
-            else if (current.PendingMatchId != null && File.Exists(native)) File.Delete(native);
-            if (target.PendingMatchId != null && File.Exists(targetPath + ".run.backup")) File.Copy(targetPath + ".run.backup", native + ".backup", true);
-            else if (File.Exists(native + ".backup")) File.Delete(native + ".backup");
-        }
-        catch { RestoreNative(native, oldNative, oldBackup); throw; }
-    }
-    public static void RestoreNative(string native, byte[]? run, byte[]? backup)
-    {
-        foreach (var item in new[] { (Path: native, Bytes: run), (Path: native + ".backup", Bytes: backup) })
-            if (item.Bytes != null) { Directory.CreateDirectory(System.IO.Path.GetDirectoryName(item.Path)!); File.WriteAllBytes(item.Path, item.Bytes); }
-            else if (File.Exists(item.Path)) File.Delete(item.Path);
-    }
     public static byte[] Export(CareerData data, byte[]? run = null, byte[]? backup = null)
     {
         using var buffer = new MemoryStream();

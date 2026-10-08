@@ -23,6 +23,7 @@ public static class CareerStore
     private static readonly Dictionary<CareerData, string> Paths = new();
     public static string LoadNotice { get; private set; } = "";
     public static string DefaultPath => ProjectSettings.GlobalizePath(SaveManager.Instance.GetProfileScopedPath("national_spire_career.json"));
+    public static string NativeRunPath => ProjectSettings.GlobalizePath(SaveManager.Instance.GetProfileScopedPath("saves/current_run.save"));
     private static string FilePath => CareerLibrary.SelectedPath(DefaultPath);
     public static bool IsCurrent(CareerData data) => data.ExternalCurrent?.Invoke() ?? ReferenceEquals(Data, data);
     public static CareerData Data
@@ -183,20 +184,17 @@ public static class CareerStore
             var previous = Data;
             if (Path.GetFullPath(path) == Path.GetFullPath(Paths[previous])) return previous;
             Save(previous);
-            var incoming = Read(path);
-            string native = GameBridge.NativeCareerPath;
-            byte[]? run = File.Exists(native) ? File.ReadAllBytes(native) : null;
-            byte[]? backup = File.Exists(native + ".backup") ? File.ReadAllBytes(native + ".backup") : null;
+            _ = Read(path);
             string previousPath = Paths[previous];
             try
             {
-                CareerLibrary.SwitchNative(previous, previousPath, incoming, path, native); CareerLibrary.Select(DefaultPath, path);
+                CareerLibrary.Select(DefaultPath, path);
                 _data = null; _loadedPath = null;
                 return Data;
             }
             catch
             {
-                CareerLibrary.RestoreNative(native, run, backup); CareerLibrary.Select(DefaultPath, previousPath);
+                CareerLibrary.Select(DefaultPath, previousPath);
                 _data = previous; _loadedPath = previousPath; throw;
             }
         }
