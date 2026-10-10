@@ -2,6 +2,7 @@
 
 public sealed class CareerData
 {
+    public ChatWorld Chats { get; set; } = new();
     public FailureDecision? Failure { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
     public Dictionary<string, Dictionary<string, int>> HumanFavours { get; set; } = [];

@@ -276,6 +276,7 @@ public static class MenuPatch
             button.OffsetLeft = 40; button.OffsetRight = 350;
             button.OffsetTop = -106; button.OffsetBottom = -42;
             button.Pressed += () => CareerScreen.Open(__instance);
+            MainMenuEntries.Bind(__instance, button);
             // 主菜单底部独立入口，避开左上方档案选择和原生菜单列表。
             if (!Coop.CoopRuntime.Bound) _ = AiService.ProcessPendingAsync();
         }

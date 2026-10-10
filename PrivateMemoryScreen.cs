@@ -78,19 +78,32 @@ public partial class CareerScreen
         if (!string.IsNullOrWhiteSpace(mood.Reason)) content.AddChild(PrivateText(mood.Reason, 15, _muted));
     }
     private void AddPrivateReasoning(PrivateTurn turn, string text)
+        => AddChatReasoning(turn.Id, text);
+    private Action<string> AddChatReasoning(string turn, string text)
     {
-        bool expanded = _privateExpandedReasoning.Contains(turn.Id);
         var section = new VBoxContainer { Name = "PrivateReasoning", SizeFlagsHorizontal = SizeFlags.ExpandFill }; section.AddThemeConstantOverride("separation", 10); _privateBody!.AddChild(section);
-        section.SetMeta("reasoning_turn", turn.Id);
-        section.AddChild(PrivateButton(expanded ? "思考过程 ▾" : "思考过程 ▸", () =>
+        section.SetMeta("reasoning_turn", turn);
+        PanelContainer? panel = null; RichTextLabel? label = null; Button? button = null;
+        void Update(string value)
         {
-            if (!_privateExpandedReasoning.Add(turn.Id)) _privateExpandedReasoning.Remove(turn.Id);
-            _privateSignature = ""; RefreshPrivateChat(false); _ = FocusPrivateReasoning(turn.Id);
-        }, 145));
-        if (!expanded) return;
-        var panel = new PanelContainer(); panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10202d", "41586a", 6, 18)); section.AddChild(panel);
-        var scroll = new ScrollContainer { CustomMinimumSize = new(0, 150), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; panel.AddChild(scroll);
-        var label = PrivateSelectableText(text, 16, _muted); scroll.AddChild(label);
+            text = value; section.Visible = text.Length > 0;
+            bool expanded = _privateExpandedReasoning.Contains(turn);
+            button!.Text = expanded ? "思考过程 ▾" : "思考过程 ▸";
+            if (expanded && panel == null)
+            {
+                panel = new PanelContainer(); panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10202d", "41586a", 6, 18)); section.AddChild(panel);
+                var scroll = new ScrollContainer { CustomMinimumSize = new(0, 150), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; panel.AddChild(scroll);
+                label = PrivateSelectableText(text, 16, _muted); scroll.AddChild(label);
+            }
+            if (panel != null) panel.Visible = expanded;
+            if (expanded && label != null && label.Text != text) label.Text = text;
+        }
+        button = PrivateButton("", () =>
+        {
+            if (!_privateExpandedReasoning.Add(turn)) _privateExpandedReasoning.Remove(turn);
+            Update(text); _ = FocusPrivateReasoning(turn);
+        }, 145);
+        section.AddChild(button); Update(text); return Update;
     }
     private static RichTextLabel PrivateSelectableText(string text, int size, Color color)
     {
@@ -152,6 +165,14 @@ public partial class CareerScreen
     }
     private void AttachPrivate(PrivateOffer attachment)
     {
+        if (_privateGroup.Length > 0)
+        {
+            attachment.GroupId = _privateGroup;
+            attachment.Id = ((CurrentGroup?.LastInteractionNumber ?? 0) + PrivateAttachments.Count + 1).ToString();
+            if (attachment.Participants.Count == 0) attachment.Participants = _groupSelection.ToList();
+            if (attachment.Kind == "lineup") attachment.ActorId = _privatePerson;
+            PrivateAttachments.Add(attachment); RefreshPrivateAttachments(); return;
+        }
         if (PrivateAttachments.Count >= 8) { _privateStatus!.Text = "每条消息最多附加 8 项。"; return; }
         PrivateAttachments.Add(attachment); RefreshPrivateAttachments();
         Callable.From(() => { if (IsInstanceValid(_privateInput) && _privateInput!.IsVisibleInTree()) _privateInput.GrabFocus(); }).CallDeferred();
@@ -228,6 +249,7 @@ public partial class CareerScreen
     { PrivateCommand("dm-delete", new() { Entry = turn.Id, Part = player ? "user" : "reply" }); return true; }, "删除");
     private void PrivateMemory()
     {
+        if (_privateGroup.Length > 0) { GroupMemory(); return; }
         if (_privatePerson.Length == 0) { _privateStatus!.Text = "请先选择一位选手。"; return; }
         var data = ViewData; var c = PrivateMessages.Conversation(data, _privatePerson);
         ShowCareerDialog("聊天记忆", "", () => true, "关闭", box =>

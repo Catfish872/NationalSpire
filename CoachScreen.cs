@@ -113,7 +113,7 @@ public partial class CareerScreen
             error = Text(members.Count == 0 ? "目前没有可调整的队员。" : "", 16, new Color("ee929d")); box.AddChild(error);
         });
     }
-    private void PrivateLineupCard(CareerData data, CoachLineupRequest request, VBoxContainer parent)
+    private void PrivateLineupCard(CareerData data, CoachLineupRequest request, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)
     {
         var panel = new PanelContainer { Name = "CoachLineupCard" };
         panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18)); parent.AddChild(panel);
@@ -122,18 +122,18 @@ public partial class CareerScreen
         inner.AddChild(PrivateText(CoachLineups.Description(data, request), 18, _ink));
         inner.AddChild(Text($"第{request.Season}赛季", 16, _muted));
         if (request.Reason.Length > 0) inner.AddChild(PrivateText(request.Reason, 16, new Color("ee929d")));
-        if (request.State == "待生效") inner.AddChild(PrivateButton("取消调整", () => PrivateCommand("dm-lineup-cancel", new() { Offer = request.Id }), 130));
+        if (request.State == "待生效") inner.AddChild(PrivateButton("取消调整", () => { if (send != null) send("lineup-cancel", new() { Offer = request.Id }); else PrivateCommand("dm-lineup-cancel", new() { Offer = request.Id }); }, 130));
     }
-    private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent)
+    private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)
     {
         var panel = new PanelContainer { Name = "CoachTrainingCard" }; panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18)); parent.AddChild(panel);
         var inner = Inner(panel); inner.AddThemeConstantOverride("separation", 10);
-        inner.AddChild(Text("教练训练 · " + plan.State, 21, _gold));
+        inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold));
         inner.AddChild(PrivateText(plan.Content, 18, _ink));
         inner.AddChild(Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted));
         var progress = new ProgressBar { MinValue = 0, MaxValue = plan.Weeks, Value = plan.PaidWeeks, ShowPercentage = false, CustomMinimumSize = new(0, 8), MouseFilter = MouseFilterEnum.Ignore };
         inner.AddChild(progress);
         inner.AddChild(Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal));
-        if (plan.State == "进行中") inner.AddChild(PrivateButton("取消训练", () => PrivateCommand("dm-training-cancel", new()), 130));
+        if (plan.State == "进行中") inner.AddChild(PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130));
     }
 }

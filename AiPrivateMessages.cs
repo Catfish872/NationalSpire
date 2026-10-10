@@ -56,7 +56,7 @@ public static partial class AiService
             if (turn.RequestKind == "arbitration")
             {
                 var record = new StringBuilder();
-                string response = await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk));
+                string response = await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId);
                 var decision = SpireArbitration.Parse(response);
                 cancel.Token.ThrowIfCancellationRequested();
                 data = current(); if (data == null) return;
@@ -82,7 +82,7 @@ public static partial class AiService
                 if ((DateTime.UtcNow - lastProgress).TotalMilliseconds < 100) return;
                 lastProgress = DateTime.UtcNow; Notify(parser.Text);
             }
-            await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking);
+            await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId);
             cancel.Token.ThrowIfCancellationRequested(); parser.Finish();
             data = current(); if (data == null || PrivateKey(data, person) != key || !PrivateMessages.CanChat(data, person)) return;
             conversation = PrivateMessages.Conversation(data, person);
@@ -90,6 +90,7 @@ public static partial class AiService
             if (turn.Status != "sending") return;
             if (SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");
+            if (turn.ReplyOrder == 0) turn.ReplyOrder = GroupChats.NextOrder(data);
             turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error;
             PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);
             turn.Regenerating = false; turn.PreviousReply = turn.PreviousReasoning = "";
@@ -132,7 +133,7 @@ public static partial class AiService
     }
 
     internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
-        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null)
+        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "")
     {
         if (string.IsNullOrWhiteSpace(CurrentKey)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
         if (!TryGetEndpoint(options.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
@@ -140,57 +141,74 @@ public static partial class AiService
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", CurrentKey);
         request.Content = new StringContent(JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json), Encoding.UTF8, "application/json");
         Diagnostics.RegisterSecret(CurrentKey);
-        Diagnostics.Record("private.request", new { stream, options.Model, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });
-        using var response = await PrivateTransport(request, token);
-        if (!response.IsSuccessStatusCode) throw new HttpRequestException(await HttpFailure(response));
-        if (!stream || response.Content.Headers.ContentType?.MediaType == "application/json")
+        string trace = Guid.NewGuid().ToString("N"), failure = ""; JsonElement? lastUsage = null;
+        var received = new StringBuilder(); var thoughts = new StringBuilder(); var visible = new StringBuilder();
+        var onContent = progress; var onReasoning = reasoning;
+        reasoning = chunk => { thoughts.Append(chunk); onReasoning?.Invoke(chunk); };
+        var leading = new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning);
+        progress = chunk => { received.Append(chunk); leading.Feed(chunk); };
+        void RememberUsage(JsonElement root) { if (root.TryGetProperty("usage", out var usage) && usage.ValueKind == JsonValueKind.Object) lastUsage = usage.Clone(); }
+        Diagnostics.Record("private.request", new { trace, context, stream, options.Model, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });
+        try
         {
-            string body = await response.Content.ReadAsStringAsync(token);
-            using var document = JsonDocument.Parse(body);
-            if (document.RootElement.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
-            LogPrivateUsage(document.RootElement);
-            var choice = document.RootElement.GetProperty("choices")[0];
-            if (choice.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String && finish.GetString() != "stop")
-                throw new InvalidDataException("回复未完整结束：" + finish.GetString());
-            var message = choice.GetProperty("message");
-            reasoning?.Invoke(PrivateReasoning(message));
-            string content = message.GetProperty("content").GetString() ?? "";
-            progress?.Invoke(content); return content;
-        }
-        using var reader = new StreamReader(await response.Content.ReadAsStreamAsync(token));
-        var result = new StringBuilder(); var eventData = new StringBuilder(); bool done = false, completed = false; int reasoningSize = 0;
-        void Event()
-        {
-            if (eventData.Length == 0) return;
-            string content = eventData.ToString().Trim(); eventData.Clear();
-            if (content == "[DONE]") { done = true; return; }
-            using var document = JsonDocument.Parse(content); var root = document.RootElement;
-            if (root.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
-            LogPrivateUsage(root);
-            if (!root.TryGetProperty("choices", out var choices) || choices.GetArrayLength() == 0) return;
-            var first = choices[0];
-            if (first.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String)
+            using var response = await PrivateTransport(request, token);
+            if (!response.IsSuccessStatusCode) throw new HttpRequestException(await HttpFailure(response));
+            if (!stream || response.Content.Headers.ContentType?.MediaType == "application/json")
             {
-                if (finish.GetString() != "stop") throw new InvalidDataException("私信回复未完整结束：" + finish.GetString());
-                completed = true;
+                string body = await response.Content.ReadAsStringAsync(token);
+                using var document = JsonDocument.Parse(body);
+                if (document.RootElement.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
+                RememberUsage(document.RootElement);
+                var choice = document.RootElement.GetProperty("choices")[0];
+                var message = choice.GetProperty("message");
+                reasoning?.Invoke(PrivateReasoning(message));
+                string content = message.GetProperty("content").GetString() ?? "";
+                progress?.Invoke(content); leading.Finish();
+                if (choice.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String && finish.GetString() != "stop")
+                    throw new InvalidDataException("回复未完整结束：" + finish.GetString());
+                return visible.ToString();
             }
-            if (first.TryGetProperty("delta", out var delta))
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync(token));
+            var result = new StringBuilder(); var eventData = new StringBuilder(); bool done = false, completed = false; int reasoningSize = 0;
+            void Event()
             {
-                string thought = PrivateReasoning(delta); reasoningSize += thought.Length;
-                if (thought.Length > 0) reasoning?.Invoke(thought);
-                if (delta.TryGetProperty("content", out var text) && text.ValueKind == JsonValueKind.String)
-                { string chunk = text.GetString()!; result.Append(chunk); progress?.Invoke(chunk); }
+                if (eventData.Length == 0) return;
+                string content = eventData.ToString().Trim(); eventData.Clear();
+                if (content == "[DONE]") { done = true; return; }
+                using var document = JsonDocument.Parse(content); var root = document.RootElement;
+                if (root.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
+                RememberUsage(root);
+                if (!root.TryGetProperty("choices", out var choices) || choices.GetArrayLength() == 0) return;
+                var first = choices[0];
+                if (first.TryGetProperty("delta", out var delta))
+                {
+                    string thought = PrivateReasoning(delta); reasoningSize += thought.Length;
+                    if (thought.Length > 0) reasoning?.Invoke(thought);
+                    if (delta.TryGetProperty("content", out var text) && text.ValueKind == JsonValueKind.String)
+                    { string chunk = text.GetString()!; result.Append(chunk); progress?.Invoke(chunk); }
+                }
+                if (first.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String)
+                {
+                    if (finish.GetString() != "stop") throw new InvalidDataException("私信回复未完整结束：" + finish.GetString());
+                    completed = true;
+                }
             }
+            while (await reader.ReadLineAsync(token) is { } line)
+            {
+                if (line.Length == 0) { Event(); if (done) break; }
+                else if (line.StartsWith("data:", StringComparison.Ordinal)) { if (eventData.Length > 0) eventData.Append('\n'); eventData.Append(line[5..].TrimStart()); }
+                if (result.Length + eventData.Length + reasoningSize > 100000) throw new InvalidDataException("私信回复过长，已停止接收。");
+            }
+            Event();
+            if (!done && !completed) throw new IOException("回复连接提前结束，交互未执行，请重试。");
+            leading.Finish(); return visible.ToString();
         }
-        while (await reader.ReadLineAsync(token) is { } line)
+        catch (Exception e) { failure = FailureReason(e); throw; }
+        finally
         {
-            if (line.Length == 0) { Event(); if (done) break; }
-            else if (line.StartsWith("data:", StringComparison.Ordinal)) { if (eventData.Length > 0) eventData.Append('\n'); eventData.Append(line[5..].TrimStart()); }
-            if (result.Length + eventData.Length + reasoningSize > 100000) throw new InvalidDataException("私信回复过长，已停止接收。");
+            if (lastUsage is { } usage) Diagnostics.Record("private.usage", new { trace, context, usage });
+            Diagnostics.Record("private.response", new { trace, context, options.Model, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
         }
-        Event();
-        if (!done && !completed) throw new IOException("回复连接提前结束，交互未执行，请重试。");
-        return result.ToString();
     }
     private static string PrivateReasoning(JsonElement message)
     {
@@ -198,11 +216,6 @@ public static partial class AiService
             if (message.TryGetProperty(key, out var value) && value.ValueKind == JsonValueKind.String) return value.GetString() ?? "";
         return "";
     }
-    private static void LogPrivateUsage(JsonElement root)
-    {
-        if (root.TryGetProperty("usage", out var usage)) Diagnostics.Record("private.usage", usage.ToString());
-    }
-
     private static async Task SummarizePrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person)
     {
         var data = current(); if (data == null || !PrivateMessages.CanChat(data, person)) return;
@@ -251,7 +264,7 @@ public static partial class AiService
     private static Task<string> Summarize(CareerData data, string person, string section, string content)
     {
         var p = CareerEngine.Person(data, person)!;
-        List<Dictionary<string, string>> messages = [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(data.Ai, section) + $"\n你是{p.PublicName}，以{p.PublicName}的第一人称整理与玩家{CareerEngine.Name(data)}的聊天。\n{p.PublicName}的性格 " + JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(p.Personality), Json) }, new() { ["role"] = "user", ["content"] = content }];
+        List<Dictionary<string, string>> messages = [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(data.Ai, section) + $"\n你是{p.PublicName}，以{p.PublicName}的第一人称整理与玩家{CareerEngine.Name(data)}的聊天。\n{p.PublicName}的性格 " + JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(p.Personality), Json) + "\n性格使用说明：" + PersonalityLibrary.ProfileUsage }, new() { ["role"] = "user", ["content"] = content }];
         var node = JsonSerializer.SerializeToNode(messages)!; CharacterIdentity.Apply(node, CharacterIdentity.Aliases(data));
         messages = node.Deserialize<List<Dictionary<string, string>>>()!;
         return SummaryRequest(data.Ai, messages);

@@ -71,7 +71,8 @@ public static class PrivateProfileChanges
         {
             var post = new CommunityPost { Id = id, AuthorId = person, Title = offer.Title, Body = offer.Detail,
                 Day = data.Day, Category = "选手动态", PersonalPost = true, NeedsReaction = true, RelatedPeople = [person, data.LocalHumanId.Length > 0 ? data.LocalHumanId : "player"] };
-            post.MentionedPeople = CommunityMentions.Resolve(data, post.Title + "\n" + post.Body);
+            post.RelatedPeople = post.RelatedPeople.Concat(offer.RelatedPeople).Distinct().ToList();
+            post.MentionedPeople = CommunityMentions.Resolve(data, post.Title + "\n" + post.Body).Concat(offer.RelatedPeople).Distinct().ToList();
             post.NewsGeneration.State = "completed";
             data.Posts.Insert(0, post); CommunityThreads.Remember(data, post); CommunityThreads.TrimFeed(data);
         }

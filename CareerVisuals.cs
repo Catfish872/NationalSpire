@@ -22,6 +22,7 @@ public static class CareerVisuals
     public static readonly Color Ink = new("f2f6fa"), Muted = new("bbcad6"), Gold = new("eed39b"), Teal = new("80e7db"), Lime = new("c4f36b");
     public static void ClearContent(Node parent)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Clear);
         // 保留父级主题直到销毁，避免移出场景树时全部文本切回默认字体并重新排版。
         // 隐藏后容器立即忽略旧内容，真正销毁交给帧末处理。
         foreach (var child in parent.GetChildren())
@@ -54,11 +55,12 @@ public static class CareerVisuals
     {
         var theme = new Theme { DefaultFontSize = 19 };
         theme.DefaultFont = InterfaceFont();
-        foreach (string type in new[] { "Button", "OptionButton", "MenuButton" })
+        foreach (string type in new[] { "Button", "OptionButton", "MenuButton", "CheckBox" })
         {
             theme.SetStylebox("normal", type, Box("1d3040", "395365", 8, 14));
             theme.SetStylebox("hover", type, Box("28495a", "70d4bc", 8, 14));
             theme.SetStylebox("pressed", type, Box("304f60", "e5c18b", 8, 14));
+            theme.SetStylebox("hover_pressed", type, Box("304f60", "70d4bc", 8, 14));
             theme.SetStylebox("disabled", type, Box("111e2b", "263746", 8, 14));
             var focus = Box("00000000", "789aa4", 8, 0);
             focus.BorderWidthLeft = focus.BorderWidthTop = focus.BorderWidthRight = focus.BorderWidthBottom = 2;
@@ -68,6 +70,17 @@ public static class CareerVisuals
             theme.SetColor("font_pressed_color", type, Gold);
             theme.SetColor("font_disabled_color", type, new Color("9baebb"));
         }
+        // 覆盖原版主题的复选图标；所有状态使用同样尺寸，文字位置不随按下状态变化。
+        foreach (bool selected in new[] { false, true })
+        {
+            using var image = new Image();
+            image.LoadSvgFromString("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><rect x='1' y='1' width='18' height='18' rx='4' fill='#142536' stroke='#82b8bc' stroke-width='2'/>"
+                + (selected ? "<path d='M5 10 L9 14 L15 6' fill='none' stroke='#70d4bc' stroke-width='2.5'/>" : "") + "</svg>");
+            var icon = ImageTexture.CreateFromImage(image);
+            string state = selected ? "checked" : "unchecked";
+            theme.SetIcon(state, "CheckBox", icon); theme.SetIcon(state + "_disabled", "CheckBox", icon);
+        }
+        theme.SetConstant("h_separation", "CheckBox", 10);
         theme.SetStylebox("normal", "LineEdit", Box("101c2a", "395365", 8, 12));
         theme.SetStylebox("focus", "LineEdit", Box("172e3e", "70d4bc", 8, 12));
         theme.SetStylebox("panel", "PopupMenu", Box("122331"));

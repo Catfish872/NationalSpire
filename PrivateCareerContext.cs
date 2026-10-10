@@ -56,7 +56,7 @@ public static partial class PrivatePublicContext
             b.AppendLine($"{p.PublicName}正在参与{activity.Title}，{PrivateAppointments.DateText(d, activity.StartedDay)}开始，预计{PrivateAppointments.DateText(d, activity.FinishDay)}结束。{activity.Detail}");
     }
 
-    private static void AppendRecentResults(StringBuilder b, CareerData d, CareerPerson p)
+    internal static void AppendRecentResults(StringBuilder b, CareerData d, CareerPerson p)
     {
         var records = new List<(string Key, int Day, int Order, string Text)>();
         var fixtures = d.Esports.Competitions.SelectMany(c => c.Fixtures

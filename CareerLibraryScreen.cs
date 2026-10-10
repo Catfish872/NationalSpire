@@ -48,6 +48,12 @@ public partial class CareerScreen
                     }
                     catch (Exception e) { Notice("导出失败：" + e.Message, true); }
                 }, 105));
+                var deleteButton = Button("删除", () => ConfirmCareerDeletion(entry.Name, entry.Season, entry.Day,
+                    () => CareerStore.DeleteCareer(CareerStore.DefaultPath, entry.Path)), 105);
+                deleteButton.Name = "DeleteCareer_" + System.IO.Path.GetFileNameWithoutExtension(entry.Path);
+                deleteButton.Disabled = entry.Current;
+                if (entry.Current) deleteButton.TooltipText = "先切换到另一份生涯，再删除当前生涯。";
+                row.AddChild(deleteButton);
             }
             var worlds = CoopSettings.Storage.List().ToList();
             foreach (var cp in worlds)
@@ -59,7 +65,38 @@ public partial class CareerScreen
                 words.AddChild(Text($"多人 · 第{cp.World.World.Season}赛季 · 第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天", 16, _muted));
                 row.AddChild(Button("进入房间", () => { _cancelDialog?.Invoke(); var menu = (Control)GetParent(); Close(); CoopScreen.OpenSaved(menu, cp.World.Id); }, 135));
                 row.AddChild(Button("导出", () => { try { OS.ShellShowInFileManager(CareerLibrary.ExportDesktop(cp.World.Name, CoopSettings.Storage.ExportArchive(cp.World.Id))); Notice("生涯已导出。", false); } catch (Exception e) { Notice(e.Message, true); } }, 105));
+                var deleteButton = Button("删除", () => ConfirmCareerDeletion(cp.World.Name, cp.World.World.Season, SeasonCalendar.Day(cp.World.World, cp.World.World.Day), () =>
+                {
+                    if (CoopRuntime.Current?.Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
+                    CoopSettings.Storage.Delete(cp.World.Id);
+                }), 105);
+                deleteButton.Name = "DeleteCareer_" + cp.World.Id;
+                deleteButton.Disabled = CoopRuntime.Current?.Session?.World?.Id == cp.World.Id;
+                if (deleteButton.Disabled) deleteButton.TooltipText = "先退出这份生涯的房间，再删除存档。";
+                row.AddChild(deleteButton);
             }
         }, showCancel: false);
+    }
+
+    private void ConfirmCareerDeletion(string name, int season, int day, Action delete)
+    {
+        _cancelDialog?.Invoke();
+        Label? failure = null;
+        ShowCareerDialog("删除生涯", "", () =>
+        {
+            try { delete(); _cancelDialog?.Invoke(); OpenCareerLibrary(); Notice("生涯已删除，本机备份已保留。", false); return true; }
+            catch (Exception e)
+            {
+                failure!.Text = e is IOException { HResult: unchecked((int)0x80070020) } ? "删除失败：存档文件正在使用，请稍后重试。" : "删除失败：" + e.Message;
+                failure.Show(); return false;
+            }
+        }, "删除", box =>
+        {
+            box.AddChild(Text(name, 23, _ink));
+            box.AddChild(Text($"第{season}赛季第{day}天", 16, _muted));
+            box.AddChild(Text("从列表移除，文件保留在本机备份中。", 17, _muted));
+            failure = Text("", 16, new Color("f29b9b")); failure.Hide(); box.AddChild(failure);
+        }, compact: true);
+        if (_dialogOverlay?.FindChild("CareerDialogCancel", true, false) is Button cancel) cancel.Pressed += OpenCareerLibrary;
     }
 }

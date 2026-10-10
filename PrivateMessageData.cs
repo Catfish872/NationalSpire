@@ -48,6 +48,8 @@ public sealed class PrivateConversation
 }
 public sealed class PrivateTurn
 {
+    public long UserOrder { get; set; }
+    public long ReplyOrder { get; set; }
     public List<PrivateInteractionUndo> InteractionUndo { get; set; } = [];
     public ArbitrationRecord? Arbitration { get; set; }
     public List<PrivateProfileChange> ProfileChanges { get; set; } = [];
@@ -104,6 +106,14 @@ public sealed class PrivateSummary
 }
 public sealed class PrivateOffer
 {
+    public string GroupId { get; set; } = "";
+    public string CoachId { get; set; } = "";
+    public bool CoachAccepted { get; set; }
+    public string ActorId { get; set; } = "";
+    public List<string> Participants { get; set; } = [];
+    public List<string> RelatedPeople { get; set; } = [];
+    public int FavourBefore { get; set; }
+    public List<int> FavourTargets { get; set; } = [];
     public string FirstPerson { get; set; } = "";
     public string SecondPerson { get; set; } = "";
     public string ReplacesOfferId { get; set; } = "";

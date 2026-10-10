@@ -44,6 +44,7 @@ public static class AvatarHonors
     }
     private static Dictionary<string, string> Earned(CareerData d, string id)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Honors);
         var result = new Dictionary<string, string> { ["plain"] = "" };
         var person = CareerEngine.Person(d, id);
         int license = id == "player" || d.HumanIds.Contains(id) ? d.Esports.License : person?.Role switch

@@ -14,7 +14,7 @@ public sealed partial class CoopCoordinator
     {
         if (Host || World == null) return;
         var part = Read<CoopPrivatePart>(wire);
-        if (part.Person.Length > 256 || part.Part.Total > 400000 || !PrivateMessages.CanChat(World.World, part.Person)) return;
+        if (part.Person.Length > 256 || part.Part.Total > 400000 || !(part.Person.StartsWith("group:") ? World.World.Chats.Groups.Any(g => "group:" + g.Id == part.Person && g.Members.Contains(World.Members.Single(m => m.SteamId == Self).PersonId)) : PrivateMessages.CanChat(World.World, part.Person))) return;
         if (!_privateAssemblers.TryGetValue(part.Person, out var assembler))
         {
             if (_privateAssemblers.Count >= 64) _privateAssemblers.Remove(_privateAssemblers.Keys.First());
@@ -27,6 +27,12 @@ public sealed partial class CoopCoordinator
         if (_privateSequences.GetValueOrDefault(sequence) >= chunk.Sequence) return;
         _privateSequences[sequence] = chunk.Sequence;
         if (_privateSequences.Count > 512) _privateSequences.Remove(_privateSequences.Keys.First());
+        if (chunk.Person.StartsWith("group:"))
+        {
+            var active = World.World.Chats.Groups.FirstOrDefault(g => g.Id == chunk.Person[6..])?.Turns.LastOrDefault();
+            if (active?.Id == chunk.Turn && active.Status is "queued" or "sending") { AiService.GroupLive[World.Id + "/group/" + chunk.Person[6..]] = chunk.Text; AiService.GroupReasoningLive[World.Id + "/group/" + chunk.Person[6..]] = (chunk.Turn, chunk.Reasoning); }
+            return;
+        }
         AiService.PrivateLive[World.Id + "-" + Self + "/" + chunk.Person] = (chunk.Turn, chunk.Text);
         AiService.PrivateReasoningLive[World.Id + "-" + Self + "/" + chunk.Person] = (chunk.Turn, chunk.Reasoning);
     }
@@ -45,6 +51,7 @@ public sealed partial class CoopCoordinator
             if (_closed || World?.Id != worldId || World.Epoch != epoch) return;
             var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
             var member = copy.Members.Single(m => m.SteamId == sender);
+            copy.World.Chats.Order = Math.Max(copy.World.Chats.Order, data.Chats.Order);
             member.Life.Mailbox = data.Life.Mailbox; member.Life.Relationships = data.Life.Relationships;
             CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);
             PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);
@@ -70,6 +77,7 @@ public sealed partial class CoopCoordinator
     public static CoopWorld PrivateSnapshot(CoopWorld source, ulong recipient)
     {
         var copy = CoopJson.Copy(source); CoopJson.Detached(copy.World);
+        copy.World.Chats.Groups.RemoveAll(g => !g.Members.Contains(copy.Members.Single(m => m.SteamId == recipient).PersonId));
         copy.World.Life.Mailbox = new();
         foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) member.Life.Mailbox = new();
         return copy;
@@ -80,6 +88,15 @@ public static partial class CoopRules
 {
     private static CoopWorld SavePrivateFailure(CoopWorld original, ulong sender, CoopCommand command, string error)
     {
+        if (command.Kind == "group-offer-confirm")
+        {
+            var groupPayload = JsonSerializer.Deserialize<GroupCommand>(command.Text) ?? new();
+            var groupCopy = CoopJson.Copy(original); CoopJson.Detached(groupCopy.World);
+            var group = groupCopy.World.Chats.Groups.FirstOrDefault(g => g.Id == command.Target);
+            var offer = group?.Interactions.GetValueOrDefault(groupPayload.Lane)?.Offers.FirstOrDefault(o => o.Id == groupPayload.Interaction.Offer);
+            if (offer == null || offer.State != "待确认" || offer.Kind is not ("contract" or "match") || offer.Detail == error) return original;
+            offer.Detail = error; group!.Revision++; groupCopy.Revision++; return groupCopy;
+        }
         if (command.Kind != "dm-confirm") return original;
         var copy = CoopJson.Copy(original); CoopJson.Detached(copy.World);
         var member = copy.Members.Single(m => m.SteamId == sender);

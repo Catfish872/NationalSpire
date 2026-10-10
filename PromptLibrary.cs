@@ -40,6 +40,9 @@ public static partial class PromptLibrary
         根据题材选择有价值的叙述角度，比赛的资源、速度、对手、历史交手和选手变化都可形成观察。选题之间保持各自的关注点，文章的长度和结构随素材展开。标题通常12—24字，正文80—180字，资料较少时可更简短，段落用换行表示。已报道的事实可以简短承接，这一期侧重后来发生的变化，选择贴合题材的新开头与观察角度。
         advertisement=true的文章采用轻松的推广口吻，创意来自给定选手、俱乐部、实际合作品牌及广告方向，读者是故事里的观众。
         """),
+        new("group", "群聊提示词", GroupChatPrompts.Guide),
+        new("group-summary", "群聊小总结", GroupChatPrompts.SmallSummary),
+        new("group-long-summary", "群聊大总结", GroupChatPrompts.BigSummary),
         new("private", "私信提示词", PrivateMessagePrompts.Guide),
         new("private-summary", "私信小总结", PrivateMessagePrompts.SmallSummary),
         new("private-long-summary", "私信大总结", PrivateMessagePrompts.BigSummary),

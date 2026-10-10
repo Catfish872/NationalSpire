@@ -30,8 +30,9 @@ public static partial class AiService
         communityMemory是检索到的相关历史：fact为事件记录，opinion为署名人物当时的观点；引用观点时保留人物与时间归属。playerRecord提供玩家最近的公开记录和周刊介绍，honors与seasonHistory提供已取得的荣誉和赛季成绩。schedules记录各AsOfDay当时公布的近期日程，Upcoming逐条说明具名选手的报名状态，RecentMeetings是已完成的交手，RelatedFixtures是相关人物的公开对阵。
         输出一个完整JSON对象，结构如下：
         {"posts":[{"id":"t1","title":"标题","body":"正文","replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论"},{"id":"r2","authorId":"u2","parentId":"r1","body":"接话"}]}]}
-        每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。replyCount是参考人数，实际参与者、回复人数和长短由话题决定。
+        每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。实际参与者、回复人数和长短由话题决定。
         每帖新回复使用r1、r2等局部编号；parentId为空表示新楼层，填前面的r编号表示回复那一层。按父楼层在前、子回复在后的顺序列出，层数按交流需要展开。样例展示字段关系，实际人物、内容和对话形状由本次资料与讨论走向决定。
+        人物可以相互回复，也可以在同帖多次发言，不限每人一条。每条发言使用独立回复编号，回复关系通过parentId表示。
         """;
     private const string DiscussionPrompt = """
 
@@ -41,6 +42,7 @@ public static partial class AiService
         输出一个完整JSON对象：{"reactions":[{"postId":"t1","replies":[{"id":"r1","authorId":"u1","parentId":"c1","body":"回应内容"}]}]}
         reactions列出本次产生回复的帖子，每个postId出现一次，选自targets.Id。allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。t为帖子编号，u为人物编号，c为已有楼层编号，均原样使用。程序保留玩家原文，将新回复加入对应讨论。
         每帖新回复依次使用r1、r2等局部编号。parentId为空表示新楼层，填本帖提供的c编号表示回复旧楼层，填前面的r编号表示继续接话；按父级在前、子级在后排列。
+        人物可以相互回复，也可以在同帖多次发言，不限每人一条。每条发言使用独立回复编号，回复关系通过parentId表示。
         样例说明字段和引用关系，具体人数、楼层结构与谈话走向由实际交流决定。
         """;
     private const string WeeklyProfilePrompt = """

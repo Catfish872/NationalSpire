@@ -68,21 +68,24 @@ public static class CommunityThreads
     }
     public static bool Normalize(CareerData data)
     {
-        if (data.CommunityVersion >= 2) return false;
+        if (data.CommunityVersion >= 3) return false;
         foreach (var post in All(data))
         {
-            post.Revision = Math.Max(1, post.Revision);
-            var known = new HashSet<string>();
-            foreach (var r in post.Replies)
+            if (data.CommunityVersion < 2)
             {
-                if (string.IsNullOrEmpty(r.Id) || known.Contains(r.Id)) r.Id = Guid.NewGuid().ToString("N");
-                if (!known.Contains(r.ParentId)) r.ParentId = "";
-                known.Add(r.Id); if (r.Day == 0) r.Day = post.Day;
+                post.Revision = Math.Max(1, post.Revision);
+                var known = new HashSet<string>();
+                foreach (var r in post.Replies)
+                {
+                    if (string.IsNullOrEmpty(r.Id) || known.Contains(r.Id)) r.Id = Guid.NewGuid().ToString("N");
+                    if (!known.Contains(r.ParentId)) r.ParentId = "";
+                    known.Add(r.Id); if (r.Day == 0) r.Day = post.Day;
+                }
+                post.MatchKind = data.Matches.FirstOrDefault(m => post.EventKey == "match" + m.Id)?.Kind ?? post.MatchKind;
             }
-            post.MatchKind = data.Matches.FirstOrDefault(m => post.EventKey == "match" + m.Id)?.Kind ?? post.MatchKind;
-            Remember(data, post);
+            if (CommunityMentions.Remember(data, post) || data.CommunityVersion < 2) Remember(data, post);
         }
-        data.CommunityVersion = 2; return true;
+        data.CommunityVersion = 3; return true;
     }
     public static void MarkRead(CareerData data, CommunityPost post)
     {
@@ -146,7 +149,9 @@ public static class CommunityThreads
     {
         var match = data.Matches.FirstOrDefault(m => post.EventKey == "match" + m.Id)
             ?? (post.MatchKind.Length == 0 ? null : new CareerMatch { Kind = post.MatchKind });
-        return CareerNarrative.Audience(data, post.EventKey, post.Category, match, post.RelatedPeople).Where(p => !IsHuman(data, p.Id) && !SpireArbitration.Muted(p)).ToList();
+        // 玩家帖子仍按发帖者赛区选择普通观众，历史提及人物由推荐与资料列表另外加入。
+        var related = IsHuman(data, post.AuthorId) ? new List<string> { post.AuthorId } : post.RelatedPeople;
+        return CareerNarrative.Audience(data, post.EventKey, post.Category, match, related).Where(p => !IsHuman(data, p.Id) && !SpireArbitration.Muted(p)).ToList();
     }
     public static void OfflineReactions(CareerData data, IReadOnlySet<string> requested)
     {
@@ -195,6 +200,7 @@ public static class CommunityThreads
     }
     public static void Remember(CareerData data, CommunityPost post)
     {
+        CommunityMentions.Remember(data, post);
         void Put(CommunityMemory memory)
         {
             int i = data.CommunityMemories.FindIndex(m => m.Id == memory.Id);

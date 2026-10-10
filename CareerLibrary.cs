@@ -37,6 +37,33 @@ public static class CareerLibrary
         string path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(original)!, "national_spire_career-" + Guid.NewGuid().ToString("N") + ".json");
         Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!); File.WriteAllBytes(path, CoopJson.PublicBytes(data)); return path;
     }
+    public static string Delete(string original, string path)
+    {
+        original = System.IO.Path.GetFullPath(original); path = System.IO.Path.GetFullPath(path);
+        string folder = System.IO.Path.GetDirectoryName(original)!, file = System.IO.Path.GetFileName(path);
+        if (!string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase) || !ValidName(file))
+            throw new InvalidDataException("生涯路径无效。");
+        if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase))
+            throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");
+        string backup = System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"));
+        var files = Directory.GetFiles(folder, file + ".*").Where(p =>
+        {
+            string suffix = p[path.Length..];
+            return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");
+        }).Append(path).ToArray();
+        Directory.CreateDirectory(backup);
+        var moved = new List<string>();
+        try
+        {
+            foreach (string source in files) { File.Move(source, System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source))); moved.Add(source); }
+        }
+        catch
+        {
+            foreach (string source in moved.AsEnumerable().Reverse()) File.Move(System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)), source);
+            Directory.Delete(backup); throw;
+        }
+        return backup;
+    }
     public static byte[] Export(CareerData data, byte[]? run = null, byte[]? backup = null)
     {
         using var buffer = new MemoryStream();

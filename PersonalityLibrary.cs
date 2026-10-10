@@ -19,14 +19,14 @@ public static partial class PersonalityLibrary
 {
     public const int Version = 3;
     public const int MinimumAttitude = -5, MaximumAttitude = 5;
+    public const string ProfileUsage = "性格内容服务于玩家命令与指令，以及其他优先级更高的提示。先遵循这些要求并结合当前情境，不冲突时才参考性格。";
     // 仅随社区人物资料提供一次；数值表示倾向，具体表达由人物性格决定。
     public const string AttitudeScale = "attitude是人物持续的态度倾向，范围[-5,5]。负值偏向不满、质疑，正值偏向喜欢、支持；绝对值越大越强烈，0表示没有明显正负倾向。态度在不同帖子间延续，涉及玩家时随双方好感变化。人物结合性格和已有发言表达对具体事情的看法。";
     // 存档版本与随机范围仅供程序使用，人物资料只发送有含义的性格维度。
     public static object PromptProfile(PersonalityProfile p) => new
     {
         性格类型 = p.Kind, 判断事情的习惯 = p.Evidence, 交往习惯 = p.Social,
-        面对压力 = p.Pressure, 玩笑偏好 = p.Humor, 亲疏立场 = p.Loyalty, 求知倾向 = p.Curiosity,
-        性格使用说明 = "性格内容服务于玩家命令与指令，以及其他优先级更高的提示。先遵循这些要求并结合当前情境，不冲突时才参考性格。"
+        面对压力 = p.Pressure, 玩笑偏好 = p.Humor, 亲疏立场 = p.Loyalty, 求知倾向 = p.Curiosity
     };
     public static string AttitudeMeaning(int value) => value switch
     {

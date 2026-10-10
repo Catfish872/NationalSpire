@@ -54,7 +54,7 @@ public static partial class AiService
         object NewsPerson(CareerPerson person)
         {
             int cutoff = pending.Min(p => p.Day);
-            var personalPosts = pending.Where(p => p.AuthorId == person.Id || p.Replies.Any(r => r.AuthorId == person.Id));
+            var personalPosts = pending.Where(p => p.AuthorId == person.Id || NewsCommenters(p, pending.Count).Contains(person.Id));
             var snapshot = pending.Where(p => p.Day <= cutoff).SelectMany(p => p.PeopleAtEvent.Select(who => (Who: who, p.Day)))
                 .FirstOrDefault(x => x.Who.Id == person.Id);
             // 历史身份、战绩仍按事件快照，当前性格重置只用于新的发言，不改写旧记录。
@@ -67,9 +67,8 @@ public static partial class AiService
         {
             p.Id, p.AuthorId, topic = p.SourceTitle.Length > 0 ? p.SourceTitle : p.Title,
             facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? p.SourceBody : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
-            replyCount = Math.Clamp(p.Replies.Select(r => r.AuthorId).Distinct().Count(supplied.Contains), 2, 4),
-            allowedAuthors = p.Replies.Select(r => r.AuthorId).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
-            对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => p.Replies.Any(r => r.AuthorId == person.Id) || p.AuthorId == person.Id), occasion),
+            allowedAuthors = NewsCommenters(p, pending.Count).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
+            对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => NewsCommenters(p, pending.Count).Contains(person.Id) || p.AuthorId == person.Id), occasion),
             match = MatchContext(data, p)
         }).ToArray();
         return JsonSerializer.Serialize(new
@@ -81,7 +80,8 @@ public static partial class AiService
             schedules = pending.GroupBy(p => p.Day).Select(group => PublicSchedule.ForPrompt(group.Key == data.Day
                 ? PublicSchedule.Capture(data, group.SelectMany(p => p.RelatedPeople)) : group.Select(p => p.Schedule).FirstOrDefault(s => s != null))),
             playerRecord = PlayerPublicRecord(data, pending.Min(p => p.Day), !pending.Any(p => p.EventKey.StartsWith("match"))), attitudeScale = PersonalityLibrary.AttitudeScale,
-            态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = persons.Select(NewsPerson), communityMemory = memories, posts
+            态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = persons.Select(NewsPerson),
+            性格使用说明 = PersonalityLibrary.ProfileUsage, communityMemory = memories, posts
         }, Json);
     }
 }

@@ -71,6 +71,7 @@ public static partial class Diagnostics
             if (directory == null || !Directory.Exists(directory)) return;
             string json = Redact(JsonSerializer.Serialize(LoggingPerformance(), Json));
             File.WriteAllText(Path.Combine(directory, "logging-performance.json"), json);
+            File.WriteAllText(Path.Combine(directory, "ui-performance.json"), JsonSerializer.Serialize(UiPerformance.Snapshot(), Json));
         }
         catch (Exception e) { lock (Gate) _performanceWriteError = e.GetType().Name + ": " + e.Message; }
     }

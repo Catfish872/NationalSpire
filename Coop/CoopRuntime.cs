@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
@@ -95,7 +95,7 @@ public partial class CoopRuntime : Node
             _resumeRequired = Session.World?.Run != null; _pausedCount = Session.World?.Run?.ResumeCount ?? 0;
             Session.RunMessage += Native.Message;
             _nativeAttempt = Session.World?.Run?.Attempt ?? "";
-            Session.TriggerAi += kind => { if (kind is "confirm" or "failure-confirm" or "post" or "reply" or "dm-confirm" or "dm-arbitration-apology") _ = Ai.Process(); };
+            Session.TriggerAi += kind => { if (kind is "confirm" or "failure-confirm" or "post" or "reply" or "dm-confirm" or "dm-arbitration-apology" or "group-offer-confirm") _ = Ai.Process(); };
             _live = new(Session); Status = "房间已连接";
             if (host && checkpoint?.World.CareerStarted == true) _ = Ai.Process();
         }
@@ -252,6 +252,7 @@ public static class CoopMenuPatch
         __instance.AddChild(button); button.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.BottomLeft);
         button.OffsetLeft = 40; button.OffsetRight = 350; button.OffsetTop = -178; button.OffsetBottom = -114;
         button.Pressed += () => CoopScreen.Open(__instance);
+        MainMenuEntries.Bind(__instance, button);
         if (CoopRuntime.Bound) Callable.From(() => CoopScreen.OpenCareerOrRoom(__instance)).CallDeferred();
     }
 }

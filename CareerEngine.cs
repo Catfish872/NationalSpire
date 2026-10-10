@@ -25,7 +25,7 @@ public static class CareerEngine
         foreach (var person in data.People.Concat(data.Posts.Concat(data.SavedThreads).SelectMany(p => p.PeopleAtEvent)))
             person.Style = person.Style.Replace("星能", "辉星", StringComparison.Ordinal);
         if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) CircuitWorld.AutoEntry(data);
-        EsportsWorld.RefreshLeagueMatches(data);
+        changed |= EsportsWorld.RefreshLeagueMatches(data);
         WeeklyJournal.Initialize(data);
         AvatarHonors.Capture(data);
         return changed;
@@ -296,6 +296,7 @@ public static class CareerEngine
         CareerMoney.Record(d, m.Event + "赛后结算（含合同及荣誉收入）", record.Prize);
         d.PendingMatchId = null; d.PendingSince = 0;
         // 同日自愿报名与正式席位可以并存，完成当天全部已报名比赛后再推进日期。
+        if (EsportsWorld.PlayerLeague(d) is { } league) LeagueRosterRepair.Apply(d, league);
         if (!d.Matches.Any(game => game.Registered && game.Status == "待赛" && game.Day == d.Day)) MoveToNextDay(d);
         record.WorldImpact = CircuitLedger.MatchImpact(d, m);
         if (record.WorldImpact.Length > 0 && d.Posts.FirstOrDefault(p => p.EventKey == "match" + m.Id) is { } matchPost)
@@ -333,7 +334,7 @@ public static class CareerEngine
             if (p != null) authors.Add(p);
         }
         if (related?.FirstOrDefault() is { } featured && audience.FirstOrDefault(p => p.Id == featured) is { } person && !authors.Contains(person)) authors.Add(person);
-        int replyCount = 2 + rng.Next(5);
+        int replyCount = 3 + rng.Next(4);
         foreach (var candidate in candidates) if (authors.Count < replyCount && !authors.Contains(candidate)) authors.Add(candidate);
         string factTitle = title.Replace("你", Name(d)), factBody = body.Replace("你", Name(d));
         (title, body) = CareerNarrative.News(d, key, title, body, category, match);

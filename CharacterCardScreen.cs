@@ -45,7 +45,9 @@ public partial class CareerScreen
         { draft.Avatar = avatar; portrait.Art = AvatarImages.Read(avatar) ?? AutomaticPortrait(); }, draft.Id, AutomaticPortrait()), 165));
         if (!create && draft.CreatedCard)
         {
-            var delete = Button("删除角色", () => ShowCareerDialog("删除" + draft.PublicName, "取消未完成的安排，历史帖子和赛果保留。", () =>
+            var delete = Button("删除角色", () => ShowCareerDialog("删除" + draft.PublicName,
+                "取消未完成的安排，历史帖子和赛果保留。" + (CharacterDeletion.StarterReplacement(data, draft.Id) is { } replacement
+                    ? "\n" + replacement.PublicName + "将接替首发，合同待遇不变。" : ""), () =>
             {
                 if (MultiplayerCommand("character-delete", draft.Id, accepted: () => { _multiplayer!.Refresh(); _closeCharacterCard?.Invoke(); Render(); })) return true;
                 var error = CharacterDeletion.Delete(data, draft.Id);

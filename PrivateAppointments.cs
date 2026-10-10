@@ -43,7 +43,9 @@ public static class PrivateAppointments
                 && m.Status is "待赛" or "进行中" && (m.Registered || m.Id == data.PendingMatchId)))
             .Select(f => new ScheduleEntry(date, c.Name, FixtureText(f, c))));
         var activities = SocialAppointments.All(data).Where(x => x.Offer.State == "已确认" && Date(data, x.Offer) == date)
-            .Select(x => new ScheduleEntry(date, x.Offer.Title, $"{player}与{CareerEngine.DisplayName(data, x.Conversation.PersonId)}已约定《{x.Offer.Title}》。{x.Offer.Detail}"));
+            .Select(x => new ScheduleEntry(date, x.Offer.Title, (x.Offer.GroupId.Length > 0
+                ? string.Join("、", x.Offer.Participants.Select(id => GroupChats.Name(data, id)))
+                : $"{player}与{CareerEngine.DisplayName(data, x.Conversation.PersonId)}") + $"已约定《{x.Offer.Title}》。{x.Offer.Detail}"));
         return matches.Concat(fixtures).Concat(activities).Distinct().ToList();
     }
     public static string DateText(CareerData data, int date)
@@ -98,6 +100,7 @@ public static class PrivateAppointments
         int Read(string key, int fallback) => int.TryParse(fields.GetValueOrDefault(key), out int value) ? value : fallback;
         var request = turn.Attachments.LastOrDefault(a => a.Kind == "match" && a.Season == Read("Season", a.Season) && a.Day == Read("Day", a.Day))
             ?? turn.Attachments.LastOrDefault(a => a.Kind == "match") ?? (turn.Request?.Kind == "match" ? turn.Request : null);
+        if (action == "接受" && request == null) action = "邀请";
         var active = c.Offers.Where(o => o.Kind == "match" && o.State is "待确认" or "已确认").ToList();
         var previous = active.LastOrDefault(o => o.Season == Read("Season", -1) && o.Day == Read("Day", -1)) ?? active.LastOrDefault();
         var basis = request ?? previous;

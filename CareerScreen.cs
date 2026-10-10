@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
@@ -83,8 +83,10 @@ public partial class CareerScreen : Control, IScreenContext
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape })
         { GetViewport().SetInputAsHandled(); Back(); }
     }
+    private long _frameTime;
     public override void _Process(double delta)
     {
+        UiPerformance.Frame(ref _frameTime, _privateOverlay == null ? _tab : "通讯");
         TickPrivate(delta);
         if (_privateOverlay != null) { if (_multiplayer is { Alive: false }) Close(); return; }
         TickWeekly(delta);
@@ -212,6 +214,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Render()
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Render, _tab);
         if (ViewData.Failure != null) _tab = "结算";
         if (ViewData.PendingCeremonySeason is > 0 and var pending && _noticedCeremonySeason != pending)
         {
@@ -224,7 +227,7 @@ public partial class CareerScreen : Control, IScreenContext
         }
         if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
         _renderVersion++;
-        _mentions = null;
+        _mentionsChecked = false;
         CareerVisuals.ClearContent(_content);
         _content.AddThemeConstantOverride("separation", 18);
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;
@@ -296,7 +299,7 @@ public partial class CareerScreen : Control, IScreenContext
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); body.AddChild(row);
             var words = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(words);
             words.AddChild(Text(activity.Title, 23, _gold)); words.AddChild(Text("今天 · " + CareerEngine.DisplayName(data, conversation.PersonId), 16, _muted));
-            row.AddChild(Button("前往私信  →", () => OpenPrivateMessages(conversation.PersonId), 175));
+            row.AddChild(Button(activity.GroupId.Length > 0 ? "前往群聊  →" : "前往私信  →", () => { if (activity.GroupId.Length > 0) SelectGroup(activity.GroupId); else OpenPrivateMessages(conversation.PersonId); }, 175));
         }
         ClubInvitation(data);
         if (data.Ceremonies.Count > 0) CeremonyInvitation(data);
@@ -468,6 +471,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Matches(CareerData data)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Matches);
         AddHeading("选择你的赛场", "通关胜过未通关。都通关时，速度更快的一方获胜；都未通关时，到达更高楼层的一方获胜。");
         if (data.PendingMatchId != null)
         {
@@ -598,7 +602,7 @@ public partial class CareerScreen : Control, IScreenContext
         _content.AddChild(Text("本赛季赛程", 22, _gold));
         foreach (var m in data.Matches.Where(m => m.Day > SeasonCalendar.Start(data) && m.Day <= SeasonCalendar.End(data)))
         {
-            var card = Card(); _content.AddChild(card);
+            var card = Card();
             var box = Inner(card);
             var entryReason = EsportsWorld.EntryReason(data, m);
             var status = m.Status == "待赛" ? (m.Registered ? "已报名" : entryReason == null ? "可报名" : "资格未满足") : m.Status;
@@ -610,14 +614,16 @@ public partial class CareerScreen : Control, IScreenContext
                 else if (!(m.Registered && m.Kind is "league" or "continental" or "worldcup" or "worldfinal"))
                     box.AddChild(TeamButton(m.Registered ? "取消报名" : m.Kind == "league" ? "报名联赛" : "确认报名", () => { if (MultiplayerCommand("propose-register", m.Id, number: m.Registered ? 0 : 1)) return; var error = CareerEngine.SetRegistration(data, m, !m.Registered); Render(); if (error != null) Notice(error, true); }, 250));
             }
+            _content.AddChild(card);
         }
         _content.AddChild(Text("完整积分榜", 22, _gold));
         int rank = 0;
         foreach (var standing in EsportsWorld.PlayerLeague(data) is { PlayerEntered: true } currentLeague ? EsportsWorld.Ranked(currentLeague) : Enumerable.Empty<CareerStanding>())
         {
             rank++;
-            var card = Card(); _content.AddChild(card);
+            var card = Card();
             Inner(card).AddChild(WithAvatar(data, standing.PersonId, Text($"{rank:00}   {CareerEngine.DisplayName(data, standing.PersonId)}   ·   {standing.Points} 分   ·   {standing.Wins} 胜 {standing.Losses} 负", 17, standing.PersonId == "player" ? _gold : _ink), 40, true));
+            _content.AddChild(card);
         }
         if (data.SeasonHistory.Count > 0)
         {
@@ -629,6 +635,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Community(CareerData data)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Community);
         if (_postId == ComposePostId) { RenderPostComposer(data); return; }
         if (RenderWeeklyDetail(data)) return;
         if (_postId is { } id)
@@ -666,7 +673,8 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void AddPostCard(CareerData data, CommunityPost post, bool full)
     {
-        var card = Card(); _content.AddChild(card);
+        using var timing = UiPerformance.Measure(UiPerformance.Work.PostCard);
+        var card = Card();
         var box = Inner(card);
         bool preparing = CommunityThreads.NewsPending(data, post);
         box.AddChild(WithAvatar(data, post.AuthorId, Text($"{post.Category}  ·  第 {post.Day} 天  ·  {CareerEngine.DisplayName(data, post.AuthorId)}  ·  {(preparing ? "正在撰写" : post.Replies.Count + " 条回复")}", 14, _muted), 48, true));
@@ -676,10 +684,12 @@ public partial class CareerScreen : Control, IScreenContext
         if (full && !preparing) box.AddChild(MentionText(data, post.Body, 17, _ink, post.RelatedPeople.Append(post.AuthorId)));
         RenderWorkStatus(box, post.NewsGeneration, () => GenerateContent(() => { _ = AiService.RetryNewsAsync(post.Id); }, true), "News_" + post.Id);
         if (post.AuthorId == "player" && post.NeedsReaction) RenderWorkStatus(box, post.ReactionGeneration, () => GenerateContent(() => { _ = AiService.ProcessInteractionsAsync([post.Id]); }, true), post.Id);
+        _content.AddChild(card);
     }
 
     private void Profiles(CareerData data)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Profiles);
         _content.AddThemeConstantOverride("separation", 24);
         _content.AddChild(Text(_personId == null ? "选手名录" : "人物档案", 30, _gold));
         var selector = ProfileActions(); _content.AddChild(selector);
@@ -704,13 +714,14 @@ public partial class CareerScreen : Control, IScreenContext
         var grid = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 14); grid.AddThemeConstantOverride("v_separation", 14); _content.AddChild(grid);
         foreach (var person in people.Take(_profileLimit))
         {
-            var card = Card(); grid.AddChild(card); var box = Inner(card); box.AddThemeConstantOverride("separation", 16);
+            var card = Card(); var box = Inner(card); box.AddThemeConstantOverride("separation", 16);
             box.AddChild(Text(person.Role + "  /  " + person.Country + "  ·  " + IdentityGender.Of(data, person.Id), 13, _muted));
             var name = Button(person.PublicName + "   ↗", () => OpenPerson(person.Id));
             name.Alignment = HorizontalAlignment.Left; name.SizeFlagsHorizontal = SizeFlags.ExpandFill; name.AddThemeFontSizeOverride("font_size", 23); name.AutowrapMode = TextServer.AutowrapMode.WordSmart; box.AddChild(WithAvatar(data, person.Id, name));
             if (person.Handle.Length > 0 && person.Name.Length > 0) box.AddChild(Text(person.Name, 14, _muted));
             box.AddChild(Text(person.Character + " / " + EsportsWorld.ClubName(data, person.ClubId), 16, _ink));
             box.AddChild(Text($"最高进阶 {person.MaxAscension}    ·    {person.Rating} 分", 14, _gold));
+            grid.AddChild(card);
         }
         if (people.Count > _profileLimit) _content.AddChild(Button("显示更多人物", () => { int scroll = _scroll.ScrollVertical; _profileLimit += 36; Render(); _ = RestoreScrollAsync(scroll, _renderVersion); }, 210));
     }

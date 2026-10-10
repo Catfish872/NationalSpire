@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace NationalSpire;
 
@@ -11,6 +11,7 @@ public sealed class CoachAppointment
 
 public sealed class CoachTrainingPlan
 {
+    public string CoachId { get; set; } = "";
     public string Id { get; set; } = "";
     public string PersonId { get; set; } = "";
     public string TurnId { get; set; } = "";
@@ -84,7 +85,7 @@ public static class ClubCoaching
     {
         if (!PlayerFeatures(d)) return "教练任职适用于单人生涯的自建俱乐部。";
         d.Esports.OwnedClub!.PlayerCoach = value;
-        if (!value) foreach (var p in d.Esports.OwnedClub.CoachTraining.Where(p => p.State == "进行中")) p.State = "已取消";
+        if (!value) foreach (var p in d.Esports.OwnedClub.CoachTraining.Where(p => p.State == "进行中" && p.CoachId.Length == 0)) p.State = "已取消";
         CareerStore.Save(d); return null;
     }
     public static string? PlayerPositionError(CareerData d, string position, string replacement)
@@ -147,13 +148,31 @@ public static class ClubCoaching
         "coach-notice-" + Guid.NewGuid().ToString("N"), "俱乐部", title, text, ["player"]);
 
     public const string Protocol = """
-附件内容中存在训练计划时，根据具体内容和情况决定是否接受；接受须输出 [Training: 接受, Id: 12]，Id 填对应训练附件的编号；口头答应不会实际生效。接受已有训练的新安排会刷新期限，不叠加训练效果或时长。如果不存在训练计划附件，则不允许输出接受训练标记。
+本轮附件中存在训练计划时，根据具体内容和情况决定是否接受；接受须输出 [Training: 接受, Id: 12]，Id 填对应训练附件的编号；口头答应不会实际生效。接受已有训练的新安排会刷新期限，不叠加训练效果或时长。如果没有训练计划附件但是玩家有安排训练的意向，则先在正文中商谈训练内容，收到对应附件后再输出接受训练标记。
 """;
+    // 自建俱乐部沿用原存储位置，普通俱乐部训练由生涯保存。
+    public static IEnumerable<CoachTrainingPlan> TrainingPlans(CareerData d) =>
+        d.Esports.CoachTraining.Concat(d.Esports.OwnedClub?.CoachTraining ?? []);
+    private static List<CoachTrainingPlan> TrainingStore(CareerData d, string club) =>
+        d.Esports.OwnedClub is { } o && o.ClubId == club ? o.CoachTraining : d.Esports.CoachTraining;
+    internal static void RestoreTraining(CareerData d, string person, List<CoachTrainingPlan> plans)
+    {
+        d.Esports.CoachTraining.RemoveAll(p => p.PersonId == person);
+        d.Esports.OwnedClub?.CoachTraining.RemoveAll(p => p.PersonId == person);
+        foreach (var plan in plans) TrainingStore(d, plan.ClubId).Add(plan);
+    }
+    private static bool TrainingMember(CareerData d, string person, string club) => club.Length > 0
+        && d.People.Any(p => p.Id == person && p.ClubId == club && !IsCoach(p))
+        && (d.Esports.OwnedClub is not { } o || o.ClubId != club
+            || o.Contracts.Any(c => c.PersonId == person && c.Position is "首发" or "轮换" or "青训"));
     public static string? TrainingError(CareerData d, string person, PrivateOffer attachment)
     {
-        if (!PlayerCoach(d)) return "请先在俱乐部兼任教练。";
-        if (d.Esports.OwnedClub is not { } o || !o.Contracts.Any(c => c.PersonId == person && c.Position is "首发" or "轮换" or "青训")
-            || !d.People.Any(p => p.Id == person && p.ClubId == o.ClubId && !IsCoach(p))) return "训练对象须为本队选手。";
+        if (attachment.CoachId.Length > 0)
+        {
+            if (!attachment.CoachAccepted || !CoachLineups.CanRequest(d, attachment.CoachId)) return "训练尚未由本队教练接受。";
+        }
+        else if (!PlayerCoach(d)) return "请先在俱乐部兼任教练。";
+        if (!TrainingMember(d, person, d.Esports.ClubId)) return "训练对象须为本队选手。";
         if (attachment.Weeks is < 1 or > 4 || string.IsNullOrWhiteSpace(attachment.Detail)) return "请填写训练内容并选择1—4周。";
         return null;
     }
@@ -164,21 +183,20 @@ public static class ClubCoaching
         var a = t.Attachments.FirstOrDefault(a => a.Kind == "training" && a.Id == PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id")));
         if (a == null) { t.Error += "\n缺少对应训练附件，未执行。"; return; }
         if (TrainingError(d, c.PersonId, a) is { } error) { t.Error += "\n" + error; return; }
-        var plans = d.Esports.OwnedClub!.CoachTraining;
+        var plans = TrainingStore(d, d.Esports.ClubId);
         string id = t.Id + ":" + a.Id;
         if (plans.Any(p => p.Id == id)) return;
         foreach (var old in plans.Where(p => p.PersonId == c.PersonId && p.State == "进行中")) old.State = "已替换";
         plans.Add(new() { Id = id, PersonId = c.PersonId, ClubId = d.Esports.ClubId, TurnId = t.Id,
-            Content = a.Detail, StartDay = d.Day, Weeks = a.Weeks });
+            Content = a.Detail, StartDay = d.Day, Weeks = a.Weeks, CoachId = a.CoachId });
         c.Offers.Add(new() { Id = id, Kind = "training", TurnId = t.Id, State = "已接受", Detail = a.Detail, Weeks = a.Weeks });
     }
     public static void Advance(CareerData d)
     {
-        if (d.Esports.OwnedClub is not { } o) return;
-        foreach (var plan in o.CoachTraining.Where(p => p.State == "进行中"))
+        foreach (var plan in TrainingPlans(d).Where(p => p.State == "进行中"))
         {
-            if (!PlayerCoach(d) || plan.ClubId != d.Esports.ClubId || !o.Contracts.Any(c => c.PersonId == plan.PersonId && c.Position != "教练")
-                || !d.People.Any(p => p.Id == plan.PersonId && p.ClubId == plan.ClubId && !IsCoach(p))) { plan.State = "已取消"; continue; }
+            if (!(plan.CoachId.Length > 0 ? CoachLineups.CanRequest(d, plan.CoachId) : PlayerCoach(d))
+                || plan.ClubId != d.Esports.ClubId || !TrainingMember(d, plan.PersonId, plan.ClubId)) { plan.State = "已取消"; continue; }
             int due = Math.Clamp((d.Day - plan.StartDay) / 7, 0, plan.Weeks);
             while (plan.PaidWeeks < due)
             {
@@ -192,13 +210,11 @@ public static class ClubCoaching
     }
     public static void StopTraining(CareerData d, string id)
     {
-        if (d.Esports.OwnedClub is { } o)
-            foreach (var plan in o.CoachTraining.Where(p => p.PersonId == id && p.State == "进行中")) plan.State = "已取消";
+        foreach (var plan in TrainingPlans(d).Where(p => (p.PersonId == id || p.CoachId == id) && p.State == "进行中")) plan.State = "已取消";
     }
     public static string TrainingContext(CareerData d, string id)
     {
-        if (d.Esports.OwnedClub is not { } o) return "";
-        var p = o.CoachTraining.LastOrDefault(p => p.PersonId == id);
+        var p = TrainingPlans(d).LastOrDefault(p => p.PersonId == id);
         return p == null ? "" : $"\n教练训练《{p.Content}》：{PrivateAppointments.DateText(d, p.StartDay)}开始，{PrivateAppointments.DateText(d, p.EndDay)}结束，{p.State}，已完成{p.PaidWeeks}/{p.Weeks}周，已获得{p.Gained * 100:0.##}个百分点的永久成长。";
     }
 }

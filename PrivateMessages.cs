@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -109,7 +109,7 @@ public static class PrivateMessages
         if ((string.IsNullOrWhiteSpace(text) && attachments?.Count is not > 0 && request == null) || text.Length > 8000) throw new ArgumentException("请填写消息或添加附件，正文最多 8000 字。");
         var c = Conversation(data, id);
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
-        var turn = new PrivateTurn { User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
+        var turn = new PrivateTurn { UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
         c.Turns.Add(turn); PrivateInteractionIds.Ensure(c); return turn;
     }
     public static int Completed(PrivateConversation c) => c.Turns.Skip(c.ContextStart).Count(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted));
@@ -201,6 +201,17 @@ public static class PrivateMessages
         if (turn.Applied) return;
         PrivateInteractionIds.Ensure(c);
         var before = PrivateInteractionHistory.Capture(data, c.PersonId);
+        int favourBefore = Favour(data, c.PersonId), preceding = favourBefore;
+        var favourTargets = directives.Select(FavourTarget).OfType<int>().ToList();
+        bool confirmFavour = false;
+        foreach (int target in favourTargets)
+        {
+            confirmFavour |= Math.Abs(target - preceding) > 10;
+            preceding = target;
+        }
+        confirmFavour |= Math.Abs(preceding - favourBefore) > 10;
+        if (confirmFavour)
+            c.Offers.Add(new() { Kind = "favour", TurnId = turn.Id, FavourBefore = favourBefore, FavourTargets = favourTargets });
         foreach (var fields in directives)
         {
             if (fields.ContainsKey("Activity")) SocialAppointments.Respond(data, c, turn, fields);
@@ -247,8 +258,8 @@ public static class PrivateMessages
             else if (fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship"))
             {
                 var relation = Relation(data, c.PersonId);
-                if (fields.TryGetValue("Favour", out var proposed) && decimal.TryParse(proposed, NumberStyles.Float, CultureInfo.InvariantCulture, out var value))
-                    ChangeFavour(data, c.PersonId, (int)Math.Clamp(decimal.Round(value, 0, MidpointRounding.AwayFromZero), -100, 100) - relation.Favour);
+                if (!confirmFavour && FavourTarget(fields) is int target)
+                    ChangeFavour(data, c.PersonId, target - relation.Favour);
                 if (fields.TryGetValue("Attitude", out var impression)) relation.Impression = impression.Trim();
                 if (fields.TryGetValue("Relationship", out var label)) relation.Relationship = label.Trim();
                 relation.Revision++;
@@ -268,6 +279,21 @@ public static class PrivateMessages
         turn.Applied = true;
         PrivateInteractionHistory.Record(data, c.PersonId, turn, before);
     }
+    private static int? FavourTarget(Dictionary<string, string> fields)
+        => fields.TryGetValue("Favour", out var proposed) && decimal.TryParse(proposed, NumberStyles.Float, CultureInfo.InvariantCulture, out var value)
+            ? (int)Math.Clamp(decimal.Round(value, 0, MidpointRounding.AwayFromZero), -100, 100) : null;
+
+    public static void ConfirmFavour(CareerData data, PrivateConversation c, PrivateOffer offer, bool apply)
+    {
+        if (offer.State != "待确认") return;
+        var before = PrivateInteractionHistory.Capture(data, c.PersonId);
+        offer.FavourBefore = Favour(data, c.PersonId);
+        if (apply)
+            foreach (int target in offer.FavourTargets) ChangeFavour(data, c.PersonId, target - Favour(data, c.PersonId));
+        offer.State = apply ? "已确认" : "已取消";
+        if (c.Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
+            PrivateInteractionHistory.Record(data, c.PersonId, turn, before);
+    }
     private static decimal Money(Dictionary<string, string> fields, string key) => decimal.TryParse(fields.GetValueOrDefault(key), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal n) ? n : 0;
     private static int Number(Dictionary<string, string> fields, string key) => int.TryParse(fields.GetValueOrDefault(key), NumberStyles.Integer, CultureInfo.InvariantCulture, out int n) ? n : -1;
 }
@@ -275,6 +301,8 @@ public static class PrivateMessages
 /// <summary>括号可能跨越任意网络分片；普通括号原样显示，协议正文从不显示。</summary>
 public sealed class PrivateStreamParser
 {
+    private readonly string[] _extraFields;
+    public PrivateStreamParser(params string[] extraFields) => _extraFields = extraFields;
     private readonly StringBuilder _visible = new(), _pending = new();
     private int _depth;
     public string Text => _visible.ToString();
@@ -306,7 +334,7 @@ public sealed class PrivateStreamParser
                 : fields.ContainsKey("Mood") ? ["Mood", "Days", "Evidence", "Reason"]
                 : fields.ContainsKey("Match") ? ["Match", "Season", "Day", "Ascension", "Mode"]
                 : fields.ContainsKey("Contract") ? ["Contract", "Signing", "Wage", "WinBonus", "Weeks", "Role"] : [];
-            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase))) Directives.Add(fields);
+            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase) || _extraFields.Contains(k, StringComparer.OrdinalIgnoreCase))) Directives.Add(fields);
             else Error = "交互格式不完整，未执行。";
         }
     }

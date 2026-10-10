@@ -8,7 +8,7 @@ namespace NationalSpire;
 /// <summary>保留有界的运行记录；导出时合并生涯、请求和游戏日志，统一隐藏凭据。</summary>
 public static partial class Diagnostics
 {
-    public const string ModVersion = "0.25.32";
+    public const string ModVersion = "0.26.7";
 
     // 开赛失败逐次记录；读取诊断资料失败时仍保留最初的异常及其余资料。
     public static string RecordStartFailure(string stage, Exception error,
@@ -127,6 +127,7 @@ public static partial class Diagnostics
         using var measure = new LogMeasure(LogWork.Capture);
         var files = new Dictionary<string, string>(); var notes = new List<string>();
         files["summary.json"] = JsonSerializer.Serialize(new { modVersion = ModVersion, exportedUtc = DateTimeOffset.UtcNow, status, logging = LoggingPerformance() }, Json);
+        files["ui-performance.json"] = JsonSerializer.Serialize(UiPerformance.Snapshot(), Json);
         try { if (RuntimeSnapshot != null) files["runtime.json"] = JsonSerializer.Serialize(RuntimeSnapshot(), Json); }
         catch (Exception e) { notes.Add(e.Message); }
         string? directory;
@@ -201,10 +202,13 @@ public static partial class Diagnostics
             // 完整模组状态用于核对赛程、种子、路线、楼层引用和生成任务；不读取原版存档或密钥文件。
             Section("career.json", () => data);
             Section("logging-performance.json", LoggingPerformance);
+            Section("ui-performance.json", UiPerformance.Snapshot);
             string? performanceDirectory;
             lock (Gate) performanceDirectory = _directory;
             if (performanceDirectory != null && File.Exists(Path.Combine(performanceDirectory, "logging-performance.json")))
                 LogFile(Path.Combine(performanceDirectory, "logging-performance.json"), "logging-last-snapshot.json");
+            if (performanceDirectory != null && File.Exists(Path.Combine(performanceDirectory, "ui-performance.json")))
+                LogFile(Path.Combine(performanceDirectory, "ui-performance.json"), "ui-last-snapshot.json");
             foreach (var trace in ReadMatchTraces(data.WorldId)) Write("matches/" + trace.Key, trace.Value);
             if (cooperative != null) Section("cooperative.json", () => cooperative);
             if (peerReports != null) foreach (var report in peerReports) Write(report.Key, report.Value);

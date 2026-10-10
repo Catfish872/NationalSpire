@@ -4,6 +4,7 @@ public sealed class EsportsCareer
 {
     public int OrganizationContentVersion { get; set; }
     public OwnedClubState? OwnedClub { get; set; }
+    public List<CoachTrainingPlan> CoachTraining { get; set; } = [];
     public List<CoachLineupRequest> LineupRequests { get; set; } = [];
     public int FreeAgentVersion { get; set; }
     public int CommerceVersion { get; set; }

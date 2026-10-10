@@ -6,6 +6,7 @@ public static class CommunityMentions
         + (data.People.Count(p => p.PublicName == person.PublicName) > 1 ? "〔" + person.Id + "〕" : "");
     public static List<string> Resolve(CareerData data, string text)
     {
+        if (!text.Contains('@')) return [];
         var candidates = data.People.Where(p => !CommunityThreads.IsHuman(data, p.Id) && !SpireArbitration.Muted(p))
             .SelectMany(p => p.HandleAliases.Append(p.Name).Append(p.PublicName).Where(n => n.Length > 0)
                 .Select(n => (p.Id, Token: "@" + n)).Append((p.Id, Token: Token(data, p))))
@@ -28,4 +29,14 @@ public static class CommunityMentions
     public static List<string> Required(CommunityPost post, ISet<string> requested) =>
         (requested.Contains(post.Id) ? post.MentionedPeople : [])
         .Concat(post.Replies.Where(r => requested.Contains(r.Id)).SelectMany(r => r.MentionedPeople)).Distinct().ToList();
+
+    public static bool Remember(CareerData data, CommunityPost post)
+    {
+        var mentioned = post.MentionedPeople.Concat(post.Replies.SelectMany(r => r.MentionedPeople))
+            .Concat(Resolve(data, post.Title + "\n" + post.Body + "\n" + string.Join("\n", post.Replies.Select(r => r.Body))));
+        bool changed = false;
+        foreach (string id in mentioned.Distinct())
+            if (!post.RelatedPeople.Contains(id)) { post.RelatedPeople.Add(id); changed = true; }
+        return changed;
+    }
 }

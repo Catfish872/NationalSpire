@@ -48,7 +48,7 @@ public partial class CareerScreen
         box.AddChild(button);
     }
     private ICareerSession? _multiplayer;
-    private CareerData ViewData => _multiplayer?.Data ?? CareerStore.Data;
+    private CareerData ViewData => _multiplayer?.Data ?? _boundData ?? CareerStore.Data;
     private bool MultiplayerCommand(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)
     {
         if (_multiplayer == null) return false;

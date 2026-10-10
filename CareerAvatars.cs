@@ -24,6 +24,7 @@ public static class CareerAvatars
         CareerEngine.StableHash($"{data.WorldId}:home-card:{PlayerArchive.Read().Recent.FirstOrDefault()?.StartTime ?? 0}");
     public static AvatarArt ForPerson(CareerData data, string personId)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.Avatar);
         var selected = personId == "player" ? data.SelectedAvatar : data.HumanAvatars.GetValueOrDefault(personId) ?? CareerEngine.Person(data, personId)?.Avatar;
         if (AvatarImages.Read(selected) is { } custom) return custom;
         return Automatic(data, personId);
@@ -146,8 +147,9 @@ public partial class CareerScreen
             CustomMinimumSize = new Vector2(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter });
         row.AddChild(content); return row;
     }
-    private Control Avatar(CareerData data, string personId, int size = 52, bool clickable = true)
+    private Control Avatar(CareerData data, string personId, int size = 52, bool clickable = true, Action? open = null)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.AvatarControl);
         var art = CareerAvatars.ForPerson(data, personId);
         var identity = AvatarHonors.ForPerson(data, personId);
         var picture = new CareerAvatar { PersonId = personId, Art = art, Identity = identity, CustomMinimumSize = new Vector2(size, size),
@@ -159,7 +161,7 @@ public partial class CareerScreen
         button.AddChild(picture); picture.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         button.MouseEntered += () => picture.Modulate = new Color(1.15f, 1.15f, 1.15f);
         button.MouseExited += () => picture.Modulate = Colors.White;
-        button.Pressed += () => OpenPerson(personId);
+        button.Pressed += open ?? (() => OpenPerson(personId));
         return button;
     }
     private HBoxContainer WithAvatar(CareerData data, string id, Control content, int size = 52, bool clickable = true)

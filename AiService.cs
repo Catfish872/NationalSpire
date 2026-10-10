@@ -219,13 +219,14 @@ public static partial class AiService
 
     private static string BuildPrompt(CareerData data, List<CommunityPost> pending) => BuildNewsContext(data, pending);
 
+    private static IEnumerable<string> NewsCommenters(CommunityPost post, int postCount)
+        => post.Replies.Select(r => r.AuthorId).Distinct().Take(postCount > 1 ? 5 : int.MaxValue);
+
     private static List<CareerPerson> PromptPeople(CareerData data, List<CommunityPost> pending)
     {
-        // 帖数增加时先覆盖全部作者和每帖两名评论者，防止后面的帖子缺少可发言人物。
-        var ids = pending.Select(p => p.AuthorId).Concat(pending.SelectMany(p => p.Replies.Take(2).Select(r => r.AuthorId)))
-            .Concat(pending.SelectMany(p => p.Replies).Select(r => r.AuthorId))
-            .Distinct().Take(Math.Max(12, pending.Count * 4)).ToHashSet();
-        return data.People.Where(p => ids.Contains(p.Id) && !CommunityThreads.IsHuman(data, p.Id)).ToList();
+        var ids = pending.Select(p => p.AuthorId).Concat(pending.SelectMany(p => NewsCommenters(p, pending.Count)))
+            .Concat(pending.SelectMany(p => p.RelatedPeople)).ToHashSet();
+        return data.People.Where(p => ids.Contains(p.Id) && !CommunityThreads.IsHuman(data, p.Id) && !SpireArbitration.Muted(p)).ToList();
     }
 
     private static void ApplyResponse(CareerData data, List<CommunityPost> pending, string content)

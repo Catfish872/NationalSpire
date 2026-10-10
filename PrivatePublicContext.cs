@@ -90,6 +90,7 @@ public static partial class PrivatePublicContext
         if (d.LocalHumanId.Length == 0 && d.PlayerIntroduction.Length > 0 && d.PlayerIntroductionDay <= d.Day)
             b.AppendLine($"{PrivateAppointments.DateText(d, d.PlayerIntroductionDay)}的{player}周刊档案：{d.PlayerIntroduction}");
         AppendCareerDetails(b, d, p, changing);
+        b.AppendLine("\n性格使用说明：" + PersonalityLibrary.ProfileUsage);
         return b.ToString().TrimEnd();
 
         void Awards(string id, string name)

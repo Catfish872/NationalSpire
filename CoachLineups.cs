@@ -19,7 +19,7 @@ public sealed class CoachLineupRequest
 public static class CoachLineups
 {
     public const string Protocol = """
-本轮附件包含阵容调整请求时，根据具体内容和情况决定是否同意。同意输出 [Lineup: 同意, Id: 13]，拒绝输出 [Lineup: 拒绝, Id: 13]，Id 填对应附件的编号；口头答复不会登记处理结果。同意的调整在下赛季生效。没有对应附件时，不得输出该标记。
+本轮附件包含阵容调整请求时，根据具体内容和情况决定是否同意。同意输出 [Lineup: 同意, Id: 13]，拒绝输出 [Lineup: 拒绝, Id: 13]，Id 填对应附件的编号；口头答复不会登记处理结果。同意的调整在下赛季生效。如果没有阵容调整附件但是玩家有调整意向，则先在正文中商谈阵容，收到对应附件后再输出同意或拒绝标记。
 """;
     public static bool Coach(CareerPerson p) => p.ClubPosition == "教练" || p.ClubPosition.Length == 0 && (p.Role == "教练" || p.Identities.Contains("教练"));
     public static bool CanRequest(CareerData d, string coach) => d.Esports.ClubId.Length > 0

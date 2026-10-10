@@ -32,6 +32,7 @@ public static class CareerStore
         {
             lock (Gate)
             {
+                using var timing = UiPerformance.Measure(UiPerformance.Work.Store);
                 var path = FilePath;
                 if (_data != null && _loadedPath == path) return _data;
                 _data = null;
@@ -65,6 +66,7 @@ public static class CareerStore
                 }
                 _data ??= CareerEngine.CreateNew();
                 PrivateMessageCommands.Recover(_data.Life);
+                GroupChats.Recover(_data);
                 bool clubMarket = _data.Esports.EcosystemVersion >= 1 && (_data.Esports.OwnedClub is { EconomyVersion: < 1 } || _data.Esports.FreeAgentVersion < 2 || _data.People.Any(p => p.Id.StartsWith("free-agent-") && p.RecruitVersion < 1));
                 bool cameos = _data.Cameos.Version < CameoContent.Version && _data.Esports.EcosystemVersion >= 0;
                 string cameoBackup = path + ".pre-cameos" + CameoContent.Version;
@@ -138,6 +140,8 @@ public static class CareerStore
             lock (Gate)
             {
                 data ??= Data;
+                // 删除与保存共用锁；请求在删除前进入 Save 时，也不能重建已删除生涯。
+                if (data.ExternalSave is { } detached) { detached(data); return; }
                 if (!Paths.TryGetValue(data, out var path)) throw new InvalidOperationException("生涯未绑定存档路径。");
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
                 var temp = path + ".tmp";
@@ -197,6 +201,23 @@ public static class CareerStore
                 CareerLibrary.Select(DefaultPath, previousPath);
                 _data = previous; _loadedPath = previousPath; throw;
             }
+        }
+    }
+
+    public static void DeleteCareer(string original, string path)
+    {
+        lock (Gate)
+        {
+            path = Path.GetFullPath(path);
+            if (_data != null && _loadedPath != null && string.Equals(path, Path.GetFullPath(_loadedPath), StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");
+            CareerLibrary.Delete(original, path);
+            foreach (var data in Paths.Where(p => string.Equals(Path.GetFullPath(p.Value), path, StringComparison.OrdinalIgnoreCase)).Select(p => p.Key).ToArray())
+            {
+                data.ExternalCurrent = () => false; data.ExternalSave = _ => { };
+                Paths.Remove(data);
+            }
+            ValidatedFiles.Remove(path);
         }
     }
 

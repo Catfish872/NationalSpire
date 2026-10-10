@@ -1,4 +1,4 @@
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -58,12 +58,17 @@ public static class PromptTransfer
         }
         if (bundle.CustomTemplate?.Sections?.Remove("private-style", out var customStyle) == true)
             bundle.CustomTemplate.Sections["private"] = PromptLibrary.MergePrivateText(bundle.CustomTemplate.Sections.GetValueOrDefault("private", PrivateMessagePrompts.Guide), customStyle);
-        // 旧文件只补新增私信模块，已有模块的完整性检查保持不变。
-        foreach (var id in PrivateMessagePrompts.SectionIds)
+        // 旧文件缺少的场景沿用所属模板默认值，已有自定义文本保留。
+        var defaults = new AiOptions { PromptTemplate = bundle.CustomTemplate?.BaseTemplate ?? bundle.Template };
+        foreach (var section in PromptLibrary.Sections)
         {
-            var section = PromptLibrary.Sections.First(s => s.Id == id);
-            bundle.Sections?.TryAdd(id, new() { FollowDefault = true, Text = section.DefaultText });
-            bundle.CustomTemplate?.Sections?.TryAdd(id, section.DefaultText);
+            string id = section.Id, text = PromptLibrary.Default(defaults, id);
+            if (bundle.CustomTemplate?.Sections is { } customSections
+                && (!customSections.TryGetValue(id, out var customText) || string.IsNullOrWhiteSpace(customText)))
+                customSections[id] = text;
+            if (bundle.Sections is { } sections
+                && (!sections.TryGetValue(id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text)))
+                sections[id] = new() { FollowDefault = true, Text = bundle.CustomTemplate?.Sections?.GetValueOrDefault(id) ?? text };
         }
         if (bundle.Format != "national-spire-prompts" || bundle.Version is not (1 or 2))
             throw new ArgumentException("不支持此提示词文件格式或版本。");

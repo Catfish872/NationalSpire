@@ -70,7 +70,7 @@ public static class OwnedClubs
             if (p.ClubId != own.ClubId || p.ClubPosition != position || contract.Position != position) changed = true;
             p.ClubId = own.ClubId; p.ClubPosition = position; contract.Position = position;
         }
-        return changed;
+        return CharacterDeletion.RepairStarters(d) || changed;
     }
     public static List<CareerPerson> Candidates(CareerData d) => d.People.Where(p => p.ClubId.Length == 0
         && IsRecruitable(p) && !Humans(d).Contains(p.Id))
@@ -296,6 +296,8 @@ public static class OwnedClubs
     public static string? Swap(CareerData d, string first, string second)
     {
         if (!IsOwner(d) || d.PendingMatchId != null) return "比赛进行中，暂时不能调整阵容。";
+        CharacterDeletion.RepairStarters(d);
+        if (CharacterDeletion.DeletedStarterVacancy(d)) return CharacterDeletion.MissingStarter;
         var o = d.Esports.OwnedClub!;
         if (Humans(d).Contains(first) || Humans(d).Contains(second) || first == second || !o.Contracts.Any(c => c.PersonId == first) || !o.Contracts.Any(c => c.PersonId == second)) return "请选择两名不同的签约选手。";
         if (ReservedStarter(d, first) || ReservedStarter(d, second)) return "该首发席位已有下赛季转会约定，暂不能交换。";
@@ -333,12 +335,13 @@ public static class OwnedClubs
     {
         if (!IsOwner(d) || d.PendingMatchId != null) return "请先完成当前比赛。";
         var o = d.Esports.OwnedClub!;
-        if (o.Coaches.Contains(id)) return "教练不能兼任选手。";
+        bool wasCoach = o.Coaches.Contains(id);
         if (!o.Contracts.Any(c => c.PersonId == id) || position is not ("轮换" or "青训") || o.Starters.Contains(id)) return "首发调整请使用交换阵容。";
         if (position == "青训" && o.Reserves.Contains(id) && o.Reserves.Count <= 3) return "请保留三名轮换。";
-        o.Reserves.Remove(id); o.Youth.Remove(id); PositionList(o, position).Add(id);
+        o.Coaches.Remove(id); o.Reserves.Remove(id); o.Youth.Remove(id); PositionList(o, position).Add(id);
         o.Contracts.Single(c => c.PersonId == id).Position = position;
         UpdateRosterRole(CareerEngine.Person(d, id)!, position);
+        if (wasCoach) { ClubCoaching.StopTraining(d, id); CareerTraining.InvalidateForecast(d); }
         CareerStore.Save(d); return null;
     }
     public static decimal ExitFee(CareerData d, OwnedPlayerContract c) => Math.Min(4, Math.Max(0, (c.EndDay - d.Day + 6) / 7)) * c.Wage;

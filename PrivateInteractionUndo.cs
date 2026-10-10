@@ -16,6 +16,8 @@ public static class PrivateInteractionHistory
     private static JsonNode? Node<T>(T value) => JsonSerializer.SerializeToNode(value);
     public static JsonObject Capture(CareerData d, string id, bool contract = false)
     {
+        if (GroupChats.IsHuman(d, id))
+            return new JsonObject { ["offers"] = Node(PrivateMessages.Mailbox(d).Conversations[id].Offers) };
         var p = CareerEngine.Person(d, id)!;
         var learning = Node(p.Learning)!.AsObject();
         foreach (string key in new[] { "MoodDay", "MoodUntil", "MoodStrength" }) learning.Remove(key);
@@ -26,7 +28,7 @@ public static class PrivateInteractionHistory
             ["mood"] = Node(new { p.Learning.MoodDay, p.Learning.MoodUntil, p.Learning.MoodStrength }),
             ["relation"] = Node(PrivateMessages.Relation(d, id)),
             ["offers"] = Node(PrivateMessages.Conversation(d, id).Offers),
-            ["coachTraining"] = Node(d.Esports.OwnedClub?.CoachTraining.Where(p => p.PersonId == id).ToList() ?? []),
+            ["coachTraining"] = Node(ClubCoaching.TrainingPlans(d).Where(p => p.PersonId == id).ToList()),
             ["lineups"] = Node(d.Esports.LineupRequests),
             ["playerSeat"] = d.Esports.OwnedClub is { } seats ? Node(new { seats.ClubId, seats.PlayerPositionSeason,
                 seats.PlayerNextPosition, seats.PlayerReplacement, seats.PlayerPositionRequest }) : null,
@@ -149,6 +151,8 @@ public static class PrivateInteractionHistory
 
     private static void Restore(CareerData d, string id, JsonObject state, bool contract)
     {
+        if (GroupChats.IsHuman(d, id))
+        { PrivateMessages.Mailbox(d).Conversations[id].Offers = state["offers"]!.Deserialize<List<PrivateOffer>>()!; return; }
         var p = CareerEngine.Person(d, id)!;
         foreach (var field in state["profile"]!.AsObject()) PrivateProfileChanges.SetValue(p, field.Key, field.Value!.GetValue<string>());
         p.PrivateProfileReceipts = state["receipts"]!.Deserialize<HashSet<string>>()!;
@@ -165,10 +169,10 @@ public static class PrivateInteractionHistory
             d.Matches.RemoveAll(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == id);
             d.Matches.AddRange(state["privateMatches"]!.Deserialize<List<CareerMatch>>()!);
         }
-        if (state["coachTraining"] != null && d.Esports.OwnedClub is { } own)
+        if (state["coachTraining"] != null)
         {
             var restored = state["coachTraining"]!.Deserialize<List<CoachTrainingPlan>>()!;
-            own.CoachTraining.RemoveAll(p => p.PersonId == id); own.CoachTraining.AddRange(restored);
+            ClubCoaching.RestoreTraining(d, id, restored);
         }
         if (state["lineups"] != null)
         {

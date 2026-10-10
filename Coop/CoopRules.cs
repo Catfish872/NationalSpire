@@ -46,12 +46,14 @@ public static partial class CoopRules
         var oldPosts = CommunityThreads.All(w.World).Select(p => p.Id).ToHashSet();
         foreach (var post in CommunityThreads.All(d).Where(p => !oldPosts.Contains(p.Id)))
         { post.RelatedPeople = post.RelatedPeople.Select(id => id == "player" ? m.PersonId : id).ToList(); }
+        w.World.Chats.Order = Math.Max(w.World.Chats.Order, d.Chats.Order);
         m.Name = d.PlayerAlias; m.Aliases = d.PlayerNameAliases; m.Credits = d.Credits; m.Fans = d.Fans; m.Rating = d.Rating;
         m.Wins = d.Wins; m.Losses = d.Losses; m.Draws = d.Draws; m.HighestClear = d.AvatarHighestClear;
         m.Life = d.Life; m.Sponsors = d.Esports.Sponsors; m.SponsorOffers = d.Esports.SponsorOffers; m.Results = d.Results;
         w.World.People = d.People; w.World.Esports.Clubs = d.Esports.Clubs;
         w.World.Development = d.Development;
         w.World.Esports.LineupRequests = d.Esports.LineupRequests;
+        w.World.Esports.CoachTraining = d.Esports.CoachTraining;
         if (m.SteamId == w.Owner) w.World.Esports.OwnedClub = d.Esports.OwnedClub;
         w.World.Posts = d.Posts; w.World.SavedThreads = d.SavedThreads; w.World.CommunityMemories = d.CommunityMemories;
         foreach (var ev in m.Life.Events)
@@ -91,7 +93,7 @@ public static partial class CoopRules
         CoopOutcome Reject(string error) => new(false, error);
         if (!original.Members.Any(m => m.SteamId == sender)) return (original, Reject("身份不属于本生涯。"));
         if (command.World != original.Id || command.Epoch != original.Epoch) return (original, Reject("房间会话已改变，请重新同步。"));
-        if (command.Id.Length is < 1 or > 80 || command.Kind != "character-card" && command.Text.Length > (command.Kind == "avatar" ? PlayerAvatar.MaxText : command.Kind.StartsWith("dm-") ? 160000 : 16000) || command.Target.Length > 256) return (original, Reject("操作内容无效。"));
+        if (command.Id.Length is < 1 or > 80 || command.Kind != "character-card" && command.Text.Length > (command.Kind == "avatar" ? PlayerAvatar.MaxText : (command.Kind.StartsWith("dm-") || command.Kind.StartsWith("group-")) ? 160000 : 16000) || command.Target.Length > 256) return (original, Reject("操作内容无效。"));
         string key = sender + "/" + command.Id, fingerprint = CoopJson.Hash(CoopJson.Bytes(command));
         if (original.Receipts.TryGetValue(key, out var receipt)) return (original, receipt.Fingerprint == fingerprint ? new(true, receipt.Result, true) : Reject("请求标识冲突。"));
         // 同一提议的投票互不覆盖；其他队员先确认或阅读消息后，仍接受该提议的确认。
@@ -106,9 +108,10 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && command.Kind is not ("ceremony-read" or "read" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
-            if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
+            else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("owned-", StringComparison.Ordinal))
             {
                 if (sender != w.Owner) return (original, Reject("俱乐部由房主管理。"));

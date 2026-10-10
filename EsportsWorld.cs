@@ -124,10 +124,15 @@ public static class EsportsWorld
     }
 
     private static string LeagueSlot(CareerData d, WorldCompetition c) => c.PlayerEntered ? "player" : c.Entrants.LastOrDefault(id => ClubOf(d, id) == d.Esports.ClubId) ?? c.Entrants[^1];
-    public static void RefreshLeagueMatches(CareerData d)
+    public static bool RefreshLeagueMatches(CareerData d)
     {
-        var c = PlayerLeague(d); if (c == null) return;
-        if (c.Modern) { if (c.PlayerEntered) CircuitWorld.SchedulePlayer(d, c); return; }
+        var c = PlayerLeague(d); if (c == null) return false;
+        if (c.Modern)
+        {
+            bool repaired = LeagueRosterRepair.Apply(d, c);
+            if (c.PlayerEntered) CircuitWorld.SchedulePlayer(d, c);
+            return repaired;
+        }
         foreach (var m in d.Matches.Where(m => m.Kind == "league" && m.Day > (d.Season - 1) * 28 && m.Day <= d.Season * 28 && m.Status == "待赛"))
         {
             var f = c.Fixtures.FirstOrDefault(f => f.Round == m.Round && (f.HomeId == LeagueSlot(d, c) || f.AwayId == LeagueSlot(d, c)));
@@ -136,6 +141,7 @@ public static class EsportsWorld
             m.OpponentId = f.HomeId == LeagueSlot(d, c) ? f.AwayId : f.HomeId;
         }
         d.Standings = c.PlayerEntered ? c.Table : [];
+        return false;
     }
 
     public static string? EntryReason(CareerData d, CareerMatch m)
@@ -238,6 +244,7 @@ public static class EsportsWorld
 
     public static void EndDay(CareerData d, int day, bool publish = true)
     {
+        if (PlayerLeague(d) is { } league) LeagueRosterRepair.Apply(d, league);
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season).ToList())
         {
             foreach (var f in c.Fixtures.Where(f => f.Day == day && !f.Finished).ToList()) SimulateFixture(d, c, f);
@@ -308,6 +315,12 @@ public static class EsportsWorld
     {
         var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == m.CompetitionId);
         var f = c?.Fixtures.FirstOrDefault(f => f.Id == m.FixtureId); if (c == null || f == null || f.Finished) return;
+        // 旧版重复报名的比赛恢复后，以这场实际出场的玩家记录结算。
+        if (LeagueRosterRepair.Affected(d, c) && f.HomeId != "player" && f.AwayId != "player")
+        {
+            if (f.HomeTeam == d.Esports.ClubId) f.HomeId = "player";
+            else if (f.AwayTeam == d.Esports.ClubId) f.AwayId = "player";
+        }
         f.HomeCleared = f.HomeId == "player" ? playerClear : m.OpponentWon;
         f.AwayCleared = f.AwayId == "player" ? playerClear : m.OpponentWon;
         f.HomeFloor = f.HomeId == "player" ? m.PlayerFloor : m.OpponentFloor;

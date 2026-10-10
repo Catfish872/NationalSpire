@@ -58,22 +58,31 @@ public static class OwnedClubSchedule
         : d.Esports.OwnedClub!.Starters.ToList();
     public static void UpdateLineup(CareerData d)
     {
+        CharacterDeletion.RepairStarters(d, updateSchedule: false);
+        if (CharacterDeletion.DeletedStarterVacancy(d)) return;
         var own = d.Esports.OwnedClub!;
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(own.ClubId)))
         {
             var roster = OfficialRoster(d); c.Rosters[own.ClubId] = roster;
+            var changed = new HashSet<string>();
             foreach (var tie in c.Fixtures.Where(f => f.HomeTeam == own.ClubId || f.AwayTeam == own.ClubId)
-                .GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)).Where(g => g.All(f => !f.Finished)))
+                .GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)).Where(g => g.All(f => !f.Finished) && !CircuitWorld.ActiveTie(d, g)))
             {
                 int i = 0;
                 foreach (var f in tie)
-                { if (f.HomeTeam == own.ClubId) f.HomeId = roster[i++]; else f.AwayId = roster[i++]; }
+                {
+                    string id = roster[i++];
+                    if ((f.HomeTeam == own.ClubId ? f.HomeId : f.AwayId) == id) continue;
+                    if (f.HomeTeam == own.ClubId) f.HomeId = id; else f.AwayId = id;
+                    changed.Add(f.Id);
+                }
             }
             foreach (string id in c.Cooperative ? roster.Take(1) : roster)
             {
                 if (!c.Entrants.Contains(id)) { c.Entrants.Add(id); c.Table.Add(new() { PersonId = id }); }
                 c.EntrantClubs[id] = own.ClubId; c.EntrantCountries[id] = d.Esports.Country;
             }
+            if (changed.Count > 0) CircuitWorld.UpdatePlayerMatches(d, c, changed);
         }
     }
 }

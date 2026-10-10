@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public static class SocialAppointments
 {
@@ -8,7 +8,7 @@ public static class SocialAppointments
 修改已有约定使用 [Activity: 改期, Id: 14, Season: 2, Day: 19]，取消使用 [Activity: 取消, Id: 14]，Id 填对应活动的编号。活动不等同比赛，不自行承诺资金或能力奖励。
 """;
     public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> All(CareerData d)
-        => PrivateMessages.Mailbox(d).Conversations.Values.SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)));
+        => PrivateMessages.Mailbox(d).Conversations.Values.Concat(GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)));
     public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> Due(CareerData d)
         => All(d).Where(x => x.Offer.State == "已确认" && PrivateAppointments.Date(d, x.Offer) == d.Day);
     public static void Expire(CareerData d)

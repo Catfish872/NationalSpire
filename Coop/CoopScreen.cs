@@ -113,14 +113,14 @@ public partial class CoopScreen : Control, IScreenContext
     }
     private static LineEdit Input(Node parent, string placeholder, string value = "")
     { var line = new LineEdit { PlaceholderText = placeholder, Text = value, CustomMinimumSize = new(0, 48), SizeFlagsHorizontal = SizeFlags.ExpandFill }; parent.AddChild(line); return line; }
-    private void Confirm(string title, string question, Action action)
+    private void Confirm(string title, string question, Action action, string confirmText = "确认")
     {
         if (_dialog != null) return;
         var shade = new ColorRect { Color = new(0, 0, 0, .8f), MouseFilter = MouseFilterEnum.Stop }; _dialog = shade; _stage.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         var center = new CenterContainer(); shade.AddChild(center); center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         var wrapper = new VBoxContainer { CustomMinimumSize = new(720, 0) }; center.AddChild(wrapper);
         var body = Card(wrapper, title); Text(body, question); var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); body.AddChild(row);
-        Button(row, "确认", () => { shade.QueueFree(); _dialog = null; try { action(); } catch (Exception e) { _message = e.Message; } });
+        Button(row, confirmText, () => { shade.QueueFree(); _dialog = null; try { action(); } catch (Exception e) { _message = e.Message; } });
         Button(row, "取消", () => { shade.QueueFree(); _dialog = null; });
     }
     private async void Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "")
@@ -177,7 +177,11 @@ public partial class CoopScreen : Control, IScreenContext
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
             Text(row, $"{cp.World.Name} · 第 {cp.World.World.Day} 天 · {cp.World.Members.Count} 位成员", 18);
             Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
-            Button(row, "删除", () => Confirm("删除多人存档", $"删除“{cp.World.Name}”的本机存档？单人生涯不受影响。", () => { CoopSettings.Storage.Delete(cp.World.Id); Render(); }), 100);
+            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天\n从列表移除，文件保留在本机备份中。", () =>
+            {
+                if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
+                CoopSettings.Storage.Delete(cp.World.Id); Render();
+            }, "删除"), 100);
         }
     }
     private void WaitingRoom(CoopWorld world)

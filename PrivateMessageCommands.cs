@@ -66,6 +66,8 @@ public static class PrivateMessageCommands
             case "dm-confirm": case "dm-decline":
                 var offer = c.Offers.FirstOrDefault(o => o.Id == command.Offer);
                 if (offer == null) return "这项邀约已不存在。";
+                if (offer.Kind == "favour")
+                { PrivateMessages.ConfirmFavour(data, c, offer, kind == "dm-confirm"); return null; }
                 if (offer.Kind == "activity")
                 {
                     if (kind == "dm-decline") { if (offer.State is not ("待确认" or "已确认")) return "这项活动已处理。"; offer.State = "已取消"; return null; }

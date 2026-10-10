@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -43,10 +43,12 @@ public sealed partial class CoopCoordinator : IDisposable
                 storage.BackupBeforeDevelopment(hostWorld.World, hostWorld.Run);
             World = hostWorld.World; NativeSave = hostWorld.Run; World.Epoch = Guid.NewGuid().ToString("N"); World.Proposal = null;
             foreach (var member in World.Members) PrivateMessageCommands.Recover(member.Life);
+            GroupChats.Recover(World.World);
             OwnedClubs.RepairContractRoster(World.World, World.Members.Select(m => m.Life.Mailbox));
             OwnedClubs.EnsureMarket(World.World);
             CircuitPeople.Replenish(World.World);
             EsportsWorld.ClearInvalidRegistrations(World.World);
+            EsportsWorld.RefreshLeagueMatches(World.World);
             PlayerIdentity.Ensure(World.World);
             PersonalityLibrary.EnsureAll(World.World);
             NpcRecords.Ensure(World.World);
@@ -129,6 +131,7 @@ public sealed partial class CoopCoordinator : IDisposable
                     if (World != null && (World.Id != snapshot.World.Id || World.Epoch == snapshot.World.Epoch && World.Revision > snapshot.World.Revision)) break;
                     _storage.Save(snapshot.World, snapshot.Run); World = snapshot.World; NativeSave = snapshot.Run;
                     CoopJson.Detached(World.World); _seen[sender] = DateTime.UtcNow; Status = "已同步";
+                    foreach (var group in World.World.Chats.Groups.Where(g => !GroupChats.Busy(g))) { AiService.GroupLive.Remove(World.Id + "/group/" + group.Id); AiService.GroupReasoningLive.Remove(World.Id + "/group/" + group.Id); }
                     CompleteReplies(); Changed?.Invoke(); break;
                 case "command" when Host:
                     var command = Read<CoopCommand>(wire);
@@ -211,6 +214,7 @@ public sealed partial class CoopCoordinator : IDisposable
         Changed?.Invoke();
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) TriggerAi?.Invoke(command.Kind);
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartPrivate(sender, command);
+        if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartGroup(sender, command);
     }
     public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)
     {
@@ -225,7 +229,7 @@ public sealed partial class CoopCoordinator : IDisposable
         {
             var view = PrivateSnapshot(World, peer);
             var settings = AiSettingsStore.Load(new());
-            view.World.PrivatePromptSnapshot = PrivateMessagePrompts.SectionIds.Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
+            view.World.PrivatePromptSnapshot = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
             var parts = CoopAssembler.Split(CoopJson.PublicBytes(new CoopSnapshot(view, NativeSave))).ToArray();
             foreach (var part in parts) Send(peer, "snapshot", part);
         }

@@ -371,7 +371,14 @@ public partial class CareerScreen
                     actions.AddChild(ClubSelect(partners.Select(i => "交换 · " + CareerEngine.DisplayName(d, i) + "（" + OwnedClubs.Position(o, i) + "）").ToArray(), 0, i => other = partners[i]));
                     actions.AddChild(ClubButton("确认交换", () => ShowCareerDialog("调整阵容", $"交换 {p.PublicName} 与 {CareerEngine.DisplayName(d, other)} 的位置？", () => { ClubAction(d, "swap", other, id); return true; }), 150));
                 }
-                if (role is "轮换" or "青训")
+                if (role == "教练")
+                {
+                    foreach (string destination in new[] { "轮换", "青训" })
+                        actions.AddChild(ClubButton("转回" + destination, () => ShowCareerDialog("转回" + destination,
+                            $"{p.PublicName} · 立即转回{destination}\n保留合同待遇与期限。停止其负责的未完成训练，已获得成长保留。",
+                            () => { ClubAction(d, "position", destination, id); return true; }), 150));
+                }
+                else if (role is "轮换" or "青训")
                 {
                     string destination = role == "青训" ? "轮换" : "青训";
                     actions.AddChild(ClubButton("调入" + destination, () => ShowCareerDialog("调整阵容", $"将 {p.PublicName} 调入{destination}？", () => { ClubAction(d, "position", destination, id); return true; }), 150));

@@ -88,8 +88,12 @@ public static partial class AiService
         var addressed = post.Replies.Where(r => requested.Contains(r.Id)).Select(r => post.Replies.FirstOrDefault(p => p.Id == r.ParentId)?.AuthorId).ToHashSet();
         var involved = post.Replies.Select(r => r.AuthorId).ToHashSet();
         var mentioned = CommunityMentions.Required(post, requested).Select(id => CareerEngine.Person(data, id)).OfType<CareerPerson>().Where(p => !CommunityThreads.IsHuman(data, p.Id) && !SpireArbitration.Muted(p)).ToList();
-        return mentioned.Concat(CommunityThreads.Audience(data, post).Where(p => mentioned.All(m => m.Id != p.Id)).OrderByDescending(p => addressed.Contains(p.Id)).ThenByDescending(p => p.Id == post.AuthorId)
-            .ThenByDescending(p => involved.Contains(p.Id)).ThenBy(p => CareerEngine.StableHash(post.Id + p.Id) % 1000 - Math.Abs(DiscussionFavour(data, p.Id, post, requested)) * 3).Take(Math.Max(0, 4 - mentioned.Count))).ToList();
+        var related = post.RelatedPeople.Select(id => CareerEngine.Person(data, id)).OfType<CareerPerson>()
+            .Where(p => !CommunityThreads.IsHuman(data, p.Id) && !SpireArbitration.Muted(p));
+        int count = 3 + CareerEngine.StableHash(data.WorldId + ":discussion-count:" + post.Id + ":" + string.Join("|", requested.Order(StringComparer.Ordinal))) % 4;
+        return mentioned.Concat(CommunityThreads.Audience(data, post).Concat(related).DistinctBy(p => p.Id)
+            .Where(p => mentioned.All(m => m.Id != p.Id)).OrderByDescending(p => addressed.Contains(p.Id)).ThenByDescending(p => p.Id == post.AuthorId)
+            .ThenByDescending(p => involved.Contains(p.Id)).ThenBy(p => CareerEngine.StableHash(post.Id + p.Id) % 1000 - Math.Abs(DiscussionFavour(data, p.Id, post, requested)) * 3).Take(Math.Max(0, count - mentioned.Count))).ToList();
     }
     private static int DiscussionFavour(CareerData data, string person, CommunityPost post, ISet<string> requested)
     {
@@ -130,6 +134,7 @@ public static partial class AiService
         };
         if (profile == null) { PersonalityLibrary.Ensure(data, p); profile = p.Personality; }
         person["personality"] = PersonalityLibrary.PromptProfile(profile);
+        if (ChatTimeline.PublicMemories(data, p.Id, day ?? data.Day) is { Length: > 0 } groups) person["群聊记忆（仅知情人可直接引用）"] = groups;
         if (privatePosts != null && PrivateMessages.PublicMemory(data, p, privatePosts, day ?? data.Day) is { Length: > 0 } memory) person["私下往来"] = memory;
         var humans = privatePosts?.SelectMany(post => post.RelatedPeople.Concat(post.Replies.Select(r => r.AuthorId)).Append(post.AuthorId))
             .Where(id => CommunityThreads.IsHuman(data, id)).Distinct().ToArray() ?? [];
@@ -148,7 +153,9 @@ public static partial class AiService
         PersonalityLibrary.EnsureAll(data);
         string occasion = "discussion:" + string.Join("|", requested.Order(StringComparer.Ordinal));
         var schedule = PublicSchedule.Capture(data, targets.SelectMany(p => p.RelatedPeople));
-        var people = targets.SelectMany(p => DiscussionPeople(data, p, requested)).DistinctBy(p => p.Id).ToList();
+        var people = targets.SelectMany(p => DiscussionPeople(data, p, requested)).Concat(targets.SelectMany(p => p.RelatedPeople)
+            .Select(id => CareerEngine.Person(data, id)).OfType<CareerPerson>()
+            .Where(p => !CommunityThreads.IsHuman(data, p.Id) && !SpireArbitration.Muted(p))).DistinctBy(p => p.Id).ToList();
         var queued = targets.SelectMany(p => p.Replies.Where(r => requested.Contains(r.Id)).Select(r => new
         { r.Id, postId = p.Id, kind = "reply" }).Concat(requested.Contains(p.Id) ? [new { p.Id, postId = p.Id, kind = "post" }] : [])).ToArray();
         string query = string.Join(" ", targets.Where(p => requested.Contains(p.Id) || p.Replies.Any(r => requested.Contains(r.Id)))
@@ -182,7 +189,8 @@ public static partial class AiService
         var latest = data.Results.LastOrDefault(r => r.OfficialAscensionVerified && r.Day <= data.Day && r.Kind != "private-friendly");
         bool hasLatestEvidence = latest != null && memories.Any(m => m.Id.EndsWith(":result") && m.Day == latest.Day && m.People.Contains("player") && m.People.Contains(latest.OpponentId));
         return JsonSerializer.Serialize(new { day = data.Day, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender }, schedule = PublicSchedule.ForPrompt(schedule), playerRecord = PlayerPublicRecord(data, data.Day, !hasLatestEvidence && !contexts.Any(c => c.match != null)), queued, targets = contexts,
-            attitudeScale = PersonalityLibrary.AttitudeScale, 态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = people.Select(p => Persona(data, p, occasion, privatePosts: targets.Where(t => DiscussionPeople(data, t, requested).Any(s => s.Id == p.Id)))), otherSpeakers = names, memory = memories,
+            attitudeScale = PersonalityLibrary.AttitudeScale, 态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = people.Select(p => Persona(data, p, occasion, privatePosts: targets.Where(t => t.RelatedPeople.Contains(p.Id) || DiscussionPeople(data, t, requested).Any(s => s.Id == p.Id)))),
+            性格使用说明 = PersonalityLibrary.ProfileUsage, otherSpeakers = names, memory = memories,
             career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak,
                 honors = data.Esports.Honors.TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }) } }, Json);
     }
@@ -205,6 +213,7 @@ public static partial class AiService
             string localId = item.GetProperty("id").GetString() ?? "";
             string author = item.GetProperty("authorId").GetString() ?? "";
             string parent = item.GetProperty("parentId").GetString() ?? "";
+            if (parent == post.Id) parent = "";
             string body = item.GetProperty("body").GetString() ?? "";
             if (string.IsNullOrWhiteSpace(localId) || existing.Contains(localId) || aliases.ContainsKey(localId) || !allowed.Contains(author) || author == "player" || string.IsNullOrWhiteSpace(body))
                 throw new InvalidDataException("回复标识或人物无效");

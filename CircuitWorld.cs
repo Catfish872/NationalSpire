@@ -113,15 +113,16 @@ public static class CircuitWorld
     public static void EnrollLeague(CareerData d, WorldCompetition c)
     {
         if (ClubCoaching.PlayerReserve(d) || c.PlayerEntered || !c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)) return;
-        c.PlayerReplacedId = roster[0] == "player" ? "" : roster[0];
-        if (roster[0] != "player") Replace(d, c, roster[0], "player");
+        c.PlayerReplacedId = roster.Contains("player") ? "" : roster[0];
+        if (c.PlayerReplacedId.Length > 0) Replace(d, c, c.PlayerReplacedId, "player");
         c.PlayerEntered = true; d.Standings = c.Table; SchedulePlayer(d, c);
     }
     public static void LeavePreseason(CareerData d)
     {
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && c.Modern && c.Kind == "league" && c.PlayerEntered && c.Fixtures.All(f => !f.Finished)))
         {
-            Replace(d, c, "player", c.PlayerReplacedId); c.PlayerEntered = false; c.PlayerReplacedId = "";
+            if (c.PlayerReplacedId.Length > 0) Replace(d, c, "player", c.PlayerReplacedId);
+            c.PlayerEntered = false; c.PlayerReplacedId = "";
             d.Matches.RemoveAll(m => m.CompetitionId == c.Id); d.Standings = [];
         }
     }
@@ -167,6 +168,17 @@ public static class CircuitWorld
                 Registered = true, Seed = $"NS-{d.WorldId}-{f.Id}" });
         }
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
+    }
+    internal static bool ActiveTie(CareerData d, IEnumerable<WorldFixture> tie) => d.Matches.Any(m =>
+        (m.Id == d.PendingMatchId || m.Id == d.Failure?.Result.MatchId) && tie.Any(f => f.Id == m.FixtureId));
+    internal static void UpdatePlayerMatches(CareerData d, WorldCompetition c, IReadOnlySet<string> changed)
+    {
+        // 只处理本次改过参赛者的场次；其余比赛保留编号、种子及已准备的成绩。
+        d.Matches.RemoveAll(m => m.CompetitionId == c.Id && changed.Contains(m.FixtureId) && m.Status == "待赛"
+            && m.Id != d.PendingMatchId && m.Id != d.Failure?.Result.MatchId
+            && c.Fixtures.First(f => f.Id == m.FixtureId) is { } f
+            && (f.HomeId != "player" && f.AwayId != "player" || m.OpponentId != (f.HomeId == "player" ? f.AwayId : f.HomeId)));
+        SchedulePlayer(d, c);
     }
     public static void AdvanceCompetition(CareerData d, WorldCompetition c, int day, bool publish)
     {

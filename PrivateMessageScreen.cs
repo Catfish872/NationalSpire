@@ -15,7 +15,7 @@ public partial class CareerScreen
     private VBoxContainer? _privateAttachments;
     private ScrollContainer? _privateAttachmentScroll;
     private readonly Dictionary<string, List<PrivateOffer>> _privateAttachmentDrafts = [];
-    private List<PrivateOffer> PrivateAttachments => _privateAttachmentDrafts.TryGetValue(_privatePerson, out var items) ? items : _privateAttachmentDrafts[_privatePerson] = [];
+    private List<PrivateOffer> PrivateAttachments => _privateAttachmentDrafts.TryGetValue(ChatDraftKey, out var items) ? items : _privateAttachmentDrafts[ChatDraftKey] = [];
     private VBoxContainer? _privateProposal;
     private string _privateProposalSignature = "";
     private string _privatePerson = "", _privateQuery = "", _privateSignature = "", _privateListSignature = "";
@@ -38,7 +38,7 @@ public partial class CareerScreen
         var layout = new VBoxContainer(); layout.AddThemeConstantOverride("separation", 18); margin.AddChild(layout);
         var header = new HBoxContainer(); header.AddThemeConstantOverride("separation", 16); layout.AddChild(header);
         var brand = new VBoxContainer(); brand.AddThemeConstantOverride("separation", 3); header.AddChild(brand);
-        brand.AddChild(PrivateLine("私信", 30, _gold));
+        brand.AddChild(PrivateLine("通讯", 30, _gold));
         brand.AddChild(PrivateLine("国运尖塔 · 选手通讯", 14, _muted));
         header.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         header.AddChild(PrivateButton("提示词预览", PreviewPrivatePrompt, 170));
@@ -51,8 +51,9 @@ public partial class CareerScreen
         var left = new PanelContainer(); left.CustomMinimumSize = new(290, 0); left.SizeFlagsHorizontal = SizeFlags.Fill; columns.AddChild(left);
         left.AddThemeStyleboxOverride("panel", CareerVisuals.Box("101b29", "3c5265", 12, 16));
         var sidebar = Inner(left); sidebar.AddThemeConstantOverride("separation", 18);
-        var search = new LineEdit { PlaceholderText = "搜索选手", CustomMinimumSize = new(260, 48) }; sidebar.AddChild(search);
+        var search = new LineEdit { PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(260, 48) }; sidebar.AddChild(search);
         search.TextChanged += value => { _privateQuery = value; _privateListSignature = ""; RefreshPrivateList(); };
+        GroupSidebar(sidebar);
         var listScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; sidebar.AddChild(listScroll);
         _privateList = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _privateList.AddThemeConstantOverride("separation", 12); listScroll.AddChild(_privateList);
         var main = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddChild(main);
@@ -85,15 +86,21 @@ public partial class CareerScreen
         else { PrivateEmpty("选择一位选手", "搜索姓名，或从选手档案发起私信。"); _privateSend.Disabled = true; }
     }
     private void ClosePrivateMessages()
+        => ClosePrivateMessagesCore(true);
+    private void ClosePrivateMessagesCore(bool render)
     {
         if (_privateOverlay == null) return;
-        if (_privatePerson.Length > 0 && _privateInput != null) _privateDrafts[_privatePerson] = _privateInput.Text;
-        _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = "";
-        _boundData = ViewData; Render();
+        if (ChatDraftKey.Length > 0 && _privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
+        _privateStreamText = _privateStreamThought = _groupReasoningUpdate = null;
+        _groupStreamParser = null; _groupStreamLabels.Clear();
+        _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = ""; _privateGroup = "";
+        _boundData = ViewData; if (render) Render();
     }
     private void SelectPrivate(string person)
     {
         if (!PrivateMessages.CanChat(ViewData, person)) return;
+        if (_privateGroup.Length > 0 && _privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
+        _privateGroup = "";
         if (_privatePerson.Length > 0) _privateDrafts[_privatePerson] = _privateInput!.Text;
         _privatePerson = person; _privateInput!.Text = _privateDrafts.GetValueOrDefault(person, "");
         _privateSend!.Disabled = false;
@@ -107,7 +114,8 @@ public partial class CareerScreen
         _privateClock += delta; if (_privateClock < .12) return; _privateClock = 0;
         var box = PrivateMessages.Mailbox(ViewData);
         int unread = box.Conversations.Values.Sum(c => Math.Max(0, c.Turns.Count(t => t.Status == "complete") - c.SeenCount));
-        if (_privateBadge != null) { _privateBadge.TooltipText = unread > 0 ? $"私信 · {unread} 条未读" : "私信"; _privateBadge.Modulate = unread > 0 ? CareerVisuals.Gold : Colors.White; }
+        unread += GroupChats.Visible(ViewData).Sum(g => Math.Max(0, g.Turns.Count(t => t.Status == "complete") - g.Seen.GetValueOrDefault(GroupChats.Human(ViewData))));
+        if (_privateBadge != null) { _privateBadge.TooltipText = unread > 0 ? $"通讯 · {unread} 条未读" : "通讯"; _privateBadge.Modulate = unread > 0 ? CareerVisuals.Gold : Colors.White; }
         if (_privateOverlay == null) return;
         _multiplayer?.Refresh(); RefreshPrivateProposal(); RefreshPrivateList(); RefreshPrivateChat();
     }
@@ -128,8 +136,10 @@ public partial class CareerScreen
     {
         if (_privateList == null || !IsInstanceValid(_privateList)) return;
         var data = ViewData; var box = PrivateMessages.Mailbox(data);
-        string signature = _privatePerson + _privateQuery + string.Join('|', box.Conversations.Select(p => p.Key + p.Value.Turns.Count + ":" + p.Value.Turns.LastOrDefault()?.Status + ":" + p.Value.SeenCount + ":" + p.Value.MemoryRevision + ":" + p.Value.LastReplyOrder));
+        string signature = _chatFilter + _privateGroup + string.Join("|", GroupChats.Visible(data).Select(g => g.Id + ":" + g.Revision + ":" + g.Turns.Count)) + _privatePerson + _privateQuery + string.Join('|', box.Conversations.Select(p => p.Key + p.Value.Turns.Count + ":" + p.Value.Turns.LastOrDefault()?.Status + ":" + p.Value.SeenCount + ":" + p.Value.MemoryRevision + ":" + p.Value.LastReplyOrder));
         if (_privateListSignature == signature) return; _privateListSignature = signature; CareerVisuals.ClearContent(_privateList);
+        AddGroupList();
+        if (_chatFilter == "群聊") return;
         var candidates = _privateQuery.Length > 0 ? data.People.Where(p => PrivateMessages.CanChat(data, p.Id) && (p.PublicName.Contains(_privateQuery, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(_privateQuery, StringComparison.OrdinalIgnoreCase))).Take(40)
             : box.Conversations.Values.OrderByDescending(c => c.LastReplyOrder).ThenByDescending(c => c.Turns.LastOrDefault()?.Day ?? 0).Select(c => CareerEngine.Person(data, c.PersonId)).OfType<CareerPerson>();
         foreach (var p in candidates)
@@ -149,17 +159,30 @@ public partial class CareerScreen
         }
         if (_privateList.GetChildCount() == 0) _privateList.AddChild(Text("搜索选手，或从档案发起私信。", 16, _muted));
     }
+    private Action<string>? _privateStreamText, _privateStreamThought;
+    private string _privateStreamLastText = "", _privateStreamLastThought = "";
+    private void UpdatePrivateStream(string text, string thought, bool follow)
+    {
+        if (text == _privateStreamLastText && thought == _privateStreamLastThought) return;
+        bool bottom = _privateScroll!.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90;
+        _privateStreamText?.Invoke(text); _privateStreamThought?.Invoke(thought);
+        _privateStreamLastText = text; _privateStreamLastThought = thought;
+        if (bottom && follow) _ = ScrollPrivateToBottom();
+    }
     private void RefreshPrivateChat(bool follow = true)
     {
+        if (_privateGroup.Length > 0) { RefreshGroupChat(); return; }
         if (_privatePerson.Length == 0 || _privateBody == null || _privateInput == null) return;
         var data = ViewData; var c = PrivateMessages.Conversation(data, _privatePerson); var r = PrivateMessages.Relation(data, _privatePerson);
         string live = AiService.PrivateLive.TryGetValue(AiService.PrivateKey(data, _privatePerson), out var update) && c.Turns.LastOrDefault() is { Status: "sending" } last && last.Id == update.Turn ? update.Text : "";
         string thinking = AiService.PrivateReasoningLive.TryGetValue(AiService.PrivateKey(data, _privatePerson), out var thought) && c.Turns.LastOrDefault() is { Status: "sending" } current && current.Id == thought.Turn ? thought.Text : "";
-        string signature = data.Day + "|" + c.MemoryRevision + "|" + c.SummaryStatus + c.Turns.Count + "|" + c.Turns.LastOrDefault()?.Status + "|" + c.Turns.LastOrDefault()?.Reply + "|" + c.Turns.LastOrDefault()?.Error + "|" + live + "|" + thinking.Length + "|" + c.SummaryError + "|" + string.Join(',', c.Offers.Select(o => o.State)) + r.Revision;
+        string signature = data.Day + "|" + c.MemoryRevision + "|" + c.SummaryStatus + c.Turns.Count + "|" + c.Turns.LastOrDefault()?.Status + "|" + c.Turns.LastOrDefault()?.Reply + "|" + c.Turns.LastOrDefault()?.Error + "|" + c.SummaryError + "|" + string.Join(',', c.Offers.Select(o => o.State)) + r.Revision;
         signature += "|" + ClubCoaching.TrainingContext(data, _privatePerson);
         signature += "|" + CoachLineups.Context(data, _privatePerson);
         signature += "|" + CareerTraining.MoodLevel(CareerEngine.Person(data, _privatePerson)!, data.Day);
-        if (signature == _privateSignature) return; _privateSignature = signature;
+        if (signature == _privateSignature) { UpdatePrivateStream(live, thinking, follow); return; } _privateSignature = signature;
+        _privateStreamText = _privateStreamThought = null;
+        _privateStreamLastText = live; _privateStreamLastThought = thinking;
         bool bottom = _privateScroll!.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90 || c.Turns.Count < 3;
         CareerVisuals.ClearContent(_privateHeading!);
         _privateHeading!.AddChild(PrivateIdentity(data, _privatePerson, true));
@@ -173,9 +196,17 @@ public partial class CareerScreen
             else if (turn.RequestKind == "arbitration") _privateBody.AddChild(Text("尖塔仲裁 · " + (turn.Status == "failed" ? "审理中断" : "正在审理"), 20, _gold));
             if (!turn.UserDeleted) AddPrivateBubble(turn.User, true, turn);
             string reasoning = turn.Status == "sending" && turn.Id == thought.Turn ? thinking : turn.Reasoning;
-            if (reasoning.Length > 0 && !turn.ReplyDeleted) AddPrivateReasoning(turn, reasoning);
+            if (!turn.ReplyDeleted && (reasoning.Length > 0 || turn.Status == "sending"))
+            {
+                var updateReasoning = AddChatReasoning(turn.Id, reasoning);
+                if (turn.Status == "sending") _privateStreamThought = updateReasoning;
+            }
             string reply = turn.Status == "sending" && turn.Id == update.Turn ? live : turn.Reply;
-            if (reply.Length > 0 && !turn.ReplyDeleted) AddPrivateBubble(reply, false, turn);
+            if (!turn.ReplyDeleted && (reply.Length > 0 || turn.Status == "sending"))
+            {
+                var updateReply = AddPrivateBubble(reply, false, turn);
+                if (turn.Status == "sending") _privateStreamText = updateReply;
+            }
             if (turn.Learning is { } learning && !turn.ReplyDeleted)
                 AddPrivateLearning(turn, learning);
             foreach (var change in turn.ProfileChanges.Where(_ => !turn.ReplyDeleted)) AddPrivateProfileChange(change);
@@ -188,7 +219,7 @@ public partial class CareerScreen
             else if (turn.Error.Length > 0) _privateBody.AddChild(PrivateText(turn.Error, 14, _muted));
             foreach (var offer in c.Offers.Where(o => o.TurnId == turn.Id)) AddPrivateOffer(data, offer);
         }
-        var ongoingTraining = data.Esports.OwnedClub?.CoachTraining.LastOrDefault(p => p.PersonId == _privatePerson && p.State == "进行中");
+        var ongoingTraining = ClubCoaching.TrainingPlans(data).LastOrDefault(p => p.PersonId == _privatePerson && p.State == "进行中");
         if (ongoingTraining != null && !c.Turns.TakeLast(_privateVisible).Any(t => !(t.UserDeleted && t.ReplyDeleted) && c.Offers.Any(o => o.Kind == "training" && o.Id == ongoingTraining.Id && o.TurnId == t.Id)))
             PrivateTrainingCard(data, ongoingTraining, _privateBody);
         foreach (var request in data.Esports.LineupRequests.Where(r => r.Coach == _privatePerson && r.ClubId == data.Esports.ClubId
@@ -220,7 +251,7 @@ public partial class CareerScreen
         var section = _privateBody!.GetChildren().OfType<Control>().FirstOrDefault(c => c.HasMeta("reasoning_turn") && c.GetMeta("reasoning_turn").AsString() == turn);
         if (section != null) _privateScroll!.EnsureControlVisible(section);
     }
-    private void AddPrivateBubble(string text, bool player, PrivateTurn turn)
+    private Action<string> AddPrivateBubble(string text, bool player, PrivateTurn turn)
     {
         var row = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, Alignment = player ? BoxContainer.AlignmentMode.End : BoxContainer.AlignmentMode.Begin }; row.AddThemeConstantOverride("separation", 8); _privateBody!.AddChild(row);
         var blank = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(65, 0) };
@@ -228,13 +259,21 @@ public partial class CareerScreen
         var bubble = new PanelContainer { CustomMinimumSize = new(player && turn.Attachments.Count > 0 ? 640 : Math.Clamp(text.Length * 18 + 40, 200, 680), 0) };
         bubble.AddThemeStyleboxOverride("panel", CareerVisuals.Box(player ? "304b60" : "223649", player ? "597f98" : "405c72", 10, 16)); row.AddChild(bubble);
         var content = new VBoxContainer(); content.AddThemeConstantOverride("separation", 8); bubble.AddChild(content);
-        if (text.Length > 0) content.AddChild(PrivateSelectableText(text, 19, _ink));
+        var message = PrivateSelectableText(text, 19, _ink); content.AddChild(message);
         if (player) foreach (var a in turn.Attachments) content.AddChild(PrivateAttachmentCard(a, false));
         var more = PrivateButton("···", () => PrivateMessageMenu(turn, player), 42); more.TooltipText = player ? "管理消息" : "管理消息与重新生成"; row.AddChild(more);
         if (!player) row.AddChild(blank);
+        void Update(string value)
+        {
+            row.Visible = value.Length > 0 || player && turn.Attachments.Count > 0;
+            if (message.Text != value) message.Text = value;
+            bubble.CustomMinimumSize = new(player && turn.Attachments.Count > 0 ? 640 : Math.Clamp(value.Length * 18 + 40, 200, 680), 0);
+        }
+        Update(text); return Update;
     }
     private void SendPrivate()
     {
+        if (_privateGroup.Length > 0) { SendGroup(); return; }
         if (_privatePerson.Length == 0) return;
         var c = PrivateMessages.Conversation(ViewData, _privatePerson);
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) { PrivateCommand("dm-stop", new()); return; }
@@ -272,6 +311,7 @@ public partial class CareerScreen
     }
     private void PrivateSettings()
     {
+        if (_privateGroup.Length > 0) { GroupSettings(); return; }
         var current = PrivateMessages.Mailbox(ViewData).Settings; SpinBox? maximum = null, recent = null, limit = null, merge = null; Label? error = null;
         ShowCareerDialog("聊天记录", "总结在后台进行，聊天可以继续。原始记录完整保留。", () =>
         {
@@ -295,6 +335,7 @@ public partial class CareerScreen
     }
     private void PreviewPrivatePrompt()
     {
+        if (_privateGroup.Length > 0) { PreviewGroupPrompt(); return; }
         if (_privatePerson.Length == 0) return;
         var d = ViewData; var c = PrivateMessages.Conversation(d, _privatePerson);
         // 预览包含当前草稿，既不保存也不发送。
@@ -310,6 +351,7 @@ public partial class CareerScreen
     }
     private void PrivateActions()
     {
+        if (_privateGroup.Length > 0) { GroupActions(); return; }
         if (_privatePerson.Length == 0) return;
         ShowCareerDialog("添加到消息", "选好后可以继续输入，发送时一并附上。", () => true, "关闭", box =>
         {
@@ -370,6 +412,23 @@ public partial class CareerScreen
     }
     private void AddPrivateOffer(CareerData data, PrivateOffer offer)
     {
+        if (offer.Kind == "favour")
+        {
+            var panel = new PanelContainer { Name = "PrivateFavourCard" };
+            panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("203448", "b89e67", 8, 16)); _privateBody!.AddChild(panel);
+            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); panel.AddChild(row);
+            int current = offer.State == "待确认" ? PrivateMessages.Favour(data, _privatePerson) : offer.FavourBefore;
+            int target = offer.FavourTargets[^1];
+            string state = offer.State == "已确认" ? " · 已应用" : offer.State == "已取消" ? " · 已保留" : "";
+            var label = PrivateLine($"好感 {current} → {target}（{target - current:+0;-0;0}）" + state, 18, _gold);
+            label.SizeFlagsHorizontal = SizeFlags.ExpandFill; row.AddChild(label);
+            if (offer.State == "待确认")
+            {
+                row.AddChild(PrivateButton("应用", () => PrivateCommand("dm-confirm", new() { Offer = offer.Id }), 90));
+                row.AddChild(PrivateButton("保留原值", () => PrivateCommand("dm-decline", new() { Offer = offer.Id }), 120));
+            }
+            return;
+        }
         if (offer.Kind == "lineup")
         {
             if (data.Esports.LineupRequests.FirstOrDefault(r => r.Id == offer.Id) is { } request) PrivateLineupCard(data, request, _privateBody!);
@@ -377,7 +436,7 @@ public partial class CareerScreen
         }
         if (offer.Kind == "training")
         {
-            if (data.Esports.OwnedClub?.CoachTraining.FirstOrDefault(p => p.Id == offer.Id) is { } plan)
+            if (ClubCoaching.TrainingPlans(data).FirstOrDefault(p => p.Id == offer.Id) is { } plan)
                 PrivateTrainingCard(data, plan, _privateBody!);
             return;
         }
