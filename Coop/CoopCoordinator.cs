@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -224,13 +224,16 @@ public sealed partial class CoopCoordinator : IDisposable
     }
     public void Broadcast()
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopBroadcast);
         if (!Host || World == null) return;
-        foreach (ulong peer in World.Members.Select(m => m.SteamId).Where(p => p != Self && _seen.ContainsKey(p)))
+        var peers = World.Members.Select(m => m.SteamId).Where(p => p != Self && _seen.ContainsKey(p)).ToArray();
+        if (peers.Length == 0) return;
+        var encoded = new SnapshotEncoder(CoopJson.PublicBytes(new CoopSnapshot(World, NativeSave)));
+        foreach (ulong peer in peers)
         {
-            var view = PrivateSnapshot(World, peer);
             var settings = AiSettingsStore.Load(new());
-            view.World.PrivatePromptSnapshot = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
-            var parts = CoopAssembler.Split(CoopJson.PublicBytes(new CoopSnapshot(view, NativeSave))).ToArray();
+            var templates = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
+            var parts = CoopAssembler.Split(encoded.Encode(peer, templates)).ToArray();
             foreach (var part in parts) Send(peer, "snapshot", part);
         }
     }

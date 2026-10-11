@@ -296,7 +296,8 @@ public partial class CareerScreen
                     row.AddChild(PrivateButton("编辑", () => { _cancelDialog?.Invoke(); EditPrivateSummary(s, kind); }, 72));
                     row.AddChild(PrivateButton("删除", () =>
                     {
-                        _cancelDialog?.Invoke(); ShowCareerDialog("删除这条总结", "后续对话不再使用这条总结，原始聊天记录保留。", () => { PrivateCommand("dm-summary-delete", new() { Entry = s.Id, Part = kind }); return true; }, "删除");
+                        string warning = s.IsLatest(c.SmallSummaries.Concat(c.BigSummaries)) ? "" : "删除这条总结可能导致永久丢失记忆。";
+                        _cancelDialog?.Invoke(); ShowCareerDialog("删除这条总结", warning, () => { PrivateCommand("dm-summary-delete", new() { Entry = s.Id, Part = kind }); return true; }, "确认删除");
                     }, 72));
                     inner.AddChild(PrivateText(s.Text, 18, _ink));
                 }

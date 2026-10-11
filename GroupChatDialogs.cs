@@ -93,7 +93,11 @@ public partial class CareerScreen
                 var edit = new TextEdit { Text = s.Text, WrapMode = TextEdit.LineWrappingMode.Boundary, CustomMinimumSize = new(630, 130) }; entry.AddChild(edit);
                 var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); entry.AddChild(row);
                 row.AddChild(PrivateButton("保存", () => GroupCommand("group-summary-edit", new() { Text = edit.Text, Interaction = new() { Entry = s.Id, Part = part } }), 90));
-                row.AddChild(PrivateButton("删除", () => { GroupCommand("group-summary-delete", new() { Interaction = new() { Entry = s.Id, Part = part } }); entry.QueueFree(); }, 90));
+                row.AddChild(PrivateButton("删除", () =>
+                {
+                    string warning = s.IsLatest(g.SmallSummaries.Concat(g.BigSummaries)) ? "" : "删除这条总结可能导致永久丢失记忆。";
+                    _cancelDialog?.Invoke(); ShowCareerDialog("删除这条总结", warning, () => { GroupCommand("group-summary-delete", new() { Interaction = new() { Entry = s.Id, Part = part } }); return true; }, "确认删除");
+                }, 90));
             }
         }, showCancel: false);
     }

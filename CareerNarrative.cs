@@ -39,11 +39,12 @@ public static class CareerNarrative
     }
     public static string Feature(CareerData d, CareerPerson p)
     {
+        string character = CharacterIdentity.Name(d, p.Character);
         string opening = (CareerEngine.StableHash(d.WorldId + p.Id) % 3) switch
         {
-            0 => $"{EsportsWorld.ClubName(d, p.ClubId)}的{p.PublicName}常用{p.Character}，{p.Style}。",
-            1 => $"谈到{p.Country}赛区的{p.PublicName}，观众最熟悉的还是{p.Character}：{p.Style}。",
-            _ => $"本期关注{p.PublicName}。这位来自{p.Country}的选手目前效力于{EsportsWorld.ClubName(d, p.ClubId)}，惯用{p.Character}。"
+            0 => $"{EsportsWorld.ClubName(d, p.ClubId)}的{p.PublicName}常用{character}，{p.Style}。",
+            1 => $"谈到{p.Country}赛区的{p.PublicName}，观众最熟悉的还是{character}：{p.Style}。",
+            _ => $"本期关注{p.PublicName}。这位来自{p.Country}的选手目前效力于{EsportsWorld.ClubName(d, p.ClubId)}，惯用{character}。"
         };
         return opening + $"公开履历中的最高通关进阶为 {p.MaxAscension}。" + (p.Form.Length > 0 ? $"最近的正式赛果为{p.Form}，下一场的发挥值得关注。" : "新赛季的正式比赛还未留下足够的战报，赛场表现仍待观察。");
     }

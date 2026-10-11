@@ -9,14 +9,12 @@ internal sealed class AiWireProtocol
     private static readonly System.Text.Json.JsonSerializerOptions Json = new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
     private readonly Dictionary<string, string> _encode = new();
     private readonly Dictionary<string, string> _decode = new();
-    private readonly Dictionary<string, string> _characters;
     private readonly List<(string Earlier, string Current)> _names = [];
     private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
     internal AiWireProtocol(CareerData data)
     {
         void Add(string id, string shortId)
         { if (id.Length > 0 && id != "player" && _encode.TryAdd(id, shortId)) _decode.Add(shortId, id); }
-        _characters = CharacterIdentity.Aliases(data);
         int person = 0, post = 0, comment = 0;
         foreach (var p in data.People)
         {
@@ -44,7 +42,6 @@ internal sealed class AiWireProtocol
         foreach (string key in new[] { "memory", "communityMemory" })
             if (node[key] is JsonArray memories)
                 foreach (var memory in memories.OfType<JsonObject>()) { memory.Remove("Id"); memory.Remove("PostId"); }
-        CharacterIdentity.Apply(node, _characters);
         Rewrite(node, _encode); return node.ToJsonString(Json);
     }
     internal string Decode(string response, bool normalizeFields = true, string? expectedArray = null)

@@ -119,7 +119,7 @@ public static class WeeklyJournal
             data.WeeklyPersonBaselines[person.Id] = fingerprint;
             if (!changed || !(EsportsWorld.IsProfessional(person) || person.Role == "青训选手" || performances.Any(p => p.Id == person.Id))) continue;
             issue.Profiles.Add(new() { Id = person.Id, Name = person.PublicName, Gender = IdentityGender.Of(data, person.Id),
-                Background = $"姓名{person.Name}，{person.Country}，{person.Role}，{EsportsWorld.ClubName(data, person.ClubId)}，{person.Character}，{person.Style}" + (person.CameoId.Length > 0 ? "；" + person.Biography : ""),
+                Background = $"姓名{person.Name}，{person.Country}，{person.Role}，{EsportsWorld.ClubName(data, person.ClubId)}，{CharacterIdentity.Name(data, person.Character)}，{person.Style}" + (person.CameoId.Length > 0 ? "；" + person.Biography : ""),
                 History = $"累计通关{person.Wins}次/失败{person.Losses}次（含训练），最高进阶{person.MaxAscension}，评分{person.Rating}，冠军{person.Titles}次" + (person.RecordedWinStreak > 0 ? "；" + CameoContent.StreakText(person) : ""),
                 ThisWeek = WeekStats(person.Id) + $" 本期累计新增通关{person.Wins - oldWins}次/失败{person.Losses - oldLosses}次（含训练）。", Previous = person.AiIntroduction });
         }
@@ -144,7 +144,7 @@ public static class WeeklyJournal
         {
             var focus = results.OrderByDescending(r => r.Win).ThenByDescending(r => r.Ascension).ThenByDescending(r => r.Day).First();
             issue.Slides.Add(new() { Topic = "本期选手焦点", Character = focus.Character, Importance = focus.Win && focus.Ascension >= 8 ? 3 : 2,
-                People = ["player", focus.OpponentId], Facts = WeekStats("player") + $"。焦点对局：第{focus.Day}天，{CareerEngine.Name(data)}使用{focus.Character}，卡组：{string.Join('、', focus.DeckSummary)}。{focus.Evidence.Summary()}。关键牌面：{string.Join('；', focus.Cards.Take(5))}" });
+                People = ["player", focus.OpponentId], Facts = WeekStats("player") + $"。焦点对局：第{focus.Day}天，{CareerEngine.Name(data)}使用{CharacterIdentity.ForResult(focus)}，卡组：{string.Join('、', focus.DeckSummary)}。{focus.Evidence.Summary()}。关键牌面：{string.Join('；', focus.Cards.Take(5))}" });
         }
         foreach (var competition in data.Esports.Competitions.Where(c => c.Fixtures.Any(f => f.Finished && f.Day >= start && f.Day <= data.Day))
             .OrderByDescending(c => c.Finished).ThenByDescending(c => c.Kind != "league").ThenByDescending(c => c.Country == data.Esports.Country).Take(2))

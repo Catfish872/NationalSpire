@@ -123,24 +123,13 @@ public partial class LiveRunBridge : Node
         Guard(UpdateRace);
     }
     private static List<RouteNode> CopyMap(ActMap map, int act, bool secondBoss)
-    {
-        var all = map.GetAllMapPoints().Append(map.StartingMapPoint).Append(map.BossMapPoint);
-        if (secondBoss && map.SecondBossMapPoint != null) all = all.Append(map.SecondBossMapPoint);
-        return all.DistinctBy(p => p.coord).Select(p => new RouteNode(act, p.coord.row, p.coord.col, p.PointType.ToString(),
-            p.Children.Where(c => secondBoss || c != map.SecondBossMapPoint).Select(c => (c.coord.row, c.coord.col)).ToList())).ToList();
-    }
+        => LiveMaps.Copy(map, act, secondBoss);
     private void EnsurePlan()
     {
         if (_match.Live != null) { _match.Live.Commentary.SharedPhrases = _data.BroadcastHistory; return; }
         if (_run.Map is NullActMap) return;
         MatchRules.PrepareOpponent(_data, _match);
-        var maps = new List<RouteNode>();
-        for (int i = 0; i < _run.Acts.Count; i++)
-        {
-            bool second = _match.RequiredAscension >= 10 && i == _run.Acts.Count - 1;
-            ActMap map = i == _run.CurrentActIndex ? _run.Map : new StandardActMap(GameCompatibility.MapRng(_run.Rng, i + 1), _run.Acts[i], false, false, second);
-            maps.AddRange(CopyMap(map, i, second));
-        }
+        var maps = LiveMaps.Read(_run, _match, false);
         var character = GameBridge.Characters().FirstOrDefault(c => c.Title.GetFormattedText() == _rival.Character);
         int hp = character?.StartingHp ?? 75;
         _match.Live = RivalSimulation.Create(_match, _rival, maps, hp);
@@ -267,13 +256,7 @@ public partial class LiveRunBridge : Node
     private void CalibrateMap(LiveMatchState live)
     {
         // 真实地图校验连线；个人事件或其他模组改图后，以独立赛道状态显示对手，保持已发布的时间和血量连续。
-        var steps = live.Steps.Where(s => s.Act == _run.CurrentActIndex).ToList();
-        _mapCompatible = steps.All(s => _run.Map.GetPoint(new MapCoord(s.Col, s.Row)) is { } p && p.PointType.ToString() == s.Kind);
-        for (int i = 1; _mapCompatible && i < steps.Count; i++)
-        {
-            var parent = _run.Map.GetPoint(new MapCoord(steps[i - 1].Col, steps[i - 1].Row));
-            _mapCompatible = parent != null && parent.Children.Any(c => c.coord == new MapCoord(steps[i].Col, steps[i].Row));
-        }
+        _mapCompatible = LiveMaps.Matches(_run.Map, live.Steps, _run.CurrentActIndex);
     }
 
     private void UpdateMap(LiveMatchState live, RivalProgress progress, double seconds)

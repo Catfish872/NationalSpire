@@ -132,7 +132,9 @@ public static class PrivateMessages
             {
                 var p = CommunityThreads.All(data).FirstOrDefault(p => p.Id == a.MatchId); if (p == null) return "这篇帖子已不存在。";
                 a.PostRevision = p.Revision;
-                a.Detail = p.Title + "\n" + PrivatePublicContext.PostText(data, p, CareerEngine.Person(data, person)!);
+                var text = PrivatePublicContext.PostTexts(data, p, CareerEngine.Person(data, person)!);
+                a.Detail = p.Title + "\n" + text.Original;
+                a.AiDetail = AiGeneratedText.Different(a.Detail, p.Title + "\n" + text.Ai);
             }
             else if (a.Kind != "advice") return "附件类型无效。";
             if (a.Kind == "advice" && a.Detail.Length > 8000) return "附加文字过长。";
@@ -163,7 +165,14 @@ public static class PrivateMessages
         {
             var list = command.Part == "big" ? c.BigSummaries : c.SmallSummaries;
             var summary = list.FirstOrDefault(s => s.Id == command.Entry); if (summary == null) return "这条总结已不存在。";
-            if (kind == "dm-summary-delete") list.Remove(summary);
+            if (kind == "dm-summary-delete")
+            {
+                bool latest = summary.IsLatest(c.SmallSummaries.Concat(c.BigSummaries));
+                list.Remove(summary);
+                // 最新总结失去覆盖时，聊天和下次总结共同恢复读取对应原文。
+                if (latest && !c.SmallSummaries.Concat(c.BigSummaries).Any(s => s.From <= summary.From && s.Through >= summary.Through))
+                    c.ContextStart = Math.Min(c.ContextStart, summary.From);
+            }
             else { if (string.IsNullOrWhiteSpace(command.Text)) return "总结不能为空。"; summary.Text = command.Text.Trim(); }
         }
         else

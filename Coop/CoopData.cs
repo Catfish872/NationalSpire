@@ -21,7 +21,7 @@ public static class CoopJson
     public static byte[] PublicBytes<T>(T value) => JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions);
     public static byte[] Bytes<T>(T value) => JsonSerializer.SerializeToUtf8Bytes(value, Options);
     public static T Read<T>(byte[] bytes) => JsonSerializer.Deserialize<T>(bytes, Options) ?? throw new InvalidDataException("数据为空");
-    public static T Copy<T>(T value) => Read<T>(Bytes(value));
+    public static T Copy<T>(T value) { using var timing = UiPerformance.Measure(UiPerformance.Work.CoopCopy); return Read<T>(Bytes(value)); }
     public static string Hash(byte[] bytes) => Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(bytes));
     public static void Detached(CareerData d) { d.ExternalSave = _ => { }; d.ExternalCurrent = () => false; }
 }

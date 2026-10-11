@@ -2,6 +2,8 @@
 
 public sealed class CareerData
 {
+    // 仅供同步序列化前替换顶层字段；不得传给业务规则，编码后必须深复制。
+    internal CareerData EncodingHeader() => (CareerData)MemberwiseClone();
     public ChatWorld Chats { get; set; } = new();
     public FailureDecision? Failure { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
@@ -192,6 +194,8 @@ public sealed class CommunityPost
     public int EditorialVersion { get; set; }
     public string SourceTitle { get; set; } = "";
     public string SourceBody { get; set; } = "";
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? AiSourceBody { get; set; }
     public int Priority { get; set; } = 1;
     public string Category { get; set; } = "社区";
     public List<string> RelatedPeople { get; set; } = [];
@@ -235,6 +239,8 @@ public sealed class CommunityMemory
     public string Kind { get; set; } = "fact";
     public List<string> People { get; set; } = [];
     public string Text { get; set; } = "";
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? AiText { get; set; }
 }
 
 public sealed class CareerResult

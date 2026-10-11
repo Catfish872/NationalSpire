@@ -1,4 +1,4 @@
-﻿namespace NationalSpire.Coop;
+namespace NationalSpire.Coop;
 
 /// <summary>所有玩家命令在主机串行执行；在副本上计算成功后整体提交，不切换单人全局存档。</summary>
 public static partial class CoopRules
@@ -24,21 +24,21 @@ public static partial class CoopRules
     }
     public static CareerData View(CoopWorld w, CoopMember m)
     {
-        var d = CoopJson.Copy(w.World); CoopJson.Detached(d);
-        d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
+        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopView);
+        var d = w.World.EncodingHeader(); d.Esports = w.World.Esports.EncodingHeader();
         d.CooperativeMembers = 1; d.WorldId = w.Id + "-" + m.SteamId;
-        d.PlayerAlias = m.Name; d.PlayerGender = m.Gender; d.PlayerNameAliases = m.Aliases.ToList(); d.Credits = m.Credits; d.Fans = m.Fans; d.Rating = m.Rating;
+        d.PlayerAlias = m.Name; d.PlayerGender = m.Gender; d.PlayerNameAliases = m.Aliases; d.Credits = m.Credits; d.Fans = m.Fans; d.Rating = m.Rating;
         d.Wins = m.Wins; d.Losses = m.Losses; d.Draws = m.Draws; d.AvatarHighestClear = m.HighestClear;
         d.SelectedAvatarFrame = m.AvatarFrame;
-        d.SelectedAvatar = CoopJson.Copy(m.Avatar);
-        d.PlayerCard = m.Card == null ? null : CoopJson.Copy(m.Card);
-        d.SelectedCharacter = m.Character; d.RandomCharacter = m.RandomCharacter; d.Life = CoopJson.Copy(m.Life); d.Results = CoopJson.Copy(m.Results);
+        d.SelectedAvatar = m.Avatar; d.PlayerCard = m.Card;
+        d.SelectedCharacter = m.Character; d.RandomCharacter = m.RandomCharacter; d.Life = m.Life; d.Results = m.Results;
         d.PendingCeremonySeason = w.World.PendingCeremonySeason > m.SeenCeremonySeason ? w.World.PendingCeremonySeason : 0;
-        d.Esports.Honors.RemoveAll(h => h.Id.StartsWith("ceremony-") || h.Id.StartsWith("top20-"));
-        d.Esports.Honors.AddRange(CoopJson.Copy(m.CeremonyHonors));
-        d.Esports.Sponsors = CoopJson.Copy(m.Sponsors); d.Esports.SponsorOffers = CoopJson.Copy(m.SponsorOffers);
+        d.Esports.Honors = w.World.Esports.Honors.Where(h => !h.Id.StartsWith("ceremony-") && !h.Id.StartsWith("top20-")).Concat(m.CeremonyHonors).ToList();
+        d.Esports.Sponsors = m.Sponsors; d.Esports.SponsorOffers = m.SponsorOffers;
         // 团队合同已经由世界结算，个人商业结算只处理自己的赞助。
         d.Esports.PlayerContract = null; d.Esports.CommercialPaidMatches = [];
+        d = CoopJson.Copy(d); CoopJson.Detached(d);
+        d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
         return d;
     }
     private static void Capture(CoopWorld w, CoopMember m, CareerData d)
@@ -548,7 +548,12 @@ public static partial class CoopRules
             post.SourceBody += "\n本场为合作队伍赛，全体真人共同爬塔。队员为" + string.Join("、", played.Select(m => m.Name)) + "。对手全队为" + string.Join("、", run.Opponents.Select(id => CareerEngine.DisplayName(d, id))) + "。";
             if (details != null) foreach (var member in played)
                 if (details.TryGetValue(member.SteamId, out var detail))
-                    post.SourceBody += $"\n{member.Name}使用{detail.Character}，{detail.Evidence.ResourceSummary()}，牌组为{string.Join("、", detail.DeckSummary)}。";
+                {
+                    string suffix = $"，{detail.Evidence.ResourceSummary()}，牌组为{string.Join("、", detail.DeckSummary)}。";
+                    string ai = AiGeneratedText.Source(post) + $"\n{member.Name}使用{CharacterIdentity.ForResult(detail)}" + suffix;
+                    post.SourceBody += $"\n{member.Name}使用{detail.Character}" + suffix;
+                    post.AiSourceBody = AiGeneratedText.Different(post.SourceBody, ai);
+                }
             post.RelatedPeople.AddRange(played.Select(m => m.PersonId)); CommunityThreads.Remember(d, post);
         }
         w.Run = null; w.LatestCheckpoint = ""; w.Revision++; RefreshPeople(w); return w;

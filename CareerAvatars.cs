@@ -43,7 +43,7 @@ public static class CareerAvatars
 public partial class CareerAvatar : Control
 {
     private StyleBoxFlat? _frame;
-    public string PersonId { get; init; } = "";
+    public string PersonId { get; set; } = "";
     private AvatarIdentity? _identity;
     public AvatarIdentity? Identity { get => _identity; set { _identity = value; _frame = null; QueueRedraw(); } }
     private AvatarArt _art = new(null, CareerVisuals.Teal, "");

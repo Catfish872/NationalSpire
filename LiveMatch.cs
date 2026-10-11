@@ -29,6 +29,7 @@ public sealed class RivalStep
     public int Col { get; set; }
     public int Floor { get; set; }
     public string Kind { get; set; } = "";
+    public bool IndependentRoute { get; set; }
     public double Start { get; set; }
     public double End { get; set; }
     public double HpCheckpointSeconds { get; set; }
@@ -38,7 +39,10 @@ public sealed class RivalStep
     public int BattleLoss { get; set; }
     public string Action { get; set; } = "";
 }
-public sealed record RouteNode(int Act, int Row, int Col, string Kind, List<(int Row, int Col)> Children);
+public sealed record RouteNode(int Act, int Row, int Col, string Kind, List<(int Row, int Col)> Children)
+{
+    public bool Independent { get; init; }
+}
 public sealed record RivalProgress(RivalStep Step, int Hp, bool Finished, bool Dead);
 
 /// <summary>仅模拟对手的比赛记录，使用独立随机源，时间与原生对局计时对应。</summary>
@@ -46,6 +50,19 @@ public static class RivalSimulation
 {
     public static bool Combat(string kind) => kind is "Monster" or "Elite" or "Boss" or "Unknown";
     public static string RoomName(string kind) => kind switch { "Monster" => "普通战斗", "Elite" => "精英战斗", "Boss" => "首领战", "RestSite" => "休息处", "Shop" => "商店", "Treasure" => "宝箱", "Ancient" => "先古之民", _ => "事件" };
+    public static List<RouteNode> IndependentMap(int act, int rooms, bool secondBoss, string seed)
+    {
+        var rng = new Random(CareerEngine.StableHash(seed + ":independent-map:" + act));
+        var kinds = new List<string> { "Ancient" };
+        // 独立路线只提供对手房间模拟，不使用玩家地图坐标，也不调用原生地图生成器。
+        string[] pool = ["Monster", "Monster", "Monster", "Monster", "Unknown", "Unknown", "Elite", "RestSite", "Shop"];
+        for (int i = 0; i < rooms; i++)
+            kinds.Add(i == 0 ? "Monster" : i == rooms - 1 ? "RestSite" : i == rooms - 7 ? "Treasure" : pool[rng.Next(pool.Length)]);
+        kinds.Add("Boss");
+        if (secondBoss) kinds.Add("Boss");
+        return kinds.Select((kind, row) => new RouteNode(act, row, -1, kind,
+            row + 1 < kinds.Count ? [(row + 1, -1)] : []) { Independent = true }).ToList();
+    }
     public static List<RouteNode> Route(IReadOnlyList<RouteNode> nodes, CareerPerson person, string seed)
     {
         var rng = new Random(CareerEngine.StableHash(seed + ":route:" + person.Id));
@@ -78,11 +95,18 @@ public static class RivalSimulation
         if (route.Count == 0) throw new InvalidOperationException("对手地图尚未生成");
         if (!match.OpponentWon)
         {
+            bool independent = route.Any(n => n.Independent);
             // 止步位置落在真实战斗节点，随后结算沿用同一楼层。
             int target = Math.Clamp(match.OpponentFloor - 1, 0, route.Count - 1);
             var battles = Enumerable.Range(0, route.Count).Where(i => Combat(route[i].Kind)).ToList();
-            if (battles.Count > 0) target = battles.OrderBy(i => Math.Abs(i - target)).ThenBy(i => i).First();
-            route = route.Take(target + 1).ToList(); match.OpponentFloor = route.Count;
+            if (!independent && battles.Count > 0) target = battles.OrderBy(i => Math.Abs(i - target)).ThenBy(i => i).First();
+            route = route.Take(target + 1).ToList();
+            if (independent)
+            {
+                // 备用地图不能改变已确定的失败楼层；止步房间作为独立战斗处理。
+                if (!Combat(route[^1].Kind)) route[^1] = route[^1] with { Kind = "Monster", Independent = true };
+            }
+            else match.OpponentFloor = route.Count;
         }
         var rng = new Random(CareerEngine.StableHash(match.Seed + ":timeline:" + person.Id));
         var weights = route.Select(n => (n.Kind switch { "Boss" => 260, "Elite" => 165, "Monster" => 100, "Unknown" => 65, "RestSite" => 28, "Ancient" => 35, _ => 36 }) * (.65 + rng.NextDouble() * .7)).ToArray();
@@ -92,10 +116,11 @@ public static class RivalSimulation
         for (int i = 0; i < route.Count; i++)
         {
             var node = route[i];
-            var step = new RivalStep { Act = node.Act, Row = node.Row, Col = node.Col, Floor = i + 1, Kind = node.Kind, Start = time };
+            var step = new RivalStep { Act = node.Act, Row = node.Row, Col = node.Col, Floor = i + 1, Kind = node.Kind, Start = time, IndependentRoute = node.Independent };
             time += duration * weights[i] / sum; step.End = i == route.Count - 1 ? duration : time;
             live.Steps.Add(step);
         }
+        if (!match.OpponentWon && maps.Any(n => n.Independent)) live.Steps[^1].Floor = match.OpponentFloor;
         PlanHealth(live, match, person, 0, match.RequiredAscension >= 2 ? Math.Max(1, (int)(maxHp * .8)) : maxHp);
         return live;
     }

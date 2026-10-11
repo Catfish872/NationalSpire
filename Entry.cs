@@ -29,7 +29,8 @@ public static class Entry
         TaskScheduler.UnobservedTaskException += (_, e) => Diagnostics.Error("task.unobserved", e.Exception);
         Diagnostics.Record("mod.loaded", new { version = Diagnostics.ModVersion, game = GameCompatibility.Version() });
         CareerEngine.PlayerNameSource = () => PlatformUtil.GetPlayerNameRaw(PlatformUtil.PrimaryPlatform, PlatformUtil.GetLocalPlayerId(PlatformUtil.PrimaryPlatform));
-        CharacterIdentity.Source = () => GameBridge.Characters().Select(c => new CharacterDefinition(c.Id.ToString(), PlayerArchive.CharacterName(c.Id))).ToArray();
+        CharacterIdentity.OriginalSource = GameCharacterNames.Originals;
+        CharacterIdentity.Source = () => GameCharacterNames.Definitions(GameBridge.Characters());
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         LiveCompatibility.Install(new Harmony("nationalspire.career"), typeof(Entry).Assembly);
         GD.Print("[NationalSpire] 生涯与社区模块已加载");

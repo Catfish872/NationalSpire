@@ -2,6 +2,9 @@
 
 public static class SocialAppointments
 {
+    public const string ExpiredDate = "填写的邀约日期已过期，请重新约定日期";
+    public static string StatusText(CareerData d, PrivateOffer o) => o.State == "已过期"
+        || o.State == "待确认" && PrivateAppointments.Date(d, o) < d.Day ? "未建立约定；" + ExpiredDate : o.State;
     public const string Protocol = """
 玩家主动提出或暗示活动意愿时，才可商谈活动，名称与内容按双方交流自定。只有下列标记生成待确认约定，口头答应不产生记录；玩家确认后记入日程。
 [Activity: 邀请, Title: 一起看录像, Season: 2, Day: 18, Detail: 讨论今天的比赛]
@@ -26,14 +29,19 @@ public static class SocialAppointments
             Detail = fields.GetValueOrDefault("Detail", old?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "" };
         o.Season = int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : -1;
         o.Day = int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : -1;
-        if (string.IsNullOrWhiteSpace(o.Title) || o.Season < d.Season || o.Day < 1 || o.Day > SeasonCalendar.Length(d, o.Season)
-            || PrivateAppointments.Date(d, o) < d.Day) { t.Error += "\n活动需要名称和有效日期。"; return; }
+        if (string.IsNullOrWhiteSpace(o.Title) || o.Season < 1 || o.Day < 1 || o.Day > SeasonCalendar.Length(d, o.Season))
+        { t.Error += "\n活动需要名称和有效日期。"; return; }
+        if (PrivateAppointments.Date(d, o) < d.Day)
+        {
+            o.State = "已过期"; c.Offers.Add(o);
+            t.Error += "\n" + ExpiredDate; return;
+        }
         c.Offers.Add(o);
     }
     public static string? Confirm(CareerData d, PrivateConversation c, PrivateOffer o)
     {
         if (o.State != "待确认") return "这项活动已处理。";
-        if (PrivateAppointments.Date(d, o) < d.Day) return "活动日期已过，请重新商谈。";
+        if (PrivateAppointments.Date(d, o) < d.Day) return ExpiredDate;
         var source = c.Turns.FirstOrDefault(t => t.Id == o.TurnId);
         var before = source == null ? null : PrivateInteractionHistory.Capture(d, c.PersonId);
         if (c.Offers.FirstOrDefault(x => x.Id == o.ReplacesOfferId) is { } old) old.State = "已改期";

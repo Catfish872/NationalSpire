@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -82,6 +82,97 @@ public sealed partial class CoopCoordinator
         foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) member.Life.Mailbox = new();
         return copy;
     }
+    /// <summary>从只读编码副本生成收件人的完整同步包，不共享可修改的业务集合。</summary>
+    internal static byte[] SnapshotBytes(byte[] snapshot, ulong recipient, Dictionary<string, string> templates)
+        => new SnapshotEncoder(snapshot).Encode(recipient, templates);
+
+    // 同一份编码只扫描一次。计划只持有只读字节与字段位置，不持有可修改的生涯集合。
+    internal sealed class SnapshotEncoder
+    {
+        private sealed class Value
+        {
+            internal string Name = "", Path = "";
+            internal int Start, Length;
+            internal List<Value>? Children;
+            internal ulong Member;
+            internal HashSet<string>? Members;
+        }
+        private readonly byte[] _source, _mailbox = CoopJson.Bytes(new PrivateMailbox());
+        private readonly Value _root;
+        internal SnapshotEncoder(byte[] source)
+        {
+            _source = source; var reader = new Utf8JsonReader(source); reader.Read(); _root = Read(ref reader, "snapshot");
+        }
+        private Value Read(ref Utf8JsonReader reader, string path)
+        {
+            var value = new Value { Path = path, Start = checked((int)reader.TokenStartIndex) };
+            if (path is "snapshot" or "world" or "career" or "life" or "chat" or "member")
+            {
+                value.Children = [];
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+                {
+                    string name = reader.GetString()!; reader.Read();
+                    string nested = (path, name) switch
+                    {
+                        ("snapshot", "World") => "world", ("world", "World") => "career", ("world", "Members") => "members",
+                        ("career", "Life") or ("member", "Life") => "life", ("career", "Chats") => "chat", ("chat", "Groups") => "groups", _ => "raw"
+                    };
+                    if (path == "member" && name == "SteamId") value.Member = reader.GetUInt64();
+                    var child = Read(ref reader, nested); child.Name = name; value.Children.Add(child);
+                }
+            }
+            else if (path is "members" or "groups")
+            {
+                value.Children = [];
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndArray) value.Children.Add(Read(ref reader, path == "members" ? "member" : "group"));
+            }
+            else
+            {
+                if (path == "group")
+                {
+                    value.Members = []; var scan = reader;
+                    while (scan.Read() && scan.TokenType != JsonTokenType.EndObject)
+                    {
+                        string name = scan.GetString()!; scan.Read();
+                        if (name == "Members") while (scan.Read() && scan.TokenType != JsonTokenType.EndArray) value.Members.Add(scan.GetString()!);
+                        else scan.Skip();
+                    }
+                }
+                reader.Skip();
+            }
+            value.Length = checked((int)reader.BytesConsumed) - value.Start; return value;
+        }
+        internal byte[] Encode(ulong recipient, Dictionary<string, string> templates)
+        {
+            using var timing = UiPerformance.Measure(UiPerformance.Work.CoopEncode);
+            using var buffer = new MemoryStream();
+            using (var writer = new Utf8JsonWriter(buffer, new() { Encoder = CoopJson.Options.Encoder })) Write(_root, writer, recipient, CoopJson.Bytes(templates));
+            return buffer.ToArray();
+        }
+        private void Raw(Value value, Utf8JsonWriter writer) => writer.WriteRawValue(_source.AsSpan(value.Start, value.Length), skipInputValidation: true);
+        private void Write(Value value, Utf8JsonWriter writer, ulong recipient, byte[] templates)
+        {
+            if (value.Path is "members" or "groups")
+            {
+                writer.WriteStartArray();
+                foreach (var child in value.Children!)
+                    if (value.Path == "members") { if (child.Member == recipient) Raw(child, writer); else Write(child, writer, recipient, templates); }
+                    else if (child.Members!.Contains("human-" + recipient)) Raw(child, writer);
+                writer.WriteEndArray(); return;
+            }
+            writer.WriteStartObject();
+            foreach (var child in value.Children!)
+            {
+                writer.WritePropertyName(child.Name);
+                if (value.Path == "life" && child.Name == "Mailbox") writer.WriteRawValue(_mailbox, true);
+                else if (value.Path == "career" && child.Name == "PrivatePromptSnapshot") writer.WriteRawValue(templates, true);
+                else if (child.Path != "raw") Write(child, writer, recipient, templates);
+                else Raw(child, writer);
+            }
+            writer.WriteEndObject();
+        }
+    }
+
 }
 
 public static partial class CoopRules

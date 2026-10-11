@@ -30,7 +30,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
     public static string UserText(CareerData d, GroupChat g, GroupTurn t) => t.Text + (t.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", t.Attachments.Select(a =>
         "编号" + a.Id + " · " + PrivateMessages.AttachmentTitle(a) + "\n对象：" + string.Join("、", a.Participants.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))
         + (a.ActorId.Length > 0 ? "\n处理人：" + g.Alias(a.ActorId) + " " + GroupChats.Name(d, a.ActorId) : "")
-        + (a.CoachId.Length > 0 ? "\n负责教练：" + g.Alias(a.CoachId) + " " + GroupChats.Name(d, a.CoachId) : "") + "\n" + a.Detail)));
+        + (a.CoachId.Length > 0 ? "\n负责教练：" + g.Alias(a.CoachId) + " " + GroupChats.Name(d, a.CoachId) : "") + "\n" + AiGeneratedText.Attachment(a))));
     internal static string InteractionContext(CareerData d, GroupChat g, int recent, string person = "", string turnId = "")
     {
         var turns = g.Turns.Where(t => t.Status == "complete").TakeLast(recent).SelectMany(t => t.Effects).Select(e => e.Turn).ToHashSet();
@@ -49,7 +49,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
                 if (turnId.Length == 0 && !active && !turns.Contains(o.TurnId)) continue;
                 string content = o.Kind switch
                 {
-                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，第{o.Season}赛季第{o.Day}天，{o.Detail}，{o.State}",
+                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，第{o.Season}赛季第{o.Day}天，{o.Detail}，{SocialAppointments.StatusText(d, o)}",
                     "match" => $"{actor}与{target}的{o.Mode}，第{o.Season}赛季第{o.Day}天，进阶{o.Ascension}，{match?.Status ?? o.State}。{o.Detail}",
                     "contract" => $"{actor}的合同报价，签字费{o.Signing}美元、周薪{o.Wage}美元、胜场奖金{o.WinBonus}美元，{o.Weeks}周，席位{o.Role}，{o.State}。{o.Detail}",
                     "publish" => $"{actor}的帖子《{o.Title}》，{(o.State == "已确认" ? "已发布" : o.State)}。{o.Detail}",
@@ -92,19 +92,20 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         foreach (var former in g.Aliases.Where(x => !g.Members.Contains(x.Key))) profiles.AppendLine($"以往成员：{former.Value} {GroupChats.Name(d, former.Key)}（已离群，仅用于识别历史记录）。");
         string player = GroupChats.Name(d, GroupChats.Human(d));
         profiles.AppendLine($"{player}的本生涯战绩：{d.Wins}胜{d.Losses}负、{d.Draws}平。参赛资格：{EsportsWorld.LicenseName(d)}。");
-        if (d.PlayerCard is { } card) profiles.AppendLine($"{player}的角色资料：{card.Biography}；打法：{card.Style}；擅长角色：{card.Character}。");
+        if (d.PlayerCard is { } card) profiles.AppendLine($"{player}的角色资料：{card.Biography}；打法：{card.Style}；擅长角色：{CharacterIdentity.Name(d, card.Character)}。");
         if (ClubCoaching.PlayerFeatures(d)) profiles.AppendLine($"{player}的俱乐部岗位：{(ClubCoaching.PlayerReserve(d) ? "轮换" : "首发")}{(ClubCoaching.PlayerCoach(d) ? "，兼任教练" : "")}。");
         foreach (var r in d.Results.OrderByDescending(r => r.Day).Take(3).Reverse()) profiles.AppendLine($"{PrivateAppointments.DateText(d, r.Day)}，{player}参加{r.Event}，对手{r.Opponent}，实际进阶{r.PlayedAscension ?? r.Ascension}，{MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}，赛事结果{r.Outcome}。");
         foreach (string club in g.Members.Select(id => CareerEngine.Person(d, id)?.ClubId ?? (id == GroupChats.Human(d) ? d.Esports.ClubId : "")).Where(id => id.Length > 0).Distinct().Order(StringComparer.Ordinal))
             profiles.AppendLine($"{EsportsWorld.ClubName(d, club)}成员：" + string.Join("；", CoachLineups.Members(d, club).Select(p => $"{p.PublicName}（{CoachLineups.Position(d, p)}，评分{p.Rating}，最高进阶{p.MaxAscension}）")));
         Add("user", profiles.ToString());
         var fixedPosts = new Dictionary<string, string>(); var topicPosts = new Dictionary<string, string>();
+        var search = new CommunityMemorySearch.Request();
         string query = string.Join("\n", g.Turns.Where(t => t.Status == "complete").TakeLast(2).Select(t => t.Text).Append(pending?.Text ?? ""));
         foreach (var p in g.Members.Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().Where(p => !GroupChats.IsHuman(d, p.Id)))
         {
             var baseline = new List<(string Id, string Text)>(); var topical = new List<(string Id, string Text)>();
-            PrivatePublicContext.Community(d, p, "", completePosts: baseline);
-            PrivatePublicContext.Community(d, p, query, completePosts: topical);
+            PrivatePublicContext.Community(d, p, "", completePosts: baseline, request: search);
+            PrivatePublicContext.Community(d, p, query, completePosts: topical, request: search);
             foreach (var post in baseline) fixedPosts.TryAdd(post.Id, post.Text);
             foreach (var post in topical) topicPosts.TryAdd(post.Id, post.Text);
         }
@@ -153,8 +154,6 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         }
         Add("user", state.ToString());
         if (pending != null) Add("user", PrivateAppointments.DateText(d, pending.Day) + "，" + GroupChats.Name(d, pending.Sender) + "发到本群：\n" + UserText(d, g, pending));
-        var node = JsonSerializer.SerializeToNode(messages)!;
-        CharacterIdentity.Apply(node, CharacterIdentity.Aliases(d), d.People.SelectMany(p => p.HandleAliases.Append(p.Name).Append(p.Handle)).Concat(d.PlayerNameAliases).Append(CareerEngine.Name(d)));
-        return node.Deserialize<List<Dictionary<string, string>>>()!;
+        return messages;
     }
 }

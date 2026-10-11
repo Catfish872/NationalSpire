@@ -41,15 +41,7 @@ public sealed class CoopLive(CoopCoordinator session)
             var match = session.World.World.Matches.Single(m => m.Id == live.MatchId);
             if (live.Rival == null)
             {
-                var maps = new List<RouteNode>();
-                for (int i = 0; i < state.Acts.Count; i++)
-                {
-                    bool second = match.RequiredAscension >= 10 && i == state.Acts.Count - 1;
-                    ActMap map = i == state.CurrentActIndex ? state.Map : new StandardActMap(GameCompatibility.MapRng(state.Rng, i + 1), state.Acts[i], true, false, second);
-                    var nodes = map.GetAllMapPoints().Append(map.StartingMapPoint).Append(map.BossMapPoint);
-                    if (second && map.SecondBossMapPoint != null) nodes = nodes.Append(map.SecondBossMapPoint);
-                    maps.AddRange(nodes.DistinctBy(p => p.coord).Select(p => new RouteNode(i, p.coord.row, p.coord.col, p.PointType.ToString(), p.Children.Where(c => second || c != map.SecondBossMapPoint).Select(c => (c.coord.row, c.coord.col)).ToList())));
-                }
+                var maps = LiveMaps.Read(state, match, true);
                 var leader = CareerEngine.Person(session.World.World, live.Opponents[0])!;
                 var route = RivalSimulation.Route(maps, leader, match.Seed);
                 var coordinates = route.Select(n => (n.Act, n.Row, n.Col)).ToHashSet();
@@ -84,6 +76,7 @@ public sealed class CoopLive(CoopCoordinator session)
         {
             var progress = RivalSimulation.At(live.Rival, live.Clock);
             lines.Add($"\n对方第 {progress.Step.Act + 1} 幕 · {progress.Step.Floor} 层" + (progress.Finished ? progress.Dead ? " · 全队止步" : " · 已通关" : " · " + RivalSimulation.RoomName(progress.Step.Kind)));
+            if (progress.Step.Act == state.CurrentActIndex && !LiveMaps.Matches(state.Map, live.Rival.Steps, state.CurrentActIndex)) lines[^1] += " · 独立路线";
             foreach (var rival in live.RivalMembers)
                 lines.Add(CareerEngine.DisplayName(session.World.World, rival.Key) + $"  {RivalSimulation.At(rival.Value, live.Clock).Hp}/{rival.Value.MaxHp}");
         }
@@ -115,7 +108,7 @@ public sealed class CoopLive(CoopCoordinator session)
                 id.Length > 0 ? AvatarHonors.ForPerson(session.World.World, id) : null);
         }
         _heard.IntersectWith(live.Speeches.Select(s => s.Id));
-        UpdateMap(live, state.CurrentActIndex);
+        UpdateMap(live, state.Map, state.CurrentActIndex);
     }
     private void ConfirmStop()
     {
@@ -138,9 +131,11 @@ public sealed class CoopLive(CoopCoordinator session)
             finally { if (GodotObject.IsInstanceValid(cover)) cover.QueueFree(); }
         };
     }
-    private void UpdateMap(CoopRun live, int act)
+    private void UpdateMap(CoopRun live, ActMap actualMap, int act)
     {
         if (live.Rival == null || NMapScreen.Instance is not { IsOpen: true } screen)
+        { foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.Hide(); return; }
+        if (!LiveMaps.Matches(actualMap, live.Rival.Steps, act))
         { foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.Hide(); return; }
         var points = LiveCompatibility.MapPoints(screen); if (points.Count == 0) return;
         var parent = points.Values.First().GetParent();

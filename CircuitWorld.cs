@@ -207,6 +207,15 @@ public static class CircuitWorld
     }
     public static void CreateFinals(CareerData d, bool publish)
     {
+        string finalId = $"worldfinal-{d.Season}";
+        var final = d.Esports.Competitions.FirstOrDefault(c => c.Id == finalId && c.Kind == "worldfinal" && c.Season == d.Season);
+        if (final != null && !final.Finished && final.Fixtures.All(f => !f.Finished))
+        {
+            // 失败重试可能留下相同副本；只合并完整内容一致且没有赛果的赛事。
+            string saved = System.Text.Json.JsonSerializer.Serialize(final);
+            d.Esports.Competitions.RemoveAll(c => c != final && c.Id == finalId && c.Kind == "worldfinal" && c.Season == d.Season
+                && System.Text.Json.JsonSerializer.Serialize(c) == saved);
+        }
         if (d.Esports.Competitions.Any(c => c.Season == d.Season && c.Kind is "continental" or "worldcup")) return;
         var leagues = d.Esports.Competitions.Where(c => c.Season == d.Season && c.Modern && c.Kind == "league").ToList();
         if (leagues.Count != 8 || leagues.Any(c => !c.Finished)) return;
@@ -218,10 +227,15 @@ public static class CircuitWorld
         var candidates = leagues.SelectMany(c => c.Table).OrderByDescending(t => CircuitLedger.Points(d, t.PersonId))
             .ThenByDescending(t => t.Wins).ThenByDescending(t => EsportsWorld.RatingOf(d, t.PersonId)).Select(t => t.PersonId);
         qualified.AddRange(candidates.Where(id => !d.DeletedPeople.ContainsKey(id) && !qualified.Contains(id)).Take(32 - qualified.Count));
-        var final = new WorldCompetition { Id = $"worldfinal-{d.Season}", Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
+        bool newFinal = final == null;
+        final ??= new WorldCompetition { Id = finalId, Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
             CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, Entrants = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + id)).ToList(), PlayerEntered = qualified.Contains("player") };
         bool finalSeason = d.Season % 2 == 1;
-        if (finalSeason) { Snapshot(d, final); AddRound(final, final.Entrants, 1); d.Esports.Competitions.Add(final); SchedulePlayer(d, final); }
+        if (finalSeason)
+        {
+            if (newFinal) { Snapshot(d, final); AddRound(final, final.Entrants, 1); d.Esports.Competitions.Add(final); }
+            SchedulePlayer(d, final);
+        }
         string kind = d.Season % 2 == 0 ? "worldcup" : "continental";
         var cup = new WorldCompetition { Id = $"{kind}-{d.Season}", Kind = kind, Name = EsportsWorld.StageName(kind), Country = "国际", Season = d.Season, CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, TeamEvent = true };
         foreach (var league in leagues)
@@ -249,6 +263,13 @@ public static class CircuitWorld
                 for (int i = 0; i < roster.Count; i++)
                     if (d.DeletedPeople.ContainsKey(roster[i]) && d.People.Where(p => p.ClubId == team.PersonId && EsportsWorld.IsProfessional(p) && !roster.Contains(p.Id))
                         .OrderByDescending(p => p.Rating).FirstOrDefault() is { } replacement) roster[i] = replacement.Id;
+                int needed = d.CooperativeMembers > 1 ? d.CooperativeMembers : 3;
+                if (roster.Count < needed)
+                {
+                    // 历史名单保留原样，只为新杯赛补入当前阵容中的缺位人员。
+                    var current = d.Esports.OwnedClub?.ClubId == team.PersonId ? OwnedClubSchedule.OfficialRoster(d) : CoachLineups.Roster(d, team.PersonId);
+                    roster.AddRange(current.Where(id => !roster.Contains(id)).Take(needed - roster.Count));
+                }
                 cup.Rosters[team.PersonId] = roster;
             }
         }

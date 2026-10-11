@@ -35,26 +35,6 @@ public partial class CareerScreen
         }
         _privateScroll!.ScrollVertical = position;
     }
-    private void AddGroupList()
-    {
-        if (_chatFilter == "私信") return;
-        foreach (var g in GroupChats.Visible(ViewData).Where(g => _privateQuery.Length == 0 || g.Name.Contains(_privateQuery, StringComparison.OrdinalIgnoreCase) || g.Members.Any(id => GroupChats.Name(ViewData, id).Contains(_privateQuery, StringComparison.OrdinalIgnoreCase)))
-            .OrderByDescending(g => g.Turns.LastOrDefault()?.Order ?? g.Entries.LastOrDefault()?.Order ?? 0))
-        {
-            int unread = g.Turns.Count(t => t.Status == "complete") - g.Seen.GetValueOrDefault(GroupChats.Human(ViewData));
-            var button = PrivateButton("", () => SelectGroup(g.Id), 0); button.CustomMinimumSize = new(0, 82); button.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            button.AddThemeStyleboxOverride("normal", CareerVisuals.Box(g.Id == _privateGroup ? "334b60" : "142536", g.Id == _privateGroup ? "d8bc7e" : "334b60", 8, 10));
-            _privateList!.AddChild(button);
-            var inset = new MarginContainer(); button.AddChild(inset); inset.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-            foreach (var edge in new[] { "left", "right", "top", "bottom" }) inset.AddThemeConstantOverride("margin_" + edge, 12);
-            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); inset.AddChild(row);
-            var emblem = PrivateLine("群", 23, CareerVisuals.Teal); emblem.CustomMinimumSize = new(38, 0); emblem.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; row.AddChild(emblem);
-            var text = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; text.AddThemeConstantOverride("separation", 6); row.AddChild(text);
-            var title = PrivateLine(g.Name + (unread > 0 ? "  ●" : ""), 17, _ink); title.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; text.AddChild(title);
-            string snippet = g.Turns.LastOrDefault()?.Replies.LastOrDefault()?.Text ?? g.Turns.LastOrDefault()?.Text ?? $"{g.Members.Count} 位成员";
-            var preview = PrivateLine(snippet.Replace('\n', ' '), 14, _muted); preview.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; text.AddChild(preview); PrivateIgnoreMouse(inset);
-        }
-    }
     private void SelectGroup(string id)
     {
         if (_privateOverlay == null) OpenPrivateMessages();

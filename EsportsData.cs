@@ -2,6 +2,8 @@ namespace NationalSpire;
 
 public sealed class EsportsCareer
 {
+    // 编码临时对象只替换属性，不修改共享列表；解码结果才允许用于业务操作。
+    internal EsportsCareer EncodingHeader() => (EsportsCareer)MemberwiseClone();
     public int OrganizationContentVersion { get; set; }
     public OwnedClubState? OwnedClub { get; set; }
     public List<CoachTrainingPlan> CoachTraining { get; set; } = [];

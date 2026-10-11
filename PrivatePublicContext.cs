@@ -18,7 +18,7 @@ public static partial class PrivatePublicContext
         显示名称 = p.PublicName, 游戏名 = p.Handle, 姓名 = p.Name.Length > 0 ? p.Name : "未填写", 曾用游戏名 = p.HandleAliases,
         性别 = IdentityGender.Of(d, p.Id), 职业 = p.Role, 国家或地区 = p.Country, 所在地区 = p.Region,
         角色卡保存的背景介绍 = p.Biography, 性格概述 = p.Temperament, 打法 = p.Style, 性格 = PersonalityLibrary.PromptProfile(p.Personality),
-        擅长角色 = CharacterIdentity.Aliases(d).GetValueOrDefault(p.Character, p.Character), 说话习惯 = p.Voice, 身份 = p.Identities,
+        擅长角色 = CharacterIdentity.Name(d, p.Character), 说话习惯 = p.Voice, 身份 = p.Identities,
         支持俱乐部 = p.SupportedClubId.Length > 0 ? EsportsWorld.ClubName(d, p.SupportedClubId) : "未记录",
         熟悉的人 = p.Connections.Select(id => CareerEngine.Person(d, id) is { } known ? IdentityText(known) : CareerEngine.DisplayName(d, id))
     };
@@ -67,14 +67,14 @@ public static partial class PrivatePublicContext
             if (card.Name.Length > 0) b.AppendLine($"{player}的姓名：{card.Name}。");
             if (card.Style.Length > 0) b.AppendLine($"{player}的打法偏好：{card.Style}。");
             if (card.Biography.Length > 0) b.AppendLine($"{player}的人物介绍：{card.Biography}");
-            if (card.Character.Length > 0) b.AppendLine($"{player}擅长角色：{card.Character}。");
+            if (card.Character.Length > 0) b.AppendLine($"{player}擅长角色：{CharacterIdentity.Name(d, card.Character)}。");
             if (card.Identities.Count > 0) b.AppendLine($"{player}的其他身份：{string.Join("、", card.Identities)}。");
             if (card.Region.Length > 0) b.AppendLine($"{player}所在地区：{card.Region}。");
             if (card.SupportedClubId.Length > 0) b.AppendLine($"{player}支持的俱乐部：{EsportsWorld.ClubName(d, card.SupportedClubId)}。");
             if (card.Voice.Length > 0) b.AppendLine($"{player}的说话习惯：{card.Voice}");
             if (card.Personality.Dimensions().Any(s => s.Length > 0)) b.AppendLine($"{player}自设角色卡中的性格：" + System.Text.Json.JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(card.Personality), new System.Text.Json.JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
         }
-        if (d.SelectedCharacter.Length > 0) b.AppendLine($"{player}当前选择的角色：{CharacterIdentity.Aliases(d).GetValueOrDefault(d.SelectedCharacter, d.SelectedCharacter)}。");
+        if (d.SelectedCharacter.Length > 0) b.AppendLine($"{player}当前选择的角色：{CharacterIdentity.Name(d, d.SelectedCharacter)}。");
         if (d.PlayerNameAliases.Count > 0) b.AppendLine($"{player}的曾用游戏名：{string.Join("、", d.PlayerNameAliases)}。");
         b.AppendLine($"{player}所属俱乐部：{EsportsWorld.ClubName(d, d.Esports.ClubId)}。" + (OwnedClubs.CanOperate(d) ? $"{player}是这家自建俱乐部的管理者。" : ""));
         if (ClubCoaching.PlayerFeatures(d))
@@ -106,16 +106,17 @@ public static partial class PrivatePublicContext
         }
     }
 
-    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null)
+    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null, CommunityMemorySearch.Request? request = null)
     {
+        request ??= new();
         var posts = CommunityThreads.All(d).Where(p => p.Day <= d.Day && !CommunityThreads.NewsPending(d, p)).ToArray();
         var available = posts.ToDictionary(p => p.Id);
         var memories = CommunityMemorySearch.PrivateAcquaintance(d, person);
         memories.AddRange(CommunityMemorySearch.Retrieve(d, query, [person.Id, Human(d)], d.Day, new HashSet<string>(), 5,
-            excludedMemories: memories.Select(m => m.Id).ToHashSet(), requireTopic: true));
+            excludedMemories: memories.Select(m => m.Id).ToHashSet(), requireTopic: true, request: request));
         bool PlayerRelated(CommunityPost p) => IsPlayer(d, p.AuthorId) || p.RelatedPeople.Any(id => IsPlayer(d, id)) || p.Replies.Any(r => r.Day <= d.Day && IsPlayer(d, r.AuthorId));
         int LastActivity(CommunityPost p) => p.Replies.Where(r => r.Day <= d.Day && (r.AuthorId == person.Id || IsPlayer(d, r.AuthorId))).Select(r => r.Day).Append(p.Day).Max();
-        bool Topic(CommunityPost p) => CommunityMemorySearch.MatchesTopic(query, p.Title + "\n" + p.Body);
+        bool Topic(CommunityPost p) => CommunityMemorySearch.MatchesTopic(query, p.Title + "\n" + p.Body, request);
         var selected = new List<CommunityPost>();
         void Add(IEnumerable<CommunityPost> sources, int count)
             => selected.AddRange(sources.Where(p => attached?.Contains(p.Id) != true && selected.All(s => s.Id != p.Id)).Take(count));
@@ -130,7 +131,7 @@ public static partial class PrivatePublicContext
         var b = new StringBuilder();
         foreach (var post in selected)
         {
-            string fullPost = PostText(d, post, person, query, memories);
+            string fullPost = PostText(d, post, person, query, memories, request);
             b.AppendLine(fullPost);
             completePosts?.Add((post.Id, fullPost));
         }
@@ -141,31 +142,38 @@ public static partial class PrivatePublicContext
         var originals = d.CommunityMemories.Where(m => m.Day <= d.Day && missingSources.Contains(m.PostId) &&
             (m.Id == m.PostId + ":fact" || m.Id == m.PostId + ":editorial"));
         foreach (var memory in originals.Concat(remaining).DistinctBy(m => m.Id))
-            b.AppendLine($"{PrivateAppointments.DateText(d, memory.Day)}，{(memory.Kind == "fact" ? "已记录事件" : "社区发言，仅代表发言者的观点或猜测")}：{memory.Text}");
+            b.AppendLine($"{PrivateAppointments.DateText(d, memory.Day)}，{(memory.Kind == "fact" ? "已记录事件" : "社区发言，仅代表发言者的观点或猜测")}：{AiGeneratedText.Memory(memory)}");
         return b.ToString().Trim();
     }
-    public static string PostText(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null)
+    public static string PostText(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null, CommunityMemorySearch.Request? request = null)
+        => PostTexts(d, post, person, query, sourceMemories, request).Ai;
+    public static (string Original, string Ai) PostTexts(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null, CommunityMemorySearch.Request? request = null)
     {
         var b = new StringBuilder();
         var memories = sourceMemories ?? [];
             b.AppendLine($"\n《{post.Title}》｜{PrivateAppointments.DateText(d, post.Day)}｜发帖者：{Name(d, post.AuthorId)}");
             b.AppendLine($"帖子原文（{Name(d, post.AuthorId)}的公开发言）：\n{post.Body}");
+            var original = new StringBuilder(b.ToString());
+            void Both(string line) { b.AppendLine(line); original.AppendLine(line); }
             if (post.SourceBody.Length > 0 && post.SourceBody != post.Body && !CommunityThreads.IsHuman(d, post.AuthorId))
-                b.AppendLine($"这篇帖子对应的已记录事件：{GameText.Plain(post.SourceBody)}");
+            {
+                b.AppendLine($"这篇帖子对应的已记录事件：{GameText.Plain(AiGeneratedText.Source(post))}");
+                original.AppendLine($"这篇帖子对应的已记录事件：{GameText.Plain(post.SourceBody)}");
+            }
             // 与社区回帖共用选取规则，既提供人物发言，也提供他人回应及讨论发展。
             var replies = post.Replies.Where(r => r.Day <= d.Day).DistinctBy(r => r.Id).ToDictionary(r => r.Id);
             var chosen = post.Replies.Where(r => r.Day <= d.Day && (r.AuthorId == person.Id || IsPlayer(d, r.AuthorId))).TakeLast(6)
-                .Concat(post.Replies.Where(r => r.Day <= d.Day && CommunityMemorySearch.MatchesTopic(query, r.Body)).TakeLast(2)).Select(r => r.Id).ToHashSet();
+                .Concat(post.Replies.Where(r => r.Day <= d.Day && CommunityMemorySearch.MatchesTopic(query, r.Body, request)).TakeLast(2)).Select(r => r.Id).ToHashSet();
             foreach (var memory in memories.Where(m => m.PostId == post.Id))
                 foreach (var reply in replies.Values.Where(r => memory.Id == post.Id + ":" + r.Id)) chosen.Add(reply.Id);
             var conversation = CommunityThreads.ContextReplies(post, d.Day, anchors: chosen);
-            if (conversation.Count > 0) b.AppendLine(conversation.Count == replies.Count ? "帖子讨论（完整记录）：" : "帖子讨论（开头、近期发言与相关回复分支）：");
+            if (conversation.Count > 0) Both(conversation.Count == replies.Count ? "帖子讨论（完整记录）：" : "帖子讨论（开头、近期发言与相关回复分支）：");
             foreach (var reply in conversation)
             {
                 string target = replies.TryGetValue(reply.ParentId, out var parent) ? Name(d, parent.AuthorId) : "原帖";
-                b.AppendLine($"{PrivateAppointments.DateText(d, reply.Day)}，{Name(d, reply.AuthorId)}回复{target}：{reply.Body}");
+                Both($"{PrivateAppointments.DateText(d, reply.Day)}，{Name(d, reply.AuthorId)}回复{target}：{reply.Body}");
             }
-        return b.ToString().Trim();
+        return (original.ToString().Trim(), b.ToString().Trim());
     }
 
 }

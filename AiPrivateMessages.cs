@@ -265,8 +265,6 @@ public static partial class AiService
     {
         var p = CareerEngine.Person(data, person)!;
         List<Dictionary<string, string>> messages = [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(data.Ai, section) + $"\n你是{p.PublicName}，以{p.PublicName}的第一人称整理与玩家{CareerEngine.Name(data)}的聊天。\n{p.PublicName}的性格 " + JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(p.Personality), Json) + "\n性格使用说明：" + PersonalityLibrary.ProfileUsage }, new() { ["role"] = "user", ["content"] = content }];
-        var node = JsonSerializer.SerializeToNode(messages)!; CharacterIdentity.Apply(node, CharacterIdentity.Aliases(data));
-        messages = node.Deserialize<List<Dictionary<string, string>>>()!;
         return SummaryRequest(data.Ai, messages);
     }
     private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages)

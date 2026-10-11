@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -79,17 +79,24 @@ public sealed class CoopStorage(string root)
     }
     public void Save(CoopWorld world, byte[]? run)
     {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopSave);
         string dir = DirectoryFor(world.Id); Directory.CreateDirectory(dir);
         string id = Guid.NewGuid().ToString("N"), checkpoint = Path.Combine(dir, id); Directory.CreateDirectory(checkpoint);
-        byte[] bytes = CoopJson.PublicBytes(world.CheckpointHeader(id));
-        Durable(Path.Combine(checkpoint, "world.json"), bytes);
-        if (run != null) Durable(Path.Combine(checkpoint, "run.bin"), run);
-        var manifest = new Manifest(id, CoopJson.Hash(bytes), run == null ? "" : CoopJson.Hash(run));
+        byte[] bytes;
+        using (UiPerformance.Measure(UiPerformance.Work.CoopSerialize)) bytes = CoopJson.PublicBytes(world.CheckpointHeader(id));
+        using (UiPerformance.Measure(UiPerformance.Work.CoopWriteWorld)) Durable(Path.Combine(checkpoint, "world.json"), bytes);
+        if (run != null) using (UiPerformance.Measure(UiPerformance.Work.CoopWriteRun)) Durable(Path.Combine(checkpoint, "run.bin"), run);
+        Manifest manifest;
+        using (UiPerformance.Measure(UiPerformance.Work.CoopHash)) manifest = new Manifest(id, CoopJson.Hash(bytes), run == null ? "" : CoopJson.Hash(run));
         string current = Path.Combine(dir, "current.json"), next = current + ".tmp";
-        Durable(next, CoopJson.Bytes(manifest));
-        if (File.Exists(current)) File.Replace(next, current, Path.Combine(dir, "previous.json"));
-        else File.Move(next, current);
+        using (UiPerformance.Measure(UiPerformance.Work.CoopManifest))
+        {
+            Durable(next, CoopJson.Bytes(manifest));
+            if (File.Exists(current)) File.Replace(next, current, Path.Combine(dir, "previous.json"));
+            else File.Move(next, current);
+        }
         // 保留当前与上一份完整检查点，不无限积累每次操作的副本。
+        using var cleanup = UiPerformance.Measure(UiPerformance.Work.CoopCleanup);
         var keep = new HashSet<string> { id };
         try { keep.Add(CoopJson.Read<Manifest>(File.ReadAllBytes(Path.Combine(dir, "previous.json"))).Directory); } catch { }
         foreach (var old in Directory.GetDirectories(dir))

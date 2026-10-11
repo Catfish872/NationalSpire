@@ -207,7 +207,8 @@ public static class CommunityThreads
             if (i >= 0) data.CommunityMemories[i] = memory; else data.CommunityMemories.Add(memory);
         }
         Put(new CommunityMemory { Id = post.Id + ":fact", PostId = post.Id, Day = post.Day, Kind = CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost ? "opinion" : "fact", People = post.RelatedPeople.Append(post.AuthorId).Distinct().ToList(),
-            Text = (CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost ? CareerEngine.DisplayName(data, post.AuthorId) + "发帖：" : "") + (post.SourceTitle.Length > 0 ? post.SourceTitle : post.Title) + "：" + (post.SourceBody.Length > 0 ? post.SourceBody : post.Body) });
+            Text = (CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost ? CareerEngine.DisplayName(data, post.AuthorId) + "发帖：" : "") + (post.SourceTitle.Length > 0 ? post.SourceTitle : post.Title) + "：" + (post.SourceBody.Length > 0 ? post.SourceBody : post.Body),
+            AiText = post.AiSourceBody == null ? null : (post.SourceTitle.Length > 0 ? post.SourceTitle : post.Title) + "：" + post.AiSourceBody });
         if (NewsPending(data, post))
         { data.CommunityMemories.RemoveAll(m => m.PostId == post.Id && m.Kind == "opinion"); return; }
         if (post.SourceBody.Length > 0 && post.NewsGeneration.State == "completed")
@@ -222,8 +223,12 @@ public static class CommunityThreads
         if (post == null) return;
         string id = post.Id + ":result";
         if (data.CommunityMemories.Any(m => m.Id == id)) return;
+        string ending = $"对阵{result.Opponent}。赛事进阶 {result.Ascension}，{result.Outcome}；{MatchRules.Performance(result.Win, result.Floor, result.RunSeconds)}；评分变化 {result.RatingDelta:+0;-0;0}。" + MatchRules.ChallengeNote(result, data.CooperativeMembers > 1) + "卡组：" + string.Join("，", result.DeckSummary) + "。" + result.Evidence.Summary() + result.WorldImpact;
+        string beginning = $"{result.Event}，{CareerEngine.Name(data)}使用";
+        string original = beginning + result.Character + ending;
         data.CommunityMemories.Add(new CommunityMemory { Id = id, PostId = post.Id, Day = result.Day,
-            People = ["player", result.OpponentId], Text = $"{result.Event}，{CareerEngine.Name(data)}使用{result.Character}对阵{result.Opponent}。赛事进阶 {result.Ascension}，{result.Outcome}；{MatchRules.Performance(result.Win, result.Floor, result.RunSeconds)}；评分变化 {result.RatingDelta:+0;-0;0}。" + MatchRules.ChallengeNote(result, data.CooperativeMembers > 1) + "卡组：" + string.Join("，", result.DeckSummary) + "。" + result.Evidence.Summary() + result.WorldImpact });
+            People = ["player", result.OpponentId], Text = original,
+            AiText = AiGeneratedText.Different(original, beginning + CharacterIdentity.ForResult(result) + ending) });
     }
     public static void TrimFeed(CareerData data)
     {

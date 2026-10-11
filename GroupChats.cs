@@ -117,7 +117,18 @@ public static class GroupChats
         {
             var list = command.Interaction.Part == "big" ? g.BigSummaries : g.SmallSummaries;
             var summary = list.FirstOrDefault(s => s.Id == command.Interaction.Entry);
-            if (summary != null) { if (kind.EndsWith("delete")) list.Remove(summary); else summary.Text = command.Text; }
+            if (summary != null)
+            {
+                if (kind.EndsWith("delete"))
+                {
+                    bool latest = summary.IsLatest(g.SmallSummaries.Concat(g.BigSummaries));
+                    list.Remove(summary);
+                    // 最新总结失去覆盖时，聊天和下次总结共同恢复读取对应原文。
+                    if (latest && !g.SmallSummaries.Concat(g.BigSummaries).Any(s => s.From <= summary.From && s.Through >= summary.Through))
+                        g.SummarizedThrough = Math.Min(g.SummarizedThrough, summary.From);
+                }
+                else summary.Text = command.Text;
+            }
         }
         else if (kind.StartsWith("group-offer-"))
         {

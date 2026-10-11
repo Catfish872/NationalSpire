@@ -78,6 +78,7 @@ public sealed class CoopAssembler
     public static IEnumerable<CoopPart> Split(byte[] raw)
     {
         using var output = new MemoryStream();
+        using (UiPerformance.Measure(UiPerformance.Work.CoopCompress))
         using (var zip = new BrotliStream(output, CompressionLevel.Fastest, true)) zip.Write(raw);
         byte[] bytes = output.ToArray(); const int size = 24000;
         if (bytes.Length > 32 * 1024 * 1024) throw new InvalidDataException("共同生涯超出同步容量。");
@@ -95,7 +96,10 @@ public sealed class CoopAssembler
         if (_parts.TryGetValue(p.Index, out var old) && !old.AsSpan().SequenceEqual(p.Bytes)) throw new InvalidDataException("重复分片冲突。");
         _parts[p.Index] = p.Bytes;
         if (_parts.Count != p.Count) return null;
-        byte[] bytes = Enumerable.Range(0, p.Count).SelectMany(i => _parts[i]).ToArray(); _parts.Clear(); _header = null;
+        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopAssemble);
+        byte[] bytes = new byte[p.Total];
+        for (int i = 0; i < p.Count; i++) _parts[i].CopyTo(bytes, i * 24000);
+        _parts.Clear(); _header = null;
         if (CoopJson.Hash(bytes) != p.Hash) throw new InvalidDataException("同步校验失败。");
         using var zip = new BrotliStream(new MemoryStream(bytes), CompressionMode.Decompress);
         using var result = new MemoryStream(); byte[] buffer = new byte[65536]; int read;

@@ -124,7 +124,7 @@ public static partial class AiService
             ["所在地区"] = p.Region,
             ["gender"] = p.CameoId.Length > 0 ? "男" : p.Gender.Length > 0 ? p.Gender : IdentityGender.Of(data, p.Id),
             ["Role"] = p.Role, ["Country"] = p.Country, ["profileAsOfDay"] = known ? (int?)(profileDay ?? data.Day) : null,
-            ["club"] = known ? EsportsWorld.ClubName(data, p.ClubId) : null, ["Character"] = p.Character, ["Style"] = p.Style,
+            ["club"] = known ? EsportsWorld.ClubName(data, p.ClubId) : null, ["Character"] = CharacterIdentity.Name(data, p.Character), ["Style"] = p.Style,
             ["identities"] = p.Identities, ["familiarPeople"] = p.Connections.Take(2).Select(id => CareerEngine.DisplayName(data, id)),
             ["worldHonors"] = CircuitLedger.PublicStanding(data, p.Id, day ?? data.Day), ["MaxAscension"] = known ? (int?)p.MaxAscension : null,
             ["Wins"] = known ? (int?)p.Wins : null, ["Losses"] = known ? (int?)p.Losses : null,
@@ -166,7 +166,7 @@ public static partial class AiService
             var conversation = CommunityThreads.ContextReplies(post, data.Day, complete);
             return new { post.Id, post.AuthorId, post.Title, post.Day, post.Body,
                 bodyKind = CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost || post.SourceBody.Length > 0 ? "opinion" : "fact",
-                officialRecord = !CommunityThreads.IsHuman(data, post.AuthorId) && post.SourceBody.Length > 0 ? post.SourceBody : null,
+                officialRecord = !CommunityThreads.IsHuman(data, post.AuthorId) && post.SourceBody.Length > 0 ? AiGeneratedText.Source(post) : null,
                 mentionRequests = post.Replies.Where(r => requested.Contains(r.Id)).Select(r => new { messageId = r.Id, requiredAuthors = r.MentionedPeople.Where(id => CareerEngine.Person(data, id) is { } p && !SpireArbitration.Muted(p)).ToArray() })
                     .Concat(requested.Contains(post.Id) ? [new { messageId = post.Id, requiredAuthors = post.MentionedPeople.Where(id => CareerEngine.Person(data, id) is { } p && !SpireArbitration.Muted(p)).ToArray() }] : []).ToArray(),
                 match = MatchContext(data, post), allowedAuthors = DiscussionPeople(data, post, requested).Select(p => p.Id).ToArray(),

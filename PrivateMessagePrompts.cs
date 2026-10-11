@@ -169,14 +169,9 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             if (!pending.UserDeleted) Add("user", $"第 {pending.Season} 赛季第 {SeasonCalendar.Day(data, pending.Day)} 天，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(pending, c));
         }
         if (pending == null) Add("user", ordered.Current);
-        // 仅在发送副本中恢复原版职业名称，显示和保存的原话保持不变。
-        var node = JsonSerializer.SerializeToNode(messages)!;
-        // 私信将资料封装为消息正文，姓名已不再是独立JSON字段，因此另外保护人物称呼。
-        CharacterIdentity.Apply(node, CharacterIdentity.Aliases(data), data.People.SelectMany(p => p.HandleAliases.Append(p.Name).Append(p.Handle))
-            .Concat(data.PlayerNameAliases).Append(CareerEngine.Name(data)).Append(data.PlayerCard?.Name ?? ""));
-        return node.Deserialize<List<Dictionary<string, string>>>()!;
+        return messages;
     }
-    public static string UserText(PrivateTurn turn, PrivateConversation c) => turn.User + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(a) + (a.Kind is "training" or "lineup" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 ? "\n" + a.Detail : ""))));
+    public static string UserText(PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(a) + (a.Kind is "training" or "lineup" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 ? "\n" + (forAi ? AiGeneratedText.Attachment(a) : a.Detail) : ""))));
     public sealed record ContextSpan(int Start, int Length, string Group, string Key = "");
     private static (string Stable, string Current) OrderContext(string context, List<ContextSpan> spans)
     {
@@ -202,10 +197,11 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     }
     public static string Context(CareerData data, PrivateConversation c, PrivateTurn turn, List<ContextSpan>? spans = null)
     {
+        var search = new CommunityMemorySearch.Request();
         PrivateInteractionIds.Ensure(c);
         var p = CareerEngine.Person(data, c.PersonId)!;
         var relation = PrivateMessages.Relation(data, c.PersonId);
-        string query = string.Join("\n", c.Turns.Where(t => t != turn && !t.UserDeleted && t.Status == "complete").TakeLast(2).Select(t => UserText(t, c)).Append(UserText(turn, c)))
+        string query = string.Join("\n", c.Turns.Where(t => t != turn && !t.UserDeleted && t.Status == "complete").TakeLast(2).Select(t => UserText(t, c, false)).Append(UserText(turn, c, false)))
             .Replace(p.PublicName, "").Replace(CareerEngine.Name(data), "");
         var postVersions = CommunityThreads.All(data).ToDictionary(post => post.Id, post => post.Revision);
         // 只排除与当前帖子版本一致的完整附件。旧引用保留原文，帖子后续发展仍可检索。
@@ -213,7 +209,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             .SelectMany(t => t.Attachments).Where(a => a.Kind == "post" && a.PostRevision > 0 && postVersions.GetValueOrDefault(a.MatchId) == a.PostRevision)
             .Select(a => a.MatchId).ToHashSet();
         var completePosts = new List<(string Id, string Text)>();
-        string publicMemory = PrivatePublicContext.Community(data, p, query, suppliedPosts, completePosts);
+        string publicMemory = PrivatePublicContext.Community(data, p, query, suppliedPosts, completePosts, search);
         var issue = (data.WeeklyEditions ?? []).Where(w => w.EndDay <= data.Day).MaxBy(w => w.EndDay);
         var calendar = Enumerable.Range(data.Day, 15).Select(day => new { Day = day, Entries = PrivateAppointments.Schedule(data, c.PersonId, day) }).ToArray();
         string player = CareerEngine.Name(data);
@@ -239,7 +235,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             if (spans != null)
             {
                 var background = new List<(string Id, string Text)>();
-                PrivatePublicContext.Community(data, p, "", suppliedPosts, background);
+                PrivatePublicContext.Community(data, p, "", suppliedPosts, background, search);
                 var stableIds = background.Select(x => x.Id).ToHashSet();
                 int position = 0;
                 foreach (var post in completePosts)
@@ -260,7 +256,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         text += $"\n{player}与{p.PublicName}尚无已确认安排、可以商谈约战的日期：" + PrivateAppointments.DateRanges(data, calendar.Where(d => d.Day > data.Day && d.Entries.All(e => !e.Occupied)).Select(d => d.Day)) + "。";
         spans?.Add(new(scheduleStart, text.Length - scheduleStart, "schedule"));
         // 首期尚未发行或旧存档未保存周报正文时，按无报道处理；查询源始终是集合。
-        var slides = (issue?.Slides ?? []).Where(s => s.Body.Length > 0 && CommunityMemorySearch.MatchesTopic(query, s.Title + s.Body)).OrderByDescending(s => s.People.Contains(c.PersonId)).ThenByDescending(s => s.Importance).Take(2).ToArray();
+        var slides = (issue?.Slides ?? []).Where(s => s.Body.Length > 0 && CommunityMemorySearch.MatchesTopic(query, s.Title + s.Body, search)).OrderByDescending(s => s.People.Contains(c.PersonId)).ThenByDescending(s => s.Importance).Take(2).ToArray();
         if (slides.Length > 0) text += "\n\n与当前话题相关的周报报道\n" + string.Join("\n", slides.Select(s => $"《{s.Title}》：{s.Body}"));
 
         double mood = CareerTraining.MoodLevel(p, data.Day);
@@ -298,7 +294,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     {
         string player = CareerEngine.Name(data), npc = CareerEngine.DisplayName(data, c.PersonId);
         if (o.Kind == "training") return $"{npc}已接受{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：{ClubCoaching.TrainingPlans(data).FirstOrDefault(p => p.Id == o.Id)?.State ?? o.State}。";
-        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，第{o.Season}赛季第{o.Day}天。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : o.State)}。";
+        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，第{o.Season}赛季第{o.Day}天。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
         string state = o.State switch
         {
             "待确认" => $"等待{player}通过界面确认" + (o.Detail.Length > 0 ? $"；最近一次执行未成功：{o.Detail}" : ""),

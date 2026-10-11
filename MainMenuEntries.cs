@@ -7,6 +7,7 @@ internal static class MainMenuEntries
 {
     public static void Bind(NMainMenu menu, Button button)
     {
+        _ = CareerListCache.For(menu);
         void UpdateVisibility() => button.Visible = !menu.SubmenuStack.SubmenusOpen
             && !menu.PatchNotesScreen.IsOpen && CareerScreen.Current == null && Coop.CoopScreen.Current == null;
 

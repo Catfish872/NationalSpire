@@ -5,6 +5,8 @@ namespace NationalSpire;
 public static class CareerVisuals
 {
     private static Font? _font;
+    private static Theme? _theme;
+    internal static void WarmText(string text) => InterfaceFont().GetStringSize(text, fontSize: 19);
     private static Font InterfaceFont()
     {
         if (_font != null && GodotObject.IsInstanceValid(_font)) return _font;
@@ -53,6 +55,7 @@ public static class CareerVisuals
     };
     public static Theme CreateTheme()
     {
+        if (_theme != null && GodotObject.IsInstanceValid(_theme)) return _theme;
         var theme = new Theme { DefaultFontSize = 19 };
         theme.DefaultFont = InterfaceFont();
         foreach (string type in new[] { "Button", "OptionButton", "MenuButton", "CheckBox" })
@@ -97,7 +100,7 @@ public static class CareerVisuals
         theme.SetStylebox("grabber_pressed", "VScrollBar", Box("c4f36b", "c4f36b", 3, 4));
         theme.SetConstant("separation", "VBoxContainer", 12);
         theme.SetConstant("separation", "HBoxContainer", 16);
-        return theme;
+        return _theme = theme;
     }
 }
 

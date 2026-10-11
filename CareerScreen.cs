@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
@@ -125,7 +125,7 @@ public partial class CareerScreen : Control, IScreenContext
     {
         if (Current != null) return;
         var screen = new CareerScreen { _tab = initialTab ?? SettlementRecords.InitialTab(multiplayer?.Data ?? CareerStore.Data), Name = "NationalSpireCareer", ZIndex = 100, Theme = CareerVisuals.CreateTheme() };
-        _open = screen; screen._multiplayer = multiplayer;
+        _open = screen; screen._multiplayer = multiplayer; screen._listCache = CareerListCache.For(menu);
         if (multiplayer != null) multiplayer.Message += screen.Notice;
         foreach (var child in menu.GetChildren().OfType<CanvasItem>())
         { screen._hidden.Add((child, child.Visible)); child.Hide(); }
@@ -143,9 +143,9 @@ public partial class CareerScreen : Control, IScreenContext
         if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); }
         _open = null;
         foreach (var (node, visible) in _hidden) if (GodotObject.IsInstanceValid(node)) node.Visible = visible;
-        QueueFree(); ActiveScreenContext.Instance.Update();
+        _listCache?.Release(); QueueFree(); ActiveScreenContext.Instance.Update();
     }
-    public override void _ExitTree() { if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); } _pageTween?.Kill(); _weeklyTween?.Kill(); if (_open == this) _open = null; }
+    public override void _ExitTree() { if (_listCache != null && IsInstanceValid(_listCache) && _listCache.IsInsideTree()) { _listCache.Release(); } if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); } _pageTween?.Kill(); _weeklyTween?.Kill(); if (_open == this) _open = null; }
     private void FitStage()
     {
         float scale = Math.Min(Size.X / 1600f, Size.Y / 1000f);
@@ -228,7 +228,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
         _renderVersion++;
         _mentionsChecked = false;
-        CareerVisuals.ClearContent(_content);
+        _listCache?.Release(); CareerVisuals.ClearContent(_content);
         _content.AddThemeConstantOverride("separation", 18);
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;
         UpdateNavigation();
@@ -712,17 +712,7 @@ public partial class CareerScreen : Control, IScreenContext
             .Where(p => _profileQuery.Length == 0 || (p.Handle + string.Join(" ", p.HandleAliases) + p.Name + p.Country + EsportsWorld.ClubName(data, p.ClubId)).Contains(_profileQuery, StringComparison.OrdinalIgnoreCase)).OrderByDescending(p => p.Rating).ToList();
         _content.AddChild(Text($"当前：{(_profileQuery.Length > 0 ? "全名录搜索" : _profileFilter)} · 找到 {people.Count} 人 / 世界共 {data.People.Count} 人 · 当前显示 {Math.Min(_profileLimit, people.Count)} 人", 15, _muted));
         var grid = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 14); grid.AddThemeConstantOverride("v_separation", 14); _content.AddChild(grid);
-        foreach (var person in people.Take(_profileLimit))
-        {
-            var card = Card(); var box = Inner(card); box.AddThemeConstantOverride("separation", 16);
-            box.AddChild(Text(person.Role + "  /  " + person.Country + "  ·  " + IdentityGender.Of(data, person.Id), 13, _muted));
-            var name = Button(person.PublicName + "   ↗", () => OpenPerson(person.Id));
-            name.Alignment = HorizontalAlignment.Left; name.SizeFlagsHorizontal = SizeFlags.ExpandFill; name.AddThemeFontSizeOverride("font_size", 23); name.AutowrapMode = TextServer.AutowrapMode.WordSmart; box.AddChild(WithAvatar(data, person.Id, name));
-            if (person.Handle.Length > 0 && person.Name.Length > 0) box.AddChild(Text(person.Name, 14, _muted));
-            box.AddChild(Text(person.Character + " / " + EsportsWorld.ClubName(data, person.ClubId), 16, _ink));
-            box.AddChild(Text($"最高进阶 {person.MaxAscension}    ·    {person.Rating} 分", 14, _gold));
-            grid.AddChild(card);
-        }
+        AddProfileCards(data, grid, people.Take(_profileLimit));
         if (people.Count > _profileLimit) _content.AddChild(Button("显示更多人物", () => { int scroll = _scroll.ScrollVertical; _profileLimit += 36; Render(); _ = RestoreScrollAsync(scroll, _renderVersion); }, 210));
     }
 
@@ -794,7 +784,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private static PanelContainer Card()
     {
-        var card = new BroadcastPanel { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        var card = new BroadcastPanel { SizeFlagsHorizontal = SizeFlags.ExpandFill, Theme = CareerVisuals.CreateTheme() };
         card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("142332"));
         return card;
     }

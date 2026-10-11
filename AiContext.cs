@@ -8,7 +8,7 @@ public static partial class AiService
     {
         gender = data.PlayerGender,
         characterCard = data.PlayerCard == null ? null : new { registeredName = data.PlayerCard.Name, data.PlayerCard.Role,
-            data.PlayerCard.Style, data.PlayerCard.Biography, Personality = PersonalityLibrary.PromptProfile(data.PlayerCard.Personality), data.PlayerCard.Character },
+            data.PlayerCard.Style, data.PlayerCard.Biography, Personality = PersonalityLibrary.PromptProfile(data.PlayerCard.Personality), Character = CharacterIdentity.Name(data, data.PlayerCard.Character) },
         introduction = data.PlayerIntroductionDay <= day ? data.PlayerIntroduction : "",
         introductionAsOfDay = data.PlayerIntroductionDay <= day ? data.PlayerIntroductionDay : 0,
         worldHonors = CircuitLedger.PublicStanding(data, "player", day),
@@ -29,10 +29,10 @@ public static partial class AiService
         {
             result.Event, result.Day, officialAscension = result.Ascension, challenge = MatchRules.ChallengeNote(result, data.CooperativeMembers > 1), result.Outcome, result.WorldImpact,
             cooperative = data.CooperativeMembers > 1 ? new { members = data.HumanIds.Select(id => new { id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id) }),
-                facts = post.SourceBody, rule = "同队玩家共同爬塔，对方也是等人数队伍；通关和胜负属于整队，不能解读为个人单挑。" } : null,
+                facts = AiGeneratedText.Source(post), rule = "同队玩家共同爬塔，对方也是等人数队伍；通关和胜负属于整队，不能解读为个人单挑。" } : null,
             player = new { name = CareerEngine.Name(data), gender = data.PlayerGender, Character = CharacterIdentity.ForResult(result), cleared = result.Win, result.Floor, elapsed = MatchRules.Time(result.RunSeconds),
                 ratingChange = result.RatingDelta, deck = result.DeckSummary.Select(GameText.Plain), keyCards = result.Cards.Take(5).Select(GameText.Plain), finishEvidence = result.Evidence.ForPrompt() },
-            opponent = new { name = result.Opponent, gender = IdentityGender.Of(data, result.OpponentId), character = opponent?.Character, style = opponent?.Style, role = opponent?.Role,
+            opponent = new { name = result.Opponent, gender = IdentityGender.Of(data, result.OpponentId), character = opponent == null ? null : CharacterIdentity.Name(data, opponent.Character), style = opponent?.Style, role = opponent?.Role,
                 bestAscension = opponent?.MaxAscension, profileAsOfDay = opponent == null ? (int?)null : result.Day, rating = opponent?.Rating, recentForm = opponent?.Form,
                 cleared = match?.OpponentWon, floor = match?.OpponentFloor, elapsed = MatchRules.Time(match?.OpponentSeconds),
                 deck = (string[]?)null },
@@ -66,7 +66,7 @@ public static partial class AiService
         var posts = pending.Select(p => new
         {
             p.Id, p.AuthorId, topic = p.SourceTitle.Length > 0 ? p.SourceTitle : p.Title,
-            facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? p.SourceBody : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
+            facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? AiGeneratedText.Source(p) : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
             allowedAuthors = NewsCommenters(p, pending.Count).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
             对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => NewsCommenters(p, pending.Count).Contains(person.Id) || p.AuthorId == person.Id), occasion),
             match = MatchContext(data, p)

@@ -103,6 +103,7 @@ public sealed class PrivateSummary
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string Text { get; set; } = "";
     public int Through { get; set; }
+    public bool IsLatest(IEnumerable<PrivateSummary> summaries) => !summaries.Any(s => s.Through > Through);
 }
 public sealed class PrivateOffer
 {
@@ -125,6 +126,8 @@ public sealed class PrivateOffer
     public string Kind { get; set; } = "";
     public string State { get; set; } = "待确认";
     public string Detail { get; set; } = "";
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? AiDetail { get; set; }
     public int Season { get; set; }
     public int Day { get; set; }
     public int Ascension { get; set; }

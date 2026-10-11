@@ -137,6 +137,6 @@ public static partial class AiService
             }
         }
         catch (Exception e) { d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); if (d != null && g != null) { g.SummaryError = "总结未完成，下次回复后重试：" + FailureReason(e); save(d); } }
-        finally { GroupSummaries.Remove(key); d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); if (d != null && g != null) { g.SummaryStatus = ""; save(d); } }
+        finally { GroupSummaries.Remove(key); d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); if (d != null && g != null && g.SummaryStatus.Length > 0) { g.SummaryStatus = ""; save(d); } }
     }
 }
