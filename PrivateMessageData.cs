@@ -45,6 +45,9 @@ public sealed class PrivateConversation
     public string SummaryError { get; set; } = "";
     public int SeenCount { get; set; }
     public List<PrivateOffer> Offers { get; set; } = [];
+    // 真国运魔改尖塔：玩家手工改过的私信上下文块，按行合并回当前自动生成的文本（见 PrivateMessagePrompts.MergeContext）。
+    public string ContextOverride { get; set; } = "";
+    public string ContextOverrideBase { get; set; } = "";
 }
 public sealed class PrivateTurn
 {

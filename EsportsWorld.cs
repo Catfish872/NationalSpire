@@ -290,13 +290,14 @@ public static class EsportsWorld
             FinishFixture(d, c, f, missingHome && missingAway ? "" : missingHome ? f.AwayId : f.HomeId, missingHome && missingAway);
             return;
         }
-        bool walkover = f.HomeId == "player" || f.AwayId == "player";
         int asc = c.Modern ? f.Ascension : c.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8;
-        RunPerformance Run(string id, string seed) => id == "player" ? new(false, 0, 0)
+        // 真国运魔改尖塔：玩家被模拟时按角色卡真实模拟（见 PlayerRun），不再恒判未通关 0 层 0 秒，
+        // 所以胜负也交给 MatchRules.Compare；下面的 walkover 只保留"真弃权"（有一方 Floor < 0，例如禁赛）。
+        RunPerformance Run(string id, string seed) => id == "player" ? PlayerRun(d, f, asc, seed)
             : MatchRules.Simulate(d, id, asc, seed, f.Day, d.CooperativeMembers > 1, c, f.Id);
         var a = Run(f.HomeId, d.WorldId + ":" + f.Id); var b = Run(f.AwayId, d.WorldId + ":" + f.Id);
-        int score = walkover ? (f.HomeId == "player" ? -1 : 1) : MatchRules.Compare(a, b);
-        walkover |= a.Floor < 0 || b.Floor < 0;
+        int score = MatchRules.Compare(a, b);
+        bool walkover = a.Floor < 0 || b.Floor < 0;
         if (c.Modern && !walkover)
             for (int replay = 1; score == 0; replay++)
             {
@@ -310,6 +311,49 @@ public static class EsportsWorld
         f.HomeSeconds = a.Seconds; f.AwaySeconds = b.Seconds;
         FinishFixture(d, c, f, draw ? "" : score > 0 ? f.HomeId : f.AwayId, draw);
     }
+
+    // 真国运魔改尖塔：玩家被程序模拟时（签表里轮到玩家、由俱乐部代打等）按角色卡走同一套模拟。
+    // 玩家不在 d.People 里（CharacterCards 只把 NPC 写进 People，玩家本人走 PlayerCard），
+    // 所以 MatchRules.Simulate(data, "player", ...) 会在 CareerEngine.Person 处抛「选手不存在」；
+    // 这里先用 CharacterCards.Read 拼出玩家本人，再走与 NPC 完全相同的口径。
+    private static RunPerformance PlayerRun(CareerData d, WorldFixture f, int ascension, string seed)
+        => SimulatePlayerRun(d, f.Day, ascension, seed);
+
+    // 玩家模拟的公开入口：开赛页的「模拟本场」与签表模拟共用这一套算法，
+    // 于是角色卡里的模拟通关率、未通关层数上下限与模拟通关用时对两者都生效。
+    internal static RunPerformance SimulatePlayerRun(CareerData d, int day, int ascension, string seed)
+    {
+        var miss = new RunPerformance(false, 0, 0);
+        if (d.PlayerCard == null) return miss;
+        try
+        {
+            var person = CharacterCards.Read(d, "player");
+            var factors = MatchRules.Evaluate(d, person, ascension, day);
+            // 口径与 NPC 分支一致：NPC 直接拿 Evaluate(...).Final 当通关率，而 Simulate(person, ...) 内部还会再加一次
+            // 交流学习与短期状态，所以这里只补长期培养、陪练、临时训练三项，算出来的通关率与 Final 相同。
+            double bonus = factors.Growth + factors.Practice + factors.Training;
+            var run = MatchRules.Simulate(person, ascension, seed, d.CooperativeMembers > 1, bonus, factors.Defense, d.RivalLevel, day);
+            if (!run.Cleared) return run;
+            // 通关用时区间已由 MatchRules.SimulatePerformance 截断（对所有角色生效），
+            // 这里只处理玩家特有的回退：两个值都没设时用自己最近一次真实通关用时。
+            if (person.SimulatedClearSeconds < 0 && person.SimulatedClearSecondsMax < 0)
+            {
+                double recorded = PlayerRecordedSeconds(d);
+                return recorded < 0 ? run : new RunPerformance(true, run.Floor, recorded);
+            }
+            return run;
+        }
+        catch (Exception error)
+        {
+            Diagnostics.Error("player-run.simulate", error);
+            return miss;
+        }
+    }
+
+    // 用时回退来源：玩家自己最近一次真实通关。d.Results 从尾部裁剪，尾部就是最新一场，
+    // 它反映当前进阶和当前水平；取最快一次会把早期低进阶的极速通关当成常态。
+    private static double PlayerRecordedSeconds(CareerData d)
+        => d.Results.LastOrDefault(r => r.Win && r.RunSeconds is > 0 && double.IsFinite(r.RunSeconds.Value))?.RunSeconds ?? -1;
 
     public static void ResolvePlayerFixture(CareerData d, CareerMatch m, bool playerClear, bool abandoned)
     {

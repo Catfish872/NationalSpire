@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using NationalSpire.Coop;
 
@@ -8,6 +8,12 @@ public sealed class CharacterCardEdit
 {
     public bool Create { get; set; }
     public string Target { get; set; } = "";
+    // 真国运魔改尖塔：编辑角色卡时一并携带这些模拟参数（-1 = 不设）。
+    public int FailureFloorCap { get; set; } = -1;
+    public int FailureFloorMin { get; set; } = -1;
+    public double SimulatedClearSeconds { get; set; } = -1;
+    public double SimulatedClearSecondsMax { get; set; } = -1;
+    public int ClearBaselineDay { get; set; } = -1;
     public CareerPerson Person { get; set; } = new();
 }
 
@@ -56,11 +62,18 @@ public static class CharacterCards
     public static string Encode(CharacterCardEdit edit)
     {
         var source = edit.Person;
-        var publicEdit = new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Person = new()
+        var publicEdit = new CharacterCardEdit { Target = edit.Target, Create = edit.Create,
+            // 真国运魔改尖塔：角色卡往返时一并携带这几项模拟参数。
+            FailureFloorCap = source.FailureFloorCap, FailureFloorMin = source.FailureFloorMin,
+            SimulatedClearSeconds = source.SimulatedClearSeconds, ClearBaselineDay = source.ClearBaselineDay,
+            Person = new()
         {
             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,
             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,
             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,
+            FailureFloorCap = source.FailureFloorCap, FailureFloorMin = source.FailureFloorMin,
+            SimulatedClearSeconds = source.SimulatedClearSeconds, SimulatedClearSecondsMax = source.SimulatedClearSecondsMax,
+            ClearBaselineDay = source.ClearBaselineDay,
             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,
             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,
             Personality = source.Personality, Avatar = source.Avatar
@@ -101,6 +114,12 @@ public static class CharacterCards
         if (p.AbilityTemplate.Length > 0 && !Templates.Contains(p.AbilityTemplate)) return "能力模板无效。";
         if (p.MaxAscension is < 0 or > 10 || p.Rating is < 0 or > 100000 || p.Wins is < 0 or > 1000000 || p.Losses is < 0 or > 1000000) return "进阶、评分或胜负场数超出范围。";
         if (p.CustomClearChance is { } rate && (!double.IsFinite(rate) || rate < 0 || rate > 1)) return "模拟通关率应在 0%—100% 之间。";
+        // 真国运魔改尖塔：未通关层数上下限与模拟通关用时区间。
+        if (p.FailureFloorMin >= 0 && p.FailureFloorCap >= 0 && p.FailureFloorMin > p.FailureFloorCap) return "未通关层数下限不能高于上限。";
+        if (!double.IsFinite(p.SimulatedClearSeconds) || !double.IsFinite(p.SimulatedClearSecondsMax)
+            || p.SimulatedClearSeconds < -1 || p.SimulatedClearSeconds > 7200
+            || p.SimulatedClearSecondsMax < -1 || p.SimulatedClearSecondsMax > 7200) return "模拟通关用时应在 -1 至 7200 秒之间。";
+        if (p.SimulatedClearSeconds >= 0 && p.SimulatedClearSecondsMax >= 0 && p.SimulatedClearSecondsMax < p.SimulatedClearSeconds) return "模拟通关用时的上限不能小于下限。";
         if (p.Personality == null || p.Personality.AttitudeMin < -5 || p.Personality.AttitudeMax > 5 || p.Personality.AttitudeMin > -1 || p.Personality.AttitudeMax < 1) return "态度下界为 -5 至 -1，上界为 1 至 5。";
         if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null || s.Length > 1200)) return "性格描述过长。";
         if (p.ClubId.Length > 0 && EsportsWorld.Club(d, p.ClubId) == null || p.SupportedClubId.Length > 0 && EsportsWorld.Club(d, p.SupportedClubId) == null) return "俱乐部已不存在。";
@@ -125,10 +144,23 @@ public static class CharacterCards
         p.Character = input.Character.Trim(); p.Style = input.Style.Trim(); p.Temperament = input.Temperament.Trim(); p.Voice = input.Voice.Trim();
         p.Biography = input.Biography.Trim(); p.Personality = CoopJson.Copy(input.Personality); p.Personality.Version = PersonalityLibrary.Version;
         p.Avatar = CoopJson.Copy(input.Avatar); p.Wins = input.Wins; p.Losses = input.Losses; p.Rating = input.Rating; p.MaxAscension = input.MaxAscension;
+        // 真国运魔改尖塔：写回模拟参数与菜鸡开关的备份值。
+        p.FailureFloorCap = input.FailureFloorCap; p.FailureFloorMin = input.FailureFloorMin;
+        p.Pushover = input.Pushover; p.PushoverMaxAscension = input.PushoverMaxAscension;
+        p.PushoverFailureFloorCap = input.PushoverFailureFloorCap; p.PushoverCustomClearChance = input.PushoverCustomClearChance;
+        p.SimulatedClearSeconds = input.SimulatedClearSeconds; p.SimulatedClearSecondsMax = input.SimulatedClearSecondsMax;
+        p.ClearBaselineDay = input.ClearBaselineDay;
         p.RecordVersion = NpcRecords.Version; p.EditedCard = true; p.AiIntroduction = ""; p.IntroductionDay = 0;
         if (edit.Target == "player")
         {
-            d.PlayerCard = p; d.PlayerAlias = p.Handle; d.PlayerGender = p.Gender; d.SelectedAvatar = p.Avatar; d.PlayerNameAliases = p.HandleAliases;
+            d.PlayerCard = p;
+            // 真国运魔改尖塔：编辑「最高通关进阶」立即写穿到国运档案与游戏档案，并记下基线日；
+            // 之后的新通关仍会按原规则继续抬高（见 EsportsWorld.Milestone / CareerEngine）。
+            int bestClear = Math.Clamp(p.MaxAscension, 0, 10);
+            d.Esports.BestClear = bestClear;
+            d.AvatarHighestClear = bestClear;
+            p.ClearBaselineDay = d.Day;
+            d.PlayerAlias = p.Handle; d.PlayerGender = p.Gender; d.SelectedAvatar = p.Avatar; d.PlayerNameAliases = p.HandleAliases;
             d.Rating = p.Rating; d.Wins = p.Wins; d.Losses = p.Losses;
             bool affiliationChanged = d.Esports.ClubId != p.ClubId || d.Esports.Country != p.Country;
             d.Esports.ClubId = p.ClubId; d.Esports.Country = p.Country;

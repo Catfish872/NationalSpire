@@ -183,6 +183,9 @@ public static class MatchRules
         bool clear = performance < chance;
         double stage = rng.NextDouble();
         int floor = clear ? 0 : FailureFloor(chance, defenseBonus, stage, rng.NextDouble());
+        // 真国运魔改尖塔：未通关层数上限/下限。未通关时先按上限截断、再抬到下限（下限优先），通关的场次不受影响。
+        if (!clear && person.FailureFloorCap >= 0) floor = Math.Min(floor, person.FailureFloorCap);
+        if (!clear && person.FailureFloorMin >= 0) floor = Math.Max(floor, person.FailureFloorMin);
         // 完整通关的平均用时按职业身份区分；失败仍按实际止步楼层折算。
         int comfort = person.MaxAscension - officialAscension;
         bool professional = EsportsWorld.IsProfessional(person);
@@ -199,7 +202,16 @@ public static class MatchRules
         seconds = Math.Round(seconds);
         // 仅缩放最终用时，不额外取随机数，通关结果、止步楼层与个人差异沿用原计算。
         double original = clear ? seconds : Math.Round(seconds * floor / 50);
-        return new(clear, floor, original * RivalTimeScale(rivalLevel));
+        double time = original * RivalTimeScale(rivalLevel);
+        // 真国运魔改尖塔：模拟通关用时区间（下限 SimulatedClearSeconds / 上限 SimulatedClearSecondsMax）。
+        // 对所有角色的模拟生效 —— NPC 与玩家共用这一条 SimulatePerformance。口径与层数上下限一致：
+        // 先「有上限就取小」再「有下限就取大」，所以下限优先、下限=上限即固定用时；未通关的场次不受影响。
+        if (clear)
+        {
+            if (person.SimulatedClearSecondsMax >= 0) time = Math.Min(time, person.SimulatedClearSecondsMax);
+            if (person.SimulatedClearSeconds >= 0) time = Math.Max(time, person.SimulatedClearSeconds);
+        }
+        return new(clear, floor, time);
     }
 
     internal static int FailureFloor(double chance, double defenseBonus, double stageRoll, double floorRoll)

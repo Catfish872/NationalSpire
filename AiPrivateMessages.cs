@@ -1,4 +1,4 @@
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -51,7 +51,10 @@ public static partial class AiService
             if (turn.Status != "queued") return;
             if (turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             originalFavour = PrivateMessages.Favour(data, person);
-            turn.Context = PrivateMessagePrompts.Context(data, conversation, turn);
+            // 真国运魔改尖塔：上下文块被手工改过时，把编辑按行合并回当前自动生成的文本；没改过就照旧。
+            turn.Context = string.IsNullOrEmpty(conversation.ContextOverride)
+                ? PrivateMessagePrompts.Context(data, conversation, turn)
+                : PrivateMessagePrompts.MergeContext(PrivateMessagePrompts.Context(data, conversation, turn), conversation.ContextOverrideBase, conversation.ContextOverride);
             turn.Status = "sending"; turn.Error = ""; save(data);
             if (turn.RequestKind == "arbitration")
             {

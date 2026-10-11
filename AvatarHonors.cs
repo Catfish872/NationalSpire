@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public sealed record AvatarFrame(string Id, string Name, string Color, int Grade, string Requirement);
 public sealed record AvatarIdentity(AvatarFrame Frame, int Ascension, string Role, string Proof)
@@ -66,14 +66,36 @@ public static class AvatarHonors
         }
         return result;
     }
-    public static void Capture(CareerData d)
+    // 真国运魔改尖塔：角色卡上编辑过的「最高通关进阶」。
+    public static int PlayerCardClear(CareerData d) => Math.Clamp(d.PlayerCard?.MaxAscension ?? -1, 0, 10);
+
+    // 编辑基线日之后新打的通关才参与抬升，避免编辑前的旧成绩把编辑值又顶回去。
+    private static int MaxResultsClearAfter(CareerData d, int baselineDay)
     {
-        if (d.Esports.BestClear is >= 0 and <= 10) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, d.Esports.BestClear);
-        // 旧版存档只恢复仍有依据的通关进阶；赛事胜负与是否通关分别判断。
-        foreach (var r in d.Results.Where(r => r.Win))
+        int best = -1;
+        foreach (var r in d.Results.Where(r => r.Win && r.Day > baselineDay))
         {
             int ascension = r.PlayedAscension ?? (r.OfficialAscensionVerified ? r.Ascension : -1);
-            if (ascension is >= 0 and <= 10) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, ascension);
+            if (ascension is >= 0 and <= 10) best = Math.Max(best, ascension);
+        }
+        return best;
+    }
+    public static void Capture(CareerData d)
+    {
+        if (d.PlayerCard == null)
+        {
+            if (d.Esports.BestClear is >= 0 and <= 10) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, d.Esports.BestClear);
+            // 旧版存档只恢复仍有依据的通关进阶；赛事胜负与是否通关分别判断。
+            foreach (var r in d.Results.Where(r => r.Win))
+            {
+                int ascension = r.PlayedAscension ?? (r.OfficialAscensionVerified ? r.Ascension : -1);
+                if (ascension is >= 0 and <= 10) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, ascension);
+            }
+        }
+        else
+        {
+            // 有角色卡时以卡上编辑值为准，只让基线日之后的新通关继续抬高（可升可降）。
+            d.AvatarHighestClear = Math.Max(PlayerCardClear(d), MaxResultsClearAfter(d, d.PlayerCard.ClearBaselineDay));
         }
         foreach (var pair in Earned(d, "player")) d.AvatarFrames.TryAdd(pair.Key, pair.Value);
     }
