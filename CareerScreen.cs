@@ -573,7 +573,23 @@ public partial class CareerScreen : Control, IScreenContext
                 _starting = false;
                 if (IsInstanceValid(this) && !IsQueuedForDeletion() && error != null) Notice(error, true);
             }, 220); Emphasize(enter); controls.AddChild(enter);
-            if (_multiplayer == null && due && data.PendingMatchId == null) controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
+            if (_multiplayer == null && due && data.PendingMatchId == null)
+            {
+                controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
+                var simulate = Button("模拟本场", () =>
+                {
+                    var (characterName, characterId) = GameBridge.ResolveCharacter(match,
+                        selectedCharacter == chars.Count ? null : chars[Math.Clamp(selectedCharacter, 0, chars.Count - 1)]);
+                    CareerEngine.SimulateMatch(data, match, (int)asc.Value, characterName, characterId);
+                    Render();
+                }, 160);
+                // 一场真打成绩都没有时锁住代打：判定在 MatchRules.PlayerRunAvailable，界面不自己算规则。
+                simulate.Disabled = !MatchRules.PlayerRunAvailable(data);
+                simulate.TooltipText = simulate.Disabled
+                    ? "还没有真打过的正式成绩，代打已锁住：先自己打完一场正式比赛即可解锁。"
+                    : "由程序按你在赛事里真打的总胜率代打本场（各进阶一致）。成绩与真打同样计入赛果、奖金、荣誉和战报；比分落后时仍会进入失败选择。";
+                controls.AddChild(simulate);
+            }
             if (SaveManager.Instance.HasRunSave) box.AddChild(Text(MatchRecovery.SingleplayerInUse, 16, new Color("e7a6a6")));
             box.AddChild(Matchup(data, match));
         }

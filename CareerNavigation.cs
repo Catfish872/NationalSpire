@@ -53,6 +53,19 @@ public partial class CareerScreen
         else { _tab = tab; _personId = null; _postId = null; _competitionId = null; _worldSection = "国运榜"; }
         _scroll.ScrollVertical = 0; Render(); _ = RestoreScrollAsync(scroll, _renderVersion);
     }
+    /// <summary>
+    /// 对局打完、赛果落地后由 GameBridge 调用：有刚产生的待结算比赛就直接进结算页。
+    /// 结算页的初始页签只在 OpenView 创建实例时按 SettlementRecords.InitialTab 算一次，
+    /// 而从对局返回时复用的是同一个实例，所以这里必须显式切一次 ——
+    /// 否则玩家回到生涯后停在原来的页签上，看不到已经结算好的这一场。
+    /// </summary>
+    public static void ShowSettlement()
+    {
+        if (Current is not { } screen) return;
+        if (SettlementRecords.InitialTab(screen.ViewData) != "结算") return;
+        if (screen._tab == "结算") screen.Render();
+        else screen.SwitchTab("结算");
+    }
     private void OpenPerson(string id)
     {
         if (_tab == "选手档案" && _personId == id) return;

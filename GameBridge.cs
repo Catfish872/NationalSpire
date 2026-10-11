@@ -25,6 +25,16 @@ public static class GameBridge
     public static bool CanReleaseMissingRun => !SaveManager.Instance.HasRunSave && !RunManager.Instance.IsInProgress;
     public static List<CharacterModel> Characters() => ModelDb.AllCharacters.Where(c => c is not RandomCharacter).ToList();
     public static CharacterModel RandomChoice() => ModelDb.Character<RandomCharacter>();
+    /// <summary>
+    /// 玩家让程序代打时，把界面选中的角色解析成结算记录使用的职业名称与编号。
+    /// 随机槽位沿用开赛时同一随机源（CreateActSelectionRng），名称与原版皮肤／模组职业的命名规则一致。
+    /// </summary>
+    public static (string Name, string Id) ResolveCharacter(CareerMatch match, CharacterModel? character)
+    {
+        if (character is null or RandomCharacter)
+            character = CreateActSelectionRng(match.Seed).NextItem(ModelDb.AllCharacters) ?? throw new InvalidOperationException("没有可用角色。");
+        return (PlayerArchive.CharacterName(character.Id), character.Id.ToString());
+    }
     // 保留当前游戏返回的完整哈希宽度，与原生单人大厅的章节随机源一致。
     public static Rng CreateActSelectionRng(string seed) => GameCompatibility.ActRng(seed);
 
@@ -137,6 +147,8 @@ public static class GameBridge
         var detail = ReadPlayerHistory(history, history.Players[0]);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
             history.MapPointHistory.Sum(a => a.Count), detail.Character, history.Ascension, detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
+        // 打完直接进结算页：CareerScreen 实例是复用的，不会重算初始页签（见 CareerScreen.ShowSettlement）。
+        CareerScreen.ShowSettlement();
         PlayerArchive.Invalidate();
         _ = AiService.ProcessPendingAsync();
     }

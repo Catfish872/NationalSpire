@@ -146,6 +146,73 @@ public static class MatchRules
         return SimulatePerformance(person, ascension, seed, cooperative, factors.Final, factors.Defense, data.RivalLevel, date);
     }
 
+    /// <summary>
+    /// 玩家是否能代打：角色卡自填了模拟通关率，或至少有一场真打成绩。
+    /// 「现有算法」这一档对玩家不适用（玩家不套角色卡算法），界面据此启用或锁住入口。
+    /// </summary>
+    public static bool PlayerRunAvailable(CareerData data)
+        => CharacterCards.Read(data, "player").CustomClearChance.HasValue || PlayerRecord(data) is not null;
+
+    /// <summary>
+    /// 玩家的赛事内真打成绩统计：通关数与场数，是真打判据的唯一出处。
+    /// 只看核实过进阶的正式比赛，排除退赛与私下切磋，并要求带局内证据
+    /// （GameBridge.ReadPlayerHistory 会给真打写 PotionsRecorded 与 DeckSummary）；
+    /// 程序代打产生的成绩不带这些数据，必须排除，否则模拟结果会被当成历史再喂回模拟。
+    /// </summary>
+    private static (int Clears, int Total)? PlayerRecord(CareerData data)
+    {
+        var sample = data.Results.Where(r => r.OfficialAscensionVerified
+            && !PrivateAppointments.IsPrivate(r)
+            && r.Outcome != "退赛"
+            && (r.Evidence.PotionsRecorded || r.DeckSummary.Count > 0)).ToList();
+        return sample.Count == 0 ? null : (sample.Count(r => r.Win), sample.Count);
+    }
+
+    /// <summary>玩家模拟胜率：赛事内真打总胜率，不分进阶。一场真打成绩都没有时返回 null（锁住代打）。</summary>
+    private static double? PlayerHistoricClearRate(CareerData data)
+    {
+        if (PlayerRecord(data) is not { } record) return null;
+        return (double)record.Clears / record.Total;
+    }
+
+    /// <summary>
+    /// 玩家由程序代打时的成绩来源，也是"玩家模拟成绩从哪来"的唯一入口：调用者不得再自行计算通关率、楼层或用时。
+    /// 通关率取角色卡自填的模拟通关率（若设了），否则取赛事内真打总胜率（各进阶一致，有几场就用几场）。
+    /// 两者都没有、或被禁赛时返回 Floor = -1 的占位成绩，调用者据此不结算（代打被锁住，不退回角色卡算法）。
+    /// 角色卡不存在时 CharacterCards.Read 会按当前玩家资料构造默认卡，所以这里不判 d.PlayerCard == null。
+    /// </summary>
+    public static RunPerformance PlayerRun(CareerData data, CareerMatch match, int ascension, string seed)
+    {
+        var person = CharacterCards.Read(data, "player");
+        // 与 NPC 共用同一处禁赛判定：禁赛一场按缺席处理。
+        if (SpireArbitration.Banned(person, match.Day)) return new(false, -1, 0);
+        double rate;
+        if (person.CustomClearChance.HasValue)
+            rate = BaseChance(person, ascension);            // 自填百分比按既有换算规则展开到该进阶
+        else if (PlayerHistoricClearRate(data) is { } historic)
+            rate = historic;                                  // 真打总胜率，各进阶一致
+        else
+            return new(false, -1, 0);                         // 都没有 → 锁住代打
+        var factors = Evaluate(data, person, ascension, match.Day);
+        // 楼层与用时仍由既有的 SimulatePerformance 产出，不在这里另写一套规则。
+        return SimulatePerformance(person, ascension, seed, data.CooperativeMembers > 1, Math.Clamp(rate, 0, 1), factors.Defense, data.RivalLevel, match.Day);
+    }
+
+    /// <summary>
+    /// 界面用：这一场比赛"模拟实际会用的通关率"及其来源。判定与 PlayerRun 保持同一处，
+    /// 界面不得再自己判断优先级；玩家既没自填、也没真打历史时如实说明代打已锁住。
+    /// </summary>
+    public static (double Rate, string Source) SubstituteRate(CareerData data, CareerPerson person, int ascension)
+    {
+        if (person.CustomClearChance.HasValue)
+            return (BaseChance(person, ascension), "自填百分比");
+        if (person.Id != "player")
+            return (BaseChance(person, ascension), "现有算法");
+        if (PlayerRecord(data) is not { } record)
+            return (0, "已锁住：没有真打历史，先自己打完一场正式比赛");
+        return ((double)record.Clears / record.Total, $"赛事内真打 {record.Total} 场 {record.Clears} 胜，各进阶一致");
+    }
+
     private static double CustomChanceAtAscension(double custom, int highest, int ascension)
     {
         custom = Math.Clamp(custom, 0, 1);

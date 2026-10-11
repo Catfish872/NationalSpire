@@ -317,6 +317,18 @@ public static class CareerEngine
         if (d.Failure != null || d.PendingMatchId != null) return;
         FinishMatch(d, m, false, false, 0, "未出场", m.RequiredAscension, [], 0, forfeit: true);
     }
+    /// <summary>
+    /// 玩家主动把本场交给程序代打：成绩由 MatchRules.PlayerRun 按玩家自己的历史成绩给出，
+    /// 之后与真打走同一个结算入口 FinishMatch，因此战报、账目、荣誉、资格与失败待选择等下游完全一致。
+    /// </summary>
+    public static void SimulateMatch(CareerData d, CareerMatch m, int ascension, string character, string characterId)
+    {
+        if (d.Failure != null || d.PendingMatchId != null) return;
+        var run = MatchRules.PlayerRun(d, m, ascension, d.WorldId + ":simulate:" + m.Id);
+        // 与 NPC 一致：禁赛一场不产生成绩，也不写入任何记录。
+        if (run.Floor < 0) return;
+        FinishMatch(d, m, run.Cleared, false, run.Floor, character, ascension, [], run.Seconds, characterId: characterId);
+    }
     public static void Publish(CareerData d, string key, string title, string body, string category, bool aiPending, List<string>? related = null, CareerMatch? match = null)
     {
         if (d.Posts.Any(p => p.EventKey == key)) return;

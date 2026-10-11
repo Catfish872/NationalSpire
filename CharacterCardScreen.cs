@@ -134,23 +134,55 @@ public partial class CareerScreen
         var character = Line(abilityFields, "擅长角色", draft.Character, SetCharacter, 120, "CardCharacter");
         Choice(ability, "选择已安装的角色", characterNames, Array.IndexOf(characterNames, draft.Character), n => { character.Text = characterNames[n]; SetCharacter(character.Text); });
         var numbers = Pair(ability);
-        var ascension = Number(numbers, "最高通关进阶", draft.MaxAscension, 0, 10, v => draft.MaxAscension = (int)v, "CardAscension");
-        var rating = Number(numbers, "评分", draft.Rating, 0, 100000, v => draft.Rating = (int)v, "CardRating");
+        // SyncChance 会被下面几个控件的回调引用，所以这几个先声明（沿用本文件既有的 SpinBox rate = null! 写法）。
+        SpinBox rate = null!;
+        OptionButton mode = null!;
+        Label chanceNote = null!;
+        bool playerCard = draft.Id == "player";   // SyncChance 会在更早的回调里被引用，所以一并前置声明
+        var ascension = Number(numbers, "最高通关进阶", draft.MaxAscension, 0, 10, v => { draft.MaxAscension = (int)v; SyncChance(); }, "CardAscension");
+        var rating = Number(numbers, "评分", draft.Rating, 0, 100000, v => { draft.Rating = (int)v; SyncChance(); }, "CardRating");
         var wins = Number(numbers, "累计胜场", draft.Wins, 0, 1000000, v => draft.Wins = (int)v, "CardWins");
         var losses = Number(numbers, "累计负场", draft.Losses, 0, 1000000, v => draft.Losses = (int)v, "CardLosses");
         var probability = Pair(ability);
-        SpinBox rate = null!;
-        var mode = Choice(probability, "模拟通关率", ["现有算法", "自定义"], draft.CustomClearChance.HasValue ? 1 : 0, n =>
-        { draft.CustomClearChance = n == 0 ? null : rate.Value / 100; rate.Editable = n == 1; }, "CardChanceMode");
+        // 玩家角色用「历史胜率／自定义胜率」，不套 NPC 那套硬编码算法口径；NPC 卡片保持作者原本的两档。
+        mode = Choice(probability, "模拟通关率", playerCard ? ["历史胜率", "自定义"] : ["现有算法", "自定义"], draft.CustomClearChance.HasValue ? 1 : 0, n =>
+        { draft.CustomClearChance = n == 0 ? null : rate.Value / 100; rate.Editable = n == 1; SyncChance(); }, "CardChanceMode");
         rate = Number(probability, "基础通关率 %", (draft.CustomClearChance ?? MatchRules.BaseChance(draft, draft.MaxAscension)) * 100, 0, 100,
-            v => { if (mode.Selected == 1) draft.CustomClearChance = v / 100; }, "CardChance", .1);
+            v => { if (mode.Selected == 1) draft.CustomClearChance = v / 100; SyncChance(false); }, "CardChance", .1);
         rate.Editable = draft.CustomClearChance.HasValue;
-        ability.AddChild(Text("胜率为通过的最高进阶胜率，更高或更低进阶将动态调整", 15, _muted));
+        chanceNote = Text("", 15, _muted);
+        ability.AddChild(chanceNote);
+        // recompute=false 专供数字框自己的回调，避免"写回 Value → 再触发回调"来回递归。
+        void SyncChance(bool recompute = true)
+        {
+            var (substituteRate, source) = MatchRules.SubstituteRate(data, draft, draft.MaxAscension);
+            if (playerCard)
+            {
+                // 玩家：「历史胜率」档显示实际会用的真打胜率（不可编辑，因为它是战绩不是设置）；
+                // 「自定义」档照旧可选可填，自填值优先 —— 与 PlayerRun 的取值顺序一致。
+                double shown = (mode.Selected == 1 ? draft.CustomClearChance ?? substituteRate : substituteRate) * 100;
+                if (Math.Abs(rate.Value - shown) > 0.049) rate.Value = shown;
+                rate.Editable = mode.Selected == 1;
+                chanceNote.Text = mode.Selected == 1
+                    ? $"自定义胜率 {rate.Value:0.#}%（保存后对这个角色的模拟生效，优先于历史胜率）"
+                    : $"历史胜率：{source}；更高或更低进阶一致";
+                return;
+            }
+            if (mode.Selected != 1)
+            {
+                double current = MatchRules.BaseChance(draft, draft.MaxAscension) * 100;
+                if (recompute && Math.Abs(rate.Value - current) > 0.049) rate.Value = current;
+            }
+            string algorithm = mode.Selected == 1 ? $"自定义通关率 {rate.Value:0.#}%" : $"现有算法 {rate.Value:0.#}%";
+            chanceNote.Text = $"{algorithm}（按最高通关进阶 {draft.MaxAscension}）；更高或更低进阶将动态调整";
+        }
+        SyncChance();
         var apply = Button("应用预设", () =>
         {
             CharacterCards.ApplyTemplate(draft, CharacterCards.Templates[preset.Selected]); role.Text = draft.Role;
             ascension.Value = draft.MaxAscension; rating.Value = draft.Rating; wins.Value = draft.Wins; losses.Value = draft.Losses;
             mode.Select(0); rate.Editable = false; rate.Value = MatchRules.BaseChance(draft, draft.MaxAscension) * 100;
+            SyncChance();   // 玩家卡片要把数字框换回真打胜率
         }, 160); apply.SizeFlagsVertical = SizeFlags.ShrinkEnd; presetRow.AddChild(apply);
         ability.AddChild(Text("培养加成另计。累计胜负仅修改档案；真人对局由实际战斗决定。", 15, _muted));
 

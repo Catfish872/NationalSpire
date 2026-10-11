@@ -8,7 +8,8 @@
 | 单人原版开局/恢复 | 原版 RunManager 与当前保存、模组生涯/比赛绑定 | GameBridge、CareerRunBinding、MatchRecovery | 实际原版对局；属于其他生涯的对局要求完成或玩家手动放弃 |
 | 多人原版开局/恢复 | CoopRun、出场名单、角色、种子、Attempt、ResumeCount、NativeSave | CoopNativeRun、NativeLobbyApi、CoopRuntime | 原版合作大厅和对局、检查点、暂停恢复 |
 | 实际战斗证据 | 原版卡组、生命、牌面、金币、药水、结算记录 | GameBridge.ReadEvidence、RunEvidence、GameText | CareerResult、战报、周刊与 AI 事实 |
-| 结束与失败选择 | 双方通关、失败楼层、固定对手用时、玩家用时 | CareerEngine.FinishMatch、SettlementRecord、FailureDecision、MatchRecovery | 正式赛果、奖励、待重赛选择、后续赛事 |
+| 结束与失败选择 | 双方通关、失败楼层、固定对手用时、玩家用时 | CareerEngine.FinishMatch、SettlementRecord、FailureDecision、MatchRecovery；打完后按 SettlementRecords.InitialTab 自动进结算页（CareerScreen.ShowSettlement） | 正式赛果、奖励、待重赛选择、后续赛事 |
+| 玩家主动代打本场 | 玩家在赛事里真打的成绩（按局内证据判定，各进阶一致）、角色卡自填胜率、界面选中角色 | CareerScreen.Matches 的“模拟本场”按钮、GameBridge.ResolveCharacter、CareerEngine.SimulateMatch、MatchRules.PlayerRun、MatchRules.PlayerRunAvailable、MatchRules.PlayerRecord；角色编辑面板玩家卡片按 MatchRules.SubstituteRate 把「历史胜率／自定义胜率」直接显示在数字框里 | 与真打完全相同的结算：CareerEngine.FinishMatch 的赛果、奖金、荣誉、战报和失败待选择；既没自填也没真打历史时锁住代打 |
 | 局内转播 | 当前实际地图/房间/战斗，固定对手成绩和用时 | LiveRunBridge、LiveMaps、RivalSimulation、LiveCommentary、LiveVoices；多人 CoopLive / CoopBroadcast | 对手进度、生命、解说、弹幕、地图显示 |
 
 开赛角色选择保留皮肤职业名称。界面名称、实际游戏职业编号、发给 AI 的原职业名称分别处理。界面优化不能更改角色资源或共享字体。

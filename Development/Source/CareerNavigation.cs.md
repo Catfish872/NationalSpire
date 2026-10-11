@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9FE2735108100C306789B810578F42A4D35D3A7B76AF798BD2656BB612F93995`。来源：[源码](../../CareerNavigation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F72A555CB696E4446A41728FC4AF27FCDA876695A4BEAB15D7B9BCE48CD10A9E`。来源：[源码](../../CareerNavigation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -157,6 +157,28 @@ private Label _breadcrumb = null!;
 - `_tab` = `tab`
 - `_worldSection` = `"国运榜"`
 - `scroll` = `visit.Location.Scroll`
+
+<a id="symbol-2d1b3695a786"></a>
+
+## `NationalSpire.CareerScreen.ShowSettlement() — public static void ShowSettlement()`
+
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-4495455c88ce)
+
+**调用：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.SwitchTab(string)`](CareerNavigation.cs.md#symbol-64b01d2d7cc1)；[`NationalSpire.SettlementRecords.InitialTab(NationalSpire.CareerData)`](SettlementRecord.cs.md#symbol-1035c20d576a)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Current`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.SwitchTab(string)`；`NationalSpire.SettlementRecords.InitialTab(NationalSpire.CareerData)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.SettlementRecords.InitialTab(NationalSpire.CareerData)`；输入表达式：`SettlementRecords.InitialTab(screen.ViewData)`；返回值紧邻使用处：`BinaryExpressionSyntax: SettlementRecords.InitialTab(screen.ViewData) != "结算"`
+- `NationalSpire.CareerScreen.SwitchTab(string)`；输入表达式：`screen.SwitchTab("结算")`；返回值紧邻使用处：`ExpressionStatementSyntax: screen.SwitchTab("结算");`
+
+**赋值（含属性/字段和局部值）：**
+
+- `screen` = `Current`
+
 
 <a id="symbol-4430ec2bce8b"></a>
 

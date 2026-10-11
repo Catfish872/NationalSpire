@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5E6D3C18110A6E3A57F043D936DBA485FF264781B1A68243D161470B693BC6DA`。来源：[源码](../../CharacterCardScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`48E2646D4D6DB777086F9DEF6EBA1105AD4C4D2940C09669F5525ECC6D1F63AF`。来源：[源码](../../CharacterCardScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,7 +23,7 @@ private Action? _closeCharacterCard;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)
 
-**调用：** `System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.MatchRules.SubstituteRate(NationalSpire.CareerData, NationalSpire.CareerPerson, int)`](MatchRules.cs.md#symbol-0045c7caa84a)；`System.Collections.Generic.List<T>.Contains(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.ICareerSession.Host`
 
