@@ -138,7 +138,7 @@ public partial class CareerScreen
             if (club.TrainingFund > 0) box.AddChild(Text($"待使用专项资金 {CareerMoney.Format(club.TrainingFund)}", 15, _gold));
             foreach (var p in data.People.Where(p => p.ClubId == club.Id && EsportsWorld.IsProfessional(p)).OrderByDescending(p => p.Rating))
                 box.AddChild(PersonLink(data, p.Id, $"{p.PublicName}  ·  {ClubRole(data, club.Id, p.Id)}  ↗", 40));
-            if (data.Esports.ClubId == club.Id) box.AddChild(PersonLink(data, "player", CareerEngine.Name(data) + " · 本季首发  ↗", 40));
+            if (data.Esports.ClubId == club.Id) box.AddChild(PersonLink(data, "player", CareerEngine.Name(data) + " · " + ClubRole(data, club.Id, GroupChats.Human(data)) + "  ↗", 40));
             foreach (var p in data.People.Where(p => p.ClubId == club.Id && !EsportsWorld.IsProfessional(p)))
                 box.AddChild(PersonLink(data, p.Id, $"{p.PublicName} · {p.Role}  ↗", 32));
         }
