@@ -42,7 +42,7 @@ public partial class CareerScreen
     private void NationRanking(CareerData data)
     {
         _content.AddChild(Text($"第 {CircuitLedger.Year(data.Season)} 年 · 国运榜", 30, _gold));
-        _content.AddChild(Text("在国际赛事中为国家争取更高名次。国运榜每四赛季重新排名，国运带来的资金会支持选手、俱乐部和青训。", 17, _muted));
+        _content.AddChild(Text("在国际赛事中为国家争取更高名次。国运榜每四赛季重新排名，国运带来的资金会支持选手、俱乐部和青训，并在「国家发展」里沉淀成经济、社会与民生的长期变化。", 17, _muted));
         int rank = 0;
         var nationTable = CircuitLedger.NationTable(data);
         foreach (var row in CircuitLedger.NationTable(data))
@@ -54,6 +54,8 @@ public partial class CareerScreen
             var awards = data.Esports.CircuitAwards.Where(a => a.Country == row.Country && CircuitLedger.Year(a.Season) == CircuitLedger.Year(data.Season) && a.Fortune > 0).ToList();
             int own = awards.Where(a => a.PersonId == "player").Sum(a => a.Fortune);
             box.AddChild(Text($"储备资金 {CareerMoney.Format(nation?.Treasury ?? 0)}    ·    累计投入 {CareerMoney.Format(nation?.Development ?? 0)}" + (own > 0 ? $"    ·    我的贡献 {own}（{own * 100 / Math.Max(1, row.Points)}%）" : ""), 17, CareerVisuals.Teal));
+            // 真国运魔改尖塔：让玩家一眼看到国运到底改变了什么。
+            if (nation is { LastReport.Length: > 0 }) box.AddChild(Text(nation.LastReport, 15, _muted));
             foreach (var contribution in awards.GroupBy(a => a.PersonId).OrderByDescending(g => g.Sum(a => a.Fortune)).Take(3))
                 box.AddChild(PersonLink(data, contribution.Key, $"{CareerEngine.DisplayName(data, contribution.Key)}    +{contribution.Sum(a => a.Fortune)} 国运   ↗", 36));
             foreach (var source in awards.GroupBy(a => a.CompetitionId).OrderByDescending(g => g.First().Day).Take(3))

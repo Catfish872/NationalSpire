@@ -174,7 +174,9 @@ public static class CareerNarrative
         return category switch
         {
             "转会" => "transfer", "俱乐部" => "entry", "国际赛事" => "international", "晋级" => "qualification",
-            "生涯里程碑" => "honor", "训练日常" => "practice", "人物专访" => "feature", "赛季" => "season", _ => "news"
+            "生涯里程碑" => "honor", "训练日常" => "practice", "人物专访" => "feature", "赛季" => "season",
+            // 真国运魔改尖塔：发展公报走自己的离线跟帖兜底句（NarrativeText.Banks["development"]）。
+            "国家发展" => "development", _ => "news"
         };
     }
     public static string Reply(CareerData d, CareerPerson p, string category, CareerMatch? match, int variant, string eventKey = "")

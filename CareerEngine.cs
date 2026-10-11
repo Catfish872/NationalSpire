@@ -359,7 +359,9 @@ public static class CareerEngine
         if (aiPending) post.Schedule = PublicSchedule.Capture(d, post.RelatedPeople);
         d.Posts.Insert(0, post); CommunityThreads.Remember(d, post); CommunityThreads.TrimFeed(d);
     }
+    // 真国运魔改尖塔：发展公报即使没开 AI 也要发（正文用模板文本），所以在重要新闻里放行。
     public static bool IsImportantNews(string key, int priority) => priority >= 3 || key == "ecosystem"
+        || key.StartsWith("development-", StringComparison.Ordinal)
         || new[] { "champion-", "qualification-", "knockout-", "draw-", "transfer-", "season-", "recap-" }.Any(key.StartsWith);
     public static int StableHash(string value)
     {

@@ -7,6 +7,9 @@ namespace NationalSpire;
 /// <summary>仅交换可编辑提示词。默认项保留跟随模板更新的语义，不交换账户配置。</summary>
 public static class PromptTransfer
 {
+    /// <summary>真国运魔改尖塔：这些场景是后来加的，旧提示词包里没有，导入时按默认值补齐，不因此判为不兼容。</summary>
+    private static bool OptionalSection(string id) => id == "development";
+
     public sealed class Bundle
     {
         [JsonRequired] public string Format { get; set; } = "national-spire-prompts";
@@ -81,13 +84,13 @@ public static class PromptTransfer
             var custom = bundle.CustomTemplate;
             if (custom == null || !bundle.Template.StartsWith("custom-", StringComparison.Ordinal) || !Guid.TryParseExact(bundle.Template[7..], "N", out _)
                 || !PromptLibrary.Templates.Any(t => t.Id == custom.BaseTemplate)
-                || custom.Sections == null || custom.Sections.Count != PromptLibrary.Sections.Count
-                || PromptLibrary.Sections.Any(s => !custom.Sections.TryGetValue(s.Id, out var text) || string.IsNullOrWhiteSpace(text)))
+                || custom.Sections == null
+                || PromptLibrary.Sections.Any(s => !OptionalSection(s.Id) && (!custom.Sections.TryGetValue(s.Id, out var text) || string.IsNullOrWhiteSpace(text))))
                 throw new ArgumentException("文件中的自建模板不完整。");
             PromptLibrary.ValidateTemplateName(new(), custom.Name);
         }
-        if (bundle.Sections == null || bundle.Sections.Count != PromptLibrary.Sections.Count
-            || PromptLibrary.Sections.Any(s => !bundle.Sections.TryGetValue(s.Id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text)))
+        if (bundle.Sections == null
+            || PromptLibrary.Sections.Any(s => !OptionalSection(s.Id) && (!bundle.Sections.TryGetValue(s.Id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text))))
             throw new ArgumentException("文件需要包含全部场景，每项提示词不能为空。");
     }
     public static void Apply(AiOptions options, Bundle bundle, string? targetTemplate = null)

@@ -135,6 +135,14 @@ public partial class CareerScreen
         Choice(ability, "选择已安装的角色", characterNames, Array.IndexOf(characterNames, draft.Character), n => { character.Text = characterNames[n]; SetCharacter(character.Text); });
         var numbers = Pair(ability);
         var ascension = Number(numbers, "最高通关进阶", draft.MaxAscension, 0, 10, v => draft.MaxAscension = (int)v, "CardAscension");
+        var floorCap = Number(numbers, "未通关最高层数", draft.FailureFloorCap, -1, 100, v => draft.FailureFloorCap = (int)v, "CardFailureFloorCap");
+        floorCap.TooltipText = "-1 表示不限；未通关的模拟比赛最多止步于该层数。";
+        var floorMin = Number(numbers, "未通关最低层数", draft.FailureFloorMin, -1, 100, v => draft.FailureFloorMin = (int)v, "CardFailureFloorMin");
+        floorMin.TooltipText = "-1 表示不限；未通关的模拟比赛至少到达该层数（用来控分）。和上限同时设置时先按上限截断、再抬到下限；保存时下限高于上限会被拒绝，所以两种设置不会同时生效。";
+        var clearSeconds = Number(numbers, "模拟通关用时下限（秒，-1 不设）", draft.SimulatedClearSeconds, -1, 7200, v => draft.SimulatedClearSeconds = v, "CardSimulatedClearSeconds");
+        clearSeconds.TooltipText = "通关用时的下限：-1 表示不设。和上限一起构成区间 —— 每局先按常规公式模拟算出一个用时，再「有上限就取小、有下限就取大」（下限优先，所以下限=上限就是固定用时）。对当前编辑的这个角色的所有模拟比赛生效（不只是玩家）。两个都不设时，玩家一侧仍沿用「最近一次真实通关用时」。";
+        var clearSecondsMax = Number(numbers, "模拟通关用时上限（秒，-1 不设）", draft.SimulatedClearSecondsMax, -1, 7200, v => draft.SimulatedClearSecondsMax = v, "CardSimulatedClearSecondsMax");
+        clearSecondsMax.TooltipText = "通关用时的上限：-1 表示不设。对当前编辑的这个角色的所有模拟比赛生效（含 NPC 对手与签表模拟），不只是玩家；未通关的场次不受影响。";
         var rating = Number(numbers, "评分", draft.Rating, 0, 100000, v => draft.Rating = (int)v, "CardRating");
         var wins = Number(numbers, "累计胜场", draft.Wins, 0, 1000000, v => draft.Wins = (int)v, "CardWins");
         var losses = Number(numbers, "累计负场", draft.Losses, 0, 1000000, v => draft.Losses = (int)v, "CardLosses");
@@ -153,6 +161,52 @@ public partial class CareerScreen
             mode.Select(0); rate.Editable = false; rate.Value = MatchRules.BaseChance(draft, draft.MaxAscension) * 100;
         }, 160); apply.SizeFlagsVertical = SizeFlags.ShrinkEnd; presetRow.AddChild(apply);
         ability.AddChild(Text("培养加成另计。累计胜负仅修改档案；真人对局由实际战斗决定。", 15, _muted));
+        // 菜鸡开关：一次把 最高进阶/未通关层数上限/模拟通关率 压成菜鸡，并把原值记在该角色身上；再按一次还原。
+        var pushoverRow = new HBoxContainer(); pushoverRow.AddThemeConstantOverride("separation", 14); ability.AddChild(pushoverRow);
+        Button pushover = null!;
+        var pushoverNote = Text("", 15, _muted);
+        pushover = Button("", () => ApplyPushover(), 240);
+        pushover.Name = "CardPushover";
+        pushover.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        pushoverRow.AddChild(pushover);
+        pushoverNote.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        pushoverRow.AddChild(pushoverNote);
+        ShowPushover();
+        void ShowPushover()
+        {
+            pushover.Text = draft.Pushover ? "菜鸡开关：开（点一下还原）" : "菜鸡开关：一键压成菜鸡";
+            pushover.TooltipText = "把「最高通关进阶」压到 0、「未通关最高层数」压到 20、「模拟通关率」改成自定义 0%，再按一次还原原来的值。改动在保存角色后生效；只作用于这个角色的模拟比赛，不影响你真打的楼层。";
+            pushoverNote.Text = draft.Pushover ? "已压成：最高进阶 0 · 未通关最高层数 20 · 模拟通关率 0%（保存后生效）" : "一键把最高进阶压到 0、未通关最高层数压到 20、模拟通关率改成自定义 0%；再按一次还原。";
+        }
+        void ApplyPushover()
+        {
+            if (!draft.Pushover)
+            {
+                draft.PushoverMaxAscension = draft.MaxAscension;
+                draft.PushoverFailureFloorCap = draft.FailureFloorCap;
+                draft.PushoverCustomClearChance = draft.CustomClearChance ?? -1;
+                draft.Pushover = true;
+                draft.MaxAscension = 0;
+                draft.FailureFloorCap = 20;
+                draft.CustomClearChance = 0.0;
+            }
+            else
+            {
+                draft.MaxAscension = Math.Clamp(draft.PushoverMaxAscension, 0, 10);
+                draft.FailureFloorCap = draft.PushoverFailureFloorCap;
+                draft.CustomClearChance = draft.PushoverCustomClearChance >= 0 ? new double?(draft.PushoverCustomClearChance) : null;
+                draft.Pushover = false;
+                draft.PushoverMaxAscension = -1;
+                draft.PushoverFailureFloorCap = -1;
+                draft.PushoverCustomClearChance = -1;
+            }
+            ascension.Value = draft.MaxAscension;
+            floorCap.Value = draft.FailureFloorCap;
+            mode.Select(draft.CustomClearChance.HasValue ? 1 : 0);
+            rate.Editable = draft.CustomClearChance.HasValue;
+            rate.Value = (draft.CustomClearChance ?? MatchRules.BaseChance(draft, draft.MaxAscension)) * 100;
+            ShowPushover();
+        }
 
         var personality = Section("打法与性格");
         Memo(personality, "打法偏好", draft.Style, v => draft.Style = v, "CardStyle");

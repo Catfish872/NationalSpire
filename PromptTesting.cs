@@ -16,6 +16,9 @@ public static partial class AiService
             .Select(p => new PromptTestSource(scene, p.Id, $"第 {w.Week} 周 · {p.Name}", w.Week))).ToList(),
         "weekly" => data.WeeklyEditions.OrderByDescending(w => w.Week).SelectMany(w => w.Slides
             .Select(s => new PromptTestSource(scene, s.Id, $"第 {w.Week} 周 · {(s.Title.Length > 0 ? s.Title : s.Topic)}", w.Week))).ToList(),
+        // 真国运魔改尖塔：国家发展公报用 seed 走与 news 相同的 posts 契约，所以这里列出已发布的发展公报。
+        "development" => CommunityThreads.All(data).Where(p => p.Category == "国家发展" && p.SourceBody.Length > 0)
+            .OrderByDescending(p => p.Day).Select(p => new PromptTestSource(scene, p.Id, $"第 {p.Day} 天 · {p.Title}")).ToList(),
         _ => []
     };
 
@@ -27,10 +30,10 @@ public static partial class AiService
         var snapshot = TestCopy(data);
         CareerLife.Ensure(snapshot);
         string context, target = source.Id;
-        if (source.Scene is "news" or "discussion")
+        if (source.Scene is "news" or "development" or "discussion")
         {
             var post = CommunityThreads.All(snapshot).Single(p => p.Id == source.Id);
-            if (source.Scene == "news") context = BuildNewsContext(snapshot, [post]);
+            if (source.Scene is "news" or "development") context = BuildNewsContext(snapshot, [post]);
             else
             {
                 if (string.IsNullOrWhiteSpace(message)) throw new ArgumentException("请填写用来测试的留言。");

@@ -56,6 +56,7 @@ public partial class CareerScreen
             _content.AddChild(Text((ClubCoaching.PlayerReserve(data) ? "俱乐部轮换" : "俱乐部首发") + (ClubCoaching.PlayerCoach(data) ? " · 兼任教练" : ""), 18, CareerVisuals.Teal));
         var toolbar = ProfileActions(); toolbar.Name = "ProfileToolbar"; _content.AddChild(toolbar);
         toolbar.AddChild(Button("编辑角色", () => OpenCharacterCard(data, "player"), 165));
+        toolbar.AddChild(Button("编辑战绩记录", () => OpenCareerResultsEditor(data), 190));
         toolbar.AddChild(Button("更换头像", () => OpenAvatarSettings(data), 165));
         toolbar.AddChild(Button(_choosingFrame ? "收起头像框" : "更换头像框", () => { _choosingFrame = !_choosingFrame; Render(); }, 165));
         if (_choosingFrame) AvatarWardrobe(data, ProfileSection("头像框"));

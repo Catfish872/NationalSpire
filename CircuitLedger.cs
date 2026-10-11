@@ -118,6 +118,8 @@ public static class CircuitLedger
             if (contract.PaidSeason < d.Season) { club.Budget += contract.Retainer; ClubOperations.Entry(club, d.Day, contract.Brand + "赞助到账", contract.Retainer); contract.PaidSeason = d.Season; }
         }
         CareerCommerce.SeasonStart(d);
+        // 真国运魔改尖塔：把国运沉淀成各国社会发展指标，并发布本赛季的发展公报（本国与有变动的走 AI，其余用模板文本）。
+        NationalDevelopment.SeasonStart(d);
     }
     private static SponsorContract CreateContract(CareerData d, string target, int tier)
     {

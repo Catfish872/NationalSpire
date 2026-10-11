@@ -158,10 +158,17 @@ public static partial class AiService
         foreach (var post in pending) { CommunityThreads.SetWork(post.NewsGeneration, "queued"); CommunityThreads.Remember(data, post); }
         CareerStore.Save(data);
         // 总帖数仍由配置决定；限制单次输出规模，避免大批次截断后全部重试。
-        foreach (var batch in pending.Chunk(5)) await ProcessNewsBatchAsync(data, batch.ToList());
+        async Task Generate(List<CommunityPost> batch, string scene)
+        {
+            if (batch.Count == 0) return;
+            foreach (var chunk in batch.Chunk(5)) await ProcessNewsBatchAsync(data, chunk.ToList(), scene);
+        }
+        // 国家发展公报使用专用创作场景，与其他帖子分开成批发送；空批次不发起请求。
+        await Generate(pending.Where(p => p.Category != "国家发展").ToList(), "news");
+        await Generate(pending.Where(p => p.Category == "国家发展").ToList(), "development");
     }
 
-    private static async Task ProcessNewsBatchAsync(CareerData data, List<CommunityPost> pending)
+    private static async Task ProcessNewsBatchAsync(CareerData data, List<CommunityPost> pending, string scene)
     {
         string trace = Guid.NewGuid().ToString("N");
         string failure = "请求中断或配置已改变，可重试";
@@ -184,20 +191,20 @@ public static partial class AiService
             // 发送时固定帖子资料，响应期间新增留言不会改变本轮生成内容。
             var snapshots = pending.Select(p => JsonSerializer.Deserialize<CommunityPost>(JsonSerializer.Serialize(p, Json))!).ToList();
             var wire = new AiWireProtocol(data);
-            var payload = BuildNewsPayload(data, snapshots, wire);
+            var payload = BuildNewsPayload(data, snapshots, wire, scene);
             foreach (var post in pending) CommunityThreads.SetWork(post.NewsGeneration, "sending");
             data.Ai.RequestsToday++; CareerStore.Save(data); Status = "正在生成社区讨论";
             using var request = new HttpRequestMessage(HttpMethod.Post, uri);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", key);
             request.Content = new StringContent(payload, Encoding.UTF8, "application/json");
-            using var response = await SendAsync(request, data, trace, "news", pending.Select(p => p.Id));
+            using var response = await SendAsync(request, data, trace, scene, pending.Select(p => p.Id));
             if (!response.IsSuccessStatusCode) { Fail(await HttpFailure(response)); return; }
             var content = wire.Decode(await ReadResponseCompletion(response), expectedArray: "posts");
             if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
             if (pending.Any(p => p.NewsGeneration.State == "superseded"))
             { foreach (var p in pending) { p.AiPending = false; CommunityThreads.SetWork(p.NewsGeneration, "superseded"); } return; }
             ApplyNewsResponse(data, pending, content);
-            Diagnostics.Record("ai.applied", new { trace, kind = "news", posts = pending.Select(p => p.Id).ToArray() });
+            Diagnostics.Record("ai.applied", new { trace, kind = scene, posts = pending.Select(p => p.Id).ToArray() });
             Status = $"已发布 {pending.Count} 篇 AI 更新"; CareerStore.Save(data);
         }
         catch (Exception e) { Diagnostics.Error("ai.news:" + trace, e); Fail(FailureReason(e)); GD.PushWarning("[NationalSpire] 新闻生成：" + failure); }
@@ -210,11 +217,11 @@ public static partial class AiService
     }
 
     private static string BuildPayload(CareerData data, List<CommunityPost> pending) => BuildNewsPayload(data, pending, new AiWireProtocol(data));
-    private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire) => JsonSerializer.Serialize(new
+    private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire, string scene = "news") => JsonSerializer.Serialize(new
     {
         model = data.Ai.Model,
         stream = false,
-        messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }
+        messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, scene) }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }
     }, Json);
 
     private static string BuildPrompt(CareerData data, List<CommunityPost> pending) => BuildNewsContext(data, pending);
