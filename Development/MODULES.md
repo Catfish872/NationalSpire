@@ -1,0 +1,54 @@
+# 模块与功能
+
+## 逻辑层与职责
+
+| 层 | 入口与模块 | 输入来自哪里 | 输出交给谁 | 数据或外部副作用 |
+| --- | --- | --- | --- | --- |
+| 游戏接入 | Entry.Init、MainMenuEntries、GameBridge、LiveCompatibility、RuntimeApi、GameCompatibility | 原版 ModInitializer、菜单、RunManager、战斗与存储接口 | 生涯界面、比赛恢复、证据记录、转播 | 安装 Harmony 补丁、订阅游戏事件；反射读取版本差异接口 |
+| 页面与会话 | CareerScreen 各 partial、CareerNavigation、ICareerSession、CoopCareerSession | 当前绑定生涯或多人个人视图、用户操作、流式状态 | 生涯命令、多人 Send、AI 请求入口 | 创建和更新控件；操作保存由规则与会话入口负责 |
+| 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
+| 合同与培养 | OwnedClubs、OwnedClubSchedule、ClubOperations、ClubCoaching、CoachLineups、CareerTraining | 所属俱乐部、合同、席位、训练计划、预约转会 | 当前阵容、未来比赛名单、培养效果、账目 | 修改俱乐部与发展数据；名单变化传给赛事同步入口 |
+| 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
+| 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
+| 聊天与交互 | PrivateMessageCommands、PrivateMessages、GroupChats、GroupInteractions、ChatTimeline、PrivateInteractionUndo | 用户文字、附件、群成员、AI 标记、旧记录 | 聊天轮次、交互卡片、关系、训练、活动、赛程与帖子 | 交互执行调用对应业务规则；回退依赖已记录的交互历史 |
+| 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务 | 最终 messages、模型响应、解析后的正文与标记 | HTTP、请求队列、实时字典、生成状态、结果保存回调 |
+| 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 文件替换、持久写入、备份、分片发送；房主负责共享操作 |
+| 局内显示 | LiveRunBridge、LiveMatch、LiveMaps、LiveRaceHud、LiveVoices、LiveCommentary、LiveCrowd、CoopLive、CoopBroadcast | 原版实际地图与战斗、已确定对手结果及用时 | 对手进度、解说、弹幕、人物头像 | 局内事件订阅；读取资源；播报历史与当前比赛保存 |
+| 支撑与诊断 | Diagnostics、UiPerformance、LogPerformance、GameText、各头像与资源模块 | 实际请求、错误、阶段计时、资源、存档副本 | 日志、诊断包、格式化文本和缓存资源 | 凭据脱敏；资源缓存；性能记录 |
+
+具体文件及函数依赖见[双向源码索引](SOURCE_MAP.md)。partial 类可能分布在不同模块文件，不能把单个文件误当成完整类。
+
+## 运行入口与非直接调用
+
+| 安装或建立入口 | 保存的回调或事件 | 实际使用者与时机 |
+| --- | --- | --- |
+| Entry.Init | CareerEngine.PlayerNameSource | 创建与显示玩家身份时读取平台名称 |
+| Entry.Init | CharacterIdentity.Source | 职业别名资料构建时读取 GameBridge.Characters 及 PlayerArchive 的名称 |
+| Entry.Init | Diagnostics.RuntimeSnapshot、未处理异常事件 | 导出诊断和异常记录读取游戏、局内及联机会话状态 |
+| Entry.Init → ScriptManagerBridge.LookupScriptsInAssembly | Godot 脚本类型 | 场景创建及游戏补丁入口，不表现为普通 C# 直接调用 |
+| Entry.Init → LiveCompatibility.Install | Harmony 补丁方法 | 原版菜单、对局、地图、保存等被补丁目标触发；实际目标由兼容层寻找 |
+| CareerScreen 绑定 ICareerSession | Data、Refresh、Send、Generate、Export | 共用界面读取多人个人视图，操作交给房主；不替换 CareerStore.Data |
+| 单人聊天页面 | current、save、progress | current 重新获取绑定数据；save 写入生涯；progress 更新当前页面 |
+| CoopCoordinator.StartPrivate / StartGroup | Current、Save、progress 局部函数 | 共用聊天引擎通过这些委托读取最新数据、合并保存、发送实时消息 |
+| CoopAi 任务视图 | ExternalCurrent、ExternalSave | 公共生成引擎检验会话有效性，将生成结果合并回最新多人数据 |
+| CoopCoordinator 构造函数 | transport.Received、Changed、TriggerAi、Replied、RunMessage | 网络驱动接收；会话刷新、公共 AI、操作确认及原版对局桥分别使用 |
+| CoopBroadcast 构造函数 | CombatSetUp、CombatWon、History.Changed | 游戏战斗事件驱动观察与解说；Dispose 取消订阅 |
+| 页面 Button / 信号绑定 | 点击、文本变化、滚动与每帧回调 | 用户或 Godot 触发；函数索引的方法组引用帮助定位，执行顺序仍由信号决定 |
+
+## 跨模块数据流程
+
+比赛事实 → 赛事结算与账目 → 公开原始材料 → 社区和周刊任务 → 模型正文 → 社区记忆 → 后续社区与聊天检索。
+
+用户聊天 → 保存 queued 轮次 → 排队 → 保存 sending → 上下文与模型 → 流式显示 → 解析标记 → 业务规则 → 保存 complete → 自动总结。
+
+多人命令 → 房主规则复制并执行 → 检查点 → 回执 → 按接收者过滤的完整广播 → 客机检查点 → 个人视图 → 界面刷新。
+
+这些流程之间共享日期、人物编号、赛事编号、聊天顺序和关系数据。异步请求完成后读取最新数据，合并范围由单人绑定或多人回调决定。不能把最初构建请求时的数据副本直接当作完成时的全部最新数据。
+
+## 使用和维护边界
+
+AI 生成发言与交互提案，赛事胜负、合同、资金与日程由业务规则决定。解析成功不等于所有业务交互成功。
+
+公开事实、私信记录、群聊记录、来源总结和模型模板用途不同。保密范围由资料选择和固定说明共同形成，不能仅靠模板文风维持。
+
+原版单人对局由原版机制管理。模组生涯切换只切换模组资料；多人原版检查点由现有 CoopNativeRun 与会话桥管理。详细约定分别见[数据](DATA_CONTRACTS.md)、[AI](AI_FLOWS.md)、[保存](PERSISTENCE_AND_COOP.md)和[游戏](GAME_AND_UI.md)章节。

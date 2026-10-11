@@ -1,0 +1,278 @@
+# AiWeekly.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`CD5C8894E19BA735961EFE0966DF81F9D8F4B8A7FB4F2C352CC7FD5AE1ACF8A2`。来源：[源码](../../AiWeekly.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.AiService`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+private static readonly HashSet<(CareerData Data, int Week)> ScheduledEditions = [];
+```
+
+<a id="symbol-bb0ee823dfc4"></a>
+
+## `NationalSpire.AiService.ProcessWeeklyAsync(NationalSpire.CareerData?) — public static async Task ProcessWeeklyAsync(CareerData? requestedData = null)`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.ProcessPendingAsync(NationalSpire.CareerData?)`](AiService.cs.md#symbol-8243488b636b)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
+
+**调用：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.PublicationBacklog.Compact(NationalSpire.CareerData, bool)`](PublicationBacklog.cs.md#symbol-37eb1c83d725)；[`NationalSpire.WeeklyJournal.ActivateLatest(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-182dc6fd73e0)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.Enabled`；`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`；`NationalSpire.AiService.ScheduledEditions`；`NationalSpire.AiWorkState.State`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.WeeklyEditions`；`NationalSpire.CareerStore.Data`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.PublicationBacklog.Compact(NationalSpire.CareerData, bool)`；`NationalSpire.WeeklyEdition.NewsWork`；`NationalSpire.WeeklyEdition.ProfilesWork`；`NationalSpire.WeeklyEdition.Week`；`NationalSpire.WeeklyJournal.ActivateLatest(NationalSpire.CareerData)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`；输入表达式：`GenerateWeekly(data, issue, false, false)`；返回值紧邻使用处：`AwaitExpressionSyntax: await GenerateWeekly(data, issue, false, false)`
+- `NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`；输入表达式：`GenerateWeekly(data, issue, true, false)`；返回值紧邻使用处：`AwaitExpressionSyntax: await GenerateWeekly(data, issue, true, false)`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(data)`
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(data);`
+- `NationalSpire.PublicationBacklog.Compact(NationalSpire.CareerData, bool)`；输入表达式：`PublicationBacklog.Compact(data, false)`；返回值紧邻使用处：`ExpressionStatementSyntax: PublicationBacklog.Compact(data, false);`
+- `NationalSpire.WeeklyJournal.ActivateLatest(NationalSpire.CareerData)`；输入表达式：`WeeklyJournal.ActivateLatest(data)`；返回值紧邻使用处：`IfStatementSyntax: if (WeeklyJournal.ActivateLatest(data)) CareerStore.Save(data);`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`ScheduledEditions.Add((data, issue.Week))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ScheduledEditions.Add((data, issue.Week))`
+- `System.Collections.Generic.HashSet<T>.Remove(T)`；输入表达式：`ScheduledEditions.Remove((data, issue.Week))`；返回值紧邻使用处：`ExpressionStatementSyntax: ScheduledEditions.Remove((data, issue.Week));`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`data.WeeklyEditions.OrderByDescending(w => w.Week)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.WeeklyEditions.OrderByDescending(w => w.Week).Take`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`data.WeeklyEditions.OrderByDescending(w => w.Week).Take(1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.WeeklyEditions.OrderByDescending(w => w.Week).Take(1).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`data.WeeklyEditions.OrderByDescending(w => w.Week).Take(1).ToList()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var issue in data.WeeklyEditions.OrderByDescending(w => w.Week).Take(1).ToList())          {              if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled) return;              lock (ScheduledEditions) if (!ScheduledEditions.Add((data, issue.Week))) continue;              try              {                  if (issue.ProfilesWork.State == "idle") await GenerateWeekly(data, issue, true, false);                  if (issue.NewsWork.State == "idle") await GenerateWeekly(data, issue, false, false);              }              finally { lock (ScheduledEditions) ScheduledEditions.Remove((data, issue.Week)); }          }`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-fbf35e9ecdeb"></a>
+
+## `NationalSpire.AiService.RetryWeeklyAsync(int, bool, NationalSpire.CareerData?) — public static Task RetryWeeklyAsync(int week, bool profiles, CareerData? requestedData = null)`
+
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](Coop/CoopAi.cs.md#symbol-b4b98ce85f62)
+
+**调用：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`；`NationalSpire.CareerData.WeeklyEditions`；`NationalSpire.CareerStore.Data`；`NationalSpire.WeeklyEdition.Week`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`；输入表达式：`GenerateWeekly(data, issue, profiles, true)`；返回值紧邻使用处：`ConditionalExpressionSyntax: issue == null ? Task.CompletedTask : GenerateWeekly(data, issue, profiles, true)`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.WeeklyEditions.FirstOrDefault(w => w.Week == week)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.WeeklyEditions.FirstOrDefault(w => w.Week == week)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-9db02a002768"></a>
+
+## `NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool) — private static async Task GenerateWeekly(CareerData data, WeeklyEdition issue, bool profiles, bool retry)`
+
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.ProcessWeeklyAsync(NationalSpire.CareerData?)`](AiWeekly.cs.md#symbol-bb0ee823dfc4)；[`NationalSpire.AiService.RetryWeeklyAsync(int, bool, NationalSpire.CareerData?)`](AiWeekly.cs.md#symbol-fbf35e9ecdeb)
+
+**调用：** [`Current()`](AiWeekly.cs.md#symbol-d26127c44e7d)；[`Fail(string)`](AiWeekly.cs.md#symbol-fb02169a63e2)；[`NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string)`](AiWeekly.cs.md#symbol-48defc4d8c32)；[`NationalSpire.AiService.BuildWeeklyContext(NationalSpire.WeeklyEdition, bool)`](AiWeekly.cs.md#symbol-68c73eee1d19)；[`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`](AiPrompts.cs.md#symbol-7a07a16bbdcd)；[`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-364b38bdda09)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-4f223cb1164e)；[`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`](AiService.cs.md#symbol-aad664840095)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-5ba7da409ec8)；[`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)；[`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)；[`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`](CameoContent.cs.md#symbol-57586e8f0819)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-f933ce4e4ad8)；[`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`](CommunityThreads.cs.md#symbol-981631ecddfc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`](PublicationBacklog.cs.md#symbol-dd2c343a219d)；`int.Parse(string)`；`int.ToString()`；`string.IsNullOrWhiteSpace(string?)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.DateTime.ToString(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+
+**字段、属性、事件及方法组引用：** `<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.messages`；`<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.stream`；`<anonymous type: string role, string content>.content`；`<anonymous type: string role, string content>.role`；`<anonymous type: string trace, string kind, int Week>.kind`；`Current()`；`Fail(string)`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiOptions.RequestDay`；`NationalSpire.AiOptions.RequestsToday`；`NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string)`；`NationalSpire.AiService.BuildWeeklyContext(NationalSpire.WeeklyEdition, bool)`；`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.AiService.Status`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`；`NationalSpire.AiWireProtocol.Encode(string)`；`NationalSpire.AiWorkState.State`；`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.WeeklyEditions`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`；`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`；`NationalSpire.WeeklyEdition.EndDay`；`NationalSpire.WeeklyEdition.Memory`；`NationalSpire.WeeklyEdition.NewsWork`；`NationalSpire.WeeklyEdition.Profiles`；`NationalSpire.WeeklyEdition.ProfilesWork`；`NationalSpire.WeeklyEdition.Revision`；`NationalSpire.WeeklyEdition.StartDay`；`NationalSpire.WeeklyEdition.Week`；`NationalSpire.WeeklyProfile.Id`；`NationalSpire.WeeklyProfile.Previous`；`NationalSpire.WeeklyProfile.Updated`；`NationalSpire.WeeklySlide.People`；`NationalSpire.WeeklySlide.Topic`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Current()`；输入表达式：`Current()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Current()`
+- `Fail(string)`；输入表达式：`Fail("接口地址无效")`；返回值紧邻使用处：`ExpressionStatementSyntax: Fail("接口地址无效");`
+- `Fail(string)`；输入表达式：`Fail("未设置密钥")`；返回值紧邻使用处：`ExpressionStatementSyntax: Fail("未设置密钥");`
+- `Fail(string)`；输入表达式：`Fail(await HttpFailure(response))`；返回值紧邻使用处：`ExpressionStatementSyntax: Fail(await HttpFailure(response));`
+- `Fail(string)`；输入表达式：`Fail(FailureReason(e))`；返回值紧邻使用处：`ExpressionStatementSyntax: Fail(FailureReason(e));`
+- `int.Parse(string)`；输入表达式：`int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))`
+- `int.ToString()`；输入表达式：`issue.Week.ToString()`；返回值紧邻使用处：`ExpressionElementSyntax: issue.Week.ToString()`
+- `NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string)`；输入表达式：`ApplyWeeklyResponse(data, issue, profiles, content)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplyWeeklyResponse(data, issue, profiles, content);`
+- `NationalSpire.AiService.BuildWeeklyContext(NationalSpire.WeeklyEdition, bool)`；输入表达式：`BuildWeeklyContext(issue, profiles)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = BuildWeeklyContext(issue, profiles)`
+- `NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`；输入表达式：`ComposeSystem(data.Ai, profiles ? "profiles" : "weekly")`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: content = ComposeSystem(data.Ai, profiles ? "profiles" : "weekly")`
+- `NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；输入表达式：`EnterQueueAsync(data, [$"edition:{issue.Week}:" + (profiles ? "profiles" : "news")], [work])`；返回值紧邻使用处：`AwaitExpressionSyntax: await EnterQueueAsync(data, [$"edition:{issue.Week}:" + (profiles ? "profiles" : "news")], [work])`
+- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`FailureReason(e)`；返回值紧邻使用处：`ArgumentSyntax: FailureReason(e)`
+- `NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；输入表达式：`HttpFailure(response)`；返回值紧邻使用处：`AwaitExpressionSyntax: await HttpFailure(response)`
+- `NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`；输入表达式：`ReadResponseCompletion(response)`；返回值紧邻使用处：`AwaitExpressionSyntax: await ReadResponseCompletion(response)`
+- `NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`SendAsync(request, data, trace, profiles ? "profiles" : "weekly", [issue.Week.ToString()])`；返回值紧邻使用处：`AwaitExpressionSyntax: await SendAsync(request, data, trace, profiles ? "profiles" : "weekly", [issue.Week.ToString()])`
+- `NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；输入表达式：`TryGetEndpoint(endpoint, out var uri)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !TryGetEndpoint(endpoint, out var uri)`
+- `NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；输入表达式：`WaitForRequestStartAsync(data, [work])`；返回值紧邻使用处：`AwaitExpressionSyntax: await WaitForRequestStartAsync(data, [work])`
+- `NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`；输入表达式：`new AiWireProtocol(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new AiWireProtocol(data)`
+- `NationalSpire.AiWireProtocol.Decode(string, bool, string?)`；输入表达式：`wire.Decode(await ReadResponseCompletion(response), expectedArray: profiles ? "profiles" : "slides")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = wire.Decode(await ReadResponseCompletion(response), expectedArray: profiles ? "profiles" : "slides")`
+- `NationalSpire.AiWireProtocol.Encode(string)`；输入表达式：`wire.Encode(context)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: content = wire.Encode(context)`
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).Any`
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).Select`
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).SelectMany`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(data)`
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(data);`
+- `NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`；输入表达式：`CommunityMemorySearch.Retrieve(data, string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic)),                      CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct(), issue.StartDay - 1, new HashSet<string>(), 5)`；返回值紧邻使用处：`AssignmentExpressionSyntax: issue.Memory = CommunityMemorySearch.Retrieve(data, string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic)),                      CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct(), issue.StartDay - 1, new HashSet<string>(), 5)`
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "completed")`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "completed");`
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "failed", failure)`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "failed", failure);`
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "queued")`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "queued");`
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "sending")`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "sending");`
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "superseded")`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "superseded");`
+- `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("ai.weekly:" + trace, e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("ai.weekly:" + trace, e);`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.applied", new { trace, kind = profiles ? "profiles" : "weekly", issue.Week })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.applied", new { trace, kind = profiles ? "profiles" : "weekly", issue.Week });`
+- `NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`；输入表达式：`PublicationBacklog.Latest(data, issue)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PublicationBacklog.Latest(data, issue)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(key)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(key)) { Fail("未设置密钥"); return; }`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic))`；返回值紧邻使用处：`ArgumentSyntax: string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic))`
+- `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<string>()`；返回值紧邻使用处：`ArgumentSyntax: new HashSet<string>()`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>()`；输入表达式：`CameoContent.GeneratedSlides(issue).Any()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CameoContent.GeneratedSlides(issue).Any()`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct()`；返回值紧邻使用处：`ArgumentSyntax: CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct()`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay).SelectMany(w => w.Profiles).FirstOrDefault(p => p.Id == profile.Id && p.Updated.Length > 0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay).SelectMany(w => w.Profiles).FirstOrDefault(p => p.Id == profile.Id && p.Updated.Length > 0)`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`CameoContent.GeneratedSlides(issue).Select(s => s.Topic)`；返回值紧邻使用处：`ArgumentSyntax: CameoContent.GeneratedSlides(issue).Select(s => s.Topic)`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`CameoContent.GeneratedSlides(issue).SelectMany(s => s.People)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay).SelectMany(w => w.Profiles)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending(w => w.EndDay).SelectMany(w => w.Profiles).FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.WeeklyEditions.Where(w => w.EndDay < issue.EndDay)                      .OrderByDescending`
+- `System.DateTime.ToString(string?)`；输入表达式：`DateTime.UtcNow.ToString("yyyyMMdd")`；返回值紧邻使用处：`ArgumentSyntax: DateTime.UtcNow.ToString("yyyyMMdd")`
+- `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
+- `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Guid.NewGuid().ToString("N")`
+- `System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；输入表达式：`new AuthenticationHeaderValue("Bearer", key)`；返回值紧邻使用处：`AssignmentExpressionSyntax: request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", key)`
+- `System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；输入表达式：`new HttpRequestMessage(HttpMethod.Post, uri)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HttpRequestMessage(HttpMethod.Post, uri)`
+- `System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；输入表达式：`new StringContent(payload, Encoding.UTF8, "application/json")`；返回值紧邻使用处：`AssignmentExpressionSyntax: request.Content = new StringContent(payload, Encoding.UTF8, "application/json")`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { model, stream = false,                  messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, profiles ? "profiles" : "weekly") }, new { role = "user", content = wire.Encode(context) } } }, Json)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonSerializer.Serialize(new { model, stream = false,                  messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, profiles ? "profiles" : "weekly") }, new { role = "user", content = wire.Encode(context) } } }, Json)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `data.Ai.RequestDay` = `today`
+- `data.Ai.RequestsToday` = `0`
+- `issue.Memory` = `CommunityMemorySearch.Retrieve(data, string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic)),                      CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct(), issue.StartDay - 1, new HashSet<string>(), 5)`
+- `profile.Previous` = `prior.Updated`
+- `request.Content` = `new StringContent(payload, Encoding.UTF8, "application/json")`
+- `request.Headers.Authorization` = `new AuthenticationHeaderValue("Bearer", key)`
+- `Status` = `$"第 {issue.Week} 周：" + (profiles ? "正在更新选手介绍" : "正在编写周刊")`
+- `Status` = `$"第 {issue.Week} 周" + (profiles ? "选手介绍已更新" : "周刊已发布")`
+
+<a id="symbol-fb02169a63e2"></a>
+
+## `Fail(string) — void Fail(string message)`
+
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
+
+**调用：** [`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`](CommunityThreads.cs.md#symbol-981631ecddfc)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.Status`；`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；输入表达式：`CommunityThreads.SetWork(work, "failed", message)`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityThreads.SetWork(work, "failed", message);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `failure` = `message`
+- `Status` = `"周刊生成失败：" + message`
+
+<a id="symbol-d26127c44e7d"></a>
+
+## `Current() — bool Current()`
+
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
+
+**调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`](PublicationBacklog.cs.md#symbol-dd2c343a219d)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiWorkState.State`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: data.Ai.Enabled && CareerStore.IsCurrent(data)`
+- `NationalSpire.PublicationBacklog.Latest(NationalSpire.CareerData, NationalSpire.WeeklyEdition)`；输入表达式：`PublicationBacklog.Latest(data, issue)`；返回值紧邻使用处：`BinaryExpressionSyntax: data.Ai.Enabled && CareerStore.IsCurrent(data) && key == CurrentKey && endpoint == data.Ai.Endpoint && model == data.Ai.Model                  && work.State != "superseded" && PublicationBacklog.Latest(data, issue)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-68c73eee1d19"></a>
+
+## `NationalSpire.AiService.BuildWeeklyContext(NationalSpire.WeeklyEdition, bool) — internal static string BuildWeeklyContext(WeeklyEdition issue, bool profiles)`
+
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
+
+**调用：** [`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`](CameoContent.cs.md#symbol-57586e8f0819)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.PublicSchedule.ForPrompt(NationalSpire.PublicSchedule?)`](PublicSchedule.cs.md#symbol-37129720d5ed)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+
+**字段、属性、事件及方法组引用：** `<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.asOfDay`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.cooperation`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.fromDay`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.memory`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.profiles`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.schedule`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.slides`；`<anonymous type: int week, int fromDay, int asOfDay, string cooperation, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Topic, string Facts, bool advertisement>> slides, System.Collections.Generic.IEnumerable<<anonymous type: string Name, string Gender, string Background, string introduction>> profiles, System.Collections.Generic.List<NationalSpire.CommunityMemory> memory, object schedule>.week`；`<anonymous type: int week, int fromDay, int asOfDay, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>> profiles>.asOfDay`；`<anonymous type: int week, int fromDay, int asOfDay, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>> profiles>.fromDay`；`<anonymous type: int week, int fromDay, int asOfDay, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>> profiles>.profiles`；`<anonymous type: int week, int fromDay, int asOfDay, System.Collections.Generic.IEnumerable<<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>> profiles>.week`；`<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>.History`；`<anonymous type: string Id, string Name, string Gender, string Background, string History, string ThisWeek, string Previous>.ThisWeek`；`<anonymous type: string Id, string Topic, string Facts, bool advertisement>.advertisement`；`<anonymous type: string Id, string Topic, string Facts, bool advertisement>.Facts`；`<anonymous type: string Name, string Gender, string Background, string introduction>.introduction`；`NationalSpire.AiService.Json`；`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；`NationalSpire.GameText.Plain(string)`；`NationalSpire.PublicSchedule.ForPrompt(NationalSpire.PublicSchedule?)`；`NationalSpire.WeeklyEdition.Cooperation`；`NationalSpire.WeeklyEdition.EndDay`；`NationalSpire.WeeklyEdition.Memory`；`NationalSpire.WeeklyEdition.Profiles`；`NationalSpire.WeeklyEdition.Schedule`；`NationalSpire.WeeklyEdition.StartDay`；`NationalSpire.WeeklyEdition.Week`；`NationalSpire.WeeklyProfile.Background`；`NationalSpire.WeeklyProfile.Gender`；`NationalSpire.WeeklyProfile.History`；`NationalSpire.WeeklyProfile.Id`；`NationalSpire.WeeklyProfile.Name`；`NationalSpire.WeeklyProfile.Previous`；`NationalSpire.WeeklyProfile.ThisWeek`；`NationalSpire.WeeklyProfile.Updated`；`NationalSpire.WeeklySlide.Advertisement`；`NationalSpire.WeeklySlide.Facts`；`NationalSpire.WeeklySlide.Id`；`NationalSpire.WeeklySlide.People`；`NationalSpire.WeeklySlide.Topic`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).Select`
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).SelectMany`
+- `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(p.History)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: History = GameText.Plain(p.History)`
+- `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(p.ThisWeek)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: ThisWeek = GameText.Plain(p.ThisWeek)`
+- `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(s.Facts)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: Facts = GameText.Plain(s.Facts)`
+- `NationalSpire.PublicSchedule.ForPrompt(NationalSpire.PublicSchedule?)`；输入表达式：`PublicSchedule.ForPrompt(issue.Schedule)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: schedule = PublicSchedule.ForPrompt(issue.Schedule)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`selected.Contains(p.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => selected.Contains(p.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: slides = CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement })`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous })`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous })`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`CameoContent.GeneratedSlides(issue).SelectMany(s => s.People)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`issue.Profiles.Where(p => selected.Contains(p.Id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: issue.Profiles.Where(p => selected.Contains(p.Id)).Select`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,              cooperation = issue.Cooperation,              slides = CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement }),              profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous }),              memory = issue.Memory, schedule = PublicSchedule.ForPrompt(issue.Schedule) }, Json)`；返回值紧邻使用处：`ReturnStatementSyntax: return JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,              cooperation = issue.Cooperation,              slides = CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement }),              profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous }),              memory = issue.Memory, schedule = PublicSchedule.ForPrompt(issue.Schedule) }, Json);`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,              profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous }) }, Json)`；返回值紧邻使用处：`ReturnStatementSyntax: return JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,              profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous }) }, Json);`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-48defc4d8c32"></a>
+
+## `NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string) — internal static void ApplyWeeklyResponse(CareerData data, WeeklyEdition issue, bool profiles, string content)`
+
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
+
+**调用：** [`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`](CameoContent.cs.md#symbol-57586e8f0819)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；`NationalSpire.CommunityMemory.CommunityMemory()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
+
+**字段、属性、事件及方法组引用：** `(string Id, string Title, string Body).Body`；`(string Id, string Title, string Body).Id`；`(string Id, string Title, string Body).Title`；`NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；`NationalSpire.CareerData.CommunityMemories`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.PlayerIntroduction`；`NationalSpire.CareerData.PlayerIntroductionDay`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerLifeState.Events`；`NationalSpire.CareerPerson.AiIntroduction`；`NationalSpire.CareerPerson.IntroductionDay`；`NationalSpire.CommunityMemory.Day`；`NationalSpire.CommunityMemory.Id`；`NationalSpire.CommunityMemory.Kind`；`NationalSpire.CommunityMemory.People`；`NationalSpire.CommunityMemory.PostId`；`NationalSpire.CommunityMemory.Text`；`NationalSpire.LifeEvent.EditionWeek`；`NationalSpire.LifeEvent.Id`；`NationalSpire.WeeklyEdition.EndDay`；`NationalSpire.WeeklyEdition.Profiles`；`NationalSpire.WeeklyEdition.Slides`；`NationalSpire.WeeklyEdition.Week`；`NationalSpire.WeeklyProfile.Id`；`NationalSpire.WeeklyProfile.Updated`；`NationalSpire.WeeklySlide.Advertisement`；`NationalSpire.WeeklySlide.Body`；`NationalSpire.WeeklySlide.EventIds`；`NationalSpire.WeeklySlide.Id`；`NationalSpire.WeeklySlide.People`；`NationalSpire.WeeklySlide.Title`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CameoContent.GeneratedSlides(NationalSpire.WeeklyEdition)`；输入表达式：`CameoContent.GeneratedSlides(issue)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).Select`
+- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, row.Id)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, row.Id) is { } person`
+- `NationalSpire.CommunityMemory.CommunityMemory()`；输入表达式：`new() { Id = memoryId, PostId = memoryId, Day = issue.EndDay, Kind = "opinion", People = slide.People,                      Text = $"第{issue.Week}周周刊编辑评论《{slide.Title}》：{slide.Body}" }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = memoryId, PostId = memoryId, Day = issue.EndDay, Kind = "opinion", People = slide.People,                      Text = $"第{issue.Week}周周刊编辑评论《{slide.Title}》：{slide.Body}" }`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(body)`；返回值紧邻使用处：`BinaryExpressionSyntax: !expected.Remove(id) || string.IsNullOrWhiteSpace(body)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(title)`；返回值紧邻使用处：`BinaryExpressionSyntax: !profiles && string.IsNullOrWhiteSpace(title)`
+- `System.Collections.Generic.HashSet<T>.Remove(T)`；输入表达式：`expected.Remove(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !expected.Remove(id)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`CameoContent.GeneratedSlides(issue).Select(s => s.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CameoContent.GeneratedSlides(issue).Select(s => s.Id).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`issue.Profiles.Select(p => p.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: issue.Profiles.Select(p => p.Id).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`issue.Profiles.Single(p => p.Id == row.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: issue.Profiles.Single(p => p.Id == row.Id).Updated`
+- `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`issue.Slides.Single(s => s.Id == row.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = issue.Slides.Single(s => s.Id == row.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`CameoContent.GeneratedSlides(issue).Select(s => s.Id).ToHashSet()`；返回值紧邻使用处：`ConditionalExpressionSyntax: profiles ? issue.Profiles.Select(p => p.Id).ToHashSet() : CameoContent.GeneratedSlides(issue).Select(s => s.Id).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`issue.Profiles.Select(p => p.Id).ToHashSet()`；返回值紧邻使用处：`ConditionalExpressionSyntax: profiles ? issue.Profiles.Select(p => p.Id).ToHashSet() : CameoContent.GeneratedSlides(issue).Select(s => s.Id).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`document.RootElement.GetProperty(profiles ? "profiles" : "slides").EnumerateArray().ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = document.RootElement.GetProperty(profiles ? "profiles" : "slides").EnumerateArray().ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Life.Events.Where(e => slide.EventIds.Contains(e.Id))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var e in data.Life.Events.Where(e => slide.EventIds.Contains(e.Id))) e.EditionWeek = issue.Week;`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`data.CommunityMemories.Add(new() { Id = memoryId, PostId = memoryId, Day = issue.EndDay, Kind = "opinion", People = slide.People,                      Text = $"第{issue.Week}周周刊编辑评论《{slide.Title}》：{slide.Body}" })`；返回值紧邻使用处：`ExpressionStatementSyntax: data.CommunityMemories.Add(new() { Id = memoryId, PostId = memoryId, Day = issue.EndDay, Kind = "opinion", People = slide.People,                      Text = $"第{issue.Week}周周刊编辑评论《{slide.Title}》：{slide.Body}" });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`staged.Add((id, title, body))`；返回值紧邻使用处：`ExpressionStatementSyntax: staged.Add((id, title, body));`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`slide.EventIds.Contains(e.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: e => slide.EventIds.Contains(e.Id)`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<(string Id, string Title, string Body)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<(string Id, string Title, string Body)>()`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`data.CommunityMemories.RemoveAll(m => m.Id == memoryId)`；返回值紧邻使用处：`ExpressionStatementSyntax: data.CommunityMemories.RemoveAll(m => m.Id == memoryId);`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("周刊编号或正文不符合请求")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("周刊编号或正文不符合请求");`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("周刊批次不完整")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("周刊批次不完整");`
+- `System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；输入表达式：`JsonDocument.Parse(content)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonDocument.Parse(content)`
+- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`document.RootElement.GetProperty(profiles ? "profiles" : "slides").EnumerateArray()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: document.RootElement.GetProperty(profiles ? "profiles" : "slides").EnumerateArray().ToList`
+- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`document.RootElement.GetProperty(profiles ? "profiles" : "slides")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: document.RootElement.GetProperty(profiles ? "profiles" : "slides").EnumerateArray`
+- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`row.GetProperty("body")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetProperty("body").GetString`
+- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`row.GetProperty("id")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetProperty("id").GetString`
+- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`row.GetProperty("title")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetProperty("title").GetString`
+- `System.Text.Json.JsonElement.GetString()`；输入表达式：`row.GetProperty("body").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: row.GetProperty("body").GetString() ?? ""`
+- `System.Text.Json.JsonElement.GetString()`；输入表达式：`row.GetProperty("id").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: row.GetProperty("id").GetString() ?? ""`
+- `System.Text.Json.JsonElement.GetString()`；输入表达式：`row.GetProperty("title").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: row.GetProperty("title").GetString() ?? ""`
+
+**赋值（含属性/字段和局部值）：**
+
+- `data.PlayerIntroduction` = `row.Body`
+- `data.PlayerIntroductionDay` = `issue.EndDay`
+- `Day` = `issue.EndDay`
+- `e.EditionWeek` = `issue.Week`
+- `Id` = `memoryId`
+- `issue.Profiles.Single(p => p.Id == row.Id).Updated` = `row.Body`
+- `Kind` = `"opinion"`
+- `People` = `slide.People`
+- `person.AiIntroduction` = `row.Body`
+- `person.IntroductionDay` = `issue.EndDay`
+- `PostId` = `memoryId`
+- `slide.Body` = `row.Body`
+- `slide.Title` = `row.Title`
+- `Text` = `$"第{issue.Week}周周刊编辑评论《{slide.Title}》：{slide.Body}"`
