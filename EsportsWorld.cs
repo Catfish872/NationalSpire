@@ -323,16 +323,22 @@ public static class EsportsWorld
     // 于是角色卡里的模拟通关率、未通关层数上下限与模拟通关用时对两者都生效。
     internal static RunPerformance SimulatePlayerRun(CareerData d, int day, int ascension, string seed)
     {
-        var miss = new RunPerformance(false, 0, 0);
-        if (d.PlayerCard == null) return miss;
         try
         {
+            // 不判 d.PlayerCard == null：CharacterCards.Read 本身会在没有角色卡时按当前玩家资料构造默认卡
+            // （MaxAscension 取 d.Esports.BestClear），挡在它前面会让从没编辑过角色卡的玩家一律拿到 0 层 0 秒。
             var person = CharacterCards.Read(d, "player");
             var factors = MatchRules.Evaluate(d, person, ascension, day);
-            // 口径与 NPC 分支一致：NPC 直接拿 Evaluate(...).Final 当通关率，而 Simulate(person, ...) 内部还会再加一次
-            // 交流学习与短期状态，所以这里只补长期培养、陪练、临时训练三项，算出来的通关率与 Final 相同。
-            double bonus = factors.Growth + factors.Practice + factors.Training;
-            var run = MatchRules.Simulate(person, ascension, seed, d.CooperativeMembers > 1, bonus, factors.Defense, d.RivalLevel, day);
+            RunPerformance run;
+            if (person.CustomClearChance is null && MatchRules.PlayerHistoricClearRate(d, ascension) is { } rate)
+                // 历史平均胜率单独一路：只用玩家自己打过的正式比赛算胜率，楼层与用时仍走既有口径。
+                run = MatchRules.SimulateAtChance(person, ascension, rate, seed, d.CooperativeMembers > 1, factors.Defense, d.RivalLevel, day);
+            else
+                // 口径与 NPC 分支一致：NPC 直接拿 Evaluate(...).Final 当通关率，而 Simulate(person, ...) 内部还会再加一次
+                // 交流学习与短期状态，所以这里只补长期培养、陪练、临时训练三项，算出来的通关率与 Final 相同。
+                // 角色卡里自己填的百分比由 BaseChance 按进阶换算后生效，优先级高于历史胜率。
+                run = MatchRules.Simulate(person, ascension, seed, d.CooperativeMembers > 1,
+                    factors.Growth + factors.Practice + factors.Training, factors.Defense, d.RivalLevel, day);
             if (!run.Cleared) return run;
             // 通关用时区间已由 MatchRules.SimulatePerformance 截断（对所有角色生效），
             // 这里只处理玩家特有的回退：两个值都没设时用自己最近一次真实通关用时。
@@ -346,7 +352,7 @@ public static class EsportsWorld
         catch (Exception error)
         {
             Diagnostics.Error("player-run.simulate", error);
-            return miss;
+            return new RunPerformance(false, 0, 0);
         }
     }
 

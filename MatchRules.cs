@@ -173,6 +173,27 @@ public static class MatchRules
     public static RunPerformance Simulate(CareerPerson person, int officialAscension, string seed, bool cooperative = false, double chanceBonus = 0, double defenseBonus = 0, int rivalLevel = 1000, int? day = null)
         => SimulatePerformance(person, officialAscension, seed, cooperative, ClearChance(person, officialAscension, chanceBonus, day), defenseBonus, rivalLevel, day);
 
+    /// <summary>
+    /// 按指定的通关概率模拟一场。楼层与用时仍走既有的 SimulatePerformance，只是通关率由调用者另行给出，
+    /// 供"玩家历史平均胜率"这类独立口径使用；调用者不得因此重写楼层或用时的计算。
+    /// </summary>
+    public static RunPerformance SimulateAtChance(CareerPerson person, int officialAscension, double chance, string seed,
+        bool cooperative = false, double defenseBonus = 0, int rivalLevel = 1000, int? day = null)
+        => SimulatePerformance(person, officialAscension, seed, cooperative, Math.Clamp(chance, 0, 1), defenseBonus, rivalLevel, day);
+
+    /// <summary>
+    /// 玩家历史平均通关率。只看核实过赛事进阶的正式比赛，排除退赛与私下切磋；
+    /// 同进阶样本够就用同进阶，否则放宽到全部进阶；样本仍不足时返回 null，由调用者回退角色卡口径。
+    /// 这是"玩家历史胜率"的唯一计算入口。
+    /// </summary>
+    public static double? PlayerHistoricClearRate(CareerData data, int ascension, int minimum = 5)
+    {
+        var usable = data.Results.Where(r => r.OfficialAscensionVerified && !PrivateAppointments.IsPrivate(r) && r.Outcome != "退赛").ToList();
+        var same = usable.Where(r => r.Ascension == ascension).ToList();
+        var sample = same.Count >= minimum ? same : usable;
+        return sample.Count >= minimum ? (double)sample.Count(r => r.Win) / sample.Count : null;
+    }
+
     private static RunPerformance SimulatePerformance(CareerPerson person, int officialAscension, string seed, bool cooperative, double chance, double defenseBonus, int rivalLevel, int? day)
     {
         if (SpireArbitration.Banned(person, day ?? 0)) return new(false, -1, 0);
