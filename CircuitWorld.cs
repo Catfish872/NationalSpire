@@ -102,12 +102,12 @@ public static class CircuitWorld
         // 独立固定办赛日；玩家选择参赛，比赛资格并不消耗后续机会。
         for (int offset = 0; offset < length; offset += 14)
         {
-            if (offset + 3 <= length) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 45, p => p.Role == "普通玩家" && !ClubCoaching.IsCoach(p));
-            if (offset + 6 <= length) Add(offset + 6, "city", "城市新秀公开赛", 3, 100, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
-            if (offset + 9 <= length) Add(offset + 9, "academy", "职业青训选拔赛", 6, 180, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
-            if (offset + 11 <= length) Add(offset + 11, "open", "赛区巡回公开赛", 7, 190, EsportsWorld.IsProfessional);
+            if (offset + 3 <= length) Add(offset + 3, "local", offset == 0 ? "街区周末杯" : "社区周末公开杯", 0, 200, p => p.Role == "普通玩家" && !ClubCoaching.IsCoach(p));
+            if (offset + 6 <= length) Add(offset + 6, "city", "城市新秀公开赛", 3, 500, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
+            if (offset + 9 <= length) Add(offset + 9, "academy", "职业青训选拔赛", 6, 900, p => p.Role == "青训选手" && !ClubCoaching.IsCoach(p));
+            if (offset + 11 <= length) Add(offset + 11, "open", "赛区巡回公开赛", 7, 1_200, EsportsWorld.IsProfessional);
         }
-        Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
+        Add(length, "masters", "世界纪录邀请赛", 10, 8_000, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
     }
     public static void EnrollLeague(CareerData d, WorldCompetition c)
@@ -164,7 +164,7 @@ public static class CircuitWorld
             if (d.Matches.Any(m => m.FixtureId == f.Id)) continue;
             d.Matches.Add(new() { CompetitionId = c.Id, FixtureId = f.Id, Round = f.Round, Day = f.Day, Kind = c.Kind,
                 Event = c.Name + " · " + RoundName(c, f.Round), OpponentId = f.HomeId == "player" ? f.AwayId : f.HomeId,
-                RequiredAscension = f.Ascension, Prize = c.Kind == "league" ? 260 : c.Kind == "worldfinal" ? c.PrizeVersion >= 1 ? 0 : 600 + f.Round * 200 : 400 + f.Round * 180,
+                RequiredAscension = f.Ascension, Prize = c.Kind == "league" ? 1_500 : c.Kind == "worldfinal" ? c.PrizeVersion >= 1 ? 0 : 4_000 + f.Round * 1_500 : 2_000 + f.Round * 600,
                 Registered = true, Seed = $"NS-{d.WorldId}-{f.Id}" });
         }
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();

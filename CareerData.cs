@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class CareerData
 {
@@ -60,6 +60,12 @@ public sealed class CareerData
     public int Season { get; set; } = 1;
     public int Rating { get; set; } = 1000;
     public int Fans { get; set; } = 28;
+    /// <summary>消费品与投资：持有物、限购、运营次数与掉粉凭据（设计文档 §11）。</summary>
+    public ConsumerState Consumer { get; set; } = new();
+    /// <summary>原生外汇市场与个人账户，随当前生涯一起保存与导出。</summary>
+    public ForexSpire.ForexState? Forex { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData, List<ForexSpire.ForexFixture>>? ForexDailySink { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public int ForexGroupPositions { get; set; }
     public int Credits { get; set; } = 0;
     public int Wins { get; set; }
     public int Losses { get; set; }
@@ -188,6 +194,8 @@ public sealed class CareerPerson
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int Rating { get; set; }
+    /// <summary>人气榜：NPC 的粉丝数（只有进阶 ≥ 8 的人参与排名）。</summary>
+    public int Fans { get; set; }
     public string Role { get; set; } = "观众";
     public string Voice { get; set; } = "";
 }

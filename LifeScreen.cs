@@ -1,10 +1,10 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private string _lifeSection = "活动与计划";
+    private string _lifeSection = "训练与经营";
     private int _lifeHistoryLimit = 8;
     private void Life(CareerData d)
     {
@@ -12,9 +12,9 @@ public partial class CareerScreen
         foreach (string message in d.Life.RepairNotices.TakeLast(4)) _content.AddChild(Text(message, 16, CareerVisuals.Teal));
         _content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
         var tabs = new HBoxContainer(); _content.AddChild(tabs);
-        foreach (string name in new[] { "活动与计划", "我的空间", "公开消息", "收支记录" })
-            tabs.AddChild(FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165));
-        if (_lifeSection == "我的空间") { LifeCollection(d); return; }
+        foreach (string name in new[] { "训练与经营", "娱乐与消费", "商城", "公开消息", "收支记录" })
+            tabs.AddChild(FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 155));
+        if (_lifeSection == "商城") { ConsumerShop(d); LifeCollection(d); return; }
         if (_lifeSection == "公开消息") { LifeNews(d); return; }
         if (_lifeSection == "收支记录")
         {
@@ -23,19 +23,13 @@ public partial class CareerScreen
             if (d.Life.Ledger.Count == 0) _content.AddChild(Text("新的收入和花销会记在这里。", 18, _muted));
             return;
         }
-        var available = d.Life.Activities.Where(a => a.Status == "可安排" && a.ExpiresDay >= d.Day).ToList();
-        _content.AddChild(Text("这一轮，想做些什么？", 23, _gold));
-        if (available.Count > 0)
-        {
-            _content.AddChild(Text($"从 {available.Count} 项安排中选择一项。其他邀请随本轮结束，之后还会有新的机会。", 17, _muted));
-            _content.AddChild(Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210));
-        }
-        if (available.Count == 0) _content.AddChild(Text("暂时没有新的活动邀请。日程推进后，会陆续出现新的机会。", 17, _muted));
-        foreach (var a in available) ActivityCard(d, a);
-        var ongoing = d.Life.Activities.Where(a => a.Status == "进行中").OrderBy(a => a.FinishDay).ToList();
+        bool trading = _lifeSection == "训练与经营";
+        bool InGroup(string kind) => (kind is "备赛" or "培养" or "青训" or "俱乐部" or "经营" or "商业") == trading;
+        var ongoing = d.Life.Activities.Where(a => a.Status == "进行中" && InGroup(a.Kind)).OrderBy(a => a.FinishDay).ToList();
         if (ongoing.Count > 0) _content.AddChild(Text("正在进行", 23, _gold));
         foreach (var a in ongoing) ActivityCard(d, a);
-        var completed = d.Life.Activities.Where(a => a.Status == "已完成").OrderByDescending(a => a.FinishDay).ToList();
+        ActivityMarket(d, trading);
+        var completed = d.Life.Activities.Where(a => a.Status == "已完成" && InGroup(a.Kind)).OrderByDescending(a => a.FinishDay).ToList();
         if (completed.Count > 0) _content.AddChild(Text("留下的经历", 23, _gold));
         foreach (var a in completed.Take(_lifeHistoryLimit)) ActivityCard(d, a);
         if (completed.Count > _lifeHistoryLimit) _content.AddChild(Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200));
@@ -78,7 +72,9 @@ public partial class CareerScreen
         }
         else
         {
-            box.AddChild(Text(a.Status == "进行中" ? $"第{a.StartedDay}天开始 · 预计第{a.FinishDay}天完成" : $"第{a.FinishDay}天完成 · 花费 {CareerMoney.Format(a.PaidCost >= 0 ? a.PaidCost : a.Cost)}", 16, _muted));
+            box.AddChild(Text(a.Status == "进行中"
+                ? $"{PrivateAppointments.DateText(d, a.StartedDay)}开始 · 预计{PrivateAppointments.DateText(d, a.FinishDay)}完成（总第 {a.StartedDay}—{a.FinishDay} 天）"
+                : $"{PrivateAppointments.DateText(d, a.FinishDay)}完成（总第 {a.FinishDay} 天） · 花费 {CareerMoney.Format(a.PaidCost >= 0 ? a.PaidCost : a.Cost)}", 16, _muted));
             box.AddChild(Text(a.Result, 18, CareerVisuals.Teal));
             if ((CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a)) && a.Status == "进行中") box.AddChild(Text(CareerLife.Expected(d, a), 18, _muted));
         }
@@ -156,5 +152,32 @@ public partial class CareerScreen
         }
         if (events.Count == 0) _content.AddChild(Text("公开活动和项目成果会在这里公布。", 17, _muted));
         if (events.Count > _lifeHistoryLimit) _content.AddChild(Button("查看更早消息", () => { _lifeHistoryLimit += 12; Render(); }, 200));
+    }
+
+    /// <summary>市场化（D13）：不再"每轮三选一"，全部目录条目随时下单；训练与经营类同种每月限一项。
+    /// 需要指定对象的条目会先弹选人列表（可搜索、本队成员优先）。文案在 ConsumerText.cs。</summary>
+    private void ActivityMarket(CareerData d, bool trading)
+    {
+        bool IsTrading(string kind) => kind is "备赛" or "培养" or "青训" or "俱乐部" or "经营" or "商业";
+        var plans = LifeCatalog.Plans.Where(p => IsTrading(p.Kind) == trading).ToList();
+        _content.AddChild(Text(ConsumerText.MarketTitle, 23, _gold));
+        _content.AddChild(Text(ConsumerText.MarketIntro(trading), 16, _muted));
+        var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        grid.AddThemeConstantOverride("h_separation", 16); grid.AddThemeConstantOverride("v_separation", 16); _content.AddChild(grid);
+        foreach (var plan in plans)
+        {
+            var card = Card(); grid.AddChild(card); var box = Inner(card);
+            box.AddChild(Text(plan.Title + " · " + plan.Kind, 20, _gold));
+            box.AddChild(Text(ConsumerText.Generic(plan.Purpose), 16, _ink));
+            box.AddChild(Text(ConsumerText.MarketPrice(CareerMoney.Format(plan.Cost), plan.Days, plan.Long), 15, _muted));
+            if (LifeCatalog.NeedsTarget(plan))
+                box.AddChild(Button(ConsumerText.MarketPickOrder, () => PersonPicker(d, plan.Title + ConsumerText.PickerTitleSuffix, plan, person =>
+                {
+                    var error = CareerLife.Purchase(d, plan.Key, person.Id);
+                    Render(); Notice(error ?? plan.Title + " 已确认。", error != null);
+                }), 220));
+            else
+                box.AddChild(Button(ConsumerText.MarketOrder, () => { var error = CareerLife.Purchase(d, plan.Key); Render(); Notice(error ?? plan.Title + " 已确认。", error != null); }, 150));
+        }
     }
 }

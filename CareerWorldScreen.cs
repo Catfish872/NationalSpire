@@ -6,6 +6,8 @@ public partial class CareerScreen
 {
     private string _worldSection = "国运榜";
     private string? _competitionId;
+    // 「国家发展」当前查看的国家；null / 找不到时回落到本国。只影响界面，不写存档。
+    private string? _nationFocus;
     private void World(CareerData data)
     {
         if (_worldSection == "俱乐部" && _clubDraft != null) { ClubWizard(data); return; }
@@ -18,9 +20,10 @@ public partial class CareerScreen
         ib.AddChild(Text("当前目标：" + EsportsWorld.NextGoal(data), 18, CareerVisuals.Teal));
         ib.AddChild(Text(CareerNarrative.PlayerEvaluation(data), 16, _muted));
         var tabs = new HFlowContainer(); _content.AddChild(tabs);
-        foreach (string section in new[] { "国运榜", "国家发展", "世界荣誉", "世界积分", "赛事总览", "俱乐部", "荣誉室", "晋级规则" }) tabs.AddChild(Button(section, () => OpenWorldSection(section), 155));
+        foreach (string section in new[] { "国运榜", "国家发展", "人气榜", "世界荣誉", "世界积分", "赛事总览", "俱乐部", "荣誉室", "晋级规则" }) tabs.AddChild(Button(section, () => OpenWorldSection(section), 155));
         if (_worldSection == "国运榜") { NationRanking(data); return; }
         if (_worldSection == "国家发展") { NationDevelopment(data); return; }
+        if (_worldSection == "人气榜") { FanChart(data); return; }
         if (_worldSection == "世界荣誉") { WorldHonors(data); return; }
         if (_worldSection == "世界积分") { CircuitRanking(data); return; }
         if (_worldSection == "俱乐部") { Clubs(data); return; }
@@ -145,39 +148,96 @@ public partial class CareerScreen
         }
         if (_clubLimit < data.Esports.Clubs.Count) _content.AddChild(Button("显示更多俱乐部", () => { int y = _scroll.ScrollVertical; _clubLimit += 8; Render(); _ = RestoreScrollAsync(y, _renderVersion); }, 220));
     }
-    // 真国运魔改尖塔：国运沉淀成的社会发展指标。上半是本国明细，下半是各国对比。
+    // 真国运魔改尖塔：国运沉淀成的社会发展指标。上半是"当前查看的国家"的明细（默认本国，
+    // 点下表任何国家名都能切换），下半是按列渲染的各国对比表。
     private void NationDevelopment(CareerData data)
     {
         NationalDevelopment.Ensure(data);
         _content.AddChild(Text("国家发展 · 社会指标", 30, _gold));
         _content.AddChild(Text("国际赛事赢下的国运，每赛季沉淀成各国的经济、社会与民生指标。维持三项要各缴 40 点，剩下的才用来升级；国运不足的国家会逐渐败落。", 17, _muted));
-        var own = data.Esports.Nations.FirstOrDefault(n => n.Country == data.Esports.Country);
-        if (own != null)
+        var home = data.Esports.Nations.FirstOrDefault(n => n.Country == data.Esports.Country);
+        var focus = data.Esports.Nations.FirstOrDefault(n => n.Country == _nationFocus) ?? home ?? data.Esports.Nations.FirstOrDefault();
+        if (focus != null)
         {
+            bool mine = ReferenceEquals(focus, home);
             var card = Card(); _content.AddChild(card); var box = Inner(card);
-            int fortune = NationalDevelopment.SeasonFortune(data, own.Country, data.Season - 1);
-            box.AddChild(Text($"{own.Country}    ·    人均 GDP {own.Gdp:N0} 美元    ·    本季增速 {own.GdpGrowth:P1}", 25, _gold));
-            box.AddChild(Text(NationalDevelopment.GdpReading(own.GdpGrowth), 17, CareerVisuals.Teal));
+            int fortune = NationalDevelopment.SeasonFortune(data, focus.Country, data.Season - 1);
+            // 人均 GDP 是年化值（一季 = 84 天或 28 天），所以年化与一季产出一起给，避免"一季怎么这么高"的误读。
+            box.AddChild(Text($"{focus.Country}    ·    人均 GDP {focus.Gdp:N0} 美元/年（一季产出 ≈{NationalDevelopment.QuarterlyGdp(data, focus):N0}）    ·    本季增速 {focus.GdpGrowth:P1}" + (mine ? "    ·    我的国家" : ""), 25, _gold));
+            box.AddChild(Text(NationalDevelopment.GdpReading(focus.GdpGrowth), 17, CareerVisuals.Teal));
+            // 增速的构成读存档里结算当时记下的数字（不是拿升级后的等级反推），这样"国运值多少增速"看得见。
+            if (focus.GrowthConvergence != 0)
+                box.AddChild(Text($"增速怎么来的：基础 {focus.GrowthBase:P2} + 等级 {focus.GrowthLevel:P2} + 国运 {focus.GrowthFortunePart:P2}" +
+                    $"    （结算时国运 {focus.GrowthFortune}，收敛系数 ×{focus.GrowthConvergence:0.00}）", 16, _muted));
+            else
+                box.AddChild(Text("增速构成会在下一次赛季结算时记录。", 15, _muted));
             box.AddChild(Text($"上赛季国运 {fortune}    ·    " + (fortune >= 120 ? "三项维护均可缴纳" : fortune >= 80 ? "只能保住两项维护" : fortune >= 40 ? "只能保住一项维护" : "三项维护都缴不上，指标将全面下滑"), 16, _muted));
+            if (focus.LastReport.Length > 0) box.AddChild(Text("最近一次公报 · " + focus.LastReport, 16, _muted));
             foreach (var group in new[] { "经济", "社会", "民生" })
             {
                 box.AddChild(Text(group, 20, CareerVisuals.Teal));
                 foreach (var indicator in NationalDevelopment.InGroup(group))
                 {
-                    int level = NationalDevelopment.Level(own, indicator.Id);
+                    int level = NationalDevelopment.Level(focus, indicator.Id);
                     box.AddChild(Text($"{indicator.Name}    等级 {level}" + (indicator.Id == "income" ? $"    （参考人均 GDP {NationalDevelopment.IncomeBand(level)}）" : ""), 19, LevelColor(level)));
                     box.AddChild(Text(NationalDevelopment.Description(indicator.Id, level), 16, _muted));
                 }
             }
+            if (!mine && home != null) box.AddChild(Button($"← 回到我的国家（{home.Country}）", () => FocusNation(home.Country), 300));
         }
         _content.AddChild(Text("各国对比", 24, _gold));
+        _content.AddChild(Text("点国家名可以查看该国的九项指标明细；金色一行是你的国家，带 ◆ 的是正在查看的国家。", 15, _muted));
+        var rows = NationalDevelopment.TableRows(data);
+        if (rows.Count == 0) { _content.AddChild(Text("暂时没有国家资料。", 17, _muted)); return; }
         var table = Card(); _content.AddChild(table); var body = Inner(table);
-        body.AddChild(Text("国家    工业 农业 服务 ｜ 治安 团结 风向 ｜ 公共 基建 收入 ｜ 人均 GDP", 16, _muted));
-        foreach (var nation in data.Esports.Nations.OrderByDescending(n => NationalDevelopment.All.Sum(i => NationalDevelopment.Level(n, i.Id))))
+        var grid = new GridContainer { Columns = NationalDevelopment.TableColumns.Count, SizeFlagsHorizontal = SizeFlags.ShrinkBegin };
+        grid.AddThemeConstantOverride("h_separation", 10); grid.AddThemeConstantOverride("v_separation", 6); body.AddChild(grid);
+        foreach (var column in NationalDevelopment.TableColumns)
+            grid.AddChild(NationCell(column.Kind == NationalDevelopment.TableCell.Separator ? "｜" : column.Header, _muted, column.Width, 16, column.Center));
+        foreach (var row in rows)
         {
-            string levels = string.Join(" ", NationalDevelopment.All.Select(i => NationalDevelopment.Level(nation, i.Id)));
-            body.AddChild(Text($"{nation.Country,-4}  {levels}     {nation.Gdp:N0}" + (nation.Country == data.Esports.Country ? "   · 我的国家" : ""), 17, nation.Country == data.Esports.Country ? _gold : _ink));
+            bool viewing = focus != null && row.Country == focus.Country;
+            for (int c = 0; c < row.Cells.Length; c++)
+            {
+                var column = NationalDevelopment.TableColumns[c];
+                string text = row.Cells[c];
+                if (column.Kind == NationalDevelopment.TableCell.Country)
+                {
+                    var name = Button((viewing ? "◆ " : "") + text, () => FocusNation(row.Country), column.Width);
+                    name.TooltipText = $"查看{row.Country}的九项指标明细";
+                    name.AddThemeColorOverride("font_color", row.Mine ? _gold : _ink);
+                    grid.AddChild(name);
+                }
+                else if (column.Kind == NationalDevelopment.TableCell.Level)
+                    grid.AddChild(NationCell(text, row.Mine ? _gold : LevelColor(int.Parse(text)), column.Width, 17, true));
+                else if (column.Kind == NationalDevelopment.TableCell.Separator) grid.AddChild(NationCell("", _muted, column.Width, 16, true));
+                else if (column.Kind == NationalDevelopment.TableCell.Gdp) grid.AddChild(NationCell(text, row.Mine ? _gold : _ink, column.Width, 17, true));
+                else grid.AddChild(NationCell(text, _gold, column.Width, 15, true));
+            }
         }
+    }
+
+    /// <summary>对比表里的单元格：列宽固定、不换行，所以同一列的数字天然对齐（不再靠空格凑）。</summary>
+    private Label NationCell(string text, Color color, float width, int size, bool center)
+    {
+        var label = Text(text, size, color);
+        label.AutowrapMode = TextServer.AutowrapMode.Off;
+        label.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+        label.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        label.VerticalAlignment = VerticalAlignment.Center;
+        label.CustomMinimumSize = new Vector2(width, 0);
+        if (center) label.HorizontalAlignment = HorizontalAlignment.Center;
+        return label;
+    }
+
+    /// <summary>切换对比表上方明细卡片的国家；只重画当前页，不改变存档。</summary>
+    private void FocusNation(string country)
+    {
+        if (_nationFocus == country) return;
+        int y = _scroll.ScrollVertical;
+        _nationFocus = country;
+        Render();
+        _ = RestoreScrollAsync(y, _renderVersion);
     }
 
     private Color LevelColor(int level) => level >= 7 ? _gold : level <= 3 ? new Color("ee929d") : _ink;

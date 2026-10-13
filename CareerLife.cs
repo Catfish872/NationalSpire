@@ -107,7 +107,6 @@ public static class CareerLife
             }
         }
         foreach (var item in d.Life.Activities.Where(a => a.Status == "可安排" && a.ExpiresDay < d.Day)) item.Status = "已结束";
-        if (d.Day >= d.Life.NextOfferDay) Offer(d);
         Trim(d);
     }
     public static void Offer(CareerData d)
@@ -179,11 +178,13 @@ public static class CareerLife
             if (CareerTraining.Multiplayer(d)) return "合作比赛由真人共同完成，这项NPC训练不适用。";
             if (item.ClubId != d.Esports.ClubId) return "这项训练属于此前的俱乐部。";
             var targets = CareerTraining.Targets(d);
-            if (targetId.Length > 0 && !targets.Any(p => p.Id == targetId)) return "培养对象已不属于本队职业阵容。";
+            // 全队 / 全队培养是**全员**安排：不看个人对象，只要求本队有已确认的参赛阵容。
+            bool team = CareerTraining.Kind(item.Title) is "team" or "team-growth";
+            if (!team && targetId.Length > 0 && !targets.Any(p => p.Id == targetId)) return "培养对象已不属于本队职业阵容。";
             if (targetId.Length > 0) item.PersonId = targetId;
-            if (!targets.Any(p => p.Id == item.PersonId)) return "培养对象已不在本队。";
+            if (!team && !targets.Any(p => p.Id == item.PersonId)) return "培养对象已不在本队。";
             if (!CareerTraining.GrowthAvailable(d, item)) return "当前没有可培养的队友。";
-            if (CareerTraining.Kind(item.Title) is "team" or "team-growth" && !targets.Any(p => CareerTraining.ActiveRoster(d, p.Id))) return "本队尚无已确认的参赛阵容。";
+            if (team && !targets.Any(p => CareerTraining.ActiveRoster(d, p.Id))) return "本队尚无已确认的参赛阵容。";
         }
         if (ClubPrograms.IsTraining(item) && ClubPrograms.Error(d, item) is { } programError) return programError;
         int cost = CareerRelics.Cost(d, item);
@@ -198,7 +199,6 @@ public static class CareerLife
         else if (CareerTraining.IsTraining(item)) CareerTraining.Snapshot(d, item);
         else if (item.Kind == "俱乐部" && item.TermsVersion >= 1)
             item.TrainingTargets = CareerTraining.Targets(d).Where(p => CareerTraining.ActiveRoster(d, p.Id)).Select(p => p.Id).ToList();
-        foreach (var other in d.Life.Activities.Where(a => a.Status == "可安排" && a.Round == item.Round)) other.Status = "已结束";
         d.Life.LastDecisionDay = d.Day; d.Life.NextOfferDay = d.Day + 7 + Hash(d, "decision:" + item.Id) % 6;
         item.Result = (CareerTraining.IsTraining(item) || ClubPrograms.IsTraining(item))
             ? item.WeeklyGrowthPoints > 0 ? $"第 {item.TrainingStart} 天开始培养，每周记录长期成长，第 {item.FinishDay} 天完成。"
@@ -208,7 +208,8 @@ public static class CareerLife
         if (duration < item.Duration) item.Result += $"筹备缩短 {item.Duration - duration} 天。";
         if (item.Kind is "青训" or "社交") item.Result += " " + Thanks(d, item);
         if (item.Public) AddEvent(d, item.Id + ":start", item.Kind, item.Title + "已安排",
-            $"{CareerEngine.Name(d)}安排了{item.Title}，投入{CareerMoney.Format(cost)}。{item.Detail}。计划第{item.FinishDay}天完成。", ["player", item.PersonId], item.LongProject);
+            $"{CareerEngine.Name(d)}安排了{item.Title}，投入{CareerMoney.Format(cost)}。{item.Detail}。计划第{item.FinishDay}天完成。",
+            new[] { "player", item.PersonId }.Where(x => x.Length > 0).ToList(), item.LongProject);
         CareerStore.Save(d); return null;
     }
     private static string Thanks(CareerData d, LifeActivity item)
@@ -260,24 +261,25 @@ public static class CareerLife
             a.Result += $"{companion.PublicName}永久通关率 +{CareerTraining.Grow(d, companion.Id, a.TermsVersion >= 3 ? 20 : 10, d.Season) / 100.0:0.##}%。";
         if (a.Kind == "商业")
         {
-            int percent = Math.Clamp(70 + Hash(d, a.Id + ":sales") % 41 + Math.Min(20, d.Fans / 5000), 70, 130);
+            int percent = Math.Clamp(70 + Hash(d, a.Id + ":sales") % 41 + ConsumerEngine.CommercialBonus(d.Fans), 70, 145);
             int revenue = CareerRelics.Business(d, a, ActivityBenefit(a, a.Cost * percent / 100)); d.Credits += revenue;
             CareerMoney.Record(d, a.Title + "结算", revenue); a.Result += $"本次到账{CareerMoney.Format(revenue)}，项目已结清。";
         }
         if (a.Kind == "生活") { d.Life.Preparation = 1; a.Result += "休息后整理了想法，下次内容制作费用减少 12%，最多节省 $240，不叠加次数。"; }
         if (a.Kind == "事业") { d.Life.Facilities = Math.Min(3, d.Life.Facilities + 1); a.Result += $"长期配套已投入使用：内容和社区活动费用减少 {d.Life.Facilities * 2.4:0.#}%，每次最多节省 $240。"; }
         if (a.Kind is "青训" or "社交") a.Result += $"{name}对你的好感为 {PrivateMessages.Favour(d, a.PersonId)}。";
-        if (a.Kind is "内容" or "社区" or "商业")
+        if (a.Kind is "内容" or "社区" or "商业" or "生活" or "社交")
         {
             int fans = 15 + Hash(d, a.Id) % 61 + Math.Min(75, a.Cost / 10);
             if (a.TermsVersion >= 1 && a.Kind is "内容" or "社区") fans = fans * 6 / 5;
-            fans = ActivityBenefit(a, fans);
+            fans = ConsumerEngine.LifeActivityFans(ActivityBenefit(a, fans));   // 新尺子：旧公式 ×20（D14）
             d.Fans += fans; a.Result += $"新增{fans}位关注者。";
         }
         if (a.Kind is "生活" or "事业" || a.Variant.Contains(':') && a.Kind == "社交")
             d.Life.Collection[a.Variant] = a.Title + " · 第" + d.Season + "赛季";
         CareerRelics.Complete(d, a);
-        if (a.Public) AddEvent(d, a.Id + ":finish", a.Kind, a.Title + "完成", CareerEngine.Name(d) + "安排的" + a.Title + "完成。" + a.Result, ["player", a.PersonId], a.LongProject);
+        if (a.Public) AddEvent(d, a.Id + ":finish", a.Kind, a.Title + "完成", CareerEngine.Name(d) + "安排的" + a.Title + "完成。" + a.Result,
+            new[] { "player", a.PersonId }.Where(x => x.Length > 0).ToList(), a.LongProject);
     }
     public static int ActivityBenefit(LifeActivity a, int value) => a.TermsVersion >= 3 ? value * 6 / 5 : value;
     public static int Grow(CareerData d, CareerPerson person, int investment, string seed)
@@ -297,14 +299,90 @@ public static class CareerLife
         var factors = MatchRules.Evaluate(d, person, ascension, matchDay);
         return factors.Growth + factors.Training + factors.Practice;
     }
-    public static void SkipRound(CareerData d)
+    public static string? SkipRound(CareerData d)
     {
-        if (!d.Life.Activities.Any(a => a.Status == "可安排")) return;
+        if (!d.Life.Activities.Any(a => a.Status == "可安排")) return null;
         foreach (var a in d.Life.Activities.Where(a => a.Status == "可安排")) a.Status = "已结束";
         d.Life.LastDecisionDay = d.Day;
         d.Life.NextOfferDay = d.Day + 7 + Hash(d, "skip:" + d.Life.OfferRound) % 6;
         CareerStore.Save(d);
+        return null;
     }
+
+    /// <summary>市场化（D13）：取消"每轮三选一"，任何目录条目都可以随时下单。
+    /// 限流改用"同种每月一项"：训练 / 备赛 / 培养 / 青训 / 俱乐部 / 经营 同 Kind 28 天内只能有一个在进行中。</summary>
+    public static string? Purchase(CareerData d, string planKey, string targetId = "")
+    {
+        Ensure(d);
+        var plan = LifeCatalog.Plans.FirstOrDefault(p => p.Key == planKey);
+        if (plan == null) return "找不到这项安排。";
+        if (plan.Kind is "俱乐部" or "备赛" or "培养" && d.Esports.ClubId.Length == 0) return "签约俱乐部之后才能安排这项。";
+        if (plan.Kind == "经营" && !OwnedClubs.CanOperate(d)) return "经营安排由俱乐部房主管理。";
+        if (plan.Kind == "内容" && d.Results.Count == 0) return "先打完一场比赛，内容制作才有素材。";
+        if (plan.Kind is "备赛" or "培养" or "青训" or "俱乐部" or "经营"
+            && d.Life.Activities.Any(a => a.Kind == plan.Kind && a.Status == "进行中" && a.StartedDay > d.Day - 28))
+            return $"{plan.Kind}类每月只能安排一项，等当前这项结束再来。";
+        if (plan.Long && d.Life.Activities.Any(a => a.LongProject && a.Status == "进行中")) return "当前长期项目完成后，可以开始下一项。";
+        // 全员型安排（全队备赛/培养、俱乐部与经营类）不选人：作用于全员，帖子里也不需要点名谁。
+        bool needsTarget = LifeCatalog.NeedsTarget(plan);
+        if (!needsTarget && targetId.Length > 0) return ConsumerText.NoTargetNeeded;
+        CareerPerson? target = null;
+        if (needsTarget)
+        {
+            target = Resolve(d, plan, targetId);
+            if (target == null)
+            {
+                if (targetId.Length > 0 && CareerEngine.Person(d, targetId) is { } wanted)
+                    return ConsumerText.BlockedBy(string.Join("、", TargetBlockers(d, plan, wanted)));
+                return ConsumerText.NoEligibleTarget;
+            }
+        }
+        string setting = d.Esports.Country + new[] { "的社区活动中心", "的城市文化街区", "的赛事会场周边", "的地方会馆", "的俱乐部所在街区" }[Hash(d, plan.Key + d.Day) % 5];
+        string club = (EsportsWorld.Club(d, target?.ClubId ?? d.Esports.ClubId) ?? EsportsWorld.Club(d, d.Esports.ClubId))?.Name ?? "本队";
+        string Fill(string text) => text.Replace("{人}", target?.PublicName ?? "队友").Replace("{队}", club).Replace("{地}", setting);
+        int scale = plan.Kind is "生活" or "社交" or "备赛" or "培养" or "经营" ? 1 : Hash(d, "market:" + plan.Key + d.Day) % 3 + 1;
+        var item = new LifeActivity { Round = 0, Id = "market-" + d.Day + "-" + plan.Key, Kind = plan.Kind, Variant = plan.Key,
+            Title = plan.Title, Detail = Fill(plan.Purpose), PersonId = target?.Id ?? "", ClubId = target?.ClubId ?? d.Esports.ClubId, Setting = setting,
+            Cost = plan.Cost * scale, OfferedDay = d.Day, ExpiresDay = d.Day, Duration = plan.Days,
+            Public = plan.Public, LongProject = plan.Long, TermsVersion = 3, Status = "可安排" };
+        d.Life.Activities.Add(item);
+        return Accept(d, item.Id, targetId);
+    }
+
+    /// <summary>这个对象为什么不能参与这项安排（空列表 = 可以选）。
+    /// **唯一判定**：界面上每个置灰行显示的原因、以及下单/动用时的校验，都走这一处，避免"界面说能选、引擎说不行"。
+    /// 规则：好感 ≥ 5 是任何需要指定对象的安排的门槛（先熟络再请人）；具体类别还要求俱乐部归属或身份。
+    /// **国籍不是限制**（你可以请任何国家的人，包括外援与外国青训）。</summary>
+    public static List<string> TargetBlockers(CareerData d, LifeCatalog.Plan plan, CareerPerson p)
+    {
+        var blockers = new List<string>();
+        if (p.Id == "player") { blockers.Add(ConsumerText.BlockerSelf); return blockers; }
+        if (PrivateMessages.Favour(d, p.Id) < ConsumerEngine.InviteFavourGate) blockers.Add(ConsumerText.BlockerFavour(ConsumerEngine.InviteFavourGate));
+        bool inClub = p.ClubId.Length > 0 && p.ClubId == d.Esports.ClubId;
+        switch (plan.Kind)
+        {
+            case "备赛" or "培养":
+                if (!inClub) blockers.Add(ConsumerText.BlockerNotInClub);
+                else if (!EsportsWorld.IsProfessional(p)) blockers.Add(ConsumerText.BlockerNotProfessional);
+                break;
+            case "青训":
+                if (p.Role != "青训选手") blockers.Add(ConsumerText.BlockerNotYouth);
+                break;
+            case "俱乐部":
+                if (!inClub) blockers.Add(ConsumerText.BlockerNotInClub);
+                break;
+        }
+        return blockers;
+    }
+
+    /// <summary>对象池 = 没有任何阻挡原因的人（界面上的默认名单与下单时的随机人选都从这里取）。</summary>
+    private static CareerPerson? Resolve(CareerData d, LifeCatalog.Plan plan, string targetId)
+    {
+        if (targetId.Length > 0 && CareerEngine.Person(d, targetId) is { } wanted)
+            return TargetBlockers(d, plan, wanted).Count == 0 ? wanted : null;
+        return d.People.OrderBy(p => Hash(d, plan.Key + p.Id + d.Day)).FirstOrDefault(p => TargetBlockers(d, plan, p).Count == 0);
+    }
+
     public static string Expected(CareerData d, LifeActivity a)
     {
         if (ClubPrograms.IsTraining(a)) return ClubPrograms.Description(d, a);
@@ -368,7 +446,7 @@ public static class CareerLife
         var events = d.Life.Events.Where(e => e.PostId.Length == 0 && e.Day < d.Day && e.Day >= d.Day - 7 && e.People.Any(id => id == "player" || d.HumanIds.Contains(id))
             && (d.CooperativeMembers <= 1 || !e.Id.StartsWith("human-")))
             .OrderByDescending(e => e.Important).ThenByDescending(e => e.Day).Take(4).ToList();
-        if (events.Count == 0 || !d.Ai.Enabled) return;
+        if (events.Count == 0) return;   // 关掉 AI 也照发：正文用事实文本，见 IsImportantNews 的 life-update- 白名单
         var first = events[0]; string key = (d.CooperativeMembers > 1 ? "club-update-" : "life-update-") + d.Day;
         CareerEngine.Publish(d, key, events.Count == 1 ? first.Title : CareerEngine.Name(d) + "的近期安排与进展",
             string.Join("\n", events.OrderBy(e => e.Day).Select(e => $"第{e.Day}天，{e.Title}：{e.Detail}")), "人物日常", true,

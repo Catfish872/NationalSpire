@@ -74,6 +74,9 @@ public static partial class AiService
         return JsonSerializer.Serialize(new
         {
             day = data.Day, season = data.Season, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender },
+            外汇事实说明 = pending.Any(p => p.Category == "外汇市场")
+                ? "外汇帖facts中的赛果、信号、收盘价和日期由程序结算；仅评论已发生事实，不重算、不改数值、不编造未来行情或个人资产。"
+                : null,
             // 荣誉带日期，避免把后来取得的头衔写入旧新闻。
             honors = data.Esports.Honors.Where(h => h.Day <= contextDay).TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }),
             seasonHistory = data.SeasonHistory.TakeLast(2).Select(s => new { s.Season, s.Rank, s.Points }),

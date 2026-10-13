@@ -8,7 +8,7 @@ namespace NationalSpire;
 /// </summary>
 public static class NationalDevelopment
 {
-    public const int Version = 1;
+    public const int Version = 2;
 
     /// <summary>每赛季每个大类要缴的维护费。三项合计 120 才能全部保级。</summary>
     private const int MaintenancePerGroup = 40;
@@ -195,10 +195,10 @@ public static class NationalDevelopment
     public static string GdpReading(double growth) => growth switch
     {
         < 0 => "经济收缩。订单与就业同时下滑，社会情绪开始向坏的那一侧倾斜。",
-        < 0.01 => "近乎停滞。账面还在动，普通人的体感是没有变化。",
+        < 0.01 => "近乎停滞。虽说产业还在此升彼降，但大部分人没有感觉到经济在变好。",
         < 0.022 => "温和增长。新旧行业交替，收入缓慢改善。",
         < 0.035 => "强劲增长。就业充足，企业愿意投资，民众信心上扬。",
-        _ => "过热。机会多但物价与资产价格也在跑，贫富分化被放大。",
+        _ => "过热。但因为是国运注入过多导致的增长加速所以副作用被免去了。",
     };
 
     /// <summary>旧档迁移：缺字段的国家按国别基值补齐，只做一次。</summary>
@@ -240,7 +240,8 @@ public static class NationalDevelopment
             var before = All.ToDictionary(i => i.Id, i => Level(n, i.Id));
             int budget = SeasonFortune(d, n.Country, d.Season - 1);
             // ① 先用上赛季末的 9 项等级算 GDP —— 顺序很关键，否则本季刚买来的等级会被算进增速，等于花一次钱受益两次。
-            GrowGdp(n);
+            //    增速同时吃本赛季国运（budget 的原始值，还没被维护费扣掉）。
+            GrowGdp(n, budget);
             // ② 维护费：先保最弱的大类，付不起的大类组内随机掉 1 级。
             var dropped = PayMaintenance(d, n, ref budget);
             // ③ 剩余预算按大类权重买升级（不设每季封顶）。
@@ -250,16 +251,49 @@ public static class NationalDevelopment
         }
     }
 
-    private static void GrowGdp(NationalLegacy n)
+    // 人均 GDP 增速的系数（设计文档 4.5；2026-10 按玩家反馈重标过一次）。
+    // 旧系数：等级结构项只有 0.010，实测中国那季 1695 点国运对增速贡献 0、等级只值 0.04pp，等于没挂钩。
+    private const double BaseGrowth = 0.006;      // 基础 0.6%/季
+    private const double LevelGrowth = 0.020;     // 等级结构项 ±2%/季（结构项范围约 ±1）
+    private const double FortuneGrowth = 0.014;   // 本赛季国运线性加到最多 +1.4%
+    private const int FortuneCap = 2000;          // 达到这个点数就吃满国运项
+    private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
+
+    /// <summary>一次结算的增速构成。数值都是"折算后"的（已乘收敛系数），界面与公报直接展示这三项。</summary>
+    public sealed record GrowthBreakdown(double Base, double Level, double Fortune, double Convergence, double Total);
+
+    /// <summary>用当前（= 上赛季末的）九项等级与本季国运算增速。GrowGdp、界面、公报、校验工具共用这一处公式，
+    /// 避免"文档一个公式、代码另一个公式"。</summary>
+    public static GrowthBreakdown Breakdown(NationalLegacy n, int fortune)
     {
         double structural = 0;
         foreach (var indicator in All)
             structural += GrowthWeight[indicator.Id] * (Level(n, indicator.Id) - 5) / 5.0;
-        double growth = 0.006 + structural * 0.010;
-        growth *= 1 - 0.35 * Math.Log2(Math.Max(1000, n.Gdp) / 40000.0);
-        n.GdpGrowth = Math.Clamp(growth, -0.02, 0.025);
+        double convergence = 1 - 0.35 * Math.Log2(Math.Max(1000, n.Gdp) / 40000.0);
+        double strength = Math.Min(Math.Max(fortune, 0), FortuneCap) / (double)FortuneCap;
+        double basis = BaseGrowth + structural * LevelGrowth + FortuneGrowth * strength;
+        return new GrowthBreakdown(BaseGrowth * convergence, structural * LevelGrowth * convergence, FortuneGrowth * strength * convergence,
+            convergence, Math.Clamp(basis * convergence, GrowthFloor, GrowthCeiling));
+    }
+
+    private static void GrowGdp(NationalLegacy n, int fortune)
+    {
+        var breakdown = Breakdown(n, fortune);
+        n.GdpGrowth = breakdown.Total;
+        // 存下来的是"当时"的输入与拆解：结算完等级就被买高了，事后再算只会得到一个和 GdpGrowth 对不上的数。
+        n.GrowthFortune = fortune;
+        n.GrowthBase = breakdown.Base;
+        n.GrowthLevel = breakdown.Level;
+        n.GrowthFortunePart = breakdown.Fortune;
+        n.GrowthConvergence = breakdown.Convergence;
         n.Gdp = (int)Math.Round(n.Gdp * (1 + n.GdpGrowth));
     }
+
+    /// <summary>每年几个赛季（84 天或 28 天一季）。Gdp 是年化人均 GDP，用它才能折成一季的产出。</summary>
+    public static double SeasonsPerYear(CareerData d) => 365.0 / SeasonCalendar.Length(d);
+
+    /// <summary>一季的人均产出 ≈ 年化人均 GDP ÷ 每年赛季数。界面与公报拿它回答"一季怎么这么高"。</summary>
+    public static int QuarterlyGdp(CareerData d, NationalLegacy n) => (int)Math.Round(n.Gdp / SeasonsPerYear(d));
 
     private static List<string> PayMaintenance(CareerData d, NationalLegacy n, ref int budget)
     {
@@ -309,7 +343,9 @@ public static class NationalDevelopment
     {
         var text = new System.Text.StringBuilder();
         int season = d.Season;
-        text.Append($"第 {season} 赛季 {n.Country} 发展公报。本季国运 {SeasonFortune(d, n.Country, season - 1)}，人均 GDP {n.Gdp:N0} 美元，增速 {n.GdpGrowth:P1}。{GdpReading(n.GdpGrowth)}");
+        // 人均 GDP 是年化值，直接写"美元"容易被读成一季的产出，所以把一季产出一起给出来。
+        text.Append($"第 {season} 赛季 {n.Country} 发展公报。本季国运 {SeasonFortune(d, n.Country, season - 1)}，人均 GDP {n.Gdp:N0} 美元/年（一季产出 {QuarterlyGdp(d, n):N0}），增速 {n.GdpGrowth:P1}"
+            + $"（基础 {n.GrowthBase:P2} + 等级 {n.GrowthLevel:P2} + 国运 {n.GrowthFortunePart:P2}）。{GdpReading(n.GdpGrowth)}");
         var changed = All.Where(i => Level(n, i.Id) != before[i.Id]).ToList();
         if (changed.Count == 0) text.Append("各项指标与上季持平。");
         else
@@ -334,7 +370,7 @@ public static class NationalDevelopment
     public static string TemplateText(CareerData d, NationalLegacy n, Dictionary<string, int> before)
     {
         var changed = All.Where(i => Level(n, i.Id) != before[i.Id]).Select(i => $"{i.Name} {before[i.Id]}→{Level(n, i.Id)}").ToList();
-        return $"人均 GDP {n.Gdp:N0} 美元，本季增速 {n.GdpGrowth:P1}。"
+        return $"人均 GDP {n.Gdp:N0} 美元/年（一季产出 {QuarterlyGdp(d, n):N0}），本季增速 {n.GdpGrowth:P1}。"
             + (changed.Count == 0 ? "各项指标与上季持平。" : "调整：" + string.Join("、", changed) + "。");
     }
 
@@ -351,5 +387,72 @@ public static class NationalDevelopment
         n.LastReport = summary.Count == 0 ? "本期发展：各项与上季持平" : "本期发展：" + string.Join("、", summary);
         CareerEngine.Publish(d, key, $"{n.Country}第 {d.Season} 赛季发展公报", ai ? facts : TemplateText(d, n, before),
             "国家发展", ai, home ? ["player"] : null);
+    }
+
+    // —— 各国对比表的共享布局 ——
+    // 界面（CareerWorldScreen.NationDevelopment）与纯校验工具（tools/nation-table-verify）读同一份列定义：
+    // 列数、列宽、分组分隔符只有一处真相；行数据与列一一对应，长度永远相等。
+    // 旧写法是"表头写死 + 行里用空格凑宽度"，在比例字体下必然错位，所以整张表改成按列渲染。
+
+    public enum TableCell { Country, Level, Separator, Gdp, Note }
+
+    public sealed record TableColumn(TableCell Kind, string Header, float Width, bool Center, string Indicator = "");
+
+    public sealed record TableRow(string Country, string[] Cells, bool Mine);
+
+    /// <summary>九项指标在对比表里的两字简称，按 Id 取，所以调整 All 的顺序也不会错位。</summary>
+    private static readonly Dictionary<string, string> ShortNames = new()
+    {
+        ["industry"] = "工业", ["agriculture"] = "农业", ["services"] = "服务",
+        ["security"] = "治安", ["unity"] = "团结", ["sentiment"] = "风向",
+        ["publicService"] = "公共", ["infrastructure"] = "基建", ["income"] = "收入",
+    };
+
+    public static string ShortName(string id) => ShortNames.TryGetValue(id, out var name) ? name : Get(id).Name;
+
+    // 列宽刻意压到合计 828px（含 10px 列间距）：页面用的 ScrollContainer 关掉了横向滚动，
+    // 表格又不再自动换行，所以宁可少留白，也不要窄窗口下把右边的「人均 GDP / 我的国家」裁掉。
+    private const float CountryColumn = 84, LevelColumn = 42, SeparatorColumn = 18, GdpColumn = 92, NoteColumn = 80;
+
+    public static readonly IReadOnlyList<TableColumn> TableColumns = BuildColumns();
+
+    private static List<TableColumn> BuildColumns()
+    {
+        var columns = new List<TableColumn> { new(TableCell.Country, "国家", CountryColumn, true) };
+        for (int i = 0; i < All.Length; i++)
+        {
+            // 分隔符由分组边界推导，不写死下标：指标增删或换组时表头自动跟上。
+            if (i > 0 && All[i].Group != All[i - 1].Group) columns.Add(new(TableCell.Separator, "｜", SeparatorColumn, true));
+            columns.Add(new(TableCell.Level, ShortName(All[i].Id), LevelColumn, true, All[i].Id));
+        }
+        columns.Add(new(TableCell.Separator, "｜", SeparatorColumn, true));
+        columns.Add(new(TableCell.Gdp, "人均 GDP", GdpColumn, true));
+        columns.Add(new(TableCell.Note, "", NoteColumn, true));
+        return columns;
+    }
+
+    /// <summary>对比表的数据行：九项合计高的在前，同分保持 Nations 里的原顺序（OrderByDescending 是稳定排序）。</summary>
+    public static List<TableRow> TableRows(CareerData d)
+    {
+        var columns = TableColumns;
+        var rows = new List<TableRow>();
+        foreach (var nation in d.Esports.Nations.OrderByDescending(n => All.Sum(i => Level(n, i.Id))))
+        {
+            var cells = new string[columns.Count];
+            for (int c = 0; c < columns.Count; c++)
+            {
+                var column = columns[c];
+                cells[c] = column.Kind switch
+                {
+                    TableCell.Country => nation.Country,
+                    TableCell.Level => Level(nation, column.Indicator).ToString(),
+                    TableCell.Gdp => nation.Gdp.ToString("N0", System.Globalization.CultureInfo.InvariantCulture),
+                    TableCell.Note => nation.Country == d.Esports.Country ? "我的国家" : "",
+                    _ => "",
+                };
+            }
+            rows.Add(new TableRow(nation.Country, cells, nation.Country == d.Esports.Country));
+        }
+        return rows;
     }
 }

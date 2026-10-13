@@ -24,6 +24,7 @@ public partial class CareerScreen : Control, IScreenContext
     private string _communityFilter = "全部";
     private int _postLimit = 30;
     private ScrollContainer _scroll = null!;
+    private MarginContainer _contentPadding = null!;
     private Control _stage = null!;
     private readonly Dictionary<string, Button> _navButtons = new();
     private readonly List<(CanvasItem Node, bool Visible)> _hidden = [];
@@ -202,11 +203,15 @@ public partial class CareerScreen : Control, IScreenContext
         _backButton = Button("← 返回上一级", Back, 210); navigation.AddChild(_backButton);
         _breadcrumb = Text("", 16, _muted); _breadcrumb.AutowrapMode = TextServer.AutowrapMode.Off;
         _breadcrumb.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; navigation.AddChild(_breadcrumb);
+        _breadcrumb.CustomMinimumSize = new(280, 0); _breadcrumb.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+        var forexEntry = Button("外汇交易  ↗", () => SwitchTab("外汇交易"), 180);
+        forexEntry.Name = "ForexEntryButton"; StyleForexEntry(forexEntry, false);
+        navigation.AddChild(forexEntry); _navButtons["外汇交易"] = forexEntry;
         _status = Text("", 16, _muted); _status.CustomMinimumSize = new Vector2(0, 32); right.AddChild(_status);
         _scroll = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
         right.AddChild(_scroll);
         _content = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _content.AddThemeConstantOverride("separation", 18);
-        var scrollPadding = new MarginContainer { Name = "CareerContentPadding", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        var scrollPadding = _contentPadding = new MarginContainer { Name = "CareerContentPadding", SizeFlagsHorizontal = SizeFlags.ExpandFill };
         scrollPadding.AddThemeConstantOverride("margin_bottom", 32); _scroll.AddChild(scrollPadding); scrollPadding.AddChild(_content);
         Render();
         if (_multiplayer == null && CareerStore.LoadNotice.Length > 0) Notice(CareerStore.LoadNotice, true);
@@ -229,12 +234,16 @@ public partial class CareerScreen : Control, IScreenContext
         _renderVersion++;
         _mentionsChecked = false;
         _listCache?.Release(); CareerVisuals.ClearContent(_content);
-        _content.AddThemeConstantOverride("separation", 18);
+        _content.AddThemeConstantOverride("separation", _tab == "外汇交易" ? 8 : 18);
+        _contentPadding.AddThemeConstantOverride("margin_bottom", _tab == "外汇交易" ? 0 : 32);
+        _scroll.VerticalScrollMode = _tab == "外汇交易" ? ScrollContainer.ScrollMode.Disabled : ScrollContainer.ScrollMode.Auto;
+        if (_tab == "外汇交易") _scroll.ScrollVertical = 0;
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;
         UpdateNavigation();
         foreach (var (name, button) in _navButtons)
         {
             button.Disabled = ViewData.Failure != null && name != "结算";
+            if (name == "外汇交易") { StyleForexEntry(button, name == _tab); continue; }
             var style = CareerVisuals.Box(name == _tab ? "28434c" : "0d1825", name == _tab ? "658c91" : "0d1825", 5, 14);
             style.ContentMarginTop = style.ContentMarginBottom = 8;
             button.AddThemeStyleboxOverride("normal", style);
@@ -249,7 +258,7 @@ public partial class CareerScreen : Control, IScreenContext
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
-        _status.Text = $"第 {data.Season} 赛季  ·  第 {SeasonCalendar.Day(data, data.Day)} 天     评分 {data.Rating}     关注 {data.Fans}     可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
+        _status.Text = $"第 {data.Season} 赛季  ·  第 {SeasonCalendar.Day(data, data.Day)} 天（总第 {data.Day} 天）     评分 {data.Rating}     关注 {data.Fans}     可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
         if (_multiplayer != null)
         {
             _content.AddChild(Text(_multiplayer.Status, 16, CareerVisuals.Teal));
@@ -278,6 +287,7 @@ public partial class CareerScreen : Control, IScreenContext
             case "赛事": RenderTeam(); Matches(data); break;
             case "赛事与俱乐部": World(data); break;
             case "生涯生活": Life(data); break;
+            case "外汇交易": Forex(data); break;
             case "社区": Community(data); break;
             case "选手档案": Profiles(data); break;
             case "模组设置": AiSettings(data); break;
@@ -319,7 +329,11 @@ public partial class CareerScreen : Control, IScreenContext
         intro.AddChild(new Control { CustomMinimumSize = new Vector2(0, 12) });
         var play = Button(data.PendingMatchId != null ? "查看进行中的比赛   →" : noAvailableMatch ? "查看日程并推进   →" : next == null ? "选择参赛赛事   →" : next.Day > data.Day ? "前往比赛日   →" : "准备出场   →", () =>
         {
-            if (next != null && next.Day > data.Day && data.PendingMatchId == null && !MultiplayerCommand("propose-advance", number: next.Day)) CareerEngine.AdvanceToMatch(data);
+            if (next != null && next.Day > data.Day && data.PendingMatchId == null)
+            {
+                RequestCareerAdvance(data, next.Day, () => Visit(() => _tab = "赛事"));
+                return;
+            }
             Visit(() => _tab = noAvailableMatch && data.PendingMatchId == null ? "日程" : "赛事");
         }, 260); Emphasize(play); intro.AddChild(play);
         var poster = new VBoxContainer { CustomMinimumSize = new Vector2(276, 0) }; heroRow.AddChild(poster);
@@ -403,12 +417,12 @@ public partial class CareerScreen : Control, IScreenContext
         AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); _content.AddChild(row);
         row.AddChild(TeamButton("推进一天", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 1)) return; bool advanced = CareerEngine.AdvanceOneDay(data); Render(); if (!advanced) Notice("比赛日需先完成或放弃比赛。", true); }, 180));
-        var nextMatchButton = TeamButton("跳转到下一场比赛", () => { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); }, 260);
+        var nextMatchButton = TeamButton("跳转到下一场比赛", () => RequestCareerAdvance(data, CareerEngine.NextMatch(data)?.Day ?? data.Day + 1), 260);
         if (CareerEngine.NextMatch(data) == null)
         { nextMatchButton.Text = "暂无已报名比赛"; nextMatchButton.Disabled = true; nextMatchButton.TooltipText = "可以推进一天、前往下个赛季，或选择尚可报名的比赛。"; }
         row.AddChild(nextMatchButton);
-        row.AddChild(TeamButton("跳过四周", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 28)) return; CareerEngine.AdvanceToDay(data, data.Day + 28); _selectedDay = data.Day; Render(); }, 155));
-        row.AddChild(TeamButton("下个赛季", () => { if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return; CareerEngine.AdvanceToDay(data, SeasonCalendar.End(data) + 1); _selectedDay = data.Day; Render(); }, 155));
+        row.AddChild(TeamButton("跳过四周", () => RequestCareerAdvance(data, data.Day + 28), 155));
+        row.AddChild(TeamButton("下个赛季", () => RequestCareerAdvance(data, SeasonCalendar.End(data) + 1), 155));
         _content.AddChild(TeamButton(data.AutoQualifiers ? "选拔赛自动报名：开启" : "选拔赛自动报名：暂停", () =>
         {
             if (MultiplayerCommand("propose-auto", number: data.AutoQualifiers ? 0 : 1)) return;
@@ -466,7 +480,7 @@ public partial class CareerScreen : Control, IScreenContext
             var fixtures = competition.Fixtures.Where(f => f.Day == shown).ToList();
             box.AddChild(Text($"世界赛场 · {competition.Name} · {fixtures.Count(f => f.Finished)}/{fixtures.Count} 场已结束", 16, _muted));
         }
-        if (shown > data.Day) box.AddChild(TeamButton("跳转到此日", () => { if (MultiplayerCommand("propose-advance", number: shown)) return; CareerEngine.AdvanceToDay(data, shown); Render(); }, 180));
+        if (shown > data.Day) box.AddChild(TeamButton("跳转到此日", () => RequestCareerAdvance(data, shown), 180));
     }
 
     private void Matches(CareerData data)
@@ -563,7 +577,7 @@ public partial class CareerScreen : Control, IScreenContext
             var controls = new HBoxContainer(); controls.AddThemeConstantOverride("separation", 12); box.AddChild(controls);
             var enter = TeamButton(due ? "开始比赛" : "跳转到比赛日", async () =>
             {
-                if (!due) { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); return; }
+                if (!due) { RequestCareerAdvance(data, CareerEngine.NextMatch(data)?.Day ?? data.Day + 1); return; }
                 if (chars.Count == 0) { Notice("没有可用角色。", true); return; }
                 if (MultiplayerCommand("propose-start", match.Id, number: (int)asc.Value)) return;
                 if (_starting) return;
@@ -603,8 +617,7 @@ public partial class CareerScreen : Control, IScreenContext
             }, 180));
             actions.AddChild(TeamButton("下个赛季", () =>
             {
-                if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return;
-                CareerEngine.AdvanceToDay(data, SeasonCalendar.End(data) + 1); Render();
+                RequestCareerAdvance(data, SeasonCalendar.End(data) + 1);
             }, 180));
             eb.AddChild(Text("推进期间会在已报名的比赛日停下。", 15, _muted));
         }
@@ -699,9 +712,9 @@ public partial class CareerScreen : Control, IScreenContext
         readBriefs.TooltipText = "将未由 AI 撰写、也没有玩家参与的内容标为已读。";
         communityActions.AddChild(readBriefs);
         var filters = new HBoxContainer(); _content.AddChild(filters);
-        foreach (string filter in new[] { "全部", "比赛战报", "国际赛事", "俱乐部动态", "人物日常", "我的讨论", "未读更新" })
-            filters.AddChild(FilterButton(filter, _communityFilter == filter, () => { _communityFilter = filter; _postLimit = 30; _scroll.ScrollVertical = 0; Render(); }, 110));
-        var posts = (_communityFilter is "我的讨论" or "未读更新" ? CommunityThreads.All(data) : data.Posts).Where(p => _communityFilter switch { "我的讨论" => p.AuthorId == "player" || p.Replies.Any(r => r.AuthorId == "player"), "未读更新" => p.Revision > p.SeenRevision, "比赛战报" => p.EventKey.StartsWith("match"), "国际赛事" => p.Category == "国际赛事" || p.Category.Contains("洲际") || p.Category.Contains("世界杯"), "俱乐部动态" => p.Category is "转会" or "俱乐部", "人物日常" => p.Category is "训练日常" or "人物专访" or "人物日常", _ => true }).ToList();
+        foreach (string filter in new[] { "全部", "比赛战报", "国际赛事", "外汇市场", "俱乐部动态", "人物日常", "消费与生活", "人气榜", "我的讨论", "未读更新" })
+            filters.AddChild(FilterButton(filter, _communityFilter == filter, () => { _communityFilter = filter; _postLimit = 30; _scroll.ScrollVertical = 0; Render(); }, 96));
+        var posts = (_communityFilter is "我的讨论" or "未读更新" ? CommunityThreads.All(data) : data.Posts).Where(p => _communityFilter switch { "我的讨论" => p.AuthorId == "player" || p.Replies.Any(r => r.AuthorId == "player"), "未读更新" => p.Revision > p.SeenRevision, "比赛战报" => p.EventKey.StartsWith("match"), "国际赛事" => p.Category == "国际赛事" || p.Category.Contains("洲际") || p.Category.Contains("世界杯"), "外汇市场" => p.Category == "外汇市场", "俱乐部动态" => p.Category is "转会" or "俱乐部", "人物日常" => p.Category is "训练日常" or "人物专访" or "人物日常", "消费与生活" => p.Category is "消费与生活" or "热搜", "人气榜" => p.Category == "人气榜", _ => true }).ToList();
         foreach (var post in posts.Take(_postLimit)) AddPostCard(data, post, true);
         if (posts.Count == 0) _content.AddChild(Text("这个频道暂时没有新动态。", 18, _muted));
         if (posts.Count > _postLimit) _content.AddChild(Button("显示更早动态", () => { _postLimit += 30; Render(); }, 190));

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace NationalSpire;
 
@@ -109,14 +109,14 @@ public static class EsportsWorld
             d.Matches.Add(new CareerMatch { Day = start + day, Kind = kind, Event = title, OpponentId = opponent, RequiredAscension = ascension, Prize = prize, Round = round, Seed = $"NS{d.Season:X}{day:X}{CareerEngine.StableHash(d.WorldId + kind + d.Season + round):X8}" });
         }
         var locals = d.People.Where(p => p.Country == d.Esports.Country && p.Role == "普通玩家").ToList();
-        Add(3, "local", "街区周末杯", 0, 45, locals[d.Season % locals.Count].Id);
-        Add(6, "city", "城市新秀公开赛", 3, 100, d.People.First(p => p.Role == "青训选手" && p.Country == d.Esports.Country).Id);
-        Add(9, "academy", "职业青训选拔赛", 6, 180, "p15");
-        for (int r = 1; r <= 3; r++) Add(9 + r * 3, "league", $"职业联赛 · 第 {r} 轮", 8, 260, round: r);
+        Add(3, "local", "街区周末杯", 0, 200, locals[d.Season % locals.Count].Id);
+        Add(6, "city", "城市新秀公开赛", 3, 500, d.People.First(p => p.Role == "青训选手" && p.Country == d.Esports.Country).Id);
+        Add(9, "academy", "职业青训选拔赛", 6, 900, "p15");
+        for (int r = 1; r <= 3; r++) Add(9 + r * 3, "league", $"职业联赛 · 第 {r} 轮", 8, 1_500, round: r);
         string cup = d.Season % 2 == 0 ? "worldcup" : "continental";
         int rounds = cup == "worldcup" ? 3 : 4;
-        for (int r = 1; r <= rounds; r++) Add(26 - (rounds - r) * 2, cup, StageName(cup) + " · " + CupRound(cup, r), r == rounds ? 9 : 8, 400 + r * 180, round: r);
-        Add(28, "masters", "世界纪录邀请赛", 10, 1200, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
+        for (int r = 1; r <= rounds; r++) Add(26 - (rounds - r) * 2, cup, StageName(cup) + " · " + CupRound(cup, r), r == rounds ? 9 : 8, 2_000 + r * 600, round: r);
+        Add(28, "masters", "世界纪录邀请赛", 10, 8_000, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
         RefreshLeagueMatches(d);
         if (!migrating && d.Season > 1) TransferWindow(d);
@@ -464,7 +464,7 @@ public static class EsportsWorld
         if (c.ChampionId == "player")
         {
             string honorId = c.Kind + "-" + d.Season;
-            Milestone(d, honorId, c.Name + "冠军", $"第 {d.Season} 赛季，{ClubName(d, d.Esports.ClubId)}的你登上冠军领奖台。", c.Kind == "worldcup" ? 2200 : c.Kind == "continental" ? 1400 : 500, c.Kind == "league" ? 500 : 1500);
+            Milestone(d, honorId, c.Name + "冠军", $"第 {d.Season} 赛季，{ClubName(d, d.Esports.ClubId)}的你登上冠军领奖台。", c.Kind == "worldcup" ? 2200 : c.Kind == "continental" ? 1400 : 500, c.Kind == "league" ? 2_500 : 7_500);
             if (c.Kind != "league") MakeOffers(d, true);
         }
         if (publish) CareerEngine.Publish(d, "champion-" + c.Id, $"{c.Name}落幕：{name}夺冠", $"{(c.Kind == "worldcup" ? CountryOf(d, c.ChampionId) : ClubName(d, ClubOf(d, c.ChampionId)))}收获本赛季冠军。完整对阵与结果已收录在赛事档案。", c.Kind == "league" ? "国内联赛" : "国际赛事", true, [c.ChampionId]);
@@ -484,18 +484,18 @@ public static class EsportsWorld
         {
             w.License = target;
             ClearInvalidRegistrations(d);
-            Milestone(d, "license-" + target, target == 3 ? "取得职业资格" : target == 2 ? "获得青训邀请" : "走出社区赛场", $"{m.Event}的成绩通过认证，你现在是{LicenseName(d)}。", target * 65, target * 50);
+            Milestone(d, "license-" + target, target == 3 ? "取得职业资格" : target == 2 ? "获得青训邀请" : "走出社区赛场", $"{m.Event}的成绩通过认证，你现在是{LicenseName(d)}。", target * 1_300, target * 250);
             if (target == 3) MakeOffers(d, false);
         }
-        if (runClear && !abandoned && (m.RequiredAscension) >= 8) Milestone(d, "clear-" + m.RequiredAscension, $"进阶 {m.RequiredAscension} 通关认证", "职业圈正在研究这份通关战报，不同赛区开始关注你的下一场表现。", (m.RequiredAscension) >= 9 ? 500 : 200, 120);
-        if (w.WinStreak >= 3) Milestone(d, "streak-3", "三连胜，新星升起", "连续三场赛事获胜，你第一次登上赛区焦点栏目。", 120, 100);
+        if (runClear && !abandoned && (m.RequiredAscension) >= 8) Milestone(d, "clear-" + m.RequiredAscension, $"进阶 {m.RequiredAscension} 通关认证", "职业圈正在研究这份通关战报，不同赛区开始关注你的下一场表现。", (m.RequiredAscension) >= 9 ? 10_000 : 4_000, 600);
+        if (w.WinStreak >= 3) Milestone(d, "streak-3", "三连胜，新星升起", "连续三场赛事获胜，你第一次登上赛区焦点栏目。", 2_400, 500);
         CareerCommerce.RefreshOffers(d);
     }
     public static void Milestone(CareerData d, string id, string title, string detail, int fans, int money)
     {
-        if (OwnedClubs.IsOwner(d)) return;
         if (d.Esports.Milestones.Contains(id)) return;
-        d.Esports.Milestones.Add(id); d.Fans += fans; d.Credits += money;
+        // 奖杯按新粉丝表结算（D14：固定整数整数）；当老板不再吞掉个人里程碑（文档 P2）。
+        d.Esports.Milestones.Add(id); d.Fans += ConsumerEngine.TrophyFans(id, title, fans); d.Credits += money;
         d.Esports.Honors.Add(new CareerHonor { Id = id, Title = title, Detail = detail, Season = d.Season, Day = d.Day });
         CareerEngine.Publish(d, "honor-" + id, title, detail, "生涯里程碑", true);
     }

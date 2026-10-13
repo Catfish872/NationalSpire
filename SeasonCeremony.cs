@@ -185,7 +185,7 @@ public static class SeasonCeremony
         foreach(var a in ceremony.Awards.Where(a=>a.WinnerId=="player"||a.Recipients.Contains("player")))
         {
             string key=RewardKey(ceremony,a); if(!data.CeremonyRewardReceipts.Add(key))continue;
-            data.Fans+=RewardAmount(a); data.Esports.Honors.Add(new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason});
+            data.Fans+=ConsumerEngine.AwardFans(data,a.Title); data.Esports.Honors.Add(new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason});
         }
         var top=ceremony.YearTop.FirstOrDefault(r=>r.Id=="player");
         if(top!=null && data.CeremonyRewardReceipts.Add($"top20-{ceremony.Season}"))
