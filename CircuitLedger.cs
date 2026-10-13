@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>赛事积分、国家贡献和商业合同统一由已确认的比赛结果结算。</summary>
 public static class CircuitLedger
@@ -57,7 +57,7 @@ public static class CircuitLedger
             if (id == "player")
             {
                 int dividend = fortune * 2; d.Credits += dividend;
-                int placementPrize = c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? rank switch { 1 => 50000, 2 => 25000, 4 => 10000, 8 => 5000, 16 => 2000, _ => 1000 } : 0;
+                int placementPrize = c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? rank switch { 1 => 150_000, 2 => 70_000, 4 => 30_000, 8 => 15_000, 16 => 6_000, _ => 3_000 } : 0;
                 d.Credits += placementPrize; d.Life.PrizeTotal += placementPrize;
                 string detail = $"{CareerEngine.Name(d)}取得{c.Name}{place}，世界积分增加{points}，为{award.Country}贡献{fortune}国运，国家奖励{CareerMoney.Format(dividend)}。" + (placementPrize > 0 ? $"本届名次奖金{CareerMoney.Format(placementPrize)}。" : "");
                 if (champion) EsportsWorld.Milestone(d, c.Id, c.Name + "冠军", detail, c.Kind == "worldfinal" ? 3000 : 1200, c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? 0 : 1000);
@@ -118,6 +118,10 @@ public static class CircuitLedger
             if (contract.PaidSeason < d.Season) { club.Budget += contract.Retainer; ClubOperations.Entry(club, d.Day, contract.Brand + "赞助到账", contract.Retainer); contract.PaidSeason = d.Season; }
         }
         CareerCommerce.SeasonStart(d);
+        // 真国运魔改尖塔：把国运沉淀成各国社会发展指标，并发布本赛季的发展公报（本国与有变动的走 AI，其余用模板文本）。
+        NationalDevelopment.SeasonStart(d);
+        // 消费品与投资：NPC 粉丝按战绩增长，并重置"本季已买/已用"的计数。
+        ConsumerEngine.SeasonStart(d);
     }
     private static SponsorContract CreateContract(CareerData d, string target, int tier)
     {

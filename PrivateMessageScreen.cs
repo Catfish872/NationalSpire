@@ -188,7 +188,7 @@ public partial class CareerScreen
         _privateStreamLastText = live; _privateStreamLastThought = thinking;
         bool bottom = _privateScroll!.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90 || c.Turns.Count < 3;
         CareerVisuals.ClearContent(_privateHeading!);
-        _privateHeading!.AddChild(PrivateIdentity(data, _privatePerson, true));
+        _privateHeading!.AddChild(PrivateIdentityWithRelationEdit(data, _privatePerson));
         CareerVisuals.ClearContent(_privateBody);
         if (c.Turns.Count > _privateVisible) _privateBody.AddChild(PrivateButton("查看更早消息", () => { _privateVisible += 40; _privateSignature = ""; RefreshPrivateChat(); }, 180));
         foreach (var turn in c.Turns.TakeLast(_privateVisible))
@@ -340,16 +340,90 @@ public partial class CareerScreen
     {
         if (_privateGroup.Length > 0) { PreviewGroupPrompt(); return; }
         if (_privatePerson.Length == 0) return;
-        var d = ViewData; var c = PrivateMessages.Conversation(d, _privatePerson);
-        // 预览包含当前草稿，既不保存也不发送。
-        var copy = JsonSerializer.Deserialize<PrivateConversation>(JsonSerializer.Serialize(c))!;
-        var pending = copy.Turns.LastOrDefault(t => t.Status is "queued" or "sending");
-        if (pending == null) { pending = new() { Day = d.Day, Season = d.Season, User = _privateInput?.Text ?? "", Attachments = PrivateAttachments.ToList() }; copy.Turns.Add(pending); }
-        string preview = string.Join("\n\n────────────────\n\n", PrivateMessagePrompts.Compose(d, copy, pending).Select(m => m["role"] + "\n" + m["content"]));
-        ShowCareerDialog("私信提示词预览", "当前草稿与实际上下文。交互格式由模组管理。", () => true, "关闭", box =>
+        var viewData = ViewData;
+        var live = PrivateMessages.Conversation(viewData, _privatePerson);
+        if (string.IsNullOrEmpty(live.ContextOverride)) live.ContextOverride = "";
+        (PrivateConversation Draft, PrivateTurn Pending) BuildPromptDraft()
         {
-            var edit = new TextEdit { Text = preview, Editable = false, CustomMinimumSize = new(950, 580), WrapMode = TextEdit.LineWrappingMode.Boundary }; edit.AddThemeFontSizeOverride("font_size", 16); box.AddChild(edit);
-            box.AddChild(PrivateButton("复制完整提示词", () => DisplayServer.ClipboardSet(preview), 200));
+            // 预览包含当前草稿，既不保存也不发送。
+            var draft = JsonSerializer.Deserialize<PrivateConversation>(JsonSerializer.Serialize(live))!;
+            var pending = draft.Turns.LastOrDefault(t => t.Status is "queued" or "sending");
+            if (pending == null)
+            {
+                pending = new() { Day = viewData.Day, Season = viewData.Season, User = _privateInput?.Text ?? "", Attachments = PrivateAttachments.ToList() };
+                draft.Turns.Add(pending);
+            }
+            return (draft, pending);
+        }
+        string FreshContext()
+        {
+            var (draft, pending) = BuildPromptDraft();
+            return PrivateMessagePrompts.Context(viewData, draft, pending);
+        }
+        string FinalContext()
+        {
+            string fresh = FreshContext();
+            return live.ContextOverride.Length == 0 ? fresh : PrivateMessagePrompts.MergeContext(fresh, live.ContextOverrideBase, live.ContextOverride);
+        }
+        string RenderPrompt(string contextText)
+        {
+            var (draft, pending) = BuildPromptDraft();
+            if (contextText.Length > 0) pending.Context = contextText;
+            return string.Join("\n\n────────────────\n\n", PrivateMessagePrompts.Compose(viewData, draft, pending).Select(m => m["role"] + "\n" + m["content"]));
+        }
+        float viewportHeight = GetViewportRect().Size.Y;
+        float previewHeight = Math.Clamp(viewportHeight * 0.26f, 200f, 420f);
+        float contextHeight = Math.Clamp(viewportHeight * 0.2f, 160f, 320f);
+        ShowCareerDialog("私信提示词预览", "上方是实际发送的完整提示词，交互格式由模组管理；下面那段可以改 —— 你改过的行以你为准，其余每轮自动更新。", () => true, "关闭", box =>
+        {
+            var edit = new TextEdit { Name = "PrivatePromptPreview", Text = RenderPrompt(FinalContext()), Editable = false, CustomMinimumSize = new(950, previewHeight), WrapMode = TextEdit.LineWrappingMode.Boundary };
+            edit.AddThemeFontSizeOverride("font_size", 16); box.AddChild(edit);
+            box.AddChild(PrivateLine("上下文块 · 可编辑（只有你改过的行会被固定下来；清空或点「一键撤销」= 全自动）", 13, _muted));
+            var context = new TextEdit
+            {
+                Name = "PrivateContextEdit",
+                Text = live.ContextOverride.Length > 0 ? live.ContextOverride : FreshContext(),
+                CustomMinimumSize = new(950, contextHeight),
+                WrapMode = TextEdit.LineWrappingMode.Boundary
+            };
+            context.AddThemeFontSizeOverride("font_size", 15);
+            context.AddThemeColorOverride("font_color", _ink);
+            context.AddThemeStyleboxOverride("normal", CareerVisuals.Box("0c1b27", "304e5d", 8, 12));
+            context.AddThemeStyleboxOverride("focus", CareerVisuals.Box("10232e", "69bcb3", 8, 12));
+            box.AddChild(context);
+            var status = PrivateText("", 13, _muted); box.AddChild(status);
+            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); box.AddChild(row);
+            row.AddChild(PrivateButton("保存上下文", () =>
+            {
+                string fresh = FreshContext();
+                if (context.Text.Trim().Length == 0 || context.Text == fresh) { live.ContextOverride = ""; live.ContextOverrideBase = ""; }
+                else { live.ContextOverride = context.Text; live.ContextOverrideBase = fresh; }
+                PersistPrivateRelation(viewData);
+                context.Text = FinalContext();
+                edit.Text = RenderPrompt(FinalContext());
+                ShowPromptStatus();
+            }, 200));
+            row.AddChild(PrivateButton("一键撤销（恢复自动生成）", () =>
+            {
+                string fresh = FreshContext();
+                live.ContextOverride = "";
+                live.ContextOverrideBase = "";
+                PersistPrivateRelation(viewData);
+                context.Text = fresh;
+                edit.Text = RenderPrompt(fresh);
+                ShowPromptStatus();
+            }, 300));
+            row.AddChild(PrivateButton("复制完整提示词", () => DisplayServer.ClipboardSet(edit.Text), 200));
+            ShowPromptStatus();
+            void ShowPromptStatus()
+            {
+                if (live.ContextOverride.Length == 0) { status.Text = "当前：整段自动生成，每轮跟随游戏进度重算。"; return; }
+                if (live.ContextOverrideBase.Length == 0) { status.Text = "当前：这是旧版保存的整段快照。点「一键撤销」回到最新自动文本、把改动重做一遍再保存，之后就是逐行合并（只有你改过的行是你的）。"; return; }
+                string fresh = FreshContext();
+                string merged = PrivateMessagePrompts.MergeContext(fresh, live.ContextOverrideBase, live.ContextOverride);
+                bool frozen = merged == live.ContextOverride && live.ContextOverrideBase != fresh;
+                status.Text = frozen ? "当前：你改过的行用你的文本；实时数据这轮变化较大，模组暂时整段用你保存的文本。" : "当前：你改过的行用你的文本，其余每行（关系 / 日期 / 赛程 / 战况）都跟随游戏进度实时更新。";
+            }
         }, showCancel: false);
     }
     private void PrivateActions()

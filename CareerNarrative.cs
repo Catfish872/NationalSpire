@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CareerNarrative
 {
@@ -10,7 +10,7 @@ public static class CareerNarrative
             || key == "champion-" + c.Id || key.StartsWith("roundup-" + c.Id + "-"));
         if (!string.IsNullOrEmpty(competition?.Country)) country = competition.Country;
         bool international = match?.Kind is "continental" or "worldcup" or "worldfinal" or "masters"
-            || category == "国际赛事" || key.StartsWith("draw-") || key.StartsWith("international-entry-");
+            || category is "国际赛事" or "外汇市场" || key.StartsWith("draw-") || key.StartsWith("international-entry-");
         string kind = match?.Kind ?? (key == "honor-license-1" ? "local" : key == "honor-license-2" ? "city" : "");
         return d.People.Where(p => p.Id != "desk" && !SpireArbitration.Muted(p) && !d.HumanIds.Contains(p.Id) && (international || p.Country == country)
             && (kind != "local" || p.Role == "普通玩家")
@@ -20,8 +20,13 @@ public static class CareerNarrative
     public static string PostAuthor(CareerData d, string key, string category, CareerMatch? match, List<string>? related)
     {
         var pool = NewsAudience(d, key, category, match, related);
+        if (category == "外汇市场") return pool.Where(p => p.Role is "主播" or "解说员" or "赛事记者")
+            .OrderBy(p => CareerEngine.StableHash(key + p.Id)).FirstOrDefault()?.Id ?? "desk";
         if (category == "训练日常" && related?.FirstOrDefault() is { } id && pool.Any(p => p.Id == id)) return id;
         if (category is "赛事公告" or "赛季" || key.StartsWith("draw-") || key.StartsWith("contract-")) return "desk";
+        // D20：热搜类由媒体账号发（主播 / 解说员 / 赛事记者），没有合适的就交给编辑部——
+        // 总之不能是玩家自己发的，否则等于当着所有人的面承认这条热搜是他买的。
+        if (category == "热搜") return pool.FirstOrDefault(p => p.Role is "主播" or "解说员" or "赛事记者")?.Id ?? "desk";
         return pool.OrderBy(p => CareerEngine.StableHash(key + ":poster:" + p.Id)).FirstOrDefault()?.Id ?? "desk";
     }
     public static List<CareerPerson> NewsAudience(CareerData d, string key, string category, CareerMatch? match, List<string>? related)
@@ -174,7 +179,9 @@ public static class CareerNarrative
         return category switch
         {
             "转会" => "transfer", "俱乐部" => "entry", "国际赛事" => "international", "晋级" => "qualification",
-            "生涯里程碑" => "honor", "训练日常" => "practice", "人物专访" => "feature", "赛季" => "season", _ => "news"
+            "生涯里程碑" => "honor", "训练日常" => "practice", "人物专访" => "feature", "赛季" => "season",
+            // 真国运魔改尖塔：发展公报走自己的离线跟帖兜底句（NarrativeText.Banks["development"]）。
+            "国家发展" => "development", _ => "news"
         };
     }
     public static string Reply(CareerData d, CareerPerson p, string category, CareerMatch? match, int variant, string eventKey = "")
@@ -209,6 +216,7 @@ public static class CareerNarrative
     }
     public static (string Title, string Body) News(CareerData d, string key, string title, string body, string category, CareerMatch? match)
     {
+        if (category == "外汇市场") return (title, body);
         int seed = CareerEngine.StableHash(d.WorldId + key);
         if (match != null)
         {

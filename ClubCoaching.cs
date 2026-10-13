@@ -110,8 +110,13 @@ public static class ClubCoaching
         }
         foreach (var r in d.Esports.LineupRequests.Where(r => r.State == "待生效" && r.ClubId == o.ClubId
             && (r.First == "player" || r.Second == "player" || r.First == replacement || r.Second == replacement))) r.State = "已替换";
-        o.PlayerPositionRequest = "";
-        o.PlayerPositionSeason = d.Season + 1; o.PlayerNextPosition = position; o.PlayerReplacement = replacement;
+        // 真国运魔改尖塔：直接操作立即生效，不再等到下一个赛季。私信里与队员谈好的席位调整仍走原来的"下赛季生效"。
+        // 赛程只重排"尚未开打、且不在进行中"的对阵（UpdateLineup 内部用 ActiveTie 保护进行中的对局）。
+        bool reserve = position == "轮换";
+        ClearPlayerPosition(o);
+        Move(d, replacement, reserve ? "首发" : "轮换");
+        o.PlayerReserve = reserve; Move(d, "player", reserve ? "轮换" : "首发");
+        OwnedClubSchedule.UpdateLineup(d);
         CareerStore.Save(d); return null;
     }
     public static void SeasonStart(CareerData d)

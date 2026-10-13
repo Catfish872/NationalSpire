@@ -148,6 +148,23 @@ public sealed class NationalLegacy
     public int Treasury { get; set; }
     public int Development { get; set; }
     public int Titles { get; set; }
+    // 真国运魔改尖塔：社会发展指标。Gdp 是人均 GDP（美元）；Indicators 是 9 项等级（0–9）；
+    // Pending 是各大类攒着的零钱（按大类权重分配、跨赛季累积）；ReportSeason 防同一赛季重复发公报。
+    public int Gdp { get; set; }
+    public double GdpGrowth { get; set; }
+    // v2：这次结算实际用到的输入与拆解。GdpGrowth 是"上赛季末等级"算出来的，结算后等级已经被买高了，
+    // 所以想解释"增速怎么来的"必须把当时的数字存下来，否则只能拿升级后的等级反推出一个假值。
+    public int GrowthFortune { get; set; }
+    public double GrowthBase { get; set; }
+    public double GrowthLevel { get; set; }
+    public double GrowthFortunePart { get; set; }
+    public double GrowthConvergence { get; set; }
+    public Dictionary<string, int> Indicators { get; set; } = [];
+    public Dictionary<string, double> Pending { get; set; } = [];
+    public int ReportSeason { get; set; }
+    public int DevelopmentVersion { get; set; }
+    /// <summary>最近一次发展公报的摘要，国运榜卡片直接显示（例："本期发展：工业 6→7、公共服务 5→6"）。</summary>
+    public string LastReport { get; set; } = "";
 }
 public sealed class ClubOffer
 {

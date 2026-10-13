@@ -7,7 +7,10 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Sts2Dir>E:\SteamLibrary\steamapps\common\Slay the Spire 2</Sts2Dir>
     <Sts2DataDir>$(Sts2Dir)\data_sts2_windows_x86_64</Sts2DataDir>
-    <ModOutputDir>$(Sts2Dir)\mods\NationalSpire</ModOutputDir>
+    <!-- 真国运魔改尖塔：独立 mod，装到游戏根目录的 mods\ 下。
+         注意 id 必须与原版相同（= NationalSpire）：加载器是 Path.Combine(mod.path, modId + ".dll") 找程序集的，
+         同 id 才能对上文件名，并且加载器会自动禁用工坊版（本地 mods/ 优先），天然做到"不同时启用"。 -->
+    <ModOutputDir>$(Sts2Dir)\mods\真国运魔改尖塔</ModOutputDir>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sts2"><HintPath>$(Sts2DataDir)\sts2.dll</HintPath><Private>false</Private></Reference>

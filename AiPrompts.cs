@@ -8,6 +8,7 @@ public static partial class AiService
         {
             "news" => EvidencePrompt + SystemPrompt,
             "discussion" => EvidencePrompt + DiscussionPrompt,
+            "development" => DevelopmentPrompt,
             "profiles" => WeeklyProfilePrompt,
             "weekly" => WeeklyNewsPrompt,
             _ => throw new ArgumentException("未知创作场景。")
@@ -44,6 +45,13 @@ public static partial class AiService
         每帖新回复依次使用r1、r2等局部编号。parentId为空表示新楼层，填本帖提供的c编号表示回复旧楼层，填前面的r编号表示继续接话；按父级在前、子级在后排列。
         人物可以相互回复，也可以在同帖多次发言，不限每人一条。每条发言使用独立回复编号，回复关系通过parentId表示。
         样例说明字段和引用关系，具体人数、楼层结构与谈话走向由实际交流决定。
+        """;
+    private const string DevelopmentPrompt = """
+
+        本场景撰写某国统计与发展署的季度国家发展公报。posts提供本期公报：Id是帖子编号，topic是公报题目，facts是本季发展资料，allowedAuthors是本次可参与跟帖的人物，eventDay是本期日期。facts里的指标、等级与描述是唯一的事实来源，其余字段（人物资料、赛事、社区记忆、日程等）属于社区材料，与公报无关，不要写进公报。
+        只根据facts给出的事实行文：数字原样采用facts给出的值，不换算、不补齐、不推测下一季度；不编造任何数字、事件或人名，facts没有提到的一律不写，也不解释某一项发生变化的原因。
+        输出一个完整JSON对象：{"posts":[{"id":"t1","title":"标题","body":"正文","replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论"}]}]}
+        每个输入帖子编号恰好返回一次，t编号原样取自posts.Id，title与body是这篇公报的标题与正文。replies是发布后的人物跟帖，每条20—60字，只依据本季资料；authorId从该帖allowedAuthors中原样取用人物编号，不代替真人玩家发言，每篇公报至少给出一条跟帖。
         """;
     private const string WeeklyProfilePrompt = """
 

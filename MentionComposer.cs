@@ -29,9 +29,7 @@ public partial class CareerScreen
             line = editor.GetCaretLine(); string before = editor.GetLine(line)[..editor.GetCaretColumn()]; at = before.LastIndexOf('@');
             string query = at < 0 ? "" : before[(at + 1)..];
             if (at < 0 || query.Any(char.IsWhiteSpace) || query.Contains('〔')) { panel.Hide(); return; }
-            people = ViewData.People.Where(p => PrivateMessages.CanChat(ViewData, p.Id) &&
-                (p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)))
-                .OrderByDescending(p => p.PublicName.StartsWith(query, StringComparison.OrdinalIgnoreCase)).ThenBy(p => p.PublicName).Take(6).ToList();
+            people = PersonMentions.Search(ViewData, query, 6);
             CareerVisuals.ClearContent(list); buttons.Clear(); selected = 0;
             foreach (var p in people)
             {

@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class CareerData
 {
@@ -60,6 +60,12 @@ public sealed class CareerData
     public int Season { get; set; } = 1;
     public int Rating { get; set; } = 1000;
     public int Fans { get; set; } = 28;
+    /// <summary>消费品与投资：持有物、限购、运营次数与掉粉凭据（设计文档 §11）。</summary>
+    public ConsumerState Consumer { get; set; } = new();
+    /// <summary>原生外汇市场与个人账户，随当前生涯一起保存与导出。</summary>
+    public ForexSpire.ForexState? Forex { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData, List<ForexSpire.ForexFixture>>? ForexDailySink { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public int ForexGroupPositions { get; set; }
     public int Credits { get; set; } = 0;
     public int Wins { get; set; }
     public int Losses { get; set; }
@@ -169,10 +175,27 @@ public sealed class CareerPerson
     public string Character { get; set; } = "";
     public string Style { get; set; } = "";
     public int MaxAscension { get; set; }
+    // 真国运魔改尖塔：未通关层数上限/下限（-1 = 不设）。未通关时先 Min 上限、再 Max 下限，通关场次不受影响。
+    public int FailureFloorCap { get; set; } = -1;
+    public int FailureFloorMin { get; set; } = -1;
+    // 真国运魔改尖塔：模拟通关用时下限/上限（秒，-1 = 不设）。先取小（上限）再取大（下限），下限优先。
+    public double SimulatedClearSeconds { get; set; } = -1;
+    public double SimulatedClearSecondsMax { get; set; } = -1;
+    // 真国运魔改尖塔：编辑「最高通关进阶」时记下当天的天数，之后的新通关仍会继续抬高。
+    public int ClearBaselineDay { get; set; } = -1;
+    // 真国运魔改尖塔：菜鸡开关。一键把最高进阶压到 0、未通关层数上限压到 20、模拟通关率改成 0%；
+    // 再按一次用下面三个字段里存的原始值还原。PushoverCustomClearChance = -1 表示原本是"现有算法"（null）。
+    // Pushover 同时充当"备份有效"的标志。
+    public bool Pushover { get; set; }
+    public int PushoverMaxAscension { get; set; } = -1;
+    public int PushoverFailureFloorCap { get; set; } = -1;
+    public double PushoverCustomClearChance { get; set; } = -1;
     public int PrivateHighestClear { get; set; } = -1;
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int Rating { get; set; }
+    /// <summary>人气榜：NPC 的粉丝数（只有进阶 ≥ 8 的人参与排名）。</summary>
+    public int Fans { get; set; }
     public string Role { get; set; } = "观众";
     public string Voice { get; set; } = "";
 }

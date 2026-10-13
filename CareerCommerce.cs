@@ -60,7 +60,7 @@ public static class CareerCommerce
     }
     public static ClubOffer Quote(CareerData d, CareerClub club)
     {
-        int tier = 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league"));
+        int tier = Math.Min(8, 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league")) + ConsumerEngine.MoneyTier(d.Fans));
         int kind = IdentityIndex(d, club.Id);
         int signing = Math.Min(Math.Max(0, club.Budget / 5), (kind switch { 0 => 3000, 1 => 1400, 2 => 2400, _ => 1800 }) * tier);
         return new() { ClubId = club.Id, ExpiresDay = d.Day + 28, SigningBonus = signing,
@@ -87,7 +87,7 @@ public static class CareerCommerce
         w.SponsorOffers.RemoveAll(s => s.ExpiresDay < d.Day);
         if (w.License < 3 || ActiveSponsor(d) != null) { Capture(d); return; }
         if (w.SponsorOffers.Count > 0) { Capture(d); return; }
-        int tier = 1 + Math.Min(7, w.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league"));
+        int tier = Math.Min(8, 1 + Math.Min(7, w.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league")) + ConsumerEngine.MoneyTier(d.Fans));
         var previous = w.Sponsors.LastOrDefault(s => s.TargetId == "player" && s.Accepted);
         for (int plan = 0; plan < 3; plan++)
         {

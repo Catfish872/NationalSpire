@@ -26,6 +26,15 @@ public sealed class PersonMentions
         }
     }
     private static bool Latin(char c) => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or >= '0' and <= '9' or '_' or '-';
+
+    /// <summary>@ 人物与"选人"弹窗共用的搜索：在**全部人物**里按昵称 / 姓名匹配，前缀命中优先。
+    /// 空查询返回世界名录的开头一段（与 @ 输入框刚打出 "@" 时的行为一致）。</summary>
+    public static List<CareerPerson> Search(CareerData d, string query, int take) => d.People
+        .Where(p => PrivateMessages.CanChat(d, p.Id))
+        .Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+        .OrderByDescending(p => query.Length > 0 && p.PublicName.StartsWith(query, StringComparison.OrdinalIgnoreCase))
+        .ThenBy(p => p.PublicName)
+        .Take(take).ToList();
     public List<Match> Find(string text, IEnumerable<string>? related = null)
     {
         var context = related?.ToHashSet() ?? [];

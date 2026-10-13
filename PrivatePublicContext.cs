@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 namespace NationalSpire;
 
@@ -47,6 +47,8 @@ public static partial class PrivatePublicContext
         b.AppendLine($"{player}的本生涯比赛战绩为{d.Wins}胜{d.Losses}负、{d.Draws}平，评分{d.Rating}，关注{d.Fans}。");
         var results = d.Results.Where(r => r.Day <= d.Day && r.Kind != "private-friendly").ToArray();
         int highest = results.Where(r => r.Win).Select(ActualAscension).Append(d.LocalHumanId.Length == 0 ? d.Esports.BestClear : -1).Max();
+        // 真国运魔改尖塔：单人模式以角色卡上编辑的「最高通关进阶」为准，避免 AI 看到的数字和角色卡自相矛盾。
+        if (d.LocalHumanId.Length == 0) highest = d.AvatarHighestClear;
         b.AppendLine(highest >= 0 ? $"{player}的生涯最高通关：进阶{highest}。" : $"{player}尚无已确认的生涯通关进阶记录。");
         if (d.AvatarHighestClear > highest) b.AppendLine($"{player}的游戏档案最高通关：进阶{d.AvatarHighestClear}（包含本生涯以外的游戏记录）。");
         // 实际爬塔通关与赛事胜负分别统计，避免把未通关获胜或加赛进阶混为一谈。

@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CareerEngine
 {
@@ -22,6 +22,12 @@ public static class CareerEngine
         CameoContent.Ensure(data);
         NpcRecords.Ensure(data);
         PersonalityLibrary.EnsureAll(data);
+        ConsumerEngine.Ensure(data);
+        if (ForexService.IsSinglePlayer(data) && !ForexService.LegacyPatchLoaded)
+        {
+            changed |= data.Forex == null;
+            ForexService.Ensure(data);
+        }
         foreach (var person in data.People.Concat(data.Posts.Concat(data.SavedThreads).SelectMany(p => p.PeopleAtEvent)))
             person.Style = person.Style.Replace("星能", "辉星", StringComparison.Ordinal);
         if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) CircuitWorld.AutoEntry(data);
@@ -69,6 +75,7 @@ public static class CareerEngine
         NpcRecords.Ensure(data);
         WeeklyJournal.Initialize(data);
         AvatarHonors.Capture(data);
+        if (ForexService.IsSinglePlayer(data) && !ForexService.LegacyPatchLoaded) ForexService.Ensure(data);
         return data;
     }
     public static CareerMatch? NextMatch(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).OrderBy(m => m.Day).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
@@ -84,8 +91,10 @@ public static class CareerEngine
     }
     private static void MoveToNextDay(CareerData d)
     {
+        ForexService.BeginDay(d);
         foreach (var missed in d.Matches.Where(m => m.Status == "待赛" && !m.Registered && m.Day <= d.Day)) missed.Status = "未报名";
         EsportsWorld.EndDay(d, d.Day);
+        var forexFixtures = ForexService.IsSinglePlayer(d) || d.ForexDailySink != null ? ForexService.Snapshot(d) : [];
         WeeklyJournal.CloseWeek(d);
         d.Day++;
         SocialAppointments.Expire(d);
@@ -100,10 +109,12 @@ public static class CareerEngine
         ClubOperations.Advance(d);
         OwnedClubs.Advance(d);
         CareerLife.PublishPending(d);
+        ConsumerEngine.DailyTick(d);
         SimulateWorld(d);
         AvatarHonors.Capture(d);
         CareerCommerce.RefreshOffers(d);
         if (d.Esports.EcosystemVersion >= 1) CircuitWorld.AutoEntry(d);
+        ForexService.AdvanceDay(d, forexFixtures);
     }
     public static int AdvanceToMatch(CareerData d)
     {
@@ -255,11 +266,12 @@ public static class CareerEngine
             CareerStore.Save(d); return;
         }
         int rating = d.Rating, fans = d.Fans, credits = d.Credits;
-        int weight = m.Kind switch { "league" => 2, "continental" => 4, "worldcup" => 6, "worldfinal" => 8, "masters" => 8, _ => 1 };
         double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension);
-        if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Fans += MatchRules.Reward(weight * (25 + m.RequiredAscension * 12), multiplier); d.Credits += MatchRules.Reward(m.Prize, multiplier); }
-        else if (m.Draw) { d.Draws++; d.Rating += 8; d.Fans += MatchRules.Reward(weight * 15, multiplier); d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
-        else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); if (!forfeit) d.Fans += Math.Max(3, floor / 3); }
+        // 粉丝在比赛完成的这一刻结算（D6 批注）：胜/平按新表给固定整数，只有"未通关且输"才掉粉。
+        int fanDelta = ConsumerEngine.MatchFans(d, m, runClear && !forfeit, forfeit, floor, multiplier);
+        if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Credits += MatchRules.Reward(m.Prize, multiplier); }
+        else if (m.Draw) { d.Draws++; d.Rating += 8; d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
+        else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); }
         EsportsWorld.ResolvePlayerFixture(d, m, runClear && !forfeit, forfeit);
         if (m.CompetitionId == "")
         {
@@ -279,7 +291,7 @@ public static class CareerEngine
         record.Evidence = evidence ?? new();
         CareerRelics.Match(d, m, record, forfeit, rating);
         record.RatingDelta = d.Rating - rating;
-        Publish(d, "match" + m.Id, $"{m.Event}：你对阵{opponent.PublicName}，{verdict}", MatchRules.Report(m, record, d.CooperativeMembers > 1), EsportsWorld.StageName(m.Kind), true, [m.OpponentId], m);
+        Publish(d, "match" + m.Id, $"{m.Event}：你对阵{opponent.PublicName}，{verdict}", MatchRules.Report(m, record, d.CooperativeMembers > 1) + ConsumerEngine.FanLine(fanDelta), EsportsWorld.StageName(m.Kind), true, [m.OpponentId], m);
         // 同一场比赛带来的资格与荣誉放进同一份战报材料，减少重复选题。
         var resultPost = d.Posts.FirstOrDefault(p => p.EventKey == "match" + m.Id);
         var related = d.Posts.Where(p => !postsBeforeResult.Contains(p.Id) && p != resultPost && p.Day == m.Day
@@ -359,8 +371,12 @@ public static class CareerEngine
         if (aiPending) post.Schedule = PublicSchedule.Capture(d, post.RelatedPeople);
         d.Posts.Insert(0, post); CommunityThreads.Remember(d, post); CommunityThreads.TrimFeed(d);
     }
+    // 真国运魔改尖塔：发展公报即使没开 AI 也要发（正文用模板文本），所以在重要新闻里放行。
+    // 消费品与投资：消费/动用/人气榜/运营帖同样永远发（D9），不依赖 AI 开关。
     public static bool IsImportantNews(string key, int priority) => priority >= 3 || key == "ecosystem"
-        || new[] { "champion-", "qualification-", "knockout-", "draw-", "transfer-", "season-", "recap-" }.Any(key.StartsWith);
+        || key.StartsWith("development-", StringComparison.Ordinal)
+        || key.StartsWith("forex-", StringComparison.Ordinal)
+        || new[] { "champion-", "qualification-", "knockout-", "draw-", "transfer-", "season-", "recap-", "shop-", "party-", "chart-", "promo-", "life-update-", "club-update-" }.Any(key.StartsWith);
     public static int StableHash(string value)
     {
         unchecked { uint hash = 2166136261; foreach (char c in value) { hash ^= c; hash *= 16777619; } return (int)(hash & 0x7fffffff); }
@@ -371,7 +387,7 @@ public static class CareerEngine
         var league = EsportsWorld.PlayerLeague(d);
         int rank = league?.PlayerEntered == true ? EsportsWorld.DomesticRank(d) : 0;
         int points = league?.Table.FirstOrDefault(x => x.PersonId == "player")?.Points ?? 0;
-        int prize = rank == 0 || points == 0 ? 0 : rank == 1 ? 240 : rank <= 3 ? 100 : 20;
+        int prize = rank == 0 || points == 0 ? 0 : rank == 1 ? 3_000 : rank <= 3 ? 1_200 : 500;
         d.Credits += prize; d.Life.PrizeTotal += prize; CareerMoney.Record(d, "赛季名次奖金", prize);
         d.SeasonHistory.Add(new SeasonRecap { Season = d.Season, Rank = rank, Points = points, Prize = prize });
         Publish(d, "recap-" + d.Season, $"第 {d.Season} 赛季收官", rank == 0 ? "本赛季尚未进入职业联赛。新赛季仍可参加选拔，已经取得的资格与荣誉继续保留。" : $"你获得国内联赛第 {rank} 名，积分 {points}，收官奖励 {CareerMoney.Format(prize)}。已取得的资格、俱乐部合同与荣誉将延续至新赛季。", "赛季", true);

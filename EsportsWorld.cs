@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace NationalSpire;
 
@@ -109,14 +109,14 @@ public static class EsportsWorld
             d.Matches.Add(new CareerMatch { Day = start + day, Kind = kind, Event = title, OpponentId = opponent, RequiredAscension = ascension, Prize = prize, Round = round, Seed = $"NS{d.Season:X}{day:X}{CareerEngine.StableHash(d.WorldId + kind + d.Season + round):X8}" });
         }
         var locals = d.People.Where(p => p.Country == d.Esports.Country && p.Role == "普通玩家").ToList();
-        Add(3, "local", "街区周末杯", 0, 45, locals[d.Season % locals.Count].Id);
-        Add(6, "city", "城市新秀公开赛", 3, 100, d.People.First(p => p.Role == "青训选手" && p.Country == d.Esports.Country).Id);
-        Add(9, "academy", "职业青训选拔赛", 6, 180, "p15");
-        for (int r = 1; r <= 3; r++) Add(9 + r * 3, "league", $"职业联赛 · 第 {r} 轮", 8, 260, round: r);
+        Add(3, "local", "街区周末杯", 0, 200, locals[d.Season % locals.Count].Id);
+        Add(6, "city", "城市新秀公开赛", 3, 500, d.People.First(p => p.Role == "青训选手" && p.Country == d.Esports.Country).Id);
+        Add(9, "academy", "职业青训选拔赛", 6, 900, "p15");
+        for (int r = 1; r <= 3; r++) Add(9 + r * 3, "league", $"职业联赛 · 第 {r} 轮", 8, 1_500, round: r);
         string cup = d.Season % 2 == 0 ? "worldcup" : "continental";
         int rounds = cup == "worldcup" ? 3 : 4;
-        for (int r = 1; r <= rounds; r++) Add(26 - (rounds - r) * 2, cup, StageName(cup) + " · " + CupRound(cup, r), r == rounds ? 9 : 8, 400 + r * 180, round: r);
-        Add(28, "masters", "世界纪录邀请赛", 10, 1200, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
+        for (int r = 1; r <= rounds; r++) Add(26 - (rounds - r) * 2, cup, StageName(cup) + " · " + CupRound(cup, r), r == rounds ? 9 : 8, 2_000 + r * 600, round: r);
+        Add(28, "masters", "世界纪录邀请赛", 10, 8_000, d.People.Where(p => p.MaxAscension == 9).OrderByDescending(p => p.Rating).First().Id);
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
         RefreshLeagueMatches(d);
         if (!migrating && d.Season > 1) TransferWindow(d);
@@ -290,13 +290,14 @@ public static class EsportsWorld
             FinishFixture(d, c, f, missingHome && missingAway ? "" : missingHome ? f.AwayId : f.HomeId, missingHome && missingAway);
             return;
         }
-        bool walkover = f.HomeId == "player" || f.AwayId == "player";
         int asc = c.Modern ? f.Ascension : c.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8;
-        RunPerformance Run(string id, string seed) => id == "player" ? new(false, 0, 0)
+        // 真国运魔改尖塔：玩家被模拟时按角色卡真实模拟（见 PlayerRun），不再恒判未通关 0 层 0 秒，
+        // 所以胜负也交给 MatchRules.Compare；下面的 walkover 只保留"真弃权"（有一方 Floor < 0，例如禁赛）。
+        RunPerformance Run(string id, string seed) => id == "player" ? PlayerRun(d, f, asc, seed)
             : MatchRules.Simulate(d, id, asc, seed, f.Day, d.CooperativeMembers > 1, c, f.Id);
         var a = Run(f.HomeId, d.WorldId + ":" + f.Id); var b = Run(f.AwayId, d.WorldId + ":" + f.Id);
-        int score = walkover ? (f.HomeId == "player" ? -1 : 1) : MatchRules.Compare(a, b);
-        walkover |= a.Floor < 0 || b.Floor < 0;
+        int score = MatchRules.Compare(a, b);
+        bool walkover = a.Floor < 0 || b.Floor < 0;
         if (c.Modern && !walkover)
             for (int replay = 1; score == 0; replay++)
             {
@@ -310,6 +311,55 @@ public static class EsportsWorld
         f.HomeSeconds = a.Seconds; f.AwaySeconds = b.Seconds;
         FinishFixture(d, c, f, draw ? "" : score > 0 ? f.HomeId : f.AwayId, draw);
     }
+
+    // 真国运魔改尖塔：玩家被程序模拟时（签表里轮到玩家、由俱乐部代打等）按角色卡走同一套模拟。
+    // 玩家不在 d.People 里（CharacterCards 只把 NPC 写进 People，玩家本人走 PlayerCard），
+    // 所以 MatchRules.Simulate(data, "player", ...) 会在 CareerEngine.Person 处抛「选手不存在」；
+    // 这里先用 CharacterCards.Read 拼出玩家本人，再走与 NPC 完全相同的口径。
+    private static RunPerformance PlayerRun(CareerData d, WorldFixture f, int ascension, string seed)
+        => SimulatePlayerRun(d, f.Day, ascension, seed);
+
+    // 玩家模拟的公开入口：开赛页的「模拟本场」与签表模拟共用这一套算法，
+    // 于是角色卡里的模拟通关率、未通关层数上下限与模拟通关用时对两者都生效。
+    internal static RunPerformance SimulatePlayerRun(CareerData d, int day, int ascension, string seed)
+    {
+        try
+        {
+            // 不判 d.PlayerCard == null：CharacterCards.Read 本身会在没有角色卡时按当前玩家资料构造默认卡
+            // （MaxAscension 取 d.Esports.BestClear），挡在它前面会让从没编辑过角色卡的玩家一律拿到 0 层 0 秒。
+            var person = CharacterCards.Read(d, "player");
+            var factors = MatchRules.Evaluate(d, person, ascension, day);
+            RunPerformance run;
+            if (person.CustomClearChance is null && MatchRules.PlayerHistoricClearRate(d, ascension) is { } rate)
+                // 历史平均胜率单独一路：只用玩家自己打过的正式比赛算胜率，楼层与用时仍走既有口径。
+                run = MatchRules.SimulateAtChance(person, ascension, rate, seed, d.CooperativeMembers > 1, factors.Defense, d.RivalLevel, day);
+            else
+                // 口径与 NPC 分支一致：NPC 直接拿 Evaluate(...).Final 当通关率，而 Simulate(person, ...) 内部还会再加一次
+                // 交流学习与短期状态，所以这里只补长期培养、陪练、临时训练三项，算出来的通关率与 Final 相同。
+                // 角色卡里自己填的百分比由 BaseChance 按进阶换算后生效，优先级高于历史胜率。
+                run = MatchRules.Simulate(person, ascension, seed, d.CooperativeMembers > 1,
+                    factors.Growth + factors.Practice + factors.Training, factors.Defense, d.RivalLevel, day);
+            if (!run.Cleared) return run;
+            // 通关用时区间已由 MatchRules.SimulatePerformance 截断（对所有角色生效），
+            // 这里只处理玩家特有的回退：两个值都没设时用自己最近一次真实通关用时。
+            if (person.SimulatedClearSeconds < 0 && person.SimulatedClearSecondsMax < 0)
+            {
+                double recorded = PlayerRecordedSeconds(d);
+                return recorded < 0 ? run : new RunPerformance(true, run.Floor, recorded);
+            }
+            return run;
+        }
+        catch (Exception error)
+        {
+            Diagnostics.Error("player-run.simulate", error);
+            return new RunPerformance(false, 0, 0);
+        }
+    }
+
+    // 用时回退来源：玩家自己最近一次真实通关。d.Results 从尾部裁剪，尾部就是最新一场，
+    // 它反映当前进阶和当前水平；取最快一次会把早期低进阶的极速通关当成常态。
+    private static double PlayerRecordedSeconds(CareerData d)
+        => d.Results.LastOrDefault(r => r.Win && r.RunSeconds is > 0 && double.IsFinite(r.RunSeconds.Value))?.RunSeconds ?? -1;
 
     public static void ResolvePlayerFixture(CareerData d, CareerMatch m, bool playerClear, bool abandoned)
     {
@@ -414,7 +464,7 @@ public static class EsportsWorld
         if (c.ChampionId == "player")
         {
             string honorId = c.Kind + "-" + d.Season;
-            Milestone(d, honorId, c.Name + "冠军", $"第 {d.Season} 赛季，{ClubName(d, d.Esports.ClubId)}的你登上冠军领奖台。", c.Kind == "worldcup" ? 2200 : c.Kind == "continental" ? 1400 : 500, c.Kind == "league" ? 500 : 1500);
+            Milestone(d, honorId, c.Name + "冠军", $"第 {d.Season} 赛季，{ClubName(d, d.Esports.ClubId)}的你登上冠军领奖台。", c.Kind == "worldcup" ? 2200 : c.Kind == "continental" ? 1400 : 500, c.Kind == "league" ? 2_500 : 7_500);
             if (c.Kind != "league") MakeOffers(d, true);
         }
         if (publish) CareerEngine.Publish(d, "champion-" + c.Id, $"{c.Name}落幕：{name}夺冠", $"{(c.Kind == "worldcup" ? CountryOf(d, c.ChampionId) : ClubName(d, ClubOf(d, c.ChampionId)))}收获本赛季冠军。完整对阵与结果已收录在赛事档案。", c.Kind == "league" ? "国内联赛" : "国际赛事", true, [c.ChampionId]);
@@ -434,18 +484,18 @@ public static class EsportsWorld
         {
             w.License = target;
             ClearInvalidRegistrations(d);
-            Milestone(d, "license-" + target, target == 3 ? "取得职业资格" : target == 2 ? "获得青训邀请" : "走出社区赛场", $"{m.Event}的成绩通过认证，你现在是{LicenseName(d)}。", target * 65, target * 50);
+            Milestone(d, "license-" + target, target == 3 ? "取得职业资格" : target == 2 ? "获得青训邀请" : "走出社区赛场", $"{m.Event}的成绩通过认证，你现在是{LicenseName(d)}。", target * 1_300, target * 250);
             if (target == 3) MakeOffers(d, false);
         }
-        if (runClear && !abandoned && (m.RequiredAscension) >= 8) Milestone(d, "clear-" + m.RequiredAscension, $"进阶 {m.RequiredAscension} 通关认证", "职业圈正在研究这份通关战报，不同赛区开始关注你的下一场表现。", (m.RequiredAscension) >= 9 ? 500 : 200, 120);
-        if (w.WinStreak >= 3) Milestone(d, "streak-3", "三连胜，新星升起", "连续三场赛事获胜，你第一次登上赛区焦点栏目。", 120, 100);
+        if (runClear && !abandoned && (m.RequiredAscension) >= 8) Milestone(d, "clear-" + m.RequiredAscension, $"进阶 {m.RequiredAscension} 通关认证", "职业圈正在研究这份通关战报，不同赛区开始关注你的下一场表现。", (m.RequiredAscension) >= 9 ? 10_000 : 4_000, 600);
+        if (w.WinStreak >= 3) Milestone(d, "streak-3", "三连胜，新星升起", "连续三场赛事获胜，你第一次登上赛区焦点栏目。", 2_400, 500);
         CareerCommerce.RefreshOffers(d);
     }
     public static void Milestone(CareerData d, string id, string title, string detail, int fans, int money)
     {
-        if (OwnedClubs.IsOwner(d)) return;
         if (d.Esports.Milestones.Contains(id)) return;
-        d.Esports.Milestones.Add(id); d.Fans += fans; d.Credits += money;
+        // 奖杯按新粉丝表结算（D14：固定整数整数）；当老板不再吞掉个人里程碑（文档 P2）。
+        d.Esports.Milestones.Add(id); d.Fans += ConsumerEngine.TrophyFans(id, title, fans); d.Credits += money;
         d.Esports.Honors.Add(new CareerHonor { Id = id, Title = title, Detail = detail, Season = d.Season, Day = d.Day });
         CareerEngine.Publish(d, "honor-" + id, title, detail, "生涯里程碑", true);
     }

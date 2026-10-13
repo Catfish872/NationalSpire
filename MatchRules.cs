@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public readonly record struct RunPerformance(bool Cleared, int Floor, double Seconds);
 
@@ -173,6 +173,27 @@ public static class MatchRules
     public static RunPerformance Simulate(CareerPerson person, int officialAscension, string seed, bool cooperative = false, double chanceBonus = 0, double defenseBonus = 0, int rivalLevel = 1000, int? day = null)
         => SimulatePerformance(person, officialAscension, seed, cooperative, ClearChance(person, officialAscension, chanceBonus, day), defenseBonus, rivalLevel, day);
 
+    /// <summary>
+    /// 按指定的通关概率模拟一场。楼层与用时仍走既有的 SimulatePerformance，只是通关率由调用者另行给出，
+    /// 供"玩家历史平均胜率"这类独立口径使用；调用者不得因此重写楼层或用时的计算。
+    /// </summary>
+    public static RunPerformance SimulateAtChance(CareerPerson person, int officialAscension, double chance, string seed,
+        bool cooperative = false, double defenseBonus = 0, int rivalLevel = 1000, int? day = null)
+        => SimulatePerformance(person, officialAscension, seed, cooperative, Math.Clamp(chance, 0, 1), defenseBonus, rivalLevel, day);
+
+    /// <summary>
+    /// 玩家历史平均通关率。只看核实过赛事进阶的正式比赛，排除退赛与私下切磋；
+    /// 同进阶样本够就用同进阶，否则放宽到全部进阶；样本仍不足时返回 null，由调用者回退角色卡口径。
+    /// 这是"玩家历史胜率"的唯一计算入口。
+    /// </summary>
+    public static double? PlayerHistoricClearRate(CareerData data, int ascension, int minimum = 5)
+    {
+        var usable = data.Results.Where(r => r.OfficialAscensionVerified && !PrivateAppointments.IsPrivate(r) && r.Outcome != "退赛").ToList();
+        var same = usable.Where(r => r.Ascension == ascension).ToList();
+        var sample = same.Count >= minimum ? same : usable;
+        return sample.Count >= minimum ? (double)sample.Count(r => r.Win) / sample.Count : null;
+    }
+
     private static RunPerformance SimulatePerformance(CareerPerson person, int officialAscension, string seed, bool cooperative, double chance, double defenseBonus, int rivalLevel, int? day)
     {
         if (SpireArbitration.Banned(person, day ?? 0)) return new(false, -1, 0);
@@ -183,6 +204,9 @@ public static class MatchRules
         bool clear = performance < chance;
         double stage = rng.NextDouble();
         int floor = clear ? 0 : FailureFloor(chance, defenseBonus, stage, rng.NextDouble());
+        // 真国运魔改尖塔：未通关层数上限/下限。未通关时先按上限截断、再抬到下限（下限优先），通关的场次不受影响。
+        if (!clear && person.FailureFloorCap >= 0) floor = Math.Min(floor, person.FailureFloorCap);
+        if (!clear && person.FailureFloorMin >= 0) floor = Math.Max(floor, person.FailureFloorMin);
         // 完整通关的平均用时按职业身份区分；失败仍按实际止步楼层折算。
         int comfort = person.MaxAscension - officialAscension;
         bool professional = EsportsWorld.IsProfessional(person);
@@ -191,7 +215,12 @@ public static class MatchRules
         // 多人队伍完整通关基准增加半小时，职业差异和随机波动沿用原计算。
         double teamOffset = cooperative ? 1800 : 0;
         baseline += teamOffset;
-        double seconds = baseline * (.88 + rng.NextDouble() * .24);
+        double timeRoll = rng.NextDouble();
+        double seconds = baseline * (.88 + timeRoll * .24);
+        // 该次抽样的自然波动位置（0–1）：0 = 公式下限 .88×baseline，1 = 公式上限 1.12×baseline。
+        // 用于把用时映射进角色卡配置的区间，而不是截断到端点。
+        double naturalSpan = baseline * .24;
+        double naturalPosition = naturalSpan > 0 ? Math.Clamp((seconds - baseline * .88) / naturalSpan, 0, 1) : .5;
         if (comfort >= 3 && rng.NextDouble() < .025) seconds = Math.Min(seconds, 2100 + teamOffset + rng.NextDouble() * 540);
         double minimum = cooperative ? 3600 : 2700;
         // 低于下限时保留个人差异，避免大量选手同时停在整点。
@@ -199,7 +228,31 @@ public static class MatchRules
         seconds = Math.Round(seconds);
         // 仅缩放最终用时，不额外取随机数，通关结果、止步楼层与个人差异沿用原计算。
         double original = clear ? seconds : Math.Round(seconds * floor / 50);
-        return new(clear, floor, original * RivalTimeScale(rivalLevel));
+        double time = original * RivalTimeScale(rivalLevel);
+        // 真国运魔改尖塔：模拟通关用时区间（下限 SimulatedClearSeconds / 上限 SimulatedClearSecondsMax）。
+        // 对所有角色的模拟生效 —— NPC 与玩家共用这一条 SimulatePerformance。
+        //
+        // 上下限都设时：把用时【映射进】这个区间，在该次抽样的自然波动位置上插值，
+        //   于是区间内均匀浮动（下限=上限即固定用时），而不是被截断到端点。
+        //   旧写法「有上限取小、有下限取大」会让用时长期高于上限的角色 100% 贴在区间上限上。
+        // 只设一端时：仍按原口径截断（单边的语义就是"不要超过/不要低于"）。
+        // 未通关的场次不受影响。
+        if (clear)
+        {
+            double lo = person.SimulatedClearSeconds, hi = person.SimulatedClearSecondsMax;
+            if (lo >= 0 && hi >= 0)
+            {
+                if (hi < lo) (lo, hi) = (hi, lo);
+                time = lo + (hi - lo) * naturalPosition;   // naturalPosition=0 → 下限；=1 → 上限
+            }
+            else
+            {
+                if (hi >= 0) time = Math.Min(time, hi);
+                if (lo >= 0) time = Math.Max(time, lo);
+            }
+            if (time < 0) time = 0;
+        }
+        return new(clear, floor, time);
     }
 
     internal static int FailureFloor(double chance, double defenseBonus, double stageRoll, double floorRoll)

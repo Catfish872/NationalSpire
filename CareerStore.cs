@@ -132,7 +132,12 @@ public static class CareerStore
         return data;
     }
 
-    public static void Save(CareerData? data = null)
+    public static void Save(CareerData? data = null) => SaveInternal(data, true);
+
+    // 财务事务只保存生涯，避免已落盘后因无关 AI 设置写入失败而回滚内存。
+    internal static void SaveCareerOnly(CareerData data) => SaveInternal(data, false);
+
+    private static void SaveInternal(CareerData? data, bool saveAiSettings)
     {
         if (data?.ExternalSave is { } external) { external(data); return; }
         try
@@ -158,7 +163,7 @@ public static class CareerStore
                 }
                 File.Move(temp, path, true);
                 ValidatedFiles[path] = Stamp(path);
-                if (ReferenceEquals(_data, data)) AiSettingsStore.Save(data.Ai);
+                if (saveAiSettings && ReferenceEquals(_data, data)) AiSettingsStore.Save(data.Ai);
             }
         }
         catch (Exception e) { Diagnostics.Error("career.save", e); throw; }

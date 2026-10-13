@@ -58,6 +58,7 @@ public sealed class CoopWorld
 }
 public sealed class CoopMember
 {
+    public ForexSpire.ForexPortfolio Forex { get; set; } = new();
     public CareerPerson? Card { get; set; }
     public int SeenCeremonySeason { get; set; }
     public HashSet<string> CeremonyReceipts { get; set; } = [];

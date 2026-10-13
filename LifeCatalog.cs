@@ -33,7 +33,7 @@ public static class LifeCatalog
             "教练驻队指导|邀请教练驻队，兼顾近期比赛和长期进步|驻队指导结束，签约选手保留了训练成果",
             "建立全队训练体系|统一职业、轮换和青训的分阶段训练|本期训练完成，全体签约选手取得长期进步"
         ]);
-        Group("生活", 25, 1, false, false, [
+        Group("生活", 25, 1, true, false, [
             "逛旧书店|找一本与比赛无关的书，给自己留一个安静下午|在扉页记下了这次客场的日期",
             "沿河散步|带上相机记录沿途的街景|整理出一本沿河散步相册",
             "地方料理课|跟着店主学一道当地家常菜|带回了手写食谱，终于记住了调味顺序",
@@ -45,7 +45,7 @@ public static class LifeCatalog
             "逛地方市集|挑选一件当地手工小物|纪念品已经放上个人展示架",
             "胶片摄影|用一卷胶片记录休息日|冲洗出的照片收进了生涯相册"
         ]);
-        Group("社交", 45, 1, false, false, [
+        Group("社交", 45, 1, true, false, [
             "赛后请客|约{人}吃一顿便饭，聊聊赛场之外的近况|和{人}聊到店家准备打烊，约好了下次再聚",
             "桌游下午|约{人}到桌游店尝试一款新游戏|和{人}留下了一张合照，输赢留在了桌上",
             "给朋友挑礼物|给{人}准备一份符合其职业经历的小礼物|{人}收到了礼物，并回了一条感谢消息",
@@ -163,6 +163,17 @@ public static class LifeCatalog
         // 历史版本按列表位置编号；标题与分类共同确定原项目，避免插入新分类后错配。
         return Plans.FirstOrDefault(p => p.Kind == activity.Kind && p.Title == activity.Title);
     }
+
+    /// <summary>这条安排是否需要**指定对象**。
+    /// 全队 / 俱乐部 / 经营类作用于全员，不需要选人；青训 / 社交与单人训练类才需要。
+    /// 判定直接复用 <see cref="CareerTraining.Kind"/>——与"效果到底作用在谁身上"是同一个函数，
+    /// 所以不会出现"界面要你选一个人、效果却是全队"这种语义脱节。</summary>
+    public static bool NeedsTarget(Plan plan) => plan.Kind switch
+    {
+        "青训" or "社交" => true,
+        "备赛" or "培养" => CareerTraining.Kind(plan.Title) is not ("team" or "team-growth"),
+        _ => false
+    };
     public static readonly (string Key, string Title, int Cost)[] Objects = [
         ("lamp", "暖光台灯", 18), ("plant", "桌边绿植", 8), ("mug", "手作马克杯", 12), ("poster", "本季参赛纪念海报", 20),
         ("shelf", "奖杯展示架", 85), ("chair", "可调节工作椅", 70), ("photo", "客场照片墙", 38), ("vinyl", "休息室唱片机", 65),

@@ -37,8 +37,10 @@ public static partial class CoopRules
         d.Esports.Sponsors = m.Sponsors; d.Esports.SponsorOffers = m.SponsorOffers;
         // 团队合同已经由世界结算，个人商业结算只处理自己的赞助。
         d.Esports.PlayerContract = null; d.Esports.CommercialPaidMatches = [];
+        d.Forex = CoopForex.View(w, m);
         d = CoopJson.Copy(d); CoopJson.Detached(d);
         d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
+        d.ForexGroupPositions = w.Members.Sum(member => member.Forex?.Account?.Positions?.Count ?? 0);
         return d;
     }
     private static void Capture(CoopWorld w, CoopMember m, CareerData d)
@@ -105,6 +107,7 @@ public static partial class CoopRules
         string? error = null;
         try
         {
+            CoopForex.Attach(w);
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
@@ -112,6 +115,7 @@ public static partial class CoopRules
             if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
+            else if (command.Kind.StartsWith("forex-", StringComparison.Ordinal)) error = CoopForex.Command(w, member, command);
             else if (command.Kind.StartsWith("owned-", StringComparison.Ordinal))
             {
                 if (sender != w.Owner) return (original, Reject("俱乐部由房主管理。"));
@@ -489,6 +493,7 @@ public static partial class CoopRules
         if (original.Run is not { } run || run.Attempt != attempt || !double.IsFinite(seconds) || seconds < 0 || clear && seconds <= 0) throw new InvalidOperationException("结算对局不匹配。");
         if (!players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) throw new InvalidOperationException("结算成员不完整。");
         var w = CoopJson.Copy(original); CoopJson.Detached(w.World); var d = w.World;
+        CoopForex.Attach(w);
         UseOwnerWallet(w);
         decimal clubBefore = d.Esports.OwnedClub?.CashFlow ?? 0;
         var match = d.Matches.Single(m => m.Id == run.MatchId); decimal money = CareerMoney.Balance(d); int day = d.Day, rating = d.Rating, fans = d.Fans;

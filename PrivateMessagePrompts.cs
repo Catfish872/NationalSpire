@@ -195,6 +195,128 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             .SelectMany(group => pieces.Where(p => p.Group == group).Select(p => p.Text)));
         return (stable, current);
     }
+    // 真国运魔改尖塔：玩家手改过的上下文块。ContextOverrideBase 是保存那一刻自动生成的原文，
+    // ContextOverride 是玩家改后的文本。两者相减得到"玩家改过的行"，再把这些改动按锚点套到最新的
+    // 自动生成文本上 —— 于是玩家没碰过的行（日期/赛程/好感/印象/公开战况…）每轮都是实时的，只有玩家
+    // 改过的行归玩家。算法在 tools\mergetest 里有 20 条断言覆盖（追加/改行/删行/中间插入/锚点失效回退/CRLF/旧存档）。
+    public static string MergeContext(string fresh, string baseText, string edited)
+    {
+        if (string.IsNullOrEmpty(edited)) return fresh;
+        if (string.IsNullOrEmpty(baseText) || baseText == fresh) return edited;
+        if (edited == baseText) return fresh;
+        string text = Normalize(fresh);
+        string text2 = Normalize(baseText);
+        string text3 = Normalize(edited);
+        string[] array = text2.Split('\n');
+        string[] array2 = text3.Split('\n');
+        string[] array3 = text.Split('\n');
+        if (array.Length > 1500 || array2.Length > 1500 || array3.Length > 1500) return text3;
+        List<(int Anchor, int Remove, List<string> Insert)> list = DiffHunks(array, array2);
+        if (list == null) return text3;
+        List<string> list2 = new List<string>(array3);
+        int num = -1;
+        foreach (var item in list)
+        {
+            int num2 = -1;
+            bool flag = (item.Anchor == array.Length - 1 && item.Remove == 0);
+            if (!flag && item.Anchor >= 0)
+            {
+                for (int num3 = Math.Min(3, item.Anchor + 1); num3 >= 1; num3--)
+                {
+                    int num4 = FindMergeAnchor(list2, array, item.Anchor - num3 + 1, num3, num + 1);
+                    if (num4 >= 0)
+                    {
+                        num2 = num4 + num3 - 1;
+                        break;
+                    }
+                }
+                if (num2 < 0)
+                {
+                    if (item.Remove > 0) return text3;
+                    flag = true;
+                }
+            }
+            int num5;
+            int num6;
+            if (flag)
+            {
+                num5 = list2.Count;
+                num6 = 0;
+            }
+            else
+            {
+                num5 = num2 + 1;
+                num6 = Math.Min(item.Remove, Math.Max(0, list2.Count - num5));
+            }
+            if (num6 > 0) list2.RemoveRange(num5, num6);
+            if (item.Insert.Count > 0) list2.InsertRange(num5, item.Insert);
+            num = num5 + item.Insert.Count - 1;
+        }
+        return string.Join("\n", list2);
+    }
+
+    private static string Normalize(string text) => text.Replace("\r\n", "\n").Replace('\r', '\n');
+
+    private static List<(int Anchor, int Remove, List<string> Insert)> DiffHunks(string[] from, string[] to)
+    {
+        int num = from.Length;
+        int num2 = to.Length;
+        int[,] array = new int[num + 1, num2 + 1];
+        for (int num3 = num - 1; num3 >= 0; num3--)
+            for (int num4 = num2 - 1; num4 >= 0; num4--)
+                array[num3, num4] = (from[num3] == to[num4]) ? (array[num3 + 1, num4 + 1] + 1) : Math.Max(array[num3 + 1, num4], array[num3, num4 + 1]);
+        List<(int Anchor, int Remove, List<string> Insert)> list = new List<(int, int, List<string>)>();
+        int num5 = -1;
+        int num6 = 0;
+        List<string> list2 = new List<string>();
+        int num7 = 0;
+        int num8 = 0;
+        while (num7 < num && num8 < num2)
+        {
+            if (from[num7] == to[num8])
+            {
+                Flush();
+                num5 = num7;
+                num7++;
+                num8++;
+            }
+            else if (array[num7 + 1, num8] >= array[num7, num8 + 1])
+            {
+                num6++;
+                num7++;
+            }
+            else
+            {
+                list2.Add(to[num8]);
+                num8++;
+            }
+        }
+        while (num7 < num) { num6++; num7++; }
+        while (num8 < num2) { list2.Add(to[num8]); num8++; }
+        Flush();
+        return list;
+        void Flush()
+        {
+            if (num6 > 0 || list2.Count > 0) list.Add((num5, num6, list2));
+            num6 = 0;
+            list2 = new List<string>();
+        }
+    }
+
+    private static int FindMergeAnchor(List<string> haystack, string[] needle, int needleStart, int count, int from)
+    {
+        for (int num = Math.Max(0, from); num + count <= haystack.Count; num++)
+        {
+            bool flag = true;
+            for (int num2 = 0; num2 < count; num2++)
+            {
+                if (haystack[num + num2] != needle[needleStart + num2]) { flag = false; break; }
+            }
+            if (flag) return num;
+        }
+        return -1;
+    }
+
     public static string Context(CareerData data, PrivateConversation c, PrivateTurn turn, List<ContextSpan>? spans = null)
     {
         var search = new CommunityMemorySearch.Request();

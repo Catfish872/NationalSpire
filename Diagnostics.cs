@@ -1,4 +1,4 @@
-﻿using System.IO.Compression;
+using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -8,7 +8,12 @@ namespace NationalSpire;
 /// <summary>保留有界的运行记录；导出时合并生涯、请求和游戏日志，统一隐藏凭据。</summary>
 public static partial class Diagnostics
 {
-    public const string ModVersion = "0.26.10";
+    // 真国运魔改尖塔：本地修改版专用标识。联机内容一致性也用它（CoopRuntime.Compatibility），
+    // 所以与原版字符串不同 —— 防止两个版本的玩家互相进房导致世界数据不一致。
+    // true2：增速公式重标 + NationalLegacy 新增 Growth* 字段（存档结构变了），所以再隔一档。
+    // true3：消费品与投资（CareerPerson.Fans / CareerData.Consumer），存档结构又变一次。
+    // true4-forex1：单人原生外汇存档与导航；与旧版隔离联机内容标识。
+    public const string ModVersion = "0.26.11-true4-forex2";
 
     // 开赛失败逐次记录；读取诊断资料失败时仍保留最初的异常及其余资料。
     public static string RecordStartFailure(string stage, Exception error,

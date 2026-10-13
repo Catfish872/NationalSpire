@@ -24,6 +24,7 @@ public partial class CareerScreen : Control, IScreenContext
     private string _communityFilter = "全部";
     private int _postLimit = 30;
     private ScrollContainer _scroll = null!;
+    private MarginContainer _contentPadding = null!;
     private Control _stage = null!;
     private readonly Dictionary<string, Button> _navButtons = new();
     private readonly List<(CanvasItem Node, bool Visible)> _hidden = [];
@@ -202,11 +203,15 @@ public partial class CareerScreen : Control, IScreenContext
         _backButton = Button("← 返回上一级", Back, 210); navigation.AddChild(_backButton);
         _breadcrumb = Text("", 16, _muted); _breadcrumb.AutowrapMode = TextServer.AutowrapMode.Off;
         _breadcrumb.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; navigation.AddChild(_breadcrumb);
+        _breadcrumb.CustomMinimumSize = new(280, 0); _breadcrumb.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+        var forexEntry = Button("外汇交易  ↗", () => SwitchTab("外汇交易"), 180);
+        forexEntry.Name = "ForexEntryButton"; StyleForexEntry(forexEntry, false);
+        navigation.AddChild(forexEntry); _navButtons["外汇交易"] = forexEntry;
         _status = Text("", 16, _muted); _status.CustomMinimumSize = new Vector2(0, 32); right.AddChild(_status);
         _scroll = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
         right.AddChild(_scroll);
         _content = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _content.AddThemeConstantOverride("separation", 18);
-        var scrollPadding = new MarginContainer { Name = "CareerContentPadding", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        var scrollPadding = _contentPadding = new MarginContainer { Name = "CareerContentPadding", SizeFlagsHorizontal = SizeFlags.ExpandFill };
         scrollPadding.AddThemeConstantOverride("margin_bottom", 32); _scroll.AddChild(scrollPadding); scrollPadding.AddChild(_content);
         Render();
         if (_multiplayer == null && CareerStore.LoadNotice.Length > 0) Notice(CareerStore.LoadNotice, true);
@@ -229,12 +234,16 @@ public partial class CareerScreen : Control, IScreenContext
         _renderVersion++;
         _mentionsChecked = false;
         _listCache?.Release(); CareerVisuals.ClearContent(_content);
-        _content.AddThemeConstantOverride("separation", 18);
+        _content.AddThemeConstantOverride("separation", _tab == "外汇交易" ? 8 : 18);
+        _contentPadding.AddThemeConstantOverride("margin_bottom", _tab == "外汇交易" ? 0 : 32);
+        _scroll.VerticalScrollMode = _tab == "外汇交易" ? ScrollContainer.ScrollMode.Disabled : ScrollContainer.ScrollMode.Auto;
+        if (_tab == "外汇交易") _scroll.ScrollVertical = 0;
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;
         UpdateNavigation();
         foreach (var (name, button) in _navButtons)
         {
             button.Disabled = ViewData.Failure != null && name != "结算";
+            if (name == "外汇交易") { StyleForexEntry(button, name == _tab); continue; }
             var style = CareerVisuals.Box(name == _tab ? "28434c" : "0d1825", name == _tab ? "658c91" : "0d1825", 5, 14);
             style.ContentMarginTop = style.ContentMarginBottom = 8;
             button.AddThemeStyleboxOverride("normal", style);
@@ -249,7 +258,7 @@ public partial class CareerScreen : Control, IScreenContext
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
-        _status.Text = $"第 {data.Season} 赛季  ·  第 {SeasonCalendar.Day(data, data.Day)} 天     评分 {data.Rating}     关注 {data.Fans}     可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
+        _status.Text = $"第 {data.Season} 赛季  ·  第 {SeasonCalendar.Day(data, data.Day)} 天（总第 {data.Day} 天）     评分 {data.Rating}     关注 {data.Fans}     可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
         if (_multiplayer != null)
         {
             _content.AddChild(Text(_multiplayer.Status, 16, CareerVisuals.Teal));
@@ -278,6 +287,7 @@ public partial class CareerScreen : Control, IScreenContext
             case "赛事": RenderTeam(); Matches(data); break;
             case "赛事与俱乐部": World(data); break;
             case "生涯生活": Life(data); break;
+            case "外汇交易": Forex(data); break;
             case "社区": Community(data); break;
             case "选手档案": Profiles(data); break;
             case "模组设置": AiSettings(data); break;
@@ -319,7 +329,11 @@ public partial class CareerScreen : Control, IScreenContext
         intro.AddChild(new Control { CustomMinimumSize = new Vector2(0, 12) });
         var play = Button(data.PendingMatchId != null ? "查看进行中的比赛   →" : noAvailableMatch ? "查看日程并推进   →" : next == null ? "选择参赛赛事   →" : next.Day > data.Day ? "前往比赛日   →" : "准备出场   →", () =>
         {
-            if (next != null && next.Day > data.Day && data.PendingMatchId == null && !MultiplayerCommand("propose-advance", number: next.Day)) CareerEngine.AdvanceToMatch(data);
+            if (next != null && next.Day > data.Day && data.PendingMatchId == null)
+            {
+                RequestCareerAdvance(data, next.Day, () => Visit(() => _tab = "赛事"));
+                return;
+            }
             Visit(() => _tab = noAvailableMatch && data.PendingMatchId == null ? "日程" : "赛事");
         }, 260); Emphasize(play); intro.AddChild(play);
         var poster = new VBoxContainer { CustomMinimumSize = new Vector2(276, 0) }; heroRow.AddChild(poster);
@@ -403,12 +417,12 @@ public partial class CareerScreen : Control, IScreenContext
         AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); _content.AddChild(row);
         row.AddChild(TeamButton("推进一天", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 1)) return; bool advanced = CareerEngine.AdvanceOneDay(data); Render(); if (!advanced) Notice("比赛日需先完成或放弃比赛。", true); }, 180));
-        var nextMatchButton = TeamButton("跳转到下一场比赛", () => { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); }, 260);
+        var nextMatchButton = TeamButton("跳转到下一场比赛", () => RequestCareerAdvance(data, CareerEngine.NextMatch(data)?.Day ?? data.Day + 1), 260);
         if (CareerEngine.NextMatch(data) == null)
         { nextMatchButton.Text = "暂无已报名比赛"; nextMatchButton.Disabled = true; nextMatchButton.TooltipText = "可以推进一天、前往下个赛季，或选择尚可报名的比赛。"; }
         row.AddChild(nextMatchButton);
-        row.AddChild(TeamButton("跳过四周", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 28)) return; CareerEngine.AdvanceToDay(data, data.Day + 28); _selectedDay = data.Day; Render(); }, 155));
-        row.AddChild(TeamButton("下个赛季", () => { if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return; CareerEngine.AdvanceToDay(data, SeasonCalendar.End(data) + 1); _selectedDay = data.Day; Render(); }, 155));
+        row.AddChild(TeamButton("跳过四周", () => RequestCareerAdvance(data, data.Day + 28), 155));
+        row.AddChild(TeamButton("下个赛季", () => RequestCareerAdvance(data, SeasonCalendar.End(data) + 1), 155));
         _content.AddChild(TeamButton(data.AutoQualifiers ? "选拔赛自动报名：开启" : "选拔赛自动报名：暂停", () =>
         {
             if (MultiplayerCommand("propose-auto", number: data.AutoQualifiers ? 0 : 1)) return;
@@ -466,7 +480,7 @@ public partial class CareerScreen : Control, IScreenContext
             var fixtures = competition.Fixtures.Where(f => f.Day == shown).ToList();
             box.AddChild(Text($"世界赛场 · {competition.Name} · {fixtures.Count(f => f.Finished)}/{fixtures.Count} 场已结束", 16, _muted));
         }
-        if (shown > data.Day) box.AddChild(TeamButton("跳转到此日", () => { if (MultiplayerCommand("propose-advance", number: shown)) return; CareerEngine.AdvanceToDay(data, shown); Render(); }, 180));
+        if (shown > data.Day) box.AddChild(TeamButton("跳转到此日", () => RequestCareerAdvance(data, shown), 180));
     }
 
     private void Matches(CareerData data)
@@ -563,7 +577,7 @@ public partial class CareerScreen : Control, IScreenContext
             var controls = new HBoxContainer(); controls.AddThemeConstantOverride("separation", 12); box.AddChild(controls);
             var enter = TeamButton(due ? "开始比赛" : "跳转到比赛日", async () =>
             {
-                if (!due) { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); return; }
+                if (!due) { RequestCareerAdvance(data, CareerEngine.NextMatch(data)?.Day ?? data.Day + 1); return; }
                 if (chars.Count == 0) { Notice("没有可用角色。", true); return; }
                 if (MultiplayerCommand("propose-start", match.Id, number: (int)asc.Value)) return;
                 if (_starting) return;
@@ -573,7 +587,17 @@ public partial class CareerScreen : Control, IScreenContext
                 _starting = false;
                 if (IsInstanceValid(this) && !IsQueuedForDeletion() && error != null) Notice(error, true);
             }, 220); Emphasize(enter); controls.AddChild(enter);
-            if (_multiplayer == null && due && data.PendingMatchId == null) controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
+            if (_multiplayer == null && due && data.PendingMatchId == null)
+            {
+                controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
+                // 真国运魔改尖塔：「模拟本场」用世界赛签表同一套 EsportsWorld.SimulatePlayerRun 替玩家打完这一场，
+                // 再走 CareerEngine.FinishMatch 正常结算 —— 战报、社区帖、评分、粉丝、奖金、战绩、AI 统计都按真打一样记。
+                // 只在单人、比赛日、没有进行中的对局时出现（与「放弃本场」同一条件）。
+                var simulate = Button("模拟本场", () => SimulatePlayerMatch(data, match, (int)asc.Value, chars, selectedCharacter), 160);
+                simulate.Name = "SimulateMatchButton";
+                simulate.TooltipText = "不想亲自打？按你角色卡的属性、模拟通关率、未通关层数上限和模拟通关用时算一局，结果照常记为正式战绩（战报、评分、奖金、AI 统计都按真打一样记）。";
+                controls.AddChild(simulate);
+            }
             if (SaveManager.Instance.HasRunSave) box.AddChild(Text(MatchRecovery.SingleplayerInUse, 16, new Color("e7a6a6")));
             box.AddChild(Matchup(data, match));
         }
@@ -593,8 +617,7 @@ public partial class CareerScreen : Control, IScreenContext
             }, 180));
             actions.AddChild(TeamButton("下个赛季", () =>
             {
-                if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return;
-                CareerEngine.AdvanceToDay(data, SeasonCalendar.End(data) + 1); Render();
+                RequestCareerAdvance(data, SeasonCalendar.End(data) + 1);
             }, 180));
             eb.AddChild(Text("推进期间会在已报名的比赛日停下。", 15, _muted));
         }
@@ -633,6 +656,32 @@ public partial class CareerScreen : Control, IScreenContext
         }
     }
 
+    // 「模拟本场」：用世界赛签表同一套 EsportsWorld.SimulatePlayerRun 替玩家打完这一场，
+    // 再走 CareerEngine.FinishMatch 正常结算 —— 战报、社区帖、评分、粉丝、奖金、战绩、AI 统计都按真打一样记。
+    private void SimulatePlayerMatch(CareerData data, CareerMatch match, int ascension, List<CharacterModel> characters, int selected)
+    {
+        if (match.Status != "待赛" || match.Day != data.Day || data.PendingMatchId != null)
+        {
+            Notice("这场比赛现在不能模拟。", error: true);
+            return;
+        }
+        CharacterModel? characterModel = null;
+        if (characters.Count > 0)
+            characterModel = selected >= 0 && selected < characters.Count ? characters[selected] : characters[CareerEngine.StableHash(match.Seed + ":sim-character") % characters.Count];
+        string text = characterModel != null ? characterModel.Id.ToString() : data.PlayerCard?.Character ?? CareerAvatars.MainCharacter(data, "player");
+        string character = GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == text)?.Title.GetFormattedText() ?? text;
+        var runPerformance = EsportsWorld.SimulatePlayerRun(data, match.Day, ascension, match.Seed + ":player-sim");
+        CareerEngine.FinishMatch(data, match, runPerformance.Cleared, abandoned: false, runPerformance.Floor, character, ascension, new List<string>(), runPerformance.Seconds, null, null, text);
+        if (data.PendingSettlementId != match.Id)
+        {
+            Notice("模拟没有结算成功（比赛状态可能已变化）。", error: true);
+            Render();
+            return;
+        }
+        Notice($"本场已由程序模拟 —— {MatchRules.Performance(runPerformance.Cleared, runPerformance.Floor, runPerformance.Seconds)}。", false);
+        if (_tab == "结算") Render(); else SwitchTab("结算");
+    }
+
     private void Community(CareerData data)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.Community);
@@ -663,9 +712,9 @@ public partial class CareerScreen : Control, IScreenContext
         readBriefs.TooltipText = "将未由 AI 撰写、也没有玩家参与的内容标为已读。";
         communityActions.AddChild(readBriefs);
         var filters = new HBoxContainer(); _content.AddChild(filters);
-        foreach (string filter in new[] { "全部", "比赛战报", "国际赛事", "俱乐部动态", "人物日常", "我的讨论", "未读更新" })
-            filters.AddChild(FilterButton(filter, _communityFilter == filter, () => { _communityFilter = filter; _postLimit = 30; _scroll.ScrollVertical = 0; Render(); }, 110));
-        var posts = (_communityFilter is "我的讨论" or "未读更新" ? CommunityThreads.All(data) : data.Posts).Where(p => _communityFilter switch { "我的讨论" => p.AuthorId == "player" || p.Replies.Any(r => r.AuthorId == "player"), "未读更新" => p.Revision > p.SeenRevision, "比赛战报" => p.EventKey.StartsWith("match"), "国际赛事" => p.Category == "国际赛事" || p.Category.Contains("洲际") || p.Category.Contains("世界杯"), "俱乐部动态" => p.Category is "转会" or "俱乐部", "人物日常" => p.Category is "训练日常" or "人物专访" or "人物日常", _ => true }).ToList();
+        foreach (string filter in new[] { "全部", "比赛战报", "国际赛事", "外汇市场", "俱乐部动态", "人物日常", "消费与生活", "人气榜", "我的讨论", "未读更新" })
+            filters.AddChild(FilterButton(filter, _communityFilter == filter, () => { _communityFilter = filter; _postLimit = 30; _scroll.ScrollVertical = 0; Render(); }, 96));
+        var posts = (_communityFilter is "我的讨论" or "未读更新" ? CommunityThreads.All(data) : data.Posts).Where(p => _communityFilter switch { "我的讨论" => p.AuthorId == "player" || p.Replies.Any(r => r.AuthorId == "player"), "未读更新" => p.Revision > p.SeenRevision, "比赛战报" => p.EventKey.StartsWith("match"), "国际赛事" => p.Category == "国际赛事" || p.Category.Contains("洲际") || p.Category.Contains("世界杯"), "外汇市场" => p.Category == "外汇市场", "俱乐部动态" => p.Category is "转会" or "俱乐部", "人物日常" => p.Category is "训练日常" or "人物专访" or "人物日常", "消费与生活" => p.Category is "消费与生活" or "热搜", "人气榜" => p.Category == "人气榜", _ => true }).ToList();
         foreach (var post in posts.Take(_postLimit)) AddPostCard(data, post, true);
         if (posts.Count == 0) _content.AddChild(Text("这个频道暂时没有新动态。", 18, _muted));
         if (posts.Count > _postLimit) _content.AddChild(Button("显示更早动态", () => { _postLimit += 30; Render(); }, 190));
@@ -768,6 +817,454 @@ public partial class CareerScreen : Control, IScreenContext
             confirm.AddChild(Button("取消", () => { _confirmReset = false; Render(); }, 120));
         }
 
+    }
+
+    // ───────────────────────── 生涯战绩记录编辑器 ─────────────────────────
+    private sealed class CareerResultEditControls
+    {
+        public Label Index = null!;
+        public Label Impact = null!;
+        public SpinBox Day = null!;
+        public LineEdit Event = null!;
+        public LineEdit Opponent = null!;
+        public LineEdit Character = null!;
+        public SpinBox Ascension = null!;
+        public SpinBox PlayedAscension = null!;
+        public SpinBox Floor = null!;
+        public SpinBox Seconds = null!;
+        public SpinBox RatingDelta = null!;
+        public SpinBox FansDelta = null!;
+        public SpinBox Prize = null!;
+        public LineEdit Seed = null!;
+        public OptionButton Outcome = null!;
+        public OptionButton Kind = null!;
+        public OptionButton Win = null!;
+        public OptionButton Verified = null!;
+        public Button Remove = null!;
+    }
+
+    private static readonly string[] CareerResultOutcomeLabels = ["获胜", "平局", "失利", "退赛"];
+    private static readonly string[] CareerResultKindLabels = ["league", "continental", "worldcup", "worldfinal", "masters", "legacy", "private-friendly", "private-challenge"];
+    private static readonly string[] CareerResultYesNo = ["是", "否"];
+
+    private static bool PrivateResultKind(string kind) => kind is "private-friendly" or "private-challenge";
+
+    // 生涯总计里的胜/平/负是独立计数器（不是从记录重算的 —— 记录只保留最近 200 条），
+    // 所以这里按"改一条记录就挪一格"的方式做增量同步，改结果/删记录/新增记录时总计跟着走。
+    private static void AdjustResultCounters(CareerData data, string outcome, int delta)
+    {
+        if (delta == 0) return;
+        if (outcome == "获胜") data.Wins = Math.Max(0, data.Wins + delta);
+        else if (outcome == "平局") data.Draws = Math.Max(0, data.Draws + delta);
+        else data.Losses = Math.Max(0, data.Losses + delta);
+    }
+
+    // 生涯战报的原始记录编辑器：改的就是 CareerData.Results，所以战报、战绩图、选手档案、
+    // AI 上下文里的「已记录公开比赛」统计、以及从记录重算的最高通关进阶都会跟着变。
+    private void OpenCareerResultsEditor(CareerData data)
+    {
+        if (_dialogOverlay != null) return;
+        var viewData = data;
+        var controls = new CareerResultEditControls();
+        int index = viewData.Results.Count - 1;
+        bool removing = false;
+        ShowCareerDialog("编辑战绩记录", "改的是生涯战报的原始记录：战报、战绩图、选手档案、AI 上下文里的「已记录公开比赛」都读它；改结果或删/加记录时，生涯总计的胜/平/负会跟着挪一格，保存后还会按记录重算最高通关进阶。", () =>
+        {
+            Render();
+            return true;
+        }, "关闭", box =>
+        {
+            controls.Index = Text("", 15, CareerVisuals.Teal);
+            box.AddChild(controls.Index);
+            var hBoxContainer = new HBoxContainer();
+            hBoxContainer.AddThemeConstantOverride("separation", 12);
+            box.AddChild(hBoxContainer);
+            hBoxContainer.AddChild(Button("← 更早一条", () => { if (index > 0) { index--; Load(); } }, 150));
+            hBoxContainer.AddChild(Button("更新一条 →", () => { if (index < viewData.Results.Count - 1) { index++; Load(); } }, 150));
+            hBoxContainer.AddChild(Button("最早", () => { index = 0; Load(); }, 100));
+            hBoxContainer.AddChild(Button("最新", () => { index = viewData.Results.Count - 1; Load(); }, 100));
+            var scrollContainer = new ScrollContainer
+            {
+                Name = "CareerResultFormScroll",
+                CustomMinimumSize = new Vector2(0, Math.Clamp(GetViewportRect().Size.Y * 0.4f, 240f, 470f)),
+                HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+                SizeFlagsHorizontal = SizeFlags.ExpandFill
+            };
+            box.AddChild(scrollContainer);
+            var gridContainer = new GridContainer { Name = "CareerResultForm", Columns = 4, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            gridContainer.AddThemeConstantOverride("h_separation", 18);
+            gridContainer.AddThemeConstantOverride("v_separation", 12);
+            scrollContainer.AddChild(gridContainer);
+            controls.Day = FieldSpin(gridContainer, "日期（第几天）", 1, 9999, 1);
+            controls.Event = FieldLine(gridContainer, "赛事 / 事件");
+            controls.Opponent = FieldLine(gridContainer, "对手");
+            controls.Character = FieldLine(gridContainer, "使用角色");
+            controls.Ascension = FieldSpin(gridContainer, "赛事进阶（0-10）", 0, 10, 1);
+            controls.PlayedAscension = FieldSpin(gridContainer, "实际挑战进阶（-1 未记录）", -1, 10, 1);
+            controls.Floor = FieldSpin(gridContainer, "层数", 0, 9999, 1);
+            controls.Seconds = FieldSpin(gridContainer, "用时（秒，-1 未记录）", -1, 7200, 1);
+            controls.RatingDelta = FieldSpin(gridContainer, "评分变化", -500, 500, 1);
+            controls.FansDelta = FieldSpin(gridContainer, "关注变化", -1000000, 1000000, 1);
+            controls.Prize = FieldSpin(gridContainer, "奖金（美元）", 0, 100000000, 1);
+            controls.Seed = FieldLine(gridContainer, "种子");
+            controls.Outcome = FieldChoice(gridContainer, "结果", CareerResultOutcomeLabels);
+            controls.Kind = FieldChoice(gridContainer, "赛事类型", CareerResultKindLabels);
+            controls.Win = FieldChoice(gridContainer, "通关（本局是否打通）", CareerResultYesNo);
+            controls.Verified = FieldChoice(gridContainer, "官方验证", CareerResultYesNo);
+            controls.Impact = Text("", 14, _muted);
+            box.AddChild(controls.Impact);
+            var hBoxContainer2 = new HBoxContainer();
+            hBoxContainer2.AddThemeConstantOverride("separation", 14);
+            box.AddChild(hBoxContainer2);
+            hBoxContainer2.AddChild(Button("保存本场", Save, 130));
+            controls.Remove = Button("删除本场", RemoveEntry, 150);
+            hBoxContainer2.AddChild(controls.Remove);
+            hBoxContainer2.AddChild(Button("新增一场（以当前为模板）", AddEntry, 240));
+            Load();
+            void Field(string label, GridContainer target)
+            {
+                var label2 = Text(label, 15, _muted);
+                target.AddChild(label2);
+            }
+            SpinBox FieldSpin(GridContainer target, string label, double min, double max, double step)
+            {
+                Field(label, target);
+                var spinBox = new SpinBox { MinValue = min, MaxValue = max, Step = step, CustomMinimumSize = new Vector2(175, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                target.AddChild(spinBox);
+                spinBox.ValueChanged += _ => RefreshImpact();
+                return spinBox;
+            }
+            LineEdit FieldLine(GridContainer target, string label)
+            {
+                Field(label, target);
+                var lineEdit = new LineEdit { CustomMinimumSize = new Vector2(175, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                lineEdit.AddThemeFontSizeOverride("font_size", 15);
+                lineEdit.AddThemeColorOverride("font_color", _ink);
+                lineEdit.AddThemeStyleboxOverride("normal", CareerVisuals.Box("0c1b27", "304e5d", 8, 10));
+                lineEdit.AddThemeStyleboxOverride("focus", CareerVisuals.Box("10232e", "69bcb3", 8, 10));
+                target.AddChild(lineEdit);
+                lineEdit.TextChanged += _ => RefreshImpact();
+                return lineEdit;
+            }
+            OptionButton FieldChoice(GridContainer target, string label, string[] options)
+            {
+                Field(label, target);
+                var optionButton = new OptionButton { CustomMinimumSize = new Vector2(175, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                optionButton.AddThemeFontSizeOverride("font_size", 15);
+                foreach (string option in options) optionButton.AddItem(option);
+                target.AddChild(optionButton);
+                optionButton.ItemSelected += _ => RefreshImpact();
+                return optionButton;
+            }
+            void SelectChoice(OptionButton button, string[] options, string current)
+            {
+                button.Clear();
+                int num = 0;
+                bool flag = false;
+                for (int j = 0; j < options.Length; j++)
+                {
+                    button.AddItem(options[j]);
+                    if (options[j] == current) { num = j; flag = true; }
+                }
+                if (!flag && current.Length > 0) { button.AddItem(current); num = options.Length; }
+                button.Selected = num;
+            }
+            string ChoiceText(OptionButton button) => button.Selected >= 0 && button.Selected < button.ItemCount ? button.GetItemText(button.Selected) : "";
+            void RefreshImpact()
+            {
+                if (index < 0 || index >= viewData.Results.Count) return;
+                int num = -1;
+                for (int j = 0; j < viewData.Results.Count; j++)
+                {
+                    if (j == index) continue;
+                    var other = viewData.Results[j];
+                    if (other.Win && other.OfficialAscensionVerified && !PrivateAppointments.IsPrivate(other)) num = Math.Max(num, other.Ascension);
+                }
+                bool flag = controls.Win.Selected == 0;
+                bool flag2 = controls.Verified.Selected == 0;
+                int num2 = (int)controls.Ascension.Value;
+                if (flag && flag2 && !PrivateResultKind(ChoiceText(controls.Kind))) num = Math.Max(num, num2);
+                int num3 = (int)controls.PlayedAscension.Value;
+                string text = num3 >= 0 ? num3.ToString() : flag2 ? num2.ToString() : "未记录";
+                controls.Impact.Text = $"按当前编辑：最高通关进阶 → {num}（取「通关=是 且 官方验证=是 且 非私约」记录的赛事进阶最大值）；AI 统计里的实际挑战进阶 → {text}。";
+            }
+            void Load()
+            {
+                bool flag = index >= 0 && index < viewData.Results.Count;
+                removing = false;
+                controls.Remove.Text = "删除本场";
+                if (!flag)
+                {
+                    controls.Index.Text = "还没有任何战绩记录 —— 点「新增一场」建一条空白记录。";
+                    controls.Impact.Text = "";
+                    return;
+                }
+                var current = viewData.Results[index];
+                controls.Index.Text = $"第 {index + 1} / {viewData.Results.Count} 条记录 · 对局 {(current.MatchId.Length > 0 ? current.MatchId : "（无）")} · 赛事 {(current.CompetitionId.Length > 0 ? current.CompetitionId : "（无）")}";
+                controls.Day.Value = Math.Clamp(current.Day, 1, 9999);
+                controls.Event.Text = current.Event;
+                controls.Opponent.Text = current.Opponent;
+                controls.Character.Text = current.Character;
+                controls.Ascension.Value = Math.Clamp(current.Ascension, 0, 10);
+                controls.PlayedAscension.Value = Math.Clamp(current.PlayedAscension ?? -1, -1, 10);
+                controls.Floor.Value = Math.Clamp(current.Floor, 0, 9999);
+                controls.Seconds.Value = Math.Clamp(current.RunSeconds ?? -1.0, -1.0, 7200.0);
+                controls.RatingDelta.Value = Math.Clamp(current.RatingDelta, -500, 500);
+                controls.FansDelta.Value = Math.Clamp(current.FansDelta, -1000000, 1000000);
+                controls.Prize.Value = Math.Clamp(current.Prize, 0, 100000000);
+                controls.Seed.Text = current.Seed;
+                SelectChoice(controls.Outcome, CareerResultOutcomeLabels, current.Outcome);
+                SelectChoice(controls.Kind, CareerResultKindLabels, current.Kind);
+                controls.Win.Selected = current.Win ? 0 : 1;
+                controls.Verified.Selected = current.OfficialAscensionVerified ? 0 : 1;
+                RefreshImpact();
+            }
+            void Save()
+            {
+                if (index < 0 || index >= viewData.Results.Count) return;
+                var current = viewData.Results[index];
+                string text = current.Outcome;
+                current.Day = (int)controls.Day.Value;
+                current.Event = controls.Event.Text.Trim();
+                current.Opponent = controls.Opponent.Text.Trim();
+                current.Character = controls.Character.Text.Trim();
+                current.Ascension = (int)controls.Ascension.Value;
+                int num = (int)controls.PlayedAscension.Value;
+                current.PlayedAscension = num >= 0 ? num : null;
+                current.Floor = (int)controls.Floor.Value;
+                double num2 = controls.Seconds.Value;
+                current.RunSeconds = num2 >= 0 ? num2 : null;
+                current.RatingDelta = (int)controls.RatingDelta.Value;
+                current.FansDelta = (int)controls.FansDelta.Value;
+                current.Prize = (int)controls.Prize.Value;
+                current.Seed = controls.Seed.Text.Trim();
+                current.Outcome = ChoiceText(controls.Outcome);
+                if (text != current.Outcome)
+                {
+                    AdjustResultCounters(viewData, text, -1);
+                    AdjustResultCounters(viewData, current.Outcome, 1);
+                }
+                current.Kind = ChoiceText(controls.Kind);
+                current.Win = controls.Win.Selected == 0;
+                current.OfficialAscensionVerified = controls.Verified.Selected == 0;
+                CareerResultsChanged(viewData);
+                Load();
+            }
+            void AddEntry()
+            {
+                var entry = new CareerResult { Day = viewData.Day, Kind = "legacy", Outcome = "失利", OfficialAscensionVerified = true };
+                if (index >= 0 && index < viewData.Results.Count)
+                {
+                    var template = viewData.Results[index];
+                    entry.Kind = template.Kind;
+                    entry.Outcome = template.Outcome;
+                    entry.Win = template.Win;
+                    entry.OfficialAscensionVerified = template.OfficialAscensionVerified;
+                    entry.Opponent = template.Opponent;
+                    entry.OpponentId = template.OpponentId;
+                    entry.Character = template.Character;
+                    entry.CharacterId = template.CharacterId;
+                    entry.Ascension = template.Ascension;
+                    entry.PlayedAscension = template.PlayedAscension;
+                    entry.Floor = template.Floor;
+                    entry.RunSeconds = template.RunSeconds;
+                    entry.RatingDelta = template.RatingDelta;
+                    entry.FansDelta = template.FansDelta;
+                    entry.Prize = template.Prize;
+                    entry.RewardMultiplier = template.RewardMultiplier;
+                    entry.Seed = template.Seed;
+                    entry.Event = template.Event;
+                    entry.Cards = new List<string>(template.Cards);
+                    entry.DeckSummary = new List<string>(template.DeckSummary);
+                }
+                viewData.Results.Add(entry);
+                AdjustResultCounters(viewData, entry.Outcome, 1);
+                index = viewData.Results.Count - 1;
+                CareerResultsChanged(viewData);
+                Load();
+            }
+            void RemoveEntry()
+            {
+                if (index < 0 || index >= viewData.Results.Count) return;
+                if (!removing) { removing = true; controls.Remove.Text = "再点一次确认删除"; return; }
+                removing = false;
+                AdjustResultCounters(viewData, viewData.Results[index].Outcome, -1);
+                viewData.Results.RemoveAt(index);
+                if (index >= viewData.Results.Count) index = viewData.Results.Count - 1;
+                CareerResultsChanged(viewData);
+                Load();
+            }
+        }, showCancel: false);
+    }
+
+    private void CareerResultsChanged(CareerData data)
+    {
+        data.Esports.BestClear = data.Results.Where(r => r.Win && r.OfficialAscensionVerified && !PrivateAppointments.IsPrivate(r)).Select(r => r.Ascension).DefaultIfEmpty(-1).Max();
+        if (data.PlayerCard != null)
+        {
+            // 记录里实际打通的最高进阶写回角色卡：卡片值决定模拟通关率（MatchRules.Evaluate 读 MaxAscension），
+            // 不然会出现"改了记录 → 最高通关进阶变了，但模拟通关率还是旧的"。
+            int best = data.Results.Where(r => r.Win).Select(r => r.PlayedAscension ?? (r.OfficialAscensionVerified ? r.Ascension : -1)).DefaultIfEmpty(-1).Max();
+            if (best >= 0) data.PlayerCard.MaxAscension = Math.Clamp(best, 0, 10);
+            data.PlayerCard.ClearBaselineDay = -1;
+        }
+        AvatarHonors.Capture(data);
+        PersistCareerResults(data);
+    }
+
+    private void PersistCareerResults(CareerData data)
+    {
+        if (_multiplayer != null) return;
+        try { CareerStore.Save(data); }
+        catch (Exception error)
+        {
+            Diagnostics.Error("career-results.save", error);
+            Notice("战绩记录未能写入存档，请重试。", error: true);
+        }
+    }
+
+    // ───────────────────────── 私信「编辑关系」入口 ─────────────────────────
+    private Control PrivateIdentityWithRelationEdit(CareerData data, string id)
+    {
+        var control = PrivateIdentity(data, id, showProfile: true);
+        try
+        {
+            var button = FindProfileTextButton(control, "选手档案");
+            if (button == null || button.GetParent() == null)
+            {
+                GD.PrintErr("[nationalspire] 找不到「选手档案」按钮，无法放置「编辑关系」入口");
+                return control;
+            }
+            var parent = button.GetParent();
+            var node = PrivateButton("编辑关系", OpenPrivateRelationDialog, 115);
+            parent.AddChild(node);
+            parent.MoveChild(node, button.GetIndex() + 1);
+        }
+        catch (Exception error)
+        {
+            GD.PrintErr("[nationalspire] 放置「编辑关系」入口失败：" + error);
+        }
+        return control;
+    }
+
+    private static Button? FindProfileTextButton(Node node, string text)
+    {
+        if (node is Button button && button.Text != null && button.Text.Contains(text)) return button;
+        foreach (var child in node.GetChildren())
+        {
+            var found = FindProfileTextButton(child, text);
+            if (found != null) return found;
+        }
+        return null;
+    }
+
+    private sealed class PrivateRelationEditControls
+    {
+        public SpinBox Spin = null!;
+        public LineEdit Line = null!;
+        public TextEdit Text = null!;
+    }
+
+    private void OpenPrivateRelationDialog()
+    {
+        if (_privateOverlay == null || _privatePerson.Length == 0) return;
+        var data = ViewData;
+        string id = _privatePerson;
+        if (!PrivateMessages.CanChat(data, id)) return;
+        var relation = PrivateMessages.Relation(data, id);
+        var controls = new PrivateRelationEditControls();
+        ShowCareerDialog("编辑关系", "好感 / 交往关系 / 对你的印象。保存后写入存档，并让 AI 重新整理这段记忆。", () =>
+        {
+            if (!PrivateMessages.CanChat(data, id)) return false;
+            SavePrivateRelation(data, id, (int)controls.Spin.Value, controls.Line.Text, controls.Text.Text);
+            return true;
+        }, "保存", box =>
+        {
+            var hBoxContainer = new HBoxContainer();
+            hBoxContainer.AddThemeConstantOverride("separation", 18);
+            box.AddChild(hBoxContainer);
+            var favourColumn = new VBoxContainer { CustomMinimumSize = new Vector2(150, 0), SizeFlagsHorizontal = SizeFlags.ShrinkBegin };
+            favourColumn.AddThemeConstantOverride("separation", 6);
+            hBoxContainer.AddChild(favourColumn);
+            favourColumn.AddChild(PrivateLine("好感", 13, _muted));
+            controls.Spin = new SpinBox
+            {
+                Name = "PrivateFavourEdit",
+                MinValue = -100,
+                MaxValue = 100,
+                Step = 1,
+                Value = relation.Favour,
+                CustomMinimumSize = new Vector2(150, 42),
+                TooltipText = "对你的好感 · -100 至 100"
+            };
+            favourColumn.AddChild(controls.Spin);
+            var relationColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            relationColumn.AddThemeConstantOverride("separation", 6);
+            hBoxContainer.AddChild(relationColumn);
+            relationColumn.AddChild(PrivateLine("交往关系", 13, _muted));
+            controls.Line = new LineEdit
+            {
+                Name = "PrivateRelationshipEdit",
+                Text = relation.Relationship,
+                MaxLength = 40,
+                CustomMinimumSize = new Vector2(0, 42),
+                SizeFlagsHorizontal = SizeFlags.ExpandFill
+            };
+            controls.Line.AddThemeFontSizeOverride("font_size", 16);
+            controls.Line.AddThemeColorOverride("font_color", _ink);
+            controls.Line.AddThemeStyleboxOverride("normal", CareerVisuals.Box("0c1b27", "304e5d", 8, 12));
+            controls.Line.AddThemeStyleboxOverride("focus", CareerVisuals.Box("10232e", "69bcb3", 8, 12));
+            relationColumn.AddChild(controls.Line);
+            var impressionColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            impressionColumn.AddThemeConstantOverride("separation", 6);
+            box.AddChild(impressionColumn);
+            impressionColumn.AddChild(PrivateLine("对你的印象", 13, CareerVisuals.Teal));
+            controls.Text = new TextEdit
+            {
+                Name = "PrivateImpressionEdit",
+                Text = relation.Impression,
+                CustomMinimumSize = new Vector2(0, 140),
+                WrapMode = TextEdit.LineWrappingMode.Boundary,
+                SizeFlagsHorizontal = SizeFlags.ExpandFill
+            };
+            controls.Text.AddThemeFontSizeOverride("font_size", 16);
+            controls.Text.AddThemeColorOverride("font_color", _ink);
+            controls.Text.AddThemeStyleboxOverride("normal", CareerVisuals.Box("0c1b27", "304e5d", 8, 12));
+            controls.Text.AddThemeStyleboxOverride("focus", CareerVisuals.Box("10232e", "69bcb3", 8, 12));
+            impressionColumn.AddChild(controls.Text);
+            box.AddChild(PrivateLine("保存后写入存档，并让 AI 重新整理这段记忆；取消不改动任何内容。", 13, _muted));
+        });
+    }
+
+    private void SavePrivateRelation(CareerData data, string id, int favour, string relationship, string impression)
+    {
+        if (!PrivateMessages.CanChat(data, id)) return;
+        var relation = PrivateMessages.Relation(data, id);
+        int value = Math.Clamp(favour, -100, 100);
+        string text = relationship.Trim();
+        string text2 = impression.Trim();
+        if (relation.Favour == value && relation.Relationship == text && relation.Impression == text2) return;
+        if (relation.Favour != value) PrivateMessages.ChangeFavour(data, id, value - relation.Favour);
+        relation.Relationship = text;
+        relation.Impression = text2;
+        relation.Revision++;
+        var conversation = PrivateMessages.Conversation(data, id);
+        conversation.MemoryRevision++;
+        conversation.SummaryError = "";
+        _privateSignature = "";
+        PersistPrivateRelation(data);
+    }
+
+    private void PersistPrivateRelation(CareerData data)
+    {
+        if (_multiplayer != null) return;
+        try { CareerStore.Save(data); }
+        catch (Exception error)
+        {
+            Diagnostics.Error("private-relation.save", error);
+            if (_privateStatus != null && GodotObject.IsInstanceValid(_privateStatus)) { _privateStatus.Text = "关系档案未能写入存档，请重试。"; return; }
+            Notice("关系档案未能写入存档，请重试。", error: true);
+        }
     }
 
     private void AddHeading(string title, string description)
