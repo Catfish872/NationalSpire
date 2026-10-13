@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public readonly record struct RunPerformance(bool Cleared, int Floor, double Seconds);
 
@@ -215,7 +215,12 @@ public static class MatchRules
         // 多人队伍完整通关基准增加半小时，职业差异和随机波动沿用原计算。
         double teamOffset = cooperative ? 1800 : 0;
         baseline += teamOffset;
-        double seconds = baseline * (.88 + rng.NextDouble() * .24);
+        double timeRoll = rng.NextDouble();
+        double seconds = baseline * (.88 + timeRoll * .24);
+        // 该次抽样的自然波动位置（0–1）：0 = 公式下限 .88×baseline，1 = 公式上限 1.12×baseline。
+        // 用于把用时映射进角色卡配置的区间，而不是截断到端点。
+        double naturalSpan = baseline * .24;
+        double naturalPosition = naturalSpan > 0 ? Math.Clamp((seconds - baseline * .88) / naturalSpan, 0, 1) : .5;
         if (comfort >= 3 && rng.NextDouble() < .025) seconds = Math.Min(seconds, 2100 + teamOffset + rng.NextDouble() * 540);
         double minimum = cooperative ? 3600 : 2700;
         // 低于下限时保留个人差异，避免大量选手同时停在整点。
@@ -225,12 +230,27 @@ public static class MatchRules
         double original = clear ? seconds : Math.Round(seconds * floor / 50);
         double time = original * RivalTimeScale(rivalLevel);
         // 真国运魔改尖塔：模拟通关用时区间（下限 SimulatedClearSeconds / 上限 SimulatedClearSecondsMax）。
-        // 对所有角色的模拟生效 —— NPC 与玩家共用这一条 SimulatePerformance。口径与层数上下限一致：
-        // 先「有上限就取小」再「有下限就取大」，所以下限优先、下限=上限即固定用时；未通关的场次不受影响。
+        // 对所有角色的模拟生效 —— NPC 与玩家共用这一条 SimulatePerformance。
+        //
+        // 上下限都设时：把用时【映射进】这个区间，在该次抽样的自然波动位置上插值，
+        //   于是区间内均匀浮动（下限=上限即固定用时），而不是被截断到端点。
+        //   旧写法「有上限取小、有下限取大」会让用时长期高于上限的角色 100% 贴在区间上限上。
+        // 只设一端时：仍按原口径截断（单边的语义就是"不要超过/不要低于"）。
+        // 未通关的场次不受影响。
         if (clear)
         {
-            if (person.SimulatedClearSecondsMax >= 0) time = Math.Min(time, person.SimulatedClearSecondsMax);
-            if (person.SimulatedClearSeconds >= 0) time = Math.Max(time, person.SimulatedClearSeconds);
+            double lo = person.SimulatedClearSeconds, hi = person.SimulatedClearSecondsMax;
+            if (lo >= 0 && hi >= 0)
+            {
+                if (hi < lo) (lo, hi) = (hi, lo);
+                time = lo + (hi - lo) * naturalPosition;   // naturalPosition=0 → 下限；=1 → 上限
+            }
+            else
+            {
+                if (hi >= 0) time = Math.Min(time, hi);
+                if (lo >= 0) time = Math.Max(time, lo);
+            }
+            if (time < 0) time = 0;
         }
         return new(clear, floor, time);
     }
