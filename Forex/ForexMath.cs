@@ -72,8 +72,15 @@ public static class ForexMath
     // ================= 定价（D3）=================
 
     /// <summary>
-    /// 单日对数收益：
-    ///   drift + signal + σ·z + fatTail − meanReversion·ln(P/P0)
+    /// 单日对数收益（直接标价法，1 CNY = X 外币）：
+    ///   −drift − signal + σ·z + shock − meanReversion·ln(P/P0)
+    ///
+    /// 【符号约定 · 修正记录】传入的 drift / signal 都是「**该外币相对人民币走强**」的度量。
+    /// 外币走强 ⇒ 1 元能换到的外币变少 ⇒ P(=X) **下降**，所以这两项取**负号**。
+    ///
+    /// 旧写法是 `drift + signal + sigma*z + shock + revert`（正号），方向是反的：
+    /// 外币走强却让 P 上涨。存档实测特征为「英国输掉 5 场（bull(GBP) = −5，net 被钳到 −4）
+    /// 时 CNY/GBP 一天跌 5.5%」——贬值国的汇率反而暴跌，与直觉和直标法都相反。
     /// </summary>
     public static double LogReturn(
         double open, double anchor,
@@ -81,7 +88,7 @@ public static class ForexMath
         double shock, double meanReversion)
     {
         double revert = -meanReversion * Math.Log(open / anchor);
-        return drift + signal + sigma * z + shock + revert;
+        return -drift - signal + sigma * z + shock + revert;
     }
 
     /// <summary>肥尾冲击（对数收益）。2% 概率触发，幅度 1.5σ~3.5σ，并封顶。</summary>

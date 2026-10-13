@@ -3,7 +3,11 @@ namespace ForexSpire;
 /// <summary>汇率精度与初始价。</summary>
 public sealed record ForexPair(string Id, string Country, string Name, double Initial, int Digits)
 {
-    /// <summary>游戏汇率指标：保留原始初始值；上升表示外币相对人民币走强。</summary>
+    /// <summary>
+    /// 游戏汇率指标：1 CNY = X 外币（直接标价）。
+    /// **上升 = 人民币贬值（外币走强）→ 做多获利**；
+    /// 下降 = 人民币升值（外币走弱）→ 做空获利。
+    /// </summary>
     public string Ticker => Id;
 }
 

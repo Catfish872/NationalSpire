@@ -22,7 +22,7 @@ public static class ForexNews
             lines.Add(pair.Id + " · 收盘 " + close.ToString("F" + pair.Digits, CultureInfo.InvariantCulture) +
                 " · 当日 " + ((close / previous - 1) * 100).ToString("+0.00;-0.00;0.00", CultureInfo.InvariantCulture) + "%");
         }
-        lines.Add("数值上涨表示外币相对人民币走强。此材料只描述公开市场，不包含任何人的余额、借款、持仓或盈亏。不得编造未来行情或个人交易。");
+        lines.Add("数值上升表示人民币贬值（外币相对人民币走强），下降表示人民币升值。此材料只描述公开市场，不包含任何人的余额、借款、持仓或盈亏。不得编造未来行情或个人交易。");
         return new("forex-" + worldId + "-" + market.LastDay, "国家队赛果进入汇市 · 第" + market.LastDay + "天收盘", string.Join("\n", lines));
     }
 }
