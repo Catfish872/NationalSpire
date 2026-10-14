@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public sealed class FigurineState
 {
@@ -18,57 +18,71 @@ public static class CareerRelics
 {
     public sealed record Item(string Id, string Name, int Price, string Effect, int Uses = 0);
     public static readonly Item[] Catalog = [
-        new("MEMBERSHIP_CARD", "会员卡", 360, "生活和社交活动费用减少约 5%，每次最多省 $100。"),
-        new("TOOLBOX", "工具箱", 600, "每轮活动多提供一个候选，仍然只能选择一项。"),
-        new("BURNING_BLOOD", "燃烧之血", 420, "正常参赛失利后，少扣 1—2 点生涯评分。"),
-        new("MAW_BANK", "巨口储蓄罐", 32, "接下来 14 天，每天存入 $10—20；下一次活动或手办消费时取出并停止储蓄。到期自动取出。"),
-        new("VENERABLE_TEA_SET", "古茶具套装", 280, "完成生活活动后，下一次内容制作缩短 1 天；最多保留一次。"),
-        new("TUNGSTEN_ROD", "钨合金棍", 180, "商业项目亏损时补回亏损的 20%，每次最多 $150，共 3 次。盈利时不消耗次数。", 3),
-        new("MEAL_TICKET", "餐券", 60, "料理课、赛后请客或新人接风每次减免 $50，共 5 次。", 5),
-        new("THE_COURIER", "送货员", 400, "后续购买手办享受 85 折，重新购买限次手办也适用。"),
-        new("ANCHOR", "锚", 220, "每赛季第一次内容或社区活动减免 $100。"),
-        new("ORICHALCUM", "奥利哈钢", 240, "没有任何活动正在进行时，正常参赛失利少扣 1 点生涯评分。"),
-        new("DREAM_CATCHER", "捕梦网", 350, "完成生活活动后，下一轮额外提供一项内容制作候选，仍然只选一项。"),
-        new("POTION_BELT", "药水腰带", 120, "正常完成比赛且有剩余药水时，获得 $20—40 纪念展示支持，共 6 次。", 6),
-        new("JUZU_BRACELET", "佛珠手链", 300, "每轮至少提供一项生活或社交活动。"),
-        new("REGAL_PILLOW", "皇家枕头", 240, "完成生活活动后，为接下来两场正常参赛各提供 1 点失利评分保护；次数不叠加。"),
-        new("HAPPY_FLOWER", "开心小花", 200, "每完成三项活动，获得 $30—60 的小额创作回馈。"),
-        new("LETTER_OPENER", "开信刀", 300, "每完成三项内容制作，额外增加 20—35 位关注者。"),
-        new("PEN_NIB", "钢笔尖", 360, "每完成两项内容制作，额外增加 12—20 位关注者。"),
-        new("KUNAI", "苦无", 380, "每完成三次青训支持，为该次培养增加 $200 的训练资源，仍受培养上限约束。"),
-        new("SHURIKEN", "手里剑", 360, "每完成三次社区活动，额外增加 20—35 位关注者。"),
-        new("CENTENNIAL_PUZZLE", "百年积木", 200, "每赛季首次正常参赛失利后，下次内容制作减免 $100。"),
-        new("WINGED_BOOTS", "羽翼之靴", 240, "下一项至少 3 天的活动缩短 1 天，共 3 次；不会缩短至不足 1 天。", 3),
-        new("BAG_OF_PREPARATION", "准备背包", 100, "接下来三次内容或社区活动，每次减免 $60。", 3),
-        new("SLING_OF_COURAGE", "勇气投石索", 480, "正常赢下进阶 8 及以上的比赛时，额外增加 5—10 位关注者。"),
-        new("WHITE_STAR", "白星", 550, "每赛季首次赢下国际赛事，获得 $80—120 的纪念展示支持。"),
-        new("JEWELED_MASK", "宝石面具", 260, "首次与某位人物完成社交活动时，好感额外增加 3。"),
-        new("GOLDEN_PEARL", "金色珍珠", 500, "商业项目盈利时，额外获得利润的 5%，每次最多 $100。")
+        new("MEMBERSHIP_CARD", "会员卡", 3600, "生活和社交费用减少25%。"),
+        new("TOOLBOX", "工具箱", 6000, "每轮额外提供三项活动候选。"),
+        new("BURNING_BLOOD", "燃烧之血", 4200, "失利时少扣4至8点评分。"),
+        new("MAW_BANK", "巨口储蓄罐", 3200, "每天获得$500至1,000，长期生效。"),
+        new("VENERABLE_TEA_SET", "古茶具套装", 2800, "完成生活活动后，准备一次内容制作缩短2天的机会，可累积。"),
+        new("TUNGSTEN_ROD", "钨合金棍", 1800, "商业亏损补回50%。"),
+        new("MEAL_TICKET", "餐券", 600, "料理课、赛后请客和新人接风费用减少50%。"),
+        new("THE_COURIER", "送货员", 4000, "手办购买享受七折。"),
+        new("ANCHOR", "锚", 2200, "内容与社区费用减少20%。"),
+        new("ORICHALCUM", "奥利哈钢", 2400, "失利时少扣3点评分。"),
+        new("DREAM_CATCHER", "捕梦网", 3500, "生活活动完成后，下一轮额外提供两项内容候选，机会可累积。"),
+        new("POTION_BELT", "药水腰带", 1200, "正常完赛且有剩余药水，获得$2,000至4,000。"),
+        new("JUZU_BRACELET", "佛珠手链", 3000, "每轮优先同时提供生活与社交候选。"),
+        new("REGAL_PILLOW", "皇家枕头", 2400, "生活活动完成后获得四次比赛评分保护，失利时少扣4分，次数可累积。"),
+        new("HAPPY_FLOWER", "开心小花", 2000, "每完成三项活动获得$3,000至6,000。"),
+        new("LETTER_OPENER", "开信刀", 3000, "每完成三次内容制作增加2,000至3,500关注。"),
+        new("PEN_NIB", "钢笔尖", 3600, "每完成两次内容制作增加1,200至2,000关注。"),
+        new("KUNAI", "苦无", 3800, "每次青训支持增加$2,000训练资源。"),
+        new("SHURIKEN", "手里剑", 3600, "每完成三次社区活动增加2,000至3,500关注。"),
+        new("CENTENNIAL_PUZZLE", "百年积木", 2000, "失利后准备一次内容制作七折机会，可累积。"),
+        new("WINGED_BOOTS", "羽翼之靴", 2400, "至少3天的普通活动缩短2天，训练保持完整周期。"),
+        new("BAG_OF_PREPARATION", "准备背包", 1000, "内容与社区费用减少20%。"),
+        new("SLING_OF_COURAGE", "勇气投石索", 4800, "正常赢下进阶8及以上比赛增加1,000至2,000关注。"),
+        new("WHITE_STAR", "白星", 5500, "每次赢下国际赛事获得$8,000至12,000。"),
+        new("JEWELED_MASK", "宝石面具", 2600, "完成社交活动额外增加6点好感。"),
+        new("GOLDEN_PEARL", "金色珍珠", 5000, "商业项目利润额外增加50%。")
     ];
     private static int Roll(CareerData d, string key, int min, int max) => min + CareerEngine.StableHash(d.WorldId + ":figurine:" + key) % (max - min + 1);
     public static bool Has(CareerData d, string id) => d.Life.Figurines.TryGetValue(id, out var s) && !s.Ended;
     private static FigurineState? State(CareerData d, string id) => Has(d, id) ? d.Life.Figurines[id] : null;
-    public static bool CanBuy(CareerData d, Item r) => !d.Life.Figurines.TryGetValue(r.Id, out var s) || r.Uses > 0 && s.Uses <= 0;
+    public static bool CanBuy(CareerData d, Item r) => !d.Life.Figurines.ContainsKey(r.Id);
+    public static int StockCount(CareerData d)
+    {
+        int rank = CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country);
+        return rank < 0 ? 0 : new[] { 5, 4, 3, 3, 2, 2, 1, 0 }[rank];
+    }
+    public static void Upgrade(CareerData d)
+    {
+        if (d.Life.RelicVersion >= 1) return;
+        foreach (var (id, state) in d.Life.Figurines)
+        {
+            if (id == "MAW_BANK") { if (state.Ended) state.Accrued = 0; state.AccrualDay = d.Day; }
+            state.Ended = false;
+        }
+        d.Life.RelicVersion = 1;
+    }
     public static void Shop(CareerData d)
     {
-        // 旧档本期货架只保留原顺序的前四件；购买后不补位，防止同一期连续展示整个库存。
-        if (d.Life.Shop.Count > 4) d.Life.Shop = d.Life.Shop.Take(4).ToList();
+        Upgrade(d);
         if (d.Life.RestockDay > d.Day) return;
         var previous = d.Life.Shop.ToHashSet();
         d.Life.Shop = Catalog.Where(r => CanBuy(d, r)).OrderBy(r => previous.Contains(r.Id))
-            .ThenBy(r => CareerEngine.StableHash(d.WorldId + ":shop:" + d.Day + r.Id)).Take(4).Select(r => r.Id).ToList();
+            .ThenBy(r => CareerEngine.StableHash(d.WorldId + ":shop:" + d.Day + r.Id)).Take(StockCount(d)).Select(r => r.Id).ToList();
         d.Life.RestockDay = d.Day + 14;
     }
-    public static IEnumerable<Item> Offers(CareerData d) => d.Life.Shop.Take(4)
+    public static IEnumerable<Item> Offers(CareerData d) => d.Life.Shop
         .Select(id => Catalog.FirstOrDefault(r => r.Id == id)).OfType<Item>();
-    public static int PurchasePrice(CareerData d, Item item) => Has(d, "THE_COURIER") ? (item.Price * 85 + 99) / 100 : item.Price;
+    public static int PurchasePrice(CareerData d, Item item) => Has(d, "THE_COURIER") ? (item.Price * 70 + 99) / 100 : item.Price;
     public static string Status(CareerData d, Item r)
     {
         var s = d.Life.Figurines[r.Id];
         if (r.Uses > 0 && s.Uses <= 0) return "次数已用完 · 商店再次上架后可重新购买";
         if (s.Ended) return "已留作收藏 · 效果结束";
         if (r.Uses > 0) return $"剩余 {s.Uses} 次";
-        if (r.Id == "MAW_BANK") return $"已存入 {CareerMoney.Format(s.Accrued)} · 第 {s.BoughtDay + 14} 天到期";
+        if (r.Id == "MAW_BANK") return "每日回馈 · 长期生效";
         if (s.Charge > 0) return $"长期生效 · 已准备 {s.Charge} 次";
         return "长期生效";
     }
@@ -91,73 +105,57 @@ public static class CareerRelics
         Shop(d);
         var s = State(d, "MAW_BANK");
         if (s == null) return;
-        int end = Math.Min(d.Day, s.BoughtDay + 14);
-        for (int day = Math.Max(s.AccrualDay, s.BoughtDay) + 1; day <= end; day++) s.Accrued += Roll(d, "bank:" + day, 1, 2);
-        s.AccrualDay = end;
-        if (d.Day >= s.BoughtDay + 14) CashBank(d, s);
+        int amount = s.Accrued;
+        for (int day = Math.Max(s.AccrualDay, s.BoughtDay) + 1; day <= d.Day; day++) amount += Roll(d, "bank:" + day, 50, 100);
+        s.AccrualDay = d.Day; s.Accrued = 0;
+        if (amount > 0) { d.Credits += amount; CareerMoney.Record(d, "巨口储蓄罐手办回馈", amount); }
     }
-    private static void CashBank(CareerData d, FigurineState s)
-    {
-        d.Credits += s.Accrued; CareerMoney.Record(d, "巨口储蓄罐手办取款", s.Accrued); s.Ended = true;
-    }
-    public static void Spend(CareerData d)
-    {
-        Advance(d);
-        if (State(d, "MAW_BANK") is { } s) CashBank(d, s);
-    }
+    public static void Spend(CareerData d) => Advance(d);
     private static bool Food(LifeActivity a) => a.Title is "地方料理课" or "赛后请客" or "给新人接风";
     private static bool Media(LifeActivity a) => a.Kind is "内容" or "社区";
-    // 优惠不作用于投资本金；各项优惠按固定顺序分摊，总额不超过原价的五分之一。
+    // 逐项折扣相乘，投资本金不参与。
     private static IEnumerable<(string Id, int Amount)> Discounts(CareerData d, LifeActivity a)
     {
         if (a.Kind is "商业" or "事业" or "青训" or "俱乐部") yield break;
-        if (Has(d, "MEMBERSHIP_CARD") && a.Kind is "生活" or "社交") yield return ("MEMBERSHIP_CARD", Math.Min(10, a.Cost * 5 / 100));
-        if (Food(a) && State(d, "MEAL_TICKET") is { Uses: > 0 }) yield return ("MEAL_TICKET", 5);
-        if (Media(a) && State(d, "ANCHOR") is { } anchor && anchor.Season != d.Season) yield return ("ANCHOR", 10);
-        if (Media(a) && State(d, "BAG_OF_PREPARATION") is { Uses: > 0 }) yield return ("BAG_OF_PREPARATION", 6);
-        if (a.Kind == "内容" && State(d, "CENTENNIAL_PUZZLE") is { Charge: > 0 }) yield return ("CENTENNIAL_PUZZLE", 10);
-        if (a.Kind == "内容" && d.Life.Preparation > 0) yield return ("rest", Math.Min(24, a.Cost * 12 / 100));
-        if (Media(a) && d.Life.Facilities > 0) yield return ("facilities", Math.Min(24, a.Cost * Math.Min(72, d.Life.Facilities * 24) / 1000));
+        if (Has(d, "MEMBERSHIP_CARD") && a.Kind is "生活" or "社交") yield return ("MEMBERSHIP_CARD", 25);
+        if (Food(a) && Has(d, "MEAL_TICKET")) yield return ("MEAL_TICKET", 50);
+        if (Media(a) && Has(d, "ANCHOR")) yield return ("ANCHOR", 20);
+        if (Media(a) && Has(d, "BAG_OF_PREPARATION")) yield return ("BAG_OF_PREPARATION", 20);
+        if (a.Kind == "内容" && State(d, "CENTENNIAL_PUZZLE") is { Charge: > 0 }) yield return ("CENTENNIAL_PUZZLE", 30);
     }
-    public static int Cost(CareerData d, LifeActivity a) => a.Cost - Math.Min(a.Cost / 5, Discounts(d, a).Sum(x => x.Amount));
-    public static int Duration(CareerData d, LifeActivity a) => (CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a)) ? 28 : Math.Max(1, a.Duration
-        - (a.Kind == "内容" && State(d, "VENERABLE_TEA_SET") is { Charge: > 0 } ? 1 : 0)
-        - (a.Duration >= 3 && State(d, "WINGED_BOOTS") is { Uses: > 0 } ? 1 : 0));
-    private static void Use(CareerData d, string id)
+    public static int Cost(CareerData d, LifeActivity a)
     {
-        var s = d.Life.Figurines[id];
-        if (Catalog.First(r => r.Id == id).Uses > 0 && --s.Uses <= 0) s.Ended = true;
+        decimal cost = a.Cost;
+        foreach (var discount in Discounts(d, a)) cost *= 1 - discount.Amount / 100m;
+        if (a.Kind == "内容" && d.Life.Preparation > 0) cost -= Math.Min(24, a.Cost * 12 / 100);
+        if (Media(a) && d.Life.Facilities > 0) cost -= Math.Min(24, a.Cost * Math.Min(72, d.Life.Facilities * 24) / 1000);
+        return Math.Max(0, (int)cost);
     }
+    public static int Duration(CareerData d, LifeActivity a) => (CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a)) ? 28 : Math.Max(1, a.Duration
+        - (a.Kind == "内容" && State(d, "VENERABLE_TEA_SET") is { Charge: > 0 } ? 2 : 0)
+        - (a.Duration >= 3 && Has(d, "WINGED_BOOTS") ? 2 : 0));
     public static void Accept(CareerData d, LifeActivity a)
     {
-        int budget = a.Cost / 5;
-        foreach (var (id, amount) in Discounts(d, a).ToList())
-        {
-            int used = Math.Min(budget, amount); if (used <= 0) continue; budget -= used;
-            if (id == "rest") { d.Life.Preparation = 0; continue; }
-            if (id == "facilities") continue;
-            if (id == "ANCHOR") d.Life.Figurines[id].Season = d.Season;
-            if (id == "CENTENNIAL_PUZZLE") d.Life.Figurines[id].Charge = 0;
-            Use(d, id);
-        }
-        if (a.Kind == "内容" && State(d, "VENERABLE_TEA_SET") is { Charge: > 0 } tea) tea.Charge = 0;
-        if (!CareerTraining.IsTraining(a) && a.Duration >= 3 && State(d, "WINGED_BOOTS") is { Uses: > 0 }) Use(d, "WINGED_BOOTS");
+        if (a.Kind != "内容") return;
+        if (State(d, "CENTENNIAL_PUZZLE") is { Charge: > 0 } puzzle) puzzle.Charge--;
+        if (State(d, "VENERABLE_TEA_SET") is { Charge: > 0 } tea) tea.Charge--;
+        d.Life.Preparation = 0;
     }
     public static int Training(CareerData d, LifeActivity a)
     {
-        if (State(d, "KUNAI") is not { } s || ++s.Count % 3 != 0) return 0;
-        a.Result += "苦无手办带来的训练资源增加 $200。"; return 20;
+        if (!Has(d, "KUNAI")) return 0;
+        a.Result += "苦无手办带来的训练资源增加 $2,000。"; return 200;
     }
     public static int Business(CareerData d, LifeActivity a, int revenue)
     {
         int delta = revenue - a.Cost;
-        if (delta < 0 && State(d, "TUNGSTEN_ROD") is { Uses: > 0 })
+        if (delta < 0 && Has(d, "TUNGSTEN_ROD"))
         {
-            int benefit = Math.Min(15, -delta / 5);
-            if (benefit > 0) { Use(d, "TUNGSTEN_ROD"); a.Result += $"钨合金棍手办补回 {CareerMoney.Format(benefit)}。"; return revenue + benefit; }
+            int benefit = -delta / 2;
+            if (benefit > 0) { a.Result += $"钨合金棍手办补回 {CareerMoney.Format(benefit)}。"; return revenue + benefit; }
         }
         if (delta > 0 && Has(d, "GOLDEN_PEARL"))
-        { int benefit = Math.Min(10, delta / 20); if (benefit > 0) a.Result += $"金色珍珠手办额外带来 {CareerMoney.Format(benefit)}。"; return revenue + benefit; }
+        { int benefit = delta / 2; if (benefit > 0) a.Result += $"金色珍珠手办额外带来 {CareerMoney.Format(benefit)}。"; return revenue + benefit; }
         return revenue;
     }
     public static void Complete(CareerData d, LifeActivity a)
@@ -170,21 +168,17 @@ public static class CareerRelics
         if (a.Kind == "生活")
         {
             foreach (string id in new[] { "VENERABLE_TEA_SET", "DREAM_CATCHER", "REGAL_PILLOW" })
-                if (State(d, id) is { } s) { s.Charge = id == "REGAL_PILLOW" ? 2 : 1; a.Result += Catalog.First(r => r.Id == id).Name + "手办的效果已准备。"; }
+                if (State(d, id) is { } s) { s.Charge += id == "REGAL_PILLOW" ? 4 : 1; a.Result += Catalog.First(r => r.Id == id).Name + "手办的效果已准备。"; }
         }
         if (a.Kind == "社交" && a.PersonId.Length > 0 && State(d, "JEWELED_MASK") is { } mask)
         {
-            // 旧存档从活动记录恢复领取名单，之后按人物保存，避免好感变化导致重复领取。
-            mask.SocialRewards ??= d.Life.Activities.Where(x => x.Result.Contains("宝石面具手办"))
-                .Select(x => x.PersonId).ToHashSet();
-            if (mask.SocialRewards.Add(a.PersonId))
-            { PrivateMessages.ChangeFavour(d, a.PersonId, 3); a.Result += "宝石面具手办：好感额外增加 3。"; }
+            PrivateMessages.ChangeFavour(d, a.PersonId, 6); a.Result += "宝石面具手办：好感额外增加6。";
         }
-        if (a.Kind == "内容") { Fans("LETTER_OPENER", 3, 20, 35); Fans("PEN_NIB", 2, 12, 20); }
-        if (a.Kind == "社区") Fans("SHURIKEN", 3, 20, 35);
+        if (a.Kind == "内容") { Fans("LETTER_OPENER", 3, 2000, 3500); Fans("PEN_NIB", 2, 1200, 2000); }
+        if (a.Kind == "社区") Fans("SHURIKEN", 3, 2000, 3500);
         if (State(d, "HAPPY_FLOWER") is { } flower && ++flower.Count % 3 == 0)
         {
-            int amount = Roll(d, a.Id + "flower", 3, 6); d.Credits += amount; CareerMoney.Record(d, "开心小花手办回馈", amount);
+            int amount = Roll(d, a.Id + "flower", 300, 600); d.Credits += amount; CareerMoney.Record(d, "开心小花手办回馈", amount);
             a.Result += $"开心小花手办带来 {CareerMoney.Format(amount)}。";
         }
     }
@@ -193,24 +187,24 @@ public static class CareerRelics
         if (abandoned) return;
         int protection = 0;
         void Protect(string id, int amount)
-        { if (amount <= 0) return; int n = Math.Min(amount, Math.Max(0, Math.Min(3 - protection, oldRating - d.Rating))); if (n <= 0) return;
+        { if (amount <= 0) return; int n = Math.Min(amount, Math.Max(0, oldRating - d.Rating)); if (n <= 0) return;
             d.Rating += n; protection += n; result.LifeEffects.Add(Catalog.First(r => r.Id == id).Name + $"手办：本场少扣 {n} 点生涯评分。"); }
         if (!m.PlayerWon && !m.Draw)
         {
-            if (Has(d, "BURNING_BLOOD")) Protect("BURNING_BLOOD", Roll(d, m.Id + "blood", 1, 2));
-            if (Has(d, "ORICHALCUM") && !d.Life.Activities.Any(a => a.Status == "进行中")) Protect("ORICHALCUM", 1);
-            if (State(d, "REGAL_PILLOW") is { Charge: > 0 }) Protect("REGAL_PILLOW", 1);
-            if (State(d, "CENTENNIAL_PUZZLE") is { } puzzle && puzzle.Season != d.Season)
-            { puzzle.Season = d.Season; puzzle.Charge = 1; result.LifeEffects.Add("百年积木手办：下次内容制作可减免 $100。"); }
+            if (Has(d, "BURNING_BLOOD")) Protect("BURNING_BLOOD", Roll(d, m.Id + "blood", 4, 8));
+            if (Has(d, "ORICHALCUM")) Protect("ORICHALCUM", 3);
+            if (State(d, "REGAL_PILLOW") is { Charge: > 0 }) Protect("REGAL_PILLOW", 4);
+            if (State(d, "CENTENNIAL_PUZZLE") is { } puzzle)
+            { puzzle.Charge++; result.LifeEffects.Add("百年积木手办：下次内容制作享受七折。"); }
         }
         if (State(d, "REGAL_PILLOW") is { Charge: > 0 } pillow) pillow.Charge--;
         void Cash(string id, int min, int max)
         { int amount = Roll(d, m.Id + id, min, max); d.Credits += amount; result.LifeEffects.Add(Catalog.First(r => r.Id == id).Name + "手办：纪念展示支持 " + CareerMoney.Format(amount) + "。"); }
-        if (result.Evidence.PotionsRecorded && result.Evidence.RemainingPotions.Count > 0 && State(d, "POTION_BELT") is { Uses: > 0 })
-        { Cash("POTION_BELT", 2, 4); Use(d, "POTION_BELT"); }
+        if (result.Evidence.PotionsRecorded && result.Evidence.RemainingPotions.Count > 0 && Has(d, "POTION_BELT"))
+        { Cash("POTION_BELT", 200, 400); }
         if (m.PlayerWon && m.RequiredAscension >= 8 && Has(d, "SLING_OF_COURAGE"))
-        { int n = Roll(d, m.Id + "sling", 5, 10); d.Fans += n; result.LifeEffects.Add($"勇气投石索手办：额外增加 {n} 位关注者。"); }
-        if (m.PlayerWon && m.Kind is "continental" or "worldcup" or "worldfinal" or "masters" && State(d, "WHITE_STAR") is { } star && star.Season != d.Season)
-        { star.Season = d.Season; Cash("WHITE_STAR", 8, 12); }
+        { int n = Roll(d, m.Id + "sling", 1000, 2000); d.Fans += n; result.LifeEffects.Add($"勇气投石索手办：额外增加 {n} 位关注者。"); }
+        if (m.PlayerWon && m.Kind is "continental" or "worldcup" or "worldfinal" or "masters" && State(d, "WHITE_STAR") is { } star)
+        { star.Season = d.Season; Cash("WHITE_STAR", 800, 1200); }
     }
 }

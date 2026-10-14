@@ -1,4 +1,4 @@
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -159,10 +159,18 @@ public static partial class AiService
                 using var document = JsonDocument.Parse(body);
                 if (document.RootElement.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
                 RememberUsage(document.RootElement);
-                var choice = document.RootElement.GetProperty("choices")[0];
-                var message = choice.GetProperty("message");
+                if (!document.RootElement.TryGetProperty("choices", out var choices) || choices.ValueKind != JsonValueKind.Array || choices.GetArrayLength() == 0)
+                {
+                    Diagnostics.Record("private.response_structure", new { trace, context, fields = document.RootElement.EnumerateObject().Select(p => p.Name).ToArray(), choices = choices.ValueKind.ToString() });
+                    throw new InvalidDataException("接口未返回可读取的回复内容。");
+                }
+                var choice = choices[0];
+                if (choice.ValueKind != JsonValueKind.Object || !choice.TryGetProperty("message", out var message) || message.ValueKind != JsonValueKind.Object)
+                    throw new InvalidDataException("接口回复缺少消息内容。");
                 reasoning?.Invoke(PrivateReasoning(message));
-                string content = message.GetProperty("content").GetString() ?? "";
+                if (!message.TryGetProperty("content", out var contentValue) || contentValue.ValueKind != JsonValueKind.String || string.IsNullOrWhiteSpace(contentValue.GetString()))
+                    throw new InvalidDataException("接口返回了空回复，请重试。");
+                string content = contentValue.GetString()!;
                 progress?.Invoke(content); leading.Finish();
                 if (choice.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String && finish.GetString() != "stop")
                     throw new InvalidDataException("回复未完整结束：" + finish.GetString());
@@ -203,7 +211,7 @@ public static partial class AiService
             if (!done && !completed) throw new IOException("回复连接提前结束，交互未执行，请重试。");
             leading.Finish(); return visible.ToString();
         }
-        catch (Exception e) { failure = FailureReason(e); throw; }
+        catch (Exception e) { failure = FailureReason(e); Diagnostics.Error("private.transport", e); throw; }
         finally
         {
             if (lastUsage is { } usage) Diagnostics.Record("private.usage", new { trace, context, usage });

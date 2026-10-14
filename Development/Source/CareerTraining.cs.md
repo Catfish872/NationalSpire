@@ -425,7 +425,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-d510c10d173d)
+**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-b25b18b4284d)
 
 **调用：** [`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`](CareerTraining.cs.md#symbol-20ac1d8e57c7)；[`NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`](CareerTraining.cs.md#symbol-ef124ea1d16b)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -464,7 +464,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerRelics.Accept(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c4d68b813d74)；[`NationalSpire.CareerRelics.Duration(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-5a1db0b8215e)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, string, int, bool)`](CareerTraining.cs.md#symbol-3a66a2b5dee0)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerRelics.Duration(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-5a1db0b8215e)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, string, int, bool)`](CareerTraining.cs.md#symbol-3a66a2b5dee0)
 
 **调用：** 无已绑定显式调用。
 

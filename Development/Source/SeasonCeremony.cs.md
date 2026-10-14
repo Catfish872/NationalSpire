@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E03EC7C5C6C43C25B3FFAEC55C7DFF92E561DAC87FD6DD0D879568AB28938EC5`。来源：[源码](../../SeasonCeremony.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`68DD5E49B82801BA984638C7A6BCF6BE316CFDFCE0849E423066B30120EB3919`。来源：[源码](../../SeasonCeremony.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -177,11 +177,29 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-dfe8e546f0e7"></a>
+
+## `NationalSpire.CeremonyAward.AudienceReward — public int? AudienceReward`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-8bdfc5dfa952"></a>
 
 ## `NationalSpire.CeremonyAward.WinnerName — public string WinnerName`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -199,7 +217,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.Recipients — public List<string> Recipients`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -217,7 +235,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.Title — public string Title`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -235,7 +253,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.WinnerId — public string WinnerId`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -253,7 +271,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.ClubId — public string ClubId`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -271,7 +289,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.Score — public int Score`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -289,7 +307,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyAward.Reason — public string Reason`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -307,7 +325,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.RulesVersion — public int RulesVersion`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -325,7 +343,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.FullSeason — public List<CeremonyRank> FullSeason`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -343,7 +361,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.FullYear — public List<CeremonyRank> FullYear`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -361,7 +379,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.Season — public int Season`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -379,7 +397,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.Year — public int Year`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -397,7 +415,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.Day — public int Day`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -415,7 +433,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.SeasonTop — public List<CeremonyRank> SeasonTop`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -433,7 +451,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.YearTop — public List<CeremonyRank> YearTop`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -451,7 +469,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.CeremonyRecord.Awards — public List<CeremonyAward> Awards`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -469,7 +487,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Weight(string) — private static int Weight(string kind)`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)
 
@@ -487,7 +505,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.ProfessionalEvent(NationalSpire.WorldCompetition) — private static bool ProfessionalEvent(WorldCompetition c)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)；[`NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int)`](SeasonCeremony.cs.md#symbol-5698bf32bb10)
 
@@ -505,7 +523,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EnsureDebuts(NationalSpire.CareerData) — public static void EnsureDebuts(CareerData data)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)；[`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)
 
@@ -537,7 +555,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Participants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool) — public static List<string> Participants(CareerData d, WorldCompetition c, WorldFixture f, bool home)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.EnsureDebuts(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-13fa9735a703)；[`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)；[`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)；[`NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int)`](SeasonCeremony.cs.md#symbol-5698bf32bb10)
 
@@ -564,7 +582,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture) — public static void RecordParticipants(CareerData d, WorldCompetition c, WorldFixture f)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)
 
@@ -594,7 +612,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank) — private static bool EqualRank(CeremonyRank a, CeremonyRank b)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`](SeasonCeremony.cs.md#symbol-fe41ed2f86ab)；[`NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`](SeasonCeremony.cs.md#symbol-ed439c2f3984)；[`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)
 
@@ -612,7 +630,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>) — private static List<CeremonyRank> Rank(CareerData data, Func<WorldCompetition, bool> includes)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -656,25 +674,45 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `rows[id]` = `row = new() { Id=id, Name=CareerEngine.DisplayName(data,id) }`
 - `sorted[i].Place` = `i>0 && EqualRank(sorted[i],sorted[i-1]) ? sorted[i-1].Place : i+1`
 
+<a id="symbol-f5cb47c88b37"></a>
+
+## `NationalSpire.SeasonCeremony.AwardDescription(string, string) — public static string AwardDescription(string title, string reason)`
+
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`](SeasonCeremony.cs.md#symbol-fe41ed2f86ab)；[`NationalSpire.SeasonCeremony.CreateWeeklyCover(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](SeasonCeremony.cs.md#symbol-336cc50dfb1f)；[`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`](SeasonCeremony.cs.md#symbol-38d4564e570d)；[`NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-0a574d9cff35)
+
+**调用：** `string.Replace(string, string?)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `string.Replace(string, string?)`；输入表达式：`reason.Replace("同成绩并列。", "")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "联赛 MVP" => reason.Replace("同成绩并列。", "")`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-38d4564e570d"></a>
 
 ## `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string) — private static CeremonyAward PersonAward(string title, CeremonyRank? row, string reason)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`](SeasonCeremony.cs.md#symbol-ed439c2f3984)；[`NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-0a574d9cff35)
 
-**调用：** `NationalSpire.CeremonyAward.CeremonyAward()`
+**调用：** [`NationalSpire.SeasonCeremony.AwardDescription(string, string)`](SeasonCeremony.cs.md#symbol-f5cb47c88b37)；`NationalSpire.CeremonyAward.CeremonyAward()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Name`；`NationalSpire.CeremonyRank.Score`
+**字段、属性、事件及方法组引用：** `NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Name`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.SeasonCeremony.AwardDescription(string, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=reason,Recipients=row==null?[]:[row.Id]}`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=reason,Recipients=row==null?[]:[row.Id]}`
+- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=AwardDescription(title,reason),Recipients=row==null?[]:[row.Id]}`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=AwardDescription(title,reason),Recipients=row==null?[]:[row.Id]}`
+- `NationalSpire.SeasonCeremony.AwardDescription(string, string)`；输入表达式：`AwardDescription(title,reason)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Reason=AwardDescription(title,reason)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Reason` = `reason`
+- `Reason` = `AwardDescription(title,reason)`
 - `Recipients` = `row==null?[]:[row.Id]`
 - `Score` = `row?.Score??0`
 - `Title` = `title`
@@ -685,7 +723,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string) — private static void PeopleAwards(CeremonyRecord record,string title,IEnumerable<CeremonyRank> candidates,string reason)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -708,19 +746,20 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string) — private static void ClubAwards(CareerData data,CeremonyRecord record,int first,int last,string title)`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
-**调用：** [`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank)`](SeasonCeremony.cs.md#symbol-0f03620e7ce0)；`NationalSpire.CeremonyAward.CeremonyAward()`；`NationalSpire.CeremonyRank.CeremonyRank()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.SeasonCeremony.AwardDescription(string, string)`](SeasonCeremony.cs.md#symbol-f5cb47c88b37)；[`NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank)`](SeasonCeremony.cs.md#symbol-0f03620e7ce0)；`NationalSpire.CeremonyAward.CeremonyAward()`；`NationalSpire.CeremonyRank.CeremonyRank()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
-**字段、属性、事件及方法组引用：** `(int Round, string HomeTeam, string AwayTeam).AwayTeam`；`(int Round, string HomeTeam, string AwayTeam).HomeTeam`；`NationalSpire.CareerClub.Id`；`NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Clears`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRank.Wins`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.SeasonCeremony.ClubRules`；`NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank)`；`NationalSpire.WorldCompetition.Cooperative`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`
+**字段、属性、事件及方法组引用：** `(int Round, string HomeTeam, string AwayTeam).AwayTeam`；`(int Round, string HomeTeam, string AwayTeam).HomeTeam`；`NationalSpire.CareerClub.Id`；`NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Clears`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRank.Wins`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.SeasonCeremony.AwardDescription(string, string)`；`NationalSpire.SeasonCeremony.ClubRules`；`NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank)`；`NationalSpire.WorldCompetition.Cooperative`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients}`；返回值紧邻使用处：`ArgumentSyntax: new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients}`
+- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients}`；返回值紧邻使用处：`ArgumentSyntax: new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients}`
 - `NationalSpire.CeremonyRank.CeremonyRank()`；输入表达式：`new(){Id=id}`；返回值紧邻使用处：`AssignmentExpressionSyntax: row=new(){Id=id}`
 - `NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.ClubName(data,row.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: WinnerName=EsportsWorld.ClubName(data,row.Id)`
+- `NationalSpire.SeasonCeremony.AwardDescription(string, string)`；输入表达式：`AwardDescription(title,ClubRules)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Reason=AwardDescription(title,ClubRules)`
 - `NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank)`；输入表达式：`EqualRank(r,ranked[0])`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r=>EqualRank(r,ranked[0])`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string,CeremonyRank>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new Dictionary<string,CeremonyRank>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`rows.TryGetValue(id,out var row)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !rows.TryGetValue(id,out var row)`
@@ -734,14 +773,14 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`tie.Count(f=>f.WinnerId==f.HomeId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =tie.Count(f=>f.WinnerId==f.HomeId)`
 - `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Fixtures.GroupBy(f=>(f.Round,f.HomeTeam,f.AwayTeam))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.GroupBy(f=>(f.Round,f.HomeTeam,f.AwayTeam)).Where`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`rows.Values.OrderByDescending(r=>r.Score)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: rows.Values.OrderByDescending(r=>r.Score).ThenByDescending`
-- `System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；输入表达式：`ranked.TakeWhile(r=>EqualRank(r,ranked[0]))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var row in ranked.TakeWhile(r=>EqualRank(r,ranked[0])))          {              var humans=data.CooperativeMembers>1?data.HumanIds:new List<string>{"player"};              var recipients=humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList();              record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients});          }`
+- `System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；输入表达式：`ranked.TakeWhile(r=>EqualRank(r,ranked[0]))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var row in ranked.TakeWhile(r=>EqualRank(r,ranked[0])))          {              var humans=data.CooperativeMembers>1?data.HumanIds:new List<string>{"player"};              var recipients=humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList();              record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients});          }`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`rows.Values.OrderByDescending(r=>r.Score).ThenByDescending(r=>r.Wins).ThenByDescending(r=>r.Clears).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =rows.Values.OrderByDescending(r=>r.Score).ThenByDescending(r=>r.Wins).ThenByDescending(r=>r.Clears).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.GroupBy(f=>(f.Round,f.HomeTeam,f.AwayTeam)).Where(g=>g.Count()>=(c.Cooperative?1:3)&&g.All(f=>f.Finished))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var tie in c.Fixtures.GroupBy(f=>(f.Round,f.HomeTeam,f.AwayTeam)).Where(g=>g.Count()>=(c.Cooperative?1:3)&&g.All(f=>f.Finished)))          {              int home=tie.Count(f=>f.WinnerId==f.HomeId), away=tie.Count(f=>f.WinnerId==f.AwayId);              foreach(bool side in new[]{true,false})              {                  string id=side?tie.Key.HomeTeam:tie.Key.AwayTeam;                  if(!data.Esports.Clubs.Any(t=>t.Id==id))continue;                  if(!rows.TryGetValue(id,out var row))rows[id]=row=new(){Id=id};                  bool win=side?home>away:away>home, clear=tie.All(f=>side?f.HomeCleared:f.AwayCleared);                  row.Score+=(win?3:home==away?1:0)+(clear?1:0); if(win)row.Wins++;if(clear)row.Clears++;              }          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Esports.Competitions.Where(c=>c.Season>=first&&c.Season<=last&&c.TeamEvent)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var c in data.Esports.Competitions.Where(c=>c.Season>=first&&c.Season<=last&&c.TeamEvent))          foreach(var tie in c.Fixtures.GroupBy(f=>(f.Round,f.HomeTeam,f.AwayTeam)).Where(g=>g.Count()>=(c.Cooperative?1:3)&&g.All(f=>f.Finished)))          {              int home=tie.Count(f=>f.WinnerId==f.HomeId), away=tie.Count(f=>f.WinnerId==f.AwayId);              foreach(bool side in new[]{true,false})              {                  string id=side?tie.Key.HomeTeam:tie.Key.AwayTeam;                  if(!data.Esports.Clubs.Any(t=>t.Id==id))continue;                  if(!rows.TryGetValue(id,out var row))rows[id]=row=new(){Id=id};                  bool win=side?home>away:away>home, clear=tie.All(f=>side?f.HomeCleared:f.AwayCleared);                  row.Score+=(win?3:home==away?1:0)+(clear?1:0); if(win)row.Wins++;if(clear)row.Clears++;              }          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player"))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)`；返回值紧邻使用处：`BinaryExpressionSyntax: c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients})`；返回值紧邻使用处：`ExpressionStatementSyntax: record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients});`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients})`；返回值紧邻使用处：`ExpressionStatementSyntax: record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients});`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.HumanIds.Contains(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: id=="player"||data.HumanIds.Contains(id)`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>{"player"}`；返回值紧邻使用处：`ConditionalExpressionSyntax: data.CooperativeMembers>1?data.HumanIds:new List<string>{"player"}`
 - `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`rows.Values.OrderByDescending(r=>r.Score).ThenByDescending(r=>r.Wins).ThenByDescending(r=>r.Clears)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: rows.Values.OrderByDescending(r=>r.Score).ThenByDescending(r=>r.Wins).ThenByDescending(r=>r.Clears).ToList`
@@ -751,7 +790,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 - `ClubId` = `row.Id`
 - `Id` = `id`
-- `Reason` = `ClubRules`
+- `Reason` = `AwardDescription(title,ClubRules)`
 - `Recipients` = `recipients`
 - `row.Score` += `(win?3:home==away?1:0)+(clear?1:0)`
 - `row` = `new(){Id=id}`
@@ -764,7 +803,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int) — private static IEnumerable<CeremonyRank> Rookies(CareerData data, List<CeremonyRank> ranks, int first, int last)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -796,7 +835,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int) — public static CeremonyRecord Capture(CareerData data, int season)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -811,11 +850,11 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`；输入表达式：`ClubAwards(data,record,season-3,season,"年度最佳俱乐部")`；返回值紧邻使用处：`ExpressionStatementSyntax: ClubAwards(data,record,season-3,season,"年度最佳俱乐部");`
 - `NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`；输入表达式：`ClubAwards(data,record,season,season,"赛季最佳俱乐部")`；返回值紧邻使用处：`ExpressionStatementSyntax: ClubAwards(data,record,season,season,"赛季最佳俱乐部");`
 - `NationalSpire.SeasonCeremony.EnsureDebuts(NationalSpire.CareerData)`；输入表达式：`EnsureDebuts(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: EnsureDebuts(data);`
-- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。同成绩并列。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。同成绩并列。");`
+- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。");`
 - `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"年度最佳新秀",Rookies(data,annual,season-3,season),"今年首次参加职业比赛，至少出场两次。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"年度最佳新秀",Rookies(data,annual,season-3,season),"今年首次参加职业比赛，至少出场两次。");`
-- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。同成绩并列。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。同成绩并列。");`
+- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。");`
 - `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"赛季最佳新秀",Rookies(data,ranks,season,season),"本赛季首次参加职业比赛，至少出场两次。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"赛季最佳新秀",Rookies(data,ranks,season,season),"本赛季首次参加职业比赛，至少出场两次。");`
-- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。同成绩并列。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。同成绩并列。");`
+- `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`；输入表达式：`PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。");`
 - `NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`；输入表达式：`Rank(data,c=>c.Id==league.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rank(data,c=>c.Id==league.Id).Where`
 - `NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`；输入表达式：`Rank(data,c=>c.Season==season)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Rank(data,c=>c.Season==season)`
 - `NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`；输入表达式：`Rank(data,c=>c.Season>=season-3&&c.Season<=season)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Rank(data,c=>c.Season>=season-3&&c.Season<=season)`
@@ -824,7 +863,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`annual.Where(r=>r.Place<=20).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: record.YearTop=annual.Where(r=>r.Place<=20).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`ranks.Where(r=>r.Place<=20).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: record.SeasonTop=ranks.Where(r=>r.Place<=20).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`annual.Where(r=>r.Place<=20)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: annual.Where(r=>r.Place<=20).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Esports.Competitions.Where(c=>c.Season==season&&c.Kind=="league")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var league in data.Esports.Competitions.Where(c=>c.Season==season&&c.Kind=="league"))              PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。同成绩并列。");`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Esports.Competitions.Where(c=>c.Season==season&&c.Kind=="league")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var league in data.Esports.Competitions.Where(c=>c.Season==season&&c.Kind=="league"))              PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。");`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2)`；返回值紧邻使用处：`ArgumentSyntax: Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`ranks.Where(r=>r.Matches>=2)`；返回值紧邻使用处：`ArgumentSyntax: ranks.Where(r=>r.Matches>=2)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`ranks.Where(r=>r.Place<=20)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ranks.Where(r=>r.Place<=20).ToList`
@@ -844,17 +883,40 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward) — public static int RewardAmount(CeremonyAward a)`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.Coop.CoopRules.PayCeremonies(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-7bf305e883ea)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
 **调用：** `string.StartsWith(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CeremonyAward.Title`
+**字段、属性、事件及方法组引用：** `NationalSpire.CeremonyAward.AudienceReward`；`NationalSpire.CeremonyAward.Title`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `string.StartsWith(string)`；输入表达式：`a.Title.StartsWith("年度")`；返回值紧邻使用处：`ConditionalExpressionSyntax: a.Title.StartsWith("年度")?240:90`
+- `string.StartsWith(string)`；输入表达式：`a.Title.StartsWith("年度")`；返回值紧邻使用处：`ConditionalExpressionSyntax: a.Title.StartsWith("年度") ? 240 : 90`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-374e291870c7"></a>
+
+## `NationalSpire.SeasonCeremony.NewReward(NationalSpire.CeremonyAward, int) — public static int NewReward(CeremonyAward a, int fans)`
+
+来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
+
+**调用：** `System.Math.Max(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Title`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, fans)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(0, fans) / (1 + Math.Max(0, fans) / 50000000.0)`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, fans)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(0, fans) / 50000000.0`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(300000, (int)(scale * .08))`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "联赛 MVP" => Math.Max(300000, (int)(scale * .08))`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(500000, (int)(scale * .12))`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "赛季最佳选手" => Math.Max(500000, (int)(scale * .12))`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(800000, (int)(scale * .5))`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "年度最佳选手" => Math.Max(800000, (int)(scale * .5))`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -863,7 +925,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward) — public static string RewardKey(CeremonyRecord r,CeremonyAward a)`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.PayCeremonies(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-7bf305e883ea)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -881,21 +943,26 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData) — public static void Close(CareerData data)`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)
 
-**调用：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)；[`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-d0fc3753fbb4)；[`NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`](SeasonCeremony.cs.md#symbol-728070e4daae)；[`NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward)`](SeasonCeremony.cs.md#symbol-38e907ce990d)；`NationalSpire.CareerHonor.CareerHonor()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`](CareerAudience.cs.md#symbol-7ca5980a38d5)；[`NationalSpire.CareerAudience.Followers(NationalSpire.CareerPerson)`](CareerAudience.cs.md#symbol-c169fde4fb8f)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)；[`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-d0fc3753fbb4)；[`NationalSpire.SeasonCeremony.NewReward(NationalSpire.CeremonyAward, int)`](SeasonCeremony.cs.md#symbol-374e291870c7)；[`NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`](SeasonCeremony.cs.md#symbol-728070e4daae)；[`NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward)`](SeasonCeremony.cs.md#symbol-38e907ce990d)；`NationalSpire.CareerHonor.CareerHonor()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ceremonies`；`NationalSpire.CareerData.CeremonyRewardReceipts`；`NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.PendingCeremonySeason`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerHonor.Day`；`NationalSpire.CareerHonor.Detail`；`NationalSpire.CareerHonor.Id`；`NationalSpire.CareerHonor.Season`；`NationalSpire.CareerHonor.Title`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Place`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`；`NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`；`NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`；`NationalSpire.CareerAudience.Followers(NationalSpire.CareerPerson)`；`NationalSpire.CareerData.Ceremonies`；`NationalSpire.CareerData.CeremonyRewardReceipts`；`NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.PendingCeremonySeason`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerHonor.Day`；`NationalSpire.CareerHonor.Detail`；`NationalSpire.CareerHonor.Id`；`NationalSpire.CareerHonor.Season`；`NationalSpire.CareerHonor.Title`；`NationalSpire.CareerPerson.Fans`；`NationalSpire.CeremonyAward.AudienceReward`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Recipients`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Place`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`；`NationalSpire.SeasonCeremony.NewReward(NationalSpire.CeremonyAward, int)`；`NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`；`NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`；输入表达式：`CareerAudience.Followers(data, award.WinnerId)`；返回值紧邻使用处：`ArgumentSyntax: CareerAudience.Followers(data, award.WinnerId)`
+- `NationalSpire.CareerAudience.Followers(NationalSpire.CareerPerson)`；输入表达式：`CareerAudience.Followers(person)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerAudience.Followers(person) + RewardAmount(award)`
+- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, award.WinnerId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, award.WinnerId) is { } person`
 - `NationalSpire.CareerHonor.CareerHonor()`；输入表达式：`new(){Id=$"top20-{ceremony.Season}",Season=data.Season,Day=data.Day,Title=$"年度 TOP 20 · 第{top.Place}名",Detail=$"年度评选{top.Score}分。"}`；返回值紧邻使用处：`ArgumentSyntax: new(){Id=$"top20-{ceremony.Season}",Season=data.Season,Day=data.Day,Title=$"年度 TOP 20 · 第{top.Place}名",Detail=$"年度评选{top.Score}分。"}`
 - `NationalSpire.CareerHonor.CareerHonor()`；输入表达式：`new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason}`；返回值紧邻使用处：`ArgumentSyntax: new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason}`
 - `NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`；输入表达式：`Capture(data,data.Season)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Capture(data,data.Season)`
 - `NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`；输入表达式：`EnsureWeeklyCovers(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: EnsureWeeklyCovers(data);`
+- `NationalSpire.SeasonCeremony.NewReward(NationalSpire.CeremonyAward, int)`；输入表达式：`NewReward(award, CareerAudience.Followers(data, award.WinnerId))`；返回值紧邻使用处：`AssignmentExpressionSyntax: award.AudienceReward = NewReward(award, CareerAudience.Followers(data, award.WinnerId))`
 - `NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`；输入表达式：`RewardAmount(a)`；返回值紧邻使用处：`AssignmentExpressionSyntax: data.Fans+=RewardAmount(a)`
+- `NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward)`；输入表达式：`RewardAmount(award)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerAudience.Followers(person) + RewardAmount(award)`
 - `NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward)`；输入表达式：`RewardKey(ceremony,a)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =RewardKey(ceremony,a)`
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`data.CeremonyRewardReceipts.Add($"top20-{ceremony.Season}")`；返回值紧邻使用处：`BinaryExpressionSyntax: top!=null && data.CeremonyRewardReceipts.Add($"top20-{ceremony.Season}")`
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`data.CeremonyRewardReceipts.Add(key)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !data.CeremonyRewardReceipts.Add(key)`
@@ -906,9 +973,11 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`data.Esports.Honors.Add(new(){Id=$"top20-{ceremony.Season}",Season=data.Season,Day=data.Day,Title=$"年度 TOP 20 · 第{top.Place}名",Detail=$"年度评选{top.Score}分。"})`；返回值紧邻使用处：`ExpressionStatementSyntax: data.Esports.Honors.Add(new(){Id=$"top20-{ceremony.Season}",Season=data.Season,Day=data.Day,Title=$"年度 TOP 20 · 第{top.Place}名",Detail=$"年度评选{top.Score}分。"});`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`data.Esports.Honors.Add(new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason})`；返回值紧邻使用处：`ExpressionStatementSyntax: data.Esports.Honors.Add(new(){Id=key,Season=data.Season,Day=data.Day,Title=a.Title,Detail=a.Reason});`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`a.Recipients.Contains("player")`；返回值紧邻使用处：`BinaryExpressionSyntax: a.WinnerId=="player"||a.Recipients.Contains("player")`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.HumanIds.Contains(award.WinnerId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !data.HumanIds.Contains(award.WinnerId)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `award.AudienceReward` = `NewReward(award, CareerAudience.Followers(data, award.WinnerId))`
 - `data.Fans` += `120`
 - `data.Fans` += `RewardAmount(a)`
 - `data.PendingCeremonySeason` = `data.Season`
@@ -917,6 +986,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `Detail` = `a.Reason`
 - `Id` = `$"top20-{ceremony.Season}"`
 - `Id` = `key`
+- `person.Fans` = `CareerAudience.Followers(person) + RewardAmount(award)`
 - `Season` = `data.Season`
 - `Title` = `$"年度 TOP 20 · 第{top.Place}名"`
 - `Title` = `a.Title`
@@ -925,7 +995,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData) — public static bool EnsureWeeklyCovers(CareerData data)`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)；[`NationalSpire.WeeklyJournal.Recover(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-f465ec0d1539)
 
@@ -958,27 +1028,28 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.CreateWeeklyCover(NationalSpire.CareerData, NationalSpire.CeremonyRecord) — public static WeeklySlide CreateWeeklyCover(CareerData data, CeremonyRecord record)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-d0fc3753fbb4)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；`NationalSpire.WeeklySlide.WeeklySlide()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.SeasonCeremony.AwardDescription(string, string)`](SeasonCeremony.cs.md#symbol-f5cb47c88b37)；`NationalSpire.WeeklySlide.WeeklySlide()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Name`；`NationalSpire.CeremonyRank.Place`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.WeeklySlide.Body`；`NationalSpire.WeeklySlide.CeremonySeason`；`NationalSpire.WeeklySlide.Character`；`NationalSpire.WeeklySlide.Facts`；`NationalSpire.WeeklySlide.Id`；`NationalSpire.WeeklySlide.Importance`；`NationalSpire.WeeklySlide.People`；`NationalSpire.WeeklySlide.Title`；`NationalSpire.WeeklySlide.Topic`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyAward.WinnerId`；`NationalSpire.CeremonyAward.WinnerName`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Name`；`NationalSpire.CeremonyRank.Place`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.SeasonCeremony.AwardDescription(string, string)`；`NationalSpire.WeeklySlide.Body`；`NationalSpire.WeeklySlide.CeremonySeason`；`NationalSpire.WeeklySlide.Character`；`NationalSpire.WeeklySlide.Facts`；`NationalSpire.WeeklySlide.Id`；`NationalSpire.WeeklySlide.Importance`；`NationalSpire.WeeklySlide.People`；`NationalSpire.WeeklySlide.Title`；`NationalSpire.WeeklySlide.Topic`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, a.WinnerId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, r.Id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id)`
 - `NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.ClubName(data, a.ClubId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId)`
+- `NationalSpire.SeasonCeremony.AwardDescription(string, string)`；输入表达式：`AwardDescription(a.Title, a.Reason)`；返回值紧邻使用处：`InterpolationSyntax: {AwardDescription(a.Title, a.Reason)}`
 - `NationalSpire.WeeklySlide.WeeklySlide()`；输入表达式：`new WeeklySlide { Id = "ceremony-" + record.Season, CeremonySeason = record.Season,              Topic = "赛季颁奖盛典", Character = "储君", Importance = 3, Title = title,              Body = title + "。\n\n" + (winners.Length > 0 ? winners : "本季参赛记录已经归档，本届尚无符合条件的获奖者。") + leaders,              Facts = $"第{record.Season}赛季颁奖结果。" + winners + leaders,              People = record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct().ToList() }`；返回值紧邻使用处：`ReturnStatementSyntax: return new WeeklySlide { Id = "ceremony-" + record.Season, CeremonySeason = record.Season,              Topic = "赛季颁奖盛典", Character = "储君", Importance = 3, Title = title,              Body = title + "。\n\n" + (winners.Length > 0 ? winners : "本季参赛记录已经归档，本届尚无符合条件的获奖者。") + leaders,              Facts = $"第{record.Season}赛季颁奖结果。" + winners + leaders,              People = record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct().ToList() };`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", record.YearTop.Take(3).Select((r, i) =>              $"第 {(r.Place > 0 ? r.Place : i + 1)} 名  {(r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id))} · {r.Score} 分"))`；返回值紧邻使用处：`BinaryExpressionSyntax: "\n\n年度 TOP 20 已公布\n" + string.Join("\n", record.YearTop.Take(3).Select((r, i) =>              $"第 {(r.Place > 0 ? r.Place : i + 1)} 名  {(r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id))} · {r.Score} 分"))`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n\n", record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{a.Reason}"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = string.Join("\n\n", record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{a.Reason}"))`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n\n", record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{AwardDescription(a.Title, a.Reason)}"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = string.Join("\n\n", record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{AwardDescription(a.Title, a.Reason)}"))`
 - `string.StartsWith(string)`；输入表达式：`a.Title.StartsWith("年度")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: a => a.Title.StartsWith("年度")`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct().ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`record.Awards.OrderByDescending(a => a.Title.StartsWith("年度"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`record.YearTop.Take(3).Select((r, i) =>              $"第 {(r.Place > 0 ? r.Place : i + 1)} 名  {(r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id))} · {r.Score} 分")`；返回值紧邻使用处：`ArgumentSyntax: record.YearTop.Take(3).Select((r, i) =>              $"第 {(r.Place > 0 ? r.Place : i + 1)} 名  {(r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id))} · {r.Score} 分")`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{a.Reason}")`；返回值紧邻使用处：`ArgumentSyntax: record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{a.Reason}")`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{AwardDescription(a.Title, a.Reason)}")`；返回值紧邻使用处：`ArgumentSyntax: record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>              a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))              + $"\n评选得分 {a.Score}。{AwardDescription(a.Title, a.Reason)}")`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`record.Awards.Select(a => a.WinnerId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: record.Awards.Select(a => a.WinnerId).Where`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`record.YearTop.Take(3)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: record.YearTop.Take(3).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct().ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: People = record.Awards.Select(a => a.WinnerId).Where(id => id.Length > 0).Distinct().ToList()`
@@ -1000,17 +1071,17 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData) — public static CeremonyRecord Preview(CareerData data)`
 
-来源：源码第 245 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`](SeasonCeremony.cs.md#symbol-38d4564e570d)；`NationalSpire.CeremonyAward.CeremonyAward()`；`NationalSpire.CeremonyRank.CeremonyRank()`；`NationalSpire.CeremonyRecord.CeremonyRecord()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.SeasonCeremony.AwardDescription(string, string)`](SeasonCeremony.cs.md#symbol-f5cb47c88b37)；[`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`](SeasonCeremony.cs.md#symbol-38d4564e570d)；`NationalSpire.CeremonyAward.CeremonyAward()`；`NationalSpire.CeremonyRank.CeremonyRank()`；`NationalSpire.CeremonyRecord.CeremonyRecord()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyRank.Clears`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Matches`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRank.Wins`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Day`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.SeasonTop`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.CircuitLedger.Year(int)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CeremonyAward.ClubId`；`NationalSpire.CeremonyAward.Reason`；`NationalSpire.CeremonyAward.Score`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyRank.Clears`；`NationalSpire.CeremonyRank.Id`；`NationalSpire.CeremonyRank.Matches`；`NationalSpire.CeremonyRank.Score`；`NationalSpire.CeremonyRank.Wins`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Day`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.SeasonTop`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`；`NationalSpire.CircuitLedger.Year(int)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.SeasonCeremony.AwardDescription(string, string)`；`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = "团队正式对局按获胜、战平与通关累计。" }`；返回值紧邻使用处：`ArgumentSyntax: new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = "团队正式对局按获胜、战平与通关累计。" }`
+- `NationalSpire.CeremonyAward.CeremonyAward()`；输入表达式：`new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = AwardDescription("年度最佳俱乐部", "") }`；返回值紧邻使用处：`ArgumentSyntax: new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = AwardDescription("年度最佳俱乐部", "") }`
 - `NationalSpire.CeremonyRank.CeremonyRank()`；输入表达式：`new() { Id = "player", Score = 148, Matches = 10, Wins = 8, Clears = 7 }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = "player", Score = 148, Matches = 10, Wins = 8, Clears = 7 }`
 - `NationalSpire.CeremonyRank.CeremonyRank()`；输入表达式：`new() { Id = "player", Score = 482, Matches = 32, Wins = 27, Clears = 24 }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = "player", Score = 482, Matches = 32, Wins = 27, Clears = 24 }`
 - `NationalSpire.CeremonyRank.CeremonyRank()`；输入表达式：`new() { Id = person.Id, Score = score * 3, Matches = 30, Wins = 20, Clears = 18 }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = person.Id, Score = score * 3, Matches = 30, Wins = 20, Clears = 18 }`
@@ -1018,13 +1089,14 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `NationalSpire.CeremonyRecord.CeremonyRecord()`；输入表达式：`new CeremonyRecord { Season = year * 4, Year = year, Day = data.Day }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CeremonyRecord { Season = year * 4, Year = year, Day = data.Day }`
 - `NationalSpire.CircuitLedger.Year(int)`；输入表达式：`CircuitLedger.Year(data.Season)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CircuitLedger.Year(data.Season)`
 - `NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；输入表达式：`EsportsWorld.IsProfessional(p)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => EsportsWorld.IsProfessional(p)`
-- `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`；输入表达式：`PersonAward("联赛 MVP", sample.SeasonTop[0], "仅计算本赛季职业联赛的正式对局。")`；返回值紧邻使用处：`ArgumentSyntax: PersonAward("联赛 MVP", sample.SeasonTop[0], "仅计算本赛季职业联赛的正式对局。")`
+- `NationalSpire.SeasonCeremony.AwardDescription(string, string)`；输入表达式：`AwardDescription("年度最佳俱乐部", "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Reason = AwardDescription("年度最佳俱乐部", "")`
+- `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`；输入表达式：`PersonAward("联赛 MVP", sample.SeasonTop[0], "本赛季职业联赛正式比赛表现第一。")`；返回值紧邻使用处：`ArgumentSyntax: PersonAward("联赛 MVP", sample.SeasonTop[0], "本赛季职业联赛正式比赛表现第一。")`
 - `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`；输入表达式：`PersonAward("年度最佳选手", sample.YearTop[0], "全年正式比赛综合得分第一。")`；返回值紧邻使用处：`ArgumentSyntax: PersonAward("年度最佳选手", sample.YearTop[0], "全年正式比赛综合得分第一。")`
 - `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`；输入表达式：`PersonAward("赛季最佳选手", sample.SeasonTop[0], "本赛季正式比赛综合表现第一。")`；返回值紧邻使用处：`ArgumentSyntax: PersonAward("赛季最佳选手", sample.SeasonTop[0], "本赛季正式比赛综合表现第一。")`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`data.People.Where(p => EsportsWorld.IsProfessional(p)).Take(19)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var person in data.People.Where(p => EsportsWorld.IsProfessional(p)).Take(19))          {              sample.SeasonTop.Add(new() { Id = person.Id, Score = score, Matches = 10, Wins = 7, Clears = 6 });              sample.YearTop.Add(new() { Id = person.Id, Score = score * 3, Matches = 30, Wins = 20, Clears = 18 });              score -= 5;          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Where(p => EsportsWorld.IsProfessional(p))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.People.Where(p => EsportsWorld.IsProfessional(p)).Take`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = "团队正式对局按获胜、战平与通关累计。" })`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = "团队正式对局按获胜、战平与通关累计。" });`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "仅计算本赛季职业联赛的正式对局。"))`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "仅计算本赛季职业联赛的正式对局。"));`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = AwardDescription("年度最佳俱乐部", "") })`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,              Reason = AwardDescription("年度最佳俱乐部", "") });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "本赛季职业联赛正式比赛表现第一。"))`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "本赛季职业联赛正式比赛表现第一。"));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(PersonAward("年度最佳选手", sample.YearTop[0], "全年正式比赛综合得分第一。"))`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(PersonAward("年度最佳选手", sample.YearTop[0], "全年正式比赛综合得分第一。"));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.Awards.Add(PersonAward("赛季最佳选手", sample.SeasonTop[0], "本赛季正式比赛综合表现第一。"))`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.Awards.Add(PersonAward("赛季最佳选手", sample.SeasonTop[0], "本赛季正式比赛综合表现第一。"));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`sample.SeasonTop.Add(new() { Id = "player", Score = 148, Matches = 10, Wins = 8, Clears = 7 })`；返回值紧邻使用处：`ExpressionStatementSyntax: sample.SeasonTop.Add(new() { Id = "player", Score = 148, Matches = 10, Wins = 8, Clears = 7 });`
@@ -1045,7 +1117,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 - `Matches` = `10`
 - `Matches` = `30`
 - `Matches` = `32`
-- `Reason` = `"团队正式对局按获胜、战平与通关累计。"`
+- `Reason` = `AwardDescription("年度最佳俱乐部", "")`
 - `score` -= `5`
 - `Score` = `148`
 - `Score` = `482`

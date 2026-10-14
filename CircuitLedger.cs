@@ -9,14 +9,15 @@ public static class CircuitLedger
         if (c == null) return "";
         string text = "";
         var f = c.Fixtures.FirstOrDefault(f => f.Id == m.FixtureId);
+        if (f != null && NationalFortune.Applies(c)) text += NationalFortune.Impact(d, c, f);
         if (c.TeamEvent && f != null)
         {
             var tie = c.Fixtures.Where(t => t.Round == f.Round && t.HomeTeam == f.HomeTeam && t.AwayTeam == f.AwayTeam).ToList();
-            text = $"{CircuitWorld.TeamName(d, c, f.HomeTeam)} {tie.Count(t => t.WinnerId == t.HomeId)}:{tie.Count(t => t.WinnerId == t.AwayId)} {CircuitWorld.TeamName(d, c, f.AwayTeam)}。";
+            text += $"{CircuitWorld.TeamName(d, c, f.HomeTeam)} {tie.Count(t => t.WinnerId == t.HomeId)}:{tie.Count(t => t.WinnerId == t.AwayId)} {CircuitWorld.TeamName(d, c, f.AwayTeam)}。";
         }
         if (c.Kind == "worldfinal") text += c.ChampionId == "player" ? $"{CareerEngine.Name(d)}成为本届世界总决赛冠军。" : m.PlayerWon ? $"{CareerEngine.Name(d)}晋级{CircuitWorld.RoundName(c, m.Round + 1)}。" : $"{CareerEngine.Name(d)}止步{CircuitWorld.RoundName(c, m.Round)}。";
         var award = d.Esports.CircuitAwards.FirstOrDefault(a => a.CompetitionId == c.Id && a.PersonId == "player");
-        if (award != null) text += $"本项赛事获得{award.Points}世界积分、贡献{award.Fortune}国运。";
+        if (award != null && award.Completed) text += $"本项赛事获得{award.Points}世界积分、累计贡献{award.Fortune}国运。";
         return text;
     }
     public static IEnumerable<CircuitAward> Counted(CareerData d, string id) => d.Esports.CircuitAwards
@@ -35,7 +36,7 @@ public static class CircuitLedger
     }
     public static void Settle(CareerData d, WorldCompetition c, bool publish)
     {
-        if (!c.Finished || d.Esports.CircuitAwards.Any(a => a.CompetitionId == c.Id)) return;
+        if (!c.Finished || d.Esports.CircuitAwards.Any(a => a.CompetitionId == c.Id && a.Completed)) return;
         OwnedClubs.SettleAchievements(d);
         int roundCount = CircuitWorld.RoundCount(c);
         foreach (string id in c.Entrants)
@@ -48,27 +49,42 @@ public static class CircuitLedger
                 : c.Kind == "worldfinal" ? rank switch { 1 => 1500, 2 => 900, 4 => 525, 8 => 270, 16 => 120, _ => 50 } : 0;
             int fortune = c.Kind == "league" ? 0 : c.Kind == "worldfinal" ? rank switch { 1 => 600, 2 => 300, 4 => 150, 8 => 60, _ => 15 }
                 : (c.Kind == "worldcup" ? 2 : 1) * (rank switch { 1 => 180, 2 => 90, 4 => 45, _ => 15 });
-            var award = new CircuitAward { CompetitionId = c.Id, PersonId = id, Country = c.EntrantCountries[id], ClubId = c.EntrantClubs[id],
-                Season = c.Season, Day = d.Day, Event = c.Name, Kind = c.Kind, Stage = rank, Place = place, Points = points, Fortune = fortune };
-            d.Esports.CircuitAwards.Add(award);
-            if (champion && CareerEngine.Person(d, id) is { } person) person.Titles++;
+            var award = d.Esports.CircuitAwards.FirstOrDefault(a => a.CompetitionId == c.Id && a.PersonId == id);
+            if (award == null)
+            {
+                award = new CircuitAward { CompetitionId = c.Id, PersonId = id, Country = c.EntrantCountries[id], ClubId = c.EntrantClubs[id],
+                    Season = c.Season, Event = c.Name, Kind = c.Kind };
+                d.Esports.CircuitAwards.Add(award);
+            }
+            if (NationalFortune.Applies(c)) fortune = award.Fortune;
+            award.Completed = true; award.Day = d.Day; award.Stage = rank; award.Place = place; award.Points = points; award.Fortune = fortune;
+            if (champion && CareerEngine.Person(d, id) is { } person)
+            {
+                if (!d.HumanIds.Contains(id)) person.Fans = CareerAudience.Followers(d, id) + CareerAudience.ChampionGain(c.Kind);
+                person.Titles++;
+            }
             var nation = d.Esports.Nations.FirstOrDefault(n => n.Country == award.Country);
-            if (nation != null) nation.Treasury += fortune * 2;
+            if (nation != null && !NationalFortune.Applies(c))
+            {
+                nation.Treasury += fortune * 2;
+                if (fortune > 0) NationalDevelopment.Contribute(d, nation, fortune);
+            }
             if (id == "player")
             {
-                int dividend = fortune * 2; d.Credits += dividend;
+                int dividend = NationalFortune.Applies(c) ? 0 : fortune * 20; d.Credits += dividend;
                 int placementPrize = c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? rank switch { 1 => 50000, 2 => 25000, 4 => 10000, 8 => 5000, 16 => 2000, _ => 1000 } : 0;
                 d.Credits += placementPrize; d.Life.PrizeTotal += placementPrize;
-                string detail = $"{CareerEngine.Name(d)}取得{c.Name}{place}，世界积分增加{points}，为{award.Country}贡献{fortune}国运，国家奖励{CareerMoney.Format(dividend)}。" + (placementPrize > 0 ? $"本届名次奖金{CareerMoney.Format(placementPrize)}。" : "");
-                if (champion) EsportsWorld.Milestone(d, c.Id, c.Name + "冠军", detail, c.Kind == "worldfinal" ? 3000 : 1200, c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? 0 : 1000);
+                string detail = $"{CareerEngine.Name(d)}取得{c.Name}{place}，世界积分增加{points}，为{award.Country}累计贡献{fortune}国运。" + (dividend > 0 ? $"国家奖励{CareerMoney.Format(dividend)}。" : "") + (placementPrize > 0 ? $"本届名次奖金{CareerMoney.Format(placementPrize)}。" : "");
+                if (champion) EsportsWorld.Milestone(d, c.Id, c.Name + "冠军", detail, CareerAudience.ChampionGain(c.Kind), c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? 0 : 1000);
                 Remember(d, "award-" + c.Id, detail, ["player"]);
             }
         }
         if (c.Kind != "league")
             foreach (var country in (c.TeamEvent ? c.Rosters[c.ChampionTeam] : [c.ChampionId]).Select(id => c.EntrantCountries[id]).Distinct())
             { var nation = d.Esports.Nations.FirstOrDefault(n => n.Country == country); if (nation != null) nation.Titles++; }
+        AvatarHonors.InvalidateRankings(d);
         if (c.ChampionTeam.Length > 0 && EsportsWorld.Club(d, c.ChampionTeam) is { } club) { club.Titles++; int teamPrize = c.Modern ? 8000 : 800; if (club.Id == d.Esports.OwnedClub?.ClubId) OwnedClubs.Pay(d, c.Name + "球队冠军奖金", teamPrize);
-            else { club.Budget += teamPrize; ClubOperations.Entry(club, d.Day, c.Name + "球队冠军奖金", teamPrize); } }
+            else { club.Fans += c.Kind == "continental" ? 500000 : 300000; club.Budget += teamPrize; ClubOperations.Entry(club, d.Day, c.Name + "球队冠军奖金", teamPrize); } }
         string winner = c.TeamEvent ? CircuitWorld.TeamName(d, c, c.ChampionTeam) : CareerEngine.DisplayName(d, c.ChampionId);
         string report = $"第{c.Season}赛季{c.Name}落幕，{winner}夺冠。";
         if (c.Kind != "league")
@@ -88,6 +104,7 @@ public static class CircuitLedger
     {
         if (d.Esports.LastDividendSeason >= d.Season) return;
         d.Esports.LastDividendSeason = d.Season;
+        NationalDevelopment.SeasonStart(d);
         if (d.Season > 1)
         {
             int previousYear = Year(d.Season - 1);
@@ -125,7 +142,7 @@ public static class CircuitLedger
         int pick = CareerEngine.StableHash(d.WorldId + target + d.Season) % names.Length;
         int support = CareerCommerce.IdentityIndex(d, target) switch { 0 => 3200, 1 => 2000, 2 => 4200, _ => 1600 };
         return new() { Id = target + "-" + d.Season, Brand = names[pick], TargetId = target, StartSeason = d.Season, EndSeason = d.Season + 1,
-            Accepted = true, SignedDay = d.Day, Retainer = tier * support, WinBonus = 0,
+            Accepted = true, SignedDay = d.Day, Retainer = (int)Math.Round(tier * support * CareerAudience.ClubMultiplier(ClubAudience.Total(d, target))), WinBonus = 0,
             Description = RegionalOrganizations.SponsorDescription(names[pick]), Slogan = RegionalOrganizations.SponsorSlogan(names[pick]) };
     }
     public static void PlayerMatch(CareerData d, CareerMatch m)

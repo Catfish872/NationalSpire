@@ -8,13 +8,19 @@ public partial class CareerScreen
     private int _lifeHistoryLimit = 8;
     private void Life(CareerData d)
     {
-        AddHeading("赛场之外", "安排一点自己的生活，也看看这些选择后来怎样了。");
+        if (_lifeSection == "活动与计划") AddHeading("赛场之外", "安排一点自己的生活，也看看这些选择后来怎样了。");
         foreach (string message in d.Life.RepairNotices.TakeLast(4)) _content.AddChild(Text(message, 16, CareerVisuals.Teal));
-        _content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
-        var tabs = new HBoxContainer(); _content.AddChild(tabs);
-        foreach (string name in new[] { "活动与计划", "我的空间", "公开消息", "收支记录" })
-            tabs.AddChild(FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165));
+        if (_lifeSection is "活动与计划" or "收支记录") _content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
+        var tabs = new HFlowContainer(); _content.AddChild(tabs);
+        foreach (string name in LifestyleArt.Sections)
+        {
+            var tab = FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165);
+            tab.Icon = LifestyleArt.Icon(name); tab.AddThemeConstantOverride("icon_max_width", 22); tabs.AddChild(tab);
+        }
         if (_lifeSection == "我的空间") { LifeCollection(d); return; }
+        if (_lifeSection == "消费商城") { ConsumerShop(d); return; }
+        if (_lifeSection == "人气榜") { FanChart(d); return; }
+        if (_lifeSection == "交易市场") { MarketScreen(d); return; }
         if (_lifeSection == "公开消息") { LifeNews(d); return; }
         if (_lifeSection == "收支记录")
         {
@@ -89,14 +95,16 @@ public partial class CareerScreen
         CareerRelics.Shop(d);
         _content.AddChild(Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold));
         _content.AddChild(Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink));
-        _content.AddChild(Text("同款只保留一件。限次手办用完后可在商店再次购入，恢复全部次数；活动优惠合计最多抵扣原价的 20%。", 15, _muted));
-        var owned = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        owned.AddThemeConstantOverride("h_separation", 16); owned.AddThemeConstantOverride("v_separation", 16); _content.AddChild(owned);
-        foreach (var item in CareerRelics.Catalog.Where(r => d.Life.Figurines.ContainsKey(r.Id))) FigurineCard(d, owned, item, true);
-        _content.AddChild(Text($"本期手办 · 每期最多 4 款 · 第 {d.Life.RestockDay} 天上新", 23, _gold));
+        _content.AddChild(Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted));
+        _content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold));
         var store = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         store.AddThemeConstantOverride("h_separation", 16); store.AddThemeConstantOverride("v_separation", 16); _content.AddChild(store);
         foreach (var item in CareerRelics.Offers(d)) FigurineCard(d, store, item, false);
+        if (d.Life.Shop.Count == 0) _content.AddChild(Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted));
+        _content.AddChild(Text("已拥有的收藏", 23, _gold));
+        var owned = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        owned.AddThemeConstantOverride("h_separation", 16); owned.AddThemeConstantOverride("v_separation", 16); _content.AddChild(owned);
+        foreach (var item in CareerRelics.Catalog.Where(r => d.Life.Figurines.ContainsKey(r.Id))) FigurineCard(d, owned, item, true);
         if (d.Life.Collection.Count > 0)
         {
             _content.AddChild(Text("生活纪念", 23, _gold));
@@ -116,7 +124,7 @@ public partial class CareerScreen
         title.AddChild(Text(item.Name + " · 手办", 22, _gold));
         int price = CareerRelics.PurchasePrice(d, item);
         title.AddChild(Text(owned ? CareerRelics.Status(d, item) : CareerMoney.Format(price), 16, CareerVisuals.Teal));
-        if (!owned && price < item.Price) box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员 85 折", 14, _muted));
+        if (!owned && price < item.Price) box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted));
         box.AddChild(Text(item.Effect, 17, _ink));
         if (!owned)
         {
@@ -138,8 +146,8 @@ public partial class CareerScreen
             Render(); Notice("游戏名已更新。", false); return true;
         }, "确认改名", box =>
         {
-            input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);
-            status = Text("最多 32 个字符。", 16, _muted); box.AddChild(status);
+            input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);
+            status = Text("旧内容保留原名。", 16, _muted); box.AddChild(status);
         });
         input?.GrabFocus();
     }

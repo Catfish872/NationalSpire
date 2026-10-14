@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3AC0E90DA5CE43627DD8912830A96DE9F51CCF3DC22216F25CC42624F74B31B9`。来源：[源码](../../CareerLife.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5333844A03F628521C2C8F281D2D798C80FC0AD2C1D01965344BF1AC70087373`。来源：[源码](../../CareerLife.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -200,7 +200,7 @@ public const int Version = 5;
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)
 
-**调用：** [`NationalSpire.CareerLife.Hash(NationalSpire.CareerData, string)`](CareerLife.cs.md#symbol-0780f4d6b962)；[`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerTraining.ActiveRoster(NationalSpire.CareerData, string)`](CareerTraining.cs.md#symbol-4b84e446c2e4)；[`NationalSpire.CareerTraining.Multiplayer(NationalSpire.CareerData)`](CareerTraining.cs.md#symbol-69fbc353877e)；[`NationalSpire.CareerTraining.Targets(NationalSpire.CareerData)`](CareerTraining.cs.md#symbol-89a5b7a8727b)；[`NationalSpire.ClubPrograms.CanOffer(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-359a3dbeb02e)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`Text(string)`](CareerLife.cs.md#symbol-1c0cdd430001)；`NationalSpire.LifeActivity.LifeActivity()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Min(int, int)`；`System.Random.Next()`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`
+**调用：** [`NationalSpire.CareerLife.Hash(NationalSpire.CareerData, string)`](CareerLife.cs.md#symbol-0780f4d6b962)；[`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerTraining.ActiveRoster(NationalSpire.CareerData, string)`](CareerTraining.cs.md#symbol-4b84e446c2e4)；[`NationalSpire.CareerTraining.Multiplayer(NationalSpire.CareerData)`](CareerTraining.cs.md#symbol-69fbc353877e)；[`NationalSpire.CareerTraining.Targets(NationalSpire.CareerData)`](CareerTraining.cs.md#symbol-89a5b7a8727b)；[`NationalSpire.ClubPrograms.CanOffer(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-359a3dbeb02e)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`Text(string)`](CareerLife.cs.md#symbol-44b2b85f41d7)；`NationalSpire.LifeActivity.LifeActivity()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Min(int, int)`；`System.Random.Next()`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Country`；`NationalSpire.CareerClub.Id`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerDuel.PersonId`；`NationalSpire.CareerLife.Hash(NationalSpire.CareerData, string)`；`NationalSpire.CareerLifeState.Activities`；`NationalSpire.CareerLifeState.Figurines`；`NationalSpire.CareerLifeState.LastDecisionDay`；`NationalSpire.CareerLifeState.NextOfferDay`；`NationalSpire.CareerLifeState.NextProjectDay`；`NationalSpire.CareerLifeState.OfferRound`；`NationalSpire.CareerLifeState.Relationships`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；`NationalSpire.CareerTraining.ActiveRoster(NationalSpire.CareerData, string)`；`NationalSpire.CareerTraining.Multiplayer(NationalSpire.CareerData)`；`NationalSpire.CareerTraining.Targets(NationalSpire.CareerData)`；`NationalSpire.ClubPrograms.CanOffer(NationalSpire.CareerData, string)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsCareer.Duels`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.FigurineState.Charge`；`NationalSpire.LifeActivity.ClubId`；`NationalSpire.LifeActivity.Cost`；`NationalSpire.LifeActivity.Detail`；`NationalSpire.LifeActivity.Duration`；`NationalSpire.LifeActivity.ExpiresDay`；`NationalSpire.LifeActivity.Id`；`NationalSpire.LifeActivity.Kind`；`NationalSpire.LifeActivity.LongProject`；`NationalSpire.LifeActivity.OfferedDay`；`NationalSpire.LifeActivity.PersonId`；`NationalSpire.LifeActivity.Public`；`NationalSpire.LifeActivity.Round`；`NationalSpire.LifeActivity.Setting`；`NationalSpire.LifeActivity.Status`；`NationalSpire.LifeActivity.TermsVersion`；`NationalSpire.LifeActivity.Title`；`NationalSpire.LifeActivity.Variant`；`NationalSpire.LifeCatalog.Plan.Cost`；`NationalSpire.LifeCatalog.Plan.Days`；`NationalSpire.LifeCatalog.Plan.Key`；`NationalSpire.LifeCatalog.Plan.Kind`；`NationalSpire.LifeCatalog.Plan.Long`；`NationalSpire.LifeCatalog.Plan.Public`；`NationalSpire.LifeCatalog.Plan.Purpose`；`NationalSpire.LifeCatalog.Plan.Title`；`NationalSpire.LifeCatalog.Plans`；`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；`Text(string)`
 
@@ -209,8 +209,9 @@ public const int Version = 5;
 - `NationalSpire.CareerLife.Hash(NationalSpire.CareerData, string)`；输入表达式：`Hash(d, "offers:" + d.Day)`；返回值紧邻使用处：`ArgumentSyntax: Hash(d, "offers:" + d.Day)`
 - `NationalSpire.CareerLife.Hash(NationalSpire.CareerData, string)`；输入表达式：`Hash(d, plan.Key + p.Id + d.Day)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => Hash(d, plan.Key + p.Id + d.Day)`
 - `NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；输入表达式：`CareerRelics.Has(d, "DREAM_CATCHER")`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerRelics.Has(d, "DREAM_CATCHER") && life.Figurines["DREAM_CATCHER"].Charge > 0`
+- `NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；输入表达式：`CareerRelics.Has(d, "JUZU_BRACELET")`；返回值紧邻使用处：`IfStatementSyntax: if (CareerRelics.Has(d, "JUZU_BRACELET")) candidates = candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList();`
 - `NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；输入表达式：`CareerRelics.Has(d, "JUZU_BRACELET")`；返回值紧邻使用处：`IfStatementSyntax: if (CareerRelics.Has(d, "JUZU_BRACELET")) candidates = candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList();`
-- `NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；输入表达式：`CareerRelics.Has(d, "TOOLBOX")`；返回值紧邻使用处：`ConditionalExpressionSyntax: CareerRelics.Has(d, "TOOLBOX") ? 4 : 3`
+- `NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；输入表达式：`CareerRelics.Has(d, "TOOLBOX")`；返回值紧邻使用处：`ConditionalExpressionSyntax: CareerRelics.Has(d, "TOOLBOX") ? 6 : 3`
 - `NationalSpire.CareerTraining.ActiveRoster(NationalSpire.CareerData, string)`；输入表达式：`CareerTraining.ActiveRoster(d, x.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: x => CareerTraining.ActiveRoster(d, x.Id)`
 - `NationalSpire.CareerTraining.Multiplayer(NationalSpire.CareerData)`；输入表达式：`CareerTraining.Multiplayer(d)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerTraining.Multiplayer(d)`
 - `NationalSpire.CareerTraining.Targets(NationalSpire.CareerData)`；输入表达式：`CareerTraining.Targets(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CareerTraining.Targets(d).Any`
@@ -238,6 +239,7 @@ public const int Version = 5;
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`LifeCatalog.Plans.Where(p => !used.Contains(p.Key) && (!p.Long || project)              && (p.Kind is not ("俱乐部" or "备赛" or "培养") || d.Esports.ClubId.Length > 0)              && (p.Kind is not ("备赛" or "培养") || !CareerTraining.Multiplayer(d) && CareerTraining.Targets(d).Any(x => CareerTraining.ActiveRoster(d, x.Id)))              && (p.Kind != "经营" || OwnedClubs.CanOperate(d) && ClubPrograms.CanOffer(d, p.Title))              && (p.Kind != "内容" || d.Results.Count > 0)).OrderBy(p => d.Credits < 300 && p.Cost <= d.Credits ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LifeCatalog.Plans.Where(p => !used.Contains(p.Key) && (!p.Long || project)              && (p.Kind is not ("俱乐部" or "备赛" or "培养") || d.Esports.ClubId.Length > 0)              && (p.Kind is not ("备赛" or "培养") || !CareerTraining.Multiplayer(d) && CareerTraining.Targets(d).Any(x => CareerTraining.ActiveRoster(d, x.Id)))              && (p.Kind != "经营" || OwnedClubs.CanOperate(d) && ClubPrograms.CanOffer(d, p.Title))              && (p.Kind != "内容" || d.Results.Count > 0)).OrderBy(p => d.Credits < 300 && p.Cost <= d.Credits ? 0 : 1).ThenBy`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.People.Where(p => plan.Kind is "备赛" or "培养"                  ? p.ClubId == d.Esports.ClubId && EsportsWorld.IsProfessional(p)                  : p.Country == d.Esports.Country && (plan.Kind == "青训" ? p.Role == "青训选手" : p.Role is "职业选手" or "普通玩家" or "主播" or "解说员" or "退役选手"))                  .OrderByDescending(p => life.Relationships.ContainsKey(p.Id) || d.Esports.Duels.Any(x => x.PersonId == p.Id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.People.Where(p => plan.Kind is "备赛" or "培养"                  ? p.ClubId == d.Esports.ClubId && EsportsWorld.IsProfessional(p)                  : p.Country == d.Esports.Country && (plan.Kind == "青训" ? p.Role == "青训选手" : p.Role is "职业选手" or "普通玩家" or "主播" or "解说员" or "退役选手"))                  .OrderByDescending(p => life.Relationships.ContainsKey(p.Id) || d.Esports.Duels.Any(x => x.PersonId == p.Id))                  .ThenBy`
@@ -247,6 +249,7 @@ public const int Version = 5;
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: candidates = candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: candidates = candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: candidates = candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: candidates = candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: candidates = candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`d.People.Where(p => plan.Kind is "备赛" or "培养"                  ? p.ClubId == d.Esports.ClubId && EsportsWorld.IsProfessional(p)                  : p.Country == d.Esports.Country && (plan.Kind == "青训" ? p.Role == "青训选手" : p.Role is "职业选手" or "普通玩家" or "主播" or "解说员" or "退役选手"))                  .OrderByDescending(p => life.Relationships.ContainsKey(p.Id) || d.Esports.Duels.Any(x => x.PersonId == p.Id))                  .ThenBy(p => Hash(d, plan.Key + p.Id + d.Day)).Take(30).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.People.Where(p => plan.Kind is "备赛" or "培养"                  ? p.ClubId == d.Esports.ClubId && EsportsWorld.IsProfessional(p)                  : p.Country == d.Esports.Country && (plan.Kind == "青训" ? p.Role == "青训选手" : p.Role is "职业选手" or "普通玩家" or "主播" or "解说员" or "退役选手"))                  .OrderByDescending(p => life.Relationships.ContainsKey(p.Id) || d.Esports.Duels.Any(x => x.PersonId == p.Id))                  .ThenBy(p => Hash(d, plan.Key + p.Id + d.Day)).Take(30).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`LifeCatalog.Plans.Where(p => !used.Contains(p.Key) && (!p.Long || project)              && (p.Kind is not ("俱乐部" or "备赛" or "培养") || d.Esports.ClubId.Length > 0)              && (p.Kind is not ("备赛" or "培养") || !CareerTraining.Multiplayer(d) && CareerTraining.Targets(d).Any(x => CareerTraining.ActiveRoster(d, x.Id)))              && (p.Kind != "经营" || OwnedClubs.CanOperate(d) && ClubPrograms.CanOffer(d, p.Title))              && (p.Kind != "内容" || d.Results.Count > 0)).OrderBy(p => d.Credits < 300 && p.Cost <= d.Credits ? 0 : 1).ThenBy(_ => rng.Next()).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = LifeCatalog.Plans.Where(p => !used.Contains(p.Key) && (!p.Long || project)              && (p.Kind is not ("俱乐部" or "备赛" or "培养") || d.Esports.ClubId.Length > 0)              && (p.Kind is not ("备赛" or "培养") || !CareerTraining.Multiplayer(d) && CareerTraining.Targets(d).Any(x => CareerTraining.ActiveRoster(d, x.Id)))              && (p.Kind != "经营" || OwnedClubs.CanOperate(d) && ClubPrograms.CanOffer(d, p.Title))              && (p.Kind != "内容" || d.Results.Count > 0)).OrderBy(p => d.Credits < 300 && p.Cost <= d.Credits ? 0 : 1).ThenBy(_ => rng.Next()).ToList()`
@@ -271,9 +274,11 @@ public const int Version = 5;
 - `candidates` = `candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1).ToList()`
 - `candidates` = `candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1).ToList()`
 - `candidates` = `candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1).ToList()`
+- `candidates` = `candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList()`
 - `candidates` = `candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList()`
 - `ClubId` = `club.Id`
 - `Cost` = `plan.Cost * scale`
+- `count` += `2`
 - `Detail` = `Text(plan.Purpose)`
 - `dream` = `false`
 - `Duration` = `plan.Days`
@@ -283,7 +288,6 @@ public const int Version = 5;
 - `item.Detail` += `"。" + (plan.Kind switch {                  "青训" => scale == 2 ? "采用更完整的配套服务，覆盖本阶段的准备工作" : "承担本阶段的完整配套费用，方便对方专心参加",                  "内容" => scale == 2 ? "增加现场记录与后期整理的预算" : "安排专人完成拍摄、剪辑与资料整理",                  "社区" => scale == 2 ? "扩大开放名额，补充现场物料" : "扩大活动覆盖范围，配齐场地、物料和后勤人员",                  "俱乐部" => scale == 2 ? "覆盖职业队与青训组的相关需求" : "按全队规模安排，配齐相关设备与后勤支持",                  "商业" => scale == 2 ? "采用中等规模的制作与场地预算" : "按较大规模筹备，增加制作与推广预算",                  _ => scale == 2 ? "扩大项目规模，补充配套设施" : "按完整规模筹备，配齐场地、设施与负责人员" })`
 - `item.Detail` += `$"。项目结束后结算一次，预计收回投入的84%—156%，金额随关注度和销售情况变化"`
 - `Kind` = `plan.Kind`
-- `life.Figurines["DREAM_CATCHER"].Charge` = `0`
 - `life.NextOfferDay` = `d.Day + rng.Next(7, 13)`
 - `life.NextProjectDay` = `d.Day + rng.Next(21, 36)`
 - `LongProject` = `plan.Long`
@@ -298,11 +302,11 @@ public const int Version = 5;
 - `Title` = `plan.Title`
 - `Variant` = `plan.Key`
 
-<a id="symbol-1c0cdd430001"></a>
+<a id="symbol-44b2b85f41d7"></a>
 
 ## `Text(string) — string Text(string s)`
 
-来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)
 
@@ -323,7 +327,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string) — public static string? Accept(CareerData d, string id, string targetId = "")`
 
-来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -392,7 +396,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Thanks(NationalSpire.CareerData, NationalSpire.LifeActivity) — private static string Thanks(CareerData d, LifeActivity item)`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)
 
@@ -413,7 +417,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity) — private static void Complete(CareerData d, LifeActivity a)`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)
 
@@ -434,7 +438,7 @@ public const int Version = 5;
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, a.Cost * percent / 100)`；返回值紧邻使用处：`ArgumentSyntax: ActivityBenefit(a, a.Cost * percent / 100)`
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost / 2, 150))`；返回值紧邻使用处：`ArgumentSyntax: ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost / 2, 150))`
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost, 300))`；返回值紧邻使用处：`BinaryExpressionSyntax: ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost, 300)) + CareerRelics.Training(d, a)`
-- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fans)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fans = ActivityBenefit(a, fans)`
+- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fans * 20)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fans = ActivityBenefit(a, fans * 20)`
 - `NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool)`；输入表达式：`AddEvent(d, a.Id + ":finish", a.Kind, a.Title + "完成", CareerEngine.Name(d) + "安排的" + a.Title + "完成。" + a.Result, ["player", a.PersonId], a.LongProject)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddEvent(d, a.Id + ":finish", a.Kind, a.Title + "完成", CareerEngine.Name(d) + "安排的" + a.Title + "完成。" + a.Result, ["player", a.PersonId], a.LongProject);`
 - `NationalSpire.CareerLife.Grow(NationalSpire.CareerData, NationalSpire.CareerPerson, int, string)`；输入表达式：`Grow(d, member, ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost / 2, 150)), a.Id + member.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Grow(d, member, ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost / 2, 150)), a.Id + member.Id)`
 - `NationalSpire.CareerLife.Grow(NationalSpire.CareerData, NationalSpire.CareerPerson, int, string)`；输入表达式：`Grow(d, youth, ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost, 300)) + CareerRelics.Training(d, a), a.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Grow(d, youth, ActivityBenefit(a, CareerCommerce.TrainingInvestment(a.Cost, 300)) + CareerRelics.Training(d, a), a.Id)`
@@ -491,7 +495,7 @@ public const int Version = 5;
 - `d.Life.Collection[a.Variant]` = `a.Title + " · 第" + d.Season + "赛季"`
 - `d.Life.Facilities` = `Math.Min(3, d.Life.Facilities + 1)`
 - `d.Life.Preparation` = `1`
-- `fans` = `ActivityBenefit(a, fans)`
+- `fans` = `ActivityBenefit(a, fans * 20)`
 - `fans` = `fans * 6 / 5`
 - `team.Budget` -= `a.Cost`
 - `team.Budget` += `a.Cost`
@@ -500,7 +504,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int) — public static int ActivityBenefit(LifeActivity a, int value)`
 
-来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.OwnedClubs.CompleteActivity(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-d53f4fbd3e4e)
 
@@ -518,7 +522,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Grow(NationalSpire.CareerData, NationalSpire.CareerPerson, int, string) — public static int Grow(CareerData d, CareerPerson person, int investment, string seed)`
 
-来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 284 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)
 
@@ -542,7 +546,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.TeamMatchBonus(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, int, int) — public static double TeamMatchBonus(CareerData d, WorldCompetition competition, string personId, int matchDay, int ascension = 8)`
 
-来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -562,7 +566,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData) — public static void SkipRound(CareerData d)`
 
-来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 301 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -587,7 +591,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Expected(CareerData d, LifeActivity a)`
 
-来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 309 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
 
@@ -602,8 +606,8 @@ public const int Version = 5;
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, 600)`；返回值紧邻使用处：`InterpolationSyntax: {ActivityBenefit(a, 600)}`
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, a.Cost * 130 / 100)`；返回值紧邻使用处：`ArgumentSyntax: ActivityBenefit(a, a.Cost * 130 / 100)`
 - `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, a.Cost * 70 / 100)`；返回值紧邻使用处：`ArgumentSyntax: ActivityBenefit(a, a.Cost * 70 / 100)`
-- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fanHigh)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fanHigh = ActivityBenefit(a, fanHigh)`
-- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fanLow)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fanLow = ActivityBenefit(a, fanLow)`
+- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fanHigh * 20)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fanHigh = ActivityBenefit(a, fanHigh * 20)`
+- `NationalSpire.CareerLife.ActivityBenefit(NationalSpire.LifeActivity, int)`；输入表达式：`ActivityBenefit(a, fanLow * 20)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fanLow = ActivityBenefit(a, fanLow * 20)`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(ActivityBenefit(a, a.Cost * 130 / 100))`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Format(ActivityBenefit(a, a.Cost * 130 / 100))}`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(ActivityBenefit(a, a.Cost * 70 / 100))`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Format(ActivityBenefit(a, a.Cost * 70 / 100))}`
 - `NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`；输入表达式：`CareerTraining.Description(d, a)`；返回值紧邻使用处：`ReturnStatementSyntax: return CareerTraining.Description(d, a);`
@@ -614,16 +618,16 @@ public const int Version = 5;
 
 **赋值（含属性/字段和局部值）：**
 
-- `fanHigh` = `ActivityBenefit(a, fanHigh)`
+- `fanHigh` = `ActivityBenefit(a, fanHigh * 20)`
 - `fanHigh` = `fanHigh * 6 / 5`
-- `fanLow` = `ActivityBenefit(a, fanLow)`
+- `fanLow` = `ActivityBenefit(a, fanLow * 20)`
 - `fanLow` = `fanLow * 6 / 5`
 
 <a id="symbol-0ea81cb3e558"></a>
 
 ## `NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool) — public static void AddEvent(CareerData d, string id, string topic, string title, string detail, List<string> people, bool important = false)`
 
-来源：源码第 330 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 331 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-03130719dfb2)；[`NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d31f98e532af)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)；[`NationalSpire.ClubOperations.TryTransfer(NationalSpire.CareerData, NationalSpire.CareerClub)`](ClubOperations.cs.md#symbol-91ececd875b5)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.CreateCore(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-21d1184d2591)；[`NationalSpire.OwnedClubs.Report(NationalSpire.CareerData, string, string, string, System.Collections.Generic.List<string>)`](OwnedClubs.cs.md#symbol-4a616a09019e)；[`NationalSpire.WorldEvents.Advance(NationalSpire.CareerData)`](WorldEvents.cs.md#symbol-6471e41e5007)
 
@@ -656,7 +660,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.PublicActivityText(string) — internal static string PublicActivityText(string text)`
 
-来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 340 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool)`](CareerLife.cs.md#symbol-0ea81cb3e558)；[`NationalSpire.CareerLife.RefreshPublicFacts(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e81d9b416e03)
 
@@ -687,7 +691,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.RefreshPublicFacts(NationalSpire.CareerData) — private static void RefreshPublicFacts(CareerData d)`
 
-来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 350 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)
 
@@ -726,7 +730,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.PublishPending(NationalSpire.CareerData) — public static void PublishPending(CareerData d)`
 
-来源：源码第 366 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)
 
@@ -762,7 +766,7 @@ public const int Version = 5;
 
 ## `NationalSpire.CareerLife.Trim(NationalSpire.CareerData) — private static void Trim(CareerData d)`
 
-来源：源码第 379 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 380 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)
 

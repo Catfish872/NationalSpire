@@ -42,7 +42,7 @@ public static partial class SettlementRecords
             var award = d.Esports.CircuitAwards.FirstOrDefault(a => a.CompetitionId == c.Id && a.PersonId == "player");
             string value;
             if (c.ChampionId == "player" || team.Length > 0 && c.ChampionTeam == team) value = "冠军";
-            else if (award != null) value = award.Place;
+            else if (award is { Completed: true }) value = award.Place;
             else if (c.TeamEvent)
             {
                 var fixture = c.Fixtures.FirstOrDefault(f => f.Id == m.FixtureId);

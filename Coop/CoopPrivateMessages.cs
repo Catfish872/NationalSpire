@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -10,7 +10,7 @@ public sealed partial class CoopCoordinator
     private readonly Dictionary<string, int> _privateSequences = [];
     private readonly Dictionary<string, CoopAssembler> _privateAssemblers = [];
     private int _privateSendSequence;
-    private void ReceivePrivate(CoopWire wire)
+    private void ReceivePrivate(CoopWire wire, DateTime received)
     {
         if (Host || World == null) return;
         var part = Read<CoopPrivatePart>(wire);
@@ -20,7 +20,7 @@ public sealed partial class CoopCoordinator
             if (_privateAssemblers.Count >= 64) _privateAssemblers.Remove(_privateAssemblers.Keys.First());
             _privateAssemblers[part.Person] = assembler = new();
         }
-        if (assembler.Add(part.Part) is not { } bytes) return;
+        if (assembler.Add(part.Part, received) is not { } bytes) return;
         var chunk = CoopJson.Read<CoopPrivateChunk>(bytes);
         if (chunk.World != World.Id || chunk.Epoch != World.Epoch || chunk.Text.Length + chunk.Reasoning.Length > 100000) return;
         string sequence = chunk.World + "/" + chunk.Epoch + "/" + chunk.Person + "/" + chunk.Turn;
@@ -79,7 +79,9 @@ public sealed partial class CoopCoordinator
         var copy = CoopJson.Copy(source); CoopJson.Detached(copy.World);
         copy.World.Chats.Groups.RemoveAll(g => !g.Members.Contains(copy.Members.Single(m => m.SteamId == recipient).PersonId));
         copy.World.Life.Mailbox = new();
-        foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) member.Life.Mailbox = new();
+        copy.World.Life.Consumer = new();
+        copy.World.Life.Trading = new();
+        foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) { member.Life.Mailbox = new(); member.Life.Consumer = new(); member.Life.Trading = new(); }
         return copy;
     }
     /// <summary>从只读编码副本生成收件人的完整同步包，不共享可修改的业务集合。</summary>
@@ -97,7 +99,8 @@ public sealed partial class CoopCoordinator
             internal ulong Member;
             internal HashSet<string>? Members;
         }
-        private readonly byte[] _source, _mailbox = CoopJson.Bytes(new PrivateMailbox());
+        private readonly byte[] _source;
+        private static readonly byte[] _mailbox = CoopJson.Bytes(new PrivateMailbox()), _consumer = CoopJson.Bytes(new ConsumerState()), _trading = CoopJson.Bytes(new MarketAccount());
         private readonly Value _root;
         internal SnapshotEncoder(byte[] source)
         {
@@ -165,6 +168,8 @@ public sealed partial class CoopCoordinator
             {
                 writer.WritePropertyName(child.Name);
                 if (value.Path == "life" && child.Name == "Mailbox") writer.WriteRawValue(_mailbox, true);
+                else if (value.Path == "life" && child.Name == "Consumer") writer.WriteRawValue(_consumer, true);
+                else if (value.Path == "life" && child.Name == "Trading") writer.WriteRawValue(_trading, true);
                 else if (value.Path == "career" && child.Name == "PrivatePromptSnapshot") writer.WriteRawValue(templates, true);
                 else if (child.Path != "raw") Write(child, writer, recipient, templates);
                 else Raw(child, writer);

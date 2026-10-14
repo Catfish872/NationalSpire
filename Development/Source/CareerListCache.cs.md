@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A2ED5F0226E83997B07EF4E2F0C91EF8E9AEF9D046E6AB146FED3D876A41DD56`。来源：[源码](../../CareerListCache.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`652827A9A88106CE26F4E8E384C38E1F2B17EA15A09DAD72298D37733BFD53A9`。来源：[源码](../../CareerListCache.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -17,17 +17,41 @@ internal required Button Name;
 internal required CareerAvatar Avatar;
 internal Action? Open;
 internal readonly List<ProfileRow> Profiles = [];
+private MarketTerminal? _market;
 private bool _idle;
 private string? _glyphs;
 private int _glyphPosition;
+private int _iconPosition;
+private int _relicPosition;
 private CareerListCache? _listCache;
 ```
+
+<a id="symbol-8e4ce39fadc2"></a>
+
+## `NationalSpire.CareerListCache.Market — internal MarketTerminal Market`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.MarketTerminal.MarketTerminal()`](MarketTerminal.cs.md#symbol-ca583ab46f87)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerListCache._market`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_market)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_market);`
+- `NationalSpire.MarketTerminal.MarketTerminal()`；输入表达式：`new MarketTerminal()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _market = new MarketTerminal()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_market` = `new MarketTerminal()`
 
 <a id="symbol-eba9914ced8b"></a>
 
 ## `NationalSpire.CareerListCache.For(Godot.Node) — internal static CareerListCache For(Node menu)`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenView(Godot.Control, NationalSpire.ICareerSession?, string?)`](CareerScreen.cs.md#symbol-2b6ef58a9693)；[`NationalSpire.MainMenuEntries.Bind(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu, Godot.Button)`](MainMenuEntries.cs.md#symbol-04f3caa98ff1)
 
@@ -55,19 +79,22 @@ private CareerListCache? _listCache;
 
 ## `NationalSpire.CareerListCache._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerListCache.AddProfile()`](CareerListCache.cs.md#symbol-25cd78ebfabe)；[`NationalSpire.CareerVisuals.WarmText(string)`](CareerVisuals.cs.md#symbol-da585957e2e0)；`Godot.Node.SetProcess(bool)`；`string.Concat(System.Collections.Generic.IEnumerable<string?>)`；`string.String(char[]?)`；`string.Substring(int, int)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.CareerListCache.AddProfile()`](CareerListCache.cs.md#symbol-25cd78ebfabe)；[`NationalSpire.CareerVisuals.WarmText(string)`](CareerVisuals.cs.md#symbol-da585957e2e0)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketTerminal.Prepare(double)`](MarketTerminal.cs.md#symbol-64aae4a775dc)；[`NationalSpire.RelicArt.Read(string)`](RelicArt.cs.md#symbol-1d35c476ee42)；`Godot.Node.SetProcess(bool)`；`string.Concat(System.Collections.Generic.IEnumerable<string?>)`；`string.String(char[]?)`；`string.Substring(int, int)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerListCache._glyphPosition`；`NationalSpire.CareerListCache._glyphs`；`NationalSpire.CareerListCache._idle`；`NationalSpire.CareerListCache.AddProfile()`；`NationalSpire.CareerListCache.Profiles`；`NationalSpire.CareerScreen.Current`；`NationalSpire.CareerVisuals.WarmText(string)`；`NationalSpire.Coop.CoopScreen.Current`；`NationalSpire.NamePools.CrowdEnds`；`NationalSpire.NamePools.CrowdStarts`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptSection.DefaultText`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerListCache._glyphPosition`；`NationalSpire.CareerListCache._glyphs`；`NationalSpire.CareerListCache._iconPosition`；`NationalSpire.CareerListCache._idle`；`NationalSpire.CareerListCache._relicPosition`；`NationalSpire.CareerListCache.AddProfile()`；`NationalSpire.CareerListCache.Market`；`NationalSpire.CareerListCache.Profiles`；`NationalSpire.CareerRelics.Catalog`；`NationalSpire.CareerRelics.Item.Id`；`NationalSpire.CareerScreen.Current`；`NationalSpire.CareerVisuals.WarmText(string)`；`NationalSpire.Coop.CoopScreen.Current`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.LifestyleArt.Sections`；`NationalSpire.MarketTerminal.Prepare(double)`；`NationalSpire.NamePools.CrowdEnds`；`NationalSpire.NamePools.CrowdStarts`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptSection.DefaultText`；`NationalSpire.RelicArt.Read(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Node.SetProcess(bool)`；输入表达式：`SetProcess(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetProcess(false);`
 - `NationalSpire.CareerListCache.AddProfile()`；输入表达式：`AddProfile()`；返回值紧邻使用处：`ExpressionStatementSyntax: AddProfile();`
 - `NationalSpire.CareerVisuals.WarmText(string)`；输入表达式：`CareerVisuals.WarmText(_glyphs.Substring(_glyphPosition, length))`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.WarmText(_glyphs.Substring(_glyphPosition, length));`
+- `NationalSpire.LifestyleArt.Icon(string)`；输入表达式：`LifestyleArt.Icon(LifestyleArt.Sections[_iconPosition++])`；返回值紧邻使用处：`ExpressionStatementSyntax: LifestyleArt.Icon(LifestyleArt.Sections[_iconPosition++]);`
+- `NationalSpire.MarketTerminal.Prepare(double)`；输入表达式：`Market.Prepare(2)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Market.Prepare(2)`
+- `NationalSpire.RelicArt.Read(string)`；输入表达式：`RelicArt.Read(CareerRelics.Catalog[_relicPosition++].Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: RelicArt.Read(CareerRelics.Catalog[_relicPosition++].Id);`
 - `string.Concat(System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds)).Distinct`
 - `string.String(char[]?)`；输入表达式：`new string(string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds)).Distinct().ToArray())`；返回值紧邻使用处：`AssignmentExpressionSyntax: _glyphs ??= new string(string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds)).Distinct().ToArray())`
 - `string.Substring(int, int)`；输入表达式：`_glyphs.Substring(_glyphPosition, length)`；返回值紧邻使用处：`ArgumentSyntax: _glyphs.Substring(_glyphPosition, length)`
@@ -89,11 +116,11 @@ private CareerListCache? _listCache;
 
 ## `NationalSpire.CareerListCache.AddProfile() — internal ProfileRow AddProfile()`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerListCache._Process(double)`](CareerListCache.cs.md#symbol-e8085c360313)；[`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)
 
-**调用：** [`Label(int, Godot.Color)`](CareerListCache.cs.md#symbol-e86ba95ae940)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.CareerListCache.ProfileRow.ProfileRow()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`Label(int, Godot.Color)`](CareerListCache.cs.md#symbol-626fffef4f61)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.CareerListCache.ProfileRow.ProfileRow()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.List<T>.Add(T)`
 
 **字段、属性、事件及方法组引用：** `Label(int, Godot.Color)`；`NationalSpire.CareerListCache.ProfileRow.Avatar`；`NationalSpire.CareerListCache.ProfileRow.Card`；`NationalSpire.CareerListCache.ProfileRow.Character`；`NationalSpire.CareerListCache.ProfileRow.Name`；`NationalSpire.CareerListCache.ProfileRow.Open`；`NationalSpire.CareerListCache.ProfileRow.Rating`；`NationalSpire.CareerListCache.ProfileRow.RealName`；`NationalSpire.CareerListCache.ProfileRow.Role`；`NationalSpire.CareerListCache.Profiles`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`
 
@@ -160,11 +187,11 @@ private CareerListCache? _listCache;
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
 - `Theme` = `Theme`
 
-<a id="symbol-e86ba95ae940"></a>
+<a id="symbol-626fffef4f61"></a>
 
 ## `Label(int, Godot.Color) — Label Label(int size, Color color)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerListCache.AddProfile()`](CareerListCache.cs.md#symbol-25cd78ebfabe)
 
@@ -189,19 +216,23 @@ private CareerListCache? _listCache;
 
 ## `NationalSpire.CareerListCache.Release() — internal void Release()`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._ExitTree()`](CareerScreen.cs.md#symbol-5aaebf0ee0ab)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
-**调用：** `Godot.CanvasItem.Hide()`；`Godot.Node.GetParent()`；`Godot.Node.Reparent(Godot.Node, bool)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.MarketTerminal.Unbind()`](MarketTerminal.cs.md#symbol-76844d4631c4)；`Godot.CanvasItem.Hide()`；`Godot.Node.GetParent()`；`Godot.Node.Reparent(Godot.Node, bool)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerListCache.ProfileRow.Card`；`NationalSpire.CareerListCache.ProfileRow.Open`；`NationalSpire.CareerListCache.Profiles`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerListCache._market`；`NationalSpire.CareerListCache.ProfileRow.Card`；`NationalSpire.CareerListCache.ProfileRow.Open`；`NationalSpire.CareerListCache.Profiles`；`NationalSpire.MarketTerminal.Unbind()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.CanvasItem.Hide()`；输入表达式：`_market.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _market.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`row.Card.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: row.Card.Hide();`
+- `Godot.Node.GetParent()`；输入表达式：`_market.GetParent()`；返回值紧邻使用处：`BinaryExpressionSyntax: _market.GetParent() != this`
 - `Godot.Node.GetParent()`；输入表达式：`r.Card.GetParent()`；返回值紧邻使用处：`BinaryExpressionSyntax: r.Card.GetParent() != this`
+- `Godot.Node.Reparent(Godot.Node, bool)`；输入表达式：`_market.Reparent(this)`；返回值紧邻使用处：`ExpressionStatementSyntax: _market.Reparent(this);`
 - `Godot.Node.Reparent(Godot.Node, bool)`；输入表达式：`row.Card.Reparent(this)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.Card.Reparent(this);`
+- `NationalSpire.MarketTerminal.Unbind()`；输入表达式：`_market.Unbind()`；返回值紧邻使用处：`ExpressionStatementSyntax: _market.Unbind();`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Profiles.Where(r => r.Card.GetParent() != this)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var row in Profiles.Where(r => r.Card.GetParent() != this))          { row.Open = null; row.Card.Hide(); row.Card.Reparent(this); }`
 
 **赋值（含属性/字段和局部值）：**
@@ -212,7 +243,7 @@ private CareerListCache? _listCache;
 
 ## `NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>) — private void AddProfileCards(CareerData data, GridContainer grid, IEnumerable<CareerPerson> people)`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
 

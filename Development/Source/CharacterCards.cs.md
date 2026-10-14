@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5BA9296E11FA8830E0A602FBE888A498736B27209025EE23210D047A5C921AA5`。来源：[源码](../../CharacterCards.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F4ED37E13158833DF0854E610409A640BB8B29D579B00DF67F64030E69E43466`。来源：[源码](../../CharacterCards.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.CharacterCardEdit`、`NationalSpire.CharacterCards`。
+类型：`NationalSpire.CharacterCardEdit`、`NationalSpire.CharacterRelationEdit`、`NationalSpire.CharacterCards`。
 
 字段、事件及初始值（源码原样）：
 
@@ -69,13 +69,85 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-f3a803569506"></a>
+
+## `NationalSpire.CharacterCardEdit.Relation — public CharacterRelationEdit? Relation`
+
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-37e97df55402"></a>
+
+## `NationalSpire.CharacterRelationEdit.Favour — public int? Favour`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-ce6c729688d7"></a>
+
+## `NationalSpire.CharacterRelationEdit.Relationship — public string? Relationship`
+
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-002f741c0d3e"></a>
+
+## `NationalSpire.CharacterRelationEdit.Impression — public string? Impression`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-3c3ff9c389dd"></a>
 
 ## `NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string) — public static CareerPerson Read(CareerData data, string id)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)；[`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`](CharacterCards.cs.md#symbol-9a2f255d8204)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.Person(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-559e961ef669)
+**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)；[`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`](CharacterCards.cs.md#symbol-a50771d297a5)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.Person(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-559e961ef669)
 
 **调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CharacterIdentity.OriginalName(string)`](CharacterIdentity.cs.md#symbol-94292e3754dd)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PersonalityLibrary.cs.md#symbol-902b2bd837d2)；`NationalSpire.CareerPerson.CareerPerson()`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Math.Max(int, int)`
 
@@ -119,7 +191,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.New(NationalSpire.CareerData) — public static CareerPerson New(CareerData data)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
 
@@ -147,7 +219,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.ApplyTemplate(NationalSpire.CareerPerson, string) — public static void ApplyTemplate(CareerPerson p, string name)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)；[`NationalSpire.CharacterCards.New(NationalSpire.CareerData)`](CharacterCards.cs.md#symbol-3514413c59e6)
 
@@ -171,7 +243,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.Decode(string) — public static CharacterCardEdit Decode(string json)`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -191,18 +263,18 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.Encode(NationalSpire.CharacterCardEdit) — public static string Encode(CharacterCardEdit edit)`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
 
 **调用：** `NationalSpire.CareerPerson.CareerPerson()`；`NationalSpire.CharacterCardEdit.CharacterCardEdit()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.Coop.CoopJson.Options`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Relation`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.Coop.CoopJson.Options`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerPerson.CareerPerson()`；输入表达式：`new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Person = new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         }`
-- `NationalSpire.CharacterCardEdit.CharacterCardEdit()`；输入表达式：`new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Person = new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         } }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Person = new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         } }`
+- `NationalSpire.CharacterCardEdit.CharacterCardEdit()`；输入表达式：`new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Relation = edit.Relation, Person = new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         } }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Relation = edit.Relation, Person = new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         } }`
 - `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(publicEdit, CoopJson.Options)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonSerializer.Serialize(publicEdit, CoopJson.Options)`
 
 **赋值（含属性/字段和局部值）：**
@@ -223,6 +295,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 - `Person` = `new()         {             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,             AbilityTemplate = source.AbilityTemplate, Character = source.Character, MaxAscension = source.MaxAscension,             Rating = source.Rating, Wins = source.Wins, Losses = source.Losses, CustomClearChance = source.CustomClearChance,             Style = source.Style, Temperament = source.Temperament, Voice = source.Voice, Biography = source.Biography,             Personality = source.Personality, Avatar = source.Avatar         }`
 - `Personality` = `source.Personality`
 - `Rating` = `source.Rating`
+- `Relation` = `edit.Relation`
 - `Role` = `source.Role`
 - `Style` = `source.Style`
 - `SupportedClubId` = `source.SupportedClubId`
@@ -235,7 +308,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.ClubLock(NationalSpire.CareerData, string) — public static string? ClubLock(CareerData d, string id)`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)
 
@@ -256,7 +329,7 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson) — internal static void CheckImportedFields(CareerData d, CareerPerson person)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CharacterCardPng.Export(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar)`](CharacterCardPng.cs.md#symbol-e9bb5cec943f)；[`NationalSpire.CharacterCardPng.Import(NationalSpire.CareerData, byte[], System.Func<byte[], NationalSpire.PlayerAvatar>?)`](CharacterCardPng.cs.md#symbol-c7101cd02992)
 
@@ -280,13 +353,13 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool) — private static string? Validate(CareerData d, CharacterCardEdit edit, bool preview = false)`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`](CharacterCards.cs.md#symbol-9a2f255d8204)；[`NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CharacterCards.cs.md#symbol-9ac6c3acc6a4)
+**调用者：** [`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`](CharacterCards.cs.md#symbol-a50771d297a5)；[`NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CharacterCards.cs.md#symbol-9ac6c3acc6a4)
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CharacterCards.ClubLock(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-e5e79a4ed241)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.PersonalityProfile.Dimensions()`](PersonalityLibrary.cs.md#symbol-2a59469d0196)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`char.GetUnicodeCategory(char)`；`char.IsControl(char)`；`double.IsFinite(double)`；`string.Equals(string?, System.StringComparison)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Globalization.StringInfo.StringInfo(string)`
+**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CharacterCards.ClubLock(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-e5e79a4ed241)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.PersonalityProfile.Dimensions()`](PersonalityLibrary.cs.md#symbol-2a59469d0196)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`char.GetUnicodeCategory(char)`；`char.IsControl(char)`；`double.IsFinite(double)`；`string.Equals(string?, System.StringComparison)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.People`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.CharacterCards.ClubLock(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Templates`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.IdentityGender.Choices`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.PersonalityProfile.AttitudeMax`；`NationalSpire.PersonalityProfile.AttitudeMin`；`NationalSpire.PersonalityProfile.Dimensions()`；`NationalSpire.PersonalityProfile.Kind`；`NationalSpire.PlayerAvatar.Validate()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.People`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Relation`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.CharacterCards.ClubLock(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Templates`；`NationalSpire.CharacterRelationEdit.Favour`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.IdentityGender.Choices`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.PersonalityProfile.AttitudeMax`；`NationalSpire.PersonalityProfile.AttitudeMin`；`NationalSpire.PersonalityProfile.Dimensions()`；`NationalSpire.PersonalityProfile.Kind`；`NationalSpire.PlayerAvatar.Validate()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -303,39 +376,39 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 - `NationalSpire.PlayerAvatar.Validate()`；输入表达式：`p.Avatar.Validate()`；返回值紧邻使用处：`ExpressionStatementSyntax: p.Avatar.Validate();`
 - `string.Equals(string?, System.StringComparison)`；输入表达式：`p.Handle.Trim().Equals(CareerEngine.Name(d), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: edit.Target != "player" && p.Handle.Trim().Equals(CareerEngine.Name(d), StringComparison.OrdinalIgnoreCase)`
 - `string.Equals(string?, System.StringComparison)`；输入表达式：`x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase) || x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase)`
-- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(p.Handle)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrWhiteSpace(p.Handle) || new StringInfo(p.Handle.Trim()).LengthInTextElements > 32`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(p.Handle)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrWhiteSpace(p.Handle) || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`
 - `string.StartsWith(string, System.StringComparison)`；输入表达式：`edit.Target.StartsWith("custom-", StringComparison.Ordinal)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !edit.Target.StartsWith("custom-", StringComparison.Ordinal)`
 - `string.Trim()`；输入表达式：`p.Handle.Trim()`；返回值紧邻使用处：`ArgumentSyntax: p.Handle.Trim()`
 - `string.Trim()`；输入表达式：`p.Handle.Trim()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.Handle.Trim().Equals`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.Any(p => p.Id == edit.Target)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !d.People.Any(p => p.Id == edit.Target)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.Any(x => x.Id == edit.Target)`；返回值紧邻使用处：`BinaryExpressionSyntax: edit.Target.Length != 39 || !edit.Target.StartsWith("custom-", StringComparison.Ordinal) || d.People.Any(x => x.Id == edit.Target)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.Where(x => x.Id != edit.Target && !(edit.Target == "player" && x.Id == d.LocalHumanId)).Any(x => x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase) || x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase))`；返回值紧邻使用处：`BinaryExpressionSyntax: d.People.Where(x => x.Id != edit.Target && !(edit.Target == "player" && x.Id == d.LocalHumanId)).Any(x => x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase) || x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase)) || edit.Target != "player" && p.Handle.Trim().Equals(CareerEngine.Name(d), StringComparison.OrdinalIgnoreCase)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`fields.Any(s => s == null || s.Length > 1200 || s.Any(c => char.IsControl(c) && c != '\n'))`；返回值紧邻使用处：`IfStatementSyntax: if (fields.Any(s => s == null || s.Length > 1200 || s.Any(c => char.IsControl(c) && c != '\n'))) return "文字过长或包含无效字符。";`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrWhiteSpace(p.Handle) || new StringInfo(p.Handle.Trim()).LengthInTextElements > 32 || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null || s.Length > 1200)`；返回值紧邻使用处：`IfStatementSyntax: if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null || s.Length > 1200)) return "性格描述过长。";`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`s.Any(c => char.IsControl(c) && c != '\n')`；返回值紧邻使用处：`BinaryExpressionSyntax: s == null || s.Length > 1200 || s.Any(c => char.IsControl(c) && c != '\n')`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`fields.Any(s => s == null || s.Any(c => char.IsControl(c) && c != '\n'))`；返回值紧邻使用处：`IfStatementSyntax: if (fields.Any(s => s == null || s.Any(c => char.IsControl(c) && c != '\n'))) return "文字包含无效字符。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrWhiteSpace(p.Handle) || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null)`；返回值紧邻使用处：`IfStatementSyntax: if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null)) return "性格描述无效。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`s.Any(c => char.IsControl(c) && c != '\n')`；返回值紧邻使用处：`BinaryExpressionSyntax: s == null || s.Any(c => char.IsControl(c) && c != '\n')`
 - `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`p.Personality.Dimensions().Append(p.Personality.Kind)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.Personality.Dimensions().Append(p.Personality.Kind).Any`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase) || x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase)`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`EsportsWorld.Countries.Contains(p.Country)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !EsportsWorld.Countries.Contains(p.Country)`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`IdentityGender.Choices.Contains(p.Gender)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IdentityGender.Choices.Contains(p.Gender)`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`Templates.Contains(p.AbilityTemplate)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Templates.Contains(p.AbilityTemplate)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.Where(x => x.Id != edit.Target && !(edit.Target == "player" && x.Id == d.LocalHumanId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.People.Where(x => x.Id != edit.Target && !(edit.Target == "player" && x.Id == d.LocalHumanId)).Any`
-- `System.Globalization.StringInfo.StringInfo(string)`；输入表达式：`new StringInfo(p.Handle.Trim())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new StringInfo(p.Handle.Trim()).LengthInTextElements`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`d.HumanIds.Contains(edit.Target)`；返回值紧邻使用处：`BinaryExpressionSyntax: edit.Target == "player" || d.HumanIds.Contains(edit.Target)`
 
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-9a2f255d8204"></a>
+<a id="symbol-a50771d297a5"></a>
 
-## `NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit) — public static string? Apply(CareerData d, CharacterCardEdit edit)`
+## `NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?) — public static string? Apply(CareerData d, CharacterCardEdit edit, CareerLifeState? relationLife = null, string? human = null)`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CharacterCards.Save(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`](CharacterCards.cs.md#symbol-4bce7f6af16c)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** [`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-03130719dfb2)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.IdentityGender.Assigned(NationalSpire.CareerData, string)`](IdentityGender.cs.md#symbol-9b3f1de1d44a)；`NationalSpire.CareerPerson.CareerPerson()`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-03130719dfb2)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.IdentityGender.Assigned(NationalSpire.CareerData, string)`](IdentityGender.cs.md#symbol-9b3f1de1d44a)；[`NationalSpire.PrivateMessages.EditRelation(NationalSpire.CareerData, NationalSpire.CareerLifeState, string, string, NationalSpire.CharacterRelationEdit)`](PrivateMessages.cs.md#symbol-721322de5dd7)；`NationalSpire.CareerPerson.CareerPerson()`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.PlayerIntroduction`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerData.Rating`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.AiIntroduction`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.CameoId`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CreatedCard`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.EditedCard`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Identities`；`NationalSpire.CareerPerson.IntroductionDay`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.RecordVersion`；`NationalSpire.CareerPerson.Region`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`；`NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsCareer.Offers`；`NationalSpire.EsportsCareer.PlayerContract`；`NationalSpire.IdentityGender.Assigned(NationalSpire.CareerData, string)`；`NationalSpire.IdentityGender.Unset`；`NationalSpire.NpcRecords.Version`；`NationalSpire.PersonalityLibrary.Version`；`NationalSpire.PersonalityProfile.Version`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.PlayerIntroduction`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerData.Rating`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerPerson.AbilityTemplate`；`NationalSpire.CareerPerson.AiIntroduction`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.CameoId`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.CreatedCard`；`NationalSpire.CareerPerson.CustomClearChance`；`NationalSpire.CareerPerson.EditedCard`；`NationalSpire.CareerPerson.Gender`；`NationalSpire.CareerPerson.Handle`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Identities`；`NationalSpire.CareerPerson.IntroductionDay`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Personality`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.RecordVersion`；`NationalSpire.CareerPerson.Region`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.CharacterCardEdit.Create`；`NationalSpire.CharacterCardEdit.Person`；`NationalSpire.CharacterCardEdit.Relation`；`NationalSpire.CharacterCardEdit.Target`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`；`NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsCareer.Offers`；`NationalSpire.EsportsCareer.PlayerContract`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.IdentityGender.Assigned(NationalSpire.CareerData, string)`；`NationalSpire.IdentityGender.Unset`；`NationalSpire.NpcRecords.Version`；`NationalSpire.PersonalityLibrary.Version`；`NationalSpire.PersonalityProfile.Version`；`NationalSpire.PrivateMessages.EditRelation(NationalSpire.CareerData, NationalSpire.CareerLifeState, string, string, NationalSpire.CharacterRelationEdit)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -345,7 +418,9 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 - `NationalSpire.CircuitPeople.Replenish(NationalSpire.CareerData)`；输入表达式：`CircuitPeople.Replenish(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CircuitPeople.Replenish(d);`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(input.Avatar)`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Avatar = CoopJson.Copy(input.Avatar)`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(input.Personality)`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Personality = CoopJson.Copy(input.Personality)`
+- `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: human ?? GroupChats.Human(d)`
 - `NationalSpire.IdentityGender.Assigned(NationalSpire.CareerData, string)`；输入表达式：`IdentityGender.Assigned(d, p.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Gender = IdentityGender.Assigned(d, p.Id)`
+- `NationalSpire.PrivateMessages.EditRelation(NationalSpire.CareerData, NationalSpire.CareerLifeState, string, string, NationalSpire.CharacterRelationEdit)`；输入表达式：`PrivateMessages.EditRelation(d, relationLife ?? d.Life, human ?? GroupChats.Human(d), p.Id, edit.Relation)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateMessages.EditRelation(d, relationLife ?? d.Life, human ?? GroupChats.Human(d), p.Id, edit.Relation);`
 - `string.Trim()`；输入表达式：`input.Biography.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Biography = input.Biography.Trim()`
 - `string.Trim()`；输入表达式：`input.Character.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Character = input.Character.Trim()`
 - `string.Trim()`；输入表达式：`input.Handle.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.Handle = input.Handle.Trim()`
@@ -421,24 +496,26 @@ public static readonly string[] Templates = ["普通玩家", "主播", "解说�
 
 ## `NationalSpire.CharacterCards.Save(NationalSpire.CareerData, NationalSpire.CharacterCardEdit) — public static string? Save(CareerData d, CharacterCardEdit edit)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
 
-**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`](CharacterCards.cs.md#symbol-9a2f255d8204)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)
+**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`](CharacterCards.cs.md#symbol-a50771d297a5)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.PlayerIntroduction`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerData.Rating`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Chats`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.PlayerIntroduction`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerData.Rating`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(d);`
-- `NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`；输入表达式：`Apply(d, edit)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Apply(d, edit) is { } error`
+- `NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`；输入表达式：`Apply(d, edit)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Apply(d, edit) is { } error`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(d)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CoopJson.Copy(d)`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("character-card.save", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("character-card.save", e);`
 
 **赋值（含属性/字段和局部值）：**
 
+- `d.Chats` = `before.Chats`
 - `d.Esports` = `before.Esports`
+- `d.Life` = `before.Life`
 - `d.Losses` = `before.Losses`
 - `d.Matches` = `before.Matches`
 - `d.People` = `before.People`

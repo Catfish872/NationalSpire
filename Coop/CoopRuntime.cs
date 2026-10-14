@@ -79,7 +79,8 @@ public partial class CoopRuntime : Node
             CoopStorage.Checkpoint? checkpoint = null;
             if (host)
             {
-                checkpoint = savedId.Length > 0 ? CoopSettings.Storage.Load(savedId) : new(CoopRules.Create(_connecting.Self, worldName, name, capacity, country), null);
+                checkpoint = savedId.Length > 0 ? await CoopSettings.Storage.LoadAsync(savedId) : new(CoopRules.Create(_connecting.Self, worldName, name, capacity, country), null);
+                if (generation != _connectionGeneration) throw new OperationCanceledException("已取消连接。");
                 if (checkpoint.World.Owner != _connecting.Self) throw new InvalidOperationException("这个检查点属于另一名主机。");
                 if (checkpoint.World.Run is { Terminal: null } savedRun) savedRun.Phase = "paused";
                 checkpoint.World.CareerStarted |= checkpoint.World.RosterLocked || checkpoint.World.World.Day > 1;

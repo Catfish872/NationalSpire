@@ -171,7 +171,7 @@ public partial class CareerScreen
             row.AddChild(identity);
             var name = CeremonyLine(CeremonyWinner(data, award), 25, _ink); name.Name = "CeremonyWinnerName"; identity.AddChild(name);
             identity.AddChild(CeremonyLine($"评选得分  {award.Score}", 15, _muted));
-            box.AddChild(Text(award.Reason, 15, _muted));
+            box.AddChild(Text(SeasonCeremony.AwardDescription(award.Title, award.Reason), 15, _muted));
             if (own) box.AddChild(Text($"获奖关注 +{SeasonCeremony.RewardAmount(award)} · 已收入荣誉档案", 15, CareerVisuals.Teal));
         }
     }

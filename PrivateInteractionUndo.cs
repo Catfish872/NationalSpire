@@ -13,6 +13,21 @@ public sealed class PrivateInteractionUndo
 
 public static class PrivateInteractionHistory
 {
+    /// <summary>手工覆盖只替代同方向旧交互的对应字段，保留正文及其他交互的回退数据。</summary>
+    public static void PreserveRelation(PrivateMailbox box, ChatWorld chats, string human, string person, IReadOnlyList<string> fields)
+    {
+        var conversations = new List<PrivateConversation>();
+        if (box.Conversations.TryGetValue(person, out var direct)) conversations.Add(direct);
+        foreach (var group in chats.Groups)
+            if (group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)) conversations.Add(lane);
+        foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo))
+            foreach (var field in fields)
+            {
+                (undo.Before["relation"] as JsonObject)?.Remove(field);
+                (undo.After["relation"] as JsonObject)?.Remove(field);
+            }
+    }
+
     private static JsonNode? Node<T>(T value) => JsonSerializer.SerializeToNode(value);
     public static JsonObject Capture(CareerData d, string id, bool contract = false)
     {

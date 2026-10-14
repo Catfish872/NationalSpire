@@ -1,0 +1,102 @@
+# DevelopmentScreen.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`7CE7B285F4C9595735A2806B6D9F200E62A0FADC8143C557EF2D083A1643C0EB`。来源：[源码](../../DevelopmentScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.CareerScreen`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+private string _developmentCountry = "", _developmentIndicator = "industry";
+```
+
+<a id="symbol-2d48676d5e88"></a>
+
+## `NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData) — private void DevelopmentScreen(CareerData d)`
+
+来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
+
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-4344e458a80a)；[`NationalSpire.DevelopmentGauge.DevelopmentGauge()`](MarketVisuals.cs.md#symbol-91afc5ed8f86)；[`NationalSpire.MarketVisuals.LevelColor(int)`](MarketVisuals.cs.md#symbol-0f0bdceb25d3)；[`NationalSpire.NationalDevelopment.Description(string, int)`](NationalDevelopment.cs.md#symbol-eb5d5925eb64)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`](NationalDevelopment.cs.md#symbol-a5f9343d73de)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`int.ToString(string?)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `(string Country, int Points).Country`；`(string Country, int Points).Points`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._developmentCountry`；`NationalSpire.CareerScreen._developmentIndicator`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CircuitAward.Country`；`NationalSpire.CircuitAward.Day`；`NationalSpire.CircuitAward.Event`；`NationalSpire.CircuitAward.Fortune`；`NationalSpire.CircuitAward.PersonId`；`NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`；`NationalSpire.DevelopmentGauge.Level`；`NationalSpire.EsportsCareer.CircuitAwards`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.MarketVisuals.LevelColor(int)`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Description(string, int)`；`NationalSpire.NationalDevelopment.Indicator.Group`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Indicator.Name`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.Gdp`；`NationalSpire.NationalLegacy.GdpGrowth`；`NationalSpire.NationalLegacy.LastReport`；`NationalSpire.NationalLegacy.MaintenanceFunding`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`button.AddThemeColorOverride("font_color", MarketVisuals.LevelColor(level))`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeColorOverride("font_color", MarketVisuals.LevelColor(level));`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(columns)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(columns);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(metrics)`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(metrics);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text(nation.Country + " / 国家发展", 32, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text(nation.Country + " / 国家发展", 32, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(button);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(new DevelopmentGauge { Level = level })`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(new DevelopmentGauge { Level = level });`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(group.Key, 24, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(group.Key, 24, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(title, 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(title, 15, _muted));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(value, 27, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(value, 27, CareerVisuals.Teal));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`columns.AddChild(main)`；返回值紧邻使用处：`ExpressionStatementSyntax: columns.AddChild(main);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`columns.AddChild(nations)`；返回值紧邻使用处：`ExpressionStatementSyntax: columns.AddChild(nations);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`description.AddChild(Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: description.AddChild(Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`description.AddChild(Text(selected.Name, 26, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: description.AddChild(Text(selected.Name, 26, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`groups.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: groups.AddChild(card);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`lower.AddChild(detail)`；返回值紧邻使用处：`ExpressionStatementSyntax: lower.AddChild(detail);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`lower.AddChild(report)`；返回值紧邻使用处：`ExpressionStatementSyntax: lower.AddChild(report);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`main.AddChild(groups)`；返回值紧邻使用处：`ExpressionStatementSyntax: main.AddChild(groups);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`main.AddChild(header)`；返回值紧邻使用处：`ExpressionStatementSyntax: main.AddChild(header);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`main.AddChild(lower)`；返回值紧邻使用处：`ExpressionStatementSyntax: main.AddChild(lower);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`metrics.AddChild(box)`；返回值紧邻使用处：`ExpressionStatementSyntax: metrics.AddChild(box);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`nations.AddChild(FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160))`；返回值紧邻使用处：`ExpressionStatementSyntax: nations.AddChild(FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`nations.AddChild(Text("国运排名", 20, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: nations.AddChild(Text("国运排名", 20, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`news.AddChild(Text("赛场贡献与发展", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: news.AddChild(Text("赛场贡献与发展", 23, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`news.AddChild(Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: news.AddChild(Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`news.AddChild(Text(nation.LastReport, 16, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: news.AddChild(Text(nation.LastReport, 16, CareerVisuals.Teal));`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { CustomMinimumSize = new(160, 0) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { CustomMinimumSize = new(160, 0) }`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(160, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(160, 0)`
+- `int.ToString(string?)`；输入表达式：`NationalDevelopment.SeasonFortune(d, nation.Country, d.Season).ToString("N0")`；返回值紧邻使用处：`ArgumentSyntax: NationalDevelopment.SeasonFortune(d, nation.Country, d.Season).ToString("N0")`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, contribution.PersonId)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(d, contribution.PersonId)}`
+- `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
+- `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；输入表达式：`FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160)`；返回值紧邻使用处：`ArgumentSyntax: FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160)`
+- `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；输入表达式：`FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; Render(); }, 0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; Render(); }, 0)`
+- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(card)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(card)`
+- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(detail)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(detail)`
+- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(header)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(header)`
+- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(report)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(report)`
+- `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("国运排名", 20, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("国运排名", 20, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("赛场贡献与发展", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("赛场贡献与发展", 23, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(group.Key, 24, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(group.Key, 24, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(nation.Country + " / 国家发展", 32, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(nation.Country + " / 国家发展", 32, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(nation.LastReport, 16, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(nation.LastReport, 16, CareerVisuals.Teal)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(selected.Name, 26, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(selected.Name, 26, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(title, 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(title, 15, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(value, 27, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(value, 27, CareerVisuals.Teal)`
+- `NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`；输入表达式：`CircuitLedger.NationTable(d)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var row in CircuitLedger.NationTable(d))         {             rank++; string country = row.Country;             nations.AddChild(FilterButton($"{rank:00}  {country}\n{row.Points:N0}", country == _developmentCountry, () => { _developmentCountry = country; Render(); }, 160));         }`
+- `NationalSpire.DevelopmentGauge.DevelopmentGauge()`；输入表达式：`new DevelopmentGauge { Level = level }`；返回值紧邻使用处：`ArgumentSyntax: new DevelopmentGauge { Level = level }`
+- `NationalSpire.MarketVisuals.LevelColor(int)`；输入表达式：`MarketVisuals.LevelColor(level)`；返回值紧邻使用处：`ArgumentSyntax: MarketVisuals.LevelColor(level)`
+- `NationalSpire.NationalDevelopment.Description(string, int)`；输入表达式：`NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id))`；返回值紧邻使用处：`ArgumentSyntax: NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id))`
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`NationalDevelopment.Level(nation, indicator.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = NationalDevelopment.Level(nation, indicator.Id)`
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`NationalDevelopment.Level(nation, selected.Id)`；返回值紧邻使用处：`ArgumentSyntax: NationalDevelopment.Level(nation, selected.Id)`
+- `NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`；输入表达式：`NationalDevelopment.SeasonFortune(d, nation.Country, d.Season)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: NationalDevelopment.SeasonFortune(d, nation.Country, d.Season).ToString`
+- `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Nations.First(n => n.Country == _developmentCountry)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.Esports.Nations.First(n => n.Country == _developmentCountry)`
+- `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`NationalDevelopment.All.First(i => i.Id == _developmentIndicator)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = NationalDevelopment.All.First(i => i.Id == _developmentIndicator)`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`NationalDevelopment.All.GroupBy(i => i.Group)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var group in NationalDevelopment.All.GroupBy(i => i.Group))         {             var card = Card(); groups.AddChild(card); var box = Inner(card); box.AddChild(Text(group.Key, 24, _gold));             foreach (var indicator in group)             {                 int level = NationalDevelopment.Level(nation, indicator.Id);                 var button = FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; Render(); }, 0);                 button.AddThemeColorOverride("font_color", MarketVisuals.LevelColor(level)); box.AddChild(button);                 box.AddChild(new DevelopmentGauge { Level = level });             }         }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day).Take`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day).Take(4)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var contribution in d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day).Take(4))             news.AddChild(Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink));`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_developmentCountry` = `country`
+- `_developmentCountry` = `d.Esports.Country`
+- `_developmentIndicator` = `indicator.Id`
+- `CustomMinimumSize` = `new(160, 0)`
+- `Level` = `level`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`

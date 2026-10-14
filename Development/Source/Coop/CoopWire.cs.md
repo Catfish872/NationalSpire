@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`7982D5E693ECCA56D95B120B8A558D99249AD4F2AD35BCA10B6FF47A1B06DF23`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`978D89E850470745EC9FB97EB4716EF8F6F4B8E72329EB0F010FF3A91D174D1A`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.Coop.CoopWire`、`NationalSpire.Coop.CoopPacketAssembly`、`NationalSpire.Coop.CoopPacketAssembly.Part`、`NationalSpire.Coop.CoopPacketAssembly.Pending`、`NationalSpire.Coop.ICoopTransport`、`NationalSpire.Coop.CoopPart`、`NationalSpire.Coop.CoopAssembler`。
+类型：`NationalSpire.Coop.CoopWire`、`NationalSpire.Coop.CoopPacketAssembly`、`NationalSpire.Coop.CoopPacketAssembly.Part`、`NationalSpire.Coop.CoopPacketAssembly.Pending`、`NationalSpire.Coop.ICoopTransport`、`NationalSpire.Coop.CoopPart`、`NationalSpire.Coop.CoopAssembler`、`NationalSpire.Coop.CoopAssembler.Complete`。
 
 字段、事件及初始值（源码原样）：
 
@@ -284,39 +284,101 @@ private DateTime _started;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-b544da8202a5"></a>
+<a id="symbol-3bc9f4a00527"></a>
 
-## `NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart) — public byte[]? Add(CoopPart p)`
+## `NationalSpire.Coop.CoopAssembler.Complete.Decode() — public byte[] Decode()`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire)`](CoopPrivateMessages.cs.md#symbol-3d07402de490)
+**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`Step()`](CoopReception.cs.md#symbol-41b14a0db411)
 
-**调用：** [`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Array.CopyTo(System.Array, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.Compression.BrotliStream.BrotliStream(System.IO.Stream, System.IO.Compression.CompressionMode)`；`System.IO.Compression.BrotliStream.Read(System.Span<byte>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.MemoryStream(byte[])`；`System.IO.MemoryStream.ToArray()`；`System.IO.MemoryStream.Write(byte[], int, int)`；`System.Math.Min(int, int)`；`System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；`System.TimeSpan.FromSeconds(long)`；`T[]?.AsSpan<T>()`
+**调用：** [`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Array.CopyTo(System.Array, int)`；`System.IO.Compression.BrotliStream.BrotliStream(System.IO.Stream, System.IO.Compression.CompressionMode)`；`System.IO.Compression.BrotliStream.Read(System.Span<byte>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.MemoryStream(byte[])`；`System.IO.MemoryStream.ToArray()`；`System.IO.MemoryStream.Write(byte[], int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler._header`；`NationalSpire.Coop.CoopAssembler._parts`；`NationalSpire.Coop.CoopAssembler._started`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopPart.Bytes`；`NationalSpire.Coop.CoopPart.Count`；`NationalSpire.Coop.CoopPart.Hash`；`NationalSpire.Coop.CoopPart.Id`；`NationalSpire.Coop.CoopPart.Index`；`NationalSpire.Coop.CoopPart.Total`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.CoopAssemble`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler.Complete.Header`；`NationalSpire.Coop.CoopAssembler.Complete.Parts`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopPart.Hash`；`NationalSpire.Coop.CoopPart.Total`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.CoopAssemble`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Coop.CoopJson.Hash(byte[])`；输入表达式：`CoopJson.Hash(bytes)`；返回值紧邻使用处：`BinaryExpressionSyntax: CoopJson.Hash(bytes) != p.Hash`
+- `NationalSpire.Coop.CoopJson.Hash(byte[])`；输入表达式：`CoopJson.Hash(bytes)`；返回值紧邻使用处：`BinaryExpressionSyntax: CoopJson.Hash(bytes) != Header.Hash`
 - `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.CoopAssemble)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.CoopAssemble)`
-- `System.Array.CopyTo(System.Array, int)`；输入表达式：`_parts[i].CopyTo(bytes, i * 24000)`；返回值紧邻使用处：`ExpressionStatementSyntax: _parts[i].CopyTo(bytes, i * 24000);`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`_parts.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _parts.Clear();`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_parts.TryGetValue(p.Index, out var old)`；返回值紧邻使用处：`BinaryExpressionSyntax: _parts.TryGetValue(p.Index, out var old) && !old.AsSpan().SequenceEqual(p.Bytes)`
+- `System.Array.CopyTo(System.Array, int)`；输入表达式：`Parts[i].CopyTo(bytes, i * 24000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Parts[i].CopyTo(bytes, i * 24000);`
 - `System.IO.Compression.BrotliStream.BrotliStream(System.IO.Stream, System.IO.Compression.CompressionMode)`；输入表达式：`new BrotliStream(new MemoryStream(bytes), CompressionMode.Decompress)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BrotliStream(new MemoryStream(bytes), CompressionMode.Decompress)`
 - `System.IO.Compression.BrotliStream.Read(System.Span<byte>)`；输入表达式：`zip.Read(buffer)`；返回值紧邻使用处：`AssignmentExpressionSyntax: read = zip.Read(buffer)`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步分片无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步分片无效。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步分片元数据不一致。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步分片元数据不一致。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步数据解压超限。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步数据解压超限。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步校验失败。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步校验失败。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("重复分片冲突。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("重复分片冲突。");`
 - `System.IO.MemoryStream.MemoryStream()`；输入表达式：`new MemoryStream()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MemoryStream()`
 - `System.IO.MemoryStream.MemoryStream(byte[])`；输入表达式：`new MemoryStream(bytes)`；返回值紧邻使用处：`ArgumentSyntax: new MemoryStream(bytes)`
 - `System.IO.MemoryStream.ToArray()`；输入表达式：`result.ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return result.ToArray();`
 - `System.IO.MemoryStream.Write(byte[], int, int)`；输入表达式：`result.Write(buffer, 0, read)`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Write(buffer, 0, read);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `read` = `zip.Read(buffer)`
+
+<a id="symbol-b544da8202a5"></a>
+
+## `NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart) — public byte[]? Add(CoopPart p)`
+
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)
+
+**调用：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`；输入表达式：`Add(p, DateTime.UtcNow)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Add(p, DateTime.UtcNow)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-e6ffa10e5388"></a>
+
+## `NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime) — internal byte[]? Add(CoopPart p, DateTime received)`
+
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart)`](CoopWire.cs.md#symbol-b544da8202a5)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)
+
+**调用：** [`NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-35fc52cbee4a)；[`NationalSpire.Coop.CoopAssembler.Complete.Decode()`](CoopWire.cs.md#symbol-3bc9f4a00527)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；`NationalSpire.Coop.CoopAssembler.Complete.Decode()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；输入表达式：`Collect(p, received)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode()`
+- `NationalSpire.Coop.CoopAssembler.Complete.Decode()`；输入表达式：`.Decode()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode()`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-35fc52cbee4a"></a>
+
+## `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime) — internal Complete? Collect(CoopPart p, DateTime received)`
+
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
+
+**调用：** `NationalSpire.Coop.CoopAssembler.Complete.Complete(NationalSpire.Coop.CoopPart, byte[][])`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Min(int, int)`；`System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；`System.TimeSpan.FromSeconds(long)`；`T[]?.AsSpan<T>()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler._header`；`NationalSpire.Coop.CoopAssembler._parts`；`NationalSpire.Coop.CoopAssembler._started`；`NationalSpire.Coop.CoopPart.Bytes`；`NationalSpire.Coop.CoopPart.Count`；`NationalSpire.Coop.CoopPart.Hash`；`NationalSpire.Coop.CoopPart.Id`；`NationalSpire.Coop.CoopPart.Index`；`NationalSpire.Coop.CoopPart.Total`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Coop.CoopAssembler.Complete.Complete(NationalSpire.Coop.CoopPart, byte[][])`；输入表达式：`new Complete(_header, Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Complete(_header, Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray())`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`_parts.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _parts.Clear();`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_parts.TryGetValue(p.Index, out var old)`；返回值紧邻使用处：`BinaryExpressionSyntax: _parts.TryGetValue(p.Index, out var old) && !old.AsSpan().SequenceEqual(p.Bytes)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Enumerable.Range(0, p.Count).Select(i => _parts[i])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray()`；返回值紧邻使用处：`ArgumentSyntax: Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray()`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步分片无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步分片无效。");`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("同步分片元数据不一致。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("同步分片元数据不一致。");`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("重复分片冲突。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("重复分片冲突。");`
+- `System.Linq.Enumerable.Range(int, int)`；输入表达式：`Enumerable.Range(0, p.Count)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, p.Count).Select`
 - `System.Math.Min(int, int)`；输入表达式：`Math.Min(24000, p.Total - p.Index * 24000)`；返回值紧邻使用处：`BinaryExpressionSyntax: p.Bytes.Length != Math.Min(24000, p.Total - p.Index * 24000)`
 - `System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；输入表达式：`old.AsSpan().SequenceEqual(p.Bytes)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !old.AsSpan().SequenceEqual(p.Bytes)`
-- `System.TimeSpan.FromSeconds(long)`；输入表达式：`TimeSpan.FromSeconds(60)`；返回值紧邻使用处：`BinaryExpressionSyntax: DateTime.UtcNow - _started > TimeSpan.FromSeconds(60)`
+- `System.TimeSpan.FromSeconds(long)`；输入表达式：`TimeSpan.FromSeconds(60)`；返回值紧邻使用处：`BinaryExpressionSyntax: received - _started > TimeSpan.FromSeconds(60)`
 - `T[]?.AsSpan<T>()`；输入表达式：`old.AsSpan()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: old.AsSpan().SequenceEqual`
 
 **赋值（含属性/字段和局部值）：**
@@ -324,5 +386,4 @@ private DateTime _started;
 - `_header` = `null`
 - `_header` = `p`
 - `_parts[p.Index]` = `p.Bytes`
-- `_started` = `DateTime.UtcNow`
-- `read` = `zip.Read(buffer)`
+- `_started` = `received`

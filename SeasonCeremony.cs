@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public sealed class CeremonyRank
 {
@@ -15,6 +15,7 @@ public sealed class CeremonyRank
 
 public sealed class CeremonyAward
 {
+    public int? AudienceReward { get; set; }
     public string WinnerName { get; set; } = "";
     public List<string> Recipients { get; set; } = [];
     public string Title { get; set; } = "";
@@ -113,7 +114,19 @@ public static class SeasonCeremony
         for(int i=0;i<sorted.Count;i++) sorted[i].Place = i>0 && EqualRank(sorted[i],sorted[i-1]) ? sorted[i-1].Place : i+1;
         return sorted;
     }
-    private static CeremonyAward PersonAward(string title, CeremonyRank? row, string reason) => new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=reason,Recipients=row==null?[]:[row.Id]};
+    // 奖项展示与评选规则分开；读取历史奖项时沿用相同文案，不改写存档。
+    public static string AwardDescription(string title, string reason) => title switch
+    {
+        "赛季最佳选手" => "本赛季正式比赛综合表现第一。",
+        "年度最佳选手" => "全年正式比赛综合表现第一。",
+        "联赛 MVP" => reason.Replace("同成绩并列。", ""),
+        "赛季最佳新秀" => "本赛季新秀选手综合表现第一。",
+        "年度最佳新秀" => "全年新秀选手综合表现第一。",
+        "赛季最佳俱乐部" => "本赛季俱乐部综合表现第一。",
+        "年度最佳俱乐部" => "全年俱乐部综合表现第一。",
+        _ => reason
+    };
+    private static CeremonyAward PersonAward(string title, CeremonyRank? row, string reason) => new() {Title=title, WinnerId=row?.Id??"",WinnerName=row?.Name??"",Score=row?.Score??0,Reason=AwardDescription(title,reason),Recipients=row==null?[]:[row.Id]};
     private static void PeopleAwards(CeremonyRecord record,string title,IEnumerable<CeremonyRank> candidates,string reason)
     {
         var rows=candidates.ToList(); if(rows.Count==0) return;
@@ -141,7 +154,7 @@ public static class SeasonCeremony
         {
             var humans=data.CooperativeMembers>1?data.HumanIds:new List<string>{"player"};
             var recipients=humans.Where(id=>data.Esports.Competitions.Any(c=>c.Season>=first&&c.Season<=last&&c.EntrantClubs.GetValueOrDefault(id=="player"||data.HumanIds.Contains(id)?"player":id)==row.Id&&c.Fixtures.Any(f=>f.Finished&&!f.Walkover&&(f.HomeId=="player"||f.AwayId=="player")))).ToList();
-            record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=ClubRules,Recipients=recipients});
+            record.Awards.Add(new(){Title=title,ClubId=row.Id,WinnerName=EsportsWorld.ClubName(data,row.Id),Score=row.Score,Reason=AwardDescription(title,ClubRules),Recipients=recipients});
         }
     }
     private static IEnumerable<CeremonyRank> Rookies(CareerData data, List<CeremonyRank> ranks, int first, int last)
@@ -160,26 +173,45 @@ public static class SeasonCeremony
         EnsureDebuts(data);
         var record = new CeremonyRecord { Season=season,Year=year,Day=data.Day,RulesVersion=2 };
         var ranks=Rank(data,c=>c.Season==season); record.FullSeason=ranks; record.SeasonTop=ranks.Where(r=>r.Place<=20).ToList();
-        PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。同成绩并列。");
+        PeopleAwards(record,"赛季最佳选手",ranks.Where(r=>r.Matches>=2),"本赛季正式比赛综合表现第一。");
         foreach(var league in data.Esports.Competitions.Where(c=>c.Season==season&&c.Kind=="league"))
-            PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。同成绩并列。");
+            PeopleAwards(record,"联赛 MVP",Rank(data,c=>c.Id==league.Id).Where(r=>r.Matches>=2),league.Name+"正式比赛表现第一。");
         PeopleAwards(record,"赛季最佳新秀",Rookies(data,ranks,season,season),"本赛季首次参加职业比赛，至少出场两次。");
         ClubAwards(data,record,season,season,"赛季最佳俱乐部");
         if(season%4==0)
         {
             var annual=Rank(data,c=>c.Season>=season-3&&c.Season<=season); record.FullYear=annual;record.YearTop=annual.Where(r=>r.Place<=20).ToList();
-            PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。同成绩并列。");
+            PeopleAwards(record,"年度最佳选手",annual,"全年正式比赛综合表现第一。");
             PeopleAwards(record,"年度最佳新秀",Rookies(data,annual,season-3,season),"今年首次参加职业比赛，至少出场两次。");
             ClubAwards(data,record,season-3,season,"年度最佳俱乐部");
         }
         return record;
     }
-    public static int RewardAmount(CeremonyAward a) => a.Title.StartsWith("年度")?240:90;
+    public static int RewardAmount(CeremonyAward a) => a.AudienceReward ?? (a.Title.StartsWith("年度") ? 240 : 90);
+    public static int NewReward(CeremonyAward a, int fans)
+    {
+        if (a.ClubId.Length > 0) return 0;
+        double scale = Math.Max(0, fans) / (1 + Math.Max(0, fans) / 50000000.0);
+        return a.Title switch {
+            "联赛 MVP" => Math.Max(300000, (int)(scale * .08)),
+            "赛季最佳选手" => Math.Max(500000, (int)(scale * .12)),
+            "年度最佳选手" => Math.Max(800000, (int)(scale * .5)),
+            "赛季最佳新秀" => 200000,
+            "年度最佳新秀" => 300000,
+            _ => 0 };
+    }
     public static string RewardKey(CeremonyRecord r,CeremonyAward a) => $"ceremony-{r.Season}-{a.Title}-{a.WinnerId}-{a.ClubId}";
     public static void Close(CareerData data)
     {
         if(data.Ceremonies.Any(c=>c.Season==data.Season))return;
         var ceremony=Capture(data,data.Season);data.Ceremonies.Add(ceremony);data.PendingCeremonySeason=data.Season;
+        foreach (var award in ceremony.Awards)
+            award.AudienceReward = NewReward(award, CareerAudience.Followers(data, award.WinnerId));
+        foreach (var award in ceremony.Awards)
+        {
+            if (award.WinnerId != "player" && !data.HumanIds.Contains(award.WinnerId) && CareerEngine.Person(data, award.WinnerId) is { } person)
+                person.Fans = CareerAudience.Followers(person) + RewardAmount(award);
+        }
         EnsureWeeklyCovers(data);
         if(data.CooperativeMembers>1)return;
         foreach(var a in ceremony.Awards.Where(a=>a.WinnerId=="player"||a.Recipients.Contains("player")))
@@ -231,7 +263,7 @@ public static class SeasonCeremony
         string title = annual ? $"第 {record.Year} 年度荣誉揭晓" : $"第 {record.Season} 赛季荣誉揭晓";
         string winners = string.Join("\n\n", record.Awards.OrderByDescending(a => a.Title.StartsWith("年度")).Select(a =>
             a.Title + " · " + (a.WinnerName.Length > 0 ? a.WinnerName : a.ClubId.Length > 0 ? EsportsWorld.ClubName(data, a.ClubId) : CareerEngine.DisplayName(data, a.WinnerId))
-            + $"\n评选得分 {a.Score}。{a.Reason}"));
+            + $"\n评选得分 {a.Score}。{AwardDescription(a.Title, a.Reason)}"));
         string leaders = annual ? "\n\n年度 TOP 20 已公布\n" + string.Join("\n", record.YearTop.Take(3).Select((r, i) =>
             $"第 {(r.Place > 0 ? r.Place : i + 1)} 名  {(r.Name.Length > 0 ? r.Name : CareerEngine.DisplayName(data, r.Id))} · {r.Score} 分")) : "";
         return new WeeklySlide { Id = "ceremony-" + record.Season, CeremonySeason = record.Season,
@@ -256,10 +288,10 @@ public static class SeasonCeremony
             score -= 5;
         }
         sample.Awards.Add(PersonAward("赛季最佳选手", sample.SeasonTop[0], "本赛季正式比赛综合表现第一。"));
-        sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "仅计算本赛季职业联赛的正式对局。"));
+        sample.Awards.Add(PersonAward("联赛 MVP", sample.SeasonTop[0], "本赛季职业联赛正式比赛表现第一。"));
         sample.Awards.Add(PersonAward("年度最佳选手", sample.YearTop[0], "全年正式比赛综合得分第一。"));
         sample.Awards.Add(new() { Title = "年度最佳俱乐部", ClubId = data.Esports.ClubId, Score = 52,
-            Reason = "团队正式对局按获胜、战平与通关累计。" });
+            Reason = AwardDescription("年度最佳俱乐部", "") });
         return sample;
     }
 }

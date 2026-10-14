@@ -177,30 +177,34 @@ public static class MatchRules
     {
         if (SpireArbitration.Banned(person, day ?? 0)) return new(false, -1, 0);
         var rng = new Random(CareerEngine.StableHash($"performance:{seed}:{person.Id}:{officialAscension}"));
-        double rating = RatingEffect(person);
-        int form = person.Form.TakeLast(5).Sum(c => c == '胜' ? 1 : c == '负' ? -1 : 0);
         double performance = rng.NextDouble();
         bool clear = performance < chance;
         double stage = rng.NextDouble();
         int floor = clear ? 0 : FailureFloor(chance, defenseBonus, stage, rng.NextDouble());
-        // 完整通关的平均用时按职业身份区分；失败仍按实际止步楼层折算。
-        int comfort = person.MaxAscension - officialAscension;
-        bool professional = EsportsWorld.IsProfessional(person);
-        double baseline = Math.Max(professional ? 3300 : 4800,
-            (professional ? 3600 : 5100) - comfort * 90 - rating * 90 - form * 10);
-        // 多人队伍完整通关基准增加半小时，职业差异和随机波动沿用原计算。
-        double teamOffset = cooperative ? 1800 : 0;
-        baseline += teamOffset;
-        double seconds = baseline * (.88 + rng.NextDouble() * .24);
-        if (comfort >= 3 && rng.NextDouble() < .025) seconds = Math.Min(seconds, 2100 + teamOffset + rng.NextDouble() * 540);
-        double minimum = cooperative ? 3600 : 2700;
-        // 低于下限时保留个人差异，避免大量选手同时停在整点。
-        if (seconds < minimum) seconds = minimum + CareerEngine.StableHash(seed + ":minimum:" + person.Id) % 301;
-        seconds = Math.Round(seconds);
-        // 仅缩放最终用时，不额外取随机数，通关结果、止步楼层与个人差异沿用原计算。
+        double seconds = CompletionSeconds(EsportsWorld.IsProfessional(person), chance, cooperative, rng);
+        // 倍率只缩放用时；通关判定及失败楼层先完成，保持原随机序列。
         double original = clear ? seconds : Math.Round(seconds * floor / 50);
         return new(clear, floor, original * RivalTimeScale(rivalLevel));
     }
+
+    internal static double CompletionSeconds(bool professional, double chance, bool cooperative, Random rng)
+    {
+        // 保留职业约一小时、普通选手约八十五分钟的尺度；实力统一使用本场最终通关率。
+        double baseline = professional ? 3600 : 5100;
+        double mean = CompletionCenter(professional, chance);
+        double seconds;
+        // 截断正态分布，超出世界用时区间的样本重新抽取，不将样本压到边界。
+        do
+        {
+            double normal = Math.Sqrt(-2 * Math.Log(1 - rng.NextDouble())) * Math.Cos(2 * Math.PI * rng.NextDouble());
+            seconds = mean + baseline * .07 * normal;
+        } while (seconds < baseline * .75 || seconds > baseline * 1.25);
+        // 多人沿用半小时增量，不额外建立队员速度属性。
+        return Math.Round(seconds) + (cooperative ? 1800 : 0);
+    }
+
+    internal static double CompletionCenter(bool professional, double chance)
+        => (professional ? 3600 : 5100) * (1 + .18 * ((professional ? .2 : .5) - chance)) + 180;
 
     internal static int FailureFloor(double chance, double defenseBonus, double stageRoll, double floorRoll)
     {
@@ -258,6 +262,6 @@ public static class MatchRules
             2 => $"{result.Opponent}交出{other}的成绩；你的战报为{own}。最终你{result.Outcome}。",
             _ => $"双方战报已确认：你{own}，{result.Opponent}{other}。本场结果：你{result.Outcome}。"
         };
-        return $"赛事进阶 {match.RequiredAscension}。" + ChallengeNote(result, cooperative) + details + match.Decider;
+        return (result.Simulated ? "模拟赛果。" : "") + $"赛事进阶 {match.RequiredAscension}。" + ChallengeNote(result, cooperative) + details + match.Decider;
     }
 }

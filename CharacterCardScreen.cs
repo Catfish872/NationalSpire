@@ -15,6 +15,7 @@ public partial class CareerScreen
         if (!CanEditCharacter(data, id ?? "")) return;
         bool create = id == null;
         var draft = imported ?? (create ? CharacterCards.New(data) : CharacterCards.Read(data, id!));
+        if (draft.Handle.Length == 0) draft.Handle = draft.PublicName;
         var edit = new CharacterCardEdit { Create = create, Target = draft.Id, Person = draft };
         var previousFocus = GetViewport().GuiGetFocusOwner();
         IEnumerable<Control> Controls(Node node) => node.GetChildren().SelectMany(child =>
@@ -81,9 +82,9 @@ public partial class CareerScreen
         {
             var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 24); grid.AddThemeConstantOverride("v_separation", 18); parent.AddChild(grid); return grid;
         }
-        LineEdit Line(Control parent, string label, string value, Action<string> change, int limit = 120, string? name = null)
+        LineEdit Line(Control parent, string label, string value, Action<string> change, string? name = null)
         {
-            var field = Field(parent, label); var input = new LineEdit { Text = value, MaxLength = limit, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            var field = Field(parent, label); var input = new LineEdit { Text = value, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             if (name != null) input.Name = name;
             input.TextChanged += value => change(value); field.AddChild(input); return input;
         }
@@ -108,8 +109,8 @@ public partial class CareerScreen
             if (name != null) input.Name = name; input.TextChanged += () => change(input.Text); field.AddChild(input); return input;
         }
         var identity = Section("身份与归属"); var identityFields = Pair(identity);
-        Line(identityFields, "游戏 ID", draft.Handle, v => { draft.Handle = v; subtitle.Text = v; }, 32, "CardHandle");
-        Line(identityFields, "姓名 · 可留空", draft.Name, v => draft.Name = v, 64, "CardRealName");
+        Line(identityFields, "游戏 ID", draft.Handle, v => { draft.Handle = v; subtitle.Text = v; }, "CardHandle");
+        Line(identityFields, "姓名 · 可留空", draft.Name, v => draft.Name = v, "CardRealName");
         var genders = draft.Id == "player" ? IdentityGender.Choices : new[] { "男", "女" };
         var gender = Choice(identityFields, "性别", genders, Array.IndexOf(genders, draft.Gender), n => draft.Gender = genders[n], "CardGender");
         gender.Disabled = draft.CameoId.Length > 0;
@@ -128,10 +129,10 @@ public partial class CareerScreen
         var presetRow = new HBoxContainer(); presetRow.AddThemeConstantOverride("separation", 18); ability.AddChild(presetRow);
         var preset = Choice(presetRow, "能力预设", CharacterCards.Templates, Array.IndexOf(CharacterCards.Templates, draft.AbilityTemplate.Length > 0 ? draft.AbilityTemplate : draft.Role), _ => { }, "CardPreset");
         var abilityFields = Pair(ability);
-        var role = Line(abilityFields, "职业 · 可自定义", draft.Role, v => draft.Role = v, 40, "CardRole");
+        var role = Line(abilityFields, "职业 · 可自定义", draft.Role, v => draft.Role = v, "CardRole");
         var characterNames = CharacterIdentity.Source().Select(c => c.DisplayName).Concat(new[] { "铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君", draft.Character }).Where(s => s.Length > 0).Distinct().ToArray();
         void SetCharacter(string value) { draft.Character = value; if (draft.Avatar.Source == "auto") portrait.Art = AutomaticPortrait(); }
-        var character = Line(abilityFields, "擅长角色", draft.Character, SetCharacter, 120, "CardCharacter");
+        var character = Line(abilityFields, "擅长角色", draft.Character, SetCharacter, "CardCharacter");
         Choice(ability, "选择已安装的角色", characterNames, Array.IndexOf(characterNames, draft.Character), n => { character.Text = characterNames[n]; SetCharacter(character.Text); });
         var numbers = Pair(ability);
         var ascension = Number(numbers, "最高通关进阶", draft.MaxAscension, 0, 10, v => draft.MaxAscension = (int)v, "CardAscension");
@@ -156,7 +157,7 @@ public partial class CareerScreen
 
         var personality = Section("打法与性格");
         Memo(personality, "打法偏好", draft.Style, v => draft.Style = v, "CardStyle");
-        var kind = Line(personality, "性格", draft.Personality.Kind, v => draft.Personality.Kind = v, 80, "CardPersonality");
+        var kind = Line(personality, "性格", draft.Personality.Kind, v => draft.Personality.Kind = v, "CardPersonality");
         var attitudeFields = Pair(personality);
         var attitudeMin = Number(attitudeFields, "态度下界", draft.Personality.AttitudeMin, -5, -1, v => draft.Personality.AttitudeMin = (int)v, "CardAttitudeMin");
         var attitudeMax = Number(attitudeFields, "态度上界", draft.Personality.AttitudeMax, 1, 5, v => draft.Personality.AttitudeMax = (int)v, "CardAttitudeMax");
@@ -174,6 +175,14 @@ public partial class CareerScreen
         Memo(personality, "玩笑习惯", draft.Personality.Humor, v => draft.Personality.Humor = v);
         Memo(personality, "维护立场", draft.Personality.Loyalty, v => draft.Personality.Loyalty = v);
         Memo(personality, "关注与好奇", draft.Personality.Curiosity, v => draft.Personality.Curiosity = v);
+        if (draft.Id != "player" && !data.HumanIds.Contains(draft.Id))
+        {
+            var relation = PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(draft.Id) ?? new();
+            var attitude = Section("对你的态度");
+            Number(attitude, "好感", relation.Favour, -100, 100, v => (edit.Relation ??= new()).Favour = (int)v, "CardFavour");
+            Memo(attitude, "交往关系", relation.Relationship, v => (edit.Relation ??= new()).Relationship = v, "CardRelationship");
+            Memo(attitude, "对你的印象", relation.Impression, v => (edit.Relation ??= new()).Impression = v, "CardImpression");
+        }
         var status = Text("保存后应用于当前生涯。", 16, _muted); status.Name = "CardStatus"; root.AddChild(status);
         void OnCardMessage(string message, bool failure)
         { if (failure && IsInstanceValid(status)) { status.Text = message; status.Modulate = new Color("f08080"); } }

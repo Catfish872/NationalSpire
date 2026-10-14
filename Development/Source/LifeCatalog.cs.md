@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9A480DFE8B5A740A13FCE19E130242D18F197E43DFC26E637D358B87C644B811`。来源：[源码](../../LifeCatalog.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0CB84F79020690BC2D17C57D24432C72117E12CD871E82457CFD30A4016978A4`。来源：[源码](../../LifeCatalog.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -51,8 +51,8 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 - `NationalSpire.CareerTraining.Kind(string)`；输入表达式：`CareerTraining.Kind(p.Title)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerTraining.Kind(p.Title) == "mixed"`
 - `NationalSpire.CareerTraining.Kind(string)`；输入表达式：`CareerTraining.Kind(p.Title)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerTraining.Kind(p.Title) == "team-growth"`
 - `NationalSpire.CareerTraining.Kind(string)`；输入表达式：`CareerTraining.Kind(p.Title)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerTraining.Kind(p.Title) == "team"`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`list.Select(p => p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: list.Select(p => p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`list.Select(p => p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return list.Select(p => p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray();`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`list.Select(p => p.Title == "全队集中备赛" ? p with { Cost = 3600 }              : p.Title == "教练驻队指导" ? p with { Cost = 6400 }              : p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: list.Select(p => p.Title == "全队集中备赛" ? p with { Cost = 3600 }              : p.Title == "教练驻队指导" ? p with { Cost = 6400 }              : p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`list.Select(p => p.Title == "全队集中备赛" ? p with { Cost = 3600 }              : p.Title == "教练驻队指导" ? p with { Cost = 6400 }              : p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return list.Select(p => p.Title == "全队集中备赛" ? p with { Cost = 3600 }              : p.Title == "教练驻队指导" ? p with { Cost = 6400 }              : p.Title == "建设青训课程" ? p with { Cost = 1800 }              : p.Title == "高压战斗特训" ? p with { Cost = 1600 }              : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }              : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }              : p.Kind == "培养" ? p with { Cost = CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720 }              : p.Kind == "备赛" && CareerTraining.Kind(p.Title) == "team" ? p with { Cost = 540 } : p).ToArray();`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Plan>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Plan>()`
 
 **赋值（含属性/字段和局部值）：**
@@ -62,6 +62,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 - `Cost` = `1800`
 - `Cost` = `3600`
 - `Cost` = `540`
+- `Cost` = `6400`
 - `Cost` = `CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720`
 
 <a id="symbol-4db2d714dc9e"></a>
@@ -89,7 +90,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 
 ## `NationalSpire.LifeCatalog.Resolve(NationalSpire.LifeActivity) — public static Plan? Resolve(LifeActivity activity)`
 
-来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerLife.UpgradeOffers(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e7f329375f86)
 

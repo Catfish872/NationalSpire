@@ -15,7 +15,11 @@ public static class CareerEngine
         CareerCommerce.Upgrade(data);
         SeasonCalendar.Upgrade(data);
         CareerLife.Ensure(data);
+        bool nationalUpgrade = data.Esports.Nations.Any(n => n.DevelopmentVersion < NationalDevelopment.Version);
+        NationalDevelopment.Ensure(data);
         bool changed = CircuitPeople.Replenish(data);
+        changed |= nationalUpgrade;
+        changed |= CareerMarket.Initialize(data);
         changed |= EsportsWorld.ClearInvalidRegistrations(data);
         if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) CircuitWorld.EnsureOpenEvents(data);
         PlayerIdentity.Ensure(data);
@@ -69,6 +73,7 @@ public static class CareerEngine
         NpcRecords.Ensure(data);
         WeeklyJournal.Initialize(data);
         AvatarHonors.Capture(data);
+        CareerMarket.Initialize(data);
         return data;
     }
     public static CareerMatch? NextMatch(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).OrderBy(m => m.Day).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
@@ -84,6 +89,7 @@ public static class CareerEngine
     }
     private static void MoveToNextDay(CareerData d)
     {
+        CareerMarket.Initialize(d);
         foreach (var missed in d.Matches.Where(m => m.Status == "待赛" && !m.Registered && m.Day <= d.Day)) missed.Status = "未报名";
         EsportsWorld.EndDay(d, d.Day);
         WeeklyJournal.CloseWeek(d);
@@ -104,6 +110,7 @@ public static class CareerEngine
         AvatarHonors.Capture(d);
         CareerCommerce.RefreshOffers(d);
         if (d.Esports.EcosystemVersion >= 1) CircuitWorld.AutoEntry(d);
+        CareerMarket.Advance(d);
     }
     public static int AdvanceToMatch(CareerData d)
     {
@@ -208,7 +215,7 @@ public static class CareerEngine
         double local = skill switch { 0 => .56, 1 => .49, 2 => .44, 5 => .43, _ => .42 };
         return Math.Clamp(local + (skill - ascension) * .09, .03, .88);
     }
-    public static void FinishMatch(CareerData d, CareerMatch m, bool runClear, bool abandoned, int floor, string character, int ascension, List<string> cards, double runSeconds, List<string>? deckSummary = null, RunEvidence? evidence = null, string characterId = "", bool forfeit = false, bool confirmFailure = false)
+    public static void FinishMatch(CareerData d, CareerMatch m, bool runClear, bool abandoned, int floor, string character, int ascension, List<string> cards, double runSeconds, List<string>? deckSummary = null, RunEvidence? evidence = null, string characterId = "", bool forfeit = false, bool confirmFailure = false, bool simulated = false)
     {
         // 局内放弃按未通关及当前层数比较成绩；未出场退赛由大厅显式传入。
         runClear = runClear && !abandoned && !forfeit;
@@ -248,18 +255,19 @@ public static class CareerEngine
                 Day = d.Day, Event = m.Event, Opponent = opponent.PublicName, Character = character, CharacterId = characterId, Ascension = m.RequiredAscension,
                 PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards,
                 DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() };
+            friendly.Simulated = simulated;
             d.Results.Add(friendly); d.PendingMatchId = null; d.PendingSince = 0;
             if (m.Kind == "private-challenge") Publish(d, "match" + m.Id, m.Event + " · " + friendly.Outcome, MatchRules.Report(m, friendly, d.CooperativeMembers > 1), "约战", true, [m.OpponentId], m);
-            if (!d.Matches.Any(game => game.Registered && game.Status == "待赛" && game.Day == d.Day)) MoveToNextDay(d);
+
             friendly.Settlement = SettlementRecords.Capture(d, m, settledSeason); d.PendingSettlementId = m.Id;
             CareerStore.Save(d); return;
         }
         int rating = d.Rating, fans = d.Fans, credits = d.Credits;
-        int weight = m.Kind switch { "league" => 2, "continental" => 4, "worldcup" => 6, "worldfinal" => 8, "masters" => 8, _ => 1 };
         double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension);
-        if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Fans += MatchRules.Reward(weight * (25 + m.RequiredAscension * 12), multiplier); d.Credits += MatchRules.Reward(m.Prize, multiplier); }
-        else if (m.Draw) { d.Draws++; d.Rating += 8; d.Fans += MatchRules.Reward(weight * 15, multiplier); d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
-        else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); if (!forfeit) d.Fans += Math.Max(3, floor / 3); }
+        if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Credits += MatchRules.Reward(m.Prize, multiplier); }
+        else if (m.Draw) { d.Draws++; d.Rating += 8; d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
+        else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); }
+        d.Fans += CareerAudience.MatchGain(m.Kind, m.RequiredAscension, m.PlayerWon, m.Draw, forfeit, floor, multiplier, m.Round);
         EsportsWorld.ResolvePlayerFixture(d, m, runClear && !forfeit, forfeit);
         if (m.CompetitionId == "")
         {
@@ -274,6 +282,7 @@ public static class CareerEngine
         CircuitWorld.AutoEntry(d);
         string verdict = forfeit ? "退赛" : m.Draw ? "平局" : m.PlayerWon ? "获胜" : "失利";
         var record = new CareerResult { MatchId = m.Id, Kind = m.Kind, CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Outcome = verdict, Day = d.Day, Event = m.Event, Opponent = opponent.PublicName, Character = character, CharacterId = characterId, Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, RewardMultiplier = multiplier, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards };
+        record.Simulated = simulated;
         d.Results.Add(record);
         record.DeckSummary = deckSummary ?? [];
         record.Evidence = evidence ?? new();
@@ -297,7 +306,7 @@ public static class CareerEngine
         d.PendingMatchId = null; d.PendingSince = 0;
         // 同日自愿报名与正式席位可以并存，完成当天全部已报名比赛后再推进日期。
         if (EsportsWorld.PlayerLeague(d) is { } league) LeagueRosterRepair.Apply(d, league);
-        if (!d.Matches.Any(game => game.Registered && game.Status == "待赛" && game.Day == d.Day)) MoveToNextDay(d);
+
         record.WorldImpact = CircuitLedger.MatchImpact(d, m);
         if (record.WorldImpact.Length > 0 && d.Posts.FirstOrDefault(p => p.EventKey == "match" + m.Id) is { } matchPost)
         {

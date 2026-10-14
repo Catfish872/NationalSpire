@@ -335,6 +335,9 @@ public static class EsportsWorld
         if (f.Finished) return;
         SeasonCeremony.RecordParticipants(d, c, f);
         f.Finished = true; f.WinnerId = winner; f.Draw = draw;
+        NationalFortune.Confirm(d, c, f);
+        CareerAudience.Fixture(d, c, f);
+        CareerMarket.Fixture(d, c, f);
         foreach (string id in new[] { f.HomeId, f.AwayId })
         {
             if (d.DeletedPeople.ContainsKey(id)) continue;

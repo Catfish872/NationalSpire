@@ -143,6 +143,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
     public bool NeedsPause { get; private set; }
     public void Update()
     {
+        if (session.Receiving) { PumpPendingNetwork(); return; }
         if (_failed || _stopping && _service != null) return;
         PumpPendingNetwork();
         if (session.Host && !_launched && session.Full)
@@ -248,15 +249,25 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             service.Disconnected += _ => { if (!_stopping && generation == _generation && ReferenceEquals(service, _service) && (_launched || _entering)) NeedsPause = true; };
             var connected = new TaskCompletionSource(); service.ConnectedToHost += () => connected.TrySetResult();
             service.RegisterMessageHandler<InitialGameInfoMessage>((_, _) => { });
-            if (load) service.RegisterMessageHandler<ClientLoadJoinResponseMessage>((message, _) =>
+            if (load) service.RegisterMessageHandler<ClientLoadJoinResponseMessage>(async (message, _) =>
             {
-                try { _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true); }
-                catch (Exception e) { Fail(e); }
+                try
+                {
+                    await session.WaitForReceived();
+                    if (generation != _generation || !ReferenceEquals(service, _service)) return;
+                    _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true);
+                }
+                catch (Exception e) { if (generation == _generation) Fail(e); }
             });
-            else service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>((message, _) =>
+            else service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>(async (message, _) =>
             {
-                try { _start = new(GameMode.Standard, service, StartListener, session.World.Run!.Characters.Count); _start.InitializeFromMessage(message); _start.SetLocalCharacter(Character()); _start.SetReady(true); }
-                catch (Exception e) { Fail(e); }
+                try
+                {
+                    await session.WaitForReceived();
+                    if (generation != _generation || !ReferenceEquals(service, _service)) return;
+                    _start = new(GameMode.Standard, service, StartListener, session.World!.Run!.Characters.Count); _start.InitializeFromMessage(message); _start.SetLocalCharacter(Character()); _start.SetReady(true);
+                }
+                catch (Exception e) { if (generation == _generation) Fail(e); }
             });
             using var timeout = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token); timeout.CancelAfter(TimeSpan.FromSeconds(30));
             if (await _platform.Join(service, lobby, timeout.Token) is { } error) throw new IOException(error.ToString());
@@ -280,11 +291,12 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         if (state.Rng.StringSeed != run.Seed || state.AscensionLevel != run.Ascension || !state.Players.Select(p => p.NetId).Order().SequenceEqual(run.Characters.Keys.Order())
             || state.Players.Any(p => run.Characters[p.NetId] != p.Character.Id.ToString())) throw new InvalidDataException("原版对局与共同生涯绑定不一致。");
     }
-    public Task<bool> ShouldAllowRunToBegin()
+    public async Task<bool> ShouldAllowRunToBegin()
     {
+        await session.WaitForReceived();
         var run = session.World?.Run;
         bool match = run != null && run.Phase != "paused" && (!session.Host || session.Full) && (_load == null || NativeLobbyApi.Players(_load).Count == run.Characters.Count) && (_start == null || NativeLobbyApi.Players(_start).Count == run.Characters.Count && NativeLobbyApi.Players(_start).All(p => run.Characters.TryGetValue(p.Id, out string? character) && (character == p.Character!.Id.ToString() || character == CareerEngine.RandomCharacterChoice && p.Character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter)) && _start.Seed == run.Seed && _start.Ascension == run.Ascension);
-        return Task.FromResult(match);
+        return match;
     }
     public async void BeginRun(string seed, List<ActModel> acts, IReadOnlyList<ModifierModel> modifiers)
     {
@@ -293,6 +305,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         try
         {
             if (!await ShouldAllowRunToBegin()) throw new InvalidDataException("队伍开赛条件发生变化。");
+            if (generation != _generation) return;
             var lobby = _start!; _entering = true;
             await _platform.BeginNew(lobby, acts, modifiers, seed, session.World!.Run!.Ascension, _lifetime.Token);
             if (generation != _generation) return;
@@ -310,8 +323,11 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         var completed = _entryCompleted = new();
         try
         {
+            await session.WaitForReceived();
+            if (generation != _generation) return;
             var lobby = _load!; Validate(lobby.Run);
             if (!await ShouldAllowRunToBegin()) throw new InvalidDataException("队伍尚未全部连接。");
+            if (generation != _generation) return;
             _entering = true;
             await _platform.BeginSaved(lobby, _lifetime.Token);
             if (generation != _generation) return;
@@ -345,9 +361,15 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
     }
     private void PlayerChanged(NativeLobbyApi.Member player, bool isRandomCharacterResolution)
     {
-        if (!isRandomCharacterResolution || session.World?.Run is not { } run || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;
+        if (!isRandomCharacterResolution || player.Character == null || session.World?.Run is not { } current) return;
+        string character = player.Character.Id.ToString(), attempt = current.Attempt, epoch = session.World.Epoch;
+        int generation = _generation, resume = current.ResumeCount;
+        session.ApplyReceived(() =>
+        {
+        if (generation != _generation || session.World?.Epoch != epoch || session.World.Run is not { } run || run.Attempt != attempt || run.ResumeCount != resume || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;
         // 原版大厅已统一确定结果，存档只记录实际角色，恢复时不再随机。
-        run.Characters[player.Id] = player.Character!.Id.ToString();
-        var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = player.Character.Id.ToString();
+        run.Characters[player.Id] = character;
+        var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = character;
+        });
     }
 }

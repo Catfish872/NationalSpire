@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -60,7 +60,9 @@ public partial class CareerScreen
         var listScroll = new ScrollContainer { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; sidebar.AddChild(listScroll);
         _privateListScroll = listScroll;
         _privateList = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }; listScroll.AddChild(_privateList);
-        _privateListEmpty = Text("搜索选手，或从档案发起私信。", 16, _muted); _privateList.AddChild(_privateListEmpty);
+        _privateListEmpty = Text("搜索选手，或从档案发起私信。", 16, _muted);
+        _privateListEmpty.CustomMinimumSize = new(260, 0); _privateList.AddChild(_privateListEmpty);
+        _privateListEmpty.SetAnchorsAndOffsetsPreset(LayoutPreset.TopWide);
         listScroll.GetVScrollBar().ValueChanged += _ => ShowPrivateListRows();
         listScroll.Resized += ShowPrivateListRows; _privateList.Resized += ShowPrivateListRows;
         var main = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddChild(main);

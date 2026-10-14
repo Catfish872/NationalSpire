@@ -184,7 +184,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.RegionalOrganizations.Sponsor(NationalSpire.CareerData, string, int, string)`](RegionalOrganizations.cs.md#symbol-fac63dbdfc35)
+**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)；[`NationalSpire.RegionalOrganizations.Sponsor(NationalSpire.CareerData, string, int, string)`](RegionalOrganizations.cs.md#symbol-fac63dbdfc35)
 
 **调用：** [`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；`System.Math.Clamp(int, int, int)`
 
@@ -225,7 +225,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)
+**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
 **调用：** [`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`](RegionalOrganizations.cs.md#symbol-deed5b72ffc2)；`System.Array.IndexOf<T>(T[], T)`
 

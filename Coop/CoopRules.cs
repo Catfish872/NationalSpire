@@ -1,4 +1,4 @@
-namespace NationalSpire.Coop;
+﻿namespace NationalSpire.Coop;
 
 /// <summary>所有玩家命令在主机串行执行；在副本上计算成功后整体提交，不切换单人全局存档。</summary>
 public static partial class CoopRules
@@ -41,6 +41,23 @@ public static partial class CoopRules
         d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
         return d;
     }
+    // 界面与后台准备共用同一转换；仅处理独立视图，不读取游戏控件或本机设置。
+    internal static CareerData InterfaceView(CoopWorld w, ulong self)
+    {
+        var member = w.Members.Single(m => m.SteamId == self);
+        var data = View(w, member);
+        data.Esports.PlayerContract = w.World.Esports.PlayerContract == null ? null : CoopJson.Copy(w.World.Esports.PlayerContract);
+        data.PendingMatchId = w.World.Failure == null ? w.Run?.MatchId : null;
+        foreach (var thread in CommunityThreads.All(data))
+        {
+            if (thread.AuthorId == member.PersonId) thread.AuthorId = "player";
+            foreach (var reply in thread.Replies) if (reply.AuthorId == member.PersonId) reply.AuthorId = "player";
+            thread.SeenRevision = member.ReadPosts.GetValueOrDefault(thread.Id);
+        }
+        foreach (var issue in data.WeeklyEditions) issue.SeenRevision = member.ReadWeeks.GetValueOrDefault(issue.Week);
+        data.PendingSettlementId = member.SeenSettlement == data.Results.LastOrDefault()?.MatchId ? "" : data.Results.LastOrDefault()?.MatchId ?? "";
+        return data;
+    }
     private static void Capture(CoopWorld w, CoopMember m, CareerData d)
     {
         var oldPosts = CommunityThreads.All(w.World).Select(p => p.Id).ToHashSet();
@@ -82,6 +99,7 @@ public static partial class CoopRules
             }
             p.Name = m.Card?.Name ?? m.Name; p.Handle = m.Name; p.Gender = m.Gender; p.HandleAliases = m.Aliases.ToList(); p.Country = w.World.Esports.Country;
             p.ClubId = w.World.Esports.ClubId; p.Rating = m.Rating; p.Wins = m.Wins; p.Losses = m.Losses;
+            p.Fans = m.Fans;
             if (w.World.Esports.OwnedClub is { } owned) p.ClubPosition = owned.Starters.Contains(m.PersonId) ? "首发" : "轮换";
             p.MaxAscension = m.Card?.MaxAscension ?? Math.Max(0, m.HighestClear); p.Role = m.Card?.Role ?? "联机选手"; p.Region = p.Country + "赛区";
             p.Character = m.Card?.Character ?? m.Character; p.Biography = m.Card?.Biography ?? "共同生涯的真人队员，发言由本人提交。";
@@ -101,6 +119,7 @@ public static partial class CoopRules
             && command.Revision <= original.Revision;
         if (command.Revision != original.Revision && !sameProposal) return (original, Reject("状态已更新，请查看最新内容后重新操作。"));
         var w = CoopJson.Copy(original); CoopJson.Detached(w.World);
+        BindMarket(w);
         var member = w.Members.Single(m => m.SteamId == sender);
         string? error = null;
         try
@@ -127,6 +146,17 @@ public static partial class CoopRules
             }
             else switch (command.Kind)
             {
+                case "market":
+                    error = Trade(w, member, System.Text.Json.JsonSerializer.Deserialize<MarketOrder>(command.Text)!);
+                    break;
+                case "consumer-buy":
+                case "consumer-use":
+                    var consumerView = View(w, member);
+                    var purchase = System.Text.Json.JsonSerializer.Deserialize<ConsumerOrder>(command.Text)!;
+                    error = command.Kind == "consumer-buy" ? ConsumerEngine.Buy(consumerView, command.Target, purchase.Guests)
+                        : ConsumerEngine.Use(consumerView, command.Target, purchase.Verb, purchase.Guests);
+                    if (error == null) Capture(w, member, consumerView);
+                    break;
                 case "character-card":
                     if (w.Proposal != null) { error = "请先完成或取消当前团队提议。"; break; }
                     var cardEdit = CharacterCards.Decode(command.Text);
@@ -143,7 +173,7 @@ public static partial class CoopRules
                     }
                     else if (sender != w.Owner) error = "NPC 角色由房主编辑。";
                     else if (w.World.HumanIds.Contains(cardEdit.Target)) error = "真人角色由本人编辑。";
-                    else error = CharacterCards.Apply(w.World, cardEdit);
+                    else error = CharacterCards.Apply(w.World, cardEdit, member.Life, member.PersonId);
                     break;
                 case "character-delete":
                     if (sender != w.Owner) { error = "NPC角色由房主管理。"; break; }
@@ -283,14 +313,28 @@ public static partial class CoopRules
                     if (sender != w.Owner) { error = "团队安排由房主操作。"; break; }
                     if (w.Proposal != null) { error = "请先完成或取消当前提议。"; break; }
                     string kind = command.Kind[8..];
-                    if (kind is not ("advance" or "register" or "club" or "start" or "resume" or "enter" or "auto")) { error = "团队安排无效。"; break; }
+                    if (kind is not ("advance" or "register" or "club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
                     if (kind == "resume" && w.Run?.Phase != "paused") { error = "正在连接比赛，请等待连接完成。"; break; }
                     var proposal = new CoopProposal { Kind = kind, Target = command.Target, Number = command.Number, Votes = [sender], Participants = online.ToHashSet(), Label = ProposalLabel(w, kind, command.Target, command.Number) };
-                    if (kind is "start" or "resume") w.Proposal = proposal;
+                    if (kind is "start" or "resume" or "simulate") w.Proposal = proposal;
                     else error = ExecuteProposal(w, proposal, characters);
                     break;
             }
             if (error != null) return (SavePrivateFailure(original, sender, command, error), Reject(error));
+            if (w.Run is { Phase: "simulation" } simulation)
+            {
+                var match = w.World.Matches.Single(m => m.Id == simulation.MatchId);
+                var played = w.Members.Where(m => simulation.Characters.ContainsKey(m.SteamId)).ToList();
+                foreach (var participant in played.Where(m => m.RandomCharacter))
+                {
+                    participant.Character = characters.Order(StringComparer.Ordinal).ElementAt(CareerEngine.StableHash(match.Seed + ":" + participant.SteamId) % characters.Count);
+                    simulation.Characters[participant.SteamId] = participant.Character;
+                }
+                var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), simulation.Ascension);
+                var players = played.Select(m => new CoopLivePlayer(m.SteamId, m.Character, 0, 0, !performance.Cleared)).ToList();
+                w = Settle(w, simulation.Attempt, performance.Cleared, false, performance.Floor, performance.Seconds, players,
+                    confirmFailure: true, simulated: true);
+            }
             RefreshPeople(w); w.Revision++;
             w.Receipts[key] = new(fingerprint, "已完成", w.Revision);
             // 有界保存旧收据；已淘汰请求的修订号仍会阻止它再次生效。
@@ -302,6 +346,7 @@ public static partial class CoopRules
     public static string ProposalLabel(CoopWorld w, string kind, string target, int number) => kind switch
     {
         "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
+        "simulate" => "模拟 " + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到第 {number} 天", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
     };
@@ -343,6 +388,10 @@ public static partial class CoopRules
                 if (error == null) Distribute(w, d.Credits - credits);
                 return error;
             case "start": return Prepare(w, p.Target, p.Number, characters, p.Participants);
+            case "simulate":
+                var simulationError = Prepare(w, p.Target, p.Number, characters, p.Participants);
+                if (simulationError == null) w.Run!.Phase = "simulation";
+                return simulationError;
             default: return "团队安排无效。";
         }
     }
@@ -482,13 +531,14 @@ public static partial class CoopRules
         Diagnostics.RecordMatch(w, "prepared");
         w.RosterLocked = true; d.PendingMatchId = m.Id; d.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); return null;
     }
-    public static CoopWorld Settle(CoopWorld original, string attempt, bool clear, bool abandoned, int floor, double seconds, List<CoopLivePlayer> players, Dictionary<ulong, CareerResult>? details = null, bool confirmFailure = false, bool forfeit = false)
+    public static CoopWorld Settle(CoopWorld original, string attempt, bool clear, bool abandoned, int floor, double seconds, List<CoopLivePlayer> players, Dictionary<ulong, CareerResult>? details = null, bool confirmFailure = false, bool forfeit = false, bool simulated = false)
     {
         clear = clear && !abandoned;
         if (original.Settlements.Any(s => s.Attempt == attempt)) return original;
         if (original.Run is not { } run || run.Attempt != attempt || !double.IsFinite(seconds) || seconds < 0 || clear && seconds <= 0) throw new InvalidOperationException("结算对局不匹配。");
         if (!players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) throw new InvalidOperationException("结算成员不完整。");
         var w = CoopJson.Copy(original); CoopJson.Detached(w.World); var d = w.World;
+        BindMarket(w);
         UseOwnerWallet(w);
         decimal clubBefore = d.Esports.OwnedClub?.CashFlow ?? 0;
         var match = d.Matches.Single(m => m.Id == run.MatchId); decimal money = CareerMoney.Balance(d); int day = d.Day, rating = d.Rating, fans = d.Fans;
@@ -502,7 +552,7 @@ public static partial class CoopRules
             DefeatedEncounters = details?.Values.FirstOrDefault(p => p.Evidence.DefeatedEncounters != null)?.Evidence.DefeatedEncounters?.ToList()
         };
         Diagnostics.RecordMatch(w, "settlement-input", new { clear, abandoned, floor, seconds, players, details }, includePlan: true);
-        CareerEngine.FinishMatch(d, match, clear, abandoned, floor, "合作队伍", run.Ascension, [], seconds, evidence: teamEvidence, confirmFailure: confirmFailure, forfeit: forfeit);
+        CareerEngine.FinishMatch(d, match, clear, abandoned, floor, "合作队伍", run.Ascension, [], seconds, evidence: teamEvidence, confirmFailure: confirmFailure, forfeit: forfeit, simulated: simulated);
         if (d.Failure is { } pending)
         {
             pending.Result.PlayerParticipants = played.Select(m => m.PersonId).ToList();

@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
@@ -14,6 +14,8 @@ public partial class CareerScreen : Control, IScreenContext
     private readonly Color _gold = CareerVisuals.Gold, _muted = CareerVisuals.Muted, _ink = CareerVisuals.Ink;
     private VBoxContainer _content = null!;
     private Label _status = null!;
+    private Label _notice = null!;
+    private double _noticeRemaining;
     private Label _pageTitle = null!;
     private Label _seasonLabel = null!;
     private Label? _aiStatus;
@@ -86,6 +88,7 @@ public partial class CareerScreen : Control, IScreenContext
     private long _frameTime;
     public override void _Process(double delta)
     {
+        if (_noticeRemaining > 0 && (_noticeRemaining -= delta) <= 0) _notice.Hide();
         UiPerformance.Frame(ref _frameTime, _privateOverlay == null ? _tab : "通讯");
         TickPrivate(delta);
         if (_privateOverlay != null) { if (_multiplayer is { Alive: false }) Close(); return; }
@@ -203,6 +206,7 @@ public partial class CareerScreen : Control, IScreenContext
         _breadcrumb = Text("", 16, _muted); _breadcrumb.AutowrapMode = TextServer.AutowrapMode.Off;
         _breadcrumb.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; navigation.AddChild(_breadcrumb);
         _status = Text("", 16, _muted); _status.CustomMinimumSize = new Vector2(0, 32); right.AddChild(_status);
+        _notice = Text("", 16, _gold); _notice.Hide(); right.AddChild(_notice);
         _scroll = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
         right.AddChild(_scroll);
         _content = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _content.AddThemeConstantOverride("separation", 18);
@@ -228,6 +232,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
         _renderVersion++;
         _mentionsChecked = false;
+        _notice.Hide();
         _listCache?.Release(); CareerVisuals.ClearContent(_content);
         _content.AddThemeConstantOverride("separation", 18);
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;
@@ -261,7 +266,7 @@ public partial class CareerScreen : Control, IScreenContext
                 pb.AddChild(Button("取消这项安排", () => MultiplayerCommand("cancel"), 180));
             }
         }
-        if (_tab != "首页" && !(_tab == "赛事与俱乐部" && _worldSection == "俱乐部") && CanManageClub
+        if (_tab == "结算" && CanManageClub
             && !OwnedClubs.IsOwner(data) && OwnedClubs.CanJoinThisSeason(data)
             && data.Credits >= OwnedClubs.FoundingCost)
         {
@@ -573,6 +578,14 @@ public partial class CareerScreen : Control, IScreenContext
                 _starting = false;
                 if (IsInstanceValid(this) && !IsQueuedForDeletion() && error != null) Notice(error, true);
             }, 220); Emphasize(enter); controls.AddChild(enter);
+            if (due && data.PendingMatchId == null) controls.AddChild(TeamButton("模拟本场", () =>
+            {
+                if (MultiplayerCommand("propose-simulate", match.Id, number: (int)asc.Value)) return;
+                if (chars.Count == 0) return;
+                var character = selectedCharacter == chars.Count ? GameBridge.RandomChoice() : chars[Math.Clamp(selectedCharacter, 0, chars.Count - 1)];
+                var error = PlayerSimulation.Run(data, match, character.Title.GetFormattedText(), character.Id.ToString(), (int)asc.Value);
+                Render(); if (error != null) Notice(error, true);
+            }, 160));
             if (_multiplayer == null && due && data.PendingMatchId == null) controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
             if (SaveManager.Instance.HasRunSave) box.AddChild(Text(MatchRecovery.SingleplayerInUse, 16, new Color("e7a6a6")));
             box.AddChild(Matchup(data, match));
@@ -778,8 +791,8 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Notice(string message, bool error)
     {
-        _status.Text = message;
-        _status.AddThemeColorOverride("font_color", error ? new Color("f29b9b") : _gold);
+        _notice.Text = message; _notice.Show(); _noticeRemaining = error ? 0 : 4;
+        _notice.AddThemeColorOverride("font_color", error ? new Color("f29b9b") : _gold);
     }
 
     private static PanelContainer Card()

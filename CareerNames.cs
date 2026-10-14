@@ -8,7 +8,6 @@ public static class CareerNames
     {
         string name = value.Trim();
         if (name.Length == 0) return "请输入新的游戏名。";
-        if (new StringInfo(name).LengthInTextElements > 32) return "游戏名最多填写 32 个字符。";
         if (name.Any(c => char.IsControl(c) || c is '[' or ']' or '<' or '>' || char.GetUnicodeCategory(c) == UnicodeCategory.Format))
             return "游戏名不能包含换行、隐藏字符或标记符号。";
         if (data.People.Any(p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)))

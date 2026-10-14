@@ -5,6 +5,9 @@ public sealed class CareerData
     // 仅供同步序列化前替换顶层字段；不得传给业务规则，编码后必须深复制。
     internal CareerData EncodingHeader() => (CareerData)MemberwiseClone();
     public ChatWorld Chats { get; set; } = new();
+    public MarketState Market { get; set; } = new();
+    [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData, int>? MarketAccounts { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public Func<string, IEnumerable<SponsorContract>>? MarketSponsors { get; set; }
     public FailureDecision? Failure { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
     public Dictionary<string, Dictionary<string, int>> HumanFavours { get; set; } = [];
@@ -131,6 +134,7 @@ public sealed class CareerMatch
 
 public sealed class CareerPerson
 {
+    public int? Fans { get; set; }
     public string ClubPosition { get; set; } = "";
     public List<ArbitrationRecord> Arbitrations { get; set; } = [];
     public HashSet<string> PrivateProfileReceipts { get; set; } = [];
@@ -245,6 +249,7 @@ public sealed class CommunityMemory
 
 public sealed class CareerResult
 {
+    public bool Simulated { get; set; }
     public List<string> PlayerParticipants { get; set; } = [];
     public List<string> OpponentParticipants { get; set; } = [];
     public List<string> LifeEffects { get; set; } = [];

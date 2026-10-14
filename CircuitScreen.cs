@@ -64,11 +64,11 @@ public partial class CareerScreen
     {
         _content.AddChild(Text("世界总决赛 · 荣誉榜", 30, _gold));
         _content.AddChild(Text("新一届冠军诞生前，这里保留上届世界总决赛排名。", 17, _muted));
-        var latest = data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal").Select(a => a.Season).DefaultIfEmpty(0).Max();
+        var latest = data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Completed).Select(a => a.Season).DefaultIfEmpty(0).Max();
         var current = data.Esports.Competitions.FirstOrDefault(c => c.Season == data.Season && c.Kind == "worldfinal");
         if (current != null) _content.AddChild(Button("本届签表与比赛结果   →", () => OpenCompetition(current.Id), 400));
         if (latest == 0) { _content.AddChild(Text("首届世界总决赛席位将在联赛结束后公布。联赛个人前二自动入围，其余席位按世界积分和本季表现补齐。", 20, _ink)); return; }
-        foreach (var award in data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Season == latest).OrderBy(a => a.Stage).ThenBy(a => a.PersonId))
+        foreach (var award in data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Season == latest && a.Completed).OrderBy(a => a.Stage).ThenBy(a => a.PersonId))
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
             box.AddChild(Text($"第 {award.Season} 赛季 · {award.Place}    /    {award.Country}", 22, award.Stage == 1 ? _gold : _ink));

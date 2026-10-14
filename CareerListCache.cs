@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 
 namespace NationalSpire;
 
@@ -14,9 +14,16 @@ internal partial class CareerListCache : Control
         internal Action? Open;
     }
     internal readonly List<ProfileRow> Profiles = [];
+    private MarketTerminal? _market;
+    internal MarketTerminal Market
+    {
+        get { if (_market == null) { _market = new MarketTerminal(); AddChild(_market); } return _market; }
+    }
     private bool _idle;
     private string? _glyphs;
     private int _glyphPosition;
+    private int _iconPosition;
+    private int _relicPosition;
     internal static CareerListCache For(Node menu)
     {
         var existing = menu.GetChildren().OfType<CareerListCache>().FirstOrDefault();
@@ -28,6 +35,9 @@ internal partial class CareerListCache : Control
     {
         // 主菜单空闲时逐帧准备空控件，不读取生涯，不保存，不修改字体资源。
         if (!_idle || CareerScreen.Current != null || Coop.CoopScreen.Current != null) return;
+        if (!Market.Prepare(2)) return;
+        if (_iconPosition < LifestyleArt.Sections.Length) { LifestyleArt.Icon(LifestyleArt.Sections[_iconPosition++]); return; }
+        if (_relicPosition < CareerRelics.Catalog.Length) { RelicArt.Read(CareerRelics.Catalog[_relicPosition++].Id); return; }
         _glyphs ??= new string(string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds)).Distinct().ToArray());
         if (_glyphPosition < _glyphs.Length)
         {
@@ -66,6 +76,11 @@ internal partial class CareerListCache : Control
     }
     internal void Release()
     {
+        if (_market != null)
+        {
+            _market.Unbind(); _market.Hide();
+            if (_market.GetParent() != this) _market.Reparent(this);
+        }
         foreach (var row in Profiles.Where(r => r.Card.GetParent() != this))
         { row.Open = null; row.Card.Hide(); row.Card.Reparent(this); }
     }

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`39A204F2E3AF63BECD5EBC3035ABF55D35E01AC41A3CF7D80BB0E9094CAA80E1`。来源：[源码](../../UiPerformance.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6D495116F194ECAEE9339121BECF35B68BEEFC21E2443BA2B1FD5D1442038107`。来源：[源码](../../UiPerformance.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+internal static event Action<Work, double, long>? Measured;
 public long Calls, Ticks, Bytes, Maximum;
 public long Over50;
 private static readonly Cost[] Costs = Enumerable.Range(0, (int)Work.Count).Select(_ => new Cost()).ToArray();
@@ -28,7 +29,7 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Scope.Scope(NationalSpire.UiPerformance.Work, string?) — public Scope(Work work, string? page)`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)
 
@@ -52,7 +53,7 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Scope.Dispose() — public void Dispose()`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -76,9 +77,9 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?) — public static Scope Measure(Work work, string? page = null)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.OpenPrivateMessages(string)`](PrivateMessageScreen.cs.md#symbol-f454e1373239)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.RefreshPrivateList()`](PrivateMessageScreen.cs.md#symbol-fca825e025fa)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.CareerScreen.UpdateGroupStream(NationalSpire.GroupChat, string, string)`](GroupChatScreen.cs.md#symbol-c33de3d8ae73)；[`NationalSpire.CareerStore.Data`](CareerStore.cs.md#symbol-9724f0dac935)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CharacterIdentity.ForResult(NationalSpire.CareerResult)`](CharacterIdentity.cs.md#symbol-6c3ca5d0abad)；[`NationalSpire.CharacterIdentity.Name(NationalSpire.CareerData, string)`](CharacterIdentity.cs.md#symbol-4d068357a08b)；[`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart)`](Coop/CoopWire.cs.md#symbol-b544da8202a5)；[`NationalSpire.Coop.CoopAssembler.Split(byte[])`](Coop/CoopWire.cs.md#symbol-67ad26af4646)；[`NationalSpire.Coop.CoopCoordinator.Broadcast()`](Coop/CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Encode(ulong, System.Collections.Generic.Dictionary<string, string>)`](Coop/CoopPrivateMessages.cs.md#symbol-f433d36af14b)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](Coop/CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](Coop/CoopStorage.cs.md#symbol-a4c240447248)；[`NationalSpire.GameCharacterNames.Definitions(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>)`](GameCharacterNames.cs.md#symbol-2ba1db314dbc)；[`NationalSpire.GameCharacterNames.Originals()`](GameCharacterNames.cs.md#symbol-1e5c21407883)；[`NationalSpire.GameCharacterNames.Read(string)`](GameCharacterNames.cs.md#symbol-cf770f36edc2)；[`Refresh()`](GroupChatScreen.cs.md#symbol-4630d88502c7)；[`ShowRows()`](GroupChatScreen.cs.md#symbol-b9b5ca713c42)
+**调用者：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerMarket.Advance(NationalSpire.CareerData)`](CareerMarket.cs.md#symbol-6039084ecec7)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.OpenPrivateMessages(string)`](PrivateMessageScreen.cs.md#symbol-f454e1373239)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.RefreshPrivateList()`](PrivateMessageScreen.cs.md#symbol-fca825e025fa)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.CareerScreen.UpdateGroupStream(NationalSpire.GroupChat, string, string)`](GroupChatScreen.cs.md#symbol-c33de3d8ae73)；[`NationalSpire.CareerStore.Data`](CareerStore.cs.md#symbol-9724f0dac935)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CharacterIdentity.ForResult(NationalSpire.CareerResult)`](CharacterIdentity.cs.md#symbol-6c3ca5d0abad)；[`NationalSpire.CharacterIdentity.Name(NationalSpire.CareerData, string)`](CharacterIdentity.cs.md#symbol-4d068357a08b)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?)`](ConsumerEngine.cs.md#symbol-6a13be5c34c1)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>)`](ConsumerEngine.cs.md#symbol-c0beece783ab)；[`NationalSpire.Coop.CoopAssembler.Complete.Decode()`](Coop/CoopWire.cs.md#symbol-3bc9f4a00527)；[`NationalSpire.Coop.CoopAssembler.Split(byte[])`](Coop/CoopWire.cs.md#symbol-67ad26af4646)；[`NationalSpire.Coop.CoopCoordinator.Broadcast()`](Coop/CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.PumpReceived()`](Coop/CoopReception.cs.md#symbol-a09fec904cc1)；[`NationalSpire.Coop.CoopCoordinator.SaveReceived(NationalSpire.Coop.CoopSnapshot, bool, ulong)`](Coop/CoopReception.cs.md#symbol-a9de6eef033e)；[`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Encode(ulong, System.Collections.Generic.Dictionary<string, string>)`](Coop/CoopPrivateMessages.cs.md#symbol-f433d36af14b)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](Coop/CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](Coop/CoopStorage.cs.md#symbol-a4c240447248)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.EconomicActions.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](EconomicActions.cs.md#symbol-f0516c3ecf95)；[`NationalSpire.GameCharacterNames.Definitions(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>)`](GameCharacterNames.cs.md#symbol-2ba1db314dbc)；[`NationalSpire.GameCharacterNames.Originals()`](GameCharacterNames.cs.md#symbol-1e5c21407883)；[`NationalSpire.GameCharacterNames.Read(string)`](GameCharacterNames.cs.md#symbol-cf770f36edc2)；[`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-abd0a463c72f)；[`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?)`](PlayerSimulation.cs.md#symbol-a3059e9b8f34)；[`Refresh()`](GroupChatScreen.cs.md#symbol-4630d88502c7)；[`ShowRows()`](GroupChatScreen.cs.md#symbol-b9b5ca713c42)；[`Step()`](Coop/CoopReception.cs.md#symbol-41b14a0db411)
 
 **调用：** [`NationalSpire.UiPerformance.Scope.Scope(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-d4add07631bd)
 
@@ -95,16 +96,17 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Record(NationalSpire.UiPerformance.Work, long, long) — private static void Record(Work work, long ticks, long bytes)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.UiPerformance.Frame(ref long, string)`](UiPerformance.cs.md#symbol-aef0950310da)；[`NationalSpire.UiPerformance.Scope.Dispose()`](UiPerformance.cs.md#symbol-a737ce8fdbf5)
 
-**调用：** `System.Math.Max(long, long)`
+**调用：** `System.Action<T1, T2, T3>.Invoke(T1, T2, T3)`（委托实际目标见流程文档）；`System.Math.Max(long, long)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.UiPerformance.Cost.Bytes`；`NationalSpire.UiPerformance.Cost.Calls`；`NationalSpire.UiPerformance.Cost.Maximum`；`NationalSpire.UiPerformance.Cost.Over50`；`NationalSpire.UiPerformance.Cost.Ticks`；`NationalSpire.UiPerformance.Costs`；`NationalSpire.UiPerformance.Gate`
+**字段、属性、事件及方法组引用：** `NationalSpire.UiPerformance.Cost.Bytes`；`NationalSpire.UiPerformance.Cost.Calls`；`NationalSpire.UiPerformance.Cost.Maximum`；`NationalSpire.UiPerformance.Cost.Over50`；`NationalSpire.UiPerformance.Cost.Ticks`；`NationalSpire.UiPerformance.Costs`；`NationalSpire.UiPerformance.Gate`；`NationalSpire.UiPerformance.Measured`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `System.Action<T1, T2, T3>.Invoke(T1, T2, T3)`；输入表达式：`.Invoke(work, ticks * 1000.0 / Stopwatch.Frequency, bytes)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Measured?.Invoke(work, ticks * 1000.0 / Stopwatch.Frequency, bytes)`
 - `System.Math.Max(long, long)`；输入表达式：`Math.Max(c.Maximum, ticks)`；返回值紧邻使用处：`AssignmentExpressionSyntax: c.Maximum = Math.Max(c.Maximum, ticks)`
 
 **赋值（含属性/字段和局部值）：**
@@ -117,7 +119,7 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Frame(ref long, string) — public static void Frame(ref long previous, string page)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)
 
@@ -143,7 +145,7 @@ private readonly long _time, _bytes;
 
 ## `NationalSpire.UiPerformance.Snapshot() — public static object Snapshot()`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Diagnostics.CapturePeerLogs(string, string, string?)`](Diagnostics.cs.md#symbol-8481032d98dd)；[`NationalSpire.Diagnostics.SaveLoggingPerformance()`](LogPerformance.cs.md#symbol-076f9dd0d161)
 

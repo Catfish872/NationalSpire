@@ -52,6 +52,8 @@ public sealed partial class CoopCoordinator : IDisposable
             PlayerIdentity.Ensure(World.World);
             PersonalityLibrary.EnsureAll(World.World);
             NpcRecords.Ensure(World.World);
+            CareerMarket.Initialize(World.World);
+            NationalDevelopment.Ensure(World.World);
             CoopRules.AdvanceMembers(World);
             WeeklyJournal.Recover(World.World);
             WeeklyJournal.ActivateLatest(World.World);
@@ -63,6 +65,7 @@ public sealed partial class CoopCoordinator : IDisposable
     {
         if (_closed) return;
         _transport.Update();
+        PumpReceived();
         if (!Host)
             foreach (var pending in _pendingCommands.Values.ToArray())
                 if (pending.Reply == null && DateTime.UtcNow - pending.Sent >= TimeSpan.FromSeconds(3)) Retry(pending.Command);
@@ -94,6 +97,29 @@ public sealed partial class CoopCoordinator : IDisposable
     private void Receive(ulong sender, CoopWire wire)
     {
         if (_closed || sender == Self) return;
+        if (Host) { ReceiveNow(sender, wire, DateTime.UtcNow); return; }
+        if (sender != _transport.Owner) return;
+        var received = DateTime.UtcNow;
+        try
+        {
+            if (wire.Kind == "snapshot")
+            {
+                if (_assembler.Collect(Read<CoopPart>(wire), received) is { } complete) QueueSnapshot(sender, complete);
+                return;
+            }
+            if (wire.Kind == "ping")
+            {
+                var heartbeat = Read<CoopHeartbeat>(wire);
+                _seen.Clear(); foreach (ulong id in heartbeat.Online) _seen[id] = received;
+                _seen[sender] = received; Send(sender, "pong", heartbeat.Epoch);
+            }
+            _received.Enqueue(new(() => true, () => ReceiveNow(sender, wire, received)));
+        }
+        catch (Exception error) { ReceiveError(error); }
+    }
+    private void ReceiveNow(ulong sender, CoopWire wire, DateTime received)
+    {
+        if (_closed || sender == Self) return;
         try
         {
             if (wire.Kind == "hello" && Host && World != null)
@@ -114,25 +140,15 @@ public sealed partial class CoopCoordinator : IDisposable
             if (!Host && sender != _transport.Owner) return;
             if (Host && (World == null || !World.Members.Any(m => m.SteamId == sender) || !_seen.ContainsKey(sender))) return;
             if (wire.Kind is "diagnostics-request" or "diagnostics-part") { ReceiveDiagnostic(sender, wire); return; }
-            if (wire.Kind == "private-chunk") { ReceivePrivate(wire); return; }
+            if (wire.Kind == "private-chunk") { ReceivePrivate(wire, received); return; }
             switch (wire.Kind)
             {
                 case "ping" when !Host:
                     var heartbeat = Read<CoopHeartbeat>(wire);
                     if (World != null && heartbeat.Epoch != World.Epoch) { World = null; NativeSave = null; break; }
-                    _seen.Clear(); foreach (ulong id in heartbeat.Online) _seen[id] = DateTime.UtcNow;
-                    _seen[sender] = DateTime.UtcNow; Send(sender, "pong", heartbeat.Epoch); break;
+                    break;
                 case "pong" when Host:
                     if (Read<string>(wire) == World!.Epoch) _seen[sender] = DateTime.UtcNow; break;
-                case "snapshot" when !Host:
-                    if (_assembler.Add(Read<CoopPart>(wire)) is not { } bytes) break;
-                    var snapshot = CoopJson.Read<CoopSnapshot>(bytes);
-                    if (snapshot.World.Owner != sender || snapshot.World.Schema != 1 || !snapshot.World.Members.Any(m => m.SteamId == Self)) throw new InvalidDataException("存档成员不匹配。");
-                    if (World != null && (World.Id != snapshot.World.Id || World.Epoch == snapshot.World.Epoch && World.Revision > snapshot.World.Revision)) break;
-                    _storage.Save(snapshot.World, snapshot.Run); World = snapshot.World; NativeSave = snapshot.Run;
-                    CoopJson.Detached(World.World); _seen[sender] = DateTime.UtcNow; Status = "已同步";
-                    foreach (var group in World.World.Chats.Groups.Where(g => !GroupChats.Busy(g))) { AiService.GroupLive.Remove(World.Id + "/group/" + group.Id); AiService.GroupReasoningLive.Remove(World.Id + "/group/" + group.Id); }
-                    CompleteReplies(); Changed?.Invoke(); break;
                 case "command" when Host:
                     var command = Read<CoopCommand>(wire);
                     if (!Rate(sender)) { Send(sender, "reply", new CoopReply(command.Id, new(false, "操作过于频繁，请稍后再试。"))); break; }
@@ -143,13 +159,14 @@ public sealed partial class CoopCoordinator : IDisposable
                     _pendingCommands[reply.Id] = (pending.Command, pending.Sent, reply);
                     if (reply.Outcome.Accepted && pending.Command.Kind == "confirm" && World?.Proposal?.Id == pending.Command.Target)
                         World.Proposal.Votes.Add(Self);
+                    _preparedView = null;
                     Status = reply.Outcome.Accepted ? "主机已确认，正在同步。" : reply.Outcome.Message;
                     CompleteReplies(); Changed?.Invoke(); break;
                 case "error": Status = Read<string>(wire); RecordJoinError(Status); Changed?.Invoke(); break;
                 case "live" when !Host:
-                    if (_liveAssembler.Add(Read<CoopPart>(wire)) is not { } liveBytes) break;
+                    if (_liveAssembler.Add(Read<CoopPart>(wire), received) is not { } liveBytes) break;
                     var live = CoopJson.Read<CoopRun>(liveBytes);
-                    if (World?.Run is { } current && current.Attempt == live.Attempt && current.ResumeCount == live.ResumeCount && current.Phase != "paused") { World.Run = live; Changed?.Invoke(); } break;
+                    if (World?.Run is { } current && current.Attempt == live.Attempt && current.ResumeCount == live.ResumeCount && current.Phase != "paused") { World.Run = live; _preparedView = null; Changed?.Invoke(); } break;
                 default:
                     if (wire.Kind.StartsWith("run-", StringComparison.Ordinal)) RunMessage?.Invoke(new(wire.Kind, JsonSerializer.Serialize(new { sender, payload = wire.Payload })));
                     break;
@@ -174,7 +191,7 @@ public sealed partial class CoopCoordinator : IDisposable
     {
         var w = World ?? throw new InvalidOperationException("世界尚未同步。");
         var command = new CoopCommand(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent);
-        Retry(command); return command;
+        SubmitReady(command, _ => { }, error => Replied?.Invoke(new(command.Id, new(false, error.Message)))); return command;
     }
     public void Retry(CoopCommand command)
     {
@@ -244,5 +261,5 @@ public sealed partial class CoopCoordinator : IDisposable
         foreach (var member in World.Members.Where(m => m.SteamId != Self))
             foreach (var part in parts) Send(member.SteamId, "live", part);
     }
-    public void Dispose() { _closed = true; _transport.Received -= Receive; _transport.Dispose(); }
+    public void Dispose() { _closed = true; CloseReceived(); _transport.Received -= Receive; _transport.Dispose(); }
 }

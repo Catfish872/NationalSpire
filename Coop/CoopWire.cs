@@ -86,24 +86,34 @@ public sealed class CoopAssembler
         int count = (bytes.Length + size - 1) / size;
         for (int i = 0; i < count; i++) yield return new(id, i, count, bytes.Length, hash, bytes[(i * size)..Math.Min(bytes.Length, (i + 1) * size)]);
     }
-    public byte[]? Add(CoopPart p)
+    public sealed record Complete(CoopPart Header, byte[][] Parts)
+    {
+        public byte[] Decode()
+        {
+            using var timing = UiPerformance.Measure(UiPerformance.Work.CoopAssemble);
+            byte[] bytes = new byte[Header.Total];
+            for (int i = 0; i < Parts.Length; i++) Parts[i].CopyTo(bytes, i * 24000);
+            if (CoopJson.Hash(bytes) != Header.Hash) throw new InvalidDataException("同步校验失败。");
+            using var zip = new BrotliStream(new MemoryStream(bytes), CompressionMode.Decompress);
+            using var result = new MemoryStream(); byte[] buffer = new byte[65536]; int read;
+            while ((read = zip.Read(buffer)) > 0) { if (result.Length + read > 96 * 1024 * 1024) throw new InvalidDataException("同步数据解压超限。"); result.Write(buffer, 0, read); }
+            return result.ToArray();
+        }
+    }
+    public byte[]? Add(CoopPart p) => Add(p, DateTime.UtcNow);
+    internal byte[]? Add(CoopPart p, DateTime received) => Collect(p, received)?.Decode();
+    internal Complete? Collect(CoopPart p, DateTime received)
     {
         if (p.Total is < 1 or > 32 * 1024 * 1024 || p.Count != (p.Total + 23999) / 24000 || p.Index < 0 || p.Index >= p.Count || p.Bytes.Length != Math.Min(24000, p.Total - p.Index * 24000))
             throw new InvalidDataException("同步分片无效。");
-        if (_header?.Id != p.Id || DateTime.UtcNow - _started > TimeSpan.FromSeconds(60))
-        { _header = p; _parts.Clear(); _started = DateTime.UtcNow; }
+        if (_header?.Id != p.Id || received - _started > TimeSpan.FromSeconds(60))
+        { _header = p; _parts.Clear(); _started = received; }
         if (_header.Total != p.Total || _header.Hash != p.Hash || _header.Count != p.Count) throw new InvalidDataException("同步分片元数据不一致。");
         if (_parts.TryGetValue(p.Index, out var old) && !old.AsSpan().SequenceEqual(p.Bytes)) throw new InvalidDataException("重复分片冲突。");
         _parts[p.Index] = p.Bytes;
         if (_parts.Count != p.Count) return null;
-        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopAssemble);
-        byte[] bytes = new byte[p.Total];
-        for (int i = 0; i < p.Count; i++) _parts[i].CopyTo(bytes, i * 24000);
+        var complete = new Complete(_header, Enumerable.Range(0, p.Count).Select(i => _parts[i]).ToArray());
         _parts.Clear(); _header = null;
-        if (CoopJson.Hash(bytes) != p.Hash) throw new InvalidDataException("同步校验失败。");
-        using var zip = new BrotliStream(new MemoryStream(bytes), CompressionMode.Decompress);
-        using var result = new MemoryStream(); byte[] buffer = new byte[65536]; int read;
-        while ((read = zip.Read(buffer)) > 0) { if (result.Length + read > 96 * 1024 * 1024) throw new InvalidDataException("同步数据解压超限。"); result.Write(buffer, 0, read); }
-        return result.ToArray();
+        return complete;
     }
 }

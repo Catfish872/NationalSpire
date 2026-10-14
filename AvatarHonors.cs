@@ -29,6 +29,7 @@ public static class AvatarHonors
         public Dictionary<string, int> Places = [];
     }
     private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CareerData, Ranking> Rankings = new();
+    internal static void InvalidateRankings(CareerData data) => Rankings.Remove(data);
     private static int Rank(CareerData d, string id)
     {
         var cache = Rankings.GetOrCreateValue(d);

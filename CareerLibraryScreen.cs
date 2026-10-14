@@ -8,7 +8,7 @@ public partial class CareerScreen
     private void OpenCareerLibrary()
     {
         if (ViewData.Failure != null) return;
-        ShowCareerDialog("生涯存档", "", () => true, "关闭", box =>
+        ShowCareerDialog("生涯存档", "", () => true, "关闭", async box =>
         {
             var toolbar = new HBoxContainer(); toolbar.AddThemeConstantOverride("separation", 12); box.AddChild(toolbar);
             if (_multiplayer == null) toolbar.AddChild(Button("新建生涯", () =>
@@ -16,10 +16,10 @@ public partial class CareerScreen
                 try { var fresh = CareerEngine.CreateNew(); fresh.Ai = ViewData.Ai; var path = CareerLibrary.Create(CareerStore.DefaultPath, fresh); _boundData = CareerStore.SwitchCareer(path); _cancelDialog?.Invoke(); ResetNavigation(); Render(); }
                 catch (Exception e) { Notice(e.Message, true); }
             }, 180));
-            toolbar.AddChild(Button("导入存档", () => { _cancelDialog?.Invoke(); OpenFilePicker("导入生涯", [".zip"], path =>
+            toolbar.AddChild(Button("导入存档", () => { _cancelDialog?.Invoke(); OpenFilePicker("导入生涯", [".zip"], async path =>
             {
-                try { byte[] bytes = File.ReadAllBytes(path); if (CoopStorage.IsArchive(bytes)) CoopSettings.Storage.ImportArchive(bytes); else CareerLibrary.Import(CareerStore.DefaultPath, bytes); OpenCareerLibrary(); Notice("生涯已导入。", false); }
-                catch (Exception e) { Notice("导入失败：" + e.Message, true); }
+                try { byte[] bytes = File.ReadAllBytes(path); if (CoopStorage.IsArchive(bytes)) await CoopSettings.Storage.ImportArchiveAsync(bytes); else CareerLibrary.Import(CareerStore.DefaultPath, bytes); if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OpenCareerLibrary(); Notice("生涯已导入。", false); }
+                catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) Notice("导入失败：" + e.Message, true); }
             }); }, 180));
             var scroll = new BroadcastScroll { Name = "CareerLibraryScroll", CustomMinimumSize = new(0, 360), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
             box.AddChild(scroll); var entries = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; entries.AddThemeConstantOverride("separation", 14); scroll.AddChild(entries);
@@ -55,7 +55,10 @@ public partial class CareerScreen
                 if (entry.Current) deleteButton.TooltipText = "先切换到另一份生涯，再删除当前生涯。";
                 row.AddChild(deleteButton);
             }
-            var worlds = CoopSettings.Storage.List().ToList();
+            List<CoopStorage.Checkpoint> worlds;
+            try { worlds = await CoopSettings.Storage.ListAsync(); }
+            catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) Notice(error.Message, true); return; }
+            if (!IsInstanceValid(entries) || entries.IsQueuedForDeletion() || !IsInstanceValid(box) || box.IsQueuedForDeletion()) return;
             foreach (var cp in worlds)
             {
                 var card = Card(); entries.AddChild(card); var row = new HBoxContainer(); card.AddChild(row);
@@ -64,11 +67,14 @@ public partial class CareerScreen
                 words.AddChild(Text(cp.World.Name, 21, _ink));
                 words.AddChild(Text($"多人 · 第{cp.World.World.Season}赛季 · 第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天", 16, _muted));
                 row.AddChild(Button("进入房间", () => { _cancelDialog?.Invoke(); var menu = (Control)GetParent(); Close(); CoopScreen.OpenSaved(menu, cp.World.Id); }, 135));
-                row.AddChild(Button("导出", () => { try { OS.ShellShowInFileManager(CareerLibrary.ExportDesktop(cp.World.Name, CoopSettings.Storage.ExportArchive(cp.World.Id))); Notice("生涯已导出。", false); } catch (Exception e) { Notice(e.Message, true); } }, 105));
+                row.AddChild(Button("导出", async () => { try { var archive = await CoopSettings.Storage.ExportArchiveAsync(cp.World.Id); if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OS.ShellShowInFileManager(CareerLibrary.ExportDesktop(cp.World.Name, archive)); Notice("生涯已导出。", false); } catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) Notice(e.Message, true); } }, 105));
                 var deleteButton = Button("删除", () => ConfirmCareerDeletion(cp.World.Name, cp.World.World.Season, SeasonCalendar.Day(cp.World.World, cp.World.World.Day), () =>
                 {
                     if (CoopRuntime.Current?.Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
-                    CoopSettings.Storage.Delete(cp.World.Id);
+                }, async () =>
+                {
+                    if (CoopRuntime.Current?.Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
+                    await CoopSettings.Storage.DeleteAsync(cp.World.Id);
                 }), 105);
                 deleteButton.Name = "DeleteCareer_" + cp.World.Id;
                 deleteButton.Disabled = CoopRuntime.Current?.Session?.World?.Id == cp.World.Id;
@@ -78,12 +84,26 @@ public partial class CareerScreen
         }, showCancel: false);
     }
 
-    private void ConfirmCareerDeletion(string name, int season, int day, Action delete)
+    private void ConfirmCareerDeletion(string name, int season, int day, Action delete, Func<Task>? deleteAsync = null)
     {
         _cancelDialog?.Invoke();
         Label? failure = null;
+        bool deleting = false;
+        async Task DeleteAsync()
+        {
+            deleting = true;
+            try
+            {
+                delete(); await deleteAsync!();
+                if (!IsInstanceValid(failure) || failure!.IsQueuedForDeletion()) return;
+                _cancelDialog?.Invoke(); OpenCareerLibrary(); Notice("生涯已删除，本机备份已保留。", false);
+            }
+            catch (Exception error) { if (IsInstanceValid(failure) && !failure!.IsQueuedForDeletion()) { failure.Text = "删除失败：" + error.Message; failure.Show(); } }
+            finally { deleting = false; }
+        }
         ShowCareerDialog("删除生涯", "", () =>
         {
+            if (deleteAsync != null) { if (!deleting) _ = DeleteAsync(); return false; }
             try { delete(); _cancelDialog?.Invoke(); OpenCareerLibrary(); Notice("生涯已删除，本机备份已保留。", false); return true; }
             catch (Exception e)
             {

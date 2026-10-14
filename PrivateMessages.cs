@@ -94,6 +94,21 @@ public static class PrivateMessages
         var relation = Relation(data, id); relation.Favour = Math.Clamp(relation.Favour + delta, -100, 100); relation.Revision++;
         data.Life.Relationships[id] = relation.Favour;
     }
+    public static void EditRelation(CareerData data, CareerLifeState life, string human, string id, CharacterRelationEdit edit)
+    {
+        var fields = new List<string>();
+        if (edit.Favour.HasValue) fields.Add(nameof(PrivateRelation.Favour));
+        if (edit.Relationship != null) fields.Add(nameof(PrivateRelation.Relationship));
+        if (edit.Impression != null) fields.Add(nameof(PrivateRelation.Impression));
+        if (fields.Count == 0) return;
+        var box = Mailbox(life);
+        if (!box.Relations.TryGetValue(id, out var relation)) box.Relations[id] = relation = new();
+        if (edit.Favour is { } favour) { relation.Favour = favour; life.Relationships[id] = favour; }
+        if (edit.Relationship != null) relation.Relationship = edit.Relationship;
+        if (edit.Impression != null) relation.Impression = edit.Impression;
+        relation.Revision++;
+        PrivateInteractionHistory.PreserveRelation(box, data.Chats, human, id, fields);
+    }
     public static string RelationshipLabel(int favour) => favour switch
     { >= 80 => "十分亲近", >= 40 => "亲近", >= 15 => "熟悉", <= -80 => "敌视", <= -40 => "反感", <= -15 => "疏远", _ => "初识" };
     public static bool CanChat(CareerData data, string id) => id != "player" && !data.HumanIds.Contains(id) && data.People.Any(p => p.Id == id);

@@ -11,15 +11,19 @@ public partial class CareerScreen
         if (_worldSection == "俱乐部" && _clubDraft != null) { ClubWizard(data); return; }
         if (_worldSection == "俱乐部" && OwnedClubs.IsOwner(data)) { OwnedClubPanel(data); return; }
         if (_worldSection == "颁奖盛典") { Ceremony(data); return; }
+        if (_worldSection != "国家发展")
+        {
         AddHeading("世界电竞中心", $"{EsportsWorld.Countries.Length} 个国家 · {data.Esports.Clubs.Count} 家俱乐部 · {data.People.Count} 位世界居民");
         var identity = Card(); _content.AddChild(identity); var ib = Inner(identity);
         ib.AddChild(WithAvatar(data, "player", Text($"{EsportsWorld.LicenseName(data)}    /    {EsportsWorld.ClubName(data, data.Esports.ClubId)}", 27, _gold), 64));
         ib.AddChild(Text($"国籍：{data.Esports.Country}    ·    {(data.Esports.NationalTeam ? "本赛季国家队代表" : "尚未入选本赛季国家队")}    ·    连胜 {data.Esports.WinStreak}", 17, _ink));
         ib.AddChild(Text("当前目标：" + EsportsWorld.NextGoal(data), 18, CareerVisuals.Teal));
         ib.AddChild(Text(CareerNarrative.PlayerEvaluation(data), 16, _muted));
+        }
         var tabs = new HFlowContainer(); _content.AddChild(tabs);
-        foreach (string section in new[] { "国运榜", "世界荣誉", "世界积分", "赛事总览", "俱乐部", "荣誉室", "晋级规则" }) tabs.AddChild(Button(section, () => OpenWorldSection(section), 155));
+        foreach (string section in new[] { "国运榜", "国家发展", "世界荣誉", "世界积分", "赛事总览", "俱乐部", "荣誉室", "晋级规则" }) tabs.AddChild(Button(section, () => OpenWorldSection(section), 155));
         if (_worldSection == "国运榜") { NationRanking(data); return; }
+        if (_worldSection == "国家发展") { DevelopmentScreen(data); return; }
         if (_worldSection == "世界荣誉") { WorldHonors(data); return; }
         if (_worldSection == "世界积分") { CircuitRanking(data); return; }
         if (_worldSection == "俱乐部") { Clubs(data); return; }
@@ -131,7 +135,7 @@ public partial class CareerScreen
             box.AddChild(Text(club.Identity + " · " + club.Motto, 16, _muted));
             var sponsor = data.Esports.Sponsors.LastOrDefault(s => s.TargetId == club.Id && s.EndSeason >= data.Season);
             if (sponsor != null) box.AddChild(Text("合作品牌：" + sponsor.Brand, 15, _muted));
-            box.AddChild(Text((club.Id == data.Esports.OwnedClub?.ClubId ? $"俱乐部关注 {data.Esports.OwnedClub.Fans:N0}" : $"可用资金 {CareerMoney.Format(club.Budget)}") + $" · 青训 {data.People.Count(p => p.ClubId == club.Id && p.Role == "青训选手")} 人", 16, CareerVisuals.Teal));
+            box.AddChild(Text($"俱乐部关注 {ClubAudience.Total(data, club.Id):N0} · 可用资金 {CareerMoney.Format(club.Budget)} · 青训 {data.People.Count(p => p.ClubId == club.Id && p.Role == "青训选手")} 人", 16, CareerVisuals.Teal));
             if (club.SeasonReport.Length > 0) box.AddChild(Text(club.SeasonReport, 15, _muted));
             foreach (var entry in club.Ledger.TakeLast(3))
                 box.AddChild(Text($"第{entry.Day}天 · {entry.Title} · {(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))}", 14, _muted));

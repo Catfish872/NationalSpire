@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`C5B3233FCD2D17FCC9F540DD3BCA2E8762975FA42976DF1FBB47FB199AD62B18`。来源：[源码](../../../Coop/CoopDiagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2E39B826C5852B6A23376AE4BE450817B3C5FB0CC50D126FEC80EABE43E145D6`。来源：[源码](../../../Coop/CoopDiagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -87,7 +87,7 @@ private readonly Dictionary<ulong, Dictionary<string, string>> _diagnosticReport
 
 来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
 **调用：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart)`](CoopWire.cs.md#symbol-b544da8202a5)；[`NationalSpire.Coop.CoopAssembler.Split(byte[])`](CoopWire.cs.md#symbol-67ad26af4646)；[`NationalSpire.Coop.CoopCoordinator.AllowedReportName(string)`](CoopDiagnostics.cs.md#symbol-9034c731e516)；[`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopJson.Bytes<T>(T)`](CoopData.cs.md#symbol-faeb54cab7ee)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Diagnostics.Redact(string)`](../Diagnostics.cs.md#symbol-f014e01c492a)；`NationalSpire.Coop.CoopDiagnosticPart.CoopDiagnosticPart(string, string, NationalSpire.Coop.CoopPart)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Exception.ToString()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.TimeSpan.FromSeconds(long)`
 

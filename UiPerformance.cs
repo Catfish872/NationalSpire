@@ -1,11 +1,12 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace NationalSpire;
 
 // 固定项目、累计统计；页面计时和帧检测不执行磁盘写入。
 public static class UiPerformance
 {
-    public enum Work { Render, Clear, Profiles, Community, Matches, Avatar, Honors, Store, Frame, AvatarControl, PostCard, GroupRender, MemberRows, MemberFilter, PhoneOpen, PrivateList, PrivateListRows, PrivateChat, CoopCopy, CoopView, CoopSave, CoopSerialize, CoopWriteWorld, CoopWriteRun, CoopHash, CoopManifest, CoopCleanup, CoopBroadcast, CoopEncode, CoopCompress, CoopAssemble, CharacterPrepare, CharacterResourceRead, CharacterResourceParse, CharacterClassify, CharacterDefinitions, CharacterName, Count }
+    public enum Work { Render, Clear, Profiles, Community, Matches, Avatar, Honors, Store, Frame, AvatarControl, PostCard, GroupRender, MemberRows, MemberFilter, PhoneOpen, PrivateList, PrivateListRows, PrivateChat, CoopCopy, CoopView, CoopSave, CoopSerialize, CoopWriteWorld, CoopWriteRun, CoopHash, CoopManifest, CoopCleanup, CoopBroadcast, CoopEncode, CoopCompress, CoopAssemble, CharacterPrepare, CharacterResourceRead, CharacterResourceParse, CharacterClassify, CharacterDefinitions, CharacterName, CoopReceive, CoopDecode, CoopPublish, CoopPrepareView, MarketAdvance, MarketTrade, NationalContribution, ConsumerOperation, PlayerSimulation, EconomicSave, Count }
+    internal static event Action<Work, double, long>? Measured;
     private sealed class Cost { public long Calls, Ticks, Bytes, Maximum; public long Over50; }
     private static readonly Cost[] Costs = Enumerable.Range(0, (int)Work.Count).Select(_ => new Cost()).ToArray();
     private static readonly object Gate = new();
@@ -36,6 +37,7 @@ public static class UiPerformance
             var c = Costs[(int)work]; c.Calls++; c.Ticks += ticks; c.Bytes += bytes;
             c.Maximum = Math.Max(c.Maximum, ticks); if (ticks > Stopwatch.Frequency / 20) c.Over50++;
         }
+        Measured?.Invoke(work, ticks * 1000.0 / Stopwatch.Frequency, bytes);
     }
     public static void Frame(ref long previous, string page)
     {

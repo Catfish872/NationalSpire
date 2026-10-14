@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -275,7 +275,7 @@ public partial class CareerScreen
         box.AddChild(ClubSelect(sponsors.Select((id, i) => OwnedClubs.SponsorQuote(d, id).Brand + " · " + plans[i]).ToArray(), Array.IndexOf(sponsors, draft.Sponsor), i => { draft.Sponsor = sponsors[i]; RefreshClub(); }));
         var sponsor = OwnedClubs.SponsorQuote(d, draft.Sponsor);
         box.AddChild(Text(RegionalOrganizations.SponsorDescription(sponsor.Brand), 16, _muted));
-        box.AddChild(Text($"每次赢球获赞助奖金 {CareerMoney.Format(sponsor.WinBonus)}，选手奖金另付。", 17, _muted));
+        box.AddChild(Text($"每次赢球基础赞助奖金 {CareerMoney.Format(sponsor.WinBonus)}，随俱乐部关注提高；选手奖金另付。", 17, _muted));
         int fans = OwnedClubs.StartingFans(d); decimal wages = OwnedClubs.WeeklyWages(d, draft), initial = OwnedClubs.InitialCost(d, draft);
         box = ClubCard("俱乐部收支", $"初始关注 {fans:N0}");
         ClubWeeklyFinance(box, sponsor, fans, wages);
@@ -293,7 +293,7 @@ public partial class CareerScreen
     {
         _content.AddChild(Button("← 返回赛事与俱乐部", () => OpenWorldSection("国运榜"), 230));
         var o = d.Esports.OwnedClub!;
-        var box = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"第 {o.FoundedDay} 天成立  ·  关注 {o.Fans:N0}  ·  下次周结 第 {o.NextPayDay} 天", true);
+        var box = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"第 {o.FoundedDay} 天成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 第 {o.NextPayDay} 天", true);
         string currentRegion = EsportsWorld.Club(d, o.ClubId)!.Country;
         string selectedRegion = o.NextRegion.Length > 0 ? o.NextRegion : currentRegion;
         var regionRow = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
@@ -305,7 +305,7 @@ public partial class CareerScreen
         box.AddChild(Text(o.NextRegion.Length > 0 ? $"本季：{currentRegion} · 第 {d.Season + 1} 赛季起：{o.NextRegion}"
             : OwnedClubs.CanJoinThisSeason(d) ? "更换后立即调整本季联赛。" : "更换地区从下赛季生效。", 16, _muted));
         decimal wages = o.Contracts.Sum(c => c.Wage) + OwnedClubs.HumanWages(d);
-        ClubWeeklyFinance(box, o.Sponsor, o.Fans, wages, OwnedClubs.AchievementWeekly(d));
+        ClubWeeklyFinance(box, o.Sponsor, ClubAudience.Total(d, o.ClubId), wages, OwnedClubs.AchievementWeekly(d));
         if (OwnedClubs.AchievementWeekly(d) > 0) box.AddChild(Text("周收入已含有效的成绩赞助。", 16, _muted));
         if (_multiplayer != null) box.AddChild(Text("房主支付队友周薪 $1,400、每次获胜奖金 $1,000。", 17, _muted));
         if (o.Debt > 0 || o.HumanPayDue.Values.Any(value => value > 0))
@@ -321,12 +321,12 @@ public partial class CareerScreen
         if (_ownerSection == "赞助")
         {
             var sb = ClubCard("俱乐部赞助", "8 周一约。提前选择品牌，下期生效；不操作则原品牌续约。");
-            if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, o.Fans))}  ·  赢球 {CareerMoney.Format(active.WinBonus)}  ·  第 {active.EndDay} 天到期", 20, _gold));
+            if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, ClubAudience.Total(d, o.ClubId)))}  ·  赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(active, ClubAudience.Total(d, o.ClubId)))}  ·  第 {active.EndDay} 天到期", 20, _gold));
             foreach (string id in new[] { "steady", "results", "fans" })
             {
                 var s = OwnedClubs.SponsorQuote(d, id);
                 sb.AddChild(Text(RegionalOrganizations.SponsorDescription(s.Brand), 16, _muted));
-                sb.AddChild(ClubButton($"{s.Brand} · 周结 {CareerMoney.Format(OwnedClubs.SponsorWeekly(s, o.Fans))} · 赢球 {CareerMoney.Format(s.WinBonus)}", () => ShowCareerDialog("确认下期赞助", "选择 " + s.Brand + "？当前合同按期执行。", () => { ClubAction(d, "sponsor", target: id); return true; }), 0));
+                sb.AddChild(ClubButton($"{s.Brand} · 周结 {CareerMoney.Format(OwnedClubs.SponsorWeekly(s, ClubAudience.Total(d, o.ClubId)))} · 赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(s, ClubAudience.Total(d, o.ClubId)))}", () => ShowCareerDialog("确认下期赞助", "选择 " + s.Brand + "？当前合同按期执行。", () => { ClubAction(d, "sponsor", target: id); return true; }), 0));
             }
             if (o.NextSponsor.Length > 0) sb.AddChild(Text("下期已选 " + OwnedClubs.SponsorQuote(d, o.NextSponsor).Brand, 18, CareerVisuals.Teal));
             sb.AddChild(Text("成绩赞助 · 持续 8 周，同类取最高档", 21, _gold));
@@ -358,7 +358,7 @@ public partial class CareerScreen
                 if (human)
                 {
                     if (OwnedClubs.PaidHumans(d).Contains(id))
-                        rb.AddChild(Text($"周薪 {CareerMoney.Format(OwnedClubs.HumanWeeklyWage)} · 获胜 {CareerMoney.Format(OwnedClubs.HumanWinBonus)} · 待付 {CareerMoney.Format(o.HumanPayDue.GetValueOrDefault(id))}", 17, _muted));
+                        rb.AddChild(Text($"周薪 {CareerMoney.Format(o.HumanWeeklyWage)} · 获胜 {CareerMoney.Format(o.HumanWinBonus)} · 待付 {CareerMoney.Format(o.HumanPayDue.GetValueOrDefault(id))}", 17, _muted));
                     continue;
                 }
                 var c = o.Contracts.Single(c => c.PersonId == id); var p = CareerEngine.Person(d, id)!;

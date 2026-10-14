@@ -228,7 +228,7 @@ public static class CircuitWorld
             .ThenByDescending(t => t.Wins).ThenByDescending(t => EsportsWorld.RatingOf(d, t.PersonId)).Select(t => t.PersonId);
         qualified.AddRange(candidates.Where(id => !d.DeletedPeople.ContainsKey(id) && !qualified.Contains(id)).Take(32 - qualified.Count));
         bool newFinal = final == null;
-        final ??= new WorldCompetition { Id = finalId, Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
+        final ??= new WorldCompetition { FortuneVersion = 1, Id = finalId, Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
             CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, Entrants = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + id)).ToList(), PlayerEntered = qualified.Contains("player") };
         bool finalSeason = d.Season % 2 == 1;
         if (finalSeason)
@@ -237,7 +237,7 @@ public static class CircuitWorld
             SchedulePlayer(d, final);
         }
         string kind = d.Season % 2 == 0 ? "worldcup" : "continental";
-        var cup = new WorldCompetition { Id = $"{kind}-{d.Season}", Kind = kind, Name = EsportsWorld.StageName(kind), Country = "国际", Season = d.Season, CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, TeamEvent = true };
+        var cup = new WorldCompetition { FortuneVersion = 1, Id = $"{kind}-{d.Season}", Kind = kind, Name = EsportsWorld.StageName(kind), Country = "国际", Season = d.Season, CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, TeamEvent = true };
         foreach (var league in leagues)
         {
             if (kind == "worldcup")

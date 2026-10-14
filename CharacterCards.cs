@@ -9,9 +9,18 @@ public sealed class CharacterCardEdit
     public bool Create { get; set; }
     public string Target { get; set; } = "";
     public CareerPerson Person { get; set; } = new();
+    public CharacterRelationEdit? Relation { get; set; }
 }
 
-/// <summary>角色卡只编辑公开资料和模拟能力，内部身份与既有赛果保持稳定。</summary>
+/// <summary>仅用于本次编辑命令；空值表示没有编辑该字段，不进入 PNG 角色资料。</summary>
+public sealed class CharacterRelationEdit
+{
+    public int? Favour { get; set; }
+    public string? Relationship { get; set; }
+    public string? Impression { get; set; }
+}
+
+/// <summary>角色卡编辑人物资料及 NPC 对当前玩家的态度，内部身份与既有赛果保持稳定。</summary>
 public static class CharacterCards
 {
     public static readonly string[] Templates = ["普通玩家", "主播", "解说员", "青训选手", "职业选手", "世界顶尖", "教练", "赛事记者"];
@@ -56,7 +65,7 @@ public static class CharacterCards
     public static string Encode(CharacterCardEdit edit)
     {
         var source = edit.Person;
-        var publicEdit = new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Person = new()
+        var publicEdit = new CharacterCardEdit { Target = edit.Target, Create = edit.Create, Relation = edit.Relation, Person = new()
         {
             Handle = source.Handle, Name = source.Name, Gender = source.Gender, Country = source.Country,
             ClubId = source.ClubId, SupportedClubId = source.SupportedClubId, Role = source.Role,
@@ -93,16 +102,18 @@ public static class CharacterCards
         if (edit.Create && (edit.Target.Length != 39 || !edit.Target.StartsWith("custom-", StringComparison.Ordinal) || d.People.Any(x => x.Id == edit.Target))) return "新角色编号无效。";
         if (!edit.Create && edit.Target != "player" && !d.People.Any(p => p.Id == edit.Target)) return "人物已不存在。";
         string[] fields = [p.Handle, p.Name, p.Role, p.Country, p.Character, p.Style, p.Temperament, p.Voice, p.Biography, p.SupportedClubId, p.ClubId, p.AbilityTemplate];
-        if (fields.Any(s => s == null || s.Length > 1200 || s.Any(c => char.IsControl(c) && c != '\n'))) return "文字过长或包含无效字符。";
-        if (string.IsNullOrWhiteSpace(p.Handle) || new StringInfo(p.Handle.Trim()).LengthInTextElements > 32 || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)) return "游戏 ID 请填写 1—32 个可见字符。";
-        if (p.Name.Length > 64 || p.Role.Length is 0 or > 40 || p.Character.Length is 0 or > 120) return "请检查姓名、职业和擅长角色。";
+        if (fields.Any(s => s == null || s.Any(c => char.IsControl(c) && c != '\n'))) return "文字包含无效字符。";
+        if (string.IsNullOrWhiteSpace(p.Handle) || p.Handle.Any(c => c is '[' or ']' or '<' or '>' || char.IsControl(c) || char.GetUnicodeCategory(c) == UnicodeCategory.Format)) return "游戏 ID 请填写可见字符。";
+        if (p.Role.Length == 0 || p.Character.Length == 0) return "请检查职业和擅长角色。";
         if (!preview && (d.People.Where(x => x.Id != edit.Target && !(edit.Target == "player" && x.Id == d.LocalHumanId)).Any(x => x.PublicName.Equals(p.Handle.Trim(), StringComparison.OrdinalIgnoreCase) || x.HandleAliases.Contains(p.Handle.Trim(), StringComparer.OrdinalIgnoreCase)) || edit.Target != "player" && p.Handle.Trim().Equals(CareerEngine.Name(d), StringComparison.OrdinalIgnoreCase))) return "这个游戏 ID 已有人使用。";
         if (!EsportsWorld.Countries.Contains(p.Country) || !IdentityGender.Choices.Contains(p.Gender)) return "请选择赛区和性别。";
         if (p.AbilityTemplate.Length > 0 && !Templates.Contains(p.AbilityTemplate)) return "能力模板无效。";
         if (p.MaxAscension is < 0 or > 10 || p.Rating is < 0 or > 100000 || p.Wins is < 0 or > 1000000 || p.Losses is < 0 or > 1000000) return "进阶、评分或胜负场数超出范围。";
         if (p.CustomClearChance is { } rate && (!double.IsFinite(rate) || rate < 0 || rate > 1)) return "模拟通关率应在 0%—100% 之间。";
         if (p.Personality == null || p.Personality.AttitudeMin < -5 || p.Personality.AttitudeMax > 5 || p.Personality.AttitudeMin > -1 || p.Personality.AttitudeMax < 1) return "态度下界为 -5 至 -1，上界为 1 至 5。";
-        if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null || s.Length > 1200)) return "性格描述过长。";
+        if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null)) return "性格描述无效。";
+        if (edit.Relation != null && (edit.Target == "player" || d.HumanIds.Contains(edit.Target))) return "对你的态度仅用于 NPC。";
+        if (edit.Relation?.Favour is < -100 or > 100) return "好感应在 -100—100 之间。";
         if (p.ClubId.Length > 0 && EsportsWorld.Club(d, p.ClubId) == null || p.SupportedClubId.Length > 0 && EsportsWorld.Club(d, p.SupportedClubId) == null) return "俱乐部已不存在。";
         var old = edit.Create ? null : Read(d, edit.Target);
         bool changedClub = old?.ClubId != p.ClubId;
@@ -111,7 +122,7 @@ public static class CharacterCards
         try { p.Avatar.Validate(); } catch { return "头像数据无效，请重新选择。"; }
         return null;
     }
-    public static string? Apply(CareerData d, CharacterCardEdit edit)
+    public static string? Apply(CareerData d, CharacterCardEdit edit, CareerLifeState? relationLife = null, string? human = null)
     {
         if (Validate(d, edit) is { } error) return error;
         var input = edit.Person;
@@ -141,6 +152,7 @@ public static class CharacterCards
             CircuitPeople.Replenish(d);
             foreach (var m in d.Matches.Where(m => m.OpponentId == p.Id && m.Status == "待赛"))
             { m.OpponentPrepared = false; m.OpponentSeconds = null; m.Live = null; }
+            if (edit.Relation != null) PrivateMessages.EditRelation(d, relationLife ?? d.Life, human ?? GroupChats.Human(d), p.Id, edit.Relation);
         }
         return null;
     }
@@ -154,6 +166,7 @@ public static class CharacterCards
             d.People = before.People; d.Matches = before.Matches; d.Esports = before.Esports; d.PlayerCard = before.PlayerCard;
             d.PlayerAlias = before.PlayerAlias; d.PlayerGender = before.PlayerGender; d.SelectedAvatar = before.SelectedAvatar;
             d.PlayerNameAliases = before.PlayerNameAliases; d.Rating = before.Rating; d.Wins = before.Wins; d.Losses = before.Losses; d.PlayerIntroduction = before.PlayerIntroduction;
+            d.Life = before.Life; d.Chats = before.Chats;
             Diagnostics.Error("character-card.save", e); return "角色未能保存，请重试。";
         }
     }

@@ -2,6 +2,8 @@ namespace NationalSpire;
 
 public sealed class OwnedClubState
 {
+    public int HumanWeeklyWage { get; set; } = 140;
+    public int HumanWinBonus { get; set; } = 100;
     public int EconomyVersion { get; set; }
     public HashSet<string> RevenueAwards { get; set; } = [];
     public List<OwnedAchievementSponsor> AchievementSponsors { get; set; } = [];
@@ -52,6 +54,7 @@ public sealed class OwnedPlayerContract
 }
 public sealed class OwnedSponsor
 {
+    public int AudienceVersion { get; set; }
     public string Id { get; set; } = "";
     public string Brand { get; set; } = "";
     public int Weekly { get; set; }

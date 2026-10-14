@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1F13711009897D1A809F29312FA97224B492A659744DA2F6B8A77454F11CA8C7`。来源：[源码](../../CareerNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9D06BFC58BDC23D12129409D7186AA553FB205E42612617F4CC9CFFA2C7C5F84`。来源：[源码](../../CareerNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerNames.Rename(NationalSpire.CareerData, string)`](CareerNames.cs.md#symbol-68b4cb4672cb)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](Coop/CoopRules.cs.md#symbol-fedd425e9ea0)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** `char.GetUnicodeCategory(char)`；`char.IsControl(char)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Globalization.StringInfo.StringInfo(string)`
+**调用：** `char.GetUnicodeCategory(char)`；`char.IsControl(char)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.PublicName`
 
@@ -35,7 +35,6 @@
 - `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`p.HandleAliases.Append(p.PublicName).Append(p.Name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains`
 - `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`p.HandleAliases.Append(p.PublicName)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.HandleAliases.Append(p.PublicName).Append`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)`
-- `System.Globalization.StringInfo.StringInfo(string)`；输入表达式：`new StringInfo(name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new StringInfo(name).LengthInTextElements`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -44,7 +43,7 @@
 
 ## `NationalSpire.CareerNames.Rename(NationalSpire.CareerData, string) — public static string? Rename(CareerData data, string value)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenamePlayer(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-b0bc87216d33)
 

@@ -74,5 +74,5 @@ public sealed partial class CoopCoordinator
         }
     }
     private static bool AllowedReportName(string name) => name is "runtime.json" or "summary.json" or "error-counts.json" or "session-events.jsonl"
-        or "mod-log.txt" or "game-log-1.txt" or "game-log-2.txt" or "game-log-3.txt" or "notes.txt" or "latest-match.jsonl";
+        or "mod-log.txt" or "game-log-1.txt" or "game-log-2.txt" or "game-log-3.txt" or "notes.txt" or "latest-match.jsonl" or "ui-performance.json";
 }

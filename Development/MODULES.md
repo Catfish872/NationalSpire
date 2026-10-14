@@ -9,14 +9,29 @@
 | 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
 | 合同与培养 | OwnedClubs、OwnedClubSchedule、ClubOperations、ClubCoaching、CoachLineups、CareerTraining | 所属俱乐部、合同、席位、训练计划、预约转会 | 当前阵容、未来比赛名单、培养效果、账目 | 修改俱乐部与发展数据；名单变化传给赛事同步入口 |
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
+| 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
 | 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
 | 聊天与交互 | PrivateMessageCommands、PrivateMessages、GroupChats、GroupInteractions、ChatTimeline、PrivateInteractionUndo | 用户文字、附件、群成员、AI 标记、旧记录 | 聊天轮次、交互卡片、关系、训练、活动、赛程与帖子 | 交互执行调用对应业务规则；回退依赖已记录的交互历史 |
 | 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务 | 最终 messages、模型响应、解析后的正文与标记 | HTTP、请求队列、实时字典、生成状态、结果保存回调 |
-| 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 文件替换、持久写入、备份、分片发送；房主负责共享操作 |
+| 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopReception、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 房主提交；客机后台解码、保存、准备独立视图，主线程按原顺序发布；存储按实际目录协调 |
 | 局内显示 | LiveRunBridge、LiveMatch、LiveMaps、LiveRaceHud、LiveVoices、LiveCommentary、LiveCrowd、CoopLive、CoopBroadcast | 原版实际地图与战斗、已确定对手结果及用时 | 对手进度、解说、弹幕、人物头像 | 局内事件订阅；读取资源；播报历史与当前比赛保存 |
 | 支撑与诊断 | Diagnostics、UiPerformance、LogPerformance、GameText、各头像与资源模块 | 实际请求、错误、阶段计时、资源、存档副本 | 日志、诊断包、格式化文本和缓存资源 | 凭据脱敏；资源缓存；性能记录 |
 
 具体文件及函数依赖见[双向源码索引](SOURCE_MAP.md)。partial 类可能分布在不同模块文件，不能把单个文件误当成完整类。
+
+## 国运、模拟与个人经济
+
+| 模块 | 统一入口 | 输入、输出和下游 |
+| --- | --- | --- |
+| 逐场国运 | NationalFortune.Confirm | FinishFixture 的已确认赛果 → Fixture 收据、CircuitAward 累计、国家资金和 Contribute；CircuitLedger.Settle 补全最终名次，MatchImpact 提供结算及战报文字 |
+| 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 国运先补维护再分配建设余额；换季计算 GDP 和维护不足下降；WorldEvents 的原有随机事件时机发布公报，继续使用 Publish 与原有社区生成队列 |
+| 玩家模拟 | PlayerSimulation.Sample / Run | 本人真实历史优先、选定进阶优先 → RunPerformance；单人 FinishMatch、多人提议确认后 Settle，共用实际比赛结算入口 |
+| 关注与报价 | CareerAudience、ClubAudience、SeasonCeremony | 玩家和NPC共用比赛/冠军奖励；ClubAudience.Total 汇总独立关注及现役选手影响；新报价共用两条倍率曲线；奖项保存实际AudienceReward供单人及多人收据使用 |
+| 消费 | ConsumerEngine.Buy / Use | 商品目录、本人 Consumer、邀请对象与关系 → 钱包、物品、关系和公开事实；单人 EconomicActions.Save，多人 Apply/Capture |
+| 行情与交易 | CareerMarket、MarketDynamics | Initialize补前史；Advance读取固定品牌特征/国家发展/代言关注；Fixture读取已签赞助和确认赛果；Trade统一费用与账目；WorldEvents通过TryPublish使用公开行情进入原AI新闻队列 |
+| 经济提交 | EconomicActions.Save / Trade / Persist、CoopRules.Trade | 单人消费复制完整资料、交易只复制资金资料，统一Persist后提交同一生涯实例；多人复用 Apply 已创建的事务副本，只给 Trade 日期、行情、个人 Life 与钱包，避免第二次复制全部帖子、聊天和行情 |
+
+MarketScreen → MarketTerminal 复用 CareerListCache 的分帧预建控件；缓存 Release 统一解除资料和操作回调。LifestyleArt 提供本机缓存导航图标和原生商品插画。ConsumerScreen、MarketScreen、DevelopmentScreen 使用现有 CareerScreen、头像及样式入口，不修改游戏共享字体。没有独立网络协议、后台保存队列或重试机制。数据归属见 DATA_CONTRACTS，提交顺序见 PERSISTENCE_AND_COOP，规则与数值见 GAME_AND_UI。
 
 ## 运行入口与非直接调用
 

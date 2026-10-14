@@ -17,6 +17,30 @@ CareerStore.Save 首先检查 ExternalSave：多人或专用视图传入时执�
 
 Data 属性不只是获取字段：首次读取会加载文件、恢复备份、迁移、修复阵容、恢复中断生成、载入 AI 设置，必要时再次 Save。性能与依赖检查必须包含 getter 的这些工作。
 
+## 经济操作的提交、同步与恢复
+
+单人消费按钮 → EconomicActions.Save → 深复制当前 CareerData 一次并 Detached → ConsumerEngine 校验修改 → 将 Life、Credits、Fans、Posts、SavedThreads、CommunityMemories 交回原实例 → 原 CareerStore.Save。保存异常恢复这六个字段原引用并提示失败，原实例和绑定路径不变。处理同步完成，中间无 await；候选副本不传给其他请求。消费另改公开事实和本人关系。
+
+单人交易按钮 → EconomicActions.Trade → 新建只含 Day、Credits、只读 Market 及独立资金资料的输入，深复制 Trading、CreditFraction 和 Ledger；不提供聊天、帖子或人物集合。CareerMarket.Trade 校验并修改该输入；成功后只提交 Credits、Life.Trading、Life.CreditFraction、Life.Ledger，保留 CareerData 和 Life 的原实例。Persist 与消费共用原 CareerStore.Save，恰好保存一次完整生涯；失败恢复这四项原值/原引用。行情引用只读，候选对象不进入异步或网络。多人仍使用 Apply 自带的独立副本，不经过这个单人入口。
+
+多人 market / consumer-buy / consumer-use 使用原 Apply：鉴权、纪元、版本和重复收据校验后复制整个 CoopWorld。交易复用该副本的日期、行情、本人 Life 及钱包，调用统一 Trade，不再复制全部个人视图；此输入对象不保存、不广播、不交给异步任务。商城需要人物、帖子、关系，沿用 View → Buy/Use → Capture。失败丢弃整个操作副本，成功仍由 Commit 保存检查点，再回执与完整广播。
+
+行情和国运在日期/赛果原事务中更新，不单独保存或广播。Apply/Settle 在各自副本绑定 MarketAccounts，跨天和报价变更处理所有成员，包括离线账户。快照同时保存行情、余额、借款、仓位和赛果。客机仍先后台保存检查点，再按原顺序发布 World、完成回执和刷新。没有新增重试队列，原 Id、Epoch、Revision、流式依赖和接收顺序不变。
+
+品牌杠杆沿用上述操作及检查点，不新增数据字段；Account 对大于1倍品牌持仓执行原10%权益阈值，并通过 CloseValue 扣除品牌平仓费。多人绑定的 MarketAccounts 对每名成员使用同一个 Account。v0.26.16快速专项实际通过二人/四人交易、重复编号去重、成员余额隔离与检查点读回；比较时使用实际 CheckpointHeader 及 PublicBytes，计入保存生成的 LatestCheckpoint 编号，不比较运行时私有字段。单人保存成功仍一次，异常恢复持仓与资金。该次未重复强制终止进程验证。
+
+PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life 的 Consumer、Trading，本人数据保留。编码使用只读默认空值字节，不共享可修改个人集合。消费事实按原公开事件处理；私信保存回调读取最新成员，只合并对应信箱、关系与交互，不覆盖交易账户。
+
+关闭页面不撤销已提交操作。关闭进程或断线时，原临时文件/完整检查点机制恢复前一次或本次完整提交，不能只恢复扣款而丢失入账。已完成写入的操作保留，未收到回执的重复命令由原收据识别。购物、交易及模拟不创建或修改原版对局文件。恢复旧多人存档时，CoopCoordinator 在原恢复提交前初始化行情和国家发展。
+
+验证范围包括旧档、重复提交、个人隔离、保存异常、180天行情、单人/二人/四人结算，以及19组既有回归。原13个强制终止进程时机验证资金、商品、行情及聊天恢复；交易优化额外验证写入临时文件时终止、保存完成后终止。房主终止、四人客机终止后重连、四人全员重启由实际ENet进程验证，未使用多个Steam账号测试互联网传输。最终Release正常流程二人房主82项、客机21项；四人房主110项、每名客机21项，总计276项通过。
+
+2026-10-14最终经济规则122项、经济改版141项通过。后者包含14组有效及无效交易的新旧路径全文哈希比较，成功操作恰好保存一次，拒绝不保存，保存失败恢复原字段。另用玩家日志中的约36.9MB生涯执行21项真实文件检查，5次旧入口与5次账户复制入口的最终完整存档哈希相同；原入口含实际保存耗时519.56—1232.98毫秒，新入口231.46—250.86毫秒，分配由约117.5—119.9MB降至41.35MB。测试顺序旧入口先、新入口后，存在运行时预热差异；后续旧入口仍为519.56—540.90毫秒。不含磁盘的新交易准备与提交为0.10—0.45毫秒。
+
+199项资产、每项180天行情：每日更新5次为1.26—7.12毫秒，累计12.31毫秒；行情序列化5次16.35—16.69毫秒，累计82.75毫秒。完整命令副本与交易各3次，二人为124.80—134.70毫秒，四人为54.80—111.49毫秒；两组顺序不同，包含预热差异。二人实际检查点保存56.07—56.51毫秒，四人为47.52—50.22毫秒。独立步骤耗时不能相加冒充端到端帧停顿。原始逐次耗时、累计耗时及分配量位于本地 `.artifacts/economy-revision-20261014/`。
+
+上一轮PR功能接入曾以旧诊断存档比较44组AI请求全文；这轮关注、国运和行情事实有明确变化，不沿用上一轮哈希一致结论。当前总结检查使用本地固定响应，覆盖私信和群聊大小总结失败、原文保留及原入口重试；不调用模型。旧日志缺少模型原始返回和完整异常栈，不能确认其全部越界均来自空choices；现入口已消除直接读取choices[0]的越界，并记录可定位的响应结构与异常栈。
+
 ## 加载、切换与删除
 
 | 操作 | 当前调用与处理 | 后续依赖 |
@@ -33,16 +57,38 @@ Data 属性不只是获取字段：首次读取会加载文件、恢复备份、
 
 | 顺序 | 函数 | 输入与状态 | 输出交给谁 |
 | --- | --- | --- | --- |
-| 1 | CoopCareerSession.Send → Retry / 网络 command | 生涯 Id、Epoch、Revision、命令 Id、类型、对象、参数 | 房主 Execute |
+| 1 | CoopCareerSession.Send / CoopScreen.Submit → SubmitReady → Retry / 网络 command | 点击保留 Id 和参数、占用 pending；客机等待此前收到的事件，再读取 Revision；房主直接发送 | Execute；原 Retry 重发实际发送的完整命令 |
 | 2 | CoopRules.Apply | 身份、会话、操作版本、已处理 Receipts、在线名单 | 复制后执行规则，返回 World 与 Outcome；重复命令复用旧结果 |
 | 3 | Execute → Commit(..., broadcast:false) | 接受结果或实际变更 | CoopStorage.Save 先写入检查点，再替换房主当前 World |
 | 4 | Execute → reply | 处理结果与已提交 World.Revision | 本人回执或发送给客机 |
 | 5 | Broadcast | 最新 World、NativeSave、每名接收者 | 每人自己的完整快照分片 |
-| 6 | 客机 Receive(snapshot) | 完整组装的快照，校验成员/会话/版本 | 先保存客机检查点，再更新当前 World/NativeSave |
+| 6 | Receive → Collect → QueueSnapshot → PumpReceived | 收齐分片入队；后台 Decode / Read；主线程校验成员、会话、版本；后台 SaveReceived | 检查点持久保存及可选个人视图准备完成后，一起更新 World / NativeSave |
 | 7 | CompleteReplies、Changed | 已确认回执与已收到对应版本 | 个人操作完成；CoopCareerSession.Refresh 重建视图；页面刷新 |
 | 8 | 房主 TriggerAi / StartPrivate / StartGroup | 已成功且非重复的命令 | 相关生成入口，不因同命令重发再次生成 |
 
 回执“房主已确认”与“客机已经取得对应资料”分成两步。CompleteReplies 等到快照 Revision 达到回执要求后才继续。提前确认或只改房主内存，会改变这套实际完成条件。
+
+### 客机后台接收与操作顺序
+
+CoopReception.cs 集中管理客机队列。Receive 在主线程收集 snapshot 分片，最后一片到达后才放入完整消息。队首快照在后台执行 Complete.Decode 与 Read，产生独立 CoopSnapshot。后面的完整快照保留压缩分片，一次只解码、保存一份。
+
+private-chunk、live、reply、run-*、诊断消息，以及 ApplyReceived / SubmitReady 按入队顺序处理。private 与 live 组装超时使用实际接收时间。ping 立即更新在线名单并发送 pong，Epoch 检查仍按队列顺序进行。房主 ReceiveNow、Execute、Commit、保存节点及广播数量保持原流程。
+
+SaveReceived 调用 SaveAsync，持久保存成功后按需在后台建立独立 InterfaceView。PumpReceived 每帧最多发布一份 World / NativeSave；先移除队首，再调用 CompleteReplies / Changed，避免回执等待自身。普通事件累计处理达到4毫秒后停止本帧循环；单项处理、界面刷新及整帧没有4毫秒上限。
+
+WaitForReceived 只等待调用前已经收到的事件。完成或取消通过异步继续的 TaskCompletionSource 返回。CoopNativeRun 的新局/读档响应、准备校验、开始比赛等待此入口。随机角色 PlayerChanged 使用 ApplyReceived，并核对原 generation、attempt、Epoch、resume。等待期间原版连接通信和战斗网络继续执行；实际断线与 Pause 不等待存储队列。
+
+界面点击时沿原 pending 防止重复操作。SubmitReady 到达队首时只更新 Revision，保留命令 Id 和参数，再调用原 Retry、Receipts 与 CompleteReplies。关闭页面解除订阅，已经点击的操作继续；会话关闭取消未发送操作和等待。已开始的持久写入完成当前清单步骤，未开始的 SaveAsync 检查取消令牌。没有新增业务重试或房主迁移。
+
+## 角色卡保存与多人归属
+
+单人 CharacterCards.Save 先执行现有 CoopJson.Copy(data) 保存操作前资料，再调用 Apply，成功后仅调用一次 CareerStore.Save。失败时沿原 catch 恢复人物、比赛、俱乐部及玩家资料，并恢复本次新增修改涉及的 Life 和 Chats；这两份恢复数据复用已取得的副本，不新增复制、保存或重试节点。校验失败在 Apply 修改前返回。
+
+多人 character-card 命令：Decode → 本人卡片使用 View 与原个人资料合并；NPC 沿原权限仅允许房主编辑，调用 CharacterCards.Apply(w.World, edit, member.Life, member.PersonId)。人物资料修改共同 World，三项写入该成员 Life，群聊旧回退字段修改共同 Chats 中对应的 `member.PersonId/NPC/` 会话。其他成员 Life、NPC 对 NPC 的 Chats.Relations 不修改。RefreshPeople 再从各成员信箱重建 HumanFavours，供公共社区资料使用。
+
+CoopRules.Apply 仍在完整副本上执行，失败返回原 World，成功沿原 Revision、Receipts、Commit、回执、Broadcast、客机检查点及 Refresh 顺序处理。Relation 随 character-card 的原 JSON 命令传递，不改变网络分片或快照隐私规则；角色卡命令本来就不受普通聊天正文长度限制，整份数据容量限制保留。重复命令仍由原 Receipts 去重。
+
+旧PNG与存档不增加字段迁移；三项保存在已存在的个人信箱。离开编辑窗口前没有保存，取消丢弃草稿；保存成功后页面跳转不影响磁盘提交。期间其他交流改变未编辑字段时，Relation 的空值不会覆盖这些字段。模型请求继续运行并使用原完成合并；断线、关闭进程、推进日期和切换存档均使用原会话与恢复机制，不增加新流程。验证包含实际单人文件重新读取、单人保存失败整份数据一致、二人/四人回执重试及房主/客机真实检查点；本次未重复强制终止游戏进程或真实Steam断线测试。
 
 ## 多人 AI 的 current / save / progress
 
@@ -73,7 +119,7 @@ Broadcast 对当前 CoopSnapshot 调用原 PublicBytes 一次。SnapshotEncoder 
 
 PrivateSnapshot 原深复制接口保留，作为完整结果对照和既有调用兼容入口。SnapshotBytes 为单次编码入口，内部创建同样的计划。
 
-CoopAssembler.Add 按分片编号直接复制到预分配数组。大小校验、重复分片比较、哈希、解压及原有失败处理均保留，客机仍在完整验证后保存检查点。
+CoopAssembler.Collect 按编号保存分片引用；收齐后返回 Complete 并清空当前组装状态。Complete.Decode 复制分片到预分配数组，执行原哈希、解压与容量校验。Add 复用这两个入口，供原同步调用和私信/live 使用。完整快照在后台解码；原大小检查、重复分片比较及失败处理保留。
 
 ### 个人视图的复制边界
 
@@ -83,24 +129,44 @@ CoopRules.View 先从 CareerData.EncodingHeader、EsportsCareer.EncodingHeader �
 
 CoopCareerSession.Refresh 根据共同生涯 Revision 与在线/运行/待操作签名刷新。群聊页面的内容签名使用群 Revision、状态、日期、成员封禁等，未将每条流式正文当作整个页面重建条件。流式文本另行增量更新。
 
-重新生成同轮时，Turn 不能单独区分两次生成。现有接收还使用会话、分片序号及 queued/sending 状态。旧分片与新生成交错需要真实投递验证；静态字段检查没有证明所有交错均已覆盖。
+CoopRules.InterfaceView 集中执行原 Refresh 的个人字段和已读字段转换，输入候选快照与 self，返回独立 CareerData，不读取 Godot 控件或本机设置。CoopCareerSession 构造/Dispose 调用 RegisterView / UnregisterView；有订阅时 SaveReceived 准备一份视图。主线程按来源 World 对象一致性消费一次，其他情况仍调用同一转换。ApplyReceived、reply 投票写入和 live 更新使预备视图失效。Dispose 后 Alive 为 false，旧 ExternalCurrent / ExternalSave 不继续提交已读操作。
+
+重新生成同轮时，Turn 不能单独区分两次生成。现有接收还使用会话、房主连续递增的分片序号及 queued/sending 状态。接收专项检查在二人与四人协调器中集中投递：原轮完成快照、旧分片、同编号重新生成状态、新正文与思考分片，按接收顺序逐项保存后显示新生成结果。这个检查不代表任意伪造序号或不遵循当前可靠传输顺序的消息都具有同样含义。
 
 ## 保存与同步计时
 
 UiPerformance 保存固定阶段累计次数、总量、最大值及线程分配量，统计不会逐次写磁盘。CoopJson.Copy、CoopRules.View、CoopStorage.Save、Broadcast、Encode、压缩、完整组装分别计时。Save 区分原序列化、世界文件持久写入、原版文件持久写入、哈希、清单提交与旧检查点清理。父阶段包含子阶段，禁止直接相加；诊断导出沿用 UiPerformance.Snapshot。
 
+CoopReceive 记录主线程队列及回调，CoopDecode 记录后台解码，CoopPublish 记录主线程发布，CoopPrepareView 记录后台视图准备。内部 Measured 事件供隔离测试记录每次计算的线程、耗时和分配量；生产没有订阅者，不逐次写文件。队友报告白名单包含既有 ui-performance.json。
+
+当前实测证据在工作区 `.artifacts/coop-background-20261012/`，生成入口为 `NationalSpire.MultiplayerTests/Report-CoopAcceptance.ps1`。最终二人、四人各6场，逐名成员记录；同一份1716人、133篇帖子存档，实际Godot4.5.1渲染与原版ENet传输，.NET9、Windows、RTX4060 Laptop、Debug构建、本地模型分片，60帧上限。每场修改前后各一次，四人/九人及间隔/集中分片依次执行；这不是同一场景多次采样的统计分布。初次开群与后续开群分别保留，不能把不同分片方式当成相同输入的重复样本。
+
+客机保存187次，单次最大88.08毫秒；解码187次，单次最大132.79毫秒；视图准备189次，单次最大119.57毫秒，以上均在后台线程。全部客机场景的主线程 CoopReceive 最大2.53毫秒，累计56.73毫秒；CoopPublish 最大0.23毫秒，累计3.01毫秒。Save包含序列化、写入、哈希与清单提交，View包含Copy，Receive包含完成回调；不能把这些嵌套计时相加。完整操作耗时、各步骤次数、逐次分配及线程见 `comparison.json`、`stages.csv`、`calls.csv`，测量起止之间的保存数会受阅读状态及心跳交错影响，不用次数差异宣称减少保存节点。
+
+客机群聊最长帧从127.69—198.68毫秒降到56.81—155.19毫秒，超过100毫秒的帧累计从118次降到8次；私信从112.95—142.21毫秒变为135.34—164.41毫秒，社区从229.23—322.72毫秒变为255.93—330.38毫秒。长帧包含界面刷新、垃圾回收、渲染和同机其他进程竞争。后台接收改善了群聊停顿，私信和社区的最长帧未一致改善。房主生成与保存未移到后台，仍有最高4139.77毫秒长帧；部分客机社区长帧仍超过300毫秒。不能把后台计算时间与整帧混用，不能称全部停顿已消除。
+
+正确性验收使用 `NationalSpire.Tests/Run-CoopAcceptance.ps1`，19组回归通过，包含多人规则、社区交付、群聊、私信、总结、仲裁及交互、训练、角色卡关系、阵容、俱乐部、合同、赛季、并发与恢复。接收专项另验证持久保存前不发布状态与正文、心跳继续、World/NativeSave配对、独立视图哈希、排队点击保留参数且使用新Revision、迟到分片、同编号重新生成、集中六份快照每帧一份、不合并不丢失、取消、跨实例12次保存、导入导出删除及保存失败后的后续操作。最终请求90组逐条和整体SHA-256与修改前相同，差异0、错误0，不调用模型。
+
+最终Release构建0警告、0错误；安装前通过 `Run-ReleaseAcceptance.ps1` 使用最终生产程序集复验实际界面133项、原版二人合作101项及90组请求哈希相同。`release/release.json` 保存实际程序集SHA-256，不用Debug测量冒充最终Release性能数字。
+
+强制终止实际子进程13次，包含单人临时文件、queued、重新生成、完成结果，多人world/run/manifest/完成阶段以及对应异步保存；每次重新读取保留完整配套检查点或已完成结果。原版二人/四人大厅、战斗、强制终止客机与房主、全进程关闭后恢复及重复暂停的实测边界见[游戏与界面](GAME_AND_UI.md#多人后台接收期间的原版对局与界面)。接收队列取消与磁盘写入中的进程终止分开检查，不能以普通异常测试替代进程终止。
+
 ## 多人检查点的保存与恢复
 
 CoopStorage.Save：
 
-1. 为本次保存建立新检查点目录。
-2. CheckpointHeader 形成带检查点编号的数据，PublicBytes 排除本机 AI 配置。
+1. 为本次保存生成检查点编号。
+2. CheckpointHeader 形成带编号的数据，PublicBytes 排除本机 AI 配置；序列化在目录锁之外。
 3. Durable 写 world.json、存在时写 run.bin；WriteThrough，Flush(true)。
 4. 计算世界与原版对局的哈希；持久写入 current.json.tmp。
 5. 替换 current.json，同时保留 previous.json；首次使用 Move。
 6. 保留当前和上一份完整目录，清除更旧检查点。
 
-Load 依次尝试 current、previous，检查目录编号、哈希、生涯与结构、原版对局配套。只恢复校验通过的一组资料。
+Load 在目录锁内复制 current、previous 清单及 world.json / run.bin 字节，在锁外依次校验目录编号、哈希、生涯结构和原版对局配套，只恢复通过的一组。文件格式、当前与上一份、WriteThrough / Flush(true) 沿用原机制。
+
+目录协调以实际绝对路径为键，跨 CoopStorage 实例共享 Gate。Save 的磁盘写入、清单替换和清理，与 Load 的文件复制、Delete 的目录移动使用同一个 Gate。Schedule 串行连接同目录的 SaveAsync、LoadAsync、ExportArchiveAsync、DeleteAsync；前项异常由原调用者处理，不阻断后项。Tail 仅保留完成信号，不保留完整资料或导出字节。
+
+ListAsync 后台列出目录，逐项使用 LoadAsync；损坏目录沿原列表规则略过。ImportArchiveAsync 后台复用原解析与校验；编号已存在或有排队写入时另设编号，在协调锁内预留目录，再调用原 Save。CoopRuntime.Connect 使用 LoadAsync，等待后检查连接 generation。CoopScreen.Entrance、CareerLibraryScreen 的多人列表、导入、导出、删除使用异步入口；完成后核对控件有效性。关闭页面不撤销已经点击的文件操作；重复删除沿按钮 pending 处理。
 
 客机收到完整快照也调用这套保存。房主的完整资料与客机的脱敏资料不是同一范围；客机不是新的房主，恢复仍由原房主主持。
 

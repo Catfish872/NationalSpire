@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 /// <summary>合同由玩家确认；经营支出与赛季结算各执行一次。</summary>
 public static class CareerCommerce
@@ -62,12 +62,12 @@ public static class CareerCommerce
     {
         int tier = 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league"));
         int kind = IdentityIndex(d, club.Id);
-        int signing = Math.Min(Math.Max(0, club.Budget / 5), (kind switch { 0 => 3000, 1 => 1400, 2 => 2400, _ => 1800 }) * tier);
+        int signing = Math.Min(Math.Max(0, club.Budget / 5), (kind switch { 0 => 3000, 1 => 1400, 2 => 2400, _ => 1800 }) * tier * 2);
         return new() { ClubId = club.Id, ExpiresDay = d.Day + 28, SigningBonus = signing,
-            SeasonPay = (kind switch { 0 => 2400, 1 => 1200, 2 => 1800, _ => 1000 }) * tier,
-            WinBonus = (kind switch { 0 => 25, 1 => 30, 2 => 15, _ => 45 }) * tier,
+            SeasonPay = (kind switch { 0 => 2400, 1 => 1200, 2 => 1800, _ => 1000 }) * tier * 2,
+            WinBonus = (kind switch { 0 => 25, 1 => 30, 2 => 15, _ => 45 }) * tier * 2,
             FanBonus = kind == 2 ? 30 : 0, GoalWins = kind == 0 ? 4 : kind == 3 ? 2 : 3,
-            GoalReward = (kind switch { 0 => 400, 1 => 330, 2 => 260, _ => 360 }) * tier };
+            GoalReward = (kind switch { 0 => 400, 1 => 330, 2 => 260, _ => 360 }) * tier * 2 };
     }
     private static void CopyTerms(ClubOffer from, ClubOffer to)
     { to.SigningBonus = from.SigningBonus; to.SeasonPay = from.SeasonPay; to.WinBonus = from.WinBonus; to.FanBonus = from.FanBonus; to.GoalWins = from.GoalWins; to.GoalReward = from.GoalReward; }
@@ -96,8 +96,8 @@ public static class CareerCommerce
             string brand = previous != null && (regional.Contains(previous.Brand) || Brands[plan].Contains(previous.Brand)) ? previous.Brand : regional[seed % regional.Length];
             w.SponsorOffers.Add(new() { Id = $"player-{d.Season}-{d.Day}-{plan}", TargetId = "player", Brand = brand,
                 Plan = plan switch { 0 => "稳定支持", 1 => "成绩奖励", _ => "品牌推广" }, StartSeason = d.Season, EndSeason = d.Season + 1,
-                ExpiresDay = d.Day + 28, Retainer = (plan switch { 0 => 320, 1 => 140, _ => 200 }) * tier,
-                WinBonus = (plan switch { 0 => 20, 1 => 65, _ => 25 }) * tier, FanBonus = plan == 2 ? 35 * tier : 0,
+                ExpiresDay = d.Day + 28, Retainer = CareerAudience.Quote((plan switch { 0 => 320, 1 => 140, _ => 200 }) * tier, d.Fans),
+                WinBonus = CareerAudience.Quote((plan switch { 0 => 20, 1 => 65, _ => 25 }) * tier, d.Fans), FanBonus = plan == 2 ? 35 * tier : 0,
                 Description = RegionalOrganizations.SponsorDescription(brand), Slogan = RegionalOrganizations.SponsorSlogan(brand) });
         }
         CircuitLedger.Remember(d, $"sponsor-invitations-{d.Season}-{d.Day}", $"{CareerEngine.Name(d)}收到三份个人赞助邀请，等待本人选择确认。", ["player"]);

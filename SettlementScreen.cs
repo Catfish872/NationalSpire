@@ -39,6 +39,7 @@ public partial class CareerScreen
         row.AddChild(new MatchMedallion { Victory = won, Accent = accent, CustomMinimumSize = new Vector2(180, 190), SizeFlagsVertical = SizeFlags.ShrinkCenter });
         var intro = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; intro.AddThemeConstantOverride("separation", 10); row.AddChild(intro);
         intro.AddChild(Text("MATCH RESULT   /   " + result.Event, 16, accent));
+        if (result.Simulated) intro.AddChild(Text("模拟赛果", 18, _gold));
         intro.AddChild(Text(draw ? "势均力敌" : won ? "赢下这一场" : result.Outcome == "退赛" ? "本场退赛" : "本场失利", 42, _ink));
         intro.AddChild(Text($"第 {SeasonCalendar.Day(data, result.Day)} 天 · {MatchRules.AscensionLabel(result)}", 17, _muted));
         intro.AddChild(Text(pendingFailure ? "选择重赛，或确认本场成绩。" : draw ? "双方成绩相同，等待下一次交锋。" : won ? "这场胜利，记入你的生涯。" : "本场成绩已记录，赛季仍在继续。", 19, accent));

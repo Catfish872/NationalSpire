@@ -2,6 +2,8 @@ namespace NationalSpire;
 
 public sealed class CareerLifeState
 {
+    public ConsumerState Consumer { get; set; } = new();
+    public MarketAccount Trading { get; set; } = new();
     public decimal CreditFraction { get; set; }
     public PrivateMailbox Mailbox { get; set; } = new();
     public HashSet<string> RepairReceipts { get; set; } = [];
@@ -14,6 +16,7 @@ public sealed class CareerLifeState
     public Dictionary<string, FigurineState> Figurines { get; set; } = [];
     public List<string> Shop { get; set; } = [];
     public int RestockDay { get; set; }
+    public int RelicVersion { get; set; }
     public int NextOfferDay { get; set; }
     public int NextProjectDay { get; set; }
     public int NextWorldEventDay { get; set; }

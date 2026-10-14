@@ -1,12 +1,12 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire;
 
 /// <summary>建队与签约先校验后提交；所有经营收支进入玩家钱包。</summary>
 public static class OwnedClubs
 {
-    public const int HumanWeeklyWage = 140, HumanWinBonus = 100;
-    public const int FoundingCost = 5000, WeeklyOverhead = 80;
+    public const int HumanWeeklyWage = 280, HumanWinBonus = 200;
+    public const int FoundingCost = 20000, WeeklyOverhead = 80;
     public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d", "84b8ef"];
     public static bool IsOwner(CareerData d) => d.Esports.OwnedClub is { } own && own.ClubId == d.Esports.ClubId;
     public static string Tier(CareerPerson p) => p.MaxAscension >= 9 ? "明星选手" : p.MaxAscension >= 8 ? "职业主力" : p.MaxAscension >= 7 ? "潜力轮换" : "青训新秀";
@@ -78,7 +78,7 @@ public static class OwnedClubs
     public static OwnedPlayerContract Quote(CareerPerson p, string plan)
     {
         int tier = p.MaxAscension >= 9 ? 3 : p.MaxAscension >= 8 ? 2 : p.MaxAscension >= 7 ? 1 : 0;
-        int wage = new[] { 25, 60, 140, 250 }[tier], signing = new[] { 200, 350, 600, 2500 }[tier];
+        int wage = new[] { 50, 120, 280, 500 }[tier], signing = new[] { 400, 700, 1200, 5000 }[tier];
         int terms = CareerEngine.StableHash(p.Id + ":contract");
         wage = (int)Math.Round(wage * (90 + terms % 21) / 100.0);
         signing = (int)Math.Round(signing * (85 + terms / 23 % 31) / 100.0);
@@ -96,17 +96,18 @@ public static class OwnedClubs
     }
     public static OwnedSponsor SponsorQuote(CareerData d, string id) => id switch
     {
-        "results" => new() { Id = id, Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 1, "owned"), Weekly = 1100, WinBonus = 1000, FanRate = 15, EndDay = d.Day + 56 },
-        "fans" => new() { Id = id, Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 2, "owned"), Weekly = 1000, WinBonus = 300, FanRate = 4, EndDay = d.Day + 56 },
-        _ => new() { Id = "steady", Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 0, "owned"), Weekly = 1400, WinBonus = 400, FanRate = 10, EndDay = d.Day + 56 }
+        "results" => new() { AudienceVersion = 1, Id = id, Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 1, "owned"), Weekly = 1100, WinBonus = 1000, FanRate = 15, EndDay = d.Day + 56 },
+        "fans" => new() { AudienceVersion = 1, Id = id, Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 2, "owned"), Weekly = 1000, WinBonus = 300, FanRate = 4, EndDay = d.Day + 56 },
+        _ => new() { AudienceVersion = 1, Id = "steady", Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 0, "owned"), Weekly = 1400, WinBonus = 400, FanRate = 10, EndDay = d.Day + 56 }
     };
-    public static int SponsorWeekly(OwnedSponsor? s, int fans) => s == null ? 0 : s.Weekly + (int)(250 * Math.Log(1 + Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate))));
-    public static int AudienceIncome(int fans) => 100 + (int)(150 * Math.Log(1 + Math.Max(0, fans) / 7500.0));
+    public static int SponsorWeekly(OwnedSponsor? s, int fans) => s == null ? 0 : s.AudienceVersion >= 1 ? (int)Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans)) : s.Weekly + (int)(250 * Math.Log(1 + Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate))));
+    public static int SponsorWinBonus(OwnedSponsor s, int fans) => s.AudienceVersion >= 1 ? (int)Math.Round(s.WinBonus * CareerAudience.ClubMultiplier(fans)) : s.WinBonus;
+    public static int AudienceIncome(int fans) => (int)Math.Round(100 * CareerAudience.ClubMultiplier(fans));
     public static decimal InitialCost(CareerData d, ClubDraft draft) => FoundingCost + draft.Signings.Sum(s =>
         CareerEngine.Person(d, s.PersonId) is { } p ? Quote(p, s.Plan).Signing : 0);
     public static decimal WeeklyWages(CareerData d, ClubDraft draft) => HumanWages(d) + draft.Signings.Sum(s => CareerEngine.Person(d, s.PersonId) is { } p ? Quote(p, s.Plan).Wage : 0);
     public static List<string> PaidHumans(CareerData d) => Humans(d).Where(id => id != (d.Esports.OwnedClub?.ManagerId is { } manager && d.HumanIds.Contains(manager) ? manager : Humans(d)[0])).ToList();
-    public static int HumanWages(CareerData d) => PaidHumans(d).Count * HumanWeeklyWage;
+    public static int HumanWages(CareerData d) => PaidHumans(d).Count * (d.Esports.OwnedClub?.HumanWeeklyWage ?? HumanWeeklyWage);
     public static void AccrueHumanPay(CareerData d, int amount)
     {
         foreach (string id in PaidHumans(d))
@@ -115,23 +116,14 @@ public static class OwnedClubs
     public static int GrantFans(OwnedClubState o, int baseGain)
     {
         if (baseGain <= 0) return 0;
-        // 前一万关注保持初期速度，之后逐渐放缓；不足一人的部分留到下一次。
-        double scale = 1 + Math.Max(0, o.Fans - 10000) / 20000.0;
-        double gain = baseGain / (scale * scale) + o.FanRemainder;
-        int added = Math.Min(int.MaxValue - o.Fans, (int)gain);
-        o.FanRemainder = gain - added;
+        int added = Math.Min(int.MaxValue - o.Fans, baseGain);
         o.Fans += added; return added;
     }
-    public static int StartingFans(CareerData d) => Math.Max(300, Math.Min(5000, d.Fans / 3));
+    public static int StartingFans(CareerData d) => 300;
     public static void UpgradeEconomy(CareerData d)
     {
         if (d.Esports.OwnedClub is not { EconomyVersion: < 1 } o) return;
-        if (o.Sponsor is { } old)
-        {
-            var updated = SponsorQuote(d, old.Id);
-            old.Weekly = Math.Max(old.Weekly, updated.Weekly); old.WinBonus = Math.Max(old.WinBonus, updated.WinBonus);
-            old.FanRate = updated.FanRate;
-        }
+        // 已签赞助保留原金额与计算版本，新报价在下一次签约时采用。
         o.Fans = Math.Max(300, o.Fans); o.EconomyVersion = 1;
     }
     public static int AchievementWeekly(CareerData d, int? day = null) => d.Esports.OwnedClub?.AchievementSponsors
@@ -139,7 +131,7 @@ public static class OwnedClubs
     public static (int Fans, int Weekly) PlacementReward(string kind, int rank)
     {
         var reward = rank switch { 1 => (3000, 1000), 2 => (2000, 700), 3 => (1200, 400), 4 => (800, 300), _ => (500, 200) };
-        return kind == "continental" ? (reward.Item1 * 2, reward.Item2 * 2) : reward;
+        return (rank == 1 ? (kind == "continental" ? 500000 : 300000) : reward.Item1 * 100 * (kind == "continental" ? 2 : 1), kind == "continental" ? reward.Item2 * 2 : reward.Item2);
     }
     private static void AwardCommercial(CareerData d, string key, string title, int fans, int weekly)
     {
@@ -239,7 +231,7 @@ public static class OwnedClubs
         string region = draft.Region.Length == 0 ? d.Esports.Country : draft.Region;
         CircuitWorld.LeavePreseason(d);
         string id = "owned-" + d.WorldId;
-        var own = new OwnedClubState { ClubId = id, FoundedDay = d.Day, NextPayDay = d.Day + 7, Fans = StartingFans(d), EconomyVersion = 1,
+        var own = new OwnedClubState { HumanWeeklyWage = HumanWeeklyWage, HumanWinBonus = HumanWinBonus, ClubId = id, FoundedDay = d.Day, NextPayDay = d.Day + 7, Fans = StartingFans(d), EconomyVersion = 1,
             Starters = ActiveHumans(d), Reserves = Humans(d).Except(ActiveHumans(d)).ToList(), ManagerId = d.LocalHumanId.Length > 0 ? d.LocalHumanId : "player", Sponsor = SponsorQuote(d, draft.Sponsor) };
         d.Esports.OwnedClub = own;
         d.Esports.Clubs.Add(new() { Id = id, Name = draft.Name.Trim(), Color = draft.Color, Country = region,
@@ -486,12 +478,12 @@ public static class OwnedClubs
             {
                 // 默认续约写入签约条件，不重新领取一次性奖金。
                 while (s.EndDay < date) s.EndDay += 56;
-                Pay(d, "俱乐部赞助周结 · " + s.Brand, SponsorWeekly(s, o.Fans));
+                Pay(d, "俱乐部赞助周结 · " + s.Brand, SponsorWeekly(s, ClubAudience.Total(d, o.ClubId)));
             }
             int achievement = AchievementWeekly(d, date);
             if (achievement > 0) Pay(d, "俱乐部成绩赞助周结", achievement);
-            Pay(d, "俱乐部会员与周边收入", AudienceIncome(o.Fans));
-            AccrueHumanPay(d, HumanWeeklyWage);
+            Pay(d, "俱乐部会员与周边收入", AudienceIncome(ClubAudience.Total(d, o.ClubId)));
+            AccrueHumanPay(d, o.HumanWeeklyWage);
             decimal bill = WeeklyOverhead + o.Contracts.Sum(c => c.Wage) + o.Debt;
             decimal paid = Math.Min(Math.Max(0, CareerMoney.Balance(d)), bill); o.Debt = bill - paid;
             Pay(d, "俱乐部周薪与运营" + (o.Debt > 0 ? "（部分支付）" : ""), -paid);
@@ -525,9 +517,9 @@ public static class OwnedClubs
                 if (!o.PaidResults.Add(receipt)) continue;
                 bool home = tie.Key.HomeTeam == o.ClubId;
                 int wins = tie.Count(f => f.WinnerId == (home ? f.HomeId : f.AwayId));
-                GrantFans(o, wins >= (c.Cooperative ? 1 : 2) ? 400 : 120);
-                if (c.Cooperative && wins >= 1) AccrueHumanPay(d, HumanWinBonus);
-                if (wins >= (c.Cooperative ? 1 : 2) && o.Sponsor is { } sponsor) Pay(d, "俱乐部获胜赞助奖金", sponsor.WinBonus);
+                GrantFans(o, ClubAudience.RoundGain(c.Kind, tie.Key.Round, wins >= (c.Cooperative ? 1 : 2)));
+                if (c.Cooperative && wins >= 1) AccrueHumanPay(d, o.HumanWinBonus);
+                if (wins >= (c.Cooperative ? 1 : 2) && o.Sponsor is { } sponsor) Pay(d, "俱乐部获胜赞助奖金", SponsorWinBonus(sponsor, ClubAudience.Total(d, o.ClubId)));
                 foreach (var f in tie.Where(f => f.WinnerId == (home ? f.HomeId : f.AwayId)))
                     if (!c.Cooperative && o.Contracts.FirstOrDefault(ct => ct.PersonId == f.WinnerId) is { } contract)
                     {

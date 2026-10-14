@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 /// <summary>世界日常按题材与人物轮换；赛事与人物的真实状态用于筛选素材。</summary>
 public static class WorldEvents
@@ -47,6 +47,8 @@ public static class WorldEvents
         if (d.Life.Version == 0 || d.Day < d.Life.NextWorldEventDay) return;
         int seed = CareerEngine.StableHash(d.WorldId + ":events:" + d.Day);
         var rng = new Random(seed); d.Life.NextWorldEventDay = d.Day + rng.Next(3, 7);
+        if (NationalDevelopment.TryPublish(d, rng)) return;
+        if (MarketDynamics.TryPublish(d)) return;
         var candidates = Topics.Where(t => d.Day - d.Life.LastTopics.GetValueOrDefault("world:" + t.Key, -100) >= 14).ToList();
         if (candidates.Count == 0) return;
         var topic = candidates[rng.Next(candidates.Count)];

@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 /// <summary>每个条目描述一件完整的事情；人物、地点、规模和既有关系由活动生成器按条件补充。</summary>
 public static class LifeCatalog
@@ -149,7 +149,9 @@ public static class LifeCatalog
             "打造个人荣誉室|整理已经获得的奖杯、照片与生涯纪念品|荣誉室布置完成，展示了自己的真实职业经历",
             "改善长期住所|为长期参赛准备安静住所和独立工作空间|住所完成布置，收藏与比赛资料各有了位置"
         ]);
-        return list.Select(p => p.Title == "建设青训课程" ? p with { Cost = 1800 }
+        return list.Select(p => p.Title == "全队集中备赛" ? p with { Cost = 3600 }
+            : p.Title == "教练驻队指导" ? p with { Cost = 6400 }
+            : p.Title == "建设青训课程" ? p with { Cost = 1800 }
             : p.Title == "高压战斗特训" ? p with { Cost = 1600 }
             : p.Title == "建立全队训练体系" ? p with { Cost = 3600 }
             : p.Title is "沿河散步" or "参观朋友的工作室" ? p with { Cost = 0 }

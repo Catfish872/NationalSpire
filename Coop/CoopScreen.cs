@@ -142,7 +142,9 @@ public partial class CoopScreen : Control, IScreenContext
         if (_replySession != Session) { if (_replySession != null) _replySession.Replied -= Replied; _replySession = Session; Session.Replied += Replied; }
         _pending = new(world.Id, world.Epoch, Guid.NewGuid().ToString("N"), world.Revision, kind, target);
         _message = kind == "confirm" ? "已提交准备，等待同步。" : "正在同步。";
-        try { Session.Retry(_pending); Render(); } catch (Exception e) { _pending = null; _message = e.Message; }
+        Session.SubmitReady(_pending, command => _pending = command, error =>
+        { _pending = null; _message = error.Message; if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); });
+        Render();
     }
     private void Replied(CoopReply reply)
     { if (_pending?.Id != reply.Id) return; _pending = null; _message = reply.Outcome.Accepted ? (Session?.World?.Proposal != null ? "已准备，等待队友。" : "已完成。") : reply.Outcome.Message; Render(); }
@@ -155,7 +157,7 @@ public partial class CoopScreen : Control, IScreenContext
         if (Session.World == null) { var sync = Card(_body, "正在同步房间"); Text(sync, "等待房主发送队伍和存档信息。首次加入可能需要一点时间。"); Button(sync, "取消加入", () => { Runtime.Disconnect(); Render(); }); return; }
         WaitingRoom(Session.World);
     }
-    private void Entrance()
+    private async void Entrance()
     {
         var identity = Card(_body, "你的选手名字"); var name = Input(identity, "进入队伍后显示的名字", CareerEngine.PlayerName); name.Name = "LobbyPlayerName";
         var columns = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddThemeConstantOverride("h_separation", 24); _body.AddChild(columns);
@@ -170,17 +172,27 @@ public partial class CoopScreen : Control, IScreenContext
         Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190);
         Button(actions, "加入房间", () => Connect(false, name.Text, code: code.Text), 180);
         var saves = Card(_body, "已有多人生涯"); Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted);
-        var checkpoints = CoopSettings.Storage.List().ToList();
+        List<CoopStorage.Checkpoint> checkpoints;
+        try { checkpoints = await CoopSettings.Storage.ListAsync(); }
+        catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; return; }
+        if (!IsInstanceValid(saves) || saves.IsQueuedForDeletion() || !IsInstanceValid(this) || IsQueuedForDeletion()) return;
         if (checkpoints.Count == 0) Text(saves, "尚无多人存档。创建房间后会自动保存。", 18, CareerVisuals.Muted);
         foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day))
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
             Text(row, $"{cp.World.Name} · 第 {cp.World.World.Day} 天 · {cp.World.Members.Count} 位成员", 18);
             Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
-            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天\n从列表移除，文件保留在本机备份中。", () =>
+            bool deleting = false;
+            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天\n从列表移除，文件保留在本机备份中。", async () =>
             {
+                if (deleting) return; deleting = true;
+                try
+                {
                 if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
-                CoopSettings.Storage.Delete(cp.World.Id); Render();
+                await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render();
+                }
+                catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; }
+                finally { deleting = false; }
             }, "删除"), 100);
         }
     }

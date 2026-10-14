@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EC31D4CD446ADC6F06FEF2EB72DAEB785E3EEBDFA4EF0594683BE70D103FF60B`。来源：[源码](../../LifeScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`65CA40E3088892F714A4FAB8E972DB8DD22BF339A4F97F5F990157319E6AA2A2`。来源：[源码](../../LifeScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,13 +23,14 @@ private int _lifeHistoryLimit = 8;
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
-**调用：** [`NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-efe3762d8665)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerScreen.AddHeading(string, string)`](CareerScreen.cs.md#symbol-40a63c9955a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action)`](LifeScreen.cs.md#symbol-d61ca43b835f)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-825caeb63a3b)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Abs(long)`
+**调用：** [`NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-efe3762d8665)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerScreen.AddHeading(string, string)`](CareerScreen.cs.md#symbol-40a63c9955a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action)`](LifeScreen.cs.md#symbol-d61ca43b835f)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-825caeb63a3b)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Abs(long)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData)`；`NationalSpire.CareerLifeState.Activities`；`NationalSpire.CareerLifeState.Ledger`；`NationalSpire.CareerLifeState.PrizeTotal`；`NationalSpire.CareerLifeState.RepairNotices`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._lifeHistoryLimit`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`；`NationalSpire.CareerScreen.AddHeading(string, string)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action)`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.FinanceEntry.Amount`；`NationalSpire.FinanceEntry.Balance`；`NationalSpire.FinanceEntry.Day`；`NationalSpire.FinanceEntry.Title`；`NationalSpire.LifeActivity.ExpiresDay`；`NationalSpire.LifeActivity.FinishDay`；`NationalSpire.LifeActivity.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData)`；`NationalSpire.CareerLifeState.Activities`；`NationalSpire.CareerLifeState.Ledger`；`NationalSpire.CareerLifeState.PrizeTotal`；`NationalSpire.CareerLifeState.RepairNotices`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._lifeHistoryLimit`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`；`NationalSpire.CareerScreen.AddHeading(string, string)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action)`；`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.FinanceEntry.Amount`；`NationalSpire.FinanceEntry.Balance`；`NationalSpire.FinanceEntry.Day`；`NationalSpire.FinanceEntry.Title`；`NationalSpire.LifeActivity.ExpiresDay`；`NationalSpire.LifeActivity.FinishDay`；`NationalSpire.LifeActivity.Status`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.LifestyleArt.Sections`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`tab.AddThemeConstantOverride("icon_max_width", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: tab.AddThemeConstantOverride("icon_max_width", 22);`
+- `Godot.HFlowContainer.HFlowContainer()`；输入表达式：`new HFlowContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HFlowContainer()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(tabs)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(tabs);`
@@ -42,7 +43,7 @@ private int _lifeHistoryLimit = 8;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text($"第{entry.Day}天 · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text($"第{entry.Day}天 · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text(message, 16, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text(message, 16, CareerVisuals.Teal));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tabs.AddChild(FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165))`；返回值紧邻使用处：`ExpressionStatementSyntax: tabs.AddChild(FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tabs.AddChild(tab)`；返回值紧邻使用处：`ExpressionStatementSyntax: tabs.AddChild(tab);`
 - `NationalSpire.CareerLife.SkipRound(NationalSpire.CareerData)`；输入表达式：`CareerLife.SkipRound(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerLife.SkipRound(d);`
 - `NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；输入表达式：`CareerMoney.Balance(d)`；返回值紧邻使用处：`ArgumentSyntax: CareerMoney.Balance(d)`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(CareerMoney.Balance(d))`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Format(CareerMoney.Balance(d))}`
@@ -54,9 +55,12 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200)`；返回值紧邻使用处：`ArgumentSyntax: Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210)`；返回值紧邻使用处：`ArgumentSyntax: Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210)`
 - `NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action)`；输入表达式：`ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); })`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); })`
-- `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；输入表达式：`FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165)`；返回值紧邻使用处：`ArgumentSyntax: FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165)`
+- `NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`；输入表达式：`ConsumerShop(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: ConsumerShop(d);`
+- `NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`；输入表达式：`FanChart(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: FanChart(d);`
+- `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；输入表达式：`FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165)`
 - `NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；输入表达式：`LifeCollection(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: LifeCollection(d);`
 - `NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；输入表达式：`LifeNews(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: LifeNews(d);`
+- `NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`；输入表达式：`MarketScreen(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: MarketScreen(d);`
 - `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("skip")`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("skip")) return;`
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("留下的经历", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("留下的经历", 23, _gold)`
@@ -68,6 +72,7 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第{entry.Day}天 · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第{entry.Day}天 · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(message, 16, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(message, 16, CareerVisuals.Teal)`
+- `NationalSpire.LifestyleArt.Icon(string)`；输入表达式：`LifestyleArt.Icon(name)`；返回值紧邻使用处：`AssignmentExpressionSyntax: tab.Icon = LifestyleArt.Icon(name)`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`d.Life.Ledger.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Ledger.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.Life.Activities.Where(a => a.Status == "进行中").OrderBy(a => a.FinishDay)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Activities.Where(a => a.Status == "进行中").OrderBy(a => a.FinishDay).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.Life.Activities.Where(a => a.Status == "已完成").OrderByDescending(a => a.FinishDay)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Activities.Where(a => a.Status == "已完成").OrderByDescending(a => a.FinishDay).ToList`
@@ -88,12 +93,13 @@ private int _lifeHistoryLimit = 8;
 - `_lifeHistoryLimit` += `8`
 - `_lifeHistoryLimit` = `8`
 - `_lifeSection` = `name`
+- `tab.Icon` = `LifestyleArt.Icon(name)`
 
 <a id="symbol-5b3e0aaad277"></a>
 
 ## `NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity) — private void ActivityCard(CareerData d, LifeActivity a)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 
@@ -178,7 +184,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action) — private void ConfirmLife(string title, string question, Action action)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 
@@ -198,13 +204,13 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData) — private void LifeCollection(CareerData d)`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 
-**调用：** [`NationalSpire.CareerRelics.Offers(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-5393973f2695)；[`NationalSpire.CareerRelics.Shop(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-b30378b84f42)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerRelics.Offers(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-5393973f2695)；[`NationalSpire.CareerRelics.Shop(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-b30378b84f42)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-4344e458a80a)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Collection`；`NationalSpire.CareerLifeState.Figurines`；`NationalSpire.CareerLifeState.RestockDay`；`NationalSpire.CareerRelics.Catalog`；`NationalSpire.CareerRelics.Item.Id`；`NationalSpire.CareerRelics.Offers(NationalSpire.CareerData)`；`NationalSpire.CareerRelics.Shop(NationalSpire.CareerData)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._lifeHistoryLimit`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`
+**字段、属性、事件及方法组引用：** `(string Country, int Points).Country`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Collection`；`NationalSpire.CareerLifeState.Figurines`；`NationalSpire.CareerLifeState.RestockDay`；`NationalSpire.CareerLifeState.Shop`；`NationalSpire.CareerRelics.Catalog`；`NationalSpire.CareerRelics.Item.Id`；`NationalSpire.CareerRelics.Offers(NationalSpire.CareerData)`；`NationalSpire.CareerRelics.Shop(NationalSpire.CareerData)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._lifeHistoryLimit`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`；`NationalSpire.EsportsCareer.Country`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -218,9 +224,11 @@ private int _lifeHistoryLimit = 8;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(store)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(store);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("◆ " + item, 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("◆ " + item, 17, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("生活纪念", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("生活纪念", 23, _gold));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("同款只保留一件。限次手办用完后可在商店再次购入，恢复全部次数；活动优惠合计最多抵扣原价的 20%。", 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("同款只保留一件。限次手办用完后可在商店再次购入，恢复全部次数；活动优惠合计最多抵扣原价的 20%。", 15, _muted));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text($"本期手办 · 每期最多 4 款 · 第 {d.Life.RestockDay} 天上新", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text($"本期手办 · 每期最多 4 款 · 第 {d.Life.RestockDay} 天上新", 23, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("已拥有的收藏", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("已拥有的收藏", 23, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold));`
 - `NationalSpire.CareerRelics.Offers(NationalSpire.CareerData)`；输入表达式：`CareerRelics.Offers(d)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in CareerRelics.Offers(d)) FigurineCard(d, store, item, false);`
 - `NationalSpire.CareerRelics.Shop(NationalSpire.CareerData)`；输入表达式：`CareerRelics.Shop(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerRelics.Shop(d);`
@@ -230,14 +238,18 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("◆ " + item, 17, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text("◆ " + item, 17, _ink)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("生活纪念", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("生活纪念", 23, _gold)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("同款只保留一件。限次手办用完后可在商店再次购入，恢复全部次数；活动优惠合计最多抵扣原价的 20%。", 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("同款只保留一件。限次手办用完后可在商店再次购入，恢复全部次数；活动优惠合计最多抵扣原价的 20%。", 15, _muted)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"本期手办 · 每期最多 4 款 · 第 {d.Life.RestockDay} 天上新", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text($"本期手办 · 每期最多 4 款 · 第 {d.Life.RestockDay} 天上新", 23, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("已拥有的收藏", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("已拥有的收藏", 23, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold)`
+- `NationalSpire.CircuitLedger.NationTable(NationalSpire.CareerData)`；输入表达式：`CircuitLedger.NationTable(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CircuitLedger.NationTable(d).FindIndex`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`d.Life.Figurines.ContainsKey(r.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r => d.Life.Figurines.ContainsKey(r.Id)`
 - `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`d.Life.Collection.Values.TakeLast(_lifeHistoryLimit).Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in d.Life.Collection.Values.TakeLast(_lifeHistoryLimit).Reverse()) _content.AddChild(Text("◆ " + item, 17, _ink));`
 - `System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；输入表达式：`d.Life.Collection.Values.TakeLast(_lifeHistoryLimit)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Collection.Values.TakeLast(_lifeHistoryLimit).Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`CareerRelics.Catalog.Where(r => d.Life.Figurines.ContainsKey(r.Id))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in CareerRelics.Catalog.Where(r => d.Life.Figurines.ContainsKey(r.Id))) FigurineCard(d, owned, item, true);`
+- `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country)`；返回值紧邻使用处：`BinaryExpressionSyntax: CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -249,7 +261,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool) — private void FigurineCard(CareerData d, GridContainer parent, CareerRelics.Item item, bool owned)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)
 
@@ -263,7 +275,7 @@ private int _lifeHistoryLimit = 8;
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(purchase)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(purchase);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(row);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员 85 折", 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员 85 折", 14, _muted));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(item.Effect, 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(item.Effect, 17, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`parent.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: parent.AddChild(card);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(new TextureRect { Texture = texture, CustomMinimumSize = new Vector2(76, 76),              ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore })`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(new TextureRect { Texture = texture, CustomMinimumSize = new Vector2(76, 76),              ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore });`
@@ -290,7 +302,7 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(error ?? (refill ? item.Name + $"手办已恢复 {item.Uses} 次。" : item.Name + "手办已摆上展示架。"), error != null)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(error ?? (refill ? item.Name + $"手办已恢复 {item.Uses} 次。" : item.Name + "手办已摆上展示架。"), error != null);`
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("◆", 40, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("◆", 40, _gold)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"原价 {CareerMoney.Format(item.Price)} · 送货员 85 折", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"原价 {CareerMoney.Format(item.Price)} · 送货员 85 折", 14, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(item.Effect, 17, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text(item.Effect, 17, _ink)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(item.Name + " · 手办", 22, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(item.Name + " · 手办", 22, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(owned ? CareerRelics.Status(d, item) : CareerMoney.Format(price), 16, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(owned ? CareerRelics.Status(d, item) : CareerMoney.Format(price), 16, CareerVisuals.Teal)`
@@ -311,7 +323,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.RenamePlayer(NationalSpire.CareerData) — private void RenamePlayer(CareerData data)`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -322,7 +334,7 @@ private int _lifeHistoryLimit = 8;
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Control.GrabFocus()`；输入表达式：`.GrabFocus()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: input?.GrabFocus()`
-- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }`
+- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(input)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(input);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(status)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(status);`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(500, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(500, 48)`
@@ -331,24 +343,23 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("rename", text: input.Text)`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("rename", text: input.Text)) return true;`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice("游戏名已更新。", false)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice("游戏名已更新。", false);`
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool)`；输入表达式：`ShowCareerDialog("修改游戏名", "只修改当前生涯的名字。旧帖子保留原文，点击旧名字仍可查看你的档案。", () =>          {              if (MultiplayerCommand("rename", text: input.Text)) return true;              if (CareerNames.Rename(data, input.Text) is { } error) { status.Text = error; return false; }              Render(); Notice("游戏名已更新。", false); return true;          }, "确认改名", box =>          {              input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);              status = Text("最多 32 个字符。", 16, _muted); box.AddChild(status);          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("修改游戏名", "只修改当前生涯的名字。旧帖子保留原文，点击旧名字仍可查看你的档案。", () =>          {              if (MultiplayerCommand("rename", text: input.Text)) return true;              if (CareerNames.Rename(data, input.Text) is { } error) { status.Text = error; return false; }              Render(); Notice("游戏名已更新。", false); return true;          }, "确认改名", box =>          {              input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);              status = Text("最多 32 个字符。", 16, _muted); box.AddChild(status);          });`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("最多 32 个字符。", 16, _muted)`；返回值紧邻使用处：`AssignmentExpressionSyntax: status = Text("最多 32 个字符。", 16, _muted)`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool)`；输入表达式：`ShowCareerDialog("修改游戏名", "只修改当前生涯的名字。旧帖子保留原文，点击旧名字仍可查看你的档案。", () =>          {              if (MultiplayerCommand("rename", text: input.Text)) return true;              if (CareerNames.Rename(data, input.Text) is { } error) { status.Text = error; return false; }              Render(); Notice("游戏名已更新。", false); return true;          }, "确认改名", box =>          {              input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);              status = Text("旧内容保留原名。", 16, _muted); box.AddChild(status);          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("修改游戏名", "只修改当前生涯的名字。旧帖子保留原文，点击旧名字仍可查看你的档案。", () =>          {              if (MultiplayerCommand("rename", text: input.Text)) return true;              if (CareerNames.Rename(data, input.Text) is { } error) { status.Text = error; return false; }              Render(); Notice("游戏名已更新。", false); return true;          }, "确认改名", box =>          {              input = new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }; box.AddChild(input);              status = Text("旧内容保留原名。", 16, _muted); box.AddChild(status);          });`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("旧内容保留原名。", 16, _muted)`；返回值紧邻使用处：`AssignmentExpressionSyntax: status = Text("旧内容保留原名。", 16, _muted)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `CustomMinimumSize` = `new Vector2(500, 48)`
-- `input` = `new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), MaxLength = 128, CustomMinimumSize = new Vector2(500, 48) }`
-- `MaxLength` = `128`
+- `input` = `new LineEdit { Name = "CareerRenameInput", Text = CareerEngine.Name(data), CustomMinimumSize = new Vector2(500, 48) }`
 - `Name` = `"CareerRenameInput"`
 - `status.Text` = `error`
-- `status` = `Text("最多 32 个字符。", 16, _muted)`
+- `status` = `Text("旧内容保留原名。", 16, _muted)`
 - `Text` = `CareerEngine.Name(data)`
 
 <a id="symbol-825caeb63a3b"></a>
 
 ## `NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData) — private void LifeNews(CareerData d)`
 
-来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 

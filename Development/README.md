@@ -2,7 +2,7 @@
 
 ## 阅读入口与当前状态
 
-基准：2026-10-11，v0.26.11 源码。这里记录当前架构、接口和依赖。性能实测原始资料、安装与发布验收记录保留在维护者本地，不随这些架构文档公开。
+基准：2026-10-14，v0.26.16 工作区源码。这里记录当前架构、接口和依赖。性能实测原始资料、安装与发布验收记录保留在维护者本地，不随这些架构文档公开。
 
 文档仅记录真实实现、架构、接口、依赖和实测证据，供后续开发查询。修改方案在对话中审阅，不写入本目录。保存节点、流式广播、恢复与重试的当前实现见对应章节。
 
@@ -34,18 +34,18 @@
 | 私信开始生成时还保存本轮上下文 | AiService.ProcessPrivateAsync 调用 PrivateMessagePrompts.Context，写入 PrivateTurn.Context，然后保存 sending 状态 | 本轮 Context、状态和其他生涯数据 | PrivateMessagePrompts.Compose 组织请求；回查本轮上下文与诊断读取记录 |
 | 多人 AI 保存会更新操作版本 | CoopCoordinator.StartPrivate / StartGroup 的 Save 回调 | 合并后的最新共同生涯，CoopWorld.Revision 加一 | CoopCareerSession.Refresh、CompleteReplies、客机快照判定 |
 | 完整广播同时传递请求状态、发言顺序和其他资料 | CoopCoordinator.Broadcast → PublicBytes → SnapshotEncoder → Encode → Split → Send | 接收者可见的整个快照，以及 NativeSave | 客机 Receive、个人视图、聊天顺序与入群消息显示 |
-| 客机收到完整广播会先保存检查点 | CoopCoordinator.Receive 的 snapshot 分支 | CoopStorage.Save 写入快照及配套原版对局 | 之后才更新 World、完成操作回执并刷新界面；重启由检查点恢复 |
+| 客机收到完整广播会先保存检查点 | Receive → QueueSnapshot → SaveReceived | 后台 SaveAsync 写快照及配套原版对局 | 完成后主线程一起更新 World / NativeSave，再完成回执、刷新；重启仍由检查点恢复 |
 | 重新生成复用原轮次编号 | PrivateMessageCommands 与 GroupChats.Command 修改原 turn | 原 Id 保留，生成状态、正文和交互另行改变 | 流式分片、Live 字典、界面与重试读取此 Id；单凭 Id 不能区分两次生成 |
 
 上述内容是源码事实。静态依赖与实际运行验证的区别见[维护规则](MAINTENANCE.md#性能验证与正确性验收)。
 
 ## 覆盖范围的含义
 
-源码索引覆盖本项目201个 C# 文件、3057个函数及属性条目，分析得到0项编译语义错误、0个未绑定直接调用。字段初始化、类型和事件也列在文件条目中；各条目列出实际调用参数、返回值紧邻使用位置和赋值表达式。nameof 已排除。分析使用 .NET 9 参考程序集、当前游戏程序集、GodotSharp、Harmony 和 Steamworks，不执行游戏。
+源码索引覆盖本项目220个 C# 文件、3312个函数及属性条目，分析得到0项编译语义错误、0个未绑定直接调用。字段初始化、类型和事件也列在文件条目中；各条目列出实际调用参数、返回值紧邻使用位置和赋值表达式。nameof 已排除。分析使用 .NET 9 参考程序集、当前游戏程序集、GodotSharp、Harmony 和 Steamworks，不执行游戏。
 
 关键保存、上下文、聊天生成和同步流程已按源码核对。其余函数的业务含义不能仅凭自动索引认定已逐项人工审阅。原版游戏、其他模组、反射目标、事件实际发生时机、异步执行交错和真实网络需要另行核对或实测。文档会保留这些缺口，不把静态索引称为全部运行路径证明。
 
-源码摘要、函数链接和锚点按当前实现重新生成并核对。架构、接口、维护规则与源码依赖索引公开；内部审阅、未实施方案、性能验收原始资料、玩家存档与凭据不公开。
+源码摘要、函数链接和锚点按当前实现重新生成并核对。Development 中的架构、接口、维护规则与源码依赖索引已获授权公开，具体范围以 NationalSpire/.gitignore 逐项放行的路径为准。内部审阅、未实施方案、性能验收原始资料、索引生成工具、玩家存档与凭据不公开。
 
 ## 提交 PR 的文档要求
 

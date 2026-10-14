@@ -12,9 +12,10 @@ public sealed class CoopCareerSession : ICareerSession
     private CoopCommand? _pending;
     private int _queuedCeremony;
     private Action? _accepted;
+    private bool _disposed;
     public CareerData Data { get; private set; } = null!;
     public bool Host => _session.Host;
-    public bool Alive => CoopRuntime.Current?.Session == _session && _session.World != null;
+    public bool Alive => !_disposed && CoopRuntime.Current?.Session == _session && _session.World != null;
     public event Action<string, bool>? Message;
     public string Status => $"多人模式 · 在线 {_session.Online.Count}人 · " + (Host ? "你是房主，开赛时全员准备" : "房主负责团队安排，你可以处理个人事务");
     public bool CanResume => Host && _session.Full && _session.World?.Run is { Phase: "paused", Terminal: null } && _session.World.Proposal == null;
@@ -37,7 +38,7 @@ public sealed class CoopCareerSession : ICareerSession
         || _pending is { Kind: "confirm" } pending && pending.Target == ProposalId;
     public string ProposalText => _session.World?.Proposal is { } p ? p.Label + "\n" + string.Join("  /  ", _session.World.Members.Where(m => p.Participants.Contains(m.SteamId)).Select(m => m.Name + (p.Votes.Contains(m.SteamId) ? " 已同意" : " 等待确认"))) : "";
     public CoopCareerSession(CoopCoordinator session, Control menu)
-    { _session = session; _menu = menu; _session.Replied += Replied; Refresh(); }
+    { _session = session; _menu = menu; _session.RegisterView(); _session.Replied += Replied; Refresh(); }
     public bool Refresh()
     {
         if (!Alive) return false;
@@ -49,18 +50,7 @@ public sealed class CoopCareerSession : ICareerSession
         var w = _session.World!; string presence = string.Join(',', _session.Online.Order()) + "|" + RunStatus + "|" + _pending?.Id;
         if (Data != null && _revision == w.Revision && _presence == presence) return false;
         _revision = w.Revision; _presence = presence;
-        var member = w.Members.Single(m => m.SteamId == _session.Self);
-        Data = CoopRules.View(w, member);
-        Data.Esports.PlayerContract = w.World.Esports.PlayerContract == null ? null : CoopJson.Copy(w.World.Esports.PlayerContract);
-        Data.PendingMatchId = w.World.Failure == null ? w.Run?.MatchId : null;
-        foreach (var thread in CommunityThreads.All(Data))
-        {
-            if (thread.AuthorId == member.PersonId) thread.AuthorId = "player";
-            foreach (var reply in thread.Replies) if (reply.AuthorId == member.PersonId) reply.AuthorId = "player";
-        }
-        foreach (var post in CommunityThreads.All(Data)) post.SeenRevision = member.ReadPosts.GetValueOrDefault(post.Id);
-        foreach (var issue in Data.WeeklyEditions) issue.SeenRevision = member.ReadWeeks.GetValueOrDefault(issue.Week);
-        Data.PendingSettlementId = member.SeenSettlement == Data.Results.LastOrDefault()?.MatchId ? "" : Data.Results.LastOrDefault()?.MatchId ?? "";
+        Data = _session.InterfaceView();
         if (Host) Data.Ai = AiSettingsStore.Load(new());
         var view = Data;
         Data.ExternalCurrent = () => Alive && ReferenceEquals(Data, view);
@@ -87,8 +77,8 @@ public sealed class CoopCareerSession : ICareerSession
         var w = _session.World!;
         _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent); _accepted = accepted;
         if (!Host && kind == "confirm") Message?.Invoke("已提交准备，等待同步。", false);
-        try { _session.Retry(_pending); }
-        catch (Exception e) { _pending = null; _accepted = null; Message?.Invoke(e.Message, true); }
+        _session.SubmitReady(_pending, command => _pending = command, error =>
+        { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });
     }
     private void Replied(CoopReply reply)
     {
@@ -113,10 +103,11 @@ public sealed class CoopCareerSession : ICareerSession
     public async Task<string> Export()
     {
         var reports = await _session.CollectDiagnostics();
+        await _session.WaitForReceived();
         if (_session.World == null) throw new InvalidOperationException("房间已关闭，请重新连接后导出。");
         return Diagnostics.Export(_session.World.World, System.IO.Path.Combine(CoopSettings.Root, _session.World.Id),
             ProjectSettings.GlobalizePath("user://logs"), CoopRuntime.Current?.Status ?? "房间已关闭",
             new { world = CoopStorage.PublicCopy(_session.World), originalRun = _session.NativeSave, online = _session.Online.ToArray(), self = _session.Self }, reports);
     }
-    public void Dispose() { _session.Replied -= Replied; }
+    public void Dispose() { if (_disposed) return; _disposed = true; _session.Replied -= Replied; _session.UnregisterView(); }
 }

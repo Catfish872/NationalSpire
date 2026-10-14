@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`38B6AA3715D8366969171F0896613ACFB3DE7651266879CC719CE5819321DB20`。来源：[源码](../../PrivateInteractionUndo.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`3B099018D574DDA31C92A5D6DB1FF91B62D35986FB828124B6EE20F31898C78B`。来源：[源码](../../PrivateInteractionUndo.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -69,11 +69,38 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-9f5887b5e53e"></a>
+
+## `NationalSpire.PrivateInteractionHistory.PreserveRelation(NationalSpire.PrivateMailbox, NationalSpire.ChatWorld, string, string, System.Collections.Generic.IReadOnlyList<string>) — public static void PreserveRelation(PrivateMailbox box, ChatWorld chats, string human, string person, IReadOnlyList<string> fields)`
+
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.PrivateMessages.EditRelation(NationalSpire.CareerData, NationalSpire.CareerLifeState, string, string, NationalSpire.CharacterRelationEdit)`](PrivateMessages.cs.md#symbol-721322de5dd7)
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatWorld.Groups`；`NationalSpire.GroupChat.Interactions`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionUndo.After`；`NationalSpire.PrivateInteractionUndo.Before`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateTurn.InteractionUndo`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`box.Conversations.TryGetValue(person, out var direct)`；返回值紧邻使用处：`IfStatementSyntax: if (box.Conversations.TryGetValue(person, out var direct)) conversations.Add(direct);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)`；返回值紧邻使用处：`IfStatementSyntax: if (group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)) conversations.Add(lane);`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo))              foreach (var field in fields)              {                  (undo.Before["relation"] as JsonObject)?.Remove(field);                  (undo.After["relation"] as JsonObject)?.Remove(field);              }`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.SelectMany(c => c.Turns)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.SelectMany(c => c.Turns).SelectMany`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`conversations.Add(direct)`；返回值紧邻使用处：`ExpressionStatementSyntax: conversations.Add(direct);`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`conversations.Add(lane)`；返回值紧邻使用处：`ExpressionStatementSyntax: conversations.Add(lane);`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<PrivateConversation>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<PrivateConversation>()`
+- `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`.Remove(field)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: (undo.After["relation"] as JsonObject)?.Remove(field)`
+- `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`.Remove(field)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: (undo.Before["relation"] as JsonObject)?.Remove(field)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-58ee4a7730ae"></a>
 
 ## `NationalSpire.PrivateInteractionHistory.Node<T>(T) — private static JsonNode? Node<T>(T value)`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool)`](PrivateInteractionUndo.cs.md#symbol-de9e985d044d)；[`NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-0a73a9db2a55)
 
@@ -92,7 +119,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool) — public static JsonObject Capture(CareerData d, string id, bool contract = false)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.OwnedClubs.ArriveTransfers(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-2429e4910b3f)；[`NationalSpire.PrivateAppointments.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-3089895d205a)；[`NationalSpire.PrivateContracts.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, string)`](PrivateAppointments.cs.md#symbol-1c0ddcc69a05)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)；[`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-2f0b4ecea199)
 
@@ -173,7 +200,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool) — public static void Record(CareerData d, string id, PrivateTurn turn, JsonObject before, bool contract = false)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.OwnedClubs.ArriveTransfers(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-2429e4910b3f)；[`NationalSpire.PrivateAppointments.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-3089895d205a)；[`NationalSpire.PrivateContracts.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, string)`](PrivateAppointments.cs.md#symbol-1c0ddcc69a05)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-2f0b4ecea199)
 
@@ -206,7 +233,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Identity(System.Text.Json.Nodes.JsonNode?) — private static string Identity(JsonNode? n)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)
 
@@ -228,7 +255,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string) — private static (JsonNode? Before, JsonNode? After)? Difference(JsonNode? before, JsonNode? after, string path = "")`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-0a73a9db2a55)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)
 
@@ -273,7 +300,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string) — private static JsonNode? Revert(JsonNode? current, JsonNode? before, JsonNode? after, string path = "")`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)；[`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)
 
@@ -362,7 +389,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool) — private static void Restore(CareerData d, string id, JsonObject state, bool contract)`
 
-来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)
 
@@ -462,7 +489,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn) — public static string? Rewind(CareerData d, PrivateConversation c, PrivateTurn turn)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.Rewind(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChats.cs.md#symbol-d45d31e160a9)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 

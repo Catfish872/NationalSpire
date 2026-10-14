@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public static class CareerLife
 {
@@ -125,18 +125,19 @@ public static class CareerLife
             && (p.Kind is not ("备赛" or "培养") || !CareerTraining.Multiplayer(d) && CareerTraining.Targets(d).Any(x => CareerTraining.ActiveRoster(d, x.Id)))
             && (p.Kind != "经营" || OwnedClubs.CanOperate(d) && ClubPrograms.CanOffer(d, p.Title))
             && (p.Kind != "内容" || d.Results.Count > 0)).OrderBy(p => d.Credits < 300 && p.Cost <= d.Credits ? 0 : 1).ThenBy(_ => rng.Next()).ToList();
-        int count = CareerRelics.Has(d, "TOOLBOX") ? 4 : 3;
+        int count = CareerRelics.Has(d, "TOOLBOX") ? 6 : 3;
         bool dream = CareerRelics.Has(d, "DREAM_CATCHER") && life.Figurines["DREAM_CATCHER"].Charge > 0 && d.Results.Count > 0;
-        if (dream) count++;
+        int dreamOffers = dream ? 3 : 0; if (dream) count += 2;
         if (CareerRelics.Has(d, "JUZU_BRACELET")) candidates = candidates.OrderBy(p => p.Kind is "生活" or "社交" ? 0 : 1).ToList();
         if (dream) candidates = candidates.OrderBy(p => p.Kind == "内容" ? 0 : 1).ToList();
         if (d.Esports.ClubId.Length > 0 && round % 2 == 0 && !life.Activities.Any(a => a.Kind == "备赛" && a.Status == "进行中"))
             candidates = candidates.OrderBy(p => p.Kind == "备赛" ? 0 : 1).ToList();
         if (OwnedClubs.CanOperate(d)) candidates = candidates.OrderBy(p => p.Kind == "经营" ? 0 : 1).ToList();
+        if (CareerRelics.Has(d, "JUZU_BRACELET")) candidates = candidates.OrderBy(p => p.Kind == "生活" ? 0 : p.Kind == "社交" ? 1 : 2).ToList();
         foreach (var plan in candidates)
         {
             if (count <= 0) break;
-            if (!kinds.Add(plan.Kind) || plan.Long && !project) continue;
+            if ((!kinds.Add(plan.Kind) && !(plan.Kind == "内容" && dreamOffers > 0)) || plan.Long && !project) continue;
             var people = d.People.Where(p => plan.Kind is "备赛" or "培养"
                 ? p.ClubId == d.Esports.ClubId && EsportsWorld.IsProfessional(p)
                 : p.Country == d.Esports.Country && (plan.Kind == "青训" ? p.Role == "青训选手" : p.Role is "职业选手" or "普通玩家" or "主播" or "解说员" or "退役选手"))
@@ -164,7 +165,7 @@ public static class CareerLife
                 _ => scale == 2 ? "扩大项目规模，补充配套设施" : "按完整规模筹备，配齐场地、设施与负责人员" });
             if (plan.Kind == "商业") item.Detail += $"。项目结束后结算一次，预计收回投入的84%—156%，金额随关注度和销售情况变化";
             life.Activities.Add(item); count--;
-            if (dream && plan.Kind == "内容") { life.Figurines["DREAM_CATCHER"].Charge = 0; dream = false; }
+            if (dream && plan.Kind == "内容" && --dreamOffers == 0) { life.Figurines["DREAM_CATCHER"].Charge--; dream = false; }
             if (plan.Long) { project = false; life.NextProjectDay = d.Day + rng.Next(21, 36); }
         }
     }
@@ -271,7 +272,7 @@ public static class CareerLife
         {
             int fans = 15 + Hash(d, a.Id) % 61 + Math.Min(75, a.Cost / 10);
             if (a.TermsVersion >= 1 && a.Kind is "内容" or "社区") fans = fans * 6 / 5;
-            fans = ActivityBenefit(a, fans);
+            fans = ActivityBenefit(a, fans * 20);
             d.Fans += fans; a.Result += $"新增{fans}位关注者。";
         }
         if (a.Kind is "生活" or "事业" || a.Variant.Contains(':') && a.Kind == "社交")
@@ -312,7 +313,7 @@ public static class CareerLife
         int extra = Math.Min(75, a.Cost / 10);
         int fanLow = 15 + extra, fanHigh = 75 + extra;
         if (a.TermsVersion >= 1 && a.Kind is "内容" or "社区") { fanLow = fanLow * 6 / 5; fanHigh = fanHigh * 6 / 5; }
-        fanLow = ActivityBenefit(a, fanLow); fanHigh = ActivityBenefit(a, fanHigh);
+        fanLow = ActivityBenefit(a, fanLow * 20); fanHigh = ActivityBenefit(a, fanHigh * 20);
         return a.Kind switch
         {
             "生活" => "下次内容制作费用 -12%（最多省 $240）",
@@ -321,7 +322,7 @@ public static class CareerLife
             "俱乐部" => "两名青训获得评分成长" + (a.TermsVersion >= 1 ? $"；参赛队友永久通关率最多 +{(a.TermsVersion >= 3 ? 0.3 : a.TermsVersion >= 2 ? 0.15 : 0.25)}%" : ""),
             "内容" or "社区" => $"预计关注 +{fanLow}～{fanHigh}" + (a.TermsVersion >= 1 && a.Title == "录制选手对谈" ? $"；参与对谈的职业选手永久通关率最多 +{(a.TermsVersion >= 3 ? 0.2 : 0.1)}%" : ""),
             "商业" => $"回款 {CareerMoney.Format(ActivityBenefit(a, a.Cost * 70 / 100))}～{CareerMoney.Format(ActivityBenefit(a, a.Cost * 130 / 100))}（含本金）；预计关注 +{fanLow}～{fanHigh}",
-            "经营" => a.LongProject ? $"签约选手永久通关率最多 +{(a.TermsVersion >= 3 ? 1 : 0.5)}%" : $"俱乐部关注 +{ActivityBenefit(a, 300)}～{ActivityBenefit(a, 600)}，随已有关注规模递减",
+            "经营" => a.LongProject ? $"签约选手永久通关率最多 +{(a.TermsVersion >= 3 ? 1 : 0.5)}%" : $"俱乐部关注 +{ActivityBenefit(a, 300)}～{ActivityBenefit(a, 600)}",
             "事业" => "永久降低内容、社区活动费用 2.4%（累计最多 7.2%）",
             _ => "留下一份活动记录"
         };

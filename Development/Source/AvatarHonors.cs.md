@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`908160A2696E7E65E1D65AA0586259882576F400656EEBF3E1623FC984718059`。来源：[源码](../../AvatarHonors.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`BCB0F3E6DF5E4E33BDEB73E553B060EA273A5FD6D4AE3BD80C1BF6674C60065F`。来源：[源码](../../AvatarHonors.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -64,11 +64,30 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-9fa8fce765cc"></a>
+
+## `NationalSpire.AvatarHonors.InvalidateRankings(NationalSpire.CareerData) — internal static void InvalidateRankings(CareerData data)`
+
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)
+
+**调用：** `System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.Remove(TKey)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarHonors.Rankings`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.Remove(TKey)`；输入表达式：`Rankings.Remove(data)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Rankings.Remove(data)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-72230b2d2147"></a>
 
 ## `NationalSpire.AvatarHonors.Rank(NationalSpire.CareerData, string) — private static int Rank(CareerData d, string id)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)
 
@@ -103,7 +122,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string) — private static Dictionary<string, string> Earned(CareerData d, string id)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.Capture(NationalSpire.CareerData)`](AvatarHonors.cs.md#symbol-d015fb4d8249)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)
 
@@ -142,9 +161,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Capture(NationalSpire.CareerData) — public static void Capture(CareerData d)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool)`](CareerEngine.cs.md#symbol-2cb7c2afebf9)；[`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-8025e01818d7)
+**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-8025e01818d7)
 
 **调用：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Max(int, int)`
 
@@ -167,7 +186,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string) — public static string Role(CareerData d, string id)`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)
 
@@ -187,7 +206,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string) — public static AvatarIdentity ForPerson(CareerData d, string id)`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.Byline(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-3d000083d4aa)；[`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](Coop/CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
@@ -220,7 +239,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Select(NationalSpire.CareerData, string) — public static bool Select(CareerData d, string frame)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ChooseFrame(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-5700a0d050b5)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -241,7 +260,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Byline(NationalSpire.CareerData, string) — public static string Byline(CareerData d, string id)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

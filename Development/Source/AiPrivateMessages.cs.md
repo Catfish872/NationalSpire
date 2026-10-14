@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`97376F2370A4F3DD32D8105666CB794336FDCE49F22977087B30E10EBCFF297B`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5AD84DB691B35E9544A9CA6C37C33C009AE0EF289AA2AFDDEA7B3E478B1E7A9C`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -316,9 +316,9 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>)`](AiPrivateMessages.cs.md#symbol-877e675ff306)
 
-**调用：** [`Event()`](AiPrivateMessages.cs.md#symbol-f5dfceb3d069)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；[`NationalSpire.LeadingReasoningStream.Feed(string)`](LeadingReasoningStream.cs.md#symbol-db75a9cd1314)；[`NationalSpire.LeadingReasoningStream.Finish()`](LeadingReasoningStream.cs.md#symbol-90a675c31e54)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-207825987de2)；`NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Func<T1, T2, TResult>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.IOException.IOException(string?)`；`System.IO.StreamReader.ReadLineAsync(System.Threading.CancellationToken)`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpContent.ReadAsStreamAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpContent.ReadAsStringAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpRequestException.HttpRequestException(string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`Event()`](AiPrivateMessages.cs.md#symbol-d0bde857a923)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；[`NationalSpire.LeadingReasoningStream.Feed(string)`](LeadingReasoningStream.cs.md#symbol-db75a9cd1314)；[`NationalSpire.LeadingReasoningStream.Finish()`](LeadingReasoningStream.cs.md#symbol-90a675c31e54)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-207825987de2)；`NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Enum.ToString()`；`System.Func<T1, T2, TResult>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.IOException.IOException(string?)`；`System.IO.StreamReader.ReadLineAsync(System.Threading.CancellationToken)`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpContent.ReadAsStreamAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpContent.ReadAsStringAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpRequestException.HttpRequestException(string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateObject()`；`System.Text.Json.JsonElement.GetArrayLength()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string model, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, bool stream>.model`；`<anonymous type: string trace, string context, bool stream, string Model, int messages, int characters>.characters`；`<anonymous type: string trace, string context, bool stream, string Model, int messages, int characters>.messages`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.content`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.error`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.reasoning`；`Event()`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`；`NationalSpire.AiService.PrivateTransport`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`；`NationalSpire.LeadingReasoningStream.Feed(string)`；`NationalSpire.LeadingReasoningStream.Finish()`；`RememberUsage(System.Text.Json.JsonElement)`
+**字段、属性、事件及方法组引用：** `<anonymous type: string model, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, bool stream>.model`；`<anonymous type: string trace, string context, bool stream, string Model, int messages, int characters>.characters`；`<anonymous type: string trace, string context, bool stream, string Model, int messages, int characters>.messages`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.content`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.error`；`<anonymous type: string trace, string context, string Model, bool stream, string error, string content, string reasoning>.reasoning`；`<anonymous type: string trace, string context, string[] fields, string choices>.choices`；`<anonymous type: string trace, string context, string[] fields, string choices>.fields`；`Event()`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`；`NationalSpire.AiService.PrivateTransport`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`；`NationalSpire.LeadingReasoningStream.Feed(string)`；`NationalSpire.LeadingReasoningStream.Finish()`；`RememberUsage(System.Text.Json.JsonElement)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -327,7 +327,9 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；输入表达式：`HttpFailure(response)`；返回值紧邻使用处：`AwaitExpressionSyntax: await HttpFailure(response)`
 - `NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`；输入表达式：`PrivateReasoning(message)`；返回值紧邻使用处：`ArgumentSyntax: PrivateReasoning(message)`
 - `NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；输入表达式：`TryGetEndpoint(options.Endpoint, out var endpoint)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !TryGetEndpoint(options.Endpoint, out var endpoint)`
+- `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("private.transport", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("private.transport", e);`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("private.request", new { trace, context, stream, options.Model, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("private.request", new { trace, context, stream, options.Model, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("private.response_structure", new { trace, context, fields = document.RootElement.EnumerateObject().Select(p => p.Name).ToArray(), choices = choices.ValueKind.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("private.response_structure", new { trace, context, fields = document.RootElement.EnumerateObject().Select(p => p.Name).ToArray(), choices = choices.ValueKind.ToString() });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("private.response", new { trace, context, options.Model, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("private.response", new { trace, context, options.Model, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("private.usage", new { trace, context, usage })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("private.usage", new { trace, context, usage });`
 - `NationalSpire.Diagnostics.RegisterSecret(string?)`；输入表达式：`Diagnostics.RegisterSecret(CurrentKey)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RegisterSecret(CurrentKey);`
@@ -335,6 +337,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `NationalSpire.LeadingReasoningStream.Finish()`；输入表达式：`leading.Finish()`；返回值紧邻使用处：`ExpressionStatementSyntax: leading.Finish();`
 - `NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；输入表达式：`new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning)`
 - `RememberUsage(System.Text.Json.JsonElement)`；输入表达式：`RememberUsage(document.RootElement)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberUsage(document.RootElement);`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(contentValue.GetString())`；返回值紧邻使用处：`BinaryExpressionSyntax: !message.TryGetProperty("content", out var contentValue) || contentValue.ValueKind != JsonValueKind.String || string.IsNullOrWhiteSpace(contentValue.GetString())`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(CurrentKey)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(CurrentKey)) throw new InvalidOperationException("请先在模组设置中保存密钥。");`
 - `string.StartsWith(string, System.StringComparison)`；输入表达式：`line.StartsWith("data:", StringComparison.Ordinal)`；返回值紧邻使用处：`IfStatementSyntax: if (line.StartsWith("data:", StringComparison.Ordinal)) { if (eventData.Length > 0) eventData.Append('\n'); eventData.Append(line[5..].TrimStart()); }`
 - `string.TrimStart()`；输入表达式：`line[5..].TrimStart()`；返回值紧邻使用处：`ArgumentSyntax: line[5..].TrimStart()`
@@ -343,12 +346,18 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(content)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: progress?.Invoke(content)`
 - `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(PrivateReasoning(message))`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: reasoning?.Invoke(PrivateReasoning(message))`
 - `System.ArgumentException.ArgumentException(string?)`；输入表达式：`new ArgumentException("接口地址无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new ArgumentException("接口地址无效。");`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`document.RootElement.EnumerateObject().Select(p => p.Name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: document.RootElement.EnumerateObject().Select(p => p.Name).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`messages.Sum(m => m["content"].Length)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: characters = messages.Sum(m => m["content"].Length)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`document.RootElement.EnumerateObject().Select(p => p.Name).ToArray()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: fields = document.RootElement.EnumerateObject().Select(p => p.Name).ToArray()`
+- `System.Enum.ToString()`；输入表达式：`choices.ValueKind.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: choices = choices.ValueKind.ToString()`
 - `System.Func<T1, T2, TResult>.Invoke(T1, T2)`；输入表达式：`PrivateTransport(request, token)`；返回值紧邻使用处：`AwaitExpressionSyntax: await PrivateTransport(request, token)`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Guid.NewGuid().ToString("N")`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先在模组设置中保存密钥。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先在模组设置中保存密钥。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("回复未完整结束：" + finish.GetString())`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("回复未完整结束：" + finish.GetString());`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("接口返回了空回复，请重试。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("接口返回了空回复，请重试。");`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("接口回复缺少消息内容。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("接口回复缺少消息内容。");`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("接口未返回可读取的回复内容。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("接口未返回可读取的回复内容。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("私信回复过长，已停止接收。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("私信回复过长，已停止接收。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException(error.ToString())`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException(error.ToString());`
 - `System.IO.IOException.IOException(string?)`；输入表达式：`new IOException("回复连接提前结束，交互未执行，请重试。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new IOException("回复连接提前结束，交互未执行，请重试。");`
@@ -361,15 +370,18 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；输入表达式：`new HttpRequestMessage(HttpMethod.Post, endpoint)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HttpRequestMessage(HttpMethod.Post, endpoint)`
 - `System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；输入表达式：`new StringContent(JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json), Encoding.UTF8, "application/json")`；返回值紧邻使用处：`AssignmentExpressionSyntax: request.Content = new StringContent(JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json), Encoding.UTF8, "application/json")`
 - `System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；输入表达式：`JsonDocument.Parse(body)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonDocument.Parse(body)`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`choice.GetProperty("message")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = choice.GetProperty("message")`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`document.RootElement.GetProperty("choices")`；返回值紧邻使用处：`ElementAccessExpressionSyntax: document.RootElement.GetProperty("choices")[0]`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`message.GetProperty("content")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: message.GetProperty("content").GetString`
+- `System.Text.Json.JsonElement.EnumerateObject()`；输入表达式：`document.RootElement.EnumerateObject()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: document.RootElement.EnumerateObject().Select`
+- `System.Text.Json.JsonElement.GetArrayLength()`；输入表达式：`choices.GetArrayLength()`；返回值紧邻使用处：`BinaryExpressionSyntax: choices.GetArrayLength() == 0`
+- `System.Text.Json.JsonElement.GetString()`；输入表达式：`contentValue.GetString()`；返回值紧邻使用处：`ArgumentSyntax: contentValue.GetString()`
+- `System.Text.Json.JsonElement.GetString()`；输入表达式：`contentValue.GetString()`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: contentValue.GetString()!`
 - `System.Text.Json.JsonElement.GetString()`；输入表达式：`finish.GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: "回复未完整结束：" + finish.GetString()`
 - `System.Text.Json.JsonElement.GetString()`；输入表达式：`finish.GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: finish.GetString() != "stop"`
-- `System.Text.Json.JsonElement.GetString()`；输入表达式：`message.GetProperty("content").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: message.GetProperty("content").GetString() ?? ""`
 - `System.Text.Json.JsonElement.ToString()`；输入表达式：`error.ToString()`；返回值紧邻使用处：`ArgumentSyntax: error.ToString()`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`choice.TryGetProperty("finish_reason", out var finish)`；返回值紧邻使用处：`BinaryExpressionSyntax: choice.TryGetProperty("finish_reason", out var finish) && finish.ValueKind == JsonValueKind.String`
+- `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`choice.TryGetProperty("message", out var message)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !choice.TryGetProperty("message", out var message)`
+- `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`document.RootElement.TryGetProperty("choices", out var choices)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !document.RootElement.TryGetProperty("choices", out var choices)`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`document.RootElement.TryGetProperty("error", out var error)`；返回值紧邻使用处：`IfStatementSyntax: if (document.RootElement.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());`
+- `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`message.TryGetProperty("content", out var contentValue)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !message.TryGetProperty("content", out var contentValue)`
 - `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json)`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`eventData.Append('\n')`；返回值紧邻使用处：`ExpressionStatementSyntax: eventData.Append('\n');`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`eventData.Append(line[5..].TrimStart())`；返回值紧邻使用处：`ExpressionStatementSyntax: eventData.Append(line[5..].TrimStart());`
@@ -395,7 +407,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-f5dfceb3d069)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-d0bde857a923)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)
 
 **调用：** `System.Text.Json.JsonElement.Clone()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -410,11 +422,11 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 - `lastUsage` = `usage.Clone()`
 
-<a id="symbol-f5dfceb3d069"></a>
+<a id="symbol-d0bde857a923"></a>
 
 ## `Event() — void Event()`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)
 
@@ -456,9 +468,9 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement) — private static string PrivateReasoning(JsonElement message)`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-f5dfceb3d069)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-d0bde857a923)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)
 
 **调用：** `System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -476,7 +488,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string) — private static async Task SummarizePrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person)`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-88f72cb1c19e)
 
@@ -541,7 +553,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string) — private static Task<string> Summarize(CareerData data, string person, string section, string content)`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)
 
@@ -571,7 +583,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>) — private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages)`
 
-来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 278 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.AiService.SummarizeGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, string)`](AiGroupChats.cs.md#symbol-1e6e737dbe88)
 

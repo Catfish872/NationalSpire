@@ -40,6 +40,8 @@ public sealed class EsportsCareer
 }
 public sealed class CareerClub
 {
+    public int Fans { get; set; }
+    public HashSet<string> AudienceReceipts { get; set; } = [];
     public List<string> PreferredStarters { get; set; } = [];
     public int NextOperatingDay { get; set; }
     public int LastTransferSeason { get; set; }
@@ -59,6 +61,8 @@ public sealed class CareerClub
 }
 public sealed class WorldCompetition
 {
+    // 旧赛事缺省为整届结算；新建国际赛事显式启用逐场贡献。
+    public int FortuneVersion { get; set; }
     public bool Cooperative { get; set; }
     public int PrizeVersion { get; set; }
     public int CalendarDays { get; set; } = 28;
@@ -85,6 +89,11 @@ public sealed class WorldCompetition
 }
 public sealed class WorldFixture
 {
+    public bool FortuneSettled { get; set; }
+    public bool MarketSettled { get; set; }
+    public bool PromotionSettled { get; set; }
+    public Dictionary<string, int> Fortune { get; set; } = [];
+    public List<string> DevelopmentChanges { get; set; } = [];
     public List<string> HomeParticipants { get; set; } = [];
     public List<string> AwayParticipants { get; set; } = [];
     public string HomeTeam { get; set; } = "";
@@ -109,6 +118,7 @@ public sealed class WorldFixture
 
 public sealed class CircuitAward
 {
+    public bool Completed { get; set; } = true;
     public string CompetitionId { get; set; } = "";
     public string PersonId { get; set; } = "";
     public string Country { get; set; } = "";
@@ -144,6 +154,22 @@ public sealed class SponsorContract
 }
 public sealed class NationalLegacy
 {
+    public int Gdp { get; set; }
+    public double GdpGrowth { get; set; }
+    public int GrowthFortune { get; set; }
+    public double GrowthBase { get; set; }
+    public double GrowthLevel { get; set; }
+    public double GrowthFortunePart { get; set; }
+    public double GrowthConvergence { get; set; }
+    public Dictionary<string, int> Indicators { get; set; } = [];
+    public Dictionary<string, double> Pending { get; set; } = [];
+    public int ReportSeason { get; set; }
+    public int DevelopmentVersion { get; set; }
+    public int MaintenanceFunding { get; set; }
+    public string LastReport { get; set; } = "";
+    public int NewsDay { get; set; }
+    public int NewsFortune { get; set; }
+    public List<string> NewsChanges { get; set; } = [];
     public string Country { get; set; } = "";
     public int Treasury { get; set; }
     public int Development { get; set; }

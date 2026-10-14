@@ -17,7 +17,7 @@ public static class ClubOperations
             club.NextOperatingDay = d.Day + 14; club.LastOperatingSeason = d.Season;
             var members = d.People.Where(p => p.ClubId == club.Id).ToList();
             int professionals = members.Count(EsportsWorld.IsProfessional);
-            int income = Math.Max(100, club.OperatingIncome / 6);
+            int income = (int)Math.Round(Math.Max(100, club.OperatingIncome / 6) * CareerAudience.ClubMultiplier(ClubAudience.Total(d, club.Id)));
             club.Budget += income; Entry(club, d.Day, "本期运营收入", income);
             int wages = Math.Min(Math.Max(0, club.Budget - club.TrainingFund), professionals * 180 + members.Count(p => p.Role == "青训选手") * 45);
             club.Budget -= wages; Entry(club, d.Day, "人员与场地支出", -wages);
