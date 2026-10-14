@@ -320,7 +320,7 @@ public partial class CareerScreen
         if (_ownerSection == "招募") { ClubMarket(d, false); return; }
         if (_ownerSection == "赞助")
         {
-            var sb = ClubCard("俱乐部赞助", "8 周一约。提前选择品牌，下期生效；不操作则原品牌续约。");
+            var sb = ClubCard("俱乐部赞助", "8 周一约，原品牌自动续约。周收入与胜场奖金按付款时的关注数计算；也可提前选择下期品牌。");
             if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, ClubAudience.Total(d, o.ClubId)))}  ·  赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(active, ClubAudience.Total(d, o.ClubId)))}  ·  第 {active.EndDay} 天到期", 20, _gold));
             foreach (string id in new[] { "steady", "results", "fans" })
             {

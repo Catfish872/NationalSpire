@@ -52,7 +52,7 @@ public sealed partial class CoopCoordinator : IDisposable
             PlayerIdentity.Ensure(World.World);
             PersonalityLibrary.EnsureAll(World.World);
             NpcRecords.Ensure(World.World);
-            CareerMarket.Initialize(World.World);
+            CoopRules.InitializeMarket(World);
             NationalDevelopment.Ensure(World.World);
             CoopRules.AdvanceMembers(World);
             WeeklyJournal.Recover(World.World);

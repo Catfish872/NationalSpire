@@ -11,44 +11,86 @@ public partial class CareerScreen
     private int _shopPage;
     private void ConsumerShop(CareerData d)
     {
+        var purchases = new ConsumerPurchases(d);
+        var available = (_shopOwned ? purchases.Collection : ConsumerCatalog.InTier(_shopTier)).ToArray();
+        var groups = available.Select(g => g.Category).Distinct().ToArray();
+        if (_shopCategory != "全部" && !groups.Contains(_shopCategory)) _shopCategory = "全部";
         var navigation = new HFlowContainer(); _content.AddChild(navigation);
         foreach (string tier in ConsumerCatalog.TierOrder)
             navigation.AddChild(FilterButton(tier, !_shopOwned && _shopTier == tier, () => { _shopTier = tier; _shopOwned = false; _shopPage = 0; _shopCategory = "全部"; Render(); }, 110));
-        navigation.AddChild(FilterButton("我的收藏", _shopOwned, () => { _shopOwned = true; _shopPage = 0; Render(); }, 130));
+        navigation.AddChild(FilterButton("我的收藏", _shopOwned, () => { _shopOwned = true; _shopPage = 0; _shopCategory = "全部"; Render(); }, 130));
         var columns = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _content.AddChild(columns);
         var categories = new VBoxContainer { CustomMinimumSize = new(140, 0) }; columns.AddChild(categories);
-        foreach (string category in new[] { "全部" }.Concat(ConsumerCatalog.Categories(_shopTier)))
+        foreach (string category in new[] { "全部" }.Concat(groups))
             categories.AddChild(FilterButton(category, _shopCategory == category, () => { _shopCategory = category; _shopPage = 0; Render(); }, 140));
-        var goods = ConsumerCatalog.InTier(_shopTier).Where(g => _shopCategory == "全部" || g.Category == _shopCategory).ToArray();
-        if (_shopOwned) goods = d.Life.Consumer.Goods.Where(g => g.Durable).Select(g => ConsumerCatalog.Get(g.Id)).OfType<Good>().ToArray();
+        var goods = available.Where(g => _shopCategory == "全部" || g.Category == _shopCategory).ToArray();
         _shopPage = Math.Min(_shopPage, Math.Max(0, (goods.Length - 1) / 6));
         if (!goods.Any(g => g.Id == _shopSelected)) _shopSelected = goods.FirstOrDefault()?.Id ?? "";
         var catalog = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 2 }; columns.AddChild(catalog);
         var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 14); grid.AddThemeConstantOverride("v_separation", 14); catalog.AddChild(grid);
+        var detail = Card(); detail.SizeFlagsStretchRatio = 1; var body = Inner(detail);
+        var cards = new List<(Button Button, Good Good)>();
+        void Select(Good good)
+        {
+            _shopSelected = good.Id;
+            foreach (var item in cards) ConsumerVisuals.ProductStyle(item.Button, purchases.ThisSeason(item.Good) || item.Good.Promo, item.Good.Id == _shopSelected);
+            foreach (var child in body.GetChildren()) { body.RemoveChild(child); child.QueueFree(); }
+            ConsumerDetail(d, good, purchases, body);
+        }
         foreach (var good in goods.Skip(_shopPage * 6).Take(6))
         {
-            var card = Card(); grid.AddChild(card); var box = Inner(card);
-            box.AddChild(new LifestyleArt { Category = good.Category + " " + good.Name, CustomMinimumSize = new(0, 100), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+            var card = new Button { Name = "Product_" + good.Id, SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 235) };
+            grid.AddChild(card); cards.Add((card, good)); card.Pressed += () => Select(good);
+            var margin = new MarginContainer { MouseFilter = MouseFilterEnum.Ignore }; card.AddChild(margin);
+            margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+            foreach (string side in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + side, 16);
+            var box = new VBoxContainer(); margin.AddChild(box);
+            string label = purchases.Label(good);
+            bool current = purchases.ThisSeason(good) || good.Promo;
+            ConsumerVisuals.ProductStyle(card, current, good.Id == _shopSelected);
+            var artwork = new Control { CustomMinimumSize = new(0, 100), SizeFlagsHorizontal = SizeFlags.ExpandFill }; box.AddChild(artwork);
+            var art = new LifestyleArt { Category = good.Category + " " + good.Name }; artwork.AddChild(art); art.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+            if (label.Length > 0)
+            {
+                var badge = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore }; artwork.AddChild(badge);
+                badge.SetAnchorsAndOffsetsPreset(LayoutPreset.TopRight); badge.GrowHorizontal = GrowDirection.Begin;
+                badge.AddThemeStyleboxOverride("panel", ConsumerVisuals.Style(current, true));
+                var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; badge.AddChild(row);
+                row.AddChild(new ConsumerSeal { Current = current, Ticket = good.Repeatable, Promo = good.Promo, Count = purchases.Promotions(good) });
+                var caption = Text(label, 14, ConsumerVisuals.Accent(current));
+                caption.AutowrapMode = TextServer.AutowrapMode.Off;
+                row.AddChild(caption);
+            }
             box.AddChild(Text(good.Category, 14, _muted));
-            box.AddChild(Button(good.Name, () => { _shopSelected = good.Id; Render(); }, 0));
+            box.AddChild(Text(good.Name, 20, _ink));
             box.AddChild(Text(_shopOwned ? "已收藏" : $"${ConsumerEngine.Price(good):N0}", 23, CareerVisuals.Teal));
+            void IgnoreMouse(Node node)
+            {
+                if (node is Control control) control.MouseFilter = MouseFilterEnum.Ignore;
+                foreach (var child in node.GetChildren()) IgnoreMouse(child);
+            }
+            IgnoreMouse(margin);
         }
         var pages = new HBoxContainer(); catalog.AddChild(pages);
         if (_shopPage > 0) pages.AddChild(Button("← 上一页", () => { _shopPage--; Render(); }, 140));
         pages.AddChild(Text($"{_shopPage + 1} / {Math.Max(1, (goods.Length + 5) / 6)}", 16, _muted));
         if ((_shopPage + 1) * 6 < goods.Length) pages.AddChild(Button("下一页 →", () => { _shopPage++; Render(); }, 140));
-        if (ConsumerCatalog.Get(_shopSelected) is not { } selected) { catalog.AddChild(Text(_shopOwned ? "尚未拥有收藏品" : "没有符合条件的商品", 18, _muted)); return; }
-        var detail = Card(); detail.SizeFlagsStretchRatio = 1; columns.AddChild(detail); var body = Inner(detail);
+        if (ConsumerCatalog.Get(_shopSelected) is not { } selected) { detail.QueueFree(); catalog.AddChild(Text(_shopOwned ? "尚未拥有收藏品" : "没有符合条件的商品", 18, _muted)); return; }
+        columns.AddChild(detail); ConsumerDetail(d, selected, purchases, body);
+    }
+    private void ConsumerDetail(CareerData d, Good selected, ConsumerPurchases purchases, VBoxContainer body)
+    {
         body.AddChild(new LifestyleArt { Category = selected.Category + " " + selected.Name, CustomMinimumSize = new(0, 205), SizeFlagsHorizontal = SizeFlags.ExpandFill });
         body.AddChild(Text(selected.Name, 28, _gold)); body.AddChild(Text(selected.Tier + " / " + selected.Category, 15, _muted));
         body.AddChild(Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal));
         if (selected.Promo) body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}\n每赛季最多3次", 18, _ink));
         if (_shopOwned)
         {
-            var owned = d.Life.Consumer.Goods.First(g => g.Id == selected.Id);
+            body.AddChild(Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted));
+            var owned = d.Life.Consumer.Goods.FirstOrDefault(g => g.Id == selected.Id && g.Durable);
             foreach (var verb in selected.Verbs)
             {
-                bool used = owned.UsedSeason == d.Season && owned.UsedVerbs.Contains(verb.Id);
+                bool used = owned != null && owned.UsedSeason == d.Season && owned.UsedVerbs.Contains(verb.Id);
                 var button = Button(verb.Name + (used ? " · 本季已举办" : $" · ${ConsumerEngine.HospitalityFee(selected):N0}"), () => ConsumerInvite(d, selected, verb.Id, verb.Slots), 0);
                 button.Disabled = used; body.AddChild(button);
             }

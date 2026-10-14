@@ -16,6 +16,12 @@ public partial class LifestyleArt : Control
             "日常消费" => "M5 11h22l-2 18H7z M11 11V8a5 5 0 0 1 10 0v3",
             "外汇" => "M4 10h23l-5-5 M28 22H5l5 5 M16 7v18",
             "杠杆" => "M4 27V5 M4 27h25 M9 22v-5 M16 22V12 M23 22V7",
+            "做多" => "M5 27V5 M5 27h24 M9 21l6-8 5 4 8-11 M21 6h7v7",
+            "做空" => "M5 27V5 M5 27h24 M9 8l6 8 5-4 8 11 M21 23h7v-7",
+            "确认" => "M6 16l7 7L27 8",
+            "收起" => "M7 21l9-10 9 10",
+            "清除" => "M8 8l16 16 M24 8L8 24",
+            "波动" => "M3 17h6l4-10 6 19 4-12h6",
             "活动与计划" => "M5 6h22v23H5z M5 12h22 M10 3v6 M22 3v6 M10 19l4 4 8-8",
             "我的空间" => "M3 15L16 4l13 11 M7 12v17h18V12 M13 29V18h6v11",
             "消费商城" => "M5 11h22l-2 18H7z M11 11V8a5 5 0 0 1 10 0v3",
@@ -24,7 +30,7 @@ public partial class LifestyleArt : Control
             "公开消息" => "M5 7h22v19H5z M9 12h14 M9 17h14 M9 22h8",
             _ => "M7 3h18v27l-4-3-5 3-5-3-4 3z M11 9h10 M11 15h10 M11 21h6" };
         using var image = new Image();
-        string color = section is "训练装备" or "电竞设备" or "日常消费" or "外汇" ? MarketVisuals.Accent(section).ToHtml(false) : "8bd9cd";
+        string color = section is "训练装备" or "电竞设备" or "日常消费" or "外汇" or "做多" or "做空" ? MarketVisuals.Accent(section).ToHtml(false) : "8bd9cd";
         image.LoadSvgFromString("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><path d='" + path + "' fill='none' stroke='#" + color + "' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>");
         return Icons[section] = ImageTexture.CreateFromImage(image);
     }

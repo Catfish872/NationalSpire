@@ -8,19 +8,20 @@ public static class CareerMarket
     public const decimal FeeRate = .001m;
     public static bool Initialize(CareerData d)
     {
-        if (d.Market.CatalogVersion == 2) return false;
+        if (d.Market.CatalogVersion == MarketCatalog.Version && d.Market.CheckedQuoteCount == d.Market.Quotes.Count) return UpgradePricing(d);
         bool changed = false;
-        foreach (var asset in MarketCatalog.Assets)
-            if (!d.Market.Quotes.ContainsKey(asset.Id))
-            {
-                d.Market.Quotes[asset.Id] = new() { Price = asset.Initial, Previous = asset.Initial, History = [new(d.Day, asset.Initial)] };
-                changed = true;
-            }
         if (d.Market.LastDay == 0) { d.Market.LastDay = d.Day; changed = true; }
         foreach (var asset in MarketCatalog.Assets)
         {
-            var quote = d.Market.Quotes[asset.Id];
-            var first = quote.History.FirstOrDefault() ?? new MarketPoint(d.Day, quote.Price);
+            bool added = !d.Market.Quotes.TryGetValue(asset.Id, out var quote);
+            if (added)
+            {
+                quote = new() { Price = asset.Initial, Previous = asset.Initial, History = [new(d.Day, asset.Initial)] };
+                d.Market.Quotes[asset.Id] = quote; changed = true;
+            }
+            // 已完成起始曲线的存档继续使用原报价和历史；本次只为缺少行情的品牌生成曲线。
+            if (!added && d.Market.CatalogVersion is not (0 or 1)) continue;
+            var first = quote!.History.FirstOrDefault() ?? new MarketPoint(d.Day, quote.Price);
             int missing = Math.Max(0, 60 - quote.History.Count);
             var history = new List<MarketPoint>(); decimal price = first.Price;
             for (int day = first.Day - 1; day >= first.Day - missing; day--)
@@ -33,13 +34,28 @@ public static class CareerMarket
             if (missing > 0) quote.SyntheticThrough = first.Day - 1;
             if (quote.Previous == quote.Price && quote.History.Count == 60 && missing == 59) quote.Previous = quote.History[^2].Price;
         }
-        d.Market.CatalogVersion = 2; changed = true;
-        return changed;
+        changed |= d.Market.CatalogVersion != MarketCatalog.Version;
+        d.Market.CatalogVersion = MarketCatalog.Version;
+        d.Market.CheckedQuoteCount = d.Market.Quotes.Count;
+        return UpgradePricing(d) || changed;
+    }
+    private static bool UpgradePricing(CareerData d)
+    {
+        if (d.Market.PricingVersion >= 1) return false;
+        foreach (var q in d.Market.Quotes.Values)
+        {
+            q.SignalDay = d.Day;
+            q.AppliedSignal = Math.Clamp(q.PendingSignal, -4, 4);
+            if (q.AppliedSignal != 0) Price(q, d.Day, q.Price * (decimal)Math.Exp(-(double)q.AppliedSignal * .01));
+        }
+        d.Market.PricingVersion = 1; d.Market.Revision++;
+        if (d.Market.Quotes.Values.Any(q => q.AppliedSignal != 0)) Accounts(d, d.Day);
+        return true;
     }
     public static decimal Equity(MarketPosition position, decimal price)
         => position.Margin + position.Direction * position.Units * (price - position.Entry);
     public static decimal Net(MarketState market, MarketAccount account)
-        => account.Cash - account.Debt + account.Positions.Sum(p => Math.Max(0, Equity(p, market.Quotes[p.Asset].Price)));
+        => MarketExecution.LiquidationValue(market, account);
 
     private static void Record(MarketAccount account, int day, string text, decimal change)
     {
@@ -47,22 +63,42 @@ public static class CareerMarket
         if (account.Trades.Count > 120) account.Trades.RemoveAt(0);
     }
     public static void Account(MarketState market, MarketAccount account, int day)
+        => Accounts(market, [account], day);
+    private static bool Forced(MarketPosition p, decimal price)
+        => (MarketCatalog.ById[p.Asset].Forex || p.Direction < 0 || p.Leverage > 1)
+            && Equity(p, price) <= (p.InitialMargin ?? p.Margin) * .1m;
+    public static void Accounts(MarketState market, IReadOnlyList<MarketAccount> accounts, int day)
     {
-        if (account.InterestDay == 0) account.InterestDay = day;
-        while (account.InterestDay < day)
+        foreach (var account in accounts)
         {
-            decimal interest = decimal.Round(account.Debt * account.InterestRate, 4);
-            account.Debt += interest; account.InterestDay++;
-            if (interest > 0) Record(account, account.InterestDay, "借款利息", -interest);
+            if (account.InterestDay == 0) account.InterestDay = day;
+            while (account.InterestDay < day)
+            {
+                decimal interest = decimal.Round(account.Debt * account.InterestRate, 4);
+                account.Debt += interest; account.InterestDay++;
+                if (interest > 0) Record(account, account.InterestDay, "借款利息", -interest);
+            }
         }
-        foreach (var p in account.Positions.ToArray())
+        // 每次成交前记录全部已触发仓位，避免前一笔平仓改变报价后漏掉其他人的止损。
+        var pending = new Queue<(MarketAccount Account, MarketPosition Position, bool Forced)>();
+        var triggered = new HashSet<MarketPosition>();
+        while (true)
         {
-            if (!MarketCatalog.ById[p.Asset].Forex && p.Leverage == 1) continue;
-            decimal equity = Equity(p, market.Quotes[p.Asset].Price);
-            if (equity > p.Margin * .1m) continue;
-            decimal returned = CloseValue(p, market.Quotes[p.Asset].Price);
-            account.Cash += returned; account.Positions.Remove(p);
-            Record(account, day, MarketCatalog.ById[p.Asset].Name + "平仓 · 报价" + market.Quotes[p.Asset].Price, returned);
+            foreach (var owner in accounts)
+            foreach (var position in owner.Positions)
+            {
+                decimal price = market.Quotes[position.Asset].Price;
+                bool forced = Forced(position, price);
+                bool stop = position.StopPrice is { } limit && (position.Direction > 0 ? price <= limit : price >= limit);
+                if ((forced || stop) && triggered.Add(position)) pending.Enqueue((owner, position, forced));
+            }
+            if (!pending.TryDequeue(out var item)) break;
+            var (account, p, wasForced) = item;
+            bool liquidated = wasForced || Forced(p, market.Quotes[p.Asset].Price);
+            var exit = MarketExecution.Close(p, market.Quotes[p.Asset]);
+            MarketExecution.Apply(market, p.Asset, exit.Fill, day);
+            account.Cash += exit.Proceeds; account.Positions.Remove(p);
+            Record(account, day, MarketCatalog.ById[p.Asset].Name + (liquidated ? "强制平仓" : "止损平仓") + " · 成交价" + exit.Fill.Average.ToString("0.00000"), exit.Proceeds);
         }
     }
     private static void Accounts(CareerData d, int day)
@@ -72,7 +108,7 @@ public static class CareerMarket
     }
     private static void Price(MarketQuote quote, int day, decimal price)
     {
-        quote.Price = Math.Max(.000001m, decimal.Round(price, 6));
+        MarketExecution.Reprice(quote, Math.Max(.000001m, decimal.Round(price, 6)));
         if (quote.History.Count > 0 && quote.History[^1].Day == day) quote.History[^1] = new(day, quote.Price);
         else quote.History.Add(new(day, quote.Price));
         if (quote.History.Count > HistoryDays) quote.History.RemoveAt(0);
@@ -94,16 +130,17 @@ public static class CareerMarket
             foreach (var asset in MarketCatalog.Assets)
             {
                 var quote = d.Market.Quotes[asset.Id]; quote.Previous = quote.Price;
+                decimal reference = MarketExecution.ReferencePrice(quote);
                 var random = new Random(CareerEngine.StableHash($"{d.WorldId}:market:{day}:{asset.Id}"));
                 double sigma = MarketDynamics.Volatility(d.WorldId, asset);
                 double noise = MarketDynamics.Noise(d.WorldId, day, asset, random);
                 double drift = asset.Forex ? Math.Clamp(.0000012 * (total.GetValueOrDefault(asset.Country) - total.GetValueOrDefault("中国"))
                     + .000003 * (season.GetValueOrDefault(asset.Country) - season.GetValueOrDefault("中国")), -.0005, .0005) : 0;
-                double signal = asset.Forex ? (double)Math.Clamp(quote.PendingSignal, -4, 4) * .01 : 0;
                 // 两项衡量外币相对人民币走强；1 CNY 兑换的外币数量应随之下降。
-                double change = -drift - signal + sigma * noise + MarketDynamics.Shock(random, sigma)
-                    - .03 * Math.Log((double)(quote.Price / anchors[asset.Id])) + (asset.Id == eventAsset ? businessChange : 0);
-                Price(quote, day, quote.Price * (decimal)Math.Exp(change)); quote.PendingSignal = 0;
+                double change = -drift + sigma * noise + MarketDynamics.Shock(random, sigma)
+                    - .03 * Math.Log((double)(reference / anchors[asset.Id])) + (asset.Id == eventAsset ? businessChange : 0);
+                Price(quote, day, reference * (decimal)Math.Exp(change));
+                quote.PendingSignal = quote.AppliedSignal = 0; quote.SignalDay = day;
                 if (asset.Id == eventAsset) MarketDynamics.AddEvent(d, new(day, asset.Id,
                     asset.Name + (businessChange > 0 ? "公布销售增长消息" : "公布供应与成本压力消息"), businessChange));
             }
@@ -120,11 +157,10 @@ public static class CareerMarket
         if (tie.All(f => f.Walkover)) return;
         Initialize(d);
         bool home = tie.Count(f => f.WinnerId == f.HomeId) > tie.Count(f => f.WinnerId == f.AwayId);
-        bool international = c.Kind is "continental" or "worldcup" or "worldfinal";
         int last = CircuitWorld.RoundCount(c);
         double elimination = fixture.Round >= last ? 0 : -Math.Pow(.5, fixture.Round - 1);
         var signals = new Dictionary<string, double>();
-        var people = MarketDynamics.Partners(d);
+        var partners = MarketDynamics.Links(d).GroupBy(p => p.Brand).ToDictionary(g => g.Key, g => g.ToArray());
         var outcomes = tie.SelectMany(f => new[] { (Id: f.HomeId, Won: home), (Id: f.AwayId, Won: !home) }).Distinct().ToArray();
         foreach (var (id, won) in outcomes)
         {
@@ -133,23 +169,43 @@ public static class CareerMarket
             double signal = won ? 1 + (fixture.Round == last ? 2 : 0) : elimination;
             signals[nation] = signals.GetValueOrDefault(nation) + signal / tie.Length;
         }
+        var sponsorOutcomes = tie.SelectMany(f => SeasonCeremony.Participants(d, c, f, true)
+            .Select(id => (Id: id, TeamWon: home, Won: f.WinnerId == f.HomeId))
+            .Concat(SeasonCeremony.Participants(d, c, f, false).Select(id => (Id: id, TeamWon: !home, Won: f.WinnerId == f.AwayId)))).Distinct().ToArray();
         foreach (var asset in MarketCatalog.Assets)
         {
             var quote = d.Market.Quotes[asset.Id];
             if (asset.Forex)
             {
                 double signal = signals.GetValueOrDefault(asset.Country) - signals.GetValueOrDefault("中国");
+                if (quote.SignalDay != d.Day) { quote.SignalDay = d.Day; quote.PendingSignal = quote.AppliedSignal = 0; }
                 quote.PendingSignal += (decimal)signal;
-                if (signal != 0) MarketDynamics.AddEvent(d, new(d.Day, asset.Id, c.Name + "赛果已形成汇市消息，将于下一交易日计入报价。", signal, Competition: c.Id));
+                decimal applied = Math.Clamp(quote.PendingSignal, -4, 4);
+                decimal delta = applied - quote.AppliedSignal;
+                decimal forexBefore = quote.Price;
+                if (delta != 0) Price(quote, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(-(double)delta * .01));
+                quote.AppliedSignal = applied;
+                if (signal != 0) MarketDynamics.AddEvent(d, new(d.Day, asset.Id, c.Name + "赛果已计入当前汇率。", (double)(quote.Price / forexBefore - 1), Competition: c.Id));
                 continue;
             }
-            if (!people.TryGetValue(asset.Name, out var associated)) continue;
-            var related = outcomes.Where(p => associated.Contains(p.Id) || p.Id == "player" && associated.Contains(GroupChats.Human(d))).ToArray();
-            if (related.Length == 0) continue;
-            double change = related.Average(p => international ? p.Won ? .005 + (fixture.Round == last ? .01 : 0) : .005 * elimination : p.Won ? .002 : -.001);
-            change *= MarketDynamics.Sensitivity(d.WorldId, asset.Id);
-            Price(quote, d.Day, quote.Price * (decimal)Math.Exp(change));
-            MarketDynamics.AddEvent(d, new(d.Day, asset.Id, asset.Name + "合作选手完成" + c.Name + $"第{fixture.Round}轮，品牌报价{change:+0.00%;-0.00%;0.00%}。", change, related[0].Id, c.Id));
+            if (!partners.TryGetValue(asset.Name, out var links)) continue;
+            var related = new List<(string Id, string Detail, double Signal)>();
+            foreach (var link in links)
+            {
+                var seats = sponsorOutcomes.Where(p => link.Club ? (c.EntrantClubs.GetValueOrDefault(p.Id) ?? EsportsWorld.ClubOf(d, p.Id)) == link.Target
+                        : p.Id == link.Target || p.Id == "player" && d.HumanIds.Count == 0 && link.Target == GroupChats.Human(d)).Distinct().ToArray();
+                if (seats.Length == 0) continue;
+                double signal = seats.Average(p => MarketDynamics.ResultSignal(c, fixture.Round, link.Club ? p.TeamWon : p.Won));
+                string subject = link.Club ? EsportsWorld.ClubName(d, link.Target) : CareerEngine.DisplayName(d, link.Target);
+                related.Add((seats[0].Id, (link.Club ? "俱乐部赞助：" : "个人代言：") + subject + (signal > 0 ? "获胜" : signal < 0 ? "失利" : "本轮无净利好"), signal));
+            }
+            if (related.Count == 0) continue;
+            double change = MarketDynamics.BrandChange(d.WorldId, asset, related.Average(p => p.Signal));
+            decimal before = quote.Price;
+            Price(quote, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(change));
+            double actual = (double)(quote.Price / before - 1);
+            MarketDynamics.AddEvent(d, new(d.Day, asset.Id, asset.Name + " · " + string.Join("；", related.Select(p => p.Detail))
+                + $"；{c.Name}第{fixture.Round}轮，品牌报价{actual:+0.00%;-0.00%;0.00%}。", actual, related[0].Id, c.Id));
         }
         d.Market.Revision++; Accounts(d, d.Day);
     }
@@ -164,14 +220,12 @@ public static class CareerMarket
         else if (margin + .001m + OpenFee(asset, margin + .001m, leverage) <= budget) margin += .001m;
         return margin;
     }
-    public static decimal CloseValue(MarketPosition position, decimal price)
-        => decimal.Round(Math.Max(0, Equity(position, price) - (MarketCatalog.ById[position.Asset].Forex ? 0 : Math.Abs(position.Units * price) * FeeRate)), 4);
     public static string? Trade(CareerData d, MarketOrder order)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.MarketTrade);
         var account = d.Life.Trading;
-        if (order.Amount < 0 || order.Amount > int.MaxValue) return "请输入有效金额。";
-        if (order.Action is "open" or "close" && order.QuoteRevision != d.Market.Revision) return "报价已更新，请查看最新价格后确认。";
+        if (order.Amount < 0) return "请输入有效金额。";
+        if (order.Action is "open" or "close" or "margin" or "stop" && order.QuoteRevision != d.Market.Revision) return "报价已更新，请查看最新价格后确认。";
         decimal amount = decimal.Round(order.Amount, 4);
         switch (order.Action)
         {
@@ -189,25 +243,47 @@ public static class CareerMarket
             case "repay":
                 if (amount <= 0 || amount > account.Cash || amount > account.Debt) return "还款金额超过余额或欠款。";
                 account.Debt -= amount; account.Cash -= amount; amount = -amount; break;
+            case "repay-all":
+                amount = account.Debt;
+                if (amount <= 0) return "当前没有借款。";
+                if (amount > account.Cash) return "交易账户余额不足，还差" + CareerMoney.Format(amount - account.Cash) + "。";
+                account.Cash -= amount; account.Debt = 0; amount = -amount; break;
             case "open":
                 if (!MarketCatalog.ById.TryGetValue(order.Asset, out var asset)) return "找不到这项资产。";
-                if (!Leverages.Contains(order.Leverage) || order.Direction is not (-1 or 1) || !asset.Forex && order.Direction != 1) return "请选择有效的杠杆；品牌股票支持买入。";
+                if (!Leverages.Contains(order.Leverage) || order.Direction is not (-1 or 1)) return "请选择有效的杠杆和买卖方向。";
                 decimal fee = OpenFee(asset, amount, order.Leverage);
                 if (amount <= 0 || amount + fee > account.Cash) return "余额不足以支付本金与手续费。";
-                decimal price = d.Market.Quotes[asset.Id].Price;
+                var fill = MarketExecution.Open(asset, d.Market.Quotes[asset.Id], amount * order.Leverage, order.Direction);
                 account.Cash -= amount + fee;
-                account.Positions.Add(new() { Id = ++account.NextPosition, Asset = asset.Id, Entry = price, Margin = amount,
-                    Units = amount * order.Leverage / price, Direction = order.Direction, Leverage = order.Leverage });
+                account.Positions.Add(new() { Id = ++account.NextPosition, Asset = asset.Id, Entry = fill.Average, Margin = amount, InitialMargin = amount, OpeningFee = fee,
+                    Units = fill.Units, Direction = order.Direction, Leverage = order.Leverage });
+                MarketExecution.Apply(d.Market, asset.Id, fill, d.Day);
                 amount = -(amount + fee); break;
+            case "margin":
+                var funded = account.Positions.FirstOrDefault(p => p.Id == order.Position);
+                if (funded == null) return "这笔持仓已经结束。";
+                if (amount <= 0 || amount > account.Cash) return "追加金额须大于零且不超过交易账户余额。";
+                funded.InitialMargin ??= funded.Margin;
+                funded.OpeningFee ??= OpenFee(MarketCatalog.ById[funded.Asset], funded.Margin, funded.Leverage);
+                funded.Margin += amount; account.Cash -= amount; amount = -amount; break;
+            case "stop":
+                var protectedPosition = account.Positions.FirstOrDefault(p => p.Id == order.Position);
+                if (protectedPosition == null) return "这笔持仓已经结束。";
+                decimal current = d.Market.Quotes[protectedPosition.Asset].Price;
+                if (order.StopPrice is { } stopPrice && (stopPrice <= 0 || (protectedPosition.Direction > 0 ? stopPrice >= current : stopPrice <= current)))
+                    return protectedPosition.Direction > 0 ? "做多止损价须大于零且低于当前报价。" : "做空止损价须高于当前报价。";
+                protectedPosition.StopPrice = order.StopPrice; amount = 0; break;
             case "close":
                 var position = account.Positions.FirstOrDefault(p => p.Id == order.Position);
                 if (position == null) return "这笔持仓已经结束。";
-                decimal current = d.Market.Quotes[position.Asset].Price;
-                amount = CloseValue(position, current);
-                account.Cash += amount; account.Positions.Remove(position); break;
+                var exit = MarketExecution.Close(position, d.Market.Quotes[position.Asset]);
+                amount = exit.Proceeds;
+                account.Cash += amount; account.Positions.Remove(position);
+                MarketExecution.Apply(d.Market, position.Asset, exit.Fill, d.Day); break;
             default: return "交易操作无效。";
         }
-        Record(account, d.Day, order.Action switch { "deposit" => "转入", "withdraw" => "转出", "borrow" => "借款", "repay" => "还款", "open" => MarketCatalog.ById[order.Asset].Name + "建仓", _ => "平仓" }, amount);
+        Record(account, d.Day, order.Action switch { "deposit" => "转入", "withdraw" => "转出", "borrow" => "借款", "repay" or "repay-all" => "还款", "open" => MarketCatalog.ById[order.Asset].Name + "建仓", "margin" => "追加保证金", "stop" => order.StopPrice == null ? "取消止损" : "设置止损", _ => "平仓" }, amount);
+        if (order.Action is "open" or "close") Accounts(d, d.Day);
         return null;
     }
 }

@@ -95,7 +95,7 @@ public static class CareerMoney
     public static void Add(CareerData d, decimal amount)
     {
         decimal balance = Balance(d) + amount;
-        d.Credits = checked((int)decimal.Floor(balance));
+        d.Credits = checked((long)decimal.Floor(balance));
         d.Life.CreditFraction = balance - d.Credits;
     }
     // 历史社区文字只调整展示，原始发言与金额记录保留。

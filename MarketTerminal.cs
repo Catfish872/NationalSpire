@@ -11,22 +11,27 @@ internal partial class MarketTerminal : VBoxContainer
     private MarketEvent[] _selectedEvents = [];
     private readonly Label[] _metrics = new Label[4];
     private readonly MarketAssetButton[] _rows = new MarketAssetButton[8];
-    private readonly Button[] _holdings = new Button[5];
+    private readonly MarketPositionCard[] _holdings = new MarketPositionCard[5];
     private readonly Label[] _trades = new Label[5];
-    private readonly Button[] _events = new Button[4];
+    private readonly MarketEventRow[] _events = new MarketEventRow[4];
+    private readonly Label[] _sources = new Label[3];
     private readonly Dictionary<string, string> _searchText = [];
     private readonly HashSet<string> _watch = [];
     private string _identity = "", _selected = "", _query = "";
     private bool _forex, _watchOnly, _settingAmount;
     private int _portion;
-    private int _page, _holdPage, _tradePage, _range = 60, _sort;
+    private int _page, _pageCount = 1, _holdPage, _tradePage, _range = 60, _sort;
     private string _country = "全部", _sector = "全部";
     private Label _name = null!, _quote = null!, _description = null!, _fee = null!, _assetCount = null!;
+    private Label _depth = null!, _volatility = null!, _newsTitle = null!, _cost = null!, _notional = null!, _buyPrice = null!, _sellPrice = null!;
+    private ProgressBar _volatilityBar = null!;
+    private VBoxContainer _overview = null!;
     private Button _pin = null!;
     private SpinBox _amount = null!, _transfer = null!;
     private OptionButton _leverage = null!;
     private HBoxContainer _columns = null!;
     private VBoxContainer _right = null!;
+    private ScrollContainer _assetScroll = null!;
     private MarketChart _chart = null!;
     private readonly ConfigFile _preferences = new();
     private bool _loaded;
@@ -46,7 +51,7 @@ internal partial class MarketTerminal : VBoxContainer
         panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232f", "345363", 10, 10)); parent.AddChild(panel);
         var box = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; panel.AddChild(box); return box;
     }
-    private static SpinBox Money() => new() { MinValue = 0, MaxValue = int.MaxValue * 10.0, AllowGreater = true, Value = 1000, Step = 10, Prefix = "$", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 46) };
+    private static SpinBox Money() => new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, Value = 1000, Step = .01, Prefix = "$", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 46) };
     private IEnumerator<bool>? _builder;
     internal MarketTerminal()
     {
@@ -76,46 +81,84 @@ internal partial class MarketTerminal : VBoxContainer
     {
         SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var top = new HBoxContainer(); AddChild(top);
-        string[] titles = ["账户净资产", "可用余额", "持仓保证金", "待偿借款"];
+        string[] titles = ["预计清仓净资产", "可用余额", "持仓保证金", "待偿借款"];
         for (int i = 0; i < 4; i++) { var card = Panel(top); card.AddChild(Label(titles[i], 15)); _metrics[i] = Label("", 27, CareerVisuals.Gold); card.AddChild(_metrics[i]); yield return true; }
         _columns = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; AddChild(_columns);
         var left = Panel(_columns, 22); var center = Panel(_columns, 53); _right = Panel(_columns, 25);
+        left.SizeFlagsVertical = SizeFlags.ExpandFill;
         left.AddChild(Label("MARKET / 行情", 21, CareerVisuals.Gold));
         var kinds = new HBoxContainer(); left.AddChild(kinds);
-        var brands = Button("品牌", () => { _forex = false; _page = 0; RefreshList(); }); brands.Icon = LifestyleArt.Icon("日常消费"); kinds.AddChild(brands);
-        var forex = Button("外汇", () => { _forex = true; _page = 0; RefreshList(); }); forex.Icon = LifestyleArt.Icon("外汇"); kinds.AddChild(forex);
+        var brands = Button("品牌", () => { _forex = false; ResetList(); }); brands.Icon = LifestyleArt.Icon("日常消费"); kinds.AddChild(brands);
+        var forex = Button("外汇", () => { _forex = true; ResetList(); }); forex.Icon = LifestyleArt.Icon("外汇"); kinds.AddChild(forex);
         var search = new LineEdit { PlaceholderText = "搜索品牌、选手或俱乐部", SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        left.AddChild(search); search.TextChanged += value => { _query = value; _page = 0; RefreshList(); };
+        left.AddChild(search); search.TextChanged += value => { _query = value; ResetList(); };
         var filters = new HBoxContainer(); left.AddChild(filters);
         var country = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill }; foreach (string value in new[] { "全部" }.Concat(EsportsWorld.Countries)) country.AddItem(value);
-        filters.AddChild(country); country.ItemSelected += i => { _country = country.GetItemText((int)i); _page = 0; RefreshList(); };
+        filters.AddChild(country); country.ItemSelected += i => { _country = country.GetItemText((int)i); ResetList(); };
         var sector = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill }; foreach (string value in new[] { "全部", "训练装备", "电竞设备", "日常消费" }) sector.AddItem(value);
-        filters.AddChild(sector); sector.ItemSelected += i => { _sector = sector.GetItemText((int)i); _page = 0; RefreshList(); };
+        filters.AddChild(sector); sector.ItemSelected += i => { _sector = sector.GetItemText((int)i); ResetList(); };
         var sort = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill }; foreach (string value in new[] { "当日涨幅", "近7日涨幅", "近30日涨幅", "波动幅度" }) sort.AddItem(value);
-        left.AddChild(sort); sort.ItemSelected += i => { _sort = (int)i; _page = 0; RefreshList(); };
-        var watched = new CheckBox { Text = "只看自选" }; left.AddChild(watched); watched.Toggled += value => { _watchOnly = value; _page = 0; RefreshList(); };
-        for (int i = 0; i < _rows.Length; i++) { int row = i; _rows[i] = new MarketAssetButton(); _rows[i].Pressed += () => SelectRow(row); left.AddChild(_rows[i]); yield return true; }
+        left.AddChild(sort); sort.ItemSelected += i => { _sort = (int)i; ResetList(); };
+        var watched = new CheckBox { Text = "只看自选" }; left.AddChild(watched); watched.Toggled += value => { _watchOnly = value; ResetList(); };
+        _assetScroll = new ScrollContainer { Name = "MarketAssets", HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+            SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 284), MouseFilter = MouseFilterEnum.Stop, MouseForcePassScrollEvents = false };
+        left.AddChild(_assetScroll);
+        var assetList = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _assetScroll.AddChild(assetList);
+        for (int i = 0; i < _rows.Length; i++) { int row = i; _rows[i] = new MarketAssetButton(); _rows[i].Pressed += () => SelectRow(row); assetList.AddChild(_rows[i]); yield return true; }
         yield return true;
         _assetCount = Label(""); left.AddChild(_assetCount);
         var pages = new HBoxContainer(); left.AddChild(pages);
-        pages.AddChild(Button("←", () => { _page = Math.Max(0, _page - 1); RefreshList(); })); pages.AddChild(Button("→", () => { _page++; RefreshList(); }));
+        pages.AddChild(Button("←", () => ChangePage(-1))); pages.AddChild(Button("→", () => ChangePage(1)));
         var heading = new HBoxContainer(); center.AddChild(heading); _name = Label("", 26, CareerVisuals.Gold); heading.AddChild(_name);
         _pin = Button("☆", ToggleWatch); _pin.SizeFlagsHorizontal = SizeFlags.ShrinkEnd; _pin.CustomMinimumSize = new(48, 40); heading.AddChild(_pin);
         _quote = Label("", 30, CareerVisuals.Teal); center.AddChild(_quote);
         _description = Label("", 15); center.AddChild(_description);
         var ranges = new HBoxContainer(); center.AddChild(ranges);
-        foreach (int count in new[] { 30, 60, 90, 180 }) ranges.AddChild(Button(count + "日", () => { _range = count; RefreshSelection(); }));
+        foreach (int count in new[] { 30, 60, 90, 180 }) ranges.AddChild(Button(count + "日", () => { _range = count; RefreshChart(); }));
         _chart = new MarketChart { CustomMinimumSize = new(0, 270), SizeFlagsHorizontal = SizeFlags.ExpandFill }; center.AddChild(_chart);
-        center.AddChild(Label("价格背后的消息", 20, CareerVisuals.Gold));
-        for (int i = 0; i < _events.Length; i++) { int row = i; _events[i] = Button("", () => { if (row < _selectedEvents.Length && _selectedEvents[row].Person.Length > 0) _person?.Invoke(_selectedEvents[row].Person); }); _events[i].Alignment = HorizontalAlignment.Left; center.AddChild(_events[i]); yield return true; }
+        _overview = new VBoxContainer(); center.AddChild(_overview);
+        var traits = new HBoxContainer(); _overview.AddChild(traits);
+        foreach (string title in new[] { "承接规模", "日常波动" })
+        {
+            var card = Panel(traits); var caption = new HBoxContainer(); card.AddChild(caption);
+            var icon = new TextureRect { Texture = LifestyleArt.Icon(title == "承接规模" ? "外汇" : "波动"), CustomMinimumSize = new(18, 18), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered };
+            caption.AddChild(icon); caption.AddChild(Label(title, 13));
+            var value = Label("", 21, CareerVisuals.Gold); card.AddChild(value);
+            if (title == "承接规模") { _depth = value; card.TooltipText = "承接规模越大，同等金额订单造成的成交价差越小。"; }
+            else
+            {
+                _volatility = value;
+                card.TooltipText = "数值越大，日常报价起伏通常越明显。刻度范围0%至3%。";
+                _volatilityBar = new ProgressBar { MaxValue = .03, Step = .000001, ShowPercentage = false, CustomMinimumSize = new(0, 5), MouseFilter = MouseFilterEnum.Ignore };
+                _volatilityBar.AddThemeStyleboxOverride("background", CareerVisuals.Box("091923", "203844", 3, 0));
+                _volatilityBar.AddThemeStyleboxOverride("fill", CareerVisuals.Box("e4b367", "e4b367", 3, 0)); card.AddChild(_volatilityBar);
+            }
+        }
+        var sources = new HFlowContainer(); _overview.AddChild(sources);
+        for (int i = 0; i < _sources.Length; i++)
+        {
+            var source = new HBoxContainer(); sources.AddChild(source);
+            source.AddChild(new TextureRect { Texture = LifestyleArt.Icon(i == 0 ? "训练装备" : i == 1 ? "人气榜" : "交易市场"), CustomMinimumSize = new(16, 16), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
+            _sources[i] = Label("", 13); _sources[i].SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            _sources[i].AutowrapMode = TextServer.AutowrapMode.Off;
+            source.AddChild(_sources[i]);
+        }
+        _newsTitle = Label("近期动态", 18, CareerVisuals.Gold); center.AddChild(_newsTitle);
+        for (int i = 0; i < _events.Length; i++)
+        {
+            int row = i; _events[i] = new MarketEventRow();
+            _events[i].Pressed += () => { if (row < _selectedEvents.Length && _selectedEvents[row].Person.Length > 0) _person?.Invoke(_selectedEvents[row].Person); };
+            center.AddChild(_events[i]); yield return true;
+        }
         yield return true;
         _right.AddChild(Label("资金存取", 22, CareerVisuals.Gold)); _transfer = Money(); _right.AddChild(_transfer);
         var transfers = new GridContainer { Columns = 2 }; _right.AddChild(transfers);
         foreach (var (action, title) in new[] { ("deposit", "存入"), ("withdraw", "取出"), ("borrow", "借款"), ("repay", "还款") }) { var button = Button(title, () => { _transfer.Apply(); Submit(new(action, Amount: (decimal)_transfer.Value / 10)); }); button.Icon = LifestyleArt.Icon(action is "deposit" or "withdraw" ? "外汇" : "收支记录"); transfers.AddChild(button); }
+        _right.AddChild(Button("还清借款", () => Submit(new("repay-all"))));
         _right.AddChild(Label("借款 $500—50,000，日利率按金额为0.02% / 0.04% / 0.07%。", 13));
         _right.AddChild(new HSeparator()); _right.AddChild(Label("下单", 22, CareerVisuals.Gold));
         _right.AddChild(Label("保证金", 14));
-        _amount = Money(); _amount.Step = .01; _right.AddChild(_amount);
+        _amount = Money(); _amount.Step = .01; _amount.UpdateOnTextChanged = true; _right.AddChild(_amount);
         _amount.GetLineEdit().TextChanged += _ => { if (!_settingAmount) _portion = 0; };
         _amount.ValueChanged += _ => { if (!_settingAmount) { _portion = 0; RefreshFee(); } };
         var portions = new HBoxContainer(); _right.AddChild(portions);
@@ -125,13 +168,21 @@ internal partial class MarketTerminal : VBoxContainer
         }));
         _right.AddChild(Label("杠杆倍数", 14));
         _leverage = new OptionButton(); foreach (int value in CareerMarket.Leverages) _leverage.AddIconItem(LifestyleArt.Icon("杠杆"), value + " ×"); _right.AddChild(_leverage); _leverage.ItemSelected += _ => RefreshFee();
-        _fee = Label("", 15); _right.AddChild(_fee);
-        var buy = Button("买入 / 做多 ↑", () => Open(1)); buy.Icon = LifestyleArt.Icon("交易市场"); MarketVisuals.Style(buy, "日常消费", true); buy.AddThemeColorOverride("font_color", CareerVisuals.Teal); _right.AddChild(buy);
-        var sell = Button("做空 ↓", () => Open(-1)); sell.Icon = LifestyleArt.Icon("交易市场"); sell.AddThemeColorOverride("font_color", new Color("f095a3")); _right.AddChild(sell);
+        var cost = Panel(_right); cost.AddChild(Label("合计扣款", 13)); _cost = Label("", 26, CareerVisuals.Gold); cost.AddChild(_cost);
+        Label AmountRow(string title)
+        {
+            var line = new HBoxContainer(); cost.AddChild(line); line.AddChild(Label(title, 13));
+            var value = Label("", 14); value.HorizontalAlignment = HorizontalAlignment.Right; line.AddChild(value); return value;
+        }
+        _notional = AmountRow("交易总额"); _fee = AmountRow("手续费");
+        _buyPrice = Label("", 13); _right.AddChild(_buyPrice);
+        var buy = Button("做多", () => Open(1)); MarketVisuals.ActionStyle(buy, "做多"); _right.AddChild(buy);
+        _sellPrice = Label("", 13); _right.AddChild(_sellPrice);
+        var sell = Button("做空", () => Open(-1)); MarketVisuals.ActionStyle(sell, "做空"); _right.AddChild(sell);
         sell.Name = "Short";
         var bottom = new HBoxContainer(); AddChild(bottom); var holdings = Panel(bottom); var ledger = Panel(bottom);
         holdings.AddChild(Label("持仓", 22, CareerVisuals.Gold));
-        for (int i = 0; i < _holdings.Length; i++) { int row = i; _holdings[i] = Button("", () => ClosePosition(row)); _holdings[i].Alignment = HorizontalAlignment.Left; holdings.AddChild(_holdings[i]); yield return true; }
+        for (int i = 0; i < _holdings.Length; i++) { int row = i; _holdings[i] = new MarketPositionCard(() => ClosePosition(row), Submit); holdings.AddChild(_holdings[i]); yield return true; }
         var hp = new HBoxContainer(); holdings.AddChild(hp); hp.AddChild(Button("←", () => { _holdPage = Math.Max(0, _holdPage - 1); RefreshAccount(); })); hp.AddChild(Button("→", () => { _holdPage++; RefreshAccount(); }));
         ledger.AddChild(Label("结算与成交", 22, CareerVisuals.Gold));
         for (int i = 0; i < _trades.Length; i++) { _trades[i] = Label("", 16); ledger.AddChild(_trades[i]); yield return true; }
@@ -154,14 +205,18 @@ internal partial class MarketTerminal : VBoxContainer
             _identity = identity; _portion = 0; _watch.Clear(); _selected = ""; _page = _holdPage = _tradePage = 0;
             if (_preferences.HasSectionKey(identity, "watch")) foreach (string id in _preferences.GetValue(identity, "watch").AsStringArray()) _watch.Add(id);
         }
-        _searchText.Clear(); var partners = MarketDynamics.Partners(d);
+        _searchText.Clear(); var links = MarketDynamics.Links(d); var partners = MarketDynamics.Partners(d, links);
+        var clubs = links.Where(l => l.Club).GroupBy(l => l.Brand).ToDictionary(g => g.Key,
+            g => string.Join(" ", g.Select(l => EsportsWorld.ClubName(d, l.Target)).Distinct()));
         var people = d.People.ToDictionary(p => p.Id);
         foreach (var asset in MarketCatalog.Assets)
-            _searchText[asset.Id] = asset.Name + " " + asset.Country + " " + asset.Sector + " " + string.Join(" ", (partners.GetValueOrDefault(asset.Name) ?? []).Select(id => people.TryGetValue(id, out var p) ? p.PublicName + " " + EsportsWorld.ClubName(d, p.ClubId) : id == "player" ? CareerEngine.Name(d) : id));
+            _searchText[asset.Id] = asset.Name + " " + asset.Country + " " + asset.Sector + " " + clubs.GetValueOrDefault(asset.Name) + " " + string.Join(" ", (partners.GetValueOrDefault(asset.Name) ?? []).Select(id => people.TryGetValue(id, out var p) ? p.PublicName + " " + EsportsWorld.ClubName(d, p.ClubId) : id == "player" ? CareerEngine.Name(d) : id));
         RefreshList(); RefreshAccount();
     }
-    internal void Unbind() { _data = null; _submit = null; _person = null; _selectedEvents = []; _searchText.Clear(); }
+    internal void Unbind() { _data = null; _submit = null; _person = null; _selectedEvents = []; _searchText.Clear(); foreach (var card in _holdings) card?.Bind(null, null); }
     private MarketAsset[] _visible = [];
+    private void ResetList() { _page = 0; _assetScroll.ScrollVertical = 0; RefreshList(); }
+    private void ChangePage(int direction) { _page = (_page + direction + _pageCount) % _pageCount; _assetScroll.ScrollVertical = 0; RefreshList(); }
     private double SortValue(MarketAsset asset)
     {
         var q = _data!.Market.Quotes[asset.Id];
@@ -175,7 +230,8 @@ internal partial class MarketTerminal : VBoxContainer
         var assets = MarketCatalog.Assets.Where(a => a.Forex == _forex && (_country == "全部" || a.Country == _country)
             && (_forex || _sector == "全部" || a.Sector == _sector) && (!_watchOnly || _watch.Contains(a.Id)) && _searchText[a.Id].Contains(_query, StringComparison.OrdinalIgnoreCase))
             .OrderByDescending(a => _watch.Contains(a.Id)).ThenByDescending(SortValue).ThenBy(a => a.Id, StringComparer.Ordinal).ToArray();
-        _page = Math.Min(_page, Math.Max(0, (assets.Length - 1) / _rows.Length)); _visible = assets.Skip(_page * _rows.Length).Take(_rows.Length).ToArray();
+        _pageCount = Math.Max(1, (assets.Length + _rows.Length - 1) / _rows.Length);
+        _page = Math.Min(_page, _pageCount - 1); _visible = assets.Skip(_page * _rows.Length).Take(_rows.Length).ToArray();
         for (int i = 0; i < _rows.Length; i++)
         {
             _rows[i].Visible = i < _visible.Length;
@@ -183,7 +239,7 @@ internal partial class MarketTerminal : VBoxContainer
             var asset = _visible[i];
             _rows[i].Bind(asset, _data.Market.Quotes[asset.Id], _watch.Contains(asset.Id), asset.Id == _selected);
         }
-        _assetCount.Text = $"{assets.Length} 项 · {_page + 1} / {Math.Max(1, (assets.Length + _rows.Length - 1) / _rows.Length)}";
+        _assetCount.Text = $"{assets.Length} 项 · {_page + 1} / {_pageCount}";
         if (!assets.Any(a => a.Id == _selected)) _selected = assets.FirstOrDefault()?.Id ?? "";
         RefreshSelection();
     }
@@ -193,18 +249,53 @@ internal partial class MarketTerminal : VBoxContainer
         if (_data == null) return;
         if (!MarketCatalog.ById.TryGetValue(_selected, out var asset))
         {
-            _name.Text = "没有符合条件的资产"; _quote.Text = _description.Text = _fee.Text = "";
+            _name.Text = "没有符合条件的资产"; _name.TooltipText = "";
+            _quote.Text = _description.Text = _fee.Text = _cost.Text = _notional.Text = _buyPrice.Text = _sellPrice.Text = "";
+            _overview.Hide(); _newsTitle.Hide();
             _selectedEvents = []; foreach (var item in _events) item.Hide(); _chart.Set([], ""); return;
         }
         var quote = _data.Market.Quotes[_selected]; _name.Text = asset.Name; _name.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));
         for (int i = 0; i < _visible.Length; i++) MarketVisuals.Style(_rows[i], _visible[i].Sector, _visible[i].Id == _selected); _pin.Text = _watch.Contains(_selected) ? "★" : "☆";
         _quote.Text = (asset.Forex ? quote.Price.ToString("0.00000") : CareerMoney.Format(quote.Price)) + $"   {quote.Price / quote.Previous - 1:+0.00%;-0.00%;0.00%}";
-        _description.Text = asset.Country + " · " + asset.Sector + (asset.Forex ? "\n1 人民币 = " + quote.Price.ToString("0.00000") + " " + asset.Name.Replace("人民币 / ", "") : "\n" + RegionalOrganizations.SponsorDescription(asset.Name));
-        _chart.Set(quote.History.TakeLast(_range).ToArray(), _data.WorldId + asset.Id, asset.Forex ? 1 : 10);
-        _right.GetNode<Control>("Short").Visible = asset.Forex;
-        var events = _selectedEvents = _data.Market.Events.Where(e => e.Asset == _selected).TakeLast(4).Reverse().ToArray();
-        for (int i = 0; i < _events.Length; i++) { _events[i].Visible = i < events.Length; if (i < events.Length) { _events[i].Text = events[i].Text; _events[i].TooltipText = events[i].Text; } }
+        _description.Text = asset.Country + " · " + asset.Sector + (asset.Forex ? "\n1 人民币 = " + quote.Price.ToString("0.00000") + " " + asset.Name.Replace("人民币 / ", "") : "");
+        _name.TooltipText = asset.Forex ? "" : RegionalOrganizations.SponsorDescription(asset.Name);
+        RefreshChart(); _overview.Show();
+        decimal depth = MarketExecution.Depth(asset) * 10;
+        _depth.Text = depth >= 1_000_000_000_000m ? (depth / 1_000_000_000_000m).ToString("0.##") + " 万亿美元" : (depth / 100_000_000m).ToString("0.##") + " 亿美元";
+        double volatility = MarketDynamics.Volatility(_data.WorldId, asset); _volatility.Text = volatility.ToString("0.00%"); _volatilityBar.Value = volatility;
+        string industry = asset.Sector switch { "训练装备" => "工业与基建", "电竞设备" => "高新与服务产业", _ => "收入与服务产业" };
+        string[] sources = asset.Forex ? ["中外国运", "国际赛果"] : [industry, "代言人气", "赛事表现"];
+        for (int i = 0; i < _sources.Length; i++)
+        {
+            var source = (Control)_sources[i].GetParent(); source.Visible = i < sources.Length;
+            if (i < sources.Length) { _sources[i].Text = sources[i]; _sources[i].AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector)); }
+        }
+        ((TextureRect)_sources[0].GetParent().GetChild(0)).Texture = LifestyleArt.Icon(asset.Forex ? "外汇" : asset.Sector);
+        _right.GetNode<Control>("Short").Visible = true;
+        var news = _data.Market.Events.AsEnumerable().Reverse().Where(e => e.Asset == _selected)
+            .Select(e => (Event: e, Title: EventTitle(e, asset))).Where(e => e.Title.Length > 0).Take(_events.Length).ToArray();
+        _selectedEvents = news.Select(e => e.Event).ToArray(); _newsTitle.Visible = news.Length > 0;
+        for (int i = 0; i < _events.Length; i++) { _events[i].Visible = i < news.Length; if (i < news.Length) _events[i].Bind(news[i].Event, news[i].Title); }
         RefreshFee();
+    }
+    private void RefreshChart()
+    {
+        if (_data != null && MarketCatalog.ById.TryGetValue(_selected, out var asset))
+            _chart.Set(_data.Market.Quotes[_selected].History.TakeLast(_range).ToArray(), _data.WorldId + asset.Id, asset.Forex ? 1 : 10);
+    }
+    private string EventTitle(MarketEvent item, MarketAsset asset)
+    {
+        // 旧版待计价记录保留在存档中，页面选择已经发生的市场事实。
+        if (item.Text.Contains("下一日") || item.Text.Contains("次日") || item.Text.Contains("待计入")) return "";
+        if (item.Competition.Length > 0)
+        {
+            string? name = _data!.Esports.Competitions.FirstOrDefault(c => c.Id == item.Competition)?.Name;
+            if (name == null) { int end = item.Text.IndexOf("赛果", StringComparison.Ordinal); name = end > 0 ? item.Text[..Math.Min(end, 64)] : "赛事表现"; }
+            return name + " · 赛事影响";
+        }
+        if (item.Text.Contains("已写入") || item.Text.Contains("已计入")) return "";
+        string text = item.Text.StartsWith(asset.Name, StringComparison.Ordinal) ? item.Text[asset.Name.Length..].TrimStart(' ', '·', '：') : item.Text;
+        return text.Length > 96 ? text[..96] + "…" : text;
     }
     private void RefreshFee()
     {
@@ -218,7 +309,11 @@ internal partial class MarketTerminal : VBoxContainer
         }
         decimal margin = (decimal)_amount.Value / 10;
         decimal fee = CareerMarket.OpenFee(asset, margin, leverage);
-        _fee.Text = $"实际买入总额 {CareerMoney.Format(margin * leverage)}\n手续费 {CareerMoney.Format(fee)}\n合计扣款 {CareerMoney.Format(margin + fee)}" + (asset.Forex || leverage > 1 ? $"\n反向 {90.0 / leverage:0.00}% 自动平仓" : "\n现金买入");
+        string Quote(decimal value) => asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value);
+        var buy = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, 1);
+        var sell = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, -1);
+        _cost.Text = CareerMoney.Format(margin + fee); _notional.Text = CareerMoney.Format(margin * leverage); _fee.Text = CareerMoney.Format(fee);
+        _buyPrice.Text = "预计成交均价  " + Quote(buy.Average); _sellPrice.Text = "预计成交均价  " + Quote(sell.Average);
     }
     private void RefreshAccount()
     {
@@ -228,8 +323,8 @@ internal partial class MarketTerminal : VBoxContainer
         _holdPage = Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5));
         for (int i = 0; i < 5; i++)
         {
-            var p = account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault(); _holdings[i].Visible = p != null || i == 0; _holdings[i].Disabled = p == null;
-            _holdings[i].Text = p == null ? "暂无持仓" : MarketCatalog.ById[p.Asset].Name + " · " + CareerMoney.Format(CareerMarket.Equity(p, _data.Market.Quotes[p.Asset].Price) - p.Margin) + "  平仓 ↗";
+            var p = account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault(); _holdings[i].Visible = p != null || i == 0;
+            _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision);
         }
         _tradePage = Math.Min(_tradePage, Math.Max(0, (account.Trades.Count - 1) / 5));
         var trades = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray();

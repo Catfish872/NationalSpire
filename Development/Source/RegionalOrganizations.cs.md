@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`02428933DC75559746015DE3E298441B7E89883D38A895D8EBE01E5E76D101FE`。来源：[源码](../../RegionalOrganizations.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A9BAC98094DD72D0449E140CD3F5E1EF8D5A778748FE59578206B3FFFEC19301`。来源：[源码](../../RegionalOrganizations.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -184,7 +184,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)；[`NationalSpire.RegionalOrganizations.Sponsor(NationalSpire.CareerData, string, int, string)`](RegionalOrganizations.cs.md#symbol-fac63dbdfc35)
+**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.RegionalOrganizations.Sponsor(NationalSpire.CareerData, string, int, string)`](RegionalOrganizations.cs.md#symbol-fac63dbdfc35)；[`NationalSpire.RegionalOrganizations.SponsorCatalog()`](RegionalOrganizations.cs.md#symbol-c12ea64ac22f)
 
 **调用：** [`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；`System.Math.Clamp(int, int, int)`
 
@@ -198,11 +198,33 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-c12ea64ac22f"></a>
+
+## `NationalSpire.RegionalOrganizations.SponsorCatalog() — internal static IEnumerable<(string Country, int Sector, string Brand)> SponsorCatalog()`
+
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)
+
+**调用：** [`NationalSpire.CareerCommerce.LegacySponsors(int)`](CareerCommerce.cs.md#symbol-0d09d372bf3d)；[`NationalSpire.RegionalOrganizations.Sponsors(string, int)`](RegionalOrganizations.cs.md#symbol-f76b5db64641)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerCommerce.LegacySponsors(int)`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.RegionalOrganizations.Sponsors(string, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerCommerce.LegacySponsors(int)`；输入表达式：`CareerCommerce.LegacySponsors(sector)`；返回值紧邻使用处：`ConditionalExpressionSyntax: country == "中国" ? CareerCommerce.LegacySponsors(sector) : []`
+- `NationalSpire.RegionalOrganizations.Sponsors(string, int)`；输入表达式：`Sponsors(country, sector)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Sponsors(country, sector).Concat`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`Sponsors(country, sector).Concat(country == "中国" ? CareerCommerce.LegacySponsors(sector) : [])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Sponsors(country, sector).Concat(country == "中国" ? CareerCommerce.LegacySponsors(sector) : []).Distinct`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`Sponsors(country, sector).Concat(country == "中国" ? CareerCommerce.LegacySponsors(sector) : []).Distinct()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string brand in Sponsors(country, sector).Concat(country == "中国" ? CareerCommerce.LegacySponsors(sector) : []).Distinct())              yield return (country, sector, brand);`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-fac63dbdfc35"></a>
 
 ## `NationalSpire.RegionalOrganizations.Sponsor(NationalSpire.CareerData, string, int, string) — internal static string Sponsor(CareerData d, string country, int plan, string target)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.OwnedClubs.SponsorQuote(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-fb2b56604db1)
 
@@ -223,18 +245,22 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 ## `NationalSpire.RegionalOrganizations.SponsorDescription(string) — internal static string SponsorDescription(string brand)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
-**调用：** [`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`](RegionalOrganizations.cs.md#symbol-deed5b72ffc2)；`System.Array.IndexOf<T>(T[], T)`
+**调用：** [`NationalSpire.CareerCommerce.LegacySponsors(int)`](CareerCommerce.cs.md#symbol-0d09d372bf3d)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`](RegionalOrganizations.cs.md#symbol-deed5b72ffc2)；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.EsportsWorld.Countries`；`NationalSpire.RegionalOrganizations.BrandActivity`；`NationalSpire.RegionalOrganizations.Brands`；`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerCommerce.LegacySponsors(int)`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.RegionalOrganizations.BrandActivity`；`NationalSpire.RegionalOrganizations.Brands`；`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.CareerCommerce.LegacySponsors(int)`；输入表达式：`CareerCommerce.LegacySponsors(sector)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CareerCommerce.LegacySponsors(sector).Contains`
+- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(brand)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(brand) % BrandActivity.Length`
 - `NationalSpire.RegionalOrganizations.ProductDescription(string, int)`；输入表达式：`ProductDescription(brand, i % 3)`；返回值紧邻使用处：`BinaryExpressionSyntax: EsportsWorld.Countries[i / 3] + "品牌。" + ProductDescription(brand, i % 3)`
+- `NationalSpire.RegionalOrganizations.ProductDescription(string, int)`；输入表达式：`ProductDescription(brand, sector)`；返回值紧邻使用处：`BinaryExpressionSyntax: "中国品牌。" + ProductDescription(brand, sector)`
 - `System.Array.IndexOf<T>(T[], T)`；输入表达式：`Array.IndexOf(Brands[i], brand)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Array.IndexOf(Brands[i], brand) is int n`
+- `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`CareerCommerce.LegacySponsors(sector).Contains(brand)`；返回值紧邻使用处：`IfStatementSyntax: if (CareerCommerce.LegacySponsors(sector).Contains(brand))                  return "中国品牌。" + ProductDescription(brand, sector) + BrandActivity[CareerEngine.StableHash(brand) % BrandActivity.Length];`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -243,7 +269,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 ## `NationalSpire.RegionalOrganizations.SponsorSlogan(string) — internal static string SponsorSlogan(string brand)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)
 
@@ -263,7 +289,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 ## `NationalSpire.RegionalOrganizations.ProductDescription(string, int) — private static string ProductDescription(string brand, int plan)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RegionalOrganizations.SponsorDescription(string)`](RegionalOrganizations.cs.md#symbol-421e3c666278)
 

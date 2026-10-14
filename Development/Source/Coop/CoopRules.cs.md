@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`B0619F883459260390090D565FEB70DCFFF3D91102DF2074D0E7F1DCABCF6440`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C9A168686492A00E950AAF11D81BD9D86BC28B657C481503C9157E1A1D0F7242`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -661,11 +661,11 @@
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `decimal.Floor(decimal)`；输入表达式：`decimal.Floor(balance)`；返回值紧邻使用处：`CastExpressionSyntax: (int)decimal.Floor(balance)`
+- `decimal.Floor(decimal)`；输入表达式：`decimal.Floor(balance)`；返回值紧邻使用处：`CastExpressionSyntax: (long)decimal.Floor(balance)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `member.Credits` = `checked((int)decimal.Floor(balance))`
+- `member.Credits` = `checked((long)decimal.Floor(balance))`
 - `member.Life.CreditFraction` = `balance - member.Credits`
 
 <a id="symbol-e04444ebfbff"></a>
@@ -741,7 +741,7 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-bc24477e89ba)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.Distribute(NationalSpire.Coop.CoopWorld, decimal, decimal?, System.Collections.Generic.IReadOnlySet<ulong>?)`](CoopRules.cs.md#symbol-1a8c8fbba94d)
 
-**调用：** [`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](../OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](../OwnedClubs.cs.md#symbol-3b85db324fce)；`NationalSpire.FinanceEntry.FinanceEntry()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(int, int)`；`System.Math.Min(long, long)`
+**调用：** [`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](../OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](../OwnedClubs.cs.md#symbol-3b85db324fce)；`NationalSpire.FinanceEntry.FinanceEntry()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(long, long)`；`System.Math.Min(long, long)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.CreditFraction`；`NationalSpire.CareerLifeState.Ledger`；`NationalSpire.Coop.CoopMember.Credits`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.Name`；`NationalSpire.Coop.CoopMember.PersonId`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Owner`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.FinanceEntry.Amount`；`NationalSpire.FinanceEntry.Balance`；`NationalSpire.FinanceEntry.Day`；`NationalSpire.FinanceEntry.Title`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；`NationalSpire.OwnedClubState.HumanPayDue`
 
@@ -759,8 +759,8 @@
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`o.HumanPayDue.GetValueOrDefault(m.PersonId)`；返回值紧邻使用处：`BinaryExpressionSyntax: o.HumanPayDue.GetValueOrDefault(m.PersonId) > 0`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`guest.Life.Ledger.Add(new() { Day = d.Day, Title = "俱乐部工资与比赛奖金", Amount = payment, Balance = guest.Credits + guest.Life.CreditFraction })`；返回值紧邻使用处：`ExpressionStatementSyntax: guest.Life.Ledger.Add(new() { Day = d.Day, Title = "俱乐部工资与比赛奖金", Amount = payment, Balance = guest.Credits + guest.Life.CreditFraction });`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`host.Life.Ledger.Add(new() { Day = d.Day, Title = title, Amount = -payment, Balance = host.Credits + host.Life.CreditFraction })`；返回值紧邻使用处：`ExpressionStatementSyntax: host.Life.Ledger.Add(new() { Day = d.Day, Title = title, Amount = -payment, Balance = host.Credits + host.Life.CreditFraction });`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, host.Credits)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, host.Credits)`
-- `System.Math.Min(long, long)`；输入表达式：`Math.Min(Math.Max(0, host.Credits), total)`；返回值紧邻使用处：`CastExpressionSyntax: (int)Math.Min(Math.Max(0, host.Credits), total)`
+- `System.Math.Max(long, long)`；输入表达式：`Math.Max(0, host.Credits)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, host.Credits)`
+- `System.Math.Min(long, long)`；输入表达式：`Math.Min(Math.Max(0, host.Credits), total)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(Math.Max(0, host.Credits), total)`
 
 **赋值（含属性/字段和局部值）：**
 

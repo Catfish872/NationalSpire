@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8C25BCC4F1B38A247618143669819D98242FAE5F6711EAA1E328D1229DEC887C`。来源：[源码](../../LifestyleArt.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`54AB2B94C195EF3FF380A9222FFFE7F287D80234721E52245D92B743C5531C29`。来源：[源码](../../LifestyleArt.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerListCache._Process(double)`](CareerListCache.cs.md#symbol-e8085c360313)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
+**调用者：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-5323f736029f)；[`NationalSpire.CareerListCache._Process(double)`](CareerListCache.cs.md#symbol-e8085c360313)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`](MarketVisuals.cs.md#symbol-7522a8a9e836)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`](MarketVisuals.cs.md#symbol-5703b8242580)
 
 **调用：** [`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`Godot.Color.ToHtml(bool)`；`Godot.Image.Image()`；`Godot.Image.LoadSvgFromString(string, float)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -29,7 +29,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Color.ToHtml(bool)`；输入表达式：`MarketVisuals.Accent(section).ToHtml(false)`；返回值紧邻使用处：`ConditionalExpressionSyntax: section is "训练装备" or "电竞设备" or "日常消费" or "外汇" ? MarketVisuals.Accent(section).ToHtml(false) : "8bd9cd"`
+- `Godot.Color.ToHtml(bool)`；输入表达式：`MarketVisuals.Accent(section).ToHtml(false)`；返回值紧邻使用处：`ConditionalExpressionSyntax: section is "训练装备" or "电竞设备" or "日常消费" or "外汇" or "做多" or "做空" ? MarketVisuals.Accent(section).ToHtml(false) : "8bd9cd"`
 - `Godot.Image.Image()`；输入表达式：`new Image()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Image()`
 - `Godot.Image.LoadSvgFromString(string, float)`；输入表达式：`image.LoadSvgFromString("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><path d='" + path + "' fill='none' stroke='#" + color + "' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>")`；返回值紧邻使用处：`ExpressionStatementSyntax: image.LoadSvgFromString("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><path d='" + path + "' fill='none' stroke='#" + color + "' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>");`
 - `Godot.ImageTexture.CreateFromImage(Godot.Image)`；输入表达式：`ImageTexture.CreateFromImage(image)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Icons[section] = ImageTexture.CreateFromImage(image)`
@@ -44,7 +44,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 ## `NationalSpire.LifestyleArt.Category — public string Category`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -62,7 +62,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 ## `NationalSpire.LifestyleArt._Ready() — public override void _Ready()`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -82,11 +82,11 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 ## `NationalSpire.LifestyleArt._Draw() — public override void _Draw()`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-02f6ade20ab5)；[`P(float, float)`](LifestyleArt.cs.md#symbol-2538257f4260)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`string.Contains(string)`；`System.Math.Min(float, float)`
+**调用：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-788d960759ac)；[`P(float, float)`](LifestyleArt.cs.md#symbol-5d4caf7191ab)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`string.Contains(string)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `Line(float, float, float, float, Godot.Color?)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.LifestyleArt.Category`；`P(float, float)`
 
@@ -211,13 +211,13 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2538257f4260"></a>
+<a id="symbol-5d4caf7191ab"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-02f6ade20ab5)；[`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
+**调用者：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-788d960759ac)；[`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`
 
@@ -230,15 +230,15 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-02f6ade20ab5"></a>
+<a id="symbol-788d960759ac"></a>
 
 ## `Line(float, float, float, float, Godot.Color?) — void Line(float x, float y, float xx, float yy, Color? c = null)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
 
-**调用：** [`P(float, float)`](LifestyleArt.cs.md#symbol-2538257f4260)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`
+**调用：** [`P(float, float)`](LifestyleArt.cs.md#symbol-5d4caf7191ab)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`
 
 **字段、属性、事件及方法组引用：** `P(float, float)`
 

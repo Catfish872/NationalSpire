@@ -41,6 +41,8 @@ public sealed record GoodVerb(string Id, string Name, int Slots, int Favor);
 public sealed record Good(string Id, string Tier, string Category, string Name, int Price, GoodVerb[] Verbs, bool Repeatable = false, bool Promo = false, int Slots = 0)
 {
     public bool Durable => Verbs.Length > 0;
+    /// <summary>实物收藏展示资格；不参与购买次数或活动资格判断。</summary>
+    public bool Collectible => Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住";
 }
 
 /// <summary>消费品目录：四档+ 运营；分类用于商城二级菜单。</summary>

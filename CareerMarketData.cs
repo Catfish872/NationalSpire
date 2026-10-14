@@ -3,6 +3,8 @@ namespace NationalSpire;
 public sealed record MarketAsset(string Id, string Name, string Country, string Sector, bool Forex, decimal Initial);
 public sealed class MarketState
 {
+    internal int CheckedQuoteCount { get; set; } = -1;
+    public int PricingVersion { get; set; }
     public int CatalogVersion { get; set; }
     public int LastDay { get; set; }
     public long Revision { get; set; }
@@ -12,6 +14,12 @@ public sealed class MarketState
 }
 public sealed class MarketQuote
 {
+    public decimal ExecutionBase { get; set; }
+    public decimal DepthUnits { get; set; }
+    public decimal OrderUnits { get; set; }
+    public int SignalDay { get; set; }
+    public decimal AppliedSignal { get; set; }
+    public MarketQuote ExecutionCopy() => (MarketQuote)MemberwiseClone();
     public decimal Price { get; set; }
     public decimal Previous { get; set; }
     public int SyntheticThrough { get; set; } = int.MinValue;
@@ -32,6 +40,9 @@ public sealed class MarketAccount
 }
 public sealed class MarketPosition
 {
+    public decimal? InitialMargin { get; set; }
+    public decimal? StopPrice { get; set; }
+    public decimal? OpeningFee { get; set; }
     public int Id { get; set; }
     public string Asset { get; set; } = "";
     public decimal Entry { get; set; }
@@ -41,18 +52,17 @@ public sealed class MarketPosition
     public int Direction { get; set; } = 1;
 }
 public sealed record MarketTrade(int Day, string Text, decimal Change, decimal Balance);
-public sealed record MarketOrder(string Action, string Asset = "", decimal Amount = 0, int Direction = 1, int Leverage = 1, int Position = 0, long QuoteRevision = 0);
+public sealed record MarketOrder(string Action, string Asset = "", decimal Amount = 0, int Direction = 1, int Leverage = 1, int Position = 0, long QuoteRevision = 0, decimal? StopPrice = null);
 
 public static class MarketCatalog
 {
     public static readonly IReadOnlyList<MarketAsset> Assets = Build();
     public static readonly IReadOnlyDictionary<string, MarketAsset> ById = Assets.ToDictionary(a => a.Id);
+    public static readonly int Version = CareerEngine.StableHash("market-catalog:60:" + string.Join("\n", Assets.Select(a => a.Id)));
     private static List<MarketAsset> Build()
     {
         var all = new List<MarketAsset>();
-        foreach (string country in EsportsWorld.Countries)
-        for (int sector = 0; sector < 3; sector++)
-        foreach (string brand in RegionalOrganizations.Sponsors(country, sector))
+        foreach (var (country, sector, brand) in RegionalOrganizations.SponsorCatalog())
             all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,
                 10 + CareerEngine.StableHash(country + brand) % 90));
         foreach (var (country, name, initial) in new (string, string, decimal)[] {

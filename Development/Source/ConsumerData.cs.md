@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`DC8015E6BEE2CDDFE8663294AEC7E487E9B333747432E1DFDF1FEDDAF6C0C91D`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A081A97B72F064D6D4FB1AC5C5370901E1A457BC0341FD737DF55DCF4E008073`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -342,11 +342,29 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-2900dbf01d61"></a>
+
+## `NationalSpire.Good.Collectible — public bool Collectible`
+
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.Category`；`NationalSpire.Good.Durable`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-46828b8901c1"></a>
 
 ## `NationalSpire.ConsumerCatalog.Get(string) — public static Good? Get(string id)`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?)`](ConsumerEngine.cs.md#symbol-6a13be5c34c1)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>)`](ConsumerEngine.cs.md#symbol-c0beece783ab)
 
@@ -365,7 +383,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.InTier(string) — public static IEnumerable<Good> InTier(string tier)`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
 
@@ -384,9 +402,9 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.Categories(string) — public static IEnumerable<string> Categories(string tier)`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -405,11 +423,11 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.Build() — private static Good[] Build()`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-99ebb81999c6)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-0e1d7c7a5009)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
+**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-54e4d02b758c)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-2f112b74cf2c)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
 
 **字段、属性、事件及方法组引用：** `Item(string, string, string, string, int, bool, bool, int)`；`NationalSpire.ConsumerCatalog.Luxury`；`NationalSpire.ConsumerCatalog.Mass`；`NationalSpire.ConsumerCatalog.Middle`；`NationalSpire.ConsumerCatalog.Promo`；`NationalSpire.ConsumerCatalog.Rich`；`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`
 
@@ -511,11 +529,11 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-99ebb81999c6"></a>
+<a id="symbol-54e4d02b758c"></a>
 
 ## `Item(string, string, string, string, int, bool, bool, int) — void Item(string tier, string category, string id, string name, int price, bool repeatable = false, bool promo = false, int slots = 0)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerCatalog.Build()`](ConsumerData.cs.md#symbol-326fd7a8724c)
 
@@ -531,11 +549,11 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0e1d7c7a5009"></a>
+<a id="symbol-2f112b74cf2c"></a>
 
 ## `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[]) — void Wear(string tier, string category, string id, string name, int price, params GoodVerb[] verbs)`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerCatalog.Build()`](ConsumerData.cs.md#symbol-326fd7a8724c)
 

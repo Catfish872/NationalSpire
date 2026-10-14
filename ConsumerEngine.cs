@@ -50,7 +50,7 @@ public static class ConsumerEngine
         d.Fans += fans;
         string names = string.Join("、", guests.Select(g => CareerEngine.DisplayName(d, g)));
         string body = $"{CareerEngine.Name(d)}花费${Price(good):N0}购买{good.Name}。" + (names.Length > 0 ? $"同行者：{names}。" : "") + (fans > 0 ? $"活动结束后新增关注{fans}。" : "");
-        CareerEngine.Publish(d, $"shop-{GroupChats.Human(d)}-{s.PurchaseCount}", good.Name, body, "消费与生活", true, [GroupChats.Human(d), .. guests]);
+        ConsumerEvents.Purchase(d, body, guests);
         return null;
     }
     public static int HospitalityFee(Good good) => good.Tier == ConsumerCatalog.Luxury ? 10000 : good.Tier == ConsumerCatalog.Rich ? 5000 : 1000;
@@ -75,9 +75,7 @@ public static class ConsumerEngine
             PrivateMessages.ChangeFavour(d, id, count == 0 ? verb.Favor : 1);
             s.InvitedThisSeason[id] = count + 1;
         }
-        string names = string.Join("、", guests.Select(id => CareerEngine.DisplayName(d, id)));
-        CareerEngine.Publish(d, $"party-{GroupChats.Human(d)}-{s.PartyCount}", verb.Name,
-            $"{CareerEngine.Name(d)}使用{good.Name}举办{verb.Name}。" + (names.Length > 0 ? $"受邀者：{names}。" : ""), "消费与生活", true, [GroupChats.Human(d), .. guests]);
+        ConsumerEvents.Activity(d, good, verb, guests);
         return null;
     }
 }

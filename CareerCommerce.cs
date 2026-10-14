@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>合同由玩家确认；经营支出与赛季结算各执行一次。</summary>
 public static class CareerCommerce
@@ -9,6 +9,7 @@ public static class CareerCommerce
         ["篝火训练用品", "橡木装备", "远行运动", "磐石护具"],
         ["星港外设", "棱镜显示", "雷鸣键盘", "疾风竞技椅"],
         ["金羽饮品", "云帆通讯", "晨钟咖啡", "晴空影像"] ];
+    internal static IReadOnlyList<string> LegacySponsors(int plan) => Brands[plan];
     public static int IdentityIndex(CareerData d, string club) => CareerEngine.StableHash(d.WorldId + ":club:" + club) % 4;
     public static int ProfessionalCount(CareerData d, string club) => IdentityIndex(d, club) switch { 0 => 7, 1 => 5, 2 => 6, _ => 4 };
     public static int YouthCount(CareerData d, string club) => IdentityIndex(d, club) switch { 0 => 2, 1 => 5, 2 => 1, _ => 3 };
@@ -24,6 +25,7 @@ public static class CareerCommerce
     }
     public static void Upgrade(CareerData d)
     {
+        SponsorIncome.Upgrade(d);
         if (d.Esports.CommerceVersion >= Version || d.Esports.EcosystemVersion < 1) return;
         d.Esports.CommerceVersion = Version;
         foreach (var club in d.Esports.Clubs) ConfigureClub(d, club, false);
@@ -79,44 +81,66 @@ public static class CareerCommerce
         if (d.CooperativeMembers > 1) return;
         if (d.Esports.EcosystemVersion < 1) return;
         var w = d.Esports;
-        foreach (var contract in w.Sponsors.Where(s => s.TargetId == "player" && s.Accepted && s.EndedDay == 0 && s.EndSeason < d.Season))
+        SponsorIncome.Upgrade(d);
+        foreach (var contract in w.Sponsors.Where(s => s.TargetId == "player" && s.Accepted && s.EndedDay == 0 && s.EndSeason < d.Season).ToArray())
         {
-            contract.EndedDay = d.Day;
-            CircuitLedger.Remember(d, "expiry-" + contract.Id, $"{CareerEngine.Name(d)}与{contract.Brand}的个人赞助到期，新合同等待选手确认。", ["player"]);
+            if (contract.NextOffer is { } next)
+            {
+                contract.EndedDay = d.Day; contract.NextOffer = null;
+                next.StartSeason = d.Season; next.EndSeason = d.Season + 1; next.Accepted = true; next.SignedDay = d.Day;
+                next.PaidSeason = d.Season - 1; w.Sponsors.Add(next);
+                CareerLife.AddEvent(d, "sponsor-renew-" + next.Id, "赞助", CareerEngine.Name(d) + "更新个人赞助",
+                    $"{next.Brand}的{next.Plan}方案已生效，收入随关注数变化。", ["player"]);
+            }
+            else
+            {
+                while (contract.EndSeason < d.Season) contract.EndSeason += 2;
+            }
+            w.SponsorOffers.Clear();
         }
         w.SponsorOffers.RemoveAll(s => s.ExpiresDay < d.Day);
-        if (w.License < 3 || ActiveSponsor(d) != null) { Capture(d); return; }
+        if (w.License < 3) { Capture(d); return; }
         if (w.SponsorOffers.Count > 0) { Capture(d); return; }
-        int tier = 1 + Math.Min(7, w.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league"));
+        int tier = SponsorIncome.PersonalTier(d);
+        var active = ActiveSponsor(d);
+        int startSeason = active == null ? d.Season : active.EndSeason + 1;
         var previous = w.Sponsors.LastOrDefault(s => s.TargetId == "player" && s.Accepted);
         for (int plan = 0; plan < 3; plan++)
         {
             int seed = CareerEngine.StableHash(d.WorldId + ":brand:" + plan + ":" + d.Season);
             var regional = RegionalOrganizations.Sponsors(w.Country, plan);
             string brand = previous != null && (regional.Contains(previous.Brand) || Brands[plan].Contains(previous.Brand)) ? previous.Brand : regional[seed % regional.Length];
-            w.SponsorOffers.Add(new() { Id = $"player-{d.Season}-{d.Day}-{plan}", TargetId = "player", Brand = brand,
-                Plan = plan switch { 0 => "稳定支持", 1 => "成绩奖励", _ => "品牌推广" }, StartSeason = d.Season, EndSeason = d.Season + 1,
-                ExpiresDay = d.Day + 28, Retainer = CareerAudience.Quote((plan switch { 0 => 320, 1 => 140, _ => 200 }) * tier, d.Fans),
-                WinBonus = CareerAudience.Quote((plan switch { 0 => 20, 1 => 65, _ => 25 }) * tier, d.Fans), FanBonus = plan == 2 ? 35 * tier : 0,
+            string name = plan switch { 0 => "稳定支持", 1 => "成绩奖励", _ => "品牌推广" };
+            var basis = SponsorIncome.PersonalBase(name, tier);
+            w.SponsorOffers.Add(new() { Id = $"player-{startSeason}-{d.Day}-{plan}", TargetId = "player", Brand = brand,
+                Plan = name, StartSeason = startSeason, EndSeason = startSeason + 1,
+                ExpiresDay = d.Day + 28, BaseRetainer = basis.Retainer, BaseWinBonus = basis.Win,
+                Retainer = CareerAudience.Quote(basis.Retainer, d.Fans), WinBonus = CareerAudience.Quote(basis.Win, d.Fans), FanBonus = plan == 2 ? 35 * tier : 0,
                 Description = RegionalOrganizations.SponsorDescription(brand), Slogan = RegionalOrganizations.SponsorSlogan(brand) });
         }
-        CircuitLedger.Remember(d, $"sponsor-invitations-{d.Season}-{d.Day}", $"{CareerEngine.Name(d)}收到三份个人赞助邀请，等待本人选择确认。", ["player"]);
+        if (active == null) CircuitLedger.Remember(d, $"sponsor-invitations-{d.Season}-{d.Day}", $"{CareerEngine.Name(d)}收到三份个人赞助邀请，等待本人选择确认。", ["player"]);
         Capture(d);
     }
-    public static string SponsorTerms(SponsorContract c) => $"每赛季支持 {CareerMoney.Format(c.Retainer)} · 每场获胜奖金 {CareerMoney.Format(c.WinBonus)}"
-        + (c.FanBonus > 0 ? $"、关注 +{c.FanBonus}" : "") + $" · 合作至第 {c.EndSeason} 赛季";
+    public static string SponsorTerms(CareerData d, SponsorContract c) => $"按当前关注：每赛季支持 {CareerMoney.Format(SponsorIncome.Retainer(d, c))} · 每场获胜奖金 {CareerMoney.Format(SponsorIncome.WinBonus(d, c))}"
+        + (c.FanBonus > 0 ? $"、关注 +{c.FanBonus}" : "") + $"\n金额随关注数变化 · 本期至第 {c.EndSeason} 赛季，届满自动续约";
     public static string? AcceptSponsor(CareerData d, SponsorContract offer)
     {
         if (!d.Esports.SponsorOffers.Contains(offer) || offer.ExpiresDay < d.Day || d.Esports.License < 3) return "这份赞助邀请已经失效。";
-        if (ActiveSponsor(d) != null) return "当前已有个人赞助，合同到期后可重新选择。";
+        SponsorIncome.Initialize(d, offer);
+        if (ActiveSponsor(d) is { } active)
+        {
+            active.NextOffer = offer; d.Esports.SponsorOffers.Clear();
+            RefreshOffers(d); CareerStore.Save(d); return null;
+        }
         offer.Accepted = true; offer.SignedDay = d.Day; offer.PaidSeason = d.Season;
-        d.Esports.Sponsors.Add(offer); d.Esports.SponsorOffers.Clear(); d.Credits += offer.Retainer;
-        string fact = $"{CareerEngine.Name(d)}确认与{offer.Brand}签约。{SponsorTerms(offer)}。本季支持已经到账。";
+        int payment = SponsorIncome.Retainer(d, offer);
+        d.Esports.Sponsors.Add(offer); d.Esports.SponsorOffers.Clear(); d.Credits += payment;
+        string fact = $"{CareerEngine.Name(d)}确认与{offer.Brand}签约。{SponsorTerms(d, offer)}。本季支持已经到账。";
         if (!d.Esports.Milestones.Contains("sponsor-confirmed"))
         { d.Esports.Milestones.Add("sponsor-confirmed"); d.Esports.Honors.Add(new() { Id = "sponsor-confirmed", Title = "首份个人赞助", Detail = fact, Day = d.Day, Season = d.Season }); }
-        Capture(d);
+        RefreshOffers(d);
         CareerLife.AddEvent(d, "sponsor-confirmed-" + offer.Id, "赞助", CareerEngine.Name(d) + "与" + offer.Brand + "达成合作", fact, ["player"], true);
-        CareerMoney.Record(d, "个人赞助签约支持", offer.Retainer);
+        CareerMoney.Record(d, "个人赞助签约支持", payment);
         CareerStore.Save(d); return null;
     }
     public static void SignedClub(CareerData d, ClubOffer offer)
@@ -138,7 +162,7 @@ public static class CareerCommerce
         if (!match.PlayerWon || d.Esports.CommercialPaidMatches.Contains(match.Id)) return;
         d.Esports.CommercialPaidMatches.Add(match.Id);
         if (d.Esports.CommercialPaidMatches.Count > 256) d.Esports.CommercialPaidMatches.RemoveAt(0);
-        if (ActiveSponsor(d) is { } sponsor) { d.Credits += sponsor.WinBonus; d.Fans += sponsor.FanBonus; }
+        if (ActiveSponsor(d) is { } sponsor) { d.Credits += SponsorIncome.WinBonus(d, sponsor); d.Fans += sponsor.FanBonus; }
         var contract = d.Esports.PlayerContract;
         var competition = d.Esports.Competitions.FirstOrDefault(c => c.Id == match.CompetitionId);
         if (contract == null || competition == null || competition.Kind is not ("league" or "continental") || competition.EntrantClubs.GetValueOrDefault("player") != contract.ClubId) return;
@@ -153,9 +177,9 @@ public static class CareerCommerce
     }
     public static void SeasonStart(CareerData d)
     {
-        int before = d.Credits;
+        long before = d.Credits;
         RefreshOffers(d);
-        if (ActiveSponsor(d) is { } sponsor && sponsor.PaidSeason < d.Season) { sponsor.PaidSeason = d.Season; d.Credits += sponsor.Retainer; }
+        if (ActiveSponsor(d) is { } sponsor && sponsor.PaidSeason < d.Season) { sponsor.PaidSeason = d.Season; d.Credits += SponsorIncome.Retainer(d, sponsor); }
         if (d.Esports.PlayerContract is { } contract && d.Esports.ClubPaidSeason < d.Season)
         { d.Esports.ClubPaidSeason = d.Season; d.Credits += contract.SeasonPay; if (EsportsWorld.Club(d, contract.ClubId) is { } club) Spend(d, club, contract.SeasonPay); }
         CareerMoney.Record(d, "新赛季合同与赞助收入", d.Credits - before);
@@ -182,7 +206,7 @@ public static class CareerCommerce
     {
         var sponsor = ActiveSponsor(d);
         string summary = (d.Esports.ClubId.Length == 0 ? "自由选手" : "效力" + EsportsWorld.ClubName(d, d.Esports.ClubId)) + "；"
-            + (sponsor == null ? "个人赞助待签约" : $"个人赞助{ sponsor.Brand}，第{sponsor.StartSeason}至{sponsor.EndSeason}赛季，赛季支持{CareerMoney.Format(sponsor.Retainer)}、胜场奖金{CareerMoney.Format(sponsor.WinBonus)}" + (sponsor.FanBonus > 0 ? $"、胜场推广增加{sponsor.FanBonus}关注" : ""))
+            + (sponsor == null ? "个人赞助待签约" : $"个人赞助{ sponsor.Brand}，第{sponsor.StartSeason}至{sponsor.EndSeason}赛季，按当前关注计算赛季支持{CareerMoney.Format(SponsorIncome.Retainer(d, sponsor))}、胜场奖金{CareerMoney.Format(SponsorIncome.WinBonus(d, sponsor))}，到期自动续约" + (sponsor.FanBonus > 0 ? $"、胜场推广增加{sponsor.FanBonus}关注" : ""))
             + (sponsor == null && d.Esports.SponsorOffers.Count > 0 ? "；待确认邀请：" + string.Join('、', d.Esports.SponsorOffers.Take(3).Select(s => s.Brand)) : "");
         var history = d.Esports.CommercialHistory;
         if (history.LastOrDefault()?.Summary == summary) return;

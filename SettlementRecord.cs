@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class SettlementRecord
 {
@@ -10,7 +10,7 @@ public sealed class SettlementRecord
     public string Decider { get; set; } = "";
     public int Rating { get; set; }
     public int Fans { get; set; }
-    public int Credits { get; set; }
+    public long Credits { get; set; }
 }
 public sealed class SettlementStanding
 {

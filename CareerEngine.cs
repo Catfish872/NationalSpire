@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CareerEngine
 {
@@ -262,13 +262,14 @@ public static class CareerEngine
             friendly.Settlement = SettlementRecords.Capture(d, m, settledSeason); d.PendingSettlementId = m.Id;
             CareerStore.Save(d); return;
         }
-        int rating = d.Rating, fans = d.Fans, credits = d.Credits;
+        int rating = d.Rating, fans = d.Fans; long credits = d.Credits;
         double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension);
         if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Credits += MatchRules.Reward(m.Prize, multiplier); }
         else if (m.Draw) { d.Draws++; d.Rating += 8; d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
         else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); }
         d.Fans += CareerAudience.MatchGain(m.Kind, m.RequiredAscension, m.PlayerWon, m.Draw, forfeit, floor, multiplier, m.Round);
         EsportsWorld.ResolvePlayerFixture(d, m, runClear && !forfeit, forfeit);
+        EsportsWorld.CompleteMatchDay(d);
         if (m.CompetitionId == "")
         {
             if (m.OpponentWon) { opponent.Wins++; opponent.MaxAscension = Math.Max(opponent.MaxAscension, m.RequiredAscension); }
@@ -314,6 +315,16 @@ public static class CareerEngine
             CommunityThreads.Remember(d, matchPost);
         }
         record.Settlement = SettlementRecords.Capture(d, m, settledSeason);
+        if (d.Esports.Competitions.FirstOrDefault(c => c.Id == m.CompetitionId) is { } competition
+            && d.Posts.FirstOrDefault(p => p.EventKey == "match" + m.Id) is { } report)
+        {
+            var fixtures = competition.Fixtures.Where(f => f.Day == m.Day && f.Round == m.Round).ToList();
+            string roundFacts = WorldEvents.FixtureFacts(d, competition, fixtures);
+            foreach (var pending in fixtures.Where(f => !f.Finished))
+                roundFacts += $"\n{DisplayName(d, pending.HomeId)}对阵{DisplayName(d, pending.AwayId)}：尚未完成。";
+            report.RelatedFacts += "\n" + roundFacts; report.SourceBody += "\n" + roundFacts; report.Body += "\n" + roundFacts;
+            report.Revision++; CommunityThreads.Remember(d, report);
+        }
         record.Settlement.Honors = d.Esports.Honors.Where(h => !honorsBefore.Contains(h.Title)).Select(h => h.Title).Take(4).ToList();
         d.PendingSettlementId = m.Id;
         CommunityThreads.RememberMatch(d, record);

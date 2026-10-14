@@ -88,6 +88,13 @@ internal static class RegionalOrganizations
         return ClubBackgrounds[HumanNames.Region(club.Country)][seed % 8] + Ambitions[kind][seed / 8 % 8];
     }
     internal static string[] Sponsors(string country, int plan) => Brands[HumanNames.Region(country) * 3 + Math.Clamp(plan, 0, 2)];
+    internal static IEnumerable<(string Country, int Sector, string Brand)> SponsorCatalog()
+    {
+        foreach (string country in EsportsWorld.Countries)
+        for (int sector = 0; sector < 3; sector++)
+        foreach (string brand in Sponsors(country, sector).Concat(country == "中国" ? CareerCommerce.LegacySponsors(sector) : []).Distinct())
+            yield return (country, sector, brand);
+    }
     internal static string Sponsor(CareerData d, string country, int plan, string target) =>
         Sponsors(country, plan)[CareerEngine.StableHash(d.WorldId + ":brand:" + target + ":" + plan) % Sponsors(country, plan).Length];
     internal static string SponsorDescription(string brand)
@@ -95,6 +102,9 @@ internal static class RegionalOrganizations
         for (int i = 0; i < Brands.Length; i++)
             if (Array.IndexOf(Brands[i], brand) is int n && n >= 0)
                 return EsportsWorld.Countries[i / 3] + "品牌。" + ProductDescription(brand, i % 3) + BrandActivity[n];
+        for (int sector = 0; sector < 3; sector++)
+            if (CareerCommerce.LegacySponsors(sector).Contains(brand))
+                return "中国品牌。" + ProductDescription(brand, sector) + BrandActivity[CareerEngine.StableHash(brand) % BrandActivity.Length];
         return "";
     }
     internal static string SponsorSlogan(string brand)

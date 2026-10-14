@@ -132,7 +132,8 @@ public static class CircuitLedger
             {
                 contract = CreateContract(d, club.Id, club.Titles > 0 ? 2 : 1); d.Esports.Sponsors.Add(contract);
             }
-            if (contract.PaidSeason < d.Season) { club.Budget += contract.Retainer; ClubOperations.Entry(club, d.Day, contract.Brand + "赞助到账", contract.Retainer); contract.PaidSeason = d.Season; }
+            SponsorIncome.Initialize(d, contract);
+            if (contract.PaidSeason < d.Season) { int payment = SponsorIncome.Retainer(d, contract); club.Budget += payment; ClubOperations.Entry(club, d.Day, contract.Brand + "赞助到账", payment); contract.PaidSeason = d.Season; }
         }
         CareerCommerce.SeasonStart(d);
     }
@@ -142,7 +143,7 @@ public static class CircuitLedger
         int pick = CareerEngine.StableHash(d.WorldId + target + d.Season) % names.Length;
         int support = CareerCommerce.IdentityIndex(d, target) switch { 0 => 3200, 1 => 2000, 2 => 4200, _ => 1600 };
         return new() { Id = target + "-" + d.Season, Brand = names[pick], TargetId = target, StartSeason = d.Season, EndSeason = d.Season + 1,
-            Accepted = true, SignedDay = d.Day, Retainer = (int)Math.Round(tier * support * CareerAudience.ClubMultiplier(ClubAudience.Total(d, target))), WinBonus = 0,
+            Accepted = true, SignedDay = d.Day, BaseRetainer = tier * support, BaseWinBonus = 0, Retainer = (int)Math.Round(tier * support * CareerAudience.ClubMultiplier(ClubAudience.Total(d, target))), WinBonus = 0,
             Description = RegionalOrganizations.SponsorDescription(names[pick]), Slogan = RegionalOrganizations.SponsorSlogan(names[pick]) };
     }
     public static void PlayerMatch(CareerData d, CareerMatch m)

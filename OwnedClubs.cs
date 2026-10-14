@@ -100,8 +100,8 @@ public static class OwnedClubs
         "fans" => new() { AudienceVersion = 1, Id = id, Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 2, "owned"), Weekly = 1000, WinBonus = 300, FanRate = 4, EndDay = d.Day + 56 },
         _ => new() { AudienceVersion = 1, Id = "steady", Brand = RegionalOrganizations.Sponsor(d, d.Esports.Country, 0, "owned"), Weekly = 1400, WinBonus = 400, FanRate = 10, EndDay = d.Day + 56 }
     };
-    public static int SponsorWeekly(OwnedSponsor? s, int fans) => s == null ? 0 : s.AudienceVersion >= 1 ? (int)Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans)) : s.Weekly + (int)(250 * Math.Log(1 + Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate))));
-    public static int SponsorWinBonus(OwnedSponsor s, int fans) => s.AudienceVersion >= 1 ? (int)Math.Round(s.WinBonus * CareerAudience.ClubMultiplier(fans)) : s.WinBonus;
+    public static int SponsorWeekly(OwnedSponsor? s, int fans) => s == null ? 0 : (int)Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans));
+    public static int SponsorWinBonus(OwnedSponsor s, int fans) => (int)Math.Round(s.WinBonus * CareerAudience.ClubMultiplier(fans));
     public static int AudienceIncome(int fans) => (int)Math.Round(100 * CareerAudience.ClubMultiplier(fans));
     public static decimal InitialCost(CareerData d, ClubDraft draft) => FoundingCost + draft.Signings.Sum(s =>
         CareerEngine.Person(d, s.PersonId) is { } p ? Quote(p, s.Plan).Signing : 0);
@@ -123,7 +123,7 @@ public static class OwnedClubs
     public static void UpgradeEconomy(CareerData d)
     {
         if (d.Esports.OwnedClub is not { EconomyVersion: < 1 } o) return;
-        // 已签赞助保留原金额与计算版本，新报价在下一次签约时采用。
+        // 保留已签基础金额；新旧赞助付款共用当前关注倍率。
         o.Fans = Math.Max(300, o.Fans); o.EconomyVersion = 1;
     }
     public static int AchievementWeekly(CareerData d, int? day = null) => d.Esports.OwnedClub?.AchievementSponsors

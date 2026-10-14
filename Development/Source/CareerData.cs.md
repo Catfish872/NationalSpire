@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`AAD7358618D7B2197FA701187236E141EDA85708853B51D8FB3BD0DE4255F8EC`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`FE544D36EE67741FD528EFC1B4BCF04517E67301BB2C4656650BD3BFE151F436`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -1106,7 +1106,7 @@ public const int MaximumNewsPostCount = 20;
 
 <a id="symbol-c5560dbc30e5"></a>
 
-## `NationalSpire.CareerData.Credits — public int Credits`
+## `NationalSpire.CareerData.Credits — public long Credits`
 
 来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -4090,7 +4090,7 @@ public const int MaximumNewsPostCount = 20;
 
 <a id="symbol-9d7d10d564e8"></a>
 
-## `NationalSpire.CareerResult.Prize — public int Prize`
+## `NationalSpire.CareerResult.Prize — public long Prize`
 
 来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 

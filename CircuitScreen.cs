@@ -16,23 +16,24 @@ public partial class CareerScreen
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
             box.AddChild(Text(contract.Brand + "  /  " + (contract.TargetId == "player" ? "个人赞助" : "俱乐部赞助"), 24, _gold));
-            box.AddChild(Text(contract.TargetId == "player" ? CareerCommerce.SponsorTerms(contract) : $"合作至第 {contract.EndSeason} 赛季 · 每赛季支持球队 {CareerMoney.Format(contract.Retainer)}", 17, _ink));
+            box.AddChild(Text(contract.TargetId == "player" ? CareerCommerce.SponsorTerms(d, contract) : $"合作至第 {contract.EndSeason} 赛季 · 按当前关注每赛季支持球队 {CareerMoney.Format(SponsorIncome.Retainer(d, contract))}", 17, _ink));
             box.AddChild(Text(contract.Slogan, 17, _muted));
             if (contract.Description.Length > 0) box.AddChild(Text(contract.Description, 16, _muted));
         }
-        if (CareerCommerce.ActiveSponsor(d) == null)
+        var active = CareerCommerce.ActiveSponsor(d);
+        if (active?.NextOffer is { } next) _content.AddChild(Text($"下期合作 · {next.Brand} / {next.Plan} · 第 {active.EndSeason + 1} 赛季生效", 18, CareerVisuals.Teal));
         {
-            _content.AddChild(Text(d.Esports.License < 3 ? "取得职业资格后，将收到个人赞助邀请。" : "挑选一份个人赞助，也可以稍后决定。接受后发放本季支持，合同到期后重新选择。", 17, _muted));
+            _content.AddChild(Text(active != null ? "当前合作自动续约，也可选择下期更换方案。收入按付款时的关注数计算。" : d.Esports.License < 3 ? "取得职业资格后，将收到个人赞助邀请。" : "挑选一份个人赞助。接受后发放本季支持，合同到期自动续约。", 17, _muted));
             foreach (var offer in d.Esports.SponsorOffers.Where(s => s.ExpiresDay >= d.Day))
             {
                 var card = Card(); _content.AddChild(card); var box = Inner(card);
                 box.AddChild(Text(offer.Brand + "  /  " + offer.Plan, 24, _gold));
-                box.AddChild(Text(CareerCommerce.SponsorTerms(offer), 17, _ink));
+                box.AddChild(Text(CareerCommerce.SponsorTerms(d, offer), 17, _ink));
                 box.AddChild(Text(offer.Slogan + $" · 邀请剩余 {offer.ExpiresDay - d.Day + 1} 天", 16, _muted));
                 if (offer.Description.Length > 0) box.AddChild(Text(offer.Description, 16, _muted));
-                box.AddChild(Button("接受赞助", () =>
+                box.AddChild(Button(active == null ? "接受赞助" : "选择下期方案", () =>
                 {
-                    if (MultiplayerCommand("sponsor", offer.Id)) return; var error = CareerCommerce.AcceptSponsor(d, offer); Render(); Notice(error ?? "合作已确认，本季支持已经到账。", error != null);
+                    if (MultiplayerCommand("sponsor", offer.Id)) return; var error = CareerCommerce.AcceptSponsor(d, offer); Render(); Notice(error ?? (active == null ? "合作已确认，本季支持已经到账。" : "下期方案已确认，当前合同到期后生效。"), error != null);
 
                 }, 180));
             }

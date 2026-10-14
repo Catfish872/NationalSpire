@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6EBAD58A1E13E862727EA3467BCA23C626E1B52281DDAA90AE92D105C078E597`。来源：[源码](../../OwnedClubScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D01F4185B2C0E0D3B2902D90DB9ADF221F11B6EC6D5B831C2F2C1BC0D9F8B400`。来源：[源码](../../OwnedClubScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -875,7 +875,7 @@ private readonly Dictionary<string, ClubSigning> _signChoices = [];
 - `NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`；输入表达式：`ClubButton("转任教练", () => CoachAppointmentDialog(d, id), 150)`；返回值紧邻使用处：`ArgumentSyntax: ClubButton("转任教练", () => CoachAppointmentDialog(d, id), 150)`
 - `NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`；输入表达式：`ClubButton($"{s.Brand} · 周结 {CareerMoney.Format(OwnedClubs.SponsorWeekly(s, ClubAudience.Total(d, o.ClubId)))} · 赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(s, ClubAudience.Total(d, o.ClubId)))}", () => ShowCareerDialog("确认下期赞助", "选择 " + s.Brand + "？当前合同按期执行。", () => { ClubAction(d, "sponsor", target: id); return true; }), 0)`；返回值紧邻使用处：`ArgumentSyntax: ClubButton($"{s.Brand} · 周结 {CareerMoney.Format(OwnedClubs.SponsorWeekly(s, ClubAudience.Total(d, o.ClubId)))} · 赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(s, ClubAudience.Total(d, o.ClubId)))}", () => ShowCareerDialog("确认下期赞助", "选择 " + s.Brand + "？当前合同按期执行。", () => { ClubAction(d, "sponsor", target: id); return true; }), 0)`
 - `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard("经营流水", "俱乐部收支计入钱包，以下单独列出经营记录。")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard("经营流水", "俱乐部收支计入钱包，以下单独列出经营记录。")`
-- `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard("俱乐部赞助", "8 周一约。提前选择品牌，下期生效；不操作则原品牌续约。")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard("俱乐部赞助", "8 周一约。提前选择品牌，下期生效；不操作则原品牌续约。")`
+- `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard("俱乐部赞助", "8 周一约，原品牌自动续约。周收入与胜场奖金按付款时的关注数计算；也可提前选择下期品牌。")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard("俱乐部赞助", "8 周一约，原品牌自动续约。周收入与胜场奖金按付款时的关注数计算；也可提前选择下期品牌。")`
 - `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"第 {o.FoundedDay} 天成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 第 {o.NextPayDay} 天", true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"第 {o.FoundedDay} 天成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 第 {o.NextPayDay} 天", true)`
 - `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard(role + "  /  " + OwnedClubs.PositionList(o, role).Count + " 人")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard(role + "  /  " + OwnedClubs.PositionList(o, role).Count + " 人")`
 - `NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`；输入表达式：`ClubDirectory(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: ClubDirectory(d);`

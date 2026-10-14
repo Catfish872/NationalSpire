@@ -84,7 +84,7 @@ public partial class CareerScreen
         }
         else
         {
-            box.AddChild(Text(a.Status == "进行中" ? $"第{a.StartedDay}天开始 · 预计第{a.FinishDay}天完成" : $"第{a.FinishDay}天完成 · 花费 {CareerMoney.Format(a.PaidCost >= 0 ? a.PaidCost : a.Cost)}", 16, _muted));
+            box.AddChild(Text(a.Status == "进行中" ? $"{PrivateAppointments.DateText(d, a.StartedDay)}开始 · 预计{PrivateAppointments.DateText(d, a.FinishDay)}完成" : $"{PrivateAppointments.DateText(d, a.FinishDay)}完成 · 花费 {CareerMoney.Format(a.PaidCost >= 0 ? a.PaidCost : a.Cost)}", 16, _muted));
             box.AddChild(Text(a.Result, 18, CareerVisuals.Teal));
             if ((CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a)) && a.Status == "进行中") box.AddChild(Text(CareerLife.Expected(d, a), 18, _muted));
         }

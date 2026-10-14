@@ -100,7 +100,16 @@ public partial class CareerScreen : Control, IScreenContext
         {
             if (!_multiplayer.Alive) { Close(); return; }
             bool editing = _tab == "模组设置" && _aiSettingsDirty || _characterCardOverlay != null || _dialogOverlay != null || _promptOverlay != null || _avatarOverlay != null || _closePromptTest != null || GetViewport().GuiGetFocusOwner() is LineEdit or TextEdit or SpinBox;
-            if (!editing && _multiplayer.Refresh()) { _boundData = ViewData; int y = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(y, _renderVersion); }
+            string? previousResult = _boundData.Results.LastOrDefault()?.MatchId;
+            if (!editing && _multiplayer.Refresh())
+            {
+                _boundData = ViewData;
+                var result = _boundData.Results.LastOrDefault();
+                bool settled = result is { Simulated: true } && result.MatchId != previousResult && _boundData.PendingSettlementId == result.MatchId;
+                if (settled) _tab = "结算";
+                int y = settled ? 0 : _scroll.ScrollVertical;
+                Render(); _ = RestoreScrollAsync(y, _renderVersion);
+            }
         }
         if (_multiplayer == null && !CareerStore.IsCurrent(_boundData)) { Close(); return; }
         if (_tab == "模组设置" && _aiStatus != null && GodotObject.IsInstanceValid(_aiStatus)) _aiStatus.Text = "当前状态：" + PlayerFacingText.AiStatus(AiService.Status) + $"  ·  今日请求次数 {_boundData.Ai.RequestsToday}";
@@ -254,7 +263,7 @@ public partial class CareerScreen : Control, IScreenContext
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
-        _status.Text = $"第 {data.Season} 赛季  ·  第 {SeasonCalendar.Day(data, data.Day)} 天     评分 {data.Rating}     关注 {data.Fans}     可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
+        _status.Text = $"第 {data.Season} 赛季 · 第 {SeasonCalendar.Day(data, data.Day)} 天（累计第 {data.Day} 天）   评分 {data.Rating}   关注 {data.Fans}   可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
         if (_multiplayer != null)
         {
             _content.AddChild(Text(_multiplayer.Status, 16, CareerVisuals.Teal));
@@ -407,7 +416,7 @@ public partial class CareerScreen : Control, IScreenContext
     {
         AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); _content.AddChild(row);
-        row.AddChild(TeamButton("推进一天", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 1)) return; bool advanced = CareerEngine.AdvanceOneDay(data); Render(); if (!advanced) Notice("比赛日需先完成或放弃比赛。", true); }, 180));
+        row.AddChild(TeamButton("推进一天", AdvanceCareerDay, 180));
         var nextMatchButton = TeamButton("跳转到下一场比赛", () => { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); }, 260);
         if (CareerEngine.NextMatch(data) == null)
         { nextMatchButton.Text = "暂无已报名比赛"; nextMatchButton.Disabled = true; nextMatchButton.TooltipText = "可以推进一天、前往下个赛季，或选择尚可报名的比赛。"; }
@@ -584,6 +593,7 @@ public partial class CareerScreen : Control, IScreenContext
                 if (chars.Count == 0) return;
                 var character = selectedCharacter == chars.Count ? GameBridge.RandomChoice() : chars[Math.Clamp(selectedCharacter, 0, chars.Count - 1)];
                 var error = PlayerSimulation.Run(data, match, character.Title.GetFormattedText(), character.Id.ToString(), (int)asc.Value);
+                if (error == null && data.PendingSettlementId == match.Id && data.Results.Any(r => r.MatchId == match.Id)) _tab = "结算";
                 Render(); if (error != null) Notice(error, true);
             }, 160));
             if (_multiplayer == null && due && data.PendingMatchId == null) controls.AddChild(Button("放弃本场", () => { CareerEngine.Forfeit(data, match); Render(); }, 160));
@@ -598,12 +608,7 @@ public partial class CareerScreen : Control, IScreenContext
             eb.AddChild(Text(available ? "可以从下方赛程报名，也可以继续推进日期。"
                 : $"本赛季共 {SeasonCalendar.Length(data)} 天。没有比赛时仍可继续生活、等待后续赛程，或进入下个赛季。", 18, _ink));
             var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); eb.AddChild(actions);
-            actions.AddChild(TeamButton("推进一天", () =>
-            {
-                if (MultiplayerCommand("propose-advance", number: data.Day + 1)) return;
-                if (!CareerEngine.AdvanceOneDay(data)) Notice("请先完成或放弃当前比赛。", true);
-                Render();
-            }, 180));
+            actions.AddChild(TeamButton("推进一天", AdvanceCareerDay, 180));
             actions.AddChild(TeamButton("下个赛季", () =>
             {
                 if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return;

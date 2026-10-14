@@ -149,6 +149,9 @@ public sealed class SponsorContract
     public int EndSeason { get; set; }
     public int Retainer { get; set; }
     public int WinBonus { get; set; }
+    public int? BaseRetainer { get; set; }
+    public int? BaseWinBonus { get; set; }
+    public SponsorContract? NextOffer { get; set; }
     public int PaidSeason { get; set; }
     public List<string> PaidMatches { get; set; } = [];
 }

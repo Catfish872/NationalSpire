@@ -155,6 +155,7 @@ public static class CircuitWorld
     }
     private static void AddRound(WorldCompetition c, List<string> entrants, int round)
     {
+        if (c.Fixtures.Any(f => f.Round == round)) return;
         for (int i = 0; i < entrants.Count / 2; i++) AddTie(c, entrants[i * 2], entrants[i * 2 + 1], round, DayOf(c, round));
     }
     public static void SchedulePlayer(CareerData d, WorldCompetition c)

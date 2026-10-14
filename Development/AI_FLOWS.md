@@ -4,7 +4,9 @@
 
 私信和群聊的小总结、大总结最终都调用 AiService.SummaryRequest → RequestPrivateAsync。非流式响应必须含非空choices数组、message对象和非空content字符串。缺少内容时抛出明确的InvalidDataException，Diagnostics记录响应字段及原始异常栈；不将空内容交给FinishSmallSummary/FinishBigSummary。总结原入口捕获失败、保存SummaryError、清理SummaryStatus；原文、旧总结及覆盖起点保留，下次仍使用原重试入口。没有新增重试机制。
 
-WorldEvents在原随机事件时机依次尝试国家发展公报和MarketDynamics.TryPublish。市场新闻仅使用尚未发布的公开赛事/经营消息及当前报价，交给CareerEngine.Publish和既有新闻队列；不会读取Trading、个人借款或仓位。模型输出仅用于帖子与评论，不改变价格。
+WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场动态各1.5、其余各1），抽中后调用NationalDevelopment.TryPublish或MarketDynamics.TryPublish，不进行额外发布概率或新增轮换。市场新闻仅使用最近七天尚未发布的最多八条公开赛事/经营消息及当前报价，交给CareerEngine.Publish和既有新闻队列；不会读取Trading、个人借款或仓位。模型输出仅用于帖子与评论，不改变价格。
+
+正式比赛 FinishMatch 在 CompleteMatchDay 补齐NPC赛果后，用 WorldEvents.FixtureFacts 读取本赛事、当天、同轮次的已完成对阵，追加到战报 RelatedFacts、SourceBody 和 Body，再由 CommunityThreads.Remember 更新可检索资料。内容包含各席位姓名、通关/楼层、用时及团体比分；同日另一场玩家比赛仍待赛时只写“尚未完成”。AiContext.MatchContext 读取 RelatedFacts，因此即使采用结构化比赛资料而不直接使用 SourceBody，也能获得完整同轮事实。单人模拟、真人对局及多人 Settle 共用此入口，之后沿原保存与新闻生成队列执行，不推迟到下一天，也不调用额外模型。FixtureFacts 同时供市场消息和国运公报使用。
 ## 输入组织与输出使用
 
 | 请求 | 主要组织入口 | 上游数据 | 输出使用者 |
@@ -23,7 +25,9 @@ WorldEvents在原随机事件时机依次尝试国家发展公报和MarketDynami
 
 ## 经济和国家发展的公开事实
 
-ConsumerEngine.Buy/Use、NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、RelatedPeople、Schedule 与 CommunityMemories。人物选择、新闻生成、评论分支和检索继续使用原入口。购物事实包含商品、价格、同行人和实际新增关注，公报包含国运及实际指标变化；NationalFortune.Impact 经 MatchImpact 进入 CareerResult.WorldImpact、比赛帖子和事实记录。
+ConsumerEngine.Buy/Use → ConsumerEvents.Purchase/Activity → CareerLife.AddEvent，立即保存购买或已完成活动事实，不立即创建帖子。Purchase 合并当前玩家同日尚未进入帖子和周刊的购物记录，同时更新对应 life-fact 公开事实；Activity 每次单独记录完成情况和参加者，避免不同聚会混用名单。购物事实含商品、价格、同行人和实际新增关注。单人后续推进日期由 CareerLife.PublishPending 选择过去7天、早于当天的最多4条未发布生活事件；多人由 CoopRules.AdvanceMembers 合并成员事件，按原条件选择最多8条。两者通过原 CareerEngine.Publish 生成生活近况帖子，模型按已经发生的事实报道和讨论。PostId 防止重复发布，已有帖子不改写。关闭 AI 时沿用原生活事件发布条件，不另设补发队列。
+
+NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、RelatedPeople、Schedule 与 CommunityMemories。人物选择、新闻生成、评论分支和检索继续使用原入口；公报包含国运及实际指标变化，WorldEvents.FixtureFacts读取已结算WorldFixture及SeasonCeremony.Participants，提供贡献来源比赛、真实出场者和团队比分。品牌新闻正文包含个人/俱乐部赞助对象及胜负，新闻按Competition归并补充赛果；单纯经营消息不添加虚构的赛事因果。NationalFortune.Impact 经 MatchImpact 进入 CareerResult.WorldImpact、比赛帖子和事实记录。
 
 模拟比赛使用 FinishMatch/Settle 产生正式赛果，MatchRules.Report 标明模拟，不构造不存在的牌组或战斗证据。新增经济操作不直接调用模型，也没有另一套输出协议。行情、持仓及全部商品库存不自动拼入聊天上下文；个人账户不进入其他成员快照。
 

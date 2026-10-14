@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2A2C16FE0E94C9E17C4D592031C35070639FC88622154A15CFE420717089F458`。来源：[源码](../../CareerAudience.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5D1C31326A018C3BEC3277A4F331D4AB38AEEF6E4572397F01CF83A74142609B`。来源：[源码](../../CareerAudience.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -139,7 +139,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerAudience.Quote(int, int)`](CareerAudience.cs.md#symbol-b5169ddb9dda)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)
+**调用者：** [`NationalSpire.CareerAudience.Quote(int, int)`](CareerAudience.cs.md#symbol-b5169ddb9dda)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)；[`NationalSpire.SponsorIncome.Multiplier(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-89b9ce8a4b62)
 
 **调用：** `System.Math.Max(int, int)`；`System.Math.Pow(double, double)`
 
@@ -159,7 +159,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)；[`NationalSpire.OwnedClubs.AudienceIncome(int)`](OwnedClubs.cs.md#symbol-b2b3c8e1de88)；[`NationalSpire.OwnedClubs.SponsorWeekly(NationalSpire.OwnedSponsor?, int)`](OwnedClubs.cs.md#symbol-c9d09ed04c48)；[`NationalSpire.OwnedClubs.SponsorWinBonus(NationalSpire.OwnedSponsor, int)`](OwnedClubs.cs.md#symbol-27e3d96628f4)
+**调用者：** [`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)；[`NationalSpire.OwnedClubs.AudienceIncome(int)`](OwnedClubs.cs.md#symbol-b2b3c8e1de88)；[`NationalSpire.OwnedClubs.SponsorWeekly(NationalSpire.OwnedSponsor?, int)`](OwnedClubs.cs.md#symbol-c9d09ed04c48)；[`NationalSpire.OwnedClubs.SponsorWinBonus(NationalSpire.OwnedSponsor, int)`](OwnedClubs.cs.md#symbol-27e3d96628f4)；[`NationalSpire.SponsorIncome.Multiplier(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-89b9ce8a4b62)
 
 **调用：** `System.Math.Max(int, int)`；`System.Math.Pow(double, double)`
 
@@ -199,7 +199,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?)`](ConsumerEngine.cs.md#symbol-6a13be5c34c1)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?)`](ConsumerEngine.cs.md#symbol-6a13be5c34c1)
 
 **调用：** `System.Math.Round(double)`
 

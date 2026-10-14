@@ -23,7 +23,7 @@ public static class CareerAudience
     }
     public static double RoundMultiplier(int round) => round switch { <= 1 => 1, 2 => 1.5, 3 => 2, 4 => 3, _ => 4 };
     public static int ChampionGain(string kind) => kind switch { "league" => 100000, "continental" => 150000, "worldcup" => 500000, "worldfinal" => 1000000, _ => 0 };
-    // 连续曲线统一用于新赞助报价；已签金额由合同自身保存。
+    // 连续曲线统一用于赞助报价、当前合同展示及实际付款。
     public static double QuoteMultiplier(int fans) => Math.Pow(1 + Math.Max(0, fans) / 100000.0, .6390841180914144);
     public static double ClubMultiplier(int fans) => Math.Pow(1 + Math.Max(0, fans) / 100000.0, .662800438550683);
     public static int Quote(int original, int fans) => (int)Math.Round(original * QuoteMultiplier(fans));

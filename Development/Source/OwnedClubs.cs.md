@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`968EE3DEAA2BCF3F90F474B26947A429DF03C588638D98142FE856D80FB8BDD7`。来源：[源码](../../OwnedClubs.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9B1D59E0C2FDC2CB795B528802BAD90F606F51C69EEDBB26AF3CE7B1ED31E0E3`。来源：[源码](../../OwnedClubs.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -319,16 +319,13 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 **调用者：** [`NationalSpire.CareerScreen.ClubWeeklyFinance(Godot.VBoxContainer, NationalSpire.OwnedSponsor?, int, decimal, int)`](OwnedClubScreen.cs.md#symbol-e4836a392d68)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.BreakEvenFans(NationalSpire.OwnedSponsor?, decimal)`](OwnedClubs.cs.md#symbol-8b262987c35a)
 
-**调用：** [`NationalSpire.CareerAudience.ClubMultiplier(int)`](CareerAudience.cs.md#symbol-6230afa93ab3)；`System.Math.Log(double)`；`System.Math.Max(int, int)`；`System.Math.Round(double)`
+**调用：** [`NationalSpire.CareerAudience.ClubMultiplier(int)`](CareerAudience.cs.md#symbol-6230afa93ab3)；`System.Math.Round(double)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.ClubMultiplier(int)`；`NationalSpire.OwnedSponsor.AudienceVersion`；`NationalSpire.OwnedSponsor.FanRate`；`NationalSpire.OwnedSponsor.Weekly`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.ClubMultiplier(int)`；`NationalSpire.OwnedSponsor.Weekly`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerAudience.ClubMultiplier(int)`；输入表达式：`CareerAudience.ClubMultiplier(fans)`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Weekly * CareerAudience.ClubMultiplier(fans)`
-- `System.Math.Log(double)`；输入表达式：`Math.Log(1 + Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate)))`；返回值紧邻使用处：`BinaryExpressionSyntax: 250 * Math.Log(1 + Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate)))`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, fans)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(0, fans) / (1000.0 * Math.Max(1, s.FanRate))`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(1, s.FanRate)`；返回值紧邻使用处：`BinaryExpressionSyntax: 1000.0 * Math.Max(1, s.FanRate)`
 - `System.Math.Round(double)`；输入表达式：`Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans))`；返回值紧邻使用处：`CastExpressionSyntax: (int)Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans))`
 
 **赋值（含属性/字段和局部值）：**
@@ -344,7 +341,7 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 **调用：** [`NationalSpire.CareerAudience.ClubMultiplier(int)`](CareerAudience.cs.md#symbol-6230afa93ab3)；`System.Math.Round(double)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.ClubMultiplier(int)`；`NationalSpire.OwnedSponsor.AudienceVersion`；`NationalSpire.OwnedSponsor.WinBonus`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.ClubMultiplier(int)`；`NationalSpire.OwnedSponsor.WinBonus`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 

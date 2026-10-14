@@ -1,4 +1,4 @@
-﻿namespace NationalSpire.Coop;
+namespace NationalSpire.Coop;
 
 /// <summary>所有玩家命令在主机串行执行；在副本上计算成功后整体提交，不切换单人全局存档。</summary>
 public static partial class CoopRules
@@ -383,7 +383,7 @@ public static partial class CoopRules
             case "club":
                 var offer = d.Esports.Offers.FirstOrDefault(o => o.ClubId == p.Target);
                 if (offer == null) return "合同邀请已失效。";
-                int credits = d.Credits;
+                long credits = d.Credits;
                 string? error = EsportsWorld.AcceptOffer(d, offer);
                 if (error == null) Distribute(w, d.Credits - credits);
                 return error;
@@ -398,7 +398,7 @@ public static partial class CoopRules
     private static void AddMoney(CoopMember member, decimal amount)
     {
         decimal balance = member.Credits + member.Life.CreditFraction + amount;
-        member.Credits = checked((int)decimal.Floor(balance));
+        member.Credits = checked((long)decimal.Floor(balance));
         member.Life.CreditFraction = balance - member.Credits;
     }
     private static void UseOwnerWallet(CoopWorld w)
@@ -435,12 +435,12 @@ public static partial class CoopRules
         var host = w.Members.Single(m => m.SteamId == w.Owner);
         var guests = w.Members.Where(m => m.SteamId != w.Owner && o.HumanPayDue.GetValueOrDefault(m.PersonId) > 0).OrderBy(m => m.SteamId).ToList();
         long total = guests.Sum(m => (long)o.HumanPayDue[m.PersonId]);
-        int budget = (int)Math.Min(Math.Max(0, host.Credits), total);
+        long budget = Math.Min(Math.Max(0, host.Credits), total);
         d.Credits = host.Credits; d.Life.CreditFraction = host.Life.CreditFraction;
         foreach (var guest in guests)
         {
             int due = o.HumanPayDue[guest.PersonId];
-            int payment = (int)((long)budget * due / total);
+            int payment = (int)((decimal)budget * due / total);
             budget -= payment; total -= due;
             if (payment == 0) continue;
             o.HumanPayDue[guest.PersonId] -= payment;

@@ -1,6 +1,6 @@
 ﻿namespace NationalSpire;
 
-/// <summary>世界日常按题材与人物轮换；赛事与人物的真实状态用于筛选素材。</summary>
+/// <summary>在有素材的题材中按权重抽取，赛事与人物的真实状态用于筛选素材。</summary>
 public static class WorldEvents
 {
     private sealed record Topic(string Key, string Title, string Detail);
@@ -47,14 +47,18 @@ public static class WorldEvents
         if (d.Life.Version == 0 || d.Day < d.Life.NextWorldEventDay) return;
         int seed = CareerEngine.StableHash(d.WorldId + ":events:" + d.Day);
         var rng = new Random(seed); d.Life.NextWorldEventDay = d.Day + rng.Next(3, 7);
-        if (NationalDevelopment.TryPublish(d, rng)) return;
-        if (MarketDynamics.TryPublish(d)) return;
         var candidates = Topics.Where(t => d.Day - d.Life.LastTopics.GetValueOrDefault("world:" + t.Key, -100) >= 14).ToList();
-        if (candidates.Count == 0) return;
-        var topic = candidates[rng.Next(candidates.Count)];
         var people = d.People.Where(p => p.ClubId.Length > 0 && EsportsWorld.IsProfessional(p)
             && d.Day - d.Life.LastTopics.GetValueOrDefault("person:" + p.Id, -100) >= 42).ToList();
-        if (people.Count == 0) return;
+        var subjects = people.Count > 0 ? candidates.Select(t => t.Key).Distinct().ToList() : [];
+        if (NationalDevelopment.NewsCandidates(d).Length > 0) subjects.Add("国运发展");
+        if (MarketDynamics.NewsCandidates(d).Length > 0) subjects.Add("市场动态");
+        if (subjects.Count == 0) return;
+        string subject = SelectTopic(subjects, rng);
+        if (subject == "国运发展") { NationalDevelopment.TryPublish(d, rng); return; }
+        if (subject == "市场动态") { MarketDynamics.TryPublish(d); return; }
+        var templates = candidates.Where(t => t.Key == subject).ToArray();
+        var topic = templates[rng.Next(templates.Length)];
         var person = people[rng.Next(people.Count)];
         string Render(string s) => s.Replace("{人}", person.PublicName).Replace("{队}", EsportsWorld.ClubName(d, person.ClubId));
         d.Life.LastTopics["world:" + topic.Key] = d.Day; d.Life.LastTopics["person:" + person.Id] = d.Day;
@@ -63,4 +67,23 @@ public static class WorldEvents
         CareerEngine.Publish(d, "world-life-" + d.Day, title, detail, "人物日常", true, [person.Id]);
         if (d.Posts.FirstOrDefault(p => p.EventKey == "world-life-" + d.Day) is { } post) post.NewsTopic = topic.Key;
     }
+    public static string SelectTopic(IReadOnlyList<string> subjects, Random random)
+    {
+        static double Weight(string subject) => subject is "国运发展" or "市场动态" ? 1.5 : 1;
+        double choice = random.NextDouble() * subjects.Sum(Weight);
+        foreach (string subject in subjects) { choice -= Weight(subject); if (choice < 0) return subject; }
+        return subjects[^1];
+    }
+
+    /// <summary>新闻只引用已结算场次；同一团体对阵合并说明，保留个人与团队赛果的区别。</summary>
+    public static string FixtureFacts(CareerData d, WorldCompetition c, IEnumerable<WorldFixture> fixtures)
+        => string.Join("\n", fixtures.Where(f => f.Finished).GroupBy(f => (f.Day, f.Round, Home: c.TeamEvent ? f.HomeTeam : f.HomeId, Away: c.TeamEvent ? f.AwayTeam : f.AwayId)).Select(g =>
+        {
+            string name(string id) => CareerEngine.DisplayName(d, id);
+            string seats = string.Join("；", g.Select(f => string.Join("、", SeasonCeremony.Participants(d, c, f, true).Select(name))
+                + (f.Draw ? "战平" : f.WinnerId == f.HomeId ? "战胜" : "负于") + string.Join("、", SeasonCeremony.Participants(d, c, f, false).Select(name))
+                + $"（双方成绩：{MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)}；{MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)}）"));
+            string teams = c.TeamEvent ? $"{CircuitWorld.TeamName(d, c, g.Key.Home)}对阵{CircuitWorld.TeamName(d, c, g.Key.Away)}，已完成比分{g.Count(f => f.WinnerId == f.HomeId)}:{g.Count(f => f.WinnerId == f.AwayId)}。" : "";
+            return $"第{g.Key.Day}天，{c.Name}第{g.Key.Round}轮：{teams}{seats}。";
+        }));
 }

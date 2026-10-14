@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class CareerData
 {
@@ -63,7 +63,7 @@ public sealed class CareerData
     public int Season { get; set; } = 1;
     public int Rating { get; set; } = 1000;
     public int Fans { get; set; } = 28;
-    public int Credits { get; set; } = 0;
+    public long Credits { get; set; } = 0;
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int SelectedAscension { get; set; }
@@ -268,7 +268,7 @@ public sealed class CareerResult
     public string Outcome { get; set; } = "";
     public int RatingDelta { get; set; }
     public int FansDelta { get; set; }
-    public int Prize { get; set; }
+    public long Prize { get; set; }
     public int Day { get; set; }
     public string Event { get; set; } = "";
     public string Opponent { get; set; } = "";

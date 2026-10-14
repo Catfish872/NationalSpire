@@ -68,7 +68,7 @@ public sealed class CoopMember
     public string Gender { get; set; } = IdentityGender.Unset;
     public string Character { get; set; } = "";
     public bool RandomCharacter { get; set; }
-    public int Credits { get; set; }
+    public long Credits { get; set; }
     public int Fans { get; set; } = 28;
     public int Rating { get; set; } = 1000;
     public int Wins { get; set; }
@@ -135,7 +135,7 @@ public sealed class CoopSettlement
     public int Floor { get; set; }
     public double Seconds { get; set; }
     public int Day { get; set; }
-    public Dictionary<ulong, int> Payouts { get; set; } = [];
+    public Dictionary<ulong, long> Payouts { get; set; } = [];
     public List<CoopLivePlayer> Players { get; set; } = [];
     public SettlementRecord? Rankings { get; set; }
 }

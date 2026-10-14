@@ -243,11 +243,16 @@ public static class EsportsWorld
     private static string CupSlot(CareerData d, WorldCompetition c) => c.Kind == "worldcup" ? c.Entrants.First(id => CountryOf(d, id) == d.Esports.Country) : c.Entrants.FirstOrDefault(id => ClubOf(d, id) == d.Esports.ClubId) ?? c.Entrants.First(id => CountryOf(d, id) == d.Esports.Country);
 
     public static void EndDay(CareerData d, int day, bool publish = true)
+        => SettleDay(d, day, publish, true);
+
+    public static void CompleteMatchDay(CareerData d) => SettleDay(d, d.Day, true, false);
+
+    private static void SettleDay(CareerData d, int day, bool publish, bool includePlayer)
     {
         if (PlayerLeague(d) is { } league) LeagueRosterRepair.Apply(d, league);
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season).ToList())
         {
-            foreach (var f in c.Fixtures.Where(f => f.Day == day && !f.Finished).ToList()) SimulateFixture(d, c, f);
+            foreach (var f in c.Fixtures.Where(f => f.Day == day && !f.Finished && (includePlayer || f.HomeId != "player" && f.AwayId != "player")).ToList()) SimulateFixture(d, c, f);
             TeamPreparations.Complete(d, c, day);
             if (c.Modern) { CircuitWorld.AdvanceCompetition(d, c, day, publish); continue; }
             if (c.Kind == "league" && !c.Finished && c.Fixtures.All(f => f.Finished))

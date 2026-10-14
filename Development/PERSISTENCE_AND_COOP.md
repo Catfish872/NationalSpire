@@ -19,15 +19,31 @@ Data 属性不只是获取字段：首次读取会加载文件、恢复备份、
 
 ## 经济操作的提交、同步与恢复
 
+FinishMatch → CompleteMatchDay在原赛后保存之前完成当天NPC赛果、签表、奖励和行情。单人仍由FinishMatch末尾Save提交；多人仍在CoopRules.Settle副本中计算，之后Distribute/Capture、Commit、检查点和广播一次完成。没有增加保存或广播，没有修改重试、回执及断线恢复。Fixture的MarketSettled和已完成标识、AddRound已有轮次判定确保再次EndDay不重复结算。玩家同日其他未赛场次保持待赛；其他人的私人持仓仍由原快照过滤规则处理。
+
+市场推进按钮复用propose-advance，客机不能单独推进；重复订单、旧报价、正在同步等处理继续由现有命令入口决定。CareerScreen只在个人视图新增Simulated结果且待阅编号匹配时切换结算，普通完整同步不会反复跳转。新闻素材消费、NextWorldEventDay、NewsDay、NewsFortune与生成帖子仍随原日期推进保存；离开页面、切换存档不另建任务或缓存。
+
+持续赞助沿用 CareerCommerce.AcceptSponsor 的一次 CareerStore.Save；多人仍通过 sponsor 命令在 Apply 副本中调用，由 Capture 保存本人 Sponsors/SponsorOffers，Commit 写检查点后回执和广播。自动续约及下期生效在原日期推进或比赛 RefreshOffers 中执行，没有额外保存、广播、后台任务或重试。PaidSeason 和 CommercialPaidMatches 继续控制付款；NextOffer 与基础金额在同一合同对象内序列化。消费新增的待发布生活事件及公开事实均位于 EconomicActions.Save 原有六项提交范围，保存失败会和资金、物品一起恢复。已保存消费离开页面仍保留，后续推进由原发布流程处理。
+
+v0.26.18专项118项、既有合同42项、商城展示107项、既有经济122项、实际Godot界面78项通过。覆盖三类赞助初签/重复操作/旧合同转换/涨粉/续约/预约切换/重复赛季、二人和四人命令与检查点完整读回、消费保存失败恢复、购物活动合并及重复发布。未调用模型；本轮没有重复强制终止进程或真实Steam断线测试，不把检查点读回等同于这些测试。
+
+Release本机逐次性能记录：每次1000组个人赛季款和胜场款计算，稳定支持0.2571/0.1657/0.1649/0.1647/0.2020毫秒，成绩奖励0.1923/0.1737/0.1723/0.1675/0.9897毫秒，品牌推广0.1036/0.0870/0.0872/0.0865/0.0868毫秒；每批分配88字节（含计时对象）。10次购物业务与事件合并为0.9178/0.0654/0.0315/0.0293/0.0276毫秒，合计1.0716毫秒，分配26536/24832/24552/25088/24552字节；此项不含磁盘保存。依次为所有成员复制完整个人视图并计算赞助文本，二人5次81.83—124.24毫秒、累计499.46毫秒；四人183.72—230.62毫秒、累计1034.58毫秒，单批约24.38/54.26MB；这是包含原有View深复制的整批耗时，不能当作赞助公式或网络时延。无新增缓存。
+
+实际Godot界面1280×720赞助首次/再次处理86.97/23.05毫秒，首帧97.97/30.03毫秒，分配19552/19136字节；1920×1080处理23.39/23.88毫秒，首帧30.15/30.47毫秒，各17344字节。1920测试在1280之后，不能称为全新进程冷启动。商城1280首次首帧168.06毫秒，复访62.48毫秒。原始记录位于本地 `.artifacts/sponsor-consumer-20261014/`；计时包含嵌套步骤，不能相加充当总耗时。构建成功，NuGet漏洞信息服务不可访问产生NU1900警告。
+
 单人消费按钮 → EconomicActions.Save → 深复制当前 CareerData 一次并 Detached → ConsumerEngine 校验修改 → 将 Life、Credits、Fans、Posts、SavedThreads、CommunityMemories 交回原实例 → 原 CareerStore.Save。保存异常恢复这六个字段原引用并提示失败，原实例和绑定路径不变。处理同步完成，中间无 await；候选副本不传给其他请求。消费另改公开事实和本人关系。
 
-单人交易按钮 → EconomicActions.Trade → 新建只含 Day、Credits、只读 Market 及独立资金资料的输入，深复制 Trading、CreditFraction 和 Ledger；不提供聊天、帖子或人物集合。CareerMarket.Trade 校验并修改该输入；成功后只提交 Credits、Life.Trading、Life.CreditFraction、Life.Ledger，保留 CareerData 和 Life 的原实例。Persist 与消费共用原 CareerStore.Save，恰好保存一次完整生涯；失败恢复这四项原值/原引用。行情引用只读，候选对象不进入异步或网络。多人仍使用 Apply 自带的独立副本，不经过这个单人入口。
+单人交易按钮 → EconomicActions.Trade → 新建只含 Day、Credits、Market 及独立资金资料的输入，深复制 Trading、CreditFraction 和 Ledger；买卖会改价，因此同时深复制 Market；存取与借还不改价，沿用只读引用。不提供聊天、帖子或人物集合。CareerMarket.Trade 校验并修改输入，成功后提交 Credits、Life.Trading、Life.CreditFraction、Life.Ledger、Market，保留 CareerData 和 Life 原实例。Persist 共用原 CareerStore.Save，恰好保存一次完整生涯；失败恢复这五项原值/原引用。候选对象不进入异步或网络。
 
-多人 market / consumer-buy / consumer-use 使用原 Apply：鉴权、纪元、版本和重复收据校验后复制整个 CoopWorld。交易复用该副本的日期、行情、本人 Life 及钱包，调用统一 Trade，不再复制全部个人视图；此输入对象不保存、不广播、不交给异步任务。商城需要人物、帖子、关系，沿用 View → Buy/Use → Capture。失败丢弃整个操作副本，成功仍由 Commit 保存检查点，再回执与完整广播。
+多人 market / consumer-buy / consumer-use 使用原 Apply：鉴权、纪元、版本和重复收据校验后复制整个 CoopWorld。交易复用该副本的日期、行情、本人 Life、钱包及绑定到该副本的 MarketAccounts，调用统一 Trade；报价变化引起的其他成员强平也在同一副本完成，不再复制全部个人视图。此输入不保存、不广播、不交给异步任务。商城沿用 View → Buy/Use → Capture。失败丢弃整个副本，成功仍由 Commit 保存检查点，再回执与完整广播。
 
 行情和国运在日期/赛果原事务中更新，不单独保存或广播。Apply/Settle 在各自副本绑定 MarketAccounts，跨天和报价变更处理所有成员，包括离线账户。快照同时保存行情、余额、借款、仓位和赛果。客机仍先后台保存检查点，再按原顺序发布 World、完成回执和刷新。没有新增重试队列，原 Id、Epoch、Revision、流式依赖和接收顺序不变。
 
-品牌杠杆沿用上述操作及检查点，不新增数据字段；Account 对大于1倍品牌持仓执行原10%权益阈值，并通过 CloseValue 扣除品牌平仓费。多人绑定的 MarketAccounts 对每名成员使用同一个 Account。v0.26.16快速专项实际通过二人/四人交易、重复编号去重、成员余额隔离与检查点读回；比较时使用实际 CheckpointHeader 及 PublicBytes，计入保存生成的 LatestCheckpoint 编号，不比较运行时私有字段。单人保存成功仍一次，异常恢复持仓与资金。该次未重复强制终止进程验证。
+Account是单账户包装，调用Accounts(MarketState,IReadOnlyList<MarketAccount>,day)。CoopRules.BindMarket的MarketAccounts委托一次传入全部成员账户，包括离线成员。统一结算先处理原借款利息，再扫描全部仓位，把已触发止损或强平的仓位加入本次操作内的队列与去重集合。每完成一笔平仓并Apply改变公共报价，再扫描剩余持仓；已经触发的仓位即使因前一笔成交使报价恢复，也继续成交。两种条件同时成立优先记强平。同一仓位只入队、成交一次；队列不跨操作保存，不是恢复重试机制。
+
+Trade开平仓、Fixture和Advance共用上述入口；没有异步间隙、额外保存或广播。margin与stop只修改本人Trading，EconomicActions沿用只读Market并复制个人资金资料，成功一次保存，失败完整恢复。追加与止损设置、取消均检查QuoteRevision；界面输入时不提交，确认后立即收起编辑区，避免同一展开表单重复确认。多人仍由原命令Id、Epoch和Revision去重与鉴权。旧档无StopPrice时不增加止损，InitialMargin在首次追加前从旧Margin填写，原成本及手续费不重新定价。
+
+行情目录补齐与旧档PricingVersion升级共用原加载事务。Initialize按统一品牌目录补齐缺少的报价和60条起始曲线，记录目录指纹；首次检查资产键后使用当前MarketState的CheckedQuoteCount缓存。JSON复制及恢复检查点重建运行期缓存。原Quote、History、钱包和仓位继续沿用；补齐结果随原保存或Commit提交。离开页面、关闭进程及断线继续由原完整存档和检查点恢复。旧档 PricingVersion 升级在原加载事务中处理遗留信号；多人恢复由 InitializeMarket 先绑定全部账户，再 Initialize，最后沿原恢复 Commit 保存。失败决定和同成绩加赛均在正式 Fixture 之前返回，因此没有行情变化；确认失败只正式结算一次。重赛不需要撤销已计价信号，也没有新增封锁交易条件。
 
 PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life 的 Consumer、Trading，本人数据保留。编码使用只读默认空值字节，不共享可修改个人集合。消费事实按原公开事件处理；私信保存回调读取最新成员，只合并对应信箱、关系与交互，不覆盖交易账户。
 

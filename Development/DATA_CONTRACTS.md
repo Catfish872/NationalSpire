@@ -1,4 +1,4 @@
-﻿# 数据归属与使用约定
+# 数据归属与使用约定
 
 ## 单人与多人数据
 
@@ -25,20 +25,25 @@
 - NationalLegacy.Indicators 为九项等级，Pending 为三类未用建设余额，MaintenanceFunding 为本赛季维护额度；DevelopmentVersion、ReportSeason 用于迁移和换季去重。首次启用给予当前赛季 120 维护额度，不追扣历史维护。NewsDay/NewsFortune/NewsChanges 保存公报候选，LastReport 供界面读取。
 - CareerResult.Simulated 默认 false。模拟成绩仍写入原结果、荣誉、评分、奖金、关注和职业最高进阶；主要战报与结算标明模拟。模拟不产生原版对局、原版战斗记录、牌组或战斗证据。
 - CareerPerson.Fans 可空，null 时从 CareerAudience 读取初值，NPC 首次增加关注时写入整数。真人以 CoopMember.Fans 为准，RefreshPeople 更新显示人物。旧玩家关注不重算。
-- CareerData.Market 为公开共同行情。CatalogVersion=2 表示199项资产及60天起始曲线初始化完成；LastDay 为最后更新日，Revision 为报价版本。每项 Quote 保存现价、前价及最多180条价格；SyntheticThrough 区分补入的模拟前史，PendingSignal 保存待下一交易日结算的汇率赛事影响。Market.Events 保存最多240条公开市场事件，NewsDay 为已选入新闻的截止日期。
-- CareerLifeState.Trading 为本人账户，含 Cash、Debt、InterestDay、InterestRate、NextPosition、Positions 和最近 120 条 Trades。金额为内部 Credits 单位，显示美元为十倍；报价、仓位使用 decimal，钱包余数仍用 CreditFraction。
-- PendingSignal 保存外币国减中国的赛事强弱信号，下一交易日以负号计入报价后清零；报价表示1人民币兑换的外币数量。旧价格、历史、持仓和待处理信号不迁移。MarketEvent.Change 对外汇赛果事件保留同一强弱信号，对品牌报价事件表示价格变化；外汇消息正文不把该字段当成涨幅。
-- 品牌与外汇共用 MarketPosition 的 Margin、Units、Entry、Direction 和 Leverage，品牌只允许Direction=1；1倍品牌旧仓不自动平仓，大于1倍沿用外汇10%权益阈值。CloseValue 统一手动/自动平仓返回金额；品牌两种平仓均扣0.1%卖出费，外汇免费，无新增存档字段。
+- CareerData.Market 为公开共同行情。MarketCatalog统一整理地区品牌及CareerCommerce.LegacySponsors提供的旧版品牌，按地区、类别及名称去重，当前201项资产。旧版通用品牌沿用中国地区和原类别。CatalogVersion保存MarketCatalog.Version，由完整资产编号列表及60条起始曲线规则生成；PricingVersion=1 表示旧待处理外汇信号已计入报价。LastDay 为最后更新日，Revision 为报价版本。每项 Quote 保存现价、前价及最多180条价格；SyntheticThrough 区分补入的模拟前史。Market.Events 保存最多240条公开市场事件，NewsDay为已选入新闻的截止日期，同时用于市场新闻七天间隔；只选择最近七天且晚于此日期的最多八条事件。
+- CareerLifeState.Trading 为本人账户，含 Cash、Debt、InterestDay、InterestRate、NextPosition、Positions 和最近120条 Trades。金额为内部 Credits 单位，显示美元为十倍。CareerData.Credits、CoopMember.Credits、SettlementRecord.Credits、CareerResult.Prize、SeasonRecap.Prize 和 CoopSettlement.Payouts 使用64位整数；报价、账户和钱包余数 CreditFraction 使用 decimal。JSON仍为原字段的数字，旧整数可直接读取，不改历史余额或重新计算既往收益。新的大金额存档不支持降级到32位钱包版本。
+- PendingSignal 保存本日外币国减中国的原始信号总和，AppliedSignal 保存已计价的±4范围合计，SignalDay 标识日期。Fixture 每次只应用新合计与旧合计之差，Advance 次日清零但不再次计价。报价表示1人民币兑换的外币数量，正信号降低报价。旧 PricingVersion=0 时 Initialize 将已有 PendingSignal 截至±4计价一次，并处理强平；多人恢复先由 CoopRules.InitializeMarket 绑定全部成员账户再升级。v0.26.20的新外汇赛果 MarketEvent.Change 与品牌一样保存实际相对报价变化，历史事件不重写。
+- MarketState.CheckedQuoteCount是仅驻留当前对象的内部缓存。读取存档、JSON复制或恢复检查点时为-1，Initialize核对全部201项资产键；完整目录继续使用原MarketQuote及History对象，缺项沿用原报价及60条起始曲线生成入口。完成后缓存字典数量；相同目录版本及数量进入快速路径。目录编号列表或字典数量变化触发检查。旧CatalogVersion=0/1仍按原规则补充全部不足60条的历史，版本2及新版目录只补缺少报价的资产。缓存随对象释放，序列化与同步携带原CatalogVersion和Quotes。
+- MarketQuote.ExecutionBase 为不含玩家订单影响的基准价格；DepthUnits 为该基准下的承接数量；OrderUnits 为本次外部报价以来累计净买入数量。MarketExecution.Open/Close 只返回计算结果；Apply 写入净数量、现价、当日曲线及 Revision。每日行情或有效赛果调用 Reprice，以独立基准计算新报价并补充成交深度，净数量归零，已持仓数量和成本不变。字段缺省0时从当前报价和统一 Depth 初始化。ExecutionCopy 只供预计清仓计算更新数值，禁止修改其中共享的 History。
+- 品牌与外汇共用 MarketPosition 的 Margin、Units、Entry、Direction 和 Leverage；Direction=1为做多、-1为做空。Entry 为整笔开仓均价；Leverage保留开仓档位，初始仓位由Entry×Units计算。InitialMargin保存最初保证金，旧仓null时取当前Margin；首次追加前冻结此值和OpeningFee，随后仅增加Margin、扣除个人Cash。OpeningFee保存实际开仓费，旧仓null时用原费用公式还原。追加不改变数量、价格、原手续费或公共行情。
+- StopPrice为个人仓位的可空止损触发价，旧档缺省null；品牌按内部十美元单位存储，外汇按原始汇率存储。做多报价≤StopPrice、做空报价≥StopPrice触发整笔平仓；1倍品牌做多也检查止损。强平适用于全部外汇、品牌做空及大于1倍品牌做多，阈值为InitialMargin的10%。强平与止损同时满足只记强平。MarketExecution.Close统一计算实际成交均价、平仓费、非负到账和含开仓费的净盈亏，止损不保证按触发价成交。
+- MarketOrder新增可选StopPrice，原字段和默认值兼容；margin操作使用Amount和Position，stop操作使用StopPrice和Position，null表示取消。两者都检查QuoteRevision及本人持仓编号；追加要求正数且不超过Cash。设置止损要求正数，多仓低于当前报价、空仓高于当前报价，取消不受价格条件限制。个人仓位字段随原Trading保存和过滤，不进入其他玩家的公开资料。
 - MarketOrder.QuoteRevision 只约束买入和平仓，必须等于共同报价版本；按钮读取当前绑定视图中的报价版本。网络操作编号和重复收据仍由 CoopCommand 管理。
-- CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品保留，较旧一次性消费历史由账目和帖子保留。
-- MarketAccounts、MarketSponsors 是 JsonIgnore 委托。BindMarket 在 Apply/Settle 的副本中绑定：处理所有成员账户（含离线成员）、读取参与者赞助；序列化、个人视图和网络不携带委托。
+- CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品明细保留，较旧普通消费明细会清理，但 BoughtDay 保留每款最近购买日期。ConsumerPurchases 只读合并 BoughtDay/Goods，用于已购徽章及实物收藏，不新增存档字段；本季状态来自 Goods.Season，宣发次数仅在 Consumer.Season 等于当前赛季时使用。Good.Durable 仍代表可举办活动、终身限购的原规则；Good.Collectible 独立决定实物展示，不把杂志等普通商品改成终身限购。Consumed 不参与收藏展示过滤。
+- MarketAccounts、MarketSponsors 是 JsonIgnore 委托。BindMarket 在 Apply/Settle 的副本及 InitializeMarket 的恢复资料中绑定：处理所有成员账户（含离线成员）、读取参与者赞助；序列化、个人视图和网络不携带委托。交易输入复用该副本委托，不能指向提交前的旧 CoopWorld。
 
 - CareerClub.Fans 保存普通俱乐部独立关注，AudienceReceipts 按赛事/轮次/对阵去重；OwnedClubState.Fans 保留自建俱乐部原独立关注。ClubAudience.Total 动态叠加现役前三人20%，不把这一部分写回独立关注。
-- OwnedSponsor.AudienceVersion 缺省0沿用旧收入公式，新报价1使用俱乐部关注倍率。OwnedClubState.HumanWeeklyWage/HumanWinBonus 缺省140/100，创建新俱乐部明确设置280/200，旧存档合同不重算。
+- OwnedSponsor.AudienceVersion 仅保留旧字段兼容，新旧合同都通过 SponsorWeekly/SponsorWinBonus 使用当前俱乐部关注倍率；原 Weekly/WinBonus 基数、合同期限和已支付款项不变。OwnedClubState.HumanWeeklyWage/HumanWinBonus 缺省140/100，创建新俱乐部明确设置280/200，旧存档工资合同不重算。
+- SponsorContract.BaseRetainer/BaseWinBonus 为可空基础金额；新报价直接写入，旧合同经 SponsorIncome.Initialize 一次确定，后续粉丝变化不改基础金额。Retainer/WinBonus 保留历史报价兼容，付款和界面读取 SponsorIncome 计算结果。NextOffer 保存已经选择的下期个人方案；到期由 RefreshOffers 转为当前合同并清空旧 NextOffer。PaidSeason 与 CommercialPaidMatches 继续分别防止赛季款、胜场款重复发放。Sponsors/SponsorOffers 属于当前玩家 Esports，多人由 CoopMember 的同名字段保存，View/Capture 及检查点自动包含新字段；未关联玩家的普通俱乐部赞助仍属于共同赛事资料。
 - CeremonyAward.AudienceReward 可空；新颁奖写入当时实际关注奖励，旧空值读取90/240。奖项确定后不会随玩家后来的关注变化重算。
 - Life.RelicVersion 缺省0，CareerRelics.Upgrade 恢复旧耗尽收藏、保留未领取储蓄，已领取储蓄清零；设为1后不重复迁移。原 Uses/Ended 字段继续反序列化兼容旧档，不作为新版购买次数门槛。
 - MarketAccount.InterestRate 缺省0.0003，保留旧借款；新借款时按本金写入对应利率，还款不重定价。
-- MarketTerminal 的自选名单位于本机 user://NationalSpire_market.cfg，按WorldId及Human分组；不进生涯、不广播。控件缓存不持有离开页面后的CareerData或交易回调。
+- MarketTerminal 的自选名单位于本机 user://NationalSpire_market.cfg，按WorldId及Human分组。概况和动态属于本机显示状态；EventTitle读取旧事件，MarketEventRow使用记录的Day、Change与Person。旧待处理文本保留在Market.Events，由展示筛选选择当前可见事实。RefreshChart仅使用当前资产历史，切换图表范围保留已整理的概况和动态。Unbind清除当前CareerData、交易与人物回调、选中事件和搜索资料，并解除持仓卡片资料。
 其他成员快照中的 Consumer、Trading 会清空，本人数据保留；公共行情一致共享。房主权威存档保留所有账户，用于离线结算和恢复。
 
 ## 编号、版本与顺序

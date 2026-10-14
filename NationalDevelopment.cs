@@ -250,17 +250,23 @@ public static class NationalDevelopment
         return changes;
     }
 
+    public static NationalLegacy[] NewsCandidates(CareerData d) => d.Esports.Nations
+        .Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7).ToArray();
+
     public static bool TryPublish(CareerData d, Random random)
     {
-        var candidates = d.Esports.Nations.Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7).ToArray();
-        if (candidates.Length == 0 || random.NextDouble() >= .3) return false;
+        var candidates = NewsCandidates(d);
+        if (candidates.Length == 0) return false;
         var n = candidates[random.Next(candidates.Length)];
         string key = $"development-{n.Country}-{n.NewsDay}";
         var people = d.People.Where(p => p.Country == n.Country && EsportsWorld.IsProfessional(p) && !SpireArbitration.Banned(p, d.Day))
             .OrderBy(p => CareerEngine.StableHash(key + p.Id)).Take(3).Select(p => p.Id).ToList();
+        var competitions = d.Esports.Competitions.Where(c => c.Fixtures.Any(f => f.Day == n.NewsDay && f.Finished && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country))).ToArray();
+        string matches = string.Join("\n", competitions.Select(c => WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))));
         CareerEngine.Publish(d, key, n.Country + "国运发展公报",
             $"第{n.NewsDay}天，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)
-            + $"当前人均GDP {n.Gdp:N0}美元/年。", "国家发展", true, people);
+            + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches
+            + "\n请围绕这些比赛与当地生活变化组织报道和人物讨论。没有指标变化时，不写成已经升级。", "国家发展", true, people);
         n.NewsFortune = 0; n.NewsChanges.Clear();
         return true;
     }
