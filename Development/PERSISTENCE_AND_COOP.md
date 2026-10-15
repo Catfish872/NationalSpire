@@ -19,6 +19,10 @@ Data 属性不只是获取字段：首次读取会加载文件、恢复备份、
 
 ## 经济操作的提交、同步与恢复
 
+模拟失利的 FinishMatch 在写入正式赛果前保存 Failure.Result 与原对手 Opponent，返回待选择界面。确认失败经 MatchFailure.RestoreMatch 恢复原比赛参数，再执行完整结算；实际重赛沿原 GameBridge 保存绑定并启动游戏，开局成功后清除原 Failure。退出或切换后由完整生涯恢复待选择。旧 Opponent 缺省值在再次选择时补齐，计算发生在该次选择中。单人正式资料、多人个人战绩、国运、行情、帖子及结算收据在最终确认或实际重赛完成时写入。
+
+多人 Settle 的失利分支保留 Run.Terminal 和 decision 阶段。failure-retry 保存 RetryRequested 并建立原 start 投票；取消投票保留 Terminal，failure-confirm 仍可结算原模拟成绩。全队确认时在 Apply 候选副本中清除旧 Run 并 Prepare；成功形成新实际对局，失败返回原 World。每条命令继续执行原检查点、回执和广播；断线及进程关闭后从已提交检查点恢复。二人/四人专项已实际写入、读取检查点，并验证取消后确认与真实重赛最终结算；Steam断线和原版启动的本轮实际操作待实测。
+
 FinishMatch → CompleteMatchDay在原赛后保存之前完成当天NPC赛果、签表、奖励和行情。单人仍由FinishMatch末尾Save提交；多人仍在CoopRules.Settle副本中计算，之后Distribute/Capture、Commit、检查点和广播一次完成。没有增加保存或广播，没有修改重试、回执及断线恢复。Fixture的MarketSettled和已完成标识、AddRound已有轮次判定确保再次EndDay不重复结算。玩家同日其他未赛场次保持待赛；其他人的私人持仓仍由原快照过滤规则处理。
 
 市场推进按钮复用propose-advance，客机不能单独推进；重复订单、旧报价、正在同步等处理继续由现有命令入口决定。CareerScreen只在个人视图新增Simulated结果且待阅编号匹配时切换结算，普通完整同步不会反复跳转。新闻素材消费、NextWorldEventDay、NewsDay、NewsFortune与生成帖子仍随原日期推进保存；离开页面、切换存档不另建任务或缓存。
@@ -39,7 +43,7 @@ Release本机逐次性能记录：每次1000组个人赛季款和胜场款计算
 
 行情和国运在日期/赛果原事务中更新，不单独保存或广播。Apply/Settle 在各自副本绑定 MarketAccounts，跨天和报价变更处理所有成员，包括离线账户。快照同时保存行情、余额、借款、仓位和赛果。客机仍先后台保存检查点，再按原顺序发布 World、完成回执和刷新。没有新增重试队列，原 Id、Epoch、Revision、流式依赖和接收顺序不变。
 
-Account是单账户包装，调用Accounts(MarketState,IReadOnlyList<MarketAccount>,day)。CoopRules.BindMarket的MarketAccounts委托一次传入全部成员账户，包括离线成员。统一结算先处理原借款利息，再扫描全部仓位，把已触发止损或强平的仓位加入本次操作内的队列与去重集合。每完成一笔平仓并Apply改变公共报价，再扫描剩余持仓；已经触发的仓位即使因前一笔成交使报价恢复，也继续成交。两种条件同时成立优先记强平。同一仓位只入队、成交一次；队列不跨操作保存，不是恢复重试机制。
+Account是单账户包装，调用Accounts(MarketState,IReadOnlyList<MarketAccount>,day)。CoopRules.BindMarket的MarketAccounts委托一次传入全部成员账户，包括离线成员。统一结算先处理原借款利息，再扫描全部仓位，用Close的整笔预计到账判断强平、用外部基准Price判断止损，将已触发仓位加入本次操作内的队列与去重集合。每完成一笔平仓并Apply更新对应方向的承接数量，再扫描剩余持仓；已经触发的仓位即使因前一笔成交使报价恢复，也继续成交。两种条件同时成立优先记强平。同一仓位只入队、成交一次；队列不跨操作保存，不是恢复重试机制。
 
 Trade开平仓、Fixture和Advance共用上述入口；没有异步间隙、额外保存或广播。margin与stop只修改本人Trading，EconomicActions沿用只读Market并复制个人资金资料，成功一次保存，失败完整恢复。追加与止损设置、取消均检查QuoteRevision；界面输入时不提交，确认后立即收起编辑区，避免同一展开表单重复确认。多人仍由原命令Id、Epoch和Revision去重与鉴权。旧档无StopPrice时不增加止损，InitialMargin在首次追加前从旧Margin填写，原成本及手续费不重新定价。
 

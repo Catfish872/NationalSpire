@@ -63,7 +63,7 @@ public sealed class CareerData
     public int Season { get; set; } = 1;
     public int Rating { get; set; } = 1000;
     public int Fans { get; set; } = 28;
-    public long Credits { get; set; } = 0;
+    public decimal Credits { get; set; } = 0;
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int SelectedAscension { get; set; }

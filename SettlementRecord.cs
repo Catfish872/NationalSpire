@@ -10,7 +10,7 @@ public sealed class SettlementRecord
     public string Decider { get; set; } = "";
     public int Rating { get; set; }
     public int Fans { get; set; }
-    public long Credits { get; set; }
+    public decimal Credits { get; set; }
 }
 public sealed class SettlementStanding
 {

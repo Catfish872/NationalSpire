@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`474623A8832ACDDF1E6AF155506B76CAD7E6BB0FE77A66CBA008AB3A03F220B3`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`92C01E6AAE785F4056FE0C55467FDD2F05C1D9C44ED363CABFD9D1FDB6EDAB11`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -713,7 +713,7 @@ public const int Protocol = 1;
 
 <a id="symbol-7c3867337d4d"></a>
 
-## `NationalSpire.Coop.CoopMember.Credits — public long Credits`
+## `NationalSpire.Coop.CoopMember.Credits — public decimal Credits`
 
 来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 

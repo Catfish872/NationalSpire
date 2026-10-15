@@ -17,6 +17,8 @@ public sealed class MarketQuote
     public decimal ExecutionBase { get; set; }
     public decimal DepthUnits { get; set; }
     public decimal OrderUnits { get; set; }
+    public MarketNumber? BuyUnits { get; set; }
+    public MarketNumber? SellUnits { get; set; }
     public int SignalDay { get; set; }
     public decimal AppliedSignal { get; set; }
     public MarketQuote ExecutionCopy() => (MarketQuote)MemberwiseClone();
@@ -47,7 +49,7 @@ public sealed class MarketPosition
     public string Asset { get; set; } = "";
     public decimal Entry { get; set; }
     public decimal Margin { get; set; }
-    public decimal Units { get; set; }
+    public MarketNumber Units { get; set; }
     public int Leverage { get; set; } = 1;
     public int Direction { get; set; } = 1;
 }

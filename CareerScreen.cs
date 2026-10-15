@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Saves;
@@ -263,7 +263,8 @@ public partial class CareerScreen : Control, IScreenContext
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
-        _status.Text = $"第 {data.Season} 赛季 · 第 {SeasonCalendar.Day(data, data.Day)} 天（累计第 {data.Day} 天）   评分 {data.Rating}   关注 {data.Fans}   可用资金 {CareerMoney.Format(CareerMoney.Balance(data))}";
+        _status.Text = $"第 {data.Season} 赛季 · 第 {SeasonCalendar.Day(data, data.Day)} 天（累计第 {data.Day} 天）   评分 {data.Rating}   关注 {data.Fans}   可用资金 {CareerMoney.Compact(CareerMoney.Balance(data))}";
+        _status.TooltipText = "可用资金 " + CareerMoney.Format(CareerMoney.Balance(data)); _status.MouseFilter = MouseFilterEnum.Pass;
         if (_multiplayer != null)
         {
             _content.AddChild(Text(_multiplayer.Status, 16, CareerVisuals.Teal));
@@ -344,7 +345,7 @@ public partial class CareerScreen : Control, IScreenContext
         var metrics = new HBoxContainer(); _content.AddChild(metrics);
         Metric(metrics, "世界积分", CircuitLedger.Points(data, "player").ToString(), $"{data.Wins} 胜 · {data.Draws} 平 · {data.Losses} 负");
         Metric(metrics, "世界关注", data.Fans.ToString("N0"), "你的表现正在被看见");
-        Metric(metrics, "可用资金", CareerMoney.Format(CareerMoney.Balance(data)), "比赛、合同与生活收支");
+        Metric(metrics, "可用资金", CareerMoney.Compact(CareerMoney.Balance(data)), "比赛、合同与生活收支");
         int lifeOffers = data.Life.Activities.Count(a => a.Status == "可安排" && a.ExpiresDay >= data.Day);
         if (lifeOffers > 0) _content.AddChild(Button($"有 {lifeOffers} 项新的生涯活动  →", () => Visit(() => _tab = "生涯生活"), 320));
         if (_multiplayer == null) Metric(metrics, "存档通关率", archive.WinRate, $"{archive.Wins} 次通关 / {archive.Wins + archive.Losses} 次对局");

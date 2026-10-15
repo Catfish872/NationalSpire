@@ -227,22 +227,22 @@ public static class CareerEngine
         var honorsBefore = d.Esports.Honors.Select(h => h.Title).ToHashSet();
         var postsBeforeResult = d.Posts.Select(p => p.Id).ToHashSet();
         MatchRules.PrepareOpponent(d, m);
-        m.PlayerFloor = Math.Max(0, floor); m.PlayedAscension = ascension; m.PlayerSeconds = Math.Round(runSeconds, 3);
-        int comparison = forfeit ? -1 : MatchRules.Compare(new(runClear, m.PlayerFloor, m.PlayerSeconds.Value),
+        int playerFloor = Math.Max(0, floor); double playerSeconds = Math.Round(runSeconds, 3);
+        int comparison = forfeit ? -1 : MatchRules.Compare(new(runClear, playerFloor, playerSeconds),
             new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value));
-        m.Draw = comparison == 0;
-        m.PlayerWon = comparison > 0;
         if (!confirmFailure && !forfeit && comparison < 0)
         {
             if (d.Failure != null) return;
-            d.Failure = new() { Abandoned = abandoned, Result = new() { MatchId = m.Id, Kind = m.Kind,
+            d.Failure = new() { Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
                 CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
                 Day = d.Day, Event = m.Event, Outcome = "失利", Character = character, CharacterId = characterId,
-                Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = m.PlayerSeconds,
-                Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
+                Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
+                Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, Simulated = simulated, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
             d.PendingMatchId = null; d.PendingSince = 0;
             CareerStore.Save(d); return;
         }
+        m.PlayerFloor = playerFloor; m.PlayedAscension = ascension; m.PlayerSeconds = playerSeconds;
+        m.Draw = comparison == 0; m.PlayerWon = comparison > 0;
         if (runClear && !forfeit) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, ascension);
         if (CircuitWorld.ReplayTie(d, m)) return;
         m.Decider = runClear && m.OpponentWon && !forfeit ? "双方通关，按游戏记录的通关用时比较，较快者获胜。" : "";
@@ -262,7 +262,7 @@ public static class CareerEngine
             friendly.Settlement = SettlementRecords.Capture(d, m, settledSeason); d.PendingSettlementId = m.Id;
             CareerStore.Save(d); return;
         }
-        int rating = d.Rating, fans = d.Fans; long credits = d.Credits;
+        int rating = d.Rating, fans = d.Fans; decimal credits = d.Credits;
         double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension);
         if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Credits += MatchRules.Reward(m.Prize, multiplier); }
         else if (m.Draw) { d.Draws++; d.Rating += 8; d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
@@ -301,7 +301,7 @@ public static class CareerEngine
             foreach (var extra in related) d.Posts.Remove(extra);
             CommunityThreads.Remember(d, resultPost);
         }
-        record.RatingDelta = d.Rating - rating; record.FansDelta = d.Fans - fans; record.Prize = d.Credits - credits;
+        record.RatingDelta = d.Rating - rating; record.FansDelta = d.Fans - fans; record.Prize = (long)(d.Credits - credits);
         d.Life.PrizeTotal += m.PlayerWon ? MatchRules.Reward(m.Prize, multiplier) : m.Draw ? MatchRules.Reward(m.Prize / 2, multiplier) : 0;
         CareerMoney.Record(d, m.Event + "赛后结算（含合同及荣誉收入）", record.Prize);
         d.PendingMatchId = null; d.PendingSince = 0;

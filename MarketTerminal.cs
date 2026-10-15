@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -27,7 +27,7 @@ internal partial class MarketTerminal : VBoxContainer
     private ProgressBar _volatilityBar = null!;
     private VBoxContainer _overview = null!;
     private Button _pin = null!;
-    private SpinBox _amount = null!, _transfer = null!;
+    private MarketAmountInput _amount = null!, _transfer = null!;
     private OptionButton _leverage = null!;
     private HBoxContainer _columns = null!;
     private VBoxContainer _right = null!;
@@ -51,7 +51,7 @@ internal partial class MarketTerminal : VBoxContainer
         panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232f", "345363", 10, 10)); parent.AddChild(panel);
         var box = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; panel.AddChild(box); return box;
     }
-    private static SpinBox Money() => new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, Value = 1000, Step = .01, Prefix = "$", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 46) };
+    private static MarketAmountInput Money() => new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, Value = 1000, Step = .01, Prefix = "$", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 46) };
     private IEnumerator<bool>? _builder;
     internal MarketTerminal()
     {
@@ -153,13 +153,13 @@ internal partial class MarketTerminal : VBoxContainer
         yield return true;
         _right.AddChild(Label("资金存取", 22, CareerVisuals.Gold)); _transfer = Money(); _right.AddChild(_transfer);
         var transfers = new GridContainer { Columns = 2 }; _right.AddChild(transfers);
-        foreach (var (action, title) in new[] { ("deposit", "存入"), ("withdraw", "取出"), ("borrow", "借款"), ("repay", "还款") }) { var button = Button(title, () => { _transfer.Apply(); Submit(new(action, Amount: (decimal)_transfer.Value / 10)); }); button.Icon = LifestyleArt.Icon(action is "deposit" or "withdraw" ? "外汇" : "收支记录"); transfers.AddChild(button); }
+        foreach (var (action, title) in new[] { ("deposit", "存入"), ("withdraw", "取出"), ("borrow", "借款"), ("repay", "还款") }) { var button = Button(title, () => { decimal amount = _transfer.Amount / 10; _transfer.Apply(); Submit(new(action, Amount: amount)); }); button.Icon = LifestyleArt.Icon(action is "deposit" or "withdraw" ? "外汇" : "收支记录"); transfers.AddChild(button); }
         _right.AddChild(Button("还清借款", () => Submit(new("repay-all"))));
         _right.AddChild(Label("借款 $500—50,000，日利率按金额为0.02% / 0.04% / 0.07%。", 13));
         _right.AddChild(new HSeparator()); _right.AddChild(Label("下单", 22, CareerVisuals.Gold));
         _right.AddChild(Label("保证金", 14));
         _amount = Money(); _amount.Step = .01; _amount.UpdateOnTextChanged = true; _right.AddChild(_amount);
-        _amount.GetLineEdit().TextChanged += _ => { if (!_settingAmount) _portion = 0; };
+        _amount.GetLineEdit().TextChanged += _ => { if (!_settingAmount) { _portion = 0; RefreshFee(); } };
         _amount.ValueChanged += _ => { if (!_settingAmount) { _portion = 0; RefreshFee(); } };
         var portions = new HBoxContainer(); _right.AddChild(portions);
         foreach (int percent in new[] { 10, 25, 50, 100 }) portions.AddChild(Button(percent + "%", () =>
@@ -297,6 +297,8 @@ internal partial class MarketTerminal : VBoxContainer
         string text = item.Text.StartsWith(asset.Name, StringComparison.Ordinal) ? item.Text[asset.Name.Length..].TrimStart(' ', '·', '：') : item.Text;
         return text.Length > 96 ? text[..96] + "…" : text;
     }
+    private decimal OrderMargin(MarketAsset asset, int leverage) => _portion > 0
+        ? CareerMarket.BudgetMargin(asset, _data!.Life.Trading.Cash, leverage, _portion) : _amount.Amount / 10;
     private void RefreshFee()
     {
         if (_data == null || !MarketCatalog.ById.TryGetValue(_selected, out var asset)) return;
@@ -304,22 +306,24 @@ internal partial class MarketTerminal : VBoxContainer
         if (_portion > 0)
         {
             _settingAmount = true;
-            _amount.SetValueNoSignal((double)(CareerMarket.BudgetMargin(asset, _data.Life.Trading.Cash, leverage, _portion) * 10));
+            _amount.SetAmount(CareerMarket.BudgetMargin(asset, _data.Life.Trading.Cash, leverage, _portion) * 10);
             _settingAmount = false;
         }
-        decimal margin = (decimal)_amount.Value / 10;
+        decimal margin = OrderMargin(asset, leverage);
         decimal fee = CareerMarket.OpenFee(asset, margin, leverage);
         string Quote(decimal value) => asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value);
         var buy = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, 1);
         var sell = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, -1);
-        _cost.Text = CareerMoney.Format(margin + fee); _notional.Text = CareerMoney.Format(margin * leverage); _fee.Text = CareerMoney.Format(fee);
+        _cost.Text = CareerMoney.Compact(margin + fee); _notional.Text = CareerMoney.Compact(margin * leverage); _fee.Text = CareerMoney.Compact(fee);
+        _cost.MouseFilter = _notional.MouseFilter = _fee.MouseFilter = MouseFilterEnum.Pass;
+        _cost.TooltipText = CareerMoney.Format(margin + fee); _notional.TooltipText = CareerMoney.Format(margin * leverage); _fee.TooltipText = CareerMoney.Format(fee);
         _buyPrice.Text = "预计成交均价  " + Quote(buy.Average); _sellPrice.Text = "预计成交均价  " + Quote(sell.Average);
     }
     private void RefreshAccount()
     {
         if (_data == null) return; var account = _data.Life.Trading;
         decimal[] values = [CareerMarket.Net(_data.Market, account), account.Cash, account.Positions.Sum(p => p.Margin), account.Debt];
-        for (int i = 0; i < 4; i++) _metrics[i].Text = CareerMoney.Format(values[i]);
+        for (int i = 0; i < 4; i++) { _metrics[i].Text = CareerMoney.Compact(values[i]); _metrics[i].TooltipText = CareerMoney.Format(values[i]); _metrics[i].MouseFilter = MouseFilterEnum.Pass; }
         _holdPage = Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5));
         for (int i = 0; i < 5; i++)
         {
@@ -328,7 +332,7 @@ internal partial class MarketTerminal : VBoxContainer
         }
         _tradePage = Math.Min(_tradePage, Math.Max(0, (account.Trades.Count - 1) / 5));
         var trades = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray();
-        for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"第{trades[i].Day}天 · {trades[i].Text}\n{CareerMoney.Format(trades[i].Change)}" : "暂无成交"; }
+        for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"第{trades[i].Day}天 · {trades[i].Text}\n{CareerMoney.Compact(trades[i].Change)}" : "暂无成交"; }
     }
     private void ToggleWatch()
     {
@@ -341,8 +345,9 @@ internal partial class MarketTerminal : VBoxContainer
     {
         if (_data == null || !MarketCatalog.ById.TryGetValue(_selected, out var asset)) return;
         // Apply 会重写输入框文字；提交本身不应取消玩家已选择的比例。
+        int leverage = CareerMarket.Leverages[_leverage.Selected]; decimal amount = OrderMargin(asset, leverage);
         _settingAmount = true; _amount.Apply(); _settingAmount = false;
-        Submit(new("open", _selected, (decimal)_amount.Value / 10, direction, CareerMarket.Leverages[_leverage.Selected], QuoteRevision: _data.Market.Revision));
+        Submit(new("open", _selected, amount, direction, leverage, QuoteRevision: _data.Market.Revision));
     }
     private void ClosePosition(int row)
     {

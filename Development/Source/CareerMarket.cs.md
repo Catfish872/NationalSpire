@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`31B899F82E92BD85E7A47A0ED95C4C14053101DA7EE11BA45DF2ED45919DB9AA`。来源：[源码](../../CareerMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`928AF48B8D3474584F650276635E6233D809FCC517A347A138BE3C357C8DDD8E`。来源：[源码](../../CareerMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -95,11 +95,11 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 <a id="symbol-3e50cb7c29a1"></a>
 
-## `NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal) — public static decimal Equity(MarketPosition position, decimal price)`
+## `NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal) — public static MarketNumber Equity(MarketPosition position, decimal price)`
 
 来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-4c0e4a44e705)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)
+**调用者：** [`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)
 
 **调用：** 无已绑定显式调用。
 
@@ -170,21 +170,21 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-4c0e4a44e705"></a>
+<a id="symbol-1770e33293db"></a>
 
-## `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal) — private static bool Forced(MarketPosition p, decimal price)`
+## `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, NationalSpire.MarketQuote) — private static bool Forced(MarketPosition p, MarketQuote quote)`
 
 来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Accounts(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](CareerMarket.cs.md#symbol-81ec5ad63c25)
 
-**调用：** [`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-3e50cb7c29a1)
+**调用：** [`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`；`NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.InitialMargin`；`NationalSpire.MarketPosition.Leverage`；`NationalSpire.MarketPosition.Margin`
+**字段、属性、事件及方法组引用：** `NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.InitialMargin`；`NationalSpire.MarketPosition.Leverage`；`NationalSpire.MarketPosition.Margin`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`；输入表达式：`Equity(p, price)`；返回值紧邻使用处：`BinaryExpressionSyntax: Equity(p, price) <= (p.InitialMargin ?? p.Margin) * .1m`
+- `NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.Close(p, quote)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: MarketExecution.Close(p, quote).Proceeds`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -197,21 +197,22 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 **调用者：** [`NationalSpire.CareerMarket.Account(NationalSpire.MarketState, NationalSpire.MarketAccount, int)`](CareerMarket.cs.md#symbol-a92beec78217)；[`NationalSpire.Coop.CoopRules.BindMarket(NationalSpire.Coop.CoopWorld)`](Coop/CoopMarket.cs.md#symbol-b6088377cb72)
 
-**调用：** [`NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-4c0e4a44e705)；[`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`](CareerMarket.cs.md#symbol-a7af74d3e50b)；[`NationalSpire.MarketExecution.Apply(NationalSpire.MarketState, string, NationalSpire.MarketExecution.Fill, int)`](MarketExecution.cs.md#symbol-9ad4ae339dd8)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；`decimal.Round(decimal, int)`；`decimal.ToString(string?)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.List<T>.Remove(T)`；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.Collections.Generic.Queue<T>.Queue()`；`System.Collections.Generic.Queue<T>.TryDequeue(out T)`
+**调用：** [`NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](CareerMarket.cs.md#symbol-1770e33293db)；[`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`](CareerMarket.cs.md#symbol-a7af74d3e50b)；[`NationalSpire.MarketExecution.Apply(NationalSpire.MarketState, string, NationalSpire.MarketExecution.Fill, int)`](MarketExecution.cs.md#symbol-9ad4ae339dd8)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；`decimal.Round(decimal, int)`；`decimal.ToString(string?)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.List<T>.Remove(T)`；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.Collections.Generic.Queue<T>.Queue()`；`System.Collections.Generic.Queue<T>.TryDequeue(out T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal)`；`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Debt`；`NationalSpire.MarketAccount.InterestDay`；`NationalSpire.MarketAccount.InterestRate`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketExecution.Apply(NationalSpire.MarketState, string, NationalSpire.MarketExecution.Fill, int)`；`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；`NationalSpire.MarketExecution.Exit.Fill`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.StopPrice`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketState.Quotes`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Debt`；`NationalSpire.MarketAccount.InterestDay`；`NationalSpire.MarketAccount.InterestRate`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketExecution.Apply(NationalSpire.MarketState, string, NationalSpire.MarketExecution.Fill, int)`；`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；`NationalSpire.MarketExecution.Exit.Fill`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.StopPrice`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketState.Quotes`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `decimal.Round(decimal, int)`；输入表达式：`decimal.Round(account.Debt * account.InterestRate, 4)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = decimal.Round(account.Debt * account.InterestRate, 4)`
 - `decimal.ToString(string?)`；输入表达式：`exit.Fill.Average.ToString("0.00000")`；返回值紧邻使用处：`BinaryExpressionSyntax: MarketCatalog.ById[p.Asset].Name + (liquidated ? "强制平仓" : "止损平仓") + " · 成交价" + exit.Fill.Average.ToString("0.00000")`
-- `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal)`；输入表达式：`Forced(p, market.Quotes[p.Asset].Price)`；返回值紧邻使用处：`BinaryExpressionSyntax: wasForced || Forced(p, market.Quotes[p.Asset].Price)`
-- `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, decimal)`；输入表达式：`Forced(position, price)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Forced(position, price)`
+- `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`Forced(p, market.Quotes[p.Asset])`；返回值紧邻使用处：`BinaryExpressionSyntax: wasForced || Forced(p, market.Quotes[p.Asset])`
+- `NationalSpire.CareerMarket.Forced(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`Forced(position, quote)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Forced(position, quote)`
 - `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；输入表达式：`Record(account, account.InterestDay, "借款利息", -interest)`；返回值紧邻使用处：`ExpressionStatementSyntax: Record(account, account.InterestDay, "借款利息", -interest);`
 - `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；输入表达式：`Record(account, day, MarketCatalog.ById[p.Asset].Name + (liquidated ? "强制平仓" : "止损平仓") + " · 成交价" + exit.Fill.Average.ToString("0.00000"), exit.Proceeds)`；返回值紧邻使用处：`ExpressionStatementSyntax: Record(account, day, MarketCatalog.ById[p.Asset].Name + (liquidated ? "强制平仓" : "止损平仓") + " · 成交价" + exit.Fill.Average.ToString("0.00000"), exit.Proceeds);`
 - `NationalSpire.MarketExecution.Apply(NationalSpire.MarketState, string, NationalSpire.MarketExecution.Fill, int)`；输入表达式：`MarketExecution.Apply(market, p.Asset, exit.Fill, day)`；返回值紧邻使用处：`ExpressionStatementSyntax: MarketExecution.Apply(market, p.Asset, exit.Fill, day);`
 - `NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.Close(p, market.Quotes[p.Asset])`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketExecution.Close(p, market.Quotes[p.Asset])`
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`triggered.Add(position)`；返回值紧邻使用处：`BinaryExpressionSyntax: (forced || stop) && triggered.Add(position)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`triggered.Contains(position)`；返回值紧邻使用处：`IfStatementSyntax: if (triggered.Contains(position)) continue;`
 - `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<MarketPosition>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HashSet<MarketPosition>()`
 - `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`account.Positions.Remove(p)`；返回值紧邻使用处：`ExpressionStatementSyntax: account.Positions.Remove(p);`
 - `System.Collections.Generic.Queue<T>.Enqueue(T)`；输入表达式：`pending.Enqueue((owner, position, forced))`；返回值紧邻使用处：`ExpressionStatementSyntax: pending.Enqueue((owner, position, forced));`
@@ -229,7 +230,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.Accounts(NationalSpire.CareerData, int) — private static void Accounts(CareerData d, int day)`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Advance(NationalSpire.CareerData)`](CareerMarket.cs.md#symbol-6039084ecec7)；[`NationalSpire.CareerMarket.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](CareerMarket.cs.md#symbol-089c75a03be9)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerMarket.UpgradePricing(NationalSpire.CareerData)`](CareerMarket.cs.md#symbol-ee96e84cf581)
 
@@ -249,7 +250,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.Price(NationalSpire.MarketQuote, int, decimal) — private static void Price(MarketQuote quote, int day, decimal price)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Advance(NationalSpire.CareerData)`](CareerMarket.cs.md#symbol-6039084ecec7)；[`NationalSpire.CareerMarket.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](CareerMarket.cs.md#symbol-089c75a03be9)；[`NationalSpire.CareerMarket.UpgradePricing(NationalSpire.CareerData)`](CareerMarket.cs.md#symbol-ee96e84cf581)
 
@@ -275,7 +276,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.Advance(NationalSpire.CareerData) — public static void Advance(CareerData d)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)
 
@@ -333,7 +334,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture) — public static void Fixture(CareerData d, WorldCompetition c, WorldFixture fixture)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)
 
@@ -418,7 +419,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int) — public static decimal OpenFee(MarketAsset asset, decimal margin, int leverage)`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`](CareerMarket.cs.md#symbol-f2a928a00b17)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
 
@@ -437,9 +438,9 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int) — public static decimal BudgetMargin(MarketAsset asset, decimal cash, int leverage, int percent)`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
+**调用者：** [`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`](MarketTerminal.cs.md#symbol-306487121584)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
 
 **调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；`decimal.Floor(decimal)`
 
@@ -461,7 +462,7 @@ public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
 
 ## `NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder) — public static string? Trade(CareerData d, MarketOrder order)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Trade(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.MarketOrder)`](Coop/CoopMarket.cs.md#symbol-a60daf1be116)；[`NationalSpire.EconomicActions.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](EconomicActions.cs.md#symbol-f0516c3ecf95)
 

@@ -21,13 +21,29 @@ public static class PlayerSimulation
             mean *= MatchRules.RivalTimeScale(d.RivalLevel);
             // Compare 按整数秒比较，因此首次必胜必须至少快一个完整秒。
             if (match.OpponentWon && match.OpponentSeconds is > 0) mean = Math.Min(mean, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1));
-            return new(true, 0, mean);
+            return VaryTime(d, match, new(true, 0, mean));
         }
         var rng = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed));
         bool clear = rng.NextDouble() < (double)records.Count(r => r.Win) / records.Length;
         var similar = records.Where(r => r.Win == clear).ToArray();
         int floor = clear ? 0 : similar[rng.Next(similar.Length)].Floor;
-        return new(clear, floor, similar.Average(r => r.RunSeconds!.Value));
+        return VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)));
+    }
+
+    private static RunPerformance VaryTime(CareerData d, CareerMatch match, RunPerformance result)
+    {
+        double lower = result.Seconds * .97, upper = result.Seconds * 1.03;
+        if (result.Cleared && match.OpponentWon && match.OpponentSeconds is > 0)
+        {
+            double opponent = Math.Floor(match.OpponentSeconds.Value);
+            int outcome = MatchRules.Compare(result, new(true, 0, match.OpponentSeconds.Value));
+            if (outcome == 0) return result;
+            if (outcome > 0) upper = Math.Min(upper, Math.BitDecrement(opponent));
+            else lower = Math.Max(lower, opponent + 1);
+        }
+        // 用时采用独立种子，通关与失败楼层继续沿用原来的抽取结果。
+        var rng = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-time:" + match.Seed));
+        return result with { Seconds = lower + (upper - lower) * rng.NextDouble() };
     }
 
     public static string? Run(CareerData d, CareerMatch match, string character, string characterId, int? ascension = null)
@@ -38,7 +54,7 @@ public static class PlayerSimulation
         MatchRules.PrepareSeed(d, match); MatchRules.PrepareOpponent(d, match);
         var result = Sample(d, match, ascension: ascension);
         CareerEngine.FinishMatch(d, match, result.Cleared, false, result.Floor, character, ascension ?? match.RequiredAscension, [], result.Seconds,
-            characterId: characterId, confirmFailure: true, simulated: true);
+            characterId: characterId, simulated: true);
         return null;
     }
 }

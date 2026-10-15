@@ -90,12 +90,21 @@ public sealed class FinanceEntry
 /// <summary>旧档金额保留原始记账单位；所有新界面与事件统一按十美元兑换显示，避免重复迁移余额。</summary>
 public static class CareerMoney
 {
-    public static string Format(decimal units) => "$" + (units * 10).ToString("#,0.##", System.Globalization.CultureInfo.InvariantCulture);
+    public static string Format(decimal units) => Math.Abs(units) <= decimal.MaxValue / 10
+        ? "$" + (units * 10).ToString("#,0.##", System.Globalization.CultureInfo.InvariantCulture) : Format((MarketNumber)units);
+    public static string Format(MarketNumber units) => "$" + (units * 10).ToString("#,0.##");
+    public static string Compact(MarketNumber units)
+    {
+        var dollars = units * 10; var absolute = dollars < 0 ? -dollars : dollars;
+        foreach (var (scale, name) in new (decimal, string)[] { (1e24m, "秭"), (1e20m, "垓"), (1e16m, "京"), (1e12m, "万亿"), (1e8m, "亿") })
+            if (absolute >= scale) return "$" + (dollars / scale).ToString("0.##") + name;
+        return Format(units);
+    }
     public static decimal Balance(CareerData d) => d.Credits + d.Life.CreditFraction;
     public static void Add(CareerData d, decimal amount)
     {
         decimal balance = Balance(d) + amount;
-        d.Credits = checked((long)decimal.Floor(balance));
+        d.Credits = decimal.Floor(balance);
         d.Life.CreditFraction = balance - d.Credits;
     }
     // 历史社区文字只调整展示，原始发言与金额记录保留。

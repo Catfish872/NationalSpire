@@ -188,15 +188,17 @@ public static partial class CoopRules
                 case "failure-confirm":
                     if (sender != w.Owner) return (original, Reject("比赛结果由房主确认。"));
                     if (w.Run?.Terminal is not { } terminal || w.World.Failure == null) return (original, Reject("没有待确认的失败。"));
+                    bool simulatedFailure = w.World.Failure.Result.Simulated;
+                    MatchFailure.RestoreMatch(w.World);
                     w.World.Failure = null;
-                    w = Settle(w, w.Run.Attempt, terminal.Win, false, terminal.Floor, terminal.Seconds, terminal.Players, terminal.Details, true);
+                    w = Settle(w, w.Run.Attempt, terminal.Win, false, terminal.Floor, terminal.Seconds, terminal.Players, terminal.Details, true, simulated: simulatedFailure);
                     break;
                 case "failure-retry":
                     if (sender != w.Owner) return (original, Reject("重赛由房主安排。"));
                     if (w.World.Failure == null) return (original, Reject("没有待选择的失败。"));
                     if (!full) return (original, Reject("重赛需要2—4位在线队员。"));
                     var retried = MatchFailure.Retry(w.World, command.Text == "new");
-                    w.Run = null; w.LatestCheckpoint = "";
+                    w.LatestCheckpoint = "";
                     w.Proposal = new() { Kind = "start", Target = retried.Id, Number = retried.ChosenAscension ?? retried.RequiredAscension, Participants = online.ToHashSet(), Votes = [sender], Label = "准备重赛 · " + retried.Event };
                     break;
                 case "restart-run": case "abandon-run":
@@ -333,7 +335,7 @@ public static partial class CoopRules
                 var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), simulation.Ascension);
                 var players = played.Select(m => new CoopLivePlayer(m.SteamId, m.Character, 0, 0, !performance.Cleared)).ToList();
                 w = Settle(w, simulation.Attempt, performance.Cleared, false, performance.Floor, performance.Seconds, players,
-                    confirmFailure: true, simulated: true);
+                    simulated: true);
             }
             RefreshPeople(w); w.Revision++;
             w.Receipts[key] = new(fingerprint, "已完成", w.Revision);
@@ -383,11 +385,13 @@ public static partial class CoopRules
             case "club":
                 var offer = d.Esports.Offers.FirstOrDefault(o => o.ClubId == p.Target);
                 if (offer == null) return "合同邀请已失效。";
-                long credits = d.Credits;
+                decimal credits = d.Credits;
                 string? error = EsportsWorld.AcceptOffer(d, offer);
                 if (error == null) Distribute(w, d.Credits - credits);
                 return error;
-            case "start": return Prepare(w, p.Target, p.Number, characters, p.Participants);
+            case "start":
+                if (d.Failure is { RetryRequested: true } && w.Run?.Phase == "decision") w.Run = null;
+                return Prepare(w, p.Target, p.Number, characters, p.Participants);
             case "simulate":
                 var simulationError = Prepare(w, p.Target, p.Number, characters, p.Participants);
                 if (simulationError == null) w.Run!.Phase = "simulation";
@@ -398,7 +402,7 @@ public static partial class CoopRules
     private static void AddMoney(CoopMember member, decimal amount)
     {
         decimal balance = member.Credits + member.Life.CreditFraction + amount;
-        member.Credits = checked((long)decimal.Floor(balance));
+        member.Credits = decimal.Floor(balance);
         member.Life.CreditFraction = balance - member.Credits;
     }
     private static void UseOwnerWallet(CoopWorld w)
@@ -435,7 +439,7 @@ public static partial class CoopRules
         var host = w.Members.Single(m => m.SteamId == w.Owner);
         var guests = w.Members.Where(m => m.SteamId != w.Owner && o.HumanPayDue.GetValueOrDefault(m.PersonId) > 0).OrderBy(m => m.SteamId).ToList();
         long total = guests.Sum(m => (long)o.HumanPayDue[m.PersonId]);
-        long budget = Math.Min(Math.Max(0, host.Credits), total);
+        long budget = (long)Math.Min(Math.Max(0, host.Credits), total);
         d.Credits = host.Credits; d.Life.CreditFraction = host.Life.CreditFraction;
         foreach (var guest in guests)
         {
@@ -583,14 +587,14 @@ public static partial class CoopRules
             var view = View(w, member);
             if (!PrivateAppointments.IsPrivate(match)) { CareerCommerce.PlayerMatch(view, match); CareerRelics.Match(view, match, view.Results.Last(), false, member.Rating - record.RatingDelta); }
             var personalResult = view.Results.Last();
-            personalResult.Prize = view.Credits - before[member.SteamId];
+            personalResult.Prize = (long)(view.Credits - before[member.SteamId]);
             personalResult.RatingDelta = view.Rating - priorRating; personalResult.FansDelta = view.Fans - priorFans;
             if (personalResult.Settlement is { } summary) { summary.Credits = view.Credits; summary.Fans = view.Fans; summary.Rating = view.Rating; }
             Capture(w, member, view);
         }
         if (d.Day != day) AdvanceMembers(w);
         w.Settlements.Add(new() { Attempt = attempt, MatchId = match.Id, Title = match.Event, Outcome = record.Outcome, Cleared = clear, Floor = floor, Seconds = seconds, Day = day,
-            Players = players, Payouts = played.ToDictionary(m => m.SteamId, m => m.Credits - before[m.SteamId]), Rankings = record.Settlement });
+            Players = players, Payouts = played.ToDictionary(m => m.SteamId, m => (long)(m.Credits - before[m.SteamId])), Rankings = record.Settlement });
         if (w.Settlements.Count > 100) w.Settlements.RemoveAt(0);
         var post = d.Posts.FirstOrDefault(p => p.EventKey == "match" + match.Id);
         if (post != null)

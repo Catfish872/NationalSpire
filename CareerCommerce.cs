@@ -177,7 +177,7 @@ public static class CareerCommerce
     }
     public static void SeasonStart(CareerData d)
     {
-        long before = d.Credits;
+        decimal before = d.Credits;
         RefreshOffers(d);
         if (ActiveSponsor(d) is { } sponsor && sponsor.PaidSeason < d.Season) { sponsor.PaidSeason = d.Season; d.Credits += SponsorIncome.Retainer(d, sponsor); }
         if (d.Esports.PlayerContract is { } contract && d.Esports.ClubPaidSeason < d.Season)

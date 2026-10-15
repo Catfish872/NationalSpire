@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -10,7 +10,7 @@ public partial class CareerScreen
     {
         if (_lifeSection == "活动与计划") AddHeading("赛场之外", "安排一点自己的生活，也看看这些选择后来怎样了。");
         foreach (string message in d.Life.RepairNotices.TakeLast(4)) _content.AddChild(Text(message, 16, CareerVisuals.Teal));
-        if (_lifeSection is "活动与计划" or "收支记录") _content.AddChild(Text($"可用资金 {CareerMoney.Format(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
+        if (_lifeSection is "活动与计划" or "收支记录") _content.AddChild(Text($"可用资金 {CareerMoney.Compact(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
         var tabs = new HFlowContainer(); _content.AddChild(tabs);
         foreach (string name in LifestyleArt.Sections)
         {

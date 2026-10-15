@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -77,7 +77,7 @@ internal partial class MarketAssetButton : Button
         _name.Text = (watched ? "★ " : "") + asset.Name; _sector.Text = asset.Country + "  /  " + asset.Sector;
         _sector.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));
         _icon.Texture = LifestyleArt.Icon(asset.Sector);
-        _price.Text = asset.Forex ? quote.Price.ToString("0.0000") : CareerMoney.Format(quote.Price);
+        _price.Text = asset.Forex ? quote.Price.ToString("0.0000") : CareerMoney.Compact(quote.Price);
         decimal change = quote.Price / quote.Previous - 1;
         _change.Text = $"{change:+0.00%;-0.00%;0.00%}";
         _change.AddThemeColorOverride("font_color", change >= 0 ? CareerVisuals.Teal : new Color("f095a3"));
@@ -141,7 +141,7 @@ internal partial class MarketPositionCard : PanelContainer
     private readonly Button _close;
     private readonly HBoxContainer _actions = new();
     private readonly VBoxContainer _editor = new() { Visible = false };
-    private readonly SpinBox _input = new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+    private readonly MarketAmountInput _input = new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, SizeFlagsHorizontal = SizeFlags.ExpandFill };
     private readonly Button _apply, _clear;
     private readonly Action<MarketOrder> _submit;
     private MarketPosition? _position;
@@ -188,22 +188,26 @@ internal partial class MarketPositionCard : PanelContainer
         AddThemeStyleboxOverride("panel", MarketVisuals.Card(asset.Sector, false)); _icon.Texture = LifestyleArt.Icon(asset.Sector);
         _title.Text = asset.Name + $"  ·  {(p.Direction > 0 ? "做多 ↑" : "做空 ↓")}  开仓 {p.Leverage}×";
         _title.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));
-        _terms.Text = $"保证金 {CareerMoney.Format(p.Margin)}  ·  初始仓位 {CareerMoney.Format(p.Entry * p.Units)}\n建仓价 "
+        _terms.Text = $"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "
             + Price(p.Entry) + " · 止损 " + (p.StopPrice is { } stop ? Price(stop) : "未设置");
         var exit = MarketExecution.Close(p, quote!); decimal profit = exit.Profit;
-        _profit.Text = "平仓预计净盈亏 " + (profit > 0 ? "+" : "") + CareerMoney.Format(profit);
+        _terms.MouseFilter = _profit.MouseFilter = _proceeds.MouseFilter = MouseFilterEnum.Pass;
+        _terms.TooltipText = "保证金 " + CareerMoney.Format(p.Margin) + " · 初始仓位 " + CareerMoney.Format(p.Entry * p.Units);
+        _profit.TooltipText = CareerMoney.Format(profit);
+        _proceeds.TooltipText = "平仓手续费 " + CareerMoney.Format(exit.Fee) + " · 预计到账 " + CareerMoney.Format(exit.Proceeds);
+        _profit.Text = "平仓预计净盈亏 " + (profit > 0 ? "+" : "") + CareerMoney.Compact(profit);
         _profit.AddThemeColorOverride("font_color", profit >= 0 ? CareerVisuals.Teal : new Color("f095a3"));
-        _proceeds.Text = "预计成交均价 " + (asset.Forex ? exit.Fill.Average.ToString("0.00000") : CareerMoney.Format(exit.Fill.Average))
-            + "\n平仓手续费 " + CareerMoney.Format(exit.Fee) + " · 预计到账 " + CareerMoney.Format(exit.Proceeds);
+        _proceeds.Text = "预计成交均价 " + (asset.Forex ? exit.Fill.Average.ToString("0.00000") : CareerMoney.Compact(exit.Fill.Average))
+            + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds);
     }
-    private string Price(decimal value) => MarketCatalog.ById[_position!.Asset].Forex ? value.ToString("0.00000") : CareerMoney.Format(value);
+    private string Price(decimal value) => MarketCatalog.ById[_position!.Asset].Forex ? value.ToString("0.00000") : CareerMoney.Compact(value);
     private decimal DisplayScale => MarketCatalog.ById[_position!.Asset].Forex ? 1 : 10;
     private void Edit(bool margin)
     {
         if (_position == null) return;
         _margin = margin; _input.Prefix = margin || DisplayScale == 10 ? "$" : "";
         _input.Step = margin || DisplayScale == 10 ? .01 : .00001;
-        _input.SetValueNoSignal(margin ? 0 : (double)((_position.StopPrice ?? _quote!.Price) * DisplayScale));
+        _input.SetAmount(margin ? 0 : (_position.StopPrice ?? _quote!.Price) * DisplayScale);
         _apply.Text = margin ? "确认追加" : "保存止损";
         _clear.Visible = !margin && _position.StopPrice != null;
         _editor.Show(); Preview(); _input.GetLineEdit().GrabFocus();
@@ -212,18 +216,18 @@ internal partial class MarketPositionCard : PanelContainer
     {
         if (_position == null) return;
         if (!_margin) { _preview.Text = "当前报价 " + Price(_quote!.Price) + (_position.Direction > 0 ? "；低于此价设置止损。" : "；高于此价设置止损。") + "\n触发后按实际成交均价平仓。"; return; }
-        decimal addition = (decimal)_input.Value / 10;
-        decimal equity = CareerMarket.Equity(_position, _quote!.Price);
-        string Leverage(decimal funds) => funds > 0 ? (_quote.Price * _position.Units / funds).ToString("0.##") + "×" : "权益已耗尽";
-        _preview.Text = "保证金 " + CareerMoney.Format(_position.Margin) + " → " + CareerMoney.Format(_position.Margin + addition)
+        decimal addition = _input.Amount / 10;
+        var equity = CareerMarket.Equity(_position, _quote!.Price);
+        string Leverage(MarketNumber funds) => funds > 0 ? (_quote.Price * _position.Units / funds).ToString("0.##") + "×" : "权益已耗尽";
+        _preview.Text = "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)
             + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition) + " · 追加免手续费";
     }
     private void Apply()
     {
         if (_position == null || !_editor.Visible) return;
         _input.Apply();
-        Send(_margin ? new("margin", Amount: (decimal)_input.Value / 10, Position: _position.Id, QuoteRevision: _revision)
-            : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: (decimal)_input.Value / DisplayScale));
+        Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)
+            : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _input.Amount / DisplayScale));
     }
     private void Send(MarketOrder order) { _editor.Hide(); _submit(order); }
 }

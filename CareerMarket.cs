@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>公共行情只生成一次；个人账户只在报价变更、日期推进和本人下单时处理。</summary>
 public static class CareerMarket
@@ -52,7 +52,7 @@ public static class CareerMarket
         if (d.Market.Quotes.Values.Any(q => q.AppliedSignal != 0)) Accounts(d, d.Day);
         return true;
     }
-    public static decimal Equity(MarketPosition position, decimal price)
+    public static MarketNumber Equity(MarketPosition position, decimal price)
         => position.Margin + position.Direction * position.Units * (price - position.Entry);
     public static decimal Net(MarketState market, MarketAccount account)
         => MarketExecution.LiquidationValue(market, account);
@@ -64,9 +64,9 @@ public static class CareerMarket
     }
     public static void Account(MarketState market, MarketAccount account, int day)
         => Accounts(market, [account], day);
-    private static bool Forced(MarketPosition p, decimal price)
+    private static bool Forced(MarketPosition p, MarketQuote quote)
         => (MarketCatalog.ById[p.Asset].Forex || p.Direction < 0 || p.Leverage > 1)
-            && Equity(p, price) <= (p.InitialMargin ?? p.Margin) * .1m;
+            && MarketExecution.Close(p, quote).Proceeds <= (p.InitialMargin ?? p.Margin) * .1m;
     public static void Accounts(MarketState market, IReadOnlyList<MarketAccount> accounts, int day)
     {
         foreach (var account in accounts)
@@ -87,14 +87,15 @@ public static class CareerMarket
             foreach (var owner in accounts)
             foreach (var position in owner.Positions)
             {
-                decimal price = market.Quotes[position.Asset].Price;
-                bool forced = Forced(position, price);
+                if (triggered.Contains(position)) continue;
+                var quote = market.Quotes[position.Asset]; decimal price = quote.Price;
+                bool forced = Forced(position, quote);
                 bool stop = position.StopPrice is { } limit && (position.Direction > 0 ? price <= limit : price >= limit);
                 if ((forced || stop) && triggered.Add(position)) pending.Enqueue((owner, position, forced));
             }
             if (!pending.TryDequeue(out var item)) break;
             var (account, p, wasForced) = item;
-            bool liquidated = wasForced || Forced(p, market.Quotes[p.Asset].Price);
+            bool liquidated = wasForced || Forced(p, market.Quotes[p.Asset]);
             var exit = MarketExecution.Close(p, market.Quotes[p.Asset]);
             MarketExecution.Apply(market, p.Asset, exit.Fill, day);
             account.Cash += exit.Proceeds; account.Positions.Remove(p);

@@ -68,7 +68,7 @@ public sealed class CoopMember
     public string Gender { get; set; } = IdentityGender.Unset;
     public string Character { get; set; } = "";
     public bool RandomCharacter { get; set; }
-    public long Credits { get; set; }
+    public decimal Credits { get; set; }
     public int Fans { get; set; } = 28;
     public int Rating { get; set; } = 1000;
     public int Wins { get; set; }
