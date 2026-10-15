@@ -167,12 +167,19 @@ public static partial class AiService
             return new { post.Id, post.AuthorId, post.Title, post.Day, post.Body,
                 bodyKind = CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost || post.SourceBody.Length > 0 ? "opinion" : "fact",
                 officialRecord = !CommunityThreads.IsHuman(data, post.AuthorId) && post.SourceBody.Length > 0 ? AiGeneratedText.Source(post) : null,
+                // 帖级投票也在这里注入一份。
+                //
+                // 为什么不能只靠 news 路径：**玩家自己发的帖子不走 news 生成**
+                // （ProcessNewsAsync 明确过滤掉人类作者），而玩家的投票正是挂在这种帖上。
+                // 只注 news 的话，那些投票永远拿不到票数、界面一直显示 0 票。
+                poll = PollAi.PollPromptForPost(data, post),
                 mentionRequests = post.Replies.Where(r => requested.Contains(r.Id)).Select(r => new { messageId = r.Id, requiredAuthors = r.MentionedPeople.Where(id => CareerEngine.Person(data, id) is { } p && !SpireArbitration.Muted(p)).ToArray() })
                     .Concat(requested.Contains(post.Id) ? [new { messageId = post.Id, requiredAuthors = post.MentionedPeople.Where(id => CareerEngine.Person(data, id) is { } p && !SpireArbitration.Muted(p)).ToArray() }] : []).ToArray(),
                 match = MatchContext(data, post), allowedAuthors = DiscussionPeople(data, post, requested).Select(p => p.Id).ToArray(),
                 对玩家的态度 = ReplyAttitudes(data, post, DiscussionPeople(data, post, requested), occasion),
                 conversationScope = complete ? "完整帖子" : "附带相关帖子：最初两层、最近十六层及其父回复",
-                conversation = conversation.Select(r => new { r.Id, r.ParentId, r.AuthorId, r.Day, r.Body }).ToArray() };
+                conversation = conversation.Select(r => new { r.Id, r.ParentId, r.AuthorId, r.Day, r.Body,
+                    poll = PollAi.PollPromptForReply(data, r) }).ToArray() };
         }).ToArray();
         var suppliedMemory = contexts.SelectMany(p => p.conversation.Select(r => p.Id + ":" + r.Id))
             .Concat(targets.SelectMany(p => new[] { p.Id + ":fact", p.Id + ":editorial", p.Id + ":result" })).ToHashSet();
@@ -237,6 +244,20 @@ public static partial class AiService
             var post = targets.FirstOrDefault(p => p.Id == id);
             if (post == null || !seen.Add(id) || !CommunityThreads.All(data).Contains(post)) throw new InvalidDataException("回应帖子无效");
             if (!permissions.TryGetValue(id, out var permission)) throw new InvalidDataException("帖子未包含于请求");
+            // 帖级投票：玩家帖子不走 news 生成，只能靠讨论路径填票。
+            // 同理做顶层兜底 —— 只有**一个帖子**带帖级投票时归属才明确。
+            var withPoll = targets.Count(p => PollSchedule.Of(data, p) != null);
+            PollAi.ReadPoll(item, PollSchedule.Of(data, post),
+                withPoll == 1 ? parsed.RootElement : default);
+            // 回复级投票：AI 回应玩家那条带投票的回复时，顺带把票数写在同一条回复里
+            foreach (var r in item.GetProperty("replies").EnumerateArray())
+            {
+                string parent = r.TryGetProperty("parentId", out var pv) ? pv.GetString() ?? "" : "";
+                if (parent.Length == 0) continue;
+                var voted = post.Replies.FirstOrDefault(x => x.Id == parent);
+                if (voted == null) continue;
+                PollAi.ReadPoll(r, PollSchedule.OfReply(data, voted));
+            }
             staged.Add((post, ParseReplies(item.GetProperty("replies"), post, replyAuthors, true, data.Day, permission.Parents)));
         }
         if (staged.Count == 0) return;

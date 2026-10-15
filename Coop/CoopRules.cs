@@ -73,6 +73,8 @@ public static partial class CoopRules
         w.World.Esports.CoachTraining = d.Esports.CoachTraining;
         if (m.SteamId == w.Owner) w.World.Esports.OwnedClub = d.Esports.OwnedClub;
         w.World.Posts = d.Posts; w.World.SavedThreads = d.SavedThreads; w.World.CommunityMemories = d.CommunityMemories;
+        // 投票是社区共有的，与 Posts 同性质：不写回的话，命令结束时会被丢掉。
+        w.World.Polls = d.Polls;
         foreach (var ev in m.Life.Events)
         {
             ev.People = ev.People.Select(id => id == "player" ? m.PersonId : id).ToList();
@@ -277,6 +279,9 @@ public static partial class CoopRules
                         Category = "玩家讨论", RelatedPeople = [member.PersonId], NeedsReaction = true };
                     post.MentionedPeople = CommunityMentions.Resolve(w.World, post.Title + "\n" + post.Body);
                     w.World.Posts.Insert(0, post); CommunityThreads.Remember(w.World, post); CommunityThreads.TrimFeed(w.World);
+                    // 随帖发起的投票**挂在主楼**（不额外生成回复）；
+                    // command.Parent 带投票 JSON，空串表示不带投票。
+                    if (command.Parent.Length > 0) error = AttachPoll(w, member, post, command.Parent, onReply: false);
                     break;
                 case "reply":
                     var target = CommunityThreads.All(w.World).FirstOrDefault(p => p.Id == command.Target);
@@ -285,6 +290,7 @@ public static partial class CoopRules
                     if (command.Parent.Length > 0 && !target.Replies.Any(r => r.Id == command.Parent)) { error = "回复的楼层已不存在。"; break; }
                     target.Replies.Add(new CommunityReply { AuthorId = member.PersonId, ParentId = command.Parent, Body = command.Text.Trim(), Day = w.World.Day, NeedsReaction = true, MentionedPeople = CommunityMentions.Resolve(w.World, command.Text) });
                     target.AiPending = false; target.Revision++; CommunityThreads.Remember(w.World, target); break;
+                case "poll-ask": error = PollAsk(w, member, command); break;
                 case "reading":
                     var reading = CoopJson.Read<CoopReading>(System.Text.Encoding.UTF8.GetBytes(command.Text));
                     foreach (var pair in reading.Posts)

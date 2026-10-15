@@ -9,6 +9,10 @@ public sealed class CareerData
     [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData, int>? MarketAccounts { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Func<string, IEnumerable<SponsorContract>>? MarketSponsors { get; set; }
     public FailureDecision? Failure { get; set; }
+    /// <summary>社区投票。独立集合，不挂在帖子上，避免侵入原 mod 的帖子结构。</summary>
+    public List<CommunityPoll> Polls { get; set; } = [];
+    /// <summary>发出过投票贴的天数列表，用于密度控制（近 7 天不超过 N 帖）。</summary>
+    public List<int> PollLog { get; set; } = [];
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
     public Dictionary<string, Dictionary<string, int>> HumanFavours { get; set; } = [];
     public Dictionary<string, string> PrivatePromptSnapshot { get; set; } = [];
@@ -212,6 +216,39 @@ public sealed class CommunityPost
     public string Body { get; set; } = "";
     public List<CommunityReply> Replies { get; set; } = [];
     public bool AiPending { get; set; }
+}
+
+/// <summary>帖子上的社区投票。选项与票数按下标一一对应。</summary>
+public sealed class CommunityPoll
+{
+    /// <summary>所属帖子的编号。投票独立存放，靠这个字段关联。</summary>
+    public string PostId { get; set; } = "";
+    /// <summary>
+    /// 挂在**某条回复**上的投票（玩家发起）。留空表示这是**帖级**投票（程序自动发起）。
+    ///
+    /// 一帖可以同时有帖级投票与多条回复级投票 —— 想发几个就发几个，
+    /// 不必再限制「一帖一投」。
+    /// </summary>
+    public string ReplyId { get; set; } = "";
+    /// <summary>产出的投票类型（PollKind 的名字），便于排查与权重比较。</summary>
+    public string Kind { get; set; } = "";
+    /// <summary>票数规模上限，按赛事级别定：世界级 1000、本国级 200、社区级 100。</summary>
+    public int Scale { get; set; } = 100;
+    public string Question { get; set; } = "";
+    public List<string> Options { get; set; } = [];
+    public List<int> Votes { get; set; } = [];
+
+    public int Total => Votes.Sum();
+
+    /// <summary>
+    /// 格式是否可用。只做格式校验，不判断内容是否自洽
+    /// （「多少票算势均力敌」是语义判断，不该塞回程序）。
+    /// </summary>
+    public bool IsValid => Question.Trim().Length > 0
+        && Options.Count is >= 2 and <= 8
+        && Options.All(o => o.Trim().Length > 0)
+        && Votes.Count == Options.Count
+        && Votes.All(v => v >= 0);
 }
 
 public sealed class CommunityReply

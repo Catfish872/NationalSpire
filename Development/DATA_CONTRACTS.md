@@ -14,6 +14,8 @@
 | PrivateMemorySources | 多人聊天 Current 填入其他真人信箱；JsonIgnore | 当前各成员信箱副本 | ChatTimeline；群聊交互通过 CaptureGroup 合并实际变更 |
 | AiOptions、密钥 | AiSettingsStore、本机设置与请求入口 | 设置界面、加密密钥或环境变量 | 本机 AI 调用；公开序列化排除本机配置，保留公开 Enabled |
 | PrivatePromptSnapshot | Broadcast 填入各聊天场景与 world 模板 | 房主本机模板库 | 客机相关界面/上下文读取；房主生成重新读取本机设置 |
+| CareerData.Polls | PollSchedule.Run（自动）、CommunityScreen / CoopPollRules（玩家）；与 Posts 同性质 | 当天新帖与所属赛事、玩家填写的选项 | 注入提示词、界面展示、后续讨论引用 |
+| CareerData.PollLog | PollSchedule.Run 记录发出过投票的天 | 每次新增投票的那一天 | 密度控制（近 7 天不超过 2 帖）与冷却判定 |
 
 多人个人视图不是独立共享生涯，也不能代替房主最新数据。复制有不同用途：规则执行前的副本用于失败时保留原数据；个人视图用于兼容共用规则；网络副本用于剔除接收者不应看到的数据。三者不能仅因都调用 Copy 就视作重复。
 
@@ -66,6 +68,7 @@
 | LastReplyOrder | 私信完成时更新 | 通讯列表排序 | 会话最近回复排序；不代替 ChatWorld.Order |
 | 交互编号、TurnId、Lane | PrivateInteractionIds、GroupInteractions | 附件匹配、交互卡片、重新生成回退 | 交互属于哪轮、哪个人物方向；不等同于帖子或轮次编号 |
 | 作者/帖子/评论短编号 | AiWireProtocol | 输出解码和 ParseReplies | 单次请求的格式编号；真实保存编号仍用于业务引用 |
+| CommunityPoll.PostId / ReplyId | 建票时写入 | PollSchedule.Of（帖级）、OfReply（回复级）、ForPost（全部） | 投票归属：ReplyId 为空是挂在帖子上的自动投票，非空是挂在某条回复上的玩家投票 |
 
 旧记录可能没有同日顺序。ChatTimeline 明确注明旧记录缺少先后信息。日期仍以天为单位，不新增实际时间字段。
 

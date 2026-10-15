@@ -20,6 +20,7 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 | 私信总结 | SummarizePrivateAsync → Summarize / SummaryRequest | 自己的有效聊天窗口及既有总结 | FinishSmallSummary / FinishBigSummary 更新总结和窗口 |
 | 群聊总结 | SummarizeGroupAsync → SummaryRequest | 本群未覆盖完成轮次、成员通知、实际交互；大总结读取选定小总结 | 更新 SmallSummaries / BigSummaries 和 SummarizedThrough |
 | 提示词试写 | PromptTesting、PromptTestData | 隔离试写资料与选定模板 | 试写结果显示；不是正式生涯交互提交 |
+| 社区投票 | PollAi.PollPromptForPost / PollPromptForReply → BuildNewsContext 或 BuildDiscussionPrompt | 已建好的投票（问题、选项）、PollFacts 查到的环境事实、票数规模 | 模型在同一次生成里给出票数；ReadPoll 读回，后续讨论与发帖引用这组数字 |
 
 具体函数签名与上下游调用见[索引](SOURCE_MAP.md)。私信与群聊使用流式通道，社区新闻与互动等待完整响应后应用；不要把不同请求的返回处理混用。
 
@@ -170,3 +171,37 @@ CommunityMemorySearch.Retrieve 保留按 CareerData 的词汇索引。一次上�
 自动发帖由 ComposeSystem 在可编辑模板之后固定注入 EvidencePrompt 和 SystemPrompt；每帖输出字段为 id、title、body、replies。ApplyNewsResponse 先读取并检查整批字段，之后才提交；任何帖子缺少 title 或 body，GetProperty 会抛出 KeyNotFoundException，已经检查完的其他帖子也尚未保存。自定义 PromptOverrides 可额外描述另一种输出结构，固定协议仍会注入；诊断须核对实际最终请求，不能只读取自定义模板的原始 Sections。
 
 周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog 处理积压，加载 Recover 将中断任务恢复到既有可重试状态。多人公共结果由 CoopAi 合并，只提交本任务生成内容，保留期间新增真人回复和其他已完成结果。
+
+## 社区投票
+
+**票数由模型判断，程序只查事实。** 选项是自由文本，程序解析不全，硬算会失准；而模型本来就在生成这个帖子，顺带给出票数几乎不增加成本。
+
+**两条注入路径**，取决于投票挂在哪：
+
+| 归属 | 注入点 | 说明 |
+| --- | --- | --- |
+| 帖子（自动发起） | `BuildNewsContext` 的 `posts[].poll` | 帖子进新闻请求时带上 |
+| 帖子（玩家发起） | `BuildDiscussionPrompt` 的 `targets[].poll` | **玩家帖子不走新闻生成**（`ProcessNewsAsync` 过滤掉人类作者），只能靠讨论路径注入 |
+| 回复 | `BuildDiscussionPrompt` 的 `targets[].conversation[].poll` | 回复级投票挂在那条回复的对象上 |
+
+**未投票与已投票给的东西不同**：
+
+- 还没投 → `投票结果` 为 null，附 `howTo` 说明**怎么填**，并要求**先定票数再写回复**——
+  票数与回复是同一次产出的，不点明「这组数字是你自己定的」，回复会完全绕开票数各写各的（实测确认）。
+- 已经投 → 附 `投票结果`（票数、总票数），`howTo` 换成**引用指令**，要求发言在意这组数字。
+  只给数字、**不给「社区整体怎么看」的总结**：曾附带一句总结，结果被每条回复原样复述，高度趋同。
+
+**回读**：`ApplyNewsResponse` 与 `ApplyDiscussionCore` 各调一次 `PollAi.ReadPoll`，
+只做**格式校验**（票数非负、个数与选项一致）；不合法就按未填处理，帖子照常发布。
+**不做内容一致性校验**——判断「多少票算势均力敌」是语义判断，不该塞回程序。
+
+**注入层级必须写清**。曾写成「请在返回的 JSON 里加上」，模型据理解放到了 **JSON 顶层**
+（其推理里明说「top level or post level? I'll go top-level」），而解析在帖子对象内读，
+票数永远读不到。帖级提示词改为「在这个帖子的对象里加上（不是 JSON 顶层）」后修复。
+
+**票数规模由程序给上限**（世界级 1000 / 本国级 200 / 社区级 100），模型只在框内填。
+不能让模型自己定上限：它大可以说 1000 票，约束就失效了。
+
+**调性**由 `KindHint` 的定性描述给出（如「日常偏好。纯看个人兴趣，票型最分散，反串戏谑最多」）；
+玩家发起的投票没有 KindHint，此时提示词改为让模型**读问题本身**判断——不做关键词分类，
+关键词猜不准（「该不该抬」没有关键词，「谁最强」和「谁最搞笑」词面几乎一样）。

@@ -246,6 +246,13 @@ public static partial class AiService
             string title = item.GetProperty("title").GetString() ?? "";
             if (string.IsNullOrWhiteSpace(title)) throw new InvalidDataException("标题无效");
             if (string.IsNullOrWhiteSpace(body)) throw new InvalidDataException("正文无效");
+            // 批内只有**一个帖子带投票**时，顶层若出现 投票结果 也认
+            // （实测模型把它放到了 JSON 顶层，推理原话「I'll go top-level」）。
+            // 用「带投票的帖子数」而不是「批次大小」判断：多条帖子时顶层无法
+            // 区分投给谁，但只有一条带投票时归属是明确的。
+            var fallback = pending.Count(p => PollSchedule.Of(data, p) != null) == 1
+                ? parsed.RootElement : default;
+            PollAi.ReadPoll(item, PollSchedule.Of(data, post), fallback);
             var replies = ParseReplies(item.GetProperty("replies"), post, authors, false, data.Day);
             if (replies.Any(r => CareerEngine.Person(data, r.AuthorId) is { } p && SpireArbitration.Muted(p))
                 || CareerEngine.Person(data, post.AuthorId) is { } author && SpireArbitration.Muted(author))

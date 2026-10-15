@@ -122,6 +122,15 @@ CoopRules.Apply 仍在完整副本上执行，失败返回原 World，成功沿�
 
 群聊流式新发言块预留 SpeechOrders 后也会 Save。它同时导致检查点、版本更新与完整广播。减去这一保存会影响客机重新打开聊天时的通知与发言顺序，不仅影响磁盘开销。
 
+**投票（`CareerData.Polls`）与 `Posts` 同性质**，走同一套写回规则：
+
+- `CoopRules.Capture` 逐字段写回时带上 `w.World.Polls = d.Polls` —— 成员操作走的是 `View` 副本，
+  不写回就会被丢掉。
+- `CoopAi` 的生成结果合并同样要把 AI 填好的票数并回 `next.World.Polls`。
+
+`CoopRules.View` 与 `CoopAi` 都用 `CoopJson.Copy` 深拷贝，而**写回是逐字段手写的**，
+新增字段时编译器不会提醒。改 `CareerData` 上任何集合类字段，都要同时检查这两处。
+
 公共 AI 使用 ExternalCurrent / ExternalSave，CoopAi 完成时只合并该任务的新帖子、回复、周刊与资料；保留期间其他成员内容。业务规则执行前的 World 副本仍用于错误时不提交部分修改。
 
 ## 完整快照与流式分片的区别

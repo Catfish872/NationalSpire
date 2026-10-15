@@ -700,6 +700,13 @@ public partial class CareerScreen : Control, IScreenContext
         var titleButton = Button(post.Title, () => OpenPost(post));
         titleButton.AutowrapMode = TextServer.AutowrapMode.WordSmart; titleButton.Alignment = HorizontalAlignment.Left; titleButton.SizeFlagsHorizontal = SizeFlags.ExpandFill; box.AddChild(titleButton);
         if (post.Revision > post.SeenRevision) box.AddChild(Text("● 有新内容", 14, new Color("f07878")));
+        var polls = PollSchedule.ForPost(data, post).Where(p => p.IsValid).ToList();
+        if (polls.Count > 0 && !preparing)
+        {
+            var head = polls[0];
+            string extra = polls.Count > 1 ? $"（等 {polls.Count} 个投票）" : $"（共 {head.Total} 票）";
+            box.AddChild(Text($"投票 · {head.Question}{extra}", 15, CareerVisuals.Teal));
+        }
         if (full && !preparing) box.AddChild(MentionText(data, post.Body, 17, _ink, post.RelatedPeople.Append(post.AuthorId)));
         RenderWorkStatus(box, post.NewsGeneration, () => GenerateContent(() => { _ = AiService.RetryNewsAsync(post.Id); }, true), "News_" + post.Id);
         if (post.AuthorId == "player" && post.NeedsReaction) RenderWorkStatus(box, post.ReactionGeneration, () => GenerateContent(() => { _ = AiService.ProcessInteractionsAsync([post.Id]); }, true), post.Id);
