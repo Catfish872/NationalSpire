@@ -111,6 +111,7 @@ public static class CareerEngine
         CareerCommerce.RefreshOffers(d);
         if (d.Esports.EcosystemVersion >= 1) CircuitWorld.AutoEntry(d);
         CareerMarket.Advance(d);
+        PollSchedule.Advance(d);
     }
     public static int AdvanceToMatch(CareerData d)
     {
@@ -378,6 +379,7 @@ public static class CareerEngine
         }).ToList();
         if (aiPending) post.Schedule = PublicSchedule.Capture(d, post.RelatedPeople);
         d.Posts.Insert(0, post); CommunityThreads.Remember(d, post); CommunityThreads.TrimFeed(d);
+        PollSchedule.Run(d);
     }
     public static bool IsImportantNews(string key, int priority) => priority >= 3 || key == "ecosystem"
         || new[] { "champion-", "qualification-", "knockout-", "draw-", "transfer-", "season-", "recap-" }.Any(key.StartsWith);

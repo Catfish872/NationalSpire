@@ -11,6 +11,7 @@
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
 | 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
 | 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
+| 社区投票 | PollSchedule、PollFacts、PollAi、CoopPollRules | 当天新帖与所属赛事、帖子选项提到的实体、生涯进展 | 挂到帖子上的投票、注入提示词的 poll 字段、读回的票数 | 投票独立保存在 CareerData.Polls；票数由模型判断，程序只查事实；不产生好感、状态、成长等后果 |
 | 聊天与交互 | PrivateMessageCommands、PrivateMessages、GroupChats、GroupInteractions、ChatTimeline、PrivateInteractionUndo | 用户文字、附件、群成员、AI 标记、旧记录 | 聊天轮次、交互卡片、关系、训练、活动、赛程与帖子 | 交互执行调用对应业务规则；回退依赖已记录的交互历史 |
 | 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务 | 最终 messages、模型响应、解析后的正文与标记 | HTTP、请求队列、实时字典、生成状态、结果保存回调 |
 | 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopReception、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 房主提交；客机后台解码、保存、准备独立视图，主线程按原顺序发布；存储按实际目录协调 |
@@ -60,6 +61,8 @@ MarketScreen/日程/无赛事页面通过AdvanceCareerDay共用日期推进；Co
 ## 跨模块数据流程
 
 比赛事实 → 赛事结算与账目 → 公开原始材料 → 社区和周刊任务 → 模型正文 → 社区记忆 → 后续社区与聊天检索。
+
+当天新帖 → 投票调度按话题强度与密度选一帖 → 挂上投票 → 随该帖进提示词 → 模型给出票数 → 读回保存 → 后续讨论与发帖引用这组数字。玩家在回复栏发起的投票走同一条链路，但归属是一条**回复**而非帖子本身。
 
 用户聊天 → 保存 queued 轮次 → 排队 → 保存 sending → 上下文与模型 → 流式显示 → 解析标记 → 业务规则 → 保存 complete → 自动总结。
 

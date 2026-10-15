@@ -69,6 +69,7 @@ public static partial class AiService
             facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? AiGeneratedText.Source(p) : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
             allowedAuthors = NewsCommenters(p, pending.Count).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
             对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => NewsCommenters(p, pending.Count).Contains(person.Id) || p.AuthorId == person.Id), occasion),
+            poll = PollAi.PollPromptForPost(data, p),
             match = MatchContext(data, p)
         }).ToArray();
         return JsonSerializer.Serialize(new

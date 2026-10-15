@@ -105,6 +105,19 @@ public sealed class CoopAi(CoopCoordinator session)
                         Replace(next.World.Posts, updated); Replace(next.World.SavedThreads, updated);
                         CommunityThreads.Remember(next.World, updated); knownPosts[post.Id] = hash; changed = true;
                     }
+                    // 投票由 AI 填上票数，也要并回房间，成员才看得到。
+                    // 回复级投票与帖级投票可能同帖并存，**不能只按 PostId 匹配** ——
+                    // 那会让同帖的第二个之后的投票永远并不过去。
+                    foreach (var poll in data.Polls)
+                    {
+                        var existing = poll.ReplyId.Length > 0
+                            ? next.World.Polls.FirstOrDefault(x => x.ReplyId == poll.ReplyId)
+                            : next.World.Polls.FirstOrDefault(x => x.PostId == poll.PostId && x.ReplyId.Length == 0);
+                        if (existing != null && CoopJson.Hash(CoopJson.Bytes(existing)) == CoopJson.Hash(CoopJson.Bytes(poll))) continue;
+                        if (existing == null) next.World.Polls.Add(CoopJson.Copy(poll));
+                        else next.World.Polls[next.World.Polls.IndexOf(existing)] = CoopJson.Copy(poll);
+                        changed = true;
+                    }
                     foreach (var issue in data.WeeklyEditions)
                     {
                         string hash = CoopJson.Hash(CoopJson.Bytes(issue));
