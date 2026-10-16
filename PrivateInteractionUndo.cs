@@ -58,6 +58,9 @@ public static class PrivateInteractionHistory
         snapshot["matches"] = Node(d.Matches); snapshot["competitions"] = Node(d.Esports.Competitions);
         snapshot["events"] = Node(d.Life.Events); snapshot["ledger"] = Node(d.Life.Ledger);
         snapshot["memories"] = Node(d.CommunityMemories);
+        snapshot["refillPeople"] = Node(d.People.Where(x => x.Id.StartsWith("refill-", StringComparison.Ordinal)).ToDictionary(x => x.Id));
+        snapshot["refillPosts"] = Node(d.Posts.Where(x => x.EventKey.StartsWith("transfer-refill-", StringComparison.Ordinal)).ToDictionary(x => x.Id));
+        snapshot["refillSavedThreads"] = Node(d.SavedThreads.Where(x => x.EventKey.StartsWith("transfer-refill-", StringComparison.Ordinal)).ToDictionary(x => x.Id));
         return snapshot;
     }
 
@@ -220,6 +223,22 @@ public static class PrivateInteractionHistory
         d.Life.Events = state["events"]!.Deserialize<List<LifeEvent>>()!;
         d.Life.Ledger = state["ledger"]!.Deserialize<List<FinanceEntry>>()!;
         d.CommunityMemories = state["memories"]!.Deserialize<List<CommunityMemory>>()!;
+        RestoreRefills(d.People, state["refillPeople"], p => p.Id, p => p.Id.StartsWith("refill-", StringComparison.Ordinal));
+        RestoreRefills(d.Posts, state["refillPosts"], p => p.Id, p => p.EventKey.StartsWith("transfer-refill-", StringComparison.Ordinal));
+        RestoreRefills(d.SavedThreads, state["refillSavedThreads"], p => p.Id, p => p.EventKey.StartsWith("transfer-refill-", StringComparison.Ordinal));
+    }
+
+    // 补员仍由原规则生成；撤回合同同时恢复该交互产生的人物和补员报道。
+    private static void RestoreRefills<T>(List<T> items, JsonNode? state, Func<T, string> id, Func<T, bool> refill)
+    {
+        if (state is not JsonObject values) return;
+        var restored = values.Deserialize<Dictionary<string, T>>()!;
+        items.RemoveAll(item => refill(item) && !restored.ContainsKey(id(item)));
+        foreach (var entry in restored)
+        {
+            int index = items.FindIndex(item => id(item) == entry.Key);
+            if (index >= 0) items[index] = entry.Value; else items.Add(entry.Value);
+        }
     }
 
     public static string? Rewind(CareerData d, PrivateConversation c, PrivateTurn turn)

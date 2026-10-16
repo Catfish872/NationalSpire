@@ -46,11 +46,11 @@ public sealed class CoopLive(CoopCoordinator session)
                 var route = RivalSimulation.Route(maps, leader, match.Seed);
                 var coordinates = route.Select(n => (n.Act, n.Row, n.Col)).ToHashSet();
                 var shared = route.Select(n => n with { Children = n.Children.Where(c => coordinates.Contains((n.Act, c.Row, c.Col))).ToList() }).ToList();
-                live.Rival = RivalSimulation.Create(match, leader, shared, 80);
+                live.Rival = RivalSimulation.Create(match, leader, shared, GameCharacterNames.StartingHp(leader.Character));
                 foreach (string id in live.Opponents)
                 {
                     var npc = CareerEngine.Person(session.World.World, id)!;
-                    int hp = GameBridge.Characters().FirstOrDefault(c => c.Title.GetFormattedText() == npc.Character)?.StartingHp ?? 75;
+                    int hp = GameCharacterNames.StartingHp(npc.Character);
                     live.RivalMembers[id] = RivalSimulation.Create(match, npc, shared, hp);
                 }
                 live.Commentary.Add("双方队伍已经出发，本场按整队通关结果判定胜负。");

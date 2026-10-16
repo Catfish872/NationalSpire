@@ -1,5 +1,11 @@
 # 保存、广播与恢复
 
+## 结算对阵详情
+
+单人 FinishMatch 在原赛果与同日比赛完成后调用 SettlementRecords.Capture，将 CompetitionScore.Duels 连同 SettlementRecord 写入 CareerResult；末尾沿原 CareerStore.Save 提交。多人 CoopRules.Settle 仍为各成员生成结算快照，随后沿原成员资料合并、检查点、回执和广播提交。新字段随现有 JSON 对象读取与复制，版本标识继续使用现有发布版本，比赛编号继续使用原 FixtureKey。
+
+页面通过 ScoreDuels 读取持久化详情，旧格式补充使用本次渲染的临时字典。打开、展开和切换对阵的保存与广播次数为零。离开页面后释放局部详情；切换存档后从目标生涯读取对应快照；推进日期后历史详情继续沿用结算时数据。进程关闭及断线沿原已提交生涯和多人检查点恢复。新字段的 JSON 往返、后续原资料变更隔离及原赛事清理已通过规则专项；实际跨机发送、接收及断线恢复耗时待实测。
+
 ## 聊天页面的本地设置
 
 ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last 与 size。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看群成员档案后的 Back 从导航历史恢复页面及滚动位置。
@@ -7,6 +13,8 @@ ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg�
 PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只在最新页面调用原 dm-read / group-read；单人进入 CareerStore.Save，多人进入 ICareerSession.Send 与原房主提交、检查点和回执流程。最近会话选择通过上述本地配置保存，旧 dm-select 命令保留在规则与网络兼容入口。记录分页只选择控件使用的原轮次引用，生涯原文、总结及模型上下文仍由原存储与生成流程处理。调用与缓存生命周期见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
 
 ## 单人生涯保存的顺序
+
+新闻与社区回帖入队异常进入各自原失败收尾，任务状态保存后释放已取得的队列凭据，回帖先清理 ScheduledInteractions。单人继续由 CareerStore.Save 提交，多人公共新闻继续由 CoopAi.ExternalSave 合并改变的帖子并提交原检查点与广播，社区回帖继续使用原公共保存回调。成功路径的保存次数与提交顺序沿用原流程；入队失败新增执行原本被跳过的那次失败状态保存。保存自身失败仍向调用者报告，函数 finally 负责释放队列凭据。已保存失败状态在重启后继续供原重试入口读取；旧中断记录由 RecoverInterrupted 转为 failed。执行步骤与验证入口见[社区与周刊状态依赖](AI_FLOWS.md#社区与周刊状态依赖)。
 
 CareerStore.Save 首先检查 ExternalSave：多人或专用视图传入时执行该回调，不写入单人默认文件。
 
@@ -125,6 +133,8 @@ CoopRules.Apply 仍在完整副本上执行，失败返回原 World，成功沿�
 旧PNG与存档不增加字段迁移；三项保存在已存在的个人信箱。离开编辑窗口前没有保存，取消丢弃草稿；保存成功后页面跳转不影响磁盘提交。期间其他交流改变未编辑字段时，Relation 的空值不会覆盖这些字段。模型请求继续运行并使用原完成合并；断线、关闭进程、推进日期和切换存档均使用原会话与恢复机制，不增加新流程。验证包含实际单人文件重新读取、单人保存失败整份数据一致、二人/四人回执重试及房主/客机真实检查点；本次未重复强制终止游戏进程或真实Steam断线测试。
 
 ## 多人 AI 的 current / save / progress
+
+多人私聊确认合同属于 CoopRules.PrivateCommand 的原命令事务。PrivateContracts.Confirm 在独立个人视图中执行签约及赛前到队，Capture 合并人物、俱乐部、资金、补员报道和合同；确认合同与重新生成成功时，同时将 Matches、Esports.Competitions 写回当前事务副本。CoopRules.Apply 接受后沿原单次 Commit、检查点、回执及各接收者快照处理。视图内 CareerStore.Save 使用原 Detached 回调；生涯共享数据由房主事务提交。跨季到队仍由原季节推进入口执行，已保存的 SourceTurnId/SourceHumanId 用于把到队前后差异记录到原私聊轮次。
 
 | 委托 | 私信 | 群聊 | 依赖与用途 |
 | --- | --- | --- | --- |

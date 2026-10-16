@@ -5,12 +5,39 @@ using System.Text.Json;
 
 namespace NationalSpire;
 
-// 原始资源单独读取，不修改游戏的共享本地化表。缓存只含原版名称，按语言失效。
+// 名称与生命上限分别缓存；原版名称读取原始资源，生命上限读取当前职业模型，均按语言失效。
 public static class GameCharacterNames
 {
     private static readonly object Gate = new();
     private static string? _language;
     private static IReadOnlyDictionary<string, string> _originals = new Dictionary<string, string>();
+    private static string? _healthLanguage;
+    private static IReadOnlyDictionary<string, int> _startingHp = new Dictionary<string, int>();
+    public static int StartingHp(string character)
+    {
+        string language = LocManager.Instance.Language;
+        lock (Gate)
+        {
+            if (_healthLanguage != language)
+            {
+                var chinese = Read("zhs");
+                var english = Read("eng");
+                var names = new List<(string Name, int Hp)>();
+                foreach (var model in GameBridge.Characters())
+                {
+                    string key = model.Id.Entry + ".title";
+                    foreach (string name in new[] { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),
+                        chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") })
+                        if (name.Length > 0) names.Add((name, model.StartingHp));
+                }
+                _startingHp = names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)
+                    .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)
+                    .ToDictionary(g => g.Key, g => g.First().Hp, StringComparer.OrdinalIgnoreCase);
+                _healthLanguage = language;
+            }
+            return _startingHp.GetValueOrDefault(character, 75);
+        }
+    }
     public static bool IsOriginal(Type type) => type.Assembly == typeof(CharacterModel).Assembly;
     public static IReadOnlyDictionary<string, string> Originals()
     {

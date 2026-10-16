@@ -494,7 +494,7 @@ public partial class CareerScreen
         else
         {
             box.AddChild(PrivateText($"签字费 ${offer.Signing:#,0.##}  ·  周薪 ${offer.Wage:#,0.##}\n胜场奖金 ${offer.WinBonus:#,0.##}  ·  {offer.Weeks}周  ·  {offer.Role}", 17, _ink));
-            if (CareerEngine.Person(data, _privatePerson) is { ClubId.Length: > 0 } p && p.ClubId != data.Esports.OwnedClub?.ClubId) box.AddChild(Text("转会费 " + CareerMoney.Format(OwnedClubs.TransferFee(p)) + " · 下赛季加盟", 15, _muted));
+            if (CareerEngine.Person(data, _privatePerson) is { ClubId.Length: > 0 } p && p.ClubId != data.Esports.OwnedClub?.ClubId) box.AddChild(Text("转会费 " + CareerMoney.Format(OwnedClubs.TransferFee(p)) + " · " + OwnedClubs.TransferTime(data), 15, _muted));
         }
         if (offer.Detail.Length > 0) box.AddChild(PrivateText(offer.Detail, 15, _muted));
         if (offer.State == "待确认")

@@ -176,6 +176,8 @@ public static class OwnedClubs
         .SelectMany(c => c.Fixtures).Select(f => f.Day).DefaultIfEmpty(SeasonCalendar.Start(d) + 22).Min();
     public static bool CanJoinThisSeason(CareerData d) => d.Day < FirstLeagueDay(d)
         && d.Esports.Competitions.Where(c => c.Season == d.Season && c.Kind == "league").All(c => c.Fixtures.All(f => !f.Finished));
+    public static int TransferSeason(CareerData d) => CanJoinThisSeason(d) ? d.Season : d.Season + 1;
+    public static string TransferTime(CareerData d) => TransferSeason(d) == d.Season ? "立即加盟" : $"第 {d.Season + 1} 赛季加盟";
     public static List<string> Humans(CareerData d) => d.HumanIds.Count > 0 ? d.HumanIds.ToList() : ["player"];
     public static List<string> ActiveHumans(CareerData d) => d.MatchHumanIds.Count > 0 ? d.MatchHumanIds.ToList() : Humans(d);
     public static int RequiredAiStarters(CareerData d) => Math.Max(0, 3 - (ClubCoaching.PlayerReserve(d) ? 0 : ActiveHumans(d).Count));
@@ -375,13 +377,15 @@ public static class OwnedClubs
         var contract = negotiated ?? Quote(p, signing.Plan);
         contract.Position = signing.Position;
         int fee = TransferFee(p);
-        d.Esports.OwnedClub!.Transfers.Add(new() { SellerId = p.ClubId, ArrivalSeason = d.Season + 1, Position = signing.Position, ReplaceId = signing.Position == "首发" ? signing.ReplaceId : "", Fee = fee, Contract = contract });
+        int arrival = TransferSeason(d);
+        d.Esports.OwnedClub!.Transfers.Add(new() { SellerId = p.ClubId, ArrivalSeason = arrival, Position = signing.Position, ReplaceId = signing.Position == "首发" ? signing.ReplaceId : "", Fee = fee, Contract = contract });
         Pay(d, p.PublicName + "转会与签约", -fee - contract.Signing);
         if (EsportsWorld.Club(d, p.ClubId) is { } seller) seller.Budget += fee;
-        Report(d, "转会", p.PublicName + "将在下赛季加盟", $"与{EsportsWorld.ClubName(d, p.ClubId)}达成协议，转会费{CareerMoney.Format(fee)}，进入{signing.Position}阵容。本赛季继续代表原俱乐部出战。", [p.Id]);
+        if (arrival == d.Season) ArriveTransfers(d);
+        else Report(d, "转会", p.PublicName + "将在下赛季加盟", $"与{EsportsWorld.ClubName(d, p.ClubId)}达成协议，转会费{CareerMoney.Format(fee)}，进入{signing.Position}阵容。本赛季继续代表原俱乐部出战。", [p.Id]);
         CareerStore.Save(d); return null;
     }
-    // 新赛季生成签表前执行，合同金额沿用签字时的报价，避免重复收取预付款。
+    // 赛前签约当天或已约定的赛季开始时到队，合同金额沿用签字时的报价。
     public static void ArriveTransfers(CareerData d)
     {
         if (!IsOwner(d)) return;
@@ -410,7 +414,15 @@ public static class OwnedClubs
                 o.Contracts.Add(c); PositionList(o, transfer.Position).Add(p.Id);
                 p.ClubId = o.ClubId; UpdateRosterRole(p, transfer.Position);
                 transfer.Arrived = true;
-                Report(d, "转会", p.PublicName + "正式报到", $"新赛季合同生效，进入{transfer.Position}阵容。", [p.Id]);
+                // 私信个人视图以单人组织聊天，赛事名单仍按实际出场人数更新。
+                int members = d.CooperativeMembers;
+                try
+                {
+                    d.CooperativeMembers = Math.Max(members, ActiveHumans(d).Count);
+                    OwnedClubSchedule.TransferArrived(d, transfer.SellerId);
+                }
+                finally { d.CooperativeMembers = members; }
+                Report(d, "转会", p.PublicName + "正式报到", $"与{EsportsWorld.ClubName(d, transfer.SellerId)}完成转会，合同生效，进入{transfer.Position}阵容。", [p.Id]);
                 if (turn != null) PrivateInteractionHistory.Record(d, p.Id, turn, before!, true);
             }
             finally { d.Life.Mailbox = originalMailbox; d.LocalHumanId = originalHuman; }
@@ -501,7 +513,13 @@ public static class OwnedClubs
                     }
                 }
             }
-            if (o.Debt > 0) CareerLife.AddEvent(d, "club-debt-" + date, "俱乐部", "俱乐部周结资金不足", "尚有" + CareerMoney.Format(o.Debt) + "待支付，陪练与青训暂停。", ["player"]);
+            if (o.Debt > 0)
+            {
+                string club = EsportsWorld.ClubName(d, o.ClubId);
+                CareerLife.AddEvent(d, "club-debt-" + date, "俱乐部", club + " · 俱乐部周结资金不足",
+                    CareerEngine.DisplayName(d, o.ManagerId) + "经营的俱乐部" + club + "本次周结尚有"
+                    + CareerMoney.Format(o.Debt) + "待支付，陪练与青训暂停。", ["player"]);
+            }
         }
     }
     public static void SettleResults(CareerData d)

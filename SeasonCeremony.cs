@@ -40,6 +40,12 @@ public sealed class CeremonyRecord
 
 public static class SeasonCeremony
 {
+    public static bool ShowInvitation(CareerData data)
+    {
+        int season = data.Ceremonies.Select(c => c.Season).DefaultIfEmpty(0).Max();
+        return season > 0 && (season == data.Season || season == data.Season - 1 && data.Day < OwnedClubs.FirstLeagueDay(data));
+    }
+
     private static int Weight(string kind) => kind switch
     {
         "worldfinal" => 20, "worldcup" => 16, "continental" => 14,

@@ -39,6 +39,8 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 
 ## 经济和国家发展的公开事实
 
+OwnedClubs.Advance 在周结欠款大于零时，经 CareerLife.AddEvent 写入生活事件和 life-fact 公开事实。标题包含 OwnedClub.ClubId 对应的俱乐部名称；正文通过 OwnedClub.ManagerId 和 CareerEngine.DisplayName 写入经营者，接续俱乐部名称、欠款及陪练与青训暂停情况。每个欠款周结执行一次名称查询和文本拼接，事件编号继续使用 club-debt- 加周结日期。CareerLife.PublishPending 将这些原始事实传给帖子 SourceBody，后续 AI 发帖、评论、周刊与公开事实检索共用已保存的文字。名称在事件发生时写入，历史事件和已发布正文沿用原记录。此步骤随既有日期推进保存与多人广播执行。
+
 ConsumerEngine.Buy/Use → ConsumerEvents.Purchase/Activity → CareerLife.AddEvent，立即保存购买或已完成活动事实，不立即创建帖子。Purchase 合并当前玩家同日尚未进入帖子和周刊的购物记录，同时更新对应 life-fact 公开事实；Activity 每次单独记录完成情况和参加者，避免不同聚会混用名单。购物事实含商品、价格、同行人和实际新增关注。单人后续推进日期由 CareerLife.PublishPending 选择过去7天、早于当天的最多4条未发布生活事件；多人由 CoopRules.AdvanceMembers 合并成员事件，按原条件选择最多8条。两者通过原 CareerEngine.Publish 生成生活近况帖子，模型按已经发生的事实报道和讨论。PostId 防止重复发布，已有帖子不改写。关闭 AI 时沿用原生活事件发布条件，不另设补发队列。
 
 NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、RelatedPeople、Schedule 与 CommunityMemories。人物选择、新闻生成、评论分支和检索继续使用原入口；公报包含国运及实际指标变化，WorldEvents.FixtureFacts读取已结算WorldFixture及SeasonCeremony.Participants，提供贡献来源比赛、真实出场者和团队比分。品牌新闻正文包含个人/俱乐部赞助对象及胜负，新闻按Competition归并补充赛果；单纯经营消息不添加虚构的赛事因果。NationalFortune.Impact 经 MatchImpact 进入 CareerResult.WorldImpact、比赛帖子和事实记录。
@@ -197,8 +199,14 @@ UiPerformance 增加 GroupContext、PrivateContext、CommunitySelect、Community
 
 玩家每条留言分别排队，按配置并发。同帖键与任务标识参与顺序和去重。帖子相关人物保存后参与后续讨论，候选不等于全部允许的发言作者。新闻多帖当前选择范围和社区输出协议由相应入口决定；不使用已删除 covers 来判断回应或建立跨帖跳转。
 
+ProcessNewsBatchAsync 与 ProcessInteractionsAsync 从 EnterQueueAsync 调用开始进入原 try/catch/finally。入队立即抛错或返回任务失败时，原 FailureReason 写入失败原因；新闻将当前批次中尚在处理的帖子标记 failed、递增 Revision 并更新记忆，再由原 Save 提交，ProcessNewsAsync 随后继续下一批。回帖按原 PendingIds 判断 remaining，仍待回复的目标标记 failed，已回应目标沿用 completed；保存后移除本次 ScheduledInteractions 标记。失败任务经原新闻重试或回帖入口在同次运行中重新申请名额。
+
+队列凭据由函数局部 lease 保存，获取成功后一直持有到状态保存及回帖任务标记清理完成，再在 finally 调用 Dispose。保存异常仍由原调用者处理，队列凭据的释放继续执行。EnterQueueAsync 的并发配置、同内容键顺序及等待原因仍由 AiRequestQueue 管理。每批新闻入队一次，每次回帖请求入队一次；成功路径沿用原保存次数和数据复制。局部凭据随请求释放，任务状态继续随原生涯保存；离开页面后任务沿用原执行流程，切换生涯继续使用 IsCurrent 校验，进程恢复沿用 RecoverInterrupted。
+
 社区开始、排队、完成或失败保存的状态不同；开始保存的上下文还用于响应权限核对。AiWireProtocol.Decode、ParseReplies 的作者与 parent 判断依赖本次提供的编号资料。不能只依据模型 JSON 语法正确就认定业务引用正确。
 
 自动发帖由 ComposeSystem 在可编辑模板之后固定注入 EvidencePrompt 和 SystemPrompt；每帖输出字段为 id、title、body、replies。ApplyNewsResponse 先读取并检查整批字段，之后才提交；任何帖子缺少 title 或 body，GetProperty 会抛出 KeyNotFoundException，已经检查完的其他帖子也尚未保存。自定义 PromptOverrides 可额外描述另一种输出结构，固定协议仍会注入；诊断须核对实际最终请求，不能只读取自定义模板的原始 Sections。
 
-周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog 处理积压，加载 Recover 将中断任务恢复到既有可重试状态。多人公共结果由 CoopAi 合并，只提交本任务生成内容，保留期间新增真人回复和其他已完成结果。
+周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog.Select 先使用原赛前、比赛、Priority、近期题材和日期排序，再进行原题材选择，最后将 RelatedPeople 包含 player 或 HumanIds 的帖子稳定排列在前，按 MaxNewsPosts 截取。相同人物相关帖沿用原排序；其余帖沿用原题材顺序。Compact 和 ProcessNewsAsync 继续将当次超额任务设为 superseded，原七天有效范围、分批生成、失败重试与保存入口继续执行。Select 创建本次候选列表和排序集合，读取最近八篇成品；缓存范围为本次选择。建队生活事实仍由次日 PublishPending 汇总进入这条队列。
+
+加载 Recover 将中断任务恢复到既有可重试状态。多人公共结果由 CoopAi 合并，只提交本任务生成内容，保留期间新增真人回复和其他已完成结果。

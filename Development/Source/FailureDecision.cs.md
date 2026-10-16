@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`286D365BC4EBEBD3944DCA3903DCE136EB2075CEDE0579D544D3F8A34C7BC760`。来源：[源码](../../FailureDecision.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9D995050BD38CEB45E00A2ACCE93DD3C9F97F73BCB1C49F9D251FB12520ED7F5`。来源：[源码](../../FailureDecision.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -153,12 +153,13 @@
 
 **调用者：** [`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** [`NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-a1d56f5af7ac)；`string.ToUpperInvariant()`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`
+**调用：** [`NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-a1d56f5af7ac)；`NationalSpire.BroadcastMemory.BroadcastMemory()`；`string.ToUpperInvariant()`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.PendingSince`；`NationalSpire.CareerMatch.Draw`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.PlayerFloor`；`NationalSpire.CareerMatch.PlayerSeconds`；`NationalSpire.CareerMatch.PlayerWon`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.FailureDecision.RetryRequested`；`NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.PendingSince`；`NationalSpire.CareerMatch.Draw`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.PlayerFloor`；`NationalSpire.CareerMatch.PlayerSeconds`；`NationalSpire.CareerMatch.PlayerWon`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.FailureDecision.RetryRequested`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.BroadcastMemory.BroadcastMemory()`；输入表达式：`new()`；返回值紧邻使用处：`AssignmentExpressionSyntax: m.Live.Commentary = new()`
 - `NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData)`；输入表达式：`RestoreMatch(d)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RestoreMatch(d)`
 - `string.ToUpperInvariant()`；输入表达式：`Guid.NewGuid().ToString("N")[..12].ToUpperInvariant()`；返回值紧邻使用处：`BinaryExpressionSyntax: "NS" + Guid.NewGuid().ToString("N")[..12].ToUpperInvariant()`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
@@ -171,6 +172,7 @@
 - `d.PendingSince` = `0`
 - `failure.RetryRequested` = `true`
 - `m.Draw` = `m.PlayerWon = false`
+- `m.Live.Commentary` = `new()`
 - `m.Live` = `null`
 - `m.OpponentPrepared` = `false`
 - `m.OpponentSeconds` = `null`
@@ -183,7 +185,7 @@
 
 ## `NationalSpire.MatchFailure.RestoreMatch(NationalSpire.CareerData) — public static CareerMatch RestoreMatch(CareerData d)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.MatchFailure.Confirm(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-e4be787ed490)；[`NationalSpire.MatchFailure.Retry(NationalSpire.CareerData, bool)`](FailureDecision.cs.md#symbol-e81edcf0cf5a)
 

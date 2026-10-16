@@ -1,5 +1,15 @@
 # 游戏、日期、阵容与界面
 
+## 结算中的逐场对阵
+
+SettlementRecords.CaptureCompetition 在原结算时机为 CompetitionScore.Duels 保存每席参赛者编号、当时姓名、双方成绩、胜者和状态。CaptureDuel 是赛事页面与结算共用的数据入口：合作场次优先读取 WorldFixture.HomeParticipants/AwayParticipants，名单为空时读取该席 HomeId/AwayId；成绩沿用 MatchRules.Performance，失败且存在正数用时时追加 MatchRules.Time。待赛和弃权显示对应状态，平局保留双方成绩。完成编号统一由 FixtureKey 生成，原编号为空时使用轮次、日期和双方编号组合。
+
+CareerScreen.CompetitionOverview 调用 ScoreDuels 一次，得到本次显示用的详情字典；已有快照直接使用 Duels。旧快照的 Duels 缺省为空时，按 CompetitionReview.Id 查找原赛事，使用 CapturedDay、CompletedFixtures、轮次名称、双方名称和比分日期匹配原对阵。后来完成的席位依照当时的 CompletedFixtures 显示待赛。原赛事清理后旧快照继续显示已保存的总比分。补充结果属于该次渲染的局部字典，原快照继续由原结算流程管理。
+
+CompetitionOverview 和 ModernCompetition 共同调用 FixtureDetails。每席采用左右两张等宽选手卡：32像素头像及可点击姓名位于上方，通关或楼层与用时位于下方；胜方使用绿色底色、边线与胜字，中央显示 VS 或平。PersonLink 继续负责头像和人物档案跳转。合作赛每侧列出实际保存的出场者，底部显示该队共同成绩。结算总比分卡保留原日期、轮次、双方队名和赛果，采用两列排列；首次创建最多六张总比分卡，首次展开时创建其余卡片，随后展开和收起复用已创建控件。
+
+新详情随 CareerResult.Settlement 或多人成员 SettlementRecord 进入原序列化与提交流程。页面创建只读取数据；切换日期、存档或关闭页面后，局部字典和控件随页面释放。保存与多人恢复关系见[保存与多人同步](PERSISTENCE_AND_COOP.md#结算对阵详情)。本地规则21项和实际Godot界面43项通过，包含旧快照补充、原赛事清理、个人赛、团体赛、四人合作、迟完赛隔离和两种窗口宽度。逐次性能与截图保存在维护者本地 .artifacts/settlement-details-20261017。
+
 ## 模型方案设置
 
 CareerScreen.AiSettings → AiSettingsPanel.Build 是单人和多人房主共用入口。左列显示方案选择、新建、名称与保存按钮、地址、模型、密钥及原全局参数；右列显示八张任务卡，每张卡包含已保存方案下拉框和模型名称。AiRouting.Tasks 统一提供任务编号与标题，“周刊与介绍”覆盖两类周刊请求。“将当前方案应用到所有”遍历八项映射后调用一次原保存回调。
@@ -32,6 +42,8 @@ CareerScreen.AiSettings → AiSettingsPanel.Build 是单人和多人房主共用
 FinishMatch 先用局部变量比较成绩；失利待选择时仅写入 Failure.Result、Failure.Opponent，清理 PendingMatchId/PendingSince 并保存。正式 CareerMatch 的 PlayerFloor、PlayedAscension、PlayerSeconds、Draw、PlayerWon 在此分支返回后赋值。奖励、关注、评分、荣誉、Fixture、CompleteMatchDay、国运、行情和战报均沿正式结算继续执行。原失败成绩保存在待选择对象中，历史采样读取正式 Results。
 
 FailureAction 的同种子/新种子按钮调用 MatchFailure.Retry，再沿 GameBridge.StartMatch 进入实际游戏。模拟失利按 Failure.Result.CharacterId 读取本次职业，并传入 PlayedAscension（缺省取 Ascension）；同种子恢复原对手成绩，新种子重新准备对手。RestoreMatch 在每次选择及确认时读取原种子、原对手快照，避免新种子开局中断后混用新对手与原失败。GameBridge 开局成功才清除 Failure；准备失败仍保留原决定。Confirm 读取原成绩和 Simulated 标记后，传入 confirmFailure=true 正式结算。
+
+MatchFailure.Retry 在恢复比赛后，将已有 Live.Commentary 替换为新的 BroadcastMemory，重新开始楼层观察、战斗统计、发言冷却与观众状态。Live.Steps、MaxHp、对手结果及 CommentaryEnabled 继续沿用；新种子按原分支重建整个 Live。继续同一场原版对局时由 EnsurePlan 使用已保存的 Commentary。重赛重置由既有开局保存流程持久保存，解说共享词库在 EnsurePlan 中接回生涯 BroadcastHistory。
 
 单人只有产生该场正式结果时切换结算，加赛留在开赛页面。多人CareerScreen._Process比较更新前后最后一条MatchId，新结果为Simulated且PendingSettlementId对应时切换一次；普通Revision更新及重复快照不切换。
 
@@ -267,6 +279,14 @@ AdvanceToDay 逐天执行以上过程，现有单次循环最多 84 天；遇待
 
 ## 席位、历史名单和后续赛事
 
+赛前转会统一由 OwnedClubs.TransferSeason 调用 CanJoinThisSeason：当前日期早于本季最早联赛日期，且本季联赛全部对阵尚待赛，新签转会当天到队；其余情况填写下一赛季。TransferTime 为俱乐部签约面板、确认窗口、私信提示词和合同卡片提供同一到队说明。已有 OwnedTransfer.ArrivalSeason 继续作为执行日期，ArriveTransfers 在该赛季到来时办理。
+
+ArrangeTransfer 写入转会记录，沿 Pay 收取一次转会费和签字费并增加原队预算；当天到队时立即调用 ArriveTransfers，设置 SignedDay/EndDay、合同、人物 ClubId 和首发接替关系，再调用 OwnedClubSchedule.TransferArrived。该入口先复用 CircuitPeople.Replenish 的俱乐部补员规则，再通过 UpdateLineup / SetLineup 更新本队未来名单。原队所在的赛前联赛保留仍在原队的报名选手，空位由 CoachLineups.Roster 提供现有队员。SetLineup 按整组待赛对阵修改参赛者，将变更场次集合交给 CircuitWorld.UpdatePlayerMatches；随后清理双方赛前联赛的退报名选手和空积分行。原赛程日期、轮次、队伍和已有正式成绩继续沿用。
+
+私聊合同调用 PrivateContracts.Confirm → ArrangeTransfer，共用同一条到队流程。个人聊天视图中的 CooperativeMembers 为1，ArriveTransfers 在名单同步期间使用实际 ActiveHumans 人数，完成后恢复聊天视图人数。多人 PrivateCommand 在确认合同或重新生成成功后，将视图 Matches / Competitions 合并到房主事务副本，随后沿原检查点、回执和完整快照同步。合同撤回同时恢复补员人物和报道，具体数据见 DATA_CONTRACTS。
+
+一次转会执行一次原补员入口，遍历当前世界各 AI 俱乐部及成员；本队和原队只更新各自赛事。日常名单调整和转会共用 SetLineup。Arrived 防止再次办理，预付款与工资起算日分别在签字和到队时写入。俱乐部面板签约调用一次原保存；私聊确认在 ArrangeTransfer 后记录回退数据，由原 PrivateCommand 再保存一次。多人规则在原命令副本中执行并提交一次检查点和广播。选择到队时间、名单更新与合同快照使用本次数据，缓存范围为单次调用。
+
 | 操作 | 上游规则 | 实际输出 | 下游依赖 |
 | --- | --- | --- | --- |
 | 签约、解约、转会 | OwnedClubs、PrivateContracts、合同与资金 | 合同、人物所属、席位、预约到队 | 阵容、工资、培训、下一赛季与赛程 |
@@ -284,6 +304,8 @@ AdvanceToDay 逐天执行以上过程，现有单次循环最多 84 天；遇待
 上述是当前工作区行为。修复的验证证据仍需对照对应测试或产物，不用本章概述代替实际存档问题验证。
 
 ## 地图与转播依赖
+
+LiveRunBridge.EnsurePlan 和 CoopLive.Update 在首次建立对手路线时共用 GameCharacterNames.StartingHp(character)。该函数将当前 GameBridge.Characters 的 StartingHp 与职业编号、当前界面名称、原版中英文名称对应，按语言建立进程缓存；后续查询直接读取字典。五种原版职业上限为铁甲80、静默70、故障75、储君75、亡灵66；无法对应到当前模型的名称沿用原75。已有 Live 及 RivalMembers 继续读取保存的生命计划。每次语言变化读取两份原版名称资源并重建一次字典，普通楼层更新复用已保存的 MaxHp。
 
 LiveMaps.Read 以 run.Acts 为范围：
 
@@ -348,6 +370,8 @@ CharacterCards.Apply(data, edit, relationLife=null, human=null) 先执行完整�
 验证：177项新增规则检查、58项二人/四人协调器与磁盘检查点检查、20项真实单人文件保存检查、11项真实Godot控件检查通过；旧PNG32项、私信重新生成82项及角色卡1673项回归通过。旧角色卡测试原来要求人数不足时拒绝编辑，修改前代码也不符合此断言；核对 CircuitPeople.Replenish 的原有自动补员行为后，测试改为检查补员后的参赛人数，旧代码与当前代码均通过，没有修改补员规则。测试没有调用模型，不包含真实Steam网络；性能逐次记录见本地PERFORMANCE的角色卡章节。
 
 ## 颁奖文案与评选依据
+
+首页 Home 调用 SeasonCeremony.ShowInvitation：最新颁奖属于本季时显示；属于上一季时，显示到本季最早联赛日期前一天。联赛开赛当天按当前日期结束首页邀请。该判断只读取 Ceremonies、Season、Day 和 FirstLeagueDay，奖项历史继续由荣誉室的 CeremonyInvitation 访问，跨天、加载与多人个人视图都按同一条件呈现。
 
 SeasonCeremony.AwardDescription(title, reason) 是奖项展示说明的统一入口。输入奖项标题和原说明，返回展示文字，不修改任何数据。赛季/年度最佳选手、新秀、俱乐部分别返回对应期间的“综合表现第一”；联赛MVP保留原说明中的赛事名称，只去除旧版“同成绩并列。”；其他标题沿用原说明。
 

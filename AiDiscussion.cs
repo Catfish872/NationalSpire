@@ -23,9 +23,10 @@ public static partial class AiService
         var targets = ReactionTargets(data, requested);
         var works = targets.Where(p => requested.Contains(p.Id)).Select(p => p.ReactionGeneration)
             .Concat(targets.SelectMany(p => p.Replies).Where(r => requested.Contains(r.Id)).Select(r => r.ReactionGeneration)).ToArray();
-        using var lease = await EnterQueueAsync(data, requested.Select(id => "reply:" + id), works);
+        IDisposable? lease = null;
         try
         {
+            lease = await EnterQueueAsync(data, requested.Select(id => "reply:" + id), works);
             if (!CareerStore.IsCurrent(data)) return;
             requested.IntersectWith(CommunityThreads.PendingIds(data));
             if (requested.Count == 0) return;
@@ -74,6 +75,7 @@ public static partial class AiService
             finally
             {
                 lock (ScheduledInteractions) foreach (var id in scheduled) ScheduledInteractions.Remove((data, id));
+                lease?.Dispose();
             }
         }
     }

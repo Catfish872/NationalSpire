@@ -153,7 +153,7 @@ public static class PrivateContracts
         if (OwnedClubs.TransferReserved(data, p.Id)) return $"{p.PublicName}已经签订加盟合同，具体条款和加盟时间见当前资料。";
         var q = OwnedClubs.Quote(p, "steady");
         return $"参考报价为签字费 {q.Signing * 10} 美元，周薪 {q.Wage * 10} 美元，胜场奖金 {q.WinBonus * 10} 美元。金额、合同周数及首发、轮换、青训或教练岗位均按双方商谈确定。"
-            + (p.ClubId.Length > 0 ? $"转会费另付 {OwnedClubs.TransferFee(p) * 10} 美元，下赛季加盟。" : "自由选手确认签约后立即加入。")
+            + (p.ClubId.Length > 0 ? $"转会费另付 {OwnedClubs.TransferFee(p) * 10} 美元，{OwnedClubs.TransferTime(data)}。" : "自由选手确认签约后立即加入。")
             + $"当前好感 {PrivateMessages.Favour(data, p.Id)}。";
     }
     public static string? Error(CareerData data, string person, PrivateOffer offer)

@@ -56,6 +56,32 @@ public static class OwnedClubSchedule
     public static List<string> OfficialRoster(CareerData d) => d.CooperativeMembers > 1
         ? new[] { "player" }.Concat(OwnedClubs.ActiveHumans(d).Where(id => id != (d.Esports.OwnedClub?.ManagerId ?? d.HumanIds.FirstOrDefault()))).ToList()
         : d.Esports.OwnedClub!.Starters.ToList();
+    public static void TransferArrived(CareerData d, string seller)
+    {
+        // 原有补员入口维持俱乐部人数；已编排的赛前签表同步采用双方到队后的名单。
+        CircuitPeople.Replenish(d);
+        UpdateLineup(d);
+        foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && c.Kind == "league"
+            && c.Rosters.ContainsKey(seller) && c.Fixtures.All(f => !f.Finished) && c.Fixtures.All(f => f.Day > d.Day)))
+        {
+            var old = c.Rosters[seller];
+            var roster = old.Where(id => CareerEngine.Person(d, id)?.ClubId == seller).ToList();
+            roster.AddRange(CoachLineups.Roster(d, seller).Where(id => !roster.Contains(id)).Take(old.Count - roster.Count));
+            SetLineup(d, c, seller, roster);
+        }
+        foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && c.Kind == "league"
+            && (c.Rosters.ContainsKey(seller) || c.Rosters.ContainsKey(d.Esports.OwnedClub!.ClubId))
+            && c.Fixtures.All(f => !f.Finished && f.Day > d.Day)))
+        {
+            var entrants = c.Rosters.Values.SelectMany(r => c.Cooperative ? r.Take(1) : r).ToHashSet();
+            c.Entrants.RemoveAll(id => !entrants.Contains(id));
+            c.Table.RemoveAll(row => !entrants.Contains(row.PersonId));
+            foreach (string id in entrants)
+                if (!c.Table.Any(row => row.PersonId == id)) c.Table.Add(new() { PersonId = id });
+            foreach (string id in c.EntrantClubs.Keys.Where(id => !c.Rosters.Values.Any(r => r.Contains(id))).ToArray())
+            { c.EntrantClubs.Remove(id); c.EntrantCountries.Remove(id); }
+        }
+    }
     public static void UpdateLineup(CareerData d)
     {
         CharacterDeletion.RepairStarters(d, updateSchedule: false);
@@ -63,26 +89,30 @@ public static class OwnedClubSchedule
         var own = d.Esports.OwnedClub!;
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(own.ClubId)))
         {
-            var roster = OfficialRoster(d); c.Rosters[own.ClubId] = roster;
-            var changed = new HashSet<string>();
-            foreach (var tie in c.Fixtures.Where(f => f.HomeTeam == own.ClubId || f.AwayTeam == own.ClubId)
-                .GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)).Where(g => g.All(f => !f.Finished) && !CircuitWorld.ActiveTie(d, g)))
-            {
-                int i = 0;
-                foreach (var f in tie)
-                {
-                    string id = roster[i++];
-                    if ((f.HomeTeam == own.ClubId ? f.HomeId : f.AwayId) == id) continue;
-                    if (f.HomeTeam == own.ClubId) f.HomeId = id; else f.AwayId = id;
-                    changed.Add(f.Id);
-                }
-            }
-            foreach (string id in c.Cooperative ? roster.Take(1) : roster)
-            {
-                if (!c.Entrants.Contains(id)) { c.Entrants.Add(id); c.Table.Add(new() { PersonId = id }); }
-                c.EntrantClubs[id] = own.ClubId; c.EntrantCountries[id] = d.Esports.Country;
-            }
-            if (changed.Count > 0) CircuitWorld.UpdatePlayerMatches(d, c, changed);
+            SetLineup(d, c, own.ClubId, OfficialRoster(d));
         }
+    }
+    private static void SetLineup(CareerData d, WorldCompetition c, string club, List<string> roster)
+    {
+        c.Rosters[club] = roster;
+        var changed = new HashSet<string>();
+        foreach (var tie in c.Fixtures.Where(f => f.HomeTeam == club || f.AwayTeam == club)
+            .GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)).Where(g => g.All(f => !f.Finished) && !CircuitWorld.ActiveTie(d, g)))
+        {
+            int i = 0;
+            foreach (var f in tie)
+            {
+                string id = roster[i++];
+                if ((f.HomeTeam == club ? f.HomeId : f.AwayId) == id) continue;
+                if (f.HomeTeam == club) f.HomeId = id; else f.AwayId = id;
+                changed.Add(f.Id);
+            }
+        }
+        foreach (string id in c.Cooperative ? roster.Take(1) : roster)
+        {
+            if (!c.Entrants.Contains(id)) { c.Entrants.Add(id); c.Table.Add(new() { PersonId = id }); }
+            c.EntrantClubs[id] = club; c.EntrantCountries[id] = EsportsWorld.Club(d, club)!.Country;
+        }
+        if (changed.Count > 0) CircuitWorld.UpdatePlayerMatches(d, c, changed);
     }
 }

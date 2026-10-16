@@ -31,6 +31,8 @@ public static class MatchFailure
             m.Seed = "NS" + Guid.NewGuid().ToString("N")[..12].ToUpperInvariant();
             m.OpponentPrepared = false; m.OpponentSeconds = null; m.Live = null;
         }
+        // 重赛重新计时，楼层观察、发言冷却和观众状态归属于本轮实际对局。
+        if (m.Live != null) m.Live.Commentary = new();
         m.PlayerSeconds = null; m.PlayerFloor = 0; m.Draw = m.PlayerWon = false;
         d.PendingMatchId = null; d.PendingSince = 0;
         failure.RetryRequested = true;

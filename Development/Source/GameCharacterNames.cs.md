@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8E6475046FBC7DBDB2F9DD03F31C66A144CD8DE011EDB99866C8C2DD5C4D0547`。来源：[源码](../../GameCharacterNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1ED87538A03E187A341D158CB85C300E580483B7502FD7330F813ADF5E03C0C7`。来源：[源码](../../GameCharacterNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,13 +14,52 @@
 private static readonly object Gate = new();
 private static string? _language;
 private static IReadOnlyDictionary<string, string> _originals = new Dictionary<string, string>();
+private static string? _healthLanguage;
+private static IReadOnlyDictionary<string, int> _startingHp = new Dictionary<string, int>();
 ```
+
+<a id="symbol-1bb238743407"></a>
+
+## `NationalSpire.GameCharacterNames.StartingHp(string) — public static int StartingHp(string character)`
+
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.EnsurePlan()`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)
+
+**调用：** [`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.GameCharacterNames.Read(string)`](GameCharacterNames.cs.md#symbol-cf770f36edc2)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+
+**字段、属性、事件及方法组引用：** `(string Name, int Hp).Hp`；`(string Name, int Hp).Name`；`NationalSpire.GameBridge.Characters()`；`NationalSpire.GameCharacterNames._healthLanguage`；`NationalSpire.GameCharacterNames._startingHp`；`NationalSpire.GameCharacterNames.Gate`；`NationalSpire.GameCharacterNames.Read(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；输入表达式：`model.Title.GetFormattedText()`；返回值紧邻使用处：`InitializerExpressionSyntax: { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),                         chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") }`
+- `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`model.Id.ToString()`；返回值紧邻使用处：`InitializerExpressionSyntax: { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),                         chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") }`
+- `NationalSpire.GameBridge.Characters()`；输入表达式：`GameBridge.Characters()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var model in GameBridge.Characters())                 {                     string key = model.Id.Entry + ".title";                     foreach (string name in new[] { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),                         chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") })                         if (name.Length > 0) names.Add((name, model.StartingHp));                 }`
+- `NationalSpire.GameCharacterNames.Read(string)`；输入表达式：`Read("eng")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Read("eng")`
+- `NationalSpire.GameCharacterNames.Read(string)`；输入表达式：`Read("zhs")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Read("zhs")`
+- `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；输入表达式：`g.Select(n => n.Hp).Distinct().Count()`；返回值紧邻使用处：`BinaryExpressionSyntax: g.Select(n => n.Hp).Distinct().Count() == 1`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`g.Select(n => n.Hp).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.Select(n => n.Hp).Distinct().Count`
+- `System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；输入表达式：`g.First()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.First().Hp`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`g.Select(n => n.Hp)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.Select(n => n.Hp).Distinct`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)                     .ToDictionary(g => g.Key, g => g.First().Hp, StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _startingHp = names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)                     .ToDictionary(g => g.Key, g => g.First().Hp, StringComparer.OrdinalIgnoreCase)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)                     .ToDictionary`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`_startingHp.GetValueOrDefault(character, 75)`；返回值紧邻使用处：`ReturnStatementSyntax: return _startingHp.GetValueOrDefault(character, 75);`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`chinese.GetValueOrDefault(key, "")`；返回值紧邻使用处：`InitializerExpressionSyntax: { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),                         chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") }`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`english.GetValueOrDefault(key, "")`；返回值紧邻使用处：`InitializerExpressionSyntax: { model.Id.ToString(), model.Id.Entry, model.Title.GetFormattedText(),                         chinese.GetValueOrDefault(key, ""), english.GetValueOrDefault(key, "") }`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`names.Add((name, model.StartingHp))`；返回值紧邻使用处：`ExpressionStatementSyntax: names.Add((name, model.StartingHp));`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<(string Name, int Hp)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<(string Name, int Hp)>()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_healthLanguage` = `language`
+- `_startingHp` = `names.GroupBy(n => n.Name, StringComparer.OrdinalIgnoreCase)                     .Where(g => g.Select(n => n.Hp).Distinct().Count() == 1)                     .ToDictionary(g => g.Key, g => g.First().Hp, StringComparer.OrdinalIgnoreCase)`
 
 <a id="symbol-67e74be938f6"></a>
 
 ## `NationalSpire.GameCharacterNames.IsOriginal(System.Type) — public static bool IsOriginal(Type type)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GameCharacterNames.Originals()`](GameCharacterNames.cs.md#symbol-1e5c21407883)
 
@@ -38,7 +77,7 @@ private static IReadOnlyDictionary<string, string> _originals = new Dictionary<s
 
 ## `NationalSpire.GameCharacterNames.Originals() — public static IReadOnlyDictionary<string, string> Originals()`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -75,9 +114,9 @@ private static IReadOnlyDictionary<string, string> _originals = new Dictionary<s
 
 ## `NationalSpire.GameCharacterNames.Read(string) — private static Dictionary<string, string> Read(string language)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameCharacterNames.Originals()`](GameCharacterNames.cs.md#symbol-1e5c21407883)
+**调用者：** [`NationalSpire.GameCharacterNames.Originals()`](GameCharacterNames.cs.md#symbol-1e5c21407883)；[`NationalSpire.GameCharacterNames.StartingHp(string)`](GameCharacterNames.cs.md#symbol-1bb238743407)
 
 **调用：** [`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`Godot.FileAccess.GetAsText(bool)`；`Godot.FileAccess.Open(string, Godot.FileAccess.ModeFlags)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
@@ -100,7 +139,7 @@ private static IReadOnlyDictionary<string, string> _originals = new Dictionary<s
 
 ## `NationalSpire.GameCharacterNames.Definitions(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>) — public static IEnumerable<CharacterDefinition> Definitions(IEnumerable<CharacterModel> characters)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Entry.Init()`](Entry.cs.md#symbol-f4f7468c39e8)
 

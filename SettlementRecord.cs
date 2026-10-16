@@ -122,16 +122,70 @@ public sealed class CompetitionScore
     public string Score { get; set; } = "";
     public string Outcome { get; set; } = "";
     public bool PlayerRelated { get; set; }
+    public List<CompetitionDuel> Duels { get; set; } = [];
+}
+public sealed class CompetitionPlayer
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+}
+public sealed class CompetitionDuel
+{
+    public List<CompetitionPlayer> Home { get; set; } = [];
+    public List<CompetitionPlayer> Away { get; set; } = [];
+    public string HomePerformance { get; set; } = "";
+    public string AwayPerformance { get; set; } = "";
+    public string WinnerId { get; set; } = "";
+    public string Status { get; set; } = "";
 }
 
 public static partial class SettlementRecords
 {
+    public static string FixtureKey(WorldFixture f) => f.Id.Length > 0 ? f.Id : $"{f.Round}:{f.Day}:{f.HomeId}:{f.AwayId}";
+
+    public static CompetitionDuel CaptureDuel(CareerData d, WorldFixture f, bool? finished = null)
+    {
+        bool complete = finished ?? f.Finished;
+        string Performance(bool cleared, int floor, double? seconds) => MatchRules.Performance(cleared, floor, seconds)
+            + (!cleared && floor >= 0 && seconds > 0 ? " · " + MatchRules.Time(seconds) : "");
+        List<CompetitionPlayer> Players(string leader, List<string> participants) =>
+            (participants.Count > 0 ? participants : [leader]).Select(id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }).ToList();
+        return new() { Home = Players(f.HomeId, f.HomeParticipants), Away = Players(f.AwayId, f.AwayParticipants),
+            HomePerformance = complete && !f.Walkover ? Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) : "",
+            AwayPerformance = complete && !f.Walkover ? Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds) : "",
+            WinnerId = complete && !f.Draw ? f.WinnerId : "",
+            Status = !complete ? "待赛" : f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束" };
+    }
+
+    // 旧结算按当时的完赛编号读取原赛事，后来的比赛成绩仍显示为待赛。
+    public static Dictionary<CompetitionScore, List<CompetitionDuel>> ScoreDuels(CareerData d, CompetitionReview review)
+    {
+        var result = review.Scores.ToDictionary(s => s, s => s.Duels);
+        var missing = review.Scores.Where(s => s.Duels.Count == 0).ToList();
+        if (missing.Count == 0 || d.Esports.Competitions.FirstOrDefault(c => c.Id == review.Id) is not { } c) return result;
+        var completed = review.CompletedFixtures.ToHashSet();
+        string Round(int round) => c.Modern ? CircuitWorld.RoundName(c, round) : $"第 {round} 轮";
+        var fixtures = c.Fixtures.Where(f => f.Day <= review.CapturedDay);
+        var groups = c.TeamEvent ? fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)) : fixtures.GroupBy(f => (f.Round, f.Id, ""));
+        var lookup = groups.Where(g => g.Any(f => completed.Contains(FixtureKey(f)))).ToLookup(g =>
+        {
+            var first = g.First();
+            return (Round(first.Round),
+                c.TeamEvent ? CircuitWorld.TeamName(d, c, first.HomeTeam) : CareerEngine.DisplayName(d, first.HomeId),
+                c.TeamEvent ? CircuitWorld.TeamName(d, c, first.AwayTeam) : CareerEngine.DisplayName(d, first.AwayId),
+                g.Where(f => completed.Contains(FixtureKey(f))).Max(f => f.Day));
+        });
+        foreach (var score in missing)
+            result[score] = lookup[(score.Round, score.Home, score.Away, score.Day)]
+                .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList();
+        return result;
+    }
+
     private static CompetitionReview CaptureCompetition(CareerData d, CareerMatch m, WorldCompetition c, int season, Dictionary<string, int> worldPoints)
     {
         // 只比较最近一次同赛事结算；旧记录缺失时，不跨过它借用更早的比较起点。
         var previousResult = d.Results.LastOrDefault(r => r.MatchId != m.Id && r.CompetitionId == c.Id);
         var previous = previousResult?.Settlement is { } old && old.Season == season && old.Competition?.Id == c.Id ? old.Competition : null;
-        string FixtureKey(WorldFixture f) => f.Id.Length > 0 ? f.Id : $"{f.Round}:{f.Day}:{f.HomeId}:{f.AwayId}";
         var done = c.Fixtures.Where(f => f.Finished).ToList();
         var review = new CompetitionReview { Id = c.Id, Name = c.Name, CapturedDay = d.Day,
             PreviousMatchDay = previous != null ? previousResult!.Day : null,
@@ -178,6 +232,7 @@ public static partial class SettlementRecords
                 review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),
                     Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),
                     Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,
+                    Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),
                     Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"
                         : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") });
             }
@@ -186,7 +241,7 @@ public static partial class SettlementRecords
         {
             foreach (var f in done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending(f => f.Round))
                 review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),
-                    Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",
+                    Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],
                     Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"
                         : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") });
         }

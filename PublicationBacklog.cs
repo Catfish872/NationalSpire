@@ -15,7 +15,9 @@ public static class PublicationBacklog
             .ThenByDescending(p => p.EventKey.StartsWith("match"))
             .ThenByDescending(p => p.Priority * 10 - Math.Min(15, recent.Count(r => Topic(r) == Topic(p)) * 4))
             .ThenByDescending(p => p.Day).ToList();
-        return ordered.DistinctBy(Topic).Concat(ordered).DistinctBy(p => p.Id).Take(Math.Clamp(count, 1, AiOptions.MaximumNewsPostCount)).ToList();
+        return ordered.DistinctBy(Topic).Concat(ordered).DistinctBy(p => p.Id)
+            .OrderByDescending(p => p.RelatedPeople.Any(id => id == "player" || data != null && CommunityThreads.IsHuman(data, id)))
+            .Take(Math.Clamp(count, 1, AiOptions.MaximumNewsPostCount)).ToList();
     }
     public static void Compact(CareerData data, bool selectNews = true)
     {

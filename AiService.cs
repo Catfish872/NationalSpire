@@ -176,9 +176,10 @@ public static partial class AiService
         string trace = Guid.NewGuid().ToString("N");
         string failure = "请求中断或配置已改变，可重试";
         void Fail(string message) { failure = message; Status = message; }
-        using var lease = await EnterQueueAsync(data, pending.Select(p => "post:" + p.Id), pending.Select(p => p.NewsGeneration));
+        IDisposable? lease = null;
         try
         {
+            lease = await EnterQueueAsync(data, pending.Select(p => "post:" + p.Id), pending.Select(p => p.NewsGeneration));
             pending.RemoveAll(p => p.NewsGeneration.State == "superseded");
             if (pending.Count == 0 || !CareerStore.IsCurrent(data)) return;
 
@@ -215,9 +216,13 @@ public static partial class AiService
         catch (Exception e) { Diagnostics.Error("ai.news:" + trace, e); Fail(FailureReason(e)); GD.PushWarning("[NationalSpire] 新闻生成：" + failure); }
         finally
         {
-            foreach (var post in pending.Where(p => p.NewsGeneration.State is not ("completed" or "superseded")))
-            { CommunityThreads.SetWork(post.NewsGeneration, "failed", failure); post.Revision++; CommunityThreads.Remember(data, post); }
-            CareerStore.Save(data);
+            try
+            {
+                foreach (var post in pending.Where(p => p.NewsGeneration.State is not ("completed" or "superseded")))
+                { CommunityThreads.SetWork(post.NewsGeneration, "failed", failure); post.Revision++; CommunityThreads.Remember(data, post); }
+                CareerStore.Save(data);
+            }
+            finally { lease?.Dispose(); }
         }
     }
 

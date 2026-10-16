@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`8C8002EF61667DF00C01328B93472657036E4AC8286ADBF29F02F1921619B1B9`。来源：[源码](../../../Coop/CoopPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`962438D6B3E01970C0309D90066B72278AAD0E6E838391CF5ACAE94DC12EAA68`。来源：[源码](../../../Coop/CoopPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -409,6 +409,7 @@ private readonly Value _root;
 - `NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`；输入表达式：`PrivateMessageCommands.Apply(view, command.Kind, command.Target, payload)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessageCommands.Apply(view, command.Kind, command.Target, payload)`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(view, command.Target)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Conversation(view, command.Target).Offers`
 - `string.StartsWith(string)`；输入表达式：`pending.Target.StartsWith(prefix)`；返回值紧邻使用处：`BinaryExpressionSyntax: pending.Target.StartsWith(prefix) && !PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == pending.Target[prefix.Length..])`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == payload.Offer && o.Kind == "contract")`；返回值紧邻使用处：`BinaryExpressionSyntax: command.Kind == "dm-confirm"                  && PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == payload.Offer && o.Kind == "contract")`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == pending.Target[prefix.Length..])`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == pending.Target[prefix.Length..])`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`PrivateMessages.Conversation(view, command.Target).Offers.FirstOrDefault(o => o.Id == payload.Offer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Conversation(view, command.Target).Offers.FirstOrDefault(o => o.Id == payload.Offer)`
 - `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options)`；返回值紧邻使用处：`BinaryExpressionSyntax: JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options) ?? new()`
@@ -428,7 +429,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopRules.ConfirmPrivateMatch(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal) — private static string? ConfirmPrivateMatch(CoopWorld w, CoopProposal proposal)`
 
-来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.PrivateCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopPrivateMessages.cs.md#symbol-d33f4b1ffce8)
 

@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`20BEF8B87C0C61F965BA8E30DBFE68D1216BA2A75205E1DAE2CFDFD62B33C259`。来源：[源码](../../SettlementRecord.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0605AC153727EBC2BAE63C56FDD17B2D6194E3834EBE3C8DBFC0AA8E6BCCB7EE`。来源：[源码](../../SettlementRecord.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.SettlementRecord`、`NationalSpire.SettlementStanding`、`NationalSpire.SettlementRecords`、`NationalSpire.CompetitionReview`、`NationalSpire.CompetitionTable`、`NationalSpire.CompetitionRow`、`NationalSpire.CompetitionScore`、`NationalSpire.SettlementRecords`。
+类型：`NationalSpire.SettlementRecord`、`NationalSpire.SettlementStanding`、`NationalSpire.SettlementRecords`、`NationalSpire.CompetitionReview`、`NationalSpire.CompetitionTable`、`NationalSpire.CompetitionRow`、`NationalSpire.CompetitionScore`、`NationalSpire.CompetitionPlayer`、`NationalSpire.CompetitionDuel`、`NationalSpire.SettlementRecords`。
 
 字段、事件及初始值（源码原样）：
 
@@ -851,23 +851,339 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-a3a5f5bf5531"></a>
+
+## `NationalSpire.CompetitionScore.Duels — public List<CompetitionDuel> Duels`
+
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-8b208b3c3fc2"></a>
+
+## `NationalSpire.CompetitionPlayer.Id — public string Id`
+
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-de07dcf21839"></a>
+
+## `NationalSpire.CompetitionPlayer.Name — public string Name`
+
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-3b021ed5a40a"></a>
+
+## `NationalSpire.CompetitionDuel.Home — public List<CompetitionPlayer> Home`
+
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-da83ca312972"></a>
+
+## `NationalSpire.CompetitionDuel.Away — public List<CompetitionPlayer> Away`
+
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-bd83a4bc5c4a"></a>
+
+## `NationalSpire.CompetitionDuel.HomePerformance — public string HomePerformance`
+
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-f140e04f1783"></a>
+
+## `NationalSpire.CompetitionDuel.AwayPerformance — public string AwayPerformance`
+
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-537f17454ab0"></a>
+
+## `NationalSpire.CompetitionDuel.WinnerId — public string WinnerId`
+
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-23c0350c05d0"></a>
+
+## `NationalSpire.CompetitionDuel.Status — public string Status`
+
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-6835127996c4"></a>
+
+## `NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture) — public static string FixtureKey(WorldFixture f)`
+
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Round`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-b938ede0e9a5"></a>
+
+## `NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?) — public static CompetitionDuel CaptureDuel(CareerData d, WorldFixture f, bool? finished = null)`
+
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
+
+**调用：** [`Performance(bool, int, double?)`](SettlementRecord.cs.md#symbol-17097482a0e8)；[`Players(string, System.Collections.Generic.List<string>)`](SettlementRecord.cs.md#symbol-d4589a5e83b5)；`NationalSpire.CompetitionDuel.CompetitionDuel()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CompetitionDuel.Away`；`NationalSpire.CompetitionDuel.AwayPerformance`；`NationalSpire.CompetitionDuel.Home`；`NationalSpire.CompetitionDuel.HomePerformance`；`NationalSpire.CompetitionDuel.Status`；`NationalSpire.CompetitionDuel.WinnerId`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayFloor`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayParticipants`；`NationalSpire.WorldFixture.AwaySeconds`；`NationalSpire.WorldFixture.Draw`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeFloor`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeParticipants`；`NationalSpire.WorldFixture.HomeSeconds`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`；`Performance(bool, int, double?)`；`Players(string, System.Collections.Generic.List<string>)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CompetitionDuel.CompetitionDuel()`；输入表达式：`new() { Home = Players(f.HomeId, f.HomeParticipants), Away = Players(f.AwayId, f.AwayParticipants),              HomePerformance = complete && !f.Walkover ? Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) : "",              AwayPerformance = complete && !f.Walkover ? Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds) : "",              WinnerId = complete && !f.Draw ? f.WinnerId : "",              Status = !complete ? "待赛" : f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束" }`；返回值紧邻使用处：`ReturnStatementSyntax: return new() { Home = Players(f.HomeId, f.HomeParticipants), Away = Players(f.AwayId, f.AwayParticipants),              HomePerformance = complete && !f.Walkover ? Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) : "",              AwayPerformance = complete && !f.Walkover ? Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds) : "",              WinnerId = complete && !f.Draw ? f.WinnerId : "",              Status = !complete ? "待赛" : f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束" };`
+- `Performance(bool, int, double?)`；输入表达式：`Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)`；返回值紧邻使用处：`ConditionalExpressionSyntax: complete && !f.Walkover ? Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds) : ""`
+- `Performance(bool, int, double?)`；输入表达式：`Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)`；返回值紧邻使用处：`ConditionalExpressionSyntax: complete && !f.Walkover ? Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) : ""`
+- `Players(string, System.Collections.Generic.List<string>)`；输入表达式：`Players(f.AwayId, f.AwayParticipants)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Away = Players(f.AwayId, f.AwayParticipants)`
+- `Players(string, System.Collections.Generic.List<string>)`；输入表达式：`Players(f.HomeId, f.HomeParticipants)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Home = Players(f.HomeId, f.HomeParticipants)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Away` = `Players(f.AwayId, f.AwayParticipants)`
+- `AwayPerformance` = `complete && !f.Walkover ? Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds) : ""`
+- `Home` = `Players(f.HomeId, f.HomeParticipants)`
+- `HomePerformance` = `complete && !f.Walkover ? Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) : ""`
+- `Status` = `!complete ? "待赛" : f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束"`
+- `WinnerId` = `complete && !f.Draw ? f.WinnerId : ""`
+
+<a id="symbol-17097482a0e8"></a>
+
+## `Performance(bool, int, double?) — string Performance(bool cleared, int floor, double? seconds)`
+
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)
+
+**调用：** [`NationalSpire.MatchRules.Performance(bool, int, double?)`](MatchRules.cs.md#symbol-b38635e79223)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.MatchRules.Performance(bool, int, double?)`；`NationalSpire.MatchRules.Time(double?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.MatchRules.Performance(bool, int, double?)`；输入表达式：`MatchRules.Performance(cleared, floor, seconds)`；返回值紧邻使用处：`BinaryExpressionSyntax: MatchRules.Performance(cleared, floor, seconds)              + (!cleared && floor >= 0 && seconds > 0 ? " · " + MatchRules.Time(seconds) : "")`
+- `NationalSpire.MatchRules.Time(double?)`；输入表达式：`MatchRules.Time(seconds)`；返回值紧邻使用处：`BinaryExpressionSyntax: " · " + MatchRules.Time(seconds)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-d4589a5e83b5"></a>
+
+## `Players(string, System.Collections.Generic.List<string>) — List<CompetitionPlayer> Players(string leader, List<string> participants)`
+
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)
+
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；`NationalSpire.CompetitionPlayer.CompetitionPlayer()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CompetitionPlayer.Id`；`NationalSpire.CompetitionPlayer.Name`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Name = CareerEngine.DisplayName(d, id)`
+- `NationalSpire.CompetitionPlayer.CompetitionPlayer()`；输入表达式：`new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`(participants.Count > 0 ? participants : [leader]).Select(id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (participants.Count > 0 ? participants : [leader]).Select(id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`(participants.Count > 0 ? participants : [leader]).Select(id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }).ToList()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>              (participants.Count > 0 ? participants : [leader]).Select(id => new CompetitionPlayer { Id = id, Name = CareerEngine.DisplayName(d, id) }).ToList()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Id` = `id`
+- `Name` = `CareerEngine.DisplayName(d, id)`
+
+<a id="symbol-0e3bef1aba9f"></a>
+
+## `NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview) — public static Dictionary<CompetitionScore, List<CompetitionDuel>> ScoreDuels(CareerData d, CompetitionReview review)`
+
+来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.CompetitionOverview(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementScreen.cs.md#symbol-f0fb4e109457)
+
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-27622a9f36b4)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.CompetitionReview.CapturedDay`；`NationalSpire.CompetitionReview.CompletedFixtures`；`NationalSpire.CompetitionReview.Id`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Duels`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Round`；`Round(int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, first.AwayId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? CircuitWorld.TeamName(d, c, first.AwayTeam) : CareerEngine.DisplayName(d, first.AwayId)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, first.HomeId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? CircuitWorld.TeamName(d, c, first.HomeTeam) : CareerEngine.DisplayName(d, first.HomeId)`
+- `NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；输入表达式：`CircuitWorld.TeamName(d, c, first.AwayTeam)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? CircuitWorld.TeamName(d, c, first.AwayTeam) : CareerEngine.DisplayName(d, first.AwayId)`
+- `NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；输入表达式：`CircuitWorld.TeamName(d, c, first.HomeTeam)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? CircuitWorld.TeamName(d, c, first.HomeTeam) : CareerEngine.DisplayName(d, first.HomeId)`
+- `NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；输入表达式：`CaptureDuel(d, f, completed.Contains(FixtureKey(f)))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => CaptureDuel(d, f, completed.Contains(FixtureKey(f)))`
+- `NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；输入表达式：`FixtureKey(f)`；返回值紧邻使用处：`ArgumentSyntax: FixtureKey(f)`
+- `Round(int)`；输入表达式：`Round(first.Round)`；返回值紧邻使用处：`ArgumentSyntax: Round(first.Round)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`completed.Contains(FixtureKey(f))`；返回值紧邻使用处：`ArgumentSyntax: completed.Contains(FixtureKey(f))`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`completed.Contains(FixtureKey(f))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => completed.Contains(FixtureKey(f))`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`g.Any(f => completed.Contains(FixtureKey(f)))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.Any(f => completed.Contains(FixtureKey(f)))`
+- `System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；输入表达式：`g.First()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = g.First()`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Competitions.FirstOrDefault(c => c.Id == review.Id)`；返回值紧邻使用处：`IsPatternExpressionSyntax: d.Esports.Competitions.FirstOrDefault(c => c.Id == review.Id) is not { } c`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)) : fixtures.GroupBy(f => (f.Round, f.Id, ""))`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`fixtures.GroupBy(f => (f.Round, f.Id, ""))`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam)) : fixtures.GroupBy(f => (f.Round, f.Id, ""))`
+- `System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；输入表达式：`g.Where(f => completed.Contains(FixtureKey(f))).Max(f => f.Day)`；返回值紧邻使用处：`ArgumentSyntax: g.Where(f => completed.Contains(FixtureKey(f))).Max(f => f.Day)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f)))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`review.Scores.ToDictionary(s => s, s => s.Duels)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = review.Scores.ToDictionary(s => s, s => s.Duels)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`review.CompletedFixtures.ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = review.CompletedFixtures.ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: result[score] = lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`review.Scores.Where(s => s.Duels.Count == 0).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = review.Scores.Where(s => s.Duels.Count == 0).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`groups.Where(g => g.Any(f => completed.Contains(FixtureKey(f)))).ToLookup(g =>          {              var first = g.First();              return (Round(first.Round),                  c.TeamEvent ? CircuitWorld.TeamName(d, c, first.HomeTeam) : CareerEngine.DisplayName(d, first.HomeId),                  c.TeamEvent ? CircuitWorld.TeamName(d, c, first.AwayTeam) : CareerEngine.DisplayName(d, first.AwayId),                  g.Where(f => completed.Contains(FixtureKey(f))).Max(f => f.Day));          })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = groups.Where(g => g.Any(f => completed.Contains(FixtureKey(f)))).ToLookup(g =>          {              var first = g.First();              return (Round(first.Round),                  c.TeamEvent ? CircuitWorld.TeamName(d, c, first.HomeTeam) : CareerEngine.DisplayName(d, first.HomeId),                  c.TeamEvent ? CircuitWorld.TeamName(d, c, first.AwayTeam) : CareerEngine.DisplayName(d, first.AwayId),                  g.Where(f => completed.Contains(FixtureKey(f))).Max(f => f.Day));          })`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => f.Day <= review.CapturedDay)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Fixtures.Where(f => f.Day <= review.CapturedDay)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`g.Where(f => completed.Contains(FixtureKey(f)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.Where(f => completed.Contains(FixtureKey(f))).Max`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`groups.Where(g => g.Any(f => completed.Contains(FixtureKey(f))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: groups.Where(g => g.Any(f => completed.Contains(FixtureKey(f)))).ToLookup`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`review.Scores.Where(s => s.Duels.Count == 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: review.Scores.Where(s => s.Duels.Count == 0).ToList`
+
+**赋值（含属性/字段和局部值）：**
+
+- `result[score]` = `lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList()`
+
+<a id="symbol-27622a9f36b4"></a>
+
+## `Round(int) — string Round(int round)`
+
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
+
+**调用：** [`NationalSpire.CircuitWorld.RoundName(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-b35defbcdb7c)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CircuitWorld.RoundName(NationalSpire.WorldCompetition, int)`；`NationalSpire.WorldCompetition.Modern`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CircuitWorld.RoundName(NationalSpire.WorldCompetition, int)`；输入表达式：`CircuitWorld.RoundName(c, round)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.Modern ? CircuitWorld.RoundName(c, round) : $"第 {round} 轮"`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-62f41904fd5e"></a>
 
 ## `NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>) — private static CompetitionReview CaptureCompetition(CareerData d, CareerMatch m, WorldCompetition c, int season, Dictionary<string, int> worldPoints)`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)
 
-**调用：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-e2e00cb80137)；[`FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-1050c1072ed2)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`](CircuitLedger.cs.md#symbol-7d3715dcef4e)；[`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-ca39b3e6a0f0)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；[`Round(int)`](SettlementRecord.cs.md#symbol-30e7bb0c17d1)；[`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-d5c6f27b27da)；`NationalSpire.CompetitionReview.CompetitionReview()`；`NationalSpire.CompetitionScore.CompetitionScore()`；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-2bebc56beafd)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`](CircuitLedger.cs.md#symbol-7d3715dcef4e)；[`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-ca39b3e6a0f0)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-df66edefd0e4)；[`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-e1c8da2589ba)；`NationalSpire.CompetitionReview.CompetitionReview()`；`NationalSpire.CompetitionScore.CompetitionScore()`；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
-**字段、属性、事件及方法组引用：** `(int Round, string HomeTeam, string AwayTeam).AwayTeam`；`(int Round, string HomeTeam, string AwayTeam).HomeTeam`；`(int Round, string HomeTeam, string AwayTeam).Round`；`(string Id, int Points).Id`；`(string Id, int Points).Points`；`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`；`FixtureKey(NationalSpire.WorldFixture)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerResult.CompetitionId`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Settlement`；`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`；`NationalSpire.CircuitLedger.Year(int)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`；`NationalSpire.CompetitionReview.CapturedDay`；`NationalSpire.CompetitionReview.CompletedFixtures`；`NationalSpire.CompetitionReview.Id`；`NationalSpire.CompetitionReview.Name`；`NationalSpire.CompetitionReview.PreviousMatchDay`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Outcome`；`NationalSpire.CompetitionScore.PlayerRelated`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.CompetitionScore.Score`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；`NationalSpire.SettlementRecord.Competition`；`NationalSpire.SettlementRecord.Season`；`NationalSpire.WorldCompetition.ChampionId`；`NationalSpire.WorldCompetition.ChampionTeam`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Draw`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`；`Round(int)`；`Row(string, string, string, bool, int, int, string)`
+**字段、属性、事件及方法组引用：** `(int Round, string HomeTeam, string AwayTeam).AwayTeam`；`(int Round, string HomeTeam, string AwayTeam).HomeTeam`；`(int Round, string HomeTeam, string AwayTeam).Round`；`(string Id, int Points).Id`；`(string Id, int Points).Points`；`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerResult.CompetitionId`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Settlement`；`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`；`NationalSpire.CircuitLedger.Year(int)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`；`NationalSpire.CompetitionReview.CapturedDay`；`NationalSpire.CompetitionReview.CompletedFixtures`；`NationalSpire.CompetitionReview.Id`；`NationalSpire.CompetitionReview.Name`；`NationalSpire.CompetitionReview.PreviousMatchDay`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Duels`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Outcome`；`NationalSpire.CompetitionScore.PlayerRelated`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.CompetitionScore.Score`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；`NationalSpire.SettlementRecord.Competition`；`NationalSpire.SettlementRecord.Season`；`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；`NationalSpire.WorldCompetition.ChampionId`；`NationalSpire.WorldCompetition.ChampionTeam`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Draw`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`；`Round(int)`；`Row(string, string, string, bool, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`；输入表达式：`AddLeagueTable("personal", "选手积分榜", EsportsWorld.Ranked(c).ToList(), "player", id => CareerEngine.DisplayName(d, id))`；返回值紧邻使用处：`ExpressionStatementSyntax: AddLeagueTable("personal", "选手积分榜", EsportsWorld.Ranked(c).ToList(), "player", id => CareerEngine.DisplayName(d, id));`
 - `AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`；输入表达式：`AddLeagueTable("teams", "俱乐部积分榜", CircuitWorld.TeamTable(c), team, id => CircuitWorld.TeamName(d, c, id))`；返回值紧邻使用处：`ExpressionStatementSyntax: AddLeagueTable("teams", "俱乐部积分榜", CircuitWorld.TeamTable(c), team, id => CircuitWorld.TeamName(d, c, id));`
-- `FixtureKey(NationalSpire.WorldFixture)`；输入表达式：`FixtureKey(f)`；返回值紧邻使用处：`ArgumentSyntax: FixtureKey(f)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, f.AwayId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Away = CareerEngine.DisplayName(d, f.AwayId)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, f.HomeId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Home = CareerEngine.DisplayName(d, f.HomeId)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, f.WinnerId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级")`
@@ -881,11 +1197,14 @@
 - `NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；输入表达式：`CircuitWorld.TeamName(d, c, tie.Key.HomeTeam)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam)`
 - `NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`；输入表达式：`CircuitWorld.TeamTable(c)`；返回值紧邻使用处：`ArgumentSyntax: CircuitWorld.TeamTable(c)`
 - `NationalSpire.CompetitionReview.CompetitionReview()`；输入表达式：`new CompetitionReview { Id = c.Id, Name = c.Name, CapturedDay = d.Day,              PreviousMatchDay = previous != null ? previousResult!.Day : null,              CompletedFixtures = done.Select(FixtureKey).Distinct().ToList() }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CompetitionReview { Id = c.Id, Name = c.Name, CapturedDay = d.Day,              PreviousMatchDay = previous != null ? previousResult!.Day : null,              CompletedFixtures = done.Select(FixtureKey).Distinct().ToList() }`
-- `NationalSpire.CompetitionScore.CompetitionScore()`；输入表达式：`new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") }`
-- `NationalSpire.CompetitionScore.CompetitionScore()`；输入表达式：`new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") }`
+- `NationalSpire.CompetitionScore.CompetitionScore()`；输入表达式：`new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") }`
+- `NationalSpire.CompetitionScore.CompetitionScore()`；输入表达式：`new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") }`
 - `NationalSpire.CompetitionTable.CompetitionTable()`；输入表达式：`new CompetitionTable { Id = "nations", Title = "国家国运榜", Note = "当前年度国运 · 同分并列" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CompetitionTable { Id = "nations", Title = "国家国运榜", Note = "当前年度国运 · 同分并列" }`
 - `NationalSpire.CompetitionTable.CompetitionTable()`；输入表达式：`new CompetitionTable { Id = "world", Title = "参赛选手 · 世界积分", Note = "本赛事参赛选手的世界排名 · 同分并列" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CompetitionTable { Id = "world", Title = "参赛选手 · 世界积分", Note = "本赛事参赛选手的世界排名 · 同分并列" }`
 - `NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Ranked(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Ranked(c).ToList`
+- `NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；输入表达式：`CaptureDuel(d, f)`；返回值紧邻使用处：`ExpressionElementSyntax: CaptureDuel(d, f)`
+- `NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；输入表达式：`CaptureDuel(d, f)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => CaptureDuel(d, f)`
+- `NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；输入表达式：`FixtureKey(f)`；返回值紧邻使用处：`ArgumentSyntax: FixtureKey(f)`
 - `Round(int)`；输入表达式：`Round(f.Round)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Round = Round(f.Round)`
 - `Round(int)`；输入表达式：`Round(tie.Key.Round)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Round = Round(tie.Key.Round)`
 - `Row(string, string, string, bool, int, int, string)`；输入表达式：`Row(table.Id, id, CareerEngine.DisplayName(d, id), id == "player",                      points > 0 ? 1 + worldPoints.Values.Count(p => p > points) : 0, points, "")`；返回值紧邻使用处：`ArgumentSyntax: Row(table.Id, id, CareerEngine.DisplayName(d, id), id == "player",                      points > 0 ? 1 + worldPoints.Values.Count(p => p > points) : 0, points, "")`
@@ -908,16 +1227,18 @@
 - `System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；输入表达式：`g.Max(f => f.Day)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.Max(f => f.Day)`
 - `System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；输入表达式：`tie.Where(f => f.Finished).Max(f => f.Day)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Day = tie.Where(f => f.Finished).Max(f => f.Day)`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Entrants.Append("player").Distinct().OrderByDescending(id => worldPoints.GetValueOrDefault(id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Entrants.Append("player").Distinct().OrderByDescending(id => worldPoints.GetValueOrDefault(id)).ThenBy`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f)))).OrderByDescending(g => g.Max(f => f.Day))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var tie in c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f)))).OrderByDescending(g => g.Max(f => f.Day)))              {                  int home = tie.Count(f => f.Finished && !f.Draw && f.WinnerId == f.HomeId);                  int away = tie.Count(f => f.Finished && !f.Draw && f.WinnerId == f.AwayId);                  bool complete = tie.All(f => f.Finished);                  string winner = home == away ? "" : CircuitWorld.TeamName(d, c, home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam);                  review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") });              }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f)))).OrderByDescending(g => g.Max(f => f.Day))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var tie in c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f)))).OrderByDescending(g => g.Max(f => f.Day)))              {                  int home = tie.Count(f => f.Finished && !f.Draw && f.WinnerId == f.HomeId);                  int away = tie.Count(f => f.Finished && !f.Draw && f.WinnerId == f.AwayId);                  bool complete = tie.All(f => f.Finished);                  string winner = home == away ? "" : CircuitWorld.TeamName(d, c, home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam);                  review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") });              }`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points).ThenBy`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`done.Select(FixtureKey)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: done.Select(FixtureKey).Distinct`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`tie.Select(f => CaptureDuel(d, f))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: tie.Select(f => CaptureDuel(d, f)).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`.CompletedFixtures.ToHashSet()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: previous?.CompletedFixtures.ToHashSet()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`c.Fixtures.Where(f => f.Finished).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Fixtures.Where(f => f.Finished).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`done.Select(FixtureKey).Distinct().ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: CompletedFixtures = done.Select(FixtureKey).Distinct().ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points).ThenBy(n => n.Id, StringComparer.Ordinal).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points).ThenBy(n => n.Id, StringComparer.Ordinal).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`EsportsWorld.Ranked(c).ToList()`；返回值紧邻使用处：`ArgumentSyntax: EsportsWorld.Ranked(c).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`tie.Select(f => CaptureDuel(d, f)).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Duels = tie.Select(f => CaptureDuel(d, f)).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))                  .Where(g => g.Any(f => f.Finished && !known.Contains(FixtureKey(f)))).OrderByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => f.Finished)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.Finished).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`done.Where(f => !known.Contains(FixtureKey(f)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending`
@@ -927,15 +1248,15 @@
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`worldPoints.GetValueOrDefault(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: worldPoints.GetValueOrDefault(id) > 0`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`worldPoints.GetValueOrDefault(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = worldPoints.GetValueOrDefault(id)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`worldPoints.GetValueOrDefault(id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => worldPoints.GetValueOrDefault(id)`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") })`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") });`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") })`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") })`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") })`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Scores.Add(new() { Day = tie.Where(f => f.Finished).Max(f => f.Day), Round = Round(tie.Key.Round),                      Home = CircuitWorld.TeamName(d, c, tie.Key.HomeTeam), Away = CircuitWorld.TeamName(d, c, tie.Key.AwayTeam),                      Score = $"{home} : {away}", PlayerRelated = tie.Key.HomeTeam == team || tie.Key.AwayTeam == team,                      Duels = tie.Select(f => CaptureDuel(d, f)).ToList(),                      Outcome = !complete ? "进行中" : winner.Length == 0 ? "平局" : c.Kind == "league" ? winner + " 获胜"                          : winner + (c.ChampionTeam == (home > away ? tie.Key.HomeTeam : tie.Key.AwayTeam) ? " 夺冠" : " 晋级") });`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Tables.Add(table)`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Tables.Add(table);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`table.Rows.Add(Row(table.Id, id, CareerEngine.DisplayName(d, id), id == "player",                      points > 0 ? 1 + worldPoints.Values.Count(p => p > points) : 0, points, ""))`；返回值紧邻使用处：`ExpressionStatementSyntax: table.Rows.Add(Row(table.Id, id, CareerEngine.DisplayName(d, id), id == "player",                      points > 0 ? 1 + worldPoints.Values.Count(p => p > points) : 0, points, ""));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`table.Rows.Add(Row(table.Id, n.Id, n.Id, n.Id == nation,                  n.Points > 0 ? 1 + countries.Count(p => p.Points > n.Points) : 0, n.Points, ""))`；返回值紧邻使用处：`ExpressionStatementSyntax: table.Rows.Add(Row(table.Id, n.Id, n.Id, n.Id == nation,                  n.Points > 0 ? 1 + countries.Count(p => p.Points > n.Points) : 0, n.Points, ""));`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`p.Value.Contains("player")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => p.Value.Contains("player")`
 - `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`c.Entrants.Append("player").Distinct().OrderByDescending(id => worldPoints.GetValueOrDefault(id)).ThenBy(id => id, StringComparer.Ordinal)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string id in c.Entrants.Append("player").Distinct().OrderByDescending(id => worldPoints.GetValueOrDefault(id)).ThenBy(id => id, StringComparer.Ordinal))              {                  int points = worldPoints.GetValueOrDefault(id);                  table.Rows.Add(Row(table.Id, id, CareerEngine.DisplayName(d, id), id == "player",                      points > 0 ? 1 + worldPoints.Values.Count(p => p > points) : 0, points, ""));              }`
 - `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points).ThenBy(n => n.Id, StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Countries.Select(n => (Id: n, Points: CircuitLedger.Fortune(d, n, CircuitLedger.Year(season))))                  .OrderByDescending(n => n.Points).ThenBy(n => n.Id, StringComparer.Ordinal).ToList`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending(f => f.Round)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var f in done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending(f => f.Round))                  review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player",                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") });`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending(f => f.Round)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var f in done.Where(f => !known.Contains(FixtureKey(f))).OrderByDescending(f => f.Day).ThenByDescending(f => f.Round))                  review.Scores.Add(new() { Day = f.Day, Round = Round(f.Round), Home = CareerEngine.DisplayName(d, f.HomeId), Away = CareerEngine.DisplayName(d, f.AwayId),                      Score = f.Draw ? "平局" : "VS", PlayerRelated = f.HomeId == "player" || f.AwayId == "player", Duels = [CaptureDuel(d, f)],                      Outcome = f.Draw ? "双方战平" : CareerEngine.DisplayName(d, f.WinnerId) + (f.Walkover ? " 获胜（对手退赛）"                          : c.ChampionId == f.WinnerId ? " 夺冠" : c.Kind == "league" ? " 获胜" : " 晋级") });`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -945,6 +1266,8 @@
 - `CompletedFixtures` = `done.Select(FixtureKey).Distinct().ToList()`
 - `Day` = `f.Day`
 - `Day` = `tie.Where(f => f.Finished).Max(f => f.Day)`
+- `Duels` = `[CaptureDuel(d, f)]`
+- `Duels` = `tie.Select(f => CaptureDuel(d, f)).ToList()`
 - `Home` = `CareerEngine.DisplayName(d, f.HomeId)`
 - `Home` = `CircuitWorld.TeamName(d, c, tie.Key.HomeTeam)`
 - `Id` = `"nations"`
@@ -965,29 +1288,11 @@
 - `Title` = `"参赛选手 · 世界积分"`
 - `Title` = `"国家国运榜"`
 
-<a id="symbol-1050c1072ed2"></a>
-
-## `FixtureKey(NationalSpire.WorldFixture) — string FixtureKey(WorldFixture f)`
-
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
-
-**调用：** 无已绑定显式调用。
-
-**字段、属性、事件及方法组引用：** `NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Round`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-
-**赋值（含属性/字段和局部值）：**
-
-
-<a id="symbol-30e7bb0c17d1"></a>
+<a id="symbol-df66edefd0e4"></a>
 
 ## `Round(int) — string Round(int round)`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
@@ -1002,13 +1307,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d5c6f27b27da"></a>
+<a id="symbol-e1c8da2589ba"></a>
 
 ## `Row(string, string, string, bool, int, int, string) — CompetitionRow Row(string table, string id, string name, bool own, int rank, int points, string record)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 249 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-e2e00cb80137)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
+**调用者：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-2bebc56beafd)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
 **调用：** `NationalSpire.CompetitionRow.CompetitionRow()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -1031,15 +1336,15 @@
 - `Rank` = `rank`
 - `Record` = `record`
 
-<a id="symbol-e2e00cb80137"></a>
+<a id="symbol-2bebc56beafd"></a>
 
 ## `AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>) — void AddLeagueTable(string id, string title, List<CareerStanding> standings, string own, Func<string, string> name)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
-**调用：** [`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-d5c6f27b27da)；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-e1c8da2589ba)；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`Row(string, string, string, bool, int, int, string)`
 

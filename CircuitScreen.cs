@@ -131,11 +131,7 @@ public partial class CareerScreen
                 box.AddChild(Text($"第 {SeasonCalendar.Day(data, first.Day)} 天 · {heading}", 20, _gold));
                 foreach (var f in tie)
                 {
-                    var line = new HBoxContainer(); box.AddChild(line);
-                    line.AddChild(PersonLink(data, f.HomeId, (f.WinnerId == f.HomeId ? "◆ " : "") + CareerEngine.DisplayName(data, f.HomeId), 36));
-                    line.AddChild(Text("  vs  ", 17, _muted));
-                    line.AddChild(PersonLink(data, f.AwayId, (f.WinnerId == f.AwayId ? "◆ " : "") + CareerEngine.DisplayName(data, f.AwayId), 36));
-                    if (f.Finished) box.AddChild(Text(f.Walkover ? "弃权判定" : MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds) + " / " + MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds), 15, _muted));
+                    box.AddChild(FixtureDetails(data, SettlementRecords.CaptureDuel(data, f)));
                 }
             }
         }

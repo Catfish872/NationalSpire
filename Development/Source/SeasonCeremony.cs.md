@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`68DD5E49B82801BA984638C7A6BCF6BE316CFDFCE0849E423066B30120EB3919`。来源：[源码](../../SeasonCeremony.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`245AD68B8BE063F8431633AB63F19BE646255FED764D33EC5D3F7D29F060C172`。来源：[源码](../../SeasonCeremony.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -483,11 +483,33 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-e0254247811d"></a>
+
+## `NationalSpire.SeasonCeremony.ShowInvitation(NationalSpire.CareerData) — public static bool ShowInvitation(CareerData data)`
+
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)
+
+**调用：** [`NationalSpire.OwnedClubs.FirstLeagueDay(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-4dd05f6eadef)；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ceremonies`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.OwnedClubs.FirstLeagueDay(NationalSpire.CareerData)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.OwnedClubs.FirstLeagueDay(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.FirstLeagueDay(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: data.Day < OwnedClubs.FirstLeagueDay(data)`
+- `System.Collections.Generic.IEnumerable<int>.Max()`；输入表达式：`data.Ceremonies.Select(c => c.Season).DefaultIfEmpty(0).Max()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.Ceremonies.Select(c => c.Season).DefaultIfEmpty(0).Max()`
+- `System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；输入表达式：`data.Ceremonies.Select(c => c.Season).DefaultIfEmpty(0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Ceremonies.Select(c => c.Season).DefaultIfEmpty(0).Max`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`data.Ceremonies.Select(c => c.Season)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Ceremonies.Select(c => c.Season).DefaultIfEmpty`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-61347e0eabf7"></a>
 
 ## `NationalSpire.SeasonCeremony.Weight(string) — private static int Weight(string kind)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)
 
@@ -505,7 +527,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.ProfessionalEvent(NationalSpire.WorldCompetition) — private static bool ProfessionalEvent(WorldCompetition c)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)；[`NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int)`](SeasonCeremony.cs.md#symbol-5698bf32bb10)
 
@@ -523,7 +545,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EnsureDebuts(NationalSpire.CareerData) — public static void EnsureDebuts(CareerData data)`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)；[`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)
 
@@ -555,7 +577,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Participants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool) — public static List<string> Participants(CareerData d, WorldCompetition c, WorldFixture f, bool home)`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](CareerMarket.cs.md#symbol-089c75a03be9)；[`NationalSpire.SeasonCeremony.EnsureDebuts(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-13fa9735a703)；[`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)；[`NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](SeasonCeremony.cs.md#symbol-c2189cc9f951)；[`NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int)`](SeasonCeremony.cs.md#symbol-5698bf32bb10)；[`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`](WorldEvents.cs.md#symbol-04c812704f65)
 
@@ -582,7 +604,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RecordParticipants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture) — public static void RecordParticipants(CareerData d, WorldCompetition c, WorldFixture f)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)
 
@@ -612,7 +634,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EqualRank(NationalSpire.CeremonyRank, NationalSpire.CeremonyRank) — private static bool EqualRank(CeremonyRank a, CeremonyRank b)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`](SeasonCeremony.cs.md#symbol-fe41ed2f86ab)；[`NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`](SeasonCeremony.cs.md#symbol-ed439c2f3984)；[`NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>)`](SeasonCeremony.cs.md#symbol-afd4d82cf23a)
 
@@ -630,7 +652,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Rank(NationalSpire.CareerData, System.Func<NationalSpire.WorldCompetition, bool>) — private static List<CeremonyRank> Rank(CareerData data, Func<WorldCompetition, bool> includes)`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -678,7 +700,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.AwardDescription(string, string) — public static string AwardDescription(string title, string reason)`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string)`](SeasonCeremony.cs.md#symbol-fe41ed2f86ab)；[`NationalSpire.SeasonCeremony.CreateWeeklyCover(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](SeasonCeremony.cs.md#symbol-336cc50dfb1f)；[`NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string)`](SeasonCeremony.cs.md#symbol-38d4564e570d)；[`NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-0a574d9cff35)
 
@@ -697,7 +719,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.PersonAward(string, NationalSpire.CeremonyRank?, string) — private static CeremonyAward PersonAward(string title, CeremonyRank? row, string reason)`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string)`](SeasonCeremony.cs.md#symbol-ed439c2f3984)；[`NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-0a574d9cff35)
 
@@ -723,7 +745,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.PeopleAwards(NationalSpire.CeremonyRecord, string, System.Collections.Generic.IEnumerable<NationalSpire.CeremonyRank>, string) — private static void PeopleAwards(CeremonyRecord record,string title,IEnumerable<CeremonyRank> candidates,string reason)`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -746,7 +768,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.ClubAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord, int, int, string) — private static void ClubAwards(CareerData data,CeremonyRecord record,int first,int last,string title)`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -803,7 +825,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Rookies(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>, int, int) — private static IEnumerable<CeremonyRank> Rookies(CareerData data, List<CeremonyRank> ranks, int first, int last)`
 
-来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int)`](SeasonCeremony.cs.md#symbol-aa8a4ae9c2d5)
 
@@ -835,7 +857,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Capture(NationalSpire.CareerData, int) — public static CeremonyRecord Capture(CareerData data, int season)`
 
-来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -883,7 +905,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RewardAmount(NationalSpire.CeremonyAward) — public static int RewardAmount(CeremonyAward a)`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.Coop.CoopRules.PayCeremonies(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-7bf305e883ea)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -902,7 +924,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.NewReward(NationalSpire.CeremonyAward, int) — public static int NewReward(CeremonyAward a, int fans)`
 
-来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -925,7 +947,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.RewardKey(NationalSpire.CeremonyRecord, NationalSpire.CeremonyAward) — public static string RewardKey(CeremonyRecord r,CeremonyAward a)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.PayCeremonies(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-7bf305e883ea)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
@@ -943,7 +965,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData) — public static void Close(CareerData data)`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)
 
@@ -995,7 +1017,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData) — public static bool EnsureWeeklyCovers(CareerData data)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)；[`NationalSpire.WeeklyJournal.Recover(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-f465ec0d1539)
 
@@ -1028,7 +1050,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.CreateWeeklyCover(NationalSpire.CareerData, NationalSpire.CeremonyRecord) — public static WeeklySlide CreateWeeklyCover(CareerData data, CeremonyRecord record)`
 
-来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SeasonCeremony.EnsureWeeklyCovers(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-d0fc3753fbb4)
 
@@ -1071,7 +1093,7 @@ public const string ClubRules = "俱乐部按整轮团队对抗计分：获胜3�
 
 ## `NationalSpire.SeasonCeremony.Preview(NationalSpire.CareerData) — public static CeremonyRecord Preview(CareerData data)`
 
-来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

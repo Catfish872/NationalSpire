@@ -227,7 +227,8 @@ public static partial class CoopRules
         if (result == null)
         {
             Capture(w, member, view);
-            if (command.Kind is "dm-regenerate")
+            if (command.Kind is "dm-regenerate" || command.Kind == "dm-confirm"
+                && PrivateMessages.Conversation(view, command.Target).Offers.Any(o => o.Id == payload.Offer && o.Kind == "contract"))
             { w.World.Matches = view.Matches; w.World.Esports.Competitions = view.Esports.Competitions; }
             if (command.Kind is "dm-clear" or "dm-delete" or "dm-regenerate" && w.Proposal is { Kind: "dm-match" } pending)
             {

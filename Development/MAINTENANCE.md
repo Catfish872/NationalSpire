@@ -8,6 +8,8 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 新的业务模块放入职责明确的章节，规模需要时拆为独立专题并从目录链接。已存在功能直接修改原章节，删除过时叙述。版本历史与当前规则分开，避免读者要拼接多次追加记录才能得到现状。
 
+发布与本地安装前同步核对 NationalSpire.json.version 和 Diagnostics.ModVersion，并读取最终 DLL 元数据中的 ModVersion 常量确认构建结果。安装后核对目标目录的清单版本及 DLL、清单 SHA-256。Diagnostics.ModVersion 同时用于 CareerScreen 品牌版本、Entry 加载记录、诊断导出和 CoopRuntime.Compatibility 发布版本标识；修改常量后重新编译整个生产项目，使这些调用者使用同一版本。上述检查在构建与安装阶段执行。
+
 ## 开始修改前
 
 1. 阅读目录、负责章节及函数索引，核对源码摘要与当前文件。

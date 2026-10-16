@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6D8BDF0BEB03F447F56059EE79FF6AB2CCC53543CCFE5DB7FCD4085371F6F583`。来源：[源码](../../PrivateAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2AEFD5E8855C4FF57046FD2C172FB5CDEC498A6D56746C0BAF935F4D93CC4DBD`。来源：[源码](../../PrivateAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -489,15 +489,16 @@
 
 **调用者：** [`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)
 
-**调用：** [`NationalSpire.OwnedClubs.Quote(NationalSpire.CareerPerson, string)`](OwnedClubs.cs.md#symbol-6507b91ba56b)；[`NationalSpire.OwnedClubs.TransferFee(NationalSpire.CareerPerson)`](OwnedClubs.cs.md#symbol-35a81fabab41)；[`NationalSpire.OwnedClubs.TransferReserved(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-fda6cea8331b)；[`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)
+**调用：** [`NationalSpire.OwnedClubs.Quote(NationalSpire.CareerPerson, string)`](OwnedClubs.cs.md#symbol-6507b91ba56b)；[`NationalSpire.OwnedClubs.TransferFee(NationalSpire.CareerPerson)`](OwnedClubs.cs.md#symbol-35a81fabab41)；[`NationalSpire.OwnedClubs.TransferReserved(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-fda6cea8331b)；[`NationalSpire.OwnedClubs.TransferTime(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-c16d35ec992f)；[`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.OwnedClubs.Quote(NationalSpire.CareerPerson, string)`；`NationalSpire.OwnedClubs.TransferFee(NationalSpire.CareerPerson)`；`NationalSpire.OwnedClubs.TransferReserved(NationalSpire.CareerData, string)`；`NationalSpire.OwnedPlayerContract.Signing`；`NationalSpire.OwnedPlayerContract.Wage`；`NationalSpire.OwnedPlayerContract.WinBonus`；`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.OwnedClubs.Quote(NationalSpire.CareerPerson, string)`；`NationalSpire.OwnedClubs.TransferFee(NationalSpire.CareerPerson)`；`NationalSpire.OwnedClubs.TransferReserved(NationalSpire.CareerData, string)`；`NationalSpire.OwnedClubs.TransferTime(NationalSpire.CareerData)`；`NationalSpire.OwnedPlayerContract.Signing`；`NationalSpire.OwnedPlayerContract.Wage`；`NationalSpire.OwnedPlayerContract.WinBonus`；`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.OwnedClubs.Quote(NationalSpire.CareerPerson, string)`；输入表达式：`OwnedClubs.Quote(p, "steady")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = OwnedClubs.Quote(p, "steady")`
 - `NationalSpire.OwnedClubs.TransferFee(NationalSpire.CareerPerson)`；输入表达式：`OwnedClubs.TransferFee(p)`；返回值紧邻使用处：`BinaryExpressionSyntax: OwnedClubs.TransferFee(p) * 10`
 - `NationalSpire.OwnedClubs.TransferReserved(NationalSpire.CareerData, string)`；输入表达式：`OwnedClubs.TransferReserved(data, p.Id)`；返回值紧邻使用处：`IfStatementSyntax: if (OwnedClubs.TransferReserved(data, p.Id)) return $"{p.PublicName}已经签订加盟合同，具体条款和加盟时间见当前资料。";`
+- `NationalSpire.OwnedClubs.TransferTime(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.TransferTime(data)`；返回值紧邻使用处：`InterpolationSyntax: {OwnedClubs.TransferTime(data)}`
 - `NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Favour(data, p.Id)`；返回值紧邻使用处：`InterpolationSyntax: {PrivateMessages.Favour(data, p.Id)}`
 
 **赋值（含属性/字段和局部值）：**

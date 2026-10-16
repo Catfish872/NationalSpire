@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BBA6520731CEB550B726C442EE7790C6D22AB9EA1935A56021B283270B3741DC`。来源：[源码](../../SettlementScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`19C57DF2D2CAC9C2E23FF3559F89968C846FA31BD1D0F6DF0E6AEFE3DEA7C56C`。来源：[源码](../../SettlementScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -288,12 +288,13 @@ private string _settlementMatch = "";
 
 **调用者：** [`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)
 
-**调用：** [`Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`](SettlementScreen.cs.md#symbol-c5db1c2e1262)；[`Line(Godot.Control)`](SettlementScreen.cs.md#symbol-a45b743037b6)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GridContainer.GridContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`AddScore(int)`](SettlementScreen.cs.md#symbol-cfafceb6927a)；[`Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`](SettlementScreen.cs.md#symbol-c5db1c2e1262)；[`Line(Godot.Control)`](SettlementScreen.cs.md#symbol-a45b743037b6)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GridContainer.GridContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`；`Line(Godot.Control)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CompetitionReview.Name`；`NationalSpire.CompetitionReview.PreviousMatchDay`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionRow.Name`；`NationalSpire.CompetitionRow.PlayerRelated`；`NationalSpire.CompetitionRow.Points`；`NationalSpire.CompetitionRow.PreviousPoints`；`NationalSpire.CompetitionRow.PreviousRank`；`NationalSpire.CompetitionRow.Rank`；`NationalSpire.CompetitionRow.Record`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Outcome`；`NationalSpire.CompetitionScore.PlayerRelated`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.CompetitionScore.Score`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `AddScore(int)`；`Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`；`Line(Godot.Control)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CompetitionReview.Name`；`NationalSpire.CompetitionReview.PreviousMatchDay`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionRow.Name`；`NationalSpire.CompetitionRow.PlayerRelated`；`NationalSpire.CompetitionRow.Points`；`NationalSpire.CompetitionRow.PreviousPoints`；`NationalSpire.CompetitionRow.PreviousRank`；`NationalSpire.CompetitionRow.Rank`；`NationalSpire.CompetitionRow.Record`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `AddScore(int)`；输入表达式：`AddScore(i)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddScore(i);`
 - `Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`；输入表达式：`Cell(header, "累计战绩", 140, _muted, 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: Cell(header, "累计战绩", 140, _muted, 14);`
 - `Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`；输入表达式：`Cell(header, "名次", 50, _muted, 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: Cell(header, "名次", 50, _muted, 14);`
 - `Cell(Godot.HBoxContainer, string, int, Godot.Color, int, bool)`；输入表达式：`Cell(header, "名次变化", 80, _muted, 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: Cell(header, "名次变化", 80, _muted, 14);`
@@ -317,9 +318,6 @@ private string _settlementMatch = "";
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(scores)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(scores);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(headerMargin)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(headerMargin);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(strip)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(strip);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(table.Note, 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(table.Note, 14, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(table.Title, 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(table.Title, 23, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(toggle)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(toggle);`
@@ -327,7 +325,6 @@ private string _settlementMatch = "";
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`content.AddChild(Text("本赛事暂无新增完赛记录。", 16, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddChild(Text("本赛事暂无新增完赛记录。", 16, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`content.AddChild(Text(review.PreviousMatchDay != null ? "这期间的对阵" : "已结束的对阵", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddChild(Text(review.PreviousMatchDay != null ? "这期间的对阵" : "已结束的对阵", 23, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`content.AddChild(toggle)`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddChild(toggle);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`grid.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: grid.AddChild(card);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`intro.AddChild(Text("同期赛况   /   " + review.Name, 25, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: intro.AddChild(Text("同期赛况   /   " + review.Name, 25, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`intro.AddChild(Text(review.PreviousMatchDay is { } day              ? $"从你上次参加本赛事（第 {SeasonCalendar.Day(data, day)} 天）至本次结算 · 名次与积分变化均以该场结算为起点"              : "截至本次结算的赛事全貌 · 尚无上次排名记录，暂不显示升降", 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: intro.AddChild(Text(review.PreviousMatchDay is { } day              ? $"从你上次参加本赛事（第 {SeasonCalendar.Day(data, day)} 天）至本次结算 · 名次与积分变化均以该场结算为起点"              : "截至本次结算的赛事全貌 · 尚无上次排名记录，暂不显示升降", 15, _muted));`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
@@ -341,26 +338,22 @@ private string _settlementMatch = "";
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(scores)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(scores)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("本赛事暂无新增完赛记录。", 16, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("本赛事暂无新增完赛记录。", 16, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("同期赛况   /   " + review.Name, 25, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("同期赛况   /   " + review.Name, 25, _gold)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(review.PreviousMatchDay != null ? "这期间的对阵" : "已结束的对阵", 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(review.PreviousMatchDay != null ? "这期间的对阵" : "已结束的对阵", 23, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(review.PreviousMatchDay is { } day              ? $"从你上次参加本赛事（第 {SeasonCalendar.Day(data, day)} 天）至本次结算 · 名次与积分变化均以该场结算为起点"              : "截至本次结算的赛事全貌 · 尚无上次排名记录，暂不显示升降", 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(review.PreviousMatchDay is { } day              ? $"从你上次参加本赛事（第 {SeasonCalendar.Day(data, day)} 天）至本次结算 · 名次与积分变化均以该场结算为起点"              : "截至本次结算的赛事全貌 · 尚无上次排名记录，暂不显示升降", 15, _muted)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(score.Outcome, 16, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(score.Outcome, 16, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(table.Note, 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(table.Note, 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(table.Title, 23, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(table.Title, 23, _gold)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box(r.PlayerRelated ? "254247" : i % 2 == 0 ? "192d3b" : "152532", r.PlayerRelated ? "5c9a9b" : "263e4c", 5, 10)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box(r.PlayerRelated ? "254247" : i % 2 == 0 ? "192d3b" : "152532", r.PlayerRelated ? "5c9a9b" : "263e4c", 5, 10)`
 - `NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Day(data, day)`；返回值紧邻使用处：`InterpolationSyntax: {SeasonCalendar.Day(data, day)}`
-- `NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Day(data, score.Day)`；返回值紧邻使用处：`InterpolationSyntax: {SeasonCalendar.Day(data, score.Day)}`
+- `NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`；输入表达式：`SettlementRecords.ScoreDuels(data, review)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SettlementRecords.ScoreDuels(data, review)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`table.Rows.Any(r => r.Record.Length > 0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = table.Rows.Any(r => r.Record.Length > 0)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`review.Tables.Where(t => t.Rows.Count > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var table in review.Tables.Where(t => t.Rows.Count > 0))          {              var card = Card(); _content.AddChild(card); var box = Inner(card);              box.AddChild(Text(table.Title, 23, _gold)); box.AddChild(Text(table.Note, 14, _muted));              bool hasRecord = table.Rows.Any(r => r.Record.Length > 0);              HBoxContainer Line(Control parent)              {                  var line = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };                  line.AddThemeConstantOverride("separation", 16); parent.AddChild(line); return line;              }              void Cell(HBoxContainer row, string value, int width, Color color, int size = 17, bool expand = false)              {                  var label = Text(value, size, color); label.CustomMinimumSize = new Vector2(width, 0);                  label.SizeFlagsHorizontal = expand ? SizeFlags.ExpandFill : SizeFlags.Fill; row.AddChild(label);              }              var headerMargin = new MarginContainer(); headerMargin.AddThemeConstantOverride("margin_left", 10); headerMargin.AddThemeConstantOverride("margin_right", 10); box.AddChild(headerMargin);              var header = Line(headerMargin);              Cell(header, "名次", 50, _muted, 14); Cell(header, table.Id == "teams" ? "俱乐部" : table.Id == "nations" ? "国家 / 地区" : "选手", 180, _muted, 14, true);              if (hasRecord) Cell(header, "累计战绩", 140, _muted, 14);              Cell(header, table.Id == "nations" ? "国运 / 增量" : "积分 / 增量", 160, _muted, 14); Cell(header, "名次变化", 80, _muted, 14);              var extra = new List<Control>();              for (int i = 0; i < table.Rows.Count; i++)              {                  var r = table.Rows[i];                  var strip = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };                  strip.AddThemeStyleboxOverride("panel", CareerVisuals.Box(r.PlayerRelated ? "254247" : i % 2 == 0 ? "192d3b" : "152532", r.PlayerRelated ? "5c9a9b" : "263e4c", 5, 10));                  box.AddChild(strip); var row = Line(strip);                  Cell(row, r.Rank > 0 ? $"{r.Rank:00}" : "—", 50, r.Rank is > 0 and <= 3 ? _gold : _muted, 21);                  string marker = !r.PlayerRelated ? "" : table.Id == "teams" ? " · 你的俱乐部" : table.Id == "nations" ? " · 你的赛区" : " · 你";                  Cell(row, r.Name + marker, 180, r.PlayerRelated ? _gold : _ink, 18, true);                  if (hasRecord) Cell(row, r.Record, 140, _muted, 15);                  string delta = r.PreviousPoints is { } oldPoints ? $"   ({r.Points - oldPoints:+0;-0;0})" : "";                  Cell(row, r.Points + delta, 160, CareerVisuals.Teal, 18);                  string change = "—"; Color changeColor = _muted;                  if (r.PreviousRank is { } oldRank)                  {                      int movement = oldRank - r.Rank;                      change = oldRank == 0 && r.Rank > 0 ? "新上榜" : r.Rank == 0 && oldRank > 0 ? "暂未上榜" : movement == 0 ? "持平" : movement > 0 ? $"↑ {movement}" : $"↓ {-movement}";                      changeColor = change == "新上榜" || movement > 0 && r.Rank > 0 ? CareerVisuals.Teal : movement < 0 ? new Color("d5a59a") : _muted;                  }                  Cell(row, change, 80, changeColor, 16);                  if (i >= 8 && !r.PlayerRelated) { strip.Visible = false; extra.Add(strip); }              }              if (extra.Count > 0)              {                  bool expanded = false;                  string unit = table.Id == "teams" ? "支队伍" : table.Id == "nations" ? "个国家 / 地区" : "位";                  var toggle = Button($"展开完整榜单 · 共 {table.Rows.Count} {unit}", () => { }, 240); box.AddChild(toggle);                  toggle.Pressed += () => { expanded = !expanded; foreach (var row in extra) row.Visible = expanded; toggle.Text = expanded ? "收起榜单" : $"展开完整榜单 · 共 {table.Rows.Count} {unit}"; };              }          }`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`extra.Add(strip)`；返回值紧邻使用处：`ExpressionStatementSyntax: extra.Add(strip);`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`hidden.Add(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: hidden.Add(card);`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Control>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Control>()`
+- `System.Math.Min(int, int)`；输入表达式：`Math.Min(6, review.Scores.Count)`；返回值紧邻使用处：`BinaryExpressionSyntax: i < Math.Min(6, review.Scores.Count)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `card.Visible` = `expanded`
-- `card.Visible` = `false`
 - `change` = `oldRank == 0 && r.Rank > 0 ? "新上榜" : r.Rank == 0 && oldRank > 0 ? "暂未上榜" : movement == 0 ? "持平" : movement > 0 ? $"↑ {movement}" : $"↓ {-movement}"`
 - `changeColor` = `change == "新上榜" || movement > 0 && r.Rank > 0 ? CareerVisuals.Teal : movement < 0 ? new Color("d5a59a") : _muted`
 - `Columns` = `2`
@@ -369,7 +362,7 @@ private string _settlementMatch = "";
 - `row.Visible` = `expanded`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `strip.Visible` = `false`
-- `toggle.Pressed` += `() => { expanded = !expanded; foreach (var card in hidden) card.Visible = expanded; toggle.Text = expanded ? "收起对阵" : $"查看全部对阵 · 共 {review.Scores.Count} 场"; }`
+- `toggle.Pressed` += `() =>              {                  expanded = !expanded;                  if (expanded && hidden.Count == 0) for (int i = 6; i < review.Scores.Count; i++) AddScore(i);                  foreach (var card in hidden) card.Visible = expanded;                  toggle.Text = expanded ? "收起对阵" : $"查看全部对阵 · 共 {review.Scores.Count} 场";              }`
 - `toggle.Pressed` += `() => { expanded = !expanded; foreach (var row in extra) row.Visible = expanded; toggle.Text = expanded ? "收起榜单" : $"展开完整榜单 · 共 {table.Rows.Count} {unit}"; }`
 - `toggle.Text` = `expanded ? "收起榜单" : $"展开完整榜单 · 共 {table.Rows.Count} {unit}"`
 - `toggle.Text` = `expanded ? "收起对阵" : $"查看全部对阵 · 共 {review.Scores.Count} 场"`
@@ -419,11 +412,122 @@ private string _settlementMatch = "";
 - `label.CustomMinimumSize` = `new Vector2(width, 0)`
 - `label.SizeFlagsHorizontal` = `expand ? SizeFlags.ExpandFill : SizeFlags.Fill`
 
+<a id="symbol-cfafceb6927a"></a>
+
+## `AddScore(int) — void AddScore(int i)`
+
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.CompetitionOverview(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementScreen.cs.md#symbol-f0fb4e109457)
+
+**调用：** [`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.FixtureDetails(NationalSpire.CareerData, NationalSpire.CompetitionDuel)`](SettlementScreen.cs.md#symbol-432510bdd12f)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.List<T>.Add(T)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.FixtureDetails(NationalSpire.CareerData, NationalSpire.CompetitionDuel)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Outcome`；`NationalSpire.CompetitionScore.PlayerRelated`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.CompetitionScore.Score`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(FixtureDetails(data, duel))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(FixtureDetails(data, duel));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`grid.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: grid.AddChild(card);`
+- `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
+- `NationalSpire.CareerScreen.FixtureDetails(NationalSpire.CareerData, NationalSpire.CompetitionDuel)`；输入表达式：`FixtureDetails(data, duel)`；返回值紧邻使用处：`ArgumentSyntax: FixtureDetails(data, duel)`
+- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(card)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(card)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(score.Outcome, 16, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text(score.Outcome, 16, CareerVisuals.Teal)`
+- `NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Day(data, score.Day)`；返回值紧邻使用处：`InterpolationSyntax: {SeasonCalendar.Day(data, score.Day)}`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`hidden.Add(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: hidden.Add(card);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `card.Name` = `"CompetitionScore" + i`
+
+<a id="symbol-432510bdd12f"></a>
+
+## `NationalSpire.CareerScreen.FixtureDetails(NationalSpire.CareerData, NationalSpire.CompetitionDuel) — private HBoxContainer FixtureDetails(CareerData data, CompetitionDuel duel)`
+
+来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`AddScore(int)`](SettlementScreen.cs.md#symbol-cfafceb6927a)；[`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)
+
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string)`](SettlementScreen.cs.md#symbol-49b1e1a15f4b)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CompetitionDuel.Away`；`NationalSpire.CompetitionDuel.AwayPerformance`；`NationalSpire.CompetitionDuel.Home`；`NationalSpire.CompetitionDuel.HomePerformance`；`NationalSpire.CompetitionDuel.Status`；`Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 8);`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "FixtureDetails", SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { Name = "FixtureDetails", SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(versus)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(versus);`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(20, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: versus.CustomMinimumSize = new(20, 0)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(duel.Status == "平局" ? "平" : "VS", 12, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(duel.Status == "平局" ? "平" : "VS", 12, _muted)`
+- `Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string)`；输入表达式：`Side(duel.Away, duel.AwayPerformance)`；返回值紧邻使用处：`ExpressionStatementSyntax: Side(duel.Away, duel.AwayPerformance);`
+- `Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string)`；输入表达式：`Side(duel.Home, duel.HomePerformance)`；返回值紧邻使用处：`ExpressionStatementSyntax: Side(duel.Home, duel.HomePerformance);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Name` = `"FixtureDetails"`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `versus.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `versus.CustomMinimumSize` = `new(20, 0)`
+- `versus.SizeFlagsHorizontal` = `SizeFlags.ShrinkCenter`
+- `versus.SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
+
+<a id="symbol-49b1e1a15f4b"></a>
+
+## `Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string) — void Side(List<CompetitionPlayer> players, string performance)`
+
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.FixtureDetails(NationalSpire.CareerData, NationalSpire.CompetitionDuel)`](SettlementScreen.cs.md#symbol-432510bdd12f)
+
+**调用：** [`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChild<T>(int, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CompetitionDuel.Status`；`NationalSpire.CompetitionDuel.WinnerId`；`NationalSpire.CompetitionPlayer.Id`；`NationalSpire.CompetitionPlayer.Name`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`name.AddThemeColorOverride("font_color", _ink)`；返回值紧邻使用处：`ExpressionStatementSyntax: name.AddThemeColorOverride("font_color", _ink);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`body.AddThemeConstantOverride("separation", 4)`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddThemeConstantOverride("separation", 4);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`line.AddThemeConstantOverride("separation", 6)`；返回值紧邻使用处：`ExpressionStatementSyntax: line.AddThemeConstantOverride("separation", 6);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`link.AddThemeConstantOverride("separation", 7)`；返回值紧邻使用处：`ExpressionStatementSyntax: link.AddThemeConstantOverride("separation", 7);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`name.AddThemeFontSizeOverride("font_size", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: name.AddThemeFontSizeOverride("font_size", 16);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel", style)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel", style);`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(line)`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(line);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(link)`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(link);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`line.AddChild(badge)`；返回值紧邻使用处：`ExpressionStatementSyntax: line.AddChild(badge);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`line.AddChild(result)`；返回值紧邻使用处：`ExpressionStatementSyntax: line.AddChild(result);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`panel.AddChild(body)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddChild(body);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(panel);`
+- `Godot.Node.GetChild<T>(int, bool)`；输入表达式：`link.GetChild<Button>(1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = link.GetChild<Button>(1)`
+- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 }`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer()`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 32)`；返回值紧邻使用处：`AssignmentExpressionSyntax: name.CustomMinimumSize = new(0, 32)`
+- `NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；输入表达式：`PersonLink(data, player.Id, player.Name, 32)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PersonLink(data, player.Id, player.Name, 32)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("胜", 14, CareerVisuals.Teal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("胜", 14, CareerVisuals.Teal)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(performance.Length > 0 ? performance : duel.Status, 14, color)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(performance.Length > 0 ? performance : duel.Status, 14, color)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box(won ? "14332f" : "10232f", won ? "437e70" : "29424f", 6, 9)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerVisuals.Box(won ? "14332f" : "10232f", won ? "437e70" : "29424f", 6, 9)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`players.Any(p => p.Id == duel.WinnerId)`；返回值紧邻使用处：`BinaryExpressionSyntax: duel.WinnerId.Length > 0 && players.Any(p => p.Id == duel.WinnerId)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `badge.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `badge.SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
+- `name.CustomMinimumSize` = `new(0, 32)`
+- `name.Flat` = `true`
+- `result.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `SizeFlagsStretchRatio` = `1`
+- `style.BorderWidthLeft` = `won ? 3 : 1`
+
 <a id="symbol-9da5b512a4ff"></a>
 
 ## `NationalSpire.MatchMedallion.Victory — public bool Victory`
 
-来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -441,7 +545,7 @@ private string _settlementMatch = "";
 
 ## `NationalSpire.MatchMedallion.Accent — public Color Accent`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -459,11 +563,11 @@ private string _settlementMatch = "";
 
 ## `NationalSpire.MatchMedallion._Draw() — public override void _Draw()`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](SettlementScreen.cs.md#symbol-0f87558a5fe0)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Mathf.Cos(float)`；`Godot.Mathf.DegToRad(float)`；`Godot.Mathf.Sin(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`P(float, float)`](SettlementScreen.cs.md#symbol-dc37dbe1f1b6)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Mathf.Cos(float)`；`Godot.Mathf.DegToRad(float)`；`Godot.Mathf.Sin(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MatchMedallion.Accent`；`NationalSpire.MatchMedallion.Victory`；`P(float, float)`
 
@@ -523,11 +627,11 @@ private string _settlementMatch = "";
 
 - `side` += `2`
 
-<a id="symbol-0f87558a5fe0"></a>
+<a id="symbol-dc37dbe1f1b6"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MatchMedallion._Draw()`](SettlementScreen.cs.md#symbol-511923326c2e)
 

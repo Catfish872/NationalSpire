@@ -228,7 +228,7 @@ public partial class CareerScreen
         if (!OwnedClubs.IsRecruitable(p) || p.ClubId == d.Esports.ClubId) return;
         bool transfer = p.ClubId.Length > 0;
         if (!_signChoices.TryGetValue(p.Id, out var selection)) _signChoices[p.Id] = selection = new() { PersonId = p.Id, Position = p.MaxAscension >= 9 ? "首发" : "轮换" };
-        box.AddChild(Text(transfer ? "洽谈下赛季转会" : "签约加入俱乐部", 22, _gold));
+        box.AddChild(Text(transfer ? "洽谈转会 · " + OwnedClubs.TransferTime(d) : "签约加入俱乐部", 22, _gold));
         string[] plans = ["steady", "performance", "growth"];
         if (!plans.Contains(selection.Plan)) selection.Plan = plans[0];
         string[] positions = ["首发", "轮换", "青训", "教练"];
@@ -240,17 +240,17 @@ public partial class CareerScreen
             if (replacements.Count > 0)
             {
                 if (!replacements.Contains(selection.ReplaceId)) selection.ReplaceId = replacements[0];
-                box.AddChild(ClubSelect(replacements.Select(id => (transfer ? "下赛季转为轮换 · " : "转为轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => { selection.ReplaceId = replacements[i]; RefreshClub(); }));
+                box.AddChild(ClubSelect(replacements.Select(id => (transfer && OwnedClubs.TransferSeason(d) > d.Season ? "下赛季转为轮换 · " : "转为轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => { selection.ReplaceId = replacements[i]; RefreshClub(); }));
             }
             else selection.ReplaceId = "";
         }
         var quote = OwnedClubs.Quote(p, selection.Plan); int fee = transfer ? OwnedClubs.TransferFee(p) : 0;
         box.AddChild(Text((transfer ? $"转会 {CareerMoney.Format(fee)} · " : "") + $"签约 {CareerMoney.Format(quote.Signing)} · 周薪 {CareerMoney.Format(quote.Wage)}\n获胜奖金 {CareerMoney.Format(quote.WinBonus)} · 合约 {quote.Days / 7} 周", 18, _gold));
-        box.AddChild(Text(transfer ? "现在支付转会与签约费，下赛季报到后开始发薪。本季仍在原队比赛。" : "确认后支付签约费，立即加入所选阵容。", 17, _muted));
+        box.AddChild(Text(transfer ? OwnedClubs.TransferSeason(d) == d.Season ? "确认后支付转会与签约费，立即加入所选阵容，本季联赛采用新名单。" : "现在支付转会与签约费，下赛季报到后开始发薪。本季仍在原队比赛。" : "确认后支付签约费，立即加入所选阵容。", 17, _muted));
         ClubPracticePreview(d, box, selection, false);
         string? error = transfer ? OwnedClubs.TransferError(d, selection) : OwnedClubs.RecruitError(d, selection);
         if (error != null) box.AddChild(Text(error, 16, _muted));
-        var sign = ClubButton(transfer ? "签订转会合同" : selection.Position == "教练" ? "签约这位教练" : "签约这位选手", () => ShowCareerDialog(transfer ? "确认转会" : "确认签约", $"{p.PublicName} · {selection.Position} · " + (transfer ? $"第 {d.Season + 1} 赛季加盟" : "立即加盟") + $"\n初付 {CareerMoney.Format(fee + quote.Signing)}，到队后周薪 {CareerMoney.Format(quote.Wage)}。", () => { ClubAction(d, transfer ? "transfer" : "recruit", JsonSerializer.Serialize(selection)); return true; }), 240);
+        var sign = ClubButton(transfer ? "签订转会合同" : selection.Position == "教练" ? "签约这位教练" : "签约这位选手", () => ShowCareerDialog(transfer ? "确认转会" : "确认签约", $"{p.PublicName} · {selection.Position} · " + (transfer ? OwnedClubs.TransferTime(d) : "立即加盟") + $"\n初付 {CareerMoney.Format(fee + quote.Signing)}，到队后周薪 {CareerMoney.Format(quote.Wage)}。", () => { ClubAction(d, transfer ? "transfer" : "recruit", JsonSerializer.Serialize(selection)); return true; }), 240);
         sign.Disabled |= error != null; box.AddChild(sign);
     }
     private void ClubReview(CareerData d, ClubDraft draft)

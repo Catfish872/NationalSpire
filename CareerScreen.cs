@@ -317,7 +317,7 @@ public partial class CareerScreen : Control, IScreenContext
             row.AddChild(Button(activity.GroupId.Length > 0 ? "前往群聊  →" : "前往私信  →", () => { if (activity.GroupId.Length > 0) SelectGroup(activity.GroupId); else OpenPrivateMessages(conversation.PersonId); }, 175));
         }
         ClubInvitation(data);
-        if (data.Ceremonies.Count > 0) CeremonyInvitation(data);
+        if (SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data);
         var archive = PlayerArchive.Read(false);
         var hero = Card(); hero.AddThemeStyleboxOverride("panel", CareerVisuals.Box("172b3c", "406577", 8, 28));
         if (hero is BroadcastPanel banner) banner.Accent = CareerVisuals.Lime;

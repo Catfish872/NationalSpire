@@ -193,21 +193,67 @@ public partial class CareerScreen
         if (review.Scores.Count == 0) { content.AddChild(Text("本赛事暂无新增完赛记录。", 16, _muted)); return; }
         var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         grid.AddThemeConstantOverride("h_separation", 16); grid.AddThemeConstantOverride("v_separation", 12); content.AddChild(grid);
+        var details = SettlementRecords.ScoreDuels(data, review);
         var hidden = new List<Control>();
-        for (int i = 0; i < review.Scores.Count; i++)
+        void AddScore(int i)
         {
-            var score = review.Scores[i]; var card = Card(); grid.AddChild(card); var box = Inner(card);
+            var score = review.Scores[i]; var card = Card(); card.Name = "CompetitionScore" + i; grid.AddChild(card); var box = Inner(card);
             box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted));
             box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink));
             box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal));
-            if (i >= 6) { card.Visible = false; hidden.Add(card); }
+            foreach (var duel in details[score]) box.AddChild(FixtureDetails(data, duel));
+            if (i >= 6) hidden.Add(card);
         }
-        if (hidden.Count > 0)
+        for (int i = 0; i < Math.Min(6, review.Scores.Count); i++) AddScore(i);
+        if (review.Scores.Count > 6)
         {
             bool expanded = false;
             var toggle = Button($"查看全部对阵 · 共 {review.Scores.Count} 场", () => { }, 240); content.AddChild(toggle);
-            toggle.Pressed += () => { expanded = !expanded; foreach (var card in hidden) card.Visible = expanded; toggle.Text = expanded ? "收起对阵" : $"查看全部对阵 · 共 {review.Scores.Count} 场"; };
+            toggle.Pressed += () =>
+            {
+                expanded = !expanded;
+                if (expanded && hidden.Count == 0) for (int i = 6; i < review.Scores.Count; i++) AddScore(i);
+                foreach (var card in hidden) card.Visible = expanded;
+                toggle.Text = expanded ? "收起对阵" : $"查看全部对阵 · 共 {review.Scores.Count} 场";
+            };
         }
+    }
+
+    private HBoxContainer FixtureDetails(CareerData data, CompetitionDuel duel)
+    {
+        var row = new HBoxContainer { Name = "FixtureDetails", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        row.AddThemeConstantOverride("separation", 8);
+        void Side(List<CompetitionPlayer> players, string performance)
+        {
+            bool won = duel.WinnerId.Length > 0 && players.Any(p => p.Id == duel.WinnerId);
+            var color = won ? CareerVisuals.Teal : _muted;
+            var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 };
+            var style = CareerVisuals.Box(won ? "14332f" : "10232f", won ? "437e70" : "29424f", 6, 9);
+            style.BorderWidthLeft = won ? 3 : 1; panel.AddThemeStyleboxOverride("panel", style); row.AddChild(panel);
+            var body = new VBoxContainer(); body.AddThemeConstantOverride("separation", 4); panel.AddChild(body);
+            foreach (var player in players)
+            {
+                var link = PersonLink(data, player.Id, player.Name, 32); link.AddThemeConstantOverride("separation", 7);
+                var name = link.GetChild<Button>(1); name.Flat = true; name.CustomMinimumSize = new(0, 32);
+                name.AddThemeFontSizeOverride("font_size", 16); name.AddThemeColorOverride("font_color", _ink);
+                body.AddChild(link);
+            }
+            var line = new HBoxContainer(); line.AddThemeConstantOverride("separation", 6); body.AddChild(line);
+            if (won)
+            {
+                var badge = Text("胜", 14, CareerVisuals.Teal); badge.AutowrapMode = TextServer.AutowrapMode.Off;
+                badge.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; line.AddChild(badge);
+            }
+            var result = Text(performance.Length > 0 ? performance : duel.Status, 14, color);
+            result.SizeFlagsHorizontal = SizeFlags.ExpandFill; line.AddChild(result);
+        }
+        Side(duel.Home, duel.HomePerformance);
+        var versus = Text(duel.Status == "平局" ? "平" : "VS", 12, _muted);
+        versus.AutowrapMode = TextServer.AutowrapMode.Off;
+        versus.SizeFlagsHorizontal = SizeFlags.ShrinkCenter; versus.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        versus.CustomMinimumSize = new(20, 0); row.AddChild(versus);
+        Side(duel.Away, duel.AwayPerformance);
+        return row;
     }
 
 }

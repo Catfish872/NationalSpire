@@ -1,5 +1,11 @@
 # 数据归属与使用约定
 
+## 结算对阵详情
+
+CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表。每项 Home/Away 为 CompetitionPlayer 列表，Id 用于头像和人物档案，Name 保存结算时姓名；HomePerformance/AwayPerformance 保存格式化后的通关、楼层与用时，WinnerId 标记胜方，Status 为待赛、弃权判定、平局或已结束。合作赛名单来自比赛实际出场记录，整队共用一份成绩。CaptureCompetition 创建这些独立列表，原赛事和人物后续变更各自生效，结算中的姓名和成绩沿用快照。
+
+旧JSON缺少 Duels 时默认空列表。ScoreDuels 的输入为当前 CareerData 与一份 CompetitionReview，返回以 CompetitionScore 对象为键的显示详情字典；有快照时引用已存详情，旧格式时从仍保留的同赛事对阵补充。匹配使用当时的完成编号和截止日期，后续完赛席位保留当时待赛状态。原赛事已经清理时沿用原总比分。详情字典仅属于当前页面，浏览结束后释放。保存、广播与恢复沿用 SettlementRecord 原有归属，见[结算对阵详情](PERSISTENCE_AND_COOP.md#结算对阵详情)。
+
 ## 单人与多人数据
 
 | 数据 | 管理者与写入入口 | 输入来源 | 下游使用者 |
@@ -115,6 +121,10 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 PNG 仍使用 CharacterCardPng.Bundle Version=1 和原 Fields。导出只交换人物资料，导入只建立新人物，不携带好感、关系或印象；新人物使用0、初识、空印象。旧命令缺少 Relation 时按原人物编辑流程执行，旧存档继续由 Mailbox(CareerLifeState) 执行原迁移。字符长度限制取消，必填、非法字符、重名、数值及合同规则保持；多人整体容量限制保持原规则。
 
 ## 赛事、阵容、资料与记忆
+
+OwnedTransfer.ArrivalSeason 记录签字时约定的到队赛季；新记录由 TransferSeason 按开赛日期决定，已有记录继续读取所存日期。Arrived 表示已经转移归属及合同，Contract.SignedDay/EndDay 从实际到队日期起算。SourceTurnId/SourceHumanId 将跨季到队交互关联到签字时的私聊轮次；当天到队由外层 PrivateContracts.Confirm 记录同一次合同回退。
+
+PrivateInteractionHistory.Capture 的合同快照增加 refillPeople、refillPosts、refillSavedThreads，按稳定编号保存原补员入口产生的人物及报道。Difference 仍只将实际变化写入 PrivateInteractionUndo，Rewind / RestoreRefills 复用原逐字段回退，恢复对应集合及双方赛事，其他人物、帖子、后来的独立金额变化继续使用当前值。旧回退记录缺少这些键时读取当前集合；加载和启动继续使用原字段默认值。人物模型、合同及赛事版本编号继续沿用。
 
 | 数据 | 生产者 | 下游使用者与独立性 |
 | --- | --- | --- |

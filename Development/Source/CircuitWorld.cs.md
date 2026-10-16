@@ -20,7 +20,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)；[`NationalSpire.CircuitLedger.MatchImpact(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CircuitLedger.cs.md#symbol-5c41de2c3969)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)；[`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`](WorldEvents.cs.md#symbol-04c812704f65)
+**调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)；[`NationalSpire.CircuitLedger.MatchImpact(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CircuitLedger.cs.md#symbol-5c41de2c3969)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)；[`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`](WorldEvents.cs.md#symbol-04c812704f65)
 
 **调用：** [`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)
 
@@ -61,7 +61,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CircuitLedger.MatchImpact(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CircuitLedger.cs.md#symbol-5c41de2c3969)；[`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-bf4a0401a0ec)；[`Round(int)`](SettlementRecord.cs.md#symbol-30e7bb0c17d1)
+**调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CircuitLedger.MatchImpact(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CircuitLedger.cs.md#symbol-5c41de2c3969)；[`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-bf4a0401a0ec)；[`Round(int)`](SettlementRecord.cs.md#symbol-27622a9f36b4)；[`Round(int)`](SettlementRecord.cs.md#symbol-df66edefd0e4)
 
 **调用：** [`NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-95620df3f1f6)
 
@@ -516,7 +516,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-ba8eef47d52c)
+**调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -536,7 +536,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-ba8eef47d52c)
+**调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)
 
 **调用：** [`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-bf4a0401a0ec)；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
 

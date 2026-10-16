@@ -130,8 +130,7 @@ public partial class LiveRunBridge : Node
         if (_run.Map is NullActMap) return;
         MatchRules.PrepareOpponent(_data, _match);
         var maps = LiveMaps.Read(_run, _match, false);
-        var character = GameBridge.Characters().FirstOrDefault(c => c.Title.GetFormattedText() == _rival.Character);
-        int hp = character?.StartingHp ?? 75;
+        int hp = GameCharacterNames.StartingHp(_rival.Character);
         _match.Live = RivalSimulation.Create(_match, _rival, maps, hp);
         _match.Live.Commentary.SharedPhrases = _data.BroadcastHistory;
         CareerStore.Save(_data);
