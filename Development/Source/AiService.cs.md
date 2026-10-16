@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`444E5E3C9427636C49E3FE91E3E29C9AB51BEC40E42DFDA7B33068B4AC1363FA`。来源：[源码](../../AiService.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0AE2290C8EC0C6D7E0689CA03027934D045D6F4FC1228E18BBE6C2F3C1E461B0`。来源：[源码](../../AiService.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -18,6 +18,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = JavaScrip
 internal static readonly HttpRequestOptionsKey<TimeSpan> TimeoutOption = new("NationalSpire.Timeout");
 private static DateTimeOffset _lastRequest;
 private static string? _sessionKey = AiSettingsStore.ReadKey();
+private static readonly Dictionary<string, string> ProfileKeys = new();
 ```
 
 <a id="symbol-19e0ca89f9d7"></a>
@@ -124,11 +125,11 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 **调用：** [`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Diagnostics.Stopwatch.StartNew()`；`System.Exception.ToString()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Clamp(int, int, int)`；`System.Net.Http.HttpContent.ReadAsStringAsync()`；`System.Net.Http.HttpRequestOptions.Set<TValue>(System.Net.Http.HttpRequestOptionsKey<TValue>, TValue)`；`System.Net.Http.HttpResponseMessage.Dispose()`；`System.TimeSpan.FromMinutes(long)`；`System.Uri.ToString()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.characters`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.status`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.exception`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, string Model, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.endpoint`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, string Model, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.payload`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, string Model, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.targets`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiService.TimeoutOption`；`NationalSpire.AiService.Transport`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
+**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.characters`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.status`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.exception`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.endpoint`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.payload`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.targets`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiService.TimeoutOption`；`NationalSpire.AiService.Transport`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,              endpoint = request.RequestUri?.ToString(), data.Ai.Model, data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,              payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,              endpoint = request.RequestUri?.ToString(), data.Ai.Model, data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,              payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() });`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,              endpoint = request.RequestUri?.ToString(), data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,              payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,              endpoint = request.RequestUri?.ToString(), data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,              payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.response", new { trace, kind, status = (int)response.StatusCode,                  elapsedMilliseconds = timer.ElapsedMilliseconds, characters = body.Length, body })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.response", new { trace, kind, status = (int)response.StatusCode,                  elapsedMilliseconds = timer.ElapsedMilliseconds, characters = body.Length, body });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.transport-failed", new { trace, kind, elapsedMilliseconds = timer.ElapsedMilliseconds, exception = e.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.transport-failed", new { trace, kind, elapsedMilliseconds = timer.ElapsedMilliseconds, exception = e.ToString() });`
 - `NationalSpire.Diagnostics.RegisterSecret(string?)`；输入表达式：`Diagnostics.RegisterSecret(request.Headers.Authorization?.Parameter)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RegisterSecret(request.Headers.Authorization?.Parameter);`
@@ -227,21 +228,82 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 - `_sessionKey` = `value`
 
-<a id="symbol-1db4f1f2513d"></a>
+<a id="symbol-96c9adf50cfa"></a>
 
-## `NationalSpire.AiService.PersistKey(string) — public static string? PersistKey(string value)`
+## `NationalSpire.AiService.ProfileKey(string) — public static string? ProfileKey(string profile)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`CommitKey()`](AiSettingsPanel.cs.md#symbol-b768a66bdbcb)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string)`](AiSettingsPanel.cs.md#symbol-f3d78e0ed656)
+**调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.HasProfileKey(string)`](AiService.cs.md#symbol-79f735f59baf)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`NationalSpire.AiSettingsStore.SaveKey(string)`](AiSettingsStore.cs.md#symbol-2bce026c34b0)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；`string.IsNullOrWhiteSpace(string?)`；`System.Exception.GetType()`
+**调用：** [`NationalSpire.AiSettingsStore.ReadKey(string)`](AiSettingsStore.cs.md#symbol-ca446a961f94)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: bool deleting, bool available, string error>.available`；`<anonymous type: bool deleting, bool available, string error>.error`；`<anonymous type: bool deleting, bool available>.available`；`NationalSpire.AiService._sessionKey`；`NationalSpire.AiService.HasKey`；`NationalSpire.AiSettingsStore.SaveKey(string)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiRouting.Default`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiService.ProfileKeys`；`NationalSpire.AiSettingsStore.ReadKey(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.AiSettingsStore.SaveKey(string)`；输入表达式：`AiSettingsStore.SaveKey(value)`；返回值紧邻使用处：`ExpressionStatementSyntax: AiSettingsStore.SaveKey(value);`
+- `NationalSpire.AiSettingsStore.ReadKey(string)`；输入表达式：`AiSettingsStore.ReadKey(profile)`；返回值紧邻使用处：`ConditionalExpressionSyntax: ProfileKeys.TryGetValue(profile, out var key) ? key : AiSettingsStore.ReadKey(profile)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`ProfileKeys.TryGetValue(profile, out var key)`；返回值紧邻使用处：`ConditionalExpressionSyntax: ProfileKeys.TryGetValue(profile, out var key) ? key : AiSettingsStore.ReadKey(profile)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-79f735f59baf"></a>
+
+## `NationalSpire.AiService.HasProfileKey(string) — public static bool HasProfileKey(string profile)`
+
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`CommitKey()`](AiSettingsPanel.cs.md#symbol-965bdffd5689)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
+
+**调用：** [`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；`string.IsNullOrWhiteSpace(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProfileKey(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiService.ProfileKey(string)`；输入表达式：`ProfileKey(profile)`；返回值紧邻使用处：`ArgumentSyntax: ProfileKey(profile)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(ProfileKey(profile))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(ProfileKey(profile))`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-8c02bb75b41a"></a>
+
+## `NationalSpire.AiService.Connection(NationalSpire.AiOptions, string) — public static AiConnection Connection(AiOptions options, string task)`
+
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)
+
+**调用：** [`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；[`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；`NationalSpire.AiConnection.AiConnection(string, string, string, string, string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiConnectionProfile.Endpoint`；`NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.ProfileKey(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiConnection.AiConnection(string, string, string, string, string?)`；输入表达式：`new(id, profile.Name, profile.Endpoint, profile.Model, ProfileKey(id))`；返回值紧邻使用处：`ReturnStatementSyntax: return new(id, profile.Name, profile.Endpoint, profile.Model, ProfileKey(id));`
+- `NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`；输入表达式：`AiRouting.ProfileId(options, task)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = AiRouting.ProfileId(options, task)`
+- `NationalSpire.AiService.ProfileKey(string)`；输入表达式：`ProfileKey(id)`；返回值紧邻使用处：`ArgumentSyntax: ProfileKey(id)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-017daf4a239c"></a>
+
+## `NationalSpire.AiService.PersistKey(string, string) — public static string? PersistKey(string value, string profile = AiRouting.Default)`
+
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`CommitKey()`](AiSettingsPanel.cs.md#symbol-965bdffd5689)
+
+**调用：** [`NationalSpire.AiSettingsStore.SaveKey(string, string)`](AiSettingsStore.cs.md#symbol-5e3165a11a8d)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；`string.IsNullOrWhiteSpace(string?)`；`System.Exception.GetType()`
+
+**字段、属性、事件及方法组引用：** `<anonymous type: bool deleting, bool available, string error>.available`；`<anonymous type: bool deleting, bool available, string error>.error`；`<anonymous type: bool deleting, bool available>.available`；`NationalSpire.AiRouting.Default`；`NationalSpire.AiService._sessionKey`；`NationalSpire.AiService.HasKey`；`NationalSpire.AiService.ProfileKeys`；`NationalSpire.AiSettingsStore.SaveKey(string, string)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiSettingsStore.SaveKey(string, string)`；输入表达式：`AiSettingsStore.SaveKey(value, profile)`；返回值紧邻使用处：`ExpressionStatementSyntax: AiSettingsStore.SaveKey(value, profile);`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.credential.save-failed", new { deleting, available = HasKey, error = e.GetType().Name })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.credential.save-failed", new { deleting, available = HasKey, error = e.GetType().Name });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.credential.saved", new { deleting, available = HasKey })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.credential.saved", new { deleting, available = HasKey });`
 - `NationalSpire.Diagnostics.RegisterSecret(string?)`；输入表达式：`Diagnostics.RegisterSecret(value)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RegisterSecret(value);`
@@ -251,12 +313,13 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 **赋值（含属性/字段和局部值）：**
 
 - `_sessionKey` = `value`
+- `ProfileKeys[profile]` = `value`
 
 <a id="symbol-d342b956ee1a"></a>
 
 ## `NationalSpire.AiService.HasKey — public static bool HasKey`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -275,9 +338,9 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.FailureReason(System.Exception) — internal static string FailureReason(Exception error)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?)`](AiModels.cs.md#symbol-e41aed0c4d95)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)；[`NationalSpire.AiService.SummarizeGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, string)`](AiGroupChats.cs.md#symbol-1e6e737dbe88)；[`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string)`](AiSettingsPanel.cs.md#symbol-f3d78e0ed656)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?)`](GroupChatScreen.cs.md#symbol-9f2d53ad7587)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`Notify()`](AiGroupChats.cs.md#symbol-57c976501a7f)；[`Notify(string)`](AiPrivateMessages.cs.md#symbol-c0fe3566d8ec)
+**调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.SummarizeGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, string)`](AiGroupChats.cs.md#symbol-1e6e737dbe88)；[`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?)`](GroupChatScreen.cs.md#symbol-9f2d53ad7587)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`Notify()`](AiGroupChats.cs.md#symbol-57c976501a7f)；[`Notify(string)`](AiPrivateMessages.cs.md#symbol-c0fe3566d8ec)
 
 **调用：** [`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Exception.GetType()`
 
@@ -299,9 +362,9 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage) — internal static async Task<string> HttpFailure(HttpResponseMessage response)`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?)`](AiModels.cs.md#symbol-e41aed0c4d95)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
+**调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
 **调用：** [`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`System.Net.Http.HttpContent.ReadAsStringAsync()`
 
@@ -319,9 +382,9 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri) — internal static bool TryGetEndpoint(string? endpoint, out Uri uri)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string)`](AiPrivateMessages.cs.md#symbol-53f19ad44e07)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
+**调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
 **调用：** `string.EndsWith(string, System.StringComparison)`；`string.IsNullOrEmpty(string?)`；`string.Trim()`；`string.TrimEnd(char)`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`；`System.UriBuilder.UriBuilder(System.Uri)`
 
@@ -347,7 +410,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ProcessPendingAsync(NationalSpire.CareerData?) — public static async Task ProcessPendingAsync(CareerData? requestedData = null)`
 
-来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AiSettings(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-6dafb04d04fd)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](Coop/CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-4495455c88ce)；[`NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](GameBridge.cs.md#symbol-6939e359db40)
 
@@ -368,7 +431,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.RetryNewsAsync(string) — public static Task RetryNewsAsync(string postId)`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
@@ -387,7 +450,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.RetryFailedNewsAsync() — public static Task RetryFailedNewsAsync()`
 
-来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 
@@ -406,7 +469,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.SelectNewsBatch(System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int) — internal static List<CommunityPost> SelectNewsBatch(IEnumerable<CommunityPost> candidates, int count)`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -425,7 +488,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ProcessNewsAsync(string?, NationalSpire.CareerData?) — public static async Task ProcessNewsAsync(string? retryId, CareerData? requestedData = null)`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPendingAsync(NationalSpire.CareerData?)`](AiService.cs.md#symbol-8243488b636b)；[`NationalSpire.AiService.RetryFailedNewsAsync()`](AiService.cs.md#symbol-411839f2efbd)；[`NationalSpire.AiService.RetryNewsAsync(string)`](AiService.cs.md#symbol-4e15401241c3)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](Coop/CoopAi.cs.md#symbol-b4b98ce85f62)
 
@@ -462,13 +525,13 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>) — private static async Task ProcessNewsBatchAsync(CareerData data, List<CommunityPost> pending)`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessNewsAsync(string?, NationalSpire.CareerData?)`](AiService.cs.md#symbol-1773c3383336)
 
-**调用：** [`Fail(string)`](AiService.cs.md#symbol-9c114d45f26d)；[`NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`](AiService.cs.md#symbol-5cb9c2055e1c)；[`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`](AiService.cs.md#symbol-b632d49f74a4)；[`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-364b38bdda09)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-4f223cb1164e)；[`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`](AiService.cs.md#symbol-aad664840095)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-5ba7da409ec8)；[`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)；[`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)；[`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`](CommunityThreads.cs.md#symbol-981631ecddfc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；`Godot.GD.PushWarning(string)`；`int.Parse(string)`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.DateTime.ToString(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`Fail(string)`](AiService.cs.md#symbol-e404a196f39a)；[`NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`](AiService.cs.md#symbol-5cb9c2055e1c)；[`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-364b38bdda09)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-4f223cb1164e)；[`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`](AiService.cs.md#symbol-aad664840095)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`](AiService.cs.md#symbol-5ba7da409ec8)；[`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)；[`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)；[`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`](CommunityThreads.cs.md#symbol-981631ecddfc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；`Godot.GD.PushWarning(string)`；`int.Parse(string)`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.DateTime.ToString(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, string[] posts>.kind`；`<anonymous type: string trace, string kind, string[] posts>.posts`；`Fail(string)`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiOptions.RequestDay`；`NationalSpire.AiOptions.RequestsToday`；`NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`；`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`；`NationalSpire.AiService.CurrentKey`；`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.AiService.Status`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`；`NationalSpire.AiWorkState.State`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityPost.AiPending`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.NewsGeneration`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`
+**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, string[] posts>.kind`；`<anonymous type: string trace, string kind, string[] posts>.posts`；`Fail(string)`；`NationalSpire.AiConnection.Endpoint`；`NationalSpire.AiConnection.Key`；`NationalSpire.AiConnection.Model`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.RequestDay`；`NationalSpire.AiOptions.RequestsToday`；`NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`；`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`；`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.AiService.Status`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.AiService.WaitForRequestStartAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`；`NationalSpire.AiWorkState.State`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityPost.AiPending`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.NewsGeneration`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityThreads.SetWork(NationalSpire.AiWorkState, string, string)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -479,7 +542,8 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 - `Godot.GD.PushWarning(string)`；输入表达式：`GD.PushWarning("[NationalSpire] 新闻生成：" + failure)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushWarning("[NationalSpire] 新闻生成：" + failure);`
 - `int.Parse(string)`；输入表达式：`int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"))`
 - `NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`；输入表达式：`ApplyNewsResponse(data, pending, content)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplyNewsResponse(data, pending, content);`
-- `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`；输入表达式：`BuildNewsPayload(data, snapshots, wire)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = BuildNewsPayload(data, snapshots, wire)`
+- `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`；输入表达式：`BuildNewsPayload(data, snapshots, wire, model)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = BuildNewsPayload(data, snapshots, wire, model)`
+- `NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；输入表达式：`Connection(data.Ai, "news")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Connection(data.Ai, "news")`
 - `NationalSpire.AiService.EnterQueueAsync(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IEnumerable<NationalSpire.AiWorkState>)`；输入表达式：`EnterQueueAsync(data, pending.Select(p => "post:" + p.Id), pending.Select(p => p.NewsGeneration))`；返回值紧邻使用处：`AwaitExpressionSyntax: await EnterQueueAsync(data, pending.Select(p => "post:" + p.Id), pending.Select(p => p.NewsGeneration))`
 - `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`FailureReason(e)`；返回值紧邻使用处：`ArgumentSyntax: FailureReason(e)`
 - `NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；输入表达式：`HttpFailure(response)`；返回值紧邻使用处：`AwaitExpressionSyntax: await HttpFailure(response)`
@@ -527,11 +591,11 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 - `Status` = `"正在生成社区讨论"`
 - `Status` = `$"已发布 {pending.Count} 篇 AI 更新"`
 
-<a id="symbol-9c114d45f26d"></a>
+<a id="symbol-e404a196f39a"></a>
 
 ## `Fail(string) — void Fail(string message)`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)
 
@@ -551,40 +615,41 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.BuildPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>) — private static string BuildPayload(CareerData data, List<CommunityPost> pending)`
 
-来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`](AiService.cs.md#symbol-b632d49f74a4)；[`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)
+**调用：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)；[`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`；输入表达式：`BuildNewsPayload(data, pending, new AiWireProtocol(data))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => BuildNewsPayload(data, pending, new AiWireProtocol(data))`
+- `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`；输入表达式：`BuildNewsPayload(data, pending, new AiWireProtocol(data))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => BuildNewsPayload(data, pending, new AiWireProtocol(data))`
 - `NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`；输入表达式：`new AiWireProtocol(data)`；返回值紧邻使用处：`ArgumentSyntax: new AiWireProtocol(data)`
 
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-b632d49f74a4"></a>
+<a id="symbol-847b058813c9"></a>
 
-## `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol) — private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire)`
+## `NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?) — private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire, string? model = null)`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-28e7b92711a0)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)
 
-**调用：** [`NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-73679a979463)；[`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`](AiPrompts.cs.md#symbol-7a07a16bbdcd)；[`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-73679a979463)；[`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`](AiPrompts.cs.md#symbol-7a07a16bbdcd)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.messages`；`<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.model`；`<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.stream`；`<anonymous type: string role, string content>.content`；`<anonymous type: string role, string content>.role`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`；`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.Json`；`NationalSpire.AiWireProtocol.Encode(string)`；`NationalSpire.CareerData.Ai`
+**字段、属性、事件及方法组引用：** `<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.messages`；`<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.model`；`<anonymous type: string model, bool stream, <anonymous type: string role, string content>[] messages>.stream`；`<anonymous type: string role, string content>.content`；`<anonymous type: string role, string content>.role`；`NationalSpire.AiConnection.Model`；`NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`；`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.Json`；`NationalSpire.AiWireProtocol.Encode(string)`；`NationalSpire.CareerData.Ai`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`；输入表达式：`BuildPrompt(data, pending)`；返回值紧邻使用处：`ArgumentSyntax: BuildPrompt(data, pending)`
 - `NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`；输入表达式：`ComposeSystem(data.Ai, "news")`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: content = ComposeSystem(data.Ai, "news")`
+- `NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；输入表达式：`Connection(data.Ai, "news")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Connection(data.Ai, "news").Model`
 - `NationalSpire.AiWireProtocol.Encode(string)`；输入表达式：`wire.Encode(BuildPrompt(data, pending))`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: content = wire.Encode(BuildPrompt(data, pending))`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new      {          model = data.Ai.Model,          stream = false,          messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }      }, Json)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.Serialize(new      {          model = data.Ai.Model,          stream = false,          messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }      }, Json)`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new      {          model = model ?? Connection(data.Ai, "news").Model,          stream = false,          messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }      }, Json)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.Serialize(new      {          model = model ?? Connection(data.Ai, "news").Model,          stream = false,          messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }      }, Json)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -593,9 +658,9 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.BuildPrompt(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>) — private static string BuildPrompt(CareerData data, List<CommunityPost> pending)`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`](AiService.cs.md#symbol-b632d49f74a4)
+**调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)
 
 **调用：** [`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)
 
@@ -612,9 +677,9 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.NewsCommenters(NationalSpire.CommunityPost, int) — private static IEnumerable<string> NewsCommenters(CommunityPost post, int postCount)`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)；[`NationalSpire.AiService.PromptPeople(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-8981dbfc57ac)；[`NewsPerson(NationalSpire.CareerPerson)`](AiContext.cs.md#symbol-dcc60cdd818f)
+**调用者：** [`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)；[`NationalSpire.AiService.PromptPeople(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-8981dbfc57ac)；[`NewsPerson(NationalSpire.CareerPerson)`](AiContext.cs.md#symbol-9af6051969fe)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`
 
@@ -633,7 +698,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.PromptPeople(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>) — private static List<CareerPerson> PromptPeople(CareerData data, List<CommunityPost> pending)`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)
 
@@ -663,7 +728,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ApplyResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string) — private static void ApplyResponse(CareerData data, List<CommunityPost> pending, string content)`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -682,7 +747,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ApplyNewsResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string) — private static void ApplyNewsResponse(CareerData data, List<CommunityPost> pending, string content)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ApplyResponse(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, string)`](AiService.cs.md#symbol-51fbbe9c81d2)；[`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)
 
@@ -742,7 +807,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage) — internal static async Task<string> ReadResponseCompletion(HttpResponseMessage response)`
 
-来源：源码第 268 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
@@ -765,7 +830,7 @@ private static string? _sessionKey = AiSettingsStore.ReadKey();
 
 ## `NationalSpire.AiService.ReadCompletion(System.Text.Json.JsonElement) — private static string ReadCompletion(JsonElement envelope)`
 
-来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ReadResponseCompletion(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-4f223cb1164e)
 

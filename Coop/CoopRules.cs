@@ -39,6 +39,7 @@ public static partial class CoopRules
         d.Esports.PlayerContract = null; d.Esports.CommercialPaidMatches = [];
         d = CoopJson.Copy(d); CoopJson.Detached(d);
         d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
+        d.TradingAccounts = () => w.Members.Select(member => member.SteamId == m.SteamId ? d.Life.Trading : member.Life.Trading).ToArray();
         return d;
     }
     // 界面与后台准备共用同一转换；仅处理独立视图，不读取游戏控件或本机设置。

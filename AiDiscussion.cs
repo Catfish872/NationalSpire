@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -31,12 +31,14 @@ public static partial class AiService
             if (requested.Count == 0) return;
             if (!data.Ai.Enabled)
             { CommunityThreads.OfflineReactions(data, requested); CareerStore.Save(data); Status = "社区已有离线回应"; return; }
-            var key = CurrentKey; string endpoint = data.Ai.Endpoint, model = data.Ai.Model;
+
+            await WaitForRequestStartAsync(data, works);
+            if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled) return;
+            var connection = Connection(data.Ai, "discussion");
+            string? key = connection.Key; string endpoint = connection.Endpoint, model = connection.Model;
             if (string.IsNullOrWhiteSpace(key)) { Fail("未设置密钥"); return; }
             if (!TryGetEndpoint(endpoint, out var uri))
             { Fail("接口地址无效，请填写完整的 http:// 或 https:// 地址"); return; }
-            await WaitForRequestStartAsync(data, works);
-            if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
             int today = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"));
             if (data.Ai.RequestDay != today) { data.Ai.RequestDay = today; data.Ai.RequestsToday = 0; }
             string context = BuildDiscussionPrompt(data, requested, targets);
@@ -53,7 +55,7 @@ public static partial class AiService
             using var response = await SendAsync(request, data, trace, "discussion", requested);
             if (!response.IsSuccessStatusCode) { Fail(await HttpFailure(response)); return; }
             string content = wire.Decode(await ReadResponseCompletion(response), expectedArray: "reactions");
-            if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
+            if (!CareerStore.IsCurrent(data) || !data.Ai.Enabled) return;
             ApplyDiscussionCore(data, requested, targets, content, permissions);
             if (CommunityThreads.PendingIds(data).Any(requested.Contains)) { Fail("本次未生成社区回复，可重试"); return; }
             Diagnostics.Record("ai.applied", new { trace, kind = "discussion", targets = requested.ToArray() });
@@ -114,7 +116,7 @@ public static partial class AiService
                 human == "player" || human == data.LocalHumanId ? PrivateMessages.Favour(data, p.Id) : data.HumanFavours.GetValueOrDefault(human)?.GetValueOrDefault(p.Id) ?? 0)
         })).ToArray();
     }
-    private static object Persona(CareerData data, CareerPerson p, string occasion, int? day = null, int? profileDay = null, PersonalityProfile? profile = null, int favour = 0, IEnumerable<CommunityPost>? privatePosts = null)
+    private static object Persona(CareerData data, CareerPerson p, string occasion, int? day = null, int? profileDay = null, PersonalityProfile? profile = null, int favour = 0, IEnumerable<CommunityPost>? privatePosts = null, ChatTimeline.PublicMemoryRequest? sharedGroups = null)
     {
         bool known = (profileDay ?? data.Day) <= (day ?? data.Day);
         var person = new Dictionary<string, object?> {
@@ -134,7 +136,12 @@ public static partial class AiService
         };
         if (profile == null) { PersonalityLibrary.Ensure(data, p); profile = p.Personality; }
         person["personality"] = PersonalityLibrary.PromptProfile(profile);
-        if (ChatTimeline.PublicMemories(data, p.Id, day ?? data.Day) is { Length: > 0 } groups) person["群聊记忆（仅知情人可直接引用）"] = groups;
+        if (sharedGroups != null)
+        {
+            var references = sharedGroups.For(p.Id, day ?? data.Day);
+            if (references.Length > 0) person["群聊记忆引用（本人知情）"] = references;
+        }
+        else if (ChatTimeline.PublicMemories(data, p.Id, day ?? data.Day) is { Length: > 0 } groups) person["群聊记忆（仅知情人可直接引用）"] = groups;
         if (privatePosts != null && PrivateMessages.PublicMemory(data, p, privatePosts, day ?? data.Day) is { Length: > 0 } memory) person["私下往来"] = memory;
         var humans = privatePosts?.SelectMany(post => post.RelatedPeople.Concat(post.Replies.Select(r => r.AuthorId)).Append(post.AuthorId))
             .Where(id => CommunityThreads.IsHuman(data, id)).Distinct().ToArray() ?? [];
@@ -188,8 +195,10 @@ public static partial class AiService
             .Select(id => new { Id = id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id) });
         var latest = data.Results.LastOrDefault(r => r.OfficialAscensionVerified && r.Day <= data.Day && r.Kind != "private-friendly");
         bool hasLatestEvidence = latest != null && memories.Any(m => m.Id.EndsWith(":result") && m.Day == latest.Day && m.People.Contains("player") && m.People.Contains(latest.OpponentId));
+        var sharedGroups = new ChatTimeline.PublicMemoryRequest(data);
+        var personas = people.Select(p => Persona(data, p, occasion, privatePosts: targets.Where(t => t.RelatedPeople.Contains(p.Id) || DiscussionPeople(data, t, requested).Any(s => s.Id == p.Id)), sharedGroups: sharedGroups)).ToArray();
         return JsonSerializer.Serialize(new { day = data.Day, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender }, schedule = PublicSchedule.ForPrompt(schedule), playerRecord = PlayerPublicRecord(data, data.Day, !hasLatestEvidence && !contexts.Any(c => c.match != null)), queued, targets = contexts,
-            attitudeScale = PersonalityLibrary.AttitudeScale, 态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = people.Select(p => Persona(data, p, occasion, privatePosts: targets.Where(t => t.RelatedPeople.Contains(p.Id) || DiscussionPeople(data, t, requested).Any(s => s.Id == p.Id)))),
+            attitudeScale = PersonalityLibrary.AttitudeScale, 态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = personas, sharedGroupMemories = sharedGroups.Records,
             性格使用说明 = PersonalityLibrary.ProfileUsage, otherSpeakers = names, memory = memories,
             career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak,
                 honors = data.Esports.Honors.TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }) } }, Json);

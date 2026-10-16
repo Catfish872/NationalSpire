@@ -10,9 +10,11 @@ internal sealed class AiWireProtocol
     private readonly Dictionary<string, string> _encode = new();
     private readonly Dictionary<string, string> _decode = new();
     private readonly List<(string Earlier, string Current)> _names = [];
-    private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
+    private readonly CareerData _data;
+    private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "sourcePostId", "sourceReplyId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
     internal AiWireProtocol(CareerData data)
     {
+        _data = data;
         void Add(string id, string shortId)
         { if (id.Length > 0 && id != "player" && _encode.TryAdd(id, shortId)) _decode.Add(shortId, id); }
         int person = 0, post = 0, comment = 0;
@@ -32,6 +34,7 @@ internal sealed class AiWireProtocol
     internal string Encode(string context)
     {
         var node = JsonNode.Parse(context)!;
+        AddMemorySources(node);
         // 只为本次材料中确实出现的旧称提供身份对照，历史原文继续按原样保存。
         string readable = node.ToJsonString(Json);
         var referenced = _names.Where(n => readable.Contains(n.Earlier, StringComparison.Ordinal)).Distinct().ToArray();
@@ -43,6 +46,51 @@ internal sealed class AiWireProtocol
             if (node[key] is JsonArray memories)
                 foreach (var memory in memories.OfType<JsonObject>()) { memory.Remove("Id"); memory.Remove("PostId"); }
         Rewrite(node, _encode); return node.ToJsonString(Json);
+    }
+    // 历史评论保留原帖与父回复。来源按帖子编号合并，人物使用具名身份。
+    private void AddMemorySources(JsonNode node)
+    {
+        var sources = CommunityThreads.All(_data).ToDictionary(p => p.Id);
+        var selected = new Dictionary<string, HashSet<string>>();
+        foreach (string key in new[] { "memory", "communityMemory" })
+        {
+            if (node[key] is not JsonArray memories) continue;
+            foreach (var memory in memories.OfType<JsonObject>())
+            {
+                string postId = memory["PostId"]?.GetValue<string>() ?? "", id = memory["Id"]?.GetValue<string>() ?? "";
+                if (!sources.TryGetValue(postId, out var post)) continue;
+                var reply = post.Replies.FirstOrDefault(r => id == postId + ":" + r.Id);
+                if (reply == null) continue;
+                memory["sourcePostId"] = postId; memory["sourceReplyId"] = reply.Id;
+                memory["author"] = CareerEngine.DisplayName(_data, reply.AuthorId);
+                memory["parentId"] = reply.ParentId;
+                if (!selected.TryGetValue(postId, out var ancestors)) selected.Add(postId, ancestors = []);
+                var replies = post.Replies.ToDictionary(r => r.Id);
+                while (replies.TryGetValue(reply.ParentId, out var parent) && ancestors.Add(parent.Id)) reply = parent;
+            }
+        }
+        if (selected.Count == 0) return;
+        // 当前回帖目标已经包含正文和评论时，来源仅补充尚未提供的父回复。
+        var supplied = (node["targets"] as JsonArray ?? []).OfType<JsonObject>().ToDictionary(p => p["Id"]!.GetValue<string>());
+        var records = new JsonArray();
+        foreach (var entry in selected.OrderBy(x => x.Key, StringComparer.Ordinal))
+        {
+            var post = sources[entry.Key];
+            var record = new JsonObject { ["postId"] = post.Id };
+            HashSet<string> existing = [];
+            if (supplied.TryGetValue(post.Id, out var target))
+                existing = (target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet();
+            else
+            {
+                record["title"] = post.Title; record["author"] = CareerEngine.DisplayName(_data, post.AuthorId); record["day"] = post.Day;
+                record["body"] = post.Body; record["bodyKind"] = "作者公开发言";
+                if (post.SourceBody.Length > 0 && !CommunityThreads.IsHuman(_data, post.AuthorId)) record["officialRecord"] = AiGeneratedText.Source(post);
+            }
+            record["parentComments"] = JsonSerializer.SerializeToNode(post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))
+                .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body }), Json);
+            records.Add(record);
+        }
+        node["communitySources"] = records;
     }
     internal string Decode(string response, bool normalizeFields = true, string? expectedArray = null)
     {

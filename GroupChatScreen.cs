@@ -20,26 +20,20 @@ public partial class CareerScreen
     private string _groupCreateName = "新群聊";
     private void OpenGroupPerson(string person)
     {
-        var previous = CaptureLocation() with { Group = _privateGroup, ChatScroll = _privateScroll!.ScrollVertical };
+        var previous = CaptureLocation() with { Group = _privateGroup, ChatScroll = _privateScroll!.ScrollVertical, ChatPage = ChatPage };
         ClosePrivateMessagesCore(false);
         Visit(() => { _tab = "选手档案"; _personId = person; });
         _backHistory.Pop(); _backHistory.Push(previous); UpdateNavigation();
     }
-    private async Task RestoreGroupScroll(string group, int position)
+    private Task RestoreGroupScroll(string group, int position) => _privateGroup == group ? ScrollChatTo(position) : Task.CompletedTask;
+    private void SelectGroup(string id, int page = -1)
     {
-        var tree = GetTree();
-        for (int i = 0; i < 2; i++)
-        {
-            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
-            if (!IsInstanceValid(this) || IsQueuedForDeletion() || _privateOverlay == null || _privateGroup != group) return;
-        }
-        _privateScroll!.ScrollVertical = position;
-    }
-    private void SelectGroup(string id)
-    {
-        if (_privateOverlay == null) OpenPrivateMessages();
+        if (_privateOverlay == null) { OpenPrivateMessages(group: id, page: page); return; }
         if (_privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
-        _privateGroup = id; _privatePerson = ""; _groupSignature = _privateListSignature = _groupError = ""; _privateVisible = 40;
+        _privateGroup = id; _privatePerson = ""; _groupSignature = _privateListSignature = _groupError = "";
+        ResetChatPage(); BindChatPage(true);
+        if (page >= 0) { _groupPages.Move(page); InvalidateChatPage(0); }
+        SaveChatPreferences();
         _privateInput!.Text = _privateDrafts.GetValueOrDefault(ChatDraftKey, "");
         RefreshPrivateAttachments(); RefreshPrivateList(); RefreshGroupChat();
     }
@@ -65,15 +59,16 @@ public partial class CareerScreen
             }
             if (_groupStreamLabels[i] is { } label && label.Text != text) label.Text = text;
         }
-        if (bottom) _ = ScrollPrivateToBottom();
+        if (bottom && ChatAtLatest) _ = ScrollPrivateToBottom();
     }
     private void RefreshGroupChat()
     {
         var g = CurrentGroup; if (g == null || _privateBody == null) return;
+        BindChatPage(ChatAtBottom);
         string live = AiService.GroupLive.GetValueOrDefault(AiService.GroupKey(ViewData, g.Id), "");
         var thought = AiService.GroupReasoningLive.GetValueOrDefault(AiService.GroupKey(ViewData, g.Id));
         bool busy = GroupChats.Busy(g);
-        string signature = g.Id + ":" + g.Revision + ":" + g.Turns.LastOrDefault()?.Status + ":" + _privateVisible + ":" + g.SummaryStatus + g.SummaryError + ":" + ViewData.Day;
+        string signature = g.Id + ":" + g.Revision + ":" + g.Turns.LastOrDefault()?.Status + ":" + _groupPages.Page + ":" + _groupPages.Size + ":" + g.SummaryStatus + g.SummaryError + ":" + ViewData.Day;
         signature += ":" + string.Join(",", g.Members.Select(id => GroupChats.CanSpeak(ViewData, id)));
         _privateSend!.Text = busy ? "正在回复…" : "发送"; _privateSend.Disabled = busy;
         _privateStatus!.Text = _groupError.Length > 0 ? _groupError : g.SummaryError.Length > 0 ? g.SummaryError : g.SummaryStatus; _privateStatus.Visible = _privateStatus.Text.Length > 0;
@@ -88,9 +83,11 @@ public partial class CareerScreen
         _privateHeading.AddChild(PrivateButton("群成员", () => GroupMemberPicker(g, people => GroupCommand("group-add", new() { People = people })), 110));
         if (busy) _privateHeading.AddChild(PrivateButton("停止生成", () => GroupCommand("group-stop", new()), 110));
         CareerVisuals.ClearContent(_privateBody);
-        if (g.Turns.Count > _privateVisible) _privateBody.AddChild(PrivateButton("查看更早消息", () => { _privateVisible += 40; _groupSignature = ""; RefreshGroupChat(); }, 180));
-        long first = g.Turns.Count > _privateVisible ? g.Turns[^_privateVisible].Order : 0;
-        var notices = new Queue<GroupEntry>(g.Entries.Where(e => e.Order >= first).OrderBy(e => e.Order));
+        var visibleTurns = _groupPages.Visible.ToArray();
+        long first = _groupPages.Page == 0 ? 0 : visibleTurns.FirstOrDefault()?.Order ?? 0;
+        long end = _groupPages.Next?.Order ?? long.MaxValue;
+        var entries = g.Entries.Where(e => e.Order >= first && e.Order < end).OrderBy(e => e.Order).ToArray();
+        var notices = new Queue<GroupEntry>(entries);
         int lastDay = 0;
         void NoticesThrough(long order)
         {
@@ -100,8 +97,8 @@ public partial class CareerScreen
                 _privateBody.AddChild(PrivateLine(PrivateAppointments.DateText(ViewData, entry.Day) + " · " + entry.Text, 13, _muted));
             }
         }
-        var events = g.Entries.Where(e => e.Order >= first).Select(e => (e.Order, Notice: (GroupEntry?)e, Turn: (GroupTurn?)null))
-            .Concat(g.Turns.TakeLast(_privateVisible).Select(t => (t.Order, Notice: (GroupEntry?)null, Turn: (GroupTurn?)t))).OrderBy(x => x.Order);
+        var events = entries.Select(e => (e.Order, Notice: (GroupEntry?)e, Turn: (GroupTurn?)null))
+            .Concat(visibleTurns.Select(t => (t.Order, Notice: (GroupEntry?)null, Turn: (GroupTurn?)t))).OrderBy(x => x.Order);
         foreach (var item in events)
         {
             if (item.Notice != null) { NoticesThrough(item.Notice.Order); continue; }
@@ -152,9 +149,9 @@ public partial class CareerScreen
                 else if (t.Status == "complete" && (t.Replies.Count > 0 || t.Raw.Length > 0) && t.ArbitrationTargets.Count == 0) _privateBody.AddChild(PrivateButton("重新生成本轮", () => GroupCommand("group-regenerate", new()), 180));
             }
         }
-        if (!g.Turns.Any()) _privateBody.AddChild(PrivateText("开始群聊", 20, _muted));
-        if (bottom) _ = ScrollPrivateToBottom();
-        if (g.Seen.GetValueOrDefault(GroupChats.Human(ViewData)) < g.Turns.Count(t => t.Status == "complete")) GroupCommand("group-read", new());
+        if (_groupPages.Count == 0 && entries.Length == 0) _privateBody.AddChild(PrivateText("开始群聊", 20, _muted));
+        if (ChatAtLatest && g.Seen.GetValueOrDefault(GroupChats.Human(ViewData)) < g.Turns.Count(t => t.Status == "complete")) GroupCommand("group-read", new());
+        FinishChatPage(bottom);
     }
     private RichTextLabel GroupBubble(string person, string text, List<PrivateOffer>? attachments = null)
     {
@@ -205,7 +202,7 @@ public partial class CareerScreen
         if (CurrentGroup is not { } g || GroupChats.Busy(g)) return;
         string text = _privateInput!.Text; var attachments = PrivateAttachments.ToList(); string key = ChatDraftKey;
         GroupCommand("group-send", new() { Text = text, Attachments = attachments }, () =>
-        { if (ChatDraftKey == key) { _privateInput.Text = ""; PrivateAttachments.Clear(); RefreshPrivateAttachments(); } });
+        { if (ChatDraftKey == key) { _privateInput.Text = ""; PrivateAttachments.Clear(); RefreshPrivateAttachments(); LatestChatPage(); } });
     }
     private void GroupCommand(string kind, GroupCommand command, Action? accepted = null)
     {

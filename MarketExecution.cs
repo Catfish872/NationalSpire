@@ -49,6 +49,7 @@ public static class MarketExecution
     }
     public static Exit Close(MarketPosition p, MarketQuote q)
     {
+        if (p.ExecutionVersion == 1) return MarketClearing.Exit(p, q);
         var asset = MarketCatalog.ById[p.Asset]; var (b, k) = Book(asset, q);
         int direction = -p.Direction;
         var start = Used(q, direction); var end = start + p.Units;
@@ -66,13 +67,13 @@ public static class MarketExecution
         decimal openingFee = p.OpeningFee ?? CareerMarket.OpenFee(asset, p.Margin, p.Leverage);
         return new(new(p.Units, (decimal)average, end, (decimal)(b * Shape(end, k, direction)), direction), fee, proceeds, proceeds - p.Margin - openingFee);
     }
-    private static void Consume(MarketQuote q, MarketAsset asset, Fill fill)
+    internal static void Consume(MarketQuote q, MarketAsset asset, Fill fill)
     {
         var (b, k) = Book(asset, q);
         q.BuyUnits = fill.Direction > 0 ? fill.EndUnits : Used(q, 1);
         q.SellUnits = fill.Direction < 0 ? fill.EndUnits : Used(q, -1);
         q.ExecutionBase = b; q.DepthUnits = k; q.OrderUnits = 0;
-        q.Price = b;
+        q.Price = MarketClearing.Price(q);
     }
     public static void Apply(MarketState market, string asset, Fill fill, int day)
     {
@@ -87,11 +88,12 @@ public static class MarketExecution
         // 外部行情提供新的成交深度。订单推高的报价不能反过来成为下一次消息的估值基础。
         if (q.ExecutionBase > 0) q.DepthUnits *= q.ExecutionBase / price;
         q.ExecutionBase = price; q.OrderUnits = 0; q.BuyUnits = q.SellUnits = 0;
-        q.Price = price;
+        q.Price = MarketClearing.Price(q);
     }
     public static decimal ReferencePrice(MarketQuote q) => q.ExecutionBase > 0 ? q.ExecutionBase : q.Price;
-    public static decimal LiquidationValue(MarketState market, MarketAccount account)
+    public static decimal LiquidationValue(MarketState market, MarketAccount account, IReadOnlyList<MarketAccount>? accounts = null)
     {
+        if (account.Positions.Any(p => p.ExecutionVersion == 1)) return MarketClearing.LiquidationValue(market, account, accounts ?? [account]);
         // 按持仓顺序计算连续平仓，避免把每笔都按第一笔的成交条件相加。
         var quotes = new Dictionary<string, MarketQuote>(); decimal result = account.Cash - account.Debt;
         foreach (var p in account.Positions)

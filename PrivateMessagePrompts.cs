@@ -138,6 +138,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     public static readonly string[] SectionIds = ["private", "private-summary", "private-long-summary"];
     public static List<Dictionary<string, string>> Compose(CareerData data, PrivateConversation c, PrivateTurn? pending = null)
     {
+        using var measurement = UiPerformance.Measure(UiPerformance.Work.PrivateContext);
         var p = CareerEngine.Person(data, c.PersonId)!;
         List<Dictionary<string, string>> messages = [];
         void Add(string role, string text) => messages.Add(new() { ["role"] = role, ["content"] = text });
@@ -190,9 +191,9 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         string stable = string.Concat(pieces.Where(p => p.Group == "profile").Select(p => p.Text))
             + string.Concat(pieces.Where(p => p.Group == "results").Select(p => p.Text))
             + string.Concat(pieces.Where(p => p.Group == "public-heading").Select(p => p.Text))
-            + string.Concat(pieces.Where(p => p.Group == "public").OrderBy(p => p.Key, StringComparer.Ordinal).Select(p => p.Text));
+            + string.Concat(pieces.Where(p => p.Group == "public").OrderBy(p => p.Key, StringComparer.Ordinal).Select(p => p.Text.TrimEnd() + "\n\n"));
         string current = string.Concat(new[] { "current", "topic", "schedule", "learning", "mood" }
-            .SelectMany(group => pieces.Where(p => p.Group == group).Select(p => p.Text)));
+            .SelectMany(group => pieces.Where(p => p.Group == group).Select(p => p.Group == "topic" ? p.Text.TrimEnd() + "\n\n" : p.Text)));
         return (stable, current);
     }
     public static string Context(CareerData data, PrivateConversation c, PrivateTurn turn, List<ContextSpan>? spans = null)
@@ -234,15 +235,13 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             spans?.Add(new(text.Length, heading.Length, "public-heading")); text += heading;
             if (spans != null)
             {
-                var background = new List<(string Id, string Text)>();
-                PrivatePublicContext.Community(data, p, "", suppliedPosts, background, search);
-                var stableIds = background.Select(x => x.Id).ToHashSet();
+                var stableIds = PrivatePublicContext.SelectCommunity(data, p, "", suppliedPosts, search).Posts.Select(x => x.Id).ToHashSet();
                 int position = 0;
                 foreach (var post in completePosts)
                 {
                     int start = publicMemory.IndexOf(post.Text, position, StringComparison.Ordinal);
                     if (start < 0) continue;
-                    // 分隔空白随完整帖子移动，不把标题、原文或回复分开。
+                    // 固定帖子正文参与前缀复用；本次评论分支随当前话题放在后部。
                     spans.Add(new(text.Length + position, start + post.Text.Length - position, stableIds.Contains(post.Id) ? "public" : "topic", post.Id));
                     position = start + post.Text.Length;
                 }

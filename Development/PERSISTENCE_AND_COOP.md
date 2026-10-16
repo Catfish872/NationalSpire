@@ -1,5 +1,11 @@
 # 保存、广播与恢复
 
+## 聊天页面的本地设置
+
+ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last 与 size。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看群成员档案后的 Back 从导航历史恢复页面及滚动位置。
+
+PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只在最新页面调用原 dm-read / group-read；单人进入 CareerStore.Save，多人进入 ICareerSession.Send 与原房主提交、检查点和回执流程。最近会话选择通过上述本地配置保存，旧 dm-select 命令保留在规则与网络兼容入口。记录分页只选择控件使用的原轮次引用，生涯原文、总结及模型上下文仍由原存储与生成流程处理。调用与缓存生命周期见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
+
 ## 单人生涯保存的顺序
 
 CareerStore.Save 首先检查 ExternalSave：多人或专用视图传入时执行该回调，不写入单人默认文件。
@@ -45,7 +51,7 @@ Release本机逐次性能记录：每次1000组个人赛季款和胜场款计算
 
 Account是单账户包装，调用Accounts(MarketState,IReadOnlyList<MarketAccount>,day)。CoopRules.BindMarket的MarketAccounts委托一次传入全部成员账户，包括离线成员。统一结算先处理原借款利息，再扫描全部仓位，用Close的整笔预计到账判断强平、用外部基准Price判断止损，将已触发仓位加入本次操作内的队列与去重集合。每完成一笔平仓并Apply更新对应方向的承接数量，再扫描剩余持仓；已经触发的仓位即使因前一笔成交使报价恢复，也继续成交。两种条件同时成立优先记强平。同一仓位只入队、成交一次；队列不跨操作保存，不是恢复重试机制。
 
-Trade开平仓、Fixture和Advance共用上述入口；没有异步间隙、额外保存或广播。margin与stop只修改本人Trading，EconomicActions沿用只读Market并复制个人资金资料，成功一次保存，失败完整恢复。追加与止损设置、取消均检查QuoteRevision；界面输入时不提交，确认后立即收起编辑区，避免同一展开表单重复确认。多人仍由原命令Id、Epoch和Revision去重与鉴权。旧档无StopPrice时不增加止损，InitialMargin在首次追加前从旧Margin填写，原成本及手续费不重新定价。
+Trade开平仓、Fixture和Advance共用上述入口；没有异步间隙、额外保存或广播。margin与stop修改本人Trading，新仓同时更新市场Revision；EconomicActions经RevisionCopy复制标量版本并复制个人资金资料，成功一次保存，失败完整恢复。追加与止损设置、取消均检查QuoteRevision；界面输入时不提交，确认后立即收起编辑区，避免同一展开表单重复确认。多人仍由原命令Id、Epoch和Revision去重与鉴权。旧档无StopPrice时不增加止损，InitialMargin在首次追加前从旧Margin填写，原成本及手续费不重新定价。
 
 行情目录补齐与旧档PricingVersion升级共用原加载事务。Initialize按统一品牌目录补齐缺少的报价和60条起始曲线，记录目录指纹；首次检查资产键后使用当前MarketState的CheckedQuoteCount缓存。JSON复制及恢复检查点重建运行期缓存。原Quote、History、钱包和仓位继续沿用；补齐结果随原保存或Commit提交。离开页面、关闭进程及断线继续由原完整存档和检查点恢复。旧档 PricingVersion 升级在原加载事务中处理遗留信号；多人恢复由 InitializeMarket 先绑定全部账户，再 Initialize，最后沿原恢复 Commit 保存。失败决定和同成绩加赛均在正式 Fixture 之前返回，因此没有行情变化；确认失败只正式结算一次。重赛不需要撤销已计价信号，也没有新增封锁交易条件。
 
@@ -72,6 +78,14 @@ PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life
 | 导入导出 | CareerLibrary 与对应格式入口 | 不因导入模组资料而改写原版单人对局 |
 
 单人 Save 不声称具有多人 WriteThrough + Flush(true) 的完全相同持久性。进程中断与断电也不是同一测试条件。
+
+## 新仓成交与客机预览
+
+EconomicActions.Trade复制个人资金资料；open/close复制Market，margin/stop经RevisionCopy复制标量并共享只读报价。CareerMarket.Trade在候选资料调用MarketClearing.Preview/Close→Commit，全部分段成交与自动退出完成后，Persist保存一次。失败沿原回调恢复钱包、Trading和Market引用。日期和赛果通过Price→MarketClearing.Reprice在原事务内处理。旧仓继续原双侧成交计算。
+
+BindMarket把TradingAccounts绑定当前操作副本的全部成员，含离线成员。CoopRules.Trade复用这些引用，Preview产生结果后Commit修改副本。原Apply→检查点保存→替换World→回执→各接收者快照顺序继续执行。同一订单触发的各成员仓位退出随同一检查点提交。QuoteRevision包含新仓追加保证金与止损变化，供后续订单重新核对执行条件。
+
+market-query沿CoopCoordinator原成员和发送方检查，再核对世界编号及Epoch。ReceiveMarket→CoopRules.InspectMarket→MarketClearing.Inspect读取房主当前资料，返回请求者净资产、双向订单摘要和指定本人仓位退出结果。market-answer经房主身份检查，按请求编号完成等待；等待上限10秒，结束时删除请求记录。查询对Revision、Receipts、存档与广播均保持只读。PrivateSnapshot/SnapshotEncoder继续过滤其他人的Trading。客户端按页面代次、对象引用和报价版本应用结果，实际交易仍由原CoopCommand及MarketOrder版本检查处理。离开页面后过期响应随请求完成释放，关闭进程和断线继续使用原检查点恢复完整交易。
 
 ## 多人命令提交的完整顺序
 

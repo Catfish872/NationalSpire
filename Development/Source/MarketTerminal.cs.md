@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5959FC3BA856B3AB50AA0888221130982BC779755BFA5ED24F81270FE22098E4`。来源：[源码](../../MarketTerminal.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`272ED4CA7B262CF95B4EC32674C2A6ADA74C3080F440E50D9BDC7859A29F5282`。来源：[源码](../../MarketTerminal.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,6 +14,9 @@
 private CareerData? _data;
 private Action<MarketOrder>? _submit;
 private Action<string>? _person;
+private MarketInspectionResult? _inspection;
+private int _inspectionGeneration;
+private bool _inspectionBusy;
 private MarketEvent[] _selectedEvents = [];
 private readonly Label[] _metrics = new Label[4];
 private readonly MarketAssetButton[] _rows = new MarketAssetButton[8];
@@ -53,9 +56,9 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Label(string, int, Godot.Color?) — private Label Label(string text, int size = 16, Color? color = null)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`AmountRow(string)`](MarketTerminal.cs.md#symbol-e723e6bbf90e)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
+**调用者：** [`AmountRow(string)`](MarketTerminal.cs.md#symbol-2cc118ecba54)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
 **调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Label.Label()`
 
@@ -78,7 +81,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Button(string, System.Action) — private Button Button(string text, Action action)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -104,7 +107,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Panel(Godot.Node, float) — private VBoxContainer Panel(Node parent, float ratio = 1)`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -130,7 +133,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Money() — private static MarketAmountInput Money()`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -158,7 +161,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.MarketTerminal() — internal MarketTerminal()`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerListCache.Market`](CareerListCache.cs.md#symbol-8e4ce39fadc2)
 
@@ -193,7 +196,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Prepare(double) — internal bool Prepare(double budgetMilliseconds)`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerListCache._Process(double)`](CareerListCache.cs.md#symbol-e8085c360313)；[`NationalSpire.MarketTerminal.Bind(NationalSpire.CareerData, System.Action<NationalSpire.MarketOrder>, System.Action<string>)`](MarketTerminal.cs.md#symbol-09b1a1ea6de7)
 
@@ -215,13 +218,13 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Build() — private IEnumerable<bool> Build()`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.MarketTerminal()`](MarketTerminal.cs.md#symbol-ca583ab46f87)
 
-**调用：** [`AmountRow(string)`](MarketTerminal.cs.md#symbol-e723e6bbf90e)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketAssetButton.MarketAssetButton()`](MarketVisuals.cs.md#symbol-3e8aa8ef1217)；[`NationalSpire.MarketEventRow.MarketEventRow()`](MarketVisuals.cs.md#symbol-b32cc5c2b62a)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)；[`NationalSpire.MarketTerminal.Button(string, System.Action)`](MarketTerminal.cs.md#symbol-e98fd552cf86)；[`NationalSpire.MarketTerminal.ChangePage(int)`](MarketTerminal.cs.md#symbol-83787d38907b)；[`NationalSpire.MarketTerminal.ClosePosition(int)`](MarketTerminal.cs.md#symbol-1a0f641bc735)；[`NationalSpire.MarketTerminal.Label(string, int, Godot.Color?)`](MarketTerminal.cs.md#symbol-f68caab7d69a)；[`NationalSpire.MarketTerminal.Money()`](MarketTerminal.cs.md#symbol-965685631592)；[`NationalSpire.MarketTerminal.Open(int)`](MarketTerminal.cs.md#symbol-9665309ab157)；[`NationalSpire.MarketTerminal.Panel(Godot.Node, float)`](MarketTerminal.cs.md#symbol-3d766989e03d)；[`NationalSpire.MarketTerminal.RefreshAccount()`](MarketTerminal.cs.md#symbol-4089d15c736a)；[`NationalSpire.MarketTerminal.RefreshChart()`](MarketTerminal.cs.md#symbol-e1b73bf4bb8f)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.ResetList()`](MarketTerminal.cs.md#symbol-d43e3b0284a7)；[`NationalSpire.MarketTerminal.SelectRow(int)`](MarketTerminal.cs.md#symbol-3c5b757d5a8f)；[`NationalSpire.MarketTerminal.Submit(NationalSpire.MarketOrder)`](MarketTerminal.cs.md#symbol-63d52edc18fa)；[`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`](MarketVisuals.cs.md#symbol-5703b8242580)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.Reparent(Godot.Node, bool)`；`Godot.OptionButton.AddIconItem(Godot.Texture2D, string, int)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.GetItemText(int)`；`Godot.OptionButton.OptionButton()`；`Godot.ProgressBar.ProgressBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.SpinBox.Apply()`；`Godot.SpinBox.GetLineEdit()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketChart.MarketChart()`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Math.Max(int, int)`
+**调用：** [`AmountRow(string)`](MarketTerminal.cs.md#symbol-2cc118ecba54)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketAssetButton.MarketAssetButton()`](MarketVisuals.cs.md#symbol-3e8aa8ef1217)；[`NationalSpire.MarketEventRow.MarketEventRow()`](MarketVisuals.cs.md#symbol-b32cc5c2b62a)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)；[`NationalSpire.MarketTerminal.Button(string, System.Action)`](MarketTerminal.cs.md#symbol-e98fd552cf86)；[`NationalSpire.MarketTerminal.ChangePage(int)`](MarketTerminal.cs.md#symbol-83787d38907b)；[`NationalSpire.MarketTerminal.ClosePosition(int)`](MarketTerminal.cs.md#symbol-1a0f641bc735)；[`NationalSpire.MarketTerminal.Label(string, int, Godot.Color?)`](MarketTerminal.cs.md#symbol-f68caab7d69a)；[`NationalSpire.MarketTerminal.Money()`](MarketTerminal.cs.md#symbol-965685631592)；[`NationalSpire.MarketTerminal.Open(int)`](MarketTerminal.cs.md#symbol-9665309ab157)；[`NationalSpire.MarketTerminal.Panel(Godot.Node, float)`](MarketTerminal.cs.md#symbol-3d766989e03d)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshChart()`](MarketTerminal.cs.md#symbol-e1b73bf4bb8f)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.ResetList()`](MarketTerminal.cs.md#symbol-d43e3b0284a7)；[`NationalSpire.MarketTerminal.SelectRow(int)`](MarketTerminal.cs.md#symbol-3c5b757d5a8f)；[`NationalSpire.MarketTerminal.Submit(NationalSpire.MarketOrder)`](MarketTerminal.cs.md#symbol-63d52edc18fa)；[`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`](MarketVisuals.cs.md#symbol-5703b8242580)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.Reparent(Godot.Node, bool)`；`Godot.OptionButton.AddIconItem(Godot.Texture2D, string, int)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.GetItemText(int)`；`Godot.OptionButton.OptionButton()`；`Godot.ProgressBar.ProgressBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.SpinBox.Apply()`；`Godot.SpinBox.GetLineEdit()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketChart.MarketChart()`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `AmountRow(string)`；`NationalSpire.CareerMarket.Leverages`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAmountInput.Amount`；`NationalSpire.MarketEvent.Person`；`NationalSpire.MarketTerminal._amount`；`NationalSpire.MarketTerminal._assetCount`；`NationalSpire.MarketTerminal._assetScroll`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._chart`；`NationalSpire.MarketTerminal._columns`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._country`；`NationalSpire.MarketTerminal._depth`；`NationalSpire.MarketTerminal._description`；`NationalSpire.MarketTerminal._events`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._forex`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._leverage`；`NationalSpire.MarketTerminal._metrics`；`NationalSpire.MarketTerminal._name`；`NationalSpire.MarketTerminal._newsTitle`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._overview`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._pin`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._query`；`NationalSpire.MarketTerminal._quote`；`NationalSpire.MarketTerminal._range`；`NationalSpire.MarketTerminal._right`；`NationalSpire.MarketTerminal._rows`；`NationalSpire.MarketTerminal._sector`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._settingAmount`；`NationalSpire.MarketTerminal._sort`；`NationalSpire.MarketTerminal._sources`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._trades`；`NationalSpire.MarketTerminal._transfer`；`NationalSpire.MarketTerminal._volatility`；`NationalSpire.MarketTerminal._volatilityBar`；`NationalSpire.MarketTerminal._watchOnly`；`NationalSpire.MarketTerminal.Button(string, System.Action)`；`NationalSpire.MarketTerminal.ChangePage(int)`；`NationalSpire.MarketTerminal.ClosePosition(int)`；`NationalSpire.MarketTerminal.Label(string, int, Godot.Color?)`；`NationalSpire.MarketTerminal.Money()`；`NationalSpire.MarketTerminal.Open(int)`；`NationalSpire.MarketTerminal.Panel(Godot.Node, float)`；`NationalSpire.MarketTerminal.RefreshAccount()`；`NationalSpire.MarketTerminal.RefreshChart()`；`NationalSpire.MarketTerminal.RefreshFee()`；`NationalSpire.MarketTerminal.ResetList()`；`NationalSpire.MarketTerminal.SelectRow(int)`；`NationalSpire.MarketTerminal.Submit(NationalSpire.MarketOrder)`；`NationalSpire.MarketTerminal.ToggleWatch()`；`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`
+**字段、属性、事件及方法组引用：** `AmountRow(string)`；`NationalSpire.CareerMarket.Leverages`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAmountInput.Amount`；`NationalSpire.MarketEvent.Person`；`NationalSpire.MarketTerminal._amount`；`NationalSpire.MarketTerminal._assetCount`；`NationalSpire.MarketTerminal._assetScroll`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._chart`；`NationalSpire.MarketTerminal._columns`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._country`；`NationalSpire.MarketTerminal._depth`；`NationalSpire.MarketTerminal._description`；`NationalSpire.MarketTerminal._events`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._forex`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._leverage`；`NationalSpire.MarketTerminal._metrics`；`NationalSpire.MarketTerminal._name`；`NationalSpire.MarketTerminal._newsTitle`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._overview`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._pin`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._query`；`NationalSpire.MarketTerminal._quote`；`NationalSpire.MarketTerminal._range`；`NationalSpire.MarketTerminal._right`；`NationalSpire.MarketTerminal._rows`；`NationalSpire.MarketTerminal._sector`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._settingAmount`；`NationalSpire.MarketTerminal._sort`；`NationalSpire.MarketTerminal._sources`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._trades`；`NationalSpire.MarketTerminal._transfer`；`NationalSpire.MarketTerminal._volatility`；`NationalSpire.MarketTerminal._volatilityBar`；`NationalSpire.MarketTerminal._watchOnly`；`NationalSpire.MarketTerminal.Button(string, System.Action)`；`NationalSpire.MarketTerminal.ChangePage(int)`；`NationalSpire.MarketTerminal.ClosePosition(int)`；`NationalSpire.MarketTerminal.Label(string, int, Godot.Color?)`；`NationalSpire.MarketTerminal.Money()`；`NationalSpire.MarketTerminal.Open(int)`；`NationalSpire.MarketTerminal.Panel(Godot.Node, float)`；`NationalSpire.MarketTerminal.RefreshAccount(bool)`；`NationalSpire.MarketTerminal.RefreshChart()`；`NationalSpire.MarketTerminal.RefreshFee()`；`NationalSpire.MarketTerminal.ResetList()`；`NationalSpire.MarketTerminal.SelectRow(int)`；`NationalSpire.MarketTerminal.Submit(NationalSpire.MarketOrder)`；`NationalSpire.MarketTerminal.ToggleWatch()`；`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -402,7 +405,7 @@ private decimal _displayScale = 1;
 - `NationalSpire.MarketTerminal.Panel(Godot.Node, float)`；输入表达式：`Panel(bottom)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Panel(bottom)`
 - `NationalSpire.MarketTerminal.Panel(Godot.Node, float)`；输入表达式：`Panel(top)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Panel(top)`
 - `NationalSpire.MarketTerminal.Panel(Godot.Node, float)`；输入表达式：`Panel(traits)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Panel(traits)`
-- `NationalSpire.MarketTerminal.RefreshAccount()`；输入表达式：`RefreshAccount()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshAccount();`
+- `NationalSpire.MarketTerminal.RefreshAccount(bool)`；输入表达式：`RefreshAccount()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshAccount();`
 - `NationalSpire.MarketTerminal.RefreshChart()`；输入表达式：`RefreshChart()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshChart();`
 - `NationalSpire.MarketTerminal.RefreshFee()`；输入表达式：`RefreshFee()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshFee();`
 - `NationalSpire.MarketTerminal.RefreshFee()`；输入表达式：`RefreshFee()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: _ => RefreshFee()`
@@ -506,11 +509,11 @@ private decimal _displayScale = 1;
 - `Texture` = `LifestyleArt.Icon(title == "承接规模" ? "外汇" : "波动")`
 - `watched.Toggled` += `value => { _watchOnly = value; ResetList(); }`
 
-<a id="symbol-e723e6bbf90e"></a>
+<a id="symbol-2cc118ecba54"></a>
 
 ## `AmountRow(string) — Label AmountRow(string title)`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -535,13 +538,13 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Bind(NationalSpire.CareerData, System.Action<NationalSpire.MarketOrder>, System.Action<string>) — internal void Bind(CareerData d, Action<MarketOrder> submit, Action<string> person)`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-ed217f617f49)；[`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`](MarketDynamics.cs.md#symbol-01f5459a2989)；[`NationalSpire.MarketTerminal.Prepare(double)`](MarketTerminal.cs.md#symbol-64aae4a775dc)；[`NationalSpire.MarketTerminal.RefreshAccount()`](MarketTerminal.cs.md#symbol-4089d15c736a)；[`NationalSpire.MarketTerminal.RefreshList()`](MarketTerminal.cs.md#symbol-38f64566d7c6)；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.HasSectionKey(string, string)`；`Godot.ConfigFile.Load(string)`；`Godot.Variant.AsStringArray()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-ed217f617f49)；[`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`](MarketDynamics.cs.md#symbol-01f5459a2989)；[`NationalSpire.MarketTerminal.Prepare(double)`](MarketTerminal.cs.md#symbol-64aae4a775dc)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshList()`](MarketTerminal.cs.md#symbol-38f64566d7c6)；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.HasSectionKey(string, string)`；`Godot.ConfigFile.Load(string)`；`Godot.Variant.AsStringArray()`；`object.ReferenceEquals(object?, object?)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.People`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.MarketAsset.Country`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketCatalog.Assets`；`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`；`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`；`NationalSpire.MarketDynamics.SponsorLink.Brand`；`NationalSpire.MarketDynamics.SponsorLink.Club`；`NationalSpire.MarketDynamics.SponsorLink.Target`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._identity`；`NationalSpire.MarketTerminal._loaded`；`NationalSpire.MarketTerminal._page`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._preferences`；`NationalSpire.MarketTerminal._searchText`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._submit`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._watch`；`NationalSpire.MarketTerminal.Prepare(double)`；`NationalSpire.MarketTerminal.RefreshAccount()`；`NationalSpire.MarketTerminal.RefreshList()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Market`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.MarketAsset.Country`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketCatalog.Assets`；`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`；`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`；`NationalSpire.MarketDynamics.SponsorLink.Brand`；`NationalSpire.MarketDynamics.SponsorLink.Club`；`NationalSpire.MarketDynamics.SponsorLink.Target`；`NationalSpire.MarketInspectionResult.Revision`；`NationalSpire.MarketState.Revision`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._identity`；`NationalSpire.MarketTerminal._inspection`；`NationalSpire.MarketTerminal._loaded`；`NationalSpire.MarketTerminal._page`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._preferences`；`NationalSpire.MarketTerminal._searchText`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._submit`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._watch`；`NationalSpire.MarketTerminal.Prepare(double)`；`NationalSpire.MarketTerminal.RefreshAccount(bool)`；`NationalSpire.MarketTerminal.RefreshList()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -556,8 +559,9 @@ private decimal _displayScale = 1;
 - `NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`；输入表达式：`MarketDynamics.Links(d)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketDynamics.Links(d)`
 - `NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`；输入表达式：`MarketDynamics.Partners(d, links)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketDynamics.Partners(d, links)`
 - `NationalSpire.MarketTerminal.Prepare(double)`；输入表达式：`Prepare(double.PositiveInfinity)`；返回值紧邻使用处：`ExpressionStatementSyntax: Prepare(double.PositiveInfinity);`
-- `NationalSpire.MarketTerminal.RefreshAccount()`；输入表达式：`RefreshAccount()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshAccount();`
+- `NationalSpire.MarketTerminal.RefreshAccount(bool)`；输入表达式：`RefreshAccount()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshAccount();`
 - `NationalSpire.MarketTerminal.RefreshList()`；输入表达式：`RefreshList()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshList();`
+- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(_data, d)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(_data, d)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join(" ", (partners.GetValueOrDefault(asset.Name) ?? []).Select(id => people.TryGetValue(id, out var p) ? p.PublicName + " " + EsportsWorld.ClubName(d, p.ClubId) : id == "player" ? CareerEngine.Name(d) : id))`；返回值紧邻使用处：`BinaryExpressionSyntax: asset.Name + " " + asset.Country + " " + asset.Sector + " " + clubs.GetValueOrDefault(asset.Name) + " " + string.Join(" ", (partners.GetValueOrDefault(asset.Name) ?? []).Select(id => people.TryGetValue(id, out var p) ? p.PublicName + " " + EsportsWorld.ClubName(d, p.ClubId) : id == "player" ? CareerEngine.Name(d) : id))`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join(" ", g.Select(l => EsportsWorld.ClubName(d, l.Target)).Distinct())`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => string.Join(" ", g.Select(l => EsportsWorld.ClubName(d, l.Target)).Distinct())`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`_searchText.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _searchText.Clear();`
@@ -579,6 +583,7 @@ private decimal _displayScale = 1;
 - `_data` = `d`
 - `_holdPage` = `_tradePage = 0`
 - `_identity` = `identity`
+- `_inspection` = `null`
 - `_loaded` = `true`
 - `_page` = `_holdPage = _tradePage = 0`
 - `_person` = `person`
@@ -592,22 +597,23 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Unbind() — internal void Unbind()`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerListCache.Release()`](CareerListCache.cs.md#symbol-395e4ab9a213)
 
-**调用：** [`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`](MarketVisuals.cs.md#symbol-7522a8a9e836)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`
+**调用：** [`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._searchText`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._submit`
+**字段、属性、事件及方法组引用：** `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._inspection`；`NationalSpire.MarketTerminal._inspectionGeneration`；`NationalSpire.MarketTerminal._person`；`NationalSpire.MarketTerminal._searchText`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._submit`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`；输入表达式：`.Bind(null, null)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: card?.Bind(null, null)`
+- `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`；输入表达式：`.Bind(null, null)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: card?.Bind(null, null)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`_searchText.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _searchText.Clear();`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_data` = `null`
+- `_inspection` = `null`
 - `_person` = `null`
 - `_selectedEvents` = `[]`
 - `_submit` = `null`
@@ -616,7 +622,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.ResetList() — private void ResetList()`
 
-来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -637,7 +643,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.ChangePage(int) — private void ChangePage(int direction)`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -658,7 +664,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.SortValue(NationalSpire.MarketAsset) — private double SortValue(MarketAsset asset)`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -678,7 +684,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.RefreshList() — private void RefreshList()`
 
-来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Bind(NationalSpire.CareerData, System.Action<NationalSpire.MarketOrder>, System.Action<string>)`](MarketTerminal.cs.md#symbol-09b1a1ea6de7)；[`NationalSpire.MarketTerminal.ChangePage(int)`](MarketTerminal.cs.md#symbol-83787d38907b)；[`NationalSpire.MarketTerminal.ResetList()`](MarketTerminal.cs.md#symbol-d43e3b0284a7)；[`NationalSpire.MarketTerminal.ToggleWatch()`](MarketTerminal.cs.md#symbol-0579dd458274)
 
@@ -720,7 +726,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.SelectRow(int) — private void SelectRow(int row)`
 
-来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 251 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -740,13 +746,13 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.RefreshSelection() — private void RefreshSelection()`
 
-来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 252 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshList()`](MarketTerminal.cs.md#symbol-38f64566d7c6)；[`NationalSpire.MarketTerminal.SelectRow(int)`](MarketTerminal.cs.md#symbol-3c5b757d5a8f)
 
-**调用：** [`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal)`](MarketTerminal.cs.md#symbol-22dfa2e243b9)；[`NationalSpire.MarketDynamics.Volatility(string, NationalSpire.MarketAsset)`](MarketDynamics.cs.md#symbol-9fa2a14727ca)；[`NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string)`](MarketVisuals.cs.md#symbol-30fd495127a5)；[`NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`](MarketExecution.cs.md#symbol-c74291f4d6c7)；[`NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset)`](MarketTerminal.cs.md#symbol-17a172f5c790)；[`NationalSpire.MarketTerminal.RefreshChart()`](MarketTerminal.cs.md#symbol-e1b73bf4bb8f)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)；[`NationalSpire.RegionalOrganizations.SponsorDescription(string)`](RegionalOrganizations.cs.md#symbol-421e3c666278)；`decimal.ToString(string?)`；`double.ToString(string?)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Node.GetChild(int, bool)`；`Godot.Node.GetNode<T>(Godot.NodePath)`；`Godot.Node.GetParent()`；`string.Replace(string, string?)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** [`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal)`](MarketTerminal.cs.md#symbol-22dfa2e243b9)；[`NationalSpire.MarketDynamics.Volatility(string, NationalSpire.MarketAsset)`](MarketDynamics.cs.md#symbol-9fa2a14727ca)；[`NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string)`](MarketVisuals.cs.md#symbol-30fd495127a5)；[`NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`](MarketExecution.cs.md#symbol-c74291f4d6c7)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset)`](MarketTerminal.cs.md#symbol-17a172f5c790)；[`NationalSpire.MarketTerminal.RefreshChart()`](MarketTerminal.cs.md#symbol-e1b73bf4bb8f)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)；[`NationalSpire.RegionalOrganizations.SponsorDescription(string)`](RegionalOrganizations.cs.md#symbol-421e3c666278)；`decimal.ToString(string?)`；`double.ToString(string?)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Node.GetChild(int, bool)`；`Godot.Node.GetNode<T>(Godot.NodePath)`；`Godot.Node.GetParent()`；`string.Replace(string, string?)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
-**字段、属性、事件及方法组引用：** `(NationalSpire.MarketEvent Event, string Title).Event`；`(NationalSpire.MarketEvent Event, string Title).Title`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAsset.Country`；`NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal)`；`NationalSpire.MarketDynamics.Volatility(string, NationalSpire.MarketAsset)`；`NationalSpire.MarketEvent.Asset`；`NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string)`；`NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`；`NationalSpire.MarketQuote.Previous`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketState.Events`；`NationalSpire.MarketState.Quotes`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._chart`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._depth`；`NationalSpire.MarketTerminal._description`；`NationalSpire.MarketTerminal._events`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._name`；`NationalSpire.MarketTerminal._newsTitle`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._overview`；`NationalSpire.MarketTerminal._pin`；`NationalSpire.MarketTerminal._quote`；`NationalSpire.MarketTerminal._right`；`NationalSpire.MarketTerminal._rows`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._sources`；`NationalSpire.MarketTerminal._visible`；`NationalSpire.MarketTerminal._volatility`；`NationalSpire.MarketTerminal._volatilityBar`；`NationalSpire.MarketTerminal._watch`；`NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset)`；`NationalSpire.MarketTerminal.RefreshChart()`；`NationalSpire.MarketTerminal.RefreshFee()`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`；`NationalSpire.RegionalOrganizations.SponsorDescription(string)`
+**字段、属性、事件及方法组引用：** `(NationalSpire.MarketEvent Event, string Title).Event`；`(NationalSpire.MarketEvent Event, string Title).Title`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAsset.Country`；`NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal)`；`NationalSpire.MarketDynamics.Volatility(string, NationalSpire.MarketAsset)`；`NationalSpire.MarketEvent.Asset`；`NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string)`；`NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`；`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`；`NationalSpire.MarketQuote.ClearingDepthUnits`；`NationalSpire.MarketQuote.Previous`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketState.Events`；`NationalSpire.MarketState.Quotes`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._chart`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._depth`；`NationalSpire.MarketTerminal._description`；`NationalSpire.MarketTerminal._events`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._name`；`NationalSpire.MarketTerminal._newsTitle`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._overview`；`NationalSpire.MarketTerminal._pin`；`NationalSpire.MarketTerminal._quote`；`NationalSpire.MarketTerminal._right`；`NationalSpire.MarketTerminal._rows`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._selectedEvents`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._sources`；`NationalSpire.MarketTerminal._visible`；`NationalSpire.MarketTerminal._volatility`；`NationalSpire.MarketTerminal._volatilityBar`；`NationalSpire.MarketTerminal._watch`；`NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset)`；`NationalSpire.MarketTerminal.RefreshChart()`；`NationalSpire.MarketTerminal.RefreshFee()`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`；`NationalSpire.RegionalOrganizations.SponsorDescription(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -770,7 +776,8 @@ private decimal _displayScale = 1;
 - `NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal)`；输入表达式：`_chart.Set([], "")`；返回值紧邻使用处：`ExpressionStatementSyntax: _chart.Set([], "");`
 - `NationalSpire.MarketDynamics.Volatility(string, NationalSpire.MarketAsset)`；输入表达式：`MarketDynamics.Volatility(_data.WorldId, asset)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketDynamics.Volatility(_data.WorldId, asset)`
 - `NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string)`；输入表达式：`_events[i].Bind(news[i].Event, news[i].Title)`；返回值紧邻使用处：`ExpressionStatementSyntax: _events[i].Bind(news[i].Event, news[i].Title);`
-- `NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`；输入表达式：`MarketExecution.Depth(asset)`；返回值紧邻使用处：`BinaryExpressionSyntax: MarketExecution.Depth(asset) * 10`
+- `NationalSpire.MarketExecution.Depth(NationalSpire.MarketAsset)`；输入表达式：`MarketExecution.Depth(asset)`；返回值紧邻使用处：`ConditionalExpressionSyntax: depthQuote.ClearingDepthUnits > 0 ? depthQuote.ClearingDepthUnits * MarketExecution.ReferencePrice(depthQuote) : MarketExecution.Depth(asset)`
+- `NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.ReferencePrice(depthQuote)`；返回值紧邻使用处：`BinaryExpressionSyntax: depthQuote.ClearingDepthUnits * MarketExecution.ReferencePrice(depthQuote)`
 - `NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset)`；输入表达式：`EventTitle(e, asset)`；返回值紧邻使用处：`ArgumentSyntax: Title: EventTitle(e, asset)`
 - `NationalSpire.MarketTerminal.RefreshChart()`；输入表达式：`RefreshChart()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshChart();`
 - `NationalSpire.MarketTerminal.RefreshFee()`；输入表达式：`RefreshFee()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshFee();`
@@ -822,7 +829,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.RefreshChart() — private void RefreshChart()`
 
-来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
@@ -844,7 +851,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.EventTitle(NationalSpire.MarketEvent, NationalSpire.MarketAsset) — private string EventTitle(MarketEvent item, MarketAsset asset)`
 
-来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
@@ -873,9 +880,9 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int) — private decimal OrderMargin(MarketAsset asset, int leverage)`
 
-来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 306 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketTerminal.Open(int)`](MarketTerminal.cs.md#symbol-9665309ab157)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
+**调用者：** [`NationalSpire.MarketTerminal.Open(int)`](MarketTerminal.cs.md#symbol-9665309ab157)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)
 
 **调用：** [`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`](CareerMarket.cs.md#symbol-f2a928a00b17)
 
@@ -892,13 +899,13 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.RefreshFee() — private void RefreshFee()`
 
-来源：源码第 302 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
+**调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.MarketTerminal.SetOrderMargin(decimal)`](MarketTerminal.cs.md#symbol-5c2e4be798a5)
 
-**调用：** [`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`](CareerMarket.cs.md#symbol-f2a928a00b17)；[`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.MarketAmountInput.SetAmount(decimal)`](MarketAmountInput.cs.md#symbol-b73158988cf2)；[`NationalSpire.MarketExecution.Open(NationalSpire.MarketAsset, NationalSpire.MarketQuote, decimal, int)`](MarketExecution.cs.md#symbol-1d104843be66)；[`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`](MarketTerminal.cs.md#symbol-306487121584)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-07d3c2f38dee)；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** [`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`](CareerMarket.cs.md#symbol-f2a928a00b17)；[`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.MarketAmountInput.SetAmount(decimal)`](MarketAmountInput.cs.md#symbol-b73158988cf2)；[`NationalSpire.MarketClearing.Preview(NationalSpire.CareerData, NationalSpire.MarketOrder, bool)`](MarketClearing.cs.md#symbol-e90e0ab892c9)；[`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`](MarketTerminal.cs.md#symbol-306487121584)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-21e2888e28ce)；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`；`NationalSpire.CareerMarket.Leverages`；`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAmountInput.SetAmount(decimal)`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketExecution.Open(NationalSpire.MarketAsset, NationalSpire.MarketQuote, decimal, int)`；`NationalSpire.MarketState.Quotes`；`NationalSpire.MarketTerminal._amount`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._leverage`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._settingAmount`；`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`；`Quote(decimal)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.InspectMarket`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMarket.BudgetMargin(NationalSpire.MarketAsset, decimal, int, int)`；`NationalSpire.CareerMarket.Leverages`；`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAmountInput.SetAmount(decimal)`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketClearing.Preview(NationalSpire.CareerData, NationalSpire.MarketOrder, bool)`；`NationalSpire.MarketClearing.Result.Average`；`NationalSpire.MarketTerminal._amount`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._cost`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._fee`；`NationalSpire.MarketTerminal._leverage`；`NationalSpire.MarketTerminal._notional`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal._settingAmount`；`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`；`NationalSpire.MarketTerminal.RequestInspection()`；`Quote(decimal)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -911,15 +918,19 @@ private decimal _displayScale = 1;
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(margin * leverage)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _notional.TooltipText = CareerMoney.Format(margin * leverage)`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(margin + fee)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _cost.TooltipText = CareerMoney.Format(margin + fee)`
 - `NationalSpire.MarketAmountInput.SetAmount(decimal)`；输入表达式：`_amount.SetAmount(CareerMarket.BudgetMargin(asset, _data.Life.Trading.Cash, leverage, _portion) * 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: _amount.SetAmount(CareerMarket.BudgetMargin(asset, _data.Life.Trading.Cash, leverage, _portion) * 10);`
-- `NationalSpire.MarketExecution.Open(NationalSpire.MarketAsset, NationalSpire.MarketQuote, decimal, int)`；输入表达式：`MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, -1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, -1)`
-- `NationalSpire.MarketExecution.Open(NationalSpire.MarketAsset, NationalSpire.MarketQuote, decimal, int)`；输入表达式：`MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, 1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, 1)`
+- `NationalSpire.MarketClearing.Preview(NationalSpire.CareerData, NationalSpire.MarketOrder, bool)`；输入表达式：`MarketClearing.Preview(_data, new("open", asset.Id, margin, -1, leverage), false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketClearing.Preview(_data, new("open", asset.Id, margin, -1, leverage), false)`
+- `NationalSpire.MarketClearing.Preview(NationalSpire.CareerData, NationalSpire.MarketOrder, bool)`；输入表达式：`MarketClearing.Preview(_data, new("open", asset.Id, margin, 1, leverage), false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketClearing.Preview(_data, new("open", asset.Id, margin, 1, leverage), false)`
+- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("open", asset.Id, margin, -1, leverage)`；返回值紧邻使用处：`ArgumentSyntax: new("open", asset.Id, margin, -1, leverage)`
+- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("open", asset.Id, margin, 1, leverage)`；返回值紧邻使用处：`ArgumentSyntax: new("open", asset.Id, margin, 1, leverage)`
 - `NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`；输入表达式：`OrderMargin(asset, leverage)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = OrderMargin(asset, leverage)`
+- `NationalSpire.MarketTerminal.RequestInspection()`；输入表达式：`RequestInspection()`；返回值紧邻使用处：`ExpressionStatementSyntax: RequestInspection();`
 - `Quote(decimal)`；输入表达式：`Quote(buy.Average)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价  " + Quote(buy.Average)`
 - `Quote(decimal)`；输入表达式：`Quote(sell.Average)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价  " + Quote(sell.Average)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`MarketCatalog.ById.TryGetValue(_selected, out var asset)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !MarketCatalog.ById.TryGetValue(_selected, out var asset)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `_buyPrice.Text` = `_sellPrice.Text = "正在计算成交均价"`
 - `_buyPrice.Text` = `"预计成交均价  " + Quote(buy.Average)`
 - `_cost.MouseFilter` = `_notional.MouseFilter = _fee.MouseFilter = MouseFilterEnum.Pass`
 - `_cost.Text` = `CareerMoney.Compact(margin + fee)`
@@ -931,14 +942,15 @@ private decimal _displayScale = 1;
 - `_notional.Text` = `CareerMoney.Compact(margin * leverage)`
 - `_notional.TooltipText` = `CareerMoney.Format(margin * leverage)`
 - `_sellPrice.Text` = `"预计成交均价  " + Quote(sell.Average)`
+- `_sellPrice.Text` = `"正在计算成交均价"`
 - `_settingAmount` = `false`
 - `_settingAmount` = `true`
 
-<a id="symbol-07d3c2f38dee"></a>
+<a id="symbol-21e2888e28ce"></a>
 
 ## `Quote(decimal) — string Quote(decimal value)`
 
-来源：源码第 314 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
 
@@ -954,25 +966,88 @@ private decimal _displayScale = 1;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-4089d15c736a"></a>
+<a id="symbol-332ba74db6e5"></a>
 
-## `NationalSpire.MarketTerminal.RefreshAccount() — private void RefreshAccount()`
+## `NationalSpire.MarketTerminal.RequestInspection() — private async void RequestInspection()`
 
-来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 332 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketTerminal.Bind(NationalSpire.CareerData, System.Action<NationalSpire.MarketOrder>, System.Action<string>)`](MarketTerminal.cs.md#symbol-09b1a1ea6de7)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
+**调用者：** [`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)
 
-**调用：** [`NationalSpire.CareerMarket.Net(NationalSpire.MarketState, NationalSpire.MarketAccount)`](CareerMarket.cs.md#symbol-55ca9c614fb1)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`](MarketVisuals.cs.md#symbol-7522a8a9e836)；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`](MarketTerminal.cs.md#symbol-306487121584)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-1cda59f3a28e)；`NationalSpire.MarketInspection.MarketInspection(string, decimal, int, int[], bool)`；`object.ReferenceEquals(object?, object?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Threading.Tasks.Task.Delay(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMarket.Net(NationalSpire.MarketState, NationalSpire.MarketAccount)`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Debt`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAccount.Trades`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Margin`；`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`；`NationalSpire.MarketState.Quotes`；`NationalSpire.MarketState.Revision`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._metrics`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._trades`；`NationalSpire.MarketTrade.Change`；`NationalSpire.MarketTrade.Day`；`NationalSpire.MarketTrade.Text`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.InspectMarket`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMarket.Leverages`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAsset.Id`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketInspectionResult.Buy`；`NationalSpire.MarketInspectionResult.Revision`；`NationalSpire.MarketInspectionResult.Sell`；`NationalSpire.MarketOrderPreview.Average`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketState.Revision`；`NationalSpire.MarketTerminal._buyPrice`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._inspection`；`NationalSpire.MarketTerminal._inspectionBusy`；`NationalSpire.MarketTerminal._inspectionGeneration`；`NationalSpire.MarketTerminal._leverage`；`NationalSpire.MarketTerminal._selected`；`NationalSpire.MarketTerminal._sellPrice`；`NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`；`NationalSpire.MarketTerminal.RefreshAccount(bool)`；`NationalSpire.MarketTerminal.RequestInspection()`；`Quote(decimal)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerMarket.Net(NationalSpire.MarketState, NationalSpire.MarketAccount)`；输入表达式：`CareerMarket.Net(_data.Market, account)`；返回值紧邻使用处：`ExpressionElementSyntax: CareerMarket.Net(_data.Market, account)`
+- `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("market.remote-preview", error)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("market.remote-preview", error);`
+- `NationalSpire.MarketInspection.MarketInspection(string, decimal, int, int[], bool)`；输入表达式：`new MarketInspection(asset.Id, OrderMargin(asset, leverage), leverage, data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MarketInspection(asset.Id, OrderMargin(asset, leverage), leverage, data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray())`
+- `NationalSpire.MarketTerminal.OrderMargin(NationalSpire.MarketAsset, int)`；输入表达式：`OrderMargin(asset, leverage)`；返回值紧邻使用处：`ArgumentSyntax: OrderMargin(asset, leverage)`
+- `NationalSpire.MarketTerminal.RefreshAccount(bool)`；输入表达式：`RefreshAccount(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshAccount(false);`
+- `NationalSpire.MarketTerminal.RequestInspection()`；输入表达式：`RequestInspection()`；返回值紧邻使用处：`ExpressionStatementSyntax: RequestInspection();`
+- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(_data, data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(_data, data)`
+- `Quote(decimal)`；输入表达式：`Quote(result.Buy.Average)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价  " + Quote(result.Buy.Average)`
+- `Quote(decimal)`；输入表达式：`Quote(result.Sell.Average)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价  " + Quote(result.Sell.Average)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`data.Life.Trading.Positions.Skip(_holdPage * 5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Life.Trading.Positions.Skip(_holdPage * 5).Take`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray()`；返回值紧邻使用处：`ArgumentSyntax: data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray()`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`MarketCatalog.ById.TryGetValue(_selected, out var asset)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !MarketCatalog.ById.TryGetValue(_selected, out var asset)`
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`data.InspectMarket(request)`；返回值紧邻使用处：`AwaitExpressionSyntax: await data.InspectMarket(request)`
+- `System.Threading.Tasks.Task.Delay(int)`；输入表达式：`Task.Delay(120)`；返回值紧邻使用处：`AwaitExpressionSyntax: await Task.Delay(120)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_buyPrice.Text` = `_sellPrice.Text = "报价读取失败，点击下单时重新计算"`
+- `_buyPrice.Text` = `"预计成交均价  " + Quote(result.Buy.Average)`
+- `_inspection` = `result`
+- `_inspectionBusy` = `false`
+- `_inspectionBusy` = `true`
+- `_sellPrice.Text` = `"报价读取失败，点击下单时重新计算"`
+- `_sellPrice.Text` = `"预计成交均价  " + Quote(result.Sell.Average)`
+
+<a id="symbol-1cda59f3a28e"></a>
+
+## `Quote(decimal) — string Quote(decimal value)`
+
+来源：源码第 345 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)
+
+**调用：** [`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；`decimal.ToString(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.MarketAsset.Forex`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `decimal.ToString(string?)`；输入表达式：`value.ToString("0.00000")`；返回值紧邻使用处：`ConditionalExpressionSyntax: asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value)`
+- `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(value)`；返回值紧邻使用处：`ConditionalExpressionSyntax: asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-9559baf40113"></a>
+
+## `NationalSpire.MarketTerminal.RefreshAccount(bool) — private void RefreshAccount(bool requestInspection = true)`
+
+来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.MarketTerminal.Bind(NationalSpire.CareerData, System.Action<NationalSpire.MarketOrder>, System.Action<string>)`](MarketTerminal.cs.md#symbol-09b1a1ea6de7)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)
+
+**调用：** [`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`](MarketClearing.cs.md#symbol-2192e2bdcb1e)；[`NationalSpire.MarketClearing.PreviewClose(NationalSpire.CareerData, NationalSpire.MarketPosition)`](MarketClearing.cs.md#symbol-554374f533fb)；[`NationalSpire.MarketExecution.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>?)`](MarketExecution.cs.md#symbol-38a7df5abf7b)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketTerminal.RequestInspection()`](MarketTerminal.cs.md#symbol-332ba74db6e5)；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.InspectMarket`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Debt`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAccount.Trades`；`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`；`NationalSpire.MarketClearing.PreviewClose(NationalSpire.CareerData, NationalSpire.MarketPosition)`；`NationalSpire.MarketExecution.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>?)`；`NationalSpire.MarketInspectionResult.Exits`；`NationalSpire.MarketInspectionResult.Net`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketPosition.Margin`；`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`；`NationalSpire.MarketState.Quotes`；`NationalSpire.MarketState.Revision`；`NationalSpire.MarketTerminal._data`；`NationalSpire.MarketTerminal._holdings`；`NationalSpire.MarketTerminal._holdPage`；`NationalSpire.MarketTerminal._inspection`；`NationalSpire.MarketTerminal._metrics`；`NationalSpire.MarketTerminal._tradePage`；`NationalSpire.MarketTerminal._trades`；`NationalSpire.MarketTerminal.RequestInspection()`；`NationalSpire.MarketTrade.Change`；`NationalSpire.MarketTrade.Day`；`NationalSpire.MarketTrade.Text`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(trades[i].Change)`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Compact(trades[i].Change)}`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(values[i])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _metrics[i].Text = CareerMoney.Compact(values[i])`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(values[i])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _metrics[i].TooltipText = CareerMoney.Format(values[i])`
-- `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long)`；输入表达式：`_holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision)`；返回值紧邻使用处：`ExpressionStatementSyntax: _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision);`
+- `NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`；输入表达式：`MarketClearing.Accounts(_data)`；返回值紧邻使用处：`ArgumentSyntax: MarketClearing.Accounts(_data)`
+- `NationalSpire.MarketClearing.PreviewClose(NationalSpire.CareerData, NationalSpire.MarketPosition)`；输入表达式：`MarketClearing.PreviewClose(_data, p)`；返回值紧邻使用处：`ConditionalExpressionSyntax: remote ? _inspection?.Exits.GetValueOrDefault(p.Id) : MarketClearing.PreviewClose(_data, p)`
+- `NationalSpire.MarketExecution.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>?)`；输入表达式：`MarketExecution.LiquidationValue(_data.Market, account, MarketClearing.Accounts(_data))`；返回值紧邻使用处：`ConditionalExpressionSyntax: remote ? _inspection?.Net ?? 0 : MarketExecution.LiquidationValue(_data.Market, account, MarketClearing.Accounts(_data))`
+- `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`；输入表达式：`_holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision, exit, remote && exit == null)`；返回值紧邻使用处：`ExpressionStatementSyntax: _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision, exit, remote && exit == null);`
+- `NationalSpire.MarketTerminal.RequestInspection()`；输入表达式：`RequestInspection()`；返回值紧邻使用处：`ExpressionStatementSyntax: RequestInspection();`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`account.Trades.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: account.Trades.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault()`
 - `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`account.Trades.AsEnumerable().Reverse()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: account.Trades.AsEnumerable().Reverse().Skip`
@@ -981,6 +1056,7 @@ private decimal _displayScale = 1;
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, decimal>)`；输入表达式：`account.Positions.Sum(p => p.Margin)`；返回值紧邻使用处：`ExpressionElementSyntax: account.Positions.Sum(p => p.Margin)`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray()`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.Exits.GetValueOrDefault(p.Id)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _inspection?.Exits.GetValueOrDefault(p.Id)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, (account.Positions.Count - 1) / 5)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, (account.Positions.Count - 1) / 5)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, (account.Trades.Count - 1) / 5)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, (account.Trades.Count - 1) / 5)`
 - `System.Math.Min(int, int)`；输入表达式：`Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _holdPage = Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5))`
@@ -990,6 +1066,8 @@ private decimal _displayScale = 1;
 
 - `_holdings[i].Visible` = `p != null || i == 0`
 - `_holdPage` = `Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5))`
+- `_metrics[0].Text` = `"正在计算"`
+- `_metrics[0].TooltipText` = `""`
 - `_metrics[i].MouseFilter` = `MouseFilterEnum.Pass`
 - `_metrics[i].Text` = `CareerMoney.Compact(values[i])`
 - `_metrics[i].TooltipText` = `CareerMoney.Format(values[i])`
@@ -1001,7 +1079,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.ToggleWatch() — private void ToggleWatch()`
 
-来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 375 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1026,7 +1104,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.Submit(NationalSpire.MarketOrder) — private void Submit(MarketOrder order)`
 
-来源：源码第 343 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 381 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.ClosePosition(int)`](MarketTerminal.cs.md#symbol-1a0f641bc735)；[`NationalSpire.MarketTerminal.Open(int)`](MarketTerminal.cs.md#symbol-9665309ab157)
 
@@ -1041,11 +1119,34 @@ private decimal _displayScale = 1;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-5c2e4be798a5"></a>
+
+## `NationalSpire.MarketTerminal.SetOrderMargin(decimal) — internal void SetOrderMargin(decimal margin)`
+
+来源：源码第 382 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.MarketSubmit(NationalSpire.CareerData, NationalSpire.MarketOrder)`](MarketScreen.cs.md#symbol-fbc36ef790b1)
+
+**调用：** [`NationalSpire.MarketAmountInput.SetAmount(decimal)`](MarketAmountInput.cs.md#symbol-b73158988cf2)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.MarketAmountInput.SetAmount(decimal)`；`NationalSpire.MarketTerminal._amount`；`NationalSpire.MarketTerminal._portion`；`NationalSpire.MarketTerminal._settingAmount`；`NationalSpire.MarketTerminal.RefreshFee()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.MarketAmountInput.SetAmount(decimal)`；输入表达式：`_amount.SetAmount(margin * 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: _amount.SetAmount(margin * 10);`
+- `NationalSpire.MarketTerminal.RefreshFee()`；输入表达式：`RefreshFee()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshFee();`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_portion` = `0`
+- `_settingAmount` = `false`
+- `_settingAmount` = `true`
+
 <a id="symbol-9665309ab157"></a>
 
 ## `NationalSpire.MarketTerminal.Open(int) — private void Open(int direction)`
 
-来源：源码第 344 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 386 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -1070,7 +1171,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketTerminal.ClosePosition(int) — private void ClosePosition(int row)`
 
-来源：源码第 352 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 394 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
@@ -1092,7 +1193,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketChart.Points — public MarketPoint[] Points`
 
-来源：源码第 365 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 407 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1111,7 +1212,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketChart.Set(NationalSpire.MarketPoint[], string, decimal) — public void Set(MarketPoint[] points, string seed, decimal displayScale = 1)`
 
-来源：源码第 366 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 408 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketChart.Points`](MarketTerminal.cs.md#symbol-88fdb4c0e3f3)；[`NationalSpire.MarketTerminal.RefreshChart()`](MarketTerminal.cs.md#symbol-e1b73bf4bb8f)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
@@ -1134,7 +1235,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketChart._Ready() — public override void _Ready()`
 
-来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 409 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1156,7 +1257,7 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketChart._GuiInput(Godot.InputEvent) — public override void _GuiInput(InputEvent e)`
 
-来源：源码第 368 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 410 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1178,11 +1279,11 @@ private decimal _displayScale = 1;
 
 ## `NationalSpire.MarketChart._Draw() — public override void _Draw()`
 
-来源：源码第 372 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 414 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`Y(decimal)`](MarketTerminal.cs.md#symbol-42d673a39a93)；`decimal.ToString(string?)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.Color.Color(string)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Min<TSource>(System.Func<TSource, decimal>)`；`System.Math.Abs(float)`；`System.Math.Max(decimal, decimal)`；`System.Math.Max(float, float)`；`System.Math.Min(decimal, decimal)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`Y(decimal)`](MarketTerminal.cs.md#symbol-c3cda4635013)；`decimal.ToString(string?)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.Color.Color(string)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Min<TSource>(System.Func<TSource, decimal>)`；`System.Math.Abs(float)`；`System.Math.Max(decimal, decimal)`；`System.Math.Max(float, float)`；`System.Math.Min(decimal, decimal)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.MarketChart._displayScale`；`NationalSpire.MarketChart._hover`；`NationalSpire.MarketChart._points`；`NationalSpire.MarketChart._seed`；`NationalSpire.MarketPoint.Day`；`NationalSpire.MarketPoint.Price`；`Y(decimal)`
 
@@ -1240,11 +1341,11 @@ private decimal _displayScale = 1;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-42d673a39a93"></a>
+<a id="symbol-c3cda4635013"></a>
 
 ## `Y(decimal) — float Y(decimal value)`
 
-来源：源码第 377 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 419 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketChart._Draw()`](MarketTerminal.cs.md#symbol-b9c7f00ce2d0)
 

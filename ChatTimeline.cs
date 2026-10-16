@@ -75,11 +75,26 @@ public static class ChatTimeline
             .Where(x => x.Order >= start && (pending == null || pending.UserOrder == 0 || x.Order < pending.UserOrder)))
             .OrderBy(x => x.Day).ThenBy(x => x.Order);
     }
-    public static object[] PublicMemories(CareerData d, string person, int day) => d.Chats.Groups.Where(g => g.Members.Contains(person)).Select(g => (object)new
+    public static object[] PublicMemories(CareerData d, string person, int day) => d.Chats.Groups.Where(g => g.Members.Contains(person)).Select(g => PublicMemory(d, g, day)).ToArray();
+    private static object PublicMemory(CareerData d, GroupChat g, int day) => new
     {
         群聊 = g.Name, 说明 = "这是该人物参加的群聊记忆，不是帖子里已经公开的发言。其他人只知道公开说出的部分。", 知情人 = g.Members.Select(id => GroupChats.Name(d, id)).ToArray(),
         大总结 = g.BigSummaries.LastOrDefault(s => s.Through > 0 && s.Through <= g.Turns.Count && g.Turns[s.Through - 1].Day <= day)?.Text,
         小总结 = g.SmallSummaries.LastOrDefault(s => s.Through > 0 && s.Through <= g.Turns.Count && g.Turns[s.Through - 1].Day <= day)?.Text,
         最近记录 = g.Turns.Where(t => t.Status == "complete" && t.Day <= day).TakeLast(5).Select(t => new { 日期 = PrivateAppointments.DateText(d, t.Day), 发言 = t.Replies.Select(r => new { 人物 = GroupChats.Name(d, r.Author), 内容 = r.Text }), 玩家姓名 = GroupChats.Name(d, t.Sender), 玩家消息 = t.Text }).ToArray()
-    }).ToArray();
+    };
+
+    /// <summary>一次发帖或回帖请求共享群聊资料；日期与群聊编号共同确定可见版本。</summary>
+    public sealed class PublicMemoryRequest(CareerData data)
+    {
+        private readonly Dictionary<(string Group, int Day), object> _records = [];
+        public string[] For(string person, int day) => data.Chats.Groups.Where(g => g.Members.Contains(person))
+            .OrderBy(g => g.Id, StringComparer.Ordinal).Select(g =>
+            {
+                string id = g.Id + ":" + day;
+                if (!_records.ContainsKey((g.Id, day))) _records.Add((g.Id, day), new { reference = id, content = PublicMemory(data, g, day) });
+                return id;
+            }).ToArray();
+        public object[] Records => _records.OrderBy(x => x.Key.Group, StringComparer.Ordinal).ThenBy(x => x.Key.Day).Select(x => x.Value).ToArray();
+    }
 }

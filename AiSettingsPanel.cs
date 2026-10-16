@@ -6,29 +6,40 @@ namespace NationalSpire;
 public static class AiSettingsPanel
 {
     public static Label Build(VBoxContainer box, AiOptions options, Action save, Action generate, Action prompts,
-        Action<string, bool> notice, Action? editing = null, string saveText = "保存设置")
+        Action<string, bool> notice, Action? editing = null, string saveText = "保存设置", Action<Action>? confirmSwitch = null)
     {
+        AiRouting.Ensure(options);
+        var columns = new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        columns.AddThemeConstantOverride("separation", 22); box.AddChild(columns);
+        var editorPanel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1.2f };
+        editorPanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102330", "385565", 10, 18)); columns.AddChild(editorPanel);
+        var editor = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; editor.AddThemeConstantOverride("separation", 10); editorPanel.AddChild(editor);
+        var routePanel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        routePanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 10, 18)); columns.AddChild(routePanel);
+        var routes = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; routes.AddThemeConstantOverride("separation", 13); routePanel.AddChild(routes);
+        string selected = AiRouting.Default; bool loading = false, creating = false, deleteKey = false;
+        string? draftKey = AiService.ProfileKey(selected);
         Label Text(string value)
         {
             var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-            label.AddThemeFontSizeOverride("font_size", 16); label.AddThemeColorOverride("font_color", CareerVisuals.Muted); box.AddChild(label); return label;
+            label.AddThemeFontSizeOverride("font_size", 16); label.AddThemeColorOverride("font_color", CareerVisuals.Muted); editor.AddChild(label); return label;
         }
         void Button(string title, Action action)
         {
             var button = new BroadcastButton { Text = title, CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin };
-            button.Pressed += action; box.AddChild(button);
+            button.Pressed += action; editor.AddChild(button);
         }
         void Save() { try { save(); } catch (Exception e) { notice("设置未能保存：" + e.Message, true); } }
         LineEdit Input(string title, string value, string name)
         {
             Text(title); var input = new LineEdit { Name = name, Text = value, CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-            input.TextChanged += _ => editing?.Invoke(); box.AddChild(input); return input;
+            input.TextChanged += _ => editing?.Invoke(); editor.AddChild(input); return input;
         }
         var commitNumbers = new List<Func<bool>>();
         void Number(string title, string name, int value, int min, int max, Action<int> update)
         {
             Text($"{title}（{min}—{max}）");
-            var row = new HBoxContainer(); box.AddChild(row);
+            var row = new HBoxContainer(); editor.AddChild(row);
             int saved = Math.Clamp(value, min, max);
             var input = new LineEdit { Name = name, Text = saved.ToString(), CustomMinimumSize = new(150, 44), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
             row.AddChild(input);
@@ -57,29 +68,37 @@ public static class AiSettingsPanel
         LineEdit? key = null;
         void CommitKey()
         {
-            if (key == null || string.IsNullOrWhiteSpace(key.Text)) return;
-            Diagnostics.Record("ai.credential.commit", new { source = "save-button" });
-            var error = AiService.PersistKey(key.Text.Trim());
-            key.Text = "";
-            key.PlaceholderText = error == null ? "已保存，留空保留当前密钥" : "已暂存，本次启动可用";
+            string? value = deleteKey ? "" : !string.IsNullOrWhiteSpace(key!.Text) ? key.Text.Trim() : creating ? draftKey : null;
+            if (value == null) return;
+            var error = AiService.PersistKey(value, selected);
+            draftKey = value; key!.Text = ""; deleteKey = false;
+            key.PlaceholderText = AiService.HasProfileKey(selected) ? "已保存，留空保留当前密钥" : "请输入 API 密钥";
             if (error != null) notice(error, true);
         }
+        Text("连接方案").AddThemeColorOverride("font_color", CareerVisuals.Gold);
+        var selectionRow = new HBoxContainer(); editor.AddChild(selectionRow);
+        var profiles = new OptionButton { Name = "AiProfiles", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; selectionRow.AddChild(profiles);
+        var create = new BroadcastButton { Name = "AiNewProfile", Text = "＋ 新建", CustomMinimumSize = new(96, 46) }; selectionRow.AddChild(create);
+        var saveRow = new HBoxContainer(); editor.AddChild(saveRow);
+        var profileName = new LineEdit { Name = "AiProfileName", Text = options.ConnectionProfiles[selected].Name, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        saveRow.AddChild(profileName); profileName.TextChanged += _ => editing?.Invoke();
+        var saveButton = new BroadcastButton { Name = "AiSaveProfile", Text = saveText, CustomMinimumSize = new(128, 46) }; saveRow.AddChild(saveButton);
         Button("提示词配置", prompts);
         var enabled = new CheckBox { Text = "启用 AI 社区", ButtonPressed = options.Enabled };
-        enabled.Toggled += value => { editing?.Invoke(); options.Enabled = value; Save(); }; box.AddChild(enabled);
-        var endpoint = Input("服务地址（自动补全 /chat/completions）", options.Endpoint, "AiEndpoint");
-        var model = Input("模型名称", options.Model, "AiModel");
+        enabled.Toggled += value => { editing?.Invoke(); options.Enabled = value; Save(); }; editor.AddChild(enabled);
+        var endpoint = Input("服务地址（自动补全 /chat/completions）", options.ConnectionProfiles[selected].Endpoint, "AiEndpoint");
+        var model = Input("模型名称", options.ConnectionProfiles[selected].Model, "AiModel");
         Text("API 密钥（加密保存在本机）");
-        key = new LineEdit { Name = "AiKey", Secret = true, PlaceholderText = AiService.HasKey ? "已保存，留空保留当前密钥" : "请输入 API 密钥", CustomMinimumSize = new(0, 42) };
+        key = new LineEdit { Name = "AiKey", Secret = true, PlaceholderText = AiService.HasProfileKey(selected) ? "已保存，留空保留当前密钥" : "请输入 API 密钥", CustomMinimumSize = new(0, 42) };
         key.TextChanged += _ => editing?.Invoke();
-        box.AddChild(key);
+        editor.AddChild(key);
         var fetch = new BroadcastButton { Name = "AiFetchModels", Text = "获取模型列表", CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin };
-        box.AddChild(fetch);
+        editor.AddChild(fetch);
         var modelStatus = Text("使用当前填写的密钥查询，留空时使用已保存密钥。"); modelStatus.Name = "AiModelStatus";
-        var modelChoices = new VBoxContainer { Visible = false }; box.AddChild(modelChoices);
+        var modelChoices = new VBoxContainer { Visible = false }; editor.AddChild(modelChoices);
         var filter = new LineEdit { Name = "AiModelFilter", PlaceholderText = "搜索模型", CustomMinimumSize = new(0, 42) }; modelChoices.AddChild(filter);
         var picker = new OptionButton { Name = "AiModelList", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; modelChoices.AddChild(picker);
-        var details = new TextEdit { Name = "AiModelError", Visible = false, Editable = false, CustomMinimumSize = new(0, 110), WrapMode = TextEdit.LineWrappingMode.Boundary }; box.AddChild(details);
+        var details = new TextEdit { Name = "AiModelError", Visible = false, Editable = false, CustomMinimumSize = new(0, 110), WrapMode = TextEdit.LineWrappingMode.Boundary }; editor.AddChild(details);
         details.AddThemeFontSizeOverride("font_size", 16);
         IReadOnlyList<string> models = []; string[] filtered = []; int queryRevision = 0;
         void FilterModels()
@@ -101,12 +120,12 @@ public static class AiSettingsPanel
         {
             if (fetch.Disabled) return;
             editing?.Invoke();
-            int revision = queryRevision; string address = endpoint.Text.Trim(), credential = key.Text;
+            int revision = queryRevision; string address = endpoint.Text.Trim(); string? credential = string.IsNullOrWhiteSpace(key.Text) ? draftKey : key.Text;
             fetch.Disabled = true; fetch.Text = "正在获取…"; modelStatus.Text = "正在查询模型列表…"; details.Visible = false;
             bool Current() => GodotObject.IsInstanceValid(fetch) && !fetch.IsQueuedForDeletion() && fetch.IsInsideTree() && revision == queryRevision;
             try
             {
-                var result = await AiService.FetchModelsAsync(address, credential);
+                var result = await AiService.FetchModelsAsync(address, credential, selected);
                 if (!Current()) return;
                 models = result; filter.Text = ""; FilterModels(); modelChoices.Visible = models.Count > 0;
                 modelStatus.Text = models.Count == 0 ? "接口返回的模型列表为空，可手动填写模型名称。" : $"已获取 {models.Count} 个模型，支持搜索选择。";
@@ -122,14 +141,16 @@ public static class AiSettingsPanel
                 if (GodotObject.IsInstanceValid(fetch) && !fetch.IsQueuedForDeletion()) { fetch.Disabled = false; fetch.Text = "获取模型列表"; }
             }
         };
-        Button("删除已保存密钥", () => { var error = AiService.PersistKey(""); key.Text = ""; key.PlaceholderText = "请输入 API 密钥"; InvalidateModels(); notice(error ?? "本机密钥已删除。", error != null); });
+        Button("删除已保存密钥", () => { deleteKey = true; draftKey = ""; key.Text = ""; key.PlaceholderText = "保存后删除此方案密钥"; editing?.Invoke(); InvalidateModels(); });
         Number("每次最多生成帖子数", "AiNewsPostCount", options.MaxNewsPosts, 1, AiOptions.MaximumNewsPostCount, value => options.MaxNewsPosts = value);
         Text("按待生成事件选取，不足时不会凑数。数量越多，生成时间和用量通常越高；默认 3 篇。");
         Number("最大并发数", "AiConcurrency", options.MaxConcurrentRequests, 1, 16, value => options.MaxConcurrentRequests = value);
         Number("请求发送间隔 · 秒，0 表示无需间隔", "AiRequestInterval", options.MinimumIntervalSeconds, 0, 300, value => options.MinimumIntervalSeconds = value);
         Number("最长等待时间 · 分钟", "AiTimeout", options.RequestTimeoutMinutes, 2, 30, value => options.RequestTimeoutMinutes = value);
         var status = Text("当前状态：" + PlayerFacingText.AiStatus(AiService.Status));
-        Button(saveText, () =>
+        var routeControls = new List<(string Task, OptionButton Picker, Label Model)>();
+        var applyAll = new BroadcastButton { Name = "AiApplyAll", Text = "将当前方案应用到所有", CustomMinimumSize = new(0, 46) };
+        saveButton.Pressed += () =>
         {
             Diagnostics.Record("ai.settings.save-clicked", new { enteredCredential = !string.IsNullOrWhiteSpace(key.Text), available = AiService.HasKey });
             try
@@ -138,18 +159,92 @@ public static class AiSettingsPanel
                 bool valid = true;
                 foreach (var commit in commitNumbers) if (!commit()) valid = false;
                 if (!valid) { Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" }); return; }
-                options.Endpoint = endpoint.Text.Trim(); options.Model = model.Text.Trim();
-                if (!Uri.TryCreate(options.Endpoint, UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https") || options.Model.Length == 0)
+                string name = profileName.Text.Trim(), address = endpoint.Text.Trim(), modelId = model.Text.Trim();
+                if (name.Length == 0) throw new ArgumentException("请填写方案名称。");
+                if (options.ConnectionProfiles.Any(p => p.Key != selected && p.Value.Name == name)) throw new ArgumentException("方案名称已存在，请修改名称。");
+                if (!Uri.TryCreate(address, UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https") || modelId.Length == 0)
                     throw new ArgumentException("请填写有效的服务地址和模型名称。");
-                save();
-                CommitKey();
+                var prior = options.ConnectionProfiles.GetValueOrDefault(selected);
+                options.ConnectionProfiles[selected] = new() { Name = name, Endpoint = address, Model = modelId };
+                if (selected == AiRouting.Default) { options.Endpoint = address; options.Model = modelId; }
+                try { save(); }
+                catch
+                {
+                    if (prior == null) options.ConnectionProfiles.Remove(selected); else options.ConnectionProfiles[selected] = prior;
+                    if (selected == AiRouting.Default && prior != null) { options.Endpoint = prior.Endpoint; options.Model = prior.Model; }
+                    throw;
+                }
+                CommitKey(); creating = false;
+                RefreshProfiles(); RefreshRoutes();
                 Diagnostics.Record("ai.settings.saved", new { enabled = options.Enabled, available = AiService.HasKey });
                 if (!options.Enabled) { notice("设置已保存。", false); return; }
-                if (!AiService.HasKey) { notice("设置已保存，请填写 API 密钥。", true); return; }
+                if (!AiService.HasProfileKey(selected)) { notice("设置已保存，请填写 API 密钥。", true); return; }
                 generate(); notice("设置已保存。", false);
             }
             catch (Exception e) { Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name }); notice(e.Message, true); }
-        });
+        };
+        var routeTitle = new Label { Text = "任务使用方案" }; routeTitle.AddThemeFontSizeOverride("font_size", 22); routeTitle.AddThemeColorOverride("font_color", CareerVisuals.Gold); routes.AddChild(routeTitle);
+        routes.AddChild(applyAll);
+        foreach (var task in AiRouting.Tasks)
+        {
+            var panel = new PanelContainer(); panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("172f3c", "345363", 7, 12)); routes.AddChild(panel);
+            var row = new VBoxContainer(); row.AddThemeConstantOverride("separation", 5); panel.AddChild(row);
+            var title = new Label { Text = task.Name }; title.AddThemeFontSizeOverride("font_size", 18); row.AddChild(title);
+            var choice = new OptionButton { Name = "AiRoute_" + task.Id, FitToLongestItem = false, CustomMinimumSize = new(0, 40), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; row.AddChild(choice);
+            var detail = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart }; detail.AddThemeFontSizeOverride("font_size", 14); detail.AddThemeColorOverride("font_color", CareerVisuals.Muted); row.AddChild(detail);
+            routeControls.Add((task.Id, choice, detail));
+            choice.ItemSelected += index => { if (loading) return; options.TaskProfiles[task.Id] = choice.GetItemMetadata((int)index).AsString(); Save(); RefreshRoutes(); };
+        }
+        void RefreshRoutes()
+        {
+            loading = true;
+            foreach (var route in routeControls)
+            {
+                route.Picker.Clear(); string assigned = AiRouting.ProfileId(options, route.Task); int i = 0;
+                foreach (var entry in options.ConnectionProfiles)
+                { route.Picker.AddItem(entry.Value.Name); route.Picker.SetItemMetadata(i, entry.Key); if (entry.Key == assigned) route.Picker.Select(i); i++; }
+                route.Model.Text = options.ConnectionProfiles[assigned].Model;
+            }
+            applyAll.Disabled = creating; loading = false;
+        }
+        void RefreshProfiles()
+        {
+            loading = true; profiles.Clear(); int i = 0;
+            foreach (var entry in options.ConnectionProfiles)
+            { profiles.AddItem(entry.Value.Name); profiles.SetItemMetadata(i, entry.Key); if (entry.Key == selected) profiles.Select(i); i++; }
+            if (creating) { profiles.AddItem(profileName.Text); profiles.SetItemMetadata(i, selected); profiles.Select(i); }
+            loading = false;
+        }
+        bool Dirty()
+        {
+            if (creating || deleteKey || !string.IsNullOrWhiteSpace(key.Text)) return true;
+            var saved = options.ConnectionProfiles[selected];
+            return profileName.Text != saved.Name || endpoint.Text != saved.Endpoint || model.Text != saved.Model;
+        }
+        void Load(string id, bool fresh)
+        {
+            var source = options.ConnectionProfiles[id]; draftKey = AiService.ProfileKey(id);
+            selected = fresh ? Guid.NewGuid().ToString("N") : id; creating = fresh; deleteKey = false;
+            profileName.Text = fresh ? AiRouting.NextName(options) : source.Name;
+            endpoint.Text = source.Endpoint; model.Text = source.Model; key.Text = "";
+            key.PlaceholderText = !string.IsNullOrWhiteSpace(draftKey) ? "已保存，留空保留当前密钥" : "请输入 API 密钥";
+            InvalidateModels(); RefreshProfiles(); RefreshRoutes();
+        }
+        void Switch(Action action)
+        {
+            if (!Dirty()) { action(); return; }
+            RefreshProfiles();
+            if (confirmSwitch != null) confirmSwitch(action);
+        }
+        profiles.ItemSelected += index =>
+        {
+            if (loading) return;
+            string target = profiles.GetItemMetadata((int)index).AsString();
+            if (target != selected) Switch(() => Load(target, false));
+        };
+        create.Pressed += () => { string source = creating ? AiRouting.Default : selected; Switch(() => Load(source, true)); };
+        applyAll.Pressed += () => { foreach (var task in AiRouting.Tasks) options.TaskProfiles[task.Id] = selected; Save(); RefreshRoutes(); notice("当前方案已应用到所有任务。", false); };
+        RefreshProfiles(); RefreshRoutes();
         return status;
     }
 }

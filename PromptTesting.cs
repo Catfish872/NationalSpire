@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -76,18 +76,19 @@ public static partial class AiService
             if (!ReferenceEquals(test.Owner, owner) || !CareerStore.IsCurrent(owner)) throw new ArgumentException("生涯已切换，请重新选择材料。");
             var options = TestCopy(owner.Ai);
             foreach (var draft in drafts) PromptLibrary.Save(options, draft.Key, draft.Value);
-            string? key = CurrentKey;
+            var connection = Connection(owner.Ai, test.Source.Scene);
+            string? key = connection.Key;
             if (!owner.Ai.Enabled) throw new ArgumentException("请先在 模组设置中开启 AI。");
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("请先在 模组设置中填写密钥。");
-            if (!TryGetEndpoint(options.Endpoint, out var uri)) throw new ArgumentException("接口地址无效。");
-            bool Current() => CareerStore.IsCurrent(owner) && owner.Ai.Enabled && CurrentKey == key
-                && owner.Ai.Endpoint == options.Endpoint && owner.Ai.Model == options.Model;
+            if (!TryGetEndpoint(connection.Endpoint, out var uri)) throw new ArgumentException("接口地址无效。");
+            bool Current() => CareerStore.IsCurrent(owner) && owner.Ai.Enabled;
             using var lease = await EnterQueueAsync(owner, ["prompt-preview"], [test.Work]);
             await WaitForRequestStartAsync(owner, [test.Work]);
             if (!Current()) throw new ArgumentException("设置或生涯已切换，请重新测试。");
+            if (Connection(owner.Ai, test.Source.Scene) != connection) throw new ArgumentException("接收方案已改变，请重新确认。");
             var data = TestCopy(test.Snapshot);
             var wire = new AiWireProtocol(data);
-            string payload = JsonSerializer.Serialize(new { model = options.Model, stream = false,
+            string payload = JsonSerializer.Serialize(new { model = connection.Model, stream = false,
                 messages = new[] { new { role = "system", content = ComposeSystem(options, test.Source.Scene) },
                     new { role = "user", content = wire.Encode(test.Context) } } }, Json);
             int today = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"));

@@ -106,35 +106,45 @@ public static partial class PrivatePublicContext
         }
     }
 
-    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null, CommunityMemorySearch.Request? request = null)
+    public static (List<CommunityPost> Posts, List<CommunityMemory> Memories, Dictionary<string, CommunityPost> Available) SelectCommunity(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, CommunityMemorySearch.Request? request = null)
     {
+        using var measurement = UiPerformance.Measure(UiPerformance.Work.CommunitySelect);
         request ??= new();
-        var posts = CommunityThreads.All(d).Where(p => p.Day <= d.Day && !CommunityThreads.NewsPending(d, p)).ToArray();
+        var activity = request.Posts(d);
+        var posts = activity.Values.Select(a => a.Post).ToArray();
         var available = posts.ToDictionary(p => p.Id);
-        var memories = CommunityMemorySearch.PrivateAcquaintance(d, person);
+        var memories = request.Acquaintance(d, person);
         memories.AddRange(CommunityMemorySearch.Retrieve(d, query, [person.Id, Human(d)], d.Day, new HashSet<string>(), 5,
             excludedMemories: memories.Select(m => m.Id).ToHashSet(), requireTopic: true, request: request));
-        bool PlayerRelated(CommunityPost p) => IsPlayer(d, p.AuthorId) || p.RelatedPeople.Any(id => IsPlayer(d, id)) || p.Replies.Any(r => r.Day <= d.Day && IsPlayer(d, r.AuthorId));
-        int LastActivity(CommunityPost p) => p.Replies.Where(r => r.Day <= d.Day && (r.AuthorId == person.Id || IsPlayer(d, r.AuthorId))).Select(r => r.Day).Append(p.Day).Max();
-        bool Topic(CommunityPost p) => CommunityMemorySearch.MatchesTopic(query, p.Title + "\n" + p.Body, request);
+        bool PlayerRelated(CommunityPost p) => activity[p.Id].PlayerRelated;
+        int LastActivity(CommunityPost p) => Math.Max(p.Day, Math.Max(activity[p.Id].LastByAuthor.GetValueOrDefault(person.Id), activity[p.Id].LastByAuthor.GetValueOrDefault(Human(d))));
+        bool Topic(CommunityPost p) => request.Topic(p, query);
         var selected = new List<CommunityPost>();
         void Add(IEnumerable<CommunityPost> sources, int count)
             => selected.AddRange(sources.Where(p => attached?.Contains(p.Id) != true && selected.All(s => s.Id != p.Id)).Take(count));
         // 原帖只发送一次。保留双方近期公开往来，让“刚才那个帖子”也能找到完整语境。
-        var ownPosts = posts.Where(p => p.AuthorId == person.Id || p.Replies.Any(r => r.Day <= d.Day && r.AuthorId == person.Id)).ToArray();
+        var ownPosts = posts.Where(p => p.AuthorId == person.Id || activity[p.Id].LastByAuthor.ContainsKey(person.Id)).ToArray();
         Add(ownPosts.OrderByDescending(LastActivity), 1);
         Add(ownPosts.Where(p => Topic(p) || PlayerRelated(p)).OrderByDescending(Topic).ThenByDescending(PlayerRelated).ThenByDescending(LastActivity), 2);
         Add(posts.Where(PlayerRelated).OrderByDescending(LastActivity), 1);
         Add(posts.Where(p => PlayerRelated(p) && Topic(p)).OrderByDescending(p => p.Priority).ThenByDescending(LastActivity), 2);
         Add(memories.Where(m => available.ContainsKey(m.PostId)).Select(m => available[m.PostId]).DistinctBy(p => p.Id), 2);
         Add(posts.Where(Topic).OrderByDescending(LastActivity), 2);
+        return (selected, memories, available);
+    }
+    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null, CommunityMemorySearch.Request? request = null)
+    {
+        request ??= new();
+        var (selected, memories, available) = SelectCommunity(d, person, query, attached, request);
+        var comments = CommunityPromptContext.SelectReplies(selected, d.Day, [person.Id, Human(d)], query, request);
         var b = new StringBuilder();
         foreach (var post in selected)
         {
-            string fullPost = PostText(d, post, person, query, memories, request);
+            string fullPost = PostTexts(d, post, person, query, memories, request, includeConversation: false).Ai;
             b.AppendLine(fullPost);
             completePosts?.Add((post.Id, fullPost));
         }
+        b.AppendLine(CommunityPromptContext.Comments(d, selected, comments));
         // 原帖已归档删除时仍保留记忆条目；同一来源已展开后不再重复其摘录。
         var selectedIds = selected.Select(p => p.Id).Concat(attached ?? new HashSet<string>()).ToHashSet();
         var remaining = memories.Where(m => !selectedIds.Contains(m.PostId)).ToArray();
@@ -147,7 +157,7 @@ public static partial class PrivatePublicContext
     }
     public static string PostText(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null, CommunityMemorySearch.Request? request = null)
         => PostTexts(d, post, person, query, sourceMemories, request).Ai;
-    public static (string Original, string Ai) PostTexts(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null, CommunityMemorySearch.Request? request = null)
+    public static (string Original, string Ai) PostTexts(CareerData d, CommunityPost post, CareerPerson person, string query = "", IEnumerable<CommunityMemory>? sourceMemories = null, CommunityMemorySearch.Request? request = null, bool includeConversation = true)
     {
         var b = new StringBuilder();
         var memories = sourceMemories ?? [];
@@ -160,6 +170,7 @@ public static partial class PrivatePublicContext
                 b.AppendLine($"这篇帖子对应的已记录事件：{GameText.Plain(AiGeneratedText.Source(post))}");
                 original.AppendLine($"这篇帖子对应的已记录事件：{GameText.Plain(post.SourceBody)}");
             }
+            if (!includeConversation) return (original.ToString().Trim(), b.ToString().Trim());
             // 与社区回帖共用选取规则，既提供人物发言，也提供他人回应及讨论发展。
             var replies = post.Replies.Where(r => r.Day <= d.Day).DistinctBy(r => r.Id).ToDictionary(r => r.Id);
             var chosen = post.Replies.Where(r => r.Day <= d.Day && (r.AuthorId == person.Id || IsPlayer(d, r.AuthorId))).TakeLast(6)

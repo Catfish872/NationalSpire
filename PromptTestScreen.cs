@@ -84,11 +84,12 @@ public partial class CareerScreen
             {
                 localError = "";
                 var test = Prepare();
-                string endpoint = data.Ai.Endpoint;
+                var connection = AiService.Connection(data.Ai, test.Source.Scene);
+                string endpoint = connection.Endpoint;
                 string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";
                 ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>
                 {
-                    if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }
+                    if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }
                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);
                     Refresh();
                     return true;

@@ -286,7 +286,7 @@ private readonly BigInteger value;
 
 来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；[`NationalSpire.MarketExecution.Used(NationalSpire.MarketQuote, int)`](MarketExecution.cs.md#symbol-722e0831cb22)
+**调用者：** [`NationalSpire.MarketClearing.Session.Open(decimal, int, int)`](MarketClearing.cs.md#symbol-318331fe9749)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；[`NationalSpire.MarketExecution.Used(NationalSpire.MarketQuote, int)`](MarketExecution.cs.md#symbol-722e0831cb22)
 
 **调用：** 无已绑定显式调用。
 
@@ -347,7 +347,7 @@ private readonly BigInteger value;
 
 来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-4e2f52b03c4f)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.MarketNumber.ToString()`](MarketNumber.cs.md#symbol-b93eea41cb69)
+**调用者：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-b46380358b7b)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.MarketNumber.ToString()`](MarketNumber.cs.md#symbol-b93eea41cb69)
 
 **调用：** [`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)；`string.Contains(char)`；`string.Contains(string)`；`string.TrimEnd(char)`；`System.Numerics.BigInteger.Abs(System.Numerics.BigInteger)`；`System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger, System.Numerics.BigInteger, out System.Numerics.BigInteger)`；`System.Numerics.BigInteger.ToString(string?, System.IFormatProvider?)`
 

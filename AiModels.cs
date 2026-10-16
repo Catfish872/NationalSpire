@@ -15,9 +15,9 @@ public static partial class AiService
         else if (!path.EndsWith("/models", StringComparison.OrdinalIgnoreCase)) path = path.Length == 0 ? "/v1/models" : path + "/models";
         builder.Path = path; return builder.Uri;
     }
-    public static async Task<IReadOnlyList<string>> FetchModelsAsync(string endpoint, string? enteredKey)
+    public static async Task<IReadOnlyList<string>> FetchModelsAsync(string endpoint, string? enteredKey, string profile = AiRouting.Default)
     {
-        string? key = string.IsNullOrWhiteSpace(enteredKey) ? CurrentKey : enteredKey.Trim();
+        string? key = string.IsNullOrWhiteSpace(enteredKey) ? ProfileKey(profile) : enteredKey.Trim();
         if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("请先填写 API 密钥。");
         Diagnostics.RegisterSecret(key);
         var uri = ModelsEndpoint(endpoint);

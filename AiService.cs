@@ -53,7 +53,7 @@ public static partial class AiService
         request.Options.Set(TimeoutOption, TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
         Diagnostics.RegisterSecret(request.Headers.Authorization?.Parameter);
         Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,
-            endpoint = request.RequestUri?.ToString(), data.Ai.Model, data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,
+            endpoint = request.RequestUri?.ToString(), data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,
             payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() });
         var timer = System.Diagnostics.Stopwatch.StartNew();
         HttpResponseMessage response;
@@ -83,19 +83,29 @@ public static partial class AiService
     private static string? _sessionKey = AiSettingsStore.ReadKey();
     private static string? CurrentKey => !string.IsNullOrWhiteSpace(_sessionKey) ? _sessionKey : System.Environment.GetEnvironmentVariable("NATIONAL_SPIRE_API_KEY");
     public static void SetSessionKey(string value) => _sessionKey = value;
-    public static string? PersistKey(string value)
+    private static readonly Dictionary<string, string> ProfileKeys = new();
+    public static string? ProfileKey(string profile) => profile == AiRouting.Default ? CurrentKey
+        : ProfileKeys.TryGetValue(profile, out var key) ? key : AiSettingsStore.ReadKey(profile);
+    public static bool HasProfileKey(string profile) => !string.IsNullOrWhiteSpace(ProfileKey(profile));
+    public static AiConnection Connection(AiOptions options, string task)
+    {
+        string id = AiRouting.ProfileId(options, task); var profile = options.ConnectionProfiles[id];
+        return new(id, profile.Name, profile.Endpoint, profile.Model, ProfileKey(id));
+    }
+    public static string? PersistKey(string value, string profile = AiRouting.Default)
     {
         Diagnostics.RegisterSecret(value);
         bool deleting = string.IsNullOrWhiteSpace(value);
         try
         {
-            AiSettingsStore.SaveKey(value); _sessionKey = value;
+            AiSettingsStore.SaveKey(value, profile);
+            if (profile == AiRouting.Default) _sessionKey = value; else ProfileKeys[profile] = value;
             Diagnostics.Record("ai.credential.saved", new { deleting, available = HasKey });
             return null;
         }
         catch (Exception e)
         {
-            _sessionKey = value;
+            if (profile == AiRouting.Default) _sessionKey = value; else ProfileKeys[profile] = value;
             Diagnostics.Record("ai.credential.save-failed", new { deleting, available = HasKey, error = e.GetType().Name });
             return deleting ? "本次启动已清除密钥；删除本机文件失败：" + e.GetType().Name
                 : "密钥暂存于本次启动；加密保存失败：" + e.GetType().Name;
@@ -171,12 +181,14 @@ public static partial class AiService
         {
             pending.RemoveAll(p => p.NewsGeneration.State == "superseded");
             if (pending.Count == 0 || !CareerStore.IsCurrent(data)) return;
-            var key = CurrentKey; string endpoint = data.Ai.Endpoint, model = data.Ai.Model;
+
             if (!data.Ai.Enabled) return;
+            await WaitForRequestStartAsync(data, pending.Select(p => p.NewsGeneration));
+            if (!data.Ai.Enabled || !CareerStore.IsCurrent(data)) return;
+            var connection = Connection(data.Ai, "news");
+            string? key = connection.Key; string endpoint = connection.Endpoint, model = connection.Model;
             if (string.IsNullOrWhiteSpace(key)) { Fail("未设置密钥"); return; }
             if (!TryGetEndpoint(endpoint, out var uri)) { Fail("接口地址无效，请填写完整的 http:// 或 https:// 地址"); return; }
-            await WaitForRequestStartAsync(data, pending.Select(p => p.NewsGeneration));
-            if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || CurrentKey != key || data.Ai.Endpoint != endpoint || data.Ai.Model != model) return;
             pending.RemoveAll(p => p.NewsGeneration.State == "superseded");
             if (pending.Count == 0) return;
             int today = int.Parse(DateTime.UtcNow.ToString("yyyyMMdd"));
@@ -184,7 +196,7 @@ public static partial class AiService
             // 发送时固定帖子资料，响应期间新增留言不会改变本轮生成内容。
             var snapshots = pending.Select(p => JsonSerializer.Deserialize<CommunityPost>(JsonSerializer.Serialize(p, Json))!).ToList();
             var wire = new AiWireProtocol(data);
-            var payload = BuildNewsPayload(data, snapshots, wire);
+            var payload = BuildNewsPayload(data, snapshots, wire, model);
             foreach (var post in pending) CommunityThreads.SetWork(post.NewsGeneration, "sending");
             data.Ai.RequestsToday++; CareerStore.Save(data); Status = "正在生成社区讨论";
             using var request = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -193,7 +205,7 @@ public static partial class AiService
             using var response = await SendAsync(request, data, trace, "news", pending.Select(p => p.Id));
             if (!response.IsSuccessStatusCode) { Fail(await HttpFailure(response)); return; }
             var content = wire.Decode(await ReadResponseCompletion(response), expectedArray: "posts");
-            if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || key != CurrentKey || endpoint != data.Ai.Endpoint || model != data.Ai.Model) return;
+            if (!data.Ai.Enabled || !CareerStore.IsCurrent(data)) return;
             if (pending.Any(p => p.NewsGeneration.State == "superseded"))
             { foreach (var p in pending) { p.AiPending = false; CommunityThreads.SetWork(p.NewsGeneration, "superseded"); } return; }
             ApplyNewsResponse(data, pending, content);
@@ -210,9 +222,9 @@ public static partial class AiService
     }
 
     private static string BuildPayload(CareerData data, List<CommunityPost> pending) => BuildNewsPayload(data, pending, new AiWireProtocol(data));
-    private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire) => JsonSerializer.Serialize(new
+    private static string BuildNewsPayload(CareerData data, List<CommunityPost> pending, AiWireProtocol wire, string? model = null) => JsonSerializer.Serialize(new
     {
-        model = data.Ai.Model,
+        model = model ?? Connection(data.Ai, "news").Model,
         stream = false,
         messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "news") }, new { role = "user", content = wire.Encode(BuildPrompt(data, pending)) } }
     }, Json);

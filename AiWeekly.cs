@@ -46,13 +46,15 @@ public static partial class AiService
         {
             if (!data.Ai.Enabled || !CareerStore.IsCurrent(data) || work.State == "superseded" || !PublicationBacklog.Latest(data, issue)) return;
             if (profiles ? issue.Profiles.Count == 0 : !CameoContent.GeneratedSlides(issue).Any()) { CommunityThreads.SetWork(work, "completed"); return; }
-            string? key = CurrentKey; string endpoint = data.Ai.Endpoint, model = data.Ai.Model;
-            if (string.IsNullOrWhiteSpace(key)) { Fail("未设置密钥"); return; }
-            if (!TryGetEndpoint(endpoint, out var uri)) { Fail("接口地址无效"); return; }
+
             await WaitForRequestStartAsync(data, [work]);
-            bool Current() => data.Ai.Enabled && CareerStore.IsCurrent(data) && key == CurrentKey && endpoint == data.Ai.Endpoint && model == data.Ai.Model
+            bool Current() => data.Ai.Enabled && CareerStore.IsCurrent(data)
                 && work.State != "superseded" && PublicationBacklog.Latest(data, issue);
             if (!Current()) return;
+            var connection = Connection(data.Ai, "weekly");
+            string? key = connection.Key; string endpoint = connection.Endpoint, model = connection.Model;
+            if (string.IsNullOrWhiteSpace(key)) { Fail("未设置密钥"); return; }
+            if (!TryGetEndpoint(endpoint, out var uri)) { Fail("接口地址无效"); return; }
             // 引用此前实际发布的介绍，跳过的期数通过累计履历衔接。
             if (profiles) foreach (var profile in issue.Profiles)
             {

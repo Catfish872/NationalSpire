@@ -141,6 +141,7 @@ public sealed partial class CoopCoordinator : IDisposable
             if (Host && (World == null || !World.Members.Any(m => m.SteamId == sender) || !_seen.ContainsKey(sender))) return;
             if (wire.Kind is "diagnostics-request" or "diagnostics-part") { ReceiveDiagnostic(sender, wire); return; }
             if (wire.Kind == "private-chunk") { ReceivePrivate(wire, received); return; }
+            if (wire.Kind is "market-query" or "market-answer") { ReceiveMarket(sender, wire); return; }
             switch (wire.Kind)
             {
                 case "ping" when !Host:

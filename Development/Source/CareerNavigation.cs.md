@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9FE2735108100C306789B810578F42A4D35D3A7B76AF798BD2656BB612F93995`。来源：[源码](../../CareerNavigation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8ACB3B41DB602C729CE5258981CC891D4E1B40D8EFC60027170C72E830F8EA42`。来源：[源码](../../CareerNavigation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -26,13 +26,13 @@ private Label _breadcrumb = null!;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenGroupPerson(string)`](GroupChatScreen.cs.md#symbol-1eb7b9a65ede)；[`NationalSpire.CareerScreen.RememberTab()`](CareerNavigation.cs.md#symbol-217738bbaf70)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 
-**调用：** `NationalSpire.CareerScreen.Location.Location(string, string?, string?, string, string?, string, string, int, int, int, int, string, string, int, string, int)`
+**调用：** `NationalSpire.CareerScreen.Location.Location(string, string?, string?, string, string?, string, string, int, int, int, int, string, string, int, string, int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._lifeHistoryLimit`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._postLimit`；`NationalSpire.CareerScreen._profileFilter`；`NationalSpire.CareerScreen._profileLimit`；`NationalSpire.CareerScreen._profileQuery`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._selectedDay`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._worldSection`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerScreen.Location.Location(string, string?, string?, string, string?, string, string, int, int, int, int, string, string, int, string, int)`；输入表达式：`new(_tab, _personId, _postId, _worldSection, _competitionId,          _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(_tab, _personId, _postId, _worldSection, _competitionId,          _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit)`
+- `NationalSpire.CareerScreen.Location.Location(string, string?, string?, string, string?, string, string, int, int, int, int, string, string, int, string, int, int)`；输入表达式：`new(_tab, _personId, _postId, _worldSection, _competitionId,          _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(_tab, _personId, _postId, _worldSection, _competitionId,          _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -230,7 +230,7 @@ private Label _breadcrumb = null!;
 
 **调用者：** [`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
 
-**调用：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`SelectFilter()`](CareerNavigation.cs.md#symbol-a11297033a59)
+**调用：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`SelectFilter()`](CareerNavigation.cs.md#symbol-3410eb6af6bc)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Visit(System.Action)`；`SelectFilter()`
 
@@ -246,7 +246,7 @@ private Label _breadcrumb = null!;
 - `_scroll.ScrollVertical` = `0`
 - `_tab` = `"选手档案"`
 
-<a id="symbol-a11297033a59"></a>
+<a id="symbol-3410eb6af6bc"></a>
 
 ## `SelectFilter() — void SelectFilter()`
 
@@ -337,9 +337,9 @@ private Label _breadcrumb = null!;
 
 **调用者：** [`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)
 
-**调用：** [`NationalSpire.CareerScreen.ApplyLocation(NationalSpire.CareerScreen.Location)`](CareerNavigation.cs.md#symbol-326019f9e7f5)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.RememberTab()`](CareerNavigation.cs.md#symbol-217738bbaf70)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`](GroupChatScreen.cs.md#symbol-b8810762e549)；[`NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`](CareerScreen.cs.md#symbol-9df94d88557a)；[`NationalSpire.CareerScreen.SelectGroup(string)`](GroupChatScreen.cs.md#symbol-08ab8d513fb8)；`System.Collections.Generic.Stack<T>.TryPop(out T)`
+**调用：** [`NationalSpire.CareerScreen.ApplyLocation(NationalSpire.CareerScreen.Location)`](CareerNavigation.cs.md#symbol-326019f9e7f5)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.RememberTab()`](CareerNavigation.cs.md#symbol-217738bbaf70)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`](GroupChatScreen.cs.md#symbol-b8810762e549)；[`NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`](CareerScreen.cs.md#symbol-9df94d88557a)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；`System.Collections.Generic.Stack<T>.TryPop(out T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerScreen._backHistory`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._confirmReset`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.ApplyLocation(NationalSpire.CareerScreen.Location)`；`NationalSpire.CareerScreen.Close()`；`NationalSpire.CareerScreen.Location.ChatScroll`；`NationalSpire.CareerScreen.Location.Group`；`NationalSpire.CareerScreen.Location.Scroll`；`NationalSpire.CareerScreen.RememberTab()`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`；`NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`；`NationalSpire.CareerScreen.SelectGroup(string)`；`NationalSpire.CareerScreen.ViewData`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerScreen._backHistory`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._confirmReset`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.ApplyLocation(NationalSpire.CareerScreen.Location)`；`NationalSpire.CareerScreen.Close()`；`NationalSpire.CareerScreen.Location.ChatPage`；`NationalSpire.CareerScreen.Location.ChatScroll`；`NationalSpire.CareerScreen.Location.Group`；`NationalSpire.CareerScreen.Location.Scroll`；`NationalSpire.CareerScreen.RememberTab()`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`；`NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`；`NationalSpire.CareerScreen.SelectGroup(string, int)`；`NationalSpire.CareerScreen.ViewData`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -349,8 +349,8 @@ private Label _breadcrumb = null!;
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`；输入表达式：`RestoreGroupScroll(previous.Group, previous.ChatScroll)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = RestoreGroupScroll(previous.Group, previous.ChatScroll)`
 - `NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`；输入表达式：`RestoreScrollAsync(previous.Scroll, _renderVersion)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = RestoreScrollAsync(previous.Scroll, _renderVersion)`
-- `NationalSpire.CareerScreen.SelectGroup(string)`；输入表达式：`SelectGroup(previous.Group)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectGroup(previous.Group);`
-- `System.Collections.Generic.Stack<T>.TryPop(out T)`；输入表达式：`_backHistory.TryPop(out var previous)`；返回值紧邻使用处：`IfStatementSyntax: if (_backHistory.TryPop(out var previous))          {              ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);              if (previous.Group.Length > 0) { SelectGroup(previous.Group); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }          }          else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "选手档案" && _personId != null) { _personId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "赛事与俱乐部" && _competitionId != null) { _competitionId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "赛事与俱乐部" && _worldSection == "颁奖盛典") { _worldSection = "荣誉室"; _scroll.ScrollVertical = 0; Render(); }          else Close();`
+- `NationalSpire.CareerScreen.SelectGroup(string, int)`；输入表达式：`SelectGroup(previous.Group, previous.ChatPage)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectGroup(previous.Group, previous.ChatPage);`
+- `System.Collections.Generic.Stack<T>.TryPop(out T)`；输入表达式：`_backHistory.TryPop(out var previous)`；返回值紧邻使用处：`IfStatementSyntax: if (_backHistory.TryPop(out var previous))          {              ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);              if (previous.Group.Length > 0) { SelectGroup(previous.Group, previous.ChatPage); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }          }          else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "选手档案" && _personId != null) { _personId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "赛事与俱乐部" && _competitionId != null) { _competitionId = null; _scroll.ScrollVertical = 0; Render(); }          else if (_tab == "赛事与俱乐部" && _worldSection == "颁奖盛典") { _worldSection = "荣誉室"; _scroll.ScrollVertical = 0; Render(); }          else Close();`
 
 **赋值（含属性/字段和局部值）：**
 

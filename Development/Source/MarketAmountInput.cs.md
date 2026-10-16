@@ -68,7 +68,7 @@ private decimal? _entered;
 
 来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
+**调用者：** [`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.SetOrderMargin(decimal)`](MarketTerminal.cs.md#symbol-5c2e4be798a5)
 
 **调用：** `Godot.Range.SetValueNoSignal(double)`
 

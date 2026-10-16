@@ -10,13 +10,15 @@ public static class AiSettingsStore
     private static AiOptions? _options;
     private static string _saved = "", _savedPath = "";
     private static string SettingsPath => ProjectSettings.GlobalizePath("user://national_spire_ai_settings.json");
-    private static string SecretPath => ProjectSettings.GlobalizePath("user://national_spire_ai_key.bin");
+    private static string SecretPath(string profile) => ProjectSettings.GlobalizePath(profile == AiRouting.Default
+        ? "user://national_spire_ai_key.bin" : "user://national_spire_ai_key_" + profile + ".bin");
+    private static readonly Dictionary<string, string?> Keys = new();
     public static AiOptions Load(AiOptions legacy)
     {
         if (_options != null) return _options;
         try { if (File.Exists(SettingsPath)) _options = JsonSerializer.Deserialize<AiOptions>(File.ReadAllText(SettingsPath)); }
         catch { GD.PushWarning("[NationalSpire] AI 配置无法读取，使用生涯中的配置副本。"); }
-        return _options ??= legacy;
+        _options ??= legacy; AiRouting.Ensure(_options); return _options;
     }
     public static void Save(AiOptions options)
     {
@@ -27,19 +29,22 @@ public static class AiSettingsStore
         File.Move(SettingsPath + ".tmp", SettingsPath, true);
         _options = options; _saved = content; _savedPath = SettingsPath;
     }
-    public static string? ReadKey()
+    public static string? ReadKey(string profile = AiRouting.Default)
     {
-        if (!OperatingSystem.IsWindows() || !File.Exists(SecretPath))
+        if (Keys.TryGetValue(profile, out var cached)) return cached;
+        string path = SecretPath(profile);
+        Keys[profile] = null;
+        if (!OperatingSystem.IsWindows() || !File.Exists(path))
         {
             Diagnostics.Record("ai.credential.read", new { status = OperatingSystem.IsWindows() ? "missing" : "unsupported" });
             return null;
         }
         try
         {
-            string value = Encoding.UTF8.GetString(Transform(File.ReadAllBytes(SecretPath), false));
+            string value = Encoding.UTF8.GetString(Transform(File.ReadAllBytes(path), false));
             Diagnostics.RegisterSecret(value);
             Diagnostics.Record("ai.credential.read", new { status = string.IsNullOrWhiteSpace(value) ? "empty" : "loaded" });
-            return value;
+            Keys[profile] = value; return value;
         }
         catch (Exception e)
         {
@@ -47,13 +52,15 @@ public static class AiSettingsStore
             GD.PushWarning("[NationalSpire] 已保存密钥无法解密，请重新输入。"); return null;
         }
     }
-    public static void SaveKey(string key)
+    public static void SaveKey(string key, string profile = AiRouting.Default)
     {
-        if (string.IsNullOrWhiteSpace(key)) { if (File.Exists(SecretPath)) File.Delete(SecretPath); return; }
+        string path = SecretPath(profile);
+        if (string.IsNullOrWhiteSpace(key)) { if (File.Exists(path)) File.Delete(path); Keys[profile] = null; return; }
         if (!OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("当前系统仅支持临时密钥。");
-        Directory.CreateDirectory(Path.GetDirectoryName(SecretPath)!);
-        File.WriteAllBytes(SecretPath + ".tmp", Transform(Encoding.UTF8.GetBytes(key), true));
-        File.Move(SecretPath + ".tmp", SecretPath, true);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllBytes(path + ".tmp", Transform(Encoding.UTF8.GetBytes(key), true));
+        File.Move(path + ".tmp", path, true);
+        Keys[profile] = key;
     }
     // DPAPI 将密钥绑定到当前 Windows 用户；生涯文件及诊断不包含明文密钥。
     [StructLayout(LayoutKind.Sequential)] private struct Blob { public int Length; public IntPtr Data; }

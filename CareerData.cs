@@ -7,6 +7,8 @@ public sealed class CareerData
     public ChatWorld Chats { get; set; } = new();
     public MarketState Market { get; set; } = new();
     [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData, int>? MarketAccounts { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public Func<IReadOnlyList<MarketAccount>>? TradingAccounts { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public Func<MarketInspection, Task<MarketInspectionResult>>? InspectMarket { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Func<string, IEnumerable<SponsorContract>>? MarketSponsors { get; set; }
     public FailureDecision? Failure { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Dictionary<string, PrivateMailbox> PrivateMemorySources { get; set; } = [];
@@ -283,6 +285,8 @@ public sealed class CareerResult
 
 public sealed class AiOptions : System.Text.Json.Serialization.IJsonOnDeserializing, System.Text.Json.Serialization.IJsonOnDeserialized
 {
+    public Dictionary<string, AiConnectionProfile> ConnectionProfiles { get; set; } = new();
+    public Dictionary<string, string> TaskProfiles { get; set; } = new();
     public int PrivatePromptVersion { get; set; }
     public string PromptTemplate { get; set; } = PromptLibrary.DefaultTemplate;
     public Dictionary<string, CustomPromptTemplate> CustomPromptTemplates { get; set; } = new();

@@ -1,5 +1,3 @@
-using System.Text.RegularExpressions;
-
 namespace NationalSpire;
 
 public static class CommunityMemorySearch
@@ -8,21 +6,78 @@ public static class CommunityMemorySearch
     public sealed class Request
     {
         private readonly Dictionary<string, HashSet<string>> _terms = new(StringComparer.Ordinal);
+        private readonly Dictionary<(CareerData Data, int Day, string Query), Search> _searches = [];
+        private readonly Dictionary<(CareerData Data, int Day), Dictionary<string, PostActivity>> _posts = [];
+        private readonly Dictionary<(CommunityPost Post, string Query), bool> _topics = [];
+        private readonly Dictionary<(CareerData Data, int Day, string Person), List<CommunityMemory>> _acquaintances = [];
+        private readonly Dictionary<(CareerData Data, int Day), (Dictionary<string, CommunityPost> Posts, ILookup<string, CommunityMemory> People)> _acquaintancePools = [];
+        internal (Dictionary<string, CommunityPost> Posts, ILookup<string, CommunityMemory> People) AcquaintancePool(CareerData data)
+        {
+            var key = (data, data.Day);
+            if (_acquaintancePools.TryGetValue(key, out var pool)) return pool;
+            var posts = CommunityThreads.All(data).DistinctBy(p => p.Id).ToDictionary(p => p.Id);
+            var available = data.CommunityMemories.AsEnumerable().Reverse().Where(m => m.Day <= data.Day &&
+                (!posts.TryGetValue(m.PostId, out var post) || !CommunityThreads.NewsPending(data, post)));
+            pool = (posts, available.SelectMany(m => m.People.Distinct().Select(id => (id, m))).ToLookup(x => x.id, x => x.m));
+            _acquaintancePools.Add(key, pool); return pool;
+        }
+        internal Dictionary<string, PostActivity> Posts(CareerData data)
+        {
+            var key = (data, data.Day);
+            if (_posts.TryGetValue(key, out var posts)) return posts;
+            string human = data.LocalHumanId.Length > 0 ? data.LocalHumanId : "player";
+            posts = CommunityThreads.All(data).Where(p => p.Day <= data.Day && !CommunityThreads.NewsPending(data, p)).ToDictionary(p => p.Id, p =>
+            {
+                var activity = p.Replies.Where(r => r.Day <= data.Day).GroupBy(r => r.AuthorId).ToDictionary(g => g.Key, g => g.Max(r => r.Day));
+                return new PostActivity(p, activity, p.AuthorId == human || p.RelatedPeople.Contains(human) || activity.ContainsKey(human));
+            });
+            _posts.Add(key, posts); return posts;
+        }
+        internal bool Topic(CommunityPost post, string query)
+        {
+            if (!_topics.TryGetValue((post, query), out bool result))
+                _topics.Add((post, query), result = MatchesTopic(query, post.Title + "\n" + post.Body, this));
+            return result;
+        }
+        internal List<CommunityMemory> Acquaintance(CareerData data, CareerPerson person)
+        {
+            var key = (data, data.Day, person.Id);
+            if (!_acquaintances.TryGetValue(key, out var records)) _acquaintances.Add(key, records = PrivateAcquaintance(data, person, this));
+            return new(records);
+        }
+        internal Search Prepare(CareerData data, int day, string query)
+        {
+            var key = (data, day, query);
+            if (!_searches.TryGetValue(key, out var search)) _searches.Add(key, search = BuildSearch(data, day, GetTerms(query)));
+            return search;
+        }
         internal HashSet<string> GetTerms(string text)
         {
             if (!_terms.TryGetValue(text, out var terms)) _terms.Add(text, terms = Terms(text));
             return terms;
         }
     }
-    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CareerData, Dictionary<string, (string Text, HashSet<string> Terms)>> Indexes = new();
+    internal sealed record PostActivity(CommunityPost Post, Dictionary<string, int> LastByAuthor, bool PlayerRelated);
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CareerData, System.Collections.Concurrent.ConcurrentDictionary<string, (string Text, HashSet<string> Terms)>> Indexes = new();
     private static HashSet<string> Terms(string text)
     {
         var terms = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (Match match in Regex.Matches(text, @"[a-zA-Z0-9_]+|[\p{IsCJKUnifiedIdeographs}]+"))
+        static bool Latin(char c) => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or >= '0' and <= '9' or '_';
+        static bool Chinese(char c) => c is >= '\u4e00' and <= '\u9fff';
+        for (int i = 0; i < text.Length;)
         {
-            string word = match.Value;
-            if (word[0] <= 127) terms.Add(word);
-            else for (int i = 0; i < word.Length - 1; i++) terms.Add(word.Substring(i, 2));
+            int start = i;
+            if (Latin(text[i]))
+            {
+                while (i < text.Length && Latin(text[i])) i++;
+                terms.Add(text[start..i]);
+            }
+            else if (Chinese(text[i]))
+            {
+                while (i < text.Length && Chinese(text[i])) i++;
+                for (int j = start; j + 1 < i; j++) terms.Add(text.Substring(j, 2));
+            }
+            else i++;
         }
         return terms;
     }
@@ -30,18 +85,51 @@ public static class CommunityMemorySearch
     public static bool MatchesTopic(string query, string text, Request? request = null)
     {
         var queryTerms = request?.GetTerms(query) ?? Terms(query);
+        if (queryTerms.Count(t => !ConversationNoise.Contains(t)) < 2) return false;
         var textTerms = request?.GetTerms(text) ?? Terms(text);
+        return MatchesTopic(queryTerms, textTerms);
+    }
+    private static bool MatchesTopic(HashSet<string> queryTerms, HashSet<string> textTerms)
+    {
         int matches = 0;
         foreach (string term in queryTerms)
             if (!ConversationNoise.Contains(term) && textTerms.Contains(term) && ++matches == 2) return true;
         return false;
     }
-    public static List<CommunityMemory> PrivateAcquaintance(CareerData data, CareerPerson person)
+    private sealed class ReplyTerms
     {
+        private string _text = "";
+        private HashSet<string> _terms = [];
+        internal HashSet<string> Get(string text)
+        {
+            lock (this)
+            {
+                if (_text != text) { _text = text; _terms = Terms(text); }
+                return _terms;
+            }
+        }
+    }
+    private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CommunityReply, ReplyTerms> ReplyIndexes = new();
+    public static double TopicScore(string query, CommunityReply reply, Request request)
+    {
+        return TopicScore(request.GetTerms(query), reply);
+    }
+    internal static double TopicScore(HashSet<string> queryTerms, CommunityReply reply)
+    {
+        var terms = ReplyIndexes.GetOrCreateValue(reply).Get(reply.Body);
+        int matches = 0;
+        var smaller = queryTerms.Count < terms.Count ? queryTerms : terms;
+        var larger = queryTerms.Count < terms.Count ? terms : queryTerms;
+        foreach (string term in smaller) if (!ConversationNoise.Contains(term) && larger.Contains(term)) matches++;
+        return matches >= 2 ? matches / Math.Sqrt(Math.Max(1, terms.Count)) : 0;
+    }
+    public static List<CommunityMemory> PrivateAcquaintance(CareerData data, CareerPerson person, Request? request = null)
+    {
+        using var measurement = UiPerformance.Measure(UiPerformance.Work.CommunityAcquaintance);
         string human = data.LocalHumanId.Length > 0 ? data.LocalHumanId : "player";
-        var posts = CommunityThreads.All(data).DistinctBy(p => p.Id).ToDictionary(p => p.Id);
-        var available = data.CommunityMemories.AsEnumerable().Reverse().Where(m => m.Day <= data.Day &&
-            (!posts.TryGetValue(m.PostId, out var post) || !CommunityThreads.NewsPending(data, post))).ToArray();
+        var pool = (request ?? new()).AcquaintancePool(data);
+        var posts = pool.Posts;
+        var available = pool.People[person.Id];
         var names = person.HandleAliases.Append(person.PublicName).Where(n => n.Length > 0).Distinct().ToArray();
         bool Own(CommunityMemory m) => m.Kind == "opinion" && m.People.Contains(person.Id) && names.Any(name =>
             m.Text.StartsWith(name + "：", StringComparison.Ordinal) || m.Text.StartsWith(name + "发帖", StringComparison.Ordinal));
@@ -56,32 +144,52 @@ public static class CommunityMemorySearch
     }
     public static List<CommunityMemory> Retrieve(CareerData data, string query, IEnumerable<string> people, int day, ISet<string> excludedPosts, int count = 6, ISet<string>? excludedMemories = null, bool requireTopic = false, Request? request = null)
     {
+        using var measurement = UiPerformance.Measure(UiPerformance.Work.CommunityRetrieve);
         var identities = people.Where(id => id != "player" && id != "desk").Distinct()
             .Select((id, index) => (id, weight: index < 3 ? 8 : 3)).ToDictionary(x => x.id, x => x.weight);
         var queryTerms = request?.GetTerms(query) ?? Terms(query);
-        var index = Indexes.GetOrCreateValue(data);
-        HashSet<string> IndexedTerms(CommunityMemory memory)
-        {
-            if (index.TryGetValue(memory.Id, out var cached) && cached.Text == memory.Text) return cached.Terms;
-            var terms = Terms(memory.Text); index[memory.Id] = (memory.Text, terms); return terms;
-        }
-        var unpublished = CommunityThreads.All(data).Where(p => CommunityThreads.NewsPending(data, p)).Select(p => p.Id).ToHashSet();
-        var documents = data.CommunityMemories.Where(m => (m.Kind != "opinion" || !unpublished.Contains(m.PostId)) && m.Day <= day && !excludedPosts.Contains(m.PostId) && !(excludedMemories?.Contains(m.Id) ?? false))
-            .Select(m => (Memory: m, Terms: IndexedTerms(m))).ToList();
-        var frequencies = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        foreach (var doc in documents) foreach (var term in queryTerms)
-            if (doc.Terms.Contains(term)) frequencies[term] = frequencies.GetValueOrDefault(term) + 1;
-        double Score((CommunityMemory Memory, HashSet<string> Terms) doc)
-        {
-            double lexical = doc.Terms.Where(queryTerms.Contains).Sum(t => Math.Log(1 + (documents.Count + 1.0) / frequencies[t]));
-            return lexical / Math.Sqrt(Math.Max(1, doc.Terms.Count)) + doc.Memory.People.Sum(id => identities.GetValueOrDefault(id))
-                + (doc.Memory.Kind == "fact" ? 1 : 0) + 1.0 / (1 + Math.Max(0, day - doc.Memory.Day) / 28.0);
-        }
+        if (requireTopic && queryTerms.Count(t => !ConversationNoise.Contains(t)) < 2) return [];
+        var search = (request ?? new()).Prepare(data, day, query);
+        var excluded = (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id).ToArray();
+        var excludedIds = excluded.Select(d => d.Memory.Id).ToHashSet();
+        var frequencies = new Dictionary<string, int>(search.Frequencies, StringComparer.OrdinalIgnoreCase);
+        foreach (var doc in excluded) foreach (string term in doc.Matches) frequencies[term]--;
+        int countAvailable = search.Documents.Count - excluded.Length;
+        var weights = frequencies.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => Math.Log(1 + (countAvailable + 1.0) / p.Value), StringComparer.OrdinalIgnoreCase);
+        double Score(Document doc) => doc.Matches.Sum(t => weights[t]) / Math.Sqrt(Math.Max(1, doc.TermCount))
+            + doc.Memory.People.Sum(id => identities.GetValueOrDefault(id))
+            + (doc.Memory.Kind == "fact" ? 1 : 0) + 1.0 / (1 + Math.Max(0, day - doc.Memory.Day) / 28.0);
         // 人物与话题匹配优先，日期只作轻微加权；久远的交手不会因过期而失去检索机会。
         var perPost = new Dictionary<string, int>();
-        return documents.Where(d => requireTopic ? MatchesTopic(query, d.Memory.Text, request) : d.Terms.Overlaps(queryTerms) || d.Memory.People.Any(identities.ContainsKey))
+        return (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))
             .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)
             .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })
             .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList();
     }
+    internal sealed record Document(CommunityMemory Memory, int TermCount, string[] Matches, bool Topic);
+    internal sealed class Search(List<Document> documents, Dictionary<string, int> frequencies)
+    {
+        internal List<Document> Documents { get; } = documents;
+        internal Dictionary<string, int> Frequencies { get; } = frequencies;
+        internal Dictionary<string, Document> ById { get; } = documents.ToDictionary(d => d.Memory.Id);
+        internal ILookup<string, Document> ByPost { get; } = documents.ToLookup(d => d.Memory.PostId);
+        internal List<Document> Topics { get; } = documents.Where(d => d.Topic).ToList();
+    }
+    private static Search BuildSearch(CareerData data, int day, HashSet<string> queryTerms)
+    {
+        var index = Indexes.GetOrCreateValue(data);
+        var unpublished = CommunityThreads.All(data).Where(p => CommunityThreads.NewsPending(data, p)).Select(p => p.Id).ToHashSet();
+        var documents = new List<Document>();
+        var frequencies = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        foreach (var memory in data.CommunityMemories.Where(m => m.Day <= day && (m.Kind != "opinion" || !unpublished.Contains(m.PostId))))
+        {
+            if (!index.TryGetValue(memory.Id, out var cached) || cached.Text != memory.Text)
+                index[memory.Id] = cached = (memory.Text, Terms(memory.Text));
+            var matches = (queryTerms.Count < cached.Terms.Count ? queryTerms.Where(cached.Terms.Contains) : cached.Terms.Where(queryTerms.Contains)).ToArray();
+            foreach (string term in matches) frequencies[term] = frequencies.GetValueOrDefault(term) + 1;
+            documents.Add(new(memory, cached.Terms.Count, matches, matches.Count(t => !ConversationNoise.Contains(t)) >= 2));
+        }
+        return new(documents, frequencies);
+    }
+
 }

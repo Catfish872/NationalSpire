@@ -178,9 +178,10 @@ internal partial class MarketPositionCard : PanelContainer
         }
         _terms.AddThemeColorOverride("font_color", CareerVisuals.Muted);
     }
-    internal void Bind(MarketPosition? p, MarketQuote? quote, long revision = 0)
+    internal void Bind(MarketPosition? p, MarketQuote? quote, long revision = 0, MarketExecution.Exit? projected = null, bool pending = false)
     {
         _position = p; _quote = quote; _revision = revision; _editor.Hide();
+        if (p?.ExecutionVersion == 0 && quote != null) { _quote = quote.ExecutionCopy(); _quote.Price = MarketExecution.ReferencePrice(quote); }
         _actions.Visible = p != null;
         _close.Visible = _icon.Visible = _terms.Visible = _profit.Visible = _proceeds.Visible = p != null;
         if (p == null) { _title.Text = "暂无持仓"; return; }
@@ -190,7 +191,8 @@ internal partial class MarketPositionCard : PanelContainer
         _title.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));
         _terms.Text = $"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "
             + Price(p.Entry) + " · 止损 " + (p.StopPrice is { } stop ? Price(stop) : "未设置");
-        var exit = MarketExecution.Close(p, quote!); decimal profit = exit.Profit;
+        if (pending) { _profit.Text = "正在计算平仓报价"; _proceeds.Text = ""; return; }
+        var exit = projected ?? MarketExecution.Close(p, quote!); decimal profit = exit.Profit;
         _terms.MouseFilter = _profit.MouseFilter = _proceeds.MouseFilter = MouseFilterEnum.Pass;
         _terms.TooltipText = "保证金 " + CareerMoney.Format(p.Margin) + " · 初始仓位 " + CareerMoney.Format(p.Entry * p.Units);
         _profit.TooltipText = CareerMoney.Format(profit);

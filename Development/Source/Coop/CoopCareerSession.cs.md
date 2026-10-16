@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`E1A2FA06CC0E18171A58CFBA40D65BE939AA9A3A53E73BC1DAB61D93C6E42CAA`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`28B966E7C88C96ACB4C3DF176E426277131EE050E94FA913A49FF602C00A142E`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -275,7 +275,7 @@ public event Action<string, bool>? Message;
 
 **调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](../AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`](CoopCareerSession.cs.md#symbol-b761b96e0df4)；[`NationalSpire.Coop.CoopCoordinator.InterfaceView()`](CoopReception.cs.md#symbol-242ad3af3c89)；`int.ToString()`；`NationalSpire.AiOptions.AiOptions()`；`object.ReferenceEquals(object?, object?)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.ExternalCurrent`；`NationalSpire.CareerData.ExternalSave`；`NationalSpire.Coop.CoopCareerSession._pending`；`NationalSpire.Coop.CoopCareerSession._presence`；`NationalSpire.Coop.CoopCareerSession._queuedCeremony`；`NationalSpire.Coop.CoopCareerSession._revision`；`NationalSpire.Coop.CoopCareerSession._session`；`NationalSpire.Coop.CoopCareerSession.Alive`；`NationalSpire.Coop.CoopCareerSession.Data`；`NationalSpire.Coop.CoopCareerSession.Host`；`NationalSpire.Coop.CoopCareerSession.RunStatus`；`NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`；`NationalSpire.Coop.CoopCommand.Id`；`NationalSpire.Coop.CoopCoordinator.InterfaceView()`；`NationalSpire.Coop.CoopCoordinator.Online`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Revision`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.ExternalCurrent`；`NationalSpire.CareerData.ExternalSave`；`NationalSpire.CareerData.InspectMarket`；`NationalSpire.Coop.CoopCareerSession._pending`；`NationalSpire.Coop.CoopCareerSession._presence`；`NationalSpire.Coop.CoopCareerSession._queuedCeremony`；`NationalSpire.Coop.CoopCareerSession._revision`；`NationalSpire.Coop.CoopCareerSession._session`；`NationalSpire.Coop.CoopCareerSession.Alive`；`NationalSpire.Coop.CoopCareerSession.Data`；`NationalSpire.Coop.CoopCareerSession.Host`；`NationalSpire.Coop.CoopCareerSession.RunStatus`；`NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`；`NationalSpire.Coop.CoopCommand.Id`；`NationalSpire.Coop.CoopCoordinator.InspectMarket(NationalSpire.MarketInspection)`；`NationalSpire.Coop.CoopCoordinator.InterfaceView()`；`NationalSpire.Coop.CoopCoordinator.Online`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Revision`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -296,13 +296,14 @@ public event Action<string, bool>? Message;
 - `Data.Ai` = `AiSettingsStore.Load(new())`
 - `Data.ExternalCurrent` = `() => Alive && ReferenceEquals(Data, view)`
 - `Data.ExternalSave` = `SaveReading`
+- `Data.InspectMarket` = `_session.InspectMarket`
 - `Data` = `_session.InterfaceView()`
 
 <a id="symbol-34fbd3119785"></a>
 
 ## `NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData) — private void SaveReading(CareerData data)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -335,7 +336,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?) — public void Send(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Refresh()`](CoopCareerSession.cs.md#symbol-d972d69103cb)；[`NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData)`](CoopCareerSession.cs.md#symbol-34fbd3119785)
 
@@ -369,7 +370,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Replied(NationalSpire.Coop.CoopReply) — private void Replied(CoopReply reply)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -392,7 +393,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.SaveAi(NationalSpire.CareerData) — public void SaveAi(CareerData data)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -418,7 +419,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Generate(bool) — public void Generate(bool retry = false)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -439,7 +440,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.OpenRoom() — public void OpenRoom()`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -458,7 +459,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Export() — public async Task<string> Export()`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -484,7 +485,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Dispose() — public void Dispose()`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -65,6 +65,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
     }
     public static List<Dictionary<string, string>> Compose(CareerData d, GroupChat g, GroupTurn? pending = null)
     {
+        using var measurement = UiPerformance.Measure(UiPerformance.Work.GroupContext);
         var messages = new List<Dictionary<string, string>>();
         void Add(string role, string text) { if (text.Length > 0) messages.Add(new() { ["role"] = role, ["content"] = text }); }
         var protocols = string.Join("\n", PrivateMessagePrompts.Protocol, PrivateMessagePrompts.SkillProtocol, PrivateMessagePrompts.MoodProtocol,
@@ -98,18 +99,20 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         foreach (string club in g.Members.Select(id => CareerEngine.Person(d, id)?.ClubId ?? (id == GroupChats.Human(d) ? d.Esports.ClubId : "")).Where(id => id.Length > 0).Distinct().Order(StringComparer.Ordinal))
             profiles.AppendLine($"{EsportsWorld.ClubName(d, club)}成员：" + string.Join("；", CoachLineups.Members(d, club).Select(p => $"{p.PublicName}（{CoachLineups.Position(d, p)}，评分{p.Rating}，最高进阶{p.MaxAscension}）")));
         Add("user", profiles.ToString());
-        var fixedPosts = new Dictionary<string, string>(); var topicPosts = new Dictionary<string, string>();
+        var fixedPosts = new Dictionary<string, CommunityPost>(); var topicPosts = new Dictionary<string, CommunityPost>();
         var search = new CommunityMemorySearch.Request();
         string query = string.Join("\n", g.Turns.Where(t => t.Status == "complete").TakeLast(2).Select(t => t.Text).Append(pending?.Text ?? ""));
         foreach (var p in g.Members.Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().Where(p => !GroupChats.IsHuman(d, p.Id)))
         {
-            var baseline = new List<(string Id, string Text)>(); var topical = new List<(string Id, string Text)>();
-            PrivatePublicContext.Community(d, p, "", completePosts: baseline, request: search);
-            PrivatePublicContext.Community(d, p, query, completePosts: topical, request: search);
-            foreach (var post in baseline) fixedPosts.TryAdd(post.Id, post.Text);
-            foreach (var post in topical) topicPosts.TryAdd(post.Id, post.Text);
+            var baseline = PrivatePublicContext.SelectCommunity(d, p, "", request: search).Posts;
+            var topical = PrivatePublicContext.SelectCommunity(d, p, query, request: search).Posts;
+            foreach (var post in baseline) fixedPosts.TryAdd(post.Id, post);
+            foreach (var post in topical) topicPosts.TryAdd(post.Id, post);
         }
-        Add("user", string.Join("\n\n", fixedPosts.OrderBy(x => x.Key, StringComparer.Ordinal).Select(x => x.Value)));
+        var allPosts = fixedPosts.Values.Concat(topicPosts.Values).DistinctBy(p => p.Id).ToArray();
+        var comments = CommunityPromptContext.SelectReplies(allPosts, d.Day, g.Members, query, search);
+        string Body(CommunityPost post) => PrivatePublicContext.PostTexts(d, post, new CareerPerson(), includeConversation: false).Ai;
+        Add("user", string.Join("\n\n", fixedPosts.OrderBy(x => x.Key, StringComparer.Ordinal).Select(x => Body(x.Value))));
         Add("user", ChatTimeline.Summaries(d, g.Members, g.Id));
         foreach (var s in g.BigSummaries.Concat(g.SmallSummaries)) Add("user", $"本群第{s.From + 1}至{s.Through}轮总结\n" + s.Text);
         var completed = g.Turns.Select((t, i) => (t, i)).Where(x => x.t.Status == "complete").ToArray();
@@ -126,7 +129,8 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         own.AddRange(g.Entries.Where(e => e.Order >= first).Select(e => new ChatTimeline.Item(e.Order, e.Day, "user", PrivateAppointments.DateText(d, e.Day) + "，" + e.Text)));
         own.AddRange(ChatTimeline.External(d, g.Members, g.Id).Where(e => e.Order >= externalStart && (pending == null || e.Order < pending.Order)));
         foreach (var item in own.OrderBy(x => x.Day).ThenBy(x => x.Order)) Add(item.Role, ChatTimeline.Text(d, item));
-        Add("user", string.Join("\n\n", topicPosts.Where(x => !fixedPosts.ContainsKey(x.Key)).OrderBy(x => x.Key, StringComparer.Ordinal).Select(x => x.Value)));
+        Add("user", string.Join("\n\n", topicPosts.Where(x => !fixedPosts.ContainsKey(x.Key)).OrderBy(x => x.Key, StringComparer.Ordinal).Select(x => Body(x.Value))));
+        Add("user", CommunityPromptContext.Comments(d, allPosts, comments));
         var state = new StringBuilder("当前日期：" + PrivateAppointments.DateText(d, d.Day) + "\n");
         foreach (string id in g.Members.Where(id => PrivateMessages.CanChat(d, id)))
         {

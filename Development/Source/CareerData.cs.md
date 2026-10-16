@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2B780FEB60BFF592E1736E4BF82758E92165282D88C403A032B20A26921947AE`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B4C6F9FC2178CE5DA75E5A490BA43460F5E1BF88D1814172607DE32685A516BB`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -89,11 +89,47 @@ public const int MaximumNewsPostCount = 20;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-ebc40924aee7"></a>
+
+## `NationalSpire.CareerData.TradingAccounts — public Func<IReadOnlyList<MarketAccount>>? TradingAccounts`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-b28eabfc7944"></a>
+
+## `NationalSpire.CareerData.InspectMarket — public Func<MarketInspection, Task<MarketInspectionResult>>? InspectMarket`
+
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-866aafbc0ff4"></a>
 
 ## `NationalSpire.CareerData.MarketSponsors — public Func<string, IEnumerable<SponsorContract>>? MarketSponsors`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -111,7 +147,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Failure — public FailureDecision? Failure`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -129,7 +165,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PrivateMemorySources — public Dictionary<string, PrivateMailbox> PrivateMemorySources`
 
-来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -147,7 +183,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.HumanFavours — public Dictionary<string, Dictionary<string, int>> HumanFavours`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -165,7 +201,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PrivatePromptSnapshot — public Dictionary<string, string> PrivatePromptSnapshot`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -183,7 +219,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerCard — public CareerPerson? PlayerCard`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -201,7 +237,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Development — public Dictionary<string, PlayerDevelopment> Development`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -219,7 +255,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.ProfessionalDebuts — public Dictionary<string, int> ProfessionalDebuts`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -237,7 +273,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.CeremonyRewardReceipts — public HashSet<string> CeremonyRewardReceipts`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -255,7 +291,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.DebutVersion — public int DebutVersion`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -273,7 +309,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.AvatarWorldId — public string AvatarWorldId`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -291,7 +327,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.LocalHumanId — public string LocalHumanId`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -309,7 +345,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.CooperativeMembers — public int CooperativeMembers`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -327,7 +363,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.RivalLevel — public int RivalLevel`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -345,7 +381,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.RandomCharacter — public bool RandomCharacter`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -363,7 +399,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.HumanIds — public List<string> HumanIds`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -381,7 +417,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.HumanFrames — public Dictionary<string, string> HumanFrames`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -399,7 +435,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.HumanAvatars — public Dictionary<string, PlayerAvatar> HumanAvatars`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -417,7 +453,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SelectedAvatar — public PlayerAvatar SelectedAvatar`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -436,7 +472,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.HumanClears — public Dictionary<string, int> HumanClears`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -454,7 +490,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.ExternalSave — public Action<CareerData>? ExternalSave`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -472,7 +508,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.ExternalCurrent — public Func<bool>? ExternalCurrent`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -490,7 +526,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Cameos — public CameoState Cameos`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -509,7 +545,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerAlias — public string PlayerAlias`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -527,7 +563,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerGender — public string PlayerGender`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -545,7 +581,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerNameAliases — public List<string> PlayerNameAliases`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -563,7 +599,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PendingSettlementId — public string PendingSettlementId`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -581,7 +617,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PendingCeremonySeason — public int PendingCeremonySeason`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -599,7 +635,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Ceremonies — public List<CeremonyRecord> Ceremonies`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -617,7 +653,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Life — public CareerLifeState Life`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -636,7 +672,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.AvatarHighestClear — public int AvatarHighestClear`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -654,7 +690,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SelectedAvatarFrame — public string SelectedAvatarFrame`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -672,7 +708,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.AvatarFrames — public Dictionary<string, string> AvatarFrames`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -690,7 +726,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.LongSeasonsFrom — public int LongSeasonsFrom`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -708,7 +744,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.AutoQualifiers — public bool AutoQualifiers`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -726,7 +762,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.BroadcastUi — public BroadcastUiState BroadcastUi`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -745,7 +781,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.WeeklyEditions — public List<WeeklyEdition> WeeklyEditions`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -763,7 +799,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.WeeklyPersonBaselines — public Dictionary<string, string> WeeklyPersonBaselines`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -781,7 +817,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerIntroduction — public string PlayerIntroduction`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -799,7 +835,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PlayerIntroductionDay — public int PlayerIntroductionDay`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -817,7 +853,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Version — public int Version`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -835,7 +871,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.ContentVersion — public int ContentVersion`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -853,7 +889,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.ContentPoolVersion — public int ContentPoolVersion`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -871,7 +907,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.BroadcastHistory — public Dictionary<string, List<string>> BroadcastHistory`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -889,7 +925,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.IdentityVersion — public int IdentityVersion`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -907,7 +943,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.CommunityVersion — public int CommunityVersion`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -925,7 +961,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SavedThreads — public List<CommunityPost> SavedThreads`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -943,7 +979,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.CommunityMemories — public List<CommunityMemory> CommunityMemories`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -961,7 +997,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Esports — public EsportsCareer Esports`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -980,7 +1016,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.WorldId — public string WorldId`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1000,7 +1036,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Draws — public int Draws`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1018,7 +1054,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PendingSince — public long PendingSince`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1036,7 +1072,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Day — public int Day`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1054,7 +1090,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Season — public int Season`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1072,7 +1108,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Rating — public int Rating`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1090,7 +1126,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Fans — public int Fans`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1108,7 +1144,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Credits — public decimal Credits`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1126,7 +1162,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Wins — public int Wins`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1144,7 +1180,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Losses — public int Losses`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1162,7 +1198,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SelectedAscension — public int SelectedAscension`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1180,7 +1216,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SelectedCharacter — public string SelectedCharacter`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1198,7 +1234,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PendingMatchId — public string? PendingMatchId`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1216,7 +1252,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Matches — public List<CareerMatch> Matches`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1234,7 +1270,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.People — public List<CareerPerson> People`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1252,7 +1288,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.DeletedPeople — public Dictionary<string, CareerPerson> DeletedPeople`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1270,7 +1306,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.MatchHumanIds — public List<string> MatchHumanIds`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1288,7 +1324,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.PendingHistoryExcluded — public HashSet<string> PendingHistoryExcluded`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1306,7 +1342,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.TeamPreparations — public List<TeamPreparation> TeamPreparations`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1324,7 +1360,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Posts — public List<CommunityPost> Posts`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1342,7 +1378,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Results — public List<CareerResult> Results`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1360,7 +1396,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Standings — public List<CareerStanding> Standings`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1378,7 +1414,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.SeasonHistory — public List<SeasonRecap> SeasonHistory`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1396,7 +1432,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerData.Ai — public AiOptions Ai`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1415,7 +1451,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.Clears — public int Clears`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1433,7 +1469,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.Draws — public int Draws`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1451,7 +1487,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.PersonId — public string PersonId`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1469,7 +1505,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.Points — public int Points`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1487,7 +1523,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.Wins — public int Wins`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1505,7 +1541,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerStanding.Losses — public int Losses`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1523,7 +1559,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.SeasonRecap.Season — public int Season`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1541,7 +1577,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.SeasonRecap.Rank — public int Rank`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1559,7 +1595,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.SeasonRecap.Points — public int Points`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1577,7 +1613,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.SeasonRecap.Prize — public int Prize`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1595,7 +1631,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.CommentatorIds — public List<string> CommentatorIds`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1613,7 +1649,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.RegistrationDeclined — public bool RegistrationDeclined`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1631,7 +1667,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Live — public LiveMatchState? Live`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1649,7 +1685,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Kind — public string Kind`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1667,7 +1703,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.CompetitionId — public string CompetitionId`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1685,7 +1721,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.FixtureId — public string FixtureId`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1703,7 +1739,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Round — public int Round`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1721,7 +1757,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Decider — public string Decider`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1739,7 +1775,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Draw — public bool Draw`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1757,7 +1793,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.PlayedAscension — public int? PlayedAscension`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1775,7 +1811,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.ChosenAscension — public int? ChosenAscension`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1793,7 +1829,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.OpponentPrepared — public bool OpponentPrepared`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1811,7 +1847,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.OpponentSeconds — public double? OpponentSeconds`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1829,7 +1865,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.PlayerSeconds — public double? PlayerSeconds`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1847,7 +1883,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Id — public string Id`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1867,7 +1903,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Day — public int Day`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1885,7 +1921,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Event — public string Event`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1903,7 +1939,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.OpponentId — public string OpponentId`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1921,7 +1957,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Seed — public string Seed`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1939,7 +1975,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.SeedRandomized — public bool SeedRandomized`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1957,7 +1993,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Prize — public int Prize`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1975,7 +2011,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.RequiredAscension — public int RequiredAscension`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1993,7 +2029,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Registered — public bool Registered`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2011,7 +2047,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.Status — public string Status`
 
-来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2029,7 +2065,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.PlayerWon — public bool PlayerWon`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2047,7 +2083,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.OpponentWon — public bool OpponentWon`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2065,7 +2101,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.OpponentFloor — public int OpponentFloor`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2083,7 +2119,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerMatch.PlayerFloor — public int PlayerFloor`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2101,7 +2137,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Fans — public int? Fans`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2119,7 +2155,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.ClubPosition — public string ClubPosition`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2137,7 +2173,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Arbitrations — public List<ArbitrationRecord> Arbitrations`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2155,7 +2191,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.PrivateProfileReceipts — public HashSet<string> PrivateProfileReceipts`
 
-来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2173,7 +2209,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.EditedCard — public bool EditedCard`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2191,7 +2227,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.CreatedCard — public bool CreatedCard`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2209,7 +2245,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.AbilityTemplate — public string AbilityTemplate`
 
-来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2227,7 +2263,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.CustomClearChance — public double? CustomClearChance`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2245,7 +2281,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Learning — public NpcLearning Learning`
 
-来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2264,7 +2300,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Avatar — public PlayerAvatar Avatar`
 
-来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2283,7 +2319,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Gender — public string Gender`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2301,7 +2337,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.RatingGrowthRemainder — public double RatingGrowthRemainder`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2319,7 +2355,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.RecordVersion — public int RecordVersion`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2337,7 +2373,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.RecruitVersion — public int RecruitVersion`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2355,7 +2391,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.RecordedWinStreak — public int RecordedWinStreak`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2373,7 +2409,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.RecordedStreakAscension — public int RecordedStreakAscension`
 
-来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2391,7 +2427,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.CameoId — public string CameoId`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2409,7 +2445,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Identities — public List<string> Identities`
 
-来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2427,7 +2463,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Connections — public List<string> Connections`
 
-来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2445,7 +2481,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Personality — public PersonalityProfile Personality`
 
-来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2464,7 +2500,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.AiIntroduction — public string AiIntroduction`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2482,7 +2518,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.IntroductionDay — public int IntroductionDay`
 
-来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2500,7 +2536,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Temperament — public string Temperament`
 
-来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2518,7 +2554,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Biography — public string Biography`
 
-来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2536,7 +2572,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.SupportedClubId — public string SupportedClubId`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2554,7 +2590,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Country — public string Country`
 
-来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2572,7 +2608,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.ClubId — public string ClubId`
 
-来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2590,7 +2626,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Form — public string Form`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2608,7 +2644,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Titles — public int Titles`
 
-来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2626,7 +2662,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Id — public string Id`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2644,7 +2680,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Name — public string Name`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2662,7 +2698,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.HandleAliases — public List<string> HandleAliases`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2680,7 +2716,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Handle — public string Handle`
 
-来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2698,7 +2734,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.PublicName — public string PublicName`
 
-来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2716,7 +2752,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Region — public string Region`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2734,7 +2770,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Character — public string Character`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2752,7 +2788,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Style — public string Style`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2770,7 +2806,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.MaxAscension — public int MaxAscension`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2788,7 +2824,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.PrivateHighestClear — public int PrivateHighestClear`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2806,7 +2842,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Wins — public int Wins`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2824,7 +2860,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Losses — public int Losses`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2842,7 +2878,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Rating — public int Rating`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2860,7 +2896,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Role — public string Role`
 
-来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2878,7 +2914,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerPerson.Voice — public string Voice`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2896,7 +2932,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.PersonalPost — public bool PersonalPost`
 
-来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2914,7 +2950,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.MentionedPeople — public List<string> MentionedPeople`
 
-来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2932,7 +2968,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.NewsTopic — public string NewsTopic`
 
-来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2950,7 +2986,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.RelatedFacts — public string RelatedFacts`
 
-来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2968,7 +3004,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Schedule — public PublicSchedule? Schedule`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2986,7 +3022,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.PeopleAtEvent — public List<CareerPerson> PeopleAtEvent`
 
-来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3004,7 +3040,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.NewsGeneration — public AiWorkState NewsGeneration`
 
-来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3023,7 +3059,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.ReactionGeneration — public AiWorkState ReactionGeneration`
 
-来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3042,7 +3078,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.NeedsReaction — public bool NeedsReaction`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3060,7 +3096,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.MatchKind — public string MatchKind`
 
-来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3078,7 +3114,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Revision — public long Revision`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3096,7 +3132,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.SeenRevision — public long SeenRevision`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3114,7 +3150,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.EditorialVersion — public int EditorialVersion`
 
-来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3132,7 +3168,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.SourceTitle — public string SourceTitle`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3150,7 +3186,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.SourceBody — public string SourceBody`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3168,7 +3204,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.AiSourceBody — public string? AiSourceBody`
 
-来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3186,7 +3222,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Priority — public int Priority`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3204,7 +3240,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Category — public string Category`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3222,7 +3258,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.RelatedPeople — public List<string> RelatedPeople`
 
-来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3240,7 +3276,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Analysis — public string Analysis`
 
-来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 208 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3258,7 +3294,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Id — public string Id`
 
-来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3278,7 +3314,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Day — public int Day`
 
-来源：源码第 208 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3296,7 +3332,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.EventKey — public string EventKey`
 
-来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3314,7 +3350,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Title — public string Title`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3332,7 +3368,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.AuthorId — public string AuthorId`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3350,7 +3386,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Body — public string Body`
 
-来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3368,7 +3404,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.Replies — public List<CommunityReply> Replies`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3386,7 +3422,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityPost.AiPending — public bool AiPending`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3404,7 +3440,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.MentionedPeople — public List<string> MentionedPeople`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3422,7 +3458,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.AiGenerated — public bool AiGenerated`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3440,7 +3476,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.ReactionGeneration — public AiWorkState ReactionGeneration`
 
-来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3459,7 +3495,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.Id — public string Id`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3479,7 +3515,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.ParentId — public string ParentId`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3497,7 +3533,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.Day — public int Day`
 
-来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3515,7 +3551,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.NeedsReaction — public bool NeedsReaction`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3533,7 +3569,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.AuthorId — public string AuthorId`
 
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3551,7 +3587,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityReply.Body — public string Body`
 
-来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3569,7 +3605,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiWorkState.WaitReason — public string WaitReason`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3587,7 +3623,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiWorkState.State — public string State`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3605,7 +3641,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiWorkState.Error — public string Error`
 
-来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3623,7 +3659,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.Id — public string Id`
 
-来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3641,7 +3677,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.PostId — public string PostId`
 
-来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3659,7 +3695,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.Day — public int Day`
 
-来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3677,7 +3713,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.Kind — public string Kind`
 
-来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 245 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3695,7 +3731,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.People — public List<string> People`
 
-来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3713,7 +3749,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.Text — public string Text`
 
-来源：源码第 245 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3731,7 +3767,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CommunityMemory.AiText — public string? AiText`
 
-来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3749,7 +3785,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Simulated — public bool Simulated`
 
-来源：源码第 252 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3767,7 +3803,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.PlayerParticipants — public List<string> PlayerParticipants`
 
-来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3785,7 +3821,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.OpponentParticipants — public List<string> OpponentParticipants`
 
-来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3803,7 +3839,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.LifeEffects — public List<string> LifeEffects`
 
-来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3821,7 +3857,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Settlement — public SettlementRecord? Settlement`
 
-来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 258 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3839,7 +3875,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.WorldImpact — public string WorldImpact`
 
-来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 259 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3857,7 +3893,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Evidence — public RunEvidence Evidence`
 
-来源：源码第 258 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3876,7 +3912,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.DeckSummary — public List<string> DeckSummary`
 
-来源：源码第 259 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 261 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3894,7 +3930,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.OfficialAscensionVerified — public bool OfficialAscensionVerified`
 
-来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3912,7 +3948,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.PlayedAscension — public int? PlayedAscension`
 
-来源：源码第 261 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3930,7 +3966,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.RunSeconds — public double? RunSeconds`
 
-来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3948,7 +3984,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.RewardMultiplier — public double RewardMultiplier`
 
-来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3966,7 +4002,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.OpponentId — public string OpponentId`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -3984,7 +4020,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.CompetitionId — public string CompetitionId`
 
-来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 267 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4002,7 +4038,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Kind — public string Kind`
 
-来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 268 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4020,7 +4056,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.MatchId — public string MatchId`
 
-来源：源码第 267 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4038,7 +4074,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Outcome — public string Outcome`
 
-来源：源码第 268 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4056,7 +4092,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.RatingDelta — public int RatingDelta`
 
-来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4074,7 +4110,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.FansDelta — public int FansDelta`
 
-来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4092,7 +4128,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Prize — public long Prize`
 
-来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4110,7 +4146,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Day — public int Day`
 
-来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4128,7 +4164,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Event — public string Event`
 
-来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4146,7 +4182,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Opponent — public string Opponent`
 
-来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4164,7 +4200,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.CharacterId — public string CharacterId`
 
-来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4182,7 +4218,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Character — public string Character`
 
-来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 278 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4200,7 +4236,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Ascension — public int Ascension`
 
-来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 279 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4218,7 +4254,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Win — public bool Win`
 
-来源：源码第 278 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4236,7 +4272,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Floor — public int Floor`
 
-来源：源码第 279 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4254,7 +4290,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Seed — public string Seed`
 
-来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4272,7 +4308,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.CareerResult.Cards — public List<string> Cards`
 
-来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4286,11 +4322,49 @@ public const int MaximumNewsPostCount = 20;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-945eefc4ccb3"></a>
+
+## `NationalSpire.AiOptions.ConnectionProfiles — public Dictionary<string, AiConnectionProfile> ConnectionProfiles`
+
+来源：源码第 288 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new()`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-705c60aba205"></a>
+
+## `NationalSpire.AiOptions.TaskProfiles — public Dictionary<string, string> TaskProfiles`
+
+来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new()`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-55f3ceb7f4ff"></a>
 
 ## `NationalSpire.AiOptions.PrivatePromptVersion — public int PrivatePromptVersion`
 
-来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4308,7 +4382,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.PromptTemplate — public string PromptTemplate`
 
-来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4326,7 +4400,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.CustomPromptTemplates — public Dictionary<string, CustomPromptTemplate> CustomPromptTemplates`
 
-来源：源码第 288 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4345,7 +4419,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.PromptTemplateOverrides — public Dictionary<string, Dictionary<string, string>> PromptTemplateOverrides`
 
-来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4364,7 +4438,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.PromptOverrides — public Dictionary<string, string> PromptOverrides`
 
-来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4383,7 +4457,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.MaxConcurrentRequests — public int MaxConcurrentRequests`
 
-来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 295 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4401,7 +4475,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.MinimumIntervalSeconds — public int MinimumIntervalSeconds`
 
-来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 296 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4419,7 +4493,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.RequestTimeoutMinutes — public int RequestTimeoutMinutes`
 
-来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 297 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4437,7 +4511,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.Enabled — public bool Enabled`
 
-来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 298 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4455,7 +4529,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.Endpoint — public string Endpoint`
 
-来源：源码第 295 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4473,7 +4547,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.EndpointFormatVersion — public int EndpointFormatVersion`
 
-来源：源码第 296 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4491,7 +4565,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.System.Text.Json.Serialization.IJsonOnDeserializing.OnDeserializing() — void System.Text.Json.Serialization.IJsonOnDeserializing.OnDeserializing()`
 
-来源：源码第 297 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 301 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4510,7 +4584,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.System.Text.Json.Serialization.IJsonOnDeserialized.OnDeserialized() — void System.Text.Json.Serialization.IJsonOnDeserialized.OnDeserialized()`
 
-来源：源码第 298 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 302 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4535,7 +4609,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.Model — public string Model`
 
-来源：源码第 307 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 311 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4553,7 +4627,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.MaxNewsPosts — public int MaxNewsPosts`
 
-来源：源码第 309 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 313 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4571,7 +4645,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.RequestsToday — public int RequestsToday`
 
-来源：源码第 310 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 314 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -4589,7 +4663,7 @@ public const int MaximumNewsPostCount = 20;
 
 ## `NationalSpire.AiOptions.RequestDay — public int RequestDay`
 
-来源：源码第 311 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 315 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

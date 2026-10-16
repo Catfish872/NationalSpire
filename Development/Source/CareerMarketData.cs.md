@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`ECB6D6C2596E080C83948CAEC060D4B12D53AC9AF86411A370F437D61B796B99`。来源：[源码](../../CareerMarketData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C5B5A9349CFE54C5365E6625C198DB1C43208ABACDA7AB7F3B482EF28B4D2FA4`。来源：[源码](../../CareerMarketData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.MarketAsset`、`NationalSpire.MarketState`、`NationalSpire.MarketQuote`、`NationalSpire.MarketPoint`、`NationalSpire.MarketEvent`、`NationalSpire.MarketAccount`、`NationalSpire.MarketPosition`、`NationalSpire.MarketTrade`、`NationalSpire.MarketOrder`、`NationalSpire.MarketCatalog`。
+类型：`NationalSpire.MarketAsset`、`NationalSpire.MarketState`、`NationalSpire.MarketQuote`、`NationalSpire.MarketPoint`、`NationalSpire.MarketEvent`、`NationalSpire.MarketAccount`、`NationalSpire.MarketPosition`、`NationalSpire.MarketTrade`、`NationalSpire.MarketOrder`、`NationalSpire.MarketInspection`、`NationalSpire.MarketOrderPreview`、`NationalSpire.MarketInspectionResult`、`NationalSpire.MarketCatalog`。
 
 字段、事件及初始值（源码原样）：
 
@@ -16,11 +16,30 @@ public static readonly IReadOnlyDictionary<string, MarketAsset> ById = Assets.To
 public static readonly int Version = CareerEngine.StableHash("market-catalog:60:" + string.Join("\n", Assets.Select(a => a.Id)));
 ```
 
+<a id="symbol-bf57296d6030"></a>
+
+## `NationalSpire.MarketState.RevisionCopy() — public MarketState RevisionCopy()`
+
+来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.EconomicActions.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](EconomicActions.cs.md#symbol-f0516c3ecf95)
+
+**调用：** `object.MemberwiseClone()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `object.MemberwiseClone()`；输入表达式：`MemberwiseClone()`；返回值紧邻使用处：`CastExpressionSyntax: (MarketState)MemberwiseClone()`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-80848768321a"></a>
 
 ## `NationalSpire.MarketState.CheckedQuoteCount — internal int CheckedQuoteCount`
 
-来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -38,7 +57,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.PricingVersion — public int PricingVersion`
 
-来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -56,7 +75,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.CatalogVersion — public int CatalogVersion`
 
-来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -74,7 +93,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.LastDay — public int LastDay`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -92,7 +111,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.Revision — public long Revision`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -110,7 +129,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.NewsDay — public int NewsDay`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -128,7 +147,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.Events — public List<MarketEvent> Events`
 
-来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -146,7 +165,61 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketState.Quotes — public Dictionary<string, MarketQuote> Quotes`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-73456ddf927a"></a>
+
+## `NationalSpire.MarketQuote.ClearingDepthUnits — public decimal ClearingDepthUnits`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-9fbb9f90dbe8"></a>
+
+## `NationalSpire.MarketQuote.LongUnits — public decimal LongUnits`
+
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-635edb2e6f30"></a>
+
+## `NationalSpire.MarketQuote.ShortUnits — public decimal ShortUnits`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -164,7 +237,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.ExecutionBase — public decimal ExecutionBase`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -182,7 +255,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.DepthUnits — public decimal DepthUnits`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -200,7 +273,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.OrderUnits — public decimal OrderUnits`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -218,7 +291,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.BuyUnits — public MarketNumber? BuyUnits`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -236,7 +309,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.SellUnits — public MarketNumber? SellUnits`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -254,7 +327,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.SignalDay — public int SignalDay`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +345,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.AppliedSignal — public decimal AppliedSignal`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -290,9 +363,9 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.ExecutionCopy() — public MarketQuote ExecutionCopy()`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketExecution.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount)`](MarketExecution.cs.md#symbol-77afecd31787)
+**调用者：** [`NationalSpire.MarketClearing.Session.Session(NationalSpire.MarketAsset, NationalSpire.MarketQuote, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>)`](MarketClearing.cs.md#symbol-510ea2f6756a)；[`NationalSpire.MarketExecution.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>?)`](MarketExecution.cs.md#symbol-38a7df5abf7b)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)
 
 **调用：** `object.MemberwiseClone()`
 
@@ -309,7 +382,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.Price — public decimal Price`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -327,7 +400,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.Previous — public decimal Previous`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -345,7 +418,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.SyntheticThrough — public int SyntheticThrough`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -363,7 +436,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.PendingSignal — public decimal PendingSignal`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -381,7 +454,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketQuote.History — public List<MarketPoint> History`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -399,7 +472,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.Cash — public decimal Cash`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -417,7 +490,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.Debt — public decimal Debt`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -435,7 +508,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.InterestDay — public int InterestDay`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -453,7 +526,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.InterestRate — public decimal InterestRate`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -471,7 +544,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.NextPosition — public int NextPosition`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -489,7 +562,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.Positions — public List<MarketPosition> Positions`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -507,7 +580,25 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketAccount.Trades — public List<MarketTrade> Trades`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-ef84c91c8ccd"></a>
+
+## `NationalSpire.MarketPosition.ExecutionVersion — public int ExecutionVersion`
+
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -525,7 +616,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.InitialMargin — public decimal? InitialMargin`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -543,7 +634,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.StopPrice — public decimal? StopPrice`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -561,7 +652,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.OpeningFee — public decimal? OpeningFee`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -579,7 +670,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Id — public int Id`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -597,7 +688,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Asset — public string Asset`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -615,7 +706,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Entry — public decimal Entry`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -633,7 +724,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Margin — public decimal Margin`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -651,7 +742,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Units — public MarketNumber Units`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -669,7 +760,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Leverage — public int Leverage`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -687,7 +778,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketPosition.Direction — public int Direction`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -705,7 +796,7 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 
 ## `NationalSpire.MarketCatalog.Build() — private static List<MarketAsset> Build()`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

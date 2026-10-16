@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -56,7 +56,7 @@ public static partial class AiService
             if (turn.RequestKind == "arbitration")
             {
                 var record = new StringBuilder();
-                string response = await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId);
+                string response = await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration");
                 var decision = SpireArbitration.Parse(response);
                 cancel.Token.ThrowIfCancellationRequested();
                 data = current(); if (data == null) return;
@@ -133,14 +133,15 @@ public static partial class AiService
     }
 
     internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
-        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "")
+        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private")
     {
-        if (string.IsNullOrWhiteSpace(CurrentKey)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
-        if (!TryGetEndpoint(options.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
+        var connection = Connection(options, task);
+        if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
+        if (!TryGetEndpoint(connection.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", CurrentKey);
-        request.Content = new StringContent(JsonSerializer.Serialize(new { model = options.Model, messages, stream }, Json), Encoding.UTF8, "application/json");
-        Diagnostics.RegisterSecret(CurrentKey);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", connection.Key);
+        request.Content = new StringContent(JsonSerializer.Serialize(new { model = connection.Model, messages, stream }, Json), Encoding.UTF8, "application/json");
+        Diagnostics.RegisterSecret(connection.Key);
         string trace = Guid.NewGuid().ToString("N"), failure = ""; JsonElement? lastUsage = null;
         var received = new StringBuilder(); var thoughts = new StringBuilder(); var visible = new StringBuilder();
         var onContent = progress; var onReasoning = reasoning;
@@ -148,7 +149,7 @@ public static partial class AiService
         var leading = new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning);
         progress = chunk => { received.Append(chunk); leading.Feed(chunk); };
         void RememberUsage(JsonElement root) { if (root.TryGetProperty("usage", out var usage) && usage.ValueKind == JsonValueKind.Object) lastUsage = usage.Clone(); }
-        Diagnostics.Record("private.request", new { trace, context, stream, options.Model, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });
+        Diagnostics.Record("private.request", new { trace, context, stream, connection.Model, connection.ProfileId, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });
         try
         {
             using var response = await PrivateTransport(request, token);
@@ -215,7 +216,7 @@ public static partial class AiService
         finally
         {
             if (lastUsage is { } usage) Diagnostics.Record("private.usage", new { trace, context, usage });
-            Diagnostics.Record("private.response", new { trace, context, options.Model, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
+            Diagnostics.Record("private.response", new { trace, context, connection.Model, connection.ProfileId, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
         }
     }
     private static string PrivateReasoning(JsonElement message)
@@ -273,13 +274,13 @@ public static partial class AiService
     {
         var p = CareerEngine.Person(data, person)!;
         List<Dictionary<string, string>> messages = [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(data.Ai, section) + $"\n你是{p.PublicName}，以{p.PublicName}的第一人称整理与玩家{CareerEngine.Name(data)}的聊天。\n{p.PublicName}的性格 " + JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(p.Personality), Json) + "\n性格使用说明：" + PersonalityLibrary.ProfileUsage }, new() { ["role"] = "user", ["content"] = content }];
-        return SummaryRequest(data.Ai, messages);
+        return SummaryRequest(data.Ai, messages, "private-summary");
     }
-    private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages)
+    private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages, string task)
     {
         using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(options.RequestTimeoutMinutes, 2, 30)));
         await PrivateSummaryQueue.WaitAsync(timeout.Token);
-        try { return await RequestPrivateAsync(options, messages, false, null, timeout.Token); }
+        try { return await RequestPrivateAsync(options, messages, false, null, timeout.Token, task: task); }
         finally { PrivateSummaryQueue.Release(); }
     }
 }

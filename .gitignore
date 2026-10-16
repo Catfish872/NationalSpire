@@ -45,3 +45,4 @@ obj/
 national_spire_career*.json
 national_spire_ai_settings.json
 national_spire_ai_key.bin
+national_spire_ai_key_*.bin

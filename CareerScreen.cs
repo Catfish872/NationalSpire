@@ -763,7 +763,12 @@ public partial class CareerScreen : Control, IScreenContext
         if (_multiplayer is { Host: false }) { box.AddChild(Text("AI 由主机统一生成，你无需配置服务或密钥。帖子、解说与周刊会自动同步。", 20, _ink)); AddMultiplayerReportButton(box); return; }
         _aiStatus = AiSettingsPanel.Build(box, data.Ai,
             () => { SaveAiSettings(data); AiService.RefreshConcurrency(data.Ai); },
-            () => GenerateContent(() => { _ = AiService.ProcessPendingAsync(data); }), () => OpenPromptSettings(data), Notice, () => _aiSettingsDirty = true);
+            () => GenerateContent(() => { _ = AiService.ProcessPendingAsync(data); }), () => OpenPromptSettings(data), Notice, () => _aiSettingsDirty = true,
+            confirmSwitch: action => ShowCareerDialog("方案没有保存", "方案没有保存，确认切换吗？", () => { action(); return true; }, "确认切换",
+                contents: content =>
+                {
+                    var mark = new Label { Text = "◇", HorizontalAlignment = HorizontalAlignment.Center }; mark.AddThemeFontSizeOverride("font_size", 44); mark.AddThemeColorOverride("font_color", _gold); content.AddChild(mark);
+                }, cancelText: "继续编辑"));
         if (_multiplayer != null) { box.AddChild(Button("导入与导出生涯", OpenCareerLibrary, 280)); AddMultiplayerReportButton(box); return; }
         var debug = Card(); _content.AddChild(debug); var db = Inner(debug);
         db.AddChild(Text("生涯管理", 24, _gold));

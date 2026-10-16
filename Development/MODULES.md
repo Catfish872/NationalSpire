@@ -6,13 +6,14 @@
 | --- | --- | --- | --- | --- |
 | 游戏接入 | Entry.Init、MainMenuEntries、GameBridge、LiveCompatibility、RuntimeApi、GameCompatibility | 原版 ModInitializer、菜单、RunManager、战斗与存储接口 | 生涯界面、比赛恢复、证据记录、转播 | 安装 Harmony 补丁、订阅游戏事件；反射读取版本差异接口 |
 | 页面与会话 | CareerScreen 各 partial、CareerNavigation、ICareerSession、CoopCareerSession | 当前绑定生涯或多人个人视图、用户操作、流式状态 | 生涯命令、多人 Send、AI 请求入口 | 创建和更新控件；操作保存由规则与会话入口负责 |
+| 聊天历史显示 | ChatHistoryPage、ChatHistoryScreen、PrivateMessageScreen、GroupChatScreen、CareerNavigation | 当前会话记录、内容版本、翻页与选择操作 | 输入框操作行、当前页面气泡、滚动定位与档案返回 | 缓存当前会话轮次引用；本地配置按世界及玩家保存最近会话与每页轮数 |
 | 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
 | 合同与培养 | OwnedClubs、OwnedClubSchedule、ClubOperations、ClubCoaching、CoachLineups、CareerTraining | 所属俱乐部、合同、席位、训练计划、预约转会 | 当前阵容、未来比赛名单、培养效果、账目 | 修改俱乐部与发展数据；名单变化传给赛事同步入口 |
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
 | 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
-| 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
+| 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch、CommunityPromptContext | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
 | 聊天与交互 | PrivateMessageCommands、PrivateMessages、GroupChats、GroupInteractions、ChatTimeline、PrivateInteractionUndo | 用户文字、附件、群成员、AI 标记、旧记录 | 聊天轮次、交互卡片、关系、训练、活动、赛程与帖子 | 交互执行调用对应业务规则；回退依赖已记录的交互历史 |
-| 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务 | 最终 messages、模型响应、解析后的正文与标记 | HTTP、请求队列、实时字典、生成状态、结果保存回调 |
+| 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRouting、AiSettingsStore、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务、本机任务方案 | 最终 messages、连接快照、模型响应、解析后的正文与标记 | HTTP、按方案加密凭据、请求队列、实时字典、生成状态、结果保存回调 |
 | 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopReception、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 房主提交；客机后台解码、保存、准备独立视图，主线程按原顺序发布；存储按实际目录协调 |
 | 局内显示 | LiveRunBridge、LiveMatch、LiveMaps、LiveRaceHud、LiveVoices、LiveCommentary、LiveCrowd、CoopLive、CoopBroadcast | 原版实际地图与战斗、已确定对手结果及用时 | 对手进度、解说、弹幕、人物头像 | 局内事件订阅；读取资源；播报历史与当前比赛保存 |
 | 支撑与诊断 | Diagnostics、UiPerformance、LogPerformance、GameText、各头像与资源模块 | 实际请求、错误、阶段计时、资源、存档副本 | 日志、诊断包、格式化文本和缓存资源 | 凭据脱敏；资源缓存；性能记录 |
@@ -31,8 +32,8 @@
 | 消费事件 | ConsumerEvents.Purchase / Activity | 成功购买、活动结果 → 当天购物合并记录或独立已完成聚会记录；CareerLife.AddEvent 保存公开事实，原日期推进流程汇总发布 |
 | 持续赞助收入 | SponsorIncome → CareerCommerce / CircuitLedger / OwnedClubs | 基础合同金额、付款时关注 → 个人赛季款和胜场款、普通俱乐部赛季款、自建俱乐部周款和胜场款；个人 RefreshOffers 自动续约并应用 NextOffer，原付款收据、保存及多人命令继续使用 |
 | 商城购买展示 | ConsumerShop → ConsumerPurchases / ConsumerVisuals / ConsumerSeal | 本人 BoughtDay、Goods、PromoUsed 与商品目录 → 本季徽章、宣发进度、实物收藏与最近购买日期；每次刷新只读整理一次，不保存、不广播，样式缓存不含玩家资料；我的空间不接入 |
-| 行情与交易 | CareerMarket、MarketDynamics、MarketExecution、MarketNumber | Initialize补前史并迁移旧待计价信号；Advance按独立基准更新日行情；Fixture在正式赛果中即时计价；MarketExecution统一深度、买卖均价、预计清仓价值和实际到账，Trade执行资金及公共报价变更；WorldEvents通过TryPublish使用公开行情进入原AI新闻队列 |
-| 经济提交 | EconomicActions.Save / Trade / Persist、CoopRules.Trade | 单人消费复制完整资料；交易复制资金资料，买卖另复制共同报价；统一Persist提交原生涯实例，异常回退资金与报价；多人复用Apply完整副本及MarketAccounts，处理其他成员强平，避免第二次复制整个生涯 |
+| 行情与交易 | CareerMarket、MarketDynamics、MarketExecution、MarketClearing、MarketNumber | Initialize补前史并迁移旧待计价信号；Advance按独立基准更新日行情；Fixture在正式赛果中即时计价；MarketExecution保留旧仓成交；MarketClearing统一新仓曲线、分段强平、预览和提交，Trade执行资金及公共报价变更；WorldEvents通过TryPublish使用公开行情进入原AI新闻队列 |
+| 经济提交 | EconomicActions.Save / Trade / Persist、CoopRules.Trade | 单人消费复制完整资料；交易复制资金资料，买卖另复制共同报价；统一Persist提交原生涯实例，异常回退资金与报价；多人复用Apply完整副本、MarketAccounts及TradingAccounts，处理其他成员强平，避免第二次复制整个生涯 |
 
 MarketScreen/日程/无赛事页面通过AdvanceCareerDay共用日期推进；ConsumerShop.Select只重建ConsumerDetail。MarketPositionCard将持仓信息、平仓和保证金/止损编辑分开；Edit/Preview仅改本机控件，Apply/Send输出MarketOrder，经MarketTerminal.Submit→MarketScreen.MarketSubmit→单人EconomicActions.Trade或多人market命令→CareerMarket.Trade。MarketScreen → MarketTerminal复用CareerListCache的分帧预建控件；卡片Bind更新个人仓位、报价及版本并收起编辑区，Unbind对全部卡片Bind(null,null)，解除缓存中的仓位、报价和编辑状态。LifestyleArt提供本机缓存导航图标和原生商品插画。ConsumerScreen、MarketScreen、DevelopmentScreen使用现有CareerScreen、头像及样式入口，不修改游戏共享字体。没有独立网络协议、后台保存队列或重试机制。数据归属见DATA_CONTRACTS，提交顺序见PERSISTENCE_AND_COOP，规则与数值见GAME_AND_UI。
 
@@ -40,7 +41,7 @@ MarketScreen/日程/无赛事页面通过AdvanceCareerDay共用日期推进；Co
 
 品牌目录：MarketCatalog.Build→RegionalOrganizations.SponsorCatalog→地区Sponsors及CareerCommerce.LegacySponsors→统一Assets/ById及Version。CareerEngine.NormalizeRoster、日期/赛果及CoopRules.InitializeMarket共用CareerMarket.Initialize；检查、缺项生成、CheckedQuoteCount及原UpgradePricing均在此入口完成。市场搜索：MarketTerminal.Bind→MarketDynamics.Links→有效Sponsors、真人委托和自建俱乐部赞助，结果交给Partners及直接俱乐部名称索引；ResetList与ChangePage共用RefreshList。数据和生命周期见DATA_CONTRACTS及GAME_AND_UI。
 
-市场展示：MarketTerminal.RefreshSelection→MarketExecution.Depth / MarketDynamics.Volatility→固定概况控件；RefreshSelection→EventTitle→四个MarketEventRow.Bind→日期、标题、报价变化与原人物回调。图表范围按钮→RefreshChart→MarketChart.Set。订单输入→MarketAmountInput.Amount→OrderMargin/RefreshFee→OpenFee及两次MarketExecution.Open→扣款、费用和方向均价；做多/做空→Open→统一Submit。MarketVisuals.ActionStyle提供按动作与状态缓存的样式，LifestyleArt.Icon提供做多、做空、确认、收起、清除及波动图标；保证金和止损编辑沿用MarketPositionCard.Apply/Send。界面刷新、切换个人视图、离开页面和Unbind的生命周期沿用本章原入口。
+市场展示：MarketTerminal.RefreshSelection→MarketExecution.Depth / MarketDynamics.Volatility→固定概况控件；RefreshSelection→EventTitle→四个MarketEventRow.Bind→日期、标题、报价变化与原人物回调。图表范围按钮→RefreshChart→MarketChart.Set。订单输入→MarketAmountInput.Amount→OrderMargin/RefreshFee→OpenFee及两次MarketClearing.Preview→扣款、费用和方向均价；做多/做空→Open→统一Submit。MarketVisuals.ActionStyle提供按动作与状态缓存的样式，LifestyleArt.Icon提供做多、做空、确认、收起、清除及波动图标；保证金和止损编辑沿用MarketPositionCard.Apply/Send。界面刷新、切换个人视图、离开页面和Unbind的生命周期沿用本章原入口。
 
 | 安装或建立入口 | 保存的回调或事件 | 实际使用者与时机 |
 | --- | --- | --- |

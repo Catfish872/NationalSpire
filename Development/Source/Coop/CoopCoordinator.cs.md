@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`DE8DA03A3D1262A771024B510F11B7B2D9DB6E4AF438245112D4E8BA4C671958`。来源：[源码](../../../Coop/CoopCoordinator.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`153F7561B0CE0F6FD2427327F36A00AADBBB49D539E2C7D95DEF1191E5C6EE5E`。来源：[源码](../../../Coop/CoopCoordinator.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -264,7 +264,7 @@ public event Action<CoopReply>? Replied;
 
 来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.CollectDiagnostics(System.TimeSpan?)`](CoopDiagnostics.cs.md#symbol-3673c645e7c7)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.PublishLive()`](CoopCoordinator.cs.md#symbol-1e3cadd9f597)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-11ae699cefda)；[`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopCoordinator.StartGroup(ulong, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-83d332761336)；[`NationalSpire.Coop.CoopCoordinator.StartPrivate(ulong, NationalSpire.Coop.CoopCommand)`](CoopPrivateMessages.cs.md#symbol-ebc3f29b5eb6)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.CollectDiagnostics(System.TimeSpan?)`](CoopDiagnostics.cs.md#symbol-3673c645e7c7)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.InspectMarket(NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-fa87d36508d0)；[`NationalSpire.Coop.CoopCoordinator.PublishLive()`](CoopCoordinator.cs.md#symbol-1e3cadd9f597)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`](CoopMarket.cs.md#symbol-1d6c27a5f526)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-11ae699cefda)；[`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopCoordinator.StartGroup(ulong, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-83d332761336)；[`NationalSpire.Coop.CoopCoordinator.StartPrivate(ulong, NationalSpire.Coop.CoopCommand)`](CoopPrivateMessages.cs.md#symbol-ebc3f29b5eb6)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)
 
 **调用：** [`NationalSpire.Coop.ICoopTransport.Send(ulong, NationalSpire.Coop.CoopWire)`](CoopWire.cs.md#symbol-fc2e03480549)；`NationalSpire.Coop.CoopWire.CoopWire(string, string)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -307,7 +307,7 @@ public event Action<CoopReply>? Replied;
 
 来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`](CoopMarket.cs.md#symbol-1d6c27a5f526)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)
 
 **调用：** `System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
@@ -360,9 +360,9 @@ public event Action<CoopReply>? Replied;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
 
-**调用：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopContentIdentity.Difference(string, string)`](CoopContentIdentity.cs.md#symbol-71a611ce4e39)；[`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`](CoopCoordinator.cs.md#symbol-4f91858a07d3)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.Rate(ulong)`](CoopCoordinator.cs.md#symbol-d72b98487984)；[`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)；[`NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`](CoopCoordinator.cs.md#symbol-a8a225b353ea)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](CoopRules.cs.md#symbol-fedd425e9ea0)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`NationalSpire.Coop.CoopOutcome.CoopOutcome(bool, string, bool)`；`NationalSpire.Coop.CoopReply.CoopReply(string, NationalSpire.Coop.CoopOutcome, long)`；`NationalSpire.Coop.CoopWire.CoopWire(string, string)`；`string.StartsWith(string, System.StringComparison)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopContentIdentity.Difference(string, string)`](CoopContentIdentity.cs.md#symbol-71a611ce4e39)；[`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`](CoopCoordinator.cs.md#symbol-4f91858a07d3)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.Rate(ulong)`](CoopCoordinator.cs.md#symbol-d72b98487984)；[`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`](CoopMarket.cs.md#symbol-1d6c27a5f526)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)；[`NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`](CoopCoordinator.cs.md#symbol-a8a225b353ea)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](CoopRules.cs.md#symbol-fedd425e9ea0)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`NationalSpire.Coop.CoopOutcome.CoopOutcome(bool, string, bool)`；`NationalSpire.Coop.CoopReply.CoopReply(string, NationalSpire.Coop.CoopOutcome, long)`；`NationalSpire.Coop.CoopWire.CoopWire(string, string)`；`string.StartsWith(string, System.StringComparison)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `(NationalSpire.Coop.CoopCommand Command, System.DateTime Sent, NationalSpire.Coop.CoopReply? Reply).Command`；`(NationalSpire.Coop.CoopCommand Command, System.DateTime Sent, NationalSpire.Coop.CoopReply? Reply).Sent`；`<anonymous type: ulong sender, string payload>.payload`；`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`；`NationalSpire.Coop.CoopCommand.Id`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopContentIdentity.Difference(string, string)`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._compatibility`；`NationalSpire.Coop.CoopCoordinator._liveAssembler`；`NationalSpire.Coop.CoopCoordinator._pendingCommands`；`NationalSpire.Coop.CoopCoordinator._preparedView`；`NationalSpire.Coop.CoopCoordinator._seen`；`NationalSpire.Coop.CoopCoordinator._token`；`NationalSpire.Coop.CoopCoordinator._transport`；`NationalSpire.Coop.CoopCoordinator.Changed`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`；`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.Rate(ulong)`；`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`；`NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`；`NationalSpire.Coop.CoopCoordinator.RunMessage`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.Status`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopHeartbeat.Epoch`；`NationalSpire.Coop.CoopHello.Compatibility`；`NationalSpire.Coop.CoopHello.Name`；`NationalSpire.Coop.CoopHello.Protocol`；`NationalSpire.Coop.CoopHello.Token`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopOutcome.Accepted`；`NationalSpire.Coop.CoopOutcome.Message`；`NationalSpire.Coop.CoopProposal.Id`；`NationalSpire.Coop.CoopProposal.Votes`；`NationalSpire.Coop.CoopReply.Id`；`NationalSpire.Coop.CoopReply.Outcome`；`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopWire.Kind`；`NationalSpire.Coop.CoopWire.Payload`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Proposal`；`NationalSpire.Coop.CoopWorld.Protocol`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.Coop.ICoopTransport.Owner`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
+**字段、属性、事件及方法组引用：** `(NationalSpire.Coop.CoopCommand Command, System.DateTime Sent, NationalSpire.Coop.CoopReply? Reply).Command`；`(NationalSpire.Coop.CoopCommand Command, System.DateTime Sent, NationalSpire.Coop.CoopReply? Reply).Sent`；`<anonymous type: ulong sender, string payload>.payload`；`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`；`NationalSpire.Coop.CoopCommand.Id`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopContentIdentity.Difference(string, string)`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._compatibility`；`NationalSpire.Coop.CoopCoordinator._liveAssembler`；`NationalSpire.Coop.CoopCoordinator._pendingCommands`；`NationalSpire.Coop.CoopCoordinator._preparedView`；`NationalSpire.Coop.CoopCoordinator._seen`；`NationalSpire.Coop.CoopCoordinator._token`；`NationalSpire.Coop.CoopCoordinator._transport`；`NationalSpire.Coop.CoopCoordinator.Changed`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`；`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.Rate(ulong)`；`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`；`NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`；`NationalSpire.Coop.CoopCoordinator.RunMessage`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.Status`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopHeartbeat.Epoch`；`NationalSpire.Coop.CoopHello.Compatibility`；`NationalSpire.Coop.CoopHello.Name`；`NationalSpire.Coop.CoopHello.Protocol`；`NationalSpire.Coop.CoopHello.Token`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopOutcome.Accepted`；`NationalSpire.Coop.CoopOutcome.Message`；`NationalSpire.Coop.CoopProposal.Id`；`NationalSpire.Coop.CoopProposal.Votes`；`NationalSpire.Coop.CoopReply.Id`；`NationalSpire.Coop.CoopReply.Outcome`；`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopWire.Kind`；`NationalSpire.Coop.CoopWire.Payload`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Proposal`；`NationalSpire.Coop.CoopWorld.Protocol`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.Coop.ICoopTransport.Owner`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -380,6 +380,7 @@ public event Action<CoopReply>? Replied;
 - `NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；输入表达式：`Read<string>(wire)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Status = Read<string>(wire)`
 - `NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；输入表达式：`Read<string>(wire)`；返回值紧邻使用处：`BinaryExpressionSyntax: Read<string>(wire) == World!.Epoch`
 - `NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`；输入表达式：`ReceiveDiagnostic(sender, wire)`；返回值紧邻使用处：`ExpressionStatementSyntax: ReceiveDiagnostic(sender, wire);`
+- `NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`；输入表达式：`ReceiveMarket(sender, wire)`；返回值紧邻使用处：`ExpressionStatementSyntax: ReceiveMarket(sender, wire);`
 - `NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`；输入表达式：`ReceivePrivate(wire, received)`；返回值紧邻使用处：`ExpressionStatementSyntax: ReceivePrivate(wire, received);`
 - `NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`；输入表达式：`RecordJoinError(error)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordJoinError(error);`
 - `NationalSpire.Coop.CoopCoordinator.RecordJoinError(string)`；输入表达式：`RecordJoinError(Status)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordJoinError(Status);`
@@ -419,7 +420,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.RecordJoinError(string) — private void RecordJoinError(string error)`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
@@ -440,7 +441,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Rate(ulong) — private bool Rate(ulong sender)`
 
-来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
@@ -462,7 +463,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Submit(string, string, string, int, string) — public CoopCommand Submit(string kind, string target = "", string text = "", int number = 0, string parent = "")`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -488,7 +489,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand) — public void Retry(CoopCommand command)`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)；[`Submit()`](CoopReception.cs.md#symbol-690f4f77e4f1)
 
@@ -511,7 +512,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.CompleteReplies() — private void CompleteReplies()`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.QueueSnapshot(ulong, NationalSpire.Coop.CoopAssembler.Complete)`](CoopReception.cs.md#symbol-15289643ead0)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
@@ -536,7 +537,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand) — private void Execute(ulong sender, CoopCommand command)`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-11ae699cefda)
 
@@ -566,7 +567,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool) — public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.Coop.CoopCareerSession.SaveAi(NationalSpire.CareerData)`](CoopCareerSession.cs.md#symbol-6fb4f052a4e3)；[`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](CoopCoordinator.cs.md#symbol-778097f34ec3)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)；[`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)；[`NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory)`](CoopRuntime.cs.md#symbol-732476d12d29)；[`NationalSpire.Coop.CoopRuntime.FinishTerminal()`](CoopRuntime.cs.md#symbol-9dbe454d0582)；[`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)；[`Save(NationalSpire.CareerData)`](CoopGroupChats.cs.md#symbol-500092220c28)；[`Save(NationalSpire.CareerData)`](CoopPrivateMessages.cs.md#symbol-b25b18b4284d)
 
@@ -591,7 +592,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Broadcast() — public void Broadcast()`
 
-来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)
 
@@ -627,7 +628,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.PublishLive() — public void PublishLive()`
 
-来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 258 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.Update()`](CoopLive.cs.md#symbol-fe745d15ee63)
 
@@ -650,7 +651,7 @@ public event Action<CoopReply>? Replied;
 
 ## `NationalSpire.Coop.CoopCoordinator.Dispose() — public void Dispose()`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Disconnect()`](CoopRuntime.cs.md#symbol-a4550fd42c36)
 

@@ -18,7 +18,8 @@ public static class EconomicActions
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.EconomicSave);
         // 买卖会改变报价；行情与个人资金一起复制、保存、恢复，不复制聊天与帖子。
-        var candidate = new CareerData { Day = data.Day, Market = order.Action is "open" or "close" ? CoopJson.Copy(data.Market) : data.Market, Credits = data.Credits,
+        var candidate = new CareerData { Day = data.Day, Market = order.Action is "open" or "close" ? CoopJson.Copy(data.Market)
+                : order.Action is "margin" or "stop" ? data.Market.RevisionCopy() : data.Market, Credits = data.Credits,
             Life = CoopJson.Copy(new CareerLifeState { Trading = data.Life.Trading, CreditFraction = data.Life.CreditFraction, Ledger = data.Life.Ledger }) };
         if (CareerMarket.Trade(candidate, order) is { } error) return error;
         var before = (data.Credits, data.Life.Trading, data.Life.CreditFraction, data.Life.Ledger, data.Market);

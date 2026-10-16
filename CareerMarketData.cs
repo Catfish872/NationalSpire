@@ -3,6 +3,7 @@ namespace NationalSpire;
 public sealed record MarketAsset(string Id, string Name, string Country, string Sector, bool Forex, decimal Initial);
 public sealed class MarketState
 {
+    public MarketState RevisionCopy() => (MarketState)MemberwiseClone();
     internal int CheckedQuoteCount { get; set; } = -1;
     public int PricingVersion { get; set; }
     public int CatalogVersion { get; set; }
@@ -14,6 +15,9 @@ public sealed class MarketState
 }
 public sealed class MarketQuote
 {
+    public decimal ClearingDepthUnits { get; set; }
+    public decimal LongUnits { get; set; }
+    public decimal ShortUnits { get; set; }
     public decimal ExecutionBase { get; set; }
     public decimal DepthUnits { get; set; }
     public decimal OrderUnits { get; set; }
@@ -42,6 +46,8 @@ public sealed class MarketAccount
 }
 public sealed class MarketPosition
 {
+    // 缺省为旧成交规则；新订单明确写入1，读档无需遍历或改写旧持仓。
+    public int ExecutionVersion { get; set; }
     public decimal? InitialMargin { get; set; }
     public decimal? StopPrice { get; set; }
     public decimal? OpeningFee { get; set; }
@@ -55,6 +61,9 @@ public sealed class MarketPosition
 }
 public sealed record MarketTrade(int Day, string Text, decimal Change, decimal Balance);
 public sealed record MarketOrder(string Action, string Asset = "", decimal Amount = 0, int Direction = 1, int Leverage = 1, int Position = 0, long QuoteRevision = 0, decimal? StopPrice = null);
+public sealed record MarketInspection(string Asset, decimal Amount, int Leverage, int[] Positions, bool Suggest = false);
+public sealed record MarketOrderPreview(bool Accepted, string Reason, decimal Margin, decimal Average, decimal Fee);
+public sealed record MarketInspectionResult(long Revision, decimal Net, MarketOrderPreview Buy, MarketOrderPreview Sell, Dictionary<int, MarketExecution.Exit> Exits);
 
 public static class MarketCatalog
 {

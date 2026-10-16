@@ -1,5 +1,19 @@
 ﻿# AI 请求、交互与记忆
 
+## 按任务选择连接方案
+
+AiRouting.Tasks 定义八项选择：weekly 周刊与介绍、news 发帖、discussion 回帖、private 私聊、group 群聊、private-summary 私聊总结、group-summary 群聊总结、arbitration 聊天仲裁。Category 将 profiles 归入 weekly，将 private-long-summary/group-long-summary 归入各自总结。自动帖子正文和同次生成的首批评论共用 news；玩家发帖或留言后生成的回应使用 discussion。两种聊天仲裁共用 arbitration，大小总结及手动/自动总结使用各自聊天的总结方案。
+
+全部请求通过 AiService.Connection(options, task) → AiRouting.ProfileId 读取任务指向，再从 ConnectionProfiles 取得地址、模型和显示名称，从 ProfileKey 取得该方案密钥。返回 AiConnection 值快照。新闻、回帖、周刊在原队列及间隔等待结束后取得快照；普通聊天和仲裁在等待结束后调用 RequestPrivateAsync，SummaryRequest 在原总结信号量通过后调用同一入口。请求消息结构、解析器、总结条件、并发和间隔继续由原模块管理。
+
+RequestPrivateAsync 的 task 缺省 private；群聊调用者传 group，两种仲裁传 arbitration，总结调用者传 private-summary/group-summary。BuildNewsPayload 可接收本次快照模型，独立 BuildPayload 查询 news。每次实际发送只取得一次连接快照，各请求持有地址、模型和密钥字符串引用。请求期间编辑设置后，已发送请求继续用本次快照完成；完成结果仍检查生涯、轮次和原任务状态。失败保存沿原入口处理，再次点击重试时读取当时的任务选择及已保存方案。
+
+提示词试写按 Source.Scene 选择同一任务方案。PromptTestScreen 的确认窗口展示实际接收地址和材料；确认时及排队结束后校验该次连接，地址、模型或密钥变化时提示重新确认。重新测试展示当前方案，响应返回后的配置编辑保持本次结果有效；生涯归属与启用状态仍由 Current 校验。模型列表查询使用编辑框地址和密钥草稿，留空时读取当前方案保存的密钥；返回结果仍由原 queryRevision 和控件有效性决定是否显示。
+
+单人 CareerStore.Load 与多人房主 View/CoopAi 使用 AiSettingsStore.Load 的本机对象。任务编号和方案编号属于本机配置；多人公开序列化继续通过 PublicOptions 仅保留 Enabled。离开设置页面会释放编辑控件及未保存草稿，已经发送的模型请求沿原后台处理完成。切换生涯、日期推进、关闭进程和断线继续使用原 current、恢复及检查点入口；之后重试根据本机当前配置重新选择方案。
+
+验证：--ai-routing-checks 通过21项，使用模拟HTTP传输检查八类任务的实际地址、模型、密钥、旧配置转换、别名分类、重命名、失败后重新分配、发送后修改及公开快照过滤。--response-workflow-checks 通过社区182项、周刊50项、独立试写19项；--model-list-checks 通过29项。首次旧配置转换0.1741毫秒/2304字节，预热一万次后的十万次 Connection 查询累计8.2061毫秒/0字节。这里计量本地查询，真实服务生成和Steam网络耗时另行测量。界面及独立密钥文件验证见 GAME_AND_UI 的模型方案设置章节。
+
 ## 总结响应与市场新闻
 
 私信和群聊的小总结、大总结最终都调用 AiService.SummaryRequest → RequestPrivateAsync。非流式响应必须含非空choices数组、message对象和非空content字符串。缺少内容时抛出明确的InvalidDataException，Diagnostics记录响应字段及原始异常栈；不将空内容交给FinishSmallSummary/FinishBigSummary。总结原入口捕获失败、保存SummaryError、清理SummaryStatus；原文、旧总结及覆盖起点保留，下次仍使用原重试入口。没有新增重试机制。
@@ -147,7 +161,7 @@ Favour 表示目标值，大幅调整进入玩家确认。群聊下方还显示�
 | 私信 ChatTimeline.PrivateHistory | 对话对象参加的其他群；排除当前私信；每个来源最近 5 个完成轮次；日期不超过当前日期 | 与自己的保留原文按 Day、Order 排列；在当前待回复 UserOrder 之前 |
 | 群聊 ChatTimeline.External | 当前群员相关私信、其他相关群；排除当前群 | 与本群记录按时间顺序组织；来源标记人物、群及知情人 |
 | ChatTimeline.RelatedGroups | 当前相关 NPC 所参加的其他群，合并去重；不设置每人最多一个群的限制 | External、Summaries |
-| ChatTimeline.Summaries | 相关来源最后一条大总结及之后的小总结 | 前部稳定资料；注明来源与第一人称对应人物 |
+| ChatTimeline.Summaries | 每个相关来源最后一条大总结，以及覆盖终点晚于该大总结的最后一条小总结 | 前部稳定资料；注明来源与第一人称对应人物 |
 | 社区 ChatTimeline.PublicMemories | 该人物确实参加的群，日期有效 | Persona 使用人物可知记忆；没有参加的群不作为其来源 |
 | CommunityMemorySearch | 公开事实与观点、人物、日期、已生成状态和排除来源 | PrivatePublicContext、社区与周刊资料；各人选择仍分别执行 |
 
@@ -157,9 +171,27 @@ Favour 表示目标值，大幅调整进入玩家确认。群聊下方还显示�
 
 外部会话原文随当前窗口推移消退，不等待来源生成总结。恢复本会话最新总结的原文范围见[数据约定](DATA_CONTRACTS.md)。群聊小总结只读取本群 own 轮次、成员通知和交互资料，不把外部私信原文作为总结输入。
 
+私信和群聊共用 PrivatePublicContext.SelectCommunity 选择历史帖子。每个人按原有的 1/2/1/2/2/2 类候选收集最多十篇；群聊分别收集背景和话题候选，再按帖子编号合并。选中的帖子正文和事件事实完整发送。PostTexts 的 includeConversation=false 分支提供正文；主动附带的帖子继续使用默认的 PostTexts 路径。
+
+CommunityPromptContext.SelectReplies 对整次请求的已选帖子统一选择评论：取参与者（含玩家）最近八条，再取与查询至少匹配两个有效词组、按匹配数除以评论词组数平方根排序的八条。词组采用英文数字词及相邻汉字对，沿用 CommunityMemorySearch 的日常用语过滤表。重复评论按帖子编号和评论编号合并；每个起点补齐全部父回复，再补一条日期最近、同日按原评论顺序靠后的直接回应。最终评论数量随父回复链长度变化。时间相同的候选使用评论编号确定顺序。Comments 输出原评论全文、作者、日期和回复对象，标题关联到同次请求内的完整原帖；观点标签与原始事件事实分别提供。
+
+GroupChatPrompts.Compose 在早部放置背景帖正文，在当前材料部分放置新增话题正文及全请求的评论分支。PrivateMessagePrompts.Context 生成同样分开的正文与评论；OrderContext 按固定来源编号组织背景正文，话题正文和评论位于当前材料部分。排序后的帖子之间保留分段空白。已有 PrivateTurn.Context 仍作为本轮保存快照使用；没有保存快照的请求使用本次整理结果。
+
+自动发帖的 BuildNewsContext 对整个批次调用一次 Retrieve，最多六条；社区回帖的 BuildDiscussionPrompt 对整个请求取八条；周刊取五条。CommunityThreads.Remember 分别保存事件事实全文、已生成帖子正文全文，以及每次更新时最后十二条评论的全文。Put 按记录编号更新，之前保存的其他评论继续留在 CommunityMemories。Retrieve 对同一 PostId 最多选两条；人物列表前三人的匹配权重各为8，其余各为3，人物得分累加，日期得分为1/(1+间隔天数/28)。自动发帖采用文字片段相交或人物相交的候选条件。
+
+发送社区和周刊请求前，AiWireProtocol.Encode 为 memory/communityMemory 中的独立历史评论补充 sourcePostId、sourceReplyId、author 和 parentId。AddMemorySources 按帖子编号合并 communitySources，提供原帖标题、作者、日期、正文、对应事件事实及父评论全文。当前 targets 已提供的正文和父评论沿用该目标资料。源帖已经归档删除时，原 CommunityMemory.Text 继续提供记录。随后移除存档检索编号 Id、PostId，统一转换模型使用的短编号。Kind 保持 fact/opinion 原分类；新增来源字段用于阅读上下文，响应父级权限仍由当前 targets 的 conversation 判定。
+
+BuildNewsContext 和 BuildDiscussionPrompt 各创建一次 ChatTimeline.PublicMemoryRequest。Persona 的群聊记忆引用按群聊编号和可见截止日组成；相同群和截止日的正文仅在 sharedGroupMemories 出现一次。正文包含原有知情人列表、最后一条有效大总结、小总结及最近五轮完成记录。不同截止日期分别保存请求材料。引用按群编号排序，全部人物资料完成后序列化共享材料。PrivateMessages.PublicMemory 继续按人物提供对应私下关系、总结和最近十条私信发言。BuildDiscussionPrompt 的当前目标帖依旧使用 complete=true，保留当日可见评论及其响应编号。
+
+两个聊天Compose每次注入完整world及对应private/group提示词，再追加固定交互协议。PromptOverrides中的有效文本优先于模板默认文本；CustomPromptTemplates和PromptTemplateOverrides是模板资料，实际请求通过Get选择本场景文本。本群Compose读取全部已保存大总结与小总结，再保留从Min(SummarizedThrough, recentStart)开始的原文，使最近RecentRounds轮继续提供逐句内容。ChatTimeline.External对每个相关会话取最后五个完成轮次，每轮包含该轮全部发言；RelatedGroups按成员交集选择来源。人物数、来源数、发言数及正文长度共同决定最终请求大小。
+
 自动总结条件保持当前代码：群聊未覆盖的完成轮数达到 SummaryEvery（默认 25）；私信 ContextStart 之后的有效完成轮数大于 MaximumRounds（默认 50）。删除最新总结回退起点后，下一次回复完成仍按这些条件判断，没有新增或修改触发条件。
 
-CommunityMemorySearch.Retrieve 保留按 CareerData 的词汇索引。一次上下文整理还会创建 Request，以原始文字为键复用 Terms 的结果；MatchesTopic 与 Retrieve 读取同一请求的计算结果。不同人物仍分别生成候选集合、计算词频并排序。Request 不保存人物选择，不跨请求保留生涯资料。
+CommunityMemorySearch 的跨请求缓存只保存纯词汇计算：CareerData 对应的弱引用索引按记忆编号及原文验证，原文改变后重新计算；评论弱引用缓存按 CommunityReply 实例及 Body 验证。生涯实例和评论释放后由垃圾回收清理。并发请求通过 ConcurrentDictionary 和评论缓存内部同步读取。Terms 使用字符扫描，英文数字下划线和汉字范围与原正则规则一致。
+
+一次 Compose 的 Request 复用可见帖子、作者最近活动、人物相关记录、帖子话题判断，以及同一日期、查询词的文档匹配和词频。Retrieve 针对本次排除项扣除对应词频，再使用原有词汇分数、人物权重、日期权重排序；候选选择与六/八/五条数量规则沿用原入口。不同请求重新读取人物、日期、帖子状态与原文，退出函数后释放请求内集合。一次群聊最多执行每名 NPC 两次候选选择、一次全请求评论选择；每篇选中正文输出一次。缓存和评论选择都只整理请求材料，保存、广播与重试由原 AiService/CoopCoordinator 流程执行。
+
+UiPerformance 增加 GroupContext、PrivateContext、CommunitySelect、CommunityBranches、CommunityRetrieve、CommunityAcquaintance 六项累计统计。父阶段包含内部阶段，统计时分别报告。ContextMaterialChecks 用本地诊断档重建三次相同输入，记录逐次耗时、分配量、完整请求和十个样例的评论选择；PublicDisputes 使用三段真实公开争论及玩家首次私信原话，分别构建私信和三人群聊请求，检查选中的公开评论确实进入 Compose 返回内容，人工核对争执起因、反驳与当事人最终公开表态。群聊为派生测试场景。ContextSelectionChecks 验证争执父链、日期、词汇扫描、共享群聊内容及固定前缀。实际服务端 token 与缓存命中率由网络返回 usage 字段确认，本地字符计数用于同输入前后比较。
 
 ## 社区与周刊状态依赖
 

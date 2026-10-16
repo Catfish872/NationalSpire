@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`91F77ECA61B6607949E8A16C41C99E9D3152B2480E693A456A586920C52397EE`。来源：[源码](../../PromptTestScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`80F6242613512D749185A2A32F0B2CB5C83FDC716D51909B87FAA3EB6FC7D885`。来源：[源码](../../PromptTestScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,9 +23,9 @@ private Action? _closePromptTest;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
-**调用：** [`ChooseSources()`](PromptTestScreen.cs.md#symbol-cba8a35800c1)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool)`](CareerDialog.cs.md#symbol-ecc011933bb1)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Prepare()`](PromptTestScreen.cs.md#symbol-4b8e2760368c)；[`Preview(string, string)`](PromptTestScreen.cs.md#symbol-2492911147e3)；[`Refresh()`](PromptTestScreen.cs.md#symbol-38e68dd71768)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-275c5fb60023)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.Timer.Timer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Uri.GetLeftPart(System.UriPartial)`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`
+**调用：** [`ChooseSources()`](PromptTestScreen.cs.md#symbol-b495d2c3d047)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Prepare()`](PromptTestScreen.cs.md#symbol-bb12916e300a)；[`Preview(string, string)`](PromptTestScreen.cs.md#symbol-ef689470fe03)；[`Refresh()`](PromptTestScreen.cs.md#symbol-e609e93f16bf)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-ba102e81e6b8)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.Timer.Timer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Uri.GetLeftPart(System.UriPartial)`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`
 
-**字段、属性、事件及方法组引用：** `ChooseSources()`；`CloseTest()`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._closePromptTest`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._promptTestSession`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.PromptTestSession.Message`；`NationalSpire.PromptTestSession.Running`；`NationalSpire.PromptTestSession.Source`；`NationalSpire.PromptTestSource.Scene`；`Prepare()`；`Preview(string, string)`；`Refresh()`；`ShowMaterial()`
+**字段、属性、事件及方法组引用：** `ChooseSources()`；`CloseTest()`；`NationalSpire.AiConnection.Endpoint`；`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._closePromptTest`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._promptTestSession`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.PromptTestSession.Message`；`NationalSpire.PromptTestSession.Running`；`NationalSpire.PromptTestSession.Source`；`NationalSpire.PromptTestSource.Scene`；`Prepare()`；`Preview(string, string)`；`Refresh()`；`ShowMaterial()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -70,13 +70,15 @@ private Action? _closePromptTest;
 - `Godot.Timer.Timer()`；输入表达式：`new Godot.Timer { WaitTime = .25, Autostart = true }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Godot.Timer { WaitTime = .25, Autostart = true }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, 90)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(0, 90)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(250, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(250, 48)`
+- `NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；输入表达式：`AiService.Connection(data.Ai, test.Source.Scene)`；返回值紧邻使用处：`BinaryExpressionSyntax: AiService.Connection(data.Ai, test.Source.Scene) != connection`
+- `NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；输入表达式：`AiService.Connection(data.Ai, test.Source.Scene)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = AiService.Connection(data.Ai, test.Source.Scene)`
 - `NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`；输入表达式：`AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("查看本次材料", () => { showingMaterial = !showingMaterial; material.Visible = showingMaterial; compare.Visible = !showingMaterial; if (showingMaterial) ShowMaterial(); }, 210)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("查看本次材料", () => { showingMaterial = !showingMaterial; material.Visible = showingMaterial; compare.Visible = !showingMaterial; if (showingMaterial) ShowMaterial(); }, 210)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("返回编辑", CloseTest, 170)`；返回值紧邻使用处：`ArgumentSyntax: Button("返回编辑", CloseTest, 170)`
-- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("开始测试", () =>         {             if (_promptTestSession?.Running == true) return;             try             {                 localError = "";                 var test = Prepare();                 string endpoint = data.Ai.Endpoint;                 string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                 ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                 {                     if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                     Refresh();                     return true;                 }, "发送并测试");             }             catch (Exception e) { localError = e.Message; status.Text = e.Message; }         }, 180)`；返回值紧邻使用处：`AssignmentExpressionSyntax: send = Button("开始测试", () =>         {             if (_promptTestSession?.Running == true) return;             try             {                 localError = "";                 var test = Prepare();                 string endpoint = data.Ai.Endpoint;                 string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                 ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                 {                     if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                     Refresh();                     return true;                 }, "发送并测试");             }             catch (Exception e) { localError = e.Message; status.Text = e.Message; }         }, 180)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("开始测试", () =>          {              if (_promptTestSession?.Running == true) return;              try              {                  localError = "";                  var test = Prepare();                  var connection = AiService.Connection(data.Ai, test.Source.Scene);                  string endpoint = connection.Endpoint;                  string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                  ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                  {                      if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }                      _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                      Refresh();                      return true;                  }, "发送并测试");              }              catch (Exception e) { localError = e.Message; status.Text = e.Message; }          }, 180)`；返回值紧邻使用处：`AssignmentExpressionSyntax: send = Button("开始测试", () =>          {              if (_promptTestSession?.Running == true) return;              try              {                  localError = "";                  var test = Prepare();                  var connection = AiService.Connection(data.Ai, test.Source.Scene);                  string endpoint = connection.Endpoint;                  string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                  ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                  {                      if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }                      _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                      Refresh();                      return true;                  }, "发送并测试");              }              catch (Exception e) { localError = e.Message; status.Text = e.Message; }          }, 180)`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(panel)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(panel)`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool)`；输入表达式：`ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                 {                     if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                     Refresh();                     return true;                 }, "发送并测试")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                 {                     if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                     Refresh();                     return true;                 }, "发送并测试");`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                  {                      if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }                      _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                      Refresh();                      return true;                  }, "发送并测试")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                  {                      if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }                      _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                      Refresh();                      return true;                  }, "发送并测试");`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, CareerVisuals.Teal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 16, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("使用当前编辑。每次试写调用一次 AI，仅在这里预览，保留前后两次结果供比较。", 17, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("使用当前编辑。每次试写调用一次 AI，仅在这里预览，保留前后两次结果供比较。", 17, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("提示词试写", 28, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("提示词试写", 28, _gold)`
@@ -117,7 +119,7 @@ private Action? _closePromptTest;
 - `PlaceholderText` = `"填写要让社区回应的测试留言……"`
 - `scene` = `scenes[(int)index]`
 - `sceneChoice.ItemSelected` += `index => { localError = ""; scene = scenes[(int)index]; ChooseSources(); if (showingMaterial) ShowMaterial(); }`
-- `send` = `Button("开始测试", () =>         {             if (_promptTestSession?.Running == true) return;             try             {                 localError = "";                 var test = Prepare();                 string endpoint = data.Ai.Endpoint;                 string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                 ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                 {                     if (data.Ai.Endpoint != endpoint) { localError = "接收地址已改变，请重新确认。"; return true; }                     _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                     Refresh();                     return true;                 }, "发送并测试");             }             catch (Exception e) { localError = e.Message; status.Text = e.Message; }         }, 180)`
+- `send` = `Button("开始测试", () =>          {              if (_promptTestSession?.Running == true) return;              try              {                  localError = "";                  var test = Prepare();                  var connection = AiService.Connection(data.Ai, test.Source.Scene);                  string endpoint = connection.Endpoint;                  string service = Uri.TryCreate(endpoint, UriKind.Absolute, out var address) ? address.GetLeftPart(UriPartial.Authority) : "尚未填写有效地址";                  ShowCareerDialog("确认试写", $"向 {service} 发送所选材料、相关人物与历史记录，以及当前编辑的提示词？\n消耗一次 AI 请求。结果仅供预览，材料可在“查看本次材料”中检查。", () =>                  {                      if (AiService.Connection(data.Ai, test.Source.Scene) != connection) { localError = "接收地址已改变，请重新确认。"; return true; }                      _ = AiService.TestPromptAsync(data, test, new Dictionary<string, string>(drafts), confirmedExternalSend: true);                      Refresh();                      return true;                  }, "发送并测试");              }              catch (Exception e) { localError = e.Message; status.Text = e.Message; }          }, 180)`
 - `showingMaterial` = `!showingMaterial`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `SizeFlagsVertical` = `SizeFlags.ExpandFill`
@@ -130,7 +132,7 @@ private Action? _closePromptTest;
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 - `ZIndex` = `30`
 
-<a id="symbol-2492911147e3"></a>
+<a id="symbol-ef689470fe03"></a>
 
 ## `Preview(string, string) — TextEdit Preview(string title, string name)`
 
@@ -160,7 +162,7 @@ private Action? _closePromptTest;
 - `SizeFlagsVertical` = `SizeFlags.ExpandFill`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 
-<a id="symbol-cba8a35800c1"></a>
+<a id="symbol-b495d2c3d047"></a>
 
 ## `ChooseSources() — void ChooseSources()`
 
@@ -187,13 +189,13 @@ private Action? _closePromptTest;
 - `message.Visible` = `scene == "discussion"`
 - `sources` = `AiService.TestSources(data, scene)`
 
-<a id="symbol-4b8e2760368c"></a>
+<a id="symbol-bb12916e300a"></a>
 
 ## `Prepare() — PromptTestSession Prepare()`
 
 来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-275c5fb60023)
+**调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-ba102e81e6b8)
 
 **调用：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；`System.ArgumentException.ArgumentException(string?)`
 
@@ -208,7 +210,7 @@ private Action? _closePromptTest;
 
 - `_promptTestSession` = `AiService.CreateTestSession(data, source, message.Text)`
 
-<a id="symbol-275c5fb60023"></a>
+<a id="symbol-ba102e81e6b8"></a>
 
 ## `ShowMaterial() — void ShowMaterial()`
 
@@ -216,7 +218,7 @@ private Action? _closePromptTest;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)
 
-**调用：** [`Prepare()`](PromptTestScreen.cs.md#symbol-4b8e2760368c)；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
+**调用：** [`Prepare()`](PromptTestScreen.cs.md#symbol-bb12916e300a)；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PromptTestSession.Context`；`Prepare()`
 
@@ -224,8 +226,8 @@ private Action? _closePromptTest;
 
 - `Prepare()`；输入表达式：`Prepare()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Prepare()`
 - `System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；输入表达式：`System.Text.Json.JsonDocument.Parse(test.Context)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.Text.Json.JsonDocument.Parse(test.Context)`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`；返回值紧邻使用处：`AssignmentExpressionSyntax: material.Text = System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
-- `System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；输入表达式：`new System.Text.Json.JsonSerializerOptions                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`；返回值紧邻使用处：`ArgumentSyntax: new System.Text.Json.JsonSerializerOptions                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`；返回值紧邻使用处：`AssignmentExpressionSyntax: material.Text = System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
+- `System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；输入表达式：`new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`；返回值紧邻使用处：`ArgumentSyntax: new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -233,14 +235,14 @@ private Action? _closePromptTest;
 - `localError` = `""`
 - `localError` = `e.Message`
 - `material.Text` = `e.Message`
-- `material.Text` = `System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
+- `material.Text` = `System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
 - `WriteIndented` = `true`
 
-<a id="symbol-f6aaea32f10b"></a>
+<a id="symbol-4541f5c07cf7"></a>
 
 ## `CloseTest() — void CloseTest()`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -259,11 +261,11 @@ private Action? _closePromptTest;
 
 - `_closePromptTest` = `null`
 
-<a id="symbol-38e68dd71768"></a>
+<a id="symbol-e609e93f16bf"></a>
 
 ## `Refresh() — void Refresh()`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)
 
@@ -285,4 +287,4 @@ private Action? _closePromptTest;
 - `sourceChoice.Disabled` = `busy`
 - `status.Text` = `localError`
 - `status.Text` = `sources.Count == 0 ? "当前场景还没有可用材料，请选择其他场景。" : "选择材料后开始测试。"`
-- `status.Text` = `test.Work.State switch {                 "queued" => test.Work.WaitReason.Length > 0 ? test.Work.WaitReason : "正在等候空闲位置……",                 "sending" => "正在试写，可以返回继续编辑。",                 "completed" => "试写完成。同一材料可重新测试，或返回编辑后再比较。",                 "failed" => test.Work.Error,                 _ => "材料已经选好，点击开始测试。" }`
+- `status.Text` = `test.Work.State switch {                  "queued" => test.Work.WaitReason.Length > 0 ? test.Work.WaitReason : "正在等候空闲位置……",                  "sending" => "正在试写，可以返回继续编辑。",                  "completed" => "试写完成。同一材料可重新测试，或返回编辑后再比较。",                  "failed" => test.Work.Error,                  _ => "材料已经选好，点击开始测试。" }`

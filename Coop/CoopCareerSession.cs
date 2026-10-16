@@ -55,6 +55,7 @@ public sealed class CoopCareerSession : ICareerSession
         var view = Data;
         Data.ExternalCurrent = () => Alive && ReferenceEquals(Data, view);
         Data.ExternalSave = SaveReading;
+        if (!Host) Data.InspectMarket = _session.InspectMarket;
         return true;
     }
     private void SaveReading(CareerData data)

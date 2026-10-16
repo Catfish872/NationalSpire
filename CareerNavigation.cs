@@ -6,7 +6,7 @@ public partial class CareerScreen
 {
     private sealed record Location(string Tab, string? Person, string? Post, string WorldSection, string? Competition,
         string ProfileFilter, string CommunityFilter, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
-        string Group = "", int ChatScroll = 0);
+        string Group = "", int ChatScroll = 0, int ChatPage = 0);
     private sealed record TabVisit(Location Location, Location[] History);
     private readonly Stack<Location> _backHistory = new();
     private readonly Dictionary<string, TabVisit> _tabVisits = new();
@@ -91,7 +91,7 @@ public partial class CareerScreen
         if (_backHistory.TryPop(out var previous))
         {
             ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);
-            if (previous.Group.Length > 0) { SelectGroup(previous.Group); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }
+            if (previous.Group.Length > 0) { SelectGroup(previous.Group, previous.ChatPage); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }
         }
         else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }
         else if (_tab == "选手档案" && _personId != null) { _personId = null; _scroll.ScrollVertical = 0; Render(); }

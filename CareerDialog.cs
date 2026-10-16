@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -8,7 +8,7 @@ public partial class CareerScreen
     private Action? _cancelDialog;
 
     // 使用主视口内的控件，避免创建独立窗口触发游戏的失焦静音。
-    private void ShowCareerDialog(string title, string message, Func<bool> confirm, string confirmText = "确认", Action<VBoxContainer>? contents = null, bool showCancel = true, bool compact = false)
+    private void ShowCareerDialog(string title, string message, Func<bool> confirm, string confirmText = "确认", Action<VBoxContainer>? contents = null, bool showCancel = true, bool compact = false, string cancelText = "取消")
     {
         if (_dialogOverlay != null) return;
         var previousFocus = GetViewport().GuiGetFocusOwner();
@@ -47,7 +47,7 @@ public partial class CareerScreen
             if (IsInstanceValid(previousFocus) && previousFocus.IsInsideTree() && !previousFocus.IsQueuedForDeletion() && previousFocus.IsVisibleInTree()) previousFocus.GrabFocus();
         }
         _cancelDialog = CloseDialog;
-        var cancel = _privateOverlay != null ? PrivateButton("取消", CloseDialog, 110) : Button("取消", CloseDialog, 130); cancel.Name = "CareerDialogCancel"; if (showCancel) actions.AddChild(cancel);
+        var cancel = _privateOverlay != null ? PrivateButton(cancelText, CloseDialog, 110) : Button(cancelText, CloseDialog, 130); cancel.Name = "CareerDialogCancel"; if (showCancel) actions.AddChild(cancel);
         void Accept() { if (!closed && confirm()) CloseDialog(); }
         var accept = _privateOverlay != null ? PrivateButton(confirmText, Accept, 150) : Button(confirmText, Accept, 170); accept.Name = "CareerDialogConfirm";
         if (_privateOverlay == null) accept.AddThemeStyleboxOverride("normal", CareerVisuals.Box("2c505c", "63d4c5", 8, 12));

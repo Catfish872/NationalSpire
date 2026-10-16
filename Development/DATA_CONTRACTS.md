@@ -12,10 +12,20 @@
 | CoopStorage 目录协调 | Schedule 与按绝对路径共享的 Gate | 排队存储操作、当前与上一份文件字节 | 跨实例按目录串行，磁盘读写互斥；恢复格式不变 |
 | ExternalCurrent / ExternalSave | 会话或公共 AI 任务建立；JsonIgnore | 当前绑定、会话编号、代次、个人视图 | CareerStore.IsCurrent / Save、AI 完成后的有效性与保存 |
 | PrivateMemorySources | 多人聊天 Current 填入其他真人信箱；JsonIgnore | 当前各成员信箱副本 | ChatTimeline；群聊交互通过 CaptureGroup 合并实际变更 |
-| AiOptions、密钥 | AiSettingsStore、本机设置与请求入口 | 设置界面、加密密钥或环境变量 | 本机 AI 调用；公开序列化排除本机配置，保留公开 Enabled |
+| AiOptions、密钥 | AiSettingsStore、本机设置与请求入口 | ConnectionProfiles、TaskProfiles、设置界面、按方案加密的密钥或默认方案环境变量 | AiService.Connection 取得发送快照；公开序列化仅保留 Enabled |
 | PrivatePromptSnapshot | Broadcast 填入各聊天场景与 world 模板 | 房主本机模板库 | 客机相关界面/上下文读取；房主生成重新读取本机设置 |
 
 多人个人视图不是独立共享生涯，也不能代替房主最新数据。复制有不同用途：规则执行前的副本用于失败时保留原数据；个人视图用于兼容共用规则；网络副本用于剔除接收者不应看到的数据。三者不能仅因都调用 Copy 就视作重复。
+
+## AI 连接方案与本机凭据
+
+AiOptions.ConnectionProfiles 以稳定编号保存 AiConnectionProfile{Name, Endpoint, Model}，TaskProfiles 以八种任务编号指向连接方案编号。旧配置首次由 AiRouting.Ensure 将 Endpoint/Model 写入 default；缺少某任务选择时使用 default。创建方案使用 Guid 的 N 格式编号，重命名只改变 Name。旧 Endpoint/Model 继续作为读取早期配置的来源，保存 default 时同步两项。全局 Enabled、并发、间隔、等待时间、帖子批量与提示词仍属于 AiOptions。
+
+AiSettingsStore.Load 每个进程首次读取 user://national_spire_ai_settings.json，转换旧配置后保留 _options；后续调用复用对象。Save 通过原临时文件替换入口写入，内容与路径均和 _saved 相同时复用已有文件。界面连接字段属于当前控件草稿，保存时才替换该方案；任务分配及一键应用直接修改 TaskProfiles 后调用原保存回调。单人回调为 CareerStore.Save，先保存生涯，再保存本机设置；多人回调为 CoopCareerSession.SaveAi，先保存本机设置，再沿原 Commit 更新 Enabled、Revision、检查点和公开快照。
+
+默认方案沿用 user://national_spire_ai_key.bin；其他方案使用 user://national_spire_ai_key_{稳定编号}.bin。SaveKey 用当前Windows账户的DPAPI加密，并通过临时文件替换；ReadKey 按编号首次读取和解密，Keys 字典缓存明文或空结果，保存时更新缓存。AiService.ProfileKeys 保存本次启动覆盖值，默认方案保留原 _sessionKey 和 NATIONAL_SPIRE_API_KEY 环境变量入口。持久保存失败时原 PersistKey 返回提示并保留当前进程可用值。
+
+AiConnection 保存本次请求的方案编号、名称、地址、模型、密钥。密钥在独立文件和本机缓存中管理；普通配置JSON存储方案资料。CoopJson.PublicOptions 将 AiOptions 转为仅含 Enabled 的公开配置，客机收到房主公开启用状态；房主生成重新读取本机配置。启动恢复直接复用已保存的编号与映射，加载早期配置时建立一次 default；请求重试查询最新映射。UI草稿随控件释放，保存的配置跨生涯共享。
 
 ## 国运、模拟与经济数据
 
@@ -31,11 +41,15 @@
 - CareerLifeState.Trading为本人账户，含Cash、Debt、InterestDay、InterestRate、NextPosition、Positions及最近120条Trades。内部金额显示美元时乘10。CareerData.Credits、CoopMember.Credits、SettlementRecord.Credits改为decimal整数值，钱包小数部分继续使用CreditFraction；CareerResult.Prize、SeasonRecap.Prize及CoopSettlement.Payouts仍记录64位整数赛事收入。报价、保证金、实际到账和账户余额采用decimal。钱包与成交数量继续序列化为JSON数字，旧整数及旧decimal数量可直接读取。超出旧long范围的钱包需使用本版本读取；联机沿用CoopContentIdentity的发布版本一致检查。
 - PendingSignal 保存本日外币国减中国的原始信号总和，AppliedSignal 保存已计价的±4范围合计，SignalDay 标识日期。Fixture 每次只应用新合计与旧合计之差，Advance 次日清零但不再次计价。报价表示1人民币兑换的外币数量，正信号降低报价。旧 PricingVersion=0 时 Initialize 将已有 PendingSignal 截至±4计价一次，并处理强平；多人恢复先由 CoopRules.InitializeMarket 绑定全部成员账户再升级。v0.26.20的新外汇赛果 MarketEvent.Change 与品牌一样保存实际相对报价变化，历史事件不重写。
 - MarketState.CheckedQuoteCount是仅驻留当前对象的内部缓存。读取存档、JSON复制或恢复检查点时为-1，Initialize核对全部201项资产键；完整目录继续使用原MarketQuote及History对象，缺项沿用原报价及60条起始曲线生成入口。完成后缓存字典数量；相同目录版本及数量进入快速路径。目录编号列表或字典数量变化触发检查。旧CatalogVersion=0/1仍按原规则补充全部不足60条的历史，版本2及新版目录只补缺少报价的资产。缓存随对象释放，序列化与同步携带原CatalogVersion和Quotes。
-- MarketQuote.ExecutionBase为外部行情基准，DepthUnits为该基准下的承接数量，BuyUnits、SellUnits为可空MarketNumber。字段缺省null时，Used从旧OrderUnits正负部分读取对应方向已消费数量；首次成交写入两侧字段并将旧OrderUnits归零。Open/Close返回计算结果，Apply→Consume写数量和基准Price，并更新当日历史及Revision；每日行情和有效赛果Reprice更新基准并清零两侧数量。ExecutionCopy供Net在数值副本中模拟退出，History共享只读。
+- MarketQuote.ExecutionBase为外部行情基准，DepthUnits为该基准下的承接数量，BuyUnits、SellUnits为可空MarketNumber。字段缺省null时，Used从旧OrderUnits正负部分读取对应方向已消费数量；首次成交写入两侧字段并将旧OrderUnits归零。Open/Close返回计算结果，旧仓Apply→Consume写旧数量，Price按外部基准及当前新仓数量计算，并更新当日历史及Revision；每日行情和有效赛果Reprice更新基准并清零两侧数量。ExecutionCopy供Net在数值副本中模拟退出，History共享只读。
 - MarketPosition.Units及Fill.Units/EndUnits采用MarketNumber；Fill.Direction表示本次实际买入或卖出的方向。Exit.Fee采用MarketNumber，Exit.Proceeds/Profit采用decimal。MarketNumber以BigInteger保存固定28位小数，Round采用偶数舍入；转换器读取旧JSON数字及科学计数法，输出精确JSON数字。字段随原保存、事务复制、快照及检查点传递，其他成员的个人持仓继续由原快照过滤处理。
 - 品牌与外汇共用 MarketPosition 的 Margin、Units、Entry、Direction 和 Leverage；Direction=1为做多、-1为做空。Entry 为整笔开仓均价；Leverage保留开仓档位，初始仓位由Entry×Units计算。InitialMargin保存最初保证金，旧仓null时取当前Margin；首次追加前冻结此值和OpeningFee，随后仅增加Margin、扣除个人Cash。OpeningFee保存实际开仓费，旧仓null时用原费用公式还原。追加不改变数量、价格、原手续费或公共行情。
-- StopPrice为个人仓位的可空止损触发价，旧档缺省null；品牌按内部十美元单位存储，外汇按原始汇率存储。做多报价≤StopPrice、做空报价≥StopPrice触发整笔平仓；1倍品牌做多也检查止损。强平适用于全部外汇、品牌做空及大于1倍品牌做多，使用Close计算的当前预计到账与InitialMargin的10%比较。强平与止损同时满足只记强平。MarketExecution.Close统一计算实际成交均价、平仓费、非负到账和含开仓费的净盈亏，止损不保证按触发价成交。
+- StopPrice为个人仓位的可空止损触发价，旧档缺省null；品牌按内部十美元单位存储，外汇按原始汇率存储。做多报价≤StopPrice、做空报价≥StopPrice触发整笔平仓；1倍品牌做多也检查止损。旧仓强平适用于全部外汇、品牌做空及大于1倍品牌做多，使用Close计算的当前预计到账与InitialMargin的10%比较；新仓阈值见ExecutionVersion条目。强平与止损同时满足只记强平。旧仓由MarketExecution.Close计算成交均价、平仓费、到账和净盈亏；新仓由MarketClearing.PreviewClose/Close模拟途中触发的其他仓位，再通过Exit计算相同字段。止损触发后的各段成交共同形成最终均价。
 - MarketOrder新增可选StopPrice，原字段和默认值兼容；margin操作使用Amount和Position，stop操作使用StopPrice和Position，null表示取消。两者都检查QuoteRevision及本人持仓编号；追加要求正数且不超过Cash。设置止损要求正数，多仓低于当前报价、空仓高于当前报价，取消不受价格条件限制。个人仓位字段随原Trading保存和过滤，不进入其他玩家的公开资料。
+- MarketPosition.ExecutionVersion缺省0表示旧仓，Trade新仓明确写1。版本0继续原双侧曲线及10%阈值；版本1使用共同曲线及最坏退出资金到零的条件。旧仓保留Entry、Units、Margin、止损与既有盈亏。
+- MarketQuote.ClearingDepthUnits为新仓固定数量K，LongUnits/ShortUnits保存全部账户新多仓/新空仓数量。Price由ExecutionBase和两侧数量共同计算。旧DepthUnits、BuyUnits、SellUnits继续服务旧仓。外部行情刷新旧字段，保留新仓数量。所有字段进入原JSON、事务副本和检查点。
+- MarketClearing.Result为单次计算对象，含Quote数值副本、已触发仓位及账户引用、成交金额、均价、手续费和完整执行标志。Commit执行资金与数量变更。MarketState.RevisionCopy供margin/stop复制标量版本，共享只读Quotes与Events；开平仓仍复制完整Market。新仓追加保证金、设置和取消止损递增市场Revision。
+- TradingAccounts和InspectMarket为JsonIgnore委托。房主BindMarket绑定当前事务全部成员账户；客机其他成员Trading经原过滤后为空，InspectMarket向房主查询。MarketInspection仅包含本人订单参数及本人持仓编号；MarketInspectionResult返回市场版本、本人净资产、双向订单摘要和本人退出结果。
 - MarketOrder.QuoteRevision 约束开仓、平仓、追加保证金和止损设置，必须等于共同报价版本；按钮读取当前绑定视图中的报价版本。网络操作编号和重复收据仍由 CoopCommand 管理。
 - CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品明细保留，较旧普通消费明细会清理，但 BoughtDay 保留每款最近购买日期。ConsumerPurchases 只读合并 BoughtDay/Goods，用于已购徽章及实物收藏，不新增存档字段；本季状态来自 Goods.Season，宣发次数仅在 Consumer.Season 等于当前赛季时使用。Good.Durable 仍代表可举办活动、终身限购的原规则；Good.Collectible 独立决定实物展示，不把杂志等普通商品改成终身限购。Consumed 不参与收藏展示过滤。
 - MarketAccounts、MarketSponsors 是 JsonIgnore 委托。BindMarket 在 Apply/Settle 的副本及 InitializeMarket 的恢复资料中绑定：处理所有成员账户（含离线成员）、读取参与者赞助；序列化、个人视图和网络不携带委托。交易输入复用该副本委托，不能指向提交前的旧 CoopWorld。
@@ -88,6 +102,10 @@
 
 入群消息是独立 Entry，不增加聊天轮次。新成员能查看群里原记录，加入位置按全局 Order 表示。
 
+聊天显示的 ChatHistoryPage<T> 只持有当前会话可见轮次的引用，页大小默认10、可选5；引用索引通过列表引用、数量及 MemoryRevision / GroupChat.Revision 更新。ChatHistoryScreen 的页码、滚动请求编号和新消息提示属于本机 CareerScreen。输入框操作行读取这些状态；原 PrivateTurn / GroupTurn、附件、交互及总结继续属于生涯记录。群通知按当前页面首轮至下一页面首轮的 Order 读取。
+
+本地 user://NationalSpire_chat.cfg 的分区为 WorldId:本机玩家编号，last 保存人物编号或 group:群编号，size 保存5或10。选择会话与更改轮数写入本地配置；翻页只更新内存。旧 Mailbox.LastPerson 用于首次恢复私信入口；通讯选择改由本地配置记录，dm-select 命令继续保留在原规则入口。群成员档案的返回记录使用 Location.Group / ChatPage / ChatScroll，生命周期为当前生涯界面导航历史。具体调用、失效与保存边界见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
+
 最新总结删除且没有其他总结完整覆盖其范围时，原文起点回退到被删总结的 From。聊天与再总结都恢复这一段直到当前最新记录，不按配置额外裁剪恢复区间。非最新总结删除不回退；其确认框提示“删除这条总结可能导致永久丢失记忆”。
 
 外部会话记录只按既有窗口选择，不等待来源总结成功。当前会话总结读取本会话材料，群聊总结不将外部私信原文写入群摘要。详细选择见[AI 流程](AI_FLOWS.md)。
@@ -108,6 +126,7 @@ PNG 仍使用 CharacterCardPng.Bundle Version=1 和原 Fields。导出只交换�
 | Character / CharacterId | 人物、GameBridge.ReadEvidence、结算 | 界面可以显示皮肤名称；发给 AI 的职业转换由 CharacterIdentity 处理 |
 | CommunityPost 原始主题/事实/赛果与正文/Replies | 事件发布、玩家提交、模型应用 | 原始事实与模型正文分开；parentId 指向同帖上文 |
 | CommunityMemory | 公开事实和讨论整理 | 本地检索、上下文；来源 PostId、人物和日期参与过滤 |
+| CommunityPromptContext 的评论集合、PublicMemoryRequest 的共享群聊、AiWireProtocol 的 communitySources | 一次请求内建立 | 发送前序列化；来自现有帖子、评论和群聊。引用编号只用于请求，持久数据仍归原对象管理；PrivateTurn.Context 按原保存节点记录整段材料 |
 | CommunityPost.AiSourceBody / CommunityMemory.AiText / PrivateOffer.AiDetail | RememberMatch、CoopRules.Settle、Remember、PrepareAttachments 在生成职业事实时填写；仅有差异时保存 | 原字段负责界面和检索；AiGeneratedText 供请求读取，缺失回退原字段。WhenWritingNull 省略空字段。旧档不迁移，既有 JSON 深复制、保存、权限过滤和广播继续管理这些字段 |
 | WeeklyEdition 与生成阶段 | WeeklyJournal 捕获事实；AiWeekly 应用结果 | 双周档案、文章、界面、重试；事实快照和生成状态不是同一项数据 |
 | 人物简介/记忆/关系/状态 | 档案、周刊、聊天与交互 | 供后续上下文使用；旧自由文本不属于本次职业入口转换的范围 |

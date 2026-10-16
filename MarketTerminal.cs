@@ -8,6 +8,9 @@ internal partial class MarketTerminal : VBoxContainer
     private CareerData? _data;
     private Action<MarketOrder>? _submit;
     private Action<string>? _person;
+    private MarketInspectionResult? _inspection;
+    private int _inspectionGeneration;
+    private bool _inspectionBusy;
     private MarketEvent[] _selectedEvents = [];
     private readonly Label[] _metrics = new Label[4];
     private readonly MarketAssetButton[] _rows = new MarketAssetButton[8];
@@ -197,7 +200,9 @@ internal partial class MarketTerminal : VBoxContainer
     internal void Bind(CareerData d, Action<MarketOrder> submit, Action<string> person)
     {
         Prepare(double.PositiveInfinity);
+        if (!ReferenceEquals(_data, d)) _inspection = null;
         _data = d; _submit = submit; _person = person;
+        if (_inspection?.Revision != d.Market.Revision) _inspection = null;
         string identity = d.WorldId + ":" + GroupChats.Human(d);
         if (!_loaded) { _preferences.Load("user://NationalSpire_market.cfg"); _loaded = true; }
         if (_identity != identity)
@@ -213,7 +218,7 @@ internal partial class MarketTerminal : VBoxContainer
             _searchText[asset.Id] = asset.Name + " " + asset.Country + " " + asset.Sector + " " + clubs.GetValueOrDefault(asset.Name) + " " + string.Join(" ", (partners.GetValueOrDefault(asset.Name) ?? []).Select(id => people.TryGetValue(id, out var p) ? p.PublicName + " " + EsportsWorld.ClubName(d, p.ClubId) : id == "player" ? CareerEngine.Name(d) : id));
         RefreshList(); RefreshAccount();
     }
-    internal void Unbind() { _data = null; _submit = null; _person = null; _selectedEvents = []; _searchText.Clear(); foreach (var card in _holdings) card?.Bind(null, null); }
+    internal void Unbind() { _data = null; _submit = null; _person = null; _inspection = null; _inspectionGeneration++; _selectedEvents = []; _searchText.Clear(); foreach (var card in _holdings) card?.Bind(null, null); }
     private MarketAsset[] _visible = [];
     private void ResetList() { _page = 0; _assetScroll.ScrollVertical = 0; RefreshList(); }
     private void ChangePage(int direction) { _page = (_page + direction + _pageCount) % _pageCount; _assetScroll.ScrollVertical = 0; RefreshList(); }
@@ -260,7 +265,8 @@ internal partial class MarketTerminal : VBoxContainer
         _description.Text = asset.Country + " · " + asset.Sector + (asset.Forex ? "\n1 人民币 = " + quote.Price.ToString("0.00000") + " " + asset.Name.Replace("人民币 / ", "") : "");
         _name.TooltipText = asset.Forex ? "" : RegionalOrganizations.SponsorDescription(asset.Name);
         RefreshChart(); _overview.Show();
-        decimal depth = MarketExecution.Depth(asset) * 10;
+        var depthQuote = _data.Market.Quotes[asset.Id];
+        decimal depth = (depthQuote.ClearingDepthUnits > 0 ? depthQuote.ClearingDepthUnits * MarketExecution.ReferencePrice(depthQuote) : MarketExecution.Depth(asset)) * 10;
         _depth.Text = depth >= 1_000_000_000_000m ? (depth / 1_000_000_000_000m).ToString("0.##") + " 万亿美元" : (depth / 100_000_000m).ToString("0.##") + " 亿美元";
         double volatility = MarketDynamics.Volatility(_data.WorldId, asset); _volatility.Text = volatility.ToString("0.00%"); _volatilityBar.Value = volatility;
         string industry = asset.Sector switch { "训练装备" => "工业与基建", "电竞设备" => "高新与服务产业", _ => "收入与服务产业" };
@@ -312,27 +318,59 @@ internal partial class MarketTerminal : VBoxContainer
         decimal margin = OrderMargin(asset, leverage);
         decimal fee = CareerMarket.OpenFee(asset, margin, leverage);
         string Quote(decimal value) => asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value);
-        var buy = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, 1);
-        var sell = MarketExecution.Open(asset, _data.Market.Quotes[asset.Id], margin * leverage, -1);
         _cost.Text = CareerMoney.Compact(margin + fee); _notional.Text = CareerMoney.Compact(margin * leverage); _fee.Text = CareerMoney.Compact(fee);
         _cost.MouseFilter = _notional.MouseFilter = _fee.MouseFilter = MouseFilterEnum.Pass;
         _cost.TooltipText = CareerMoney.Format(margin + fee); _notional.TooltipText = CareerMoney.Format(margin * leverage); _fee.TooltipText = CareerMoney.Format(fee);
+        if (_data.InspectMarket != null)
+        {
+            _buyPrice.Text = _sellPrice.Text = "正在计算成交均价"; RequestInspection(); return;
+        }
+        var buy = MarketClearing.Preview(_data, new("open", asset.Id, margin, 1, leverage), false);
+        var sell = MarketClearing.Preview(_data, new("open", asset.Id, margin, -1, leverage), false);
         _buyPrice.Text = "预计成交均价  " + Quote(buy.Average); _sellPrice.Text = "预计成交均价  " + Quote(sell.Average);
     }
-    private void RefreshAccount()
+    private async void RequestInspection()
+    {
+        int generation = ++_inspectionGeneration;
+        await Task.Delay(120);
+        if (generation != _inspectionGeneration || _inspectionBusy || _data?.InspectMarket == null || !MarketCatalog.ById.TryGetValue(_selected, out var asset)) return;
+        var data = _data; int leverage = CareerMarket.Leverages[_leverage.Selected];
+        var request = new MarketInspection(asset.Id, OrderMargin(asset, leverage), leverage, data.Life.Trading.Positions.Skip(_holdPage * 5).Take(5).Select(p => p.Id).ToArray());
+        _inspectionBusy = true;
+        try
+        {
+            var result = await data.InspectMarket(request);
+            if (generation != _inspectionGeneration || !ReferenceEquals(_data, data) || result.Revision != data.Market.Revision) return;
+            _inspection = result;
+            string Quote(decimal value) => asset.Forex ? value.ToString("0.00000") : CareerMoney.Format(value);
+            _buyPrice.Text = "预计成交均价  " + Quote(result.Buy.Average); _sellPrice.Text = "预计成交均价  " + Quote(result.Sell.Average);
+            RefreshAccount(false);
+        }
+        catch (Exception error)
+        {
+            Diagnostics.Error("market.remote-preview", error);
+            if (generation == _inspectionGeneration && _data != null) _buyPrice.Text = _sellPrice.Text = "报价读取失败，点击下单时重新计算";
+        }
+        finally { _inspectionBusy = false; if (_data?.InspectMarket != null && generation != _inspectionGeneration) RequestInspection(); }
+    }
+    private void RefreshAccount(bool requestInspection = true)
     {
         if (_data == null) return; var account = _data.Life.Trading;
-        decimal[] values = [CareerMarket.Net(_data.Market, account), account.Cash, account.Positions.Sum(p => p.Margin), account.Debt];
+        bool remote = _data.InspectMarket != null;
+        decimal[] values = [remote ? _inspection?.Net ?? 0 : MarketExecution.LiquidationValue(_data.Market, account, MarketClearing.Accounts(_data)), account.Cash, account.Positions.Sum(p => p.Margin), account.Debt];
         for (int i = 0; i < 4; i++) { _metrics[i].Text = CareerMoney.Compact(values[i]); _metrics[i].TooltipText = CareerMoney.Format(values[i]); _metrics[i].MouseFilter = MouseFilterEnum.Pass; }
+        if (remote && _inspection == null) { _metrics[0].Text = "正在计算"; _metrics[0].TooltipText = ""; }
         _holdPage = Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5));
         for (int i = 0; i < 5; i++)
         {
             var p = account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault(); _holdings[i].Visible = p != null || i == 0;
-            _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision);
+            var exit = p == null ? null : remote ? _inspection?.Exits.GetValueOrDefault(p.Id) : MarketClearing.PreviewClose(_data, p);
+            _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision, exit, remote && exit == null);
         }
         _tradePage = Math.Min(_tradePage, Math.Max(0, (account.Trades.Count - 1) / 5));
         var trades = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray();
         for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"第{trades[i].Day}天 · {trades[i].Text}\n{CareerMoney.Compact(trades[i].Change)}" : "暂无成交"; }
+        if (remote && requestInspection) RequestInspection();
     }
     private void ToggleWatch()
     {
@@ -341,6 +379,10 @@ internal partial class MarketTerminal : VBoxContainer
         _preferences.SetValue(_identity, "watch", _watch.Order().ToArray()); _preferences.Save("user://NationalSpire_market.cfg"); RefreshList();
     }
     private void Submit(MarketOrder order) => _submit?.Invoke(order);
+    internal void SetOrderMargin(decimal margin)
+    {
+        _portion = 0; _settingAmount = true; _amount.SetAmount(margin * 10); _settingAmount = false; RefreshFee();
+    }
     private void Open(int direction)
     {
         if (_data == null || !MarketCatalog.ById.TryGetValue(_selected, out var asset)) return;

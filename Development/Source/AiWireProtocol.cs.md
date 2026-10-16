@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`99A84FC3E751ABE43E1FCE0C004F6EA1D9FB4857C41572F643886E46C2D802B5`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EE5069D2E8D4A187004C6ED3A7D7A1CD256A349FFBD2201E5FABE99F5EFA4BDA`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -15,20 +15,21 @@ private static readonly System.Text.Json.JsonSerializerOptions Json = new() { En
 private readonly Dictionary<string, string> _encode = new();
 private readonly Dictionary<string, string> _decode = new();
 private readonly List<(string Earlier, string Current)> _names = [];
-private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
+private readonly CareerData _data;
+private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "AuthorId", "parentId", "ParentId", "postId", "PostId", "sourcePostId", "sourceReplyId", "allowedAuthors", "requiredAuthors", "messageId", "People"];
 ```
 
 <a id="symbol-ebb8d59c054e"></a>
 
 ## `NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData) — internal AiWireProtocol(CareerData data)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-28e7b92711a0)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`Add(string, string)`](AiWireProtocol.cs.md#symbol-3184fc1626bd)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`Add(string, string)`](AiWireProtocol.cs.md#symbol-4d4174bcb744)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `Add(string, string)`；`NationalSpire.AiWireProtocol._names`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `Add(string, string)`；`NationalSpire.AiWireProtocol._data`；`NationalSpire.AiWireProtocol._names`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.PlayerNameAliases`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerPerson.HandleAliases`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -45,12 +46,13 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **赋值（含属性/字段和局部值）：**
 
+- `_data` = `data`
 
-<a id="symbol-3184fc1626bd"></a>
+<a id="symbol-4d4174bcb744"></a>
 
 ## `Add(string, string) — void Add(string id, string shortId)`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.AiWireProtocol(NationalSpire.CareerData)`](AiWireProtocol.cs.md#symbol-ebb8d59c054e)
 
@@ -70,16 +72,17 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.Encode(string) — internal string Encode(string context)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol)`](AiService.cs.md#symbol-b632d49f74a4)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
+**调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Text.Json.Nodes.JsonArray.JsonArray(params System.Text.Json.Nodes.JsonNode?[])`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+**调用：** [`NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-724c4b9d095b)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Text.Json.Nodes.JsonArray.JsonArray(params System.Text.Json.Nodes.JsonNode?[])`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
 
-**字段、属性、事件及方法组引用：** `(string Earlier, string Current).Current`；`(string Earlier, string Current).Earlier`；`NationalSpire.AiWireProtocol._encode`；`NationalSpire.AiWireProtocol._names`；`NationalSpire.AiWireProtocol.Json`；`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`
+**字段、属性、事件及方法组引用：** `(string Earlier, string Current).Current`；`(string Earlier, string Current).Earlier`；`NationalSpire.AiWireProtocol._encode`；`NationalSpire.AiWireProtocol._names`；`NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`；`NationalSpire.AiWireProtocol.Json`；`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`；输入表达式：`AddMemorySources(node)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddMemorySources(node);`
 - `NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`；输入表达式：`Rewrite(node, _encode)`；返回值紧邻使用处：`ExpressionStatementSyntax: Rewrite(node, _encode);`
 - `string.Contains(string, System.StringComparison)`；输入表达式：`readable.Contains(n.Earlier, StringComparison.Ordinal)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: n => readable.Contains(n.Earlier, StringComparison.Ordinal)`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`_names.Where(n => readable.Contains(n.Earlier, StringComparison.Ordinal)).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _names.Where(n => readable.Contains(n.Earlier, StringComparison.Ordinal)).Distinct().ToArray`
@@ -102,11 +105,79 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 - `["原ID"]` = `n.Earlier`
 - `node["nameHistory"]` = `new JsonArray(referenced.Select(n => (JsonNode)new JsonObject                  { ["原ID"] = n.Earlier, ["现ID"] = n.Current }).ToArray())`
 
+<a id="symbol-724c4b9d095b"></a>
+
+## `NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode) — private void AddMemorySources(JsonNode node)`
+
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)
+
+**调用：** [`NationalSpire.AiGeneratedText.Source(NationalSpire.CommunityPost)`](AiGeneratedText.cs.md#symbol-ac6ac5681f0e)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Text.Json.JsonSerializer.SerializeToNode<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonArray.Add<T>(T?)`；`System.Text.Json.Nodes.JsonArray.JsonArray(System.Text.Json.Nodes.JsonNodeOptions?)`；`System.Text.Json.Nodes.JsonNode.GetValue<T>()`；`System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`
+
+**字段、属性、事件及方法组引用：** `<anonymous type: string Id, string ParentId, string author, int Day, string Body>.author`；`NationalSpire.AiGeneratedText.Source(NationalSpire.CommunityPost)`；`NationalSpire.AiWireProtocol._data`；`NationalSpire.AiWireProtocol.Json`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Body`；`NationalSpire.CommunityPost.Day`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityPost.SourceBody`；`NationalSpire.CommunityPost.Title`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Body`；`NationalSpire.CommunityReply.Day`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiGeneratedText.Source(NationalSpire.CommunityPost)`；输入表达式：`AiGeneratedText.Source(post)`；返回值紧邻使用处：`AssignmentExpressionSyntax: record["officialRecord"] = AiGeneratedText.Source(post)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, post.AuthorId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: record["author"] = CareerEngine.DisplayName(_data, post.AuthorId)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, r.AuthorId)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: author = CareerEngine.DisplayName(_data, r.AuthorId)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, reply.AuthorId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: memory["author"] = CareerEngine.DisplayName(_data, reply.AuthorId)`
+- `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(_data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(_data).ToDictionary`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(_data, post.AuthorId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CommunityThreads.IsHuman(_data, post.AuthorId)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；输入表达式：`selected.Add(postId, ancestors = [])`；返回值紧邻使用处：`ExpressionStatementSyntax: selected.Add(postId, ancestors = []);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, HashSet<string>>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, HashSet<string>>()`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`replies.TryGetValue(reply.ParentId, out var parent)`；返回值紧邻使用处：`BinaryExpressionSyntax: replies.TryGetValue(reply.ParentId, out var parent) && ancestors.Add(parent.Id)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`selected.TryGetValue(postId, out var ancestors)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !selected.TryGetValue(postId, out var ancestors)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`sources.TryGetValue(postId, out var post)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !sources.TryGetValue(postId, out var post)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`supplied.TryGetValue(post.Id, out var target)`；返回值紧邻使用处：`IfStatementSyntax: if (supplied.TryGetValue(post.Id, out var target))                  existing = (target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet();              else              {                  record["title"] = post.Title; record["author"] = CareerEngine.DisplayName(_data, post.AuthorId); record["day"] = post.Day;                  record["body"] = post.Body; record["bodyKind"] = "作者公开发言";                  if (post.SourceBody.Length > 0 && !CommunityThreads.IsHuman(_data, post.AuthorId)) record["officialRecord"] = AiGeneratedText.Source(post);              }`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`ancestors.Add(parent.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: replies.TryGetValue(reply.ParentId, out var parent) && ancestors.Add(parent.Id)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`entry.Value.Contains(r.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.Value.Contains(r.Id) && !existing.Contains(r.Id)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`existing.Contains(r.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !existing.Contains(r.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`post.Replies.FirstOrDefault(r => id == postId + ":" + r.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = post.Replies.FirstOrDefault(r => id == postId + ":" + r.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`selected.OrderBy(x => x.Key, StringComparer.Ordinal)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var entry in selected.OrderBy(x => x.Key, StringComparer.Ordinal))          {              var post = sources[entry.Key];              var record = new JsonObject { ["postId"] = post.Id };              HashSet<string> existing = [];              if (supplied.TryGetValue(post.Id, out var target))                  existing = (target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet();              else              {                  record["title"] = post.Title; record["author"] = CareerEngine.DisplayName(_data, post.AuthorId); record["day"] = post.Day;                  record["body"] = post.Body; record["bodyKind"] = "作者公开发言";                  if (post.SourceBody.Length > 0 && !CommunityThreads.IsHuman(_data, post.AuthorId)) record["officialRecord"] = AiGeneratedText.Source(post);              }              record["parentComments"] = JsonSerializer.SerializeToNode(post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body }), Json);              records.Add(record);          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`(target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body })`；返回值紧邻使用处：`ArgumentSyntax: post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body })`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`(node["targets"] as JsonArray ?? []).OfType<JsonObject>().ToDictionary(p => p["Id"]!.GetValue<string>())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = (node["targets"] as JsonArray ?? []).OfType<JsonObject>().ToDictionary(p => p["Id"]!.GetValue<string>())`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`CommunityThreads.All(_data).ToDictionary(p => p.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.All(_data).ToDictionary(p => p.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`post.Replies.ToDictionary(r => r.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = post.Replies.ToDictionary(r => r.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`(target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet()`；返回值紧邻使用处：`AssignmentExpressionSyntax: existing = (target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select`
+- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`(node["targets"] as JsonArray ?? []).OfType<JsonObject>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (node["targets"] as JsonArray ?? []).OfType<JsonObject>().ToDictionary`
+- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`memories.OfType<JsonObject>()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var memory in memories.OfType<JsonObject>())              {                  string postId = memory["PostId"]?.GetValue<string>() ?? "", id = memory["Id"]?.GetValue<string>() ?? "";                  if (!sources.TryGetValue(postId, out var post)) continue;                  var reply = post.Replies.FirstOrDefault(r => id == postId + ":" + r.Id);                  if (reply == null) continue;                  memory["sourcePostId"] = postId; memory["sourceReplyId"] = reply.Id;                  memory["author"] = CareerEngine.DisplayName(_data, reply.AuthorId);                  memory["parentId"] = reply.ParentId;                  if (!selected.TryGetValue(postId, out var ancestors)) selected.Add(postId, ancestors = []);                  var replies = post.Replies.ToDictionary(r => r.Id);                  while (replies.TryGetValue(reply.ParentId, out var parent) && ancestors.Add(parent.Id)) reply = parent;              }`
+- `System.Text.Json.JsonSerializer.SerializeToNode<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.SerializeToNode(post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body }), Json)`；返回值紧邻使用处：`AssignmentExpressionSyntax: record["parentComments"] = JsonSerializer.SerializeToNode(post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body }), Json)`
+- `System.Text.Json.Nodes.JsonArray.Add<T>(T?)`；输入表达式：`records.Add(record)`；返回值紧邻使用处：`ExpressionStatementSyntax: records.Add(record);`
+- `System.Text.Json.Nodes.JsonArray.JsonArray(System.Text.Json.Nodes.JsonNodeOptions?)`；输入表达式：`new JsonArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new JsonArray()`
+- `System.Text.Json.Nodes.JsonNode.GetValue<T>()`；输入表达式：`.GetValue<string>()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: memory["Id"]?.GetValue<string>()`
+- `System.Text.Json.Nodes.JsonNode.GetValue<T>()`；输入表达式：`.GetValue<string>()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: memory["PostId"]?.GetValue<string>()`
+- `System.Text.Json.Nodes.JsonNode.GetValue<T>()`；输入表达式：`p["Id"]!.GetValue<string>()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => p["Id"]!.GetValue<string>()`
+- `System.Text.Json.Nodes.JsonNode.GetValue<T>()`；输入表达式：`r!["Id"]!.GetValue<string>()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r => r!["Id"]!.GetValue<string>()`
+- `System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`；输入表达式：`new JsonObject { ["postId"] = post.Id }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new JsonObject { ["postId"] = post.Id }`
+
+**赋值（含属性/字段和局部值）：**
+
+- `["postId"]` = `post.Id`
+- `ancestors` = `[]`
+- `existing` = `(target["conversation"] as JsonArray ?? []).Select(r => r!["Id"]!.GetValue<string>()).ToHashSet()`
+- `memory["author"]` = `CareerEngine.DisplayName(_data, reply.AuthorId)`
+- `memory["parentId"]` = `reply.ParentId`
+- `memory["sourcePostId"]` = `postId`
+- `memory["sourceReplyId"]` = `reply.Id`
+- `node["communitySources"]` = `records`
+- `record["author"]` = `CareerEngine.DisplayName(_data, post.AuthorId)`
+- `record["body"]` = `post.Body`
+- `record["bodyKind"]` = `"作者公开发言"`
+- `record["day"]` = `post.Day`
+- `record["officialRecord"]` = `AiGeneratedText.Source(post)`
+- `record["parentComments"]` = `JsonSerializer.SerializeToNode(post.Replies.Where(r => entry.Value.Contains(r.Id) && !existing.Contains(r.Id))                  .Select(r => new { r.Id, r.ParentId, author = CareerEngine.DisplayName(_data, r.AuthorId), r.Day, r.Body }), Json)`
+- `record["title"]` = `post.Title`
+- `reply` = `parent`
+
 <a id="symbol-1b2e04d42691"></a>
 
 ## `NationalSpire.AiWireProtocol.Decode(string, bool, string?) — internal string Decode(string response, bool normalizeFields = true, string? expectedArray = null)`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
@@ -128,7 +199,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.ReadBody(string, bool, string?) — private static JsonNode ReadBody(string response, bool extract, string? expectedArray)`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)
 
@@ -173,7 +244,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.UnwrapLeadingBlocks(string) — private static string UnwrapLeadingBlocks(string response)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)
 
@@ -211,7 +282,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.HasRows(System.Text.Json.Nodes.JsonNode, string, bool) — private static bool HasRows(JsonNode node, string name, bool requireRows)`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)
 
@@ -232,7 +303,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode) — private static void NormalizeFields(JsonNode node)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)
 
@@ -258,7 +329,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool) — private static void Rewrite(JsonNode node, Dictionary<string, string> map, bool identifiers = false)`
 
-来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)
 

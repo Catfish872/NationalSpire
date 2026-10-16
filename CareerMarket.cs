@@ -57,7 +57,7 @@ public static class CareerMarket
     public static decimal Net(MarketState market, MarketAccount account)
         => MarketExecution.LiquidationValue(market, account);
 
-    private static void Record(MarketAccount account, int day, string text, decimal change)
+    internal static void Record(MarketAccount account, int day, string text, decimal change)
     {
         account.Trades.Add(new(day, text, change, account.Cash));
         if (account.Trades.Count > 120) account.Trades.RemoveAt(0);
@@ -69,6 +69,7 @@ public static class CareerMarket
             && MarketExecution.Close(p, quote).Proceeds <= (p.InitialMargin ?? p.Margin) * .1m;
     public static void Accounts(MarketState market, IReadOnlyList<MarketAccount> accounts, int day)
     {
+        MarketClearing.Settle(market, accounts, day);
         foreach (var account in accounts)
         {
             if (account.InterestDay == 0) account.InterestDay = day;
@@ -87,8 +88,9 @@ public static class CareerMarket
             foreach (var owner in accounts)
             foreach (var position in owner.Positions)
             {
+                if (position.ExecutionVersion == 1) continue;
                 if (triggered.Contains(position)) continue;
-                var quote = market.Quotes[position.Asset]; decimal price = quote.Price;
+                var quote = market.Quotes[position.Asset]; decimal price = MarketExecution.ReferencePrice(quote);
                 bool forced = Forced(position, quote);
                 bool stop = position.StopPrice is { } limit && (position.Direction > 0 ? price <= limit : price >= limit);
                 if ((forced || stop) && triggered.Add(position)) pending.Enqueue((owner, position, forced));
@@ -113,6 +115,12 @@ public static class CareerMarket
         if (quote.History.Count > 0 && quote.History[^1].Day == day) quote.History[^1] = new(day, quote.Price);
         else quote.History.Add(new(day, quote.Price));
         if (quote.History.Count > HistoryDays) quote.History.RemoveAt(0);
+    }
+    private static void Price(CareerData data, string asset, int day, decimal price)
+    {
+        var quote = data.Market.Quotes[asset];
+        if (quote.ClearingDepthUnits == 0) Price(quote, day, price);
+        else MarketClearing.Reprice(data.Market, asset, MarketClearing.Accounts(data), day, Math.Max(.000001m, decimal.Round(price, 6)));
     }
     public static void Advance(CareerData d)
     {
@@ -140,7 +148,7 @@ public static class CareerMarket
                 // 两项衡量外币相对人民币走强；1 CNY 兑换的外币数量应随之下降。
                 double change = -drift + sigma * noise + MarketDynamics.Shock(random, sigma)
                     - .03 * Math.Log((double)(reference / anchors[asset.Id])) + (asset.Id == eventAsset ? businessChange : 0);
-                Price(quote, day, reference * (decimal)Math.Exp(change));
+                Price(d, asset.Id, day, reference * (decimal)Math.Exp(change));
                 quote.PendingSignal = quote.AppliedSignal = 0; quote.SignalDay = day;
                 if (asset.Id == eventAsset) MarketDynamics.AddEvent(d, new(day, asset.Id,
                     asset.Name + (businessChange > 0 ? "公布销售增长消息" : "公布供应与成本压力消息"), businessChange));
@@ -184,7 +192,7 @@ public static class CareerMarket
                 decimal applied = Math.Clamp(quote.PendingSignal, -4, 4);
                 decimal delta = applied - quote.AppliedSignal;
                 decimal forexBefore = quote.Price;
-                if (delta != 0) Price(quote, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(-(double)delta * .01));
+                if (delta != 0) Price(d, asset.Id, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(-(double)delta * .01));
                 quote.AppliedSignal = applied;
                 if (signal != 0) MarketDynamics.AddEvent(d, new(d.Day, asset.Id, c.Name + "赛果已计入当前汇率。", (double)(quote.Price / forexBefore - 1), Competition: c.Id));
                 continue;
@@ -203,7 +211,7 @@ public static class CareerMarket
             if (related.Count == 0) continue;
             double change = MarketDynamics.BrandChange(d.WorldId, asset, related.Average(p => p.Signal));
             decimal before = quote.Price;
-            Price(quote, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(change));
+            Price(d, asset.Id, d.Day, MarketExecution.ReferencePrice(quote) * (decimal)Math.Exp(change));
             double actual = (double)(quote.Price / before - 1);
             MarketDynamics.AddEvent(d, new(d.Day, asset.Id, asset.Name + " · " + string.Join("；", related.Select(p => p.Detail))
                 + $"；{c.Name}第{fixture.Round}轮，品牌报价{actual:+0.00%;-0.00%;0.00%}。", actual, related[0].Id, c.Id));
@@ -254,11 +262,12 @@ public static class CareerMarket
                 if (!Leverages.Contains(order.Leverage) || order.Direction is not (-1 or 1)) return "请选择有效的杠杆和买卖方向。";
                 decimal fee = OpenFee(asset, amount, order.Leverage);
                 if (amount <= 0 || amount + fee > account.Cash) return "余额不足以支付本金与手续费。";
-                var fill = MarketExecution.Open(asset, d.Market.Quotes[asset.Id], amount * order.Leverage, order.Direction);
+                var preview = MarketClearing.Preview(d, order, false);
+                if (!preview.Accepted) return preview.Reason + "，请调整保证金或杠杆后确认。";
+                MarketClearing.Commit(d.Market, asset.Id, preview, d.Day);
                 account.Cash -= amount + fee;
-                account.Positions.Add(new() { Id = ++account.NextPosition, Asset = asset.Id, Entry = fill.Average, Margin = amount, InitialMargin = amount, OpeningFee = fee,
-                    Units = fill.Units, Direction = order.Direction, Leverage = order.Leverage });
-                MarketExecution.Apply(d.Market, asset.Id, fill, d.Day);
+                account.Positions.Add(new() { Id = ++account.NextPosition, Asset = asset.Id, Entry = preview.Average, Margin = amount, InitialMargin = amount, OpeningFee = fee,
+                    Units = preview.Units, Direction = order.Direction, Leverage = order.Leverage, ExecutionVersion = 1 });
                 amount = -(amount + fee); break;
             case "margin":
                 var funded = account.Positions.FirstOrDefault(p => p.Id == order.Position);
@@ -266,17 +275,27 @@ public static class CareerMarket
                 if (amount <= 0 || amount > account.Cash) return "追加金额须大于零且不超过交易账户余额。";
                 funded.InitialMargin ??= funded.Margin;
                 funded.OpeningFee ??= OpenFee(MarketCatalog.ById[funded.Asset], funded.Margin, funded.Leverage);
-                funded.Margin += amount; account.Cash -= amount; amount = -amount; break;
+                funded.Margin += amount; account.Cash -= amount; amount = -amount;
+                if (funded.ExecutionVersion == 1) d.Market.Revision++;
+                break;
             case "stop":
                 var protectedPosition = account.Positions.FirstOrDefault(p => p.Id == order.Position);
                 if (protectedPosition == null) return "这笔持仓已经结束。";
-                decimal current = d.Market.Quotes[protectedPosition.Asset].Price;
+                decimal current = protectedPosition.ExecutionVersion == 1 ? d.Market.Quotes[protectedPosition.Asset].Price : MarketExecution.ReferencePrice(d.Market.Quotes[protectedPosition.Asset]);
                 if (order.StopPrice is { } stopPrice && (stopPrice <= 0 || (protectedPosition.Direction > 0 ? stopPrice >= current : stopPrice <= current)))
                     return protectedPosition.Direction > 0 ? "做多止损价须大于零且低于当前报价。" : "做空止损价须高于当前报价。";
-                protectedPosition.StopPrice = order.StopPrice; amount = 0; break;
+                protectedPosition.StopPrice = order.StopPrice; amount = 0;
+                if (protectedPosition.ExecutionVersion == 1) d.Market.Revision++;
+                break;
             case "close":
                 var position = account.Positions.FirstOrDefault(p => p.Id == order.Position);
                 if (position == null) return "这笔持仓已经结束。";
+                if (position.ExecutionVersion == 1)
+                {
+                    var closing = MarketClearing.Close(d.Market, MarketClearing.Accounts(d), position);
+                    MarketClearing.Commit(d.Market, position.Asset, closing, d.Day);
+                    Accounts(d, d.Day); return null;
+                }
                 var exit = MarketExecution.Close(position, d.Market.Quotes[position.Asset]);
                 amount = exit.Proceeds;
                 account.Cash += amount; account.Positions.Remove(position);
