@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EE5069D2E8D4A187004C6ED3A7D7A1CD256A349FFBD2201E5FABE99F5EFA4BDA`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`4C0AA7B8EAF0B456026A8A69170061D84541EC689C4450FC4686B1CAF33426BB`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -181,13 +181,13 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；[`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；[`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiWireProtocol._decode`；`NationalSpire.AiWireProtocol.Json`；`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`；`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`；`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiWireProtocol.Json`；`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`；`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`；`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`；`NationalSpire.AiWireProtocol._decode`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`；输入表达式：`NormalizeFields(node)`；返回值紧邻使用处：`ExpressionStatementSyntax: NormalizeFields(node);`
+- `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`；输入表达式：`NormalizeFields(node)`；返回值紧邻使用处：`ExpressionStatementSyntax: NormalizeFields(node);`
 - `NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`；输入表达式：`ReadBody(response, normalizeFields, expectedArray)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadBody(response, normalizeFields, expectedArray)`
 - `NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`；输入表达式：`Rewrite(node, _decode)`；返回值紧邻使用处：`ExpressionStatementSyntax: Rewrite(node, _decode);`
 - `System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；输入表达式：`node.ToJsonString(Json)`；返回值紧邻使用处：`ReturnStatementSyntax: return node.ToJsonString(Json);`
@@ -301,25 +301,26 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 <a id="symbol-ee9bc80e3996"></a>
 
-## `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode) — private static void NormalizeFields(JsonNode node)`
+## `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool) — private static void NormalizeFields(JsonNode node, bool scoreFields = false)`
 
 来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)
+**调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)
 
-**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`；`string.ToLowerInvariant()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`；输入表达式：`NormalizeFields(value)`；返回值紧邻使用处：`ExpressionStatementSyntax: NormalizeFields(value);`
-- `string.ToLowerInvariant()`；输入表达式：`key.ToLowerInvariant()`；返回值紧邻使用处：`SwitchExpressionSyntax: key.ToLowerInvariant() switch                  {                      "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId",                      "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", _ => key                  }`
+- `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`；输入表达式：`NormalizeFields(value, scoreFields || canonical == "scoreUpdates")`；返回值紧邻使用处：`ExpressionStatementSyntax: NormalizeFields(value, scoreFields || canonical == "scoreUpdates");`
+- `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode, bool)`；输入表达式：`NormalizeFields(value, scoreFields)`；返回值紧邻使用处：`ExpressionStatementSyntax: NormalizeFields(value, scoreFields);`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`obj.Select(p => p.Key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: obj.Select(p => p.Key).ToArray`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`obj.Select(p => p.Key).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string key in obj.Select(p => p.Key).ToArray())              {                  string canonical = key.ToLowerInvariant() switch                  {                      "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId",                      "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", _ => key                  };                  var value = obj[key];                  if (canonical != key)                  {                      if (obj.ContainsKey(canonical)) throw new InvalidDataException("返回字段重复");                      obj.Remove(key); obj[canonical] = value;                  }                  if (value != null) NormalizeFields(value);              }`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`obj.Select(p => p.Key).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string key in obj.Select(p => p.Key).ToArray()) { string canonical = key.ToLowerInvariant() switch { "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId", "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", "netscore" => "netScore", "scoreupdates" => "scoreUpdates", _ => key }; var value = obj[key]; if (canonical != key) { if (obj.ContainsKey(canonical)) { if (scoreFields || canonical is "netScore" or "scoreUpdates") { obj.Remove(key); continue; } throw new InvalidDataException("返回字段重复"); } obj.Remove(key); obj[canonical] = value; } // 可选评分的类型由评分解析器检查；畸形评分保留正文的正常解析路径。 if (canonical == "netScore" || canonical == "scoreUpdates" && value is not JsonArray) continue; if (value != null) NormalizeFields(value, scoreFields || canonical == "scoreUpdates"); }`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("返回字段重复")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("返回字段重复");`
-- `System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；输入表达式：`obj.ContainsKey(canonical)`；返回值紧邻使用处：`IfStatementSyntax: if (obj.ContainsKey(canonical)) throw new InvalidDataException("返回字段重复");`
+- `System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；输入表达式：`obj.ContainsKey(canonical)`；返回值紧邻使用处：`IfStatementSyntax: if (obj.ContainsKey(canonical)) { if (scoreFields || canonical is "netScore" or "scoreUpdates") { obj.Remove(key); continue; } throw new InvalidDataException("返回字段重复"); }`
 - `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`obj.Remove(key)`；返回值紧邻使用处：`ExpressionStatementSyntax: obj.Remove(key);`
+- `string.ToLowerInvariant()`；输入表达式：`key.ToLowerInvariant()`；返回值紧邻使用处：`SwitchExpressionSyntax: key.ToLowerInvariant() switch { "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId", "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", "netscore" => "netScore", "scoreupdates" => "scoreUpdates", _ => key }`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -329,7 +330,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 ## `NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool) — private static void Rewrite(JsonNode node, Dictionary<string, string> map, bool identifiers = false)`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.Encode(string)`](AiWireProtocol.cs.md#symbol-bcdcbacd353a)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool)`](AiWireProtocol.cs.md#symbol-4c74b3828c4a)
 

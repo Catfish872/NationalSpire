@@ -8,7 +8,7 @@ public static partial class PrivatePublicContext
         .Where(a => a.PersonId == id && a.Day <= d.Day && a.Points > 0 && a.Season > d.Season - 4 && a.Season <= d.Season)
         .OrderByDescending(a => a.Points).ThenByDescending(a => a.Season).Take(6).Sum(a => a.Points);
     // 动态事实独立于保存的提示词和人物自述，直接使用当前生涯中已发生的记录。
-    private static void AppendCareerDetails(StringBuilder b, CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null)
+    private static void AppendCareerDetails(StringBuilder b, CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null, bool includeConversation = true)
     {
         string player = CareerEngine.Name(d);
         var meetings = d.Results.Where(r => r.Day <= d.Day && (r.OpponentId == p.Id || r.OpponentParticipants.Contains(p.Id))).OrderBy(r => r.Day).ToArray();
@@ -46,8 +46,8 @@ public static partial class PrivatePublicContext
             int moodStart = b.Length;
             int shock = SpireArbitration.ShockDay(p, d.Day), until = CareerTraining.MoodUntil(p, d.Day);
             b.AppendLine($"{p.PublicName}当前比赛状态从{PrivateAppointments.DateText(d, shock >= 0 ? shock : p.Learning.MoodDay)}持续至{PrivateAppointments.DateText(d, until)}之前，剩余{until - d.Day}天，" + (shock >= 0 ? "仲裁期间保持最严重负面等级，期满解除。" : "效果逐日减弱。"));
-            var cause = PrivateMessages.Conversation(d, p.Id).Turns.Where(t => !t.UserDeleted && !t.ReplyDeleted && t.Status == "complete")
-                .Select(t => t.Mood).LastOrDefault(m => m != null && m.Day == p.Learning.MoodDay && m.Day + m.Days == p.Learning.MoodUntil && m.Strength == p.Learning.MoodStrength);
+            var cause = includeConversation ? PrivateMessages.Conversation(d, p.Id).Turns.Where(t => !t.UserDeleted && !t.ReplyDeleted && t.Status == "complete")
+                .Select(t => t.Mood).LastOrDefault(m => m != null && m.Day == p.Learning.MoodDay && m.Day + m.Days == p.Learning.MoodUntil && m.Strength == p.Learning.MoodStrength) : null;
             if (cause != null) b.AppendLine($"{p.PublicName}在本次私信中记录的状态缘由：{cause.Reason}");
             changing?.Add((moodStart, b.Length - moodStart, "mood"));
         }

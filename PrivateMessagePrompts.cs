@@ -143,7 +143,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         List<Dictionary<string, string>> messages = [];
         void Add(string role, string text) => messages.Add(new() { ["role"] = role, ["content"] = text });
         Add("system", Section(data, "world") + "\n\n" + Section(data, "private") + "\n\n" + Protocol + "\n\n" + SkillProtocol + "\n\n" + MoodProtocol + "\n\n" + MatchProtocol + "\n\n" + PostProtocol + "\n\n" + ProfileProtocol
-            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
+            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
         Add("user", $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n" + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
         var contextTurn = pending ?? new PrivateTurn { Day = data.Day, Season = data.Season };
         var contextSpans = new List<ContextSpan>();
@@ -172,7 +172,9 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (pending == null) Add("user", ordered.Current);
         return messages;
     }
-    public static string UserText(PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(a) + (a.Kind is "training" or "lineup" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 ? "\n" + (forAi ? AiGeneratedText.Attachment(a) : a.Detail) : ""))));
+    public static string UserText(PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User
+        + (CommunityReporting.IsReport(turn) && !turn.UserDeleted ? "\n" + (forAi ? AiGeneratedText.Attachment(turn.Request!) : turn.Request!.Detail) : "")
+        + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(a) + (a.Kind is "training" or "lineup" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 ? "\n" + (forAi ? AiGeneratedText.Attachment(a) : a.Detail) : ""))));
     public sealed record ContextSpan(int Start, int Length, string Group, string Key = "");
     private static (string Stable, string Current) OrderContext(string context, List<ContextSpan> spans)
     {

@@ -6,7 +6,7 @@ public partial class CareerScreen
 {
     private readonly Dictionary<string, string> _replyTargets = new();
     private readonly Dictionary<string, string> _replyDrafts = new();
-    private readonly Dictionary<string, Control> _replyControls = new();
+    private readonly Dictionary<string, HashSet<string>> _collapsedDiscussions = new();
     private readonly HashSet<string> _expandedPostBackgrounds = [];
     private Button? _updatesButton;
     private string _newPostTitle = "", _newPostBody = "";
@@ -36,15 +36,19 @@ public partial class CareerScreen
     }
     private void RefreshDiscussion(CareerData data, CommunityPost post)
     {
-        if (CareerVisuals.FindContent(_content, "ThreadHeader") is VBoxContainer header)
+        RebuildThreadReplies(data, post, () =>
         {
-            CareerVisuals.ClearContent(header);
-            RenderPostHeader(data, post, header); UpdateNavigation();
-            if (CareerVisuals.FindContent(_content, "SubmitThreadReply") is Button submit) submit.Disabled = CommunityThreads.NewsPending(data, post);
-        }
-        if (CareerVisuals.FindContent(_content, "ThreadDiscussion") is not VBoxContainer discussion) return;
-        CareerVisuals.ClearContent(discussion);
-        RenderDiscussion(data, post, discussion); CommunityThreads.MarkRead(data, post);
+            if (CareerVisuals.FindContent(_content, "ThreadHeader") is VBoxContainer header)
+            {
+                CareerVisuals.ClearContent(header);
+                RenderPostHeader(data, post, header); UpdateNavigation();
+            }
+            if (CareerVisuals.FindContent(_content, "ThreadDiscussion") is VBoxContainer discussion)
+            {
+                CareerVisuals.ClearContent(discussion); RenderDiscussion(data, post, discussion);
+            }
+        });
+        CommunityThreads.MarkRead(data, post);
         UpdateCommunityBadge(); _postSignature = Signature(data);
     }
     private void UpdateCommunityBadge()
@@ -63,30 +67,91 @@ public partial class CareerScreen
         _content.AddChild(header); RenderPostHeader(data, post, header);
         var discussion = new VBoxContainer { Name = "ThreadDiscussion", SizeFlagsHorizontal = SizeFlags.ExpandFill };
         _content.AddChild(discussion); RenderDiscussion(data, post, discussion);
-        var composer = Card(); _content.AddChild(composer); var cb = Inner(composer);
-        string parentId = _replyTargets.GetValueOrDefault(post.Id, "");
+        RenderReplyComposer(data, post);
+    }
+    private void RenderReplyComposer(CareerData data, CommunityPost post, PanelContainer? retained = null)
+    {
+        if (CommunityThreads.NewsPending(data, post) || !_replyTargets.TryGetValue(post.Id, out string? parentId)
+            || CareerVisuals.FindContent(_content, "ReplyHost_" + parentId) is not VBoxContainer host)
+        { retained?.QueueFree(); return; }
+        if (retained != null) { host.AddChild(retained); return; }
+        var composer = Card(); composer.Name = "ThreadReplyComposer"; host.AddChild(composer); var cb = Inner(composer);
         var target = post.Replies.FirstOrDefault(r => r.Id == parentId);
-        if (target == null) parentId = "";
         string draftKey = post.Id + ":" + parentId;
-        cb.AddChild(Text(target == null ? "发表回复" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)} · {CommunityThreads.Position(post, target).Floor}L", 20, _gold));
+        cb.AddChild(Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold));
         var editor = new TextEdit { Name = "CommunityReplyEditor", Text = _replyDrafts.GetValueOrDefault(draftKey, ""),
             PlaceholderText = "说说你的想法，或继续上面的讨论……", CustomMinimumSize = new Vector2(0, 130),
             SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary };
         cb.AddChild(editor); AddMentionPicker(editor, cb); editor.TextChanged += () => _replyDrafts[draftKey] = editor.Text;
+        editor.SetCaretLine(editor.GetLineCount() - 1); editor.SetCaretColumn(editor.GetLine(editor.GetCaretLine()).Length);
         var actions = new HBoxContainer(); cb.AddChild(actions);
+        CommunityReplyExpressions.Attach(editor, cb, actions);
+        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         var submit = Button("发布回复", () =>
         {
             try
             {
-                if (MultiplayerCommand("reply", post.Id, editor.Text, parent: parentId, accepted: () => { _replyDrafts.Remove(draftKey); _replyTargets.Remove(post.Id); Render(); })) return;
-                var sent = CommunityThreads.Submit(data, post, parentId, editor.Text);
-                _replyDrafts.Remove(draftKey); _replyTargets.Remove(post.Id); Render();
-                _ = FocusComposerAsync(); _ = AiService.ProcessInteractionsAsync([sent.Id]);
+                string submitted = editor.Text;
+                _replyDrafts[draftKey] = submitted;
+                if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId,
+                    accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return;
+                var current = ViewData;
+                var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)
+                    ?? throw new InvalidOperationException("帖子已不存在。");
+                var sent = CommunityThreads.Submit(current, thread, parentId, submitted);
+                CompleteThreadReply(post.Id, parentId, submitted);
+                _ = AiService.ProcessInteractionsAsync([sent.Id]);
                 Notice("回复已发布。", false);
             }
             catch (Exception e) { Notice(e.Message, true); }
         }, 150); submit.Name = "SubmitThreadReply"; submit.Disabled = CommunityThreads.NewsPending(data, post); actions.AddChild(submit);
-        if (target != null) actions.AddChild(Button("改为回复帖子", () => BeginReply(post, ""), 180));
+        var close = Button("收起", () => CloseThreadReply(post.Id, parentId), 100);
+        close.Name = "CloseThreadReply"; close.TooltipText = "收起回复栏，保留草稿"; actions.AddChild(close);
+    }
+    private void RebuildThreadReplies(CareerData data, CommunityPost post, Action rebuild)
+    {
+        var composer = CareerVisuals.FindContent(_content, "ThreadReplyComposer") as PanelContainer;
+        var editor = composer == null ? null : CareerVisuals.FindContent(composer, "CommunityReplyEditor") as TextEdit;
+        var selection = editor?.HasSelection() == true
+            ? (Line: editor.GetSelectionOriginLine(), Column: editor.GetSelectionOriginColumn(), CaretLine: editor.GetCaretLine(), CaretColumn: editor.GetCaretColumn())
+            : ((int Line, int Column, int CaretLine, int CaretColumn)?)null;
+        var focused = GetViewport().GuiGetFocusOwner();
+        bool restoreFocus = composer != null && focused != null && composer.IsAncestorOf(focused);
+        // 暂时移出将重建的卡片，保留 TextEdit 的光标、选区和撤销历史。
+        if (composer != null) composer.GetParent().RemoveChild(composer);
+        rebuild(); RenderReplyComposer(data, post, composer);
+        if (restoreFocus && focused != null && IsInstanceValid(focused) && focused.IsInsideTree() && !focused.IsQueuedForDeletion()) focused.GrabFocus();
+        if (selection is { } selected && editor != null && IsInstanceValid(editor) && editor.IsInsideTree() && !editor.IsQueuedForDeletion())
+            editor.Select(selected.Line, selected.Column, selected.CaretLine, selected.CaretColumn);
+    }
+    private void CompleteThreadReply(string postId, string parentId, string submitted)
+    {
+        string key = postId + ":" + parentId;
+        if (_replyDrafts.GetValueOrDefault(key, "") == submitted)
+        {
+            _replyDrafts.Remove(key);
+            if (_replyTargets.TryGetValue(postId, out string? active) && active == parentId) _replyTargets.Remove(postId);
+        }
+        if (_postId == postId && _tab == "社区" && CommunityThreads.All(ViewData).FirstOrDefault(p => p.Id == postId) is { } post)
+        {
+            int position = _scroll.ScrollVertical;
+            RefreshDiscussion(ViewData, post); _ = RestoreScrollAsync(position, _renderVersion);
+        }
+    }
+    private void CloseThreadReply(string postId, string parentId)
+    {
+        if (!_replyTargets.TryGetValue(postId, out string? active) || active != parentId) return;
+        _replyTargets.Remove(postId); _renderVersion++;
+        if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
+        RetireReplyComposer();
+        string buttonName = parentId.Length == 0 ? "ReplyToPost" : "ReplyTo_" + parentId;
+        if (CareerVisuals.FindContent(_content, buttonName) is Button button) button.GrabFocus();
+    }
+    private void RetireReplyComposer()
+    {
+        if (CareerVisuals.FindContent(_content, "ThreadReplyComposer") is not Control composer) return;
+        composer.Hide(); composer.ProcessMode = ProcessModeEnum.Disabled;
+        composer.Name = "Retired_" + composer.GetInstanceId(); composer.QueueFree();
     }
     private void RenderPostHeader(CareerData data, CommunityPost post, VBoxContainer header)
     {
@@ -94,9 +159,17 @@ public partial class CareerScreen
         header.AddChild(Text($"第 {post.Day} 天 · {post.Category}", 16, _muted));
         RenderPostBackground(data, post, header);
         string country = CareerEngine.Person(data, post.AuthorId)?.Country ?? data.Esports.Country;
-        header.AddChild(WithAvatar(data, post.AuthorId, Text($"{CareerEngine.DisplayName(data, post.AuthorId)}  ·  {country}赛区", 19, _muted), 56));
         bool preparing = CommunityThreads.NewsPending(data, post);
-        var card = Card(); header.AddChild(card); Inner(card).AddChild(MentionText(data, preparing ? "这篇帖子还在撰写中，稍后就能看到。" : post.Body, 19, preparing ? _muted : _ink, post.RelatedPeople.Append(post.AuthorId)));
+        var card = Card();
+        var authorMargin = new MarginContainer();
+        authorMargin.AddThemeConstantOverride("margin_right", (int)card.GetThemeStylebox("panel").ContentMarginRight);
+        header.AddChild(authorMargin);
+        var author = new HBoxContainer(); authorMargin.AddChild(author);
+        author.AddChild(WithAvatar(data, post.AuthorId, Text($"{CareerEngine.DisplayName(data, post.AuthorId)}  ·  {country}赛区", 19, _muted), 56));
+        if (!preparing) author.AddChild(DiscussionVotes(data, post));
+        header.AddChild(card); var body = Inner(card); body.Name = "ReplyHost_";
+        body.AddChild(MentionText(data, preparing ? "这篇帖子还在撰写中，稍后就能看到。" : post.Body, 19, preparing ? _muted : _ink, post.RelatedPeople.Append(post.AuthorId)));
+        if (!preparing) body.AddChild(DiscussionActions(data, post));
         if (post.Analysis.Length > 0) header.AddChild(MentionText(data, post.Analysis, 18, _muted, post.RelatedPeople));
         RenderWorkStatus(header, post.NewsGeneration, () => GenerateContent(() => { _ = AiService.RetryNewsAsync(post.Id); }, true), "News_" + post.Id);
         if ((CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost) && post.NeedsReaction) RenderWorkStatus(header, post.ReactionGeneration, () => GenerateContent(() => { _ = AiService.ProcessInteractionsAsync([post.Id]); }, true), post.Id);
@@ -136,30 +209,149 @@ public partial class CareerScreen
     {
         if (CommunityThreads.NewsPending(data, post)) { discussion.AddChild(Text("大家还在赶来……", 17, _muted)); return; }
         discussion.AddChild(Text($"讨论 · {post.Replies.Count} 条回复", 21, _gold));
-        _replyControls.Clear();
-        foreach (var reply in CommunityThreads.ReadingOrder(post))
+        if (!_collapsedDiscussions.TryGetValue(post.Id, out var collapsed))
+            _collapsedDiscussions[post.Id] = collapsed = [];
+        var items = CommunityDiscussionLayout.Build(post, collapsed);
+        var cards = new Dictionary<string, Control>();
+        var tree = new CommunityDiscussionLines { Name = "DiscussionTree", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        discussion.AddChild(tree);
+        foreach (var item in items.Where(item => item.Visible))
         {
-            var (floor, depth) = CommunityThreads.Position(post, reply);
-            var indent = new MarginContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
-            indent.AddThemeConstantOverride("margin_left", Math.Min(depth, 3) * 20); discussion.AddChild(indent);
-            var c = Card(); indent.AddChild(c); var box = Inner(c); _replyControls[reply.Id] = c;
+            var reply = item.Reply;
+            int inset = CommunityDiscussionLines.Gutter + Math.Min(item.Depth, CommunityDiscussionLines.MaximumIndentDepth) * CommunityDiscussionLines.Indent;
+            var row = new HBoxContainer { Name = "Comment_" + reply.Id, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            row.AddThemeConstantOverride("separation", 0); tree.AddChild(row);
+            var gutter = new Control { CustomMinimumSize = new Vector2(inset, 0), MouseFilter = MouseFilterEnum.Ignore };
+            row.AddChild(gutter);
+            var c = Card(); row.AddChild(c); var box = Inner(c); box.Name = "ReplyHost_" + reply.Id; cards[reply.Id] = c;
+            if (item.Parent is { } parent && cards.TryGetValue(parent.Reply.Id, out var parentCard)) tree.ConnectReply(parentCard, c);
+            bool isCollapsed = collapsed.Contains(reply.Id);
+            if (item.Descendants > 0)
+            {
+                tree.RegisterToggle(c);
+                var toggle = new CommunityBranchToggle
+                {
+                    Name = "ToggleReplies_" + reply.Id, Collapsed = isCollapsed,
+                    Position = new Vector2(inset - CommunityDiscussionLines.Gutter / 2f - 14, CommunityDiscussionLines.AnchorY - 14),
+                    TooltipText = $"{(isCollapsed ? "展开" : "收起")}这条评论下的 {item.Descendants} 条回复"
+                };
+                toggle.Pressed += () => ToggleDiscussion(post, reply.Id);
+                gutter.AddChild(toggle);
+            }
             var head = new HBoxContainer(); box.AddChild(head);
             var speaker = CareerEngine.Person(data, reply.AuthorId);
-            string caption = $"{CareerEngine.DisplayName(data, reply.AuthorId)}  ·  {speaker?.Country ?? data.Esports.Country}赛区\n{floor}L" + (depth > 0 ? $" · 楼中楼" : "") + $"  ·  第 {reply.Day} 天";
+            string caption = $"{CareerEngine.DisplayName(data, reply.AuthorId)}  ·  {speaker?.Country ?? data.Esports.Country}赛区\n{item.Floor}L" + (item.Depth > 0 ? $" · 楼中楼" : "") + $"  ·  第 {reply.Day} 天";
             head.AddChild(WithAvatar(data, reply.AuthorId, Text(caption, 16, reply.AuthorId == "player" ? _gold : _ink), 42));
-            var respond = Button("回复", () => BeginReply(post, reply.Id), 80); respond.Name = "ReplyTo_" + reply.Id; head.AddChild(respond);
-            if (reply.ParentId.Length > 0 && post.Replies.FirstOrDefault(r => r.Id == reply.ParentId) is { } parent)
-            {
-                var above = Button("↳ 回复 " + CareerEngine.DisplayName(data, parent.AuthorId) + " · 查看上文", () =>
-                { if (_replyControls.TryGetValue(parent.Id, out var control)) _scroll.EnsureControlVisible(control); });
-                above.AutowrapMode = TextServer.AutowrapMode.WordSmart; above.SizeFlagsHorizontal = SizeFlags.ExpandFill; box.AddChild(above);
-            }
+            head.AddChild(DiscussionVotes(data, post, reply));
             box.AddChild(MentionText(data, reply.Body, 17, _ink, post.RelatedPeople.Append(post.AuthorId).Append(reply.AuthorId)));
+            box.AddChild(DiscussionActions(data, post, reply));
+            if (isCollapsed && item.Descendants > 0) box.AddChild(Text($"已收起 {item.Descendants} 条回复", 14, _muted));
             if (reply.NeedsReaction) RenderWorkStatus(box, reply.ReactionGeneration, () => GenerateContent(() => { _ = AiService.ProcessInteractionsAsync([reply.Id]); }, true), reply.Id);
         }
     }
+    private HBoxContainer DiscussionVotes(CareerData data, CommunityPost post, CommunityReply? reply = null)
+    {
+        string replyId = reply?.Id ?? "", suffix = reply?.Id ?? "Post";
+        var row = new HBoxContainer { SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        row.AddThemeConstantOverride("separation", 4);
+        var up = new CommunityVoteButton { Name = "VoteUp_" + suffix, Direction = 1, MainPost = reply == null, ToggleMode = true };
+        var down = new CommunityVoteButton { Name = "VoteDown_" + suffix, Direction = -1, MainPost = reply == null, ToggleMode = true };
+        var score = Text("", reply == null ? 18 : 16, _ink);
+        score.Name = "VoteScore_" + suffix;
+        score.AutowrapMode = TextServer.AutowrapMode.Off;
+        score.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+        score.CustomMinimumSize = new Vector2(32, 0);
+        score.HorizontalAlignment = HorizontalAlignment.Center;
+        score.MouseFilter = MouseFilterEnum.Pass;
+        row.AddChild(up); row.AddChild(score); row.AddChild(down);
+        void Update(CareerData current, CommunityPost currentPost, CommunityReply? currentReply)
+        {
+            int choice = currentReply == null ? CommunityVotes.Choice(current, currentPost) : CommunityVotes.Choice(current, currentReply);
+            long total = currentReply == null ? CommunityVotes.Score(currentPost) : CommunityVotes.Score(current, currentReply);
+            int? basis = currentReply == null ? currentPost.AiNetScore : currentReply.AiNetScore;
+            long audience = currentReply == null ? CommunityVotes.AudienceScore(basis) : CommunityVotes.AudienceScore(current, currentReply);
+            score.Text = total.ToString();
+            score.TooltipText = (basis.HasValue ? $"AI 受众净赞数：{audience}" : "等待 AI 生成受众净赞数")
+                + (choice == 1 ? "\n你已点赞（+1）" : choice == -1 ? "\n你已点踩（-1）" : "\n点击赞踩表达态度");
+            up.TooltipText = choice == 1 ? "取消点赞" : "点赞";
+            down.TooltipText = choice == -1 ? "取消点踩" : "点踩";
+            up.SetPressedNoSignal(choice == 1); down.SetPressedNoSignal(choice == -1);
+            up.QueueRedraw(); down.QueueRedraw();
+        }
+        void Vote(int direction)
+        {
+            try
+            {
+                var current = ViewData;
+                var currentPost = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)
+                    ?? throw new InvalidOperationException("帖子已不存在。");
+                var currentReply = replyId.Length == 0 ? null : currentPost.Replies.FirstOrDefault(r => r.Id == replyId)
+                    ?? throw new InvalidOperationException("回复的楼层已不存在。");
+                int choice = currentReply == null ? CommunityVotes.Choice(current, currentPost) : CommunityVotes.Choice(current, currentReply);
+                int next = choice == direction ? 0 : direction;
+                if (MultiplayerCommand("community-vote", post.Id, number: next, parent: replyId))
+                { Update(current, currentPost, currentReply); return; }
+                string before = Signature(current);
+                long voteRevision = currentPost.VoteRevision;
+                string voter = CommunityVotes.VoterId(current);
+                if (CommunityVotes.SetVote(current, post.Id, replyId, next, voter))
+                {
+                    try { CareerStore.Save(current); }
+                    catch
+                    {
+                        CommunityVotes.SetVote(current, post.Id, replyId, choice, voter);
+                        currentPost.VoteRevision = voteRevision;
+                        throw;
+                    }
+                }
+                Update(current, currentPost, currentReply);
+                // 本地改票只更新当前按钮；已有内容更新仍交由原刷新流程处理。
+                if (_postSignature == before) _postSignature = Signature(current);
+            }
+            catch (Exception e) { Update(data, post, reply); Notice(e.Message, true); }
+        }
+        up.Pressed += () => Vote(1); down.Pressed += () => Vote(-1);
+        Update(data, post, reply);
+        return row;
+    }
+    private Button DiscussionReplyButton(CommunityPost post, string parent, bool mainPost = false)
+    {
+        var button = new CommunityReplyButton
+        {
+            Name = parent.Length == 0 ? "ReplyToPost" : "ReplyTo_" + parent,
+            MainPost = mainPost, TooltipText = parent.Length == 0 ? "回复帖子" : "回复这条评论"
+        };
+        button.Pressed += () => BeginReply(post, parent);
+        return button;
+    }
+    private void ToggleDiscussion(CommunityPost post, string replyId)
+    {
+        if (!_collapsedDiscussions.TryGetValue(post.Id, out var collapsed)) return;
+        if (!collapsed.Add(replyId)) collapsed.Remove(replyId);
+        if (CareerVisuals.FindContent(_content, "ThreadDiscussion") is not VBoxContainer discussion) return;
+        _renderVersion++;
+        if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
+        int position = _scroll.ScrollVertical;
+        string toggleName = "ToggleReplies_" + replyId;
+        bool restoreFocus = GetViewport().GuiGetFocusOwner()?.Name == toggleName;
+        RebuildThreadReplies(ViewData, post, () => { CareerVisuals.ClearContent(discussion); RenderDiscussion(ViewData, post, discussion); });
+        if (restoreFocus && CareerVisuals.FindContent(discussion, toggleName) is Button toggle) toggle.GrabFocus();
+        _ = RestoreScrollAsync(position, _renderVersion);
+    }
     private void BeginReply(CommunityPost post, string parent)
-    { _replyTargets[post.Id] = parent; Render(); _ = FocusComposerAsync(); }
+    {
+        if (_replyTargets.TryGetValue(post.Id, out string? current) && current == parent
+            && CareerVisuals.FindContent(_content, "CommunityReplyEditor") != null)
+        { CloseThreadReply(post.Id, parent); return; }
+        if (_scroll is BroadcastScroll scrolling) scrolling.StopMotion();
+        _renderVersion++;
+        if (!_replyTargets.TryGetValue(post.Id, out string? active) || active != parent
+            || CareerVisuals.FindContent(_content, "CommunityReplyEditor") == null)
+        {
+            RetireReplyComposer(); _replyTargets[post.Id] = parent; RenderReplyComposer(ViewData, post);
+        }
+        _ = FocusComposerAsync();
+    }
     private void RenderWorkStatus(VBoxContainer box, AiWorkState work, Action retry, string id)
     {
         if (work.State is "idle" or "completed" or "disabled" or "superseded") return;
@@ -185,11 +377,16 @@ public partial class CareerScreen
     }
     private async Task FocusComposerAsync()
     {
+        if (CareerVisuals.FindContent(_content, "CommunityReplyEditor") is not TextEdit editor) return;
         int version = _renderVersion;
-        for (int i = 0; i < 2; i++) await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        if (!IsInstanceValid(this) || !IsInsideTree() || version != _renderVersion) return;
-        if (CareerVisuals.FindContent(_content, "CommunityReplyEditor") is TextEdit editor)
-        { _scroll.EnsureControlVisible(editor); editor.GrabFocus(); editor.SetCaretColumn(editor.Text.Length); }
+        var tree = GetTree();
+        for (int i = 0; i < 2; i++)
+        {
+            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            if (!IsInstanceValid(this) || !IsInsideTree() || IsQueuedForDeletion() || version != _renderVersion
+                || !IsInstanceValid(editor) || editor.IsQueuedForDeletion() || !editor.IsVisibleInTree()) return;
+        }
+        _scroll.EnsureControlVisible(editor); editor.GrabFocus();
     }
 }
 

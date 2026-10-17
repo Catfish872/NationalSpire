@@ -111,7 +111,9 @@ public static class PrivateMessages
     }
     public static string RelationshipLabel(int favour) => favour switch
     { >= 80 => "十分亲近", >= 40 => "亲近", >= 15 => "熟悉", <= -80 => "敌视", <= -40 => "反感", <= -15 => "疏远", _ => "初识" };
-    public static bool CanChat(CareerData data, string id) => id != "player" && !data.HumanIds.Contains(id) && data.People.Any(p => p.Id == id);
+    private static bool IsChatNpc(CareerData data, string id) => id != "player" && !data.HumanIds.Contains(id);
+    public static bool CanChat(CareerData data, string id) => IsChatNpc(data, id) && data.People.Any(p => p.Id == id);
+    public static IEnumerable<CareerPerson> ChatCandidates(CareerData data) => data.People.Where(p => IsChatNpc(data, p.Id));
     public static PrivateConversation Conversation(CareerData data, string id)
     {
         if (!CanChat(data, id)) throw new ArgumentException("只能与 NPC 私信。");
@@ -132,6 +134,7 @@ public static class PrivateMessages
     public static string? PrepareAttachments(CareerData data, string person, List<PrivateOffer> attachments)
     {
         if (attachments.Count > 8) return "每条消息最多附加 8 项。";
+        var quotes = new List<(PrivateOffer Target, PrivateOffer Prepared)>();
         foreach (var a in attachments)
         {
             if (a.Kind == "match") { if (PrivateAppointments.Error(data, person, a) is { } error) return error; }
@@ -151,15 +154,28 @@ public static class PrivateMessages
                 a.Detail = p.Title + "\n" + text.Original;
                 a.AiDetail = AiGeneratedText.Different(a.Detail, p.Title + "\n" + text.Ai);
             }
+            else if (a.Kind == CommunitySharing.Kind)
+            {
+                var prepared = new PrivateOffer { Kind = a.Kind, Quote = a.Quote };
+                if (CommunitySharing.Prepare(data, prepared) is { } error) return error;
+                quotes.Add((a, prepared));
+            }
             else if (a.Kind != "advice") return "附件类型无效。";
             if (a.Kind == "advice" && a.Detail.Length > 8000) return "附加文字过长。";
+        }
+        foreach (var (target, prepared) in quotes)
+        {
+            target.Quote = prepared.Quote; target.Detail = prepared.Detail; target.AiDetail = prepared.AiDetail;
+            target.MatchId = prepared.MatchId; target.PostRevision = prepared.PostRevision;
         }
         return null;
     }
     public static string AttachmentTitle(PrivateOffer a) => a.Kind switch
     {
         "match" => $"{a.Mode} · 第{a.Season}赛季第{a.Day}天 · A{a.Ascension}",
-        "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子", "advice" => "附加文字", _ => "附件"
+        "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子",
+        CommunitySharing.Kind => a.Quote?.ReplyId.Length > 0 ? "分享评论" : "分享主楼",
+        CommunityReporting.Kind => a.Quote?.ReplyId.Length > 0 ? "举报评论" : "举报主楼", "advice" => "附加文字", _ => "附件"
     };
     public static string? Manage(CareerData data, PrivateConversation c, string kind, PrivateMessageCommand command)
     {

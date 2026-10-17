@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`17EC5E6839F0F27CF48B9B0CC06CBC99E1CB3D7FD69F50F3DC860CF124B2B4A5`。来源：[源码](../../ArbitrationScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`29308572EC36510FA483239D95886E9B7432886C9E666260B25D21B118B44F0D`。来源：[源码](../../ArbitrationScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,13 +11,95 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
+
+<a id="symbol-4223b2b95c14"></a>
+
+## `NationalSpire.CareerScreen.ReportDiscussion(string, string) — private void ReportDiscussion(string postId, string replyId)`
+
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.DiscussionActions(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityShareScreen.cs.md#symbol-dda6fe820edc)
+
+**调用：** `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`](PrivateMessageScreen.cs.md#symbol-3ff4e47d4271)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`NationalSpire.CommunityQuote.CommunityQuote()`；[`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`](CommunitySharing.cs.md#symbol-3ee15fb08761)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`NationalSpire.PrivateOffer.PrivateOffer()`；`System.Action.Invoke()`；`System.InvalidOperationException.InvalidOperationException(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CommunityQuote.AuthorId`；`NationalSpire.CommunityQuote.AuthorName`；`NationalSpire.CommunityQuote.Body`；`NationalSpire.CommunityQuote.PostId`；`NationalSpire.CommunityQuote.PostTitle`；`NationalSpire.CommunityQuote.ReplyId`；`NationalSpire.CommunityReporting.Kind`；`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；`NationalSpire.PrivateMessageCommand.Request`；`NationalSpire.PrivateMessageCommand.Text`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quote`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`reason.AddThemeFontSizeOverride("font_size", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: reason.AddThemeFontSizeOverride("font_size", 18);`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(status)`；返回值紧邻使用处：`BinaryExpressionSyntax: _dialogOverlay != null && IsInstanceValid(status)`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(author)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(author);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(reason)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(reason);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(scroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(scroll);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(source)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(source);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(status)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(status);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(body)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(body);`
+- `Godot.ScrollContainer.ScrollContainer()`；输入表达式：`new ScrollContainer { CustomMinimumSize = new(0, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ScrollContainer { CustomMinimumSize = new(0, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
+- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。", CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`AssignmentExpressionSyntax: reason = new TextEdit { Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。", CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 180)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 180)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 90)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 90)`
+- `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(e.Message, true);`
+- `NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`；输入表达式：`OpenPrivateMessages(latest.AuthorId)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenPrivateMessages(latest.AuthorId);`
+- `NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；输入表达式：`PrivateCommand("dm-arbitrate", new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } })`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateCommand("dm-arbitrate", new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } });`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog("确认举报", "确认后将申请官方仲裁，并前往该作者的私聊查看审理进度与结果。", () => { try { var current = ViewData; var latest = CommunitySharing.Create(current, postId, replyId).Quote!; if (latest.AuthorId != quote.AuthorId || latest.Body != quote.Body) throw new InvalidOperationException("被举报内容已更新，请关闭弹窗后重新打开举报。"); if (!PrivateMessages.CanChat(current, latest.AuthorId)) throw new InvalidOperationException("这位作者已无法接受仲裁，请重新打开来源内容。"); if (current.Failure != null) throw new InvalidOperationException("请先处理当前比赛结果。"); _cancelDialog?.Invoke(); // 确认后独立提交仲裁，保留该人物的输入框与附件草稿。 OpenPrivateMessages(latest.AuthorId); PrivateCommand("dm-arbitrate", new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } }); return true; } catch (Exception e) { if (_dialogOverlay != null && IsInstanceValid(status)) { status!.Text = e.Message; status.Visible = true; } else Notice(e.Message, true); return false; } }, "确认举报", box => { var author = Text("被举报作者 · " + quote.AuthorName, 20, _gold); author.Name = "ReportAuthor"; author.AutowrapMode = TextServer.AutowrapMode.Off; author.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; author.TooltipText = quote.AuthorName; author.MouseFilter = MouseFilterEnum.Pass; box.AddChild(author); var source = Text("来源帖子 · " + quote.PostTitle, 16, _muted); source.Name = "ReportSource"; source.AutowrapMode = TextServer.AutowrapMode.Off; source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass; box.AddChild(source); var scroll = new ScrollContainer { CustomMinimumSize = new(0, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll); var body = Text(quote.Body, 18, _ink); body.Name = "ReportBody"; scroll.AddChild(body); reason = new TextEdit { Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。", CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }; reason.AddThemeFontSizeOverride("font_size", 18); box.AddChild(reason); status = Text("", 16, _muted); status.Name = "ReportStatus"; status.Visible = false; box.AddChild(status); })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("确认举报", "确认后将申请官方仲裁，并前往该作者的私聊查看审理进度与结果。", () => { try { var current = ViewData; var latest = CommunitySharing.Create(current, postId, replyId).Quote!; if (latest.AuthorId != quote.AuthorId || latest.Body != quote.Body) throw new InvalidOperationException("被举报内容已更新，请关闭弹窗后重新打开举报。"); if (!PrivateMessages.CanChat(current, latest.AuthorId)) throw new InvalidOperationException("这位作者已无法接受仲裁，请重新打开来源内容。"); if (current.Failure != null) throw new InvalidOperationException("请先处理当前比赛结果。"); _cancelDialog?.Invoke(); // 确认后独立提交仲裁，保留该人物的输入框与附件草稿。 OpenPrivateMessages(latest.AuthorId); PrivateCommand("dm-arbitrate", new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } }); return true; } catch (Exception e) { if (_dialogOverlay != null && IsInstanceValid(status)) { status!.Text = e.Message; status.Visible = true; } else Notice(e.Message, true); return false; } }, "确认举报", box => { var author = Text("被举报作者 · " + quote.AuthorName, 20, _gold); author.Name = "ReportAuthor"; author.AutowrapMode = TextServer.AutowrapMode.Off; author.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; author.TooltipText = quote.AuthorName; author.MouseFilter = MouseFilterEnum.Pass; box.AddChild(author); var source = Text("来源帖子 · " + quote.PostTitle, 16, _muted); source.Name = "ReportSource"; source.AutowrapMode = TextServer.AutowrapMode.Off; source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass; box.AddChild(source); var scroll = new ScrollContainer { CustomMinimumSize = new(0, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll); var body = Text(quote.Body, 18, _ink); body.Name = "ReportBody"; scroll.AddChild(body); reason = new TextEdit { Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。", CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }; reason.AddThemeFontSizeOverride("font_size", 18); box.AddChild(reason); status = Text("", 16, _muted); status.Name = "ReportStatus"; status.Visible = false; box.AddChild(status); });`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, _muted)`；返回值紧邻使用处：`AssignmentExpressionSyntax: status = Text("", 16, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("来源帖子 · " + quote.PostTitle, 16, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("来源帖子 · " + quote.PostTitle, 16, _muted)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("被举报作者 · " + quote.AuthorName, 20, _gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("被举报作者 · " + quote.AuthorName, 20, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(quote.Body, 18, _ink)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(quote.Body, 18, _ink)`
+- `NationalSpire.CommunityQuote.CommunityQuote()`；输入表达式：`new() { PostId = postId, ReplyId = replyId }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Quote = new() { PostId = postId, ReplyId = replyId }`
+- `NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；输入表达式：`CommunitySharing.Create(current, postId, replyId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunitySharing.Create(current, postId, replyId).Quote`
+- `NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；输入表达式：`CommunitySharing.Create(data, postId, replyId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunitySharing.Create(data, postId, replyId).Quote`
+- `NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；输入表达式：`new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } }`；返回值紧邻使用处：`ArgumentSyntax: new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } } }`
+- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(current, latest.AuthorId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.CanChat(current, latest.AuthorId)`
+- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(data, quote.AuthorId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.CanChat(data, quote.AuthorId)`
+- `NationalSpire.PrivateOffer.PrivateOffer()`；输入表达式：`new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Request = new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } }`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("社区举报适用于 NPC 作者的内容。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("社区举报适用于 NPC 作者的内容。");`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("被举报内容已更新，请关闭弹窗后重新打开举报。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("被举报内容已更新，请关闭弹窗后重新打开举报。");`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先处理当前比赛结果。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先处理当前比赛结果。");`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("这位作者已无法接受仲裁，请重新打开来源内容。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("这位作者已无法接受仲裁，请重新打开来源内容。");`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(0, 180)`
+- `CustomMinimumSize` = `new(0, 90)`
+- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
+- `Kind` = `CommunityReporting.Kind`
+- `Name` = `"ReportReason"`
+- `PlaceholderText` = `"可自定义举报原因；留空时使用默认举报说明。"`
+- `PostId` = `postId`
+- `Quote` = `new() { PostId = postId, ReplyId = replyId }`
+- `ReplyId` = `replyId`
+- `Request` = `new() { Kind = CommunityReporting.Kind, Quote = new() { PostId = postId, ReplyId = replyId } }`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `Text` = `reason!.Text`
+- `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
+- `author.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `author.MouseFilter` = `MouseFilterEnum.Pass`
+- `author.Name` = `"ReportAuthor"`
+- `author.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `author.TooltipText` = `quote.AuthorName`
+- `body.Name` = `"ReportBody"`
+- `quote` = `CommunitySharing.Create(data, postId, replyId).Quote!`
+- `reason` = `new TextEdit { Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。", CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `source.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `source.MouseFilter` = `MouseFilterEnum.Pass`
+- `source.Name` = `"ReportSource"`
+- `source.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `source.TooltipText` = `quote.PostTitle`
+- `status!.Text` = `e.Message`
+- `status.Name` = `"ReportStatus"`
+- `status.Visible` = `false`
+- `status.Visible` = `true`
+- `status` = `Text("", 16, _muted)`
 
 <a id="symbol-63e3d9aaa6df"></a>
 
 ## `NationalSpire.CareerScreen.PrivateArbitrationDialog() — private void PrivateArbitrationDialog()`
 
-来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -104,7 +186,7 @@
 
 ## `NationalSpire.CareerScreen.ArbitrationCard(NationalSpire.CareerData, NationalSpire.ArbitrationRecord) — private Control ArbitrationCard(CareerData data, ArbitrationRecord record)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PrivateMessageScreen.cs.md#symbol-8e28d3a34860)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)
 
@@ -159,7 +241,7 @@
 
 ## `NationalSpire.ArbitrationSeal._Ready() — public override void _Ready()`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -179,7 +261,7 @@
 
 ## `NationalSpire.ArbitrationSeal._Draw() — public override void _Draw()`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

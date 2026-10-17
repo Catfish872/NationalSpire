@@ -196,7 +196,7 @@ internal sealed class AiWireProtocol
     private static bool HasRows(JsonNode node, string name, bool requireRows)
         => node.AsObject().Any(p => p.Key.Equals(name, StringComparison.OrdinalIgnoreCase)
             && p.Value is JsonArray rows && (!requireRows || rows.Count > 0));
-    private static void NormalizeFields(JsonNode node)
+    private static void NormalizeFields(JsonNode node, bool scoreFields = false)
     {
         if (node is JsonObject obj)
             foreach (string key in obj.Select(p => p.Key).ToArray())
@@ -204,17 +204,24 @@ internal sealed class AiWireProtocol
                 string canonical = key.ToLowerInvariant() switch
                 {
                     "profiles" => "profiles", "slides" => "slides", "posts" => "posts", "reactions" => "reactions", "replies" => "replies", "id" => "id", "postid" => "postId",
-                    "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title", _ => key
+                    "authorid" => "authorId", "parentid" => "parentId", "body" => "body", "title" => "title",
+                    "netscore" => "netScore", "scoreupdates" => "scoreUpdates", _ => key
                 };
                 var value = obj[key];
                 if (canonical != key)
                 {
-                    if (obj.ContainsKey(canonical)) throw new InvalidDataException("返回字段重复");
+                    if (obj.ContainsKey(canonical))
+                    {
+                        if (scoreFields || canonical is "netScore" or "scoreUpdates") { obj.Remove(key); continue; }
+                        throw new InvalidDataException("返回字段重复");
+                    }
                     obj.Remove(key); obj[canonical] = value;
                 }
-                if (value != null) NormalizeFields(value);
+                // 可选评分的类型由评分解析器检查；畸形评分保留正文的正常解析路径。
+                if (canonical == "netScore" || canonical == "scoreUpdates" && value is not JsonArray) continue;
+                if (value != null) NormalizeFields(value, scoreFields || canonical == "scoreUpdates");
             }
-        else if (node is JsonArray array) foreach (var value in array) if (value != null) NormalizeFields(value);
+        else if (node is JsonArray array) foreach (var value in array) if (value != null) NormalizeFields(value, scoreFields);
     }
     private static void Rewrite(JsonNode node, Dictionary<string, string> map, bool identifiers = false)
     {

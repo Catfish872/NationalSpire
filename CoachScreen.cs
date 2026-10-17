@@ -124,16 +124,45 @@ public partial class CareerScreen
         if (request.Reason.Length > 0) inner.AddChild(PrivateText(request.Reason, 16, new Color("ee929d")));
         if (request.State == "待生效") inner.AddChild(PrivateButton("取消调整", () => { if (send != null) send("lineup-cancel", new() { Offer = request.Id }); else PrivateCommand("dm-lineup-cancel", new() { Offer = request.Id }); }, 130));
     }
+    private readonly HashSet<string> _privateExpandedTraining = [];
     private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)
     {
         var panel = new PanelContainer { Name = "CoachTrainingCard" }; panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18)); parent.AddChild(panel);
         var inner = Inner(panel); inner.AddThemeConstantOverride("separation", 10);
         inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold));
-        inner.AddChild(PrivateText(plan.Content, 18, _ink));
         inner.AddChild(Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted));
         var progress = new ProgressBar { MinValue = 0, MaxValue = plan.Weeks, Value = plan.PaidWeeks, ShowPercentage = false, CustomMinimumSize = new(0, 8), MouseFilter = MouseFilterEnum.Ignore };
         inner.AddChild(progress);
         inner.AddChild(Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal));
+        var details = PrivateText(plan.Content, 18, _ink); details.Name = "TrainingDetails_" + plan.Id;
+        details.Visible = _privateExpandedTraining.Contains(plan.Id);
+        var toggle = new CoachTrainingDisclosureButton { Name = "TrainingToggle_" + plan.Id, Text = details.Visible ? "收起" : "展开", Flat = true,
+            SizeFlagsHorizontal = SizeFlags.ShrinkBegin, MouseDefaultCursorShape = CursorShape.PointingHand };
+        toggle.AddThemeFontSizeOverride("font_size", 14);
+        foreach (string state in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color" })
+            toggle.AddThemeColorOverride(state, _muted);
+        foreach (string state in new[] { "normal", "hover", "pressed" })
+            toggle.AddThemeStyleboxOverride(state, new StyleBoxEmpty { ContentMarginRight = 20 });
+        toggle.Pressed += () =>
+        {
+            bool expanded = !_privateExpandedTraining.Remove(plan.Id);
+            if (expanded) _privateExpandedTraining.Add(plan.Id);
+            details.Visible = expanded; toggle.Text = expanded ? "收起" : "展开"; toggle.QueueRedraw();
+        };
+        inner.AddChild(toggle); inner.AddChild(details);
         if (plan.State == "进行中") inner.AddChild(PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130));
+    }
+}
+
+/// <summary>训练详情的无柄箭头与按钮文字共用字号及颜色。</summary>
+public partial class CoachTrainingDisclosureButton : Button
+{
+    public override void _Draw()
+    {
+        float side = GetThemeFontSize("font_size"), direction = Text == "收起" ? -1 : 1;
+        var center = new Vector2(Size.X - side / 2, Size.Y / 2);
+        DrawPolyline([center + new Vector2(-side * .4f, -direction * side * .2f),
+            center + new Vector2(0, direction * side * .2f),
+            center + new Vector2(side * .4f, -direction * side * .2f)], GetThemeColor("font_color"), 1.5f, true);
     }
 }

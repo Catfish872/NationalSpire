@@ -1,0 +1,258 @@
+# CommunityShareScreen.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`FBA2B31B55C81868ED4148A151D58CD557623FBD59B2509F301B6D6B9B5E69B6`。来源：[源码](../../CommunityShareScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.CareerScreen`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+
+```
+
+<a id="symbol-dda6fe820edc"></a>
+
+## `NationalSpire.CareerScreen.DiscussionActions(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — private HBoxContainer DiscussionActions(CareerData data, CommunityPost post, CommunityReply? reply = null)`
+
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
+
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；[`NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool)`](CommunityScreen.cs.md#symbol-8aac83a49357)；[`NationalSpire.CareerScreen.ReportDiscussion(string, string)`](ArbitrationScreen.cs.md#symbol-4223b2b95c14)；[`NationalSpire.CareerScreen.ShareDiscussion(string, string)`](CommunityShareScreen.cs.md#symbol-038b648fdc83)；`NationalSpire.CommunityReportButton.CommunityReportButton()`；`NationalSpire.CommunityShareButton.CommunityShareButton()`；[`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool)`；`NationalSpire.CareerScreen.ReportDiscussion(string, string)`；`NationalSpire.CareerScreen.ShareDiscussion(string, string)`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReportButton.MainPost`；`NationalSpire.CommunityShareButton.MainPost`；`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 6)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 6);`
+- `Godot.Control.Control()`；输入表达式：`new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`ArgumentSyntax: new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DiscussionActions_" + (mainPost ? "Post" : parent), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { Name = "DiscussionActions_" + (mainPost ? "Post" : parent), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(DiscussionReplyButton(post, parent, mainPost))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(DiscussionReplyButton(post, parent, mainPost));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore })`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore });`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(report)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(report);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(share)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(share);`
+- `NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool)`；输入表达式：`DiscussionReplyButton(post, parent, mainPost)`；返回值紧邻使用处：`ArgumentSyntax: DiscussionReplyButton(post, parent, mainPost)`
+- `NationalSpire.CareerScreen.ReportDiscussion(string, string)`；输入表达式：`ReportDiscussion(post.Id, parent)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ReportDiscussion(post.Id, parent)`
+- `NationalSpire.CareerScreen.ShareDiscussion(string, string)`；输入表达式：`ShareDiscussion(post.Id, parent)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ShareDiscussion(post.Id, parent)`
+- `NationalSpire.CommunityReportButton.CommunityReportButton()`；输入表达式：`new CommunityReportButton { Name = mainPost ? "ReportPost" : "Report_" + parent, MainPost = mainPost, Disabled = CommunityThreads.IsHuman(data, reply?.AuthorId ?? post.AuthorId), TooltipText = "举报此内容及作者，申请官方仲裁" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CommunityReportButton { Name = mainPost ? "ReportPost" : "Report_" + parent, MainPost = mainPost, Disabled = CommunityThreads.IsHuman(data, reply?.AuthorId ?? post.AuthorId), TooltipText = "举报此内容及作者，申请官方仲裁" }`
+- `NationalSpire.CommunityShareButton.CommunityShareButton()`；输入表达式：`new CommunityShareButton { Name = mainPost ? "SharePost" : "Share_" + parent, MainPost = mainPost, TooltipText = mainPost ? "分享帖子至私聊" : "分享这条评论至私聊" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CommunityShareButton { Name = mainPost ? "SharePost" : "Share_" + parent, MainPost = mainPost, TooltipText = mainPost ? "分享帖子至私聊" : "分享这条评论至私聊" }`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, reply?.AuthorId ?? post.AuthorId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Disabled = CommunityThreads.IsHuman(data, reply?.AuthorId ?? post.AuthorId)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Disabled` = `CommunityThreads.IsHuman(data, reply?.AuthorId ?? post.AuthorId)`
+- `MainPost` = `mainPost`
+- `MouseFilter` = `MouseFilterEnum.Ignore`
+- `Name` = `"DiscussionActions_" + (mainPost ? "Post" : parent)`
+- `Name` = `mainPost ? "ReportPost" : "Report_" + parent`
+- `Name` = `mainPost ? "SharePost" : "Share_" + parent`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `TooltipText` = `"举报此内容及作者，申请官方仲裁"`
+- `TooltipText` = `mainPost ? "分享帖子至私聊" : "分享这条评论至私聊"`
+- `report.Pressed` += `() => ReportDiscussion(post.Id, parent)`
+- `report.TooltipText` = `"社区举报适用于 NPC 作者的内容"`
+- `share.Pressed` += `() => ShareDiscussion(post.Id, parent)`
+
+<a id="symbol-038b648fdc83"></a>
+
+## `NationalSpire.CareerScreen.ShareDiscussion(string, string) — private void ShareDiscussion(string postId, string replyId)`
+
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.DiscussionActions(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityShareScreen.cs.md#symbol-dda6fe820edc)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.ScrollContainer.GetVScrollBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`](PrivateMessageScreen.cs.md#symbol-3ff4e47d4271)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`](CareerVisuals.cs.md#symbol-347d38705528)；[`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`](CommunitySharing.cs.md#symbol-3ee15fb08761)；[`NationalSpire.CommunitySharing.RecentRecipients(NationalSpire.CareerData)`](CommunitySharing.cs.md#symbol-8b3d5962100a)；[`NationalSpire.CommunitySharing.Recipients(NationalSpire.CareerData, string)`](CommunitySharing.cs.md#symbol-8baa01608a2d)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`ShowPeople()`](CommunityShareScreen.cs.md#symbol-1b2669b325e0)；[`ShowRows()`](CommunityShareScreen.cs.md#symbol-0be528ba26b5)；`System.Action.Invoke()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.List()`；`System.InvalidOperationException.InvalidOperationException(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Failure`；`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privateAttachmentDrafts`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CommunityQuote.AuthorId`；`NationalSpire.CommunityQuote.PostTitle`；`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；`NationalSpire.CommunitySharing.RecentRecipients(NationalSpire.CareerData)`；`NationalSpire.CommunitySharing.Recipients(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Quote`；`ShowPeople()`；`ShowRows()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.Hide()`；输入表达式：`status.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: status.Hide();`
+- `Godot.CanvasItem.Show()`；输入表达式：`status.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: status.Show();`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("172330")`；返回值紧邻使用处：`ArgumentSyntax: new Color("172330")`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`confirm.AddThemeColorOverride("font_color", new Color("172330"))`；返回值紧邻使用处：`ExpressionStatementSyntax: confirm.AddThemeColorOverride("font_color", new Color("172330"));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`confirm.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: confirm.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("192c3e", "506c81", 12, 18))`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("192c3e", "506c81", 12, 18));`
+- `Godot.Control.Control()`；输入表达式：`new Control { Name = "SharePersonList", SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Control { Name = "SharePersonList", SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(status)`；返回值紧邻使用处：`BinaryExpressionSyntax: _dialogOverlay != null && IsInstanceValid(status)`
+- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "SharePersonSearch", PlaceholderText = "搜索名称", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "SharePersonSearch", PlaceholderText = "搜索名称", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`contents.AddChild(filter)`；返回值紧邻使用处：`ExpressionStatementSyntax: contents.AddChild(filter);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`contents.AddChild(scroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: contents.AddChild(scroll);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`contents.AddChild(search)`；返回值紧邻使用处：`ExpressionStatementSyntax: contents.AddChild(search);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`contents.AddChild(source)`；返回值紧邻使用处：`ExpressionStatementSyntax: contents.AddChild(source);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`contents.AddChild(status)`；返回值紧邻使用处：`ExpressionStatementSyntax: contents.AddChild(status);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(list)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(list);`
+- `Godot.OptionButton.AddItem(string, int)`；输入表达式：`filter.AddItem(label)`；返回值紧邻使用处：`ExpressionStatementSyntax: filter.AddItem(label);`
+- `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "SharePersonFilter", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "SharePersonFilter", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.ScrollContainer.GetVScrollBar()`；输入表达式：`scroll.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: scroll.GetVScrollBar().ValueChanged`
+- `Godot.ScrollContainer.ScrollContainer()`；输入表达式：`new ScrollContainer { Name = "SharePersonScroll", CustomMinimumSize = new(0, 216), SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ScrollContainer { Name = "SharePersonScroll", CustomMinimumSize = new(0, 216), SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 216)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 216)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 42)`
+- `NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`；输入表达式：`AttachPrivate(attachment)`；返回值紧邻使用处：`ExpressionStatementSyntax: AttachPrivate(attachment);`
+- `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(e.Message, true);`
+- `NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`；输入表达式：`OpenPrivateMessages(selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenPrivateMessages(selected);`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog("分享至私聊", "", () => { try { var current = ViewData; if (selected.Length == 0) return false; if (current.Failure != null) throw new InvalidOperationException("请先处理当前比赛结果。"); if (!PrivateMessages.CanChat(current, selected)) throw new InvalidOperationException("这位人物已无法接收私信，请重新选择。"); if (_privateAttachmentDrafts.TryGetValue(selected, out var drafts) && drafts.Count >= 8) throw new InvalidOperationException("这段私聊已有 8 项待发附件，请先发送或移除附件。"); var attachment = CommunitySharing.Create(current, postId, replyId); _cancelDialog?.Invoke(); OpenPrivateMessages(selected); AttachPrivate(attachment); return true; } catch (Exception e) { if (_dialogOverlay != null && IsInstanceValid(status)) { status!.Text = e.Message; status.TooltipText = e.Message; status.Show(); } else Notice(e.Message, true); return false; } }, "进入私聊", contents => { var source = Text("来源帖子 · " + quote.PostTitle, 16, _muted); source.AutowrapMode = TextServer.AutowrapMode.Off; source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass; contents.AddChild(source); var search = new LineEdit { Name = "SharePersonSearch", PlaceholderText = "搜索名称", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; contents.AddChild(search); var filter = new OptionButton { Name = "SharePersonFilter", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; foreach (string label in new[] { "全部", "内容作者", "近期私聊", "同俱乐部" }) filter.AddItem(label); contents.AddChild(filter); var recent = CommunitySharing.RecentRecipients(data); var scroll = new ScrollContainer { Name = "SharePersonScroll", CustomMinimumSize = new(0, 216), SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; contents.AddChild(scroll); var list = new Control { Name = "SharePersonList", SizeFlagsHorizontal = SizeFlags.ExpandFill }; scroll.AddChild(list); status = Text("", 16, CareerVisuals.Teal); status.Hide(); status.Name = "SharePersonStatus"; status.AutowrapMode = TextServer.AutowrapMode.Off; status.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; status.MouseFilter = MouseFilterEnum.Pass; contents.AddChild(status); CareerPerson[] visible = []; var rows = new List<(HBoxContainer Row, Button Choice)>(); const int rowHeight = 64; void ShowRows() { int first = Math.Clamp(scroll.ScrollVertical / rowHeight, 0, Math.Max(0, visible.Length - 1)); int count = Math.Min(visible.Length - first, (int)Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight) + 1); while (rows.Count < count) { var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); list.AddChild(row); var choice = PrivateButton("", () => { }); choice.ToggleMode = true; choice.Alignment = HorizontalAlignment.Left; choice.SizeFlagsHorizontal = SizeFlags.ExpandFill; choice.CustomMinimumSize = new(0, rowHeight - 8); choice.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; choice.AddThemeFontSizeOverride("font_size", 20); choice.AddThemeStyleboxOverride("normal", CareerVisuals.Box("1d303f", "385566", 8, 12)); choice.AddThemeStyleboxOverride("pressed", CareerVisuals.Box("273d50", "70d4bc", 8, 12)); choice.AddThemeStyleboxOverride("hover_pressed", CareerVisuals.Box("304d5c", "70d4bc", 8, 12)); row.AddChild(choice); rows.Add((row, choice)); choice.Pressed += () => { selected = choice.GetMeta("person").AsString(); status.Text = ""; status.TooltipText = ""; status.Hide(); if (confirm != null) confirm.Disabled = false; foreach (var entry in rows) entry.Choice.SetPressedNoSignal(entry.Choice.GetMeta("person", "").AsString() == selected); }; } for (int i = 0; i < rows.Count; i++) { var (row, choice) = rows[i]; row.Visible = i < count; if (i >= count) continue; var person = visible[first + i]; if (choice.GetMeta("person", "").AsString() != person.Id) { foreach (var old in row.GetChildren().OfType<Control>().Where(c => c != choice).ToArray()) { row.RemoveChild(old); old.QueueFree(); } var avatar = Avatar(data, person.Id, 36, false); avatar.Name = "ShareAvatar_" + person.Id; row.AddChild(avatar); row.MoveChild(avatar, 0); choice.Name = "SharePerson_" + person.Id; choice.SetMeta("person", person.Id); choice.Text = person.PublicName + " · " + person.Role + (person.Id == quote.AuthorId ? " · 作者" : ""); choice.TooltipText = choice.Text; } choice.SetPressedNoSignal(person.Id == selected); row.Position = new(0, (first + i) * rowHeight); row.Size = new(list.Size.X, rowHeight - 8); } } void ShowPeople() { string query = search.Text.Trim(); visible = people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray(); list.CustomMinimumSize = new(0, visible.Length * rowHeight); scroll.ScrollVertical = 0; ShowRows(); status.Text = visible.Length == 0 ? "暂无匹配人物，请调整搜索或筛选。" : ""; status.TooltipText = status.Text; status.Visible = status.Text.Length > 0; } search.TextChanged += _ => ShowPeople(); filter.ItemSelected += _ => ShowPeople(); scroll.GetVScrollBar().ValueChanged += _ => ShowRows(); list.Resized += ShowRows; scroll.Resized += ShowRows; ShowPeople(); })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("分享至私聊", "", () => { try { var current = ViewData; if (selected.Length == 0) return false; if (current.Failure != null) throw new InvalidOperationException("请先处理当前比赛结果。"); if (!PrivateMessages.CanChat(current, selected)) throw new InvalidOperationException("这位人物已无法接收私信，请重新选择。"); if (_privateAttachmentDrafts.TryGetValue(selected, out var drafts) && drafts.Count >= 8) throw new InvalidOperationException("这段私聊已有 8 项待发附件，请先发送或移除附件。"); var attachment = CommunitySharing.Create(current, postId, replyId); _cancelDialog?.Invoke(); OpenPrivateMessages(selected); AttachPrivate(attachment); return true; } catch (Exception e) { if (_dialogOverlay != null && IsInstanceValid(status)) { status!.Text = e.Message; status.TooltipText = e.Message; status.Show(); } else Notice(e.Message, true); return false; } }, "进入私聊", contents => { var source = Text("来源帖子 · " + quote.PostTitle, 16, _muted); source.AutowrapMode = TextServer.AutowrapMode.Off; source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass; contents.AddChild(source); var search = new LineEdit { Name = "SharePersonSearch", PlaceholderText = "搜索名称", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; contents.AddChild(search); var filter = new OptionButton { Name = "SharePersonFilter", CustomMinimumSize = new(0, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; foreach (string label in new[] { "全部", "内容作者", "近期私聊", "同俱乐部" }) filter.AddItem(label); contents.AddChild(filter); var recent = CommunitySharing.RecentRecipients(data); var scroll = new ScrollContainer { Name = "SharePersonScroll", CustomMinimumSize = new(0, 216), SizeFlagsHorizontal = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; contents.AddChild(scroll); var list = new Control { Name = "SharePersonList", SizeFlagsHorizontal = SizeFlags.ExpandFill }; scroll.AddChild(list); status = Text("", 16, CareerVisuals.Teal); status.Hide(); status.Name = "SharePersonStatus"; status.AutowrapMode = TextServer.AutowrapMode.Off; status.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; status.MouseFilter = MouseFilterEnum.Pass; contents.AddChild(status); CareerPerson[] visible = []; var rows = new List<(HBoxContainer Row, Button Choice)>(); const int rowHeight = 64; void ShowRows() { int first = Math.Clamp(scroll.ScrollVertical / rowHeight, 0, Math.Max(0, visible.Length - 1)); int count = Math.Min(visible.Length - first, (int)Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight) + 1); while (rows.Count < count) { var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); list.AddChild(row); var choice = PrivateButton("", () => { }); choice.ToggleMode = true; choice.Alignment = HorizontalAlignment.Left; choice.SizeFlagsHorizontal = SizeFlags.ExpandFill; choice.CustomMinimumSize = new(0, rowHeight - 8); choice.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; choice.AddThemeFontSizeOverride("font_size", 20); choice.AddThemeStyleboxOverride("normal", CareerVisuals.Box("1d303f", "385566", 8, 12)); choice.AddThemeStyleboxOverride("pressed", CareerVisuals.Box("273d50", "70d4bc", 8, 12)); choice.AddThemeStyleboxOverride("hover_pressed", CareerVisuals.Box("304d5c", "70d4bc", 8, 12)); row.AddChild(choice); rows.Add((row, choice)); choice.Pressed += () => { selected = choice.GetMeta("person").AsString(); status.Text = ""; status.TooltipText = ""; status.Hide(); if (confirm != null) confirm.Disabled = false; foreach (var entry in rows) entry.Choice.SetPressedNoSignal(entry.Choice.GetMeta("person", "").AsString() == selected); }; } for (int i = 0; i < rows.Count; i++) { var (row, choice) = rows[i]; row.Visible = i < count; if (i >= count) continue; var person = visible[first + i]; if (choice.GetMeta("person", "").AsString() != person.Id) { foreach (var old in row.GetChildren().OfType<Control>().Where(c => c != choice).ToArray()) { row.RemoveChild(old); old.QueueFree(); } var avatar = Avatar(data, person.Id, 36, false); avatar.Name = "ShareAvatar_" + person.Id; row.AddChild(avatar); row.MoveChild(avatar, 0); choice.Name = "SharePerson_" + person.Id; choice.SetMeta("person", person.Id); choice.Text = person.PublicName + " · " + person.Role + (person.Id == quote.AuthorId ? " · 作者" : ""); choice.TooltipText = choice.Text; } choice.SetPressedNoSignal(person.Id == selected); row.Position = new(0, (first + i) * rowHeight); row.Size = new(list.Size.X, rowHeight - 8); } } void ShowPeople() { string query = search.Text.Trim(); visible = people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray(); list.CustomMinimumSize = new(0, visible.Length * rowHeight); scroll.ScrollVertical = 0; ShowRows(); status.Text = visible.Length == 0 ? "暂无匹配人物，请调整搜索或筛选。" : ""; status.TooltipText = status.Text; status.Visible = status.Text.Length > 0; } search.TextChanged += _ => ShowPeople(); filter.ItemSelected += _ => ShowPeople(); scroll.GetVScrollBar().ValueChanged += _ => ShowRows(); list.Resized += ShowRows; scroll.Resized += ShowRows; ShowPeople(); });`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, CareerVisuals.Teal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: status = Text("", 16, CareerVisuals.Teal)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("来源帖子 · " + quote.PostTitle, 16, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("来源帖子 · " + quote.PostTitle, 16, _muted)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("192c3e", "506c81", 12, 18)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("192c3e", "506c81", 12, 18)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12)`
+- `NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`；输入表达式：`CareerVisuals.FindContent(_dialogOverlay, "CareerDialogConfirm")`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerVisuals.FindContent(_dialogOverlay, "CareerDialogConfirm") is Button button`
+- `NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`；输入表达式：`CareerVisuals.FindContent(_dialogOverlay, "CareerDialogPanel")`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerVisuals.FindContent(_dialogOverlay, "CareerDialogPanel") is PanelContainer panel`
+- `NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；输入表达式：`CommunitySharing.Create(current, postId, replyId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunitySharing.Create(current, postId, replyId)`
+- `NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；输入表达式：`CommunitySharing.Create(data, postId, replyId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: preview = CommunitySharing.Create(data, postId, replyId)`
+- `NationalSpire.CommunitySharing.RecentRecipients(NationalSpire.CareerData)`；输入表达式：`CommunitySharing.RecentRecipients(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunitySharing.RecentRecipients(data)`
+- `NationalSpire.CommunitySharing.Recipients(NationalSpire.CareerData, string)`；输入表达式：`CommunitySharing.Recipients(data, quote.AuthorId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunitySharing.Recipients(data, quote.AuthorId)`
+- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(current, selected)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.CanChat(current, selected)`
+- `ShowPeople()`；输入表达式：`ShowPeople()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: _ => ShowPeople()`
+- `ShowPeople()`；输入表达式：`ShowPeople()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowPeople();`
+- `ShowRows()`；输入表达式：`ShowRows()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: _ => ShowRows()`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_privateAttachmentDrafts.TryGetValue(selected, out var drafts)`；返回值紧邻使用处：`BinaryExpressionSyntax: _privateAttachmentDrafts.TryGetValue(selected, out var drafts) && drafts.Count >= 8`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<(HBoxContainer Row, Button Choice)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<(HBoxContainer Row, Button Choice)>()`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先处理当前比赛结果。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先处理当前比赛结果。");`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("这位人物已无法接收私信，请重新选择。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("这位人物已无法接收私信，请重新选择。");`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("这段私聊已有 8 项待发附件，请先发送或移除附件。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("这段私聊已有 8 项待发附件，请先发送或移除附件。");`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(0, 216)`
+- `CustomMinimumSize` = `new(0, 42)`
+- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
+- `Name` = `"SharePersonFilter"`
+- `Name` = `"SharePersonList"`
+- `Name` = `"SharePersonScroll"`
+- `Name` = `"SharePersonSearch"`
+- `PlaceholderText` = `"搜索名称"`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `confirm.Disabled` = `true`
+- `confirm` = `button`
+- `filter.ItemSelected` += `_ => ShowPeople()`
+- `list.Resized` += `ShowRows`
+- `preview` = `CommunitySharing.Create(data, postId, replyId)`
+- `scroll.GetVScrollBar().ValueChanged` += `_ => ShowRows()`
+- `scroll.Resized` += `ShowRows`
+- `search.TextChanged` += `_ => ShowPeople()`
+- `source.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `source.MouseFilter` = `MouseFilterEnum.Pass`
+- `source.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `source.TooltipText` = `quote.PostTitle`
+- `status!.Text` = `e.Message`
+- `status.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `status.MouseFilter` = `MouseFilterEnum.Pass`
+- `status.Name` = `"SharePersonStatus"`
+- `status.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `status.TooltipText` = `e.Message`
+- `status` = `Text("", 16, CareerVisuals.Teal)`
+
+<a id="symbol-0be528ba26b5"></a>
+
+## `ShowRows() — void ShowRows()`
+
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ShareDiscussion(string, string)`](CommunityShareScreen.cs.md#symbol-038b648fdc83)；[`ShowPeople()`](CommunityShareScreen.cs.md#symbol-1b2669b325e0)
+
+**调用：** `Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Variant.AsString()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Math.Ceiling(double)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(float, float)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityQuote.AuthorId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.BaseButton.SetPressedNoSignal(bool)`；输入表达式：`choice.SetPressedNoSignal(person.Id == selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.SetPressedNoSignal(person.Id == selected);`
+- `Godot.BaseButton.SetPressedNoSignal(bool)`；输入表达式：`entry.Choice.SetPressedNoSignal(entry.Choice.GetMeta("person", "").AsString() == selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: entry.Choice.SetPressedNoSignal(entry.Choice.GetMeta("person", "").AsString() == selected);`
+- `Godot.CanvasItem.Hide()`；输入表达式：`status.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: status.Hide();`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 12);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`choice.AddThemeFontSizeOverride("font_size", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddThemeFontSizeOverride("font_size", 20);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`choice.AddThemeStyleboxOverride("hover_pressed", CareerVisuals.Box("304d5c", "70d4bc", 8, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddThemeStyleboxOverride("hover_pressed", CareerVisuals.Box("304d5c", "70d4bc", 8, 12));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`choice.AddThemeStyleboxOverride("normal", CareerVisuals.Box("1d303f", "385566", 8, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddThemeStyleboxOverride("normal", CareerVisuals.Box("1d303f", "385566", 8, 12));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`choice.AddThemeStyleboxOverride("pressed", CareerVisuals.Box("273d50", "70d4bc", 8, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddThemeStyleboxOverride("pressed", CareerVisuals.Box("273d50", "70d4bc", 8, 12));`
+- `Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`choice.GetMeta("person")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: choice.GetMeta("person").AsString`
+- `Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`choice.GetMeta("person", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: choice.GetMeta("person", "").AsString`
+- `Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`entry.Choice.GetMeta("person", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: entry.Choice.GetMeta("person", "").AsString`
+- `Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`choice.SetMeta("person", person.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.SetMeta("person", person.Id);`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`list.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: list.AddChild(row);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(avatar)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(avatar);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(choice)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(choice);`
+- `Godot.Node.GetChildren(bool)`；输入表达式：`row.GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetChildren().OfType<Control>`
+- `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`row.MoveChild(avatar, 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.MoveChild(avatar, 0);`
+- `Godot.Node.QueueFree()`；输入表达式：`old.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: old.QueueFree();`
+- `Godot.Node.RemoveChild(Godot.Node)`；输入表达式：`row.RemoveChild(old)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.RemoveChild(old);`
+- `Godot.Variant.AsString()`；输入表达式：`choice.GetMeta("person").AsString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: selected = choice.GetMeta("person").AsString()`
+- `Godot.Variant.AsString()`；输入表达式：`choice.GetMeta("person", "").AsString()`；返回值紧邻使用处：`BinaryExpressionSyntax: choice.GetMeta("person", "").AsString() != person.Id`
+- `Godot.Variant.AsString()`；输入表达式：`entry.Choice.GetMeta("person", "").AsString()`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.Choice.GetMeta("person", "").AsString() == selected`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, (first + i) * rowHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: row.Position = new(0, (first + i) * rowHeight)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, rowHeight - 8)`；返回值紧邻使用处：`AssignmentExpressionSyntax: choice.CustomMinimumSize = new(0, rowHeight - 8)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(list.Size.X, rowHeight - 8)`；返回值紧邻使用处：`AssignmentExpressionSyntax: row.Size = new(list.Size.X, rowHeight - 8)`
+- `NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；输入表达式：`Avatar(data, person.Id, 36, false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Avatar(data, person.Id, 36, false)`
+- `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；输入表达式：`PrivateButton("", () => { })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateButton("", () => { })`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("1d303f", "385566", 8, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("1d303f", "385566", 8, 12)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("273d50", "70d4bc", 8, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("273d50", "70d4bc", 8, 12)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("304d5c", "70d4bc", 8, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("304d5c", "70d4bc", 8, 12)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`row.GetChildren().OfType<Control>().Where(c => c != choice).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var old in row.GetChildren().OfType<Control>().Where(c => c != choice).ToArray()) { row.RemoveChild(old); old.QueueFree(); }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`row.GetChildren().OfType<Control>().Where(c => c != choice)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetChildren().OfType<Control>().Where(c => c != choice).ToArray`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`rows.Add((row, choice))`；返回值紧邻使用处：`ExpressionStatementSyntax: rows.Add((row, choice));`
+- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`row.GetChildren().OfType<Control>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetChildren().OfType<Control>().Where`
+- `System.Math.Ceiling(double)`；输入表达式：`Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight)`；返回值紧邻使用处：`CastExpressionSyntax: (int)Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight)`
+- `System.Math.Clamp(int, int, int)`；输入表达式：`Math.Clamp(scroll.ScrollVertical / rowHeight, 0, Math.Max(0, visible.Length - 1))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Clamp(scroll.ScrollVertical / rowHeight, 0, Math.Max(0, visible.Length - 1))`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(216, scroll.Size.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(216, scroll.Size.Y) / rowHeight`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, visible.Length - 1)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, visible.Length - 1)`
+- `System.Math.Min(int, int)`；输入表达式：`Math.Min(visible.Length - first, (int)Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight) + 1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(visible.Length - first, (int)Math.Ceiling(Math.Max(216, scroll.Size.Y) / rowHeight) + 1)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `avatar.Name` = `"ShareAvatar_" + person.Id`
+- `choice.Alignment` = `HorizontalAlignment.Left`
+- `choice.CustomMinimumSize` = `new(0, rowHeight - 8)`
+- `choice.Name` = `"SharePerson_" + person.Id`
+- `choice.Pressed` += `() => { selected = choice.GetMeta("person").AsString(); status.Text = ""; status.TooltipText = ""; status.Hide(); if (confirm != null) confirm.Disabled = false; foreach (var entry in rows) entry.Choice.SetPressedNoSignal(entry.Choice.GetMeta("person", "").AsString() == selected); }`
+- `choice.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `choice.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `choice.Text` = `person.PublicName + " · " + person.Role + (person.Id == quote.AuthorId ? " · 作者" : "")`
+- `choice.ToggleMode` = `true`
+- `choice.TooltipText` = `choice.Text`
+- `confirm.Disabled` = `false`
+- `row.Position` = `new(0, (first + i) * rowHeight)`
+- `row.Size` = `new(list.Size.X, rowHeight - 8)`
+- `row.Visible` = `i < count`
+- `selected` = `choice.GetMeta("person").AsString()`
+- `status.Text` = `""`
+- `status.TooltipText` = `""`
+- `var (row, choice)` = `rows[i]`
+
+<a id="symbol-1b2669b325e0"></a>
+
+## `ShowPeople() — void ShowPeople()`
+
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ShareDiscussion(string, string)`](CommunityShareScreen.cs.md#symbol-038b648fdc83)
+
+**调用：** `Godot.Vector2.Vector2(float, float)`；[`ShowRows()`](CommunityShareScreen.cs.md#symbol-0be528ba26b5)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Contains(string, System.StringComparison)`；`string.Trim()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CommunityQuote.AuthorId`；`NationalSpire.EsportsCareer.ClubId`；`ShowRows()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, visible.Length * rowHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: list.CustomMinimumSize = new(0, visible.Length * rowHeight)`
+- `ShowRows()`；输入表达式：`ShowRows()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowRows();`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`recent.Contains(p.Id)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: 2 => recent.Contains(p.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: visible = people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray`
+- `string.Contains(string, System.StringComparison)`；输入表达式：`p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)`
+- `string.Contains(string, System.StringComparison)`；输入表达式：`p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase)`
+- `string.Trim()`；输入表达式：`search.Text.Trim()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = search.Text.Trim()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `list.CustomMinimumSize` = `new(0, visible.Length * rowHeight)`
+- `scroll.ScrollVertical` = `0`
+- `status.Text` = `visible.Length == 0 ? "暂无匹配人物，请调整搜索或筛选。" : ""`
+- `status.TooltipText` = `status.Text`
+- `status.Visible` = `status.Text.Length > 0`
+- `visible` = `people.Where(p => query.Length == 0 || p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).Where(p => filter.Selected switch { 1 => p.Id == quote.AuthorId, 2 => recent.Contains(p.Id), 3 => data.Esports.ClubId.Length > 0 && p.ClubId == data.Esports.ClubId, _ => true }).ToArray()`

@@ -23,7 +23,7 @@ public static partial class PrivatePublicContext
         熟悉的人 = p.Connections.Select(id => CareerEngine.Person(d, id) is { } known ? IdentityText(known) : CareerEngine.DisplayName(d, id))
     };
 
-    public static string Profiles(CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null)
+    public static string Profiles(CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null, bool includeConversation = true)
     {
         string player = CareerEngine.Name(d);
         var b = new StringBuilder();
@@ -89,7 +89,7 @@ public static partial class PrivatePublicContext
         if (CareerCommerce.ActiveSponsor(d) is { } sponsor && sponsor.SignedDay <= d.Day) b.AppendLine($"{player}的个人赞助商：{sponsor.Brand}，合作期为第{sponsor.StartSeason}至{sponsor.EndSeason}赛季。{sponsor.Description}");
         if (d.LocalHumanId.Length == 0 && d.PlayerIntroduction.Length > 0 && d.PlayerIntroductionDay <= d.Day)
             b.AppendLine($"{PrivateAppointments.DateText(d, d.PlayerIntroductionDay)}的{player}周刊档案：{d.PlayerIntroduction}");
-        AppendCareerDetails(b, d, p, changing);
+        AppendCareerDetails(b, d, p, changing, includeConversation);
         b.AppendLine("\n性格使用说明：" + PersonalityLibrary.ProfileUsage);
         return b.ToString().TrimEnd();
 

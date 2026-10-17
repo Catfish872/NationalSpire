@@ -14,7 +14,7 @@ public partial class CareerScreen
     private Button? _chatEarlier, _chatNewer, _chatLatest;
     private Label? _chatPageLabel;
     private OptionButton? _chatSizePicker;
-    private HBoxContainer? _chatPagination;
+    private HBoxContainer? _chatPagination, _chatPageOptions;
     private int ChatPage => _privateGroup.Length > 0 ? _groupPages.Page : _privatePages.Page;
     private int ChatPageCount => _privateGroup.Length > 0 ? _groupPages.Pages : _privatePages.Pages;
     private bool ChatAtLatest => ChatPage == ChatPageCount - 1;
@@ -33,14 +33,22 @@ public partial class CareerScreen
         var error = ChatPreferences.Save("user://NationalSpire_chat.cfg");
         if (error != Error.Ok) GD.PushWarning("聊天显示设置保存失败：" + error);
     }
-    private void BuildChatPagination(HBoxContainer actions)
+    private void BuildChatPagination(ChatComposerLayout actions)
     {
-        var row = new HBoxContainer { Name = "ChatPagination", Visible = false, SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        var row = new HBoxContainer { Name = "ChatPagination", Visible = false };
         _chatPagination = row; row.AddThemeConstantOverride("separation", 6); actions.AddChild(row);
+        var options = new HBoxContainer { Name = "ChatPageOptions", Visible = false };
+        _chatPageOptions = options; options.AddThemeConstantOverride("separation", 6); actions.AddChild(options);
         Button Action(string name, string text, Action click, int width)
         {
-            var button = PrivateButton(text, click, width); button.Name = name; button.CustomMinimumSize = new(width, 38);
-            button.AddThemeFontSizeOverride("font_size", 14); row.AddChild(button); return button;
+            var button = PrivateButton(text, click, width); button.Name = name; button.SizeFlagsVertical = SizeFlags.Fill;
+            row.AddChild(button);
+            foreach (string state in new[] { "normal", "hover", "pressed", "hover_pressed", "disabled", "focus" })
+            {
+                var style = (StyleBox)button.GetThemeStylebox(state).Duplicate();
+                style.ContentMarginTop = style.ContentMarginBottom = 6; button.AddThemeStyleboxOverride(state, style);
+            }
+            button.AddThemeFontSizeOverride("font_size", 14); return button;
         }
         _chatEarlier = Action("ChatEarlier", "‹", () => ChangeChatPage(ChatPage - 1), 32); _chatEarlier.TooltipText = "较早记录";
         _chatEarlier.AddThemeFontSizeOverride("font_size", 20);
@@ -51,9 +59,16 @@ public partial class CareerScreen
         _chatNewer = Action("ChatNewer", "›", () => ChangeChatPage(ChatPage + 1), 32); _chatNewer.TooltipText = "较新记录";
         _chatNewer.AddThemeFontSizeOverride("font_size", 20);
         _chatLatest = Action("ChatLatest", "回到最新", LatestChatPage, 96);
-        _chatSizePicker = new OptionButton { Name = "ChatPageSize", CustomMinimumSize = new(108, 38) };
+        row.RemoveChild(_chatLatest); options.AddChild(_chatLatest);
+        _chatSizePicker = new OptionButton { Name = "ChatPageSize", CustomMinimumSize = new(108, 42), SizeFlagsVertical = SizeFlags.Fill };
         _chatSizePicker.AddItem("每页 5轮"); _chatSizePicker.AddItem("每页 10轮"); _chatSizePicker.Select(_chatPageSize == 5 ? 0 : 1);
-        _chatSizePicker.AddThemeFontSizeOverride("font_size", 14); row.AddChild(_chatSizePicker);
+        _chatSizePicker.AddThemeFontSizeOverride("font_size", 14);
+        options.AddChild(_chatSizePicker);
+        foreach (string state in new[] { "normal", "hover", "pressed", "hover_pressed", "disabled", "focus" })
+        {
+            var style = (StyleBox)_chatSizePicker.GetThemeStylebox(state).Duplicate();
+            style.ContentMarginTop = style.ContentMarginBottom = 6; _chatSizePicker.AddThemeStyleboxOverride(state, style);
+        }
         _chatSizePicker.ItemSelected += index =>
         {
             _chatPageSize = index == 0 ? 5 : 10;
@@ -65,6 +80,9 @@ public partial class CareerScreen
     {
         _privatePages.Reset(_chatPageSize); _groupPages.Reset(_chatPageSize);
         _chatPagination!.Show();
+        _chatPageOptions!.Show();
+        _privateActions!.CenterPages = true;
+        _privateExpressions?.Invoke(true);
         _chatNewMessages = false; InvalidateChatPage(int.MaxValue);
     }
     private void InvalidateChatPage(int position)

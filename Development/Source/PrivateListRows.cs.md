@@ -33,9 +33,9 @@ private Label? _privateListEmpty;
 
 **调用者：** [`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)
 
-**调用：** [`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`](PrivateMemoryScreen.cs.md#symbol-780ecbf2f8bf)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.CareerScreen.PrivateListRow.PrivateListRow()`
+**调用：** `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`](PrivateMemoryScreen.cs.md#symbol-780ecbf2f8bf)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；`NationalSpire.CareerScreen.PrivateListRow.PrivateListRow()`；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privateList`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.PrivateListRow.Button`；`NationalSpire.CareerScreen.PrivateListRow.Emblem`；`NationalSpire.CareerScreen.PrivateListRow.Group`；`NationalSpire.CareerScreen.PrivateListRow.Id`；`NationalSpire.CareerScreen.PrivateListRow.Inset`；`NationalSpire.CareerScreen.PrivateListRow.Layout`；`NationalSpire.CareerScreen.PrivateListRow.Picture`；`NationalSpire.CareerScreen.PrivateListRow.Preview`；`NationalSpire.CareerScreen.PrivateListRow.Title`；`NationalSpire.CareerScreen.PrivateListRow.Words`；`NationalSpire.CareerScreen.SelectGroup(string, int)`；`NationalSpire.CareerScreen.SelectPrivate(string)`；`NationalSpire.CareerVisuals.Teal`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.PrivateListRow.Button`；`NationalSpire.CareerScreen.PrivateListRow.Emblem`；`NationalSpire.CareerScreen.PrivateListRow.Group`；`NationalSpire.CareerScreen.PrivateListRow.Id`；`NationalSpire.CareerScreen.PrivateListRow.Inset`；`NationalSpire.CareerScreen.PrivateListRow.Layout`；`NationalSpire.CareerScreen.PrivateListRow.Picture`；`NationalSpire.CareerScreen.PrivateListRow.Preview`；`NationalSpire.CareerScreen.PrivateListRow.Title`；`NationalSpire.CareerScreen.PrivateListRow.Words`；`NationalSpire.CareerScreen.SelectGroup(string, int)`；`NationalSpire.CareerScreen.SelectPrivate(string, int)`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privateList`；`NationalSpire.CareerVisuals.Teal`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -62,26 +62,26 @@ private Label? _privateListEmpty;
 - `NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；输入表达式：`PrivateLine("群", 23, CareerVisuals.Teal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateLine("群", 23, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.PrivateListRow.PrivateListRow()`；输入表达式：`new PrivateListRow { Button = button, Inset = inset, Layout = layout, Words = words, Picture = picture, Emblem = emblem, Title = title, Preview = preview }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateListRow { Button = button, Inset = inset, Layout = layout, Words = words, Picture = picture, Emblem = emblem, Title = title, Preview = preview }`
 - `NationalSpire.CareerScreen.SelectGroup(string, int)`；输入表达式：`SelectGroup(row.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectGroup(row.Id);`
-- `NationalSpire.CareerScreen.SelectPrivate(string)`；输入表达式：`SelectPrivate(row.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectPrivate(row.Id);`
+- `NationalSpire.CareerScreen.SelectPrivate(string, int)`；输入表达式：`SelectPrivate(row.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectPrivate(row.Id);`
 
 **赋值（含属性/字段和局部值）：**
 
-- `button.CustomMinimumSize` = `new(0, 82)`
-- `button.Pressed` += `() => { if (row.Group) SelectGroup(row.Id); else SelectPrivate(row.Id); }`
 - `Button` = `button`
 - `CustomMinimumSize` = `new(40, 40)`
-- `emblem.CustomMinimumSize` = `new(38, 0)`
 - `Emblem` = `emblem`
 - `Inset` = `inset`
 - `Layout` = `layout`
 - `Picture` = `picture`
-- `preview.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `Preview` = `preview`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
-- `title.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `Title` = `title`
 - `Words` = `words`
+- `button.CustomMinimumSize` = `new(0, 82)`
+- `button.Pressed` += `() => { if (row.Group) SelectGroup(row.Id); else SelectPrivate(row.Id); }`
+- `emblem.CustomMinimumSize` = `new(38, 0)`
+- `preview.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `title.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 
 <a id="symbol-a42f68b15faf"></a>
 

@@ -1,4 +1,4 @@
-﻿# AI 请求、交互与记忆
+# AI 请求、交互与记忆
 
 ## 按任务选择连接方案
 
@@ -25,12 +25,12 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 
 | 请求 | 主要组织入口 | 上游数据 | 输出使用者 |
 | --- | --- | --- | --- |
-| 社区新闻 | AiService.ProcessNewsAsync、AiContext、AiPrompts、AiWireProtocol.Encode | 待发布事件、比赛事实、候选人物、模板、公开记忆 | 新闻响应应用入口更新原帖与回复，CommunityThreads 更新任务和记忆 |
-| 社区回帖 | ProcessInteractionsAsync → BuildDiscussionPrompt → AiWireProtocol | 本次玩家留言、目标帖及相关帖、人物与记忆、输出权限 | ApplyDiscussion → ParseReplies；正文、父评论和作者编号分别处理 |
+| 社区新闻 | AiService.ProcessNewsAsync、AiContext、AiPrompts、AiWireProtocol.Encode | 待发布事件、比赛事实、候选人物、模板、公开记忆及当前基础净赞数 | ApplyNewsResponse 更新原帖与回复，CommunityVotes 应用生成评分，CommunityThreads 更新任务和记忆 |
+| 社区回帖 | ProcessInteractionsAsync → BuildDiscussionPrompt → AiWireProtocol | 本次玩家留言、目标帖及相关帖、人物与记忆、基础净赞数与输出权限 | ApplyDiscussionCore → ParseReplies；正文、父评论和作者编号分别处理，CommunityVotes 合并本次允许更新的评分 |
 | 双周人物介绍/文章 | ProcessWeeklyAsync → ProcessEdition → BuildWeeklyContext | WeeklyJournal 固定的当期事实、已生成介绍、期刊模板 | ApplyWeeklyResponse 更新该期人物或文章，再保存阶段状态 |
 | 私信 | ProcessPrivateAsync → Context → Compose → RequestPrivateAsync | 当前人物、关系、赛程、公开资料、附件、总结、按顺序排列的会话 | PrivateStreamParser → PrivateMessages.Apply → 对应业务规则 |
 | 群聊 | ProcessGroupAsync → GroupChatPrompts.Compose → RequestPrivateAsync | 群成员、俱乐部、关系、活动、公开资料、总结、时间线 | GroupStreamParser → GroupInteractions.Apply → 私信交互与业务规则 |
-| 私信/群聊仲裁 | SpireArbitration.Compose / GroupArbitration.Compose | 申请、完整相关往来与裁决 | Parse / Apply / Complete 记录裁决、封禁、致歉等 |
+| 私信/群聊仲裁及社区举报 | SpireArbitration.Compose / GroupArbitration.Compose | 普通仲裁读取完整相关往来；社区举报读取来源帖快照、具体被举报内容、人物实力与既有裁决 | Parse / Apply / Complete 记录裁决、封禁、致歉等 |
 | 私信总结 | SummarizePrivateAsync → Summarize / SummaryRequest | 自己的有效聊天窗口及既有总结 | FinishSmallSummary / FinishBigSummary 更新总结和窗口 |
 | 群聊总结 | SummarizeGroupAsync → SummaryRequest | 本群未覆盖完成轮次、成员通知、实际交互；大总结读取选定小总结 | 更新 SmallSummaries / BigSummaries 和 SummarizedThrough |
 | 提示词试写 | PromptTesting、PromptTestData | 隔离试写资料与选定模板 | 试写结果显示；不是正式生涯交互提交 |
@@ -52,6 +52,8 @@ NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、Rela
 PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本，PromptTransfer 负责导入导出。旧模板缺少新场景时使用该场景默认文本补齐，不要求玩家原模板已有全部场景。
 
 交互格式、字段含义与关键条件由程序固定注入。群聊会将私信协议示例补上 Actor / Target，再注入群聊 Format。可编辑模板仍决定文风，但不承担唯一格式约束。
+
+社区 news / discussion 的 ComposeSystem 在当前可编辑模板后追加 EvidencePrompt、场景正文协议及 CommunityScorePrompt，旧自定义模板同样取得当前评分协议。netScore 表示模拟论坛读者的累计点赞减点踩，允许有符号整数；玩家亲自选择的票由程序另行记录。固定协议明确输入/输出netScore使用原始评分刻度，程序通过CommunityVotes.AudienceScore统一将因素形成的净值及其变化按主楼/NPC回复乘6、玩家回复乘16，正负方向一致，最后叠加玩家票；原始值继续随请求传给模型以维持同一评分尺度。评分指令同时引用发言内容、作者身份、话题热度、被谈论人物的 followers / popularity、支持者立场与既有争执，要求按讨论进展返回累计净值。BuildNewsContext、BuildDiscussionPrompt 提供当前基础净值；讨论的 otherSpeakers 同时提供角色、关注数及人气层级。Persona 的关注数据沿现有人物资料时点校验提供，PlayerPublicRecord 只在查询日等于当前日时提供当前玩家关注数，其余历史时点为null。评分字段和规则随本次新闻或回帖请求发送，生成与评分共用同一次响应。
 
 职业名称仅在程序资料入口转换。Entry.Init 将 CharacterIdentity.OriginalSource 绑定 GameCharacterNames.Originals，将 Source 绑定 GameCharacterNames.Definitions(GameBridge.Characters())。Originals 从游戏程序集的具体 CharacterModel 类型取得 ModelDb.GetId；当前注册模型属于其他程序集时排除该编号，按当前语言读取原始 characters.json；缺少条目时回退英文。它不读取或修改合并过皮肤文本的共享本地化表。名称表按语言缓存，首次读取及语言切换重新建立。没有手写原版编号或中文名称表。
 
@@ -94,7 +96,7 @@ MatchesTopic 仍要求两个非闲聊词命中。Retrieve 的词频统计仅检�
 
 | 顺序 | 函数或回调 | 读取/计算 | 修改与保存 | 谁使用结果 |
 | --- | --- | --- | --- | --- |
-| 1 | CareerScreen.PrivateCommand → PrivateMessageCommands.Apply | 人物、消息、附件与现有轮次 | 发送建立 queued；重试/重生成修改原轮；CareerStore.Save | 后台处理器根据 queued 找到本次请求 |
+| 1 | CareerScreen.PrivateCommand → PrivateMessageCommands.Apply | 人物、消息、附件与现有轮次；dm-send经PrepareAttachments按当前权威来源准备社区引用 | 发送建立 queued；重试/重生成修改原轮；CareerStore.Save | 后台处理器根据 queued 找到本次请求 |
 | 2 | ProcessPrivateAsync | current 获取绑定数据，检查人物和请求键；进入既有队列 | PrivateRequests 记录本次运行中的取消对象 | 同会话生成判断、取消入口 |
 | 3 | 排队结束后的 current | 重新获取当前数据与同一 turn，避免使用排队前资料 | Context 重新构建，写入 turn.Context；Status=sending、清空 Error；save | Compose 使用该轮 Context；中断恢复读取状态 |
 | 4 | Compose → RequestPrivateAsync | 模板、固定格式、稳定资料、变化资料、总结、时间线、本轮消息 | 请求日志；发送模型请求 | 流式接收与解析器 |
@@ -103,13 +105,23 @@ MatchesTopic 仍要求两个非闲聊词命中。Retrieve 的词频统计仅检�
 | 7 | SummarizePrivateAsync | 是否达到既有总结条件 | 达到条件时分别保存开始与结果；finally 按现有条件清理状态 | 后续聊天窗口与总结界面 |
 | 8 | 页面阅读结束 | 实际已读轮数 | dm-read 存储已读变化 | 通讯列表和未读提示 |
 
-开始保存并不只是把 queued 改成 sending，还记录本轮使用的 Context。完成保存包含交互结果，而不只是文字。
+社区引用在dm-send经PrivateMessages.PrepareAttachments → CommunitySharing.Prepare建立发送时快照；本次人物看到所选主楼或评论、来源主楼以及按根到直接父排列的父链。CommunitySharing.Text把这些字段序列化到AiDetail，UserText通过既有AiGeneratedText.Attachment读取；后续ChatTimeline、聊天总结及知情人物的公开记忆沿原附件文本路径读取。普通检索和界面继续使用Detail中的作者、所选正文及来源标题。引用采用独立community-quote类型，原完整帖子附件的postVersions筛选范围保持。
+
+PrivateMessagePrompts.Compose在可编辑模板和既有固定协议后追加CommunitySharing.Protocol。协议说明quoted、sourcePost、parents的作者归属和用途，玩家态度由其另行输入的消息表达；引用正文作为讨论材料。旧自定义私信模板同样取得此协议。已发送轮次的Detail/AiDetail固定保存，重试与重新生成复用该轮附件，来源后续变化由后续新分享读取。本流程沿原dm-send、私信生成及总结请求执行，增加的独立HTTP请求和保存入口均为0。
+
+分享专项以最终Release生产程序集执行真实Compose/Context/UserText和ProcessPrivateAsync，使用完整合成私信传输输入输出及两次ExternalSave回调，确认sourcePost、parents、quoted进入请求、用户另行输入保持、生成完成及空文字纯附件发送。发送前改写来源验证权威重建，发送后再改写来源验证该轮快照保持。补充域检查知情人物的私聊材料、重试/再生成固定引用及旧档Quote缺省值；主域与补充域均正常退出。真实模型对引用材料的理解和态度判断质量、真实HTTP服务及磁盘保存仍待验证。原始材料见本地`Previews/community-step5-share/`，完整环境与计时范围见[社区讨论树与回复入口](GAME_AND_UI.md#社区讨论树与回复入口)。
+
+开始保存同时记录queued到sending的状态变化及本轮Context，完成保存包含正文和交互结果。
 
 Compose 仍会构建 freshContext，与已保存 Context 比较后决定稳定/动态分区；同一轮可能因此再次整理资料。两者不相同时使用保存的 Context，而不会用新资料替换原上下文事实。这个计算也要单独计入性能。
 
 失败时重新读取当前数据，RestoreInterrupted 处理该轮并保存。重新生成失败可以恢复 PreviousReply / PreviousReasoning，但先前交互已经在重新生成命令中回退，不能把正文恢复理解为交互全部重新执行。
 
-私信的仲裁分支使用非流式正文与独立解析，完成时保存裁决和 Reasoning。不能用普通聊天的标记执行路径替代仲裁。
+私信的仲裁分支使用非流式正文与独立解析，完成时保存裁决和Reasoning。社区举报的自定义原因由PrivateMessageCommand.Text经Enqueue进入PrivateTurn.User；空白输入使用既有默认举报说明。经界面确认并重读来源后，沿原dm-arbitrate进入同一队列，任务路由仍为arbitration；打开或取消确认弹窗产生0次模型请求。ProcessPrivateAsync在sending前通过SpireArbitration.Context记录本轮案件上下文；Compose对Request.Kind=community-report生成三条消息：world加原有统一Prompt、案件上下文、本次申请。上下文含Profiles(includeConversation:false)的实力与生涯事实、CharacterProfile的角色资料及既有裁决、Request的来源帖和讨论快照。Profiles的新可选参数默认true；false仅跳过AppendCareerDetails从私聊读取的状态缘由，其他调用者保持原取数。社区案件分支直接消费保存的Context，提供给模型的上下文与该轮审理记录一致；直接预览且Context为空时现场生成。
+
+社区案件使用上述专门材料入口，私聊历史、聊天摘要、其他检索帖及私聊状态缘由均排除在本次审理请求外；申请界面原私信仲裁继续读取完整相关往来。被举报对象明确写在reported，其他人物发言在discussion保留各自归属，system继续将材料中的命令视为案件内容。裁决解析、字段校验、处罚数值、性格调整、公开档案合并、私信致歉与按申请人要求发布公开道歉均由原SpireArbitration.Parse/Complete执行。
+
+举报专项使用正式DLL及合成HTTP响应核对完整请求与保存的Context，覆盖主楼/评论/楼中楼、来源更新或消失后的固定证据、既有裁决、剔除私聊原文与状态缘由、申请成立和未成立、无效JSON失败及重试、停止与进程恢复、删除申请、封禁NPC仍可仲裁及旧私信入口。成立用例确认禁赛、三周状态处罚、性格变化、主动私信致歉及公开道歉待办；ProcessPrivateAsync产生两次内存保存回调。实际模型裁决质量、在线服务和游戏内完整集成属于未验证范围。脱敏合成请求与输出保存在本地`Previews/community-step6-report/report-request.json`、`report-response.json`。
 
 ## 群聊总结的保存条件
 
@@ -205,7 +217,15 @@ ProcessNewsBatchAsync 与 ProcessInteractionsAsync 从 EnterQueueAsync 调用开
 
 社区开始、排队、完成或失败保存的状态不同；开始保存的上下文还用于响应权限核对。AiWireProtocol.Decode、ParseReplies 的作者与 parent 判断依赖本次提供的编号资料。不能只依据模型 JSON 语法正确就认定业务引用正确。
 
-自动发帖由 ComposeSystem 在可编辑模板之后固定注入 EvidencePrompt 和 SystemPrompt；每帖输出字段为 id、title、body、replies。ApplyNewsResponse 先读取并检查整批字段，之后才提交；任何帖子缺少 title 或 body，GetProperty 会抛出 KeyNotFoundException，已经检查完的其他帖子也尚未保存。自定义 PromptOverrides 可额外描述另一种输出结构，固定协议仍会注入；诊断须核对实际最终请求，不能只读取自定义模板的原始 Sections。
+自动发帖输出 posts[] 的 id、title、body、netScore、replies；每条新回复包含原 id、authorId、parentId、body 及 netScore。ProcessNewsBatchAsync 在发送时复制待生成帖子，把这些快照的 Revision 随响应交给 ApplyNewsResponse。整批正文、作者、回复顺序及必需字段继续先校验后提交；缺少 title 或 body 仍触发原失败路径。ReadNetScore 单独读取 Int32 数值，缺失、错误类型、小数或越界值返回 null，当前基础净值保留，其他有效正文和评分继续应用。新回复使用同一发送版本写入 AiScoreRevision。自定义 PromptOverrides 可额外描述另一种输出结构，固定协议仍会注入；诊断须核对实际最终请求及其响应。
+
+互动响应 reactions[] 的 netScore 更新该帖主楼，新 replies[].netScore 随新评论保存；scoreUpdates:[{id,netScore}] 更新本轮已提供的旧评论。ReadDiscussionPermissions 从实际发送前的完整 context 固定各目标帖的 Revision、conversation 编号集合和 queued 所属帖集合。只有 queued 对应帖允许更新已有评分，旧评论 id 还须属于该帖已发送的 conversation；相关参考帖的既有评分继续沿用。ReadScoreUpdates 按条读取，错误容器、无效编号和无效分数局部跳过，同一编号多次有效出现时使用最后一项。ApplyDiscussionCore 在原正文、禁言与等待状态校验通过后，将主楼及旧评论评分交给 CommunityVotes.ApplyScore，再追加新回复、递增内容 Revision 并更新记忆。
+
+AiWireProtocol.NormalizeFields 识别 netScore / scoreUpdates 的大小写别名，评分数值留给 ReadNetScore 检查；scoreUpdates 内 id 继续使用原短编号解码。评分子树的大小写重复字段保留规范名的值，必需正文字段继续执行原重复字段校验。CommunityVotes.ApplyScore 比较实际发送版本与已存 AiScoreRevision，较早请求返回时保留更新后的分数。PlayerVotes 始终由玩家操作入口维护，AI 请求只提供基础净值，最终显示由Score先取AudienceScore的6倍净值，玩家回复取16倍净值，再加玩家票。评分变化随原生成成功、失败收尾与 CoopAi 回调保存；每个正常互动请求仍依次保存 queued、sending、成功结果和 finally 状态，新闻仍沿原整批排队及各批发送、结果、finally 保存。
+
+离线回复、旧帖待补分和无效score字段沿用已有基础值；新内容缺分时保持null。补分随原新闻或互动任务的有效响应执行，这些状态产生0次独立补分请求。
+
+赞踩验证使用最终Release生产程序集，domain-validation.json记录10组结果，覆盖模型及JSON往返、完整新闻和互动请求、可选评分容错、大小写别名、交错请求版本、新闻批次原子性与多人规则/合并。通过实际AiService、ComposeSystem、AiWireProtocol和响应应用入口保留5对完整合成请求/响应，验证新旧评论评分、响应期间改票、未知及跨帖更新、参考帖已有分数保护，并验证坏分数保留有效正文。HTTP传输使用内存响应，保存使用ExternalSave回调，共19次回调；测试中的身份、正文、凭据和生涯数据均为合成资料。真实API的格式遵循及模型按内容、名气生成评分的质量待实测；请求构造、解析和合并耗时尚未单独测量。证据位于本地Previews/community-step4-votes，保存及界面验证范围见对应章节。
 
 周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog.Select 先使用原赛前、比赛、Priority、近期题材和日期排序，再进行原题材选择，最后将 RelatedPeople 包含 player 或 HumanIds 的帖子稳定排列在前，按 MaxNewsPosts 截取。相同人物相关帖沿用原排序；其余帖沿用原题材顺序。Compact 和 ProcessNewsAsync 继续将当次超额任务设为 superseded，原七天有效范围、分批生成、失败重试与保存入口继续执行。Select 创建本次候选列表和排序集合，读取最近八篇成品；缓存范围为本次选择。建队生活事实仍由次日 PublishPending 汇总进入这条队列。
 

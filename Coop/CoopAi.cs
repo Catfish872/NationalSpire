@@ -31,6 +31,9 @@ public sealed class CoopAi(CoopCoordinator session)
             var data = CoopJson.Copy(source.World); data.Ai = AiSettingsStore.Load(new());
             data.PrivateMemorySources = source.Members.ToDictionary(m => m.PersonId, m => CoopJson.Copy(m.Life.Mailbox));
             var originalReplies = CommunityThreads.All(data).SelectMany(p => p.Replies).Select(r => r.Id).ToHashSet();
+            var knownScores = CommunityThreads.All(data).SelectMany(p => p.Replies
+                .Select(r => (Key: (p.Id, r.Id), Value: (r.AiNetScore, r.AiScoreRevision)))
+                .Prepend((Key: (p.Id, ""), Value: (p.AiNetScore, p.AiScoreRevision)))).ToDictionary(x => x.Key, x => x.Value);
             data.ExternalCurrent = () => key.Generation == _generation && session.World?.Id == key.World && session.World?.Epoch == key.Epoch;
             data.ExternalSave = _ =>
             {
@@ -42,7 +45,7 @@ public sealed class CoopAi(CoopCoordinator session)
                 {
                     var current = CommunityThreads.All(next.World).FirstOrDefault(p => p.Id == post.Id);
                     if (current == null) continue;
-                    bool updated = false;
+                    bool updated = MergeDiscussionScores(current, post, knownScores);
                     // 每项请求只追加自己的新评论、更新自己的处理状态，保留其他并发请求的结果。
                     foreach (var reply in post.Replies.Where(r => !originalReplies.Contains(r.Id)))
                         if (!current.Replies.Any(r => r.Id == reply.Id)) { current.Replies.Add(CoopJson.Copy(reply)); updated = true; }
@@ -78,6 +81,7 @@ public sealed class CoopAi(CoopCoordinator session)
                 var data = CoopJson.Copy(source.World); data.Ai = AiSettingsStore.Load(new());
                 data.PrivateMemorySources = source.Members.ToDictionary(m => m.PersonId, m => CoopJson.Copy(m.Life.Mailbox));
                 var knownPosts = CommunityThreads.All(data).ToDictionary(p => p.Id, p => CoopJson.Hash(CoopJson.Bytes(p)));
+                var knownPostScores = CommunityThreads.All(data).ToDictionary(p => p.Id, p => (p.AiNetScore, p.AiScoreRevision));
                 var originalReplies = CommunityThreads.All(data).ToDictionary(p => p.Id, p => p.Replies.Select(r => r.Id).ToHashSet());
                 var knownWeeks = data.WeeklyEditions.ToDictionary(p => p.Week, p => CoopJson.Hash(CoopJson.Bytes(p)));
                 data.ExternalCurrent = () => generation == _generation && session.World?.Id == source.Id && session.World?.Epoch == source.Epoch;
@@ -94,12 +98,25 @@ public sealed class CoopAi(CoopCoordinator session)
                         var current = CommunityThreads.All(next.World).FirstOrDefault(p => p.Id == post.Id);
                         if (current == null || current.SourceBody != post.SourceBody) continue;
                         var updated = CoopJson.Copy(post);
+                        updated.PlayerVotes = current.PlayerVotes; updated.VoteRevision = current.VoteRevision;
+                        updated.AiNetScore = current.AiNetScore; updated.AiScoreRevision = current.AiScoreRevision;
+                        var score = (post.AiNetScore, post.AiScoreRevision);
+                        if (knownPostScores.GetValueOrDefault(post.Id) != score)
+                            CommunityVotes.ApplyScore(updated, score.AiNetScore, score.AiScoreRevision);
+                        knownPostScores[post.Id] = score;
                         // 只保留任务开始后新增的回复，已被生成结果替换的预制评论不能重新加入。
                         var original = originalReplies.GetValueOrDefault(post.Id);
                         updated.NeedsReaction = current.NeedsReaction; updated.ReactionGeneration = CoopJson.Copy(current.ReactionGeneration);
                         for (int i = 0; i < updated.Replies.Count; i++)
-                            if (original?.Contains(updated.Replies[i].Id) == true && current.Replies.FirstOrDefault(r => r.Id == updated.Replies[i].Id) is { } latest)
-                                updated.Replies[i] = CoopJson.Copy(latest);
+                            if (current.Replies.FirstOrDefault(r => r.Id == updated.Replies[i].Id) is { } latest)
+                            {
+                                if (original?.Contains(latest.Id) == true) updated.Replies[i] = CoopJson.Copy(latest);
+                                else
+                                {
+                                    updated.Replies[i].PlayerVotes = latest.PlayerVotes;
+                                    CommunityVotes.ApplyScore(updated.Replies[i], latest.AiNetScore, latest.AiScoreRevision);
+                                }
+                            }
                         updated.Replies.AddRange(current.Replies.Where(r => original?.Contains(r.Id) != true && !updated.Replies.Any(a => a.Id == r.Id)));
                         updated.Revision = Math.Max(current.Revision, updated.Revision) + 1;
                         Replace(next.World.Posts, updated); Replace(next.World.SavedThreads, updated);
@@ -149,4 +166,26 @@ public sealed class CoopAi(CoopCoordinator session)
     }
     private static void Replace(List<CommunityPost> posts, CommunityPost updated)
     { int index = posts.FindIndex(p => p.Id == updated.Id); if (index >= 0) posts[index] = updated; }
+    private static bool MergeDiscussionScores(CommunityPost current, CommunityPost generated,
+        Dictionary<(string Post, string Reply), (int? Score, long Revision)> known)
+    {
+        bool changed = false;
+        var score = (generated.AiNetScore, generated.AiScoreRevision);
+        if (known.GetValueOrDefault((generated.Id, "")) != score)
+        {
+            changed |= CommunityVotes.ApplyScore(current, score.AiNetScore, score.AiScoreRevision);
+            known[(generated.Id, "")] = score;
+        }
+        Dictionary<string, CommunityReply>? replies = null;
+        foreach (var reply in generated.Replies)
+        {
+            var next = (reply.AiNetScore, reply.AiScoreRevision);
+            if (known.GetValueOrDefault((generated.Id, reply.Id)) == next) continue;
+            replies ??= current.Replies.ToDictionary(r => r.Id);
+            if (replies.TryGetValue(reply.Id, out var existing))
+                changed |= CommunityVotes.ApplyScore(existing, next.AiNetScore, next.AiScoreRevision);
+            known[(generated.Id, reply.Id)] = next;
+        }
+        return changed;
+    }
 }

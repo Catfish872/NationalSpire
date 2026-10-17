@@ -7,6 +7,8 @@ public static partial class AiService
     private static object PlayerPublicRecord(CareerData data, int day, bool includeEvidence = true) => new
     {
         gender = data.PlayerGender,
+        followers = day == data.Day ? (int?)data.Fans : null,
+        popularity = day == data.Day ? CareerAudience.Title(data.Fans) : null,
         characterCard = data.PlayerCard == null ? null : new { registeredName = data.PlayerCard.Name, data.PlayerCard.Role,
             data.PlayerCard.Style, data.PlayerCard.Biography, Personality = PersonalityLibrary.PromptProfile(data.PlayerCard.Personality), Character = CharacterIdentity.Name(data, data.PlayerCard.Character) },
         introduction = data.PlayerIntroductionDay <= day ? data.PlayerIntroduction : "",
@@ -66,7 +68,7 @@ public static partial class AiService
             pending.SelectMany(p => p.RelatedPeople).Concat(persons.Select(p => p.Id)), contextDay, excluded);
         var posts = pending.Select(p => new
         {
-            p.Id, p.AuthorId, topic = p.SourceTitle.Length > 0 ? p.SourceTitle : p.Title,
+            p.Id, p.AuthorId, p.Revision, netScore = p.AiNetScore, topic = p.SourceTitle.Length > 0 ? p.SourceTitle : p.Title,
             facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? AiGeneratedText.Source(p) : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
             allowedAuthors = NewsCommenters(p, pending.Count).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
             对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => NewsCommenters(p, pending.Count).Contains(person.Id) || p.AuthorId == person.Id), occasion),

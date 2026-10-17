@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A027713DB3EADF4FAA07C6793B3FC6DF70A72D44ECBB3E86F7DFDF4FFD73E4BA`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`76721612842400EDC752179C8E9B99BF97D871AD379666452A4527DEE5ADA0FB`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -223,7 +223,7 @@ private BroadcastTransition? _pageEffect;
 
 来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.BroadcastScroll._ExitTree()`](BroadcastVisuals.cs.md#symbol-311cb40e4c47)；[`NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-1a48859941e6)；[`NationalSpire.BroadcastScroll._Ready()`](BroadcastVisuals.cs.md#symbol-94caf301d158)；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
+**调用者：** [`NationalSpire.BroadcastScroll._ExitTree()`](BroadcastVisuals.cs.md#symbol-311cb40e4c47)；[`NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-1a48859941e6)；[`NationalSpire.BroadcastScroll._Ready()`](BroadcastVisuals.cs.md#symbol-94caf301d158)；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；[`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
 **调用：** `Godot.Tween.Kill()`
 
@@ -267,7 +267,7 @@ private BroadcastTransition? _pageEffect;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetGlobalRect()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`
+**调用：** `Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetGlobalRect()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`
 
@@ -291,7 +291,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll.ScrollWheel(int, double) — internal void ScrollWheel(int direction, double factor)`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.BroadcastScroll._Input(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-e5e90f272190)
 
@@ -330,7 +330,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent) — public override void _GuiInput(InputEvent input)`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -349,7 +349,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -368,7 +368,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastTransition.Progress — public float Progress`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -388,7 +388,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastTransition._Draw() — public override void _Draw()`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -418,7 +418,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel.Accent — public Color Accent`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -437,7 +437,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel._Ready() — public override void _Ready()`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -456,7 +456,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel._Draw() — public override void _Draw()`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -482,7 +482,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait.Art — public AvatarArt Art`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -501,7 +501,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait._Ready() — public override void _Ready()`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -521,7 +521,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait._Draw() — public override void _Draw()`
 
-来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -567,7 +567,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.AnimatePage() — private void AnimatePage()`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
@@ -619,7 +619,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float) — private static Button FilterButton(string title, bool selected, Action action, float width)`
 
-来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
 
@@ -644,7 +644,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Emphasize(Godot.Button) — private static void Emphasize(Button button)`
 
-来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
 
@@ -670,7 +670,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string) — private Control PlayerBanner(CareerData data, string id)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
@@ -734,7 +734,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch) — private Control Matchup(CareerData data, CareerMatch match)`
 
-来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
@@ -763,7 +763,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `Side(bool) — void Side(bool ours)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 239 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch)`](BroadcastVisuals.cs.md#symbol-dc5a27245e42)
 
