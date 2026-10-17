@@ -37,7 +37,18 @@ public static class PrivateMessageCommands
                 return publicationError;
             case "dm-arbitrate":
                 if (c.Turns.Any(t => t.Status is "queued" or "sending")) return "请先等待当前回复结束。";
-                var application = PrivateMessages.Enqueue(data, person, string.IsNullOrWhiteSpace(command.Text) ? "申请尖塔仲裁，请审理双方完整往来及此前裁决的履行情况。" : command.Text);
+                PrivateOffer? report = null;
+                if (command.Request != null)
+                {
+                    if (command.Request.Kind != CommunityReporting.Kind || command.Request.Quote is not { } source) return "社区举报来源无效。";
+                    try { report = CommunityReporting.Create(data, person, source.PostId, source.ReplyId); }
+                    catch (InvalidOperationException e) { return e.Message; }
+                }
+                string reason = string.IsNullOrWhiteSpace(command.Text)
+                    ? report != null ? "举报这条社区内容及其作者，请结合来源帖上下文和既有裁决规则审理。"
+                        : "申请尖塔仲裁，请审理双方完整往来及此前裁决的履行情况。"
+                    : command.Text;
+                var application = PrivateMessages.Enqueue(data, person, reason, report);
                 application.RequestKind = "arbitration"; return null;
             case "dm-regenerate":
                 var latest = c.Turns.LastOrDefault();
@@ -59,6 +70,7 @@ public static class PrivateMessageCommands
                 if (c.Turns.Any(t => t.Status is "queued" or "sending")) return "上一条回复尚未结束。";
                 var last = c.Turns.LastOrDefault();
                 if (last?.Status != "failed") return "没有需要重试的消息。";
+                if (last.RequestKind == "arbitration" && last.UserDeleted) return "该仲裁申请已删除，请重新提交。";
                 last.Status = "queued"; last.Error = ""; last.Reply = ""; last.Reasoning = ""; return null;
             case "dm-stop":
                 foreach (var t in c.Turns.Where(t => t.Status is "queued" or "sending")) RestoreInterrupted(t, "已停止生成。");

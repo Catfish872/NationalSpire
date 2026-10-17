@@ -4,6 +4,8 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
+    private readonly HashSet<string> _privateExpandedIdentities = [];
+
     private Control PrivateIdentity(CareerData data, string id, bool showProfile)
     {
         var person = CareerEngine.Person(data, id)!;
@@ -12,26 +14,114 @@ public partial class CareerScreen
         panel.AddThemeStyleboxOverride("panel", new StyleBoxEmpty());
         panel.AddChild(new PrivateOrnament { MouseFilter = MouseFilterEnum.Ignore });
         var inset = new MarginContainer(); panel.AddChild(inset);
-        inset.AddThemeConstantOverride("margin_bottom", 20);
-        inset.AddThemeConstantOverride("margin_top", 8);
+        inset.AddThemeConstantOverride("margin_bottom", showProfile ? 12 : 20);
+        inset.AddThemeConstantOverride("margin_top", showProfile ? 0 : 8);
         var content = new VBoxContainer(); content.AddThemeConstantOverride("separation", 22); inset.AddChild(content);
-        var identity = new HBoxContainer(); identity.AddThemeConstantOverride("separation", 20); content.AddChild(identity);
-        identity.AddChild(Avatar(data, id, 72, false));
-        var name = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        var identityInset = new MarginContainer(); content.AddChild(identityInset);
+        var identity = new HBoxContainer(); identity.AddThemeConstantOverride("separation", 20); identityInset.AddChild(identity);
+        if (showProfile) identity.CustomMinimumSize = new(0, 89);
+        void OpenProfile() => OpenPrivatePerson(id);
+        var avatar = Avatar(data, id, 72, showProfile, showProfile ? OpenProfile : null);
+        if (showProfile) avatar.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        avatar.Name = "PrivateIdentityAvatar"; identity.AddChild(avatar);
+        Container name = showProfile ? new PrivateIdentityLayout() : new VBoxContainer();
+        name.Name = "PrivateIdentityNameGroup"; name.SizeFlagsHorizontal = SizeFlags.ExpandFill; name.SizeFlagsVertical = SizeFlags.ShrinkCenter;
         name.AddThemeConstantOverride("separation", 9); identity.AddChild(name);
-        name.AddChild(PrivateText(person.PublicName, 26, _ink));
-        name.AddChild(PrivateText(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + "  /  " + person.Country, 14, _muted));
+        if (showProfile)
+        {
+            var profile = PrivateIdentityButton("PrivateIdentityName", OpenProfile);
+            profile.Text = person.PublicName; profile.Alignment = HorizontalAlignment.Left;
+            profile.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            profile.TooltipText = person.PublicName + " · 查看选手档案";
+            profile.SizeFlagsVertical = SizeFlags.Fill;
+            profile.AddThemeFontSizeOverride("font_size", 28); name.AddChild(profile);
+        }
+        else name.AddChild(PrivateText(person.PublicName, 26, _ink));
         double mood = CareerTraining.MoodLevel(person, data.Day);
-        if (mood != 0) name.AddChild(PrivateText($"{(mood > 0 ? "状态振奋" : "状态低落")} · 剩余 {CareerTraining.MoodUntil(person, data.Day) - data.Day} 天", 15, mood > 0 ? CareerVisuals.Teal : new Color("ffb6b6")));
-        if (showProfile) identity.AddChild(PrivateButton("选手档案 ↗", () => { ClosePrivateMessages(); Visit(() => { _tab = "选手档案"; _personId = id; }); }, 130));
+        var role = PrivateText(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + "  /  " + person.Country, 14, _muted);
+        role.Name = "PrivateIdentityRole";
+        if (showProfile)
+        {
+            role.AutowrapMode = TextServer.AutowrapMode.Off; role.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            role.TooltipText = role.Text;
+        }
+        name.AddChild(role);
+        if (mood != 0)
+        {
+            int remaining = CareerTraining.MoodUntil(person, data.Day) - data.Day;
+            var status = PrivateLine($"{(mood > 0 ? "状态振奋" : "状态低落")} · 剩余 {remaining} 天", 15, mood > 0 ? CareerVisuals.Teal : new Color("ffb6b6"));
+            status.Name = "PrivateIdentityMood";
+            if (showProfile)
+            {
+                var moodButton = new PrivateMoodButton { Name = "PrivateMoodButton", Elevated = mood > 0, TooltipText = $"剩余 {remaining} 天" };
+                name.AddChild(moodButton);
+                var description = new PanelContainer { Name = "PrivateMoodDescription", Visible = false, ZIndex = 1, MouseFilter = MouseFilterEnum.Ignore };
+                description.AddThemeStyleboxOverride("panel", CareerVisuals.Box("182838", "00000000", 5, 6));
+                moodButton.AddChild(description); description.AddChild(status); PrivateIgnoreMouse(description);
+                void PositionDescription() => description.Position = new(moodButton.Size.X + 12, (moodButton.Size.Y - description.GetCombinedMinimumSize().Y) / 2);
+                moodButton.Resized += PositionDescription; description.MinimumSizeChanged += PositionDescription;
+                moodButton.Pressed += () => { description.Visible = moodButton.ButtonPressed; PositionDescription(); };
+            }
+            else { status.AutowrapMode = TextServer.AutowrapMode.WordSmart; name.AddChild(status); }
+        }
+        Control? disclosure = null; Button? bondButton = null, favourButton = null; Label? favourCaption = null;
+        void ToggleDetails()
+        {
+            bool expanded = !_privateExpandedIdentities.Remove(id);
+            if (expanded) _privateExpandedIdentities.Add(id);
+            disclosure!.Visible = expanded;
+            favourCaption!.Visible = expanded;
+            bondButton!.SetPressedNoSignal(expanded); favourButton!.SetPressedNoSignal(expanded);
+        }
+        if (showProfile)
+        {
+            bondButton = PrivateIdentityButton("PrivateRelationshipToggle", ToggleDetails, true);
+            bondButton.ToggleMode = true;
+            bondButton.SizeFlagsHorizontal = SizeFlags.ShrinkEnd; bondButton.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            string value = relation.Relationship == "初识" ? PrivateMessages.RelationshipLabel(relation.Favour) : relation.Relationship;
+            bondButton.TooltipText = value + " · 展开/收起关系与印象";
+            var padding = new MarginContainer(); bondButton.AddChild(padding); padding.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+            padding.AddThemeConstantOverride("margin_left", 4); padding.AddThemeConstantOverride("margin_right", 8);
+            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); padding.AddChild(row);
+            var icon = new Control { Name = "PrivateRelationshipIcon", CustomMinimumSize = new(36, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter };
+            row.AddChild(icon); icon.AddChild(new PrivateOrnament { Kind = "bond", MouseFilter = MouseFilterEnum.Ignore });
+            var valueLabel = PrivateLine(PrivateRelationshipText(value), 18, _ink); valueLabel.Name = "PrivateRelationshipValue";
+            valueLabel.HorizontalAlignment = HorizontalAlignment.Right; valueLabel.VerticalAlignment = VerticalAlignment.Center; row.AddChild(valueLabel);
+            padding.MinimumSizeChanged += () => bondButton.CustomMinimumSize = padding.GetCombinedMinimumSize();
+            bondButton.CustomMinimumSize = padding.GetCombinedMinimumSize(); PrivateIgnoreMouse(padding); identity.AddChild(bondButton);
+        }
         var favour = new VBoxContainer { Name = "FavourMedal", CustomMinimumSize = new(94, 0), TooltipText = "对你的好感 · -100 至 100" };
-        favour.AddThemeConstantOverride("separation", 8); identity.AddChild(favour);
-        var medal = new Control { CustomMinimumSize = new(94, 78) }; favour.AddChild(medal);
+        favour.AddThemeConstantOverride("separation", 8);
+        if (showProfile)
+        {
+            favourButton = PrivateIdentityButton("PrivateFavourToggle", ToggleDetails, true);
+            favourButton.ToggleMode = true; favourButton.CustomMinimumSize = new(94, 78);
+            favourButton.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
+            favourButton.TooltipText = "对你的好感 · -100 至 100；展开/收起关系与印象";
+            identity.AddChild(favourButton); favourButton.AddChild(favour); favour.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        }
+        else identity.AddChild(favour);
+        var medal = new Control { Name = "PrivateFavourIcon", CustomMinimumSize = new(94, 78) }; favour.AddChild(medal);
         medal.AddChild(new PrivateOrnament { Kind = "favour", MouseFilter = MouseFilterEnum.Ignore });
         var number = PrivateLine(relation.Favour.ToString(), 24, _gold); medal.AddChild(number);
         number.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); number.OffsetBottom = -6; number.HorizontalAlignment = HorizontalAlignment.Center; number.VerticalAlignment = VerticalAlignment.Center;
-        var caption = PrivateLine("好感", 14, _muted); favour.AddChild(caption); caption.HorizontalAlignment = HorizontalAlignment.Center;
-        var details = new HBoxContainer(); details.AddThemeConstantOverride("separation", 24); content.AddChild(details);
+        var caption = PrivateLine("好感", 14, _muted); caption.Name = "PrivateFavourCaption"; caption.HorizontalAlignment = HorizontalAlignment.Center;
+        if (showProfile)
+        {
+            favourCaption = caption; favourButton!.AddChild(caption);
+            caption.SetAnchorsAndOffsetsPreset(LayoutPreset.BottomWide); caption.OffsetTop = 8; caption.OffsetBottom = 30;
+            caption.MouseFilter = MouseFilterEnum.Ignore; caption.Visible = _privateExpandedIdentities.Contains(id);
+            caption.CustomMinimumSize = new(94, 0);
+            PrivateIgnoreMouse(favour);
+        }
+        else favour.AddChild(caption);
+        var details = new HBoxContainer { Name = "PrivateIdentityDetails", SizeFlagsHorizontal = SizeFlags.ExpandFill }; details.AddThemeConstantOverride("separation", 24);
+        content.AddChild(details);
+        if (showProfile)
+        {
+            details.Visible = _privateExpandedIdentities.Contains(id); disclosure = details;
+            bondButton!.SetPressedNoSignal(details.Visible); favourButton!.SetPressedNoSignal(details.Visible);
+        }
         var relationship = new HBoxContainer { CustomMinimumSize = new(225, 0), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 };
         relationship.AddThemeConstantOverride("separation", 12); details.AddChild(relationship);
         var emblem = new Control { CustomMinimumSize = new(36, 48) }; relationship.AddChild(emblem);
@@ -45,6 +135,32 @@ public partial class CareerScreen
         impression.AddChild(PrivateLine("对你的印象", 13, CareerVisuals.Teal));
         impression.AddChild(PrivateText(relation.Impression.Length > 0 ? relation.Impression : "还没有留下具体印象", 18, relation.Impression.Length > 0 ? _ink : _muted));
         return panel;
+    }
+    private static string PrivateRelationshipText(string value)
+    {
+        var text = new System.Text.StringBuilder(); int column = 0;
+        var elements = System.Globalization.StringInfo.GetTextElementEnumerator(value.Replace("\r\n", "\n"));
+        while (elements.MoveNext())
+        {
+            string element = elements.GetTextElement();
+            if (element == "\n") { text.Append('\n'); column = 0; continue; }
+            if (column == 15) { text.Append('\n'); column = 0; }
+            text.Append(element); column++;
+        }
+        return text.ToString();
+    }
+    private static Button PrivateIdentityButton(string name, Action pressed, bool disclosure = false)
+    {
+        var button = new Button { Name = name, Flat = true, MouseDefaultCursorShape = CursorShape.PointingHand,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        button.AddThemeStyleboxOverride("normal", new StyleBoxEmpty());
+        button.AddThemeStyleboxOverride("hover", new StyleBoxEmpty());
+        button.AddThemeStyleboxOverride("pressed", CareerVisuals.Box("ffffff08", "70d4bc", 6, 0));
+        button.AddThemeStyleboxOverride("hover_pressed", CareerVisuals.Box("ffffff10", "70d4bc", 6, 0));
+        button.AddThemeStyleboxOverride("focus", disclosure ? new StyleBoxEmpty() : CareerVisuals.Box("00000000", "789aa4", 6, 0));
+        button.MouseEntered += () => button.Modulate = new Color(1.25f, 1.25f, 1.25f);
+        button.MouseExited += () => button.Modulate = Colors.White;
+        button.Pressed += pressed; return button;
     }
     private void AddPrivateProfileChange(PrivateProfileChange change)
     {
@@ -134,7 +250,8 @@ public partial class CareerScreen
         var heading = PrivateLine(title, 24, _ink); heading.HorizontalAlignment = HorizontalAlignment.Center; box.AddChild(heading);
         var caption = PrivateLine(detail, 17, _muted); caption.HorizontalAlignment = HorizontalAlignment.Center; box.AddChild(caption);
     }
-    private static string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is "post" or "result"
+    private static string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is CommunitySharing.Kind or CommunityReporting.Kind && a.Quote is { } quote
+        ? quote.AuthorName + (a.Kind == CommunityReporting.Kind ? " · 被举报内容" : quote.ReplyId.Length == 0 ? " · 帖子" : " · 评论") : a.Kind is "post" or "result"
         ? a.Detail.Split('\n', 2)[0] is { Length: > 0 } title ? title : PrivateMessages.AttachmentTitle(a)
         : a.Kind == "lineup" ? "调整阵容" : a.Kind == "training" ? $"训练计划 · {a.Weeks}周" : PrivateMessages.AttachmentTitle(a);
     private PanelContainer PrivateAttachmentCard(PrivateOffer a, bool draft)
@@ -144,9 +261,25 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); card.AddChild(row);
         var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; copy.AddThemeConstantOverride("separation", 4); row.AddChild(copy);
         var title = PrivateLine(PrivateAttachmentHeading(a), 17, _ink); title.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; title.TooltipText = PrivateAttachmentHeading(a); copy.AddChild(title);
-        string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : a.Kind == "lineup" ? "阵容调整" : a.Kind == "training" ? "训练内容" : "合同邀约";
-        string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
-        var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
+        if (a.Kind is CommunitySharing.Kind or CommunityReporting.Kind && a.Quote is { } quote)
+        {
+            card.Name = a.Kind == CommunityReporting.Kind ? "CommunityReportCard" : "CommunityQuoteCard";
+            title.Name = "QuoteAuthor"; title.MouseFilter = MouseFilterEnum.Pass;
+            var body = PrivateText(quote.Body, 16, _ink);
+            body.Name = "QuoteBody"; body.MaxLinesVisible = 2;
+            body.TooltipText = quote.Body; body.MouseFilter = MouseFilterEnum.Pass;
+            copy.AddChild(body);
+            var source = PrivateLine("来源帖子 · " + quote.PostTitle, 14, _muted);
+            source.Name = "QuoteSource"; source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass;
+            copy.AddChild(source);
+        }
+        else
+        {
+            string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : a.Kind == "lineup" ? "阵容调整" : a.Kind == "training" ? "训练内容" : "合同邀约";
+            string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
+            var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
+        }
         row.AddChild(PrivateButton("查看", () => PreviewPrivateAttachment(a), 60));
         if (draft) { var remove = PrivateButton("×", () => { PrivateAttachments.Remove(a); RefreshPrivateAttachments(); }, 36); remove.TooltipText = "移除这条附件"; row.AddChild(remove); }
         return card;
@@ -184,7 +317,10 @@ public partial class CareerScreen
         CareerVisuals.ClearContent(_privateAttachments);
         foreach (var a in PrivateAttachments) _privateAttachments.AddChild(PrivateAttachmentCard(a, true));
         _privateAttachmentScroll.Visible = PrivateAttachments.Count > 0;
-        _privateAttachmentScroll.CustomMinimumSize = new(0, PrivateAttachments.Count > 1 ? 146 : 72);
+        float height = PrivateAttachments.Count > 1 ? 146
+            : PrivateAttachments.Any(a => a.Kind == CommunitySharing.Kind && a.Quote != null) ? 122 : 72;
+        if (_privateComposer != null) _privateComposer.SetAttachmentHeight(height);
+        else _privateAttachmentScroll.CustomMinimumSize = new(0, height);
         if (follow) _ = ScrollPrivateToBottom();
     }
     private void PrivateSharePicker(string kind)
@@ -410,5 +546,47 @@ public partial class PrivateOrnament : Control
             Line(-14,-7,7,-7,teal,2); Line(-14,0,7,0,dim); Line(-14,7,2,7,dim);
             DrawColoredPolygon([P(7,17),P(12,22),P(7,29),P(2,22)],gold);
         }
+    }
+}
+
+/// <summary>头像高72：ID顶端对齐头像，名片居中于ID底端和头像底端之间；状态按钮独立于文字布局。</summary>
+public partial class PrivateIdentityLayout : Container
+{
+    public override Vector2 _GetMinimumSize() => new(80, 72);
+    public override void _Notification(int what)
+    {
+        if (what != NotificationSortChildren || GetChildCount() < 2) return;
+        var id = GetChild<Button>(0); var role = GetChild<Label>(1);
+        var mood = GetChildren().OfType<PrivateMoodButton>().FirstOrDefault();
+        float height = id.GetCombinedMinimumSize().Y, roleHeight = role.GetCombinedMinimumSize().Y;
+        float width = Math.Max(0, Size.X - height - 20);
+        float textWidth = Math.Min(width, Math.Max(id.GetThemeFont("font").GetStringSize(id.Text, fontSize: id.GetThemeFontSize("font_size")).X,
+            role.GetThemeFont("font").GetStringSize(role.Text, fontSize: role.GetThemeFontSize("font_size")).X));
+        FitChildInRect(id, new(0, 0, textWidth, height));
+        FitChildInRect(role, new(0, (height + Size.Y - roleHeight) / 2, textWidth, roleHeight));
+        if (mood != null) FitChildInRect(mood, new(textWidth + 20, (Size.Y - height) / 2, height, height));
+    }
+}
+
+/// <summary>短期状态的方形矢量按钮，文字说明由父级绑定并按点击展开。</summary>
+public partial class PrivateMoodButton : Button
+{
+    public bool Elevated { get; init; }
+    public override void _Ready()
+    {
+        ToggleMode = true; MouseDefaultCursorShape = CursorShape.PointingHand;
+        string fill = Elevated ? "244f3d" : "8c3039", edge = Elevated ? "4f8065" : "c58181";
+        foreach (string state in new[] { "normal", "hover", "pressed", "hover_pressed" })
+            AddThemeStyleboxOverride(state, CareerVisuals.Box(fill, edge, 5, 0));
+        AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
+        MouseEntered += () => SelfModulate = new Color(1.3f, 1.3f, 1.3f); MouseExited += () => SelfModulate = Colors.White;
+    }
+    public override void _Draw()
+    {
+        float side = Math.Min(Size.X, Size.Y), direction = Elevated ? -1 : 1;
+        var center = Size / 2;
+        Vector2 Point(float x, float y) => center + new Vector2(x, direction * y) * side;
+        DrawColoredPolygon([Point(0, .28f), Point(.26f, .02f), Point(.10f, .02f), Point(.10f, -.26f),
+            Point(-.10f, -.26f), Point(-.10f, .02f), Point(-.26f, .02f)], new Color(Elevated ? "98dea6" : "edb8b8"));
     }
 }

@@ -6,8 +6,8 @@ public static partial class AiService
     {
         string protocol = scene switch
         {
-            "news" => EvidencePrompt + SystemPrompt,
-            "discussion" => EvidencePrompt + DiscussionPrompt,
+            "news" => EvidencePrompt + SystemPrompt + CommunityScorePrompt,
+            "discussion" => EvidencePrompt + DiscussionPrompt + CommunityScorePrompt,
             "profiles" => WeeklyProfilePrompt,
             "weekly" => WeeklyNewsPrompt,
             _ => throw new ArgumentException("未知创作场景。")
@@ -29,7 +29,7 @@ public static partial class AiService
         输入posts的topic为事件主题、facts为事件记录，同时提供日期、类别和allowedAuthors；match提供本场双方的成绩、玩家牌组、结算证据及相关历史；people提供本次人物资料。人物资料的有效日期见profileAsOfDay与introductionAsOfDay。发帖时点见eventDay，引用素材的日期截至该时点。
         communityMemory是检索到的相关历史：fact为事件记录，opinion为署名人物当时的观点；引用观点时保留人物与时间归属。playerRecord提供玩家最近的公开记录和周刊介绍，honors与seasonHistory提供已取得的荣誉和赛季成绩。schedules记录各AsOfDay当时公布的近期日程，Upcoming逐条说明具名选手的报名状态，RecentMeetings是已完成的交手，RelatedFixtures是相关人物的公开对阵。
         输出一个完整JSON对象，结构如下：
-        {"posts":[{"id":"t1","title":"标题","body":"正文","replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论"},{"id":"r2","authorId":"u2","parentId":"r1","body":"接话"}]}]}
+        {"posts":[{"id":"t1","title":"标题","body":"正文","netScore":24,"replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论","netScore":8},{"id":"r2","authorId":"u2","parentId":"r1","body":"接话","netScore":-3}]}]}
         每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。实际参与者、回复人数和长短由话题决定。
         每帖新回复使用r1、r2等局部编号；parentId为空表示新楼层，填前面的r编号表示回复那一层。按父楼层在前、子回复在后的顺序列出，层数按交流需要展开。样例展示字段关系，实际人物、内容和对话形状由本次资料与讨论走向决定。
         人物可以相互回复，也可以在同帖多次发言，不限每人一条。每条发言使用独立回复编号，回复关系通过parentId表示。
@@ -39,11 +39,18 @@ public static partial class AiService
         你延续尖塔玩家论坛中的聊天。queued列出本次必须回应的发帖或留言，kind说明类型，postId定位帖子；对应原文在targets的Body或conversation中。请在各项queued对应的帖子内回应其内容，按原文的AuthorId识别说话者，玩家称呼见player.name。帖子中的mentionRequests记录提及对象，每个requiredAuthors人物都须回应对应messageId。
         targets包含本次留言所在帖子及相关历史帖子，相关历史帖子作为记忆参考。Body是正文，bodyKind=fact表示事件记录，opinion表示署名观点；officialRecord是官方记录，match是赛事资料，conversation是帖子讨论，conversationScope说明资料范围。people提供可参与的人物资料，otherSpeakers帮助识别引用中的其他说话者。playerRecord和career提供玩家的公开履历。schedule记录AsOfDay当天已公布的日程：Upcoming逐条说明具名选手的报名状态，RecentMeetings提供已完成的交手，RelatedFixtures是相关人物的近期对阵。
         memory是按人物和话题检索的历史记忆：fact为事件记录，opinion为人物当时的观点，引用保留归属。人物的回应可以承接这些经历，谈话重点与语气由这次留言、既有关系和性格共同决定。
-        输出一个完整JSON对象：{"reactions":[{"postId":"t1","replies":[{"id":"r1","authorId":"u1","parentId":"c1","body":"回应内容"}]}]}
+        输出一个完整JSON对象：{"reactions":[{"postId":"t1","netScore":24,"scoreUpdates":[{"id":"c1","netScore":6}],"replies":[{"id":"r1","authorId":"u1","parentId":"c1","body":"回应内容","netScore":-3}]}]}
         reactions列出本次产生回复的帖子，每个postId出现一次，选自targets.Id。allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。t为帖子编号，u为人物编号，c为已有楼层编号，均原样使用。程序保留玩家原文，将新回复加入对应讨论。
         每帖新回复依次使用r1、r2等局部编号。parentId为空表示新楼层，填本帖提供的c编号表示回复旧楼层，填前面的r编号表示继续接话；按父级在前、子级在后排列。
         人物可以相互回复，也可以在同帖多次发言，不限每人一条。每条发言使用独立回复编号，回复关系通过parentId表示。
         样例说明字段和引用关系，具体人数、楼层结构与谈话走向由实际交流决定。
+        """;
+    private const string CommunityScorePrompt = """
+
+        netScore是论坛模拟读者的累计点赞数减点踩数，填写有符号整数。正数表示赞多于踩，负数表示踩多于赞，0表示持平。玩家亲自点击的票由程序另行保存并相加，netScore只计算模拟读者；每次返回更新后的累计净值。
+        netScore输入与输出统一采用原始评分刻度；程序将内容、人气、身份等因素形成的综合净值及其变化放大：主楼与NPC回复合计乘以6；玩家发表的回复合计乘以16。最后加上玩家的独立投票。正值和负值使用相同倍率。请按原始刻度评估各因素，上述倍率由程序统一执行。
+        为本次生成的每篇帖子及每条新评论填写netScore。结合具体内容、作者身份、话题热度、被谈论人物的followers（关注数）与popularity（人气层级）、支持者和批评者的立场判断反馈。同等内容下，更有名的作者通常获得更多支持、较少点踩；攻击粉丝众多的人物容易受到其粉丝点踩，形成负值，推崇这类人物容易获得其粉丝支持，形成较高正值。最终数值结合具体语境、争议程度、发言内容与受众立场判断。资料中的身份、关系、支持俱乐部和既有争执用于判断这些立场。关注数表示受众规模，实际参与投票的比例按本次话题判断。样例数值仅说明格式。
+        互动请求中，仅更新queued所列postId对应的帖子：reactions中的netScore更新该帖主楼，scoreUpdates覆盖该帖conversation中的全部既有评论，逐条填写更新后的netScore，id原样取自该帖conversation.Id。输入netScore是上次保存的模拟读者净值，null表示尚待评分；结合新留言与讨论发展给出本次累计净值。targets里的其他帖子作为历史参考，其既有评分保留。replies里的每条新评论仍填写自己的netScore。
         """;
     private const string WeeklyProfilePrompt = """
 

@@ -213,7 +213,7 @@ private bool _initial = true;
 
 来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.ChatHistoryPage<T>.Resize(int)`](ChatHistoryPage.cs.md#symbol-03212ab16f78)
+**调用者：** [`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)；[`NationalSpire.ChatHistoryPage<T>.Resize(int)`](ChatHistoryPage.cs.md#symbol-03212ab16f78)
 
 **调用：** `System.Math.Clamp(int, int, int)`
 
@@ -252,7 +252,7 @@ private bool _initial = true;
 
 来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(Godot.HBoxContainer)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)
 
 **调用：** [`NationalSpire.ChatHistoryPage<T>.Move(int)`](ChatHistoryPage.cs.md#symbol-27c362fe5d02)
 

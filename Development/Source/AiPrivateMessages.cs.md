@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B6665E493F01D915971B25C7FD61F30A05445B7963F8CA5942D28CC740DA1FA9`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2D208CC2B1C0AC69D05D4FC6B8904EE3B8828E642006FA084C5812A66896BCF3`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -101,72 +101,71 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 <a id="symbol-935c714481c1"></a>
 
-## `NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?) — public static async Task ProcessPrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person,          Action<string, string>? progress = null)`
+## `NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?) — public static async Task ProcessPrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person, Action<string, string>? progress = null)`
 
 来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.Coop.CoopCoordinator.StartPrivate(ulong, NationalSpire.Coop.CoopCommand)`](Coop/CoopPrivateMessages.cs.md#symbol-ebc3f29b5eb6)
 
-**调用：** [`NationalSpire.AiRequestQueue.Configure(int)`](AiRequestQueue.cs.md#symbol-7bf81d36c27d)；[`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`](AiPrivateMessages.cs.md#symbol-d73b189170eb)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`](AiPrivateMessages.cs.md#symbol-97ba03595bc3)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-c362351c7a43)；[`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`](PrivateMessageCommands.cs.md#symbol-82b01f18fa69)；[`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`](PrivateMessagePrompts.cs.md#symbol-e8c8e5f35407)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；[`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；[`NationalSpire.PrivateStreamParser.Finish()`](PrivateMessages.cs.md#symbol-90306db26d5a)；[`NationalSpire.PrivateStreamParser.PrivateStreamParser(params string[])`](PrivateMessages.cs.md#symbol-af0a0ba2ac6c)；[`NationalSpire.SpireArbitration.Complete(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, NationalSpire.ArbitrationDecision)`](SpireArbitration.cs.md#symbol-7bc24f64a697)；[`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-6116255f39e7)；[`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`](SpireArbitration.cs.md#symbol-909e0981d663)；[`NationalSpire.SpireArbitration.Parse(string)`](SpireArbitration.cs.md#symbol-79b7629027ea)；[`Notify(string)`](AiPrivateMessages.cs.md#symbol-c0fe3566d8ec)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(long, long)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.CancellationTokenSource(System.TimeSpan)`；`System.TimeSpan.FromMinutes(long)`
+**调用：** [`NationalSpire.AiRequestQueue.Configure(int)`](AiRequestQueue.cs.md#symbol-7bf81d36c27d)；[`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`](AiPrivateMessages.cs.md#symbol-d73b189170eb)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`](AiPrivateMessages.cs.md#symbol-97ba03595bc3)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)；[`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-c362351c7a43)；[`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`](PrivateMessageCommands.cs.md#symbol-82b01f18fa69)；[`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`](PrivateMessagePrompts.cs.md#symbol-e8c8e5f35407)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；[`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；[`NationalSpire.PrivateStreamParser.Finish()`](PrivateMessages.cs.md#symbol-90306db26d5a)；[`NationalSpire.PrivateStreamParser.PrivateStreamParser(params string[])`](PrivateMessages.cs.md#symbol-af0a0ba2ac6c)；[`NationalSpire.SpireArbitration.Complete(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, NationalSpire.ArbitrationDecision)`](SpireArbitration.cs.md#symbol-7bc24f64a697)；[`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-6116255f39e7)；[`NationalSpire.SpireArbitration.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-b1beb5c71e60)；[`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`](SpireArbitration.cs.md#symbol-909e0981d663)；[`NationalSpire.SpireArbitration.Parse(string)`](SpireArbitration.cs.md#symbol-79b7629027ea)；[`Notify(string)`](AiPrivateMessages.cs.md#symbol-c0fe3566d8ec)；`System.Action<T>.Invoke(T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Func<TResult>.Invoke()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(long, long)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.CancellationTokenSource(System.TimeSpan)`；`System.TimeSpan.FromMinutes(long)`；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`
 
-**字段、属性、事件及方法组引用：** `(string Turn, string Text).Text`；`<anonymous type: string person, string turnId, string error>.error`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiRequestQueue.Configure(int)`；`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.PrivateForegroundQueue`；`NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；`NationalSpire.AiService.PrivateLive`；`NationalSpire.AiService.PrivateReasoningLive`；`NationalSpire.AiService.PrivateRequests`；`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`；`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`；`NationalSpire.PrivateConversation.LastReplyOrder`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`；`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`；`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateStreamParser.Directives`；`NationalSpire.PrivateStreamParser.Error`；`NationalSpire.PrivateStreamParser.Finish()`；`NationalSpire.PrivateStreamParser.Text`；`NationalSpire.PrivateTurn.Context`；`NationalSpire.PrivateTurn.Error`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.PreviousReasoning`；`NationalSpire.PrivateTurn.PreviousReply`；`NationalSpire.PrivateTurn.Reasoning`；`NationalSpire.PrivateTurn.Regenerating`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyOrder`；`NationalSpire.PrivateTurn.RequestKind`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.SpireArbitration.Complete(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, NationalSpire.ArbitrationDecision)`；`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`；`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`；`NationalSpire.SpireArbitration.Parse(string)`；`Notify(string)`；`Progress(string)`；`Thinking(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiRequestQueue.Configure(int)`；`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.PrivateForegroundQueue`；`NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；`NationalSpire.AiService.PrivateLive`；`NationalSpire.AiService.PrivateReasoningLive`；`NationalSpire.AiService.PrivateRequests`；`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`；`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`；`NationalSpire.PrivateConversation.LastReplyOrder`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`；`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`；`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateStreamParser.Directives`；`NationalSpire.PrivateStreamParser.Error`；`NationalSpire.PrivateStreamParser.Finish()`；`NationalSpire.PrivateStreamParser.Text`；`NationalSpire.PrivateTurn.Context`；`NationalSpire.PrivateTurn.Error`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.PreviousReasoning`；`NationalSpire.PrivateTurn.PreviousReply`；`NationalSpire.PrivateTurn.Reasoning`；`NationalSpire.PrivateTurn.Regenerating`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyOrder`；`NationalSpire.PrivateTurn.RequestKind`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.SpireArbitration.Complete(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, NationalSpire.ArbitrationDecision)`；`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`；`NationalSpire.SpireArbitration.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`；`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`；`NationalSpire.SpireArbitration.Parse(string)`；`Notify(string)`；`Progress(string)`；`Thinking(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiRequestQueue.Configure(int)`；输入表达式：`PrivateForegroundQueue.Configure(data.Ai.MaxConcurrentRequests)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateForegroundQueue.Configure(data.Ai.MaxConcurrentRequests);`
 - `NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`；输入表达式：`EnterPrivateQueue(data, key, cancel.Token)`；返回值紧邻使用处：`AwaitExpressionSyntax: await EnterPrivateQueue(data, key, cancel.Token)`
-- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`FailureReason(e)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: error = FailureReason(e)`
 - `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`FailureReason(e)`；返回值紧邻使用处：`ConditionalExpressionSyntax: e is OperationCanceledException ? "生成已停止或超时，可以重试。" : FailureReason(e)`
+- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`FailureReason(e)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: error = FailureReason(e)`
+- `NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；输入表达式：`PrivateKey(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateKey(data, person)`
 - `NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；输入表达式：`PrivateKey(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateKey(data, person) != key`
 - `NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；输入表达式：`PrivateKey(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateKey(data, person) == key`
-- `NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；输入表达式：`PrivateKey(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateKey(data, person)`
 - `NationalSpire.AiService.PrivateKey(NationalSpire.CareerData, string)`；输入表达式：`PrivateKey(latest, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateKey(latest, person) == key`
-- `NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`；输入表达式：`RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId)`；返回值紧邻使用处：`AwaitExpressionSyntax: await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId)`
 - `NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`；输入表达式：`RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration")`；返回值紧邻使用处：`AwaitExpressionSyntax: await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration")`
+- `NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`；输入表达式：`RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId)`；返回值紧邻使用处：`AwaitExpressionSyntax: await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId)`
 - `NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；输入表达式：`SummarizePrivateAsync(current, save, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = SummarizePrivateAsync(current, save, person)`
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, person)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: CareerEngine.Person(data, person)!`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("private.failed", new { person, turnId, error = FailureReason(e) })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("private.failed", new { person, turnId, error = FailureReason(e) });`
 - `NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`；输入表达式：`GroupChats.NextOrder(data)`；返回值紧邻使用处：`AssignmentExpressionSyntax: turn.ReplyOrder = GroupChats.NextOrder(data)`
 - `NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；输入表达式：`PrivateMessageCommands.RestoreInterrupted(failed, e is OperationCanceledException ? "生成已停止或超时，可以重试。" : FailureReason(e))`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateMessageCommands.RestoreInterrupted(failed, e is OperationCanceledException ? "生成已停止或超时，可以重试。" : FailureReason(e));`
 - `NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`；输入表达式：`PrivateMessagePrompts.Compose(data, conversation, turn)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessagePrompts.Compose(data, conversation, turn)`
-- `NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`；输入表达式：`PrivateMessagePrompts.Context(data, conversation, turn)`；返回值紧邻使用处：`AssignmentExpressionSyntax: turn.Context = PrivateMessagePrompts.Context(data, conversation, turn)`
+- `NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`；输入表达式：`PrivateMessagePrompts.Context(data, conversation, turn)`；返回值紧邻使用处：`ConditionalExpressionSyntax: turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn) : PrivateMessagePrompts.Context(data, conversation, turn)`
 - `NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`；输入表达式：`PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);`
-- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: data != null && PrivateKey(data, person) == key && PrivateMessages.CanChat(data, person)`
 - `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(data, person)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.CanChat(data, person)`
+- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: data != null && PrivateKey(data, person) == key && PrivateMessages.CanChat(data, person)`
 - `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(latest, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: resolve() is { } latest && PrivateMessages.CanChat(latest, person)`
-- `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(data, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: conversation = PrivateMessages.Conversation(data, person)`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Conversation(data, person)`
+- `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(data, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: conversation = PrivateMessages.Conversation(data, person)`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(data, person)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Conversation(data, person).Turns`
-- `NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Favour(data, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: originalFavour = PrivateMessages.Favour(data, person)`
 - `NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Favour(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Favour(data, person)`
+- `NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Favour(data, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: originalFavour = PrivateMessages.Favour(data, person)`
 - `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(data).Conversations`
 - `NationalSpire.PrivateStreamParser.Finish()`；输入表达式：`parser.Finish()`；返回值紧邻使用处：`ExpressionStatementSyntax: parser.Finish();`
 - `NationalSpire.PrivateStreamParser.PrivateStreamParser(params string[])`；输入表达式：`new PrivateStreamParser()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateStreamParser()`
 - `NationalSpire.SpireArbitration.Complete(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, NationalSpire.ArbitrationDecision)`；输入表达式：`SpireArbitration.Complete(data, conversation, turn, decision)`；返回值紧邻使用处：`ExpressionStatementSyntax: SpireArbitration.Complete(data, conversation, turn, decision);`
 - `NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`；输入表达式：`SpireArbitration.Compose(data, conversation, turn)`；返回值紧邻使用处：`ArgumentSyntax: SpireArbitration.Compose(data, conversation, turn)`
+- `NationalSpire.SpireArbitration.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`；输入表达式：`SpireArbitration.Context(data, conversation, turn)`；返回值紧邻使用处：`ConditionalExpressionSyntax: turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn) : PrivateMessagePrompts.Context(data, conversation, turn)`
 - `NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`；输入表达式：`SpireArbitration.Muted(CareerEngine.Person(data, person)!)`；返回值紧邻使用处：`BinaryExpressionSyntax: turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)`
 - `NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`；输入表达式：`SpireArbitration.Muted(CareerEngine.Person(data, person)!)`；返回值紧邻使用处：`IfStatementSyntax: if (SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");`
 - `NationalSpire.SpireArbitration.Parse(string)`；输入表达式：`SpireArbitration.Parse(response)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SpireArbitration.Parse(response)`
 - `Notify(string)`；输入表达式：`Notify(turn.Reply)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notify(turn.Reply);`
-- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(parser.Text)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");`
-- `string.Trim()`；输入表达式：`parser.Text.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: turn.Reply = parser.Text.Trim()`
 - `System.Action<T>.Invoke(T)`；输入表达式：`save(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: save(data);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`PrivateRequests.ContainsKey(key)`；返回值紧邻使用处：`IfStatementSyntax: if (PrivateRequests.ContainsKey(key)) return;`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`PrivateLive.Remove(key)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateLive.Remove(key);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`PrivateReasoningLive.Remove(key)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateReasoningLive.Remove(key);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`PrivateRequests.Remove(key)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateRequests.Remove(key);`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.First(t => t.Id == turnId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: turn = conversation.Turns.First(t => t.Id == turnId)`
-- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.FirstOrDefault(t => t.Status == "queued")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = conversation.Turns.FirstOrDefault(t => t.Status == "queued")`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == turnId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == turnId)`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.FirstOrDefault(t => t.Status == "queued")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = conversation.Turns.FirstOrDefault(t => t.Status == "queued")`
 - `System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, long>)`；输入表达式：`PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`PrivateLive.GetValueOrDefault(key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateLive.GetValueOrDefault(key).Text`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`PrivateReasoningLive.GetValueOrDefault(key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateReasoningLive.GetValueOrDefault(key).Text`
-- `System.Func<TResult>.Invoke()`；输入表达式：`current()`；返回值紧邻使用处：`AssignmentExpressionSyntax: data = current()`
 - `System.Func<TResult>.Invoke()`；输入表达式：`current()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = current()`
+- `System.Func<TResult>.Invoke()`；输入表达式：`current()`；返回值紧邻使用处：`AssignmentExpressionSyntax: data = current()`
 - `System.Func<TResult>.Invoke()`；输入表达式：`resolve()`；返回值紧邻使用处：`IsPatternExpressionSyntax: resolve() is { } latest`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("私信回复为空。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("私信回复为空。");`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("该角色账号已封禁，普通私信已停止。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先启用 AI。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先启用 AI。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("私信回复为空。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("私信回复为空。");`
 - `System.Math.Clamp(int, int, int)`；输入表达式：`Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)`
 - `System.Math.Max(long, long)`；输入表达式：`Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: conversation.LastReplyOrder = Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1)`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`record.Append(chunk)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: chunk => record.Append(chunk)`
@@ -176,9 +175,12 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `System.Threading.CancellationToken.ThrowIfCancellationRequested()`；输入表达式：`cancel.Token.ThrowIfCancellationRequested()`；返回值紧邻使用处：`ExpressionStatementSyntax: cancel.Token.ThrowIfCancellationRequested();`
 - `System.Threading.CancellationTokenSource.CancellationTokenSource(System.TimeSpan)`；输入表达式：`new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)))`
 - `System.TimeSpan.FromMinutes(long)`；输入表达式：`TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30))`；返回值紧邻使用处：`ArgumentSyntax: TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30))`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(parser.Text)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");`
+- `string.Trim()`；输入表达式：`parser.Text.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: turn.Reply = parser.Text.Trim()`
 
 **赋值（含属性/字段和局部值）：**
 
+- `PrivateRequests[key]` = `cancel`
 - `_` = `SummarizePrivateAsync(current, save, person)`
 - `conversation.LastReplyOrder` = `Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1)`
 - `conversation` = `PrivateMessages.Conversation(data, person)`
@@ -187,8 +189,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `failed.Reasoning` = `PrivateReasoningLive.GetValueOrDefault(key).Text ?? ""`
 - `failed.Reply` = `PrivateLive.GetValueOrDefault(key).Text ?? ""`
 - `originalFavour` = `PrivateMessages.Favour(data, person)`
-- `PrivateRequests[key]` = `cancel`
-- `turn.Context` = `PrivateMessagePrompts.Context(data, conversation, turn)`
+- `turn.Context` = `turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn) : PrivateMessagePrompts.Context(data, conversation, turn)`
 - `turn.Error` = `""`
 - `turn.Error` = `parser.Error`
 - `turn.PreviousReasoning` = `""`
@@ -196,8 +197,8 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 - `turn.Reasoning` = `reasoning.ToString()`
 - `turn.Reasoning` = `record.ToString()`
 - `turn.Regenerating` = `false`
-- `turn.Reply` = `parser.Text.Trim()`
 - `turn.ReplyOrder` = `GroupChats.NextOrder(data)`
+- `turn.Reply` = `parser.Text.Trim()`
 - `turn.Status` = `"complete"`
 - `turn.Status` = `"sending"`
 - `turn` = `conversation.Turns.First(t => t.Id == turnId)`
@@ -227,7 +228,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `Progress(string) — void Progress(string chunk)`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -249,7 +250,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `Thinking(string) — void Thinking(string chunk)`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +273,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken) — private static async Task<IDisposable> EnterPrivateQueue(CareerData data, string key, CancellationToken token)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
 
@@ -294,7 +295,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `ReleasePending() — async Task ReleasePending()`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`](AiPrivateMessages.cs.md#symbol-d73b189170eb)
 
@@ -312,7 +313,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string) — internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,          Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private")`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, string)`](AiPrivateMessages.cs.md#symbol-1b3123f418a5)
 
@@ -406,7 +407,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `RememberUsage(System.Text.Json.JsonElement) — void RememberUsage(JsonElement root)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-a5cca66b2038)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)
 
@@ -427,7 +428,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `Event() — void Event()`
 
-来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)
 
@@ -469,7 +470,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement) — private static string PrivateReasoning(JsonElement message)`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-a5cca66b2038)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)
 
@@ -489,7 +490,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string) — private static async Task SummarizePrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-88f72cb1c19e)
 
@@ -554,7 +555,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string) — private static Task<string> Summarize(CareerData data, string person, string section, string content)`
 
-来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)
 
@@ -584,7 +585,7 @@ public static readonly Dictionary<string, (string Turn, string Text)> PrivateRea
 
 ## `NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, string) — private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages, string task)`
 
-来源：源码第 279 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.AiService.SummarizeGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, string)`](AiGroupChats.cs.md#symbol-1e6e737dbe88)
 

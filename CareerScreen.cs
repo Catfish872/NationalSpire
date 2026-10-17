@@ -303,7 +303,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (_multiplayer == null && data.Ai.Enabled && data.WeeklyEditions.Any(w => w.ProfilesWork.State == "idle" || w.NewsWork.State == "idle")) _ = AiService.ProcessWeeklyAsync();
     }
 
-    private string Signature(CareerData data) => string.Join('|', CommunityThreads.All(data).Select(p => $"{p.Id}:{p.Revision}:{p.SeenRevision}:{p.AiPending}:{p.NewsGeneration.State}:{p.NewsGeneration.Error}:{p.NewsGeneration.WaitReason}:{p.ReactionGeneration.State}:{p.ReactionGeneration.Error}:{p.ReactionGeneration.WaitReason}:" + string.Join(',', p.Replies.Where(r => r.AuthorId == "player").Select(r => $"{r.Id}:{r.NeedsReaction}:{r.ReactionGeneration.State}:{r.ReactionGeneration.Error}:{r.ReactionGeneration.WaitReason}"))))
+    private string Signature(CareerData data) => string.Join('|', CommunityThreads.All(data).Select(p => $"{p.Id}:{p.Revision}:{p.VoteRevision}:{p.SeenRevision}:{p.AiPending}:{p.NewsGeneration.State}:{p.NewsGeneration.Error}:{p.NewsGeneration.WaitReason}:{p.ReactionGeneration.State}:{p.ReactionGeneration.Error}:{p.ReactionGeneration.WaitReason}:" + string.Join(',', p.Replies.Where(r => r.AuthorId == "player").Select(r => $"{r.Id}:{r.NeedsReaction}:{r.ReactionGeneration.State}:{r.ReactionGeneration.Error}:{r.ReactionGeneration.WaitReason}"))))
         + string.Join('|', data.WeeklyEditions.Select(w => $"weekly:{w.Week}:{w.Revision}:{w.SeenRevision}:{w.ProfilesWork.State}:{w.ProfilesWork.Error}:{w.ProfilesWork.WaitReason}:{w.NewsWork.State}:{w.NewsWork.Error}:{w.NewsWork.WaitReason}"));
 
     private void Home(CareerData data)

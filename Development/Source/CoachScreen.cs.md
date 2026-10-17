@@ -2,15 +2,16 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5B6FFEC8F0B9D279CEEC27A8EA3207A1C05AA5B34835533ECEAF783699533FF7`。来源：[源码](../../CoachScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C564EEC668A1C995F15FAF06631F7C7A53C9CA4461B67604305C19B01AC3CC12`。来源：[源码](../../CoachScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.CareerScreen`。
+类型：`NationalSpire.CareerScreen`、`NationalSpire.CoachTrainingDisclosureButton`。
 
 字段、事件及初始值（源码原样）：
 
 ```csharp
+private readonly HashSet<string> _privateExpandedTraining = [];
 ```
 
 <a id="symbol-7f703533cff4"></a>
@@ -314,48 +315,93 @@
 
 ## `NationalSpire.CareerScreen.PrivateTrainingCard(NationalSpire.CareerData, NationalSpire.CoachTrainingPlan, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?) — private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)
 
-**调用：** [`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`](PrivateMessageScreen.cs.md#symbol-fb5e88f4639a)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`](PrivateAppointments.cs.md#symbol-1c549626b284)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProgressBar.ProgressBar()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
+**调用：** `Godot.CanvasItem.QueueRedraw()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProgressBar.ProgressBar()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`](PrivateMessageScreen.cs.md#symbol-fb5e88f4639a)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`NationalSpire.CoachTrainingDisclosureButton.CoachTrainingDisclosureButton()`；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`](PrivateAppointments.cs.md#symbol-1c549626b284)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.Remove(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CoachTrainingPlan.Content`；`NationalSpire.CoachTrainingPlan.EndDay`；`NationalSpire.CoachTrainingPlan.Gained`；`NationalSpire.CoachTrainingPlan.PaidWeeks`；`NationalSpire.CoachTrainingPlan.PersonId`；`NationalSpire.CoachTrainingPlan.StartDay`；`NationalSpire.CoachTrainingPlan.State`；`NationalSpire.CoachTrainingPlan.Weeks`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privateExpandedTraining`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CoachTrainingPlan.Content`；`NationalSpire.CoachTrainingPlan.EndDay`；`NationalSpire.CoachTrainingPlan.Gained`；`NationalSpire.CoachTrainingPlan.Id`；`NationalSpire.CoachTrainingPlan.PaidWeeks`；`NationalSpire.CoachTrainingPlan.PersonId`；`NationalSpire.CoachTrainingPlan.StartDay`；`NationalSpire.CoachTrainingPlan.State`；`NationalSpire.CoachTrainingPlan.Weeks`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.CanvasItem.QueueRedraw()`；输入表达式：`toggle.QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: toggle.QueueRedraw();`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`toggle.AddThemeColorOverride(state, _muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: toggle.AddThemeColorOverride(state, _muted);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`inner.AddThemeConstantOverride("separation", 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddThemeConstantOverride("separation", 10);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`toggle.AddThemeFontSizeOverride("font_size", 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: toggle.AddThemeFontSizeOverride("font_size", 14);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18))`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`toggle.AddThemeStyleboxOverride(state, new StyleBoxEmpty { ContentMarginRight = 20 })`；返回值紧邻使用处：`ExpressionStatementSyntax: toggle.AddThemeStyleboxOverride(state, new StyleBoxEmpty { ContentMarginRight = 20 });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(PrivateText(plan.Content, 18, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(PrivateText(plan.Content, 18, _ink));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(progress)`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(progress);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(details)`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(details);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(progress)`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(progress);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`inner.AddChild(toggle)`；返回值紧邻使用处：`ExpressionStatementSyntax: inner.AddChild(toggle);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`parent.AddChild(panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: parent.AddChild(panel);`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { Name = "CoachTrainingCard" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { Name = "CoachTrainingCard" }`
 - `Godot.ProgressBar.ProgressBar()`；输入表达式：`new ProgressBar { MinValue = 0, MaxValue = plan.Weeks, Value = plan.PaidWeeks, ShowPercentage = false, CustomMinimumSize = new(0, 8), MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ProgressBar { MinValue = 0, MaxValue = plan.Weeks, Value = plan.PaidWeeks, ShowPercentage = false, CustomMinimumSize = new(0, 8), MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.StyleBoxEmpty.StyleBoxEmpty()`；输入表达式：`new StyleBoxEmpty { ContentMarginRight = 20 }`；返回值紧邻使用处：`ArgumentSyntax: new StyleBoxEmpty { ContentMarginRight = 20 }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 8)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 8)`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(panel)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(panel)`
 - `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；输入表达式：`PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130)`；返回值紧邻使用处：`ArgumentSyntax: PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130)`
 - `NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；输入表达式：`PrivateCommand("dm-training-cancel", new())`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateCommand("dm-training-cancel", new());`
-- `NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`；输入表达式：`PrivateText(plan.Content, 18, _ink)`；返回值紧邻使用处：`ArgumentSyntax: PrivateText(plan.Content, 18, _ink)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold)`
+- `NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`；输入表达式：`PrivateText(plan.Content, 18, _ink)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateText(plan.Content, 18, _ink)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"{PrivateAppointments.DateText(data, plan.StartDay)}—{PrivateAppointments.DateText(data, plan.EndDay)}", 15, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text((send != null ? GroupChats.Name(data, plan.PersonId) + " · " : "") + "教练训练 · " + plan.State, 21, _gold)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("193440", "6aa9a8", 9, 18)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("193440", "6aa9a8", 9, 18)`
+- `NationalSpire.CoachTrainingDisclosureButton.CoachTrainingDisclosureButton()`；输入表达式：`new CoachTrainingDisclosureButton { Name = "TrainingToggle_" + plan.Id, Text = details.Visible ? "收起" : "展开", Flat = true, SizeFlagsHorizontal = SizeFlags.ShrinkBegin, MouseDefaultCursorShape = CursorShape.PointingHand }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CoachTrainingDisclosureButton { Name = "TrainingToggle_" + plan.Id, Text = details.Visible ? "收起" : "展开", Flat = true, SizeFlagsHorizontal = SizeFlags.ShrinkBegin, MouseDefaultCursorShape = CursorShape.PointingHand }`
 - `NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；输入表达式：`GroupChats.Name(data, plan.PersonId)`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupChats.Name(data, plan.PersonId) + " · "`
 - `NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`；输入表达式：`PrivateAppointments.DateText(data, plan.EndDay)`；返回值紧邻使用处：`InterpolationSyntax: {PrivateAppointments.DateText(data, plan.EndDay)}`
 - `NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`；输入表达式：`PrivateAppointments.DateText(data, plan.StartDay)`；返回值紧邻使用处：`InterpolationSyntax: {PrivateAppointments.DateText(data, plan.StartDay)}`
 - `NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
 - `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`send("training-cancel", new())`；返回值紧邻使用处：`ExpressionStatementSyntax: send("training-cancel", new());`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`_privateExpandedTraining.Add(plan.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: _privateExpandedTraining.Add(plan.Id);`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`_privateExpandedTraining.Contains(plan.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: details.Visible = _privateExpandedTraining.Contains(plan.Id)`
+- `System.Collections.Generic.HashSet<T>.Remove(T)`；输入表达式：`_privateExpandedTraining.Remove(plan.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_privateExpandedTraining.Remove(plan.Id)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `ContentMarginRight` = `20`
 - `CustomMinimumSize` = `new(0, 8)`
+- `Flat` = `true`
 - `MaxValue` = `plan.Weeks`
 - `MinValue` = `0`
+- `MouseDefaultCursorShape` = `CursorShape.PointingHand`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 - `Name` = `"CoachTrainingCard"`
+- `Name` = `"TrainingToggle_" + plan.Id`
 - `ShowPercentage` = `false`
+- `SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
+- `Text` = `details.Visible ? "收起" : "展开"`
 - `Value` = `plan.PaidWeeks`
+- `details.Name` = `"TrainingDetails_" + plan.Id`
+- `details.Visible` = `_privateExpandedTraining.Contains(plan.Id)`
+- `details.Visible` = `expanded`
+- `toggle.Pressed` += `() => { bool expanded = !_privateExpandedTraining.Remove(plan.Id); if (expanded) _privateExpandedTraining.Add(plan.Id); details.Visible = expanded; toggle.Text = expanded ? "收起" : "展开"; toggle.QueueRedraw(); }`
+- `toggle.Text` = `expanded ? "收起" : "展开"`
+
+<a id="symbol-01ddd1205a4c"></a>
+
+## `NationalSpire.CoachTrainingDisclosureButton._Draw() — public override void _Draw()`
+
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.GetThemeColor(Godot.StringName, Godot.StringName)`；`Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；`Godot.Vector2.Vector2(float, float)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；输入表达式：`DrawPolyline([center + new Vector2(-side * .4f, -direction * side * .2f), center + new Vector2(0, direction * side * .2f), center + new Vector2(side * .4f, -direction * side * .2f)], GetThemeColor("font_color"), 1.5f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline([center + new Vector2(-side * .4f, -direction * side * .2f), center + new Vector2(0, direction * side * .2f), center + new Vector2(side * .4f, -direction * side * .2f)], GetThemeColor("font_color"), 1.5f, true);`
+- `Godot.Control.GetThemeColor(Godot.StringName, Godot.StringName)`；输入表达式：`GetThemeColor("font_color")`；返回值紧邻使用处：`ArgumentSyntax: GetThemeColor("font_color")`
+- `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；输入表达式：`GetThemeFontSize("font_size")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetThemeFontSize("font_size")`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(-side * .4f, -direction * side * .2f)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(-side * .4f, -direction * side * .2f)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, direction * side * .2f)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(0, direction * side * .2f)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(Size.X - side / 2, Size.Y / 2)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Vector2(Size.X - side / 2, Size.Y / 2)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(side * .4f, -direction * side * .2f)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(side * .4f, -direction * side * .2f)`
+
+**赋值（含属性/字段和局部值）：**

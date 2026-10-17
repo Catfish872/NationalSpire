@@ -1,4 +1,5 @@
 using Godot;
+using System.Text;
 
 namespace NationalSpire;
 
@@ -26,8 +27,16 @@ public partial class CareerScreen
         void Refresh()
         {
             if (choosing) return;
-            line = editor.GetCaretLine(); string before = editor.GetLine(line)[..editor.GetCaretColumn()]; at = before.LastIndexOf('@');
-            string query = at < 0 ? "" : before[(at + 1)..];
+            line = editor.GetCaretLine(); string text = editor.GetLine(line);
+            int caretColumn = editor.GetCaretColumn(), column = 0, offset = 0, atOffset = -1; at = -1;
+            // TextEdit 按 Unicode 码点计列，C# 切片使用 UTF-16 偏移。
+            foreach (var rune in text.EnumerateRunes())
+            {
+                if (column >= caretColumn) break;
+                if (rune.Value == '@') { at = column; atOffset = offset; }
+                offset += rune.Utf16SequenceLength; column++;
+            }
+            string query = atOffset < 0 ? "" : text[(atOffset + 1)..offset];
             if (at < 0 || query.Any(char.IsWhiteSpace) || query.Contains('〔')) { panel.Hide(); return; }
             people = ViewData.People.Where(p => PrivateMessages.CanChat(ViewData, p.Id) &&
                 (p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase)))

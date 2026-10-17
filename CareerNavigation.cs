@@ -6,7 +6,7 @@ public partial class CareerScreen
 {
     private sealed record Location(string Tab, string? Person, string? Post, string WorldSection, string? Competition,
         string ProfileFilter, string CommunityFilter, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
-        string Group = "", int ChatScroll = 0, int ChatPage = 0);
+        string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "");
     private sealed record TabVisit(Location Location, Location[] History);
     private readonly Stack<Location> _backHistory = new();
     private readonly Dictionary<string, TabVisit> _tabVisits = new();
@@ -92,6 +92,7 @@ public partial class CareerScreen
         {
             ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);
             if (previous.Group.Length > 0) { SelectGroup(previous.Group, previous.ChatPage); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }
+            else if (previous.PrivatePerson.Length > 0) { OpenPrivateMessages(previous.PrivatePerson, page: previous.ChatPage); _ = ScrollChatTo(previous.ChatScroll); }
         }
         else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }
         else if (_tab == "选手档案" && _personId != null) { _personId = null; _scroll.ScrollVertical = 0; Render(); }
@@ -114,6 +115,7 @@ public partial class CareerScreen
         else if (_tab == "赛事与俱乐部" && _competitionId != null) destination = "赛事总览";
         else if (_tab == "赛事与俱乐部" && _worldSection == "颁奖盛典") destination = "荣誉室";
         if (_backHistory.TryPeek(out var chat) && chat.Group.Length > 0) destination = "群聊";
+        else if (chat?.PrivatePerson.Length > 0) destination = "私聊";
         _backButton.Text = "← 返回" + destination; _backButton.Disabled = !CanGoBack;
         _backButton.TooltipText = CanGoBack ? "返回上一处内容，恢复筛选和阅读位置。快捷键：Esc" : "当前已是栏目入口。";
         string detail = _tab switch
@@ -130,7 +132,7 @@ public partial class CareerScreen
     }
     private void ResetNavigation()
     {
-        _backHistory.Clear(); _tabVisits.Clear(); _readPosts.Clear(); _replyDrafts.Clear(); _replyTargets.Clear();
+        _backHistory.Clear(); _tabVisits.Clear(); _readPosts.Clear(); _replyDrafts.Clear(); _replyTargets.Clear(); _collapsedDiscussions.Clear();
         _newPostTitle = ""; _newPostBody = "";
         _profileLimit = 36; _profileQuery = ""; _lifeSection = "活动与计划"; _lifeHistoryLimit = 8;
         _personId = null; _postId = null; _competitionId = null; _worldSection = "国运榜";

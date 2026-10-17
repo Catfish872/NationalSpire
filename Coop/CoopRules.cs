@@ -128,8 +128,8 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("owned-", StringComparison.Ordinal))
@@ -286,6 +286,9 @@ public static partial class CoopRules
                     if (command.Parent.Length > 0 && !target.Replies.Any(r => r.Id == command.Parent)) { error = "回复的楼层已不存在。"; break; }
                     target.Replies.Add(new CommunityReply { AuthorId = member.PersonId, ParentId = command.Parent, Body = command.Text.Trim(), Day = w.World.Day, NeedsReaction = true, MentionedPeople = CommunityMentions.Resolve(w.World, command.Text) });
                     target.AiPending = false; target.Revision++; CommunityThreads.Remember(w.World, target); break;
+                case "community-vote":
+                    CommunityVotes.SetVote(w.World, command.Target, command.Parent, command.Number, member.PersonId);
+                    break;
                 case "reading":
                     var reading = CoopJson.Read<CoopReading>(System.Text.Encoding.UTF8.GetBytes(command.Text));
                     foreach (var pair in reading.Posts)

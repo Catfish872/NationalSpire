@@ -1,0 +1,89 @@
+# CommunityReporting.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`A8FD369B0062E9A05C1C4B64A321EBB7675DA49F67047A1E2D557E1B784859BF`。来源：[源码](../../CommunityReporting.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.CommunityReporting`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+public const string Kind = "community-report";
+private static readonly JsonSerializerOptions ReportJson = new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+```
+
+<a id="symbol-a1449ae7cb1c"></a>
+
+## `NationalSpire.CommunityReporting.IsReport(NationalSpire.PrivateTurn) — public static bool IsReport(PrivateTurn turn)`
+
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.AddPrivateBubble(string, bool, NationalSpire.PrivateTurn)`](PrivateMessageScreen.cs.md#symbol-b24b4d693d2a)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-a6aa8a8392b1)；[`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-6116255f39e7)；[`NationalSpire.SpireArbitration.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-b1beb5c71e60)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CommunityReporting.Kind`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateTurn.Request`；`NationalSpire.PrivateTurn.RequestKind`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-6bbc23d16690"></a>
+
+## `NationalSpire.CommunityReporting.Create(NationalSpire.CareerData, string, string, string) — public static PrivateOffer Create(CareerData data, string personId, string postId, string replyId = "")`
+
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
+
+**调用：** [`Evidence()`](CommunityReporting.cs.md#symbol-8f21c83fe090)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`](CommunitySharing.cs.md#symbol-3ee15fb08761)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.ContextReplies(NationalSpire.CommunityPost, int, bool, System.Collections.Generic.IEnumerable<string>?)`](CommunityThreads.cs.md#symbol-3e0f576a5190)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
+
+**字段、属性、事件及方法组引用：** `Evidence()`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityQuote.AuthorId`；`NationalSpire.CommunityQuote.PostBody`；`NationalSpire.CommunityQuote.PostId`；`NationalSpire.CommunityQuote.PostSourceBody`；`NationalSpire.CommunityQuote.ReplyId`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Body`；`NationalSpire.CommunityReply.Day`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReporting.Kind`；`NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.ContextReplies(NationalSpire.CommunityPost, int, bool, System.Collections.Generic.IEnumerable<string>?)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.AiDetail`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quote`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Evidence()`；输入表达式：`Evidence()`；返回值紧邻使用处：`BinaryExpressionSyntax: "社区举报案件材料\n" + Evidence()`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, r.AuthorId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.DisplayName(data, r.AuthorId) + "：\n"`
+- `NationalSpire.CommunitySharing.Create(NationalSpire.CareerData, string, string)`；输入表达式：`CommunitySharing.Create(data, postId, replyId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunitySharing.Create(data, postId, replyId)`
+- `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(data).First`
+- `NationalSpire.CommunityThreads.ContextReplies(NationalSpire.CommunityPost, int, bool, System.Collections.Generic.IEnumerable<string>?)`；输入表达式：`CommunityThreads.ContextReplies(post, data.Day, anchors: replyId.Length > 0 ? [replyId] : null)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.ContextReplies(post, data.Day, anchors: replyId.Length > 0 ? [replyId] : null)`
+- `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(data, personId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateMessages.CanChat(data, personId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；输入表达式：`post.Replies.Where(r => r.Day <= data.Day).DistinctBy(r => r.Id).Count()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = post.Replies.Where(r => r.Day <= data.Day).DistinctBy(r => r.Id).Count()`
+- `System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`post.Replies.Where(r => r.Day <= data.Day).DistinctBy(r => r.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: post.Replies.Where(r => r.Day <= data.Day).DistinctBy(r => r.Id).Count`
+- `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`CommunityThreads.All(data).First(p => p.Id == quote.PostId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.All(data).First(p => p.Id == quote.PostId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`discussion.Select(r => CareerEngine.DisplayName(data, r.AuthorId) + "：\n" + r.Body)`；返回值紧邻使用处：`ArgumentSyntax: discussion.Select(r => CareerEngine.DisplayName(data, r.AuthorId) + "：\n" + r.Body)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`post.Replies.Where(r => r.Day <= data.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: post.Replies.Where(r => r.Day <= data.Day).DistinctBy`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("社区举报仅针对该内容的 NPC 作者，请重新打开来源内容。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("社区举报仅针对该内容的 NPC 作者，请重新打开来源内容。");`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n\n", discussion.Select(r => CareerEngine.DisplayName(data, r.AuthorId) + "：\n" + r.Body))`；返回值紧邻使用处：`BinaryExpressionSyntax: (discussion.Count == total ? "\n\n帖子讨论（完整记录）\n" : "\n\n帖子讨论（开头、近期与被举报分支）\n") + string.Join("\n\n", discussion.Select(r => CareerEngine.DisplayName(data, r.AuthorId) + "：\n" + r.Body))`
+
+**赋值（含属性/字段和局部值）：**
+
+- `replyId` = `quote.ReplyId`
+- `report.AiDetail` = `"社区举报案件材料\n" + Evidence()`
+- `report.Detail` = `"社区举报案件材料\n" + report.Detail + "\n\n来源帖子正文\n" + quote.PostBody + (quote.PostSourceBody.Length > 0 ? "\n\n已记录事件\n" + quote.PostSourceBody : "") + (discussion.Count > 0 ? (discussion.Count == total ? "\n\n帖子讨论（完整记录）\n" : "\n\n帖子讨论（开头、近期与被举报分支）\n") + string.Join("\n\n", discussion.Select(r => CareerEngine.DisplayName(data, r.AuthorId) + "：\n" + r.Body)) : "")`
+- `report.Kind` = `Kind`
+
+<a id="symbol-8f21c83fe090"></a>
+
+## `Evidence() — string Evidence()`
+
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CommunityReporting.Create(NationalSpire.CareerData, string, string, string)`](CommunityReporting.cs.md#symbol-6bbc23d16690)
+
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CommunityQuote.AuthorId`；`NationalSpire.CommunityQuote.AuthorName`；`NationalSpire.CommunityQuote.Body`；`NationalSpire.CommunityQuote.Day`；`NationalSpire.CommunityQuote.ParentId`；`NationalSpire.CommunityQuote.PostAiSourceBody`；`NationalSpire.CommunityQuote.PostAuthorId`；`NationalSpire.CommunityQuote.PostAuthorName`；`NationalSpire.CommunityQuote.PostBody`；`NationalSpire.CommunityQuote.PostDay`；`NationalSpire.CommunityQuote.PostId`；`NationalSpire.CommunityQuote.PostRevision`；`NationalSpire.CommunityQuote.PostSourceBody`；`NationalSpire.CommunityQuote.PostTitle`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Body`；`NationalSpire.CommunityReply.Day`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`；`NationalSpire.CommunityReporting.ReportJson`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, r.AuthorId)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: author = CareerEngine.DisplayName(data, r.AuthorId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`discussion.Select(r => new { id = r.Id, parentId = r.ParentId, authorId = r.AuthorId, author = CareerEngine.DisplayName(data, r.AuthorId), day = r.Day, body = r.Body })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: discussion = discussion.Select(r => new { id = r.Id, parentId = r.ParentId, authorId = r.AuthorId, author = CareerEngine.DisplayName(data, r.AuthorId), day = r.Day, body = r.Body })`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { type = "community_report", sourcePost = new { id = quote.PostId, revision = quote.PostRevision, title = quote.PostTitle, authorId = quote.PostAuthorId, author = quote.PostAuthorName, day = quote.PostDay, body = quote.PostBody, recordedEvent = quote.PostAiSourceBody ?? quote.PostSourceBody }, reported = new { id = replyId.Length == 0 ? quote.PostId : replyId, kind = replyId.Length == 0 ? "post" : "reply", parentId = quote.ParentId, authorId = quote.AuthorId, author = quote.AuthorName, day = quote.Day, body = quote.Body }, discussionComplete = discussion.Count == total, totalReplies = total, discussion = discussion.Select(r => new { id = r.Id, parentId = r.ParentId, authorId = r.AuthorId, author = CareerEngine.DisplayName(data, r.AuthorId), day = r.Day, body = r.Body }) }, ReportJson)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.Serialize(new { type = "community_report", sourcePost = new { id = quote.PostId, revision = quote.PostRevision, title = quote.PostTitle, authorId = quote.PostAuthorId, author = quote.PostAuthorName, day = quote.PostDay, body = quote.PostBody, recordedEvent = quote.PostAiSourceBody ?? quote.PostSourceBody }, reported = new { id = replyId.Length == 0 ? quote.PostId : replyId, kind = replyId.Length == 0 ? "post" : "reply", parentId = quote.ParentId, authorId = quote.AuthorId, author = quote.AuthorName, day = quote.Day, body = quote.Body }, discussionComplete = discussion.Count == total, totalReplies = total, discussion = discussion.Select(r => new { id = r.Id, parentId = r.ParentId, authorId = r.AuthorId, author = CareerEngine.DisplayName(data, r.AuthorId), day = r.Day, body = r.Body }) }, ReportJson)`
+
+**赋值（含属性/字段和局部值）：**

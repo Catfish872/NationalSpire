@@ -24,13 +24,16 @@ public partial class CareerScreen
     private readonly Dictionary<string, string> _privateDrafts = [];
     private readonly HashSet<string> _privateExpandedReasoning = [];
     private int _privateScrollRevision;
+    private ChatComposerLayout? _privateActions;
+    private Action<bool>? _privateExpressions;
+    private ChatComposerPanel? _privateComposer;
     private static Label PrivateText(string value, int size, Color color)
     { var label = Text(value, size, color); label.Text = value; return label; }
 
     private void OpenPrivateMessages(string person = "", string group = "", int page = -1)
     {
         if (ViewData.Failure != null) return;
-        if (_privateOverlay != null) { if (person.Length > 0) SelectPrivate(person); else if (group.Length > 0) SelectGroup(group, page); return; }
+        if (_privateOverlay != null) { if (person.Length > 0) SelectPrivate(person, page); else if (group.Length > 0) SelectGroup(group, page); return; }
         using var timing = UiPerformance.Measure(UiPerformance.Work.PhoneOpen, "通讯");
         _privateRows.Clear(); _privateEntries.Clear();
         LoadChatPreferences();
@@ -73,7 +76,8 @@ public partial class CareerScreen
         _privateScroll = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; chat.AddChild(_privateScroll);
         _privateBody = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ExpandFill }; _privateBody.AddThemeConstantOverride("separation", 18); _privateScroll.AddChild(_privateBody);
         _privateStatus = Text("", 14, _muted); chat.AddChild(_privateStatus);
-        var composer = new PanelContainer(); composer.AddThemeStyleboxOverride("panel", CareerVisuals.Box("0d1926", "688498", 10, 14)); chat.AddChild(composer);
+        var composer = new ChatComposerPanel { Name = "PrivateComposer" }; _privateComposer = composer;
+        composer.AddThemeStyleboxOverride("panel", CareerVisuals.Box("0d1926", "688498", 10, 14)); chat.AddChild(composer);
         var composerBody = new VBoxContainer(); composerBody.AddThemeConstantOverride("separation", 12); composer.AddChild(composerBody);
         _privateAttachmentScroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, Visible = false }; composerBody.AddChild(_privateAttachmentScroll);
         _privateAttachments = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _privateAttachments.AddThemeConstantOverride("separation", 8); _privateAttachmentScroll.AddChild(_privateAttachments);
@@ -81,14 +85,8 @@ public partial class CareerScreen
         _privateInput.AddThemeStyleboxOverride("normal", new StyleBoxEmpty()); _privateInput.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
         _privateInput.AddThemeFontSizeOverride("font_size", 18); composerBody.AddChild(_privateInput);
         _privateInput.GuiInput += input => { if (input is InputEventKey { Pressed: true, Echo: false, CtrlPressed: true, Keycode: Key.Enter }) { _privateInput.AcceptEvent(); SendPrivate(); } };
-        var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 14); composerBody.AddChild(actions);
-        actions.AddChild(PrivateButton("＋", PrivateActions, 54));
-        BuildChatPagination(actions);
-        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-        _privateSend = PrivateButton("发送", SendPrivate, 150); actions.AddChild(_privateSend);
-        _privateSend.TooltipText = "Ctrl+Enter 发送";
-        _privateSend.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));
-        _privateSend.AddThemeColorOverride("font_color", new Color("172330"));
+        BuildPrivateComposerActions(composerBody);
+        composer.Bind(main, composerBody, _privateInput, _privateAttachmentScroll, _privateHeading);
         _privateSignature = _privateListSignature = "";
         if (person.Length == 0 && group.Length == 0)
         {
@@ -102,9 +100,32 @@ public partial class CareerScreen
             }
         }
         if (group.Length > 0 && GroupChats.Visible(ViewData).Any(g => g.Id == group)) SelectGroup(group, page);
-        else if (group.Length == 0 && person.Length > 0 && PrivateMessages.CanChat(ViewData, person)) SelectPrivate(person);
-        else { PrivateEmpty("选择一位选手", "搜索姓名，或从选手档案发起私信。"); _privateSend.Disabled = true; }
+        else if (group.Length == 0 && person.Length > 0 && PrivateMessages.CanChat(ViewData, person)) SelectPrivate(person, page);
+        else { PrivateEmpty("选择一位选手", "搜索姓名，或从选手档案发起私信。"); _privateSend!.Disabled = true; }
         RefreshPrivateList();
+    }
+    private void BuildPrivateComposerActions(VBoxContainer composerBody)
+    {
+        var actions = new ChatComposerLayout { Name = "PrivateComposerActions", SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        _privateActions = actions; composerBody.AddChild(actions);
+        var left = new HBoxContainer { Name = "PrivateComposerTools" }; left.AddThemeConstantOverride("separation", 14); actions.AddChild(left);
+        var more = PrivateButton("＋", PrivateActions, 54); more.Name = "PrivateMoreActions";
+        more.SizeFlagsVertical = SizeFlags.Fill; left.AddChild(more);
+        BuildChatPagination(actions);
+        var sendActions = new HBoxContainer { Name = "PrivateComposerSendActions" }; sendActions.AddThemeConstantOverride("separation", 7); actions.AddChild(sendActions);
+        var expand = PrivateButton("", () => _privateComposer!.Toggle(), 48); expand.Name = "PrivateExpand";
+        expand.ToggleMode = true; expand.TooltipText = "放大输入框 / 恢复默认大小"; expand.SizeFlagsVertical = SizeFlags.Fill;
+        var expandIcon = new ChatComposerExpandIcon { MouseFilter = MouseFilterEnum.Ignore }; expand.AddChild(expandIcon); sendActions.AddChild(expand);
+        _privateComposer!.ExpansionChanged += value => { expand.SetPressedNoSignal(value); expandIcon.Expanded = value; expandIcon.QueueRedraw(); };
+        _privateSend = PrivateButton("发送", SendPrivate, 80 + ChatComposerLayout.SendWidthIncrease); _privateSend.Name = "PrivateSend";
+        _privateSend.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+        _privateSend.SizeFlagsHorizontal = SizeFlags.ExpandFill; _privateSend.SizeFlagsVertical = SizeFlags.Fill; sendActions.AddChild(_privateSend);
+        _privateSend.TooltipText = "Ctrl+Enter 发送";
+        _privateSend.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));
+        _privateSend.AddThemeColorOverride("font_color", new Color("172330"));
+        _privateExpressions = CommunityReplyExpressions.Attach(_privateInput!, composerBody, left, actions);
+        _privateExpressions(false);
+        ChatComposerLayout.CompactButtons(actions);
     }
     private void ClosePrivateMessages()
         => ClosePrivateMessagesCore(true);
@@ -116,10 +137,19 @@ public partial class CareerScreen
         _privateStreamText = _privateStreamThought = _groupReasoningUpdate = null;
         _groupStreamParser = null; _groupStreamLabels.Clear();
         _privatePages.Reset(_chatPageSize); _groupPages.Reset(_chatPageSize);
+        _privateExpandedIdentities.Clear(); _privateExpandedTraining.Clear(); _privateExpressions = null; _privateActions = null; _privateComposer = null;
         _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = ""; _privateGroup = "";
         _boundData = ViewData; if (render) Render();
     }
-    private void SelectPrivate(string person)
+    private void OpenPrivatePerson(string person)
+    {
+        if (ViewData.Failure != null) return;
+        var previous = CaptureLocation() with { PrivatePerson = _privatePerson, ChatScroll = _privateScroll!.ScrollVertical, ChatPage = ChatPage };
+        ClosePrivateMessagesCore(false);
+        Visit(() => { _tab = "选手档案"; _personId = person; });
+        _backHistory.Pop(); _backHistory.Push(previous); UpdateNavigation();
+    }
+    private void SelectPrivate(string person, int page = -1)
     {
         if (!PrivateMessages.CanChat(ViewData, person)) return;
         if (_privateGroup.Length > 0 && _privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
@@ -130,6 +160,7 @@ public partial class CareerScreen
         RefreshPrivateAttachments(); _privateListSignature = "";
         ResetChatPage();
         PrivateMessages.Conversation(ViewData, person);
+        if (page >= 0) { BindChatPage(true); _privatePages.Move(page); InvalidateChatPage(0); }
         SaveChatPreferences(); RefreshPrivateChat();
     }
     private void TickPrivate(double delta)
@@ -275,6 +306,7 @@ public partial class CareerScreen
         bubble.AddThemeStyleboxOverride("panel", CareerVisuals.Box(player ? "304b60" : "223649", player ? "597f98" : "405c72", 10, 16)); row.AddChild(bubble);
         var content = new VBoxContainer(); content.AddThemeConstantOverride("separation", 8); bubble.AddChild(content);
         var message = PrivateSelectableText(text, 19, _ink); content.AddChild(message);
+        if (player && CommunityReporting.IsReport(turn)) content.AddChild(PrivateAttachmentCard(turn.Request!, false));
         if (player) foreach (var a in turn.Attachments) content.AddChild(PrivateAttachmentCard(a, false));
         var more = PrivateButton("···", () => PrivateMessageMenu(turn, player), 42); more.TooltipText = player ? "管理消息" : "管理消息与重新生成"; row.AddChild(more);
         if (!player) row.AddChild(blank);
@@ -288,12 +320,13 @@ public partial class CareerScreen
     }
     private void SendPrivate()
     {
-        if (_privateGroup.Length > 0) { SendGroup(); return; }
+        if (_privateGroup.Length > 0) { _privateComposer?.SetExpanded(false); SendGroup(); return; }
         if (_privatePerson.Length == 0) return;
         var c = PrivateMessages.Conversation(ViewData, _privatePerson);
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) { PrivateCommand("dm-stop", new()); return; }
         string text = _privateInput!.Text;
         if (string.IsNullOrWhiteSpace(text) && PrivateAttachments.Count == 0) return;
+        _privateComposer?.SetExpanded(false);
         string person = _privatePerson; var attachments = PrivateAttachments.ToList();
         PrivateCommand("dm-send", new() { Text = text, Attachments = attachments }, () =>
         {

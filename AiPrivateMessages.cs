@@ -51,7 +51,8 @@ public static partial class AiService
             if (turn.Status != "queued") return;
             if (turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             originalFavour = PrivateMessages.Favour(data, person);
-            turn.Context = PrivateMessagePrompts.Context(data, conversation, turn);
+            turn.Context = turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn)
+                : PrivateMessagePrompts.Context(data, conversation, turn);
             turn.Status = "sending"; turn.Error = ""; save(data);
             if (turn.RequestKind == "arbitration")
             {

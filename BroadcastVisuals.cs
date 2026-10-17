@@ -80,6 +80,7 @@ public partial class BroadcastScroll : ScrollContainer
         while (current != null && current != this)
         {
             if (current is SpinBox or TextEdit or ScrollContainer or Popup) return;
+            if (current is Control { MouseFilter: MouseFilterEnum.Stop, MouseForcePassScrollEvents: false }) return;
             current = current.GetParent();
         }
         if (hovered != null && current != this) return;

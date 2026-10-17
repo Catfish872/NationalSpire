@@ -209,7 +209,7 @@ public static partial class AiService
             if (!data.Ai.Enabled || !CareerStore.IsCurrent(data)) return;
             if (pending.Any(p => p.NewsGeneration.State == "superseded"))
             { foreach (var p in pending) { p.AiPending = false; CommunityThreads.SetWork(p.NewsGeneration, "superseded"); } return; }
-            ApplyNewsResponse(data, pending, content);
+            ApplyNewsResponse(data, pending, content, snapshots.ToDictionary(p => p.Id, p => p.Revision));
             Diagnostics.Record("ai.applied", new { trace, kind = "news", posts = pending.Select(p => p.Id).ToArray() });
             Status = $"已发布 {pending.Count} 篇 AI 更新"; CareerStore.Save(data);
         }
@@ -248,10 +248,10 @@ public static partial class AiService
 
     private static void ApplyResponse(CareerData data, List<CommunityPost> pending, string content)
         => ApplyNewsResponse(data, pending, content);
-    private static void ApplyNewsResponse(CareerData data, List<CommunityPost> pending, string content)
+    private static void ApplyNewsResponse(CareerData data, List<CommunityPost> pending, string content, Dictionary<string, long>? sourceRevisions = null)
     {
         using var parsed = JsonDocument.Parse(content);
-        var staged = new List<(CommunityPost Post, string Title, string Body, List<CommunityReply> Replies)>();
+        var staged = new List<(CommunityPost Post, string Title, string Body, List<CommunityReply> Replies, int? Score, long Revision)>();
         var seen = new HashSet<string>();
         var authors = ReplyAuthors(data);
         foreach (var item in parsed.RootElement.GetProperty("posts").EnumerateArray())
@@ -263,11 +263,12 @@ public static partial class AiService
             string title = item.GetProperty("title").GetString() ?? "";
             if (string.IsNullOrWhiteSpace(title)) throw new InvalidDataException("标题无效");
             if (string.IsNullOrWhiteSpace(body)) throw new InvalidDataException("正文无效");
-            var replies = ParseReplies(item.GetProperty("replies"), post, authors, false, data.Day);
+            long revision = sourceRevisions?.GetValueOrDefault(post.Id) ?? post.Revision;
+            var replies = ParseReplies(item.GetProperty("replies"), post, authors, false, data.Day, sourceRevision: revision);
             if (replies.Any(r => CareerEngine.Person(data, r.AuthorId) is { } p && SpireArbitration.Muted(p))
                 || CareerEngine.Person(data, post.AuthorId) is { } author && SpireArbitration.Muted(author))
                 throw new InvalidDataException("发言者受到封号处分，本次内容未发布。");
-            staged.Add((post, title, body, replies));
+            staged.Add((post, title, body, replies, ReadNetScore(item), revision));
         }
         if (staged.Count != pending.Count) throw new InvalidDataException("批次不完整");
         // 整批校验后一次提交；生成完整帖子，同时另存官方事实供赛果核对。
@@ -275,6 +276,7 @@ public static partial class AiService
         {
             if (item.Post.SourceBody.Length == 0) { item.Post.SourceTitle = item.Post.Title; item.Post.SourceBody = item.Post.Body; }
             item.Post.Title = item.Title; item.Post.Body = item.Body; item.Post.Analysis = "";
+            CommunityVotes.ApplyScore(item.Post, item.Score, item.Revision);
             if (item.Post.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId))) item.Post.Replies.AddRange(item.Replies);
             else item.Post.Replies = item.Replies;
             item.Post.AiPending = false; item.Post.Revision++;

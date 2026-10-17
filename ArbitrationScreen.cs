@@ -4,6 +4,67 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
+    private void ReportDiscussion(string postId, string replyId)
+    {
+        if (_dialogOverlay != null) return;
+        CommunityQuote quote;
+        try
+        {
+            var data = ViewData;
+            quote = CommunitySharing.Create(data, postId, replyId).Quote!;
+            if (!PrivateMessages.CanChat(data, quote.AuthorId)) throw new InvalidOperationException("社区举报适用于 NPC 作者的内容。");
+        }
+        catch (Exception e) { Notice(e.Message, true); return; }
+        Label? status = null;
+        TextEdit? reason = null;
+        ShowCareerDialog("确认举报", "确认后将申请官方仲裁，并前往该作者的私聊查看审理进度与结果。", () =>
+        {
+            try
+            {
+                var current = ViewData;
+                var latest = CommunitySharing.Create(current, postId, replyId).Quote!;
+                if (latest.AuthorId != quote.AuthorId || latest.Body != quote.Body)
+                    throw new InvalidOperationException("被举报内容已更新，请关闭弹窗后重新打开举报。");
+                if (!PrivateMessages.CanChat(current, latest.AuthorId)) throw new InvalidOperationException("这位作者已无法接受仲裁，请重新打开来源内容。");
+                if (current.Failure != null) throw new InvalidOperationException("请先处理当前比赛结果。");
+                _cancelDialog?.Invoke();
+                // 确认后独立提交仲裁，保留该人物的输入框与附件草稿。
+                OpenPrivateMessages(latest.AuthorId);
+                PrivateCommand("dm-arbitrate", new() { Text = reason!.Text, Request = new() { Kind = CommunityReporting.Kind,
+                    Quote = new() { PostId = postId, ReplyId = replyId } } });
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (_dialogOverlay != null && IsInstanceValid(status)) { status!.Text = e.Message; status.Visible = true; }
+                else Notice(e.Message, true);
+                return false;
+            }
+        }, "确认举报", box =>
+        {
+            var author = Text("被举报作者 · " + quote.AuthorName, 20, _gold);
+            author.Name = "ReportAuthor"; author.AutowrapMode = TextServer.AutowrapMode.Off;
+            author.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; author.TooltipText = quote.AuthorName;
+            author.MouseFilter = MouseFilterEnum.Pass; box.AddChild(author);
+            var source = Text("来源帖子 · " + quote.PostTitle, 16, _muted);
+            source.Name = "ReportSource"; source.AutowrapMode = TextServer.AutowrapMode.Off;
+            source.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; source.TooltipText = quote.PostTitle;
+            source.MouseFilter = MouseFilterEnum.Pass; box.AddChild(source);
+            var scroll = new ScrollContainer { CustomMinimumSize = new(0, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
+            box.AddChild(scroll);
+            var body = Text(quote.Body, 18, _ink); body.Name = "ReportBody";
+            scroll.AddChild(body);
+            reason = new TextEdit
+            {
+                Name = "ReportReason", PlaceholderText = "可自定义举报原因；留空时使用默认举报说明。",
+                CustomMinimumSize = new(0, 90), SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                WrapMode = TextEdit.LineWrappingMode.Boundary
+            };
+            reason.AddThemeFontSizeOverride("font_size", 18); box.AddChild(reason);
+            status = Text("", 16, _muted); status.Name = "ReportStatus"; status.Visible = false; box.AddChild(status);
+        });
+    }
+
     private void PrivateArbitrationDialog()
     {
         TextEdit? reason = null;

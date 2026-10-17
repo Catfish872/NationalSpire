@@ -128,6 +128,8 @@ public sealed class PrivateOffer
     public string Detail { get; set; } = "";
     [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
     public string? AiDetail { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public CommunityQuote? Quote { get; set; }
     public int Season { get; set; }
     public int Day { get; set; }
     public int Ascension { get; set; }
@@ -138,6 +140,37 @@ public sealed class PrivateOffer
     public int Weeks { get; set; } = 8;
     public string Role { get; set; } = "轮换";
     public string MatchId { get; set; } = "";
+}
+
+public sealed class CommunityQuote
+{
+    public string PostId { get; set; } = "";
+    public string ReplyId { get; set; } = "";
+    public string ParentId { get; set; } = "";
+    public long PostRevision { get; set; }
+    public string PostTitle { get; set; } = "";
+    public string PostAuthorId { get; set; } = "";
+    public string PostAuthorName { get; set; } = "";
+    public string PostBody { get; set; } = "";
+    public string PostSourceBody { get; set; } = "";
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? PostAiSourceBody { get; set; }
+    public int PostDay { get; set; }
+    public string AuthorId { get; set; } = "";
+    public string AuthorName { get; set; } = "";
+    public string Body { get; set; } = "";
+    public int Day { get; set; }
+    public List<CommunityQuoteReply> Parents { get; set; } = [];
+}
+
+public sealed class CommunityQuoteReply
+{
+    public string Id { get; set; } = "";
+    public string ParentId { get; set; } = "";
+    public string AuthorId { get; set; } = "";
+    public string AuthorName { get; set; } = "";
+    public string Body { get; set; } = "";
+    public int Day { get; set; }
 }
 
 public static class PrivateInteractionIds
