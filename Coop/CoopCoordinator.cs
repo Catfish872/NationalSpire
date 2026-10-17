@@ -57,6 +57,7 @@ public sealed partial class CoopCoordinator : IDisposable
             CoopRules.AdvanceMembers(World);
             WeeklyJournal.Recover(World.World);
             WeeklyJournal.ActivateLatest(World.World);
+            CommunityThreads.Normalize(World.World);
             CommunityThreads.RecoverInterrupted(World.World); Commit(World, NativeSave, false);
         }
         _transport.Received += Receive;

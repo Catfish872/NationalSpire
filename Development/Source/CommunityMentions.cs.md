@@ -19,7 +19,7 @@
 
 来源：源码第 5 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Choose(int)`](MentionComposer.cs.md#symbol-c6ce7c91e139)；[`NationalSpire.CommunityMentions.Resolve(NationalSpire.CareerData, string)`](CommunityMentions.cs.md#symbol-a915a754512b)
+**调用者：** [`Choose(int)`](MentionComposer.cs.md#symbol-321e08719a8c)；[`NationalSpire.CommunityMentions.Resolve(NationalSpire.CareerData, string)`](CommunityMentions.cs.md#symbol-a915a754512b)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`
 
@@ -102,7 +102,7 @@
 
 来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityThreads.Normalize(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-95e97a5c9007)；[`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)
+**调用者：** [`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)
 
 **调用：** [`NationalSpire.CommunityMentions.Resolve(NationalSpire.CareerData, string)`](CommunityMentions.cs.md#symbol-a915a754512b)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`
 

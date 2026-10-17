@@ -132,8 +132,6 @@ public static partial class AiService
             ["identities"] = p.Identities, ["familiarPeople"] = p.Connections.Take(2).Select(id => CareerEngine.DisplayName(data, id)),
             ["worldHonors"] = CircuitLedger.PublicStanding(data, p.Id, day ?? data.Day), ["MaxAscension"] = known ? (int?)p.MaxAscension : null,
             ["Wins"] = known ? (int?)p.Wins : null, ["Losses"] = known ? (int?)p.Losses : null,
-            ["followers"] = known ? (int?)CareerAudience.Followers(p) : null,
-            ["popularity"] = known ? CareerAudience.Title(CareerAudience.Followers(p)) : null,
             ["introduction"] = p.IntroductionDay <= (day ?? data.Day) ? p.AiIntroduction : "",
             ["introductionAsOfDay"] = p.IntroductionDay <= (day ?? data.Day) ? p.IntroductionDay : 0,
             ["supports"] = p.SupportedClubId.Length == 0 ? "" : EsportsWorld.ClubName(data, p.SupportedClubId)
@@ -175,7 +173,7 @@ public static partial class AiService
         {
             bool complete = requested.Contains(post.Id) || post.Replies.Any(r => requested.Contains(r.Id)) || post.Replies.Count <= 40;
             var conversation = CommunityThreads.ContextReplies(post, data.Day, complete);
-            return new { post.Id, post.AuthorId, post.Title, post.Day, post.Body, post.Revision, netScore = post.AiNetScore,
+            return new { post.Id, post.AuthorId, post.Title, post.Day, post.Body,
                 bodyKind = CommunityThreads.IsHuman(data, post.AuthorId) || post.PersonalPost || post.SourceBody.Length > 0 ? "opinion" : "fact",
                 officialRecord = !CommunityThreads.IsHuman(data, post.AuthorId) && post.SourceBody.Length > 0 ? AiGeneratedText.Source(post) : null,
                 mentionRequests = post.Replies.Where(r => requested.Contains(r.Id)).Select(r => new { messageId = r.Id, requiredAuthors = r.MentionedPeople.Where(id => CareerEngine.Person(data, id) is { } p && !SpireArbitration.Muted(p)).ToArray() })
@@ -183,7 +181,7 @@ public static partial class AiService
                 match = MatchContext(data, post), allowedAuthors = DiscussionPeople(data, post, requested).Select(p => p.Id).ToArray(),
                 对玩家的态度 = ReplyAttitudes(data, post, DiscussionPeople(data, post, requested), occasion),
                 conversationScope = complete ? "完整帖子" : "附带相关帖子：最初两层、最近十六层及其父回复",
-                conversation = conversation.Select(r => new { r.Id, r.ParentId, r.AuthorId, r.Day, r.Body, netScore = r.AiNetScore }).ToArray() };
+                conversation = conversation.Select(r => new { r.Id, r.ParentId, r.AuthorId, r.Day, r.Body }).ToArray() };
         }).ToArray();
         var suppliedMemory = contexts.SelectMany(p => p.conversation.Select(r => p.Id + ":" + r.Id))
             .Concat(targets.SelectMany(p => new[] { p.Id + ":fact", p.Id + ":editorial", p.Id + ":result" })).ToHashSet();
@@ -196,9 +194,7 @@ public static partial class AiService
         var memories = CommunityMemorySearch.Retrieve(data, query, memoryPeople, data.Day, new HashSet<string>(), 8, suppliedMemory);
         var names = targets.Select(p => p.AuthorId).Concat(contexts.SelectMany(p => p.conversation.Select(r => r.AuthorId)))
             .Where(id => id != "player" && people.All(p => p.Id != id)).Distinct()
-            .Select(id => new { Id = id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id),
-                role = CareerEngine.Person(data, id)?.Role, followers = CareerAudience.Followers(data, id),
-                popularity = CareerAudience.Title(CareerAudience.Followers(data, id)) });
+            .Select(id => new { Id = id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id) });
         var latest = data.Results.LastOrDefault(r => r.OfficialAscensionVerified && r.Day <= data.Day && r.Kind != "private-friendly");
         bool hasLatestEvidence = latest != null && memories.Any(m => m.Id.EndsWith(":result") && m.Day == latest.Day && m.People.Contains("player") && m.People.Contains(latest.OpponentId));
         var sharedGroups = new ChatTimeline.PublicMemoryRequest(data);
@@ -211,33 +207,14 @@ public static partial class AiService
     }
     private static HashSet<string> ReplyAuthors(CareerData data) => data.People
         .Where(p => !CommunityThreads.IsHuman(data, p.Id)).Select(p => p.Id).ToHashSet();
-    private sealed record DiscussionPermission(HashSet<string> Parents, long Revision, bool ScoreUpdatesAllowed);
+    private sealed record DiscussionPermission(HashSet<string> Parents);
     private static Dictionary<string, DiscussionPermission> ReadDiscussionPermissions(string context)
     {
         using var document = JsonDocument.Parse(context);
-        var scoringPosts = document.RootElement.GetProperty("queued").EnumerateArray()
-            .Select(item => item.GetProperty("postId").GetString()!).ToHashSet();
         return document.RootElement.GetProperty("targets").EnumerateArray().ToDictionary(p => p.GetProperty("Id").GetString()!,
-            p => new DiscussionPermission(p.GetProperty("conversation").EnumerateArray().Select(r => r.GetProperty("Id").GetString()!).ToHashSet(),
-                p.TryGetProperty("Revision", out var revision) && revision.TryGetInt64(out long value) ? value : 0,
-                scoringPosts.Contains(p.GetProperty("Id").GetString()!)));
+            p => new DiscussionPermission(p.GetProperty("conversation").EnumerateArray().Select(r => r.GetProperty("Id").GetString()!).ToHashSet()));
     }
-    private static int? ReadNetScore(JsonElement item)
-        => item.ValueKind == JsonValueKind.Object && item.TryGetProperty("netScore", out var score)
-            && score.ValueKind == JsonValueKind.Number && score.TryGetInt32(out int value) ? value : null;
-    private static Dictionary<string, int> ReadScoreUpdates(JsonElement item, DiscussionPermission permission)
-    {
-        var result = new Dictionary<string, int>();
-        if (!permission.ScoreUpdatesAllowed || !item.TryGetProperty("scoreUpdates", out var updates)
-            || updates.ValueKind != JsonValueKind.Array) return result;
-        foreach (var update in updates.EnumerateArray())
-            if (update.ValueKind == JsonValueKind.Object && update.TryGetProperty("id", out var id)
-                && id.ValueKind == JsonValueKind.String && permission.Parents.Contains(id.GetString()!)
-                && ReadNetScore(update) is int score) result[id.GetString()!] = score;
-        return result;
-    }
-    internal static List<CommunityReply> ParseReplies(JsonElement array, CommunityPost post, ISet<string> allowed, bool existingParents, int day,
-        ISet<string>? suppliedParents = null, long? sourceRevision = null)
+    internal static List<CommunityReply> ParseReplies(JsonElement array, CommunityPost post, ISet<string> allowed, bool existingParents, int day, ISet<string>? suppliedParents = null)
     {
         var result = new List<CommunityReply>(); var aliases = new Dictionary<string, string>();
         var existing = existingParents ? post.Replies.Select(r => r.Id).ToHashSet() : new HashSet<string>();
@@ -253,7 +230,6 @@ public static partial class AiService
                 throw new InvalidDataException("回复标识或人物无效");
             if (parent.Length > 0 && !existing.Contains(parent) && !aliases.ContainsKey(parent)) throw new InvalidDataException("回复目标无效或顺序错误");
             var reply = new CommunityReply { AiGenerated = true, AuthorId = author, ParentId = aliases.GetValueOrDefault(parent, parent), Body = body, Day = day };
-            CommunityVotes.ApplyScore(reply, ReadNetScore(item), sourceRevision ?? post.Revision);
             aliases[localId] = reply.Id; result.Add(reply);
         }
         if (result.Count == 0) throw new InvalidDataException("缺少回复");
@@ -264,8 +240,7 @@ public static partial class AiService
     private static void ApplyDiscussionCore(CareerData data, ISet<string> requested, List<CommunityPost> targets, string content, Dictionary<string, DiscussionPermission> permissions)
     {
         using var parsed = JsonDocument.Parse(content);
-        var staged = new List<(CommunityPost Post, List<CommunityReply> Replies, int? Score, long Revision, Dictionary<string, int> Updates)>();
-        var seen = new HashSet<string>();
+        var staged = new List<(CommunityPost Post, List<CommunityReply> Replies)>(); var seen = new HashSet<string>();
         var replyAuthors = ReplyAuthors(data);
         foreach (var item in parsed.RootElement.GetProperty("reactions").EnumerateArray())
         {
@@ -273,21 +248,14 @@ public static partial class AiService
             var post = targets.FirstOrDefault(p => p.Id == id);
             if (post == null || !seen.Add(id) || !CommunityThreads.All(data).Contains(post)) throw new InvalidDataException("回应帖子无效");
             if (!permissions.TryGetValue(id, out var permission)) throw new InvalidDataException("帖子未包含于请求");
-            staged.Add((post, ParseReplies(item.GetProperty("replies"), post, replyAuthors, true, data.Day, permission.Parents, permission.Revision),
-                permission.ScoreUpdatesAllowed ? ReadNetScore(item) : null, permission.Revision, ReadScoreUpdates(item, permission)));
+            staged.Add((post, ParseReplies(item.GetProperty("replies"), post, replyAuthors, true, data.Day, permission.Parents)));
         }
         if (staged.Count == 0) return;
         if (staged.SelectMany(s => s.Replies).Any(r => CareerEngine.Person(data, r.AuthorId) is { } p && SpireArbitration.Muted(p)))
             throw new InvalidDataException("回复期间有人受到封号处分，请重新生成其他选手的回应。");
         var awaiting = CommunityThreads.PendingIds(data).ToHashSet();
         if (!requested.All(awaiting.Contains)) throw new InvalidDataException("本轮留言状态已变化");
-        foreach (var item in staged)
-        {
-            CommunityVotes.ApplyScore(item.Post, item.Score, item.Revision);
-            foreach (var reply in item.Post.Replies)
-                if (item.Updates.TryGetValue(reply.Id, out int score)) CommunityVotes.ApplyScore(reply, score, item.Revision);
-            item.Post.Replies.AddRange(item.Replies); item.Post.Revision++; CommunityThreads.Remember(data, item.Post);
-        }
+        foreach (var item in staged) { item.Post.Replies.AddRange(item.Replies); item.Post.Revision++; CommunityThreads.Remember(data, item.Post); }
         foreach (var r in CommunityThreads.All(data).SelectMany(p => p.Replies).Where(r => requested.Contains(r.Id))) r.NeedsReaction = false;
         foreach (var p in CommunityThreads.All(data).Where(p => requested.Contains(p.Id))) p.NeedsReaction = false;
     }

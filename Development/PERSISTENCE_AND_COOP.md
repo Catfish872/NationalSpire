@@ -10,7 +10,7 @@
 
 ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last 与 size。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看私聊人物或群成员档案后的Back从导航历史恢复对应会话、页面及滚动位置。
 
-私信状态按钮及其右侧说明归当前身份控件，点击仅修改可见性，重建时收起；私信关系/好感按钮共用的详情展开集合、底栏居中状态、保留中心的按钮缩放占位、输入框放大状态与表情面板归当前通讯窗口。点击详情、放大/还原输入框、切换表情分类及插入的专用保存/广播次数为0；插入通过原TextEdit与草稿字典保留文字。私信与群聊共用表情入口及当前分类，关闭通讯清空身份详情及训练详情展开集合并释放表情控件，原文字及附件草稿继续沿CareerScreen生命周期管理。头像与姓名打开档案共用OpenPrivatePerson，先将当前私聊人物、页码、滚动值写入本机Location，再保留输入草稿并沿关闭通讯和Visit入口跳转。返回沿OpenPrivateMessages及SelectPrivate恢复，读取和保存调用仍使用原偏好与已读入口。该布局改动沿用现有存档结构与房主/客机命令、检查点流程；真实联机交互与分阶段耗时仍待验证。
+私信状态按钮及其右侧说明归当前身份控件，点击仅修改可见性，重建时收起；私信关系/好感按钮共用的人物详情展开设置归本机聊天配置；底栏居中状态、保留中心的按钮缩放占位、输入框放大状态与表情面板归当前通讯窗口。点击人物详情写入本机聊天设置一次；生涯保存与业务广播次数为0。放大/还原输入框、切换表情分类及插入的专用保存/广播次数为0；插入通过原TextEdit与草稿字典保留文字。私信与群聊共用表情入口及当前分类，关闭通讯清空训练详情展开集合并释放表情控件，人物详情展开状态由本机配置保留，原文字及附件草稿继续沿CareerScreen生命周期管理。头像与姓名打开档案共用OpenPrivatePerson，先将当前私聊人物、页码、滚动值写入本机Location，再保留输入草稿并沿关闭通讯和Visit入口跳转。返回沿OpenPrivateMessages及SelectPrivate恢复，读取和保存调用仍使用原偏好与已读入口。该布局改动沿用现有存档结构与房主/客机命令、检查点流程；真实联机交互与分阶段耗时仍待验证。
 
 PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只在最新页面调用原 dm-read / group-read；单人进入 CareerStore.Save，多人进入 ICareerSession.Send 与原房主提交、检查点和回执流程。最近会话选择通过上述本地配置保存，旧 dm-select 命令保留在规则与网络兼容入口。记录分页只选择控件使用的原轮次引用，生涯原文、总结及模型上下文仍由原存储与生成流程处理。调用与缓存生命周期见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
 
@@ -26,7 +26,7 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 
 ## 单人生涯保存的顺序
 
-社区主楼或评论改票由DiscussionVotes的Vote调用CommunityVotes.SetVote，实际选择变化后调用一次CareerStore.Save；该函数只改PlayerVotes和帖子VoteRevision。保存抛错时，界面恢复改票前选择及VoteRevision，再显示错误；成功后刷新本行按钮和数值。票数随帖子完整JSON保存，离开页面、切换生涯和进程重新打开继续从已保存记录读取。旧档基础评分为null时仍可记录玩家票，下一次原AI任务返回有效分数后合并。
+社区主楼或评论改票由DiscussionVotes调用CommunityVotes.SetVote，实际变化后一次CareerStore.Save。保存抛错时恢复改票前选择及VoteRevision，再显示错误；成功后刷新本行按钮和数值。PlayerVotes随帖子JSON保存，页面切换和重新启动继续读取保存记录。旧内容通过CommunityVersion=4的一次升级取得程序评分。
 
 新闻与社区回帖入队异常进入各自原失败收尾，任务状态保存后释放已取得的队列凭据，回帖先清理 ScheduledInteractions。单人继续由 CareerStore.Save 提交，多人公共新闻继续由 CoopAi.ExternalSave 合并改变的帖子并提交原检查点与广播，社区回帖继续使用原公共保存回调。成功路径的保存次数与提交顺序沿用原流程；入队失败新增执行原本被跳过的那次失败状态保存。保存自身失败仍向调用者报告，函数 finally 负责释放队列凭据。已保存失败状态在重启后继续供原重试入口读取；旧中断记录由 RecoverInterrupted 转为 failed。执行步骤与验证入口见[社区与周刊状态依赖](AI_FLOWS.md#社区与周刊状态依赖)。
 
@@ -164,11 +164,11 @@ CoopRules.Apply 仍在完整副本上执行，失败返回原 World，成功沿�
 
 公共 AI 使用 ExternalCurrent / ExternalSave，CoopAi 完成时只合并该任务的新帖子、回复、周刊与资料；保留期间其他成员内容。业务规则执行前的 World 副本仍用于错误时不提交部分修改。
 
-CommunityVotes.AudienceScore在读取时将AiNetScore对主楼/NPC回复乘6，玩家回复按CommunityThreads.IsHuman选用16倍，玩家手动±1票最后另加；原始评分及版本继续按原格式保存、传递给AI并同步，读取操作产生0次保存或业务广播。旧档复用现有字段。社区评分随上述原回调提交。ProcessDiscussion 建立任务快照时保存每帖、每条评论的 AiNetScore / AiScoreRevision；MergeDiscussionScores 只处理相对该快照上次已合并状态发生变化的评分，并交给 CommunityVotes.ApplyScore 与房主最新版本比较。已有评论按首次实际分数变化建立一次编号字典；新评论继续沿原追加入口加入。合并完成后记录任务已消费的评分，finally 再次保存状态时沿用该记录，期间玩家票和其他请求已生成的评分留在最新 World。
+CommunityVotes.Update在CommunityThreads.Remember中、原保存前统一计算主楼及评论。读取只使用已存AudienceScore和PlayerVotes。每次Update建立本次人物、评论、父子索引及关注缓存，计算量随人物数、评论数及正文长度增长，缓存随调用结束释放。额外生涯复制、保存与业务广播次数为0。Normalize低于版本4时升级一次，达到4时常数时间返回；房主恢复通过相同入口计算，客机读取已保存的房主快照。
 
-ProcessPublications 替换生成帖子时先取得当前 PlayerVotes、VoteRevision 和基础评分；只有任务自身主楼评分变化才调用 ApplyScore。同编号原评论沿用房主最新对象，同编号新评论保留最新玩家票并比较评分版本，任务开始后新增的其他回复继续合并。每次 ExternalSave 仍先复制最新 World、应用本任务变化，有实际变化才递增 World.Revision 并 Commit，检查点与广播沿原提交顺序执行。任务代次、世界编号、Epoch 继续控制离开和切换后的有效性；旧保存缺少评分字段时按模型默认值恢复。
+ProcessDiscussion将本任务新回复和完成状态合并到房主最新帖子，再调用Remember重新计算整帖评分。ProcessPublications保留当前PlayerVotes / VoteRevision，同编号原评论沿用最新对象，新评论保留最新玩家票，期间其他回复继续合并；替换完成后Remember计算最新正文的评分。ExternalSave继续复制最新World、应用本任务变化、递增World.Revision并Commit。任务代次、世界编号及Epoch继续控制切换后的有效性；评分随原检查点、广播及客机保存一起提交。
 
-赞踩专项使用最终生产程序集与合成资料，完整CareerData的JSON往返及旧字段缺失读取通过；UI保存回调注入异常后，选择、净值、按钮高亮、VoteRevision和草稿恢复通过。实际CoopRules.Apply/View覆盖发送者身份、成员独立票、收据去重、单人在线、准备比赛期间操作、个人视图和非法票值的原子拒绝；反射调用实际CoopAi.MergeDiscussionScores覆盖旧评分快照、较新房主评分、玩家票保留和重复保存幂等。存储使用内存回调，真实CareerStore文件写入、CoopStorage检查点、房客发送接收及断线恢复在本轮尚未验证，相关分阶段耗时也待测。证据为本地Previews/community-step4-votes/domain-validation.json、synthetic-save-roundtrip.json及ui-validation-rendered.json；具体全请求覆盖见[AI流程](AI_FLOWS.md#社区与周刊状态依赖)。
+2026-10-17验证覆盖完整JSON往返、旧评分升级、玩家票保留和实际界面保存失败恢复。CoopCoordinator并发检查使用实际CoopStorage文件保存及内存消息传输，覆盖房主/客机独立票、乱序生成、失败重试、新闻与回帖交错、资金变化保留及帖子完整同步。真实Steam传输、断线恢复和真实API本轮待测。入口为CommunityVoteChecks、CoopCommunityConcurrencyChecks及CommunityPrUiChecks，本地证据位于.artifacts/pr12-validation-20261017。
 
 ## 完整快照与流式分片的区别
 

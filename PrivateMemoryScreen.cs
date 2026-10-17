@@ -4,8 +4,6 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private readonly HashSet<string> _privateExpandedIdentities = [];
-
     private Control PrivateIdentity(CareerData data, string id, bool showProfile)
     {
         var person = CareerEngine.Person(data, id)!;
@@ -65,13 +63,15 @@ public partial class CareerScreen
             else { status.AutowrapMode = TextServer.AutowrapMode.WordSmart; name.AddChild(status); }
         }
         Control? disclosure = null; Button? bondButton = null, favourButton = null; Label? favourCaption = null;
+        bool expanded = !showProfile || ChatPreferences.GetValue(ChatPreferenceKey, "identity:" + id, true).AsBool();
         void ToggleDetails()
         {
-            bool expanded = !_privateExpandedIdentities.Remove(id);
-            if (expanded) _privateExpandedIdentities.Add(id);
+            expanded = !expanded;
             disclosure!.Visible = expanded;
             favourCaption!.Visible = expanded;
             bondButton!.SetPressedNoSignal(expanded); favourButton!.SetPressedNoSignal(expanded);
+            ChatPreferences.SetValue(ChatPreferenceKey, "identity:" + id, expanded);
+            WriteChatPreferences();
         }
         if (showProfile)
         {
@@ -110,7 +110,7 @@ public partial class CareerScreen
         {
             favourCaption = caption; favourButton!.AddChild(caption);
             caption.SetAnchorsAndOffsetsPreset(LayoutPreset.BottomWide); caption.OffsetTop = 8; caption.OffsetBottom = 30;
-            caption.MouseFilter = MouseFilterEnum.Ignore; caption.Visible = _privateExpandedIdentities.Contains(id);
+            caption.MouseFilter = MouseFilterEnum.Ignore; caption.Visible = expanded;
             caption.CustomMinimumSize = new(94, 0);
             PrivateIgnoreMouse(favour);
         }
@@ -119,7 +119,7 @@ public partial class CareerScreen
         content.AddChild(details);
         if (showProfile)
         {
-            details.Visible = _privateExpandedIdentities.Contains(id); disclosure = details;
+            details.Visible = expanded; disclosure = details;
             bondButton!.SetPressedNoSignal(details.Visible); favourButton!.SetPressedNoSignal(details.Visible);
         }
         var relationship = new HBoxContainer { CustomMinimumSize = new(225, 0), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 };

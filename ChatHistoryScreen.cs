@@ -30,6 +30,10 @@ public partial class CareerScreen
         if (ChatPreferences.GetValue(key, "last", "").AsString() == ChatDraftKey
             && ChatPreferences.GetValue(key, "size", 10).AsInt32() == _chatPageSize) return;
         ChatPreferences.SetValue(key, "last", ChatDraftKey); ChatPreferences.SetValue(key, "size", _chatPageSize);
+        WriteChatPreferences();
+    }
+    private static void WriteChatPreferences()
+    {
         var error = ChatPreferences.Save("user://NationalSpire_chat.cfg");
         if (error != Error.Ok) GD.PushWarning("聊天显示设置保存失败：" + error);
     }

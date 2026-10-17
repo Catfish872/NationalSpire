@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6435775A80D139E97FCC6ABBA81476A9BD6819B2A07C2C5CAF35C2DD8E1B8F7C`。来源：[源码](../../ChatHistoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`45AF3195FF96BBF0EE84C378B59740C6D6A898CEA5D9A6D56675A5F4238E3941`。来源：[源码](../../ChatHistoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -144,37 +144,56 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-5fc0f2f77de5)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)
 
-**调用：** `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.Save(string)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.GD.PushWarning(string)`；`Godot.Variant.AsInt32()`；`Godot.Variant.AsString()`
+**调用：** [`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Variant.AsInt32()`；`Godot.Variant.AsString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen.ChatDraftKey`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen.ChatDraftKey`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`；`NationalSpire.CareerScreen.WriteChatPreferences()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.GetValue(key, "last", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(key, "last", "").AsString`
 - `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.GetValue(key, "size", 10)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(key, "size", 10).AsInt32`
-- `Godot.ConfigFile.Save(string)`；输入表达式：`ChatPreferences.Save("user://NationalSpire_chat.cfg")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ChatPreferences.Save("user://NationalSpire_chat.cfg")`
 - `Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.SetValue(key, "last", ChatDraftKey)`；返回值紧邻使用处：`ExpressionStatementSyntax: ChatPreferences.SetValue(key, "last", ChatDraftKey);`
 - `Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.SetValue(key, "size", _chatPageSize)`；返回值紧邻使用处：`ExpressionStatementSyntax: ChatPreferences.SetValue(key, "size", _chatPageSize);`
-- `Godot.GD.PushWarning(string)`；输入表达式：`GD.PushWarning("聊天显示设置保存失败：" + error)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushWarning("聊天显示设置保存失败：" + error);`
 - `Godot.Variant.AsInt32()`；输入表达式：`ChatPreferences.GetValue(key, "size", 10).AsInt32()`；返回值紧邻使用处：`BinaryExpressionSyntax: ChatPreferences.GetValue(key, "size", 10).AsInt32() == _chatPageSize`
 - `Godot.Variant.AsString()`；输入表达式：`ChatPreferences.GetValue(key, "last", "").AsString()`；返回值紧邻使用处：`BinaryExpressionSyntax: ChatPreferences.GetValue(key, "last", "").AsString() == ChatDraftKey`
+- `NationalSpire.CareerScreen.WriteChatPreferences()`；输入表达式：`WriteChatPreferences()`；返回值紧邻使用处：`ExpressionStatementSyntax: WriteChatPreferences();`
 
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-28d387d79595"></a>
+<a id="symbol-15e26075b1d4"></a>
+
+## `NationalSpire.CareerScreen.WriteChatPreferences() — private static void WriteChatPreferences()`
+
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.SaveChatPreferences()`](ChatHistoryScreen.cs.md#symbol-614208ed0b0d)；[`ToggleDetails()`](PrivateMemoryScreen.cs.md#symbol-4afa2cfd52a5)
+
+**调用：** `Godot.ConfigFile.Save(string)`；`Godot.GD.PushWarning(string)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.ChatPreferences`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.ConfigFile.Save(string)`；输入表达式：`ChatPreferences.Save("user://NationalSpire_chat.cfg")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ChatPreferences.Save("user://NationalSpire_chat.cfg")`
+- `Godot.GD.PushWarning(string)`；输入表达式：`GD.PushWarning("聊天显示设置保存失败：" + error)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushWarning("聊天显示设置保存失败：" + error);`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-5fc0f2f77de5"></a>
 
 ## `NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout) — private void BuildChatPagination(ChatComposerLayout actions)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)
 
-**调用：** [`Action(string, string, System.Action, int)`](ChatHistoryScreen.cs.md#symbol-ed35dcf54e40)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Resource.Duplicate(bool)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.InvalidateChatPage(int)`](ChatHistoryScreen.cs.md#symbol-110069df9a95)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.SaveChatPreferences()`](ChatHistoryScreen.cs.md#symbol-614208ed0b0d)；[`NationalSpire.ChatHistoryPage<T>.Resize(int)`](ChatHistoryPage.cs.md#symbol-03212ab16f78)
+**调用：** [`Action(string, string, System.Action, int)`](ChatHistoryScreen.cs.md#symbol-24f065ddf516)；[`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.InvalidateChatPage(int)`](ChatHistoryScreen.cs.md#symbol-110069df9a95)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.SaveChatPreferences()`](ChatHistoryScreen.cs.md#symbol-614208ed0b0d)；[`NationalSpire.ChatHistoryPage<T>.Resize(int)`](ChatHistoryPage.cs.md#symbol-03212ab16f78)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Resource.Duplicate(bool)`；`Godot.Vector2.Vector2(float, float)`
 
-**字段、属性、事件及方法组引用：** `Action(string, string, System.Action, int)`；`NationalSpire.CareerScreen.ChangeChatPage(int)`；`NationalSpire.CareerScreen.ChatPage`；`NationalSpire.CareerScreen.InvalidateChatPage(int)`；`NationalSpire.CareerScreen.LatestChatPage()`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`；`NationalSpire.CareerScreen.SaveChatPreferences()`；`NationalSpire.CareerScreen._chatEarlier`；`NationalSpire.CareerScreen._chatLatest`；`NationalSpire.CareerScreen._chatNewer`；`NationalSpire.CareerScreen._chatPageLabel`；`NationalSpire.CareerScreen._chatPageOptions`；`NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen._chatPagination`；`NationalSpire.CareerScreen._chatSizePicker`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.ChatHistoryPage<T>.Resize(int)`
+**字段、属性、事件及方法组引用：** `Action(string, string, System.Action, int)`；`NationalSpire.CareerScreen._chatEarlier`；`NationalSpire.CareerScreen._chatLatest`；`NationalSpire.CareerScreen._chatNewer`；`NationalSpire.CareerScreen._chatPageLabel`；`NationalSpire.CareerScreen._chatPageOptions`；`NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen._chatPagination`；`NationalSpire.CareerScreen._chatSizePicker`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.CareerScreen.ChangeChatPage(int)`；`NationalSpire.CareerScreen.ChatPage`；`NationalSpire.CareerScreen.InvalidateChatPage(int)`；`NationalSpire.CareerScreen.LatestChatPage()`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`；`NationalSpire.CareerScreen.SaveChatPreferences()`；`NationalSpire.ChatHistoryPage<T>.Resize(int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -203,8 +222,8 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 - `Godot.Resource.Duplicate(bool)`；输入表达式：`_chatSizePicker.GetThemeStylebox(state).Duplicate()`；返回值紧邻使用处：`CastExpressionSyntax: (StyleBox)_chatSizePicker.GetThemeStylebox(state).Duplicate()`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(108, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(108, 42)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(90, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatPageLabel.CustomMinimumSize = new(90, 0)`
-- `NationalSpire.CareerScreen.ChangeChatPage(int)`；输入表达式：`ChangeChatPage(ChatPage + 1)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ChangeChatPage(ChatPage + 1)`
 - `NationalSpire.CareerScreen.ChangeChatPage(int)`；输入表达式：`ChangeChatPage(ChatPage - 1)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ChangeChatPage(ChatPage - 1)`
+- `NationalSpire.CareerScreen.ChangeChatPage(int)`；输入表达式：`ChangeChatPage(ChatPage + 1)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ChangeChatPage(ChatPage + 1)`
 - `NationalSpire.CareerScreen.InvalidateChatPage(int)`；输入表达式：`InvalidateChatPage(0)`；返回值紧邻使用处：`ExpressionStatementSyntax: InvalidateChatPage(0);`
 - `NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；输入表达式：`PrivateLine("", 14, _muted)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatPageLabel = PrivateLine("", 14, _muted)`
 - `NationalSpire.CareerScreen.RefreshPrivateChat(bool)`；输入表达式：`RefreshPrivateChat()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshPrivateChat();`
@@ -214,12 +233,6 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 **赋值（含属性/字段和局部值）：**
 
-- `CustomMinimumSize` = `new(108, 42)`
-- `Name` = `"ChatPageOptions"`
-- `Name` = `"ChatPageSize"`
-- `Name` = `"ChatPagination"`
-- `SizeFlagsVertical` = `SizeFlags.Fill`
-- `Visible` = `false`
 - `_chatEarlier.TooltipText` = `"较早记录"`
 - `_chatEarlier` = `Action("ChatEarlier", "‹", () => ChangeChatPage(ChatPage - 1), 32)`
 - `_chatLatest` = `Action("ChatLatest", "回到最新", LatestChatPage, 96)`
@@ -234,20 +247,26 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 - `_chatPageOptions` = `options`
 - `_chatPageSize` = `index == 0 ? 5 : 10`
 - `_chatPagination` = `row`
-- `_chatSizePicker.ItemSelected` += `index => { _chatPageSize = index == 0 ? 5 : 10; _privatePages.Resize(_chatPageSize); _groupPages.Resize(_chatPageSize); SaveChatPreferences(); InvalidateChatPage(0); RefreshPrivateChat(); }`
+- `_chatSizePicker.ItemSelected` += `index =>          {              _chatPageSize = index == 0 ? 5 : 10;              _privatePages.Resize(_chatPageSize); _groupPages.Resize(_chatPageSize);              SaveChatPreferences(); InvalidateChatPage(0); RefreshPrivateChat();          }`
 - `_chatSizePicker` = `new OptionButton { Name = "ChatPageSize", CustomMinimumSize = new(108, 42), SizeFlagsVertical = SizeFlags.Fill }`
+- `CustomMinimumSize` = `new(108, 42)`
+- `Name` = `"ChatPageOptions"`
+- `Name` = `"ChatPageSize"`
+- `Name` = `"ChatPagination"`
+- `SizeFlagsVertical` = `SizeFlags.Fill`
 - `style.ContentMarginBottom` = `6`
 - `style.ContentMarginTop` = `style.ContentMarginBottom = 6`
+- `Visible` = `false`
 
-<a id="symbol-ed35dcf54e40"></a>
+<a id="symbol-24f065ddf516"></a>
 
 ## `Action(string, string, System.Action, int) — Button Action(string name, string text, Action click, int width)`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-5fc0f2f77de5)
 
-**调用：** `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Resource.Duplicate(bool)`；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)
+**调用：** [`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Resource.Duplicate(bool)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`
 
@@ -271,13 +290,13 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.ResetChatPage() — private void ResetChatPage()`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)
+**调用者：** [`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)
 
-**调用：** `Godot.CanvasItem.Show()`；[`NationalSpire.CareerScreen.InvalidateChatPage(int)`](ChatHistoryScreen.cs.md#symbol-110069df9a95)；[`NationalSpire.ChatHistoryPage<T>.Reset(int)`](ChatHistoryPage.cs.md#symbol-e836f7b91e73)；`System.Action<T>.Invoke(T)`
+**调用：** [`NationalSpire.CareerScreen.InvalidateChatPage(int)`](ChatHistoryScreen.cs.md#symbol-110069df9a95)；[`NationalSpire.ChatHistoryPage<T>.Reset(int)`](ChatHistoryPage.cs.md#symbol-e836f7b91e73)；`Godot.CanvasItem.Show()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.InvalidateChatPage(int)`；`NationalSpire.CareerScreen._chatNewMessages`；`NationalSpire.CareerScreen._chatPageOptions`；`NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen._chatPagination`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._privateActions`；`NationalSpire.CareerScreen._privateExpressions`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.ChatComposerLayout.CenterPages`；`NationalSpire.ChatHistoryPage<T>.Reset(int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._chatNewMessages`；`NationalSpire.CareerScreen._chatPageOptions`；`NationalSpire.CareerScreen._chatPageSize`；`NationalSpire.CareerScreen._chatPagination`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._privateActions`；`NationalSpire.CareerScreen._privateExpressions`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.CareerScreen.InvalidateChatPage(int)`；`NationalSpire.ChatComposerLayout.CenterPages`；`NationalSpire.ChatHistoryPage<T>.Reset(int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -297,9 +316,9 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.InvalidateChatPage(int) — private void InvalidateChatPage(int position)`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)；[`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.LatestChatPage()`](ChatHistoryScreen.cs.md#symbol-566a2e34c9dd)；[`NationalSpire.CareerScreen.ResetChatPage()`](ChatHistoryScreen.cs.md#symbol-0a8a3b0ae98b)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-5fc0f2f77de5)；[`NationalSpire.CareerScreen.ChangeChatPage(int)`](ChatHistoryScreen.cs.md#symbol-0e399328f32b)；[`NationalSpire.CareerScreen.LatestChatPage()`](ChatHistoryScreen.cs.md#symbol-566a2e34c9dd)；[`NationalSpire.CareerScreen.ResetChatPage()`](ChatHistoryScreen.cs.md#symbol-0a8a3b0ae98b)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)
 
 **调用：** 无已绑定显式调用。
 
@@ -318,9 +337,9 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.ChangeChatPage(int) — private void ChangeChatPage(int page)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-28d387d79595)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatPagination(NationalSpire.ChatComposerLayout)`](ChatHistoryScreen.cs.md#symbol-5fc0f2f77de5)
 
 **调用：** [`NationalSpire.CareerScreen.InvalidateChatPage(int)`](ChatHistoryScreen.cs.md#symbol-110069df9a95)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.ChatHistoryPage<T>.Move(int)`](ChatHistoryPage.cs.md#symbol-27c362fe5d02)
 
@@ -340,7 +359,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.LatestChatPage() — private void LatestChatPage()`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.SendGroup()`](GroupChatScreen.cs.md#symbol-17b4992ac7c2)；[`NationalSpire.CareerScreen.SendPrivate()`](PrivateMessageScreen.cs.md#symbol-748ab66a7351)
 
@@ -364,9 +383,9 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.BindChatPage(bool) — private void BindChatPage(bool follow)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LatestChatPage()`](ChatHistoryScreen.cs.md#symbol-566a2e34c9dd)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-ddace6dd7c79)
+**调用者：** [`NationalSpire.CareerScreen.LatestChatPage()`](ChatHistoryScreen.cs.md#symbol-566a2e34c9dd)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)
 
 **调用：** [`NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`](ChatHistoryPage.cs.md#symbol-b8e49a1a30f0)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)
 
@@ -388,7 +407,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.GroupTurnVisible(NationalSpire.GroupTurn) — private static bool GroupTurnVisible(GroupTurn turn)`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -406,7 +425,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.RefreshChatPagination() — private void RefreshChatPagination()`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.FinishChatPage(bool)`](ChatHistoryScreen.cs.md#symbol-7519bc2ca961)
 
@@ -428,7 +447,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.FinishChatPage(bool) — private void FinishChatPage(bool follow)`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)
 
@@ -452,7 +471,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 ## `NationalSpire.CareerScreen.ScrollChatTo(int) — private async Task ScrollChatTo(int position)`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Back()`](CareerNavigation.cs.md#symbol-08af62207fef)；[`NationalSpire.CareerScreen.FinishChatPage(bool)`](ChatHistoryScreen.cs.md#symbol-7519bc2ca961)；[`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`](GroupChatScreen.cs.md#symbol-b8810762e549)；[`NationalSpire.CareerScreen.ScrollPrivateToBottom()`](PrivateMessageScreen.cs.md#symbol-b2deefc4ba01)
 

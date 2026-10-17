@@ -267,7 +267,7 @@ private BroadcastTransition? _pageEffect;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetGlobalRect()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)
+**调用：** [`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetGlobalRect()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`
 
@@ -738,7 +738,7 @@ private BroadcastTransition? _pageEffect;
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-bd78011edf05)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-f3d2df3d6c54)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Lime`；`Side(bool)`
 
@@ -759,7 +759,7 @@ private BroadcastTransition? _pageEffect;
 - `center.VerticalAlignment` = `VerticalAlignment.Center`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-bd78011edf05"></a>
+<a id="symbol-f3d2df3d6c54"></a>
 
 ## `Side(bool) — void Side(bool ours)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8801A92106AD6C8CC5E078BF02018F37226AD25C3D06916E1CD85FB6F1E8F2F0`。来源：[源码](../../ChatComposerLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1F715E9E23CE2DBB0C93CD65E84EB15E76932130EE551FC60BAC63C1C5B32263`。来源：[源码](../../ChatComposerLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -34,7 +34,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)；[`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)
 
-**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；[`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** [`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.IEnumerable.OfType<TResult>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`
 
@@ -46,19 +46,19 @@ public event Action<bool>? ExpansionChanged;
 - `Godot.Node.GetIndex(bool)`；输入表达式：`button.GetIndex()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = button.GetIndex()`
 - `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`parent.MoveChild(slot, index)`；返回值紧邻使用处：`ExpressionStatementSyntax: parent.MoveChild(slot, index);`
 - `Godot.Node.RemoveChild(Godot.Node)`；输入表达式：`parent.RemoveChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: parent.RemoveChild(button);`
-- `NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；输入表达式：`new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible, SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible, SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical }`
+- `NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；输入表达式：`new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible,                  SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible,                  SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical }`
 - `NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`；输入表达式：`CompactButtons(child)`；返回值紧邻使用处：`ExpressionStatementSyntax: CompactButtons(child);`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`parent.GetChildren().OfType<Control>().ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var child in parent.GetChildren().OfType<Control>().ToArray()) { if (child is not BaseButton button) { CompactButtons(child); continue; } int index = button.GetIndex(); var slot = new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible, SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical }; parent.RemoveChild(button); parent.AddChild(slot); parent.MoveChild(slot, index); slot.AddChild(button); button.VisibilityChanged += () => slot.Visible = button.Visible; }`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`parent.GetChildren().OfType<Control>().ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var child in parent.GetChildren().OfType<Control>().ToArray())          {              if (child is not BaseButton button) { CompactButtons(child); continue; }              int index = button.GetIndex();              var slot = new ChatComposerButtonSlot { Name = button.Name + "Slot", Visible = button.Visible,                  SizeFlagsHorizontal = button.SizeFlagsHorizontal, SizeFlagsVertical = button.SizeFlagsVertical };              parent.RemoveChild(button); parent.AddChild(slot); parent.MoveChild(slot, index); slot.AddChild(button);              button.VisibilityChanged += () => slot.Visible = button.Visible;          }`
 - `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`parent.GetChildren().OfType<Control>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: parent.GetChildren().OfType<Control>().ToArray`
 
 **赋值（含属性/字段和局部值）：**
 
+- `button.VisibilityChanged` += `() => slot.Visible = button.Visible`
 - `Name` = `button.Name + "Slot"`
 - `SizeFlagsHorizontal` = `button.SizeFlagsHorizontal`
 - `SizeFlagsVertical` = `button.SizeFlagsVertical`
-- `Visible` = `button.Visible`
-- `button.VisibilityChanged` += `() => slot.Visible = button.Visible`
 - `slot.Visible` = `button.Visible`
+- `Visible` = `button.Visible`
 
 <a id="symbol-12a05a82e4a8"></a>
 
@@ -135,9 +135,9 @@ public event Action<bool>? ExpansionChanged;
 - `Godot.Node.GetChildCount(bool)`；输入表达式：`parts[2].GetChildCount()`；返回值紧邻使用处：`BinaryExpressionSyntax: parts[2].GetChildCount() - 1`
 - `Godot.Node.GetChildren(bool)`；输入表达式：`GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetChildren().OfType<Control>`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(0, 0, sizes[0].X, Size.Y)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(0, 0, sizes[0].X, Size.Y)`
-- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(Size.X - sendWidth + SendEdgeCompensation, 0, sendWidth, Size.Y)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(Size.X - sendWidth + SendEdgeCompensation, 0, sendWidth, Size.Y)`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(optionsX, 0, sizes[2].X, Size.Y)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(optionsX, 0, sizes[2].X, Size.Y)`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(pageX, 0, sizes[1].X, Size.Y)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(pageX, 0, sizes[1].X, Size.Y)`
+- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(Size.X - sendWidth + SendEdgeCompensation, 0, sendWidth, Size.Y)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(Size.X - sendWidth + SendEdgeCompensation, 0, sendWidth, Size.Y)`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`parts.Select(p => p.Visible ? p.GetCombinedMinimumSize() : Vector2.Zero)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: parts.Select(p => p.Visible ? p.GetCombinedMinimumSize() : Vector2.Zero).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`GetChildren().OfType<Control>().ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetChildren().OfType<Control>().ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`parts.Select(p => p.Visible ? p.GetCombinedMinimumSize() : Vector2.Zero).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = parts.Select(p => p.Visible ? p.GetCombinedMinimumSize() : Vector2.Zero).ToArray()`
@@ -159,7 +159,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** `Godot.Control.GetCombinedMinimumSize()`；`Godot.Node.GetChild<T>(int, bool)`；`Godot.Node.GetChildCount(bool)`
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -193,6 +193,7 @@ public event Action<bool>? ExpansionChanged;
 
 - `button.PivotOffset` = `button.Size / 2`
 - `button.Scale` = `Vector2.One * ChatComposerLayout.ButtonScale`
+
 <a id="symbol-0179a5b248ee"></a>
 
 ## `NationalSpire.ChatComposerPanel.Expanded — public bool Expanded`
@@ -203,7 +204,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -219,9 +220,9 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`](PrivateMessageScreen.cs.md#symbol-3ff4e47d4271)
 
-**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.GetParent<T>()`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.ScrollContainer.ScrollContainer()`；[`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)
+**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.GetParent<T>()`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.ScrollContainer.ScrollContainer()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.QueueResize()`；`NationalSpire.ChatComposerPanel._attachments`；`NationalSpire.ChatComposerPanel._body`；`NationalSpire.ChatComposerPanel._bounds`；`NationalSpire.ChatComposerPanel._editor`；`NationalSpire.ChatComposerPanel._heading`；`NationalSpire.ChatComposerPanel._headingViewport`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel._attachments`；`NationalSpire.ChatComposerPanel._body`；`NationalSpire.ChatComposerPanel._bounds`；`NationalSpire.ChatComposerPanel._editor`；`NationalSpire.ChatComposerPanel._heading`；`NationalSpire.ChatComposerPanel._headingViewport`；`NationalSpire.ChatComposerPanel.QueueResize()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -236,22 +237,22 @@ public event Action<bool>? ExpansionChanged;
 
 **赋值（含属性/字段和局部值）：**
 
-- `FollowFocus` = `true`
-- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
-- `Name` = `"PrivateIdentityViewport"`
-- `TreeExiting` += `() => bounds.Resized -= QueueResize`
 - `_attachments` = `attachments`
 - `_body` = `body`
 - `_bounds` = `bounds`
 - `_editor` = `editor`
-- `_headingViewport` = `new ScrollContainer { Name = "PrivateIdentityViewport", HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = true }`
 - `_heading` = `heading`
+- `_headingViewport` = `new ScrollContainer { Name = "PrivateIdentityViewport", HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, FollowFocus = true }`
 - `body.MinimumSizeChanged` += `QueueResize`
-- `bounds.Resized` += `QueueResize`
 - `bounds.Resized` -= `QueueResize`
+- `bounds.Resized` += `QueueResize`
 - `editor.SizeFlagsVertical` = `SizeFlags.ExpandFill`
+- `FollowFocus` = `true`
 - `heading.MinimumSizeChanged` += `QueueResize`
 - `heading.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
+- `Name` = `"PrivateIdentityViewport"`
+- `TreeExiting` += `() => bounds.Resized -= QueueResize`
 
 <a id="symbol-19c3c4544409"></a>
 
@@ -280,7 +281,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.SendPrivate()`](PrivateMessageScreen.cs.md#symbol-748ab66a7351)；[`NationalSpire.ChatComposerPanel.Toggle()`](ChatComposerLayout.cs.md#symbol-19c3c4544409)
 
-**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`System.Action<T>.Invoke(T)`
+**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.Expanded`；`NationalSpire.ChatComposerPanel.ExpansionChanged`；`NationalSpire.ChatComposerPanel.QueueResize()`
 
@@ -303,7 +304,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.QueueResize()`；`NationalSpire.ChatComposerPanel._attachmentHeight`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel._attachmentHeight`；`NationalSpire.ChatComposerPanel.QueueResize()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -323,7 +324,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Node.IsInsideTree()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.ResizeComposer()`；`NationalSpire.ChatComposerPanel._resizeQueued`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel._resizeQueued`；`NationalSpire.ChatComposerPanel.ResizeComposer()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -345,7 +346,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** `Godot.Control.GetCombinedMinimumSize()`；`Godot.Control.GetThemeConstant(Godot.StringName, Godot.StringName)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`；`Godot.Node.GetParent<T>()`；`Godot.Node.IsInsideTree()`；`Godot.StyleBox.GetMinimumSize()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, float>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.Expanded`；`NationalSpire.ChatComposerPanel._attachmentHeight`；`NationalSpire.ChatComposerPanel._attachments`；`NationalSpire.ChatComposerPanel._body`；`NationalSpire.ChatComposerPanel._bounds`；`NationalSpire.ChatComposerPanel._editor`；`NationalSpire.ChatComposerPanel._heading`；`NationalSpire.ChatComposerPanel._headingViewport`；`NationalSpire.ChatComposerPanel._resizeQueued`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel._attachmentHeight`；`NationalSpire.ChatComposerPanel._attachments`；`NationalSpire.ChatComposerPanel._body`；`NationalSpire.ChatComposerPanel._bounds`；`NationalSpire.ChatComposerPanel._editor`；`NationalSpire.ChatComposerPanel._heading`；`NationalSpire.ChatComposerPanel._headingViewport`；`NationalSpire.ChatComposerPanel._resizeQueued`；`NationalSpire.ChatComposerPanel.Expanded`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -354,16 +355,16 @@ public event Action<bool>? ExpansionChanged;
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_heading.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _heading.GetCombinedMinimumSize().Y`
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`c.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.GetCombinedMinimumSize().Y`
 - `Godot.Control.GetThemeConstant(Godot.StringName, Godot.StringName)`；输入表达式：`chat.GetThemeConstant("separation")`；返回值紧邻使用处：`BinaryExpressionSyntax: chat.GetThemeConstant("separation") * (siblings.Length - 1)`
-- `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`GetThemeStylebox("panel")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetThemeStylebox("panel").GetMinimumSize`
 - `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`_bounds.GetThemeStylebox("panel")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _bounds.GetThemeStylebox("panel").GetMinimumSize`
+- `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`GetThemeStylebox("panel")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetThemeStylebox("panel").GetMinimumSize`
 - `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`IsQueuedForDeletion()`；返回值紧邻使用处：`BinaryExpressionSyntax: !IsInsideTree() || IsQueuedForDeletion()`
 - `Godot.Node.GetChildren(bool)`；输入表达式：`chat.GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: chat.GetChildren().OfType<Control>`
 - `Godot.Node.GetParent<T>()`；输入表达式：`GetParent<VBoxContainer>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetParent<VBoxContainer>()`
 - `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsInsideTree()`
-- `Godot.StyleBox.GetMinimumSize()`；输入表达式：`GetThemeStylebox("panel").GetMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetThemeStylebox("panel").GetMinimumSize().Y`
 - `Godot.StyleBox.GetMinimumSize()`；输入表达式：`_bounds.GetThemeStylebox("panel").GetMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _bounds.GetThemeStylebox("panel").GetMinimumSize().Y`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, Expanded ? 36 : 68)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editor.CustomMinimumSize = new(0, Expanded ? 36 : 68)`
+- `Godot.StyleBox.GetMinimumSize()`；输入表达式：`GetThemeStylebox("panel").GetMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetThemeStylebox("panel").GetMinimumSize().Y`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, attachmentHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _attachments.CustomMinimumSize = new(0, attachmentHeight)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, Expanded ? 36 : 68)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editor.CustomMinimumSize = new(0, Expanded ? 36 : 68)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, headingHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _headingViewport.CustomMinimumSize = new(0, headingHeight)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, height)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, height)`
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, float>)`；输入表达式：`siblings.Where(c => c != this && c != _headingViewport).Sum(c => c.GetCombinedMinimumSize().Y)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = siblings.Where(c => c != this && c != _headingViewport).Sum(c => c.GetCombinedMinimumSize().Y)`
@@ -378,12 +379,12 @@ public event Action<bool>? ExpansionChanged;
 
 **赋值（含属性/字段和局部值）：**
 
-- `CustomMinimumSize` = `new(0, height)`
 - `_attachments.CustomMinimumSize` = `new(0, attachmentHeight)`
 - `_editor.CustomMinimumSize` = `new(0, Expanded ? 36 : 68)`
 - `_headingViewport.CustomMinimumSize` = `new(0, headingHeight)`
 - `_resizeQueued` = `false`
 - `attachmentHeight` = `Math.Min(attachmentHeight, Math.Max(0, height - fixedHeight))`
+- `CustomMinimumSize` = `new(0, height)`
 - `headingHeight` = `Math.Min(headingHeight, Math.Max(0, _bounds.Size.Y - height - margins - otherHeight))`
 
 <a id="symbol-356f95251eb3"></a>
@@ -396,7 +397,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -414,7 +415,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用：** `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 

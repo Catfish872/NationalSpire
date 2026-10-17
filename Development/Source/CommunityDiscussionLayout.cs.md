@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6555D85248C9D564A0DF5389AA2378D32CD47C123EEAFB0BD200248B8FAEE00D`。来源：[源码](../../CommunityDiscussionLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`CF7647C87AA18E89A793F059D4BD40606262BA0011CFA2BC5D81BD576BC02B4A`。来源：[源码](../../CommunityDiscussionLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,7 +11,6 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-
 ```
 
 <a id="symbol-a01512e18826"></a>
@@ -24,7 +23,7 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -42,7 +41,7 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -60,7 +59,7 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -96,7 +95,7 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -114,7 +113,7 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -130,14 +129,14 @@
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)
 
-**调用：** `NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；[`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-7120f3e9af63)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List(int)`
+**调用：** [`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-7120f3e9af63)；`NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List(int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CommunityDiscussionLayout.Item.Descendants`；`NationalSpire.CommunityDiscussionLayout.Item.Floor`；`NationalSpire.CommunityDiscussionLayout.Item.Parent`；`NationalSpire.CommunityDiscussionLayout.Item.Reply`；`NationalSpire.CommunityDiscussionLayout.Item.Visible`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`；`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；输入表达式：`new Item(reply, parent, parent?.Floor ?? ++floor, parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Item(reply, parent, parent?.Floor ?? ++floor, parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id))`
-- `NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`；输入表达式：`CommunityThreads.ReadingOrder(post)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var reply in CommunityThreads.ReadingOrder(post)) { // 沿既有阅读顺序绑定已出现的父节点；缺失父节点或循环引用作为独立入口显示。 byId.TryGetValue(reply.ParentId, out var parent); var item = new Item(reply, parent, parent?.Floor ?? ++floor, parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id)); items.Add(item); byId[reply.Id] = item; }`
+- `NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；输入表达式：`new Item(reply, parent, parent?.Floor ?? ++floor,                  parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Item(reply, parent, parent?.Floor ?? ++floor,                  parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id))`
+- `NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`；输入表达式：`CommunityThreads.ReadingOrder(post)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var reply in CommunityThreads.ReadingOrder(post))          {              // 沿既有阅读顺序绑定已出现的父节点；缺失父节点或循环引用作为独立入口显示。              byId.TryGetValue(reply.ParentId, out var parent);              var item = new Item(reply, parent, parent?.Floor ?? ++floor,                  parent == null || parent.Visible && !collapsed.Contains(parent.Reply.Id));              items.Add(item); byId[reply.Id] = item;          }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, Item>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, Item>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`byId.TryGetValue(reply.ParentId, out var parent)`；返回值紧邻使用处：`ExpressionStatementSyntax: byId.TryGetValue(reply.ParentId, out var parent);`
 - `System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；输入表达式：`collapsed.Contains(parent.Reply.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !collapsed.Contains(parent.Reply.Id)`

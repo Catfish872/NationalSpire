@@ -185,8 +185,8 @@ public sealed class CareerPerson
 
 public sealed class CommunityPost
 {
-    public int? AiNetScore { get; set; }
-    public long AiScoreRevision { get; set; }
+    [System.Text.Json.Serialization.JsonPropertyName("AiNetScore")]
+    public int? AudienceScore { get; set; }
     public Dictionary<string, int> PlayerVotes { get; set; } = [];
     public long VoteRevision { get; set; }
     public bool PersonalPost { get; set; }
@@ -222,8 +222,8 @@ public sealed class CommunityPost
 
 public sealed class CommunityReply
 {
-    public int? AiNetScore { get; set; }
-    public long AiScoreRevision { get; set; }
+    [System.Text.Json.Serialization.JsonPropertyName("AiNetScore")]
+    public int? AudienceScore { get; set; }
     public Dictionary<string, int> PlayerVotes { get; set; } = [];
     public List<string> MentionedPeople { get; set; } = [];
     public bool AiGenerated { get; set; }

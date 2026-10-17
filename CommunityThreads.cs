@@ -68,7 +68,7 @@ public static class CommunityThreads
     }
     public static bool Normalize(CareerData data)
     {
-        if (data.CommunityVersion >= 3) return false;
+        if (data.CommunityVersion >= 4) return false;
         foreach (var post in All(data))
         {
             if (data.CommunityVersion < 2)
@@ -83,9 +83,9 @@ public static class CommunityThreads
                 }
                 post.MatchKind = data.Matches.FirstOrDefault(m => post.EventKey == "match" + m.Id)?.Kind ?? post.MatchKind;
             }
-            if (CommunityMentions.Remember(data, post) || data.CommunityVersion < 2) Remember(data, post);
+            Remember(data, post);
         }
-        data.CommunityVersion = 3; return true;
+        data.CommunityVersion = 4; return true;
     }
     public static void MarkRead(CareerData data, CommunityPost post)
     {
@@ -201,6 +201,7 @@ public static class CommunityThreads
     public static void Remember(CareerData data, CommunityPost post)
     {
         CommunityMentions.Remember(data, post);
+        CommunityVotes.Update(data, post);
         void Put(CommunityMemory memory)
         {
             int i = data.CommunityMemories.FindIndex(m => m.Id == memory.Id);

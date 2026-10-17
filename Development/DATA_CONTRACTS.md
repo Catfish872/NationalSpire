@@ -86,8 +86,7 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 | LastReplyOrder | 私信完成时更新 | 通讯列表排序 | 会话最近回复排序；不代替 ChatWorld.Order |
 | 交互编号、TurnId、Lane | PrivateInteractionIds、GroupInteractions | 附件匹配、交互卡片、重新生成回退 | 交互属于哪轮、哪个人物方向；不等同于帖子或轮次编号 |
 | 作者/帖子/评论短编号 | AiWireProtocol | 输出解码和 ParseReplies | 单次请求的格式编号；真实保存编号仍用于业务引用 |
-| CommunityPost.VoteRevision | CommunityVotes.SetVote 在玩家选择实际变化时递增 | 社区投票控件刷新 | 玩家票变化的界面版本；帖子正文、回复及已读继续使用 Revision / SeenRevision |
-| CommunityPost / CommunityReply.AiScoreRevision | CommunityVotes.ApplyScore | 后续 AI 结果应用与 CoopAi 合并 | 产生该基础净值的实际发送帖子 Revision；较早请求的评分保留当前值 |
+| CommunityPost.VoteRevision | CommunityVotes.Update / SetVote | 社区投票控件刷新 | 程序评分或玩家选择变化时递增；正文、回复及已读继续使用Revision / SeenRevision |
 
 旧记录可能没有同日顺序。ChatTimeline 明确注明旧记录缺少先后信息。日期仍以天为单位，不新增实际时间字段。
 
@@ -126,9 +125,9 @@ Create保存待发时的预览；dm-send的PrepareAttachments按来源编号逐�
 
 聊天显示的 ChatHistoryPage<T> 只持有当前会话可见轮次的引用，页大小默认10、可选5；引用索引通过列表引用、数量及 MemoryRevision / GroupChat.Revision 更新。ChatHistoryScreen 的页码、滚动请求编号和新消息提示属于本机 CareerScreen。输入框操作行读取这些状态；原 PrivateTurn / GroupTurn、附件、交互及总结继续属于生涯记录。群通知按当前页面首轮至下一页面首轮的 Order 读取。
 
-私信顶部_privateExpandedIdentities为本次通讯窗口内按人物编号维护的HashSet，保存关系/印象详情及好感文字的展开状态，普通刷新和人物切换复用，关闭通讯清空。ChatComposerLayout.CenterPages在私信/群聊均为true，CommunityReplyExpressions返回的启用委托在选中任一会话时启用；分类、选项与异步定位编号归当前控件并随会话切换沿用。ChatComposerPanel.Expanded、附件目标高度和尺寸更新待执行标志归当前通讯输入区；放大切换保留草稿，发送恢复默认尺寸，关闭通讯释放。训练详情的_privateExpandedTraining为按计划Id维护的窗口内HashSet，新计划默认收起，普通卡片重建复用，关闭通讯清空。PrivateMoodButton及右侧状态说明属于当前身份控件，重建时收起；原始状态和到期日仍从CareerTraining.MoodLevel/MoodUntil读取。正文仍写入原_privateDrafts，发送使用原PrivateTurn；本次布局状态的序列化字段数为0，旧存档沿原默认值读取。
+私信顶部关系/印象详情及好感文字的展开状态保存于本机ChatPreferences：WorldId:本机玩家编号分区中的identity:人物编号布尔值，缺省为true。点击关系或好感按钮同步显示并写入文件一次，普通刷新、切换人物、关闭再打开通讯及重启恢复同一选择。ChatComposerLayout.CenterPages在私信/群聊均为true，CommunityReplyExpressions返回的启用委托在选中任一会话时启用；分类、选项与异步定位编号归当前控件并随会话切换沿用。ChatComposerPanel.Expanded、附件目标高度和尺寸更新待执行标志归当前通讯输入区；放大切换保留草稿，发送恢复默认尺寸，关闭通讯释放。训练详情的_privateExpandedTraining为按计划Id维护的窗口内HashSet，新计划默认收起，普通卡片重建复用，关闭通讯清空。PrivateMoodButton及右侧状态说明属于当前身份控件，重建时收起；原始状态和到期日仍从CareerTraining.MoodLevel/MoodUntil读取。正文仍写入原_privateDrafts，发送使用原PrivateTurn；本次布局状态的生涯序列化字段数为0，旧存档沿原默认值读取。
 
-本地 user://NationalSpire_chat.cfg 的分区为 WorldId:本机玩家编号，last 保存人物编号或 group:群编号，size 保存5或10。选择会话与更改轮数写入本地配置；翻页只更新内存。旧 Mailbox.LastPerson 用于首次恢复私信入口；通讯选择改由本地配置记录，dm-select 命令继续保留在原规则入口。私聊/群成员档案的返回记录使用Location.PrivatePerson / Group / ChatPage / ChatScroll，生命周期为当前生涯界面导航历史。具体调用、失效与保存边界见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
+本地 user://NationalSpire_chat.cfg 的分区为 WorldId:本机玩家编号，last保存人物编号或group:群编号，size保存5或10，identity:人物编号保存私聊人物详情的展开布尔值。选择会话与更改轮数写入本地配置；翻页只更新内存。旧 Mailbox.LastPerson 用于首次恢复私信入口；通讯选择改由本地配置记录，dm-select 命令继续保留在原规则入口。私聊/群成员档案的返回记录使用Location.PrivatePerson / Group / ChatPage / ChatScroll，生命周期为当前生涯界面导航历史。具体调用、失效与保存边界见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
 
 最新总结删除且没有其他总结完整覆盖其范围时，原文起点回退到被删总结的 From。聊天与再总结都恢复这一段直到当前最新记录，不按配置额外裁剪恢复区间。非最新总结删除不回退；其确认框提示“删除这条总结可能导致永久丢失记忆”。
 
@@ -153,14 +152,20 @@ PrivateInteractionHistory.Capture 的合同快照增加 refillPeople、refillPos
 | CareerMatch.OpponentPrepared / OpponentWon / OpponentFloor / OpponentSeconds | MatchRules.PrepareOpponent；多人开赛由 CoopRules.Start 生成 | 表示已确定的对手成绩，转播和结算直接读取。更新用时分布不重算已有准备结果，不新增个人速度字段；用时参数和调用关系见 GAME_AND_UI 的“对手成绩与通关用时” |
 | Character / CharacterId | 人物、GameBridge.ReadEvidence、结算 | 界面可以显示皮肤名称；发给 AI 的职业转换由 CharacterIdentity 处理 |
 | CommunityPost 原始主题/事实/赛果与正文/Replies | 事件发布、玩家提交、模型应用 | 原始事实与模型正文分开；parentId 指向同帖上文 |
-| CommunityPost / CommunityReply.AiNetScore、AiScoreRevision | 新闻或互动响应经 CommunityVotes.ApplyScore | AiNetScore 为可空 Int32 模拟受众原始累计净赞数；null 表示尚待评分。保存/请求使用该原始值，AudienceScore以Int64对主楼/NPC回复乘6、玩家回复乘16；显示时再加玩家选择 |
-| CommunityPost / CommunityReply.PlayerVotes | CommunityVotes.SetVote | 以实际玩家编号为键保存 -1 / +1，取消时移除键；Choice 读取当前玩家，Score 用 Int64 汇总按作者类型放大后的AI原始净值与全部有效玩家票 |
+| CommunityPost / CommunityReply.AudienceScore | Remember → CommunityVotes.Update | 可空 Int32 受众原始净赞数；沿用 JSON 键 AiNetScore。界面按主楼/NPC 评论乘6、玩家评论乘16，再加手动票 |
+| CommunityPost / CommunityReply.PlayerVotes | CommunityVotes.SetVote | 以实际玩家编号为键保存 -1 / +1，取消时移除键；Choice 读取当前玩家，Score 用 Int64 汇总按作者类型放大后的程序评分与全部有效玩家票 |
 | CommunityMemory | 公开事实和讨论整理 | 本地检索、上下文；来源 PostId、人物和日期参与过滤 |
 | CommunityPromptContext 的评论集合、PublicMemoryRequest 的共享群聊、AiWireProtocol 的 communitySources | 一次请求内建立 | 发送前序列化；来自现有帖子、评论和群聊。引用编号只用于请求，持久数据仍归原对象管理；PrivateTurn.Context 按原保存节点记录整段材料 |
 | CommunityPost.AiSourceBody / CommunityMemory.AiText / PrivateOffer.AiDetail | RememberMatch、CoopRules.Settle、Remember、PrepareAttachments 在生成职业事实时填写；仅有差异时保存 | 原字段负责界面和检索；AiGeneratedText 供请求读取，缺失回退原字段。WhenWritingNull 省略空字段。旧档不迁移，既有 JSON 深复制、保存、权限过滤和广播继续管理这些字段 |
 | WeeklyEdition 与生成阶段 | WeeklyJournal 捕获事实；AiWeekly 应用结果 | 双周档案、文章、界面、重试；事实快照和生成状态不是同一项数据 |
 | 人物简介/记忆/关系/状态 | 档案、周刊、聊天与交互 | 供后续上下文使用；旧自由文本不属于本次职业入口转换的范围 |
 
-社区评分字段随原帖子和回复序列化。旧 JSON 缺少评分时使用 null、版本0和空字典，已有正文继续保留；下次原新闻或互动任务成功返回有效评分时补入。关闭AI时的离线回复及响应缺分的新内容同样保留null，评分等待原生成入口返回有效结果。VoterId 使用个人视图的 LocalHumanId，单人回退 player。SetVote 校验 -1 / 0 / +1、玩家身份、帖子及目标回复；相同选择返回 false，实际变化才递增 VoteRevision。AudienceScore把主楼原始综合基础值乘AudienceMultiplier(6)，返回Int64；回复重载接收CareerData，沿CommunityThreads.IsHuman识别作者，NPC回复乘6，玩家回复乘PlayerReplyMultiplier(16)。Score最后加有效玩家票；基础值缺失按0，忽略字典中超出 -1 / +1 的值，返回 Int64。倍率只在读取总分及数值提示时应用，AI输入输出与序列化原始值保持同一刻度；正负原始净值每变化1，主楼与NPC回复显示变化6，玩家回复变化16。旧档沿用原字段，玩家±1选择保持。AiNetScore 与 PlayerVotes 分别修改：AI 响应更新基础净值，玩家选择在内容生成、刷新和重新读取后继续从字典恢复。ApplyScore 接受相同或较新的来源版本，较早版本和缺失分数保留已存值。保存与异步合并见[保存流程](PERSISTENCE_AND_COOP.md#单人生涯保存的顺序)，请求权限见[社区生成](AI_FLOWS.md#社区与周刊状态依赖)。
+社区评分随原帖子与评论保存。AudienceScore使用JsonPropertyName沿用AiNetScore键。CommunityVersion=4表示已升级；单人载入经原Normalize，房主恢复在RecoverInterrupted与Commit前调用Normalize。低于4时遍历Posts / SavedThreads并Remember，重算受众评分，玩家字典继续沿用；达到4直接返回。旧AiScoreRevision由JSON反序列化忽略。
+
+CommunityVotes.Update每次建立人物编号字典、评论编号字典、父编号分组及局部关注缓存。作者关注F、相关人物最大关注P、回复数N形成受众规模R=(12+sqrt(F)+0.25sqrt(P))×赛事倍率×楼层倍率×(1+0.2ln(1+N))。世界杯/世界总决赛/大师赛倍率3、洲际杯2、联赛1.5、其余1；主楼倍率1、评论0.35；少于8字符乘0.6。主楼N取全帖评论数，评论N取直接子评论数。当前玩家读取Fans，其他人物沿CareerAudience.Followers。
+
+支持比例为0.56+min(0.12,0.018log10(1+F))，增加固定随机项[-0.28,0.28]及0.04×T。T是明确支持、反对及攻击性词语合计的符号，长词优先匹配否定表达，属于文字近似判断。被谈论者关注G带来0.22×T×sqrt(G/(1+F+G))；熟人增加0.03×T，同俱乐部或支持该俱乐部增加0.04×T，职业选手或有冠军增加0.02。支持比例限定0.05—0.95。原始分数round(R×固定随机受众项[0.65,1.35]×(2×支持比例-1))。两个随机项分别使用StableHash(帖子编号:本层编号:正文:audience:用途)；主楼正文包含标题。
+
+主楼目标取首个提及人物，否则首个其他相关人物；评论取首个提及人物，否则父评论作者或主楼作者。内容通过Remember更新，重复计算相同输入数值稳定。AudienceScore以Int64按主楼/NPC评论乘6、玩家评论乘16；Score再加有效玩家票。SetVote按个人视图LocalHumanId识别玩家，单人取player；-1/0/+1分别点踩、取消、点赞，相同选择返回false，实际变化递增VoteRevision。程序评分变化也递增VoteRevision。调用者沿原保存入口提交，界面读取只计算分数之和。
 
 具体读写引用见 Source 中的字段与属性引用。索引记录引用事实，不能仅凭“引用了字段”推断该函数会修改字段；写入条件和先后顺序以流程与函数体为准。

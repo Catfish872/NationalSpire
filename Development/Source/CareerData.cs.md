@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`068EA45A5E76A45A5D43F2DBCA3454C33C7AB8A0B4838F9A2928538EA8DE4EB1`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8AFAFCE5AF4B14450DA200B577260C1E95D69A933AF4A4471F5CEC0E93227CF8`。来源：[源码](../../CareerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -2928,9 +2928,9 @@ public const int MaximumNewsPostCount = 20;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-51efb14813db"></a>
+<a id="symbol-7a1356cb17cd"></a>
 
-## `NationalSpire.CommunityPost.AiNetScore — public int? AiNetScore`
+## `NationalSpire.CommunityPost.AudienceScore — public int? AudienceScore`
 
 来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -2938,25 +2938,7 @@ public const int MaximumNewsPostCount = 20;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-
-**赋值（含属性/字段和局部值）：**
-
-
-<a id="symbol-8a0b8b1f3650"></a>
-
-## `NationalSpire.CommunityPost.AiScoreRevision — public long AiScoreRevision`
-
-来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
-
-**调用：** 无已绑定显式调用。
-
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -2974,7 +2956,7 @@ public const int MaximumNewsPostCount = 20;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -2992,7 +2974,7 @@ public const int MaximumNewsPostCount = 20;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -3508,9 +3490,9 @@ public const int MaximumNewsPostCount = 20;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-94d5471730a9"></a>
+<a id="symbol-1d577fb0e252"></a>
 
-## `NationalSpire.CommunityReply.AiNetScore — public int? AiNetScore`
+## `NationalSpire.CommunityReply.AudienceScore — public int? AudienceScore`
 
 来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -3518,25 +3500,7 @@ public const int MaximumNewsPostCount = 20;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-
-**赋值（含属性/字段和局部值）：**
-
-
-<a id="symbol-1340095df498"></a>
-
-## `NationalSpire.CommunityReply.AiScoreRevision — public long AiScoreRevision`
-
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
-
-**调用：** 无已绑定显式调用。
-
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -3554,7 +3518,7 @@ public const int MaximumNewsPostCount = 20;
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 

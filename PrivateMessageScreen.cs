@@ -113,6 +113,10 @@ public partial class CareerScreen
         more.SizeFlagsVertical = SizeFlags.Fill; left.AddChild(more);
         BuildChatPagination(actions);
         var sendActions = new HBoxContainer { Name = "PrivateComposerSendActions" }; sendActions.AddThemeConstantOverride("separation", 7); actions.AddChild(sendActions);
+        var shortcut = PrivateLine("Ctrl + Enter 发送", 12, _muted);
+        shortcut.Name = "PrivateSendShortcut"; shortcut.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+        var shortcutMargin = new MarginContainer { SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        shortcutMargin.AddChild(shortcut); sendActions.AddChild(shortcutMargin);
         var expand = PrivateButton("", () => _privateComposer!.Toggle(), 48); expand.Name = "PrivateExpand";
         expand.ToggleMode = true; expand.TooltipText = "放大输入框 / 恢复默认大小"; expand.SizeFlagsVertical = SizeFlags.Fill;
         var expandIcon = new ChatComposerExpandIcon { MouseFilter = MouseFilterEnum.Ignore }; expand.AddChild(expandIcon); sendActions.AddChild(expand);
@@ -120,6 +124,7 @@ public partial class CareerScreen
         _privateSend = PrivateButton("发送", SendPrivate, 80 + ChatComposerLayout.SendWidthIncrease); _privateSend.Name = "PrivateSend";
         _privateSend.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
         _privateSend.SizeFlagsHorizontal = SizeFlags.ExpandFill; _privateSend.SizeFlagsVertical = SizeFlags.Fill; sendActions.AddChild(_privateSend);
+        shortcutMargin.AddThemeConstantOverride("margin_right", (int)MathF.Round(_privateSend.GetCombinedMinimumSize().X * (1 - ChatComposerLayout.ButtonScale) / 2));
         _privateSend.TooltipText = "Ctrl+Enter 发送";
         _privateSend.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));
         _privateSend.AddThemeColorOverride("font_color", new Color("172330"));
@@ -137,7 +142,7 @@ public partial class CareerScreen
         _privateStreamText = _privateStreamThought = _groupReasoningUpdate = null;
         _groupStreamParser = null; _groupStreamLabels.Clear();
         _privatePages.Reset(_chatPageSize); _groupPages.Reset(_chatPageSize);
-        _privateExpandedIdentities.Clear(); _privateExpandedTraining.Clear(); _privateExpressions = null; _privateActions = null; _privateComposer = null;
+        _privateExpandedTraining.Clear(); _privateExpressions = null; _privateActions = null; _privateComposer = null;
         _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = ""; _privateGroup = "";
         _boundData = ViewData; if (render) Render();
     }

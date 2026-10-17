@@ -25,8 +25,8 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 
 | 请求 | 主要组织入口 | 上游数据 | 输出使用者 |
 | --- | --- | --- | --- |
-| 社区新闻 | AiService.ProcessNewsAsync、AiContext、AiPrompts、AiWireProtocol.Encode | 待发布事件、比赛事实、候选人物、模板、公开记忆及当前基础净赞数 | ApplyNewsResponse 更新原帖与回复，CommunityVotes 应用生成评分，CommunityThreads 更新任务和记忆 |
-| 社区回帖 | ProcessInteractionsAsync → BuildDiscussionPrompt → AiWireProtocol | 本次玩家留言、目标帖及相关帖、人物与记忆、基础净赞数与输出权限 | ApplyDiscussionCore → ParseReplies；正文、父评论和作者编号分别处理，CommunityVotes 合并本次允许更新的评分 |
+| 社区新闻 | AiService.ProcessNewsAsync、AiContext、AiPrompts、AiWireProtocol.Encode | 待发布事件、比赛事实、候选人物、模板、公开记忆 | ApplyNewsResponse 更新原帖与回复，CommunityThreads.Remember 更新任务、记忆和程序评分 |
+| 社区回帖 | ProcessInteractionsAsync → BuildDiscussionPrompt → AiWireProtocol | 本次玩家留言、目标帖及相关帖、人物与记忆 | ApplyDiscussionCore → ParseReplies；正文、父评论和作者编号分别处理，再经 Remember 计算程序评分 |
 | 双周人物介绍/文章 | ProcessWeeklyAsync → ProcessEdition → BuildWeeklyContext | WeeklyJournal 固定的当期事实、已生成介绍、期刊模板 | ApplyWeeklyResponse 更新该期人物或文章，再保存阶段状态 |
 | 私信 | ProcessPrivateAsync → Context → Compose → RequestPrivateAsync | 当前人物、关系、赛程、公开资料、附件、总结、按顺序排列的会话 | PrivateStreamParser → PrivateMessages.Apply → 对应业务规则 |
 | 群聊 | ProcessGroupAsync → GroupChatPrompts.Compose → RequestPrivateAsync | 群成员、俱乐部、关系、活动、公开资料、总结、时间线 | GroupStreamParser → GroupInteractions.Apply → 私信交互与业务规则 |
@@ -53,7 +53,7 @@ PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本�
 
 交互格式、字段含义与关键条件由程序固定注入。群聊会将私信协议示例补上 Actor / Target，再注入群聊 Format。可编辑模板仍决定文风，但不承担唯一格式约束。
 
-社区 news / discussion 的 ComposeSystem 在当前可编辑模板后追加 EvidencePrompt、场景正文协议及 CommunityScorePrompt，旧自定义模板同样取得当前评分协议。netScore 表示模拟论坛读者的累计点赞减点踩，允许有符号整数；玩家亲自选择的票由程序另行记录。固定协议明确输入/输出netScore使用原始评分刻度，程序通过CommunityVotes.AudienceScore统一将因素形成的净值及其变化按主楼/NPC回复乘6、玩家回复乘16，正负方向一致，最后叠加玩家票；原始值继续随请求传给模型以维持同一评分尺度。评分指令同时引用发言内容、作者身份、话题热度、被谈论人物的 followers / popularity、支持者立场与既有争执，要求按讨论进展返回累计净值。BuildNewsContext、BuildDiscussionPrompt 提供当前基础净值；讨论的 otherSpeakers 同时提供角色、关注数及人气层级。Persona 的关注数据沿现有人物资料时点校验提供，PlayerPublicRecord 只在查询日等于当前日时提供当前玩家关注数，其余历史时点为null。评分字段和规则随本次新闻或回帖请求发送，生成与评分共用同一次响应。
+社区 news / discussion 的 ComposeSystem在可编辑模板后追加EvidencePrompt和原场景正文协议。程序评分通过CommunityThreads.Remember → CommunityVotes.Update计算。AI继续生成标题、正文、作者编号和父回复编号；受众评分由本地算法根据人气、内容倾向及讨论热度计算。
 
 职业名称仅在程序资料入口转换。Entry.Init 将 CharacterIdentity.OriginalSource 绑定 GameCharacterNames.Originals，将 Source 绑定 GameCharacterNames.Definitions(GameBridge.Characters())。Originals 从游戏程序集的具体 CharacterModel 类型取得 ModelDb.GetId；当前注册模型属于其他程序集时排除该编号，按当前语言读取原始 characters.json；缺少条目时回退英文。它不读取或修改合并过皮肤文本的共享本地化表。名称表按语言缓存，首次读取及语言切换重新建立。没有手写原版编号或中文名称表。
 
@@ -217,15 +217,15 @@ ProcessNewsBatchAsync 与 ProcessInteractionsAsync 从 EnterQueueAsync 调用开
 
 社区开始、排队、完成或失败保存的状态不同；开始保存的上下文还用于响应权限核对。AiWireProtocol.Decode、ParseReplies 的作者与 parent 判断依赖本次提供的编号资料。不能只依据模型 JSON 语法正确就认定业务引用正确。
 
-自动发帖输出 posts[] 的 id、title、body、netScore、replies；每条新回复包含原 id、authorId、parentId、body 及 netScore。ProcessNewsBatchAsync 在发送时复制待生成帖子，把这些快照的 Revision 随响应交给 ApplyNewsResponse。整批正文、作者、回复顺序及必需字段继续先校验后提交；缺少 title 或 body 仍触发原失败路径。ReadNetScore 单独读取 Int32 数值，缺失、错误类型、小数或越界值返回 null，当前基础净值保留，其他有效正文和评分继续应用。新回复使用同一发送版本写入 AiScoreRevision。自定义 PromptOverrides 可额外描述另一种输出结构，固定协议仍会注入；诊断须核对实际最终请求及其响应。
+自动发帖输出posts[]的id、title、body、replies；新回复包含id、authorId、parentId、body。ApplyNewsResponse先校验整批正文、作者和父回复引用，再写入成品并调用Remember。缺少必需正文继续进入原失败收尾。
 
-互动响应 reactions[] 的 netScore 更新该帖主楼，新 replies[].netScore 随新评论保存；scoreUpdates:[{id,netScore}] 更新本轮已提供的旧评论。ReadDiscussionPermissions 从实际发送前的完整 context 固定各目标帖的 Revision、conversation 编号集合和 queued 所属帖集合。只有 queued 对应帖允许更新已有评分，旧评论 id 还须属于该帖已发送的 conversation；相关参考帖的既有评分继续沿用。ReadScoreUpdates 按条读取，错误容器、无效编号和无效分数局部跳过，同一编号多次有效出现时使用最后一项。ApplyDiscussionCore 在原正文、禁言与等待状态校验通过后，将主楼及旧评论评分交给 CommunityVotes.ApplyScore，再追加新回复、递增内容 Revision 并更新记忆。
+互动响应reactions[]继续按postId及replies[]处理。ApplyDiscussionCore完成正文、禁言和等待状态检查后追加新回复、递增Revision，再调用Remember统一计算主楼与评论评分。
 
-AiWireProtocol.NormalizeFields 识别 netScore / scoreUpdates 的大小写别名，评分数值留给 ReadNetScore 检查；scoreUpdates 内 id 继续使用原短编号解码。评分子树的大小写重复字段保留规范名的值，必需正文字段继续执行原重复字段校验。CommunityVotes.ApplyScore 比较实际发送版本与已存 AiScoreRevision，较早请求返回时保留更新后的分数。PlayerVotes 始终由玩家操作入口维护，AI 请求只提供基础净值，最终显示由Score先取AudienceScore的6倍净值，玩家回复取16倍净值，再加玩家票。评分变化随原生成成功、失败收尾与 CoopAi 回调保存；每个正常互动请求仍依次保存 queued、sending、成功结果和 finally 状态，新闻仍沿原整批排队及各批发送、结果、finally 保存。
+AiWireProtocol沿用原通用字段解析和短编号转换。新闻和互动任务继续沿原queued、sending、成功结果及finally保存顺序提交评分。多人先合并房主最新正文，再调用Remember；成员手动票继续从最新PlayerVotes读取。
 
-离线回复、旧帖待补分和无效score字段沿用已有基础值；新内容缺分时保持null。补分随原新闻或互动任务的有效响应执行，这些状态产生0次独立补分请求。
+新内容与离线回复均由Remember计算评分；旧内容经CommunityVersion=4的一次升级重新计算。具体公式、显示倍率和存档字段兼容见DATA_CONTRACTS，保存与多人合并见PERSISTENCE_AND_COOP。
 
-赞踩验证使用最终Release生产程序集，domain-validation.json记录10组结果，覆盖模型及JSON往返、完整新闻和互动请求、可选评分容错、大小写别名、交错请求版本、新闻批次原子性与多人规则/合并。通过实际AiService、ComposeSystem、AiWireProtocol和响应应用入口保留5对完整合成请求/响应，验证新旧评论评分、响应期间改票、未知及跨帖更新、参考帖已有分数保护，并验证坏分数保留有效正文。HTTP传输使用内存响应，保存使用ExternalSave回调，共19次回调；测试中的身份、正文、凭据和生涯数据均为合成资料。真实API的格式遵循及模型按内容、名气生成评分的质量待实测；请求构造、解析和合并耗时尚未单独测量。证据位于本地Previews/community-step4-votes，保存及界面验证范围见对应章节。
+2026-10-17程序评分检查覆盖新闻、回帖、离线回复、旧字段JSON往返、一次升级、乱序返回及玩家投票保留。实际ProcessNewsAsync和ProcessInteractionsAsync请求由内存传输检查正文协议；真实API与Steam联机另行验收。可复用入口为--community-vote-checks、--community-delivery-checks、--response-workflow-checks。本地证据位于.artifacts/pr12-validation-20261017。
 
 周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog.Select 先使用原赛前、比赛、Priority、近期题材和日期排序，再进行原题材选择，最后将 RelatedPeople 包含 player 或 HumanIds 的帖子稳定排列在前，按 MaxNewsPosts 截取。相同人物相关帖沿用原排序；其余帖沿用原题材顺序。Compact 和 ProcessNewsAsync 继续将当次超额任务设为 superseded，原七天有效范围、分批生成、失败重试与保存入口继续执行。Select 创建本次候选列表和排序集合，读取最近八篇成品；缓存范围为本次选择。建队生活事实仍由次日 PublishPending 汇总进入这条队列。
 
