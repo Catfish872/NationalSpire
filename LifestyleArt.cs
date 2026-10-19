@@ -35,6 +35,7 @@ public partial class LifestyleArt : Control
         return Icons[section] = ImageTexture.CreateFromImage(image);
     }
     public string Category { get; set; } = "";
+    public string ProductId { get; set; } = "";
     public override void _Ready() { MouseFilter = MouseFilterEnum.Ignore; Resized += QueueRedraw; }
     public override void _Draw()
     {
@@ -45,6 +46,8 @@ public partial class LifestyleArt : Control
         DrawCircle(center, 76 * scale, new Color("153846"));
         DrawArc(center, 87 * scale, -.5f, 4.5f, 48, teal, scale, true);
         Line(-78, 57, 78, 57, teal);
+        if (ConsumerProductArt.Texture(ProductId) is { } product)
+        { DrawTextureRect(product, new Rect2(P(-65, -65), new Vector2(130, 130) * scale), false); return; }
         if (Category.Contains("甜筒"))
         {
             DrawPolyline([P(-28,-12),P(28,-12),P(0,58),P(-28,-12)], ink, 2*scale,true);

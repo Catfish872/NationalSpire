@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`28B966E7C88C96ACB4C3DF176E426277131EE050E94FA913A49FF602C00A142E`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`BE95098AB3AFC39CED72E5BEA4AA03ABE26820E78D565152D9E29B6DC5235CEB`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -340,29 +340,31 @@ public event Action<string, bool>? Message;
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Refresh()`](CoopCareerSession.cs.md#symbol-d972d69103cb)；[`NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData)`](CoopCareerSession.cs.md#symbol-34fbd3119785)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`](CoopReception.cs.md#symbol-ebee1cc829c5)；`int.TryParse(string?, out int)`；`NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Math.Max(int, int)`
+**调用：** `NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；[`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`](CoopReception.cs.md#symbol-ebee1cc829c5)；[`NationalSpire.PromptInsertions.Capture(string)`](../PromptInsertions.cs.md#symbol-333725b6545b)；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Math.Max(int, int)`；`int.TryParse(string?, out int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCareerSession._accepted`；`NationalSpire.Coop.CoopCareerSession._disposed`；`NationalSpire.Coop.CoopCareerSession._pending`；`NationalSpire.Coop.CoopCareerSession._queuedCeremony`；`NationalSpire.Coop.CoopCareerSession._session`；`NationalSpire.Coop.CoopCareerSession.Alive`；`NationalSpire.Coop.CoopCareerSession.Host`；`NationalSpire.Coop.CoopCareerSession.Message`；`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Revision`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCareerSession.Alive`；`NationalSpire.Coop.CoopCareerSession.Host`；`NationalSpire.Coop.CoopCareerSession.Message`；`NationalSpire.Coop.CoopCareerSession._accepted`；`NationalSpire.Coop.CoopCareerSession._disposed`；`NationalSpire.Coop.CoopCareerSession._pending`；`NationalSpire.Coop.CoopCareerSession._queuedCeremony`；`NationalSpire.Coop.CoopCareerSession._session`；`NationalSpire.Coop.CoopCommand.PromptInsertions`；`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.PromptInsertions.Capture(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(target, out int season)`；返回值紧邻使用处：`IfStatementSyntax: if (int.TryParse(target, out int season)) _queuedCeremony = Math.Max(_queuedCeremony, season);`
-- `NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；输入表达式：`new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)`
-- `NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；输入表达式：`_session.SubmitReady(_pending, command => _pending = command, error =>          { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SubmitReady(_pending, command => _pending = command, error =>          { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });`
-- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke("房间已断开，请返回队伍重新加入。", true)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Message?.Invoke("房间已断开，请返回队伍重新加入。", true)`
+- `NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；输入表达式：`new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent) { PromptInsertions = kind is "post" or "reply" ? PromptInsertions.Capture("community") : null }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent) { PromptInsertions = kind is "post" or "reply" ? PromptInsertions.Capture("community") : null }`
+- `NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；输入表达式：`_session.SubmitReady(_pending, command => _pending = command, error => { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SubmitReady(_pending, command => _pending = command, error => { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });`
+- `NationalSpire.PromptInsertions.Capture(string)`；输入表达式：`PromptInsertions.Capture("community")`；返回值紧邻使用处：`ConditionalExpressionSyntax: kind is "post" or "reply" ? PromptInsertions.Capture("community") : null`
 - `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke("已提交准备，等待同步。", false)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Message?.Invoke("已提交准备，等待同步。", false)`
+- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke("房间已断开，请返回队伍重新加入。", true)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Message?.Invoke("房间已断开，请返回队伍重新加入。", true)`
 - `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke("正在同步上一项操作。", false)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Message?.Invoke("正在同步上一项操作。", false)`
 - `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke(error.Message, true)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Message?.Invoke(error.Message, true)`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`ArgumentSyntax: Guid.NewGuid().ToString("N")`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(_queuedCeremony, season)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _queuedCeremony = Math.Max(_queuedCeremony, season)`
+- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(target, out int season)`；返回值紧邻使用处：`IfStatementSyntax: if (int.TryParse(target, out int season)) _queuedCeremony = Math.Max(_queuedCeremony, season);`
 
 **赋值（含属性/字段和局部值）：**
 
+- `PromptInsertions` = `kind is "post" or "reply" ? PromptInsertions.Capture("community") : null`
 - `_accepted` = `accepted`
 - `_accepted` = `null`
 - `_pending` = `command`
-- `_pending` = `new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)`
+- `_pending` = `new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent) { PromptInsertions = kind is "post" or "reply" ? PromptInsertions.Capture("community") : null }`
 - `_pending` = `null`
 - `_queuedCeremony` = `Math.Max(_queuedCeremony, season)`
 
@@ -370,7 +372,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Replied(NationalSpire.Coop.CoopReply) — private void Replied(CoopReply reply)`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -393,7 +395,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.SaveAi(NationalSpire.CareerData) — public void SaveAi(CareerData data)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -419,7 +421,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Generate(bool) — public void Generate(bool retry = false)`
 
-来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -440,7 +442,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.OpenRoom() — public void OpenRoom()`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -459,7 +461,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Export() — public async Task<string> Export()`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -485,7 +487,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Dispose() — public void Dispose()`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

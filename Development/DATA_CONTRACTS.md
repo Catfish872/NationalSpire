@@ -6,6 +6,40 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 
 旧JSON缺少 Duels 时默认空列表。ScoreDuels 的输入为当前 CareerData 与一份 CompetitionReview，返回以 CompetitionScore 对象为键的显示详情字典；有快照时引用已存详情，旧格式时从仍保留的同赛事对阵补充。匹配使用当时的完成编号和截止日期，后续完赛席位保留当时待赛状态。原赛事已经清理时沿用原总比分。详情字典仅属于当前页面，浏览结束后释放。保存、广播与恢复沿用 SettlementRecord 原有归属，见[结算对阵详情](PERSISTENCE_AND_COOP.md#结算对阵详情)。
 
+## 立绘设计数据
+
+PortraitDesign.Version=1，PersonId绑定当前人物；Basics保存12项外观字段。PromptModel缺省gpt-image-2.5，ModelConstraints按模型ID保存自定义文本，缺少覆盖时读取PortraitModelPrompts默认值。Style及旧画风组字段保留历史数据。Emotions包含Id、Name、Description及Enabled，neutral固定启用；9项默认ID固定，自定义ID须为小写字母开头的1—64位字母数字下划线且唯一。默认说明改为克制微表情与小动作；与前两版默认字符串完全匹配时升级，用户编辑说明保留。Outfits保存稳定Id/Name与8项服装字段，SelectedOutfit指向当前套装，Inferred/Notes记录推测状态与设计说明。
+
+PortraitDesignStore以WorldId、LocalHumanId（单人player）、PersonId的JSON组合SHA-256作为本地文件键。数据归本机玩家，存于user://national_spire_portraits；读取检查版本、角色和当前套装，允许继续填写未完成的文本。它独立于CareerData保存、角色卡PNG与多人公共快照。
+
+StyleGroups、SelectedStyleGroup、StyleLibraryInitialized及原图缓存属于兼容保留数据。新界面使用默认收起的模型约束编辑区，打开时跳过旧参考库初始化；新提示词包从PromptModel/ModelConstraints读取约束，参考图由玩家在外部模型中上传。切换模型保留各自文本；恢复预设仅作用于当前模型。
+
+PortraitPromptExport序列化当前套装与启用情绪。design.json记录characterId、名称、PromptModel、constraints、Basics、outfit与emotions；manifest.json以characterId/outfitId/emotionId关联唯一PNG路径与提示词文件。characterId由PersonId摘要生成。目标RGBA PNG为1024×1536，neutral作为人物与画风基准。导出MD/JSON包含模型约束、外部参考上传顺序与逐图验收步骤。expressions.md按已启用的非默认情绪顺序从1连续编号，每段标题为序号与名称，情绪ID及PNG文件名独立显示，代码块为可复制的局部修改提示词。提示词首句为“现在开始生成第（N）个差分。”，随后使用“严格在默认基准立绘上修改角色的表情差分。”；动作说明原样保留，代码围栏长度随正文中的反引号调整。默认图单独使用02-基准立绘.md，其中加入用户指定的单次编辑立即交付、已确认浅色低饱和风格、限制整体润色以及同一默认基准的完整段落；expressions.md继续沿原差分提示。仅启用默认图时，Markdown说明使用该基准文件。manifest的非默认prompt统一指向expressions.md，情绪ID提供条目定位。自定义ID改动后更新PNG元数据，原包保持原编号；既有设计草稿、存档及PNG导入接口保持原行为。
+
+## 可移植角色设计ZIP
+
+CharacterDesignPackage.Manifest格式national-spire-character-design，写出Version=2。根目录character.png完全复用CharacterCardPng.Export的角色资料白名单与头像；character-design.json仅含Format、Version、DefaultEmotionId、SelectedOutfit和Sprites。每个Binding只含Outfit、Id、Emotion、File、Hash，路径为sprites/套装ID/差分ID.png；Emotion保存基础情绪ID，支持同情绪数字后缀变体。附加数据仅用于播放映射，立绘PNG按原始字节保存。Favour、Relationship、Impression、Bond、达成记录、聊天、记忆、日记、完整PortraitDesign（含推测说明/提示词）和个人场景位置设置均排除在包结构之外。
+
+Read在内存中验证格式、有效ID、唯一映射、PNG尺寸/Alpha/SHA、范围与路径；拒绝重复条目、路径越界、损坏图片和未知包版本。单包及展开内容上限512MiB，清单4MiB，单张64MiB、至多500张导出立绘；PNG角色卡16MiB。同时接受旧Version=1，只从旧Design中投影DefaultEmotionId、SelectedOutfit和Emotions.Id以恢复映射，忽略旧Relation及其余设计、场景和未知字段。导入以PNG白名单创建新的custom角色，再从此角色设定与图片ID建立默认本地设计；自定义情绪/套装名称暂用其ID，表情动作和服装提示词使用本地缺省值。Imported.Design为重建结果，Manifest不持有设计对象；ImportRelation与Relation导出入口已移除。导入角色以当前生涯新角色的初始关系开始，原角色及其存档记录保持原值。既有PNG导入继续沿原资料流程。
+
+## 约会场景数据
+
+PrivateTurn增加可空Scene和默认为空列表的SceneLines。DateSceneRequest保存OfferId、从权威活动重建的Title/Detail、OutfitId、Opening、Ending及本次可用情绪映射、Backgrounds/CurrentBackground。PrivateConversation.DateSceneStates按OfferId保存active/paused/ended，DateDiaries保存OfferId、Season、赛季内Day、Title、Content、Location、Summary；旧字段缺失时为空。DateScenes.Validate要求同会话一对一已赴约活动；首次进入须当天，已有开场或active/paused允许跨日继续，ended永久关闭。DefaultEmotionId对应已导入默认差分，套装/情绪/背景ID沿原合法性校验。dm-date-open建立开场轮次、active和日记占位；dm-date-end写ended、活动已结束和Ending通知。结束请求按同会话ended验证并支持失败重试；自动通知保留给AI，聊天气泡、会话预览和场景历史隐藏。DateDiaries.Complete仅处理Ending轮次的DateDiary/Location指令，摘要上限12000字符、地点300字符；按活动去重写入，普通私信忽略该附加字段。旧场景用已有结束感想展示兼容日记，缺失地点明确标注。
+
+DateSceneLine保存原文Text、Emotion、Narration及Background。SceneCues是PrivateStreamParser的瞬时字符位置与字段列表，场景标记通过一次正文请求生成；TaggedLines在本地兼容旧圆括号ID、中文名和Emotion标签，剥离这些元数据后将句段拼接为Reply，并校验情绪和背景白名单。台词每页至多48个Unicode文本元素；旁白按完整句末切分并保留句内逗号，较长句段由正文滚动浏览。已有SceneLines播放时沿用Narration分类选择分句方式，情绪字段保持。JoinNarration合并相邻未完句旁白，完整句末、台词或新背景作为边界；播放时只修改临时副本，既有存档段落保持。缺少Emotion时按有限语气词保守推断已导入差分，空/未知ID回退默认；客观括号描写按旁白，口语补充仍为台词，未知背景沿用前图。DefaultEmotionId是PortraitDesign及DateSceneRequest新增字符串，缺省neutral；默认差分可以改名，随所有套装映射一起保存并进入请求。已有SceneLines和旧存档沿原字段读取。只有默认图时省略模型情绪标记。DisplayText仅移除旁白展示用括号，Reply及SceneLines.Text保留正文括号，兼容情绪标签在入库前清理。dm-date-revise仅可修订最新失败的有效场景轮次，保留Id、附件及送达凭据，更新User并清理旧Context、Reply和SceneLines后置queued。
+
+DateSceneAssets保存在本机user://national_spire_portraits/scenes，文件键复用PortraitDesignStore的世界/玩家/人物隔离。Outfits按套装ID保存spriteId→PNG内容SHA256，Sprites为当前OutfitId的内存访问器；Background为背景库ID，缺省空字符串；旧图片摘要进入场景时迁移，Blur字段保留旧档兼容，读取false时将BlurAmount置0并重置Blur=true；BlurAmount为double，缺省3，设置范围0—20，渲染端限制范围并回退无效数值。SpriteScale缺省1，范围0.25—2.5，为当前默认尺寸的比例；SpriteX/SpriteY缺省0，范围−4096—4096像素，为默认定位的位移。ShowAffectionBadge为bool，缺省true，控制台词状态姓名框右侧徽章；设置与TextOutline同一行等宽。TextOutline缺省true，正文和输入的黑色描边开启时使用Godot整数宽度4px，关闭时0px。TextSpeed为double，缺省75字/秒，界面范围5—300，300表示立即显示全文；旧整数JSON可直接读取。FontSize为0/1/2（小/中/大），缺省1；正文/输入字号为25/30/35，姓名26/31/36，历史22/27/32；LetterSpacing为double，缺省1，范围0—3，表示在字体自然字间留白上额外增加0%—300%，渲染端夹限并将非有限值回退1；PanelFade为0—1，缺省0，映射到顶部下方15像素处alpha=0.75×(1−值)、底部alpha=1−0.5×值；绝对顶部alpha恒为0，三段控制点随面板高度重算。Bookmarks按OfferId保存Turn、ReplyHash和下一个句段Index，回复改变时从首句恢复。映射、偏好及书签使用临时文件原子替换；PNG按摘要共享缓存，原始像素与本地路径保持在本机。首次推进提示的已读布尔值独立写入user://NationalSpire_date_scene.cfg的scene/continue_hint_dismissed，本机各人物与生涯共用。文件浏览器的目录偏好另存user://NationalSpire_file_picker.cfg的browser/directory，记录用户点击“保存路径”时打开的文件夹绝对路径，仅本机共用，既有生涯与多人数据保持原结构。
+
+导入支持单项PNG、文件名ZIP、根目录manifest.json及带该清单的ZIP。ZIP内存在根manifest.json时沿原角色摘要、当前套装和路径校验；其余ZIP按PNG的文件名映射情绪ID，例如neutral.png、happy.png，可放在包装子目录。文件名方式的角色与套装由当前界面确定；文件名可为启用情绪ID或情绪ID_数字，如proud_1、proud_2。先匹配完整启用ID，再移除最后一段纯ASCII数字后缀匹配情绪，确保已有自定义ID含义稳定。同包完整spriteId唯一，文件名包全部校验后与当前套装合并，同名替换，其他项保留，合并结果须有DefaultEmotionId或其数字后缀变体。旧manifest仍按其完整清单替换当前套装。至少一张有效默认变体即可进入；播放时按emotion收集本地已加载纹理并随机选择，AI映射仅含基础情绪ID。PNG要求1024×1536、真实透明像素及至少一个可见像素；每张文件至多64MiB，解码前读取PNG头核对尺寸。ZIP按条目读入，拒绝路径穿越和重复ID；文件名包累计展开图片上限512MiB，__MACOSX元数据目录跳过。缓存读取重新核对SHA；所有默认变体均缺失或损坏时阻止进入，其他缺失差分随机使用有效默认变体。在立绘与场景内编辑ID由SaveEmotionEdit同步迁移所有套装的映射；图片缓存保持原SHA。背景接受PNG/JPG/WebP并转存PNG；支持至多32M像素的背景。
+
+DateBackgroundLibrary独立保存于user://national_spire_portraits/scenes/background-library.json，各人物和生涯共用。Images保存手动导入的DateSceneBackground（Id、Description、Image内容SHA），Descriptions保存各背景的本地说明覆盖，Removed保存已删除ID的集合。删除移除手动目录项和说明，并在合并后滤掉Removed，预载图下次发现时继续隐藏；重新导入同ID清除标记。原文件与按SHA共享的缓存保留。背景文件名去扩展名、空格转下划线后作为ID，支持文字、数字、下划线和短横线，最多100字符。原dusk/warm/night渐变预设已移除，这些名称可用于实际图片。Read合并模组date-backgrounds目录图片和本机导入；手动同ID图片覆盖预载项，说明覆盖独立于图片更新。背景ZIP逐项核对唯一ID、路径、64MiB单图及512MiB展开总量，全部成功后保存目录。DateSceneAssets.AutoBackground缺省true；Background从旧图片摘要迁移为背景库ID，RegisterLegacy复用已登记图像或增加imported_摘要前缀条目。场景快照只携带ID及说明，PNG、SHA缓存和说明编辑归本机。AutomaticChoices在存在真实背景图时仅返回这些图片；Closest按ID/说明的中英文词项、地点与时段同义词评分，平分时沿用当前图，再按ID稳定排序。无完全匹配项时仍返回一张图片；空图像库返回空ID，视图使用青黑底色。
+
+## 输入场景的提示词配置与请求快照
+
+PromptInsertionSettings.Slots固定四个PromptInsertion，Text缺省空字符串，Position为0/1/2/3，依次代表所有提示词前、当前输入前、当前输入后、所有提示词后；相同位置按窗口顺序连接。Enabled以private/group/community/date为键，各保存四个默认false的勾选。Normalize补齐缺失项并夹限位置，内容和位置跨场景共用，勾选在同一场景跨人物/群聊/帖子复用。完整配置只保存到本机user://national_spire_prompt_insertions.json。
+
+PrivateTurn、GroupTurn、CommunityPost和CommunityReply的PromptInsertions缺省空列表，仅保存本次已启用且有内容的项。PrivateMessageCommand、GroupCommand和CoopCommand的同名可空字段区分未指定与显式空列表；发送复制到记录，重试收到空列表时可清除旧快照。普通发送的User/Text/Body保留玩家原文。旧存档及旧命令缺字段时沿空快照处理。社区快照随公开帖子同步，群聊随群成员记录同步，私聊沿个人信箱过滤；玩家未勾选的本机文字留在本机配置中。
+
 ## 单人与多人数据
 
 | 数据 | 管理者与写入入口 | 输入来源 | 下游使用者 |
@@ -57,7 +91,7 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 - MarketClearing.Result为单次计算对象，含Quote数值副本、已触发仓位及账户引用、成交金额、均价、手续费和完整执行标志。Commit执行资金与数量变更。MarketState.RevisionCopy供margin/stop复制标量版本，共享只读Quotes与Events；开平仓仍复制完整Market。新仓追加保证金、设置和取消止损递增市场Revision。
 - TradingAccounts和InspectMarket为JsonIgnore委托。房主BindMarket绑定当前事务全部成员账户；客机其他成员Trading经原过滤后为空，InspectMarket向房主查询。MarketInspection仅包含本人订单参数及本人持仓编号；MarketInspectionResult返回市场版本、本人净资产、双向订单摘要和本人退出结果。
 - MarketOrder.QuoteRevision 约束开仓、平仓、追加保证金和止损设置，必须等于共同报价版本；按钮读取当前绑定视图中的报价版本。网络操作编号和重复收据仍由 CoopCommand 管理。
-- CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品明细保留，较旧普通消费明细会清理，但 BoughtDay 保留每款最近购买日期。ConsumerPurchases 只读合并 BoughtDay/Goods，用于已购徽章及实物收藏，不新增存档字段；本季状态来自 Goods.Season，宣发次数仅在 Consumer.Season 等于当前赛季时使用。Good.Durable 仍代表可举办活动、终身限购的原规则；Good.Collectible 独立决定实物展示，不把杂志等普通商品改成终身限购。Consumed 不参与收藏展示过滤。
+- CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品明细保留，较旧普通消费明细会清理，但 BoughtDay 保留每款最近购买日期。ConsumerPurchases 只读合并 BoughtDay/Goods及礼品、邀约可用库存，已购徽章仅购物页显示，收藏页提供有库存的礼品与活动；本季状态来自 Goods.Season，宣发次数仅在 Consumer.Season 等于当前赛季时使用。Good.Durable 仍代表可举办活动、终身限购的原规则；Good.Collectible 独立决定实物展示，不把杂志等普通商品改成终身限购。Consumed 不参与收藏展示过滤。
 - MarketAccounts、MarketSponsors 是 JsonIgnore 委托。BindMarket 在 Apply/Settle 的副本及 InitializeMarket 的恢复资料中绑定：处理所有成员账户（含离线成员）、读取参与者赞助；序列化、个人视图和网络不携带委托。交易输入复用该副本委托，不能指向提交前的旧 CoopWorld。
 
 - CareerClub.Fans 保存普通俱乐部独立关注，AudienceReceipts 按赛事/轮次/对阵去重；OwnedClubState.Fans 保留自建俱乐部原独立关注。ClubAudience.Total 动态叠加现役前三人20%，不把这一部分写回独立关注。
@@ -68,6 +102,18 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 - MarketAccount.InterestRate 缺省0.0003，保留旧借款；新借款时按本金写入对应利率，还款不重定价。
 - MarketTerminal 的自选名单位于本机 user://NationalSpire_market.cfg，按WorldId及Human分组。概况和动态属于本机显示状态；EventTitle读取旧事件，MarketEventRow使用记录的Day、Change与Person。旧待处理文本保留在Market.Events，由展示筛选选择当前可见事实。RefreshChart仅使用当前资产历史，切换图表范围保留已整理的概况和动态。Unbind清除当前CareerData、交易与人物回调、选中事件和搜索资料，并解除持仓卡片资料。
 其他成员快照中的 Consumer、Trading 会清空，本人数据保留；公共行情一致共享。房主权威存档保留所有账户，用于离线结算和恢复。
+
+### 赠礼库存、送达事实和关系阶段
+
+ConsumerState.GiftStock 保存商品Id到可持有数量的映射，GiftDeliveryIds 保存已送达附件Id，独立于 Goods/收藏与购买历史。旧档缺失时分别为空字典/集合；此前标为 Consumed 的历史消费保持原语义。Good.Giftable 要求没有耐用品活动、体验冷却、运营属性和同行名额；誓约之戒属于赠礼，盛大婚礼属于使用约会流程的一对一邀约商品。ConsumerOrder.Quantity 缺省1；GiftPurchase 包含商品、购买总量、人物数量分配及 Direct；购买总量0表示从库存赠送，正数表示先购买该数量，分配上限为购买量加可用库存，内部金额继续使用显示美元的十分之一。
+
+PrivateConversation.GiftDrafts 保存待发送礼物、婚礼邀约及商城约会邀请。预留量由全部本人会话的礼物草稿汇总，Available 扣除这些预留；可按草稿Id排除本次发送自身。PrivateOffer.Gift 为可空 GiftDelivery，普通附件省略该字段。GiftDelivery.Items 的商品Id、数量、实际单价、此前累计收取数量和偏好依据组成稳定送达快照；Sent 在发送时置真，Settled 在完整NPC回复后置真。送达前由程序重建价格、历史次数、好感和心情快照，客户端输入的收益字段归零。
+
+商城邀请Kind=date-invitation，婚礼以GoodId=grand-wedding区分并复用同一协议；PrivateOffer.GoodId/GoodVerb保存商品/活动编号，InvitationReservation关联ConsumerState.InvitationReservations中的共享凭据（Id/GoodId/Verb/People/Consumed），Title/Detail保存内容，Prepare从本人草稿重建。ConsumerState.InvitationStock为可空字典，null表示等待旧明细迁移；首次购买或预留前初始化，之后按商品保存未消耗总份数，跨季保持。Availability一次扫描草稿及Pending，按共享凭据扣除预留，取消/拒绝后自动释放；接受时Accept扣库存或调用耐用品Use，Consumed防重复结算。SourceInvitationId关联activity和原附件；接受已确认、拒绝已拒绝，改期继续保留来源。Pending从有效玩家附件减去已有处理记录，商谈保留原编号。ConsumerOrder新增BuyInvitation，缺省false，true通过原Buy购买并预留。新字符串缺省空，旧草稿在发送/接受前尝试补齐库存预留。
+
+PrivateRelation.ReceivedGifts 按本玩家—NPC方向累计实际送达件数，GiftRemainder 保存不足1点的收益。RingReceived、WeddingCompleted 分别表示实际收取婚戒和完成婚礼，RingReplyPending表示婚戒已送达且等待完整NPC回复；待回复期间Appearance.OathEligible保持false；DateScenes.Leave结束已进入过的grand-wedding场景时，由RelationshipPresentation.CompleteWedding设置WeddingCompleted并保持幂等。HighestBond 保存最高达成阶段，SelectedBond 可为空（自动规则）或0/1/2（熟人/恋人/婚约）；降级保留达成历史和婚戒、婚礼事实。OathConfirmed与WeddingCompleted同时为真才启用誓约外观，判断统一为OathAppearance；旧档只有确认求婚记录时继续保留记录并等待婚礼。CompleteWedding同时记录最高阶段2、选中阶段2、当前誓约与NpcAvatarFrames[person]=oath；再次结束同一场景保持后续装扮和关系选择。以上数据跟随个人信箱保存，角色PNG继续只携带人物资料。
+
+NpcLearning.GiftMoodExtension 记录同一次振奋状态已经通过赠礼延长的天数，最多14；RecordMood 建立新状态时归零。礼物对心情的执行凭据使用 learning.Receipts 中的 gift:附件Id，防止多人合并重复应用。
 
 ## 编号、版本与顺序
 
@@ -105,7 +151,17 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 | PrivateOffer.Quote / CommunityQuote / CommunityQuoteReply | CommunitySharing.Create建立预览，PrepareAttachments在dm-send按权威来源重新准备 | 保存社区主楼或评论引用；卡片读取Quote，显示与检索读取Detail，模型及总结沿AiDetail读取结构化上文 |
 | PrivateTurn.Request（Kind=community-report） | dm-arbitrate调用CommunityReporting.Create，按权威帖子重建 | RequestKind仍为arbitration；Quote用于举报引用卡，Detail/AiDetail保存案件快照，SpireArbitration.Context与UserText读取 |
 | Applied / Effects / 交互历史 | PrivateMessages.Apply、GroupInteractions.Apply | 重复执行判断、展示、整轮重新生成的回退 |
+| PrivateMailbox.NpcAvatarFrames[NPC] | NpcAvatarFrames.Select，经档案选择窗或dm-avatar-frame | 当前玩家给NPC选择的装扮ID；缺省/移除对应默认款，旧档为空字典，独立于AI关系撤回；CharacterDeletion及多人角色删除清理对应项，角色PNG/ZIP导出继续沿原白名单 |
+| CareerData.RomanceDifficulty | 模组设置；联机romance-difficulty房主命令 | 生涯全局难度枚举：Natural=0、Charming=1、Reserved=2、Insulated=3；旧档缺省Natural，未知值读取时归默认；成员View与过滤快照继承共同世界值 |
+| PrivateTurn.AffectionDifficulty | PrivateMessages.Enqueue | 私聊发送时难度快照，可空；重试/重生成保留，旧轮次空时使用当前生涯难度 |
+| PrivateOffer.FavourDelta | PrivateMessages.Apply/PendingFavour/ConfirmFavour | 大幅变化待确认的最终缩放差量；可空兼容旧提案，确认和卡片读取同一计算入口 |
+| PrivateRelation.GainRemainder / LossRemainder / GiftRemainder / GiftLossRemainder | AffectionRules.Apply、交互回退 | 对话/活动正负及礼物正负四个小数累积余数，旧档新增值为0；边界清空对应方向；回退差量后归一至[0,1) |
+| RelationshipPresentation.IconBond | 当前个人关系与好感 | oath/lover沿Bond；普通关系按Favour<5为unfamiliar、其余none。只输出图标资源键，原好感分档、达成记录与关系数据保持 |
+| ChatContactPreferences.Pinned / Hidden / Sort / Reverse / ShowHidden / ShowRelationships | 右键菜单及排序菜单 | 本机WorldId:Human配置中contacts JSON；Sort取favour/time/name/type，Reverse缺省false，ShowRelationships缺省true；低于5的普通关系始终在侧栏隐藏；聊天使用原NPC编号或group:群编号。置顶先行，方向仅作用于其余项；数据引用仅控制列表，生涯原文/记忆/总结保持原归属 |
 | PrivateMailbox.Relations[NPC] / PrivateRelation | 私信、群聊交互及 PrivateMessages.EditRelation | NPC 对该信箱所属玩家的好感、交往关系和印象；Revision 驱动私信显示更新；多人按 CoopMember.Life 分开保存 |
+| PrivateRelation.OathConfirmed / OathDeferred / OathPromptHidden | RelationshipPresentation.Decide，经 dm-oath-confirm / defer / close / open / release；婚戒完整回复结算重置搁置状态 | 当前玩家是否正式确认、是否搁置及是否完全收起提示卡；点击好感徽章重新打开满足资格的搁置邀请，头像框与私信沿原个人归属读取 |
+| PrivateRelation.OathReleaseReason / OathReleaseTurn | 私信 Oath:解除标记经 RequestRelease；玩家回复操作清空 | 待处理的解除原因及来源轮次；好感和关系变化本身保留誓约，玩家须回复并选择处理 |
+| PrivateRelation.Appearance / AnimationFrom / AnimationStarted | 数值或关系赋值、JSON反序列化完成 | 当前分档和关键词结果、至多750毫秒的整数展示过渡；均为派生内存状态，序列化排除 |
 | Life.Relationships[NPC] | ChangeFavour、EditRelation、回退恢复和旧档迁移 | 生活活动的既有好感读取索引，与 PrivateRelation.Favour 同步 |
 | CharacterCardEdit.Relation / CharacterRelationEdit | CharacterCardScreen 仅在输入发生变化时建立；Encode/Decode 传递 | 本次命令的可选修改；Favour 是 -100—100 的目标值，字符串空值表示未编辑，空字符串表示清空；不写入 CareerPerson，不进入 PNG 的 Fields/Bundle |
 
@@ -123,7 +179,7 @@ Create保存待发时的预览；dm-send的PrepareAttachments按来源编号逐�
 
 入群消息是独立 Entry，不增加聊天轮次。新成员能查看群里原记录，加入位置按全局 Order 表示。
 
-聊天显示的 ChatHistoryPage<T> 只持有当前会话可见轮次的引用，页大小默认10、可选5；引用索引通过列表引用、数量及 MemoryRevision / GroupChat.Revision 更新。ChatHistoryScreen 的页码、滚动请求编号和新消息提示属于本机 CareerScreen。输入框操作行读取这些状态；原 PrivateTurn / GroupTurn、附件、交互及总结继续属于生涯记录。群通知按当前页面首轮至下一页面首轮的 Order 读取。
+聊天显示的 ChatHistoryPage<T> 只持有当前会话可见轮次的引用，页大小默认10、可选5；私信可见条件共用PrivateMessages.VisibleInCommunications，Scene.Ending=false的开场与场景对话以及两侧均删除的轮次退出通讯显示，Scene.Ending=true的结束感想继续显示。原记录及AI上下文完整保留。SeenCount继续计入所有完成轮次，UnreadInCommunications先按原计数跳过已读轮次再筛选可见项，兼容旧档；引用索引通过列表引用、数量及 MemoryRevision / GroupChat.Revision 更新。ChatHistoryScreen 的页码、滚动请求编号和新消息提示属于本机 CareerScreen。输入框操作行读取这些状态；原 PrivateTurn / GroupTurn、附件、交互及总结继续属于生涯记录。群通知按当前页面首轮至下一页面首轮的 Order 读取。
 
 私信顶部关系/印象详情及好感文字的展开状态保存于本机ChatPreferences：WorldId:本机玩家编号分区中的identity:人物编号布尔值，缺省为true。点击关系或好感按钮同步显示并写入文件一次，普通刷新、切换人物、关闭再打开通讯及重启恢复同一选择。ChatComposerLayout.CenterPages在私信/群聊均为true，CommunityReplyExpressions返回的启用委托在选中任一会话时启用；分类、选项与异步定位编号归当前控件并随会话切换沿用。ChatComposerPanel.Expanded、附件目标高度和尺寸更新待执行标志归当前通讯输入区；放大切换保留草稿，发送恢复默认尺寸，关闭通讯释放。训练详情的_privateExpandedTraining为按计划Id维护的窗口内HashSet，新计划默认收起，普通卡片重建复用，关闭通讯清空。PrivateMoodButton及右侧状态说明属于当前身份控件，重建时收起；原始状态和到期日仍从CareerTraining.MoodLevel/MoodUntil读取。正文仍写入原_privateDrafts，发送使用原PrivateTurn；本次布局状态的生涯序列化字段数为0，旧存档沿原默认值读取。
 

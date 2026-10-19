@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3D6379D49C890273735BFB772D712ACC31E0940B5F981C145D013C7522FE0953`。来源：[源码](../../EconomicActions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B7A273F338F48AA12F3358C5907586B4607A069E34439C04C498027E632CB662`。来源：[源码](../../EconomicActions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
 
 <a id="symbol-6ec38e492fe6"></a>
@@ -19,7 +20,7 @@
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>)`](ConsumerScreen.cs.md#symbol-a26966f14e5c)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-a26966f14e5c)；[`NationalSpire.CareerScreen.GiftRecipientPicker(NationalSpire.CareerData, NationalSpire.Good, int, bool, string?, int, bool)`](ConsumerGiftScreen.cs.md#symbol-55244dcd20ef)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.PrivateDateInvitationPicker()`](DateDiaryScreen.cs.md#symbol-cdf7f00bf71b)
 
 **调用：** [`NationalSpire.CareerData.EncodingHeader()`](CareerData.cs.md#symbol-09cee4b6558d)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](Coop/CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.EconomicActions.Copy(NationalSpire.CareerData, NationalSpire.CareerData)`](EconomicActions.cs.md#symbol-d4ca2504b704)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 
@@ -109,13 +110,14 @@
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.CommunityMemories`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Chats`；`NationalSpire.CareerData.CommunityMemories`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 
 **赋值（含属性/字段和局部值）：**
 
+- `to.Chats` = `from.Chats`
 - `to.CommunityMemories` = `from.CommunityMemories`
 - `to.Credits` = `from.Credits`
 - `to.Fans` = `from.Fans`

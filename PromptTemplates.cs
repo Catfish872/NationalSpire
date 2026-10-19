@@ -197,6 +197,7 @@ BOSS：
     public static string Default(AiOptions options, string id)
     {
         string template = TemplateId(options);
+        if (id == "date" && options.CustomPromptTemplates.GetValueOrDefault(template)?.Sections.ContainsKey(id) != true) return Default(options, "private");
         if (options.CustomPromptTemplates?.TryGetValue(template, out var custom) == true)
         {
             if (custom.Sections.TryGetValue(id, out var text)) return text;

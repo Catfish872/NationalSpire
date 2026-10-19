@@ -40,6 +40,7 @@ public static class EconomicActions
     private static void Copy(CareerData from, CareerData to)
     {
         to.Life = from.Life; to.Credits = from.Credits; to.Fans = from.Fans;
+        to.Chats = from.Chats;
         to.Posts = from.Posts; to.SavedThreads = from.SavedThreads; to.CommunityMemories = from.CommunityMemories;
     }
 }

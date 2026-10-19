@@ -21,11 +21,12 @@ public static class ConsumerEvents
         var fact = data.CommunityMemories.FirstOrDefault(m => m.Id == "life-fact:" + entry.Id);
         if (fact != null) { fact.Text = entry.Title + "：" + entry.Detail; fact.People = entry.People.ToList(); }
     }
-    public static void Activity(CareerData data, Good good, GoodVerb verb, IReadOnlyList<string> guests)
+    public static void Activity(CareerData data, Good good, GoodVerb verb, IReadOnlyList<string> guests, bool planned = false)
     {
         string human = GroupChats.Human(data);
         string people = string.Join("、", guests.Select(id => CareerEngine.DisplayName(data, id)));
-        CareerLife.AddEvent(data, human + "/party-" + data.Life.Consumer.PartyCount, "消费与生活", verb.Name + "已完成",
-            $"{CareerEngine.Name(data)}使用{good.Name}举办的{verb.Name}已经结束。" + (people.Length > 0 ? "参加者：" + people + "。" : ""), [human, .. guests]);
+        CareerLife.AddEvent(data, human + "/party-" + data.Life.Consumer.PartyCount, "消费与生活", verb.Name + (planned ? "已约定" : "已完成"),
+            $"{CareerEngine.Name(data)}使用{good.Name}安排的{verb.Name}" + (planned ? "已得到邀约对象接受，具体安排见日程。" : "已经结束。")
+            + (people.Length > 0 ? "参加者：" + people + "。" : ""), [human, .. guests]);
     }
 }

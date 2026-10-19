@@ -47,7 +47,7 @@ public static partial class AiService
             var permissions = ReadDiscussionPermissions(context);
             var wire = new AiWireProtocol(data);
             string payload = JsonSerializer.Serialize(new { model, stream = false,
-                messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, "discussion") }, new { role = "user", content = wire.Encode(context) } } }, Json);
+                messages = PromptInsertions.Discussion(wire, requested, targets, ComposeSystem(data.Ai, "discussion"), context) }, Json);
             CommunityThreads.SetInteractionState(data, requested, "sending");
             data.Ai.RequestsToday++; CareerStore.Save(data); Status = "正在生成社区回应";
             using var request = new HttpRequestMessage(HttpMethod.Post, uri);

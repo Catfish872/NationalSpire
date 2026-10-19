@@ -12,6 +12,7 @@ public sealed class NpcLearning
     public int MoodUntil { get; set; }
     public double MoodStrength { get; set; }
     public bool MoodAggregated { get; set; }
+    public int GiftMoodExtension { get; set; }
 }
 
 public sealed class PlayerDevelopment
@@ -49,7 +50,7 @@ public static class CareerTraining
         mood.After = mood.Before;
         state.Receipts.Add(receipt); state.Sources.Add(source);
         // 标记是更新后的状态；减弱、恢复正常和重新估计持续时间均替换原状态。
-        state.MoodStrength = mood.Strength; state.MoodDay = mood.Day; state.MoodUntil = mood.Day + mood.Days;
+        state.MoodStrength = mood.Strength; state.MoodDay = mood.Day; state.MoodUntil = mood.Day + mood.Days; state.GiftMoodExtension = 0;
         mood.After = MatchRules.ClearChance(data, person, person.MaxAscension);
         InvalidateForecast(data); return true;
     }
@@ -70,7 +71,8 @@ public static class CareerTraining
         lesson.Before = MatchRules.ClearChance(data, person, person.MaxAscension);
         double magnitude = Math.Abs(lesson.Strength), topic = state.Topics.GetValueOrDefault(lesson.Topic);
         // 双重平方根递减，长期收益趋缓但没有累计硬上限；正负交替不会重置阻力。
-        state.ChanceShift += .018 * lesson.Strength / Math.Sqrt(1 + (state.Exposure + magnitude / 2) / 6)
+        double multiplier = lesson.AffectionMultiplier ??= lesson.Strength > 0 ? AffectionCompetition.Growth(data, personId) : 1;
+        state.ChanceShift += multiplier * .018 * lesson.Strength / Math.Sqrt(1 + (state.Exposure + magnitude / 2) / 6)
             / Math.Sqrt(1 + (topic + magnitude / 2) / 4);
         state.Exposure += magnitude; state.Topics[lesson.Topic] = topic + magnitude;
         state.Receipts.Add(lesson.Id); state.Sources.Add(lesson.Source);
@@ -84,7 +86,7 @@ public static class CareerTraining
         foreach (var c in mailbox.Conversations.Values)
             foreach (var turn in c.Turns.Where(t => t.Status == "complete" && t.Applied))
             {
-                if (turn.Learning != null) RecordLesson(world, c.PersonId, turn.Learning);
+                if (turn.Learning != null) { turn.Learning.AffectionMultiplier ??= 1; RecordLesson(world, c.PersonId, turn.Learning); }
                 if (turn.Mood != null) RecordMood(world, c.PersonId, turn.Mood);
             }
     }
@@ -124,6 +126,7 @@ public static class CareerTraining
         a.TrainingStart = a.StartedDay + 1;
         a.TrainingEnd = a.StartedDay + 28;
         a.FinishDay = a.TrainingEnd + 1;
+        if (!legacy) AffectionCompetition.Snapshot(d, a);
     }
     private static int SeasonAt(CareerData d, int day)
     {
@@ -140,11 +143,11 @@ public static class CareerTraining
             SeasonRemainders = existing?.SeasonRemainders.ToDictionary(p => p.Key, p => p.Value) ?? [] };
         int initial = state.Points;
         int start = a.TrainingStart > 0 ? a.TrainingStart : d.Day + 1;
-        for (int week = a.TrainingWeeksPaid + 1; week <= 4; week++) ApplyGrowth(state, weekly, SeasonAt(d, start + week * 7 - 1));
+        for (int week = a.TrainingWeeksPaid + 1; week <= 4; week++) ApplyGrowth(state, weekly, SeasonAt(d, start + week * 7 - 1), AffectionCompetition.Growth(d, id));
         return state.Points - initial;
     }
     // 对成长阻力积分，分批与一次投入结果一致；小数部分入档，后期仍持续累积。
-    private static int ApplyGrowth(PlayerDevelopment state, int amount, int season)
+    private static int ApplyGrowth(PlayerDevelopment state, int amount, int season, double multiplier = 1)
     {
         if (amount <= 0) return 0;
         double total = state.Points + state.Remainder;
@@ -155,7 +158,7 @@ public static class CareerTraining
             double delta = (low + high) / 2;
             if (GrowthCost(total, current, delta) < amount) low = delta; else high = delta;
         }
-        double growth = (low + high) / 2;
+        double growth = (low + high) / 2 * multiplier;
         int previous = state.Points;
         double newTotal = total + growth, newSeason = current + growth;
         state.Points = checked((int)Math.Floor(newTotal)); state.Remainder = newTotal - state.Points;
@@ -202,7 +205,7 @@ public static class CareerTraining
     {
         if (CareerEngine.Person(d, id) is not { } person || ClubCoaching.IsCoach(person)) return 0;
         if (!d.Development.TryGetValue(id, out var state)) d.Development[id] = state = new();
-        int gained = ApplyGrowth(state, amount, season);
+        int gained = ApplyGrowth(state, amount, season, AffectionCompetition.Growth(d, id));
         if (gained > 0) InvalidateForecast(d);
         return gained;
     }
@@ -216,7 +219,7 @@ public static class CareerTraining
         if (club.Length == 0) return 0;
         return d.Life.Activities.Where(a => (IsTraining(a) || ClubPrograms.IsTraining(a)) && a.ClubId == club && (a.Status is "进行中" or "已完成")
             && a.TrainingTargets.Contains(id) && day >= a.TrainingStart && day <= a.TrainingEnd)
-            .Select(a => defense ? a.DefensePoints : a.TemporaryPoints).DefaultIfEmpty().Max() / 10000.0;
+            .Select(a => defense ? a.DefensePoints : a.TemporaryPoints * AffectionCompetition.Temporary(d, a, id)).DefaultIfEmpty().Max() / 10000.0;
     }
     private static List<string> Beneficiaries(CareerData d, LifeActivity a, string kind) =>
         a.TrainingTargets.Count > 0 ? a.TrainingTargets : kind is "team" or "team-growth"
@@ -259,7 +262,8 @@ public static class CareerTraining
             {
                 int date = a.TrainingStart > 0 ? Math.Clamp(d.Day, a.TrainingStart, a.TrainingEnd) : d.Day + 1;
                 var current = MatchRules.Evaluate(d, p, asc, date);
-                var improved = current with { Training = Math.Max(current.Training, temporaryRate / 100.0) };
+                double multiplier = a.TrainingStart > 0 ? AffectionCompetition.Temporary(d, a, id) : AffectionCompetition.Growth(d, id);
+                var improved = current with { Training = Math.Max(current.Training, temporaryRate / 100.0 * multiplier) };
                 forecasts.Add($"{p.PublicName} · 通关率约 {current.Final:P2} → {improved.Final:P2}");
             }
             else forecasts.Add(p.PublicName);

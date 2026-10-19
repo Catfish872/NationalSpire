@@ -1,29 +1,47 @@
 # 模块与功能
 
+AffectionCompetition负责可选的关系与通关率联动：世界开关、最高好感玩家选择、队友成长倍率及直接概率修正。CareerTraining、OwnedClubs、TeamPreparations与MatchRules共用此规则；AffectionSettingsScreen及CoopRules负责设置与权限，AffectionRules/PrivateInteractionHistory维护预测失效。
+
 ## 逻辑层与职责
 
 | 层 | 入口与模块 | 输入来自哪里 | 输出交给谁 | 数据或外部副作用 |
 | --- | --- | --- | --- | --- |
 | 游戏接入 | Entry.Init、MainMenuEntries、GameBridge、LiveCompatibility、RuntimeApi、GameCompatibility | 原版 ModInitializer、菜单、RunManager、战斗与存储接口 | 生涯界面、比赛恢复、证据记录、转播 | 安装 Harmony 补丁、订阅游戏事件；反射读取版本差异接口 |
 | 页面与会话 | CareerScreen 各 partial、CareerNavigation、ICareerSession、CoopCareerSession | 当前绑定生涯或多人个人视图、用户操作、流式状态 | 生涯命令、多人 Send、AI 请求入口 | 创建和更新控件；操作保存由规则与会话入口负责 |
+| 日程日期显示 | CareerScreen.Calendar、CalendarDayButton、PrivateMessageScreen.OpenPrivateOfferCalendar | 赛事登记、当日世界赛程参与者、活动与NPC关系、本机所选日期 | 单剑/交叉双剑、爱心日历/婚礼钻石、选中底色、今天圆角悬停线、私聊直达日程 | 控件与导航归本机；复用既有绝对日期、保存和赛事规则 |
 | 聊天历史显示 | ChatHistoryPage、ChatHistoryScreen、ChatComposerLayout、ChatComposerButtonSlot、ChatComposerPanel、ChatComposerExpandIcon、PrivateMessageScreen、GroupChatScreen、CareerNavigation | 当前会话记录、内容版本、翻页与选择操作、底栏四组控件的最小尺寸 | 私信/群聊分页及轮数组整体居中、底栏等高并缩至90%、输入框60%高度放大与发送还原、发送加宽且右缘/间距保持、当前页面气泡、滚动定位与档案返回 | 缓存当前会话轮次引用；本地配置按世界及玩家保存最近会话与每页轮数；布局只修改控件位置与尺寸 |
+| 四场景提示词插入 | PromptInsertionScreen、PromptInsertions；各聊天/社区命令与Compose | 四段共享文字及位置、四场景独立勾选、请求快照 | 四列编辑器、当前输入前后及完整请求前后插入 | 本机防抖/关闭保存，已启用快照随原业务记录保存与同步，历史原文保持 |
 | 私信身份与表情 | PrivateMemoryScreen、PrivateMessageScreen、CommunityReplyExpressions | 当前人物与关系、本机配置中的人物详情展开状态、TextEdit光标/选区、当前聊天模式 | 头像/姓名档案入口、关系15字折行及右对齐、关系/好感共用自然高度详情、收起消除边框及好感文字显隐、ID顶端对齐头像、名片按两者底边居中、所有状态共用布局及独立方形状态按钮/右侧说明、ID/关系/好感1.25倍悬停亮度、与社区共用的50项Emoji/41项颜文字两行滚动选择器 | 人物详情展开状态按世界、玩家及人物写入本机聊天配置；表情面板归通讯窗口，关闭释放；插入沿原文字草稿路径，私信/群聊共用入口与分类状态，发送沿原业务 |
 | 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
 | 合同与培养 | OwnedClubs、OwnedClubSchedule、ClubOperations、ClubCoaching、CoachLineups、CareerTraining | 所属俱乐部、合同、席位、训练计划、预约转会 | 当前阵容、未来比赛名单、培养效果、账目 | 修改俱乐部与发展数据；名单变化传给赛事同步入口 |
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
+| 立绘设计与提示词包 | ProfileScreen → PortraitDesignScreen → PortraitDesigns / AiService.InferPortraitAsync / PortraitDesignStore / PortraitPromptExport；PortraitStyleScreen → PortraitModelPrompts；CharacterCardScreen / DateSceneAssetScreen → CharacterDesignPackage | 当前人物资料/记忆、外观/套装/情绪、模型约束、PNG/ZIP角色包 | 可收起模型约束、人物化情绪推测、提示词ZIP（默认稿＋连续编号的expressions.md）、PNG白名单角色与全套立绘ZIP | 私聊连接推测；设计和图片存本机，角色ZIP只携带PNG资料、图片及ID映射，个人态度与记忆保留在生涯 |
+| 一对一约会场景 | DateSceneAssetScreen / DateSceneAssetStore；DateSceneBackgroundScreen / DateSceneBackgrounds；DateSceneScreen / DateSceneView / DateSceneWaiting；DateScenes / PrivateMessageCommands / AiPrivateMessages | 当天已赴约的一对一活动、当前套装立绘、本机背景目录、完整私聊回复及玩家输入、逐句情绪/旁白/转场标注 | 按文件名或旧清单导入立绘、预载与导入背景库、AI开场、带长度保护的逐句播放/旁白淡出、兼容情绪标签、原地重生成、姓名框内好感、兴奋双跳、生成等待立绘互动及预制气泡、历史滚动浏览及可滚动输入框优先、可调字间距、背景最近匹配及淡入淡出、共用私聊输入、显示偏好与右键显隐、同情绪随机变体、独立约会提示词、暂返恢复入口、结束后私信感想与第一人称约会日记 | 活动资格由DateScenes校验；消息与效果沿私聊，通讯通过VisibleInCommunications隐藏场景对话并保留结束感想，模型标注只选已有句段及ID；场景状态和日记归个人信箱；图像、显示偏好和播放进度归本机 |
 | 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
+| 好感外观与誓约 | RelationshipPresentation、PrivateRelation、AffectionVisuals、PrivateOathScreen、AvatarHonors | 存档反序列化、好感/关系赋值、玩家确认及私信 Oath 标记 | 六档样式、不熟/熟识/恋人/誓约关系图标、四边进度、整数动画、誓约确认与解除请求、婚礼场景结束后自动装扮的誓约徽章及共享头像工厂钻戒框 | Evaluate统一判定；数值先行，大于90才扫描关键词；誓约归个人信箱。40份内嵌SVG按名缓存，等级与职业荣誉继续由头像控件绘制 |
 | 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch、CommunityPromptContext | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
 | 社区赞踩 | CommunityVotes | 主楼和评论正文、人物关注与关系、赛事类型、玩家选择 | Update计算受众净赞数，AudienceScore换算显示，Score叠加手动票，SetVote修改玩家选择 | Remember随内容更新评分，实际变化递增VoteRevision；原JSON键沿用，CommunityVersion=4升级一次，保存交给原入口 |
 | 社区讨论显示 | CommunityScreen、CommunityDiscussionLayout、CommunityDiscussionVisuals、CommunityReplyExpressions、MentionComposer | 当前帖子回复、ParentId、既有阅读顺序、赞踩数据、本机折叠编号及编辑器光标与选区 | 评论卡片、统一透明度的父子连线及圆钮留空、后代计数、可切换收起的气泡回复、赞踩控件、圆形折叠按钮、就地回复栏及隔离滚轮传播的Unicode表情选择 | 投影和控件随布局更新；草稿与折叠集合归当前屏幕，ResetNavigation清空；表情选择及提及候选归当前编辑器，提交及赞踩保存沿业务入口 |
 | 社区分享 | CommunityShareScreen、CommunitySharing、PrivateMemoryScreen | 主楼/评论编号、作者、当前个人信箱、人物选择及原私聊草稿 | 单选人物窗口、待发引用卡片、发送时来源/父链快照、私信及总结的AI材料 | 草稿归当前屏幕；发送经原dm-send按权威资料重建，Quote/Detail/AiDetail随该轮附件持久化 |
 | 社区举报 | CommunityReportButton、ArbitrationScreen、CommunityReporting、SpireArbitration | 来源帖及可选评论编号、权威原文、NPC作者、可选举报原因、人物实力与裁决 | 提交前确认弹窗、作者私聊中的举报卡、官方裁决及既有处罚和致歉 | 确认后重读来源，Text保存原因或默认说明，dm-arbitrate建立Request案件快照，统一仲裁队列执行；原文与审理材料归申请人信箱，公开裁决沿原档案合并 |
+| 通讯列表显示 | ChatContacts、ChatContactScreen、PrivateListRows、ContactRowButton、PrivateMessages | 会话顺序、NPC名称/好感、群组、本机显示偏好 | 置顶、隐藏、四种正倒序、显示隐藏、无描边菜单及联系人行、图标状态与可切换关系、待进行事件图标及距上次聊天天数、约会轮次可见过滤 | ConfigFile分生涯和玩家存放；保存/广播生涯次数0；原会话、记忆与总结保持 |
+| 攻略难度与好感结算 | AffectionRules、AffectionSettingsScreen、PrivateMessages、ConsumerGifts、ConsumerEngine、CoopRules | 生涯全局难度、原始差量、赠礼因子、约会标识、发送时快照 | 增长缩放、负向倍率、对话上限、赠礼负收益及物价 | 整数好感与四种余数存个人关系；难度由房主统一，沿原轮次/商品/多人保存和回执 |
 | 聊天与交互 | PrivateMessageCommands、PrivateMessages、GroupChats、GroupInteractions、ChatTimeline、PrivateInteractionUndo | 用户文字、附件、群成员、AI 标记、旧记录 | 聊天轮次、交互卡片、关系、训练、活动、赛程与帖子；CoachScreen训练卡正文默认收起并在当前窗口维护展开状态 | 交互执行调用对应业务规则；回退依赖已记录的交互历史 |
 | 提示词与模型 | PromptLibrary、PromptTemplates、PromptTransfer、AiContext、AiWireProtocol、各 Prompts、AiService、AiRouting、AiSettingsStore、AiRequestQueue、各解析器 | 模板、固定协议、人物与事实、历史记忆、生成任务、本机任务方案 | 最终 messages、连接快照、模型响应、解析后的正文与标记 | HTTP、按方案加密凭据、请求队列、实时字典、生成状态、结果保存回调 |
 | 保存与联机 | CareerStore、CareerLibrary、CoopRules、CoopCoordinator、CoopReception、CoopStorage、CoopAi、CoopNativeRun、CoopWire、CoopSteam | 规则结果、模型结果、原版对局、真人命令、网络消息 | 磁盘文件、回执、接收者快照、流式消息、检查点 | 房主提交；客机后台解码、保存、准备独立视图，主线程按原顺序发布；存储按实际目录协调 |
+| NPC头像装扮与群头像 | NpcAvatarFrames、NpcAvatarFrameScreen、AvatarHonors、CareerAvatar、GroupAvatar、PrivateListRows、GroupChatScreen | 当前成员信箱的装扮/关系、NPC原荣誉、群成员ID | 默认优先的装扮选择、门槛校验、四种新框、1–4人群头像、发言头像下的紧凑好感徽章 | 装扮ID按玩家存档，单人保存失败回退，多人沿dm-avatar-frame个人命令；原荣誉与关系事实独立保留；SVG缓存，群头像最多复用四节点 |
 | 局内显示 | LiveRunBridge、LiveMatch、LiveMaps、LiveRaceHud、LiveVoices、LiveCommentary、LiveCrowd、CoopLive、CoopBroadcast | 原版实际地图与战斗、已确定对手结果及用时 | 对手进度、解说、弹幕、人物头像 | 局内事件订阅；读取资源；播报历史与当前比赛保存 |
 | 支撑与诊断 | Diagnostics、UiPerformance、LogPerformance、GameText、各头像与资源模块 | 实际请求、错误、阶段计时、资源、存档副本 | 日志、诊断包、格式化文本和缓存资源 | 凭据脱敏；资源缓存；性能记录 |
 
 具体文件及函数依赖见[双向源码索引](SOURCE_MAP.md)。partial 类可能分布在不同模块文件，不能把单个文件误当成完整类。
+
+### 关系阶段与赠礼职责
+
+RelationshipPresentation 管理六档好感外观、恋人资格、誓约确认及已达成阶段的回退/恢复。CharacterCards.Apply 在保存人物前校验 CharacterRelationEdit.Bond 的解锁资格，PrivateMessages.EditRelation 保存本人关系并保护手动决定。阶段选择与关系描述共用 PrivateRelation；历史婚戒、婚礼事实独立保存。
+
+ConsumerEngine 统一按数量校验和购买可赠商品，ConsumerGifts 负责库存预留、收礼资格、批量分配、发送扣除和收益结算。ConsumerGiftScreen统一赠礼和消费邀约的人物列表，复用CareerDialog、Avatar、最近聊天排序与私聊附件流程；ConsumerQuantity统一商城和赠礼窗口的整数编辑；ConsumerPurchases负责库存礼品的收藏入口，ConsumerEngine统一邀约好感资格。ConsumerGiftControls 的 PickerRing 为群成员、社区分享、消费邀约和赠礼人物行绘制婚戒状态。赠礼库存属于当前玩家；NPC 的心情时限沿用 CareerTraining 的世界人物状态。
+
+ConsumerInvitations统一普通约会与盛大婚礼购买/库存邀约的草稿创建、发送前核验和待回应上下文；ConsumerInvitationStock负责旧库存迁移、一次快照计算可用量、共享预留、接受后幂等消耗和进行中场景锁。ConsumerScreen/ConsumerGiftScreen和DateDiaryScreen.PrivateDateInvitationPicker均通过consumer-invite进入，SocialAppointments在完整回复接受后消费并建立日程。DateDiaries负责同次结束请求的日记协议、完整活动记录与个人保存，DateDiaryScreen在人物档案提供粉色入口。DateSceneScreen读取首次当天赴约或已有未结束场景，PrivateMessages清理消息时保留已结束日程。ConsumerProductArt按商品提供32款补全SVG，LifestyleArt维持原有底色及比例。
 
 ## 国运、模拟与个人经济
 

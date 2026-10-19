@@ -1,0 +1,6 @@
+<svg viewBox="-32 -32 64 64" xmlns="http://www.w3.org/2000/svg" width="192" height="192">
+  <title>不熟：浅灰与深灰交叉方框</title>
+  <path d="M-19-7-6-20 9-5-4 8Z" fill="none" stroke="#a4adb5" stroke-width="3.2"/>
+  <path d="M-8 6 5-7 20 8 7 21Z" fill="none" stroke="#68757f" stroke-width="3.2"/>
+  <circle r="3" fill="#a4adb5"/>
+</svg>

@@ -1,10 +1,14 @@
 ﻿namespace NationalSpire;
 
-public sealed record ConsumerOrder(string Verb, List<string> Guests);
+public sealed record ConsumerOrder(string Verb, List<string> Guests, int Quantity = 1, bool BuyInvitation = false);
 
 /// <summary>消费品存档状态。只存玩家侧数据；NPC 粉丝在 CareerPerson.Fans。</summary>
 public sealed class ConsumerState
 {
+    public Dictionary<string, int>? InvitationStock { get; set; }
+    public Dictionary<string, InvitationReservation> InvitationReservations { get; set; } = [];
+    public Dictionary<string, int> GiftStock { get; set; } = [];
+    public HashSet<string> GiftDeliveryIds { get; set; } = [];
     /// <summary>已持有：耐用品、一次性消费品、体验票根。一次性品 Consumed 后只留记录。</summary>
     public List<OwnedGood> Goods { get; set; } = [];
     /// <summary>条目 → 最近一次购买的游戏日；一次性品每赛季 1 次，体验类 28 天冷却。</summary>
@@ -40,6 +44,7 @@ public sealed record GoodVerb(string Id, string Name, int Slots, int Favor);
 /// <summary>商品 Price 为显示美元金额；只有宣发活动增加关注，普通消费产生社区事件。</summary>
 public sealed record Good(string Id, string Tier, string Category, string Name, int Price, GoodVerb[] Verbs, bool Repeatable = false, bool Promo = false, int Slots = 0)
 {
+    public bool Giftable => !Durable && !Repeatable && !Promo && Slots == 0;
     public bool Durable => Verbs.Length > 0;
     /// <summary>实物收藏展示资格；不参与购买次数或活动资格判断。</summary>
     public bool Collectible => Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住";
@@ -49,7 +54,7 @@ public sealed record Good(string Id, string Tier, string Category, string Name, 
 public static class ConsumerCatalog
 {
     public const string Mass = "大众", Middle = "中产", Rich = "富裕", Luxury = "顶奢", Promo = "运营";
-    public static readonly string[] TierOrder = [Mass, Middle, Rich, Luxury, Promo];
+    public static readonly string[] TierOrder = [Mass, Middle, Rich, Luxury, "誓约", Promo];
     public const int PromoPerSeason = 3;      // 运营每项每赛季 3 次
     public const int RepeatCooldown = 28;     // 体验类冷却 = 游戏内一个月
 
@@ -101,6 +106,10 @@ public static class ConsumerCatalog
         Item(Mass, "收藏", "poster", "限量签名海报", 1_600);
         Item(Mass, "收藏", "figure", "纪念手办", 3_600);
         Item(Mass, "收藏", "jersey", "亲签球衣", 4_500);
+        Item(Mass, "礼物", "seasonal-bouquet", "时令花束", 180);
+        Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240);
+        Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1);
+        Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1);
 
         // ── 中产 $30,000–$100,000：无 party 功能的耐用品 + 可每月重复的体验 ──
         Item(Middle, "出行", "ebike", "高端电助力车", 30_000);
@@ -112,8 +121,12 @@ public static class ConsumerCatalog
         Item(Middle, "健康", "coach", "私教课包", 50_000);
         Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3);
         Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3);
-        Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true);
+        Item(Middle, "旅行", "ski", "滑雪季卡", 40_000);
         Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);
+        Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000);
+        Item(Middle, "穿戴", "silk-shawl", "手绘真丝披肩", 45_000);
+        Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1);
+        Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1);
 
         // ── 富裕 $300,000–$1,000,000：耐用品带动词，每种活动每季各 1 次 ──
         Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);   // 娱乐：可带 3 人，每月一次
@@ -129,6 +142,10 @@ public static class ConsumerCatalog
             new("party", "办一场 party", 6, 10), new("dinner", "家宴", 6, 10), new("openhouse", "开放日", 6, 10));
         Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,
             new("party", "楼顶 party", 6, 10), new("view", "夜景小聚", 4, 10), new("brunch", "周末早午餐", 6, 10));
+        Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000);
+        Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000);
+        Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1);
+        Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1);
 
         // ── 顶奢 $2,000,000+：名誉收藏（同构、规格更高）──
         Wear(Luxury, "居住", "estate", "庄园", 2_500_000,
@@ -139,12 +156,18 @@ public static class ConsumerCatalog
             new("sail", "出海", 6, 12), new("dinner", "海上晚宴", 6, 12), new("regatta", "帆船观摩", 6, 12));
         Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,
             new("feast", "岛宴", 6, 15), new("retreat", "闭门集训营", 6, 15), new("festival", "岛上音乐节", 6, 15));
+        Item(Luxury, "穿戴", "bespoke-jewelry", "高定珠宝套装", 2_200_000);
+        Item(Luxury, "收藏", "concert-piano", "珍藏音乐会钢琴", 2_800_000);
+        Item(Luxury, "旅行", "aurora-retreat", "极光玻璃屋假期", 3_200_000, repeatable: true, slots: 1);
+        Item(Luxury, "娱乐", "island-dinner", "私人海岛烛光晚宴", 4_500_000, repeatable: true, slots: 1);
 
         // ── 运营：每项每赛季 3 次，价格固定不递增 ──
         Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true);
         Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true);
         Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true);
         Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true);
+        Item("誓约", "誓约", "oath-ring", "誓约之戒", 10_000);
+        Item("誓约", "誓约", "grand-wedding", "盛大婚礼", 150_000, slots: 1);
         return list.ToArray();
     }
 }

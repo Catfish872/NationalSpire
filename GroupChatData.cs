@@ -51,6 +51,7 @@ public sealed class GroupEntry
 }
 public sealed class GroupTurn
 {
+    public List<PromptInsertion> PromptInsertions { get; set; } = [];
     public List<string> ArbitrationTargets { get; set; } = [];
     public List<long> SpeechOrders { get; set; } = [];
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
@@ -78,6 +79,7 @@ public sealed class GroupEffect
 }
 public sealed class GroupCommand
 {
+    public List<PromptInsertion>? PromptInsertions { get; set; }
     public string Text { get; set; } = "";
     public List<string> People { get; set; } = [];
     public List<PrivateOffer> Attachments { get; set; } = [];

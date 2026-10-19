@@ -44,6 +44,7 @@ public static partial class PromptLibrary
         new("group-summary", "群聊小总结", GroupChatPrompts.SmallSummary),
         new("group-long-summary", "群聊大总结", GroupChatPrompts.BigSummary),
         new("private", "私信提示词", PrivateMessagePrompts.Guide),
+        new("date", "约会提示词", PrivateMessagePrompts.Guide),
         new("private-summary", "私信小总结", PrivateMessagePrompts.SmallSummary),
         new("private-long-summary", "私信大总结", PrivateMessagePrompts.BigSummary),
     ];
@@ -77,6 +78,13 @@ public static partial class PromptLibrary
     public static string Get(AiOptions options, string id)
     {
         MergePrivatePrompt(options);
+        if (id == "date" && !IsCustom(options, id))
+        {
+            // 为当前模板建立独立副本，后续私信编辑保持各自的内容。
+            options.PromptOverrides ??= new();
+            options.PromptOverrides[id] = options.CustomPromptTemplates.GetValueOrDefault(TemplateId(options))?.Sections.ContainsKey(id) == true
+                ? Default(options, id) : Get(options, "private");
+        }
         string fallback = Default(options, id);
         return options.PromptOverrides != null && options.PromptOverrides.TryGetValue(id, out var custom)
             && !string.IsNullOrWhiteSpace(custom) ? custom : fallback;
@@ -87,10 +95,14 @@ public static partial class PromptLibrary
         string fallback = Default(options, id);
         if (string.IsNullOrWhiteSpace(text)) throw new ArgumentException("提示词不能为空。");
         options.PromptOverrides ??= new();
-        if (Normalize(text) == Normalize(fallback)) options.PromptOverrides.Remove(id);
+        if (id != "date" && Normalize(text) == Normalize(fallback)) options.PromptOverrides.Remove(id);
         else options.PromptOverrides[id] = text.Trim();
     }
-    public static void Reset(AiOptions options, string id) => options.PromptOverrides?.Remove(id);
+    public static void Reset(AiOptions options, string id)
+    {
+        if (id == "date") { options.PromptOverrides ??= new(); options.PromptOverrides[id] = Default(options, id); }
+        else options.PromptOverrides?.Remove(id);
+    }
     public static string Editorial(AiOptions options, string scene) => string.Join("\n\n",
         new[] { Get(options, "world"), scene is "news" or "discussion" ? Get(options, "voice") : "", Get(options, scene) }
             .Where(s => s.Length > 0));

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`DC986064D9D79CEDCE25B810AFE4140F9B045AAD2CA9820F0F8EA00F98DA258E`。来源：[源码](../../OwnedClubs.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`78DCB05846A12B786D6F1EFC7EF6E33FF0B1CF18364DB155EFAE0722ED3EF070`。来源：[源码](../../OwnedClubs.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -1524,12 +1524,13 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 **调用者：** [`NationalSpire.MatchRules.Evaluate(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?, bool)`](MatchRules.cs.md#symbol-92264d5fcfdd)
 
-**调用：** [`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`](OwnedClubs.cs.md#symbol-64763de09f26)；[`NationalSpire.OwnedClubs.Humans(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-241a535c93f9)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`](AffectionCompetition.cs.md#symbol-34950d0c3f4b)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`](OwnedClubs.cs.md#symbol-64763de09f26)；[`NationalSpire.OwnedClubs.Humans(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-241a535c93f9)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`；`NationalSpire.OwnedClubs.Humans(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubState.Debt`；`NationalSpire.OwnedClubState.Reserves`；`NationalSpire.OwnedClubState.Starters`；`NationalSpire.OwnedClubState.Youth`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.Esports`；`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubState.Debt`；`NationalSpire.OwnedClubState.Reserves`；`NationalSpire.OwnedClubState.Starters`；`NationalSpire.OwnedClubState.Youth`；`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`；`NationalSpire.OwnedClubs.Humans(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`；输入表达式：`AffectionCompetition.Growth(d, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: (GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)) * ClubCoaching.Factor(d) * AffectionCompetition.Growth(d, person)`
 - `NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；输入表达式：`ClubCoaching.Factor(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: (GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)) * ClubCoaching.Factor(d)`
 - `NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`；输入表达式：`GroupPractice(d, o.Reserves, asc, day)`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)`
 - `NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`；输入表达式：`GroupPractice(d, o.Youth, asc, day)`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)`
@@ -1766,7 +1767,7 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 来源：源码第 552 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.PrivateActions()`](PrivateMessageScreen.cs.md#symbol-6e8c11ead905)；[`NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-15fbcfa0d281)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；[`NationalSpire.ClubPrograms.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-b01f1c3252f6)；[`NationalSpire.ClubPrograms.Error(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-160ff8c6cde3)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.OwnedClubs.CompleteActivity(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-d53f4fbd3e4e)；[`NationalSpire.PrivateContracts.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-dbd791b573e7)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.PrivateActions()`](PrivateMessageScreen.cs.md#symbol-6e8c11ead905)；[`NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-15fbcfa0d281)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；[`NationalSpire.ClubPrograms.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-b01f1c3252f6)；[`NationalSpire.ClubPrograms.Error(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-160ff8c6cde3)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?, bool)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.OwnedClubs.CompleteActivity(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-d53f4fbd3e4e)；[`NationalSpire.PrivateContracts.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-dbd791b573e7)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
 **调用：** [`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)
 
@@ -2014,12 +2015,13 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)
 
-**调用：** [`NationalSpire.ClubPrograms.Effective(NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-b76b0b763ab3)；[`NationalSpire.ClubPrograms.Targets(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-30a147299dc6)
+**调用：** [`NationalSpire.AffectionCompetition.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity)`](AffectionCompetition.cs.md#symbol-66c772141d54)；[`NationalSpire.ClubPrograms.Effective(NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-b76b0b763ab3)；[`NationalSpire.ClubPrograms.Targets(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-30a147299dc6)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ClubPrograms.Effective(NationalSpire.LifeActivity)`；`NationalSpire.ClubPrograms.Targets(NationalSpire.CareerData, string)`；`NationalSpire.ClubPrograms.Terms.Defense`；`NationalSpire.ClubPrograms.Terms.Temporary`；`NationalSpire.ClubPrograms.Terms.Weekly`；`NationalSpire.LifeActivity.DefensePoints`；`NationalSpire.LifeActivity.FinishDay`；`NationalSpire.LifeActivity.StartedDay`；`NationalSpire.LifeActivity.TemporaryPoints`；`NationalSpire.LifeActivity.Title`；`NationalSpire.LifeActivity.TrainingEnd`；`NationalSpire.LifeActivity.TrainingKind`；`NationalSpire.LifeActivity.TrainingStart`；`NationalSpire.LifeActivity.TrainingTargets`；`NationalSpire.LifeActivity.WeeklyGrowthPoints`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionCompetition.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity)`；`NationalSpire.ClubPrograms.Effective(NationalSpire.LifeActivity)`；`NationalSpire.ClubPrograms.Targets(NationalSpire.CareerData, string)`；`NationalSpire.ClubPrograms.Terms.Defense`；`NationalSpire.ClubPrograms.Terms.Temporary`；`NationalSpire.ClubPrograms.Terms.Weekly`；`NationalSpire.LifeActivity.DefensePoints`；`NationalSpire.LifeActivity.FinishDay`；`NationalSpire.LifeActivity.StartedDay`；`NationalSpire.LifeActivity.TemporaryPoints`；`NationalSpire.LifeActivity.Title`；`NationalSpire.LifeActivity.TrainingEnd`；`NationalSpire.LifeActivity.TrainingKind`；`NationalSpire.LifeActivity.TrainingStart`；`NationalSpire.LifeActivity.TrainingTargets`；`NationalSpire.LifeActivity.WeeklyGrowthPoints`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AffectionCompetition.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity)`；输入表达式：`AffectionCompetition.Snapshot(d, a)`；返回值紧邻使用处：`ExpressionStatementSyntax: AffectionCompetition.Snapshot(d, a);`
 - `NationalSpire.ClubPrograms.Effective(NationalSpire.LifeActivity)`；输入表达式：`Effective(a)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Effective(a)`
 - `NationalSpire.ClubPrograms.Targets(NationalSpire.CareerData, string)`；输入表达式：`Targets(d, a.Title)`；返回值紧邻使用处：`AssignmentExpressionSyntax: a.TrainingTargets = Targets(d, a.Title)`
 
@@ -2038,7 +2040,7 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 ## `NationalSpire.ClubPrograms.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static void Advance(CareerData d, LifeActivity a)`
 
-来源：源码第 645 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 646 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)
 
@@ -2061,7 +2063,7 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 ## `NationalSpire.ClubPrograms.Description(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Description(CareerData d, LifeActivity a)`
 
-来源：源码第 652 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 653 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)
 
@@ -2096,7 +2098,7 @@ public static readonly string[] Colors = ["69dfd3", "eed39b", "a997ed", "ee929d"
 
 ## `NationalSpire.ClubPrograms.Details(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Details(CareerData d, LifeActivity a)`
 
-来源：源码第 671 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 672 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
 

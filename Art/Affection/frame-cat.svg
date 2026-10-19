@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100">
+<defs>
+<linearGradient id="cream" x2=".25" y2="1"><stop stop-color="#fff5e7"/><stop offset=".55" stop-color="#f4dec7"/><stop offset="1" stop-color="#ebcdb9"/></linearGradient>
+<linearGradient id="pink" x2=".2" y2="1"><stop stop-color="#ffe0e6"/><stop offset="1" stop-color="#eeb8c8"/></linearGradient>
+</defs>
+<!-- A soft, lightly asymmetric cream silhouette leaves the portrait centre clear. -->
+<path d="M20 8Q36 6 51 9Q68 6 81 8Q95 9 95 23Q93 39 96 54Q93 68 95 80Q95 95 80 95Q63 93 49 96Q33 93 20 95Q5 94 5 80Q7 65 4 49Q7 34 5 22Q5 9 20 8Z M21 15Q13 15 13 23V79Q13 87 21 87H79Q87 87 87 79V23Q87 15 79 15Z" fill="url(#cream)" fill-rule="evenodd" stroke="#ba948a" stroke-width="1.1" stroke-linejoin="round"/>
+<path d="M21 10Q37 9 51 12Q68 9 80 11 M91 23Q90 39 93 54 M79 91Q64 89 49 92Q34 89 22 91 M9 65Q11 49 8 34" fill="none" stroke="#fff9ee" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M12 15Q10 8 13 2Q14 0 17 2Q27 5 34 13Q25 18 12 15Z M66 13Q74 5 84 2Q87 1 87 4L89 15Q77 19 66 13Z" fill="url(#cream)" stroke="#ba948a" stroke-width="1.1"/>
+<path d="M16 5Q21 6 28 12Q23 15 16 13Q14 9 16 5Z M73 12Q79 7 84 6L85 13Q80 15 73 12Z" fill="url(#pink)"/>
+<path d="M43 10Q46 15 49 12Q52 17 56 11" fill="none" stroke="#cfa69a" stroke-width="1.1" stroke-linecap="round"/>
+<!-- A curled tail hugs the outer side, away from the level badge. -->
+<path d="M92 69Q98 62 96 51Q95 44 91 45Q87 46 91 50Q95 57 90 62" fill="none" stroke="#ba948a" stroke-width="5.5" stroke-linecap="round"/>
+<path d="M92 69Q98 62 96 51Q95 44 91 45Q87 46 91 50Q95 57 90 62" fill="none" stroke="#f5dfc9" stroke-width="3.3" stroke-linecap="round"/>
+<g fill="url(#cream)" stroke="#c59d95" stroke-width=".8">
+<path d="M8 85C11 78 16 77 21 84C29 89 25 99 18 97C11 100 2 94 8 85Z"/>
+<ellipse cx="6" cy="81" rx="3.7" ry="4.5" transform="rotate(-28 6 81)"/>
+<ellipse cx="13" cy="76" rx="3.8" ry="4.6" transform="rotate(-10 13 76)"/>
+<ellipse cx="22" cy="77" rx="3.8" ry="4.6" transform="rotate(15 22 77)"/>
+<ellipse cx="28" cy="84" rx="3.5" ry="4.3" transform="rotate(32 28 84)"/>
+</g>
+<path d="M11 88Q15 80 20 87Q26 93 20 94L16 93Q8 96 11 88Z" fill="url(#pink)"/>
+<g fill="#f3c6d3"><ellipse cx="6" cy="81" rx="2" ry="2.7"/><ellipse cx="13" cy="76" rx="2" ry="2.8"/><ellipse cx="22" cy="77" rx="2" ry="2.8"/><ellipse cx="28" cy="84" rx="1.9" ry="2.6"/></g>
+</svg>

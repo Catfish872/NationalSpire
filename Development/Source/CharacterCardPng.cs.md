@@ -498,7 +498,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
+**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)
 
 **调用：** [`NationalSpire.CharacterCardPng.IsCard(byte[], int, int)`](CharacterCardPng.cs.md#symbol-9cda5445ccf5)；[`NationalSpire.CharacterCardPng.ReadChunks(byte[])`](CharacterCardPng.cs.md#symbol-aa71436315e3)；[`NationalSpire.CharacterCardPng.Reference(NationalSpire.CareerData, string)`](CharacterCardPng.cs.md#symbol-6126f1f4718d)；[`NationalSpire.CharacterCardPng.WriteChunk(System.IO.Stream, string, byte[])`](CharacterCardPng.cs.md#symbol-8d262c18e179)；[`NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CharacterCards.cs.md#symbol-9ac6c3acc6a4)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`NationalSpire.CharacterCardPng.Bundle.Bundle()`；`System.ArgumentException.ArgumentException(string?)`；`System.Convert.FromBase64String(string)`；`System.Convert.ToBase64String(byte[])`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.MemoryStream.Write(byte[], int, int)`；`System.IO.MemoryStream.Write(System.ReadOnlySpan<byte>)`；`System.Text.Encoding.GetBytes(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.SerializeToUtf8Bytes<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -545,7 +545,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CharacterCardPng.ReadFile(NationalSpire.CareerData, string, System.Func<byte[], NationalSpire.PlayerAvatar>)`](CharacterCardPng.cs.md#symbol-f8d3e133c6cd)
+**调用者：** [`NationalSpire.CharacterCardPng.ReadFile(NationalSpire.CareerData, string, System.Func<byte[], NationalSpire.PlayerAvatar>)`](CharacterCardPng.cs.md#symbol-f8d3e133c6cd)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, string)`](CharacterDesignPackage.cs.md#symbol-f16085fa6784)
 
 **调用：** [`NationalSpire.CharacterCardPng.IsCard(byte[], int, int)`](CharacterCardPng.cs.md#symbol-9cda5445ccf5)；[`NationalSpire.CharacterCardPng.MatchClub(NationalSpire.CareerData, NationalSpire.CharacterCardPng.ClubReference?, bool)`](CharacterCardPng.cs.md#symbol-e94a9e995ff6)；[`NationalSpire.CharacterCardPng.ReadChunks(byte[])`](CharacterCardPng.cs.md#symbol-aa71436315e3)；[`NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CharacterCards.cs.md#symbol-9ac6c3acc6a4)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`NationalSpire.PlayerAvatar.PlayerAvatar()`；`System.Convert.FromBase64String(string)`；`System.Convert.ToBase64String(byte[])`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.MemoryStream.Write(byte[], int, int)`；`System.IO.MemoryStream.Write(System.ReadOnlySpan<byte>)`；`System.Text.Encoding.GetString(byte[], int, int)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(System.ReadOnlySpan<byte>, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -597,7 +597,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
+**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)
 
 **调用：** [`NationalSpire.CharacterCardPng.Import(NationalSpire.CareerData, byte[], System.Func<byte[], NationalSpire.PlayerAvatar>?)`](CharacterCardPng.cs.md#symbol-c7101cd02992)；`System.IO.File.ReadAllBytes(string)`
 
@@ -617,7 +617,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCard(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?)`](CharacterCardScreen.cs.md#symbol-a498f622bb3e)
+**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)
 
 **调用：** `System.Guid.NewGuid()`；`System.IO.Directory.Exists(string?)`；`System.IO.FileStream.FileStream(string, System.IO.FileMode, System.IO.FileAccess)`；`System.IO.FileStream.Write(System.ReadOnlySpan<byte>)`；`System.IO.IOException.IOException(string?)`；`System.IO.Path.Combine(string, string)`
 

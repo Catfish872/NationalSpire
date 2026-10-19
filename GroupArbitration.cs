@@ -6,14 +6,14 @@ public static class GroupArbitration
 {
     public static List<Dictionary<string, string>> Compose(CareerData d, GroupChat g, GroupTurn t)
     {
-        var source = GroupChatPrompts.Compose(d, g, t);
+        var source = GroupChatPrompts.Compose(d, g, t, insertPrompts: false);
         source[0]["content"] = GroupChatPrompts.Section(d, "world") + "\n" + SpireArbitration.Prompt + "\n" + ChatTimeline.Privacy + "\n" + """
 本次同时审理多名被申请人，分别作出裁决，不因同处一个群聊就认定所有人有责任。
 输出一个 JSON 对象：Decisions 是裁决数组，每项包含 Person（被申请人人物编号）与 Decision（上述单人裁决对象）；PublicTitle、PublicBody 为所有申请成立者共同承担具体责任的统一公开致歉草稿，由其中一名责任人代表发布。各 Decision 的 Apology 为该人发到本群的致歉。每人分别填写自己的处罚与性格变化；未成立者不承担他人的处罚。
 """;
         foreach (var message in source.Skip(1)) if (message["role"] == "assistant") { message["role"] = "user"; message["content"] = "本群已经发生的发言\n" + message["content"]; }
-        source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text });
-        return source;
+        source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2) });
+        return PromptInsertions.Apply(source, t.PromptInsertions);
     }
     public static void LinkPublication(CareerData d, GroupChat g, string localTurn)
     {

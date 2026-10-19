@@ -84,7 +84,7 @@ public partial class CareerScreen
             padding.AddThemeConstantOverride("margin_left", 4); padding.AddThemeConstantOverride("margin_right", 8);
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); padding.AddChild(row);
             var icon = new Control { Name = "PrivateRelationshipIcon", CustomMinimumSize = new(36, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter };
-            row.AddChild(icon); icon.AddChild(new PrivateOrnament { Kind = "bond", MouseFilter = MouseFilterEnum.Ignore });
+            row.AddChild(icon); icon.AddChild(new RelationshipIcon { Bond = RelationshipPresentation.IconBond(relation) });
             var valueLabel = PrivateLine(PrivateRelationshipText(value), 18, _ink); valueLabel.Name = "PrivateRelationshipValue";
             valueLabel.HorizontalAlignment = HorizontalAlignment.Right; valueLabel.VerticalAlignment = VerticalAlignment.Center; row.AddChild(valueLabel);
             padding.MinimumSizeChanged += () => bondButton.CustomMinimumSize = padding.GetCombinedMinimumSize();
@@ -94,7 +94,13 @@ public partial class CareerScreen
         favour.AddThemeConstantOverride("separation", 8);
         if (showProfile)
         {
-            favourButton = PrivateIdentityButton("PrivateFavourToggle", ToggleDetails, true);
+            favourButton = PrivateIdentityButton("PrivateFavourToggle", () =>
+            {
+                ToggleDetails();
+                var current = PrivateMessages.Relation(ViewData, id);
+                if (current.OathDeferred && !current.OathConfirmed && current.Appearance.OathEligible)
+                    PrivateCommand("dm-oath-open", new());
+            }, true);
             favourButton.ToggleMode = true; favourButton.CustomMinimumSize = new(94, 78);
             favourButton.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
             favourButton.TooltipText = "对你的好感 · -100 至 100；展开/收起关系与印象";
@@ -102,9 +108,7 @@ public partial class CareerScreen
         }
         else identity.AddChild(favour);
         var medal = new Control { Name = "PrivateFavourIcon", CustomMinimumSize = new(94, 78) }; favour.AddChild(medal);
-        medal.AddChild(new PrivateOrnament { Kind = "favour", MouseFilter = MouseFilterEnum.Ignore });
-        var number = PrivateLine(relation.Favour.ToString(), 24, _gold); medal.AddChild(number);
-        number.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); number.OffsetBottom = -6; number.HorizontalAlignment = HorizontalAlignment.Center; number.VerticalAlignment = VerticalAlignment.Center;
+        medal.AddChild(new AffectionBadge { Relation = relation });
         var caption = PrivateLine("好感", 14, _muted); caption.Name = "PrivateFavourCaption"; caption.HorizontalAlignment = HorizontalAlignment.Center;
         if (showProfile)
         {
@@ -125,7 +129,7 @@ public partial class CareerScreen
         var relationship = new HBoxContainer { CustomMinimumSize = new(225, 0), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 };
         relationship.AddThemeConstantOverride("separation", 12); details.AddChild(relationship);
         var emblem = new Control { CustomMinimumSize = new(36, 48) }; relationship.AddChild(emblem);
-        emblem.AddChild(new PrivateOrnament { Kind = "bond", MouseFilter = MouseFilterEnum.Ignore });
+        emblem.AddChild(new RelationshipIcon { Bond = RelationshipPresentation.IconBond(relation) });
         var relationText = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; relationText.AddThemeConstantOverride("separation", 8); relationship.AddChild(relationText);
         relationText.AddChild(PrivateLine("交往关系", 13, _gold));
         relationText.AddChild(PrivateText(relation.Relationship == "初识" ? PrivateMessages.RelationshipLabel(relation.Favour) : relation.Relationship, 18, _ink));
@@ -138,16 +142,12 @@ public partial class CareerScreen
     }
     private static string PrivateRelationshipText(string value)
     {
-        var text = new System.Text.StringBuilder(); int column = 0;
-        var elements = System.Globalization.StringInfo.GetTextElementEnumerator(value.Replace("\r\n", "\n"));
-        while (elements.MoveNext())
+        return string.Join('\n', value.Replace("\r\n", "\n").Split('\n').Select(line =>
         {
-            string element = elements.GetTextElement();
-            if (element == "\n") { text.Append('\n'); column = 0; continue; }
-            if (column == 15) { text.Append('\n'); column = 0; }
-            text.Append(element); column++;
-        }
-        return text.ToString();
+            var elements = System.Globalization.StringInfo.ParseCombiningCharacters(line);
+            if (elements.Length <= 15) return line;
+            return line.Insert(elements[(elements.Length + 1) / 2], "\n");
+        }));
     }
     private static Button PrivateIdentityButton(string name, Action pressed, bool disclosure = false)
     {
@@ -253,11 +253,13 @@ public partial class CareerScreen
     private static string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is CommunitySharing.Kind or CommunityReporting.Kind && a.Quote is { } quote
         ? quote.AuthorName + (a.Kind == CommunityReporting.Kind ? " · 被举报内容" : quote.ReplyId.Length == 0 ? " · 帖子" : " · 评论") : a.Kind is "post" or "result"
         ? a.Detail.Split('\n', 2)[0] is { Length: > 0 } title ? title : PrivateMessages.AttachmentTitle(a)
+        : a.Kind == ConsumerGifts.Kind && a.Gift is { Items.Count: 1 } gift ? ConsumerGifts.Summary(gift)
         : a.Kind == "lineup" ? "调整阵容" : a.Kind == "training" ? $"训练计划 · {a.Weeks}周" : PrivateMessages.AttachmentTitle(a);
     private PanelContainer PrivateAttachmentCard(PrivateOffer a, bool draft)
     {
         var card = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
         var style = CareerVisuals.Box("203448", "526e84", 6, 10); style.BorderWidthLeft = 3; style.BorderColor = _gold; card.AddThemeStyleboxOverride("panel", style);
+        if (a.Kind is ConsumerGifts.Kind or ConsumerGifts.WeddingKind or ConsumerInvitations.Kind) { style.BgColor = new Color("354052"); style.BorderColor = new Color("eab7d1"); card.Name = "GiftAttachment"; }
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); card.AddChild(row);
         var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; copy.AddThemeConstantOverride("separation", 4); row.AddChild(copy);
         var title = PrivateLine(PrivateAttachmentHeading(a), 17, _ink); title.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; title.TooltipText = PrivateAttachmentHeading(a); copy.AddChild(title);
@@ -274,14 +276,26 @@ public partial class CareerScreen
             source.TooltipText = quote.PostTitle; source.MouseFilter = MouseFilterEnum.Pass;
             copy.AddChild(source);
         }
+        else if (a.Kind == ConsumerGifts.Kind && a.Gift is { } gift)
+        {
+            if (gift.Items.Count > 1) copy.AddChild(PrivateText(ConsumerGifts.Summary(gift), 16, new Color("f0cee0")));
+            if (gift.Sent) copy.AddChild(PrivateLine(gift.Settled ? $"已送达 · 好感 +{gift.FavourGain}" : "已送达 · 等待回复", 14, new Color("d8b9cb")));
+        }
         else
         {
             string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : a.Kind == "lineup" ? "阵容调整" : a.Kind == "training" ? "训练内容" : "合同邀约";
             string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
-            var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
+            var description = PrivateLine(a.Kind is ConsumerInvitations.Kind or ConsumerGifts.WeddingKind ? excerpt : kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
         }
         row.AddChild(PrivateButton("查看", () => PreviewPrivateAttachment(a), 60));
-        if (draft) { var remove = PrivateButton("×", () => { PrivateAttachments.Remove(a); RefreshPrivateAttachments(); }, 36); remove.TooltipText = "移除这条附件"; row.AddChild(remove); }
+        if (draft)
+        {
+            var remove = PrivateButton("×", () =>
+            {
+                void Removed() { PrivateAttachments.RemoveAll(item => item.Id == a.Id); RefreshPrivateAttachments(); }
+                if (a.Kind is ConsumerGifts.Kind or ConsumerGifts.WeddingKind or ConsumerInvitations.Kind) PrivateCommand("dm-gift-cancel", new() { Entry = a.Id }, Removed); else Removed();
+            }, 36); remove.TooltipText = "移除这条附件"; row.AddChild(remove);
+        }
         return card;
     }
     private void PreviewPrivateAttachment(PrivateOffer a, bool attach = false)
@@ -292,7 +306,7 @@ public partial class CareerScreen
             var scroll = new ScrollContainer { CustomMinimumSize = new(820, height), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var body = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; body.AddThemeConstantOverride("separation", 18); scroll.AddChild(body);
             body.AddChild(PrivateText(PrivateAttachmentHeading(a), 23, _gold));
-            string detail = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..] : a.Detail;
+            string detail = a.Kind == ConsumerGifts.Kind ? ConsumerGifts.Context(a) : a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..] : a.Detail;
             body.AddChild(PrivateSelectableText(detail.Length > 0 ? detail : PrivateMessages.AttachmentTitle(a), 19, _ink));
         }, showCancel: attach);
     }
@@ -313,11 +327,17 @@ public partial class CareerScreen
     private void RefreshPrivateAttachments()
     {
         if (_privateAttachments == null || _privateAttachmentScroll == null) return;
+        if (_privateGroup.Length == 0 && _privatePerson.Length > 0)
+        {
+            var saved = PrivateMessages.Conversation(ViewData, _privatePerson).GiftDrafts;
+            PrivateAttachments.RemoveAll(a => a.Kind is ConsumerGifts.Kind or ConsumerGifts.WeddingKind or ConsumerInvitations.Kind && !saved.Any(s => s.Id == a.Id));
+            foreach (var a in saved) if (PrivateAttachments.Count < 8 && !PrivateAttachments.Any(item => item.Id == a.Id)) PrivateAttachments.Add(a);
+        }
         bool follow = _privateScroll != null && _privateScroll.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90;
         CareerVisuals.ClearContent(_privateAttachments);
         foreach (var a in PrivateAttachments) _privateAttachments.AddChild(PrivateAttachmentCard(a, true));
         _privateAttachmentScroll.Visible = PrivateAttachments.Count > 0;
-        float height = PrivateAttachments.Count > 1 ? 146
+        float height = PrivateAttachments.Count > 1 || PrivateAttachments.Any(a => a.Gift is { Items.Count: > 1 }) ? 146
             : PrivateAttachments.Any(a => a.Kind == CommunitySharing.Kind && a.Quote != null) ? 122 : 72;
         if (_privateComposer != null) _privateComposer.SetAttachmentHeight(height);
         else _privateAttachmentScroll.CustomMinimumSize = new(0, height);

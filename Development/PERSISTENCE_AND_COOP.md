@@ -8,7 +8,7 @@
 
 ## 聊天页面的本地设置
 
-ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last 与 size。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看私聊人物或群成员档案后的Back从导航历史恢复对应会话、页面及滚动位置。
+ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last、size 与contacts。contacts含有序置顶编号、隐藏集合、排序方式、展示隐藏及展示人物关系图标开关，操作各保存一次本机配置并刷新列表，生涯保存与业务广播均为0。隐藏/显示/排序保持会话和记忆内容。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看私聊人物或群成员档案后的Back从导航历史恢复对应会话、页面及滚动位置。
 
 私信状态按钮及其右侧说明归当前身份控件，点击仅修改可见性，重建时收起；私信关系/好感按钮共用的人物详情展开设置归本机聊天配置；底栏居中状态、保留中心的按钮缩放占位、输入框放大状态与表情面板归当前通讯窗口。点击人物详情写入本机聊天设置一次；生涯保存与业务广播次数为0。放大/还原输入框、切换表情分类及插入的专用保存/广播次数为0；插入通过原TextEdit与草稿字典保留文字。私信与群聊共用表情入口及当前分类，关闭通讯清空训练详情展开集合并释放表情控件，人物详情展开状态由本机配置保留，原文字及附件草稿继续沿CareerScreen生命周期管理。头像与姓名打开档案共用OpenPrivatePerson，先将当前私聊人物、页码、滚动值写入本机Location，再保留输入草稿并沿关闭通讯和Visit入口跳转。返回沿OpenPrivateMessages及SelectPrivate恢复，读取和保存调用仍使用原偏好与已读入口。该布局改动沿用现有存档结构与房主/客机命令、检查点流程；真实联机交互与分阶段耗时仍待验证。
 
@@ -24,7 +24,18 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 
 在合作存档里仍只举报NPC内容；沿既有dm-arbitrate命令，房主从成员View的权威帖子重建案件，再Capture到申请成员Life.Mailbox。Request与Context随个人信箱过滤；公开ArbitrationRecord及其处罚继续按原Merge进入人物档案。合成房主/客机命令验证目标绑定、权威正文覆盖、回执去重与PrivateSnapshot仅保留收件人信箱。真实联机发送、接收、检查点写盘与断线恢复尚待游戏环境验证；计时及边界见[社区讨论树与回复入口](GAME_AND_UI.md#社区讨论树与回复入口)。
 
+通讯显示通过PrivateMessages.VisibleInCommunications排除约会场景轮次，原信箱记录、附件、总结与模型上下文保持。SeenCount继续按所有已完成轮次计数，可见未读数在跳过该索引后筛选；旧生涯直接适用，场景结束感想保留普通私聊显示。ChatContactPreferences.Reverse缺省false，与Sort共同保存在原本机contacts JSON；DateSceneAssets.LetterSpacing缺省1，保存在原人物场景配置。两项显示偏好沿现有本机保存，生涯协议及合作快照字段保持。
+
+### 提示词插入配置与排队保存
+
+PromptInsertions.Settings在首次打开/发送时加载并缓存四窗口及四场景勾选。界面每次TextChanged、Toggled、ItemSelected立即更新内存，0.4秒防抖合并写盘；弹窗TreeExiting在关闭或导航释放时立即补写待保存内容。Save先写同目录临时文件再原子替换，失败显示提示并保留当前内存文字。显式勾选和未勾选文本都保存，关闭游戏前已落盘内容下次恢复；强制终止进程可能损失防抖期间最后输入。
+
+PrivateCommand/GroupCommand在提交时捕获当前场景快照，CommunityThreads.Publish/Submit接收社区快照；多人CoopCareerSession.Send将社区快照放入原post/reply命令，房主CoopRules复制到权威帖子/回复。私信和群聊沿原JSON命令传输，房主使用来宾提交的快照。历史记录与发送状态的保存、队列、回执和广播沿原流程，新增专用网络请求为0。切换世界保留本机配置；已保存请求携带独立快照，后台生成继续遵守原current与轮次状态核验。显式重试/重生成会按当时勾选重新捕获，队列内部重试沿该轮快照。真实Steam多机发送/接收及检查点耗时待实测。
+
 ## 单人生涯保存的顺序
+
+攻略难度保存于CareerData根对象。单人AffectionSettings在保存失败时恢复旧枚举与选择框；多人romance-difficulty走CoopRules.Apply的副本校验、房主授权、回执去重与正常世界提交，所有CoopRules.View和PrivateSnapshot继承共同值，成员个人Capture保持共同设置。旧档缺省自然相处，已有整数好感保持；新增正负小数余数缺省0，发送时PrivateTurn.AffectionDifficulty固定后续结算口径，原排队/请求失败/重试及检查点恢复继续沿原轮次处理。PrivateInteractionHistory把GainRemainder/LossRemainder作为可加减差量，回退后将溢出或负余数进位归一，保留后来独立交互的累计收益。角色手动设置Favour同时清空聊天正负余数并从旧回退记录移除这些手动覆盖字段；赠礼已送达收益保持原持久送达/Settled语义。
+
 
 社区主楼或评论改票由DiscussionVotes调用CommunityVotes.SetVote，实际变化后一次CareerStore.Save。保存抛错时恢复改票前选择及VoteRevision，再显示错误；成功后刷新本行按钮和数值。PlayerVotes随帖子JSON保存，页面切换和重新启动继续读取保存记录。旧内容通过CommunityVersion=4的一次升级取得程序评分。
 
@@ -63,7 +74,7 @@ Release本机逐次性能记录：每次1000组个人赛季款和胜场款计算
 
 实际Godot界面1280×720赞助首次/再次处理86.97/23.05毫秒，首帧97.97/30.03毫秒，分配19552/19136字节；1920×1080处理23.39/23.88毫秒，首帧30.15/30.47毫秒，各17344字节。1920测试在1280之后，不能称为全新进程冷启动。商城1280首次首帧168.06毫秒，复访62.48毫秒。原始记录位于本地 `.artifacts/sponsor-consumer-20261014/`；计时包含嵌套步骤，不能相加充当总耗时。构建成功，NuGet漏洞信息服务不可访问产生NU1900警告。
 
-单人消费按钮 → EconomicActions.Save → 深复制当前 CareerData 一次并 Detached → ConsumerEngine 校验修改 → 将 Life、Credits、Fans、Posts、SavedThreads、CommunityMemories 交回原实例 → 原 CareerStore.Save。保存异常恢复这六个字段原引用并提示失败，原实例和绑定路径不变。处理同步完成，中间无 await；候选副本不传给其他请求。消费另改公开事实和本人关系。
+单人消费按钮 → EconomicActions.Save → 深复制当前 CareerData 一次并 Detached → ConsumerEngine 校验修改 → 将 Life、Credits、Fans、Chats、Posts、SavedThreads、CommunityMemories 交回原实例 → 原 CareerStore.Save。保存异常恢复这七个字段原引用并提示失败，原实例和绑定路径不变。处理同步完成，中间无 await；候选副本不传给其他请求。消费另改公开事实和本人关系。
 
 单人交易按钮 → EconomicActions.Trade → 新建只含 Day、Credits、Market 及独立资金资料的输入，深复制 Trading、CreditFraction 和 Ledger；买卖会改价，因此同时深复制 Market；存取与借还不改价，沿用只读引用。不提供聊天、帖子或人物集合。CareerMarket.Trade 校验并修改输入，成功后提交 Credits、Life.Trading、Life.CreditFraction、Life.Ledger、Market，保留 CareerData 和 Life 原实例。Persist 共用原 CareerStore.Save，恰好保存一次完整生涯；失败恢复这五项原值/原引用。候选对象不进入异步或网络。
 
@@ -89,7 +100,55 @@ PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life
 
 上一轮PR功能接入曾以旧诊断存档比较44组AI请求全文；这轮关注、国运和行情事实有明确变化，不沿用上一轮哈希一致结论。当前总结检查使用本地固定响应，覆盖私信和群聊大小总结失败、原文保留及原入口重试；不调用模型。旧日志缺少模型原始返回和完整异常栈，不能确认其全部越界均来自空choices；现入口已消除直接读取choices[0]的越界，并记录可定位的响应结构与异常栈。
 
+### 购买、预留与赠礼保存顺序
+
+商城“购买”执行数量校验、一次扣款、库存增加及购买事实记录；商城“赠送”确认后购买总量y，合并扣除预留后的库存z，允许按各人物分配最多y+z件，剩余保留库存。收藏入口使用y=0，沿用同一Purchase校验和事务提交。直接赠送在同一 EconomicActions.Save 候选副本上建立各收礼人的queued私信、扣除库存并保存送达附件；自定义留言方式保存个人会话草稿并预留库存，取消草稿释放预留。该保存同时提交 Chats.Order，保证新私信顺序一致。保存成功后才打开私聊并启动直接赠送的AI请求。
+
+私聊 dm-gift-draft/dm-gift-cancel 与带礼物的 dm-send 使用相同事务保存，消息命令先复制礼物附件，避免原界面草稿被候选副本修改。PrepareSend 校验可赠品、正数量、NPC资格、库存预留、重复附件和持久送达Id；发送时核对婚戒的好感100与恋人条件，多枚及后续婚戒均按实际数量扣库存、记录实收件数。发送成功移除对应草稿，库存和送达事实只扣除/写入一次，已发送礼物的删除聊天或重试保持库存结果。切换人物、关闭通讯和重新载入后，剩余礼物草稿继续可见。
+
+多人 consumer-gift/consumer-wedding 通过现有 Apply 的版本和命令Id去重，在提交者 View 上执行再 Capture。直接赠送成功由 StartPrivate 对各收礼人开启原私信队列；私聊AI Save 合并本人 Mailbox/Relationships，ConsumerGifts.MergeMood 将送达附件中的已结算心情效果按凭据合入世界。其他人的库存和附件随原 PrivateSnapshot 隐去。现有群聊附件入口明确要求赠礼与婚礼邀约在对应人物私聊发送。
+
+婚戒送达设置RingReplyPending，完整回复结算后清除该标记并开放誓约提示；失败、停止和读档保留等待状态，重试继续原轮次。Mailbox.Version升级到3时检查每位NPC最近一次婚戒送达记录，将旧版仍未结算的婚戒迁移为等待回复；该迁移每份个人信箱只执行一次。
+
+婚礼邀约建立 GiftDrafts 中的 wedding-invitation 附件，保存预计费用和待安排事实；本阶段没有婚礼扣款、完成结算或剧情。已赠婚戒显示白色描边钻石，RingReceived 与 WeddingCompleted 同时为真才显示白色实心钻石。
+
+consumer-invite通过ConsumerInvitations.Create和ConsumerInvitationStock处理普通活动库存与耐用品活动预留。购买并邀约携带ConsumerOrder.BuyInvitation=true；单人EconomicActions.Save先在副本校验和购买，再一次保存，失败保留资金/物品；多人在本人View执行并Capture，复用命令回执去重。一批人物各有私聊草稿，共享InvitationReservation；可用库存等于总库存减去仍存在于草稿或待回应消息的未消耗预留。取消附件、删除待回应玩家消息或所有来宾拒绝后释放预留；发送失败保留预留供重试。首次接受按凭据消耗一次；已接受后的改期/取消、回复重生成保留已发生的商品消耗，再次接受沿同一凭据去重。耐用品本体持续持有，活动次数在草稿期间预留，接受时由原Use结算费用、次数、好感，planned参数令社区事实描述已约定活动，取消草稿释放次数。消耗型库存首次写入从现有购买明细减去已接受邀请迁移；已经清理的旧购买明细保持历史状态。新的库存字典跨季保留。AI完成时CoopPrivateMessages.Save同时合入本人Consumer、资金、账目和活动事件，其他玩家账户保持隔离。
+
+带date-invitation的dm-send复制附件并在候选数据上核对持久草稿，入队成功后移除对应GiftDrafts，消息与草稿删除沿同一次事务提交。发送前关闭窗口或切换人物可恢复草稿；发送后网络失败、停止、重启沿原私聊重试保留附件。完整NPC回复由SocialAppointments创建已确认或已拒绝活动；改期与取消归原交互回退快照。邀请消费事实与AI活动结果各自遵循原消费及交互生命周期。当天确认赴约仍由dm-attend执行，随后使用原场景入口。
+
+## 立绘设计本地保存
+
+OpenPortraitDesigner捕获当前世界、玩家、人物及本地文件路径，加载一份可编辑草稿；打开窗口产生0次AI请求，显式点击资料推测后才建立可取消请求。Read调用UpgradeDefaults：仅将与旧版默认字符串完全相同的画风、常态姿势和9项情绪说明替换成新版，保留手动修改值及ID。迁移在内存完成，沿下一次正常保存写回。保存并关闭、Escape关闭、导出前以及AI成功合并时，PortraitDesignStore.Save序列化一次草稿，写唯一临时文件再原子替换目标。自定义ID编辑在回车、失焦及界面操作前通过RenameEmotion校验；无效输入保持原ID，并阻止关闭、切页及导出，供玩家修正。读写错误在界面保留当前编辑并显示原因；读取失败保留原文件。正常关闭取消在途推测；窗口被释放或生涯失效时返回内容跳过应用。进程强制结束时恢复最近已保存版本。
+
+设计弹窗的模型约束区默认收起，基本资料直接可见。PromptModel及按模型区分的ModelConstraints随设计保存；旧画风参考组与缓存保留，当前界面停止初始化或导入参考图。模型推测与约束编辑沿原本地保存入口，切换生涯与关闭窗口仍取消或忽略已失效请求。
+
+提示词导出先保存设计，在桌面（缺省时user://portrait_exports）创建唯一命名ZIP临时文件，完成后改为最终名称；失败清理临时文件并保留草稿。包内为设计、提示词、模型约束与外部上传说明。参考原图及原始聊天保持既有本地数据；单人和多人本地设计保存/推测/导出均沿当前玩家视图。
+
+角色设计ZIP可由“编辑角色”或“立绘与场景”导出。编辑角色使用当前未保存的PNG白名单字段，立绘管理使用当前人物资料；两者都额外打包所有套装的立绘图片和必要ID映射。Write不读取信箱关系或聊天；完整设计草稿仅提供播放ID，文本及个人场景偏好保持本机。Read验证全包，旧包也忽略Relation、印象和设计说明，再打开新角色编辑草稿，导入不会预填个人态度。确认保存前Installation暂存图片和重建后的设计/场景映射，沿CharacterCards.Save或character-card多人命令保存角色资料；玩家在该草稿中主动编辑态度时继续使用原编辑规则。成功回调Commit；取消、窗口释放或安装失败通过Dispose恢复原本地元数据，内容寻址图片缓存可复用。多人只传输原角色编辑命令，立绘保存在导入客户端，其他端需自行导入。进程异常结束可能留下未被生涯人物引用的本地设计。源角色的关系、记忆、原聊天及API配置继续留在原存档；本修订保持现存生涯数据原值，玩家此前导出的旧ZIP文件仍保留其原有内容，分享时需重新导出。
+
+攻略难度附加开关沿affection-clear-chance命令由房主验证布尔编号，全体视图读取世界AffectionLinkedClearChance。联动选取最高好感玩家；RefreshPeople更新HumanFavours时比较各玩家关系快照，发生变化后使未开始比赛的预测失效。已经结算的永久成长保持原值，PrivateLearning的倍率记录随信箱保存并在世界合并时去重重放。角色编辑的态度锁由CharacterCards.Validate统一执行，界面同步只读。编辑失败的约会消息沿dm-date-revise保存同一轮次，房主StartPrivate继续生成，附件库存与送达凭据复用。
+
+### 约会场景的资源与播放进度
+
+DateSceneAssetStore在本机独立保存套装立绘映射、背景、文字速度、字号、面板透明度、立绘缩放/X/Y位移、正文描边/好感徽章开关及播放书签。导入先验证当前角色/套装清单和全部图像，再写按SHA寻址的缓存，最后原子保存一份映射；界面使用临时副本，导入异常保留原映射。选择不同套装只切换映射入口，既有套装资源继续保留。文件浏览器复用PickNestedFile，确认或取消后恢复原弹窗。共享的OpenFilePicker在打开时读取user://NationalSpire_file_picker.cfg；“保存路径”将当前目录写入browser/directory，取消导入仍保留这个显式选择。保存失败显示提示，失效目录回退最近有效目录或桌面；文件路径保持本机。字号和背景立即保存；模糊强度、字速、透明度及立绘缩放滑块逐帧预览，在拖动结束或设置窗口关闭时保存。第一次推进点击立即隐藏提示并将本机共用已读状态写入独立配置，下次打开及重启沿此状态。立绘与背景随本机缓存保留，生涯导出和多人快照包含Scene请求元数据、SceneLines及个人会话的DateSceneStates。
+
+文件名ZIP通过后合并同套装原有映射再原子保存，当前界面决定角色和套装；旧manifest导入保留原额外身份核对。DateSceneBackgrounds将导入背景写入共用图像缓存，全部导入成功后原子替换本机背景目录；失败保留原目录，已写入且未引用的内容缓存可供后续复用。当前包内提供33张JPG，保留原ZIP文件名作为背景ID。预载图从模组date-backgrounds目录读取，首次或文件长度/修改时间变化时重新校验缓存；运行期按绝对路径及这两个文件属性复用SHA，重新启动重新检查。背景说明在切换选择、导入前及点击“返回立绘与场景”时保存；Escape沿关闭语义丢弃当前尚未保存的说明编辑。
+
+场景手动选择图片时设置AutoBackground=false并保存；勾选自动后按当前播放句段恢复，逐句自动切换更新本机当前背景，随原书签保存落盘。重看或恢复书签按该轮CurrentBackground和截至书签的Background字段重建，自动选择读取当轮ID快照，现有图片库排除无图预设并为失效ID选择最接近图片；导入新背景后的下一次发送使用新目录。逐句淡入淡出只修改纹理和alpha，原私聊的保存、广播及业务交互次数保持原值。
+
+场景进入沿dm-date-open保存active及空日记条目，继续发送沿dm-send，失败后修订沿dm-date-revise；场景“重新生成”复用dm-regenerate，先重验活动仍可继续，PrivateInteractionHistory.Rewind回退原回复效果并失效相关摘要，再保留User、附件及送达凭据将同一轮置queued。新增网络协议和礼物扣库存次数为0；现有单人保存、房主/客机派发与生成sending/complete保存继续执行，本机播放书签在确认成功后移除；dm-date-end保存ended、将活动State置为已结束并追加隐藏Ending通知，queueAfterCurrent允许排在已有请求之后。DateDiaries.Guidance随同一私信请求提供当前活动的完整可用记录；PrivateStreamParser隐藏DateDiary/Location标记，完成后DateDiaries.Complete按OfferId写入独立会话列表，重试覆盖同一条。正文有效而日记缺失时保留感想和旧日记，在Error记录缺失；该回复仍可沿原重生成入口再请求。日记与场景状态独立于聊天自动摘要，删除聊天保留已结束活动和已保存日记。历史场景在Records中读取已保存的结束感想作为兼容展示，地点缺失如实标注。场景与日记通过现有个人信箱保存和多人隐私快照传输；CoopPrivateMessages.StartPrivate继续处理开场/结束。模拟命令、个人归属及去重已验证，真实Steam网络待测。
+
+返回私聊和Escape进入三选项确认。暂时返回先保存当前句书签，再经dm-date-pause保存paused，成功回执后关闭场景，将输入复制回私聊并显示底部“继续约会”卡；原活动卡的进入按钮隐藏。继续约会保留paused记录作为私聊恢复入口，按Turn/ReplyHash读取书签。结束约会经dm-date-end保存ended，永久关闭此OfferId的场景入口并取消该活动正在生成的轮次；其他活动及已发生的业务交互保留。该状态属于玩家个人会话，通过原单人存档及多人个人信箱命令保存，独立于AI交互回退。GoodId为grand-wedding且已有active/paused状态或开场记录时，结束命令同步调用CompleteWedding，写WeddingCompleted、当前/最高关系及oath头像框；PreserveRelation保护完成事实和明确关系选择，后续旧AI轮次回退继续保留。重复结束直接返回，保持之后的手动装扮与关系选择。房主按本人视图执行后随原Capture保存与广播，其他成员的婚礼记录保持各自归属。继续约会选项只关闭弹窗。关闭窗口释放场景控件与纹理，暂返期间的已发送私信沿原后台流程继续。当前会话、人物或世界/玩家键失效时轮询关闭场景。首次进入仍须当天赴约；已有开场或active/paused场景跨日继续可恢复和结束，避免跨日后遗留邀约锁。逐句推进只写本地书签；再次进入核对Turn及ReplyHash，恢复下一句或输入状态。强制结束进程后恢复最近落盘书签和既有私信恢复状态；正文草稿沿现有窗口内生命周期，进程结束后的草稿恢复尚未接入。回复原文、附件和交互结果归生涯，画面播放进度独立于交互生效时机。
+
 ## 加载、切换与删除
+
+PrivateRelation 使用 JSON 开始/完成回调：载入期间暂缓外观判断，全部属性恢复后调用一次 RelationshipPresentation.Evaluate。因此首次安装此版本后载入旧档、正常重载、个人视图复制和交互回退均从当前数值/关系重建样式。旧档缺少誓约字段时默认未确认；达到资格时由私信提示玩家操作。回调复位数字动画到存档值；日常好感和关系赋值重新判断，动画只修改展示。数值先分六档，Favour>90才匹配关系关键词，100时配偶关键词赋予誓约资格；常见否定及前任前缀排除。模型可编辑关系文字，因此关键词结果仍需按实际角色关系核验。
+
+OathDeferred标记搁置，OathPromptHidden标记完全收起；旧JSON缺失后者默认false。dm-oath-defer展示搁置说明，dm-oath-close完全隐藏，dm-oath-open清除两标记，dm-oath-confirm完成确认。新婚戒完整回复结算重置两标记。确认、暂缓、确认收起及重新打开邀请沿 PrivateCommand → PrivateMessageCommands.Apply → RelationshipPresentation.Decide 修改同一个人信箱，随后使用原保存入口。解除请求保持 OathConfirmed，玩家填写回复并选择解除/继续沟通后先通过 Enqueue 校验，再修改誓约状态、清空请求；随后原后台私信处理器生成回复。已有队列或处理器繁忙时拒绝重复发送。玩家处理调用 PreserveRelation 保护OathConfirmed、HighestBond、SelectedBond、OathDeferred、OathPromptHidden及解除请求字段，后续撤回旧轮次保留玩家决定；未处理的模型请求仍归其原轮次回退。关闭页面、切换存档和进程恢复沿现有保存及队列流程。
+
+NpcAvatarFrames.Select只写本人PrivateMailbox.NpcAvatarFrames。NpcAvatarFramePicker中的点击选择仅改变局部草稿、顶部头像/说明/条件和网格高亮，保存与广播次数为0；取消关闭并丢弃草稿。点击保存重查当前资格，单人保存一次，失败恢复原选项并保留弹窗提示。成功提交后原地刷新可见头像，关闭弹窗恢复原焦点。多人dm-avatar-frame经PrivateCommand在发起成员的View核验资格，再由Capture/原回执和快照保存，重复命令沿原编号去重，其他玩家的装扮保持独立。晚到回执检查控件、生涯与成员身份后刷新。模型调用次数为0，聊天撤回保持装扮选择，角色删除清理各成员的对应字典项。
+
+多人 dm-oath-* 仍通过房主原个人命令入口，命令按编号去重，字段属于对应 CoopMember.Life.Mailbox；确认按钮只影响当前玩家的关系。StartPrivate 为 dm-oath-release 启动既有私信引擎；完整快照继续过滤其他人的信箱。AvatarHonors 从传入个人视图读取OathConfirmed及WeddingCompleted，共同决定钻戒外观；旧档提前选中的oath头像框也经过同一门槛。合成双人成员验证已覆盖个人隔离、视图头像、重复命令和收件人过滤；实际 Steam 收发、跨机保存及断线恢复尚未实测。
 
 | 操作 | 当前调用与处理 | 后续依赖 |
 | --- | --- | --- |

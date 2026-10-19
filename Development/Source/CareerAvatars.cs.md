@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A78328F7A9F68514F0D59B9D93CFAC2A10015D3A317A6A051CBBFCC342589D76`。来源：[源码](../../CareerAvatars.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F2A5ECFA3B56635FD8438E0A4DC2D9B19242ED51629A3D44DCB269784C0CBBF0`。来源：[源码](../../CareerAvatars.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -73,7 +73,7 @@ private bool _choosingFrame;
 
 来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](Coop/CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
+**调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](Coop/CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.GroupAvatar.Update(NationalSpire.CareerData, NationalSpire.GroupChat)`](GroupAvatar.cs.md#symbol-5d97e2be271b)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
 **调用：** [`NationalSpire.AvatarImages.Read(NationalSpire.PlayerAvatar?)`](AvatarImages.cs.md#symbol-1edd50772202)；[`NationalSpire.CareerAvatars.Automatic(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-2bfa078d007b)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
@@ -131,11 +131,29 @@ private bool _choosingFrame;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-f5408642a13b"></a>
+
+## `NationalSpire.CareerAvatar.Simplified — public bool Simplified`
+
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-0465ac243ff9"></a>
 
 ## `NationalSpire.CareerAvatar.Identity — public AvatarIdentity? Identity`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -156,7 +174,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerAvatar.Art — public AvatarArt Art`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -177,7 +195,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerAvatar._Ready() — public override void _Ready()`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -197,54 +215,56 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerAvatar._Draw() — public override void _Draw()`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；`Godot.CanvasItem.DrawTextureRectRegion(Godot.Texture2D, Godot.Rect2, Godot.Rect2, Godot.Color?, bool, bool)`；`Godot.Color.ToHtml(bool)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Rect2.Grow(float)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Texture2D.GetHeight()`；`Godot.Texture2D.GetWidth()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.Math.Min(int, int)`
+**调用：** `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；`Godot.CanvasItem.DrawTextureRectRegion(Godot.Texture2D, Godot.Rect2, Godot.Rect2, Godot.Color?, bool, bool)`；`Godot.Color.ToHtml(bool)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Rect2.Grow(float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Texture2D.GetHeight()`；`Godot.Texture2D.GetWidth()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Accent`；`NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`NationalSpire.AvatarIdentity.Frame`；`NationalSpire.CareerAvatar._frame`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Accent`；`NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`NationalSpire.AvatarIdentity.DisplayFrame`；`NationalSpire.AvatarIdentity.SelectedFrame`；`NationalSpire.AvatarIdentity.UseOathFrame`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerAvatar.Simplified`；`NationalSpire.CareerAvatar._frame`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；输入表达式：`DrawArc(center + new Vector2(0, Size.Y * .33f), Size.X * .27f, Mathf.Pi, Mathf.Tau, 24, Art.Accent, Math.Max(3, Size.X * .1f), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawArc(center + new Vector2(0, Size.Y * .33f), Size.X * .27f, Mathf.Pi, Mathf.Tau, 24, Art.Accent, Math.Max(3, Size.X * .1f), true);`
 - `Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；输入表达式：`DrawCircle(center + new Vector2(0, -Size.Y * .15f), Size.X * .14f, Art.Accent)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawCircle(center + new Vector2(0, -Size.Y * .15f), Size.X * .14f, Art.Accent);`
-- `Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；输入表达式：`DrawStyleBox(_frame, bounds)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawStyleBox(_frame, bounds);`
+- `Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；输入表达式：`DrawStyleBox(_frame, Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? inner : bounds)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawStyleBox(_frame, Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? inner : bounds);`
 - `Godot.CanvasItem.DrawTextureRectRegion(Godot.Texture2D, Godot.Rect2, Godot.Rect2, Godot.Color?, bool, bool)`；输入表达式：`DrawTextureRectRegion(texture, inner, source)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawTextureRectRegion(texture, inner, source);`
-- `Godot.Color.ToHtml(bool)`；输入表达式：`Art.Accent.ToHtml()`；返回值紧邻使用处：`BinaryExpressionSyntax: Identity?.Frame.Color ?? Art.Accent.ToHtml()`
+- `Godot.Color.ToHtml(bool)`；输入表达式：`Art.Accent.ToHtml()`；返回值紧邻使用处：`BinaryExpressionSyntax: Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml()`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`GodotObject.IsInstanceValid(texture)`；返回值紧邻使用处：`BinaryExpressionSyntax: Art.Texture is { } texture && GodotObject.IsInstanceValid(texture)`
 - `Godot.Rect2.Grow(float)`；输入表达式：`bounds.Grow(-inset)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = bounds.Grow(-inset)`
-- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2((texture.GetWidth() - edge) / 2, (texture.GetHeight() - edge) / 2, edge, edge)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2((texture.GetWidth() - edge) / 2, (texture.GetHeight() - edge) / 2, edge, edge)`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2(Vector2.Zero, Size)`
+- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2((texture.GetWidth() - edge) / 2, (texture.GetHeight() - edge) / 2, edge, edge)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2((texture.GetWidth() - edge) / 2, (texture.GetHeight() - edge) / 2, edge, edge)`
+- `Godot.Texture2D.GetHeight()`；输入表达式：`texture.GetHeight()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetHeight() > 0`
 - `Godot.Texture2D.GetHeight()`；输入表达式：`texture.GetHeight()`；返回值紧邻使用处：`ArgumentSyntax: texture.GetHeight()`
 - `Godot.Texture2D.GetHeight()`；输入表达式：`texture.GetHeight()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetHeight() - edge`
-- `Godot.Texture2D.GetHeight()`；输入表达式：`texture.GetHeight()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetHeight() > 0`
+- `Godot.Texture2D.GetWidth()`；输入表达式：`texture.GetWidth()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetWidth() > 0`
 - `Godot.Texture2D.GetWidth()`；输入表达式：`texture.GetWidth()`；返回值紧邻使用处：`ArgumentSyntax: texture.GetWidth()`
 - `Godot.Texture2D.GetWidth()`；输入表达式：`texture.GetWidth()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetWidth() - edge`
-- `Godot.Texture2D.GetWidth()`；输入表达式：`texture.GetWidth()`；返回值紧邻使用处：`BinaryExpressionSyntax: texture.GetWidth() > 0`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, -Size.Y * .15f)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(0, -Size.Y * .15f)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, Size.Y * .33f)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(0, Size.Y * .33f)`
 - `NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`；输入表达式：`DrawHonors(identity)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawHonors(identity);`
-- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("0b1b22", Identity?.Frame.Color ?? Art.Accent.ToHtml(), 8, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _frame ??= CareerVisuals.Box("0b1b22", Identity?.Frame.Color ?? Art.Accent.ToHtml(), 8, 0)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("0b1b22", Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? "00000000" : Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml(), Simplified ? 3 : 8, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _frame ??= CareerVisuals.Box("0b1b22", Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? "00000000" : Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml(), Simplified ? 3 : 8, 0)`
 - `System.Math.Max(float, float)`；输入表达式：`Math.Max(3, Size.X * .1f)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(3, Size.X * .1f)`
-- `System.Math.Min(float, float)`；输入表达式：`Math.Min(Size.X, Size.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Min(Size.X, Size.Y) * (framed.Frame.Grade >= 6 ? .14f : .105f)`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(2, Size.X * .06f)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Simplified ? Math.Min(2, Size.X * .06f) : 4`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(Size.X, Size.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Min(Size.X, Size.Y) * .09f`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(Size.X, Size.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Min(Size.X, Size.Y) * (framed.DisplayFrame.Grade >= 6 ? .14f : .105f)`
 - `System.Math.Min(int, int)`；输入表达式：`Math.Min(texture.GetWidth(), texture.GetHeight())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(texture.GetWidth(), texture.GetHeight())`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_frame` ??= `CareerVisuals.Box("0b1b22", Identity?.Frame.Color ?? Art.Accent.ToHtml(), 8, 0)`
+- `_frame` ??= `CareerVisuals.Box("0b1b22", Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? "00000000" : Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml(), Simplified ? 3 : 8, 0)`
 
 <a id="symbol-e94ed9976fb6"></a>
 
 ## `NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity) — private void DrawHonors(AvatarIdentity identity)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerAvatar._Draw()`](CareerAvatars.cs.md#symbol-d0d51d45c800)
 
-**调用：** [`At(float, float)`](CareerAvatars.cs.md#symbol-83fd6e2c9a90)；[`Line(float, float, float, float)`](CareerAvatars.cs.md#symbol-e7558533dbb7)；[`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lightened(float)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Font.GetAscent(int)`；`Godot.Font.GetDescent(int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`int.ToString()`；`System.Math.Clamp(float, float, float)`；`System.Math.Max(float, float)`
+**调用：** [`At(float, float)`](CareerAvatars.cs.md#symbol-83fd6e2c9a90)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Color.Lightened(float)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Font.GetAscent(int)`；`Godot.Font.GetDescent(int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；[`Line(float, float, float, float)`](CareerAvatars.cs.md#symbol-e7558533dbb7)；[`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)；`System.Math.Clamp(float, float, float)`；`System.Math.Max(float, float)`；`int.ToString()`
 
-**字段、属性、事件及方法组引用：** `At(float, float)`；`Line(float, float, float, float)`；`NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`NationalSpire.AvatarIdentity.Ascension`；`NationalSpire.AvatarIdentity.Frame`；`NationalSpire.AvatarIdentity.Role`；`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`
+**字段、属性、事件及方法组引用：** `At(float, float)`；`Line(float, float, float, float)`；`NationalSpire.AffectionArt.Texture(string)`；`NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`NationalSpire.AvatarIdentity.Ascension`；`NationalSpire.AvatarIdentity.DisplayFrame`；`NationalSpire.AvatarIdentity.Role`；`NationalSpire.AvatarIdentity.SelectedFrame`；`NationalSpire.AvatarIdentity.UseOathFrame`；`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -264,21 +284,24 @@ private bool _choosingFrame;
 - `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`DrawLine(At(0, -4), At(0, 0), Colors.White, 3 * unit, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawLine(At(0, -4), At(0, 0), Colors.White, 3 * unit, true);`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；输入表达式：`DrawRect(new Rect2(At(-4, -4), new Vector2(8, 7) * unit), Colors.White, false, 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(At(-4, -4), new Vector2(8, 7) * unit), Colors.White, false, 1);`
 - `Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；输入表达式：`DrawString(font, center + new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2), number, fontSize: fontSize, modulate: Colors.White)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawString(font, center + new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2), number, fontSize: fontSize, modulate: Colors.White);`
+- `Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；输入表达式：`DrawTextureRect(AffectionArt.Texture("frame-" + identity.SelectedFrame), new Rect2(Vector2.Zero, Size), false)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawTextureRect(AffectionArt.Texture("frame-" + identity.SelectedFrame), new Rect2(Vector2.Zero, Size), false);`
+- `Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；输入表达式：`DrawTextureRect(AffectionArt.Texture("oath-frame"), new Rect2(-Size * .1f, Size * 1.2f), false)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawTextureRect(AffectionArt.Texture("oath-frame"), new Rect2(-Size * .1f, Size * 1.2f), false);`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("06101c")`；返回值紧邻使用处：`ArgumentSyntax: new Color("06101c")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("0c1925")`；返回值紧邻使用处：`ArgumentSyntax: new Color("0c1925")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("7cc5c0")`；返回值紧邻使用处：`ArgumentSyntax: new Color("7cc5c0")`
-- `Godot.Color.Color(string)`；输入表达式：`new Color(identity.Frame.Color)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Color(identity.Frame.Color)`
+- `Godot.Color.Color(string)`；输入表达式：`new Color(identity.UseOathFrame ? "dce6f1" : identity.DisplayFrame.Color)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Color(identity.UseOathFrame ? "dce6f1" : identity.DisplayFrame.Color)`
 - `Godot.Color.Lightened(float)`；输入表达式：`color.Lightened(.35f)`；返回值紧邻使用处：`ArgumentSyntax: color.Lightened(.35f)`
 - `Godot.Control.GetThemeDefaultFont()`；输入表达式：`GetThemeDefaultFont()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetThemeDefaultFont()`
 - `Godot.Font.GetAscent(int)`；输入表达式：`font.GetAscent(fontSize)`；返回值紧邻使用处：`BinaryExpressionSyntax: font.GetAscent(fontSize) - font.GetDescent(fontSize)`
 - `Godot.Font.GetDescent(int)`；输入表达式：`font.GetDescent(fontSize)`；返回值紧邻使用处：`BinaryExpressionSyntax: font.GetAscent(fontSize) - font.GetDescent(fontSize)`
 - `Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；输入表达式：`font.GetStringSize(number, fontSize: fontSize)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = font.GetStringSize(number, fontSize: fontSize)`
+- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(-Size * .1f, Size * 1.2f)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(-Size * .1f, Size * 1.2f)`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(At(-4, -4), new Vector2(8, 7) * unit)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(At(-4, -4), new Vector2(8, 7) * unit)`
+- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(Vector2.Zero, Size)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(8, 7)`；返回值紧邻使用处：`BinaryExpressionSyntax: new Vector2(8, 7) * unit`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(radius + 1, h - radius - 1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Vector2(radius + 1, h - radius - 1)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(w - radius - 1, h - radius - 1)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Vector2(w - radius - 1, h - radius - 1)`
-- `int.ToString()`；输入表达式：`identity.Ascension.ToString()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = identity.Ascension.ToString()`
 - `Line(float, float, float, float)`；输入表达式：`Line(-2, 1, 2, -2)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(-2, 1, 2, -2);`
 - `Line(float, float, float, float)`；输入表达式：`Line(-2, 5, 2, 5)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(-2, 5, 2, 5);`
 - `Line(float, float, float, float)`；输入表达式：`Line(-2, 5, 4, 5)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(-2, 5, 4, 5);`
@@ -289,9 +312,12 @@ private bool _choosingFrame;
 - `Line(float, float, float, float)`；输入表达式：`Line(-3, 4, 3, 4)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(-3, 4, 3, 4);`
 - `Line(float, float, float, float)`；输入表达式：`Line(0, 3, 0, 5)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(0, 3, 0, 5);`
 - `Line(float, float, float, float)`；输入表达式：`Line(3, -4, -3, 4)`；返回值紧邻使用处：`ExpressionStatementSyntax: Line(3, -4, -3, 4);`
-- `NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`；输入表达式：`DrawMetalFrame(identity.Frame)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawMetalFrame(identity.Frame);`
+- `NationalSpire.AffectionArt.Texture(string)`；输入表达式：`AffectionArt.Texture("frame-" + identity.SelectedFrame)`；返回值紧邻使用处：`ArgumentSyntax: AffectionArt.Texture("frame-" + identity.SelectedFrame)`
+- `NationalSpire.AffectionArt.Texture(string)`；输入表达式：`AffectionArt.Texture("oath-frame")`；返回值紧邻使用处：`ArgumentSyntax: AffectionArt.Texture("oath-frame")`
+- `NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`；输入表达式：`DrawMetalFrame(identity.DisplayFrame)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawMetalFrame(identity.DisplayFrame);`
 - `System.Math.Clamp(float, float, float)`；输入表达式：`Math.Clamp(w * .175f, 7, 17)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Clamp(w * .175f, 7, 17)`
 - `System.Math.Max(float, float)`；输入表达式：`Math.Max(1.5f, radius * .16f)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(1.5f, radius * .16f)`
+- `int.ToString()`；输入表达式：`identity.Ascension.ToString()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = identity.Ascension.ToString()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -300,7 +326,7 @@ private bool _choosingFrame;
 
 ## `At(float, float) — Vector2 At(float x, float y)`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Line(float, float, float, float)`](CareerAvatars.cs.md#symbol-e7558533dbb7)；[`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)
 
@@ -319,7 +345,7 @@ private bool _choosingFrame;
 
 ## `Line(float, float, float, float) — void Line(float x, float y, float x2, float y2)`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)
 
@@ -340,7 +366,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer) — private void AvatarWardrobe(CareerData data, VBoxContainer box)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
@@ -393,7 +419,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.ChooseFrame(NationalSpire.CareerData, string) — private void ChooseFrame(CareerData data, string frame)`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)
 
@@ -417,7 +443,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.WithCharacterAvatar(string, Godot.Control) — private HBoxContainer WithCharacterAvatar(string character, Control content)`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ShowArchive()`](CareerScreen.cs.md#symbol-ce008839cea8)
 
@@ -446,9 +472,9 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?) — private Control Avatar(CareerData data, string personId, int size = 52, bool clickable = true, Action? open = null)`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.CareerScreen.CeremonyHero(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-7344f4112178)；[`NationalSpire.CareerScreen.GroupBubble(string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>?)`](GroupChatScreen.cs.md#symbol-870e7cca58c0)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.PrivateIdentity(NationalSpire.CareerData, string, bool)`](PrivateMemoryScreen.cs.md#symbol-65caddca194f)；[`NationalSpire.CareerScreen.PrivateMemory()`](PrivateMemoryScreen.cs.md#symbol-942a4a496637)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.WithAvatar(NationalSpire.CareerData, string, Godot.Control, int, bool)`](CareerAvatars.cs.md#symbol-830dff168a3d)；[`ShowRows()`](CommunityShareScreen.cs.md#symbol-2e7b710b7d77)；[`ShowRows()`](GroupChatScreen.cs.md#symbol-0c716f3f9d5a)
+**调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.CareerScreen.CeremonyHero(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-7344f4112178)；[`NationalSpire.CareerScreen.GroupBubble(string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>?)`](GroupChatScreen.cs.md#symbol-870e7cca58c0)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.PrivateIdentity(NationalSpire.CareerData, string, bool)`](PrivateMemoryScreen.cs.md#symbol-65caddca194f)；[`NationalSpire.CareerScreen.PrivateMemory()`](PrivateMemoryScreen.cs.md#symbol-942a4a496637)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.WithAvatar(NationalSpire.CareerData, string, Godot.Control, int, bool)`](CareerAvatars.cs.md#symbol-830dff168a3d)；[`Rows()`](ConsumerGiftScreen.cs.md#symbol-136ca1d3e38e)；[`ShowRows()`](CommunityShareScreen.cs.md#symbol-2e7b710b7d77)；[`ShowRows()`](GroupChatScreen.cs.md#symbol-0c716f3f9d5a)
 
 **调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.OpenPerson(string)`](CareerNavigation.cs.md#symbol-4430ec2bce8b)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`NationalSpire.CareerAvatar.CareerAvatar()`
 
@@ -491,7 +517,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.WithAvatar(NationalSpire.CareerData, string, Godot.Control, int, bool) — private HBoxContainer WithAvatar(CareerData data, string id, Control content, int size = 52, bool clickable = true)`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Contender(string, string, string, string, string)`](SettlementScreen.cs.md#symbol-cce12ddd3cdd)；[`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.CeremonyRanking(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CeremonyRank>)`](CeremonyScreen.cs.md#symbol-73500bb64a58)；[`NationalSpire.CareerScreen.Competition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CareerWorldScreen.cs.md#symbol-35113b1f49bd)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)；[`NationalSpire.CareerScreen.RenderTeam()`](CareerSession.cs.md#symbol-0aab3af4bc96)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
@@ -515,7 +541,7 @@ private bool _choosingFrame;
 
 ## `NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int) — private HBoxContainer PersonLink(CareerData data, string id, string caption, int size = 40)`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CircuitRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b3ab649f5b65)；[`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-27a995f7ce9f)；[`NationalSpire.CareerScreen.ClubMarket(NationalSpire.CareerData, bool)`](OwnedClubScreen.cs.md#symbol-b1e2f4fe72a4)；[`NationalSpire.CareerScreen.Competition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CareerWorldScreen.cs.md#symbol-35113b1f49bd)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.CareerScreen.Honors(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-fd656e0e98e6)；[`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b665478390f0)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.WorldHonors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-3c1f80d447a9)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-f3d2df3d6c54)；[`Side(System.Collections.Generic.List<NationalSpire.CompetitionPlayer>, string)`](SettlementScreen.cs.md#symbol-49b1e1a15f4b)
 

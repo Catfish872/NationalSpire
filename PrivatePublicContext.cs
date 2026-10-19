@@ -132,10 +132,11 @@ public static partial class PrivatePublicContext
         Add(posts.Where(Topic).OrderByDescending(LastActivity), 2);
         return (selected, memories, available);
     }
-    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null, CommunityMemorySearch.Request? request = null)
+    public static string Community(CareerData d, CareerPerson person, string query, ISet<string>? attached = null, List<(string Id, string Text)>? completePosts = null, CommunityMemorySearch.Request? request = null, int? maximumPosts = null)
     {
         request ??= new();
         var (selected, memories, available) = SelectCommunity(d, person, query, attached, request);
+        if (maximumPosts is { } limit) selected = selected.OrderByDescending(p => request.Topic(p, query)).ThenByDescending(p => p.Day).Take(limit).ToList();
         var comments = CommunityPromptContext.SelectReplies(selected, d.Day, [person.Id, Human(d)], query, request);
         var b = new StringBuilder();
         foreach (var post in selected)

@@ -42,7 +42,7 @@ public static class CareerRelics
         new("BAG_OF_PREPARATION", "准备背包", 1000, "内容与社区费用减少20%。"),
         new("SLING_OF_COURAGE", "勇气投石索", 4800, "正常赢下进阶8及以上比赛增加1,000至2,000关注。"),
         new("WHITE_STAR", "白星", 5500, "每次赢下国际赛事获得$8,000至12,000。"),
-        new("JEWELED_MASK", "宝石面具", 2600, "完成社交活动额外增加6点好感。"),
+        new("JEWELED_MASK", "宝石面具", 2600, "完成社交活动额外获得基础6点好感，随攻略难度结算。"),
         new("GOLDEN_PEARL", "金色珍珠", 5000, "商业项目利润额外增加50%。")
     ];
     private static int Roll(CareerData d, string key, int min, int max) => min + CareerEngine.StableHash(d.WorldId + ":figurine:" + key) % (max - min + 1);
@@ -172,7 +172,8 @@ public static class CareerRelics
         }
         if (a.Kind == "社交" && a.PersonId.Length > 0 && State(d, "JEWELED_MASK") is { } mask)
         {
-            PrivateMessages.ChangeFavour(d, a.PersonId, 6); a.Result += "宝石面具手办：好感额外增加6。";
+            int before = PrivateMessages.Favour(d, a.PersonId);
+            PrivateMessages.ChangeFavour(d, a.PersonId, 6); a.Result += $"宝石面具手办：好感额外增加{PrivateMessages.Favour(d, a.PersonId) - before}。";
         }
         if (a.Kind == "内容") { Fans("LETTER_OPENER", 3, 2000, 3500); Fans("PEN_NIB", 2, 1200, 2000); }
         if (a.Kind == "社区") Fans("SHURIKEN", 3, 2000, 3500);

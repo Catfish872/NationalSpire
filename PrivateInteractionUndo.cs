@@ -157,7 +157,7 @@ public static class PrivateInteractionHistory
         }
         if (JsonNode.DeepEquals(current, after)) return before?.DeepClone();
         // 金额、累计学习等数值只撤回本次增减，保留后来发生的独立增减。
-        bool additive = path is "/credits" or "/owned/CashFlow" or "/learning/ChanceShift" or "/learning/Exposure" or "/relation/Favour"
+        bool additive = path is "/credits" or "/owned/CashFlow" or "/learning/ChanceShift" or "/learning/Exposure" or "/relation/Favour" or "/relation/GainRemainder" or "/relation/LossRemainder"
             || path.StartsWith("/learning/Topics/") || path.StartsWith("/clubBudgets/");
         if (additive && current?.GetValueKind() == JsonValueKind.Number && (before == null || before.GetValueKind() == JsonValueKind.Number) && after?.GetValueKind() == JsonValueKind.Number)
         {
@@ -179,8 +179,11 @@ public static class PrivateInteractionHistory
         p.Learning.MoodUntil = state["mood"]!["MoodUntil"]!.Deserialize<int>();
         p.Learning.MoodStrength = state["mood"]!["MoodStrength"]!.Deserialize<double>();
         var relation = state["relation"]!.Deserialize<PrivateRelation>()!;
+        int gains = (int)Math.Floor(relation.GainRemainder), losses = (int)Math.Floor(relation.LossRemainder);
+        relation.Favour += gains - losses; relation.GainRemainder -= gains; relation.LossRemainder -= losses;
         relation.Favour = Math.Clamp(relation.Favour, -100, 100);
         PrivateMessages.Mailbox(d).Relations[id] = relation; d.Life.Relationships[id] = relation.Favour;
+        if (d.AffectionLinkedClearChance) CareerTraining.InvalidateForecast(d);
         if (state["offers"] != null) PrivateMessages.Conversation(d, id).Offers = state["offers"]!.Deserialize<List<PrivateOffer>>()!;
         if (state["privateMatches"] != null)
         {
@@ -244,7 +247,7 @@ public static class PrivateInteractionHistory
     public static string? Rewind(CareerData d, PrivateConversation c, PrivateTurn turn)
     {
         var offers = c.Offers.Where(o => o.TurnId == turn.Id).ToList();
-        if (offers.Any(o => o.Kind == "activity" && o.State == "已赴约"))
+        if (offers.Any(o => o.Kind == "activity" && o.State is "已赴约" or "已结束"))
             return "这条回复的活动已经赴约，无法通过重新生成撤回。";
         if (offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消")))))
             return "这条回复的约战已经开始或结算，无法通过重新生成撤回赛果。";

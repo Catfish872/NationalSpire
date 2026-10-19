@@ -4,6 +4,8 @@ namespace NationalSpire;
 
 public sealed class PrivateMessageCommand
 {
+    public List<PromptInsertion>? PromptInsertions { get; set; }
+    public DateSceneRequest? Scene { get; set; }
     public string Text { get; set; } = "";
     public string Offer { get; set; } = "";
     public string Replacement { get; set; } = "";
@@ -17,14 +19,42 @@ public static class PrivateMessageCommands
 {
     public static string? Apply(CareerData data, string kind, string person, PrivateMessageCommand command)
     {
+        if (kind == "dm-send" && command.Attachments.Any(a => a.Kind is ConsumerGifts.Kind or ConsumerGifts.WeddingKind or ConsumerInvitations.Kind))
+            command = Coop.CoopJson.Copy(command);
         if (kind == "dm-settings") { command.Settings!.Validate(); PrivateMessages.Mailbox(data).Settings = command.Settings; return null; }
-        if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
+        if (kind == "dm-avatar-frame") return NpcAvatarFrames.Select(data, person, command.Text);
+        if (kind is "dm-send" or "dm-date-open" or "dm-date-revise" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-oath-release" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
         var c = PrivateMessages.Conversation(data, person);
         if (MatchFailure.Locked(data) is { } failure) return failure;
+        if (kind is "dm-oath-confirm" or "dm-oath-defer" or "dm-oath-close" or "dm-oath-open" or "dm-oath-release")
+            return RelationshipPresentation.Decide(data, person, kind, command);
         if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary")
             return PrivateMessages.Manage(data, c, kind, command);
         switch (kind)
         {
+            case "dm-date-revise":
+                if (AiService.PrivateBusy(data, person) || c.Turns.Any(t => t.Status is "queued" or "sending")) return "请等待上一条请求停止后再发送。";
+                var revision = c.Turns.LastOrDefault();
+                if (revision == null || revision.Id != command.Entry || revision.Status != "failed" || revision.Scene is not { Ending: false } || revision.UserDeleted || revision.ReplyDeleted) return "这条约会消息已不可修订，请刷新场景。";
+                if (DateScenes.Validate(data, c, revision.Scene) is { } revisionError) return revisionError;
+                if (string.IsNullOrWhiteSpace(command.Text)) return "请填写消息。";
+                revision.User = command.Text.Trim(); revision.Status = "queued"; revision.Error = revision.Reply = revision.Reasoning = "";
+                if (command.PromptInsertions != null) revision.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
+                revision.Context = ""; revision.SceneLines.Clear(); c.MemoryRevision++;
+                return null;
+            case "dm-date-pause": case "dm-date-end":
+                return DateScenes.Leave(data, c, command.Offer, kind == "dm-date-end");
+            case "dm-date-open":
+                if (command.Scene == null) return "场景信息缺失。";
+                if (DateScenes.Validate(data, c, command.Scene) is { } sceneError) return sceneError;
+                if (c.Turns.Any(t => t.Scene?.OfferId == command.Scene.OfferId && t.Scene.Opening && !t.ReplyDeleted)) return "本次活动已有开场，请继续已有场景。";
+                if (CareerEngine.Person(data, person) is { } muted && SpireArbitration.Muted(muted)) return "该角色账号已封禁，普通私信已停止。";
+                command.Scene.Opening = true;
+                var opening = PrivateMessages.Enqueue(data, person, "（进入约会场景 · " + command.Scene.Title + "）");
+                opening.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
+                opening.Scene = Coop.CoopJson.Copy(command.Scene); c.DateSceneStates[command.Scene.OfferId] = "active"; DateDiaries.Begin(c, c.Offers.Single(o => o.Id == command.Scene.OfferId)); return null;
+            case "dm-gift-draft": return ConsumerGifts.AddDraft(data, person, command.Request ?? new());
+            case "dm-gift-cancel": c.GiftDrafts.RemoveAll(a => a.Id == command.Entry); return null;
             case "dm-arbitration-apology":
                 var ruling = CareerEngine.Person(data, person)!.Arbitrations.FirstOrDefault(r => r.Id == command.Entry && r.Upheld);
                 if (ruling == null || ruling.ApplicantId != (data.LocalHumanId.Length > 0 ? data.LocalHumanId : "player")) return "只有该案申请人可以要求公开道歉。";
@@ -49,28 +79,39 @@ public static class PrivateMessageCommands
                         : "申请尖塔仲裁，请审理双方完整往来及此前裁决的履行情况。"
                     : command.Text;
                 var application = PrivateMessages.Enqueue(data, person, reason, report);
+                application.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
                 application.RequestKind = "arbitration"; return null;
             case "dm-regenerate":
                 var latest = c.Turns.LastOrDefault();
                 if (latest == null || latest.Id != command.Entry || latest.Status != "complete" || latest.UserDeleted || latest.ReplyDeleted || latest.RequestKind == "arbitration")
                     return "只能重新生成最新一条完整回复。";
+                if (latest.Scene != null && DateScenes.Validate(data, c, latest.Scene) is { } regenerateSceneError) return regenerateSceneError;
                 if (PrivateInteractionHistory.Rewind(data, c, latest) is { } rewindError) return rewindError;
                 latest.PreviousReply = latest.Reply; latest.PreviousReasoning = latest.Reasoning;
                 latest.Regenerating = true; latest.Status = "queued"; latest.Reply = ""; latest.Reasoning = ""; latest.Error = "";
+                if (command.PromptInsertions != null) latest.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
                 // 后台旧总结失效；新回复从撤回后的关系、日程和资料重新生成。
                 c.MemoryRevision++; return null;
             case "dm-send":
+                if (command.Scene != null && DateScenes.Validate(data, c, command.Scene) is { } dateError) return dateError;
                 if (CareerEngine.Person(data, person) is { } banned && SpireArbitration.Muted(banned)) return "该角色账号已封禁；仍可查看记录、申请仲裁及要求履行致歉。";
                 if (command.Request?.Kind == "match" && PrivateAppointments.Error(data, person, command.Request) is { } requestError) return requestError;
                 if (PrivateMessages.PrepareAttachments(data, person, command.Attachments) is { } attachmentError) return attachmentError;
-                PrivateMessages.Enqueue(data, person, command.Text, command.Request, command.Attachments); return null;
+                var sent = PrivateMessages.Enqueue(data, person, command.Text, command.Request, command.Attachments);
+                sent.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
+                if (command.Scene != null) { sent.Scene = Coop.CoopJson.Copy(command.Scene); sent.Scene.Opening = false; }
+                ConsumerGifts.Deliver(data, person, sent);
+                c.GiftDrafts.RemoveAll(a => a.Kind is ConsumerGifts.WeddingKind or ConsumerInvitations.Kind && command.Attachments.Any(s => s.Id == a.Id));
+                return null;
             case "dm-select": PrivateMessages.Mailbox(data).LastPerson = person; return null;
             case "dm-read": c.SeenCount = c.Turns.Count(t => t.Status == "complete"); return null;
             case "dm-retry":
                 if (c.Turns.Any(t => t.Status is "queued" or "sending")) return "上一条回复尚未结束。";
                 var last = c.Turns.LastOrDefault();
                 if (last?.Status != "failed") return "没有需要重试的消息。";
+                if (last.Scene != null && DateScenes.Validate(data, c, last.Scene) is { } retrySceneError) return retrySceneError;
                 if (last.RequestKind == "arbitration" && last.UserDeleted) return "该仲裁申请已删除，请重新提交。";
+                if (command.PromptInsertions != null) last.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
                 last.Status = "queued"; last.Error = ""; last.Reply = ""; last.Reasoning = ""; return null;
             case "dm-stop":
                 foreach (var t in c.Turns.Where(t => t.Status is "queued" or "sending")) RestoreInterrupted(t, "已停止生成。");

@@ -21,12 +21,14 @@ public partial class CareerScreen
         box.AddChild(title); box.AddChild(body); AddMentionPicker(body, box);
         title.TextChanged += value => _newPostTitle = value; body.TextChanged += () => _newPostBody = body.Text;
         var actions = new HBoxContainer(); box.AddChild(actions);
+        CommunityReplyExpressions.Attach(body, box, actions, promptSettings: () => OpenPromptInsertions("community"));
+        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         actions.AddChild(Button("发布帖子", () =>
         {
             try
             {
                 if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;
-                var post = CommunityThreads.Publish(data, title.Text, body.Text);
+                var post = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community"));
                 _newPostTitle = ""; _newPostBody = "";
                 _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]);
             }
@@ -99,7 +101,7 @@ public partial class CareerScreen
         cb.AddChild(editor); AddMentionPicker(editor, cb); editor.TextChanged += () => _replyDrafts[draftKey] = editor.Text;
         editor.SetCaretLine(editor.GetLineCount() - 1); editor.SetCaretColumn(editor.GetLine(editor.GetCaretLine()).Length);
         var actions = new HBoxContainer(); cb.AddChild(actions);
-        CommunityReplyExpressions.Attach(editor, cb, actions);
+        CommunityReplyExpressions.Attach(editor, cb, actions, promptSettings: () => OpenPromptInsertions("community"));
         actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         var submit = Button("发布回复", () =>
         {
@@ -112,7 +114,7 @@ public partial class CareerScreen
                 var current = ViewData;
                 var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)
                     ?? throw new InvalidOperationException("帖子已不存在。");
-                var sent = CommunityThreads.Submit(current, thread, parentId, submitted);
+                var sent = CommunityThreads.Submit(current, thread, parentId, submitted, PromptInsertions.Capture("community"));
                 CompleteThreadReply(post.Id, parentId, submitted);
                 _ = AiService.ProcessInteractionsAsync([sent.Id]);
                 Notice("回复已发布。", false);

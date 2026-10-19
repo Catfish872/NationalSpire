@@ -8,7 +8,7 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 新的业务模块放入职责明确的章节，规模需要时拆为独立专题并从目录链接。已存在功能直接修改原章节，删除过时叙述。版本历史与当前规则分开，避免读者要拼接多次追加记录才能得到现状。
 
-发布与本地安装前同步核对 NationalSpire.json.version 和 Diagnostics.ModVersion，并读取最终 DLL 元数据中的 ModVersion 常量确认构建结果。安装后核对目标目录的清单版本及 DLL、清单 SHA-256。Diagnostics.ModVersion 同时用于 CareerScreen 品牌版本、Entry 加载记录、诊断导出和 CoopRuntime.Compatibility 发布版本标识；修改常量后重新编译整个生产项目，使这些调用者使用同一版本。上述检查在构建与安装阶段执行。
+发布与本地安装前同步核对 NationalSpire.json.version 和 Diagnostics.ModVersion，并读取最终 DLL 元数据中的 ModVersion 常量确认构建结果。安装后核对目标目录的清单版本及 DLL、清单 SHA-256。同时核对游戏日志中的重复mod ID裁决、实际Loading assembly DLL路径和已加载版本：本机创意工坊0.26.31曾覆盖本地0.26.30，游戏日志明确禁用较低版本的本地副本。本次本地测试版使用0.26.32，保留创意工坊订阅及其原文件；后续工坊更新仍需再次检查实际加载来源。复制哈希证明部署文件一致，加载日志确认游戏选用哪个副本。Diagnostics.ModVersion 同时用于 CareerScreen 品牌版本、Entry 加载记录、诊断导出和 CoopRuntime.Compatibility 发布版本标识；修改常量后重新编译整个生产项目，使这些调用者使用同一版本。上述检查在构建、安装及游戏启动阶段执行。
 
 ## 开始修改前
 

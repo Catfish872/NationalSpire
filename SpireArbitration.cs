@@ -75,7 +75,7 @@ public static class SpireArbitration
         copy.ContextStart = 0;
         var pending = copy.Turns.Single(t => t.Id == request.Id);
         pending.Context = PrivateMessagePrompts.Context(d, c, request);
-        var source = PrivateMessagePrompts.Compose(d, copy, pending);
+        var source = PrivateMessagePrompts.Compose(d, copy, pending, insertPrompts: false);
         var p = CareerEngine.Person(d, c.PersonId)!;
         var messages = new List<Dictionary<string, string>> { new() { ["role"] = "system", ["content"] = PrivateMessagePrompts.Section(d, "world") + "\n\n" + Prompt } };
         foreach (var message in source.Skip(1))
@@ -86,8 +86,8 @@ public static class SpireArbitration
                 $"被申请人是{PrivatePublicContext.IdentityText(p)}，申请人是玩家{CareerEngine.Name(d)}。");
             messages.Add(new() { ["role"] = "user", ["content"] = content });
         }
-        messages.Add(new() { ["role"] = "user", ["content"] = "本次仲裁申请\n" + request.User });
-        return messages;
+        messages.Add(new() { ["role"] = "user", ["content"] = "本次仲裁申请\n" + PromptInsertions.Around(request.User, request.PromptInsertions, 1, 2) });
+        return PromptInsertions.Apply(messages, request.PromptInsertions);
     }
 
     public static ArbitrationDecision Parse(string text)

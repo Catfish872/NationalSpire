@@ -41,6 +41,7 @@ public sealed class LifeActivity
     public int TrainingWeeksPaid { get; set; }
     public Dictionary<string, int> TrainingGained { get; set; } = [];
     public int TemporaryPoints { get; set; }
+    public Dictionary<string, double> AffectionGrowth { get; set; } = [];
     public int WeeklyGrowthPoints { get; set; }
     public int DefensePoints { get; set; }
     public int Round { get; set; }

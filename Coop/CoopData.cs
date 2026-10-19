@@ -140,7 +140,10 @@ public sealed class CoopSettlement
     public SettlementRecord? Rankings { get; set; }
 }
 public sealed record CoopReceipt(string Fingerprint, string Result, long Revision);
-public sealed record CoopCommand(string World, string Epoch, string Id, long Revision, string Kind, string Target = "", string Text = "", int Number = 0, string Parent = "");
+public sealed record CoopCommand(string World, string Epoch, string Id, long Revision, string Kind, string Target = "", string Text = "", int Number = 0, string Parent = "")
+{
+    public List<PromptInsertion>? PromptInsertions { get; init; }
+}
 public sealed record CoopOutcome(bool Accepted, string Message, bool Duplicate = false);
 
 public sealed class CoopReading

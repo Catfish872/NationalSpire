@@ -6,6 +6,7 @@ public sealed class TeamPreparation
     public string Team { get; set; } = "";
     public int Remaining { get; set; } = 3;
     public HashSet<int> CompletedRounds { get; set; } = [];
+    public Dictionary<string, double> AffectionGrowth { get; set; } = [];
 }
 
 public static class TeamPreparations
@@ -26,6 +27,7 @@ public static class TeamPreparations
         if (preparation?.Remaining > 0) return "本届赛事的集体备赛仍在生效。";
         d.TeamPreparations.RemoveAll(p => p.CompetitionId == c.Id && p.Team == team);
         d.TeamPreparations.Add(new() { CompetitionId = c.Id, Team = team,
+            AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id)),
             CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() });
         if (OwnedClubs.IsOwner(d)) OwnedClubs.Pay(d, c.Name + "集体备赛", -Cost);
         else { CareerMoney.Add(d, -Cost); CareerMoney.Record(d, c.Name + "集体备赛", -Cost); }
@@ -38,7 +40,7 @@ public static class TeamPreparations
         {
             var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == p.CompetitionId && !c.Finished);
             if (c?.Rosters.GetValueOrDefault(p.Team)?.Contains(id) != true) continue;
-            if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16;
+            if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16 * (d.AffectionLinkedClearChance ? p.AffectionGrowth.GetValueOrDefault(id, 1) : 1);
         }
         return 0;
     }

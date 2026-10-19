@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100">
+<defs><linearGradient id="metal" x2=".2" y2="1"><stop stop-color="#ecfff8"/><stop offset=".35" stop-color="#9fdcd0"/><stop offset=".65" stop-color="#528b8e"/><stop offset="1" stop-color="#b7e5dc"/></linearGradient><linearGradient id="edge" x2="1" y2="1"><stop stop-color="#fffce9"/><stop offset=".5" stop-color="#8ac5c2"/><stop offset="1" stop-color="#315d6c"/></linearGradient></defs>
+<path d="M18 4H82L96 18V82L82 96H18L4 82V18Z M19 11L11 19V81L19 89H81L89 81V19L81 11Z" fill="url(#metal)" fill-rule="evenodd" stroke="#315765" stroke-width="1.2"/>
+<path d="M19 6H81L94 19V81L81 94H19L6 81V19Z" fill="none" stroke="url(#edge)" stroke-width="1.6"/>
+<path d="M20 11H80L89 20V80L80 89H20L11 80V20Z" fill="none" stroke="#dcfff2" stroke-opacity=".65" stroke-width="1"/>
+<g fill="#71aaa9" stroke="#d7fff1" stroke-width="1"><path d="M4 28Q0 15 16 4Q8 17 4 28Z"/><path d="M7 28Q19 22 19 12Q8 17 7 28Z"/><path d="M96 28Q100 15 84 4Q92 17 96 28Z"/><path d="M93 28Q81 22 81 12Q92 17 93 28Z"/></g>
+<path d="M40 5L46 1L53 6L47 12Z" fill="#daf8ed" stroke="#548d94"/><path d="M48 6L54 1L61 5L55 12Z" fill="#8fcdcb" stroke="#e0fff6"/>
+<path d="M23 94H43M57 94H77" stroke="#e5fff0" stroke-width="1.5"/><path d="M46 94L50 90L54 94L50 98Z" fill="#b4ece2" stroke="#477a83"/>
+</svg>

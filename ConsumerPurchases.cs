@@ -6,9 +6,14 @@ public sealed class ConsumerPurchases
     private readonly Dictionary<string, int> _days;
     private readonly HashSet<string> _current = [];
     private readonly Dictionary<string, int> _promotions;
+    private readonly HashSet<string> _stock;
+    private readonly HashSet<string> _invitations;
     public ConsumerPurchases(CareerData data)
     {
         var state = data.Life.Consumer;
+        _invitations = ConsumerInvitationStock.Availability(data).Where(p => p.Key.Verb.Length == 0 && p.Value > 0).Select(p => p.Key.Good).ToHashSet();
+        var reserved = ConsumerGifts.ReservedByGood(data);
+        _stock = state.GiftStock.Where(p => p.Value - reserved.GetValueOrDefault(p.Key) > 0).Select(p => p.Key).ToHashSet();
         _days = new(state.BoughtDay);
         _promotions = state.Season == data.Season ? new(state.PromoUsed) : [];
         foreach (var item in state.Goods)
@@ -17,7 +22,7 @@ public sealed class ConsumerPurchases
             if (item.Season == data.Season) _current.Add(item.Id);
         }
     }
-    public bool Owned(Good good) => good.Collectible && _days.ContainsKey(good.Id);
+    public bool Owned(Good good) => good.Giftable ? _stock.Contains(good.Id) : _invitations.Contains(good.Id) || good.Collectible && _days.ContainsKey(good.Id);
     public int Day(Good good) => _days.GetValueOrDefault(good.Id);
     public bool ThisSeason(Good good) => _current.Contains(good.Id);
     public int Promotions(Good good) => _promotions.GetValueOrDefault(good.Id);

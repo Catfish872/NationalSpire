@@ -97,7 +97,7 @@ public static class CharacterDeletion
         }
         var box = PrivateMessages.Mailbox(d);
         if (box.LastPerson == id) box.LastPerson = "";
-        box.Conversations.Remove(id); box.Relations.Remove(id);
+        box.Conversations.Remove(id); box.Relations.Remove(id); box.NpcAvatarFrames.Remove(id);
         foreach (var a in d.Life.Activities)
         {
             a.TrainingTargets.Remove(id);

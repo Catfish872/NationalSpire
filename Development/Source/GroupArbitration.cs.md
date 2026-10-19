@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3935F46DABFE4A241A0E7233C921486F8F898CC7A51854A36B463C16C1F31A42`。来源：[源码](../../GroupArbitration.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0FB5A93D9A2A66F269C7D2EC0B3A99F6E46F6C6573B5D6E4795B3C2863F76036`。来源：[源码](../../GroupArbitration.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
 
 <a id="symbol-af12ffcc2740"></a>
@@ -21,25 +22,27 @@
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)
 
-**调用：** [`NationalSpire.GroupChat.Alias(string)`](GroupChatData.cs.md#symbol-917ad43aeded)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`NationalSpire.GroupChat.Alias(string)`](GroupChatData.cs.md#symbol-917ad43aeded)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?, bool)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.PromptInsertions.Apply(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?)`](PromptInsertions.cs.md#symbol-35674fc9b589)；[`NationalSpire.PromptInsertions.Around(string, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?, int, int)`](PromptInsertions.cs.md#symbol-3d0f6f332049)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatTimeline.Privacy`；`NationalSpire.GroupChat.Alias(string)`；`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`；`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.GroupTurn.ArbitrationTargets`；`NationalSpire.GroupTurn.Text`；`NationalSpire.SpireArbitration.Prompt`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatTimeline.Privacy`；`NationalSpire.GroupChat.Alias(string)`；`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?, bool)`；`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.GroupTurn.ArbitrationTargets`；`NationalSpire.GroupTurn.PromptInsertions`；`NationalSpire.GroupTurn.Text`；`NationalSpire.PromptInsertions.Apply(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?)`；`NationalSpire.PromptInsertions.Around(string, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?, int, int)`；`NationalSpire.SpireArbitration.Prompt`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.GroupChat.Alias(string)`；输入表达式：`g.Alias(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: g.Alias(id) + " "`
-- `NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`；输入表达式：`GroupChatPrompts.Compose(d, g, t)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GroupChatPrompts.Compose(d, g, t)`
+- `NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?, bool)`；输入表达式：`GroupChatPrompts.Compose(d, g, t, insertPrompts: false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GroupChatPrompts.Compose(d, g, t, insertPrompts: false)`
 - `NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`；输入表达式：`GroupChatPrompts.Section(d, "world")`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupChatPrompts.Section(d, "world") + "\n"`
 - `NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；输入表达式：`GroupChats.Name(d, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: g.Alias(id) + " " + GroupChats.Name(d, id)`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))`；返回值紧邻使用处：`BinaryExpressionSyntax: "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text }`
+- `NationalSpire.PromptInsertions.Apply(System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?)`；输入表达式：`PromptInsertions.Apply(source, t.PromptInsertions)`；返回值紧邻使用处：`ReturnStatementSyntax: return PromptInsertions.Apply(source, t.PromptInsertions);`
+- `NationalSpire.PromptInsertions.Around(string, System.Collections.Generic.IEnumerable<NationalSpire.PromptInsertion>?, int, int)`；输入表达式：`PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2)`；返回值紧邻使用处：`BinaryExpressionSyntax: "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2) }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2) }`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))`；返回值紧邻使用处：`ArgumentSyntax: t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))`
 - `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`source.Skip(1)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var message in source.Skip(1)) if (message["role"] == "assistant") { message["role"] = "user"; message["content"] = "本群已经发生的发言\n" + message["content"]; }`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text })`；返回值紧邻使用处：`ExpressionStatementSyntax: source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2) })`；返回值紧邻使用处：`ExpressionStatementSyntax: source.Add(new() { ["role"] = "user", ["content"] = "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2) });`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))`；返回值紧邻使用处：`BinaryExpressionSyntax: "本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `["content"]` = `"本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + t.Text`
+- `["content"]` = `"本次被申请人：" + string.Join("、", t.ArbitrationTargets.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) + "\n申请内容：" + PromptInsertions.Around(t.Text, t.PromptInsertions, 1, 2)`
 - `["role"]` = `"user"`
 - `message["content"]` = `"本群已经发生的发言\n" + message["content"]`
 - `message["role"]` = `"user"`

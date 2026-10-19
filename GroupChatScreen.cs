@@ -13,7 +13,7 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 6); sidebar.AddChild(row);
         foreach (string filter in new[] { "全部", "私信", "群聊" })
         {
-            var b = PrivateButton(filter, () => { _chatFilter = filter; _privateListSignature = ""; RefreshPrivateList(); }, 68); b.Name = "ChatFilter" + filter; row.AddChild(b);
+            var b = PrivateButton(filter, () => { _chatFilter = filter; _privateListSignature = ""; RefreshPrivateList(); }, 68); b.Name = "ChatFilter" + filter; b.SizeFlagsHorizontal = SizeFlags.ExpandFill; row.AddChild(b);
         }
         row.AddChild(PrivateButton("＋", () => GroupMemberPicker(null, people => GroupCommand("group-create", new() { People = people, Text = _groupCreateName })), 42));
     }
@@ -70,6 +70,8 @@ public partial class CareerScreen
         bool busy = GroupChats.Busy(g);
         string signature = g.Id + ":" + g.Revision + ":" + g.Turns.LastOrDefault()?.Status + ":" + _groupPages.Page + ":" + _groupPages.Size + ":" + g.SummaryStatus + g.SummaryError + ":" + ViewData.Day;
         signature += ":" + string.Join(",", g.Members.Select(id => GroupChats.CanSpeak(ViewData, id)));
+        signature += ":" + string.Join(",", g.Members.Where(id => !GroupChats.IsHuman(ViewData, id)).Select(id =>
+            PrivateMessages.Mailbox(ViewData).Relations.TryGetValue(id, out var relation) ? $"{relation.Favour}/{relation.Revision}/{RelationshipPresentation.Bond(relation)}" : "0"));
         _privateSend!.Text = busy ? "正在回复…" : "发送"; _privateSend.Disabled = busy;
         _privateStatus!.Text = _groupError.Length > 0 ? _groupError : g.SummaryError.Length > 0 ? g.SummaryError : g.SummaryStatus; _privateStatus.Visible = _privateStatus.Text.Length > 0;
         if (signature == _groupSignature) { UpdateGroupStream(g, live, thought.Text ?? ""); return; } _groupSignature = signature;
@@ -158,7 +160,17 @@ public partial class CareerScreen
         bool self = person == GroupChats.Human(ViewData);
         var row = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddThemeConstantOverride("separation", 12); _privateBody!.AddChild(row);
         if (self) row.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(40, 0) });
-        else row.AddChild(Avatar(ViewData, person, 38, open: () => OpenGroupPerson(person)));
+        else
+        {
+            var portrait = new VBoxContainer { Name = "GroupSpeaker_" + person, SizeFlagsVertical = SizeFlags.ShrinkBegin };
+            portrait.AddThemeConstantOverride("separation", 3); row.AddChild(portrait);
+            portrait.AddChild(Avatar(ViewData, person, 38, open: () => OpenGroupPerson(person)));
+            if (!GroupChats.IsHuman(ViewData, person))
+            {
+                var badge = new Control { Name = "GroupFavour_" + person, CustomMinimumSize = new(38, 42), TooltipText = "对你的好感：" + PrivateMessages.Relation(ViewData, person).Favour };
+                portrait.AddChild(badge); badge.AddChild(new AffectionBadge { Relation = PrivateMessages.Relation(ViewData, person), Compact = true });
+            }
+        }
         var contents = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 4 }; contents.AddThemeConstantOverride("separation", 5); row.AddChild(contents);
         contents.AddChild(PrivateLine(GroupChats.Name(ViewData, person), 14, self ? _gold : CareerVisuals.Teal));
         var bubble = new PanelContainer(); bubble.AddThemeStyleboxOverride("panel", CareerVisuals.Box(self ? "304b60" : "223649", self ? "597f98" : "405c72", 10, 14)); contents.AddChild(bubble);
@@ -206,6 +218,7 @@ public partial class CareerScreen
     }
     private void GroupCommand(string kind, GroupCommand command, Action? accepted = null)
     {
+        if (kind is "group-send" or "group-retry" or "group-regenerate" or "group-arbitrate") command.PromptInsertions = PromptInsertions.Capture("group");
         string id = _privateGroup;
         if (_multiplayer != null) { _multiplayer.Send(kind, id, JsonSerializer.Serialize(command), accepted: () => { accepted?.Invoke(); _multiplayer.Refresh(); _groupSignature = _privateListSignature = ""; if (kind == "group-create") SelectGroup(GroupChats.Visible(ViewData).Last().Id); }); return; }
         var d = ViewData;
@@ -260,6 +273,7 @@ public partial class CareerScreen
                     foreach (var old in row.GetChildren().OfType<CareerAvatar>()) { old.Hide(); old.QueueFree(); }
                     var avatar = Avatar(d, person.Id, 36, false); row.AddChild(avatar); row.MoveChild(avatar, 0);
                     check.SetMeta("person", person.Id); check.Text = person.PublicName + " · " + person.Role;
+                    PickerRing(row, d, person.Id);
                     check.TooltipText = check.Text;
                 }
                 check.SetPressedNoSignal(selected.Contains(person.Id));

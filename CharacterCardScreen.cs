@@ -9,6 +9,8 @@ public partial class CareerScreen
     private Action? _closeCharacterCard;
     private bool CanEditCharacter(CareerData data, string id) => id == "player" || !data.HumanIds.Contains(id) && _multiplayer?.Host != false;
     private void OpenCharacterCard(CareerData data, string? id, CareerPerson? imported = null)
+        => OpenCharacterCardCore(data, id, imported, null);
+    private void OpenCharacterCardCore(CareerData data, string? id, CareerPerson? imported, CharacterDesignPackage.Imported? package)
     {
         if (_characterCardOverlay != null) return;
         if (data.PendingMatchId != null) { Notice("请在比赛结束后编辑角色。", true); return; }
@@ -17,6 +19,7 @@ public partial class CareerScreen
         var draft = imported ?? (create ? CharacterCards.New(data) : CharacterCards.Read(data, id!));
         if (draft.Handle.Length == 0) draft.Handle = draft.PublicName;
         var edit = new CharacterCardEdit { Create = create, Target = draft.Id, Person = draft };
+        CharacterDesignPackage.Installation? installation = null;
         var previousFocus = GetViewport().GuiGetFocusOwner();
         IEnumerable<Control> Controls(Node node) => node.GetChildren().SelectMany(child =>
             (child is Control c ? new[] { c } : Array.Empty<Control>()).Concat(Controls(child)));
@@ -38,6 +41,8 @@ public partial class CareerScreen
             return AvatarAssets.Load(draft.Character, variation, identityId != "player" && variation % 3 != 0);
         }
         var portrait = new CareerAvatar { Name = "CardPortrait", CustomMinimumSize = new(88, 88), Art = AvatarImages.Read(draft.Avatar) ?? AutomaticPortrait() };
+        if (!create && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(draft.Id)))
+            portrait.Identity = AvatarHonors.ForPerson(data, draft.Id);
         header.AddChild(portrait);
         var heading = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; header.AddChild(heading);
         heading.AddChild(Text(create ? "创建角色" : "编辑角色", 30, _gold));
@@ -179,9 +184,27 @@ public partial class CareerScreen
         {
             var relation = PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(draft.Id) ?? new();
             var attitude = Section("对你的态度");
+            bool locked = AffectionRules.Strict(AffectionRules.Mode(data));
+            if (locked) { edit.Relation = null; attitude.AddChild(Text("当前攻略难度下，对你的态度由实际互动决定。", 16, _muted)); }
+            if (package != null) { relation = CoopJson.Copy(relation); relation.Favour = edit.Relation?.Favour ?? relation.Favour; relation.Relationship = edit.Relation?.Relationship ?? relation.Relationship; relation.Impression = edit.Relation?.Impression ?? relation.Impression; }
             Number(attitude, "好感", relation.Favour, -100, 100, v => (edit.Relation ??= new()).Favour = (int)v, "CardFavour");
+            var bond = Choice(attitude, "关系阶段", ["熟人", "恋人", "婚约"], relation.SelectedBond ?? (relation.OathConfirmed ? 2 : relation.Appearance.Lover ? 1 : 0),
+                v => (edit.Relation ??= new()).Bond = v, "CardBond");
+            for (int i = 1; i <= 2; i++)
+            {
+                bond.SetItemDisabled(i, i > RelationshipPresentation.Unlocked(relation));
+                bond.GetPopup().SetItemTooltip(i, i == 1 ? "达成恋人关系后解锁，可回退或恢复。" : "完成誓约后解锁，可回退或恢复。");
+            }
             Memo(attitude, "交往关系", relation.Relationship, v => (edit.Relation ??= new()).Relationship = v, "CardRelationship");
             Memo(attitude, "对你的印象", relation.Impression, v => (edit.Relation ??= new()).Impression = v, "CardImpression");
+            if (locked)
+                foreach (var control in Controls(attitude))
+                {
+                    if (control is SpinBox number) number.Editable = false;
+                    if (control is TextEdit memo) memo.Editable = false;
+                    if (control is LineEdit line) line.Editable = false;
+                    if (control is BaseButton button) button.Disabled = true;
+                }
         }
         var status = Text("保存后应用于当前生涯。", 16, _muted); status.Name = "CardStatus"; root.AddChild(status);
         void OnCardMessage(string message, bool failure)
@@ -191,9 +214,10 @@ public partial class CareerScreen
             var session = _multiplayer; session.Message += OnCardMessage;
             shade.TreeExiting += () => session.Message -= OnCardMessage;
         }
-        var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 16); root.AddChild(actions);
+        var actions = new HBoxContainer { Name = "CharacterActions" }; actions.AddThemeConstantOverride("separation", 16); root.AddChild(actions);
         void CloseEditor()
         {
+            installation?.Dispose(); installation = null;
             if (!IsInstanceValid(shade) || shade.IsQueuedForDeletion()) return;
             shade.QueueFree(); _characterCardOverlay = null; _closeCharacterCard = null;
             foreach (var entry in focus) if (IsInstanceValid(entry.Control) && !entry.Control.IsQueuedForDeletion()) entry.Control.FocusMode = entry.Mode;
@@ -202,17 +226,19 @@ public partial class CareerScreen
         _closeCharacterCard = CloseEditor;
         void ShowSavedCard()
         {
-            CloseEditor();
+            installation?.Commit(); installation = null; CloseEditor();
             if (_tab == "选手档案" && _personId == edit.Target)
             {
                 int position = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(position, _renderVersion);
             }
             else OpenPerson(edit.Target);
         }
-        actions.AddChild(Button(create ? "创建并保存" : "保存角色", () =>
+        var saveButton = Button(create ? "创建并保存" : "保存角色", () =>
         {
             foreach (var input in Controls(shade).OfType<SpinBox>()) input.Apply();
             GetViewport().GuiGetFocusOwner()?.ReleaseFocus();
+            try { if (package != null) installation ??= new(data, package); }
+            catch (Exception e) { status.Text = "导入立绘失败：" + e.Message; status.Modulate = new Color("f08080"); return; }
             if (_multiplayer != null)
             {
                 string payload;
@@ -225,19 +251,21 @@ public partial class CareerScreen
             }
             if (CharacterCards.Save(ViewData, edit) is { } error) { status.Text = error; status.Modulate = new Color("f08080"); return; }
             ShowSavedCard();
-        }, 210));
-        actions.AddChild(Button("取消", CloseEditor, 150));
-        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-        var importButton = Button("导入 PNG", () => OpenFilePicker("导入角色卡", [".png"], path =>
+        }, 150);
+        saveButton.Name = "CharacterSave";
+        saveButton.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));
+        saveButton.AddThemeColorOverride("font_color", new Color("172330"));
+        var importButton = Button("导入角色", () => OpenFilePicker("导入角色 PNG / ZIP", [".png", ".zip"], path =>
         {
             try
             {
-                var incoming = CharacterCardPng.ReadFile(ViewData, path, AvatarImages.FromCardPng);
+                var incomingPackage = Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? CharacterDesignPackage.Read(ViewData, path) : null;
+                var incoming = incomingPackage?.Person ?? CharacterCardPng.ReadFile(ViewData, path, AvatarImages.FromCardPng);
                 if (AvatarImages.Read(incoming.Avatar) == null) throw new InvalidDataException("角色卡头像无法解码。");
-                CloseEditor(); OpenCharacterCard(ViewData, null, incoming);
+                CloseEditor(); OpenCharacterCardCore(ViewData, null, incoming, incomingPackage);
             }
             catch (Exception e) { if (IsInstanceValid(status)) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("f08080"); } }
-        }), 155);
+        }), 150);
         importButton.Name = "ImportCharacterPng"; importButton.Disabled = !CanEditCharacter(data, ""); actions.AddChild(importButton);
         var exportButton = Button("导出 PNG", async () =>
         {
@@ -251,7 +279,25 @@ public partial class CareerScreen
                 OS.ShellShowInFileManager(path);
             }
             catch (Exception e) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("f08080"); }
-        }, 155);
+        }, 150);
         exportButton.Name = "ExportCharacterPng"; actions.AddChild(exportButton);
+        var exportDesign = Button("导出角色设计", async () =>
+        {
+            try
+            {
+                foreach (var input in Controls(shade).OfType<SpinBox>()) input.Apply();
+                var avatar = draft.Avatar.Source == "auto" ? await AvatarImages.FromCharacterCardArt(this, AutomaticPortrait()) : draft.Avatar;
+                if (!IsInstanceValid(status) || shade.IsQueuedForDeletion()) return;
+                // 待确认导入包再次导出时，先使用同一事务安装本地设计。
+                if (package != null) installation ??= new(data, package);
+                string path = CharacterDesignPackage.Write(data, draft, avatar, CharacterDesignPackage.ExportDirectory());
+                status.Text = "角色设计ZIP已导出，包含角色卡及全部套装立绘差分。"; status.Modulate = Colors.White; OS.ShellShowInFileManager(path);
+            }
+            catch (Exception e) { if (IsInstanceValid(status)) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("f08080"); } }
+        }, 150); exportDesign.Name = "ExportCharacterDesign"; actions.AddChild(exportDesign);
+        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        var cancelButton = Button("取消", CloseEditor, 150); cancelButton.Name = "CharacterCancel"; actions.AddChild(cancelButton);
+        actions.AddChild(saveButton);
+        shade.TreeExiting += () => { installation?.Dispose(); installation = null; };
     }
 }

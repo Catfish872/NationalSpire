@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EFB871EA797C5D1BEB66098F6766C958429C54720245F8DDBA2F4CC166F5CB25`。来源：[源码](../../TeamPreparation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`7863F46851EA1AB1BD786A462E9359E6B6F0A7BF916A710F9D62D647E17F961B`。来源：[源码](../../TeamPreparation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -86,11 +86,29 @@ public const int Cost = 1200;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-76db53438dbd"></a>
+
+## `NationalSpire.TeamPreparation.AffectionGrowth — public Dictionary<string, double> AffectionGrowth`
+
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-f2f72b62407b"></a>
 
 ## `NationalSpire.TeamPreparations.Available(NationalSpire.CareerData) — public static IEnumerable<WorldCompetition> Available(CareerData d)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData)`](TeamPreparationScreen.cs.md#symbol-57b7570c5a7d)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 
@@ -116,23 +134,24 @@ public const int Cost = 1200;
 
 ## `NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string) — public static string? Buy(CareerData d, string competitionId)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData)`](TeamPreparationScreen.cs.md#symbol-57b7570c5a7d)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** [`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`](LifeData.cs.md#symbol-bcb55555a432)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-7f4fa41ad4c0)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；[`NationalSpire.TeamPreparations.Available(NationalSpire.CareerData)`](TeamPreparation.cs.md#symbol-f2f72b62407b)；`NationalSpire.TeamPreparation.TeamPreparation()`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
+**调用：** [`NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`](AffectionCompetition.cs.md#symbol-34950d0c3f4b)；[`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`](LifeData.cs.md#symbol-bcb55555a432)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-7f4fa41ad4c0)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；`NationalSpire.TeamPreparation.TeamPreparation()`；[`NationalSpire.TeamPreparations.Available(NationalSpire.CareerData)`](TeamPreparation.cs.md#symbol-f2f72b62407b)；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.TeamPreparations`；`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`；`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；`NationalSpire.TeamPreparation.CompetitionId`；`NationalSpire.TeamPreparation.CompletedRounds`；`NationalSpire.TeamPreparation.Remaining`；`NationalSpire.TeamPreparation.Team`；`NationalSpire.TeamPreparations.Available(NationalSpire.CareerData)`；`NationalSpire.TeamPreparations.Cost`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.TeamPreparations`；`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`；`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；`NationalSpire.TeamPreparation.AffectionGrowth`；`NationalSpire.TeamPreparation.CompetitionId`；`NationalSpire.TeamPreparation.CompletedRounds`；`NationalSpire.TeamPreparation.Remaining`；`NationalSpire.TeamPreparation.Team`；`NationalSpire.TeamPreparations.Available(NationalSpire.CareerData)`；`NationalSpire.TeamPreparations.Cost`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AffectionCompetition.Growth(NationalSpire.CareerData, string)`；输入表达式：`AffectionCompetition.Growth(d, id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => AffectionCompetition.Growth(d, id)`
 - `NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`；输入表达式：`CareerMoney.Add(d, -Cost)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerMoney.Add(d, -Cost);`
 - `NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；输入表达式：`CareerMoney.Balance(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerMoney.Balance(d) < Cost`
 - `NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`；输入表达式：`CareerMoney.Record(d, c.Name + "集体备赛", -Cost)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerMoney.Record(d, c.Name + "集体备赛", -Cost);`
 - `NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；输入表达式：`MatchFailure.Locked(d)`；返回值紧邻使用处：`IsPatternExpressionSyntax: MatchFailure.Locked(d) is { } locked`
-- `NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.IsOwner(d)`；返回值紧邻使用处：`IfStatementSyntax: if (OwnedClubs.IsOwner(d)) OwnedClubs.Pay(d, c.Name + "集体备赛", -Cost);         else { CareerMoney.Add(d, -Cost); CareerMoney.Record(d, c.Name + "集体备赛", -Cost); }`
+- `NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.IsOwner(d)`；返回值紧邻使用处：`IfStatementSyntax: if (OwnedClubs.IsOwner(d)) OwnedClubs.Pay(d, c.Name + "集体备赛", -Cost); else { CareerMoney.Add(d, -Cost); CareerMoney.Record(d, c.Name + "集体备赛", -Cost); }`
 - `NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；输入表达式：`OwnedClubs.Pay(d, c.Name + "集体备赛", -Cost)`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubs.Pay(d, c.Name + "集体备赛", -Cost);`
-- `NationalSpire.TeamPreparation.TeamPreparation()`；输入表达式：`new() { CompetitionId = c.Id, Team = team,             CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() }`；返回值紧邻使用处：`ArgumentSyntax: new() { CompetitionId = c.Id, Team = team,             CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() }`
+- `NationalSpire.TeamPreparation.TeamPreparation()`；输入表达式：`new() { CompetitionId = c.Id, Team = team, AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id)), CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() }`；返回值紧邻使用处：`ArgumentSyntax: new() { CompetitionId = c.Id, Team = team, AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id)), CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() }`
 - `NationalSpire.TeamPreparations.Available(NationalSpire.CareerData)`；输入表达式：`Available(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Available(d).FirstOrDefault`
 - `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`g.All(f => f.Finished)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.All(f => f.Finished)`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Rosters.First(r => r.Value.Contains("player"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Rosters.First(r => r.Value.Contains("player")).Key`
@@ -140,15 +159,17 @@ public const int Cost = 1200;
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.TeamPreparations.FirstOrDefault(p => p.CompetitionId == c.Id && p.Team == team)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.TeamPreparations.FirstOrDefault(p => p.CompetitionId == c.Id && p.Team == team)`
 - `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id))`；返回值紧邻使用处：`AssignmentExpressionSyntax: AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id))`
 - `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet()`；返回值紧邻使用处：`AssignmentExpressionSyntax: CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.TeamPreparations.Add(new() { CompetitionId = c.Id, Team = team,             CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.TeamPreparations.Add(new() { CompetitionId = c.Id, Team = team,             CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() });`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.TeamPreparations.Add(new() { CompetitionId = c.Id, Team = team, AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id)), CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.TeamPreparations.Add(new() { CompetitionId = c.Id, Team = team, AffectionGrowth = c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id)), CompletedRounds = c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet() });`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`r.Value.Contains("player")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r => r.Value.Contains("player")`
 - `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`d.TeamPreparations.RemoveAll(p => p.CompetitionId == c.Id && p.Team == team)`；返回值紧邻使用处：`ExpressionStatementSyntax: d.TeamPreparations.RemoveAll(p => p.CompetitionId == c.Id && p.Team == team);`
 
 **赋值（含属性/字段和局部值）：**
 
+- `AffectionGrowth` = `c.Rosters[team].ToDictionary(id => id, id => AffectionCompetition.Growth(d, id))`
 - `CompetitionId` = `c.Id`
 - `CompletedRounds` = `c.Fixtures.Where(f => f.HomeTeam == team || f.AwayTeam == team).GroupBy(f => f.Round).Where(g => g.All(f => f.Finished)).Select(g => g.Key).ToHashSet()`
 - `Team` = `team`
@@ -157,20 +178,21 @@ public const int Cost = 1200;
 
 ## `NationalSpire.TeamPreparations.Bonus(NationalSpire.CareerData, string, int) — public static double Bonus(CareerData d, string id, int day)`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MatchRules.Evaluate(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?, bool)`](MatchRules.cs.md#symbol-92264d5fcfdd)
 
-**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.TeamPreparations`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.TeamPreparation.CompetitionId`；`NationalSpire.TeamPreparation.Remaining`；`NationalSpire.TeamPreparation.Team`；`NationalSpire.WorldCompetition.Finished`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeTeam`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.AffectionLinkedClearChance`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.TeamPreparations`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.TeamPreparation.AffectionGrowth`；`NationalSpire.TeamPreparation.CompetitionId`；`NationalSpire.TeamPreparation.Remaining`；`NationalSpire.TeamPreparation.Team`；`NationalSpire.WorldCompetition.Finished`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeTeam`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))`；返回值紧邻使用处：`IfStatementSyntax: if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16;`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))`；返回值紧邻使用处：`IfStatementSyntax: if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16 * (d.AffectionLinkedClearChance ? p.AffectionGrowth.GetValueOrDefault(id, 1) : 1);`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Competitions.FirstOrDefault(c => c.Id == p.CompetitionId && !c.Finished)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.Esports.Competitions.FirstOrDefault(c => c.Id == p.CompetitionId && !c.Finished)`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.TeamPreparations.Where(p => p.Remaining > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var p in d.TeamPreparations.Where(p => p.Remaining > 0))         {             var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == p.CompetitionId && !c.Finished);             if (c?.Rosters.GetValueOrDefault(p.Team)?.Contains(id) != true) continue;             if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16;         }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.TeamPreparations.Where(p => p.Remaining > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var p in d.TeamPreparations.Where(p => p.Remaining > 0)) { var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == p.CompetitionId && !c.Finished); if (c?.Rosters.GetValueOrDefault(p.Team)?.Contains(id) != true) continue; if (c.Fixtures.Any(f => !f.Finished && f.Day == day && (f.HomeTeam == p.Team || f.AwayTeam == p.Team))) return .16 * (d.AffectionLinkedClearChance ? p.AffectionGrowth.GetValueOrDefault(id, 1) : 1); }`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.Rosters.GetValueOrDefault(p.Team)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .Rosters.GetValueOrDefault(p.Team)?.Contains(id)`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`p.AffectionGrowth.GetValueOrDefault(id, 1)`；返回值紧邻使用处：`ConditionalExpressionSyntax: d.AffectionLinkedClearChance ? p.AffectionGrowth.GetValueOrDefault(id, 1) : 1`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`.Contains(id)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .Rosters.GetValueOrDefault(p.Team)?.Contains(id)`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`d.HumanIds.Contains(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: id == "player" || d.HumanIds.Contains(id)`
 
@@ -181,7 +203,7 @@ public const int Cost = 1200;
 
 ## `NationalSpire.TeamPreparations.Complete(NationalSpire.CareerData, NationalSpire.WorldCompetition, int) — public static void Complete(CareerData d, WorldCompetition c, int day)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,6 +7,11 @@ namespace NationalSpire;
 /// <summary>关系、记录与交互分别保存；网络回复结束前不执行任何交互。</summary>
 public static class PrivateMessages
 {
+    public static bool VisibleInCommunications(PrivateTurn turn)
+        => turn.Scene is not { Ending: false } && !(turn.UserDeleted && turn.ReplyDeleted);
+    public static int UnreadInCommunications(PrivateConversation conversation)
+        // SeenCount continues to count all completed turns, including older saved scene turns.
+        => conversation.Turns.Where(t => t.Status == "complete").Skip(Math.Max(0, conversation.SeenCount)).Count(VisibleInCommunications);
     public static object[] PublicMemory(CareerData data, CareerPerson person, IEnumerable<CommunityPost> posts, int day)
     {
         var humans = posts.SelectMany(p => p.RelatedPeople.Concat(p.Replies.Select(r => r.AuthorId)).Append(p.AuthorId))
@@ -73,12 +78,23 @@ public static class PrivateMessages
             foreach (var c in box.Conversations.Values) RemoveDeletedOffers(c);
             box.Version = 2;
         }
+        if (box.Version < 3)
+        {
+            foreach (var (id, c) in box.Conversations)
+            {
+                var ringTurn = c.Turns.LastOrDefault(t => t.Attachments.Any(a => a.Gift is { Sent: true } g && g.Items.Any(i => i.GoodId == "oath-ring")));
+                if (ringTurn?.Attachments.Any(a => a.Gift is { Sent: true, Settled: false } g && g.Items.Any(i => i.GoodId == "oath-ring")) == true
+                    && box.Relations.TryGetValue(id, out var relation))
+                { relation.RingReplyPending = true; relation.RefreshAppearance(); }
+            }
+            box.Version = 3;
+        }
         return box;
     }
     public static void RemoveDeletedOffers(PrivateConversation c)
     {
         // 已确认事项已进入赛程或合同，删除文字不能替代取消赛事、解约等操作。
-        int removed = c.Offers.RemoveAll(o => o.State is not ("已确认" or "已赴约") &&
+        int removed = c.Offers.RemoveAll(o => o.State is not ("已确认" or "已赴约" or "已结束") &&
             !c.Turns.Any(t => t.Id == o.TurnId && !t.UserDeleted && !t.ReplyDeleted));
         if (removed > 0) c.MemoryRevision++;
     }
@@ -91,21 +107,22 @@ public static class PrivateMessages
     public static int Favour(CareerData data, string id) => Mailbox(data).Relations.GetValueOrDefault(id)?.Favour ?? 0;
     public static void ChangeFavour(CareerData data, string id, int delta)
     {
-        var relation = Relation(data, id); relation.Favour = Math.Clamp(relation.Favour + delta, -100, 100); relation.Revision++;
-        data.Life.Relationships[id] = relation.Favour;
+        AffectionRules.Apply(data, id, delta > 0 ? delta * AffectionRules.GainRate(AffectionRules.Mode(data)) : delta);
     }
     public static void EditRelation(CareerData data, CareerLifeState life, string human, string id, CharacterRelationEdit edit)
     {
         var fields = new List<string>();
-        if (edit.Favour.HasValue) fields.Add(nameof(PrivateRelation.Favour));
+        if (edit.Favour.HasValue) fields.AddRange([nameof(PrivateRelation.Favour), nameof(PrivateRelation.GainRemainder), nameof(PrivateRelation.LossRemainder)]);
         if (edit.Relationship != null) fields.Add(nameof(PrivateRelation.Relationship));
         if (edit.Impression != null) fields.Add(nameof(PrivateRelation.Impression));
+        if (edit.Bond.HasValue) fields.AddRange([nameof(PrivateRelation.SelectedBond), nameof(PrivateRelation.HighestBond), nameof(PrivateRelation.OathConfirmed), nameof(PrivateRelation.OathDeferred), nameof(PrivateRelation.OathReleaseReason), nameof(PrivateRelation.OathReleaseTurn), nameof(PrivateRelation.Relationship)]);
         if (fields.Count == 0) return;
         var box = Mailbox(life);
         if (!box.Relations.TryGetValue(id, out var relation)) box.Relations[id] = relation = new();
-        if (edit.Favour is { } favour) { relation.Favour = favour; life.Relationships[id] = favour; }
+        if (edit.Favour is { } favour) { relation.Favour = favour; relation.GainRemainder = relation.LossRemainder = 0; life.Relationships[id] = favour; if (data.AffectionLinkedClearChance) CareerTraining.InvalidateForecast(data); }
         if (edit.Relationship != null) relation.Relationship = edit.Relationship;
         if (edit.Impression != null) relation.Impression = edit.Impression;
+        if (edit.Bond.HasValue) RelationshipPresentation.Edit(relation, edit.Bond.Value);
         relation.Revision++;
         PrivateInteractionHistory.PreserveRelation(box, data.Chats, human, id, fields);
     }
@@ -121,12 +138,12 @@ public static class PrivateMessages
         if (!box.Conversations.TryGetValue(id, out var c)) box.Conversations[id] = c = new() { PersonId = id };
         return c;
     }
-    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null)
+    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null, bool queueAfterCurrent = false)
     {
         if ((string.IsNullOrWhiteSpace(text) && attachments?.Count is not > 0 && request == null) || text.Length > 8000) throw new ArgumentException("请填写消息或添加附件，正文最多 8000 字。");
         var c = Conversation(data, id);
-        if (c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
-        var turn = new PrivateTurn { UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
+        if (!queueAfterCurrent && c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
+        var turn = new PrivateTurn { AffectionDifficulty = AffectionRules.Mode(data), UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
         c.Turns.Add(turn); PrivateInteractionIds.Ensure(c); return turn;
     }
     public static int Completed(PrivateConversation c) => c.Turns.Skip(c.ContextStart).Count(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted));
@@ -134,6 +151,7 @@ public static class PrivateMessages
     public static string? PrepareAttachments(CareerData data, string person, List<PrivateOffer> attachments)
     {
         if (attachments.Count > 8) return "每条消息最多附加 8 项。";
+        if (ConsumerGifts.PrepareSend(data, person, attachments) is { } giftError) return giftError;
         var quotes = new List<(PrivateOffer Target, PrivateOffer Prepared)>();
         foreach (var a in attachments)
         {
@@ -160,6 +178,15 @@ public static class PrivateMessages
                 if (CommunitySharing.Prepare(data, prepared) is { } error) return error;
                 quotes.Add((a, prepared));
             }
+            else if (a.Kind == ConsumerGifts.Kind) a.Detail = ConsumerGifts.Summary(a.Gift!);
+            else if (a.Kind == ConsumerInvitations.Kind)
+            {
+                if (ConsumerInvitations.Prepare(data, person, a) is { } invitationError) return invitationError;
+            }
+            else if (a.Kind == ConsumerGifts.WeddingKind)
+            {
+                return "这是旧版婚礼商谈附件。请移除此附件，再从商城邀约盛大婚礼，以购买并安排正式日程。";
+            }
             else if (a.Kind != "advice") return "附件类型无效。";
             if (a.Kind == "advice" && a.Detail.Length > 8000) return "附加文字过长。";
         }
@@ -172,6 +199,7 @@ public static class PrivateMessages
     }
     public static string AttachmentTitle(PrivateOffer a) => a.Kind switch
     {
+        ConsumerGifts.Kind => "赠送礼物", ConsumerGifts.WeddingKind => "婚礼邀约", ConsumerInvitations.Kind => "约会邀请",
         "match" => $"{a.Mode} · 第{a.Season}赛季第{a.Day}天 · A{a.Ascension}",
         "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子",
         CommunitySharing.Kind => a.Quote?.ReplyId.Length > 0 ? "分享评论" : "分享主楼",
@@ -239,21 +267,26 @@ public static class PrivateMessages
     public static void Apply(CareerData data, PrivateConversation c, PrivateTurn turn, IReadOnlyList<Dictionary<string, string>> directives, int? originalFavour = null)
     {
         if (turn.Applied) return;
+        ConsumerGifts.Settle(data, c, turn, directives);
+        bool gifted = ConsumerGifts.HasDelivered(turn);
         PrivateInteractionIds.Ensure(c);
         var before = PrivateInteractionHistory.Capture(data, c.PersonId);
-        int favourBefore = Favour(data, c.PersonId), preceding = favourBefore;
-        var favourTargets = directives.Select(FavourTarget).OfType<int>().ToList();
-        bool confirmFavour = false;
-        foreach (int target in favourTargets)
-        {
-            confirmFavour |= Math.Abs(target - preceding) > 10;
-            preceding = target;
-        }
-        confirmFavour |= Math.Abs(preceding - favourBefore) > 10;
+        int favourBefore = Favour(data, c.PersonId);
+        var favourTargets = gifted ? [] : directives.Select(FavourTarget).OfType<int>().ToList();
+        bool group = directives.Any(f => f.ContainsKey("GroupParticipants"));
+        double delta = favourTargets.Count == 0 ? 0 : AffectionRules.Dialogue(data, turn, favourTargets[^1] - (originalFavour ?? favourBefore), group);
+        bool confirmFavour = Math.Abs(delta) > 10;
         if (confirmFavour)
-            c.Offers.Add(new() { Kind = "favour", TurnId = turn.Id, FavourBefore = favourBefore, FavourTargets = favourTargets });
+            c.Offers.Add(new() { Kind = "favour", TurnId = turn.Id, FavourBefore = favourBefore, FavourTargets = favourTargets, FavourDelta = delta });
+        else AffectionRules.Apply(data, c.PersonId, delta);
         foreach (var fields in directives)
         {
+            if (fields.TryGetValue("Oath", out var oathAction))
+            {
+                if (oathAction == "解除" && !fields.ContainsKey("GroupParticipants"))
+                    RelationshipPresentation.RequestRelease(Relation(data, c.PersonId), turn, fields.GetValueOrDefault("Reason", ""));
+                continue;
+            }
             if (fields.ContainsKey("Activity")) SocialAppointments.Respond(data, c, turn, fields);
             if (fields.ContainsKey("Training")) ClubCoaching.AcceptTraining(data, c, turn, fields);
             if (fields.ContainsKey("Lineup")) CoachLineups.Respond(data, c, turn, fields);
@@ -273,7 +306,7 @@ public static class PrivateMessages
             else if (fields.TryGetValue("Mood", out var moodValue) && turn.Mood == null)
             {
                 string reason = fields.GetValueOrDefault("Reason", "").Trim();
-                if (turn.Status != "complete") continue;
+                if (turn.Status != "complete" || gifted) continue;
                 int mood = int.TryParse(moodValue, out int parsedMood) && parsedMood is >= -3 and <= 3
                     ? parsedMood : (int)Math.Round(CareerTraining.MoodLevel(CareerEngine.Person(data, c.PersonId)!, data.Day));
                 int days = int.TryParse(fields.GetValueOrDefault("Days"), out int parsedDays) && parsedDays is >= 7 and <= 21 ? parsedDays : 14;
@@ -298,8 +331,6 @@ public static class PrivateMessages
             else if (fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship"))
             {
                 var relation = Relation(data, c.PersonId);
-                if (!confirmFavour && FavourTarget(fields) is int target)
-                    ChangeFavour(data, c.PersonId, target - relation.Favour);
                 if (fields.TryGetValue("Attitude", out var impression)) relation.Impression = impression.Trim();
                 if (fields.TryGetValue("Relationship", out var label)) relation.Relationship = label.Trim();
                 relation.Revision++;
@@ -323,13 +354,20 @@ public static class PrivateMessages
         => fields.TryGetValue("Favour", out var proposed) && decimal.TryParse(proposed, NumberStyles.Float, CultureInfo.InvariantCulture, out var value)
             ? (int)Math.Clamp(decimal.Round(value, 0, MidpointRounding.AwayFromZero), -100, 100) : null;
 
+    public static double PendingFavour(CareerData data, PrivateConversation c, PrivateOffer offer)
+        => offer.FavourDelta ?? (offer.FavourTargets.Count == 0 ? 0 : AffectionRules.Dialogue(data,
+            c.Turns.FirstOrDefault(t => t.Id == offer.TurnId) ?? new(), offer.FavourTargets[^1] - offer.FavourBefore, offer.GroupId.Length > 0));
+
     public static void ConfirmFavour(CareerData data, PrivateConversation c, PrivateOffer offer, bool apply)
     {
         if (offer.State != "待确认") return;
         var before = PrivateInteractionHistory.Capture(data, c.PersonId);
+        double delta = PendingFavour(data, c, offer); offer.FavourDelta = delta;
         offer.FavourBefore = Favour(data, c.PersonId);
-        if (apply)
-            foreach (int target in offer.FavourTargets) ChangeFavour(data, c.PersonId, target - Favour(data, c.PersonId));
+        if (apply && offer.FavourTargets.Count > 0)
+        {
+            AffectionRules.Apply(data, c.PersonId, delta);
+        }
         offer.State = apply ? "已确认" : "已取消";
         if (c.Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
             PrivateInteractionHistory.Record(data, c.PersonId, turn, before);
@@ -347,8 +385,9 @@ public sealed class PrivateStreamParser
     private int _depth;
     public string Text => _visible.ToString();
     public List<Dictionary<string, string>> Directives { get; } = [];
+    public List<(int Offset, Dictionary<string, string> Fields)> SceneCues { get; } = [];
     public string Error { get; private set; } = "";
-    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup)\s*[:：]", RegexOptions.IgnoreCase);
+    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Favour|Attitude|Relationship|Oath|Gift|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup|DateDiary|Scene)\s*[:：]", RegexOptions.IgnoreCase);
     public void Feed(string text)
     {
         foreach (char ch in text)
@@ -366,7 +405,7 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day"]
+            string[] allowed = fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background"] : fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("Gift") ? ["Gift", "Preference", "Reason"] : fields.ContainsKey("Oath") ? ["Oath", "Reason"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day"]
                 : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]
@@ -374,7 +413,11 @@ public sealed class PrivateStreamParser
                 : fields.ContainsKey("Mood") ? ["Mood", "Days", "Evidence", "Reason"]
                 : fields.ContainsKey("Match") ? ["Match", "Season", "Day", "Ascension", "Mode"]
                 : fields.ContainsKey("Contract") ? ["Contract", "Signing", "Wage", "WinBonus", "Weeks", "Role"] : [];
-            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase) || _extraFields.Contains(k, StringComparer.OrdinalIgnoreCase))) Directives.Add(fields);
+            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase) || _extraFields.Contains(k, StringComparer.OrdinalIgnoreCase)))
+            {
+                if (fields.ContainsKey("Scene")) SceneCues.Add((_visible.Length, fields));
+                else Directives.Add(fields);
+            }
             else Error = "交互格式不完整，未执行。";
         }
     }

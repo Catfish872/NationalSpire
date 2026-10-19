@@ -83,7 +83,9 @@ public static partial class CoopRules
     }
     public static void RefreshPeople(CoopWorld w)
     {
+        var oldFavours = w.World.HumanFavours;
         w.World.HumanFavours = w.Members.ToDictionary(m => m.PersonId, m => PrivateMessages.Mailbox(m.Life).Relations.ToDictionary(p => p.Key, p => p.Value.Favour));
+        if (w.World.AffectionLinkedClearChance && (oldFavours.Count != w.World.HumanFavours.Count || w.World.HumanFavours.Any(pair => !oldFavours.TryGetValue(pair.Key, out var before) || before.Count != pair.Value.Count || pair.Value.Any(p => before.GetValueOrDefault(p.Key) != p.Value)))) CareerTraining.InvalidateForecast(w.World);
         AvatarHonors.Capture(w.World);
         w.World.HumanIds = w.Members.Select(m => m.PersonId).ToList();
         w.World.HumanFrames = w.Members.ToDictionary(m => m.PersonId, m => m.AvatarFrame);
@@ -128,8 +130,8 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "romance-difficulty" or "affection-clear-chance" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "romance-difficulty" or "affection-clear-chance" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("owned-", StringComparison.Ordinal))
@@ -154,9 +156,22 @@ public static partial class CoopRules
                 case "consumer-use":
                     var consumerView = View(w, member);
                     var purchase = System.Text.Json.JsonSerializer.Deserialize<ConsumerOrder>(command.Text)!;
-                    error = command.Kind == "consumer-buy" ? ConsumerEngine.Buy(consumerView, command.Target, purchase.Guests)
+                    error = command.Kind == "consumer-buy" ? ConsumerEngine.Buy(consumerView, command.Target, purchase.Guests, purchase.Quantity)
                         : ConsumerEngine.Use(consumerView, command.Target, purchase.Verb, purchase.Guests);
                     if (error == null) Capture(w, member, consumerView);
+                    break;
+                case "consumer-gift":
+                case "consumer-wedding":
+                    var giftView = View(w, member);
+                    error = command.Kind == "consumer-gift" ? ConsumerGifts.Purchase(giftView, System.Text.Json.JsonSerializer.Deserialize<GiftPurchase>(command.Text)!)
+                        : ConsumerGifts.Wedding(giftView, command.Target);
+                    if (error == null) Capture(w, member, giftView);
+                    break;
+                case "consumer-invite":
+                    var invitationView = View(w, member);
+                    var invitation = System.Text.Json.JsonSerializer.Deserialize<ConsumerOrder>(command.Text)!;
+                    error = ConsumerInvitations.Create(invitationView, command.Target, invitation.Verb, invitation.Guests, invitation.BuyInvitation);
+                    if (error == null) Capture(w, member, invitationView);
                     break;
                 case "character-card":
                     if (w.Proposal != null) { error = "请先完成或取消当前团队提议。"; break; }
@@ -181,7 +196,7 @@ public static partial class CoopRules
                     error = CharacterDeletion.Delete(w.World, command.Target);
                     if (error == null) foreach (var m in w.Members)
                     {
-                        m.Life.Mailbox.Conversations.Remove(command.Target); m.Life.Mailbox.Relations.Remove(command.Target);
+                        m.Life.Mailbox.Conversations.Remove(command.Target); m.Life.Mailbox.Relations.Remove(command.Target); m.Life.Mailbox.NpcAvatarFrames.Remove(command.Target);
                         if (m.Life.Mailbox.LastPerson == command.Target) m.Life.Mailbox.LastPerson = "";
                         foreach (var a in m.Life.Activities) { a.TrainingTargets.Remove(command.Target); if (a.PersonId == command.Target && a.Status is "可安排" or "进行中") a.Status = "已取消"; }
                     }
@@ -226,6 +241,16 @@ public static partial class CoopRules
                     if (sender != w.Owner) error = "局内 AI 水平由房主设置。";
                     else if (w.Proposal != null) error = "请先完成或取消当前团队提议。";
                     else MatchRules.SetRivalLevel(w.World, command.Number);
+                    break;
+                case "romance-difficulty":
+                    if (sender != w.Owner) error = "攻略难度由房主设置，全队共用。";
+                    else if (!Enum.IsDefined((RomanceDifficulty)command.Number)) error = "请选择有效的攻略难度。";
+                    else w.World.RomanceDifficulty = (RomanceDifficulty)command.Number;
+                    break;
+                case "affection-clear-chance":
+                    if (sender != w.Owner) error = "通关率联动由房主设置，全队共用。";
+                    else if (command.Number is not (0 or 1)) error = "通关率联动选项无效。";
+                    else AffectionCompetition.Set(w.World, command.Number == 1);
                     break;
                 case "ascension":
                     var selectedMatch = w.World.Matches.FirstOrDefault(m => m.Id == command.Target && m.Status == "待赛");
@@ -275,7 +300,7 @@ public static partial class CoopRules
                 case "post":
                     if (string.IsNullOrWhiteSpace(command.Target) || string.IsNullOrWhiteSpace(command.Text)) { error = "请填写标题和正文。"; break; }
                     var post = new CommunityPost { AuthorId = member.PersonId, Title = command.Target.Trim(), Body = command.Text.Trim(), Day = w.World.Day,
-                        Category = "玩家讨论", RelatedPeople = [member.PersonId], NeedsReaction = true };
+                        Category = "玩家讨论", RelatedPeople = [member.PersonId], NeedsReaction = true, PromptInsertions = PromptInsertions.Copy(command.PromptInsertions) };
                     post.MentionedPeople = CommunityMentions.Resolve(w.World, post.Title + "\n" + post.Body);
                     w.World.Posts.Insert(0, post); CommunityThreads.Remember(w.World, post); CommunityThreads.TrimFeed(w.World);
                     break;
@@ -284,7 +309,7 @@ public static partial class CoopRules
                     if (target == null || string.IsNullOrWhiteSpace(command.Text)) { error = "帖子不存在或回复为空。"; break; }
                     // 回复目标由完整 ID 指定，客户端不能冒充其他作者。
                     if (command.Parent.Length > 0 && !target.Replies.Any(r => r.Id == command.Parent)) { error = "回复的楼层已不存在。"; break; }
-                    target.Replies.Add(new CommunityReply { AuthorId = member.PersonId, ParentId = command.Parent, Body = command.Text.Trim(), Day = w.World.Day, NeedsReaction = true, MentionedPeople = CommunityMentions.Resolve(w.World, command.Text) });
+                    target.Replies.Add(new CommunityReply { AuthorId = member.PersonId, ParentId = command.Parent, Body = command.Text.Trim(), Day = w.World.Day, NeedsReaction = true, MentionedPeople = CommunityMentions.Resolve(w.World, command.Text), PromptInsertions = PromptInsertions.Copy(command.PromptInsertions) });
                     target.AiPending = false; target.Revision++; CommunityThreads.Remember(w.World, target); break;
                 case "community-vote":
                     CommunityVotes.SetVote(w.World, command.Target, command.Parent, command.Number, member.PersonId);

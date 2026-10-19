@@ -77,6 +77,9 @@ public static class CareerEngine
         return data;
     }
     public static CareerMatch? NextMatch(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).OrderBy(m => m.Day).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
+    public static int? NextEventDay(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).Select(m => m.Day)
+        .Concat(SocialAppointments.All(d).Where(x => x.Offer.State == "已确认").Select(x => PrivateAppointments.Date(d, x.Offer)))
+        .Where(day => day >= d.Day).Select(day => (int?)day).Min();
     public static CareerMatch? NextAvailable(CareerData d) => d.Matches.FirstOrDefault(m => m.Status == "待赛" && m.Day >= d.Day && EsportsWorld.EntryReason(d, m) == null);
     public static CareerPerson? Person(CareerData d, string id) => d.People.FirstOrDefault(p => p.Id == id) ?? d.DeletedPeople.GetValueOrDefault(id);
     public static string Name(CareerData d) => string.IsNullOrWhiteSpace(d.PlayerAlias) ? PlayerName : d.PlayerAlias;

@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
@@ -38,7 +38,14 @@ public sealed partial class CoopCoordinator
     }
     private void StartPrivate(ulong sender, CoopCommand command)
     {
-        if (!Host || World == null || command.Kind is not ("dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
+        if (Host && World != null && command.Kind == "consumer-gift")
+        {
+            var purchase = JsonSerializer.Deserialize<GiftPurchase>(command.Text);
+            if (purchase is { Direct: true }) foreach (var target in purchase.Recipients)
+                StartPrivate(sender, command with { Kind = "dm-send", Target = target.Person });
+            return;
+        }
+        if (!Host || World == null || command.Kind is not ("dm-send" or "dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary" or "dm-oath-release")) return;
         string worldId = World.Id, epoch = World.Epoch;
         CareerData? Current()
         {
@@ -53,7 +60,15 @@ public sealed partial class CoopCoordinator
             var member = copy.Members.Single(m => m.SteamId == sender);
             copy.World.Chats.Order = Math.Max(copy.World.Chats.Order, data.Chats.Order);
             member.Life.Mailbox = data.Life.Mailbox; member.Life.Relationships = data.Life.Relationships;
+            member.Life.Consumer = data.Life.Consumer; member.Credits = data.Credits; member.Life.CreditFraction = data.Life.CreditFraction;
+            member.Life.Ledger = data.Life.Ledger; member.Life.Events = data.Life.Events;
+            foreach (var fact in data.CommunityMemories.Where(m => m.Id.StartsWith("life-fact:" + member.PersonId + "/party-", StringComparison.Ordinal)))
+            {
+                int index = copy.World.CommunityMemories.FindIndex(m => m.Id == fact.Id);
+                if (index >= 0) copy.World.CommunityMemories[index] = fact; else copy.World.CommunityMemories.Add(fact);
+            }
             CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);
+            ConsumerGifts.MergeMood(copy.World, member.Life.Mailbox);
             PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);
             SpireArbitration.Merge(copy.World, member.Life.Mailbox);
             CoachLineups.Merge(copy.World, data);

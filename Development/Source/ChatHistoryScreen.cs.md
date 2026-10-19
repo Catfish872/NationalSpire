@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`45AF3195FF96BBF0EE84C378B59740C6D6A898CEA5D9A6D56675A5F4238E3941`。来源：[源码](../../ChatHistoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DF22B02A211E58802187ED0FD678D01A0725EC0DD75CE2D1590F7C3579A5F06A`。来源：[源码](../../ChatHistoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -169,7 +169,7 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.SaveChatPreferences()`](ChatHistoryScreen.cs.md#symbol-614208ed0b0d)；[`ToggleDetails()`](PrivateMemoryScreen.cs.md#symbol-4afa2cfd52a5)
+**调用者：** [`NationalSpire.CareerScreen.SaveChatPreferences()`](ChatHistoryScreen.cs.md#symbol-614208ed0b0d)；[`NationalSpire.CareerScreen.SaveContactPreferences()`](ChatContactScreen.cs.md#symbol-ecb1bd4e6ac2)；[`ToggleDetails()`](PrivateMemoryScreen.cs.md#symbol-4afa2cfd52a5)
 
 **调用：** `Godot.ConfigFile.Save(string)`；`Godot.GD.PushWarning(string)`
 
@@ -389,12 +389,12 @@ private HBoxContainer? _chatPagination, _chatPageOptions;
 
 **调用：** [`NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`](ChatHistoryPage.cs.md#symbol-b8e49a1a30f0)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._chatNewMessages`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._privateGroup`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.GroupTurnVisible(NationalSpire.GroupTurn)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`；`NationalSpire.ChatHistoryPage<T>.Count`；`NationalSpire.GroupChat.Revision`；`NationalSpire.GroupChat.Turns`；`NationalSpire.PrivateConversation.MemoryRevision`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.UserDeleted`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.GroupTurnVisible(NationalSpire.GroupTurn)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._chatNewMessages`；`NationalSpire.CareerScreen._groupPages`；`NationalSpire.CareerScreen._privateGroup`；`NationalSpire.CareerScreen._privatePages`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`；`NationalSpire.ChatHistoryPage<T>.Count`；`NationalSpire.GroupChat.Revision`；`NationalSpire.GroupChat.Turns`；`NationalSpire.PrivateConversation.MemoryRevision`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.VisibleInCommunications(NationalSpire.PrivateTurn)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`；输入表达式：`_groupPages.Bind(group.Turns, group.Revision, GroupTurnVisible, follow)`；返回值紧邻使用处：`ExpressionStatementSyntax: _groupPages.Bind(group.Turns, group.Revision, GroupTurnVisible, follow);`
-- `NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`；输入表达式：`_privatePages.Bind(conversation.Turns, conversation.MemoryRevision, t => !(t.UserDeleted && t.ReplyDeleted), follow)`；返回值紧邻使用处：`ExpressionStatementSyntax: _privatePages.Bind(conversation.Turns, conversation.MemoryRevision, t => !(t.UserDeleted && t.ReplyDeleted), follow);`
+- `NationalSpire.ChatHistoryPage<T>.Bind(System.Collections.Generic.IReadOnlyList<T>, long, System.Func<T, bool>, bool)`；输入表达式：`_privatePages.Bind(conversation.Turns, conversation.MemoryRevision, PrivateMessages.VisibleInCommunications, follow)`；返回值紧邻使用处：`ExpressionStatementSyntax: _privatePages.Bind(conversation.Turns, conversation.MemoryRevision, PrivateMessages.VisibleInCommunications, follow);`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(ViewData, _privatePerson)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Conversation(ViewData, _privatePerson)`
 
 **赋值（含属性/字段和局部值）：**

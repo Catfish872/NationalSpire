@@ -438,7 +438,7 @@ public static class OwnedClubs
     public static double PracticeBonus(CareerData d, string person, int asc, int? day = null)
     {
         if (!IsOwner(d) || d.Esports.OwnedClub is not { } o || !o.Starters.Contains(person) || Humans(d).Contains(person) || o.Debt > 0) return 0;
-        return (GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)) * ClubCoaching.Factor(d);
+        return (GroupPractice(d, o.Reserves, asc, day) + GroupPractice(d, o.Youth, asc, day)) * ClubCoaching.Factor(d) * AffectionCompetition.Growth(d, person);
     }
     public static double PracticeContribution(CareerData d, CareerPerson p, int asc, int? day = null)
     {
@@ -640,6 +640,7 @@ public static class ClubPrograms
         var t = Effective(a);
         a.TrainingKind = "club"; a.TrainingTargets = Targets(d, a.Title);
         a.TemporaryPoints = t.Temporary; a.DefensePoints = t.Defense; a.WeeklyGrowthPoints = t.Weekly;
+        AffectionCompetition.Snapshot(d, a);
         a.TrainingStart = a.StartedDay + 1; a.TrainingEnd = a.StartedDay + 28; a.FinishDay = a.TrainingEnd + 1;
     }
     public static void Advance(CareerData d, LifeActivity a)

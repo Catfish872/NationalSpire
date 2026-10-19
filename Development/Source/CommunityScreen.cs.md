@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9230C3F6C056F210E0D7CDA32A826F2BDE2334D48ECC90F5FDB972CB15F02A80`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`77EF7920B535C8F0270CB421C39E67FCA105A1FE56D2CB8453A113DAD5C84A65`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -29,46 +29,42 @@ private double _elapsed;
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 
-**调用：** [`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerScreen.AddHeading(string, string)`](CareerScreen.cs.md#symbol-40a63c9955a7)；[`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string)`](CommunityThreads.cs.md#symbol-d9b68d9a8f52)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerScreen.AddHeading(string, string)`](CareerScreen.cs.md#symbol-40a63c9955a7)；[`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPromptInsertions(string)`](PromptInsertionScreen.cs.md#symbol-8c121d4185f5)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`](CommunityThreads.cs.md#symbol-d9b68d9a8f52)；[`NationalSpire.PromptInsertions.Capture(string)`](PromptInsertions.cs.md#symbol-333725b6545b)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._newPostBody`；`NationalSpire.CareerScreen._newPostTitle`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen.AddHeading(string, string)`；`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.Back()`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string)`；`NationalSpire.EsportsCareer.Country`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.AddHeading(string, string)`；`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.Back()`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenPromptInsertions(string)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._newPostBody`；`NationalSpire.CareerScreen._newPostTitle`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`；`NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.PromptInsertions.Capture(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.Control.Control()`；输入表达式：`new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`ArgumentSyntax: new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "CommunityPostTitle", Text = _newPostTitle, PlaceholderText = "帖子标题", SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "CommunityPostTitle", Text = _newPostTitle, PlaceholderText = "帖子标题", SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(card);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Button("发布帖子", () =>          {              try              {                  if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;                  var post = CommunityThreads.Publish(data, title.Text, body.Text);                  _newPostTitle = ""; _newPostBody = "";                  _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]);              }              catch (Exception e) { Notice(e.Message, true); }          }, 160))`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Button("发布帖子", () =>          {              try              {                  if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;                  var post = CommunityThreads.Publish(data, title.Text, body.Text);                  _newPostTitle = ""; _newPostBody = "";                  _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]);              }              catch (Exception e) { Notice(e.Message, true); }          }, 160));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Button("发布帖子", () => { try { if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return; var post = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community")); _newPostTitle = ""; _newPostBody = ""; _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]); } catch (Exception e) { Notice(e.Message, true); } }, 160))`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Button("发布帖子", () => { try { if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return; var post = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community")); _newPostTitle = ""; _newPostBody = ""; _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]); } catch (Exception e) { Notice(e.Message, true); } }, 160));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Button("返回社区", Back, 160))`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Button("返回社区", Back, 160));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill })`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(actions);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(body)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(body);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(title)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(title);`
-- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "CommunityPostBody", Text = _newPostBody, PlaceholderText = "分享想法，或向社区发起讨论……",              CustomMinimumSize = new Vector2(0, 250), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextEdit { Name = "CommunityPostBody", Text = _newPostBody, PlaceholderText = "分享想法，或向社区发起讨论……",              CustomMinimumSize = new Vector2(0, 250), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "CommunityPostBody", Text = _newPostBody, PlaceholderText = "分享想法，或向社区发起讨论……", CustomMinimumSize = new Vector2(0, 250), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextEdit { Name = "CommunityPostBody", Text = _newPostBody, PlaceholderText = "分享想法，或向社区发起讨论……", CustomMinimumSize = new Vector2(0, 250), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, 250)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(0, 250)`
 - `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；输入表达式：`AiService.ProcessInteractionsAsync([post.Id])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.ProcessInteractionsAsync([post.Id])`
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(data)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.Name(data)}`
 - `NationalSpire.CareerScreen.AddHeading(string, string)`；输入表达式：`AddHeading("发布帖子", $"{CareerEngine.Name(data)} · {data.Esports.Country}社区")`；返回值紧邻使用处：`ExpressionStatementSyntax: AddHeading("发布帖子", $"{CareerEngine.Name(data)} · {data.Esports.Country}社区");`
 - `NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；输入表达式：`AddMentionPicker(body, box)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddMentionPicker(body, box);`
-- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("发布帖子", () =>          {              try              {                  if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;                  var post = CommunityThreads.Publish(data, title.Text, body.Text);                  _newPostTitle = ""; _newPostBody = "";                  _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]);              }              catch (Exception e) { Notice(e.Message, true); }          }, 160)`；返回值紧邻使用处：`ArgumentSyntax: Button("发布帖子", () =>          {              try              {                  if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;                  var post = CommunityThreads.Publish(data, title.Text, body.Text);                  _newPostTitle = ""; _newPostBody = "";                  _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]);              }              catch (Exception e) { Notice(e.Message, true); }          }, 160)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("发布帖子", () => { try { if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return; var post = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community")); _newPostTitle = ""; _newPostBody = ""; _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]); } catch (Exception e) { Notice(e.Message, true); } }, 160)`；返回值紧邻使用处：`ArgumentSyntax: Button("发布帖子", () => { try { if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return; var post = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community")); _newPostTitle = ""; _newPostBody = ""; _postId = post.Id; Render(); _ = AiService.ProcessInteractionsAsync([post.Id]); } catch (Exception e) { Notice(e.Message, true); } }, 160)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("返回社区", Back, 160)`；返回值紧邻使用处：`ArgumentSyntax: Button("返回社区", Back, 160)`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(card)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(card)`
 - `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("post", title.Text, body.Text, accepted: () => { _newPostTitle = _newPostBody = ""; _postId = null; Render(); })) return;`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(e.Message, true);`
+- `NationalSpire.CareerScreen.OpenPromptInsertions(string)`；输入表达式：`OpenPromptInsertions("community")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => OpenPromptInsertions("community")`
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
-- `NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string)`；输入表达式：`CommunityThreads.Publish(data, title.Text, body.Text)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.Publish(data, title.Text, body.Text)`
+- `NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`；输入表达式：`CommunityReplyExpressions.Attach(body, box, actions, promptSettings: () => OpenPromptInsertions("community"))`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityReplyExpressions.Attach(body, box, actions, promptSettings: () => OpenPromptInsertions("community"));`
+- `NationalSpire.CommunityThreads.Publish(NationalSpire.CareerData, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`；输入表达式：`CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.Publish(data, title.Text, body.Text, PromptInsertions.Capture("community"))`
+- `NationalSpire.PromptInsertions.Capture(string)`；输入表达式：`PromptInsertions.Capture("community")`；返回值紧邻使用处：`ArgumentSyntax: PromptInsertions.Capture("community")`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_` = `AiService.ProcessInteractionsAsync([post.Id])`
-- `_newPostBody` = `""`
-- `_newPostBody` = `body.Text`
-- `_newPostTitle` = `_newPostBody = ""`
-- `_newPostTitle` = `""`
-- `_newPostTitle` = `value`
-- `_postId` = `null`
-- `_postId` = `post.Id`
-- `body.TextChanged` += `() => _newPostBody = body.Text`
 - `CustomMinimumSize` = `new Vector2(0, 250)`
 - `Name` = `"CommunityPostBody"`
 - `Name` = `"CommunityPostTitle"`
@@ -77,14 +73,23 @@ private double _elapsed;
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Text` = `_newPostBody`
 - `Text` = `_newPostTitle`
-- `title.TextChanged` += `value => _newPostTitle = value`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
+- `_` = `AiService.ProcessInteractionsAsync([post.Id])`
+- `_newPostBody` = `""`
+- `_newPostBody` = `body.Text`
+- `_newPostTitle` = `""`
+- `_newPostTitle` = `_newPostBody = ""`
+- `_newPostTitle` = `value`
+- `_postId` = `null`
+- `_postId` = `post.Id`
+- `body.TextChanged` += `() => _newPostBody = body.Text`
+- `title.TextChanged` += `value => _newPostTitle = value`
 
 <a id="symbol-ad7fb59cd134"></a>
 
 ## `NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost) — private void RefreshDiscussion(CareerData data, CommunityPost post)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)；[`NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`](CommunityScreen.cs.md#symbol-d9fcfe778254)
 
@@ -114,7 +119,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.UpdateCommunityBadge() — private void UpdateCommunityBadge()`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)；[`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -136,7 +141,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.OpenUpdates() — private void OpenUpdates()`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -158,7 +163,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost) — private void RenderThread(CareerData data, CommunityPost post)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 
@@ -192,7 +197,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderRootReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost) — private void RenderRootReplyComposer(CareerData data, CommunityPost post)`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action)`](CommunityScreen.cs.md#symbol-283b456d2a7a)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -215,7 +220,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.PanelContainer?) — private void RenderReplyComposer(CareerData data, CommunityPost post, PanelContainer? retained = null)`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action)`](CommunityScreen.cs.md#symbol-283b456d2a7a)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -240,13 +245,13 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string) — private PanelContainer CreateReplyComposer(CareerData data, CommunityPost post, string parentId)`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.PanelContainer?)`](CommunityScreen.cs.md#symbol-85990747d510)；[`NationalSpire.CareerScreen.RenderRootReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-f92fad8b113e)
 
-**调用：** [`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)；[`NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`](CommunityScreen.cs.md#symbol-d9fcfe778254)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-87fd384e7842)；[`NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string)`](CommunityThreads.cs.md#symbol-4de765d004ff)；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.GetCaretLine(int)`；`Godot.TextEdit.GetLine(int)`；`Godot.TextEdit.GetLineCount()`；`Godot.TextEdit.SetCaretColumn(int, bool, int)`；`Godot.TextEdit.SetCaretLine(int, bool, bool, int, int)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.InvalidOperationException.InvalidOperationException(string?)`
+**调用：** `Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.GetCaretLine(int)`；`Godot.TextEdit.GetLine(int)`；`Godot.TextEdit.GetLineCount()`；`Godot.TextEdit.SetCaretColumn(int, bool, int)`；`Godot.TextEdit.SetCaretLine(int, bool, bool, int, int)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)；[`NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`](CommunityScreen.cs.md#symbol-d9fcfe778254)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPromptInsertions(string)`](PromptInsertionScreen.cs.md#symbol-8c121d4185f5)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-87fd384e7842)；[`NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`](CommunityThreads.cs.md#symbol-4de765d004ff)；[`NationalSpire.PromptInsertions.Capture(string)`](PromptInsertions.cs.md#symbol-333725b6545b)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._replyDrafts`；`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CloseThreadReply(string, string)`；`NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CloseThreadReply(string, string)`；`NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenPromptInsertions(string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._replyDrafts`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`；`NationalSpire.PromptInsertions.Capture(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -255,62 +260,64 @@ private double _elapsed;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(close)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(close);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill })`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(submit)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(submit);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`cb.AddChild(Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: cb.AddChild(Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`cb.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: cb.AddChild(actions);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`cb.AddChild(editor)`；返回值紧邻使用处：`ExpressionStatementSyntax: cb.AddChild(editor);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`cb.AddChild(Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: cb.AddChild(Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold));`
 - `Godot.TextEdit.GetCaretLine(int)`；输入表达式：`editor.GetCaretLine()`；返回值紧邻使用处：`ArgumentSyntax: editor.GetCaretLine()`
 - `Godot.TextEdit.GetLine(int)`；输入表达式：`editor.GetLine(editor.GetCaretLine())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: editor.GetLine(editor.GetCaretLine()).Length`
 - `Godot.TextEdit.GetLineCount()`；输入表达式：`editor.GetLineCount()`；返回值紧邻使用处：`BinaryExpressionSyntax: editor.GetLineCount() - 1`
 - `Godot.TextEdit.SetCaretColumn(int, bool, int)`；输入表达式：`editor.SetCaretColumn(editor.GetLine(editor.GetCaretLine()).Length)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.SetCaretColumn(editor.GetLine(editor.GetCaretLine()).Length);`
 - `Godot.TextEdit.SetCaretLine(int, bool, bool, int, int)`；输入表达式：`editor.SetCaretLine(editor.GetLineCount() - 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.SetCaretLine(editor.GetLineCount() - 1);`
-- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = root ? "RootReplyEditor" : "CommunityReplyEditor", Text = _replyDrafts.GetValueOrDefault(draftKey, ""),              PlaceholderText = "说说你的想法，或继续上面的讨论……", CustomMinimumSize = new Vector2(0, 130),              SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextEdit { Name = root ? "RootReplyEditor" : "CommunityReplyEditor", Text = _replyDrafts.GetValueOrDefault(draftKey, ""),              PlaceholderText = "说说你的想法，或继续上面的讨论……", CustomMinimumSize = new Vector2(0, 130),              SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = root ? "RootReplyEditor" : "CommunityReplyEditor", Text = _replyDrafts.GetValueOrDefault(draftKey, ""), PlaceholderText = "说说你的想法，或继续上面的讨论……", CustomMinimumSize = new Vector2(0, 130), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextEdit { Name = root ? "RootReplyEditor" : "CommunityReplyEditor", Text = _replyDrafts.GetValueOrDefault(draftKey, ""), PlaceholderText = "说说你的想法，或继续上面的讨论……", CustomMinimumSize = new Vector2(0, 130), SizeFlagsHorizontal = SizeFlags.ExpandFill, WrapMode = TextEdit.LineWrappingMode.Boundary }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, 130)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(0, 130)`
 - `NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`；输入表达式：`AiService.ProcessInteractionsAsync([sent.Id])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.ProcessInteractionsAsync([sent.Id])`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, target.AuthorId)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(data, target.AuthorId)}`
 - `NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`；输入表达式：`AddMentionPicker(editor, cb)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddMentionPicker(editor, cb);`
-- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("发布回复", () =>          {              try              {                  string submitted = editor.Text;                  _replyDrafts[draftKey] = submitted;                  if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId,                      accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return;                  var current = ViewData;                  var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)                      ?? throw new InvalidOperationException("帖子已不存在。");                  var sent = CommunityThreads.Submit(current, thread, parentId, submitted);                  CompleteThreadReply(post.Id, parentId, submitted);                  _ = AiService.ProcessInteractionsAsync([sent.Id]);                  Notice("回复已发布。", false);              }              catch (Exception e) { Notice(e.Message, true); }          }, 150)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("发布回复", () =>          {              try              {                  string submitted = editor.Text;                  _replyDrafts[draftKey] = submitted;                  if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId,                      accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return;                  var current = ViewData;                  var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)                      ?? throw new InvalidOperationException("帖子已不存在。");                  var sent = CommunityThreads.Submit(current, thread, parentId, submitted);                  CompleteThreadReply(post.Id, parentId, submitted);                  _ = AiService.ProcessInteractionsAsync([sent.Id]);                  Notice("回复已发布。", false);              }              catch (Exception e) { Notice(e.Message, true); }          }, 150)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("发布回复", () => { try { string submitted = editor.Text; _replyDrafts[draftKey] = submitted; if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId, accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return; var current = ViewData; var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id) ?? throw new InvalidOperationException("帖子已不存在。"); var sent = CommunityThreads.Submit(current, thread, parentId, submitted, PromptInsertions.Capture("community")); CompleteThreadReply(post.Id, parentId, submitted); _ = AiService.ProcessInteractionsAsync([sent.Id]); Notice("回复已发布。", false); } catch (Exception e) { Notice(e.Message, true); } }, 150)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("发布回复", () => { try { string submitted = editor.Text; _replyDrafts[draftKey] = submitted; if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId, accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return; var current = ViewData; var thread = CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id) ?? throw new InvalidOperationException("帖子已不存在。"); var sent = CommunityThreads.Submit(current, thread, parentId, submitted, PromptInsertions.Capture("community")); CompleteThreadReply(post.Id, parentId, submitted); _ = AiService.ProcessInteractionsAsync([sent.Id]); Notice("回复已发布。", false); } catch (Exception e) { Notice(e.Message, true); } }, 150)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("收起", () => CloseThreadReply(post.Id, parentId), 100)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("收起", () => CloseThreadReply(post.Id, parentId), 100)`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
 - `NationalSpire.CareerScreen.CloseThreadReply(string, string)`；输入表达式：`CloseThreadReply(post.Id, parentId)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => CloseThreadReply(post.Id, parentId)`
-- `NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`；输入表达式：`CompleteThreadReply(post.Id, parentId, submitted)`；返回值紧邻使用处：`ExpressionStatementSyntax: CompleteThreadReply(post.Id, parentId, submitted);`
 - `NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`；输入表达式：`CompleteThreadReply(post.Id, parentId, submitted)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => CompleteThreadReply(post.Id, parentId, submitted)`
+- `NationalSpire.CareerScreen.CompleteThreadReply(string, string, string)`；输入表达式：`CompleteThreadReply(post.Id, parentId, submitted)`；返回值紧邻使用处：`ExpressionStatementSyntax: CompleteThreadReply(post.Id, parentId, submitted);`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(composer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(composer)`
-- `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("reply", post.Id, submitted, parent: parentId,                      accepted: () => CompleteThreadReply(post.Id, parentId, submitted))`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId,                      accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return;`
+- `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("reply", post.Id, submitted, parent: parentId, accepted: () => CompleteThreadReply(post.Id, parentId, submitted))`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("reply", post.Id, submitted, parent: parentId, accepted: () => CompleteThreadReply(post.Id, parentId, submitted))) return;`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice("回复已发布。", false)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice("回复已发布。", false);`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(e.Message, true);`
+- `NationalSpire.CareerScreen.OpenPromptInsertions(string)`；输入表达式：`OpenPromptInsertions("community")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => OpenPromptInsertions("community")`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(target == null ? "回复帖子" : $"回复 {CareerEngine.DisplayName(data, target.AuthorId)}", 18, _gold)`
-- `NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`；输入表达式：`CommunityReplyExpressions.Attach(editor, cb, actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityReplyExpressions.Attach(editor, cb, actions);`
+- `NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?, System.Action?)`；输入表达式：`CommunityReplyExpressions.Attach(editor, cb, actions, promptSettings: () => OpenPromptInsertions("community"))`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityReplyExpressions.Attach(editor, cb, actions, promptSettings: () => OpenPromptInsertions("community"));`
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(current)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(current).FirstOrDefault`
 - `NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`；输入表达式：`CommunityThreads.NewsPending(data, post)`；返回值紧邻使用处：`AssignmentExpressionSyntax: submit.Disabled = CommunityThreads.NewsPending(data, post)`
-- `NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string)`；输入表达式：`CommunityThreads.Submit(current, thread, parentId, submitted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.Submit(current, thread, parentId, submitted)`
-- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)                      ?? throw new InvalidOperationException("帖子已不存在。")`
+- `NationalSpire.CommunityThreads.Submit(NationalSpire.CareerData, NationalSpire.CommunityPost, string, string, System.Collections.Generic.List<NationalSpire.PromptInsertion>?)`；输入表达式：`CommunityThreads.Submit(current, thread, parentId, submitted, PromptInsertions.Capture("community"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.Submit(current, thread, parentId, submitted, PromptInsertions.Capture("community"))`
+- `NationalSpire.PromptInsertions.Capture(string)`；输入表达式：`PromptInsertions.Capture("community")`；返回值紧邻使用处：`ArgumentSyntax: PromptInsertions.Capture("community")`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.All(current).FirstOrDefault(p => p.Id == post.Id) ?? throw new InvalidOperationException("帖子已不存在。")`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`post.Replies.FirstOrDefault(r => r.Id == parentId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = post.Replies.FirstOrDefault(r => r.Id == parentId)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`_replyDrafts.GetValueOrDefault(draftKey, "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Text = _replyDrafts.GetValueOrDefault(draftKey, "")`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("帖子已不存在。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidOperationException("帖子已不存在。")`
 
 **赋值（含属性/字段和局部值）：**
 
+- `CustomMinimumSize` = `new Vector2(0, 130)`
+- `Name` = `root ? "RootReplyEditor" : "CommunityReplyEditor"`
+- `PlaceholderText` = `"说说你的想法，或继续上面的讨论……"`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `Text` = `_replyDrafts.GetValueOrDefault(draftKey, "")`
+- `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 - `_` = `AiService.ProcessInteractionsAsync([sent.Id])`
 - `_replyDrafts[draftKey]` = `editor.Text`
 - `_replyDrafts[draftKey]` = `submitted`
 - `close.Name` = `"CloseThreadReply"`
 - `close.TooltipText` = `"收起回复栏，保留草稿"`
 - `composer.Name` = `root ? "RootReplyComposer" : "ThreadReplyComposer"`
-- `CustomMinimumSize` = `new Vector2(0, 130)`
 - `editor.TextChanged` += `() => _replyDrafts[draftKey] = editor.Text`
-- `Name` = `root ? "RootReplyEditor" : "CommunityReplyEditor"`
-- `PlaceholderText` = `"说说你的想法，或继续上面的讨论……"`
-- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `submit.Disabled` = `CommunityThreads.NewsPending(data, post)`
 - `submit.Name` = `root ? "SubmitRootReply" : "SubmitThreadReply"`
-- `Text` = `_replyDrafts.GetValueOrDefault(draftKey, "")`
-- `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 
 <a id="symbol-283b456d2a7a"></a>
 
 ## `NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action) — private void RebuildThreadReplies(CareerData data, CommunityPost post, Action rebuild)`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
@@ -351,7 +358,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CompleteThreadReply(string, string, string) — private void CompleteThreadReply(string postId, string parentId, string submitted)`
 
-来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)
 
@@ -380,7 +387,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CloseThreadReply(string, string) — private void CloseThreadReply(string postId, string parentId)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)
 
@@ -404,7 +411,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RetireReplyComposer() — private void RetireReplyComposer()`
 
-来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)
 
@@ -428,7 +435,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderPostHeader(CareerData data, CommunityPost post, VBoxContainer header)`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -485,7 +492,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderPostBackground(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderPostBackground(CareerData data, CommunityPost post, VBoxContainer header)`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
@@ -538,7 +545,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderDiscussion(CareerData data, CommunityPost post, VBoxContainer discussion)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
@@ -620,7 +627,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — private HBoxContainer DiscussionVotes(CareerData data, CommunityPost post, CommunityReply? reply = null)`
 
-来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
@@ -665,7 +672,7 @@ private double _elapsed;
 
 ## `Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — void Update(CareerData current, CommunityPost currentPost, CommunityReply? currentReply)`
 
-来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)；[`Vote(int)`](CommunityScreen.cs.md#symbol-7043154d7107)
 
@@ -698,7 +705,7 @@ private double _elapsed;
 
 ## `Vote(int) — void Vote(int direction)`
 
-来源：源码第 301 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 303 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)
 
@@ -735,7 +742,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool) — private Button DiscussionReplyButton(CommunityPost post, string parent, bool mainPost = false)`
 
-来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionActions(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityShareScreen.cs.md#symbol-411381a49420)
 
@@ -759,7 +766,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string) — private void ToggleDiscussion(CommunityPost post, string replyId)`
 
-来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)
 
@@ -791,7 +798,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string) — private void BeginReply(CommunityPost post, string parent)`
 
-来源：源码第 361 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool)`](CommunityScreen.cs.md#symbol-8aac83a49357)
 
@@ -823,7 +830,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string) — private void RenderWorkStatus(VBoxContainer box, AiWorkState work, Action retry, string id)`
 
-来源：源码第 382 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 384 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)；[`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)
 
@@ -869,7 +876,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.FocusComposerAsync(string) — private async Task FocusComposerAsync(string editorName = "CommunityReplyEditor")`
 
-来源：源码第 405 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 407 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)
 
@@ -899,7 +906,7 @@ private double _elapsed;
 
 ## `NationalSpire.CommunityUpdateButton._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 425 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 427 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

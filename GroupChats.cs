@@ -76,9 +76,11 @@ public static class GroupChats
         if (Busy(g)) return "正在回复，请等待本轮结束。";
         if (kind is "group-send" or "group-arbitrate")
         {
+            if (command.Attachments.Any(a => a.Kind is ConsumerGifts.Kind or ConsumerGifts.WeddingKind)) return "礼物与婚礼邀约请在对应人物的私聊中发送。";
             if (kind == "group-arbitrate" && string.IsNullOrWhiteSpace(command.Text)) command.Text = "申请尖塔仲裁，请审理本群往来及此前裁决的履行情况。";
             if (string.IsNullOrWhiteSpace(command.Text) && command.Attachments.Count == 0) return null;
             var t = new GroupTurn { Sender = Human(d), Day = d.Day, Order = NextOrder(d), Text = command.Text, Attachments = command.Attachments,
+                PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions),
                 ArbitrationTargets = kind == "group-arbitrate" ? command.People.Where(g.Members.Contains).Where(id => PrivateMessages.CanChat(d, id)).Distinct().ToList() : [] };
             foreach (var a in t.Attachments) { a.Id = (++g.LastInteractionNumber).ToString(); a.GroupId = g.Id; a.CoachAccepted = false; }
             if (kind == "group-send" && !g.Members.Any(id => CanSpeak(d, id))) t.Status = "complete";
@@ -87,6 +89,7 @@ public static class GroupChats
         else if (kind == "group-retry")
         {
             if (g.Turns.LastOrDefault() is not { Status: "failed" } failed) return "没有未完成的回复。";
+            if (command.PromptInsertions != null) failed.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
             failed.Status = "queued"; failed.Replies.Clear(); failed.SpeechOrders.Clear(); failed.Raw = failed.Error = failed.Reasoning = "";
         }
         else if (kind == "group-regenerate")
@@ -98,6 +101,7 @@ public static class GroupChats
             var probeGroup = probe.Chats.Groups.Single(x => x.Id == g.Id);
             if (Rewind(probe, probeGroup, probeGroup.Turns[^1]) is { } error) return error;
             Rewind(d, g, last);
+            if (command.PromptInsertions != null) last.PromptInsertions = NationalSpire.PromptInsertions.Copy(command.PromptInsertions);
             last.Status = "queued"; last.Replies.Clear(); last.SpeechOrders.Clear(); last.Raw = last.Error = last.Reasoning = "";
             foreach (var attachment in last.Attachments) attachment.CoachAccepted = false;
             int at = g.Turns.Count - 1;

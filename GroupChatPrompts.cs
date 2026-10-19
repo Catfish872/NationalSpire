@@ -27,7 +27,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
 以下交互条件分别适用于实际 Actor；其中对玩家的关系使用 Target 指明，人物只能提交自己的状态、学习与档案变化。普通发言不需要交互标记。
 """;
     public static string Section(CareerData d, string id) => d.PrivatePromptSnapshot.GetValueOrDefault(id) ?? PromptLibrary.Get(d.Ai, id);
-    public static string UserText(CareerData d, GroupChat g, GroupTurn t) => t.Text + (t.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", t.Attachments.Select(a =>
+    public static string UserText(CareerData d, GroupChat g, GroupTurn t, List<PromptInsertion>? insertions = null) => PromptInsertions.Around(t.Text, insertions, 1, 2) + (t.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", t.Attachments.Select(a =>
         "编号" + a.Id + " · " + PrivateMessages.AttachmentTitle(a) + "\n对象：" + string.Join("、", a.Participants.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id)))
         + (a.ActorId.Length > 0 ? "\n处理人：" + g.Alias(a.ActorId) + " " + GroupChats.Name(d, a.ActorId) : "")
         + (a.CoachId.Length > 0 ? "\n负责教练：" + g.Alias(a.CoachId) + " " + GroupChats.Name(d, a.CoachId) : "") + "\n" + AiGeneratedText.Attachment(a))));
@@ -63,7 +63,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         }
         return string.Join("\n", lines);
     }
-    public static List<Dictionary<string, string>> Compose(CareerData d, GroupChat g, GroupTurn? pending = null)
+    public static List<Dictionary<string, string>> Compose(CareerData d, GroupChat g, GroupTurn? pending = null, bool insertPrompts = true)
     {
         using var measurement = UiPerformance.Measure(UiPerformance.Work.GroupContext);
         var messages = new List<Dictionary<string, string>>();
@@ -157,7 +157,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
             if (interactions.Length > 0) state.AppendLine($"<private_memory>\n群聊《{other.Name}》的交互当前状态；知情人：{string.Join("、", other.Members.Select(id => GroupChats.Name(d, id)))}\n{interactions}\n</private_memory>");
         }
         Add("user", state.ToString());
-        if (pending != null) Add("user", PrivateAppointments.DateText(d, pending.Day) + "，" + GroupChats.Name(d, pending.Sender) + "发到本群：\n" + UserText(d, g, pending));
-        return messages;
+        if (pending != null) Add("user", PrivateAppointments.DateText(d, pending.Day) + "，" + GroupChats.Name(d, pending.Sender) + "发到本群：\n" + UserText(d, g, pending, insertPrompts ? pending.PromptInsertions : null));
+        return insertPrompts ? PromptInsertions.Apply(messages, pending?.PromptInsertions) : messages;
     }
 }

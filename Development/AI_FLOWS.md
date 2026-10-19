@@ -14,6 +14,16 @@ RequestPrivateAsync 的 task 缺省 private；群聊调用者传 group，两种�
 
 验证：--ai-routing-checks 通过21项，使用模拟HTTP传输检查八类任务的实际地址、模型、密钥、旧配置转换、别名分类、重命名、失败后重新分配、发送后修改及公开快照过滤。--response-workflow-checks 通过社区182项、周刊50项、独立试写19项；--model-list-checks 通过29项。首次旧配置转换0.1741毫秒/2304字节，预热一万次后的十万次 Connection 查询累计8.2061毫秒/0字节。这里计量本地查询，真实服务生成和Steam网络耗时另行测量。界面及独立密钥文件验证见 GAME_AND_UI 的模型方案设置章节。
 
+## 立绘外观推测
+
+首次与再次打开设计界面均只加载本地草稿或默认设定，API调用次数为0；点击“根据资料推测”后才进入InferPortraitAsync并沿私聊连接发起一次推测，“停止推测”取消请求。PortraitDesigns.Messages将世界观、角色身份/简介/性格、当前玩家与此人的大小总结及ContextStart之后最近8条complete轮次组成JSON参考数据；已删除的正文置空。defaults附基本设定、当前套装及全部现有情绪ID/名称/说明/Enabled。system要求basics/outfit/outfitName/emotions/notes；emotions逐项返回id/name/description，保留既有ID，结合角色说话习惯补充少量常见新情绪，并为每项提供性格与外观相关的微表情、小幅头部或手部动作；强烈情绪才使用全身动作。
+
+AiService.InferPortraitAsync复用PrivateForegroundQueue与RequestPrivateAsync，task=private继续使用私聊连接的地址、模型和密钥。请求支持取消、超时和生涯检查。MergeInference逐字段对比发出请求时的baseline，保留在途手动编辑。emotions只接收有效唯一ID与非空description，既有ID仅在说明未被手动改动时更新；新增有效ID追加，启用状态与已有名称保留。删除或改名后的旧条目不会重新创建。无效情绪逐项跳过，其他有效外观/情绪继续合并；有效变化为0时提示错误。保存仅写本地设计，生涯与聊天写入次数为0。
+
+生图导出通过PortraitPromptExport本地组装当前套装、已启用情绪、PortraitModelPrompts.Get取得的模型约束及ZIP。玩家在外部模型上传风格参考，基准生成按主参考→辅助参考上传；差分按已确认neutral→同一风格参考上传。包内04文档说明图片用途与顺序，05文档保存当前模型的可编辑约束。旧StyleGroups与缓存仍可读取，当前导出沿模型约束且无需原图文件。推测继续使用文字资料。02-基准立绘.md另加入用户提供的单次编辑与风格锁定完整段落；差分提示文本保持当前格式。
+
+GPT Image 2.5预设强调同一默认立绘、光影/上色/低噪纹理/Alpha锁定，以及每次局部编辑的允许与保留部位；示例JSON使用gpt-image-2.5-sunburst、1024x1536、transparent和PNG。Gemini/Nano Banana预设提供相同基准、图像用途说明和透明验证要求，实际模型版本/参数由使用渠道决定。通用预设可编辑。完整差分提示保留身份与构图，通过眉眼、嘴角、头部与简单手势体现情绪，支持角色已有耳尾的变化。每张独立差分从默认立绘开始，局部修正可用最新确认图。噪点文字是视觉约束，实际Alpha与跨图一致性需外部模型实测；当前模块执行导出。
+
 ## 总结响应与市场新闻
 
 私信和群聊的小总结、大总结最终都调用 AiService.SummaryRequest → RequestPrivateAsync。非流式响应必须含非空choices数组、message对象和非空content字符串。缺少内容时抛出明确的InvalidDataException，Diagnostics记录响应字段及原始异常栈；不将空内容交给FinishSmallSummary/FinishBigSummary。总结原入口捕获失败、保存SummaryError、清理SummaryStatus；原文、旧总结及覆盖起点保留，下次仍使用原重试入口。没有新增重试机制。
@@ -36,6 +46,16 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 | 提示词试写 | PromptTesting、PromptTestData | 隔离试写资料与选定模板 | 试写结果显示；不是正式生涯交互提交 |
 
 具体函数签名与上下游调用见[索引](SOURCE_MAP.md)。私信与群聊使用流式通道，社区新闻与互动等待完整响应后应用；不要把不同请求的返回处理混用。
+
+### 四种输入场景的提示词插入
+
+私聊、群聊、社区和约会输入共用PromptInsertions；发送时Capture按场景启用项复制最多四段Text/Position，随原轮次或帖子保存。普通输入、Ctrl+Enter、约会开场、失败编辑、显式重试/重新生成和仲裁复用原命令入口；自动队列继续使用发送时的快照。玩家在排队期间修改本地文字影响之后的提交，已排队请求保持原快照。
+
+PrivateMessagePrompts.Compose与GroupChatPrompts.Compose先组装原模板、资料、记忆、历史、当前输入及固定输出协议。UserText仅为当前pending的玩家原文添加位置1/2的前后段落，附件说明接在其后。位置0置于首条消息content开头，位置3置于所有协议组装完成后最后一条content末尾；role与消息条数保持。SpireArbitration与GroupArbitration先关闭基础Compose的插入，再对仲裁申请正文和最终消息整体各应用一次。可编辑模板与流式/非流式传输共用这些最终消息；历史UserText、界面正文及记忆继续读取原始输入。
+
+社区ProcessInteractionsAsync先用原BuildDiscussionPrompt计算原任务权限，再由PromptInsertions.Discussion处理结构化targets：仅requested主帖Body及当前请求的conversation回复Body应用前后段，相关帖子与已有上文保持。完整请求前后段按不同提交快照去重，相同批次快照应用一次；各输入自己的前后段仍分别生效。经过同一AiWireProtocol实例编码和解码，人物编号映射与原权限保持。自动新闻、周刊、独立总结、立绘推测及模板试写沿各自入口；本功能作用于四种输入场景触发的正式回复请求。
+
+离线验证捕获四场景的完整序列化消息，使用本地模拟传输覆盖流式与非流式共8份请求；社区另核对实际结构化正文编码。检查四位置、协议末尾、附件/历史边界、场景隔离、排队快照、客机提交及重试关闭。测试调用真实外部API次数为0；模型对用户插入文字的遵循程度留待游戏测试。
 
 ## 经济和国家发展的公开事实
 
@@ -101,7 +121,7 @@ MatchesTopic 仍要求两个非闲聊词命中。Retrieve 的词频统计仅检�
 | 3 | 排队结束后的 current | 重新获取当前数据与同一 turn，避免使用排队前资料 | Context 重新构建，写入 turn.Context；Status=sending、清空 Error；save | Compose 使用该轮 Context；中断恢复读取状态 |
 | 4 | Compose → RequestPrivateAsync | 模板、固定格式、稳定资料、变化资料、总结、时间线、本轮消息 | 请求日志；发送模型请求 | 流式接收与解析器 |
 | 5 | PrivateStreamParser.Feed、Thinking | 正文、标记、reasoning 分片 | 更新 PrivateLive / PrivateReasoningLive；通常每 100ms 通知一次；此处不逐片保存 | 页面与多人 progress 回调 |
-| 6 | 响应结束后的 current | 重新获取生涯、人物、轮次、封禁状态；确认仍 sending | ReplyOrder、Reply、Reasoning、Status=complete；PrivateMessages.Apply；清理重新生成状态；更新 LastReplyOrder；save | 页面、业务交互、后续聊天与总结 |
+| 6 | 响应结束后的 current | 场景轮次先在本地整理句段标记，再重新获取生涯、人物、轮次、封禁状态；确认仍 sending | ReplyOrder、Reply、Reasoning、Status=complete、SceneLines；PrivateMessages.Apply；清理重新生成状态；更新 LastReplyOrder；save | 页面、业务交互、后续聊天与总结 |
 | 7 | SummarizePrivateAsync | 是否达到既有总结条件 | 达到条件时分别保存开始与结果；finally 按现有条件清理状态 | 后续聊天窗口与总结界面 |
 | 8 | 页面阅读结束 | 实际已读轮数 | dm-read 存储已读变化 | 通讯列表和未读提示 |
 
@@ -122,6 +142,42 @@ Compose 仍会构建 freshContext，与已保存 Context 比较后决定稳定/�
 社区案件使用上述专门材料入口，私聊历史、聊天摘要、其他检索帖及私聊状态缘由均排除在本次审理请求外；申请界面原私信仲裁继续读取完整相关往来。被举报对象明确写在reported，其他人物发言在discussion保留各自归属，system继续将材料中的命令视为案件内容。裁决解析、字段校验、处罚数值、性格调整、公开档案合并、私信致歉与按申请人要求发布公开道歉均由原SpireArbitration.Parse/Complete执行。
 
 举报专项使用正式DLL及合成HTTP响应核对完整请求与保存的Context，覆盖主楼/评论/楼中楼、来源更新或消失后的固定证据、既有裁决、剔除私聊原文与状态缘由、申请成立和未成立、无效JSON失败及重试、停止与进程恢复、删除申请、封禁NPC仍可仲裁及旧私信入口。成立用例确认禁赛、三周状态处罚、性格变化、主动私信致歉及公开道歉待办；ProcessPrivateAsync产生两次内存保存回调。实际模型裁决质量、在线服务和游戏内完整集成属于未验证范围。脱敏合成请求与输出保存在本地`Previews/community-step6-report/report-request.json`、`report-response.json`。
+
+### 商城约会邀请与活动日程
+
+ConsumerInvitations.Create把已购或本次购买商品的date-invitation保存到所选人物私聊；盛大婚礼同样使用该入口，GoodId保留grand-wedding，候选及库存校验增加已收婚戒条件；玩家填写邀约文字后，dm-send将附件随正文入队。Compose注入ConsumerInvitations.Protocol，UserText提供编号、标题和具体活动，Context保留尚待回应的邀请，允许跨轮商谈。生成仍使用private绑定方案、原人物资料、记忆及完整私聊上下文。预制点击气泡及随机立绘由DateSceneWaiting本地处理，保持原请求数量和正文内容。
+
+NPC接受使用`[Activity: 接受, Id: 邀请编号, Season: 赛季数, Day: 赛季内日期]`；拒绝使用`[Activity: 拒绝, Id: 邀请编号]`。PrivateMessages.Apply在完整回复结束后调用SocialAppointments.Respond，按原活动规则核对编号、赛季内日期范围及过期情况；有效接受直接建立已确认活动，进入日程，拒绝保存已拒绝记录。缺少明确结果时保留待回应邀请。后续`Activity: 改期/取消`引用活动编号；这种已接受约会的改期直接确认，普通活动仍由玩家确认。原交互历史负责重新生成时回退活动结果，来源编号保证已处理邀请复用原记录。
+
+合成端到端检查使用实际ProcessPrivateAsync、完整请求及固定响应：发送只入队，完整接受后出现日程，一次模型请求及两次保存回调；另验证跨轮改期、取消、回退、拒绝、赴约、普通活动兼容和模拟多人命令去重。脱敏材料位于本地Previews/private-gifts/date-invitation-request.json及date-invitation-response.txt。真实模型接受意愿、日期选择和网络等待待游戏内验证。
+
+### 约会场景的开场与逐句标注
+
+场景继续沿private连接与date提示词，普通私信和结束感想使用private提示词。Compose保留世界、角色资料、关系、摘要、历史、日程与附件；DateScenes.Guidance在末尾定义开场旁白及后续交谈。约会场景的公开帖子检索最多选择三篇，优先当前话题、其次近期来源，保留完整选中原文与关联评论；原始记忆保持在生涯中。活动结束日记继续读取本次约会全部可用记录。ProcessPrivateAsync生成Context与ContextSpan一次，Compose复用它们，减少同轮重复检索。重新取得队列名额后重新开始完整超时预算，排队等待仍可取消。
+
+每个场景轮次只发起一次生成请求。PrivateMessagePrompts.Compose在人物资料、记忆、历史和玩家消息之后注入DateScenes.Guidance/InlineGuidance，沿用玩家文风模板和人物约束，明确场景显示协议具有最高格式优先级。要求每句单独成行并重复[Scene: dialogue, Emotion: 已导入ID]或[Scene: narration, Background: 已有背景ID]，台词建议10—35字、长于40字按自然停顿拆分；旁白完整句子成段，保留句内逗号。多差分时每句台词必须填写最贴合的已有Emotion，平淡用DefaultEmotionId；只有默认图时省略Emotion。PrivateStreamParser流式隐藏Scene标记，按正文字符位置记录SceneCues，业务Directives单独保留。
+
+DateScenes.TaggedLines在本地按标记区间分句，兼容正文中的(情绪ID)、（中文情绪名/ID）及[Emotion: ID]；匹配已导入ID或中文名后移除显示元数据。显式空/未知情绪回退默认，缺失Emotion时依据有限语气词保守选择已有差分，仍无证据则默认；ID大小写兼容。客观括号动作/环境描写优先按旁白处理，口语补充继续作为台词。Split保留完整括号块分类；台词按句末或自然停顿拆为最多48个Unicode文本元素，避免截断emoji组合。旁白在标点句末换段，句内逗号与较长描述连续显示；Lines读取旧回复时传入已有Narration分类。JoinNarration合并未到句末且没有新背景的相邻旁白，兼容模型重复标记或旧存档中的逗号碎片；台词和背景切换仍作为边界。业务解析仍一次完成，SceneLines拼接成去除兼容标签后的Reply，两者逐字一致；角色正文语义与业务指令保留。未知背景沿用前图。元数据异常保留有效正文和业务交互。旧AnnotationMessages/Annotate为兼容校验入口，在线管线使用同次生成的标记。
+
+背景根据实际地点、时间和已发生的转场选择；玩家括号中明确描述的变化也参与同一请求。提及、回忆及计划沿用当前背景。场景刚进入以青黑色等待画面呈现；播放到实际句段才应用AI背景或Closest回退，自动模式中现有图片有至少一张时选择最接近项。手动选择的本地背景偏好保留。像素及本地路径保持在客户端。
+
+场景开场和场景对话在流式解析完成后先调用DateScenes.ReplyFailure，检查“我无法生成/提供”“我不能生成/提供”（兼容“为你/为您”）、NSFW（大小写兼容）、《杀戮尖塔2》（兼容数字前空白）和“赛事讨论”。命中时进入原failed恢复分支，保留玩家输入及附件，显示“重新生成”“编辑文字”；该轮业务指令和日记均跳过应用。普通私信及结束感想沿原处理，背景及情绪解析保持本地一次扫描。原调用完成后重新核验当前生涯、轮次及sending状态，提交Reply、SceneLines及业务交互，沿原sending/complete各保存一次。private.queue记录排队时间，private.generated记录出队后生成及本地解析时间；最终请求日志包含字符数。停止/超时仍保留失败轮次；DateFailureEdit恢复原玩家输入，dm-date-revise原地修订最新失败场景轮次，保留轮次ID、附件和送达记录，清空旧上下文/回复后重试，避免重复购买或赠礼。新的附件留待下一轮添加。联机继续由房主通过相同命令和私聊连接处理，内容沿个人信箱隔离。
+
+约会提示词对倾听、记住偏好、体贴照顾、真诚分享等小幅积极互动，以及敷衍、冷落、冒犯等负面互动，更及时给出基础Favour变化；平淡交流允许保持原值。程序统一应用现有难度与约会倍率。模型的情绪判断仍需真实接口验证。
+
+已完成合成HTTP检查：完整请求包含场景协议、历史与交互规则，一次请求同时产出正文、情绪、背景和好感指令；流式分块、中文/英文旧标签、未知ID回退、缺失Emotion保守推断、长段/无标点/组合emoji、旁白括号、失败原地修订及重生成回退均有覆盖。重生成同一轮好感从原+4回退0，再按新回复+2结算，原玩家输入和轮次Id保持，下一轮草稿保留。仅含元数据或空白旁白的输出按空回复失败处理，提供原重试入口。Godot实际控件与域完整回归通过2478项断言，278源码/4299成员语义分析错误和未绑定项均为0；1280×720与1920×1080验证三字号、最大字间距48字页面和姓名框右侧好感徽章。200字分块解析首次/再次为0.0354/0.0298毫秒、18728/18664字节；10000字为1.6389/1.1344毫秒、956600/829504字节，包含本地规范化与分句，独立于HTTP等待与保存。逐次数据、脱敏完整请求与合成输出位于本地Previews/private-gifts/date-round4-*。生成保持每轮一次请求、sending/complete两次保存；结束感想/DateDiary沿独立一次请求。线上模型的情绪标记遵循度、真实网络等待、游戏字体及Steam跨机过程留待游戏测试。
+
+### 私聊赠礼的评估与结算
+
+Compose 固定注入 ConsumerGifts.Protocol，UserText 将礼物作为附件上下文提供商品Id、真实单价、数量、此前已收次数、送达/结算状态；自定义留言仍是原消息正文。人物资料、性格、既有记忆、当前关系和状态继续通过原 Compose/Context 进入完整请求。模型针对本轮每种礼物输出 `[Gift: 商品Id, Preference: 0.6, Reason: 具体偏好依据]`。解析器隐藏标记并交给 ConsumerGifts.Settle；偏好限于0.25—1.75，缺失或非有限数值按1结算并保留解释。历史礼物标记与未送达附件产生0次结算。
+
+PrivateMessages.Apply 在建立普通AI交互回退快照前结算送达礼物。礼物事实、库存扣除和已结算收益独立于回复重新生成；同轮 Favour/Mood 标记跳过，防止AI重复奖励或覆盖程序收益，关系和印象沿原逻辑更新。网络失败、取消、关闭进程或AI未启用时，原私信失败/恢复流程保留送达附件，玩家重试后继续评估；再次生成已结算轮次读取 Settled。完整HTTP请求与合成输出验证留在本地 Previews/private-gifts，真实模型偏好判断尚待游戏内验证。
+
+赠礼先保存原始价格P、数量、此前实收n、发送时好感F与心情。设a=ln(30)/ln(5000)，基础b=(P/20)^a，偏好p先折算等效价格，等价收益因子q=p^a；好感因子h=1.75−1.5×clamp((F+50)/149,0,1)，心情m为0.5/1/1.5，每件重复因子r=1−0.9×clamp(n/9,0,1)^2。自然相处和人见人爱逐件基础收益为b×q×h×m×r。慢热磁场与绝缘体质将每个小于1的因子f改为2f−1，大于等于1的增益保持。慢热磁场把转换后负因子截为0；绝缘体质存在负因子时，负因子相加并最低截到−1，再乘原先大于1的增益因子，以保持多个减益共同造成负收益；其余正减益只作用于正收益乘积。
+
+每件结果累加后，正值乘GainRate（0.75/0.5/0.5/0.25），负值保持原量；约会再按DateRate应用对应正负倍率，绝缘体质整轮全部礼物附件合计最多扣3点。商城绝缘体质购买价和招待费为原价两倍，礼物价值计算使用商品原价。前9件按实际重复次数计算，其余按第10件系数批量求和，工作量每种礼物至多9次。小数按礼物正/负方向独立保存。同比例中性条件下，原20美元1点、10万美元30点在默认增长倍率后分别为0.5与15点；实际另受h/m/r影响。同轮多枚婚戒跨附件只结算一次有效数量，库存和实收历史保留全部数量，NPC完整回复后清除RingReplyPending再开放求婚卡。
+
+心情改善使用难度与约会倍率结算后的正收益；低落时按 ceil(本次正收益) 缩短持续天数，最早结束于当前游戏日；振奋时等效总价达到3000美元，按至少1天、floor(收益/3)延长，单次状态合计最多14天。实际应用核对状态开始日、方向、有效期和仲裁处分，普通赠礼保持仲裁处分规则。关系上下文分别报告已收婚戒、誓约和婚礼事实；婚礼邀约在完整回复接受后自动建立日程，场景结束后由程序记录已完成婚礼。
 
 ## 群聊总结的保存条件
 
@@ -149,6 +205,10 @@ SummarizeGroupAsync 未达到小总结条件、也没有需要合并的小总结
 
 ## 解析器与实际交互
 
+私信 Compose 固定注入 OathProtocol，Context 在人物关系后追加程序保存的誓约事实和待处理解除原因。模型以正文提出解除时附加独立 `[Oath: 解除, Reason: 具体原因]`；PrivateStreamParser 保留字段并从可见正文移除标记。Apply 只在已完成、正文有效的私信轮次调用 RequestRelease；当前有请求时保留原请求，群聊带 GroupParticipants 的标记跳过。结果保存为待处理请求，正式解除由玩家填写回复并点击处理按钮决定。模型输出其他 Oath 值保持原誓约状态；玩家确认依赖程序资格判断。没有新增模型请求类型，解除或继续沟通的回复沿原私信队列和 current/save 校验执行。
+
+本轮使用生产程序集生成完整合成 Compose 请求，核对模板、格式协议、人物资料、关系、誓约事实、历史和当轮输入，并逐字符解析合成解除响应，再经过实际 Apply/命令规则验证。另以 ProcessPrivateAsync 捕获最终HTTP请求体并返回内存合成响应，验证100→95、关系更新及解除请求同轮生效、誓约保留、原sending/complete两次保存回调。合成材料保存于本地 `Previews/private-affection/v31/`；外部服务、真实模型表达和长期记忆质量留待游戏测试。
+
 | 层 | 输入 | 返回或修改 | 使用者 |
 | --- | --- | --- | --- |
 | LeadingReasoningStream | 响应开头完整 think 标签，允许跨分片 | 思考与后续正文分开；思考示例不交给交互解析 | RequestPrivateAsync 的 reasoning 与正文回调 |
@@ -162,7 +222,7 @@ SummarizeGroupAsync 未达到小总结条件、也没有需要合并的小总结
 
 NPC 对 NPC 约战检测后显示暂不支持的卡片说明，不建立无法执行的比赛。封禁 NPC 的发言和交互由当前选择、提示词状态和应用判断共同处理；其记录仍可查看。
 
-Favour 表示目标值，大幅调整进入玩家确认。群聊下方还显示印象、关系、学习、状态与资料变化，并非只有好感。训练、首发调整、活动等复用对应业务模块，须同时覆盖加入普通俱乐部、自建俱乐部、玩家岗位和多人情况。
+Favour表示AI评估的基础目标值；Compose注入AffectionRules.Guidance，要求同轮只输出一次目标，程序对相对请求开始好感的差量统一缩放；缩放后绝对变化大于10进入玩家确认。慢热磁场与绝缘体质提示词允许因有具体依据的忽视意愿、敷衍重要话题、失约、越界玩笑或轻视感受产生轻微失望/疏远，轻度伤害也可触发负向目标；环境或NPC自身经历的悲伤仍按真实原因处理。实际情绪判断由模型产生，程序对负向私聊差量×2，再应用约会倍率。群聊下方还显示印象、关系、学习、状态与资料变化，并非只有好感。训练、首发调整、活动等复用对应业务模块，须同时覆盖加入普通俱乐部、自建俱乐部、玩家岗位和多人情况。
 
 角色卡手动编辑三项也使用现有个人关系数据，不经过模型标记解析或大幅好感确认。PrivateMessages.EditRelation(data, life, human, NPC, edit) 将本次非空字段写入 PrivateRelation，好感同时写 Life.Relationships，Revision 加一；全部字段未编辑时直接返回。随后 PreserveRelation(box, chats, human, NPC, fields) 处理同方向的旧交互记录。它只删除 Before/After.relation 中指定业务字段，保留回退对象、Revision及其余交互；因此旧好感差量不会减掉手动目标值，编辑印象也不会阻止旧好感、学习、合同等正常回退。新交互照常调用 Record，重新生成仍调用原 Rewind。
 

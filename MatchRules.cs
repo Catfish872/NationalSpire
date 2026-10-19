@@ -2,10 +2,10 @@
 
 public readonly record struct RunPerformance(bool Cleared, int Floor, double Seconds);
 
-public readonly record struct ChanceFactors(double Basis, double Growth, double Practice, double Training, double Skill, double Mood, double Defense)
+public readonly record struct ChanceFactors(double Basis, double Growth, double Practice, double Training, double Skill, double Mood, double Defense, double Affection = 0)
 {
     public double Bonus => Growth + Practice + Training + Skill + Mood;
-    public double Final => MatchRules.ApplyBonuses(Basis, Bonus);
+    public double Final => Math.Clamp(MatchRules.ApplyBonuses(Basis, Bonus) + Affection, 0, 1);
     public string Display()
     {
         static string Percent(double value) => (value * 100).ToString(
@@ -15,8 +15,10 @@ public readonly record struct ChanceFactors(double Basis, double Growth, double 
         foreach (var (name, value) in new[] { ("长期培养", Growth), ("陪练", Practice), ("临时训练", Training), ("交流学习", Skill), ("短期状态", Mood) })
             if (value != 0) formula += (value > 0 ? " + " : " − ") + name + Percent(Math.Abs(value));
         double total = Basis + Bonus;
-        if (total > Final + 1e-12) formula += " − 高概率衰减" + Percent(total - Final);
-        if (total < 0) formula += "，最低0%";
+        double beforeAffection = MatchRules.ApplyBonuses(Basis, Bonus);
+        if (total > beforeAffection + 1e-12) formula += " − 高概率衰减" + Percent(total - beforeAffection);
+        if (Affection != 0) formula += (Affection > 0 ? " + " : " − ") + "好感联动" + Percent(Math.Abs(Affection));
+        if (beforeAffection + Affection < 0) formula += "，最低0%";
         return Percent(Final) + "（" + formula + "）";
     }
 }
@@ -119,7 +121,7 @@ public static class MatchRules
         return new(BaseChance(person, ascension), CareerTraining.Permanent(data, person.Id, ascension),
             includePractice ? OwnedClubs.PracticeBonus(data, person.Id, ascension, date) : 0,
             Math.Max(CareerTraining.Temporary(data, person.Id, date), TeamPreparations.Bonus(data, person.Id, date)), CareerTraining.SkillBonus(person),
-            CareerTraining.MoodBonus(person, date), CareerTraining.Temporary(data, person.Id, date, true));
+            CareerTraining.MoodBonus(person, date), CareerTraining.Temporary(data, person.Id, date, true), AffectionCompetition.Direct(data, person.Id));
     }
 
     public static double ClearChance(CareerData data, CareerPerson person, int ascension, int? day = null)
@@ -132,7 +134,7 @@ public static class MatchRules
         var values = roster.Select(p => Evaluate(data, p, ascension, day)).ToList();
         // 各成员使用同一计算入口，队伍各项取平均，人数不会放大培养收益。
         return new(values.Average(v => v.Basis), values.Average(v => v.Growth), values.Average(v => v.Practice),
-            values.Average(v => v.Training), values.Average(v => v.Skill), values.Average(v => v.Mood), values.Average(v => v.Defense));
+            values.Average(v => v.Training), values.Average(v => v.Skill), values.Average(v => v.Mood), values.Average(v => v.Defense), values.Average(v => v.Affection));
     }
 
     public static RunPerformance Simulate(CareerData data, string id, int ascension, string seed, int? day = null,

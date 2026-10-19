@@ -1,0 +1,393 @@
+# DateSceneAssetScreen.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`CD86E50E6FF8BCBCAED9988B2078B660599334E68B48A8F683C112466452CED6`。来源：[源码](../../DateSceneAssetScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.CareerScreen`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+
+```
+
+<a id="symbol-a45b4a628cd5"></a>
+
+## `NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string) — private void OpenDateAssets(CareerData data, string person)`
+
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)
+
+**调用：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.FindChild(string, bool, bool)`；`Godot.Node.GetParent()`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-ac1028ce670c)；[`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`](AvatarImages.cs.md#symbol-f46bb00e33dc)；`NationalSpire.BroadcastScroll.BroadcastScroll()`；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.CharacterDesignPackage.ExportDirectory()`](CharacterDesignPackage.cs.md#symbol-4a238a2eafb0)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；`System.Action.Invoke()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
+
+**字段、属性、事件及方法组引用：** `Draw()`；`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`；`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.Avatar`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.CharacterDesignPackage.ExportDirectory()`；`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`；`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.PlayerAvatar.Source`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.Outfits`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesignStore.Read(string, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；`NationalSpire.PortraitOutfit.Id`；`NationalSpire.PortraitOutfit.Name`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Draw()`；输入表达式：`Draw()`；返回值紧邻使用处：`ExpressionStatementSyntax: Draw();`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("ee929d")`；返回值紧邻使用处：`AssignmentExpressionSyntax: status.Modulate = new Color("ee929d")`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`actions.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddThemeConstantOverride("separation", 12);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`list.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: list.AddThemeConstantOverride("separation", 12);`
+- `Godot.Control.Control()`；输入表达式：`new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(status)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsInstanceValid(status)`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(status)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(status)) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("ee929d"); }`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170))`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220))`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(actions);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(scroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(scroll);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(selector)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(selector);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(status)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(status);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`footer.AddChild(export)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.AddChild(export);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`footer.AddChild(import)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.AddChild(import);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`footer.AddChild(spacer)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.AddChild(spacer);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(list)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(list);`
+- `Godot.Node.FindChild(string, bool, bool)`；输入表达式：`.FindChild("CareerDialogConfirm", true, false)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .FindChild("CareerDialogConfirm", true, false)?.GetParent()`
+- `Godot.Node.GetParent()`；输入表达式：`.GetParent()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .FindChild("CareerDialogConfirm", true, false)?.GetParent()`
+- `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`footer.MoveChild(export, 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.MoveChild(export, 1);`
+- `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`footer.MoveChild(import, 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.MoveChild(import, 0);`
+- `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`footer.MoveChild(spacer, 2)`；返回值紧邻使用处：`ExpressionStatementSyntax: footer.MoveChild(spacer, 2);`
+- `Godot.OS.ShellShowInFileManager(string, bool)`；输入表达式：`OS.ShellShowInFileManager(zip)`；返回值紧邻使用处：`ExpressionStatementSyntax: OS.ShellShowInFileManager(zip);`
+- `Godot.OptionButton.AddItem(string, int)`；输入表达式：`selector.AddItem(outfit.Name)`；返回值紧邻使用处：`ExpressionStatementSyntax: selector.AddItem(outfit.Name);`
+- `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "DateAssetOutfit", CustomMinimumSize = new(0, 46), FitToLongestItem = false }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "DateAssetOutfit", CustomMinimumSize = new(0, 46), FitToLongestItem = false }`
+- `Godot.OptionButton.Select(int)`；输入表达式：`selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit))`；返回值紧邻使用处：`ExpressionStatementSyntax: selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit));`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 310)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 310)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 46)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 46)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(980, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: box.CustomMinimumSize = new(980, 0)`
+- `Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`；输入表达式：`Import((copy, file) => DateSceneAssetStore.ImportPack(copy, design, file), [".zip", ".json"])`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Import((copy, file) => DateSceneAssetStore.ImportPack(copy, design, file), [".zip", ".json"])`
+- `NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`；输入表达式：`AvatarImages.FromCharacterCardArt(this, CareerAvatars.ForPerson(data, person))`；返回值紧邻使用处：`AwaitExpressionSyntax: await AvatarImages.FromCharacterCardArt(this, CareerAvatars.ForPerson(data, person))`
+- `NationalSpire.BroadcastScroll.BroadcastScroll()`；输入表达式：`new BroadcastScroll { CustomMinimumSize = new(0, 310), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastScroll { CustomMinimumSize = new(0, 310), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
+- `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(data, person)`；返回值紧邻使用处：`ArgumentSyntax: CareerAvatars.ForPerson(data, person)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: "立绘与场景 · " + CareerEngine.DisplayName(data, person)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("导入立绘包 ZIP", () => Import((copy, file) => DateSceneAssetStore.ImportPack(copy, design, file), [".zip", ".json"]), 220)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("导入立绘包 ZIP", () => Import((copy, file) => DateSceneAssetStore.ImportPack(copy, design, file), [".zip", ".json"]), 220)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("导出角色设计", async () => { try { var character = CharacterCards.Read(data, person); var avatar = character.Avatar.Source == "auto" ? await AvatarImages.FromCharacterCardArt(this, CareerAvatars.ForPerson(data, person)) : character.Avatar; if (!IsInstanceValid(status) || !CareerStore.IsCurrent(data)) return; string zip = CharacterDesignPackage.Write(data, character, avatar, CharacterDesignPackage.ExportDirectory(), design, assets); status.Text = "角色设计ZIP已导出，包含全部套装及立绘差分。"; status.Modulate = Colors.White; OS.ShellShowInFileManager(zip); } catch (Exception e) { if (IsInstanceValid(status)) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("ee929d"); } } }, 200)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("导出角色设计", async () => { try { var character = CharacterCards.Read(data, person); var avatar = character.Avatar.Source == "auto" ? await AvatarImages.FromCharacterCardArt(this, CareerAvatars.ForPerson(data, person)) : character.Avatar; if (!IsInstanceValid(status) || !CareerStore.IsCurrent(data)) return; string zip = CharacterDesignPackage.Write(data, character, avatar, CharacterDesignPackage.ExportDirectory(), design, assets); status.Text = "角色设计ZIP已导出，包含全部套装及立绘差分。"; status.Modulate = Colors.White; OS.ShellShowInFileManager(zip); } catch (Exception e) { if (IsInstanceValid(status)) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("ee929d"); } } }, 200)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170)`；返回值紧邻使用处：`ArgumentSyntax: Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220)`；返回值紧邻使用处：`ArgumentSyntax: Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220)`
+- `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice("读取立绘失败：" + e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice("读取立绘失败：" + e.Message, true);`
+- `NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`；输入表达式：`OpenDateBackgroundLibrary(data, person)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenDateBackgroundLibrary(data, person);`
+- `NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`；输入表达式：`OpenPortraitDesigner(data, person)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenPortraitDesigner(data, person);`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog("立绘与场景 · " + CareerEngine.DisplayName(data, person), $"PNG画布1024×1536，包含真实透明像素。{design.DefaultEmotionId}为默认立绘；缺少的情绪使用默认差分。", () => true, "关闭", box => { box.Name = "DateAssetManager"; box.CustomMinimumSize = new(980, 0); var selector = new OptionButton { Name = "DateAssetOutfit", CustomMinimumSize = new(0, 46), FitToLongestItem = false }; foreach (var outfit in design.Outfits) selector.AddItem(outfit.Name); selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit)); box.AddChild(selector); selector.ItemSelected += i => { design.SelectedOutfit = design.Outfits[(int)i].Id; assets.OutfitId = design.SelectedOutfit; PortraitDesignStore.Save(PortraitDesignStore.FilePath(data, person), design); DateSceneAssetStore.Save(data, person, assets); Draw(); }; var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions); actions.AddChild(Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170)); actions.AddChild(Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220)); var scroll = new BroadcastScroll { CustomMinimumSize = new(0, 310), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll); list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; list.AddThemeConstantOverride("separation", 12); scroll.AddChild(list); status = Text("PNG可命名为proud.png或proud_1.png、proud_2.png。同情绪随机选图；ZIP可批量追加或替换同名图片。", 15, _muted); box.AddChild(status); Draw(); }, showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("立绘与场景 · " + CareerEngine.DisplayName(data, person), $"PNG画布1024×1536，包含真实透明像素。{design.DefaultEmotionId}为默认立绘；缺少的情绪使用默认差分。", () => true, "关闭", box => { box.Name = "DateAssetManager"; box.CustomMinimumSize = new(980, 0); var selector = new OptionButton { Name = "DateAssetOutfit", CustomMinimumSize = new(0, 46), FitToLongestItem = false }; foreach (var outfit in design.Outfits) selector.AddItem(outfit.Name); selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit)); box.AddChild(selector); selector.ItemSelected += i => { design.SelectedOutfit = design.Outfits[(int)i].Id; assets.OutfitId = design.SelectedOutfit; PortraitDesignStore.Save(PortraitDesignStore.FilePath(data, person), design); DateSceneAssetStore.Save(data, person, assets); Draw(); }; var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions); actions.AddChild(Button("编辑立绘设计", () => { _cancelDialog?.Invoke(); OpenPortraitDesigner(data, person); }, 170)); actions.AddChild(Button("背景库 / 导入背景", () => { _cancelDialog?.Invoke(); OpenDateBackgroundLibrary(data, person); }, 220)); var scroll = new BroadcastScroll { CustomMinimumSize = new(0, 310), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll); list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; list.AddThemeConstantOverride("separation", 12); scroll.AddChild(list); status = Text("PNG可命名为proud.png或proud_1.png、proud_2.png。同情绪随机选图；ZIP可批量追加或替换同名图片。", 15, _muted); box.AddChild(status); Draw(); }, showCancel: false);`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("PNG可命名为proud.png或proud_1.png、proud_2.png。同情绪随机选图；ZIP可批量追加或替换同名图片。", 15, _muted)`；返回值紧邻使用处：`AssignmentExpressionSyntax: status = Text("PNG可命名为proud.png或proud_1.png、proud_2.png。同情绪随机选图；ZIP可批量追加或替换同名图片。", 15, _muted)`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(data)`
+- `NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；输入表达式：`CharacterCards.Read(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CharacterCards.Read(data, person)`
+- `NationalSpire.CharacterDesignPackage.ExportDirectory()`；输入表达式：`CharacterDesignPackage.ExportDirectory()`；返回值紧邻使用处：`ArgumentSyntax: CharacterDesignPackage.ExportDirectory()`
+- `NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`；输入表达式：`CharacterDesignPackage.Write(data, character, avatar, CharacterDesignPackage.ExportDirectory(), design, assets)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CharacterDesignPackage.Write(data, character, avatar, CharacterDesignPackage.ExportDirectory(), design, assets)`
+- `NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`；输入表达式：`DateSceneAssetStore.ImportPack(copy, design, file)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: (copy, file) => DateSceneAssetStore.ImportPack(copy, design, file)`
+- `NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；输入表达式：`DateSceneAssetStore.Read(data, person)`；返回值紧邻使用处：`AssignmentExpressionSyntax: assets = DateSceneAssetStore.Read(data, person)`
+- `NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；输入表达式：`DateSceneAssetStore.Save(data, person, assets)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.Save(data, person, assets);`
+- `NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；输入表达式：`PortraitDesignStore.FilePath(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitDesignStore.FilePath(data, person)`
+- `NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；输入表达式：`PortraitDesignStore.FilePath(data, person)`；返回值紧邻使用处：`ArgumentSyntax: PortraitDesignStore.FilePath(data, person)`
+- `NationalSpire.PortraitDesignStore.Read(string, string)`；输入表达式：`PortraitDesignStore.Read(path, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(path, person) ?? PortraitDesigns.Create(data, person)`
+- `NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesignStore.Save(PortraitDesignStore.FilePath(data, person), design)`；返回值紧邻使用处：`ExpressionStatementSyntax: PortraitDesignStore.Save(PortraitDesignStore.FilePath(data, person), design);`
+- `NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesignStore.Save(path, design)`；返回值紧邻使用处：`ExpressionStatementSyntax: PortraitDesignStore.Save(path, design);`
+- `NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；输入表达式：`PortraitDesigns.Create(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(path, person) ?? PortraitDesigns.Create(data, person)`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, string>()`
+- `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit)`；返回值紧邻使用处：`ArgumentSyntax: design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(0, 310)`
+- `CustomMinimumSize` = `new(0, 46)`
+- `FitToLongestItem` = `false`
+- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
+- `Name` = `"DateAssetOutfit"`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `assets.OutfitId` = `design.SelectedOutfit`
+- `assets` = `DateSceneAssetStore.Read(data, person)`
+- `box.CustomMinimumSize` = `new(980, 0)`
+- `box.Name` = `"DateAssetManager"`
+- `design.SelectedOutfit` = `design.Outfits[(int)i].Id`
+- `design` = `PortraitDesignStore.Read(path, person) ?? PortraitDesigns.Create(data, person)`
+- `export.Name` = `"DateExportCharacterDesign"`
+- `import.Name` = `"DateImportPack"`
+- `list` = `new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `selector.ItemSelected` += `i => { design.SelectedOutfit = design.Outfits[(int)i].Id; assets.OutfitId = design.SelectedOutfit; PortraitDesignStore.Save(PortraitDesignStore.FilePath(data, person), design); DateSceneAssetStore.Save(data, person, assets); Draw(); }`
+- `status.Modulate` = `Colors.White`
+- `status.Modulate` = `new Color("ee929d")`
+- `status.Text` = `"导出失败：" + e.Message`
+- `status.Text` = `"角色设计ZIP已导出，包含全部套装及立绘差分。"`
+- `status` = `Text("PNG可命名为proud.png或proud_1.png、proud_2.png。同情绪随机选图；ZIP可批量追加或替换同名图片。", 15, _muted)`
+
+<a id="symbol-ac1028ce670c"></a>
+
+## `Import(System.Action<NationalSpire.DateSceneAssets, string>, string[]) — void Import(Action<DateSceneAssets, string> action, string[] extensions)`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)
+
+**调用：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)；`Godot.Color.Color(string)`；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`](CareerFilePicker.cs.md#symbol-ca0ccac08c64)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；`System.Action<T1, T2>.Invoke(T1, T2)`
+
+**字段、属性、事件及方法组引用：** `Draw()`；`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Draw()`；输入表达式：`Draw()`；返回值紧邻使用处：`ExpressionStatementSyntax: Draw();`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("ee929d")`；返回值紧邻使用处：`AssignmentExpressionSyntax: status.Modulate = new Color("ee929d")`
+- `NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`；输入表达式：`PickNestedFile("导入立绘", extensions, file => { if (!CareerStore.IsCurrent(data)) return; try { var copy = Coop.CoopJson.Copy(assets); action(copy, file); DateSceneAssetStore.Save(data, person, copy); assets = copy; status.Text = "导入完成，编号、画布与透明通道校验通过。"; status.Modulate = Colors.White; Draw(); } catch (Exception e) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("ee929d"); } })`；返回值紧邻使用处：`ExpressionStatementSyntax: PickNestedFile("导入立绘", extensions, file => { if (!CareerStore.IsCurrent(data)) return; try { var copy = Coop.CoopJson.Copy(assets); action(copy, file); DateSceneAssetStore.Save(data, person, copy); assets = copy; status.Text = "导入完成，编号、画布与透明通道校验通过。"; status.Modulate = Colors.White; Draw(); } catch (Exception e) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("ee929d"); } });`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(data)`
+- `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`Coop.CoopJson.Copy(assets)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Coop.CoopJson.Copy(assets)`
+- `NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；输入表达式：`DateSceneAssetStore.Save(data, person, copy)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.Save(data, person, copy);`
+- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`action(copy, file)`；返回值紧邻使用处：`ExpressionStatementSyntax: action(copy, file);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `assets` = `copy`
+- `status.Modulate` = `Colors.White`
+- `status.Modulate` = `new Color("ee929d")`
+- `status.Text` = `"导入失败：" + e.Message`
+- `status.Text` = `"导入完成，编号、画布与透明通道校验通过。"`
+
+<a id="symbol-1f678296da64"></a>
+
+## `Draw() — void Draw()`
+
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-ac1028ce670c)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)
+
+**调用：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Resource.Duplicate(bool)`；`Godot.Vector2.Vector2(float, float)`；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-ac1028ce670c)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.DateEmotionLink(string, string, System.Action)`](DateSceneAssetScreen.cs.md#symbol-1ddd153a2cf4)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-3b48b221efd8)；[`P(float, float)`](DateSceneAssetScreen.cs.md#symbol-90f335e6b107)；`System.Action.Invoke()`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`
+
+**字段、属性、事件及方法组引用：** `Draw()`；`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.DateEmotionLink(string, string, System.Action)`；`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；`NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`；`NationalSpire.DateSceneAssets.Sprites`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitEmotion.Enabled`；`NationalSpire.PortraitEmotion.Id`；`NationalSpire.PortraitEmotion.Name`；`P(float, float)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Draw()`；输入表达式：`Draw()`；返回值紧邻使用处：`ExpressionStatementSyntax: Draw();`
+- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`remove.DrawLine(P(-2.5f, -3), P(-2.5f, 6), color, 1.5f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: remove.DrawLine(P(-2.5f, -3), P(-2.5f, 6), color, 1.5f, true);`
+- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`remove.DrawLine(P(-9, -7), P(9, -7), color, 1.8f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: remove.DrawLine(P(-9, -7), P(9, -7), color, 1.8f, true);`
+- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`remove.DrawLine(P(2.5f, -3), P(2.5f, 6), color, 1.5f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: remove.DrawLine(P(2.5f, -3), P(2.5f, 6), color, 1.5f, true);`
+- `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；输入表达式：`remove.DrawPolyline([P(-4, -7), P(-4, -10), P(4, -10), P(4, -7)], color, 1.8f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: remove.DrawPolyline([P(-4, -7), P(-4, -10), P(4, -10), P(4, -7)], color, 1.8f, true);`
+- `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；输入表达式：`remove.DrawPolyline([P(-7, -7), P(-6, 10), P(6, 10), P(7, -7)], color, 1.8f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: remove.DrawPolyline([P(-7, -7), P(-6, 10), P(6, 10), P(7, -7)], color, 1.8f, true);`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("ee929d")`；返回值紧邻使用处：`AssignmentExpressionSyntax: status.Modulate = new Color("ee929d")`
+- `Godot.Color.Darkened(float)`；输入表达式：`_muted.Darkened(.45f)`；返回值紧邻使用处：`ConditionalExpressionSyntax: remove.Disabled ? _muted.Darkened(.45f) : _ink`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 15)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 15);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`control.AddThemeFontSizeOverride("font_size", 17)`；返回值紧邻使用处：`ExpressionStatementSyntax: control.AddThemeFontSizeOverride("font_size", 17);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`control.AddThemeStyleboxOverride(state, style)`；返回值紧邻使用处：`ExpressionStatementSyntax: control.AddThemeStyleboxOverride(state, style);`
+- `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`control.GetThemeStylebox(state)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: control.GetThemeStylebox(state).Duplicate`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`list.AddChild(add)`；返回值紧邻使用处：`ExpressionStatementSyntax: list.AddChild(add);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`list.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: list.AddChild(row);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(append)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(append);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(files)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(files);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(label)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(label);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(remove)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(remove);`
+- `Godot.OptionButton.AddItem(string, int)`；输入表达式：`files.AddItem(emotion.Id == design.DefaultEmotionId ? "请添加默认立绘" : "使用默认立绘")`；返回值紧邻使用处：`ExpressionStatementSyntax: files.AddItem(emotion.Id == design.DefaultEmotionId ? "请添加默认立绘" : "使用默认立绘");`
+- `Godot.OptionButton.AddItem(string, int)`；输入表达式：`files.AddItem(key + ".png")`；返回值紧邻使用处：`ExpressionStatementSyntax: files.AddItem(key + ".png");`
+- `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "DateSpriteFiles_" + emotion.Id, CustomMinimumSize = new(245, 48), FitToLongestItem = false }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "DateSpriteFiles_" + emotion.Id, CustomMinimumSize = new(245, 48), FitToLongestItem = false }`
+- `Godot.OptionButton.Select(int)`；输入表达式：`files.Select(selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: files.Select(selected);`
+- `Godot.Resource.Duplicate(bool)`；输入表达式：`control.GetThemeStylebox(state).Duplicate()`；返回值紧邻使用处：`CastExpressionSyntax: (StyleBox)control.GetThemeStylebox(state).Duplicate()`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(150, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: add.CustomMinimumSize = new(150, 48)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(245, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(245, 48)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(48, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: append.CustomMinimumSize = new(48, 48)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(48, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: remove.CustomMinimumSize = new(48, 48)`
+- `Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`；输入表达式：`Import((copy, file) => { DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true); selections[selectionKey] = DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""; }, [".png"])`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Import((copy, file) => { DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true); selections[selectionKey] = DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""; }, [".png"])`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("", () => { if (!CareerStore.IsCurrent(data) || !selections.TryGetValue(selectionKey, out string? key)) return; try { var copy = Coop.CoopJson.Copy(assets); if (!copy.Sprites.Remove(key)) return; // 内容缓存可被其他套装和角色复用；只移除当前套装的选中绑定。 DateSceneAssetStore.Save(data, person, copy); assets = copy; status.Text = "已删除 " + key + ".png"; status.Modulate = Colors.White; Draw(); } catch (Exception e) { status.Text = "删除失败：" + e.Message; status.Modulate = new Color("ee929d"); } }, 48)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("", () => { if (!CareerStore.IsCurrent(data) || !selections.TryGetValue(selectionKey, out string? key)) return; try { var copy = Coop.CoopJson.Copy(assets); if (!copy.Sprites.Remove(key)) return; // 内容缓存可被其他套装和角色复用；只移除当前套装的选中绑定。 DateSceneAssetStore.Save(data, person, copy); assets = copy; status.Text = "已删除 " + key + ".png"; status.Modulate = Colors.White; Draw(); } catch (Exception e) { status.Text = "删除失败：" + e.Message; status.Modulate = new Color("ee929d"); } }, 48)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("+", () => Import((copy, file) => { DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true); selections[selectionKey] = DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""; }, [".png"]), 48)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("+", () => Import((copy, file) => { DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true); selections[selectionKey] = DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""; }, [".png"]), 48)`
+- `NationalSpire.CareerScreen.DateEmotionLink(string, string, System.Action)`；输入表达式：`DateEmotionLink("新增差分", "DateNewEmotion", () => { _cancelDialog?.Invoke(); NewDateEmotion(data, person); })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateEmotionLink("新增差分", "DateNewEmotion", () => { _cancelDialog?.Invoke(); NewDateEmotion(data, person); })`
+- `NationalSpire.CareerScreen.DateEmotionLink(string, string, System.Action)`；输入表达式：`DateEmotionLink(emotion.Name + " · " + emotion.Id, "EditEmotion_" + emotion.Id, () => { _cancelDialog?.Invoke(); NewDateEmotion(data, person, emotion.Id); })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateEmotionLink(emotion.Name + " · " + emotion.Id, "EditEmotion_" + emotion.Id, () => { _cancelDialog?.Invoke(); NewDateEmotion(data, person, emotion.Id); })`
+- `NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`；输入表达式：`NewDateEmotion(data, person)`；返回值紧邻使用处：`ExpressionStatementSyntax: NewDateEmotion(data, person);`
+- `NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`；输入表达式：`NewDateEmotion(data, person, emotion.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: NewDateEmotion(data, person, emotion.Id);`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(data)`
+- `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；输入表达式：`CareerVisuals.ClearContent(list)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.ClearContent(list);`
+- `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`Coop.CoopJson.Copy(assets)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Coop.CoopJson.Copy(assets)`
+- `NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`；输入表达式：`DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true);`
+- `NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；输入表达式：`DateSceneAssetStore.Save(data, person, copy)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.Save(data, person, copy);`
+- `NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`；输入表达式：`DateSceneAssetStore.SpriteKeys(assets, design, emotion.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneAssetStore.SpriteKeys(assets, design, emotion.Id)`
+- `NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`；输入表达式：`DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except`
+- `P(float, float)`；输入表达式：`P(-2.5f, -3)`；返回值紧邻使用处：`ArgumentSyntax: P(-2.5f, -3)`
+- `P(float, float)`；输入表达式：`P(-2.5f, 6)`；返回值紧邻使用处：`ArgumentSyntax: P(-2.5f, 6)`
+- `P(float, float)`；输入表达式：`P(-4, -10)`；返回值紧邻使用处：`ExpressionElementSyntax: P(-4, -10)`
+- `P(float, float)`；输入表达式：`P(-4, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: P(-4, -7)`
+- `P(float, float)`；输入表达式：`P(-6, 10)`；返回值紧邻使用处：`ExpressionElementSyntax: P(-6, 10)`
+- `P(float, float)`；输入表达式：`P(-7, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: P(-7, -7)`
+- `P(float, float)`；输入表达式：`P(-9, -7)`；返回值紧邻使用处：`ArgumentSyntax: P(-9, -7)`
+- `P(float, float)`；输入表达式：`P(2.5f, -3)`；返回值紧邻使用处：`ArgumentSyntax: P(2.5f, -3)`
+- `P(float, float)`；输入表达式：`P(2.5f, 6)`；返回值紧邻使用处：`ArgumentSyntax: P(2.5f, 6)`
+- `P(float, float)`；输入表达式：`P(4, -10)`；返回值紧邻使用处：`ExpressionElementSyntax: P(4, -10)`
+- `P(float, float)`；输入表达式：`P(4, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: P(4, -7)`
+- `P(float, float)`；输入表达式：`P(6, 10)`；返回值紧邻使用处：`ExpressionElementSyntax: P(6, 10)`
+- `P(float, float)`；输入表达式：`P(7, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: P(7, -7)`
+- `P(float, float)`；输入表达式：`P(9, -7)`；返回值紧邻使用处：`ArgumentSyntax: P(9, -7)`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
+- `System.Array.IndexOf<T>(T[], T)`；输入表达式：`Array.IndexOf(keys, selections.GetValueOrDefault(selectionKey))`；返回值紧邻使用处：`ArgumentSyntax: Array.IndexOf(keys, selections.GetValueOrDefault(selectionKey))`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`copy.Sprites.Remove(key)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !copy.Sprites.Remove(key)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`selections.TryGetValue(selectionKey, out string? key)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !selections.TryGetValue(selectionKey, out string? key)`
+- `System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault()`；返回值紧邻使用处：`BinaryExpressionSyntax: DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`keys.FirstOrDefault()`；返回值紧邻使用处：`BinaryExpressionSyntax: keys.FirstOrDefault() ?? ""`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`design.Emotions.Where(e => e.Enabled)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var emotion in design.Emotions.Where(e => e.Enabled)) { var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 15); list.AddChild(row); var label = DateEmotionLink(emotion.Name + " · " + emotion.Id, "EditEmotion_" + emotion.Id, () => { _cancelDialog?.Invoke(); NewDateEmotion(data, person, emotion.Id); }); label.SizeFlagsHorizontal = SizeFlags.ExpandFill; row.AddChild(label); var keys = DateSceneAssetStore.SpriteKeys(assets, design, emotion.Id); string selectionKey = design.SelectedOutfit + "/" + emotion.Id; var files = new OptionButton { Name = "DateSpriteFiles_" + emotion.Id, CustomMinimumSize = new(245, 48), FitToLongestItem = false }; foreach (string key in keys) files.AddItem(key + ".png"); if (keys.Length == 0) { files.AddItem(emotion.Id == design.DefaultEmotionId ? "请添加默认立绘" : "使用默认立绘"); files.Disabled = true; } int selected = Math.Max(0, Array.IndexOf(keys, selections.GetValueOrDefault(selectionKey))); files.Select(selected); if (keys.Length > 0) selections[selectionKey] = keys[selected]; files.ItemSelected += index => selections[selectionKey] = keys[(int)index]; row.AddChild(files); var append = Button("+", () => Import((copy, file) => { DateSceneAssetStore.ImportOne(copy, design, emotion.Id, file, append: true); selections[selectionKey] = DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""; }, [".png"]), 48); append.Name = "DateSpriteAdd_" + emotion.Id; append.TooltipText = "添加PNG"; append.CustomMinimumSize = new(48, 48); row.AddChild(append); var remove = Button("", () => { if (!CareerStore.IsCurrent(data) || !selections.TryGetValue(selectionKey, out string? key)) return; try { var copy = Coop.CoopJson.Copy(assets); if (!copy.Sprites.Remove(key)) return; // 内容缓存可被其他套装和角色复用；只移除当前套装的选中绑定。 DateSceneAssetStore.Save(data, person, copy); assets = copy; status.Text = "已删除 " + key + ".png"; status.Modulate = Colors.White; Draw(); } catch (Exception e) { status.Text = "删除失败：" + e.Message; status.Modulate = new Color("ee929d"); } }, 48); remove.Name = "DateSpriteDelete_" + emotion.Id; remove.TooltipText = "删除选中的立绘"; remove.CustomMinimumSize = new(48, 48); remove.Disabled = keys.Length == 0; row.AddChild(remove); foreach (var control in new Button[] { files, append, remove }) { control.AddThemeFontSizeOverride("font_size", 17); foreach (string state in new[] { "normal", "hover", "pressed", "hover_pressed", "disabled" }) { var style = (StyleBox)control.GetThemeStylebox(state).Duplicate(); style.ContentMarginTop = style.ContentMarginBottom = 8; control.AddThemeStyleboxOverride(state, style); } } remove.Draw += () => { var center = remove.Size / 2; var color = remove.Disabled ? _muted.Darkened(.45f) : _ink; Vector2 P(float x, float y) => center + new Vector2(x, y); remove.DrawLine(P(-9, -7), P(9, -7), color, 1.8f, true); remove.DrawPolyline([P(-4, -7), P(-4, -10), P(4, -10), P(4, -7)], color, 1.8f, true); remove.DrawPolyline([P(-7, -7), P(-6, 10), P(6, 10), P(7, -7)], color, 1.8f, true); remove.DrawLine(P(-2.5f, -3), P(-2.5f, 6), color, 1.5f, true); remove.DrawLine(P(2.5f, -3), P(2.5f, 6), color, 1.5f, true); }; }`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`selections.GetValueOrDefault(selectionKey)`；返回值紧邻使用处：`ArgumentSyntax: selections.GetValueOrDefault(selectionKey)`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, Array.IndexOf(keys, selections.GetValueOrDefault(selectionKey)))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(0, Array.IndexOf(keys, selections.GetValueOrDefault(selectionKey)))`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(245, 48)`
+- `FitToLongestItem` = `false`
+- `Name` = `"DateSpriteFiles_" + emotion.Id`
+- `add.CustomMinimumSize` = `new(150, 48)`
+- `add.SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
+- `append.CustomMinimumSize` = `new(48, 48)`
+- `append.Name` = `"DateSpriteAdd_" + emotion.Id`
+- `append.TooltipText` = `"添加PNG"`
+- `assets` = `copy`
+- `files.Disabled` = `true`
+- `files.ItemSelected` += `index => selections[selectionKey] = keys[(int)index]`
+- `label.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `remove.CustomMinimumSize` = `new(48, 48)`
+- `remove.Disabled` = `keys.Length == 0`
+- `remove.Draw` += `() => { var center = remove.Size / 2; var color = remove.Disabled ? _muted.Darkened(.45f) : _ink; Vector2 P(float x, float y) => center + new Vector2(x, y); remove.DrawLine(P(-9, -7), P(9, -7), color, 1.8f, true); remove.DrawPolyline([P(-4, -7), P(-4, -10), P(4, -10), P(4, -7)], color, 1.8f, true); remove.DrawPolyline([P(-7, -7), P(-6, 10), P(6, 10), P(7, -7)], color, 1.8f, true); remove.DrawLine(P(-2.5f, -3), P(-2.5f, 6), color, 1.5f, true); remove.DrawLine(P(2.5f, -3), P(2.5f, 6), color, 1.5f, true); }`
+- `remove.Name` = `"DateSpriteDelete_" + emotion.Id`
+- `remove.TooltipText` = `"删除选中的立绘"`
+- `selections[selectionKey]` = `DateSceneAssetStore.SpriteKeys(copy, design, emotion.Id).Except(keys).FirstOrDefault() ?? keys.FirstOrDefault() ?? ""`
+- `selections[selectionKey]` = `keys[(int)index]`
+- `selections[selectionKey]` = `keys[selected]`
+- `status.Modulate` = `Colors.White`
+- `status.Modulate` = `new Color("ee929d")`
+- `status.Text` = `"删除失败：" + e.Message`
+- `status.Text` = `"已删除 " + key + ".png"`
+- `style.ContentMarginBottom` = `8`
+- `style.ContentMarginTop` = `style.ContentMarginBottom = 8`
+
+<a id="symbol-90f335e6b107"></a>
+
+## `P(float, float) — Vector2 P(float x, float y)`
+
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)
+
+**调用：** `Godot.Vector2.Vector2(float, float)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(x, y)`；返回值紧邻使用处：`BinaryExpressionSyntax: center + new Vector2(x, y)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-1ddd153a2cf4"></a>
+
+## `NationalSpire.CareerScreen.DateEmotionLink(string, string, System.Action) — private static Button DateEmotionLink(string text, string name, Action action)`
+
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)
+
+**调用：** `Godot.BaseButton.IsHovered()`；`Godot.Button.Button()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Control.HasFocus()`；`Godot.Font.GetAscent(int)`；`Godot.Font.GetHeight(int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Teal`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.BaseButton.IsHovered()`；输入表达式：`button.IsHovered()`；返回值紧邻使用处：`BinaryExpressionSyntax: button.IsHovered() || button.HasFocus()`
+- `Godot.Button.Button()`；输入表达式：`new Button { Name = name, Text = text, Alignment = HorizontalAlignment.Left, CustomMinimumSize = new(0, 48), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseDefaultCursorShape = CursorShape.PointingHand }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Button { Name = name, Text = text, Alignment = HorizontalAlignment.Left, CustomMinimumSize = new(0, 48), ClipText = true, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseDefaultCursorShape = CursorShape.PointingHand }`
+- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`button.DrawLine(new(0, y), new(width, y), button.IsHovered() || button.HasFocus() ? CareerVisuals.Teal : CareerVisuals.Ink, 1, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.DrawLine(new(0, y), new(width, y), button.IsHovered() || button.HasFocus() ? CareerVisuals.Teal : CareerVisuals.Ink, 1, true);`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`button.AddThemeColorOverride("font_" + state + "_color", CareerVisuals.Teal)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeColorOverride("font_" + state + "_color", CareerVisuals.Teal);`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`button.AddThemeColorOverride("font_color", CareerVisuals.Ink)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeColorOverride("font_color", CareerVisuals.Ink);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`button.AddThemeFontSizeOverride("font_size", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeFontSizeOverride("font_size", 18);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`button.AddThemeStyleboxOverride(state, new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeStyleboxOverride(state, new StyleBoxEmpty());`
+- `Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；输入表达式：`button.GetThemeFont("font")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = button.GetThemeFont("font")`
+- `Godot.Control.HasFocus()`；输入表达式：`button.HasFocus()`；返回值紧邻使用处：`BinaryExpressionSyntax: button.IsHovered() || button.HasFocus()`
+- `Godot.Font.GetAscent(int)`；输入表达式：`font.GetAscent(18)`；返回值紧邻使用处：`BinaryExpressionSyntax: (button.Size.Y - font.GetHeight(18)) / 2 + font.GetAscent(18)`
+- `Godot.Font.GetHeight(int)`；输入表达式：`font.GetHeight(18)`；返回值紧邻使用处：`BinaryExpressionSyntax: button.Size.Y - font.GetHeight(18)`
+- `Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；输入表达式：`font.GetStringSize(button.Text, fontSize: 18)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: font.GetStringSize(button.Text, fontSize: 18).X`
+- `Godot.StyleBoxEmpty.StyleBoxEmpty()`；输入表达式：`new StyleBoxEmpty()`；返回值紧邻使用处：`ArgumentSyntax: new StyleBoxEmpty()`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 48)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, y)`；返回值紧邻使用处：`ArgumentSyntax: new(0, y)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width, y)`；返回值紧邻使用处：`ArgumentSyntax: new(width, y)`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(button.Size.X, font.GetStringSize(button.Text, fontSize: 18).X)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(button.Size.X, font.GetStringSize(button.Text, fontSize: 18).X)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Alignment` = `HorizontalAlignment.Left`
+- `ClipText` = `true`
+- `CustomMinimumSize` = `new(0, 48)`
+- `MouseDefaultCursorShape` = `CursorShape.PointingHand`
+- `Name` = `name`
+- `TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `Text` = `text`
+- `button.Draw` += `() => { var font = button.GetThemeFont("font"); float width = Math.Min(button.Size.X, font.GetStringSize(button.Text, fontSize: 18).X); float y = (button.Size.Y - font.GetHeight(18)) / 2 + font.GetAscent(18) + 2; button.DrawLine(new(0, y), new(width, y), button.IsHovered() || button.HasFocus() ? CareerVisuals.Teal : CareerVisuals.Ink, 1, true); }`
+- `button.FocusEntered` += `button.QueueRedraw`
+- `button.FocusExited` += `button.QueueRedraw`
+- `button.MouseEntered` += `button.QueueRedraw`
+- `button.MouseExited` += `button.QueueRedraw`
+- `button.Pressed` += `action`
+
+<a id="symbol-29862ab95d64"></a>
+
+## `NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string) — private void NewDateEmotion(CareerData data, string person, string existing = "")`
+
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-1f678296da64)
+
+**调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Color.Color(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；[`NationalSpire.PortraitDesigns.Error(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-4591e55fbd90)；[`NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-c1635a7761da)；[`NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`](PortraitDesign.cs.md#symbol-72711df647d3)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`string.Trim()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesignStore.Read(string, string)`；`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；`NationalSpire.PortraitDesigns.Error(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`；`NationalSpire.PortraitEmotion.Description`；`NationalSpire.PortraitEmotion.Id`；`NationalSpire.PortraitEmotion.Name`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Callable.CallDeferred(params Godot.Variant[])`；输入表达式：`Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateAssets(data, person); }).CallDeferred()`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateAssets(data, person); }).CallDeferred()`
+- `Godot.Callable.From(System.Action)`；输入表达式：`Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateAssets(data, person); })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateAssets(data, person); }).CallDeferred`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("ee929d")`；返回值紧邻使用处：`ArgumentSyntax: new Color("ee929d")`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(this)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(this) && CareerStore.IsCurrent(data)`
+- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "DateEmotionId", PlaceholderText = "情绪ID，例如 curious", CustomMinimumSize = new(0, 42) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: id = new LineEdit { Name = "DateEmotionId", PlaceholderText = "情绪ID，例如 curious", CustomMinimumSize = new(0, 42) }`
+- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "DateEmotionName", PlaceholderText = "情绪名称，例如 好奇", CustomMinimumSize = new(0, 42) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: name = new LineEdit { Name = "DateEmotionName", PlaceholderText = "情绪名称，例如 好奇", CustomMinimumSize = new(0, 42) }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(detail)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(detail);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(error)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(error);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(id);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(name)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(name);`
+- `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "DateEmotionDescription", PlaceholderText = "表情变化与符合角色习惯的简单动作", CustomMinimumSize = new(0, 140), WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`AssignmentExpressionSyntax: detail = new TextEdit { Name = "DateEmotionDescription", PlaceholderText = "表情变化与符合角色习惯的简单动作", CustomMinimumSize = new(0, 140), WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 140)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 140)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 42)`
+- `NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`；输入表达式：`OpenDateAssets(data, person)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenDateAssets(data, person);`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog(existing.Length == 0 ? "新增情绪差分" : "编辑情绪差分", "修改名称与表现说明；更换ID时同步保留各套装中的立绘。默认差分的ID也可修改，回退映射会同步更新。", () => { try { var design = PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person) ?? PortraitDesigns.Create(data, person); var assets = DateSceneAssetStore.Read(data, person); var emotion = existing.Length == 0 ? PortraitDesigns.NewEmotion(design) : design.Emotions.Single(e => e.Id == existing); var previous = Coop.CoopJson.Copy(design); if (PortraitDesigns.RenameEmotion(design, emotion, id.Text) is { } issue) { error.Text = issue; return false; } emotion.Name = name.Text.Trim(); emotion.Description = detail.Text.Trim(); if (PortraitDesigns.Error(design) is { } invalid) { error.Text = invalid; return false; } DateSceneAssetStore.SaveEmotionEdit(data, person, previous, design, assets, existing, emotion.Id); return true; } catch (Exception e) { error.Text = e.Message; return false; } }, "保存差分", box => { id = new LineEdit { Name = "DateEmotionId", PlaceholderText = "情绪ID，例如 curious", CustomMinimumSize = new(0, 42) }; box.AddChild(id); name = new LineEdit { Name = "DateEmotionName", PlaceholderText = "情绪名称，例如 好奇", CustomMinimumSize = new(0, 42) }; box.AddChild(name); detail = new TextEdit { Name = "DateEmotionDescription", PlaceholderText = "表情变化与符合角色习惯的简单动作", CustomMinimumSize = new(0, 140), WrapMode = TextEdit.LineWrappingMode.Boundary }; box.AddChild(detail); error = Text("", 16, new Color("ee929d")); box.AddChild(error); if (original != null) { id.Text = original.Id; name.Text = original.Name; detail.Text = original.Description; } })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog(existing.Length == 0 ? "新增情绪差分" : "编辑情绪差分", "修改名称与表现说明；更换ID时同步保留各套装中的立绘。默认差分的ID也可修改，回退映射会同步更新。", () => { try { var design = PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person) ?? PortraitDesigns.Create(data, person); var assets = DateSceneAssetStore.Read(data, person); var emotion = existing.Length == 0 ? PortraitDesigns.NewEmotion(design) : design.Emotions.Single(e => e.Id == existing); var previous = Coop.CoopJson.Copy(design); if (PortraitDesigns.RenameEmotion(design, emotion, id.Text) is { } issue) { error.Text = issue; return false; } emotion.Name = name.Text.Trim(); emotion.Description = detail.Text.Trim(); if (PortraitDesigns.Error(design) is { } invalid) { error.Text = invalid; return false; } DateSceneAssetStore.SaveEmotionEdit(data, person, previous, design, assets, existing, emotion.Id); return true; } catch (Exception e) { error.Text = e.Message; return false; } }, "保存差分", box => { id = new LineEdit { Name = "DateEmotionId", PlaceholderText = "情绪ID，例如 curious", CustomMinimumSize = new(0, 42) }; box.AddChild(id); name = new LineEdit { Name = "DateEmotionName", PlaceholderText = "情绪名称，例如 好奇", CustomMinimumSize = new(0, 42) }; box.AddChild(name); detail = new TextEdit { Name = "DateEmotionDescription", PlaceholderText = "表情变化与符合角色习惯的简单动作", CustomMinimumSize = new(0, 140), WrapMode = TextEdit.LineWrappingMode.Boundary }; box.AddChild(detail); error = Text("", 16, new Color("ee929d")); box.AddChild(error); if (original != null) { id.Text = original.Id; name.Text = original.Name; detail.Text = original.Description; } });`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, new Color("ee929d"))`；返回值紧邻使用处：`AssignmentExpressionSyntax: error = Text("", 16, new Color("ee929d"))`
+- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(this) && CareerStore.IsCurrent(data)`
+- `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`Coop.CoopJson.Copy(design)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Coop.CoopJson.Copy(design)`
+- `NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；输入表达式：`DateSceneAssetStore.Read(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneAssetStore.Read(data, person)`
+- `NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`；输入表达式：`DateSceneAssetStore.SaveEmotionEdit(data, person, previous, design, assets, existing, emotion.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.SaveEmotionEdit(data, person, previous, design, assets, existing, emotion.Id);`
+- `NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；输入表达式：`PortraitDesignStore.FilePath(data, person)`；返回值紧邻使用处：`ArgumentSyntax: PortraitDesignStore.FilePath(data, person)`
+- `NationalSpire.PortraitDesignStore.Read(string, string)`；输入表达式：`PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person)?.Emotions.FirstOrDefault(e => e.Id == existing)`
+- `NationalSpire.PortraitDesignStore.Read(string, string)`；输入表达式：`PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person) ?? PortraitDesigns.Create(data, person)`
+- `NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；输入表达式：`PortraitDesigns.Create(data, person)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person) ?? PortraitDesigns.Create(data, person)`
+- `NationalSpire.PortraitDesigns.Error(NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesigns.Error(design)`；返回值紧邻使用处：`IsPatternExpressionSyntax: PortraitDesigns.Error(design) is { } invalid`
+- `NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesigns.NewEmotion(design)`；返回值紧邻使用处：`ConditionalExpressionSyntax: existing.Length == 0 ? PortraitDesigns.NewEmotion(design) : design.Emotions.Single(e => e.Id == existing)`
+- `NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`；输入表达式：`PortraitDesigns.RenameEmotion(design, emotion, id.Text)`；返回值紧邻使用处：`IsPatternExpressionSyntax: PortraitDesigns.RenameEmotion(design, emotion, id.Text) is { } issue`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`.Emotions.FirstOrDefault(e => e.Id == existing)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, person), person)?.Emotions.FirstOrDefault(e => e.Id == existing)`
+- `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`design.Emotions.Single(e => e.Id == existing)`；返回值紧邻使用处：`ConditionalExpressionSyntax: existing.Length == 0 ? PortraitDesigns.NewEmotion(design) : design.Emotions.Single(e => e.Id == existing)`
+- `string.Trim()`；输入表达式：`detail.Text.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: emotion.Description = detail.Text.Trim()`
+- `string.Trim()`；输入表达式：`name.Text.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: emotion.Name = name.Text.Trim()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(0, 140)`
+- `CustomMinimumSize` = `new(0, 42)`
+- `Name` = `"DateEmotionDescription"`
+- `Name` = `"DateEmotionId"`
+- `Name` = `"DateEmotionName"`
+- `PlaceholderText` = `"情绪ID，例如 curious"`
+- `PlaceholderText` = `"情绪名称，例如 好奇"`
+- `PlaceholderText` = `"表情变化与符合角色习惯的简单动作"`
+- `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
+- `_dialogOverlay.TreeExiting` += `() => Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateAssets(data, person); }).CallDeferred()`
+- `detail.Text` = `original.Description`
+- `detail` = `new TextEdit { Name = "DateEmotionDescription", PlaceholderText = "表情变化与符合角色习惯的简单动作", CustomMinimumSize = new(0, 140), WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `emotion.Description` = `detail.Text.Trim()`
+- `emotion.Name` = `name.Text.Trim()`
+- `error.Text` = `e.Message`
+- `error.Text` = `invalid`
+- `error.Text` = `issue`
+- `error` = `Text("", 16, new Color("ee929d"))`
+- `id.Text` = `original.Id`
+- `id` = `new LineEdit { Name = "DateEmotionId", PlaceholderText = "情绪ID，例如 curious", CustomMinimumSize = new(0, 42) }`
+- `name.Text` = `original.Name`
+- `name` = `new LineEdit { Name = "DateEmotionName", PlaceholderText = "情绪名称，例如 好奇", CustomMinimumSize = new(0, 42) }`

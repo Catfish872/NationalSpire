@@ -13,6 +13,8 @@
 - **国运与生活**：赛事影响国运，结合赞助、收入、生活事件和双周刊形成持续发展的世界。
 - **社区与聊天**：可选 AI 生成帖子、评论、私信及群聊；支持分享帖子、约战、合同、训练、活动、好感与关系等交互。
 - **角色自定义**：编辑头像、身份、战绩、基础通关率、性格与打法，通过原始 PNG 文件导入和分享角色卡。
+- **角色互动**：分档好感与关系装扮、批量赠礼、商城邀约、婚戒及婚礼，支持攻略难度和可选的好感通关率联动。
+- **约会与立绘**：一对一视觉小说场景、情绪立绘和自动背景切换、约会日记；支持角色设计、提示词导出、立绘与完整角色包导入。
 - **多人模式**：支持 Steam 联机生涯，由房主同步生涯数据，开赛前共同准备。
 
 玩家进行游戏原生战斗，AI 对手的成绩由模组模拟；比赛根据通关情况、游戏记录的用时及失败楼层等规则结算。
@@ -121,14 +123,16 @@
 
 推荐通过 [Steam 创意工坊](https://steamcommunity.com/sharedfiles/filedetails/?id=3809501471)订阅并安装。当前源码对应的版本见 [NationalSpire.json](NationalSpire.json)。
 
-手动安装时，将以下两个文件放入游戏目录的 `mods/NationalSpire/`：
+手动安装时，将模组 DLL、清单和附带背景目录放入游戏目录的 `mods/NationalSpire/`：
 
 ```text
 Slay the Spire 2/
 └─ mods/
    └─ NationalSpire/
       ├─ NationalSpire.dll
-      └─ NationalSpire.json
+      ├─ NationalSpire.json
+      └─ date-backgrounds/
+         └─ *.jpg
 ```
 
 替换文件前退出游戏。多人联机时，各成员应使用相同的游戏分支与模组版本。
@@ -158,7 +162,7 @@ dotnet build NationalSpire.csproj -c Release `
   -p:DeployMod=false
 ```
 
-构建产物为 `.godot/mono/temp/bin/Release/NationalSpire.dll`。与仓库中的 `NationalSpire.json` 一起安装即可。
+构建产物为 `.godot/mono/temp/bin/Release/NationalSpire.dll`。与仓库中的 `NationalSpire.json`、`date-backgrounds/` 一起安装即可。随包背景来源见 [date-backgrounds/SOURCES.txt](date-backgrounds/SOURCES.txt)，图标授权声明见 [Art/Affection/LICENSE-LUCIDE.txt](Art/Affection/LICENSE-LUCIDE.txt)。
 
 项目默认会将构建结果复制到 `Sts2Dir` 下的 `mods/NationalSpire/`。上述命令使用 `DeployMod=false` 关闭自动复制；需要自动安装时，在游戏退出后将其改为 `true`。
 

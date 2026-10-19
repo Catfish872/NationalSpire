@@ -23,6 +23,8 @@ public sealed class CareerData
     [System.Text.Json.Serialization.JsonIgnore] public string LocalHumanId { get; set; } = "";
     public int CooperativeMembers { get; set; } = 1;
     public int RivalLevel { get; set; } = 1000;
+    public RomanceDifficulty RomanceDifficulty { get; set; }
+    public bool AffectionLinkedClearChance { get; set; }
     public bool RandomCharacter { get; set; }
     public List<string> HumanIds { get; set; } = [];
     public Dictionary<string, string> HumanFrames { get; set; } = [];
@@ -185,6 +187,7 @@ public sealed class CareerPerson
 
 public sealed class CommunityPost
 {
+    public List<PromptInsertion> PromptInsertions { get; set; } = [];
     [System.Text.Json.Serialization.JsonPropertyName("AiNetScore")]
     public int? AudienceScore { get; set; }
     public Dictionary<string, int> PlayerVotes { get; set; } = [];
@@ -222,6 +225,7 @@ public sealed class CommunityPost
 
 public sealed class CommunityReply
 {
+    public List<PromptInsertion> PromptInsertions { get; set; } = [];
     [System.Text.Json.Serialization.JsonPropertyName("AiNetScore")]
     public int? AudienceScore { get; set; }
     public Dictionary<string, int> PlayerVotes { get; set; } = [];

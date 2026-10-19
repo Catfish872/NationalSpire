@@ -58,10 +58,10 @@ public static class CommunityThreads
     public static IEnumerable<CommunityReply> Pending(CareerData data) => All(data).SelectMany(p => p.Replies).Where(r => CommunityThreads.IsHuman(data, r.AuthorId) && r.NeedsReaction);
     public static IEnumerable<string> PendingIds(CareerData data) => Pending(data).Select(r => r.Id)
         .Concat(All(data).Where(p => (CommunityThreads.IsHuman(data, p.AuthorId) || p.PersonalPost) && p.NeedsReaction).Select(p => p.Id));
-    public static CommunityPost Publish(CareerData data, string title, string body)
+    public static CommunityPost Publish(CareerData data, string title, string body, List<PromptInsertion>? insertions = null)
     {
         if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(body)) throw new InvalidOperationException("请填写标题和正文。");
-        var post = new CommunityPost { Title = title.Trim(), Body = body.Trim(), AuthorId = "player", Day = data.Day,
+        var post = new CommunityPost { Title = title.Trim(), Body = body.Trim(), AuthorId = "player", Day = data.Day, PromptInsertions = NationalSpire.PromptInsertions.Copy(insertions),
             Category = "玩家讨论", MatchKind = "local", RelatedPeople = ["player"], NeedsReaction = true, SeenRevision = 1 };
         post.MentionedPeople = CommunityMentions.Resolve(data, post.Title + "\n" + post.Body);
         data.Posts.Insert(0, post); Remember(data, post); TrimFeed(data); CareerStore.Save(data); return post;
@@ -101,12 +101,12 @@ public static class CommunityThreads
         if (count > 0) CareerStore.Save(data);
         return count;
     }
-    public static CommunityReply Submit(CareerData data, CommunityPost post, string parentId, string body)
+    public static CommunityReply Submit(CareerData data, CommunityPost post, string parentId, string body, List<PromptInsertion>? insertions = null)
     {
         if (!All(data).Contains(post)) throw new InvalidOperationException("帖子已不存在。");
         if (string.IsNullOrWhiteSpace(body)) throw new InvalidOperationException("请先填写回复内容。");
         if (parentId.Length > 0 && !post.Replies.Any(r => r.Id == parentId)) throw new InvalidOperationException("回复目标已不存在。");
-        var reply = new CommunityReply { AuthorId = "player", ParentId = parentId, Body = body.Trim(), Day = data.Day, NeedsReaction = true };
+        var reply = new CommunityReply { AuthorId = "player", ParentId = parentId, Body = body.Trim(), Day = data.Day, NeedsReaction = true, PromptInsertions = NationalSpire.PromptInsertions.Copy(insertions) };
         reply.MentionedPeople = CommunityMentions.Resolve(data, reply.Body);
         post.Replies.Add(reply); post.AiPending = false;
         post.Revision++; post.SeenRevision = post.Revision;

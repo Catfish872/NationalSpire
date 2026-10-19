@@ -76,7 +76,8 @@ public sealed class CoopCareerSession : ICareerSession
         { if (int.TryParse(target, out int season)) _queuedCeremony = Math.Max(_queuedCeremony, season); return; }
         if (_pending != null) { Message?.Invoke("正在同步上一项操作。", false); return; }
         var w = _session.World!;
-        _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent); _accepted = accepted;
+        _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)
+            { PromptInsertions = kind is "post" or "reply" ? PromptInsertions.Capture("community") : null }; _accepted = accepted;
         if (!Host && kind == "confirm") Message?.Invoke("已提交准备，等待同步。", false);
         _session.SubmitReady(_pending, command => _pending = command, error =>
         { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });

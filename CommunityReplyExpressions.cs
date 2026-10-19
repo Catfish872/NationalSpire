@@ -33,7 +33,7 @@ internal static class CommunityReplyExpressions
         "(>_<)", "(；ω；)", "(｀・ω・´)", "( ˘ω˘ )", "m(_ _)m"
     ];
 
-    public static Action<bool> Attach(TextEdit editor, VBoxContainer parent, HBoxContainer actions, Control? toolbar = null)
+    public static Action<bool> Attach(TextEdit editor, VBoxContainer parent, HBoxContainer actions, Control? toolbar = null, Action? promptSettings = null)
     {
         // 工具栏和选择项使用键盘焦点时，保留原文字选区供插入操作替换。
         editor.DeselectOnFocusLossEnabled = false;
@@ -59,12 +59,16 @@ internal static class CommunityReplyExpressions
         panel.AddChild(choiceScroll); choiceScroll.AddChild(choices);
         var emojiButton = CategoryButton("😊", "ReplyEmojiButton", 26);
         var kaomojiButton = CategoryButton("OwO", "ReplyKaomojiButton", 16);
+        var promptButton = CategoryButton("", "ReplyPromptButton", 26);
+        promptButton.Icon = AffectionArt.Texture("prompt-insert"); promptButton.IconAlignment = HorizontalAlignment.Center;
+        promptButton.ToggleMode = false; promptButton.TooltipText = "提示词插入"; promptButton.Visible = promptSettings != null;
+        promptButton.Pressed += () => promptSettings?.Invoke();
         kaomojiButton.Hide();
         // 跟随同一操作行的实际高度，保持正方形入口和发布、收起按钮上下对齐。
         actions.Resized += () =>
         {
             float side = Math.Max(48, actions.Size.Y);
-            emojiButton.CustomMinimumSize = kaomojiButton.CustomMinimumSize = new Vector2(side, 48);
+            emojiButton.CustomMinimumSize = kaomojiButton.CustomMinimumSize = promptButton.CustomMinimumSize = new Vector2(side, 48);
         };
         bool emoji = true, enabled = true; int request = 0;
 
@@ -74,6 +78,7 @@ internal static class CommunityReplyExpressions
             kaomojiButton.SetPressedNoSignal(panel.Visible && !emoji);
             emojiButton.Visible = enabled;
             kaomojiButton.Visible = enabled && panel.Visible;
+            promptButton.Visible = enabled && !panel.Visible && promptSettings != null;
         }
         void Hide()
         {
@@ -116,6 +121,7 @@ internal static class CommunityReplyExpressions
         emojiButton.Pressed += () => Show(true); actions.AddChild(emojiButton);
         kaomojiButton.TooltipText = "切换到颜文字；再次点击收起";
         kaomojiButton.Pressed += () => Show(false); actions.AddChild(kaomojiButton);
+        actions.AddChild(promptButton);
         // 私信/群聊共用编辑器时按当前模式切换入口；隐藏同时取消待执行的聚焦。
         return value => { enabled = value; if (!enabled) { request++; panel.Hide(); } UpdateTabs(); };
     }

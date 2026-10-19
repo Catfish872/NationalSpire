@@ -43,7 +43,11 @@ public static partial class AiService
         {
             if (!data.Ai.Enabled) throw new InvalidOperationException("请先启用 AI。");
             PrivateForegroundQueue.Configure(data.Ai.MaxConcurrentRequests);
+            var timer = System.Diagnostics.Stopwatch.StartNew();
             using var lease = await EnterPrivateQueue(data, key, cancel.Token);
+            Diagnostics.Record("private.queue", new { person, turnId, milliseconds = timer.Elapsed.TotalMilliseconds });
+            cancel.CancelAfter(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
+            timer.Restart();
             cancel.Token.ThrowIfCancellationRequested();
             data = current(); if (data == null) return;
             conversation = PrivateMessages.Conversation(data, person);
@@ -51,8 +55,9 @@ public static partial class AiService
             if (turn.Status != "queued") return;
             if (turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             originalFavour = PrivateMessages.Favour(data, person);
+            var contextSpans = new List<PrivateMessagePrompts.ContextSpan>();
             turn.Context = turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn)
-                : PrivateMessagePrompts.Context(data, conversation, turn);
+                : PrivateMessagePrompts.Context(data, conversation, turn, contextSpans);
             turn.Status = "sending"; turn.Error = ""; save(data);
             if (turn.RequestKind == "arbitration")
             {
@@ -67,7 +72,7 @@ public static partial class AiService
                 SpireArbitration.Complete(data, conversation, turn, decision);
                 turn.Reasoning = record.ToString(); save(data); Notify(turn.Reply); return;
             }
-            var messages = PrivateMessagePrompts.Compose(data, conversation, turn);
+            var messages = PrivateMessagePrompts.Compose(data, conversation, turn, turn.Context, contextSpans);
             var parser = new PrivateStreamParser();
             var reasoning = new StringBuilder();
             var lastProgress = DateTime.MinValue;
@@ -85,15 +90,24 @@ public static partial class AiService
             }
             await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId);
             cancel.Token.ThrowIfCancellationRequested(); parser.Finish();
+            if (turn.Scene is { Ending: false } && DateScenes.ReplyFailure(parser.Text) is { } failure) throw new InvalidDataException(failure);
+            List<DateSceneLine> sceneLines = []; string sceneWarning = "";
+            if (turn.Scene is { Ending: false } scene && !string.IsNullOrWhiteSpace(parser.Text))
+            {
+                sceneLines = DateScenes.TaggedLines(parser, scene);
+                if (parser.SceneCues.Count == 0) sceneWarning = "\n本轮已兼容处理场景标记，并使用本地分句。";
+            }
             data = current(); if (data == null || PrivateKey(data, person) != key || !PrivateMessages.CanChat(data, person)) return;
             conversation = PrivateMessages.Conversation(data, person);
             turn = conversation.Turns.First(t => t.Id == turnId);
             if (turn.Status != "sending") return;
             if (SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
-            if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");
+            if (string.IsNullOrWhiteSpace(parser.Text) || turn.Scene is { Ending: false } && sceneLines.All(l => string.IsNullOrWhiteSpace(DateScenes.DisplayText(l)))) throw new InvalidDataException("私信回复为空。");
             if (turn.ReplyOrder == 0) turn.ReplyOrder = GroupChats.NextOrder(data);
-            turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error;
+            turn.Reply = sceneLines.Count > 0 ? string.Concat(sceneLines.Select(l => l.Text)) : parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error + sceneWarning; turn.SceneLines = sceneLines;
+            Diagnostics.Record("private.generated", new { person, turnId, milliseconds = timer.Elapsed.TotalMilliseconds, scene = turn.Scene != null, cues = parser.SceneCues.Count });
             PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);
+            DateDiaries.Complete(conversation, turn, parser.Directives);
             turn.Regenerating = false; turn.PreviousReply = turn.PreviousReasoning = "";
             conversation.LastReplyOrder = Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1);
             save(data); Notify(turn.Reply);
@@ -118,7 +132,12 @@ public static partial class AiService
             }
             Diagnostics.Record("private.failed", new { person, turnId, error = FailureReason(e) });
         }
-        finally { PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateRequests.Remove(key); }
+        finally
+        {
+            PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateRequests.Remove(key);
+            if (current() is { } latest && PrivateMessages.Conversation(latest, person).Turns.FirstOrDefault(t => t.Status == "queued")?.Scene?.Ending == true)
+                _ = ProcessPrivateAsync(current, save, person, progress);
+        }
     }
 
     private static async Task<IDisposable> EnterPrivateQueue(CareerData data, string key, CancellationToken token)

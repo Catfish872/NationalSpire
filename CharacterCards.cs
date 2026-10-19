@@ -15,6 +15,7 @@ public sealed class CharacterCardEdit
 /// <summary>仅用于本次编辑命令；空值表示没有编辑该字段，不进入 PNG 角色资料。</summary>
 public sealed class CharacterRelationEdit
 {
+    public int? Bond { get; set; }
     public int? Favour { get; set; }
     public string? Relationship { get; set; }
     public string? Impression { get; set; }
@@ -113,6 +114,7 @@ public static class CharacterCards
         if (p.Personality == null || p.Personality.AttitudeMin < -5 || p.Personality.AttitudeMax > 5 || p.Personality.AttitudeMin > -1 || p.Personality.AttitudeMax < 1) return "态度下界为 -5 至 -1，上界为 1 至 5。";
         if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null)) return "性格描述无效。";
         if (edit.Relation != null && (edit.Target == "player" || d.HumanIds.Contains(edit.Target))) return "对你的态度仅用于 NPC。";
+        if (edit.Relation != null && AffectionRules.Strict(AffectionRules.Mode(d))) return "当前攻略难度下，对你的态度由实际互动决定。";
         if (edit.Relation?.Favour is < -100 or > 100) return "好感应在 -100—100 之间。";
         if (p.ClubId.Length > 0 && EsportsWorld.Club(d, p.ClubId) == null || p.SupportedClubId.Length > 0 && EsportsWorld.Club(d, p.SupportedClubId) == null) return "俱乐部已不存在。";
         var old = edit.Create ? null : Read(d, edit.Target);
@@ -125,6 +127,8 @@ public static class CharacterCards
     public static string? Apply(CareerData d, CharacterCardEdit edit, CareerLifeState? relationLife = null, string? human = null)
     {
         if (Validate(d, edit) is { } error) return error;
+        if (edit.Relation?.Bond is { } bond && RelationshipPresentation.EditError(
+            PrivateMessages.Mailbox(relationLife ?? d.Life).Relations.GetValueOrDefault(edit.Target) ?? new(), bond) is { } bondError) return bondError;
         var input = edit.Person;
         var p = edit.Create ? new CareerPerson { Id = edit.Target, CreatedCard = true } : Read(d, edit.Target);
         if (p.PublicName.Length > 0 && p.PublicName != input.Handle.Trim() && !p.HandleAliases.Contains(p.PublicName)) p.HandleAliases.Add(p.PublicName);
