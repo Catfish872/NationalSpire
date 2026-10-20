@@ -6,7 +6,7 @@ public partial class CareerScreen
 {
     private sealed record Location(string Tab, string? Person, string? Post, string WorldSection, string? Competition,
         string ProfileFilter, string CommunityFilter, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
-        string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "");
+        string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "", string Event = "");
     private sealed record TabVisit(Location Location, Location[] History);
     private readonly Stack<Location> _backHistory = new();
     private readonly Dictionary<string, TabVisit> _tabVisits = new();
@@ -14,7 +14,8 @@ public partial class CareerScreen
     private Button _backButton = null!;
     private Label _breadcrumb = null!;
     private Location CaptureLocation() => new(_tab, _personId, _postId, _worldSection, _competitionId,
-        _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit);
+        _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit,
+        Event: _eventView?.Visible == true ? _eventId : "");
     private void ApplyLocation(Location location)
     {
         _tab = location.Tab; _personId = location.Person; _postId = location.Post;
@@ -56,7 +57,7 @@ public partial class CareerScreen
     private void OpenPerson(string id)
     {
         if (_tab == "选手档案" && _personId == id) return;
-        Visit(() => { _personId = id; _tab = "选手档案"; });
+        Visit(() => { _eventView?.Hide(); _personId = id; _tab = "选手档案"; });
     }
     private void OpenPost(CommunityPost post)
     {
@@ -93,6 +94,7 @@ public partial class CareerScreen
             ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);
             if (previous.Group.Length > 0) { SelectGroup(previous.Group, previous.ChatPage); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }
             else if (previous.PrivatePerson.Length > 0) { OpenPrivateMessages(previous.PrivatePerson, page: previous.ChatPage); _ = ScrollChatTo(previous.ChatScroll); }
+            else if (previous.Event.Length > 0) OpenRandomEvent(previous.Event);
         }
         else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }
         else if (_tab == "选手档案" && _personId != null) { _personId = null; _scroll.ScrollVertical = 0; Render(); }
@@ -116,6 +118,7 @@ public partial class CareerScreen
         else if (_tab == "赛事与俱乐部" && _worldSection == "颁奖盛典") destination = "荣誉室";
         if (_backHistory.TryPeek(out var chat) && chat.Group.Length > 0) destination = "群聊";
         else if (chat?.PrivatePerson.Length > 0) destination = "私聊";
+        else if (chat?.Event.Length > 0) destination = "随机事件";
         _backButton.Text = "← 返回" + destination; _backButton.Disabled = !CanGoBack;
         _backButton.TooltipText = CanGoBack ? "返回上一处内容，恢复筛选和阅读位置。快捷键：Esc" : "当前已是栏目入口。";
         string detail = _tab switch

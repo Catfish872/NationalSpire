@@ -66,7 +66,7 @@ public static partial class AiService
             if (!profiles)
                 issue.Memory = CommunityMemorySearch.Retrieve(data, string.Join(" ", CameoContent.GeneratedSlides(issue).Select(s => s.Topic)),
                     CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).Distinct(), issue.StartDay - 1, new HashSet<string>(), 5);
-            string context = BuildWeeklyContext(issue, profiles);
+            string context = BuildWeeklyContext(data, issue, profiles);
             string payload = JsonSerializer.Serialize(new { model, stream = false,
                 messages = new[] { new { role = "system", content = ComposeSystem(data.Ai, profiles ? "profiles" : "weekly") }, new { role = "user", content = wire.Encode(context) } } }, Json);
             CommunityThreads.SetWork(work, "sending");
@@ -94,7 +94,7 @@ public static partial class AiService
             CareerStore.Save(data);
         }
     }
-    internal static string BuildWeeklyContext(WeeklyEdition issue, bool profiles)
+    internal static string BuildWeeklyContext(CareerData data, WeeklyEdition issue, bool profiles)
     {
         if (profiles) return JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,
             profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous }) }, Json);
@@ -103,7 +103,7 @@ public static partial class AiService
             cooperation = issue.Cooperation,
             slides = CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement }),
             profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous }),
-            memory = issue.Memory, schedule = PublicSchedule.ForPrompt(issue.Schedule) }, Json);
+            memory = issue.Memory, schedule = PublicSchedule.ForPrompt(data, issue.Schedule) }, Json);
     }
     internal static void ApplyWeeklyResponse(CareerData data, WeeklyEdition issue, bool profiles, string content)
     {

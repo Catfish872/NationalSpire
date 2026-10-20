@@ -83,6 +83,7 @@ public static partial class AiService
             if (turn.Replies.Count == 0 && parser.Actions.Directives.Count == 0) throw new InvalidDataException("没有返回可识别的群聊消息，请重试。");
             GroupInteractions.Apply(d, g, turn, parser.Actions.Directives);
             turn.Status = "complete";
+            ProactiveChats.CountReplies(g, turn.Sender);
             g.Revision++; save(d); Notify();
             _ = SummarizeGroupAsync(current, save, group);
         }

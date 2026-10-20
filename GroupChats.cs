@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -14,7 +14,7 @@ public static class GroupChats
         : SpireArbitration.Muted(CareerEngine.Person(d, id)!) ? Name(d, id) + "的账号已封禁。" : "";
     public static string Name(CareerData d, string id) => id == Human(d) ? CareerEngine.Name(d) : CareerEngine.DisplayName(d, id);
     public static bool Busy(GroupChat g) => g.Turns.Any(t => t.Status is "queued" or "sending");
-    public static IEnumerable<GroupChat> Visible(CareerData d) => d.Chats.Groups.Where(g => g.Members.Contains(Human(d)));
+    public static IEnumerable<GroupChat> Visible(CareerData d) => d.Chats.Groups.Where(g => !g.Dissolved && g.Members.Contains(Human(d)));
     public static GroupChat Create(CareerData d, string name, IEnumerable<string> members)
     {
         var g = new GroupChat { Name = name.Trim(), Creator = Human(d) };
@@ -26,6 +26,7 @@ public static class GroupChats
         foreach (string id in people.Distinct().Where(id => IsHuman(d, id) || d.People.Any(p => p.Id == id)))
         {
             if (g.Members.Contains(id)) continue;
+            g.Departures.Remove(id);
             g.Members.Add(id); g.Alias(id);
             g.Entries.Add(new() { Order = NextOrder(d), Day = d.Day, Author = id, Text = Name(d, id) + "加入了群聊", Notice = true });
         }
@@ -68,9 +69,26 @@ public static class GroupChats
     {
         if (MatchFailure.Locked(d) is { } locked) return locked;
         if (kind == "group-create") { Create(d, command.Text, command.People); return null; }
+        if (kind == "group-manage")
+        {
+            var managed = d.Chats.Groups.FirstOrDefault(g => g.Id == id && !g.Forgotten);
+            return managed == null ? "群聊已删除。" : ChatMembership.Group(d, managed, command.Text, command.People.FirstOrDefault() ?? "");
+        }
         var g = Visible(d).FirstOrDefault(g => g.Id == id);
         if (g == null) return "群聊已不存在。";
+        if (kind == "group-rename")
+        {
+            string name = command.Text.Trim();
+            if (name.Length == 0) return "请填写群聊名称。";
+            if (name == g.Name) return null;
+            g.Entries.Add(new() { Order = NextOrder(d), Day = d.Day, Author = Human(d),
+                Text = Name(d, Human(d)) + " 将群名从" + g.Name + "改为" + name + "。", Notice = true });
+            g.Name = name; g.Revision++;
+            return null;
+        }
         if (kind == "group-read") { g.Seen[Human(d)] = g.Turns.Count(t => t.Status == "complete"); return null; }
+        if (kind == "group-proactive" && command.Proactive is { } proactiveSettings)
+        { var error = ProactiveChats.Configure(ProactiveChats.Settings(d, g), proactiveSettings); g.Revision++; return error; }
         if (kind == "group-add") { AddMembers(d, g, command.People); return null; }
         if (kind == "group-stop") { AiService.CancelGroup(d, g.Id); return null; }
         if (Busy(g)) return "正在回复，请等待本轮结束。";
@@ -78,6 +96,12 @@ public static class GroupChats
         {
             if (kind == "group-arbitrate" && string.IsNullOrWhiteSpace(command.Text)) command.Text = "申请尖塔仲裁，请审理本群往来及此前裁决的履行情况。";
             if (string.IsNullOrWhiteSpace(command.Text) && command.Attachments.Count == 0) return null;
+            if (g.Proactive.TryGetValue(Human(d), out var proactive)) proactive.Unanswered = 0;
+            foreach (var a in command.Attachments.Where(a => a.Kind is "gift" or "activity" or OathAttachments.Kind))
+            {
+                if (a.Kind is "gift" or OathAttachments.Kind && (!g.Members.Contains(a.ActorId) || IsHuman(d, a.ActorId))) return "请选择群内接收礼物的选手。";
+                if (ChatAttachments.Prepare(d, a.ActorId, a) is { } error) return error;
+            }
             var t = new GroupTurn { Sender = Human(d), Day = d.Day, Order = NextOrder(d), Text = command.Text, Attachments = command.Attachments,
                 ArbitrationTargets = kind == "group-arbitrate" ? command.People.Where(g.Members.Contains).Where(id => PrivateMessages.CanChat(d, id)).Distinct().ToList() : [] };
             foreach (var a in t.Attachments) { a.Id = (++g.LastInteractionNumber).ToString(); a.GroupId = g.Id; a.CoachAccepted = false; }
@@ -143,7 +167,7 @@ public static class GroupChats
                 var offer = c.Offers.FirstOrDefault(o => o.Id == command.Interaction.Offer && o.Kind == "activity");
                 if (offer == null) return "活动已不存在。";
                 if (kind == "group-offer-confirm") return SocialAppointments.Confirm(d, c, offer);
-                if (kind == "group-offer-attend") return SocialAppointments.Attend(d, offer);
+                if (kind == "group-offer-attend") return SocialAppointments.Attend(d, offer, command.Interaction.Part == "public");
                 if (kind == "group-offer-decline")
                 {
                     if (offer.State is not ("待确认" or "已确认")) return "这项活动已处理。";

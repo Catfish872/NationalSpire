@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F1F0003B15CDC09DF1C6F90BE9D5A3B601EFBC61F61C0BEACE49FB054B2F5BDD`。来源：[源码](../../SocialAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1D176406478C46FFD8F86E589F576916FD04D1864CA402045B6EDC051B585116`。来源：[源码](../../SocialAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -13,9 +13,19 @@
 ```csharp
 public const string ExpiredDate = "填写的邀约日期已过期，请重新约定日期";
 public const string Protocol = """
-玩家主动提出或暗示活动意愿时，才可商谈活动，名称与内容按双方交流自定。只有下列标记生成待确认约定，口头答应不产生记录；玩家确认后记入日程。
-[Activity: 邀请, Title: 一起看录像, Season: 2, Day: 18, Detail: 讨论今天的比赛]
-修改已有约定使用 [Activity: 改期, Id: 14, Season: 2, Day: 19]，取消使用 [Activity: 取消, Id: 14]，Id 填对应活动的编号。活动不等同比赛，不自行承诺资金或能力奖励。
+玩家主动提出或暗示活动意愿时，可以商谈活动。人物同意参加、提出新邀请、商定改期或决定取消时，必须在本轮回复中输出对应的 Activity 标记，程序据此登记活动。
+每条活动标记完整填写 Activity、Id、Title、Date、Detail。
+Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新提议填0；Title 填活动名称；Date 填公历日期，格式为YYYY-MM-DD；Detail 填活动内容。
+提出新活动：
+[Activity: 邀请, Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛]
+接受玩家提出的活动：
+[Activity: 接受, Id: 14, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛]
+商谈改期：
+[Activity: 改期, Id: 14, Title: 一起看录像, Date: 2026-01-19, Detail: 讨论今天的比赛]
+谢绝或取消活动：
+[Activity: 取消, Id: 14, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛]
+接受时按玩家附件填写活动资料；改期时填写商谈后的日期和内容；取消时填写对应活动的资料。
+只有标记才登记交互，口头答应无法触发实际效果。
 """;
 ```
 
@@ -25,7 +35,7 @@ public const string Protocol = """
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`NationalSpire.PrivateMessagePrompts.OfferContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessagePrompts.cs.md#symbol-67bd27e9ea35)
+**调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`NationalSpire.PrivateMessagePrompts.OfferContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessagePrompts.cs.md#symbol-67bd27e9ea35)
 
 **调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)
 
@@ -38,29 +48,49 @@ public const string Protocol = """
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-d06f06e1cd36"></a>
+
+## `NationalSpire.SocialAppointments.GroupProtocol — public static string GroupProtocol`
+
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `string.Replace(string, string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.SocialAppointments.Protocol`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace("Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p1", "Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p2")`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace("Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p1", "Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p2")`
+- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace`
+- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-0596ed8dd544"></a>
 
 ## `NationalSpire.SocialAppointments.All(NationalSpire.CareerData) — public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> All(CareerData d)`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.PrivateAppointments.Schedule(NationalSpire.CareerData, string, int)`](PrivateAppointments.cs.md#symbol-8d91a4d33a55)；[`NationalSpire.SocialAppointments.Due(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-d348017d127b)；[`NationalSpire.SocialAppointments.Expire(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-53508b4eaa4e)
+**调用者：** [`NationalSpire.CareerEngine.NextEventDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-0dbe0f2d1cdc)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.PrivateAppointments.Schedule(NationalSpire.CareerData, string, int)`](PrivateAppointments.cs.md#symbol-8d91a4d33a55)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)；[`NationalSpire.SocialAppointments.Due(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-d348017d127b)；[`NationalSpire.SocialAppointments.Expire(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-53508b4eaa4e)
 
-**调用：** [`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.GroupChat.Interactions`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateOffer.Kind`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Chats`；`NationalSpire.ChatWorld.Groups`；`NationalSpire.GroupChat.Interactions`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateOffer.Kind`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupChats.Human(d) + "/"`
-- `NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`；输入表达式：`GroupChats.Visible(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GroupChats.Visible(d).SelectMany`
 - `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(d).Conversations`
 - `string.StartsWith(string)`；输入表达式：`x.Key.StartsWith(GroupChats.Human(d) + "/")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: x => x.Key.StartsWith(GroupChats.Human(d) + "/")`
-- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`PrivateMessages.Mailbox(d).Conversations.Values.Concat(GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(d).Conversations.Values.Concat(GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`PrivateMessages.Mailbox(d).Conversations.Values.Concat(d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(d).Conversations.Values.Concat(d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value)`
-- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))`；返回值紧邻使用处：`ArgumentSyntax: GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))`
-- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`PrivateMessages.Mailbox(d).Conversations.Values.Concat(GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => PrivateMessages.Mailbox(d).Conversations.Values.Concat(GroupChats.Visible(d).SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)))`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))`；返回值紧邻使用处：`ArgumentSyntax: d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`PrivateMessages.Mailbox(d).Conversations.Values.Concat(d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => PrivateMessages.Mailbox(d).Conversations.Values.Concat(d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)))`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Offers.Where(o => o.Kind == "activity")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Offers.Where(o => o.Kind == "activity").Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select`
 
@@ -71,9 +101,9 @@ public const string Protocol = """
 
 ## `NationalSpire.SocialAppointments.Due(NationalSpire.CareerData) — public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> Due(CareerData d)`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int)`](CareerEngine.cs.md#symbol-e733e6d47318)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-fecbe30f550e)
+**调用者：** [`NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int, bool)`](CareerEngine.cs.md#symbol-0c04b8ec5f73)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-fecbe30f550e)
 
 **调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.SocialAppointments.All(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-0596ed8dd544)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -92,7 +122,7 @@ public const string Protocol = """
 
 ## `NationalSpire.SocialAppointments.Expire(NationalSpire.CareerData) — public static void Expire(CareerData d)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-bc24477e89ba)
 
@@ -114,64 +144,86 @@ public const string Protocol = """
 
 ## `NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>) — public static void Respond(CareerData d, PrivateConversation c, PrivateTurn t, Dictionary<string, string> fields)`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
-**调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`](PrivateMessageData.cs.md#symbol-2a4d65cc20f8)；[`NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?)`](PrivateMessageData.cs.md#symbol-ad3e5a4298ba)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；`int.TryParse(string?, out int)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-10ee34a4e855)；[`NationalSpire.GameCalendar.NormalizeFields(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, string>)`](GameCalendar.cs.md#symbol-65b6dda6244b)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`](PrivateMessageData.cs.md#symbol-2a4d65cc20f8)；[`NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?)`](PrivateMessageData.cs.md#symbol-ad3e5a4298ba)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；`int.TryParse(string?, out int)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`；`NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?)`；`NationalSpire.PrivateOffer.Day`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.ReplacesOfferId`；`NationalSpire.PrivateOffer.Season`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.Title`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateTurn.Error`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；`NationalSpire.SocialAppointments.ExpiredDate`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>)`；`NationalSpire.GameCalendar.NormalizeFields(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, string>)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`；`NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?)`；`NationalSpire.PrivateOffer.Day`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.GoodVerb`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.ReplacesOfferId`；`NationalSpire.PrivateOffer.Season`；`NationalSpire.PrivateOffer.ServiceId`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.Title`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateTurn.Error`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；`NationalSpire.SocialAppointments.ExpiredDate`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(fields.GetValueOrDefault("Day"), out int day)`；返回值紧邻使用处：`ConditionalExpressionSyntax: int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : -1`
-- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(fields.GetValueOrDefault("Season"), out int season)`；返回值紧邻使用处：`ConditionalExpressionSyntax: int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : -1`
+- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(fields.GetValueOrDefault("Day"), out int day)`；返回值紧邻使用处：`ConditionalExpressionSyntax: int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : basis?.Day ?? -1`
+- `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(fields.GetValueOrDefault("Season"), out int season)`；返回值紧邻使用处：`ConditionalExpressionSyntax: int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : basis?.Season ?? -1`
+- `NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>)`；输入表达式：`ChatAttachments.Find(c, t, "activity", fields)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ChatAttachments.Find(c, t, "activity", fields)`
+- `NationalSpire.GameCalendar.NormalizeFields(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, string>)`；输入表达式：`GameCalendar.NormalizeFields(d, fields)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GameCalendar.NormalizeFields(d, fields)`
+- `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`ExpressionElementSyntax: GroupChats.Human(d)`
 - `NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Date(d, o)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.Date(d, o) < d.Day`
 - `NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`；输入表达式：`PrivateInteractionIds.Ensure(c)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateInteractionIds.Ensure(c);`
 - `NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?)`；输入表达式：`PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id"))`；返回值紧邻使用处：`BinaryExpressionSyntax: o.Id == PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id"))`
-- `NationalSpire.PrivateOffer.PrivateOffer()`；输入表达式：`new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", old?.Title ?? ""),              Detail = fields.GetValueOrDefault("Detail", old?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", old?.Title ?? ""),              Detail = fields.GetValueOrDefault("Detail", old?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "" }`
+- `NationalSpire.PrivateOffer.PrivateOffer()`；输入表达式：`new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", basis?.Title ?? ""),              Detail = fields.GetValueOrDefault("Detail", basis?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "",              ServiceId = basis?.ServiceId ?? "", GoodId = basis?.GoodId ?? "", GoodVerb = basis?.GoodVerb ?? "", Participants = basis?.Participants.ToList() ?? [GroupChats.Human(d), c.PersonId] }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", basis?.Title ?? ""),              Detail = fields.GetValueOrDefault("Detail", basis?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "",              ServiceId = basis?.ServiceId ?? "", GoodId = basis?.GoodId ?? "", GoodVerb = basis?.GoodVerb ?? "", Participants = basis?.Participants.ToList() ?? [GroupChats.Human(d), c.PersonId] }`
+- `NationalSpire.PrivateOffer.PrivateOffer()`；输入表达式：`new() { Id = attachment.Id, Kind = "activity", TurnId = t.Id, Title = attachment.Title, Detail = attachment.Detail,                  Season = attachment.Season, Day = attachment.Day, Participants = attachment.Participants.ToList(), State = "已取消" }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = attachment.Id, Kind = "activity", TurnId = t.Id, Title = attachment.Title, Detail = attachment.Detail,                  Season = attachment.Season, Day = attachment.Day, Participants = attachment.Participants.ToList(), State = "已取消" }`
 - `NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Length(d, o.Season)`；返回值紧邻使用处：`BinaryExpressionSyntax: o.Day > SeasonCalendar.Length(d, o.Season)`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(o.Title)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrWhiteSpace(o.Title) || o.Season < 1`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Offers.FirstOrDefault(o => o.Kind == "activity" && o.Id == attachment.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: old = c.Offers.FirstOrDefault(o => o.Kind == "activity" && o.Id == attachment.Id)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Offers.FirstOrDefault(o => o.Kind == "activity" && o.Id == PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id")))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Offers.FirstOrDefault(o => o.Kind == "activity" && o.Id == PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id")))`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`.Participants.ToList()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: basis?.Participants.ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`attachment.Participants.ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Participants = attachment.Participants.ToList()`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`fields.GetValueOrDefault("Activity", "")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = fields.GetValueOrDefault("Activity", "")`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`fields.GetValueOrDefault("Detail", old?.Detail ?? "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Detail = fields.GetValueOrDefault("Detail", old?.Detail ?? "")`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`fields.GetValueOrDefault("Title", old?.Title ?? "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Title = fields.GetValueOrDefault("Title", old?.Title ?? "")`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`fields.GetValueOrDefault("Detail", basis?.Detail ?? "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Detail = fields.GetValueOrDefault("Detail", basis?.Detail ?? "")`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`fields.GetValueOrDefault("Title", basis?.Title ?? "")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Title = fields.GetValueOrDefault("Title", basis?.Title ?? "")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`fields.GetValueOrDefault("Day")`；返回值紧邻使用处：`ArgumentSyntax: fields.GetValueOrDefault("Day")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`fields.GetValueOrDefault("Id")`；返回值紧邻使用处：`ArgumentSyntax: fields.GetValueOrDefault("Id")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`fields.GetValueOrDefault("Season")`；返回值紧邻使用处：`ArgumentSyntax: fields.GetValueOrDefault("Season")`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`c.Offers.Add(new() { Id = attachment.Id, Kind = "activity", TurnId = t.Id, Title = attachment.Title, Detail = attachment.Detail,                  Season = attachment.Season, Day = attachment.Day, Participants = attachment.Participants.ToList(), State = "已取消" })`；返回值紧邻使用处：`ExpressionStatementSyntax: c.Offers.Add(new() { Id = attachment.Id, Kind = "activity", TurnId = t.Id, Title = attachment.Title, Detail = attachment.Detail,                  Season = attachment.Season, Day = attachment.Day, Participants = attachment.Participants.ToList(), State = "已取消" });`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`c.Offers.Add(o)`；返回值紧邻使用处：`ExpressionStatementSyntax: c.Offers.Add(o);`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Detail` = `fields.GetValueOrDefault("Detail", old?.Detail ?? "")`
+- `Day` = `attachment.Day`
+- `Detail` = `attachment.Detail`
+- `Detail` = `fields.GetValueOrDefault("Detail", basis?.Detail ?? "")`
+- `GoodId` = `basis?.GoodId ?? ""`
+- `GoodVerb` = `basis?.GoodVerb ?? ""`
+- `Id` = `attachment.Id`
 - `Kind` = `"activity"`
-- `o.Day` = `int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : -1`
-- `o.Season` = `int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : -1`
+- `o.Day` = `int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : basis?.Day ?? -1`
+- `o.Id` = `attachment!.Id`
+- `o.Season` = `int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : basis?.Season ?? -1`
 - `o.State` = `"已过期"`
+- `o.State` = `"已确认"`
 - `old.State` = `"已取消"`
+- `old` = `c.Offers.FirstOrDefault(o => o.Kind == "activity" && o.Id == attachment.Id)`
+- `Participants` = `attachment.Participants.ToList()`
+- `Participants` = `basis?.Participants.ToList() ?? [GroupChats.Human(d), c.PersonId]`
 - `ReplacesOfferId` = `old?.Id ?? ""`
+- `Season` = `attachment.Season`
+- `ServiceId` = `basis?.ServiceId ?? ""`
+- `State` = `"已取消"`
 - `t.Error` += `"\n" + ExpiredDate`
-- `t.Error` += `"\n活动编号或动作无效。"`
 - `t.Error` += `"\n活动需要名称和有效日期。"`
-- `Title` = `fields.GetValueOrDefault("Title", old?.Title ?? "")`
+- `t.Error` += `"\n请在活动附件中明确本次处理的活动编号。"`
+- `Title` = `attachment.Title`
+- `Title` = `fields.GetValueOrDefault("Title", basis?.Title ?? "")`
 - `TurnId` = `t.Id`
 
 <a id="symbol-2f0b4ecea199"></a>
 
 ## `NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer) — public static string? Confirm(CareerData d, PrivateConversation c, PrivateOffer o)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.Command(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-e0439deb45ac)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
-**调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool)`](PrivateInteractionUndo.cs.md#symbol-de9e985d044d)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool)`；`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.ReplacesOfferId`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.SocialAppointments.ExpiredDate`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.ReplacesOfferId`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.SocialAppointments.ExpiredDate`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Date(d, o)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.Date(d, o) < d.Day`
-- `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool)`；输入表达式：`PrivateInteractionHistory.Capture(d, c.PersonId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: source == null ? null : PrivateInteractionHistory.Capture(d, c.PersonId)`
+- `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；输入表达式：`PrivateInteractionHistory.Capture(d, c.PersonId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: source == null ? null : PrivateInteractionHistory.Capture(d, c.PersonId)`
 - `NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`；输入表达式：`PrivateInteractionHistory.Record(d, c.PersonId, source, before)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateInteractionHistory.Record(d, c.PersonId, source, before);`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Offers.FirstOrDefault(x => x.Id == o.ReplacesOfferId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: c.Offers.FirstOrDefault(x => x.Id == o.ReplacesOfferId) is { } old`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Turns.FirstOrDefault(t => t.Id == o.TurnId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Turns.FirstOrDefault(t => t.Id == o.TurnId)`
@@ -181,22 +233,59 @@ public const string Protocol = """
 - `o.State` = `"已确认"`
 - `old.State` = `"已改期"`
 
-<a id="symbol-4dbc4f79108f"></a>
+<a id="symbol-59e09ef2b579"></a>
 
-## `NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer) — public static string? Attend(CareerData d, PrivateOffer o)`
+## `NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool) — public static string? Attend(CareerData d, PrivateOffer o, bool publicly = false, bool scene = false)`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.Command(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-e0439deb45ac)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
-**调用：** [`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)
+**调用：** [`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.SocialAppointments.PublishAttendance(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-47965830082f)；[`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-4cb46102c2e0)；[`NationalSpire.WeddingAppointments.Error(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-9b3600926b30)；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.State`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`；`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.GoodVerb`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.PublicAttendance`；`NationalSpire.PrivateOffer.State`；`NationalSpire.SocialAppointments.PublishAttendance(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.WeddingAppointments.Error(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.WeddingAppointments.GoodId`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`；输入表达式：`ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly) is { } error`
+- `NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`GroupChats.IsHuman(d, id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GroupChats.IsHuman(d, id)`
 - `NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Date(d, o)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.Date(d, o) != d.Day`
+- `NationalSpire.SocialAppointments.PublishAttendance(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PublishAttendance(d, o)`；返回值紧邻使用处：`ExpressionStatementSyntax: PublishAttendance(d, o);`
+- `NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`WeddingAppointments.Complete(d, o)`；返回值紧邻使用处：`ExpressionStatementSyntax: WeddingAppointments.Complete(d, o);`
+- `NationalSpire.WeddingAppointments.Error(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`WeddingAppointments.Error(d, o)`；返回值紧邻使用处：`IsPatternExpressionSyntax: WeddingAppointments.Error(d, o) is { } weddingError`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct`
 
 **赋值（含属性/字段和局部值）：**
 
+- `o.PublicAttendance` = `publicly`
 - `o.State` = `"已赴约"`
+
+<a id="symbol-47965830082f"></a>
+
+## `NationalSpire.SocialAppointments.PublishAttendance(NationalSpire.CareerData, NationalSpire.PrivateOffer) — internal static void PublishAttendance(CareerData d, PrivateOffer o)`
+
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)；[`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-4cb46102c2e0)
+
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool)`](CareerLife.cs.md#symbol-0ea81cb3e558)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.Title`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => CareerEngine.DisplayName(d, id)`
+- `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(d)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.Name(d)}`
+- `NationalSpire.CareerLife.AddEvent(NationalSpire.CareerData, string, string, string, string, System.Collections.Generic.List<string>, bool)`；输入表达式：`CareerLife.AddEvent(d, GroupChats.Human(d) + "/appointment-" + o.Id, "消费与生活", o.Title + "已完成",              $"{CareerEngine.Name(d)}与{string.Join("、", people.Select(id => CareerEngine.DisplayName(d, id)))}参加了{o.Title}。活动内容：{o.Detail}。活动已经完成。", [GroupChats.Human(d), .. people])`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerLife.AddEvent(d, GroupChats.Human(d) + "/appointment-" + o.Id, "消费与生活", o.Title + "已完成",              $"{CareerEngine.Name(d)}与{string.Join("、", people.Select(id => CareerEngine.DisplayName(d, id)))}参加了{o.Title}。活动内容：{o.Detail}。活动已经完成。", [GroupChats.Human(d), .. people]);`
+- `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: GroupChats.Human(d) + "/appointment-"`
+- `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`ExpressionElementSyntax: GroupChats.Human(d)`
+- `NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`GroupChats.IsHuman(d, id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GroupChats.IsHuman(d, id)`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", people.Select(id => CareerEngine.DisplayName(d, id)))`；返回值紧邻使用处：`InterpolationSyntax: {string.Join("、", people.Select(id => CareerEngine.DisplayName(d, id)))}`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`people.Select(id => CareerEngine.DisplayName(d, id))`；返回值紧邻使用处：`ArgumentSyntax: people.Select(id => CareerEngine.DisplayName(d, id))`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`o.Participants.Where(id => !GroupChats.IsHuman(d, id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct`
+
+**赋值（含属性/字段和局部值）：**

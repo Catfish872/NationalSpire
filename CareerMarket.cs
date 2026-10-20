@@ -219,6 +219,12 @@ public static class CareerMarket
         d.Market.Revision++; Accounts(d, d.Day);
     }
     public static readonly int[] Leverages = [1, 2, 3, 5, 10, 20, 50, 100];
+    public static void EventPrice(CareerData d, string asset, decimal percent, string source, string title)
+    {
+        Price(d, asset, d.Day, MarketExecution.ReferencePrice(d.Market.Quotes[asset]) * (1 + percent / 100));
+        MarketDynamics.AddEvent(d, new(d.Day, asset, title, (double)percent / 100, source, ""));
+        d.Market.Revision++; Accounts(d, d.Day);
+    }
     public static decimal OpenFee(MarketAsset asset, decimal margin, int leverage) => decimal.Round(margin * leverage * (asset.Forex ? .00005m + leverage * .000005m : FeeRate), 4);
     public static decimal BudgetMargin(MarketAsset asset, decimal cash, int leverage, int percent)
     {

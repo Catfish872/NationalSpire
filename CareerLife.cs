@@ -1,10 +1,12 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CareerLife
 {
     public const int Version = 5;
     public static void Ensure(CareerData d)
     {
+        ConsumerEngine.Ensure(d);
+        RandomEvents.Ensure(d);
         RefreshPublicFacts(d);
         if (d.Esports.EcosystemVersion < 1 || d.Life.Version >= Version) return;
         if (d.Life.Version >= 3) { UpgradeOffers(d); d.Life.Version = Version; return; }
@@ -202,14 +204,14 @@ public static class CareerLife
         foreach (var other in d.Life.Activities.Where(a => a.Status == "可安排" && a.Round == item.Round)) other.Status = "已结束";
         d.Life.LastDecisionDay = d.Day; d.Life.NextOfferDay = d.Day + 7 + Hash(d, "decision:" + item.Id) % 6;
         item.Result = (CareerTraining.IsTraining(item) || ClubPrograms.IsTraining(item))
-            ? item.WeeklyGrowthPoints > 0 ? $"第 {item.TrainingStart} 天开始培养，每周记录长期成长，第 {item.FinishDay} 天完成。"
-                : $"第 {item.TrainingStart} 天开始备赛，效果持续至第 {item.TrainingEnd} 天（含当天）。第 {item.FinishDay} 天完成结算。"
-            : $"安排已确认，预计第 {item.FinishDay} 天完成。";
+            ? item.WeeklyGrowthPoints > 0 ? $"{GameCalendar.Text(d, item.TrainingStart)}开始培养，每周记录长期成长，{GameCalendar.Text(d, item.FinishDay)}完成。"
+                : $"{GameCalendar.Text(d, item.TrainingStart)}开始备赛，效果持续至{GameCalendar.Text(d, item.TrainingEnd)}（含当天）。{GameCalendar.Text(d, item.FinishDay)}完成结算。"
+            : $"安排已确认，预计{GameCalendar.Text(d, item.FinishDay)}完成。";
         if (cost < item.Cost) item.Result += $"本次优惠 {CareerMoney.Format(item.Cost - cost)}。";
         if (duration < item.Duration) item.Result += $"筹备缩短 {item.Duration - duration} 天。";
         if (item.Kind is "青训" or "社交") item.Result += " " + Thanks(d, item);
         if (item.Public) AddEvent(d, item.Id + ":start", item.Kind, item.Title + "已安排",
-            $"{CareerEngine.Name(d)}安排了{item.Title}，投入{CareerMoney.Format(cost)}。{item.Detail}。计划第{item.FinishDay}天完成。", ["player", item.PersonId], item.LongProject);
+            $"{CareerEngine.Name(d)}安排了{item.Title}，投入{CareerMoney.Format(cost)}。{item.Detail}。计划{GameCalendar.Text(d, item.FinishDay)}完成。", ["player", item.PersonId], item.LongProject);
         CareerStore.Save(d); return null;
     }
     private static string Thanks(CareerData d, LifeActivity item)
@@ -364,15 +366,16 @@ public static class CareerLife
             || postIds.Contains(m.PostId))))
             memory.Text = PublicActivityText(memory.Text);
     }
-    public static void PublishPending(CareerData d)
+    public static void PublishPending(CareerData d, bool includeToday = false, string occasion = "")
     {
-        var events = d.Life.Events.Where(e => e.PostId.Length == 0 && e.Day < d.Day && e.Day >= d.Day - 7 && e.People.Any(id => id == "player" || d.HumanIds.Contains(id))
+        var events = d.Life.Events.Where(e => e.PostId.Length == 0 && (includeToday ? e.Day <= d.Day : e.Day < d.Day) && e.Day >= d.Day - 7 && e.People.Any(id => id == "player" || d.HumanIds.Contains(id))
             && (d.CooperativeMembers <= 1 || !e.Id.StartsWith("human-")))
             .OrderByDescending(e => e.Important).ThenByDescending(e => e.Day).Take(4).ToList();
         if (events.Count == 0 || !d.Ai.Enabled) return;
-        var first = events[0]; string key = (d.CooperativeMembers > 1 ? "club-update-" : "life-update-") + d.Day;
+        var first = events[0]; string key = (d.CooperativeMembers > 1 ? "club-update-" : "life-update-") + d.Day
+            + "-" + CareerEngine.StableHash(string.Join("|", events.Select(e => e.Id).OrderBy(id => id, StringComparer.Ordinal)));
         CareerEngine.Publish(d, key, events.Count == 1 ? first.Title : CareerEngine.Name(d) + "的近期安排与进展",
-            string.Join("\n", events.OrderBy(e => e.Day).Select(e => $"第{e.Day}天，{e.Title}：{e.Detail}")), "人物日常", true,
+            string.Join("\n", events.OrderBy(e => e.Day).Select(e => $"{GameCalendar.Text(d, e.Day)}，{e.Title}：{e.Detail}")), "人物日常", true,
             events.SelectMany(e => e.People).Distinct().ToList());
         var post = d.Posts.FirstOrDefault(p => p.EventKey == key);
         if (post != null) foreach (var e in events) e.PostId = post.Id;

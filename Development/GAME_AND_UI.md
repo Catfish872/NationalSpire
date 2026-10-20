@@ -1,5 +1,27 @@
 # 游戏、日期、阵容与界面
 
+## 提示词事件池编辑
+
+PromptScreen.OpenPromptSettings 的事件池按钮调用 OpenEventPoolSettings，使用同一舞台内的遮罩。顶部切换随机事件与选手日常，左侧固定分类，日常分普通/赛后两组；右侧 ItemList、标题 LineEdit、内容 TextEdit 提供单条编辑。批量编辑切换为带行号 CodeEdit：随机事件每行一条，日常按第一个未转义的全角竖线分隔标题与内容。EventPools.BulkText/ParseBulk 统一转义反斜线、换行和竖线，空行忽略；缺失字段在底部提示行号并保留输入。插入人物和俱乐部按钮分别写入 {人}/{队}，预览用当前生涯实际选手和俱乐部替换。
+
+打开时复制当前模板覆盖列表；单条输入只替换当前记录，分类草稿使用当前编辑列表。切换分类或编辑模式时提交批量输入；输入存在字段错误时保留当前编辑区域。保存依次 Commit → EventPools.Save → SaveAiSettings，调用一次原设置保存，失败恢复之前模板的池字典并保留草稿。单人沿 CareerStore 保存生涯与本机 AI 设置，多人沿 SaveAi 保存房主配置并提交一次世界更新。恢复默认移除当前分类覆盖，随后保存生效。返回有草稿时确认放弃，关闭事件池后保留提示词页面及其未保存文字；关闭进程丢弃未保存草稿，重新进入读取已保存配置。随机事件全部为空时界面显示采用内置池。
+
+抽取性能验证使用真实生产 EventPools 与 WorldEvents.PublishDaily、独立读取的现有存档；文件写入仅在测试目录，不计入正式生涯保存性能。默认110条随机素材、84条日常：首次初始化5.7397毫秒/87504字节；再次缓存读取0.0006、0.0003毫秒；三次随机抽取0.0810、0.0031、0.0022毫秒。额外添加10000条随机素材及10000条日常后，缓存重建0.9609毫秒/1423992字节；随机抽取0.1631、0.1150、0.1060毫秒，分配211920、81704、81704字节；完整日常抽取并建立帖子23.0314、0.7428、0.7456毫秒，分配648360、518880、516504字节。测试目录保存配置17.6357毫秒/7464088字节；模板导出及重新导入整体52.8826毫秒/21098512字节。这些整体时间包含内部调用，不与内部耗时相加。
+
+EventPoolChecks 33项覆盖默认顺序、空分类、原本无素材分类新增、近期素材用尽、批量转义与错误行、模板复制/切换/删除、版本1/2/3交换文件、保存重读、实际日常发布、近期赛况筛选与分类间隔、随机事件重试和类别保存、房主配置选择。随机事件85项及途中停留33项回归通过。Godot独立界面测试实际发送鼠标输入，检查编辑、批量切换、保存、恢复默认、返回与重开：1280×720最终70项/5个布局通过，1920×1080普通规模57项/4个布局通过。小窗口一万条素材创建编辑器186.0421毫秒/973976字节；单条编辑0.6808、0.4119、0.5037毫秒，各92352字节。这里测量按钮回调的控件构建和编辑耗时，截图另等布局与渲染完成；存储及模型使用测试替身，Steam跨机发送、接收和正式生涯磁盘保存耗时未实测。本机测试原始证据在 .artifacts/event-pool-checks-final 与 event-pool-ui-*，逐次耗时和分配量以对应 JSON 为准。
+
+## 商品、会话管理和赛后生活
+
+群聊管理窗口顶部提供当前名称输入框及等高的保存名称按钮，输入有效名称后通过原 GroupCommand 发送 group-rename。空白名称在当前窗口提示填写，编辑时清除提示；保存成功关闭窗口并沿原签名刷新列表与标题。GroupChats.Command 去除首尾空格、比较当前名称，发生变化时修改 GroupChat.Name、追加带日期/操作者/原名称/新名称的 GroupEntry 通知并增加 Revision。当前可见群聊的真人成员可操作，queued/sending 期间同样可改名；相同名称保持现有名称和通知。聊天编号、轮次及附件关联继续使用原 Id。通知通过现有 GroupChatScreen 的 Entries 路径显示，沿原聊天时间线和总结窗口供后续请求读取。
+
+ConsumerScreen 的数量输入经 ConsumerOrder.Quantity 进入 ConsumerEngine.Buy；消费资格统一由 BuyError 检查数量和钱包金额。实物收藏显示累计数量，即时消费品以一次性消费标记区分。原购买季限与冷却判定已从 BuyError 移除；耐用品活动仍使用已有费用、参与者和使用次数规则。活动从通讯加号菜单进入 PrivateActivityPicker，指定物品时同时记录 GoodId/GoodVerb，接受后交给统一日程；赴约按钮选择私密或公开，公开赴约由 CareerLife.AddEvent 记录事实。
+
+ChatAttachmentScreen 的礼物选择器显示实际库存，群聊先选择接收者，再填写物品与数量。ChatManagementScreen 提供当前会话主动联系设置、隐藏/清除私聊、解散/清除群聊以及两类移出成员操作；隐藏私聊与解散群聊通过恢复列表进入。管理操作经原 PrivateCommand/GroupCommand 提交并刷新当前页面。正在生成时沿现有会话管理检查等待生成结束。
+
+WorldEvents.Advance 沿用原3至6天日常抽取日期；抽中当天有玩家待赛时保存 ReservedDailyDay。正式赛后 AfterMatch 先调用 CareerLife.PublishPending(includeToday:true)，将已完成公开活动纳入原事件汇总。事件的 PostId 负责已发布识别，批次键由日期及事件编号集合生成。当天尚有比赛时按0.35/(1+当天额外日常篇数)^2抽取额外日常；最后一场结束释放 ReservedDailyDay 对应的日常。PublishDaily 共用普通生活、48条赛后素材、国运和市场候选；赛后素材人物必须具有近7天已完成比赛，附带 FixtureFacts 生成的真实成绩。正文生成继续使用原人物日常提示词。
+
+CoachLineups.RefreshAiStarters 对 AI 俱乐部按进阶8实际通关概率、评分、编号排序，单人取前三名，多人取对应队伍人数。玩家经营的俱乐部沿用现有阵容；随后原 SeasonStart 处理已经商定的阵容调整，新赛程使用更新后的名单。
+
 ## 结算中的逐场对阵
 
 SettlementRecords.CaptureCompetition 在原结算时机为 CompetitionScore.Duels 保存每席参赛者编号、当时姓名、双方成绩、胜者和状态。CaptureDuel 是赛事页面与结算共用的数据入口：合作场次优先读取 WorldFixture.HomeParticipants/AwayParticipants，名单为空时读取该席 HomeId/AwayId；成绩沿用 MatchRules.Performance，失败且存在正数用时时追加 MatchRules.Time。待赛和弃权显示对应状态，平局保留双方成绩。完成编号统一由 FixtureKey 生成，原编号为空时使用轮次、日期和双方编号组合。
@@ -69,11 +91,11 @@ v0.26.26 快速验证使用生产规则源码的 .NET 9 测试入口 --player-si
 
 ## 逐场国运与国家发展
 
-FinishFixture 确认胜负后调用 NationalFortune.Confirm。世界总决赛各轮胜/负贡献为 10/5、20/10、60/30、120/60、390/90；洲际杯为 10/5、15/10、35/20、120/30；世界杯为 30/15、90/60、240/60。三届冠军沿途总额分别为 600、180、360。国内比赛、约战不产生国运。
+FinishFixture 确认胜负后调用 NationalFortune.Confirm。世界总决赛各轮胜/负贡献为75/5、80/10、90/30、100/60、255/90；洲际杯为20/5、35/10、45/20、80/30；世界杯为60/15、90/60、210/60。三届冠军沿途总额分别为600、180、360。国内比赛、约战沿用原国运范围。
 
 团体赛每局先发基础贡献，整轮确定后给晋级队伍补差额；合作队伍一份成绩代表三席，不因二人或四人扩大国家总奖励。弃权局没有基础贡献，晋级方保留晋级部分。每点国运提供 20 Credits（$200）个人奖励，国家储备仍为 2 Credits；最终名次结算不重复发放。旧档已生成的赛事继续使用原整届结算法，新生成赛事使用逐场算法。
 
-贡献先补每季 120 点维护，剩余按经济 40%、社会 25%、民生 35% 进入建设余额；升级成本随等级递增，不足余额保留。换季先用上季贡献与等级计算 GDP，再每类支付 40 维护，不足类别随机降低一项非零指标。随机选择由生涯、国家、赛季确定，读档不重新抽取。赛程和赛制保持原逻辑。
+贡献补充每季120点维护额度，同时每点提供7点建设进度。每次在三类中随机选一类分配70%至90%，其余进度随机分给另两类；升级成本随等级递增，余额保留。满级类别进度转为临时增强；部分指标满级的类别先分20%给满级指标，其余继续建设。换季每类支付40维护，不足部分对应最多25%的下降概率；本季没有下降且低于国家初始等级时，按缺额产生恢复一项等级的概率。随机种子包含世界、国家及日期或赛季，同一输入结果稳定。
 
 WorldEvents 每3—6天在有素材的题材中按权重抽取：国运发展、市场动态各1.5，其余八种人物题材各1；具体模板数量不影响题材概率。不增加轮换或本轮防重复。原有人物题材14天和人物42天间隔保留；市场使用NewsDay保持7天间隔，仅取最近7天尚未报道的最多8条事件。国运候选仍为最近7天有未报道贡献的国家，抽中后不再进行额外30%判定。不增加事件保存节点。结算附本场国运及实际等级变化；国家发展页面展示九项等级、描述、GDP、维护余额和最近变化。
 
@@ -93,7 +115,7 @@ SponsorIncome 统一基础金额迁移及个人/普通俱乐部金额计算。�
 
 个人首次签约支付本季款；后续赛季通过原 SeasonStart 付款，胜场通过 PlayerMatch 付款。已付赛季不补差额，重复赛果不重复付款。个人两季合同在 RefreshOffers 到期时自动延长两季；已结束历史合同不恢复。当前合同也提供三种下期报价，原28天邀请有效期继续适用；选择只保存 NextOffer、不扣款或提前付款，可在生效前重新选择。到期将旧合同结束、所选合同生效，再由原 PaidSeason 处理当季款；没有选择则延续原品牌及基础金额。自建俱乐部沿用原56天自动续约，周结与胜场按当时关注乘已存基数。赞助页面显示当前预计金额、自动续约说明和已选下期方案。旧工资、签字费、比赛奖金、已发放资金不受此迁移影响。
 
-商品、耐用品活动、宣发共用 ConsumerEngine。受邀 NPC 必须可联系且好感至少5，人数由商品规定；同一 NPC 每季首次受邀增加规定好感，后续加1。普通消费不涨粉；宣发每项每季三次，增量为显示美元价格/2/(1+0.5×本季次数)。四项各三次合计花费135万美元，增加487500关注。个人内容和社区活动基础关注乘20。
+商品、耐用品活动、宣发共用 ConsumerEngine。受邀 NPC 必须可联系且好感至少5，人数由商品规定；同一 NPC 每季首次受邀增加规定好感，后续加1。宣发按购买数量逐次计算显示美元价格/(本季已购次数+2)，每次采用原四舍五入；PromotionGain 合并相同收益的连续次数，大批量购买沿用逐次结果。普通消费继续生成消费事实，个人内容和社区活动基础关注乘20。
 
 ### 品牌赛事影响与新闻素材
 
@@ -261,6 +283,8 @@ CoopRuntime 的真实断线检测、StopConnection、Pause、场景清理及缺�
 
 ## 日期推进的实际步骤
 
+GameCalendar 统一公历显示，日程、主页面、结算、训练、帖子系统日期、周刊资料、行情横轴、活动附件和日期选择器都由内部累计天数换算。AppointmentCalendar 使用 CalendarDayButton 的原日历样式，选中日期再转回累计天数。快捷跳转通过原活动与比赛查询选择下一事件；仅有活动时同样可用。活动/约战卡片的查看日程保存当前通讯位置，返回时恢复原会话、分页和滚动位置。日期推进与赛果计算沿下表原路径执行。
+
 CareerEngine.AdvanceOneDay 检查 Failure、PendingMatchId、当日或以前待打且已报名比赛。允许时 MoveToNextDay → PublishMatchDay → CareerStore.Save。
 
 MoveToNextDay 按以下顺序执行：
@@ -273,11 +297,17 @@ MoveToNextDay 按以下顺序执行：
 6. 发布待公开生活事实、SimulateWorld、AvatarHonors.Capture、CareerCommerce.RefreshOffers。
 7. 现代赛事 CircuitWorld.AutoEntry，然后 CareerMarket.Advance 更新当天行情并处理个人账户。
 
-AdvanceToDay 逐天执行以上过程，现有单次循环最多 84 天；遇待处理比赛、失败、待完成对局或到期活动按既有条件停下。finally 在实际推进后发布比赛日事实、压缩积压任务并保存。
+AdvanceToDay 逐天执行以上过程，现有单次循环最多 84 天；遇待处理比赛、失败、待完成对局或到期活动按既有条件停下。finally 在实际推进后发布比赛日事实并保存；正常到达时压缩积压任务，随机事件途中停留时保留待筛选材料。
 
 跳过四周的测量案例实际只推进一天，原因是到达已确认活动；不能据该案例报告完整四周执行耗时。一天结束后的国际赛事创建与排名处理属于 EndDay / SimulateWorld 的下游，可能同时影响社区与奖励。
 
 ## 席位、历史名单和后续赛事
+
+单人自建俱乐部通过 CoachScreen.PlayerPositionDialog → ClubCoaching.SetPlayerPosition 当季退出或恢复首发。窗口显示玩家岗位变化、接替队员和 PlayerPositionTiming 返回的最早生效对阵。Replacements 与 StarterReplacementError 沿原资格、岗位和首发保障条件选人。ApplyPlayerPosition 交换原首发位置，调用 Move 和 UpdateRosterRole 同步名单、合同岗位及人物身份；已处于目标岗位的预约完成登记后保持当前名单。ClearPlayerPosition 清除原下一季申请，冲突 LineupRequest 标为已替换。
+
+SetPlayerPosition 调用 UpdateLineup(playerPositionChanged:true)，复用 SetLineup 的整组对阵检查。联赛和洲际俱乐部赛事中，同组比赛全部待赛且 ActiveTie 为 false 时采用新首发；同组已有正式成绩、PendingMatchId 或 Failure.Result.MatchId 时继续使用原对阵。已出场者通过 Fixture 留在 Entrants/Table，仍待赛的替补进入报名与积分；赛前退出者的空个人记录移除。PlayerEntered 根据当前报名与实际对阵计算，联赛 Standings 同步引用对应 Table。个人赛事、国家队赛事各自使用原报名数据。UpdatePlayerMatches 只重建发生换人的待赛项目；已完成比赛及原成绩保留。
+
+该操作更新一次岗位，遍历当前赛季尚在进行的本队赛事，按组更新 Fixture，刷新训练预测后调用一次 CareerStore.Save。名单、分组和参赛者集合只在当前操作存在，原比赛编号、种子和日期继续使用。离开页面与读档使用保存后的名单；旧 PlayerPositionSeason 预约继续在 SeasonStart 到期执行，新确认的当季操作替换原预约。此入口沿用单人自建俱乐部范围。PlayerPositionChecks 覆盖144项，实际Godot界面和隔离磁盘保存见 PERFORMANCE 中当季首发与决赛主动联系章节。
 
 赛前转会统一由 OwnedClubs.TransferSeason 调用 CanJoinThisSeason：当前日期早于本季最早联赛日期，且本季联赛全部对阵尚待赛，新签转会当天到队；其余情况填写下一赛季。TransferTime 为俱乐部签约面板、确认窗口、私信提示词和合同卡片提供同一到队说明。已有 OwnedTransfer.ArrivalSeason 继续作为执行日期，ArriveTransfers 在该赛季到来时办理。
 
@@ -541,6 +571,84 @@ Godot 4.5.1的最终UI结果共十条：七张1280×720/1920×1080完整视口�
 
 ### 私信与群聊历史分页
 
+联系人采用 ContactRowButton 原控件及 ChatContacts.List 组织，保留全部、私信、群聊、＋。排序支持时间、名字、类型、好感；置顶优先，好感排序的群聊随后按最近记录排序。ContactSort 显示当前方向，点击后切换。搜索、原右键菜单、齿轮管理、隐藏/恢复与主动联系共用原入口。EventIndicators 在列表签名变化时整理活动和比赛标记；普通刷新复用。关系图标显示偏好与排序保存在当前 ChatPreferences 的 contacts 字段，置顶继续使用原 pins。
+
+六档好感徽章沿用原控件，范围为−100～−30、−29～−1、0～24、25～49、50～74、75～100。恋人/誓约图案读取正式关系；好友框门槛30，亲密框45；完成婚礼且当前誓约有效时默认使用钻戒框，其余解锁头像框由玩家选择。群聊头像采用原拼接控件，人物头像仍从同一头像模块取得。
+
+### 随机事件界面与日程
+
+CareerLife.Ensure → RandomEvents.Ensure 补充未来28天附近的问号；新存档第1天起，首个事件为第7—11天，后续生成沿用原6—10天随机增量。首页和日历详情共用 EventCards 与 EventEmblem。未来事件可以从日历跳过；过期未完成事件标为 skipped。
+
+比赛、活动及日历跳转统一使用 CareerEngine.AdvanceToDay。每个推进日复用 MoveToNextDay，再由 EventJourney.Stop 判断停留原因：到期比赛、活动、失败及待处理比赛沿原流程停留；仅随机事件且日期早于目标时，保存 Destination 和 PausedDay。等于目标日期时正常到达，随机事件从首页进入。NextEventDay 只选比赛与已确认活动，首页 JourneyResumeButton 仅在已有中途停留的行程中显示继续原目的日期。
+
+Render → ShowJourneyEncounter 每次本机遇到同一事件只显示一次途中窗口，窗口共用背景读取、问号纹章和 EventStoryButton。进入事件、跳过并继续、留在当天均使用当前成员的记录；途中窗口回到首页，Esc 或关闭事件保留当日与目的日期。完成或跳过后，EventStoryView 底部提供继续原目的日期和留在当天。ContinueEventJourney 再次调用原推进入口，重新检查途中比赛、活动与其他事件。目的日期随生涯保存，重新打开后可继续；新的日期推进和正式赛后替换该行程。
+
+暂停期间 EventJourney.PublicationsPaused 阻止 ProcessPendingAsync 的自动请求、Render 的独立周刊请求，以及 CoopAi.ProcessPublications；手动生成及玩家回帖仍沿各自入口。日期模拟产生的材料继续保存，随机停留不执行额外的新闻数量筛选；下一次正常日期推进或 WorldEvents.AfterMatch 调用 Resume 恢复原自动生成。ResumePublications 仅为运行时刷新信号，避免暂停页面已经更新最新帖子编号后漏掉恢复请求。重启后主菜单沿持久化 PausedDay 判断是否可生成。
+
+每次 AdvanceToDay 仍在 finally 保存一次；途中跳过并继续分别保存跳过及推进结果。没有真正推进时保留原暂停状态。日期检查扫描现有事件，单人不复制整个生涯；背景仅在建立窗口时解码一次，关闭窗口释放。多人沿原 Apply / Commit 副本、保存与广播，在任一成员事件日停下，Target=direct 与其他日期推进采用相同规则，成员只读取自己的事件。
+
+OpenRandomEvent 创建 EventStoryView，左侧显示背景与人物，右侧为独立滚动阅读区。开始前、生成中和选项生成后均可跳过；生成时可停止，ready/failed 状态可重新生成。进度显示排队、等待响应、思考与书写，思维文字可展开。选项使用 EventStoryButton 的编号圆章、边线和多行文字，效果由 RandomEventEffects.Preview 提供；完成后思考与故事折叠入口排列在同一行，随后显示所选行动、结局和效果。数值效果使用自动换行的独立卡片，人物印象、临时状态和约战各占一行，文字共用 Preview。Rich 工厂使用空 focus 样式，保留文字选择和人物链接。公开开关沿 ChatPreferences 的生涯键保存 event-public，缺省 false；已完成记录显示其实际 Public 值。
+
+PaintMentionText 是普通内容与随机事件共用的人名匹配入口。随机事件传入本次 People 并启用引号染色，原文和保存内容保持原样；选项点击执行整个选项，故事和结局中的姓名链接进入档案。CareerNavigation.Location.Event 记录来源事件，OpenPerson 隐藏事件窗口，Back 显示原窗口并保留阅读位置。返回事件主界面后按 Esc 关闭事件，档案界面的 Esc 沿原导航返回。关闭窗口释放纹理与控件，后台生成继续。
+
+RandomEventArt 将110条素材分为10类，按事件编号和素材稳定选择原版事件图或已有约会背景；首次开始前使用中性背景，重新生成和回看使用同一选择。类别只供本地画面使用。原版图从游戏资源加载；约会背景共用 DateSceneView.CreateBackground。每次背景变化解码一次，流式刷新复用当前纹理；正文按内容变化更新，选项仅在状态、数量或可执行条件变化时重建。人物名称索引沿原页面缓存与姓名变更检查。
+
+2026-10-21 v0.27 独立 Godot 窗口在1280×720和1920×1080各通过22项操作及11处布局：途中弹窗、进入、关闭并留在当天、连续事件、跳过后继续、结果页继续行程、私信自动选择与未读、默认故事模板编辑均经真实控件操作。途中自动发帖启动0次，正常抵达后启动1次；界面计数使用模拟服务，正式 ProcessPendingAsync 的暂停行为另有逻辑测试。模型与存储采用替身，Steam跨机未实测。截图和逐次性能数据在 .artifacts/v027-ui-small、v027-ui-wide、v027-date。
+
+小窗口245字刷新三次耗时0.4360/0.0633/0.1070毫秒，累计0.6063毫秒，分配104296/7776/7776字节；3950字刷新为0.5280/0.3879/0.3682毫秒，累计1.2841毫秒，每次49784字节。背景解码及创建窗口42.8325毫秒、858536字节，包含内部刷新，不与刷新耗时相加。渲染帧等待与模型网络等待单独排除。
+
+EventJourneyChecks 使用当前生涯副本执行真实日期规则，保存通过回调计数，尚未计入磁盘及Steam网络耗时。每次完整 AdvanceToDay 保存1次，各步骤耗时包含其内部日期模拟，不能再次叠加。以下为逐次结果，数据在 .artifacts/v027-checks-final/journey-checks.json。
+
+| 操作 | 推进天数 | 完整调用毫秒 | 分配字节 | 保存次数 |
+| --- | --- | --- | --- | --- |
+| 途中首次停留0 | 1 | 17.2165 | 1049584 | 1 |
+| 继续到第二次际遇0 | 1 | 64.4768 | 17542776 | 1 |
+| 抵达原目的日期0 | 2 | 9.3720 | 1459544 | 1 |
+| 途中首次停留1 | 1 | 5.7367 | 1040424 | 1 |
+| 继续到第二次际遇1 | 1 | 52.9444 | 17512536 | 1 |
+| 抵达原目的日期1 | 2 | 6.9925 | 1458280 | 1 |
+| 事件与目的日期相同 | 2 | 56.0706 | 18698656 | 1 |
+| 停留后手动过日 | 1 | 14.4634 | 1054984 | 1 |
+| 途中正常比赛停留 | 1 | 8.8504 | 1201160 | 1 |
+| 途中正常活动停留 | 1 | 9.5909 | 1201680 | 1 |
+| 1001条事件日程 | 1 | 9.1097 | 1053256 | 1 |
+
+首次三段行程累计91.0653毫秒，再次三段累计65.6736毫秒；两次各推进4天、保存3次。1001条事件日程的完整推进也在表中。多人权威命令与个人快照检查沿 RandomEventChecks，真实房主、客机、磁盘检查点和传输耗时未在本轮实测。
+
+### 专属约会与婚礼
+
+DateChoiceButton 统一绘制约会入口与赴约选项的折角边框、信封和星芒。公开与私密赴约卡片等宽同高。DateSceneBackgrounds.Read 默认枚举程序集内33张背景，仅提供资源名及中文描述；显示时 Pixels 直接解码内置资源，外部素材按内容哈希读取 DateSceneAssetStore.Pixels。CreateBackground 在 CPU 图像上生成缩略层后上传纹理一次。ResolveImage 继续负责需要内容哈希的导入与导出路径，PNG 导入保留原字节，其他图片统一转换 PNG；图片格式、尺寸和完整性沿原规则检查。外部背景包及本机管理仍使用原接口。
+
+ProcessPrivateAsync 在正文到达后每100毫秒最多调用一次 DateScenes.TaggedLines，将场景行写入 PrivateSceneLive。TickDateScene 在 sending 时显示已到达文本，AppendLine 保留打字位置；生成完成后继续当前阅读位置，最终仍保存原完整私聊轮次。房主通过原私聊收件人分片发送 SceneLines，客机使用同一显示接口。停止、修订、重新生成、暂停及书签沿用原命令。
+
+SendDateScene → SendPrivate 在接受回调中清空本次场景编辑器、普通输入框与草稿。DateSceneView 右上角持续显示原好感徽章及当前关系，变化后短暂显示差值，展开查看印象。右上方常驻历史记录 Q 与退出约会 Esc，退出复用 DateSceneExitChoices。Q 切换现有 OpenHistory / CloseHistory；文字编辑器获得焦点时保留 Q 的文字输入，历史打开后 Q 可直接关闭。滚轮与翻页键沿用原规则。独立 Godot 项目 EventDateUiChecks 在1600×1000下通过16项操作及10处布局，包含退出按钮、Q打开关闭历史、输入Q与连续三轮发送清空；模型和存储采用测试替身，截图在 .artifacts/v027-date。
+
+AddDateSceneAction 在具备可用立绘的已确认一对一活动旁建立专属约会按钮。按钮先复用公开/私密赴约选择，再进入原 DateSceneView。HasDateArt 按素材路径与文件修改时间缓存资格；进入时验证并加载默认图，其他表情按显示需要载入。当前场景纹理按哈希复用；缺失表情使用已有默认图并显示读取说明；CloseDateScene 释放本场景纹理。切换人物、生涯或退出页面会关闭场景；播放位置由本机素材书签保存。
+
+场景的暂停保留 active/paused 数据和聊天轮次，允许跨日期返回；结束写 ended 和活动已结束，正在生成的本场景请求沿 RestoreInterrupted/CancelPrivate 终止。普通聊天列表、实时显示和未读过滤 Scene 轮次，查看场景历史及模型上下文继续读取原记录。自动总结继续读取原私聊记录和既有总结条件。
+
+婚礼商品价格为150万美元，誓约之戒为10万美元。专属礼物好感门槛85，普通礼物的确定恋人选项门槛60，发送及接受均调用同一校验。婚礼礼物接受后获得已付款服务，再从现有活动附件约定婚礼日期。普通赴约即完成婚礼；专属约会在结束时完成。WeddingAppointments.Complete 更新婚礼经历，公开婚礼在完成时登记一次事实，之后由原跳日/赛后事件汇总发帖。
+
+商品图标及数量使用 ConsumerProductArt/ConsumerGiftControls 原控件，赠礼从现有聊天附件进入。群成员选择与社区分享人物选择复用 PickerRing 显示收戒与婚礼记录。Godot独立界面项目验证7处布局，包括联系人、日历、数量、约会入口、旁白、台词和退出窗口；317×521与1024×1536立绘及版本3ZIP往返通过。真实游戏和Steam跨机仍须另行验证。
+
+### 普通通讯的分页与操作状态
+
+通讯顶部显示齿轮和关闭按钮。ChatSettingsMenu 与左侧会话条目的右键菜单 ShowChatContextMenu 共用 ChatMenuItems，提供置顶/取消置顶、聊天记录设置、主动联系、私聊管理或群聊管理、记忆管理、提示词预览、恢复会话；群聊另显示添加群成员。菜单标明人物或群名。右键展开保留当前聊天，选择设置时调用 SelectPrivate/SelectGroup 切换目标，继续沿原草稿、已读和分页入口处理；置顶只更新本机排序。PrivateIdentity 独占人物标题行，群聊标题显示名称和人数；生成期间沿原入口显示停止生成。右键菜单在当前通讯控件内建立，按鼠标位置并预留8像素边距限制在视口内，点击空白或按Escape关闭菜单，关闭通讯释放菜单。
+
+OpenChatDialog 先使用 _cancelDialog 释放当前窗口，再延迟打开目标；构建期间通过 _openingDialogReturn 将 ChatSettingsMenu 传给 ShowCareerDialog。后者捕获返回委托，取消按钮和Escape共用 _returnDialog，关闭后返回通讯设置。只读窗口的关闭和管理窗口的完成显示为返回。程序切换继续调用 _cancelDialog，单独释放当前窗口。私聊/群聊记忆内的编辑、清除确认同样通过 OpenChatDialog 返回；关闭通讯后延迟回调结束。其他界面调用 ShowCareerDialog 时返回委托为空，沿原关闭行为执行。
+
+ChatHistoryScreen.LoadChatPreferences 读取同一生涯与本机玩家分区的 pins 字符串数组，ChatContextMenuScreen.LoadChatPins 建立编号到排序位置的字典。私聊使用人物编号，群聊使用 group:群编号；SetChatPinned 将最新置顶放在数组首位，写入本地配置一次并使列表签名失效。RefreshPrivateList 完成原搜索与分类后按置顶位置稳定排序，普通会话保留原相对顺序；ShowPrivateListRows 给置顶条目增加↑标记并继续复用可见行控件。隐藏保留置顶，界面确认彻底删除成功时清除对应置顶。关闭进程、切换生涯及联机身份均按配置分区恢复；旧配置默认空数组。
+
+ChatManageDialog 的隐藏、删除与移出按钮统一调用 OpenChatDialog，先调用原 _cancelDialog 关闭管理窗口，再延迟调用 ConfirmChatRemoval 或 ConfirmKick。确认后沿原 PrivateCommand / GroupCommand → ChatMembership 执行；本地成功保存一次，多人沿现有命令回执、保存及广播。取消返回当前会话的通讯设置。ConfirmKick 等待命令成功回调后重新打开管理窗口，显示最新成员；回调核对原确认窗口仍然打开后执行，离开窗口后完成的回执沿原同步更新数据。改名成功也返回管理窗口。文案分别为隐藏私聊、删除私聊及其全部记忆、解散群聊、删除群聊及其全部记忆、移出群聊、移出并删除其群聊记忆。
+
+PrivateMatchPicker 与 PrivateActivityPicker 共享 AppointmentCalendar。输入为生涯、赛季、相关人物、当前日期与选择回调；每赛季每个人每天调用一次 PrivateAppointments.Schedule，合并相同安排，生成日期按钮、详细说明与悬停提示。选择日期只更新选中颜色和外部日期变量。活动保留当前及未来赛季选择，约战保留本季与下季选择；过去日期禁用，已有安排通过原业务校验。群聊使用已选择成员，玩家安排由 Schedule 一并读取。资料仅在当前弹窗及当前赛季控件内保存；切换赛季重建、关闭释放。创建日历后等待布局完成，滚动至选中日期或首个可选日期。
+
+GiftReceipt 统一显示私信与群聊礼物处理结果，标题为礼物及接受/拒绝状态，正文读取原 Detail 中的赠送者、接收者、物品和数量。既有礼物记录经原 Kind=gift 分支显示。
+
+训练完成位置由 TrainingCompletions 按本会话训练编号及当前页起止消息顺序选择，TrainingCompletionsThrough 将通知插入对应日期和消息之间。原训练卡片始终归原接受消息，完成通知使用同一 PrivateTrainingCard。读取只创建当前页面的队列与控件；训练结算沿 ClubCoaching.Advance 保存 CompletionDay / CompletionOrder。私信与群聊共用显示入口，后续交流排列在完成通知之后。
+
+验证入口：ChatRepairUiChecks 使用诊断存档副本、实际 Godot 控件及原游戏资源，覆盖1280×720与1920×1080的顶部按钮、活动日历、礼物卡片，实际触发私聊隐藏/删除、群聊解散/删除及两种移出确认；验证私聊与群聊训练原卡片、完成通知、后续消息和分页位置。规则、保存与性能逐次记录见本地 PERFORMANCE 中的聊天交互修复章节。
+
 PrivateMessageScreen.OpenPrivateMessages 创建共用通讯窗口，BuildPrivateComposerActions创建底部ChatComposerLayout。其四个直接子控件依次为左侧工具组、页码组、页选项组和放大/发送按钮组；BuildChatPagination分别把前后箭头与页码放进页码组，把回到最新与每页轮数放进右侧页选项组。ResetChatPage在私信和群聊均设置CenterPages=true，从较早箭头到每页轮数的完整分页操作组相对输入框居中；两端按钮按0.9缩放后的可见边缘用于中心补偿。＋保留左侧位置，😊位于其右侧；放大按钮位于发送左侧，两者共用右侧按钮组。SendWidthIncrease将发送最小宽度增加20像素，0.9缩放后增加18个可见像素。SendEdgeCompensation补偿新增的1像素右侧缩进，组内separation从8调整为7；在原分组宽度上加19，右侧布局偏移1，使发送右边缘和两按钮可见间距保持，放大按钮随之左移18像素。底栏按钮先按原尺寸参与布局，再由ChatComposerButtonSlot围绕原中心以0.9倍等比缩小绘制和点击区域；槽位保留原最小尺寸与SizeFlags，完整分页组继续居中，＋及表情入口保持靠左。当前主题的两分辨率验证为48像素槽位、43.2像素可见按钮高度。默认每页10轮，可选择5轮；Ctrl+Enter发送沿原入口执行。BuildPrivateComposerActions在PrivateComposerSendActions中先建立PrivateSendShortcut，再建立放大与发送按钮。提示使用12号灰色文字Ctrl + Enter 发送，SizeFlagsVertical.ShrinkCenter使其与按钮中心对齐；提示外层MarginContainer按发送按钮最小宽度×(1−ButtonScale)/2计算右侧留白，补偿发送按钮缩小产生的左侧空隙，使文字至放大按钮、放大至发送按钮的可见间距相等；当前为5像素布局留白。私信与群聊共用该控件，底栏和输入面板沿用原高度；窗口关闭随控件释放。PrivateTurn的玩家消息与对应回复组成一轮；GroupTurn的触发消息与本次全部人物发言组成一轮，附件、思考和交互卡片随所属轮次显示。
 
 PrivateMemoryScreen.PrivateIdentity的showProfile=true用于私信顶部：头像和姓名按钮共用OpenPrivatePerson：先记录当前人物、分页和滚动值，ClosePrivateMessagesCore(false)保留草稿并释放通讯，再沿Visit打开对应人物档案，最后把带PrivatePerson的来源压回同一导航栈。关系图标及18号关系详情位于姓名与好感勋章之间，替代原档案按钮位置。PrivateRelationshipToggle与PrivateFavourToggle共用ToggleDetails，点击任一按钮展开/收起原关系与印象内容，并同步两按钮高亮。关系和好感按钮的hover/focus使用空样式，展开时沿pressed/hover_pressed显示高亮。姓名、关系与好感共用MouseEntered/MouseExited：Modulate在RGB 1.25与白色之间切换；头像工厂保持既有1.15亮度；收起后的鼠标与键盘焦点保留原无描边表现。详情恢复原HBoxContainer内容布局，默认展开，按文字自然高度显示关系与印象。私信顶部上边距为0、下边距12，头像/姓名组、关系和好感勋章使用纵向居中；好感文字收起时隐藏，展开时作为好感按钮的子Label，以BottomWide锚定在图标底边下方8像素，宽度94像素、文本水平居中，中心X与图标相同。文字使用MouseFilter.Ignore；身份行保持当前紧凑高度，额外预留为0。姓名字号为28（Godot字体尺寸使用整数），PrivateIdentityLayout固定72像素高，ID控件顶端与72像素头像顶端对齐，职业/国家行中心Y位于ID底端与头像底端的中点。两行文字按可用宽度省略，全文保留悬停提示；姓名组在所有状态下保留相同的按钮空间。身份横行最小高度89像素，沿原位置居中头像、姓名组、关系与好感；顶部收起高度沿用101像素。振奋/低落时追加PrivateMoodButton，正方形边长取ID实际行高，中心Y与头像相同，左边缘位于两行文字右缘外20像素。振奋使用244f3d深绿底/98dea6浅绿箭头，低落使用8c3039深红底/edb8b8浅红箭头，箭头由_Draw绘制；按钮悬停以SelfModulate=(1.3,1.3,1.3)提亮至130%，离开恢复白色调制；说明Label保留原色，并由原生Tooltip显示剩余天数。点击显示按钮右侧12像素处的PrivateMoodDescription，再次点击收起；说明保持原15号字号、Teal/ffb6b6文字和“状态振奋/低落 · 剩余x天”，叠加显示于当前身份区，参与正文排版的行数为0。说明显隐归当前控件，身份重建或关闭时释放；正常状态的ID/名片坐标与有状态一致。档案页沿原有状态文字显隐。顶部关系值由PrivateRelationshipText按Unicode文本元素每15个换行，保留已有换行；Label右对齐，图标和文字共用HBoxContainer，按钮最小尺寸随内部内容更新，使文字右缘固定、图标随文字长度向左伸展。完整关系文本留在原数据与悬停提示，显示换行只归当前控件。人物详情首次显示为展开，PrivateIdentity读取ChatPreferences当前世界与本机玩家分区中的identity:人物编号布尔值，默认true；关系与好感按钮共用ToggleDetails，同步详情、好感文字及按钮按下状态，随后调用WriteChatPreferences保存一次本机设置。普通刷新、人物切换、退出通讯、档案返回和进程重启均恢复人物自己的选择；showProfile=false的档案页保持原静态身份与完整详情展示。
@@ -557,7 +665,7 @@ ChatComposerLayout在最小尺寸与排序通知中各读取固定四个直接�
 
 SelectPrivate / SelectGroup 设置目标、保存输入草稿，调用 ResetChatPage、SaveChatPreferences，再进入原 RefreshPrivateChat / RefreshGroupChat。普通选择进入最新页面并定位底部；较早、较新箭头进入目标页面顶部。LatestChatPage 先读取刚新增的轮次再定位最新，供按钮与发送成功回调共用。正在阅读历史时，新增轮次保留当前起始记录，回到最新按钮显示圆点；最新页面更新原 dm-read / group-read 已读状态。历史页面里的已有邀约和合同卡片继续通过原命令入口处理。
 
-ChatHistoryPage<T>.Bind 接收原记录列表、内容版本、可见条件及是否跟随最新，缓存可见轮次引用。首次进入或列表引用、数量、版本变化时扫描一次全会话；私信版本取 MemoryRevision，群聊取 Revision。稳定刷新复用索引。完全删除的私信轮次退出索引；群聊保留正文、附件、回复、思考、效果、通知、错误及正在生成的轮次。Move / Resize / Latest 仅调整显示范围，Visible 返回最多5或10轮的引用。正文重建只遍历当前范围；原记录和提示词继续由原会话管理。私信活动训练及阵容的既有独立状态卡片仍按原入口补充显示。CoachScreen.PrivateTrainingCard由私信当前训练、训练交互及GroupChatScreen.AddGroupOffer共同调用。标题、日期、进度条、完成周数/成长和原取消训练入口持续显示，训练正文Label默认隐藏；14号灰色CoachTrainingDisclosureButton显示“展开”加向下无柄箭头，点击后正文显示并变为“收起”加向上无柄箭头，再次点击收起。箭头使用DrawPolyline绘制，字号基准与所有交互态颜色均读取按钮文字的14号与_muted，点击后同步QueueRedraw。_privateExpandedTraining按计划Id记录当前通讯窗口内的展开状态，同一计划随聊天刷新重建时复用，ClosePrivateMessagesCore清空；切换会话仍由原ChatDraftKey保存正文草稿。每次开关修改一个HashSet项、一个Label可见性与按钮文字，保存、广播和训练命令次数均为0，接受/取消/结算仍沿原规则。
+ChatHistoryPage<T>.Bind 接收原记录列表、内容版本、可见条件及是否跟随最新，缓存可见轮次引用。首次进入或列表引用、数量、版本变化时扫描一次全会话；私信版本取 MemoryRevision，群聊取 Revision。稳定刷新复用索引。完全删除的私信轮次退出索引；群聊保留正文、附件、回复、思考、效果、通知、错误及正在生成的轮次。Move / Resize / Latest 仅调整显示范围，Visible 返回最多5或10轮的引用。正文重建只遍历当前范围；原记录和提示词继续由原会话管理。私信训练卡片由原接受消息的 Offers 显示；阵容独立状态卡片沿原入口补充显示。CoachScreen.PrivateTrainingCard由私信训练交互、GroupChatScreen.GroupOffer及TrainingCompletionsThrough共同调用。标题、日期、进度条、完成周数/成长和原取消训练入口持续显示，训练正文Label默认隐藏；14号灰色CoachTrainingDisclosureButton显示“展开”加向下无柄箭头，点击后正文显示并变为“收起”加向上无柄箭头，再次点击收起。箭头使用DrawPolyline绘制，字号基准与所有交互态颜色均读取按钮文字的14号与_muted，点击后同步QueueRedraw。_privateExpandedTraining按计划Id记录当前通讯窗口内的展开状态，同一计划随聊天刷新重建时复用，ClosePrivateMessagesCore清空；切换会话仍由原ChatDraftKey保存正文草稿。每次开关修改一个HashSet项、一个Label可见性与按钮文字，保存、广播和训练命令次数均为0，接受/取消/结算仍沿原规则。
 
 群成员加入通知继续读取 GroupChat.Entries。RefreshGroupChat 按当前页面第一轮至下一页面第一轮的 Order 划分通知；首页包含最早通知，末页包含末尾通知，页面内部仍按回复顺序穿插。轮次索引重建需要 O(N) 引用空间；页面渲染最多P轮，群通知每次布局扫描E条后排序本页通知，N为全会话轮数、P为5或10、E为通知总数。原 busy、已读统计及侧栏签名仍可能扫描完整轮次集合。流式文字沿 UpdatePrivateStream / UpdateGroupStream 更新当前控件，原始轮次和结构版本稳定时复用分页索引及气泡。
 
@@ -578,6 +686,18 @@ ScrollPrivateToBottom、私聊及群成员档案返回统一调用ScrollChatTo�
 缓存分类必须写清楚：不可变资源引用、单次检索结果、当前页面控件、可变生涯视图、网络快照各有不同生命周期。主题和字体共享资源不能原地修改；多人可变视图不能跨操作版本复用；页面缓存需要说明日期、阵容、帖子、身份和存档切换时如何更新。
 
 ## 角色卡编辑与个人态度
+
+角色卡编辑采用 PR 底部操作栏，并保留现有三项个人态度编辑。人物PNG与立绘设计ZIP分别导出；PortraitDesignScreen/PortraitStyleScreen 与素材管理入口分别保留。CharacterDesignPackage 版本3写入完整设计元数据，导入恢复自定义表情和套装资料并建立新人物编号，旧PNG沿原入口读取。CareerFilePicker 保存常用目录，取消后回到原编辑窗口；新建帖子调用共用表情控件。
+
+OpenDateAssets 在原立绘与场景窗口调用 BuildAppearanceLibrary，显示形象包选择、预览、导入保存及应用操作；下方继续编辑当前角色的套装和差分。AppearanceLibrary.List 仅枚举本机 JSON 元数据和三个内置条目。选择条目时 Load 读取设计和图片摘要，首次选择内置包才从程序集解压并通过 CharacterDesignPackage.Read 校验，图片进入 DateSceneAssetStore 的共用缓存。Preview 只加载当前默认立绘，换选与关闭时释放纹理。启动游戏没有形象包解压操作。旧版ZIP缺少服装名称时显示套装序号，保留原编号。
+
+AppearanceLibrary.Import 输入ZIP路径，以整包SHA-256去重；已保存的包直接读取元数据。首次导入复用 CharacterDesignPackage.Read，校验后的原字节直接调用 DateSceneAssetStore.Store，避免再次解码。所有图片保存成功后才以临时文件替换库JSON。人物编辑器导入ZIP也登记同一形象包库，并把已解析结果传给Import，继续原新人物编辑流程。原PNG角色卡入口和差分ZIP/JSON追加入口分别沿用各自用途。
+
+Apply 复制包内设计和图片映射，改为当前人物编号，读取并保留当前人物的背景、缩放、播放设置和书签，通过 CharacterDesignPackage.Installation 同时写入人物设计与素材配置。应用不修改CareerData。写入异常时复用Installation恢复原两份文件；共用图片缓存继续留存。关闭窗口、退出进程、切换存档及推进日期后，库文件继续可选；各角色的配置相互独立。形象包属于本机资源，单人、房主、客机使用相同入口，不触发生涯保存、模型请求或网络广播。
+
+ConsumerDetail 已移除商城购买处及收藏处的直接邀约按钮，收藏页显示从聊天＋附件约定活动的说明。购买仍走ConsumerSubmit，聊天活动继续走PrivateActivityPicker、SocialAppointments与ConsumerEngine.Use。既有商品价格、库存和活动费用规则沿用原实现。
+
+验证：实际三个内置ZIP共30张立绘通过解析、跨人物及跨生涯应用、原ZIP移除后复用、重复导入去重、人物资料保留与显示设置保留检查；23项断言和真实Godot页面布局检查通过。Release构建通过，NuGet漏洞数据因网络不可用未取得。逐次耗时、分配量与页面截图见维护者本地 `.artifacts/appearance-library/`；此功能没有实际多人网络发送步骤。
 
 OpenCharacterCard 以 CharacterCards.Read 或 New 建立人物草稿；游戏 ID 为空时仅在草稿中填入当前 PublicName，已有 ID 保持。打开或取消窗口不会因此改写原人物。游戏 ID 仍必填。LineEdit 不再设置 MaxLength；Memo 不设字数上限。CharacterCards.Validate 同步取消公开资料和性格描述的长度上限，CareerNames.Validate 的32字校验与 RenamePlayer 的32字提示及128字输入上限也已移除；其余必填、非法字符、重名、数字范围、合同及对局期间编辑规则保持原状。模型 Profile 标记的独立长度规则未改。
 
@@ -607,7 +727,7 @@ CareerWorldScreen.ClubDirectory 接收当前 CareerData，按现有俱乐部排�
 
 岗位文字调用 CircuitScreen.ClubRole(data, club.Id, GroupChats.Human(data))。GroupChats.Human 读取 LocalHumanId；为空时返回单人身份 player。多人个人视图由 CoopRules.View 提供本地成员身份，因此房主和客机分别查询自己的席位。这个调用只读取数据，不保存、不广播、不修改合同、阵容、赛程或版本。
 
-ClubRole 沿用 NPC 的同一入口：自建俱乐部调用 OwnedClubs.Position，依次检查首发、轮换、教练，其他情况显示青训；普通俱乐部检查当前赛季 league 的俱乐部名单，名单内显示本季首发，否则显示轮换选手。兼任教练仍按这个既有顺序显示选手席位。退出首发申请尚未执行时，显示当前席位；新赛季执行后显示新的席位。没有新增字段或旧档迁移。
+ClubRole 沿用 NPC 的同一入口：自建俱乐部调用 OwnedClubs.Position，依次检查首发、轮换、教练，其他情况显示青训；普通俱乐部检查当前赛季 league 的俱乐部名单，名单内显示本季首发，否则显示轮换选手。兼任教练仍按这个既有顺序显示选手席位。当季退出或恢复首发后显示新岗位；旧存档的下一季申请按到期结果更新显示。岗位沿用原字段保存。
 
 岗位查询的成员编号与界面点击编号分别使用：PersonLink 的 id 仍为 player，姓名仍由 CareerEngine.Name 提供。PersonLink 创建的头像和姓名按钮沿用 OpenPerson(player)，进入当前本地玩家档案；不将多人成员编号交给原来以 player 表示自己的档案入口。刷新页面时重新读取当前个人视图，没有新增缓存或失效规则。
 

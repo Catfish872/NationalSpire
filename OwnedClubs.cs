@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -102,7 +102,7 @@ public static class OwnedClubs
     };
     public static int SponsorWeekly(OwnedSponsor? s, int fans) => s == null ? 0 : (int)Math.Round(s.Weekly * CareerAudience.ClubMultiplier(fans));
     public static int SponsorWinBonus(OwnedSponsor s, int fans) => (int)Math.Round(s.WinBonus * CareerAudience.ClubMultiplier(fans));
-    public static int AudienceIncome(int fans) => (int)Math.Round(100 * CareerAudience.ClubMultiplier(fans));
+    public static int AudienceIncome(int fans) => (int)Math.Round(100 * CareerAudience.ClubMultiplier(fans)) + CareerIncome.ClubAttention(fans);
     public static decimal InitialCost(CareerData d, ClubDraft draft) => FoundingCost + draft.Signings.Sum(s =>
         CareerEngine.Person(d, s.PersonId) is { } p ? Quote(p, s.Plan).Signing : 0);
     public static decimal WeeklyWages(CareerData d, ClubDraft draft) => HumanWages(d) + draft.Signings.Sum(s => CareerEngine.Person(d, s.PersonId) is { } p ? Quote(p, s.Plan).Wage : 0);
@@ -181,7 +181,7 @@ public static class OwnedClubs
     public static List<string> Humans(CareerData d) => d.HumanIds.Count > 0 ? d.HumanIds.ToList() : ["player"];
     public static List<string> ActiveHumans(CareerData d) => d.MatchHumanIds.Count > 0 ? d.MatchHumanIds.ToList() : Humans(d);
     public static int RequiredAiStarters(CareerData d) => Math.Max(0, 3 - (ClubCoaching.PlayerReserve(d) ? 0 : ActiveHumans(d).Count));
-    public static string EntryText(CareerData d) => $"本季第 {SeasonCalendar.Day(d, FirstLeagueDay(d))} 天联赛开赛前可创建";
+    public static string EntryText(CareerData d) => $"{GameCalendar.Text(d, FirstLeagueDay(d))}联赛开赛前可创建";
     public static string? CreationError(CareerData d, ClubDraft draft)
     {
         if (!CanJoinThisSeason(d)) return "本季联赛已开始，请在下赛季首场联赛前创建。";
@@ -494,7 +494,7 @@ public static class OwnedClubs
             }
             int achievement = AchievementWeekly(d, date);
             if (achievement > 0) Pay(d, "俱乐部成绩赞助周结", achievement);
-            Pay(d, "俱乐部会员与周边收入", AudienceIncome(ClubAudience.Total(d, o.ClubId)));
+            Pay(d, "俱乐部会员与周边收入", CareerIncome.WithDevelopment(d, AudienceIncome(ClubAudience.Total(d, o.ClubId)), EsportsWorld.Club(d, o.ClubId)?.Country ?? d.Esports.Country));
             AccrueHumanPay(d, o.HumanWeeklyWage);
             decimal bill = WeeklyOverhead + o.Contracts.Sum(c => c.Wage) + o.Debt;
             decimal paid = Math.Min(Math.Max(0, CareerMoney.Balance(d)), bill); o.Debt = bill - paid;

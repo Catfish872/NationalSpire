@@ -15,7 +15,7 @@ public static class AiRouting
     [
         ("weekly", "周刊与介绍"), ("news", "发帖"), ("discussion", "回帖"),
         ("private", "私聊"), ("group", "群聊"), ("private-summary", "私聊总结"),
-        ("group-summary", "群聊总结"), ("arbitration", "聊天仲裁")
+        ("group-summary", "群聊总结"), ("arbitration", "聊天仲裁"), ("event", "随机事件")
     ];
 
     public static void Ensure(AiOptions options)

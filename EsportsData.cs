@@ -10,6 +10,7 @@ public sealed class EsportsCareer
     public List<CoachLineupRequest> LineupRequests { get; set; } = [];
     public int FreeAgentVersion { get; set; }
     public int CommerceVersion { get; set; }
+    public int IncomeVersion { get; set; }
     public List<SponsorContract> SponsorOffers { get; set; } = [];
     public ClubOffer? PlayerContract { get; set; }
     public int ClubPaidSeason { get; set; }
@@ -157,6 +158,8 @@ public sealed class SponsorContract
 }
 public sealed class NationalLegacy
 {
+    public Dictionary<string, double> ExtraProgress { get; set; } = [];
+    public int ExtraProgressDay { get; set; }
     public int Gdp { get; set; }
     public double GdpGrowth { get; set; }
     public int GrowthFortune { get; set; }
@@ -180,6 +183,7 @@ public sealed class NationalLegacy
 }
 public sealed class ClubOffer
 {
+    public int IncomeVersion { get; set; }
     public int SeasonPay { get; set; }
     public int WinBonus { get; set; }
     public int FanBonus { get; set; }

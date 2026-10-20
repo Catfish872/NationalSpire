@@ -41,7 +41,7 @@ public partial class CareerScreen
         intro.AddChild(Text("MATCH RESULT   /   " + result.Event, 16, accent));
         if (result.Simulated) intro.AddChild(Text("模拟赛果", 18, _gold));
         intro.AddChild(Text(draw ? "势均力敌" : won ? "赢下这一场" : result.Outcome == "退赛" ? "本场退赛" : "本场失利", 42, _ink));
-        intro.AddChild(Text($"第 {SeasonCalendar.Day(data, result.Day)} 天 · {MatchRules.AscensionLabel(result)}", 17, _muted));
+        intro.AddChild(Text($"{GameCalendar.Text(data, result.Day)} · {MatchRules.AscensionLabel(result)}", 17, _muted));
         intro.AddChild(Text(pendingFailure ? "选择重赛，或确认本场成绩。" : draw ? "双方成绩相同，等待下一次交锋。" : won ? "这场胜利，记入你的生涯。" : "本场成绩已记录，赛季仍在继续。", 19, accent));
         RenderTeam();
         var contenders = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
@@ -135,7 +135,7 @@ public partial class CareerScreen
         var heading = Card(); heading.Name = "CompetitionOverview"; _content.AddChild(heading); var intro = Inner(heading);
         intro.AddChild(Text("同期赛况   /   " + review.Name, 25, _gold));
         intro.AddChild(Text(review.PreviousMatchDay is { } day
-            ? $"从你上次参加本赛事（第 {SeasonCalendar.Day(data, day)} 天）至本次结算 · 名次与积分变化均以该场结算为起点"
+            ? $"从你上次参加本赛事（{GameCalendar.Text(data, day)}）至本次结算 · 名次与积分变化均以该场结算为起点"
             : "截至本次结算的赛事全貌 · 尚无上次排名记录，暂不显示升降", 15, _muted));
         foreach (var table in review.Tables.Where(t => t.Rows.Count > 0))
         {
@@ -198,7 +198,7 @@ public partial class CareerScreen
         void AddScore(int i)
         {
             var score = review.Scores[i]; var card = Card(); card.Name = "CompetitionScore" + i; grid.AddChild(card); var box = Inner(card);
-            box.AddChild(Text($"第 {SeasonCalendar.Day(data, score.Day)} 天 · {score.Round}", 14, _muted));
+            box.AddChild(Text($"{GameCalendar.Text(data, score.Day)} · {score.Round}", 14, _muted));
             box.AddChild(Text($"{score.Home}   {score.Score}   {score.Away}", 20, score.PlayerRelated ? _gold : _ink));
             box.AddChild(Text(score.Outcome, 16, CareerVisuals.Teal));
             foreach (var duel in details[score]) box.AddChild(FixtureDetails(data, duel));

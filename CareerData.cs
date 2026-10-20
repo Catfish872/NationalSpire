@@ -2,6 +2,8 @@ namespace NationalSpire;
 
 public sealed class CareerData
 {
+    public EventJourney Journey { get; set; } = new();
+    public int CalendarStartYear { get; set; }
     // 仅供同步序列化前替换顶层字段；不得传给业务规则，编码后必须深复制。
     internal CareerData EncodingHeader() => (CareerData)MemberwiseClone();
     public ChatWorld Chats { get; set; } = new();
@@ -185,6 +187,7 @@ public sealed class CareerPerson
 
 public sealed class CommunityPost
 {
+    public Dictionary<string, int[]> CountryLevels { get; set; } = [];
     [System.Text.Json.Serialization.JsonPropertyName("AiNetScore")]
     public int? AudienceScore { get; set; }
     public Dictionary<string, int> PlayerVotes { get; set; } = [];
@@ -295,6 +298,7 @@ public sealed class AiOptions : System.Text.Json.Serialization.IJsonOnDeserializ
     public Dictionary<string, AiConnectionProfile> ConnectionProfiles { get; set; } = new();
     public Dictionary<string, string> TaskProfiles { get; set; } = new();
     public int PrivatePromptVersion { get; set; }
+    public Dictionary<string, Dictionary<string, List<EventPoolEntry>>> EventPoolOverrides { get; set; } = new();
     public string PromptTemplate { get; set; } = PromptLibrary.DefaultTemplate;
     public Dictionary<string, CustomPromptTemplate> CustomPromptTemplates { get; set; } = new();
     public Dictionary<string, Dictionary<string, string>> PromptTemplateOverrides { get; set; } = new();

@@ -1,8 +1,8 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire.Coop;
 
-public sealed record CoopPrivateChunk(string World, string Epoch, string Person, string Turn, string Text, int Sequence, string Reasoning = "");
+public sealed record CoopPrivateChunk(string World, string Epoch, string Person, string Turn, string Text, int Sequence, string Reasoning = "", List<DateSceneLine>? SceneLines = null);
 public sealed record CoopPrivatePart(string Person, CoopPart Part);
 
 public sealed partial class CoopCoordinator
@@ -14,7 +14,7 @@ public sealed partial class CoopCoordinator
     {
         if (Host || World == null) return;
         var part = Read<CoopPrivatePart>(wire);
-        if (part.Person.Length > 256 || part.Part.Total > 400000 || !(part.Person.StartsWith("group:") ? World.World.Chats.Groups.Any(g => "group:" + g.Id == part.Person && g.Members.Contains(World.Members.Single(m => m.SteamId == Self).PersonId)) : PrivateMessages.CanChat(World.World, part.Person))) return;
+        if (part.Person.Length > 256 || part.Part.Total > 400000 || !(part.Person.StartsWith("event:") ? World.Members.Single(m => m.SteamId == Self).Life.RandomEvents.Any(e => e.Id == part.Person[6..] && e.State == "generating") : part.Person.StartsWith("group:") ? World.World.Chats.Groups.Any(g => "group:" + g.Id == part.Person && g.Members.Contains(World.Members.Single(m => m.SteamId == Self).PersonId)) : PrivateMessages.CanChat(World.World, part.Person))) return;
         if (!_privateAssemblers.TryGetValue(part.Person, out var assembler))
         {
             if (_privateAssemblers.Count >= 64) _privateAssemblers.Remove(_privateAssemblers.Keys.First());
@@ -27,6 +27,11 @@ public sealed partial class CoopCoordinator
         if (_privateSequences.GetValueOrDefault(sequence) >= chunk.Sequence) return;
         _privateSequences[sequence] = chunk.Sequence;
         if (_privateSequences.Count > 512) _privateSequences.Remove(_privateSequences.Keys.First());
+        if (chunk.Person.StartsWith("event:"))
+        {
+            if (System.Text.Json.JsonSerializer.Deserialize<EventLive>(chunk.Text) is { } live) AiService.EventLive[World.Id + "-" + Self + "/event/" + chunk.Person[6..]] = live;
+            return;
+        }
         if (chunk.Person.StartsWith("group:"))
         {
             var active = World.World.Chats.Groups.FirstOrDefault(g => g.Id == chunk.Person[6..])?.Turns.LastOrDefault();
@@ -35,10 +40,11 @@ public sealed partial class CoopCoordinator
         }
         AiService.PrivateLive[World.Id + "-" + Self + "/" + chunk.Person] = (chunk.Turn, chunk.Text);
         AiService.PrivateReasoningLive[World.Id + "-" + Self + "/" + chunk.Person] = (chunk.Turn, chunk.Reasoning);
+        if (chunk.SceneLines != null) AiService.PrivateSceneLive[World.Id + "-" + Self + "/" + chunk.Person] = (chunk.Turn, chunk.SceneLines);
     }
     private void StartPrivate(ulong sender, CoopCommand command)
     {
-        if (!Host || World == null || command.Kind is not ("dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
+        if (!Host || World == null || command.Kind is not ("dm-date-open" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
         string worldId = World.Id, epoch = World.Epoch;
         CareerData? Current()
         {
@@ -53,6 +59,7 @@ public sealed partial class CoopCoordinator
             var member = copy.Members.Single(m => m.SteamId == sender);
             copy.World.Chats.Order = Math.Max(copy.World.Chats.Order, data.Chats.Order);
             member.Life.Mailbox = data.Life.Mailbox; member.Life.Relationships = data.Life.Relationships;
+            member.Life.Consumer = data.Life.Consumer;
             CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);
             PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);
             SpireArbitration.Merge(copy.World, member.Life.Mailbox);
@@ -70,7 +77,8 @@ public sealed partial class CoopCoordinator
             if (!_closed && World?.Epoch == epoch && sender != Self)
                 // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。
                 foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,
-                    AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? ""))))
+                    AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",
+                    AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))
                     Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));
         });
     }
@@ -81,7 +89,8 @@ public sealed partial class CoopCoordinator
         copy.World.Life.Mailbox = new();
         copy.World.Life.Consumer = new();
         copy.World.Life.Trading = new();
-        foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) { member.Life.Mailbox = new(); member.Life.Consumer = new(); member.Life.Trading = new(); }
+        copy.World.Life.RandomEvents = [];
+        foreach (var member in copy.Members.Where(m => m.SteamId != recipient)) { member.Life.Mailbox = new(); member.Life.Consumer = new(); member.Life.Trading = new(); member.Life.RandomEvents = []; }
         return copy;
     }
     /// <summary>从只读编码副本生成收件人的完整同步包，不共享可修改的业务集合。</summary>
@@ -170,6 +179,7 @@ public sealed partial class CoopCoordinator
                 if (value.Path == "life" && child.Name == "Mailbox") writer.WriteRawValue(_mailbox, true);
                 else if (value.Path == "life" && child.Name == "Consumer") writer.WriteRawValue(_consumer, true);
                 else if (value.Path == "life" && child.Name == "Trading") writer.WriteRawValue(_trading, true);
+                else if (value.Path == "life" && child.Name == "RandomEvents") { writer.WriteStartArray(); writer.WriteEndArray(); }
                 else if (value.Path == "career" && child.Name == "PrivatePromptSnapshot") writer.WriteRawValue(templates, true);
                 else if (child.Path != "raw") Write(child, writer, recipient, templates);
                 else Raw(child, writer);
@@ -217,7 +227,7 @@ public static partial class CoopRules
                 if (command.Kind == "dm-confirm" && PrivateAppointments.Error(w.World, command.Target, offer) is { } error) return error;
                 var arrangement = new CoopProposal { Kind = "dm-match", Target = member.SteamId + "/" + command.Target + "/" + offer.Id,
                     Number = command.Kind == "dm-confirm" ? 1 : 0, Votes = [member.SteamId],
-                    Label = (command.Kind == "dm-confirm" ? "安排" : "取消") + $"与{CareerEngine.DisplayName(w.World, command.Target)}的{offer.Mode} · 第{offer.Season}赛季第{offer.Day}天 · 进阶{offer.Ascension}" };
+                    Label = (command.Kind == "dm-confirm" ? "安排" : "取消") + $"与{CareerEngine.DisplayName(w.World, command.Target)}的{offer.Mode} · {GameCalendar.Text(w.World, PrivateAppointments.Date(w.World, offer))} · 进阶{offer.Ascension}" };
                 return ConfirmPrivateMatch(w, arrangement);
             }
             if (offer.Kind == "contract" && member.SteamId != w.Owner) return "合同由房主管理。";

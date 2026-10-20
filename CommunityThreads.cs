@@ -68,7 +68,7 @@ public static class CommunityThreads
     }
     public static bool Normalize(CareerData data)
     {
-        if (data.CommunityVersion >= 4) return false;
+        if (data.CommunityVersion >= 6) return false;
         foreach (var post in All(data))
         {
             if (data.CommunityVersion < 2)
@@ -85,7 +85,7 @@ public static class CommunityThreads
             }
             Remember(data, post);
         }
-        data.CommunityVersion = 4; return true;
+        data.CommunityVersion = 6; return true;
     }
     public static void MarkRead(CareerData data, CommunityPost post)
     {

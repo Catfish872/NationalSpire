@@ -1,0 +1,160 @@
+<svg viewBox="-10 -10 120 120" xmlns="http://www.w3.org/2000/svg" width="360" height="360">
+  <title>银白钻戒誓约框 · 等级9 · 教练</title>
+  <defs>
+    <linearGradient id="nsoath14-platinum" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".12" stop-color="#f4edf3" />
+      <stop offset=".27" stop-color="#b5c4d3" />
+      <stop offset=".40" stop-color="#ffffff" />
+      <stop offset=".58" stop-color="#dae7ee" />
+      <stop offset=".73" stop-color="#9aaaba" />
+      <stop offset=".86" stop-color="#f8edf4" />
+      <stop offset="1" stop-color="#f4f8fc" />
+    </linearGradient>
+    <linearGradient id="nsoath14-platinum-soft" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#d0dce8" />
+      <stop offset=".30" stop-color="#ffffff" />
+      <stop offset=".63" stop-color="#ede3ee" />
+      <stop offset="1" stop-color="#a2b7c9" />
+    </linearGradient>
+    <linearGradient id="nsoath14-platinum-edge" x1="0" y1="0" x2=".2" y2="1">
+      <stop stop-color="#fafcff" />
+      <stop offset=".24" stop-color="#98a7ba" />
+      <stop offset=".50" stop-color="#d7e4ed" />
+      <stop offset=".76" stop-color="#788b9d" />
+      <stop offset="1" stop-color="#e2d9e8" />
+    </linearGradient>
+    <linearGradient id="nsoath14-rose-metal" x1="0" y1="0" x2=".8" y2="1">
+      <stop stop-color="#fff6fa" />
+      <stop offset=".24" stop-color="#f8d9e5" />
+      <stop offset=".48" stop-color="#dca8c0" />
+      <stop offset=".68" stop-color="#fff2f6" />
+      <stop offset="1" stop-color="#a87b9c" />
+    </linearGradient>
+    <linearGradient id="nsoath14-diamond-table" x1=".1" y1="0" x2=".9" y2="1">
+      <stop stop-color="#fcffff" />
+      <stop offset=".30" stop-color="#c9e7f8" />
+      <stop offset=".58" stop-color="#ffffff" />
+      <stop offset=".82" stop-color="#f5d9ef" />
+      <stop offset="1" stop-color="#b3ccdf" />
+    </linearGradient>
+    <linearGradient id="nsoath14-diamond-light" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".46" stop-color="#f2fcff" />
+      <stop offset="1" stop-color="#a9c2dc" />
+    </linearGradient>
+    <linearGradient id="nsoath14-diamond-shadow" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6d819d" />
+      <stop offset=".40" stop-color="#c6d9eb" />
+      <stop offset=".63" stop-color="#f9faff" />
+      <stop offset="1" stop-color="#8ca5c4" />
+    </linearGradient>
+    <linearGradient id="nsoath14-diamond-pink" x1="0" y1="0" x2=".8" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".5" stop-color="#f3d6eb" />
+      <stop offset="1" stop-color="#bdc0de" />
+    </linearGradient>
+    <linearGradient id="nsoath14-diamond-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a5cce8" />
+      <stop offset=".46" stop-color="#e9fbff" />
+      <stop offset="1" stop-color="#f8f4ff" />
+    </linearGradient>
+    <radialGradient id="nsoath14-pearl" cx=".34" cy=".24" r=".8">
+      <stop stop-color="#ffffff" />
+      <stop offset=".36" stop-color="#fff5fa" />
+      <stop offset=".71" stop-color="#d9dbe9" />
+      <stop offset="1" stop-color="#99aabb" />
+    </radialGradient>
+    <linearGradient id="nsoath14-portrait" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#476273" />
+      <stop offset="1" stop-color="#152735" />
+    </linearGradient>
+    <linearGradient id="nsoath14-ruby" x1="0" y1="0" x2=".7" y2="1">
+      <stop stop-color="#ffe9f1" />
+      <stop offset=".28" stop-color="#ec8fb4" />
+      <stop offset=".6" stop-color="#b54375" />
+      <stop offset="1" stop-color="#6e2b55" />
+    </linearGradient>
+    <clipPath id="nsoath14-crop">
+      <path d="M15 13H85Q89 13 89 18V80Q89 88 82 88H18Q11 88 11 80V18Q11 13 15 13Z" />
+    </clipPath>
+  </defs>
+  <g transform="matrix(1.06521739130435 0 0 1.08888888888889 -3.26086956521739 -5.53333333333333)" data-art="matched-frame-size">
+    <path data-art="avatar-outer-frame" d="M14 6H86Q96 6 96 16V82Q96 96 83 96H17Q4 96 4 82V16Q4 6 14 6Z M15 13H85Q89 13 89 18V80Q89 88 82 88H18Q11 88 11 80V18Q11 13 15 13Z" fill="url(#nsoath14-platinum)" stroke="#8295aa" stroke-width=".8" fill-rule="evenodd" />
+    <path d="M15 8.5H85Q93.5 8.5 93.5 16V81Q93.5 93.5 82 93.5H18Q6.5 93.5 6.5 81V16Q6.5 8.5 15 8.5Z" fill="none" stroke="#fbfaff" stroke-width="1" />
+    <path d="M14 7.5H86Q93 7.5 94 14H88.5Q87.8 11.1 84 11.1H16Q12.2 11.1 11.5 14H6Q7 7.5 14 7.5Z" fill="url(#nsoath14-rose-metal)" />
+    <path d="M15 13H85Q89 13 89 18V80Q89 88 82 88H18Q11 88 11 80V18Q11 13 15 13Z" fill="none" stroke="#65798d" stroke-width="1.15" />
+    <path d="M12 78V18Q12 14 16 14H84Q88 14 88 18V78" fill="none" stroke="#f7f4fc" stroke-width=".8" />
+    <path d="M31 91Q39 87 50 91Q61 87 69 91L67 95Q59 92 50 95Q41 92 33 95Z" fill="url(#nsoath14-rose-metal)" />
+    <path d="M30 92Q40 88 50 92Q60 88 70 92" fill="none" stroke="#fff8fc" stroke-width=".7" />
+    <g transform="translate(0 0) scale(1 1)">
+      <g transform="translate(-2.233 0) scale(1.2 1)" data-art="wider-side-scroll">
+        <path d="M8 34C1 43 11 48 6 57C2 64 3 70 9 75" fill="none" stroke="#798c9f" stroke-width="2.6" />
+        <path d="M8 34C1 43 11 48 6 57C2 64 3 70 9 75" fill="none" stroke="url(#nsoath14-platinum)" stroke-width="1.65" />
+        <path d="M6 41Q12 41 11 35Q7 36 6 41ZM6 56Q12 55 11 49Q6 50 6 56Z" fill="url(#nsoath14-platinum-soft)" stroke="#e9f4fc" stroke-width=".35" />
+        <path d="M6 42 10 37M6 56 10 51" stroke="#9bacc0" stroke-width=".45" />
+        <circle cx="5.5" cy="64" r="1.15" fill="url(#nsoath14-pearl)" />
+      </g>
+    </g>
+    <g transform="translate(100 0) scale(-1 1)">
+      <g transform="translate(-2.233 0) scale(1.2 1)" data-art="wider-side-scroll">
+        <path d="M8 34C1 43 11 48 6 57C2 64 3 70 9 75" fill="none" stroke="#798c9f" stroke-width="2.6" />
+        <path d="M8 34C1 43 11 48 6 57C2 64 3 70 9 75" fill="none" stroke="url(#nsoath14-platinum)" stroke-width="1.65" />
+        <path d="M6 41Q12 41 11 35Q7 36 6 41ZM6 56Q12 55 11 49Q6 50 6 56Z" fill="url(#nsoath14-platinum-soft)" stroke="#e9f4fc" stroke-width=".35" />
+        <path d="M6 42 10 37M6 56 10 51" stroke="#9bacc0" stroke-width=".45" />
+        <circle cx="5.5" cy="64" r="1.15" fill="url(#nsoath14-pearl)" />
+      </g>
+    </g>
+    <g transform="translate(50 0) scale(1 1)" data-art="outer-frame-clasp">
+      <path d="M-29 3.08Q-31.2 3.88-30.3 7.82Q-29.8 8.92-28 9.32L-26.8 7.02Z" fill="url(#nsoath14-platinum-edge)" stroke="#8195aa" stroke-width=".4" />
+      <path d="M-29 3.08C-24.5 2.58-20 3.58-15.1 4.98C-11.6 5.98-8.6 6.88-6.1 6.98L-6.1 11.32C-10.4 10.92-14.3 9.22-18.7 7.92C-22.5 6.82-26.3 6.42-28.5 7.02Q-30.2 5.4-29 3.08Z" fill="url(#nsoath14-platinum)" stroke="#8da0b4" stroke-width=".5" />
+      <path d="M-29 3.08Q-30.2 5.4-28.5 7.02L-28 9.32Q-30.5 8.52-30.7 6.2Q-31 4.08-29 3.08Z" fill="url(#nsoath14-platinum-edge)" />
+      <path d="M-28.7 3.58C-24.4 3.18-20.3 4.18-15.5 5.58C-11.8 6.68-8.9 7.48-6.8 7.58" fill="none" stroke="#ffffff" stroke-width=".8" stroke-linecap="round" />
+      <path d="M-28.5 7.02C-24.3 6.42-20.3 7.42-15.7 8.92C-11.8 10.22-8.5 10.92-6.7 10.92" fill="none" stroke="#96a9bd" stroke-width=".45" />
+      <path d="M-29.5 4.18Q-30.2 6.5-28.8 8.22" fill="none" stroke="#f7fdff" stroke-width=".65" />
+    </g>
+    <g transform="translate(50 0) scale(-1 1)" data-art="outer-frame-clasp">
+      <path d="M-29 3.08Q-31.2 3.88-30.3 7.82Q-29.8 8.92-28 9.32L-26.8 7.02Z" fill="url(#nsoath14-platinum-edge)" stroke="#8195aa" stroke-width=".4" />
+      <path d="M-29 3.08C-24.5 2.58-20 3.58-15.1 4.98C-11.6 5.98-8.6 6.88-6.1 6.98L-6.1 11.32C-10.4 10.92-14.3 9.22-18.7 7.92C-22.5 6.82-26.3 6.42-28.5 7.02Q-30.2 5.4-29 3.08Z" fill="url(#nsoath14-platinum)" stroke="#8da0b4" stroke-width=".5" />
+      <path d="M-29 3.08Q-30.2 5.4-28.5 7.02L-28 9.32Q-30.5 8.52-30.7 6.2Q-31 4.08-29 3.08Z" fill="url(#nsoath14-platinum-edge)" />
+      <path d="M-28.7 3.58C-24.4 3.18-20.3 4.18-15.5 5.58C-11.8 6.68-8.9 7.48-6.8 7.58" fill="none" stroke="#ffffff" stroke-width=".8" stroke-linecap="round" />
+      <path d="M-28.5 7.02C-24.3 6.42-20.3 7.42-15.7 8.92C-11.8 10.22-8.5 10.92-6.7 10.92" fill="none" stroke="#96a9bd" stroke-width=".45" />
+      <path d="M-29.5 4.18Q-30.2 6.5-28.8 8.22" fill="none" stroke="#f7fdff" stroke-width=".65" />
+    </g>
+    <g transform="translate(50 9.5) scale(17.2 14.9)">
+      <polygon points="0,-0.5 0.25,-0.43301 0.43301,-0.25 0.5,0 0.43301,0.25 0.25,0.43301 0,0.5 -0.25,0.43301 -0.43301,0.25 -0.5,0 -0.43301,-0.25 -0.25,-0.43301" fill="#d7eaf4" stroke="#9cacc0" stroke-width=".018" stroke-linejoin="round" />
+      <polygon points="0,-0.5 0.25,-0.43301 0,-0.23" fill="url(#nsoath14-diamond-light)" />
+      <polygon points="0.25,-0.43301 0.19919,-0.115 0,-0.23" fill="url(#nsoath14-diamond-shadow)" />
+      <polygon points="0.25,-0.43301 0.43301,-0.25 0.19919,-0.115" fill="url(#nsoath14-diamond-shadow)" />
+      <polygon points="0.25,-0.43301 0.099595,-0.17250000000000001 0,-0.23" fill="url(#nsoath14-diamond-blue)" opacity=".72" />
+      <polygon points="0.43301,-0.25 0.5,0 0.19919,-0.115" fill="url(#nsoath14-diamond-blue)" />
+      <polygon points="0.5,0 0.19919,0.115 0.19919,-0.115" fill="#ffffff" />
+      <polygon points="0.5,0 0.43301,0.25 0.19919,0.115" fill="url(#nsoath14-diamond-pink)" />
+      <polygon points="0.5,0 0.19919,0 0.19919,-0.115" fill="url(#nsoath14-diamond-pink)" opacity=".72" />
+      <polygon points="0.43301,0.25 0.25,0.43301 0.19919,0.115" fill="url(#nsoath14-diamond-shadow)" />
+      <polygon points="0.25,0.43301 0,0.23 0.19919,0.115" fill="url(#nsoath14-diamond-shadow)" />
+      <polygon points="0.25,0.43301 0,0.5 0,0.23" fill="url(#nsoath14-diamond-light)" />
+      <polygon points="0.25,0.43301 0.099595,0.17250000000000001 0.19919,0.115" fill="url(#nsoath14-diamond-blue)" opacity=".72" />
+      <polygon points="0,0.5 -0.25,0.43301 0,0.23" fill="url(#nsoath14-diamond-pink)" />
+      <polygon points="-0.25,0.43301 -0.19919,0.115 0,0.23" fill="#ffffff" />
+      <polygon points="-0.25,0.43301 -0.43301,0.25 -0.19919,0.115" fill="url(#nsoath14-diamond-blue)" />
+      <polygon points="-0.25,0.43301 -0.099595,0.17250000000000001 0,0.23" fill="url(#nsoath14-diamond-pink)" opacity=".72" />
+      <polygon points="-0.43301,0.25 -0.5,0 -0.19919,0.115" fill="url(#nsoath14-diamond-light)" />
+      <polygon points="-0.5,0 -0.19919,-0.115 -0.19919,0.115" fill="url(#nsoath14-diamond-shadow)" />
+      <polygon points="-0.5,0 -0.43301,-0.25 -0.19919,-0.115" fill="url(#nsoath14-diamond-light)" />
+      <polygon points="-0.5,0 -0.19919,0 -0.19919,0.115" fill="url(#nsoath14-diamond-blue)" opacity=".72" />
+      <polygon points="-0.43301,-0.25 -0.25,-0.43301 -0.19919,-0.115" fill="url(#nsoath14-diamond-blue)" />
+      <polygon points="-0.25,-0.43301 0,-0.23 -0.19919,-0.115" fill="#ffffff" />
+      <polygon points="-0.25,-0.43301 0,-0.5 0,-0.23" fill="url(#nsoath14-diamond-blue)" />
+      <polygon points="-0.25,-0.43301 -0.099595,-0.17250000000000001 -0.19919,-0.115" fill="url(#nsoath14-diamond-pink)" opacity=".72" />
+      <polygon points="0,-0.23 0.19919,-0.115 0.19919,0.115 0,0.23 -0.19919,0.115 -0.19919,-0.115" fill="url(#nsoath14-diamond-table)" stroke="#f7ffff" stroke-width=".011" />
+      <path d="M-.199-.115 0 .23 .199-.115M-.199 .115 0-.23 .199 .115" fill="none" stroke="#ffffff" stroke-width=".012" opacity=".67" />
+      <path d="M-.433-.25-.25-.433 0-.5 .25-.433" fill="none" stroke="#ffffff" stroke-width=".025" stroke-linecap="round" />
+      <path d="M.433 .25.25 .433 0 .5" fill="none" stroke="#e9cde8" stroke-width=".018" />
+      <path d="M-.276-.457-.247-.572-.218-.457-.106-.429-.218-.402-.247-.288-.276-.402-.389-.429Z" fill="#ffffff" />
+      <circle cx=".29" cy=".18" r=".018" fill="#ffffff" />
+    </g>
+    <path d="M45.3 91.1 47.4 88.3H52.6L54.7 91.1 50 96.1Z" fill="url(#nsoath14-ruby)" stroke="#ffe9f5" stroke-width=".65" />
+    <path d="M45.3 91.1H54.7M47.4 88.3 48.4 91.1 50 96.1 51.6 91.1 52.6 88.3" fill="none" stroke="#ffecf6" stroke-width=".45" />
+  </g>
+</svg>

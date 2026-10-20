@@ -22,6 +22,7 @@ public static partial class PromptLibrary
         // 先恢复基础模板的独立修改，再清理被删除模板的内容与覆盖项。
         if (TemplateId(options) == id) SelectTemplate(options, DeletionFallback(options, id));
         options.CustomPromptTemplates.Remove(id);
+        options.EventPoolOverrides.Remove(id);
         options.PromptTemplateOverrides?.Remove(id);
     }
 
@@ -49,6 +50,7 @@ public static partial class PromptLibrary
             Sections = Sections.ToDictionary(s => s.Id, s => Get(source, s.Id)) };
         string id = "custom-" + Guid.NewGuid().ToString("N");
         options.CustomPromptTemplates ??= new(); options.CustomPromptTemplates.Add(id, created);
+        EventPools.Save(options, EventPools.Overrides(options, baseId), id);
         SelectTemplate(options, id);
         return id;
     }

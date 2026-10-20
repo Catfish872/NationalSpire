@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100">
+<defs><linearGradient id="rose" x2=".2" y2="1"><stop stop-color="#fff1ed"/><stop offset=".35" stop-color="#efb2c0"/><stop offset=".67" stop-color="#a26180"/><stop offset="1" stop-color="#e6a3b6"/></linearGradient><linearGradient id="heart" x2=".6" y2="1"><stop stop-color="#ffb1c0"/><stop offset=".4" stop-color="#e9678d"/><stop offset="1" stop-color="#a73464"/></linearGradient></defs>
+<path d="M17 5H83L95 17V83L83 95H17L5 83V17Z M19 11L11 19V81L19 89H81L89 81V19L81 11Z" fill="url(#rose)" fill-rule="evenodd" stroke="#75465d" stroke-width="1.2"/>
+<path d="M19 7H81L93 19V81L81 93H19L7 81V19Z" fill="none" stroke="#ffe5da" stroke-width="1.4"/>
+<path d="M19 11H81L89 19V81L81 89H19L11 81V19Z" fill="none" stroke="#9b617c" stroke-width="1.1"/>
+<path d="M50 5C40-5 32 5 40 12L50 20L60 12C68 5 60-5 50 5Z" fill="url(#heart)" stroke="#ffe7de" stroke-width="1.3"/>
+<path d="M39 7Q39 2 44 4M52 8Q57 3 60 6" fill="none" stroke="#ffdee2" stroke-width="1.3" stroke-linecap="round"/>
+<path d="M35 8Q27 1 19 7L25 11L19 14Q29 17 38 10M65 8Q73 1 81 7L75 11L81 14Q71 17 62 10" fill="url(#rose)" stroke="#f8ddcf" stroke-width=".8"/>
+<g fill="url(#rose)" stroke="#ffddd5" stroke-width=".9"><path d="M7 29Q-2 36 5 48Q7 40 7 29Z"/><path d="M93 29Q102 36 95 48Q93 40 93 29Z"/><path d="M7 54Q1 61 8 70Q10 62 7 54Z"/><path d="M93 54Q99 61 92 70Q90 62 93 54Z"/></g>
+<path d="M39 93Q50 88 61 93Q50 100 39 93Z" fill="url(#rose)" stroke="#f9d9d2"/><circle cx="50" cy="94" r="2.4" fill="#e885a1"/>
+</svg>

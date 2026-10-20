@@ -2,10 +2,21 @@
 
 ## 逻辑层与职责
 
+随机事件由 RandomEvents 负责日期、抽取、选择及经历记录，EventPools 共用随机事件和选手日常的默认分类、模板覆盖、缓存与批量编辑转换，EventPoolScreen 提供提示词配置中的事件池入口。RandomEventPrompts/RandomEventParser/AiService.ProcessEventAsync 负责材料和一次流式请求，RandomEventEffects 统一检查、显示与应用效果；RandomEventScreen 是首页和日历共用入口，EventJourney 统一记录途中停留与自动发布暂停，EventJourneyScreen 连接途中窗口、首页和结果页继续行程。钱包、库存、人物好感、学习、行情、国家建设及约战调用已有模块。CoopRandomEvents 负责成员命令及仅发给事件发起人的流式结果，完整快照过滤见 PERSISTENCE_AND_COOP。具体状态、保存次数、上下文范围及旧档行为见 AI_FLOWS 和 DATA_CONTRACTS。
+
+公历统一入口为 GameCalendar：CalendarStartYear 随生涯保存，Date/Text/Iso/Day 负责累计天数与公历互换；NormalizeFields 供活动、约战解析共用。AiWireProtocol 在既有 JSON 遍历中调用 ConvertDateField，CommunitySharing 与 AiGeneratedText 负责旧结构化附件的日期显示，聊天正文保留原文。
+
+正式关系由 RelationshipGifts.Accept 与 OathAttachments.Respond 写入 PrivateRelation；WeddingAppointments 连接已接受礼物、已付款服务、活动与婚礼完成。AvatarHonors 和 NpcAvatarFrames 读取正式状态与原荣誉决定外观。普通好感变动继续调用原 ChangeFavour。
+
+专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。
+
+联系人行、日历、徽章、商品图标与数量控件采用 PR 原控件：ContactRowButton、CalendarDayButton、AffectionVisuals、ConsumerProductArt、ConsumerGiftControls。通讯分类、置顶、右键和管理继续调用现有入口；ChatContacts 只组织显示资料。
+
 | 层 | 入口与模块 | 输入来自哪里 | 输出交给谁 | 数据或外部副作用 |
 | --- | --- | --- | --- | --- |
 | 游戏接入 | Entry.Init、MainMenuEntries、GameBridge、LiveCompatibility、RuntimeApi、GameCompatibility | 原版 ModInitializer、菜单、RunManager、战斗与存储接口 | 生涯界面、比赛恢复、证据记录、转播 | 安装 Harmony 补丁、订阅游戏事件；反射读取版本差异接口 |
 | 页面与会话 | CareerScreen 各 partial、CareerNavigation、ICareerSession、CoopCareerSession | 当前绑定生涯或多人个人视图、用户操作、流式状态 | 生涯命令、多人 Send、AI 请求入口 | 创建和更新控件；操作保存由规则与会话入口负责 |
+| 通讯菜单与置顶 | ChatManagementScreen.ChatMenuItems、ChatContextMenuScreen、PrivateListRows、CareerDialog | 当前或右键选中的会话编号、本机置顶设置、取消/返回操作 | 共用齿轮与右键功能，管理窗口返回及成员列表更新，置顶排序 | pins写入现有本地聊天配置；会话业务继续调用PrivateCommand/GroupCommand |
 | 聊天历史显示 | ChatHistoryPage、ChatHistoryScreen、ChatComposerLayout、ChatComposerButtonSlot、ChatComposerPanel、ChatComposerExpandIcon、PrivateMessageScreen、GroupChatScreen、CareerNavigation | 当前会话记录、内容版本、翻页与选择操作、底栏四组控件的最小尺寸 | 私信/群聊分页及轮数组整体居中、底栏等高并缩至90%、输入框60%高度放大与发送还原、发送加宽且右缘/间距保持、当前页面气泡、滚动定位与档案返回 | 缓存当前会话轮次引用；本地配置按世界及玩家保存最近会话与每页轮数；布局只修改控件位置与尺寸 |
 | 私信身份与表情 | PrivateMemoryScreen、PrivateMessageScreen、CommunityReplyExpressions | 当前人物与关系、本机配置中的人物详情展开状态、TextEdit光标/选区、当前聊天模式 | 头像/姓名档案入口、关系15字折行及右对齐、关系/好感共用自然高度详情、收起消除边框及好感文字显隐、ID顶端对齐头像、名片按两者底边居中、所有状态共用布局及独立方形状态按钮/右侧说明、ID/关系/好感1.25倍悬停亮度、与社区共用的50项Emoji/41项颜文字两行滚动选择器 | 人物详情展开状态按世界、玩家及人物写入本机聊天配置；表情面板归通讯窗口，关闭释放；插入沿原文字草稿路径，私信/群聊共用入口与分类状态，发送沿原业务 |
 | 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
@@ -13,7 +24,7 @@
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
 | 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
 | 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch、CommunityPromptContext | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |
-| 社区赞踩 | CommunityVotes | 主楼和评论正文、人物关注与关系、赛事类型、玩家选择 | Update计算受众净赞数，AudienceScore换算显示，Score叠加手动票，SetVote修改玩家选择 | Remember随内容更新评分，实际变化递增VoteRevision；原JSON键沿用，CommunityVersion=4升级一次，保存交给原入口 |
+| 社区赞踩 | CommunityVotes | 主楼和评论正文、人物关注与关系、赛事类型、玩家选择 | Update计算受众净赞数，AudienceScore换算显示，Score叠加手动票，SetVote修改玩家选择 | Remember随内容更新评分，实际变化递增VoteRevision；原JSON键沿用，CommunityVersion=5升级一次，保存交给原入口 |
 | 社区讨论显示 | CommunityScreen、CommunityDiscussionLayout、CommunityDiscussionVisuals、CommunityReplyExpressions、MentionComposer | 当前帖子回复、ParentId、既有阅读顺序、赞踩数据、本机折叠编号及编辑器光标与选区 | 评论卡片、统一透明度的父子连线及圆钮留空、后代计数、可切换收起的气泡回复、赞踩控件、圆形折叠按钮、就地回复栏及隔离滚轮传播的Unicode表情选择 | 投影和控件随布局更新；草稿与折叠集合归当前屏幕，ResetNavigation清空；表情选择及提及候选归当前编辑器，提交及赞踩保存沿业务入口 |
 | 社区分享 | CommunityShareScreen、CommunitySharing、PrivateMemoryScreen | 主楼/评论编号、作者、当前个人信箱、人物选择及原私聊草稿 | 单选人物窗口、待发引用卡片、发送时来源/父链快照、私信及总结的AI材料 | 草稿归当前屏幕；发送经原dm-send按权威资料重建，Quote/Detail/AiDetail随该轮附件持久化 |
 | 社区举报 | CommunityReportButton、ArbitrationScreen、CommunityReporting、SpireArbitration | 来源帖及可选评论编号、权威原文、NPC作者、可选举报原因、人物实力与裁决 | 提交前确认弹窗、作者私聊中的举报卡、官方裁决及既有处罚和致歉 | 确认后重读来源，Text保存原因或默认说明，dm-arbitrate建立Request案件快照，统一仲裁队列执行；原文与审理材料归申请人信箱，公开裁决沿原档案合并 |
@@ -27,10 +38,22 @@
 
 ## 国运、模拟与个人经济
 
+职业收入统一由 CareerIncome 提供关注收益、旧合同转换和临时国运加成。CareerCommerce.RefreshOffers 先转换本人合同及报价，SponsorIncome.Retainer 同时供合同展示与实际付款使用；OwnedClubs.AudienceIncome 供周结与盈亏平衡查询使用。NPC 雇佣报价仍由 OwnedClubs.Quote 计算。
+
+国运贡献经 NationalFortune.Amount → Confirm → NationalDevelopment.Contribute。每点贡献提供7点建设进度，按比赛编号、国家和日期确定随机分配；九项现状描述、当日升降和建设目标分别由 Snapshot/Describe/Context 提供给新闻、回帖及聊天。满级指标的 ExtraProgress 经 Enhancement 换算为临时增强，IncomeBonus 参与个人赞助和俱乐部会员收入。
+
+聊天界面共用入口：ChatSettingsMenu 集中通讯工具入口，OpenChatDialog 切换设置与确认窗口；AppointmentCalendar 提供约战和活动的日历；GiftReceipt 显示礼物回执；TrainingCompletions / TrainingCompletionsThrough 按训练完成顺序组织私聊与群聊卡片。其输入、生命周期和调用关系见 GAME_AND_UI 的聊天历史章节。
+
+群聊改名入口：ChatManagementScreen.ChatManageDialog → CareerScreen.GroupCommand → GroupChats.Command，使用已有 Name、Entries 和 Revision，由原保存与多人 CaptureGroup 同步，GroupChatScreen、GroupChatPrompts 和 SummarizeGroupAsync 读取。
+
+生活与会话入口：ConsumerEngine.Buy 统一数量购买与库存迁移；ChatAttachments 统一附件资料、标记格式和礼物实际扣除；SocialAppointments 统一邀约、接受、改期、取消、赴约。ChatMembership 统一私聊隐藏与清除、群聊解散与恢复、移出成员和可见记忆范围。ProactiveChats 统一设置、触发、已回复轮数和请求启动；单人与联机共享规则，联机启动由 CoopCoordinator.StartProactiveChats 执行。
+
+CardKnowledge.Find 统一读取玩家本轮文字中的卡牌名称；GameCardKnowledge 从游戏已加载定义建立资料，语言变化更新索引。WorldEvents.AfterMatch 与 Advance 共用 PublishDaily；WorldMatchLife 提供48条赛后生活素材。CoachLineups.RefreshAiStarters 在 CircuitWorld.StartSeason 中接续人物补员、先于阵容请求生效与新赛程生成。
+
 | 模块 | 统一入口 | 输入、输出和下游 |
 | --- | --- | --- |
 | 逐场国运 | NationalFortune.Confirm | FinishFixture 的已确认赛果 → Fixture 收据、CircuitAward 累计、国家资金和 Contribute；CircuitLedger.Settle 补全最终名次，MatchImpact 提供结算及战报文字 |
-| 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 国运先补维护再分配建设余额；换季计算 GDP 和维护不足下降；WorldEvents 的原有随机事件时机发布公报，继续使用 Publish 与原有社区生成队列 |
+| 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 国运同时补充维护额度和建设余额；换季计算 GDP 和维护不足下降；WorldEvents 的原有随机事件时机发布公报，继续使用 Publish 与原有社区生成队列 |
 | 玩家模拟 | PlayerSimulation.Sample / Run | 本人真实历史优先、选定进阶优先 → 原抽取成绩 → VaryTime 在保持本场胜负的范围内按均值上下3%浮动用时 → RunPerformance；单人 FinishMatch、多人提议确认后 Settle；失利进入 FailureDecision，MatchFailure.RestoreMatch 统一恢复原种子和对手，确认原失败或进入实际重赛后再正式结算 |
 | 关注与报价 | CareerAudience、ClubAudience、SeasonCeremony | 玩家和NPC共用比赛/冠军奖励；ClubAudience.Total 汇总独立关注及现役选手影响；新报价共用两条倍率曲线；奖项保存实际AudienceReward供单人及多人收据使用 |
 | 消费 | ConsumerEngine.Buy / Use | 商品目录、本人 Consumer、邀请对象与关系 → 钱包、物品、关系和公开事实；单人 EconomicActions.Save，多人 Apply/Capture |

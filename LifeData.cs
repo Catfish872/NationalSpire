@@ -2,6 +2,7 @@ namespace NationalSpire;
 
 public sealed class CareerLifeState
 {
+    public List<RandomEventRecord> RandomEvents { get; set; } = [];
     public ConsumerState Consumer { get; set; } = new();
     public MarketAccount Trading { get; set; } = new();
     public decimal CreditFraction { get; set; }
@@ -20,6 +21,9 @@ public sealed class CareerLifeState
     public int NextOfferDay { get; set; }
     public int NextProjectDay { get; set; }
     public int NextWorldEventDay { get; set; }
+    public int ReservedDailyDay { get; set; }
+    public int PostMatchDailyDay { get; set; }
+    public int PostMatchDailyCount { get; set; }
     public long PrizeTotal { get; set; }
     public List<LifeActivity> Activities { get; set; } = [];
     public List<LifeEvent> Events { get; set; } = [];

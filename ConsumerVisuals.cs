@@ -41,17 +41,17 @@ internal partial class ConsumerSeal : Control
     public bool Current { get; init; }
     public bool Ticket { get; init; }
     public bool Promo { get; init; }
-    public int Count { get; init; }
+    public long Count { get; init; }
     public ConsumerSeal() { CustomMinimumSize = new(24, 24); MouseFilter = MouseFilterEnum.Ignore; }
     public override void _Draw()
     {
         var color = ConsumerVisuals.Accent(Current);
         if (Promo)
         {
-            for (int i = 0; i < ConsumerCatalog.PromoPerSeason; i++)
+            for (int i = 0; i < 3; i++)
             {
-                var rect = new Rect2(i * 8, 6, 5, 13);
-                DrawRect(rect, i < Count ? color : new Color(color, .12f));
+                var rect = new Rect2(i * 8, 14 - i * 4, 5, 5 + i * 4);
+                DrawRect(rect, new Color(color, .3f + i * .2f));
                 DrawRect(rect, new Color(color, .7f), false);
             }
         }

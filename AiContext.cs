@@ -70,7 +70,7 @@ public static partial class AiService
             facts = MatchContext(data, p) == null ? (p.SourceBody.Length > 0 ? AiGeneratedText.Source(p) : p.Body) : p.RelatedFacts.Length > 0 ? p.RelatedFacts : null, eventDay = p.Day, p.Category,
             allowedAuthors = NewsCommenters(p, pending.Count).Append(p.AuthorId).Distinct().Where(supplied.Contains).ToArray(),
             对玩家的态度 = ReplyAttitudes(data, p, persons.Where(person => NewsCommenters(p, pending.Count).Contains(person.Id) || p.AuthorId == person.Id), occasion),
-            match = MatchContext(data, p)
+            match = MatchContext(data, p), countryConditions = NationalDevelopment.Describe(p.CountryLevels)
         }).ToArray();
         var personas = persons.Select(NewsPerson).ToArray();
         return JsonSerializer.Serialize(new
@@ -79,7 +79,7 @@ public static partial class AiService
             // 荣誉带日期，避免把后来取得的头衔写入旧新闻。
             honors = data.Esports.Honors.Where(h => h.Day <= contextDay).TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }),
             seasonHistory = data.SeasonHistory.TakeLast(2).Select(s => new { s.Season, s.Rank, s.Points }),
-            schedules = pending.GroupBy(p => p.Day).Select(group => PublicSchedule.ForPrompt(group.Key == data.Day
+            schedules = pending.GroupBy(p => p.Day).Select(group => PublicSchedule.ForPrompt(data, group.Key == data.Day
                 ? PublicSchedule.Capture(data, group.SelectMany(p => p.RelatedPeople)) : group.Select(p => p.Schedule).FirstOrDefault(s => s != null))),
             playerRecord = PlayerPublicRecord(data, pending.Min(p => p.Day), !pending.Any(p => p.EventKey.StartsWith("match"))), attitudeScale = PersonalityLibrary.AttitudeScale,
             态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = personas, sharedGroupMemories = sharedGroups.Records,

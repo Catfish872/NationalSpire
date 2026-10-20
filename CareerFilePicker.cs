@@ -6,10 +6,28 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private string _filePickerDirectory = PromptTransfer.Desktop;
+    private static string SavedFilePickerDirectory()
+    {
+        using var config = new ConfigFile(); config.Load("user://NationalSpire_file_picker.cfg");
+        string folder = config.GetValue("browser", "directory", "").AsString();
+        return Directory.Exists(folder) ? folder : "";
+    }
+    private void PickNestedFile(string title, string[] extensions, Action<string> selected)
+    {
+        var parent = _dialogOverlay; var cancel = _cancelDialog;
+        if (parent == null) { OpenFilePicker(title, extensions, selected); return; }
+        parent.Hide(); _dialogOverlay = null; _cancelDialog = null;
+        bool Alive() => IsInstanceValid(parent) && !parent.IsQueuedForDeletion();
+        OpenFilePicker(title, extensions, file => { if (Alive()) selected(file); });
+        var picker = _dialogOverlay;
+        void Restore() { if (Alive() && (_dialogOverlay == null || _dialogOverlay == picker)) { _dialogOverlay = parent; _cancelDialog = cancel; parent.Show(); } }
+        if (picker != null) picker.TreeExiting += () => Callable.From(Restore).CallDeferred(); else Restore();
+    }
     // 使用游戏内文件浏览器，支持磁盘和目录导航，避免独立系统窗口触发失焦静音。
     private void OpenFilePicker(string title, string[] extensions, Action<string> selected)
     {
-        string folder = _filePickerDirectory, chosen = "";
+        string saved = SavedFilePickerDirectory();
+        string folder = saved.Length > 0 ? saved : Directory.Exists(_filePickerDirectory) ? _filePickerDirectory : PromptTransfer.Desktop, chosen = "";
         var history = new Stack<string>();
         var entries = new List<(string Path, bool Directory)>();
         ItemList list = null!; Label status = null!; LineEdit location = null!, search = null!;
@@ -57,6 +75,14 @@ public partial class CareerScreen
             nav.AddChild(Button("桌面", () => Navigate(PromptTransfer.Desktop), 100));
             nav.AddChild(Button("文档", () => Navigate(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), 100));
             nav.AddChild(Button("图片", () => Navigate(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)), 100));
+            var savePath = Button("保存路径", () =>
+            {
+                if (!Directory.Exists(folder)) { status.Text = "请打开一个可访问的文件夹后保存。"; return; }
+                using var config = new ConfigFile(); config.Load("user://NationalSpire_file_picker.cfg");
+                config.SetValue("browser", "directory", Path.GetFullPath(folder));
+                if (config.Save("user://NationalSpire_file_picker.cfg") != Error.Ok) { status.Text = "路径保存失败，请重试。"; return; }
+                _filePickerDirectory = folder; status.Text = "已保存当前文件夹，下次导入时会从这里开始浏览。";
+            }, 130); savePath.Name = "FilePickerSavePath"; nav.AddChild(savePath);
             location = new LineEdit { Name = "FilePickerLocation", Editable = false, CustomMinimumSize = new(0, 42) }; box.AddChild(location);
             search = new LineEdit { Name = "FilePickerSearch", PlaceholderText = "搜索当前文件夹中的名称", CustomMinimumSize = new(0, 42) }; box.AddChild(search);
             list = new ItemList { Name = "FilePickerList", CustomMinimumSize = new(0, 340), SizeFlagsHorizontal = SizeFlags.ExpandFill };

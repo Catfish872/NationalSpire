@@ -8,6 +8,44 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 
 ## 单人与多人数据
 
+### 公历、关系与场景资料
+
+CareerData.CalendarStartYear 是本生涯第1天对应的公历年份，第1天固定为该年1月1日。新建生涯时记录当前年份；旧档缺省0，在 NormalizeRoster 或多人主持者加载时由 GameCalendar.Initialize 写入升级年份，之后随原保存及完整快照固定。文件复制与再次启动读取已保存年份。内部 Day、Season、LongSeasonsFrom 和所有原赛事编号继续用于排序及计算；系统展示经 GameCalendar 换算。原文里的旧日期属于历史文字。
+
+PrivateRelation.SelectedBond 表示主动确认的关系阶段，1为恋人、2为誓约；OathConfirmed 表示当前誓约，RingReceived 和 WeddingCompleted 记录经历。普通好感数值继续使用 Favour。RelationshipGifts 在发送和接受时共用60/85门槛；普通礼物支持恋人请求，专属礼物形成誓约。OathAttachments 接受解除时取消当前誓约，保留婚礼及收礼历史，并回到恋人关系。现有交互快照与 PreserveRelation 负责重新生成的恢复和后续独立关系操作的保留。
+
+PrivateOffer.RelationshipIntent 属于本次礼物请求；ServiceId 将婚礼活动关联到已接受的婚礼礼物。服务编号为 GroupId/礼物Id，私聊的 GroupId 为空。Services 汇总当前玩家私聊及群聊交互会话，按礼物 Quantity 减去已赴约或已结束活动次数；购买、收礼扣库存、赴约使用服务分别沿原入口执行。
+
+PrivateMailbox.NpcAvatarFrames 保存当前玩家为各NPC选择的头像框。缺省使用原荣誉；婚礼完成且当前誓约有效时自动显示钻戒框。CharacterDeletion 删除自建角色时一并删除该信箱的选择记录。其他玩家信箱继续由既有多人个人资料处理。
+
+PrivateTurn.Scene 保存活动编号、套装、可用表情和背景、开场信息；SceneLines 保存台词/旁白及对应表情、背景，拼接文字等于 Reply。PrivateConversation.DateSceneStates 按活动编号记录 active、paused、ended。普通通讯过滤 Scene 轮次的显示和未读，原 Turns、ChatTimeline、自动总结及上下文继续读取这些轮次。旧档缺少 Scene 时为普通私聊，缺少正式关系状态时按原关系文字展示。
+
+素材与播放书签保存于本机 PortraitDesignStore/DateSceneAssetStore 路径，归属键包含生涯及人物；场景正文和进度状态归生涯。ZIP版本3保存 PortraitDesign 元数据、人物和图片，兼容版本1/2；PNG继续使用原角色卡格式。图片尺寸采用原比例，通用图片读取的文件大小与像素保护继续适用。
+
+AppearanceLibrary 共用库位于 `user://national_spire_portraits/library`。每份JSON包含Name、Design和Outfits图片摘要映射；导入包文件名取整包SHA-256，内置包使用haruka、charlotte、alili固定资源编号。这些编号只定位本机素材，不是人物、生涯或网络版本。三个默认ZIP嵌入程序集，首次选择后才写入库；图片共用scenes/images缓存。Apply深复制Design与Outfits，人物配置保留自己的播放设置和背景；库不包含聊天记录、关系或生涯数据。旧存档打开同一素材入口即可使用，原人物配置继续按原路径读取。
+
+### 职业收入、库存和国运字段
+
+ClubOffer.IncomeVersion 标记本人合同已完成工资×2、胜场和目标奖金×3的转换；Esports.IncomeVersion 标记待赛联赛奖金迁移。CareerIncome.Upgrade 对原数值转换一次，新报价调用同一入口。已到账金额继续由原账目保存。
+
+ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为持有数量，GiftReceipts 保存已接受礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件；Gift 接受才扣除数量。交互回退恢复对应数量差额，并保留其后购买结果。
+
+NationalLegacy.ExtraProgress 保存各满级指标的增强进度，ExtraProgressDay 标记衰减起算日期；读取按14天半衰期计算，新贡献时先将存量折算到当天再追加。CommunityPost.CountryLevels 保存事件当时各相关国家九项等级，用于历史新闻资料。即时私聊、群聊、玩家发帖及讨论请求读取当前国家状态。
+
+### 会话可见性和主动联系字段
+
+GroupChat.Name 是当前显示名称。group-rename 使用 GroupCommand.Text 传入名称，通过统一 GroupChats.Command 写入；GroupEntry.Notice=true 的改名通知保存操作时原名称、新名称、Author、Day 和全局 Order，Revision 驱动界面刷新。使用已有字段序列化，旧档直接使用原 Name；历史通知保持操作当时文本。
+
+PrivateConversation.Hidden 控制会话入口，Forgotten 标记清除；清除时删除 Turns、SmallSummaries、BigSummaries，原 Offers 标记 MemoryDeleted，实际合同、日程和其他影响仍由对应模块管理。新消息重新启用会话。
+
+ProactiveChats.Trigger 跳过 Hidden 私聊和 Dissolved 群聊；单人 StartQueued、联机房主 StartProactiveChats 在启动排队轮次前再次检查同一可见性字段。隐藏保留 ProactiveChatSettings，恢复后继续读取原概率与连续联系次数。CareerLife.Advance → ClubCoaching.Advance 从俱乐部训练计划读取训练进度，按日期、教练与队伍资格结算，与会话可见性分别处理；隐藏期间继续记录每周成长及完成通知位置。
+
+GroupChat.Dissolved 控制解散与恢复，Forgotten 标记整体清除；Departures 按人物保存离群时 ThroughOrder 和当时总结列表，MemoryStarts 保存清除后重新加入可读记录的下界。ChatMembership.Knows、Summaries、Readers 共同约束私聊外部材料、群聊外部材料和公开请求中的群聊记忆。整体清除覆盖现任及已离群成员，并清除相关私聊的保存上下文与总结缓存。
+
+ProactiveChatSettings 在私聊属于该人物会话，在群聊按真人编号保存。默认关闭，MatchChance/EventChance/DayChance 为25/25/0，UnansweredLimit 为3。LastTrigger 对同一日期或比赛去重；EventDay/SeenEvents 记录当天已检查事件。ProactiveReason/ProactiveLast 属于实际聊天轮次，保存和重试沿用同一轮次。文字、附件或私聊请求均作为玩家回应，CountReplies 从最近回应后统计完成的主动联系；失败生成沿原状态保存。
+
+FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。ProactiveChatDialog 经原 dm-proactive/group-proactive 命令调用 Configure 写入此字段，同时保留 Unanswered、LastTrigger 和事件记录。世界总决赛、洲际俱乐部冠军杯、世界杯的最终轮次将 MatchChance 按100处理，获胜与失利均适用。启用、可见性、忙碌状态、连续回复上限及同场去重继续由 Trigger 原检查处理。界面名称为夺冠赛必定回复，说明列出胜负均触发及连续次数上限。设置随原信箱、群聊、多人个人视图和检查点保存。
+
 | 数据 | 管理者与写入入口 | 输入来源 | 下游使用者 |
 | --- | --- | --- | --- |
 | CareerData | 单人由 CareerStore 绑定实例和文件；多人由 CoopWorld.World 管理共享部分 | 生涯规则、游戏事实、AI 成品 | 页面、模拟、上下文、迁移、序列化 |
@@ -19,9 +57,12 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 | ExternalCurrent / ExternalSave | 会话或公共 AI 任务建立；JsonIgnore | 当前绑定、会话编号、代次、个人视图 | CareerStore.IsCurrent / Save、AI 完成后的有效性与保存 |
 | PrivateMemorySources | 多人聊天 Current 填入其他真人信箱；JsonIgnore | 当前各成员信箱副本 | ChatTimeline；群聊交互通过 CaptureGroup 合并实际变更 |
 | AiOptions、密钥 | AiSettingsStore、本机设置与请求入口 | ConnectionProfiles、TaskProfiles、设置界面、按方案加密的密钥或默认方案环境变量 | AiService.Connection 取得发送快照；公开序列化仅保留 Enabled |
+| AiOptions.EventPoolOverrides | EventPools.Save、PromptTransfer.Apply、模板创建与删除 | 模板编号 → 固定分类编号 → EventPoolEntry 列表，保存于原本机 AI 配置及单人生涯副本 | EventPools.Get 缓存解析后的随机事件及日常；公开同步继续过滤 AiOptions |
 | PrivatePromptSnapshot | Broadcast 填入各聊天场景与 world 模板 | 房主本机模板库 | 客机相关界面/上下文读取；房主生成重新读取本机设置 |
 
 多人个人视图不是独立共享生涯，也不能代替房主最新数据。复制有不同用途：规则执行前的副本用于失败时保留原数据；个人视图用于兼容共用规则；网络副本用于剔除接收者不应看到的数据。三者不能仅因都调用 Copy 就视作重复。
+
+事件池配置以分类是否存在区分跟随默认和自定义：缺少键使用内置，存在空列表表示该分类为空。记录中的 Title 用于日常标题，Detail 用于日常内容或随机事件素材；日常继续替换 {人}、{队}。随机事件新 Category 字段保存抽取时分类，旧记录缺省为空时按原 Seed 查 RandomEventSeeds 的内置映射；已生成自定义事件修改模板后仍保留原画面分类。提示词文件版本3及旧文件缺字段行为见 AI_FLOWS。
 
 ## AI 连接方案与本机凭据
 
@@ -57,7 +98,7 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 - MarketClearing.Result为单次计算对象，含Quote数值副本、已触发仓位及账户引用、成交金额、均价、手续费和完整执行标志。Commit执行资金与数量变更。MarketState.RevisionCopy供margin/stop复制标量版本，共享只读Quotes与Events；开平仓仍复制完整Market。新仓追加保证金、设置和取消止损递增市场Revision。
 - TradingAccounts和InspectMarket为JsonIgnore委托。房主BindMarket绑定当前事务全部成员账户；客机其他成员Trading经原过滤后为空，InspectMarket向房主查询。MarketInspection仅包含本人订单参数及本人持仓编号；MarketInspectionResult返回市场版本、本人净资产、双向订单摘要和本人退出结果。
 - MarketOrder.QuoteRevision 约束开仓、平仓、追加保证金和止损设置，必须等于共同报价版本；按钮读取当前绑定视图中的报价版本。网络操作编号和重复收据仍由 CoopCommand 管理。
-- CareerLifeState.Consumer 保存本人商品、购买日期、宣发次数、邀请次数和生成帖子用的递增编号。旧档获得空账户、空物品，原余额不变；耐用品明细保留，较旧普通消费明细会清理，但 BoughtDay 保留每款最近购买日期。ConsumerPurchases 只读合并 BoughtDay/Goods，用于已购徽章及实物收藏，不新增存档字段；本季状态来自 Goods.Season，宣发次数仅在 Consumer.Season 等于当前赛季时使用。Good.Durable 仍代表可举办活动、终身限购的原规则；Good.Collectible 独立决定实物展示，不把杂志等普通商品改成终身限购。Consumed 不参与收藏展示过滤。
+- CareerLifeState.Consumer 保存本人商品、数量、购买日期、宣发次数、邀请次数和事件编号。ConsumerPurchases 只读合并 BoughtDay/Goods，按未消费实物合计数量，用于持有徽章及实物收藏；宣发次数在 Consumer.Season 等于当前赛季时使用。Good.Durable 表示可举办活动，Good.Collectible 决定库存与实物展示。恢复与数量字段见本章职业收入、库存和国运字段。
 - MarketAccounts、MarketSponsors 是 JsonIgnore 委托。BindMarket 在 Apply/Settle 的副本及 InitializeMarket 的恢复资料中绑定：处理所有成员账户（含离线成员）、读取参与者赞助；序列化、个人视图和网络不携带委托。交易输入复用该副本委托，不能指向提交前的旧 CoopWorld。
 
 - CareerClub.Fans 保存普通俱乐部独立关注，AudienceReceipts 按赛事/轮次/对阵去重；OwnedClubState.Fans 保留自建俱乐部原独立关注。ClubAudience.Total 动态叠加现役前三人20%，不把这一部分写回独立关注。
@@ -91,6 +132,14 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 旧记录可能没有同日顺序。ChatTimeline 明确注明旧记录缺少先后信息。日期仍以天为单位，不新增实际时间字段。
 
 ## 聊天、总结与交互
+
+Life.RandomEvents 保存随机事件。State 使用 waiting/generating/ready/failed/complete/skipped；Selected=-1 表示尚未选择。重新生成保留原 Story/Options/Reasoning，成功后整体替换；停止或失败时存在旧选项则回到 ready，首次生成则进入 failed。Reasoning 缺省空字符串，Phase 仅存在于内存 EventLive。Effects 每项包含一个语义作用键及该类型所需字段；故事、行动、结局分开保存。钱包协议使用美元，执行时按原货币规则换算；百分比执行时除以100。默认字段说明来自程序固定的 RandomEventPrompts.Format；可编辑 event 模板仅保存故事要求，正式生成和试写共用 Compose 追加协议；检查、预览与执行统一在 RandomEventEffects。
+
+CareerData.Journey 保存 EventJourney.Destination 与 PausedDay，归共同日历；旧档缺省为零，表示普通停留。ResumePublications 使用 JsonIgnore，仅提示当前界面在恢复时启动原自动生成；重新加载由原主菜单请求入口读取 PausedDay。事件内容仍属于个人 Life.RandomEvents，共同旅途状态不包含人物和故事。
+
+事件经历复用 PrivateTurn：RequestKind=event、Id=event:事件或比赛编号、ReplyDeleted=true。没有聊天历史的人物使用 EventOnly 会话，普通交流后自动显示联系人；事件轮次不计私信未读，SeenCount 保持包含全部完成轮次的原序号含义。ChatMembership 清除私聊时清除相同记录。NpcLearning.EventStatuses 保存来源、名称、截止日及百分比，MoodBonus 只计未到期状态。新增集合缺省为空，旧存档仍按原字段加载。
+
+CoachTrainingPlan.CompletionDay / CompletionOrder 保存训练完成日期及 ChatWorld.Order 中的固定顺序。ClubCoaching.Advance 在进行中转为已完成时写入一次；每周成长、完成状态与顺序随原 CareerLife.Advance 保存。历史已完成训练缺省顺序为0，原历史卡片继续显示；更新时正在进行的训练正常生成完成通知。界面从当前私聊 Offers 或群聊 Interactions.Offers 的训练编号定位计划，MemoryDeleted 与 Forgotten 沿原清除规则过滤。完成通知是同一计划在时间线上的第二处显示，原接受卡片保留原 TurnId。分页、关闭窗口、重新载入及多人序列化均读取这两个字段。撤回训练接受通过 RestoreTraining 恢复计划，完成通知随计划一起恢复或移除。
 
 | 数据 | 写入者 | 消费者与用途 |
 | --- | --- | --- |
@@ -127,7 +176,7 @@ Create保存待发时的预览；dm-send的PrepareAttachments按来源编号逐�
 
 私信顶部关系/印象详情及好感文字的展开状态保存于本机ChatPreferences：WorldId:本机玩家编号分区中的identity:人物编号布尔值，缺省为true。点击关系或好感按钮同步显示并写入文件一次，普通刷新、切换人物、关闭再打开通讯及重启恢复同一选择。ChatComposerLayout.CenterPages在私信/群聊均为true，CommunityReplyExpressions返回的启用委托在选中任一会话时启用；分类、选项与异步定位编号归当前控件并随会话切换沿用。ChatComposerPanel.Expanded、附件目标高度和尺寸更新待执行标志归当前通讯输入区；放大切换保留草稿，发送恢复默认尺寸，关闭通讯释放。训练详情的_privateExpandedTraining为按计划Id维护的窗口内HashSet，新计划默认收起，普通卡片重建复用，关闭通讯清空。PrivateMoodButton及右侧状态说明属于当前身份控件，重建时收起；原始状态和到期日仍从CareerTraining.MoodLevel/MoodUntil读取。正文仍写入原_privateDrafts，发送使用原PrivateTurn；本次布局状态的生涯序列化字段数为0，旧存档沿原默认值读取。
 
-本地 user://NationalSpire_chat.cfg 的分区为 WorldId:本机玩家编号，last保存人物编号或group:群编号，size保存5或10，identity:人物编号保存私聊人物详情的展开布尔值。选择会话与更改轮数写入本地配置；翻页只更新内存。旧 Mailbox.LastPerson 用于首次恢复私信入口；通讯选择改由本地配置记录，dm-select 命令继续保留在原规则入口。私聊/群成员档案的返回记录使用Location.PrivatePerson / Group / ChatPage / ChatScroll，生命周期为当前生涯界面导航历史。具体调用、失效与保存边界见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
+本地 user://NationalSpire_chat.cfg 的分区为 WorldId:本机玩家编号，last保存人物编号或group:群编号，size保存5或10，pins保存按最近置顶在前排列的人物编号或group:群编号数组，identity:人物编号保存私聊人物详情的展开布尔值。选择会话与更改轮数写入本地配置；翻页只更新内存。旧 Mailbox.LastPerson 用于首次恢复私信入口；通讯选择改由本地配置记录，dm-select 命令继续保留在原规则入口。私聊/群成员档案的返回记录使用Location.PrivatePerson / Group / ChatPage / ChatScroll，生命周期为当前生涯界面导航历史。具体调用、失效与保存边界见[聊天分页](GAME_AND_UI.md#私信与群聊历史分页)。
 
 最新总结删除且没有其他总结完整覆盖其范围时，原文起点回退到被删总结的 From。聊天与再总结都恢复这一段直到当前最新记录，不按配置额外裁剪恢复区间。非最新总结删除不回退；其确认框提示“删除这条总结可能导致永久丢失记忆”。
 
@@ -160,12 +209,12 @@ PrivateInteractionHistory.Capture 的合同快照增加 refillPeople、refillPos
 | WeeklyEdition 与生成阶段 | WeeklyJournal 捕获事实；AiWeekly 应用结果 | 双周档案、文章、界面、重试；事实快照和生成状态不是同一项数据 |
 | 人物简介/记忆/关系/状态 | 档案、周刊、聊天与交互 | 供后续上下文使用；旧自由文本不属于本次职业入口转换的范围 |
 
-社区评分随原帖子与评论保存。AudienceScore使用JsonPropertyName沿用AiNetScore键。CommunityVersion=4表示已升级；单人载入经原Normalize，房主恢复在RecoverInterrupted与Commit前调用Normalize。低于4时遍历Posts / SavedThreads并Remember，重算受众评分，玩家字典继续沿用；达到4直接返回。旧AiScoreRevision由JSON反序列化忽略。
+社区评分随原帖子与评论保存。AudienceScore使用JsonPropertyName沿用AiNetScore键。CommunityVersion=6表示已升级；单人载入经原Normalize，房主恢复在RecoverInterrupted与Commit前调用Normalize。低于6时遍历Posts / SavedThreads并Remember，重算受众评分，玩家字典继续沿用；达到6直接返回。旧AiScoreRevision由JSON反序列化忽略。
 
 CommunityVotes.Update每次建立人物编号字典、评论编号字典、父编号分组及局部关注缓存。作者关注F、相关人物最大关注P、回复数N形成受众规模R=(12+sqrt(F)+0.25sqrt(P))×赛事倍率×楼层倍率×(1+0.2ln(1+N))。世界杯/世界总决赛/大师赛倍率3、洲际杯2、联赛1.5、其余1；主楼倍率1、评论0.35；少于8字符乘0.6。主楼N取全帖评论数，评论N取直接子评论数。当前玩家读取Fans，其他人物沿CareerAudience.Followers。
 
-支持比例为0.56+min(0.12,0.018log10(1+F))，增加固定随机项[-0.28,0.28]及0.04×T。T是明确支持、反对及攻击性词语合计的符号，长词优先匹配否定表达，属于文字近似判断。被谈论者关注G带来0.22×T×sqrt(G/(1+F+G))；熟人增加0.03×T，同俱乐部或支持该俱乐部增加0.04×T，职业选手或有冠军增加0.02。支持比例限定0.05—0.95。原始分数round(R×固定随机受众项[0.65,1.35]×(2×支持比例-1))。两个随机项分别使用StableHash(帖子编号:本层编号:正文:audience:用途)；主楼正文包含标题。
+支持比例为0.56+min(0.12,0.018log10(1+F))，增加按帖子编号和作者编号确定的固定随机项[-0.28,0.28]；熟人增加0.03，同俱乐部或支持该俱乐部增加0.04，职业选手或有冠军增加0.02；帖子作者在主楼及自己的评论中增加0.04。支持比例限定0.05—0.95。原始分数s=R×固定随机受众项[0.65,1.35]×(2×支持比例-1)。s≥0时四舍五入；s<0时改为round((2u−0.8)×(1+abs(s))^0.2)，u由帖子与作者固定生成。受众倾向及负反馈换算由同一作者在该帖共用，正文及楼层编号影响传播量；词语内容作为原文字保留。
 
-主楼目标取首个提及人物，否则首个其他相关人物；评论取首个提及人物，否则父评论作者或主楼作者。内容通过Remember更新，重复计算相同输入数值稳定。AudienceScore以Int64按主楼/NPC评论乘6、玩家评论乘16；Score再加有效玩家票。SetVote按个人视图LocalHumanId识别玩家，单人取player；-1/0/+1分别点踩、取消、点赞，相同选择返回false，实际变化递增VoteRevision。程序评分变化也递增VoteRevision。调用者沿原保存入口提交，界面读取只计算分数之和。
+内容通过Remember更新，重复计算相同输入数值稳定。AudienceScore以Int64按主楼/NPC评论乘6、玩家评论乘16；Score再加有效玩家票。SetVote按个人视图LocalHumanId识别玩家，单人取player；-1/0/+1分别点踩、取消、点赞，相同选择返回false，实际变化递增VoteRevision。程序评分变化也递增VoteRevision。调用者沿原保存入口提交，界面读取只计算分数之和。
 
 具体读写引用见 Source 中的字段与属性引用。索引记录引用事实，不能仅凭“引用了字段”推断该函数会修改字段；写入条件和先后顺序以流程与函数体为准。

@@ -8,9 +8,9 @@ public static class NationalFortune
 
     public static (int Win, int Loss) Amount(string kind, int round) => kind switch
     {
-        "worldfinal" => round switch { 1 => (10, 5), 2 => (20, 10), 3 => (60, 30), 4 => (120, 60), 5 => (390, 90), _ => (0, 0) },
-        "continental" => round switch { 1 => (10, 5), 2 => (15, 10), 3 => (35, 20), 4 => (120, 30), _ => (0, 0) },
-        "worldcup" => round switch { 1 => (30, 15), 2 => (90, 60), 3 => (240, 60), _ => (0, 0) },
+        "worldfinal" => round switch { 1 => (75, 5), 2 => (80, 10), 3 => (90, 30), 4 => (100, 60), 5 => (255, 90), _ => (0, 0) },
+        "continental" => round switch { 1 => (20, 5), 2 => (35, 10), 3 => (45, 20), 4 => (80, 30), _ => (0, 0) },
+        "worldcup" => round switch { 1 => (60, 15), 2 => (90, 60), 3 => (210, 60), _ => (0, 0) },
         _ => (0, 0)
     };
 
@@ -54,7 +54,7 @@ public static class NationalFortune
         var nation = d.Esports.Nations.First(n => n.Country == country);
         nation.Treasury += amount * 2;
         if (id == "player") d.Credits += amount * 20;
-        f.DevelopmentChanges.AddRange(NationalDevelopment.Contribute(d, nation, amount));
+        f.DevelopmentChanges.AddRange(NationalDevelopment.Contribute(d, nation, amount, c.Id + ":" + f.Id));
     }
 
     public static string Impact(CareerData d, WorldCompetition c, WorldFixture f)

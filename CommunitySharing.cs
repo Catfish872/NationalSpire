@@ -1,4 +1,4 @@
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -83,21 +83,21 @@ public static class CommunitySharing
         }
         quote.Parents.Reverse();
         string detail = $"{quote.AuthorName}：\n{quote.Body}\n来源：《{quote.PostTitle}》";
-        string aiDetail = Text(quote);
+        string aiDetail = Text(data, quote);
         // 先完整构造，成功后替换；校验失败时保留草稿中展示的引用。
         attachment.Quote = quote; attachment.MatchId = post.Id; attachment.PostRevision = post.Revision;
         attachment.Detail = detail; attachment.AiDetail = aiDetail;
         return null;
     }
 
-    public static string Text(CommunityQuote quote) => "玩家分享的社区引用（按原作者身份理解）：\n" + JsonSerializer.Serialize(new
+    public static string Text(CareerData data, CommunityQuote quote) => "玩家分享的社区引用（按原作者身份理解）：\n" + JsonSerializer.Serialize(new
     {
         type = "community_quote",
         sourcePost = new { id = quote.PostId, revision = quote.PostRevision, title = quote.PostTitle, authorId = quote.PostAuthorId,
-            author = quote.PostAuthorName, day = quote.PostDay, body = quote.ReplyId.Length > 0 ? quote.PostBody : null,
+            author = quote.PostAuthorName, date = GameCalendar.Iso(data, quote.PostDay), body = quote.ReplyId.Length > 0 ? quote.PostBody : null,
             recordedEvent = quote.PostAiSourceBody ?? quote.PostSourceBody },
-        parents = quote.Parents.Select(p => new { id = p.Id, parentId = p.ParentId, authorId = p.AuthorId, author = p.AuthorName, day = p.Day, body = p.Body }),
+        parents = quote.Parents.Select(p => new { id = p.Id, parentId = p.ParentId, authorId = p.AuthorId, author = p.AuthorName, date = GameCalendar.Iso(data, p.Day), body = p.Body }),
         quoted = new { id = quote.ReplyId.Length == 0 ? quote.PostId : quote.ReplyId, kind = quote.ReplyId.Length == 0 ? "post" : "reply",
-            parentId = quote.ParentId, authorId = quote.AuthorId, author = quote.AuthorName, day = quote.Day, body = quote.Body }
+            parentId = quote.ParentId, authorId = quote.AuthorId, author = quote.AuthorName, date = GameCalendar.Iso(data, quote.Day), body = quote.Body }
     }, QuoteJson);
 }

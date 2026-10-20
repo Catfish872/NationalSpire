@@ -65,19 +65,22 @@ public static class CareerCommerce
         int tier = 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a => a.PersonId == "player" && a.Place == "冠军" && a.Kind != "league"));
         int kind = IdentityIndex(d, club.Id);
         int signing = Math.Min(Math.Max(0, club.Budget / 5), (kind switch { 0 => 3000, 1 => 1400, 2 => 2400, _ => 1800 }) * tier * 2);
-        return new() { ClubId = club.Id, ExpiresDay = d.Day + 28, SigningBonus = signing,
+        var offer = new ClubOffer { ClubId = club.Id, ExpiresDay = d.Day + 28, SigningBonus = signing,
             SeasonPay = (kind switch { 0 => 2400, 1 => 1200, 2 => 1800, _ => 1000 }) * tier * 2,
             WinBonus = (kind switch { 0 => 25, 1 => 30, 2 => 15, _ => 45 }) * tier * 2,
             FanBonus = kind == 2 ? 30 : 0, GoalWins = kind == 0 ? 4 : kind == 3 ? 2 : 3,
             GoalReward = (kind switch { 0 => 400, 1 => 330, 2 => 260, _ => 360 }) * tier * 2 };
+        CareerIncome.Upgrade(offer);
+        return offer;
     }
     private static void CopyTerms(ClubOffer from, ClubOffer to)
-    { to.SigningBonus = from.SigningBonus; to.SeasonPay = from.SeasonPay; to.WinBonus = from.WinBonus; to.FanBonus = from.FanBonus; to.GoalWins = from.GoalWins; to.GoalReward = from.GoalReward; }
+    { to.SigningBonus = from.SigningBonus; to.SeasonPay = from.SeasonPay; to.WinBonus = from.WinBonus; to.FanBonus = from.FanBonus; to.GoalWins = from.GoalWins; to.GoalReward = from.GoalReward; to.IncomeVersion = from.IncomeVersion; }
     public static string ClubTerms(ClubOffer c) => $"签约奖金 {CareerMoney.Format(c.SigningBonus)} · 每赛季报酬 {CareerMoney.Format(c.SeasonPay)} · 代表俱乐部每胜一场奖金 {CareerMoney.Format(c.WinBonus)}"
         + (c.FanBonus > 0 ? $"、关注 +{c.FanBonus}" : "") + $"\n本季代表俱乐部赢下 {c.GoalWins} 场，再奖励 {CareerMoney.Format(c.GoalReward)}。";
     public static SponsorContract? ActiveSponsor(CareerData d) => d.Esports.Sponsors.LastOrDefault(s => s.TargetId == "player" && s.Accepted && s.EndedDay == 0 && s.StartSeason <= d.Season && s.EndSeason >= d.Season);
     public static void RefreshOffers(CareerData d)
     {
+        CareerIncome.Upgrade(d);
         if (d.CooperativeMembers > 1) return;
         if (d.Esports.EcosystemVersion < 1) return;
         var w = d.Esports;

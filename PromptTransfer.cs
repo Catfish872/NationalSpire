@@ -1,4 +1,4 @@
-﻿using System.Text.Encodings.Web;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,6 +14,7 @@ public static class PromptTransfer
         [JsonRequired] public string Template { get; set; } = "";
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public CustomPromptTemplate? CustomTemplate { get; set; }
         [JsonRequired] public Dictionary<string, Section> Sections { get; set; } = [];
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public Dictionary<string, List<EventPoolEntry>>? EventPools { get; set; }
     }
     public sealed class Section
     {
@@ -28,9 +29,9 @@ public static class PromptTransfer
     };
     public static string Export(AiOptions options, IReadOnlyDictionary<string, string> drafts)
     {
-        var bundle = new Bundle { Template = PromptLibrary.TemplateId(options) };
+        var bundle = new Bundle { Version = 3, Template = PromptLibrary.TemplateId(options), EventPools = NationalSpire.EventPools.Overrides(options) };
         if (options.CustomPromptTemplates?.TryGetValue(bundle.Template, out var custom) == true)
-        { bundle.Version = 2; bundle.CustomTemplate = custom; }
+        { bundle.CustomTemplate = new() { Name = custom.Name, BaseTemplate = custom.BaseTemplate, Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value)) }; }
         foreach (var section in PromptLibrary.Sections)
         {
             string text = drafts[section.Id];
@@ -48,6 +49,11 @@ public static class PromptTransfer
     private static string Normalize(string text) => text.Replace("\r\n", "\n").Trim();
     private static void Validate(Bundle bundle)
     {
+        if (bundle.EventPools != null) NationalSpire.EventPools.Validate(bundle.EventPools);
+        if (bundle.Sections?.TryGetValue("event", out var eventSection) == true)
+            eventSection.Text = PromptLibrary.EditableText("event", eventSection.Text);
+        if (bundle.CustomTemplate?.Sections?.TryGetValue("event", out var eventText) == true)
+            bundle.CustomTemplate.Sections["event"] = PromptLibrary.EditableText("event", eventText);
         if (bundle.Sections?.Remove("private-style", out var oldStyle) == true && bundle.Sections.TryGetValue("private", out var guide))
         {
             if (!guide.FollowDefault || !oldStyle.FollowDefault)
@@ -70,9 +76,9 @@ public static class PromptTransfer
                 && (!sections.TryGetValue(id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text)))
                 sections[id] = new() { FollowDefault = true, Text = bundle.CustomTemplate?.Sections?.GetValueOrDefault(id) ?? text };
         }
-        if (bundle.Format != "national-spire-prompts" || bundle.Version is not (1 or 2))
+        if (bundle.Format != "national-spire-prompts" || bundle.Version is not (1 or 2 or 3))
             throw new ArgumentException("不支持此提示词文件格式或版本。");
-        if (bundle.Version == 1)
+        if (bundle.Version == 1 || (bundle.Version == 3 && bundle.CustomTemplate == null))
         {
             if (bundle.CustomTemplate != null || !PromptLibrary.Templates.Any(t => t.Id == bundle.Template)) throw new ArgumentException("文件中的提示词模板不存在。");
         }
@@ -106,6 +112,7 @@ public static class PromptTransfer
             options.PromptOverrides = texts.Where(p => Normalize(p.Value) != Normalize(PromptLibrary.Default(options, p.Key)))
                 .ToDictionary(p => p.Key, p => p.Value);
             options.PrivatePromptVersion = 1;
+            if (bundle.EventPools != null) NationalSpire.EventPools.Save(options, bundle.EventPools);
             return;
         }
         var overrides = bundle.Sections.Where(p => !p.Value.FollowDefault).ToDictionary(p => p.Key, p => p.Value.Text);
@@ -121,6 +128,7 @@ public static class PromptTransfer
         PromptLibrary.SelectTemplate(options, bundle.Template);
         options.PromptOverrides = overrides;
         options.PrivatePromptVersion = 1;
+        if (bundle.EventPools != null) NationalSpire.EventPools.Save(options, bundle.EventPools);
     }
     public static string Desktop => Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
     public static string WriteDesktop(string json)

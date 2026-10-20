@@ -1,10 +1,10 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>在有素材的题材中按权重抽取，赛事与人物的真实状态用于筛选素材。</summary>
-public static class WorldEvents
+public static partial class WorldEvents
 {
-    private sealed record Topic(string Key, string Title, string Detail);
-    private static readonly Topic[] Topics = [
+    internal sealed record Topic(string Key, string Title, string Detail);
+    internal static readonly Topic[] Topics = [
         new("观众", "{人}遇到远道而来的观众", "{人}在{队}的观众活动中见到了专程赶来的支持者，现场留下了一张合照。"),
         new("观众", "{队}征集新赛季应援图", "{队}向观众征集应援设计，{人}挑选了几份自己喜欢的作品。征集仍在进行。"),
         new("观众", "一张旧门票又被翻了出来", "观众在{队}的交流活动中带来一张早期赛事门票，{人}聊起了那个时期的参赛经历。"),
@@ -47,25 +47,53 @@ public static class WorldEvents
         if (d.Life.Version == 0 || d.Day < d.Life.NextWorldEventDay) return;
         int seed = CareerEngine.StableHash(d.WorldId + ":events:" + d.Day);
         var rng = new Random(seed); d.Life.NextWorldEventDay = d.Day + rng.Next(3, 7);
-        var candidates = Topics.Where(t => d.Day - d.Life.LastTopics.GetValueOrDefault("world:" + t.Key, -100) >= 14).ToList();
+        if (CareerEngine.NextMatch(d) is { } match && match.Day == d.Day)
+        { d.Life.ReservedDailyDay = d.Day; return; }
+        PublishDaily(d, rng, "world-life-" + d.Day);
+    }
+    public static void AfterMatch(CareerData d, CareerMatch match)
+    {
+        EventJourney.Resume(d);
+        CareerLife.PublishPending(d, true, match.Id);
+        bool remaining = d.Matches.Any(m => m.Day == d.Day && m.Registered && m.Status == "待赛");
+        if (d.Life.PostMatchDailyDay != d.Day) { d.Life.PostMatchDailyDay = d.Day; d.Life.PostMatchDailyCount = 0; }
+        var random = new Random(CareerEngine.StableHash(d.WorldId + ":after-match:" + match.Id));
+        if (!remaining && d.Life.ReservedDailyDay == d.Day)
+        { d.Life.ReservedDailyDay = 0; PublishDaily(d, random, "world-life-" + d.Day); }
+        else if (random.NextDouble() < .35 / Math.Pow(1 + d.Life.PostMatchDailyCount, 2))
+        { if (PublishDaily(d, random, "world-life-match-" + match.Id)) d.Life.PostMatchDailyCount++; }
+    }
+    private static bool PublishDaily(CareerData d, Random rng, string key)
+    {
+        var recent = d.Esports.Competitions.SelectMany(c => c.Fixtures.Where(f => f.Finished && f.Day <= d.Day && f.Day >= d.Day - 7)
+            .Select(f => (Competition: c, Fixture: f))).ToArray();
+        var recentPeople = recent.SelectMany(x => SeasonCeremony.Participants(d, x.Competition, x.Fixture, true)
+            .Concat(SeasonCeremony.Participants(d, x.Competition, x.Fixture, false))).ToHashSet();
+        var candidates = EventPools.Get(d).Daily.Where(t => d.Day - d.Life.LastTopics.GetValueOrDefault("world:" + t.Key, -100) >= 14).ToList();
         var people = d.People.Where(p => p.ClubId.Length > 0 && EsportsWorld.IsProfessional(p)
             && d.Day - d.Life.LastTopics.GetValueOrDefault("person:" + p.Id, -100) >= 42).ToList();
+        if (!people.Any(p => recentPeople.Contains(p.Id))) candidates.RemoveAll(t => EventPools.IsMatchCategory(t.Key));
         var subjects = people.Count > 0 ? candidates.Select(t => t.Key).Distinct().ToList() : [];
         if (NationalDevelopment.NewsCandidates(d).Length > 0) subjects.Add("国运发展");
         if (MarketDynamics.NewsCandidates(d).Length > 0) subjects.Add("市场动态");
-        if (subjects.Count == 0) return;
+        if (subjects.Count == 0) return false;
         string subject = SelectTopic(subjects, rng);
-        if (subject == "国运发展") { NationalDevelopment.TryPublish(d, rng); return; }
-        if (subject == "市场动态") { MarketDynamics.TryPublish(d); return; }
+        if (subject == "国运发展") return NationalDevelopment.TryPublish(d, rng);
+        if (subject == "市场动态") { MarketDynamics.TryPublish(d); return true; }
         var templates = candidates.Where(t => t.Key == subject).ToArray();
         var topic = templates[rng.Next(templates.Length)];
-        var person = people[rng.Next(people.Count)];
+        var pool = EventPools.IsMatchCategory(topic.Key) ? people.Where(p => recentPeople.Contains(p.Id)).ToList() : people;
+        var person = pool[rng.Next(pool.Count)];
         string Render(string s) => s.Replace("{人}", person.PublicName).Replace("{队}", EsportsWorld.ClubName(d, person.ClubId));
         d.Life.LastTopics["world:" + topic.Key] = d.Day; d.Life.LastTopics["person:" + person.Id] = d.Day;
         string title = Render(topic.Title), detail = Render(topic.Detail);
-        CareerLife.AddEvent(d, "world-life-" + d.Day, topic.Key, title, detail, [person.Id]);
-        CareerEngine.Publish(d, "world-life-" + d.Day, title, detail, "人物日常", true, [person.Id]);
-        if (d.Posts.FirstOrDefault(p => p.EventKey == "world-life-" + d.Day) is { } post) post.NewsTopic = topic.Key;
+        var result = recent.Where(x => SeasonCeremony.Participants(d, x.Competition, x.Fixture, true)
+            .Concat(SeasonCeremony.Participants(d, x.Competition, x.Fixture, false)).Contains(person.Id)).OrderByDescending(x => x.Fixture.Day).FirstOrDefault();
+        if (result.Fixture != null) detail += "\n相关比赛记录：" + FixtureFacts(d, result.Competition, [result.Fixture]);
+        CareerLife.AddEvent(d, key, topic.Key, title, detail, [person.Id]);
+        CareerEngine.Publish(d, key, title, detail, "人物日常", true, [person.Id]);
+        if (d.Posts.FirstOrDefault(p => p.EventKey == key) is { } post) post.NewsTopic = topic.Key;
+        return true;
     }
     public static string SelectTopic(IReadOnlyList<string> subjects, Random random)
     {
@@ -84,6 +112,6 @@ public static class WorldEvents
                 + (f.Draw ? "战平" : f.WinnerId == f.HomeId ? "战胜" : "负于") + string.Join("、", SeasonCeremony.Participants(d, c, f, false).Select(name))
                 + $"（双方成绩：{MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)}；{MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)}）"));
             string teams = c.TeamEvent ? $"{CircuitWorld.TeamName(d, c, g.Key.Home)}对阵{CircuitWorld.TeamName(d, c, g.Key.Away)}，已完成比分{g.Count(f => f.WinnerId == f.HomeId)}:{g.Count(f => f.WinnerId == f.AwayId)}。" : "";
-            return $"第{g.Key.Day}天，{c.Name}第{g.Key.Round}轮：{teams}{seats}。";
+            return $"{GameCalendar.Text(d, g.Key.Day)}，{c.Name}第{g.Key.Round}轮：{teams}{seats}。";
         }));
 }

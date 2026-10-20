@@ -23,6 +23,7 @@ public partial class CareerScreen
     {
         if (!_chatPreferencesLoaded) { ChatPreferences.Load("user://NationalSpire_chat.cfg"); _chatPreferencesLoaded = true; }
         _chatPageSize = ChatPreferences.GetValue(ChatPreferenceKey, "size", 10).AsInt32();
+        LoadChatPins(); LoadContactPreferences();
     }
     private void SaveChatPreferences()
     {
@@ -118,7 +119,7 @@ public partial class CareerScreen
         {
             var conversation = PrivateMessages.Conversation(ViewData, _privatePerson);
             previous = _privatePages.Count;
-            _privatePages.Bind(conversation.Turns, conversation.MemoryRevision, t => !(t.UserDeleted && t.ReplyDeleted), follow);
+            _privatePages.Bind(conversation.Turns, conversation.MemoryRevision, PrivateMessages.VisibleInCommunications, follow);
         }
         int count = _privateGroup.Length > 0 ? _groupPages.Count : _privatePages.Count;
         if (count > previous && previous > 0 && !follow) _chatNewMessages = true;

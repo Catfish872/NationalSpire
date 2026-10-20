@@ -1,26 +1,29 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
-public sealed record ConsumerOrder(string Verb, List<string> Guests);
+public sealed record ConsumerOrder(string Verb, List<string> Guests, int Quantity = 1);
 
 /// <summary>消费品存档状态。只存玩家侧数据；NPC 粉丝在 CareerPerson.Fans。</summary>
 public sealed class ConsumerState
 {
-    /// <summary>已持有：耐用品、一次性消费品、体验票根。一次性品 Consumed 后只留记录。</summary>
+    public int InventoryVersion { get; set; }
+    public HashSet<string> GiftReceipts { get; set; } = [];
+    /// <summary>保留实物及其数量；即时消费由账目和事件记录。</summary>
     public List<OwnedGood> Goods { get; set; } = [];
-    /// <summary>条目 → 最近一次购买的游戏日；一次性品每赛季 1 次，体验类 28 天冷却。</summary>
+    /// <summary>商品编号对应最近一次购买的游戏日。</summary>
     public Dictionary<string, int> BoughtDay { get; set; } = [];
-    /// <summary>运营类本季已买次数：id → 次数（每项每赛季最多 3 次）。</summary>
-    public Dictionary<string, int> PromoUsed { get; set; } = [];
+    /// <summary>运营类本季已买次数，用于逐次计算关注收益。</summary>
+    public Dictionary<string, long> PromoUsed { get; set; } = [];
     public int Season { get; set; }
     /// <summary>本季被邀请过的人 → 次数：第一次 +Favor，之后只 +1。</summary>
     public Dictionary<string, int> InvitedThisSeason { get; set; } = [];
-    public long LifetimeSpent { get; set; }
-    public int PurchaseCount { get; set; }
+    public decimal LifetimeSpent { get; set; }
+    public long PurchaseCount { get; set; }
     public int PartyCount { get; set; }
 }
 
 public sealed class OwnedGood
 {
+    public long Quantity { get; set; } = 1;
     public string Id { get; set; } = "";
     public string Name { get; set; } = "";
     public int BoughtDay { get; set; }
@@ -42,14 +45,14 @@ public sealed record Good(string Id, string Tier, string Category, string Name, 
 {
     public bool Durable => Verbs.Length > 0;
     /// <summary>实物收藏展示资格；不参与购买次数或活动资格判断。</summary>
-    public bool Collectible => Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住";
+    public bool Collectible => Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住" or "誓约";
 }
 
 /// <summary>消费品目录：四档+ 运营；分类用于商城二级菜单。</summary>
 public static class ConsumerCatalog
 {
     public const string Mass = "大众", Middle = "中产", Rich = "富裕", Luxury = "顶奢", Promo = "运营";
-    public static readonly string[] TierOrder = [Mass, Middle, Rich, Luxury, Promo];
+    public static readonly string[] TierOrder = [Mass, Middle, Rich, Luxury, "誓约", Promo];
     public const int PromoPerSeason = 3;      // 运营每项每赛季 3 次
     public const int RepeatCooldown = 28;     // 体验类冷却 = 游戏内一个月
 
@@ -145,6 +148,8 @@ public static class ConsumerCatalog
         Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true);
         Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true);
         Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true);
+        Item("誓约", "誓约", "oath-ring", "誓约之戒", 100_000);
+        Item("誓约", "誓约", "grand-wedding", "盛大婚礼", 1_500_000);
         return list.ToArray();
     }
 }

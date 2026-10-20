@@ -115,7 +115,7 @@ public static readonly Story[] Stories =
 
 来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string)`](AiWeekly.cs.md#symbol-48defc4d8c32)；[`NationalSpire.AiService.BuildWeeklyContext(NationalSpire.WeeklyEdition, bool)`](AiWeekly.cs.md#symbol-68c73eee1d19)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
+**调用者：** [`NationalSpire.AiService.ApplyWeeklyResponse(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, string)`](AiWeekly.cs.md#symbol-48defc4d8c32)；[`NationalSpire.AiService.BuildWeeklyContext(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool)`](AiWeekly.cs.md#symbol-d24065dcfca3)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)
 
 **调用：** [`NationalSpire.CameoContent.FindStory(NationalSpire.WeeklySlide)`](CameoContent.cs.md#symbol-37cea0979aaf)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 

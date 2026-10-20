@@ -28,7 +28,7 @@ public partial class CareerScreen
                 var card = Card(); entries.AddChild(card); var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); card.AddChild(row);
                 var words = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(words);
                 words.AddChild(Text(entry.Name + (entry.Current ? " · 当前" : ""), 21, entry.Current ? CareerVisuals.Teal : _ink));
-                words.AddChild(Text($"单人 · 第{entry.Season}赛季第{entry.Day}天", 16, _muted));
+                words.AddChild(Text($"单人 · 第{entry.Season}赛季 · {entry.Date}", 16, _muted));
                 var switchButton = Button("切换", () =>
                 {
                     try { _boundData = CareerStore.SwitchCareer(entry.Path); _cancelDialog?.Invoke(); ResetNavigation(); Render(); }
@@ -48,7 +48,7 @@ public partial class CareerScreen
                     }
                     catch (Exception e) { Notice("导出失败：" + e.Message, true); }
                 }, 105));
-                var deleteButton = Button("删除", () => ConfirmCareerDeletion(entry.Name, entry.Season, entry.Day,
+                var deleteButton = Button("删除", () => ConfirmCareerDeletion(entry.Name, entry.Season, entry.Date,
                     () => CareerStore.DeleteCareer(CareerStore.DefaultPath, entry.Path)), 105);
                 deleteButton.Name = "DeleteCareer_" + System.IO.Path.GetFileNameWithoutExtension(entry.Path);
                 deleteButton.Disabled = entry.Current;
@@ -65,10 +65,10 @@ public partial class CareerScreen
                 row.AddThemeConstantOverride("separation", 16);
                 var words = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(words);
                 words.AddChild(Text(cp.World.Name, 21, _ink));
-                words.AddChild(Text($"多人 · 第{cp.World.World.Season}赛季 · 第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天", 16, _muted));
+                words.AddChild(Text($"多人 · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}", 16, _muted));
                 row.AddChild(Button("进入房间", () => { _cancelDialog?.Invoke(); var menu = (Control)GetParent(); Close(); CoopScreen.OpenSaved(menu, cp.World.Id); }, 135));
                 row.AddChild(Button("导出", async () => { try { var archive = await CoopSettings.Storage.ExportArchiveAsync(cp.World.Id); if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OS.ShellShowInFileManager(CareerLibrary.ExportDesktop(cp.World.Name, archive)); Notice("生涯已导出。", false); } catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) Notice(e.Message, true); } }, 105));
-                var deleteButton = Button("删除", () => ConfirmCareerDeletion(cp.World.Name, cp.World.World.Season, SeasonCalendar.Day(cp.World.World, cp.World.World.Day), () =>
+                var deleteButton = Button("删除", () => ConfirmCareerDeletion(cp.World.Name, cp.World.World.Season, GameCalendar.Text(cp.World.World, cp.World.World.Day), () =>
                 {
                     if (CoopRuntime.Current?.Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");
                 }, async () =>
@@ -84,7 +84,7 @@ public partial class CareerScreen
         }, showCancel: false);
     }
 
-    private void ConfirmCareerDeletion(string name, int season, int day, Action delete, Func<Task>? deleteAsync = null)
+    private void ConfirmCareerDeletion(string name, int season, string date, Action delete, Func<Task>? deleteAsync = null)
     {
         _cancelDialog?.Invoke();
         Label? failure = null;
@@ -113,7 +113,7 @@ public partial class CareerScreen
         }, "删除", box =>
         {
             box.AddChild(Text(name, 23, _ink));
-            box.AddChild(Text($"第{season}赛季第{day}天", 16, _muted));
+            box.AddChild(Text($"第{season}赛季 · {date}", 16, _muted));
             box.AddChild(Text("从列表移除，文件保留在本机备份中。", 17, _muted));
             failure = Text("", 16, new Color("f29b9b")); failure.Hide(); box.AddChild(failure);
         }, compact: true);

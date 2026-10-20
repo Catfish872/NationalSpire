@@ -32,6 +32,7 @@ obj/
 *.pdb
 *.log
 *.zip
+!/appearance-packs/*.zip
 *.cache
 *.tmp
 .vs/

@@ -132,6 +132,7 @@ public static partial class CoopRules
             if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
+            else if (command.Kind.StartsWith("event-", StringComparison.Ordinal)) error = EventCommand(w, member, command);
             else if (command.Kind.StartsWith("owned-", StringComparison.Ordinal))
             {
                 if (sender != w.Owner) return (original, Reject("俱乐部由房主管理。"));
@@ -154,7 +155,7 @@ public static partial class CoopRules
                 case "consumer-use":
                     var consumerView = View(w, member);
                     var purchase = System.Text.Json.JsonSerializer.Deserialize<ConsumerOrder>(command.Text)!;
-                    error = command.Kind == "consumer-buy" ? ConsumerEngine.Buy(consumerView, command.Target, purchase.Guests)
+                    error = command.Kind == "consumer-buy" ? ConsumerEngine.Buy(consumerView, command.Target, purchase.Guests, purchase.Quantity)
                         : ConsumerEngine.Use(consumerView, command.Target, purchase.Verb, purchase.Guests);
                     if (error == null) Capture(w, member, consumerView);
                     break;
@@ -353,7 +354,7 @@ public static partial class CoopRules
     {
         "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
         "simulate" => "模拟 " + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
-        "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到第 {number} 天", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
+        "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到{GameCalendar.Text(w.World, number)}", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
     };
     private static string? ExecuteProposal(CoopWorld w, CoopProposal p, IReadOnlySet<string> characters)
@@ -380,7 +381,10 @@ public static partial class CoopRules
                     decimal before = CareerMoney.Balance(d); decimal clubBefore = d.Esports.OwnedClub?.CashFlow ?? 0;
                     if (!CareerEngine.AdvanceOneDay(d)) break;
                     Distribute(w, CareerMoney.Balance(d) - before, clubBefore); AdvanceMembers(w);
-                    if (w.Members.Any(m => SocialAppointments.Due(View(w, m)).Any())) break;
+                    bool ordinary = w.Members.Any(m => SocialAppointments.Due(View(w, m)).Any())
+                        || CareerEngine.NextMatch(d) is { } upcoming && upcoming.Day <= d.Day || d.Failure != null || d.PendingMatchId != null;
+                    bool encounter = w.Members.Any(m => m.Life.RandomEvents.Any(e => e.Day == d.Day && e.State is not ("complete" or "skipped")));
+                    if (EventJourney.Stop(d, p.Number, ordinary, encounter)) break;
                 }
                 return null;
             case "register":
@@ -471,6 +475,8 @@ public static partial class CoopRules
             SocialAppointments.Expire(view);
             if (m.PaidSeason < view.Season) { CareerCommerce.SeasonStart(view); m.PaidSeason = view.Season; }
             else CareerCommerce.RefreshOffers(view);
+            ProactiveChats.Trigger(view);
+            w.World.Chats = view.Chats;
             Capture(w, m, view);
         }
         w.World.Life.Events.RemoveAll(e => e.Id.StartsWith("human-", StringComparison.Ordinal));
@@ -480,7 +486,7 @@ public static partial class CoopRules
         if (events.Count > 0 && w.World.Ai.Enabled)
         {
             string key = "life-update-" + w.World.Day;
-            CareerEngine.Publish(w.World, key, w.Name + "的近期安排", string.Join("\n", events.Select(e => $"第 {e.Day} 天 · {e.Title} · {e.Detail}")), "人物日常", true, events.SelectMany(e => e.People).Distinct().ToList());
+            CareerEngine.Publish(w.World, key, w.Name + "的近期安排", string.Join("\n", events.Select(e => $"{GameCalendar.Text(w.World, e.Day)} · {e.Title} · {e.Detail}")), "人物日常", true, events.SelectMany(e => e.People).Distinct().ToList());
             if (w.World.Posts.FirstOrDefault(p => p.EventKey == key) is { } post) foreach (var e in events) e.PostId = post.Id;
         }
     }
@@ -613,6 +619,10 @@ public static partial class CoopRules
                     post.AiSourceBody = AiGeneratedText.Different(post.SourceBody, ai);
                 }
             post.RelatedPeople.AddRange(played.Select(m => m.PersonId)); CommunityThreads.Remember(d, post);
+        }
+        foreach (var member in w.Members)
+        {
+            var view = View(w, member); ProactiveChats.Trigger(view, match); w.World.Chats = view.Chats; Capture(w, member, view);
         }
         w.Run = null; w.LatestCheckpoint = ""; w.Revision++; RefreshPeople(w); return w;
     }

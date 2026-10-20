@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -36,7 +36,9 @@ public partial class CareerScreen
                 int level = NationalDevelopment.Level(nation, indicator.Id);
                 var button = FilterButton(indicator.Name + $"  {level:00}", _developmentIndicator == indicator.Id, () => { _developmentIndicator = indicator.Id; Render(); }, 0);
                 button.AddThemeColorOverride("font_color", MarketVisuals.LevelColor(level)); box.AddChild(button);
-                box.AddChild(new DevelopmentGauge { Level = level });
+                double enhancement = NationalDevelopment.Enhancement(nation, indicator.Id, d.Day);
+                box.AddChild(new DevelopmentGauge { Level = level, Enhancement = enhancement });
+                if (enhancement > 0) box.AddChild(Text($"发展活力 +{enhancement:0%}", 15, _gold));
             }
         }
         var lower = new HBoxContainer(); main.AddChild(lower);
@@ -46,7 +48,7 @@ public partial class CareerScreen
         description.AddChild(Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink));
         var report = Card(); lower.AddChild(report); var news = Inner(report); news.AddChild(Text("赛场贡献与发展", 23, _gold));
         foreach (var contribution in d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day).Take(4))
-            news.AddChild(Text($"第{contribution.Day}天 · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink));
+            news.AddChild(Text($"{GameCalendar.Text(d, contribution.Day)} · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink));
         if (nation.LastReport.Length > 0) news.AddChild(Text(nation.LastReport, 16, CareerVisuals.Teal));
     }
 }

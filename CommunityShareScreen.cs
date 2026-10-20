@@ -146,6 +146,7 @@ public partial class CareerScreen
                         choice.SetMeta("person", person.Id);
                         choice.Text = person.PublicName + " · " + person.Role + (person.Id == quote.AuthorId ? " · 作者" : "");
                         choice.TooltipText = choice.Text;
+                        PickerRing(row, data, person.Id);
                     }
                     choice.SetPressedNoSignal(person.Id == selected);
                     row.Position = new(0, (first + i) * rowHeight); row.Size = new(list.Size.X, rowHeight - 8);

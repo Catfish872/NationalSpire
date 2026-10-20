@@ -19,8 +19,8 @@ public partial class CareerScreen
         box.AddChild(Text("提示词试写", 28, _gold));
         box.AddChild(Text("使用当前编辑。每次试写调用一次 AI，仅在这里预览，保留前后两次结果供比较。", 17, _muted));
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); box.AddChild(row);
-        var scenes = new[] { "news", "discussion", "profiles", "weekly" };
-        var sceneNames = new[] { "自动发帖", "玩家帖子与回复", "选手介绍", "双周刊" };
+        var scenes = new[] { "news", "discussion", "profiles", "weekly", "event" };
+        var sceneNames = new[] { "自动发帖", "玩家帖子与回复", "选手介绍", "双周刊", "随机事件" };
         var sceneChoice = new OptionButton { Name = "PromptTestScene", CustomMinimumSize = new Vector2(250, 48) };
         for (int i = 0; i < scenes.Length; i++) sceneChoice.AddItem(sceneNames[i]);
         row.AddChild(sceneChoice);

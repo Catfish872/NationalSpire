@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6644D3ADBD4417DB4CCDA2F4FFF0F917E09F022B7E728B20A75D70EABCC25146`。来源：[源码](../../PromptTransfer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DCF2A665EE862F7D52B0413BCB2207DBBBADCB5F1FCC1D1D9A6C8819BE12B5D9`。来源：[源码](../../PromptTransfer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -109,11 +109,29 @@ private static readonly JsonSerializerOptions Json = new()
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-c7bbe3bd0815"></a>
+
+## `NationalSpire.PromptTransfer.Bundle.EventPools — public Dictionary<string, List<EventPoolEntry>>? EventPools`
+
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-0ab1474e6ae6"></a>
 
 ## `NationalSpire.PromptTransfer.Section.FollowDefault — public bool FollowDefault`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -131,7 +149,7 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Section.Text — public string Text`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -149,40 +167,48 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>) — public static string Export(AiOptions options, IReadOnlyDictionary<string, string> drafts)`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
-**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；[`NationalSpire.PromptTransfer.Normalize(string)`](PromptTransfer.cs.md#symbol-edc490875cec)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)；`NationalSpire.PromptTransfer.Bundle.Bundle()`；`NationalSpire.PromptTransfer.Section.Section()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；[`NationalSpire.PromptTransfer.Normalize(string)`](PromptTransfer.cs.md#symbol-edc490875cec)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)；`NationalSpire.CustomPromptTemplate.CustomPromptTemplate()`；`NationalSpire.PromptTransfer.Bundle.Bundle()`；`NationalSpire.PromptTransfer.Section.Section()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptSection.Id`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Bundle.Version`；`NationalSpire.PromptTransfer.Json`；`NationalSpire.PromptTransfer.Normalize(string)`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`；`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Name`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptSection.Id`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.EventPools`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Bundle.Version`；`NationalSpire.PromptTransfer.Json`；`NationalSpire.PromptTransfer.Normalize(string)`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`；`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.CustomPromptTemplate.CustomPromptTemplate()`；输入表达式：`new() { Name = custom.Name, BaseTemplate = custom.BaseTemplate, Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value)) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: bundle.CustomTemplate = new() { Name = custom.Name, BaseTemplate = custom.BaseTemplate, Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value)) }`
+- `NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`；输入表达式：`NationalSpire.EventPools.Overrides(options)`；返回值紧邻使用处：`AssignmentExpressionSyntax: EventPools = NationalSpire.EventPools.Overrides(options)`
 - `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；输入表达式：`PromptLibrary.Default(options, section.Id)`；返回值紧邻使用处：`ArgumentSyntax: PromptLibrary.Default(options, section.Id)`
+- `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`PromptLibrary.EditableText(p.Key, p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => PromptLibrary.EditableText(p.Key, p.Value)`
 - `NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；输入表达式：`PromptLibrary.TemplateId(options)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Template = PromptLibrary.TemplateId(options)`
-- `NationalSpire.PromptTransfer.Bundle.Bundle()`；输入表达式：`new Bundle { Template = PromptLibrary.TemplateId(options) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Bundle { Template = PromptLibrary.TemplateId(options) }`
+- `NationalSpire.PromptTransfer.Bundle.Bundle()`；输入表达式：`new Bundle { Version = 3, Template = PromptLibrary.TemplateId(options), EventPools = NationalSpire.EventPools.Overrides(options) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Bundle { Version = 3, Template = PromptLibrary.TemplateId(options), EventPools = NationalSpire.EventPools.Overrides(options) }`
 - `NationalSpire.PromptTransfer.Normalize(string)`；输入表达式：`Normalize(PromptLibrary.Default(options, section.Id))`；返回值紧邻使用处：`BinaryExpressionSyntax: Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id))`
 - `NationalSpire.PromptTransfer.Normalize(string)`；输入表达式：`Normalize(text)`；返回值紧邻使用处：`BinaryExpressionSyntax: Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id))`
 - `NationalSpire.PromptTransfer.Section.Section()`；输入表达式：`new() { Text = text,                  FollowDefault = Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id)) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: bundle.Sections[section.Id] = new() { Text = text,                  FollowDefault = Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id)) }`
 - `NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`；输入表达式：`Validate(bundle)`；返回值紧邻使用处：`ExpressionStatementSyntax: Validate(bundle);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue(bundle.Template, out var custom)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: options.CustomPromptTemplates?.TryGetValue(bundle.Template, out var custom)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value))`
 - `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(bundle, Json)`；返回值紧邻使用处：`ReturnStatementSyntax: return JsonSerializer.Serialize(bundle, Json);`
 
 **赋值（含属性/字段和局部值）：**
 
-- `bundle.CustomTemplate` = `custom`
+- `BaseTemplate` = `custom.BaseTemplate`
+- `bundle.CustomTemplate` = `new() { Name = custom.Name, BaseTemplate = custom.BaseTemplate, Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value)) }`
 - `bundle.Sections[section.Id]` = `new() { Text = text,                  FollowDefault = Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id)) }`
-- `bundle.Version` = `2`
+- `EventPools` = `NationalSpire.EventPools.Overrides(options)`
 - `FollowDefault` = `Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id))`
+- `Name` = `custom.Name`
+- `Sections` = `custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value))`
 - `Template` = `PromptLibrary.TemplateId(options)`
 - `Text` = `text`
+- `Version` = `3`
 
 <a id="symbol-ec709e31f222"></a>
 
 ## `NationalSpire.PromptTransfer.Read(string) — public static Bundle Read(string text)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)
 
@@ -203,7 +229,7 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Normalize(string) — private static string Normalize(string text)`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)
 
@@ -223,19 +249,22 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle) — private static void Validate(Bundle bundle)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`NationalSpire.PromptTransfer.Read(string)`](PromptTransfer.cs.md#symbol-ec709e31f222)
 
-**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；[`NationalSpire.PromptLibrary.ValidateTemplateName(NationalSpire.AiOptions, string, string?)`](CustomPromptTemplates.cs.md#symbol-e36cb8ec09d7)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.PromptTransfer.Section.Section()`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`
+**调用：** [`NationalSpire.EventPools.Validate(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`](EventPools.cs.md#symbol-6ad85cc3eabc)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；[`NationalSpire.PromptLibrary.ValidateTemplateName(NationalSpire.AiOptions, string, string?)`](CustomPromptTemplates.cs.md#symbol-e36cb8ec09d7)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.PromptTransfer.Section.Section()`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptTemplate`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Name`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PrivateMessagePrompts.Guide`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.MergePrivateText(string, string)`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.Templates`；`NationalSpire.PromptLibrary.ValidateTemplateName(NationalSpire.AiOptions, string, string?)`；`NationalSpire.PromptSection.Id`；`NationalSpire.PromptTemplate.Id`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.Format`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Bundle.Version`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptTemplate`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Name`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.EventPools.Validate(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`；`NationalSpire.PrivateMessagePrompts.Guide`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.MergePrivateText(string, string)`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.Templates`；`NationalSpire.PromptLibrary.ValidateTemplateName(NationalSpire.AiOptions, string, string?)`；`NationalSpire.PromptSection.Id`；`NationalSpire.PromptTemplate.Id`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.EventPools`；`NationalSpire.PromptTransfer.Bundle.Format`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Bundle.Version`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiOptions.AiOptions()`；输入表达式：`new AiOptions { PromptTemplate = bundle.CustomTemplate?.BaseTemplate ?? bundle.Template }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new AiOptions { PromptTemplate = bundle.CustomTemplate?.BaseTemplate ?? bundle.Template }`
 - `NationalSpire.AiOptions.AiOptions()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
+- `NationalSpire.EventPools.Validate(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`；输入表达式：`NationalSpire.EventPools.Validate(bundle.EventPools)`；返回值紧邻使用处：`ExpressionStatementSyntax: NationalSpire.EventPools.Validate(bundle.EventPools);`
 - `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；输入表达式：`PromptLibrary.Default(defaults, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PromptLibrary.Default(defaults, id)`
+- `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`PromptLibrary.EditableText("event", eventSection.Text)`；返回值紧邻使用处：`AssignmentExpressionSyntax: eventSection.Text = PromptLibrary.EditableText("event", eventSection.Text)`
+- `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`PromptLibrary.EditableText("event", eventText)`；返回值紧邻使用处：`AssignmentExpressionSyntax: bundle.CustomTemplate.Sections["event"] = PromptLibrary.EditableText("event", eventText)`
 - `NationalSpire.PromptLibrary.MergePrivateText(string, string)`；输入表达式：`PromptLibrary.MergePrivateText(bundle.CustomTemplate.Sections.GetValueOrDefault("private", PrivateMessagePrompts.Guide), customStyle)`；返回值紧邻使用处：`AssignmentExpressionSyntax: bundle.CustomTemplate.Sections["private"] = PromptLibrary.MergePrivateText(bundle.CustomTemplate.Sections.GetValueOrDefault("private", PrivateMessagePrompts.Guide), customStyle)`
 - `NationalSpire.PromptLibrary.MergePrivateText(string, string)`；输入表达式：`PromptLibrary.MergePrivateText(guide.FollowDefault ? PrivateMessagePrompts.Guide : guide.Text, oldStyle.Text)`；返回值紧邻使用处：`AssignmentExpressionSyntax: guide.Text = PromptLibrary.MergePrivateText(guide.FollowDefault ? PrivateMessagePrompts.Guide : guide.Text, oldStyle.Text)`
 - `NationalSpire.PromptLibrary.ValidateTemplateName(NationalSpire.AiOptions, string, string?)`；输入表达式：`PromptLibrary.ValidateTemplateName(new(), custom.Name)`；返回值紧邻使用处：`ExpressionStatementSyntax: PromptLibrary.ValidateTemplateName(new(), custom.Name);`
@@ -251,6 +280,8 @@ private static readonly JsonSerializerOptions Json = new()
 - `System.ArgumentException.ArgumentException(string?)`；输入表达式：`new ArgumentException("文件中的自建模板不完整。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new ArgumentException("文件中的自建模板不完整。");`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；输入表达式：`.Remove("private-style", out var customStyle)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .Sections?.Remove("private-style", out var customStyle)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；输入表达式：`.Remove("private-style", out var oldStyle)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: bundle.Sections?.Remove("private-style", out var oldStyle)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue("event", out var eventSection)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: bundle.Sections?.TryGetValue("event", out var eventSection)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue("event", out var eventText)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .Sections?.TryGetValue("event", out var eventText)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`bundle.Sections.TryGetValue("private", out var guide)`；返回值紧邻使用处：`BinaryExpressionSyntax: bundle.Sections?.Remove("private-style", out var oldStyle) == true && bundle.Sections.TryGetValue("private", out var guide)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`bundle.Sections.TryGetValue(s.Id, out var item)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !bundle.Sections.TryGetValue(s.Id, out var item)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`custom.Sections.TryGetValue(s.Id, out var text)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !custom.Sections.TryGetValue(s.Id, out var text)`
@@ -266,8 +297,10 @@ private static readonly JsonSerializerOptions Json = new()
 
 **赋值（含属性/字段和局部值）：**
 
+- `bundle.CustomTemplate.Sections["event"]` = `PromptLibrary.EditableText("event", eventText)`
 - `bundle.CustomTemplate.Sections["private"]` = `PromptLibrary.MergePrivateText(bundle.CustomTemplate.Sections.GetValueOrDefault("private", PrivateMessagePrompts.Guide), customStyle)`
 - `customSections[id]` = `text`
+- `eventSection.Text` = `PromptLibrary.EditableText("event", eventSection.Text)`
 - `FollowDefault` = `true`
 - `guide.FollowDefault` = `false`
 - `guide.Text` = `PromptLibrary.MergePrivateText(guide.FollowDefault ? PrivateMessagePrompts.Guide : guide.Text, oldStyle.Text)`
@@ -279,18 +312,19 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?) — public static void Apply(AiOptions options, Bundle bundle, string? targetTemplate = null)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)
 
-**调用：** [`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`](CustomPromptTemplates.cs.md#symbol-034310e38b45)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-50231e85e9e7)；[`NationalSpire.PromptTransfer.Normalize(string)`](PromptTransfer.cs.md#symbol-edc490875cec)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.CustomPromptTemplate.CustomPromptTemplate()`；`string.Equals(string?, System.StringComparison)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`](CustomPromptTemplates.cs.md#symbol-034310e38b45)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-50231e85e9e7)；[`NationalSpire.PromptTransfer.Normalize(string)`](PromptTransfer.cs.md#symbol-edc490875cec)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.CustomPromptTemplate.CustomPromptTemplate()`；`string.Equals(string?, System.StringComparison)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.AiOptions.PrivatePromptVersion`；`NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.AiOptions.PromptTemplate`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Name`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`；`NationalSpire.PromptTemplate.Id`；`NationalSpire.PromptTemplate.Name`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Normalize(string)`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`；`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.AiOptions.PrivatePromptVersion`；`NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.AiOptions.PromptTemplate`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Name`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`；`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`；`NationalSpire.PromptTemplate.Id`；`NationalSpire.PromptTemplate.Name`；`NationalSpire.PromptTransfer.Bundle.CustomTemplate`；`NationalSpire.PromptTransfer.Bundle.EventPools`；`NationalSpire.PromptTransfer.Bundle.Sections`；`NationalSpire.PromptTransfer.Bundle.Template`；`NationalSpire.PromptTransfer.Normalize(string)`；`NationalSpire.PromptTransfer.Section.FollowDefault`；`NationalSpire.PromptTransfer.Section.Text`；`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiOptions.AiOptions()`；输入表达式：`new AiOptions { PromptTemplate = bundle.Template }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new AiOptions { PromptTemplate = bundle.Template }`
 - `NationalSpire.CustomPromptTemplate.CustomPromptTemplate()`；输入表达式：`new() { Name = name, BaseTemplate = custom.BaseTemplate, Sections = new(custom.Sections) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: options.CustomPromptTemplates[bundle.Template] = new() { Name = name, BaseTemplate = custom.BaseTemplate, Sections = new(custom.Sections) }`
+- `NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`；输入表达式：`NationalSpire.EventPools.Save(options, bundle.EventPools)`；返回值紧邻使用处：`ExpressionStatementSyntax: NationalSpire.EventPools.Save(options, bundle.EventPools);`
 - `NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`；输入表达式：`PromptLibrary.AvailableTemplates(options)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PromptLibrary.AvailableTemplates(options).Any`
 - `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；输入表达式：`PromptLibrary.Default(options, p.Key)`；返回值紧邻使用处：`ArgumentSyntax: PromptLibrary.Default(options, p.Key)`
 - `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；输入表达式：`PromptLibrary.Default(source, p.Key)`；返回值紧邻使用处：`ConditionalExpressionSyntax: p.Value.FollowDefault ? PromptLibrary.Default(source, p.Key) : p.Value.Text`
@@ -331,7 +365,7 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.Desktop — public static string Desktop`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -350,7 +384,7 @@ private static readonly JsonSerializerOptions Json = new()
 
 ## `NationalSpire.PromptTransfer.WriteDesktop(string) — public static string WriteDesktop(string json)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 

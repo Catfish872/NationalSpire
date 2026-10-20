@@ -1,0 +1,106 @@
+<svg viewBox="-40 -34 80 68" xmlns="http://www.w3.org/2000/svg" width="240" height="204">
+  <title>62，50～74档，进度50%，誓约</title>
+  <defs>
+    <linearGradient id="nso10-platinum" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".12" stop-color="#f4edf3" />
+      <stop offset=".27" stop-color="#b5c4d3" />
+      <stop offset=".40" stop-color="#ffffff" />
+      <stop offset=".58" stop-color="#dae7ee" />
+      <stop offset=".73" stop-color="#9aaaba" />
+      <stop offset=".86" stop-color="#f8edf4" />
+      <stop offset="1" stop-color="#f4f8fc" />
+    </linearGradient>
+    <linearGradient id="nso10-platinum-soft" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#d0dce8" />
+      <stop offset=".30" stop-color="#ffffff" />
+      <stop offset=".63" stop-color="#ede3ee" />
+      <stop offset="1" stop-color="#a2b7c9" />
+    </linearGradient>
+    <linearGradient id="nso10-platinum-edge" x1="0" y1="0" x2=".2" y2="1">
+      <stop stop-color="#fafcff" />
+      <stop offset=".24" stop-color="#98a7ba" />
+      <stop offset=".50" stop-color="#d7e4ed" />
+      <stop offset=".76" stop-color="#788b9d" />
+      <stop offset="1" stop-color="#e2d9e8" />
+    </linearGradient>
+    <linearGradient id="nso10-rose-metal" x1="0" y1="0" x2=".8" y2="1">
+      <stop stop-color="#fff6fa" />
+      <stop offset=".24" stop-color="#f8d9e5" />
+      <stop offset=".48" stop-color="#dca8c0" />
+      <stop offset=".68" stop-color="#fff2f6" />
+      <stop offset="1" stop-color="#a87b9c" />
+    </linearGradient>
+    <linearGradient id="nso10-diamond-table" x1=".1" y1="0" x2=".9" y2="1">
+      <stop stop-color="#fcffff" />
+      <stop offset=".30" stop-color="#c9e7f8" />
+      <stop offset=".58" stop-color="#ffffff" />
+      <stop offset=".82" stop-color="#f5d9ef" />
+      <stop offset="1" stop-color="#b3ccdf" />
+    </linearGradient>
+    <linearGradient id="nso10-diamond-light" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".46" stop-color="#f2fcff" />
+      <stop offset="1" stop-color="#a9c2dc" />
+    </linearGradient>
+    <linearGradient id="nso10-diamond-shadow" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6d819d" />
+      <stop offset=".40" stop-color="#c6d9eb" />
+      <stop offset=".63" stop-color="#f9faff" />
+      <stop offset="1" stop-color="#8ca5c4" />
+    </linearGradient>
+    <linearGradient id="nso10-diamond-pink" x1="0" y1="0" x2=".8" y2="1">
+      <stop stop-color="#ffffff" />
+      <stop offset=".5" stop-color="#f3d6eb" />
+      <stop offset="1" stop-color="#bdc0de" />
+    </linearGradient>
+    <linearGradient id="nso10-diamond-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a5cce8" />
+      <stop offset=".46" stop-color="#e9fbff" />
+      <stop offset="1" stop-color="#f8f4ff" />
+    </linearGradient>
+    <radialGradient id="nso10-pearl" cx=".34" cy=".24" r=".8">
+      <stop stop-color="#ffffff" />
+      <stop offset=".36" stop-color="#fff5fa" />
+      <stop offset=".71" stop-color="#d9dbe9" />
+      <stop offset="1" stop-color="#99aabb" />
+    </radialGradient>
+    <linearGradient id="nso10-enamel" x1=".15" y1="0" x2=".75" y2="1">
+      <stop stop-color="#fffafe" />
+      <stop offset=".34" stop-color="#d7cedb" />
+      <stop offset=".65" stop-color="#dfc9df" />
+      <stop offset="1" stop-color="#cdabd8" />
+    </linearGradient>
+    <linearGradient id="nso10-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#b893b4" />
+      <stop offset=".3" stop-color="#f9e3f0" />
+      <stop offset=".64" stop-color="#bca4c4" />
+      <stop offset="1" stop-color="#e5bfd7" />
+    </linearGradient>
+    <linearGradient id="nso10-heart" x1="0" y1="0" x2=".7" y2="1">
+      <stop stop-color="#ffd3dc" />
+      <stop offset=".42" stop-color="#e75270" />
+      <stop offset="1" stop-color="#aa244a" />
+    </linearGradient>
+  </defs>
+  <g transform="scale(.94 1)" data-art="compact-hexagon">
+    <polygon points="0,-25.5 27,-12 25.8,14.5 0,30 -25.8,14.5 -27,-12" fill="#a2a6bc" stroke="#d6d9e8" stroke-width=".55" />
+    <polygon points="0,-25.5 27,-12 23,-10 0,-21" fill="#f5eef7" />
+    <polygon points="27,-12 25.8,14.5 21.8,12.4 23,-10" fill="#c5cfde" />
+    <polygon points="25.8,14.5 0,30 0,25.7 21.8,12.4" fill="#8a7f9d" />
+    <polygon points="0,30 -25.8,14.5 -21.8,12.4 0,25.7" fill="#aca1b8" />
+    <polygon points="-25.8,14.5 -27,-12 -23,-10 -21.8,12.4" fill="#d6e1ec" />
+    <polygon points="-27,-12 0,-25.5 0,-21 -23,-10" fill="#fff6fb" />
+    <polygon points="0,25.7 21.8,12.4 25.8,14.5 0,30 -25.8,14.5 -21.8,12.4" fill="#79778f" />
+    <path d="M-25.8 14.5 0 30 25.8 14.5" fill="none" stroke="#a9a5bd" stroke-width=".7" />
+    <path d="M-21.8 12.4 0 25.7 21.8 12.4" fill="none" stroke="#e9d5e7" stroke-width=".65" />
+    <polygon points="0,-21 23,-10 21.8,12.4 0,25.7 -21.8,12.4 -23,-10" fill="url(#nso10-rim)" />
+    <polygon points="0,-16.7 18.8,-7.5 18,10.4 0,21.2 -18,10.4 -18.8,-7.5" fill="url(#nso10-enamel)" stroke="#fdf6fe" stroke-width=".7" />
+    <path d="M0-16.7-18.8-7.5-18 10.4 0 21.2-11 6-10-5Z" fill="#fffaff" opacity=".38" />
+    <path d="M0-16.7 18.8-7.5 18 10.4 0 21.2 11 7 12-6Z" fill="#9d7cab" opacity=".18" />
+    <path d="M-18.8-7.5 0-16.7 18.8-7.5 9-9 0-12.2-9-9Z" fill="#ffffff" opacity=".7" />
+    <path d="M-18 10.4 0 21.2 18 10.4 0 15.8Z" fill="#fff5fc" opacity=".45" />
+    <path d="M-21.2 12-22.4-9.7 0-20.7 22.4-9.7 21.2 12" pathLength="100" fill="none" stroke="#8e739b" stroke-width="4.2" stroke-linejoin="round" />
+    <path d="M-21.2 12-22.4-9.7 0-20.7 22.4-9.7 21.2 12" pathLength="100" fill="none" stroke="#fffafb" stroke-width="2.9" stroke-linejoin="round" />
+  </g>
+</svg>

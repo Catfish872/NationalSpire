@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static partial class PromptLibrary
 {
@@ -32,7 +32,7 @@ public static partial class PromptLibrary
 在这个世界里，其他人的尖塔水平下降1000倍，人物把自身水平当作常态，而杀戮尖塔2则成为了生活的一切。但玩家是例外，玩家的游戏水平在这个水平下降的世界内依旧保持不变。当地郑重研究的难关被玩家顺手解决，会引来激动、眼红、嘴硬、自嘲和荒唐联想。然而，杀戮尖塔2关系到这里每个人的生活与国运，反映到每个人的日常生活里，选手在赛事里通关、拿到名次或连续稳定发挥，国运上涨，本国经济、就业、物价、社会福利、公共设施、教育医疗和体育产业都会随之改善，企业更愿意投资，民众信心和消费提升，出国、留学、贸易和签证环境也更宽松；本国选手暴毙、外战失利或长期连败，国运衰退，物价和失业压力上升，物资、电力、医疗与公共服务开始紧张，天灾人祸、社会矛盾和外部摩擦更容易出现，民众的抱怨与焦虑也会明显变重。因此在面对外战时，除非有非常严重的私人恩怨或性格使然，同一国家的玩家可能更倾向于保护和鼓励本国的选手，而将矛头一直对外；
 普通玩家主要挑战进阶0—3；青训进阶6通关率约四至六成；职业门槛是通关进阶8，普通职业进阶7约五至六成；世界第一进阶8约五成；顶尖选手独自进阶9偶有突破；进阶10需要多名专家和顶尖选手反复研究极佳种子才有极小机会。在这个世界，其他人的失败在三幕都可能发生，人物理解打法仍依赖熟悉流派、核心牌与自身经历。然而，通关更高的进阶意味着绝对的实力差距，更高的胜率也基本代表了无可争议的更强，连胜更是能说明概率的因素在高连胜选手面前几乎只有微乎其微甚至没有影响，甚至能这样说，高进阶+高连胜选手面对只有低进阶难以保持胜率，或者只有低进阶连胜的选手，比赛结果是完全毋庸置疑的，所有的质疑都将在绝对的实力面前哑然失色，而高实力选手拥有着绝对的话语权。诋毁选手、带选手节奏的人可能会被选手申请仲裁，严重者会被要求公开致歉、乃至于禁赛与封号惩罚。
 非职业选手完整通关平均约八十至九十分钟，职业选手平均约一小时；强者打低进阶更快、更稳，大多仍超过四十五分钟，三十五分钟属于罕见速通。中途失败的用时随止步楼层缩短。具体表现以本场记录为准，熟悉玩家过去表现的人可以逐渐习惯。
-赛事通关者优先；双方通关比用时，双方失败比楼层。赛事进阶是公开进阶。社区杯面向普通玩家，青训通过选拔争取职业资格；国内联赛连接世界大赛资格，洲际杯代表俱乐部，世界杯代表国家、每两赛季一届；奇数赛季世界总决赛决出个人冠军，荣誉公示至下届结束。国际赛事的国运贡献用于选手奖励、国内训练与青训。身份、归属、荣誉和赛程按资料。
+赛事通关者优先；双方通关比用时，双方失败比楼层。赛事进阶是公开进阶。社区杯面向普通玩家，青训通过选拔争取职业资格；国内联赛连接世界大赛资格，洲际杯代表俱乐部，世界杯代表国家、每两赛季一届；奇数赛季世界总决赛决出个人冠军，荣誉公示至下届结束。国际赛事的国运贡献用于选手奖励、国家建设，以及国内训练与青训发展。相关国家的当前条件和本次变化见所列资料。身份、归属、荣誉和赛程按资料。
 
 
 
@@ -199,12 +199,12 @@ BOSS：
         string template = TemplateId(options);
         if (options.CustomPromptTemplates?.TryGetValue(template, out var custom) == true)
         {
-            if (custom.Sections.TryGetValue(id, out var text)) return text;
+            if (custom.Sections.TryGetValue(id, out var text)) return EditableText(id, text);
             template = custom.BaseTemplate;
         }
         // 独立预设只覆盖其提供的模块；旧模板和玩家已保存的修改继续使用原有内容。
         var preset = template switch { "reduced-aggression" => ReducedAggression.Value, "tieba-aggressive" => TiebaAggressive.Value, _ => null };
-        if (preset?.TryGetValue(id, out var presetText) == true) return presetText;
+        if (preset?.TryGetValue(id, out var presetText) == true) return EditableText(id, presetText);
         return (template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText;
     }
     public static void SelectTemplate(AiOptions options, string id)

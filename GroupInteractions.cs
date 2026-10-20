@@ -9,6 +9,18 @@ public static class GroupInteractions
         foreach (var source in actions)
         {
             string actor = g.Resolve(source.GetValueOrDefault("Actor", ""));
+            if (source.ContainsKey("Activity") && source.TryGetValue("Id", out string? activityId) && activityId != "0")
+            {
+                // 同一附件使用发起者的交互记录，成员分别确认时共同更新同一项日程。
+                var existing = g.Interactions.FirstOrDefault(lane => lane.Value.Offers.Any(o => o.Kind == "activity" && o.Id == activityId));
+                if (existing.Value != null) actor = existing.Value.PersonId;
+                else if (t.Attachments.Any(a => a.Kind == "activity" && a.Id == activityId)) actor = t.Sender;
+            }
+            if (actor.Length == 0 && source.ContainsKey("Gift"))
+            {
+                var gifts = t.Attachments.Where(a => a.Kind == "gift" && (!source.ContainsKey("Id") || a.Id == source["Id"])).ToArray();
+                if (gifts.Length == 1) actor = gifts[0].ActorId;
+            }
             string target = g.Resolve(source.GetValueOrDefault("Target", ""));
             bool humanActivity = source.ContainsKey("Activity") && g.Members.Contains(actor) && GroupChats.IsHuman(d, actor);
             string unavailable = humanActivity ? "" : GroupChats.SpeechUnavailable(d, g, actor);
@@ -32,6 +44,8 @@ public static class GroupInteractions
             // 参与人保留在本次交互上，不通过正文猜测身份。
             fields["GroupParticipants"] = source.GetValueOrDefault("Participants", "");
             fields["GroupRelated"] = source.GetValueOrDefault("Related", "");
+            if (fields.ContainsKey("Activity") && list.Any(previous => previous.Count == fields.Count
+                && fields.All(field => previous.TryGetValue(field.Key, out var value) && value == field.Value))) continue;
             list.Add(fields);
         }
         foreach (var (key, fields) in pending)
@@ -70,13 +84,18 @@ public static class GroupInteractions
                     var f = metadata.FirstOrDefault(f => o.Kind switch
                     {
                         "publish" => f.GetValueOrDefault("Post") == "发布" && f.GetValueOrDefault("Title") == o.Title && f.GetValueOrDefault("Body") == o.Detail,
-                        "activity" => f.GetValueOrDefault("Activity") is "邀请" or "改期"
-                            && f.GetValueOrDefault("Season") == o.Season.ToString() && f.GetValueOrDefault("Day") == o.Day.ToString()
+                        "activity" => f.GetValueOrDefault("Activity") is "邀请" or "改期" or "接受"
+                            && f.GetValueOrDefault("Season", o.Season.ToString()) == o.Season.ToString() && f.GetValueOrDefault("Day", o.Day.ToString()) == o.Day.ToString()
                             && f.GetValueOrDefault("Title", o.Title) == o.Title && f.GetValueOrDefault("Detail", o.Detail) == o.Detail,
                         _ => false
                     });
                     if (f != null) metadata.Remove(f);
-                    o.Participants = ResolvePeople(g, f?.GetValueOrDefault("GroupParticipants", "") ?? "");
+                    var participants = ResolvePeople(g, f?.GetValueOrDefault("GroupParticipants", "") ?? "");
+                    if (participants.Count > 0)
+                    {
+                        if (o.Kind == "activity" && o.State == "已确认" && !participants.ToHashSet().SetEquals(o.Participants)) o.State = "待确认";
+                        o.Participants = participants;
+                    }
                     if (o.Participants.Count == 0 && c.Offers.FirstOrDefault(old => old.Id == o.ReplacesOfferId) is { } previous) o.Participants = previous.Participants.ToList();
                     if (o.Kind == "activity" && o.Participants.Count == 0) o.Participants = [t.Sender, key.Actor];
                     o.RelatedPeople = ResolvePeople(g, f?.GetValueOrDefault("GroupRelated", "") ?? "");

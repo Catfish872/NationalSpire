@@ -9,6 +9,11 @@ public sealed class ChatWorld
 }
 public sealed class GroupChat
 {
+    public bool Dissolved { get; set; }
+    public bool Forgotten { get; set; }
+    public Dictionary<string, GroupDeparture> Departures { get; set; } = [];
+    public Dictionary<string, long> MemoryStarts { get; set; } = [];
+    public Dictionary<string, ProactiveChatSettings> Proactive { get; set; } = [];
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string Name { get; set; } = "";
     public string Creator { get; set; } = "";
@@ -51,6 +56,8 @@ public sealed class GroupEntry
 }
 public sealed class GroupTurn
 {
+    public string ProactiveReason { get; set; } = "";
+    public bool ProactiveLast { get; set; }
     public List<string> ArbitrationTargets { get; set; } = [];
     public List<long> SpeechOrders { get; set; } = [];
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
@@ -84,4 +91,5 @@ public sealed class GroupCommand
     public string Lane { get; set; } = "";
     public PrivateMessageCommand Interaction { get; set; } = new();
     public GroupHistorySettings? Settings { get; set; }
+    public ProactiveChatSettings? Proactive { get; set; }
 }

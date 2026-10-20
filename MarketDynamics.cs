@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>同一生涯的品牌特征固定；随机变化仅由生涯、交易日和资产编号决定。</summary>
 public static class MarketDynamics
@@ -88,7 +88,7 @@ public static class MarketDynamics
         var recent = NewsCandidates(d);
         if (recent.Length == 0) return false;
         var assets = recent.Select(e => e.Asset).Distinct().Where(MarketCatalog.ById.ContainsKey).Select(id => MarketCatalog.ById[id]).ToArray();
-        string facts = string.Join("\n", recent.Select(e => $"第{e.Day}天：{e.Text}")) + "\n最新行情：" + string.Join("；", assets.Select(a => a.Name + " " + (a.Forex ? d.Market.Quotes[a.Id].Price.ToString("0.0000") : CareerMoney.Format(d.Market.Quotes[a.Id].Price))));
+        string facts = string.Join("\n", recent.Select(e => $"{GameCalendar.Text(d, e.Day)}：{e.Text}")) + "\n最新行情：" + string.Join("；", assets.Select(a => a.Name + " " + (a.Forex ? d.Market.Quotes[a.Id].Price.ToString("0.0000") : CareerMoney.Format(d.Market.Quotes[a.Id].Price))));
         foreach (var group in recent.Where(e => e.Competition.Length > 0).GroupBy(e => e.Competition))
         {
             var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == group.Key);

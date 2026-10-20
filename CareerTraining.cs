@@ -3,6 +3,7 @@ namespace NationalSpire;
 // 世界存档仅保存数值与去重摘要，私信原话和变化原因留在各自信箱。
 public sealed class NpcLearning
 {
+    public List<EventStatus> EventStatuses { get; set; } = [];
     public double ChanceShift { get; set; }
     public double Exposure { get; set; }
     public Dictionary<string, double> Topics { get; set; } = [];
@@ -27,7 +28,8 @@ public static class CareerTraining
 {
     public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", "资源", "构筑", "机制"];
     public static double SkillBonus(CareerPerson person) => person.Learning.ChanceShift;
-    public static double MoodBonus(CareerPerson person, int day) => .08 * MoodLevel(person, day);
+    public static double MoodBonus(CareerPerson person, int day) => .08 * MoodLevel(person, day)
+        + person.Learning.EventStatuses.Where(s => s.Until > day).Sum(s => s.Percent) / 100;
     public static double MoodLevel(CareerPerson person, int day)
     {
         var state = person.Learning;
@@ -270,7 +272,7 @@ public static class CareerTraining
     public static string Details(CareerData d, LifeActivity a)
     {
         string kind = a.TrainingKind.Length > 0 ? a.TrainingKind : Kind(a.Title);
-        string dates = a.TrainingStart > 0 ? $"第 {a.TrainingStart}—{a.TrainingEnd} 天有效。" : "次日起生效，共 4 周。";
+        string dates = a.TrainingStart > 0 ? $"{GameCalendar.Range(d, a.TrainingStart, a.TrainingEnd)}有效。" : "次日起生效，共 4 周。";
         string limits = "临时效果取最高值。永久成长随累计提升和本季投入逐渐减慢，小数进度保留；转会不丢失，各进阶均生效。";
         string caps = string.Join("\n", Beneficiaries(d, a, kind).Select(id => {
             var state = d.Development.GetValueOrDefault(id);

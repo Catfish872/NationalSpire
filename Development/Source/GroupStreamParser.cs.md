@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2F3212D8526D1FAAD062B5AE508CC3B160AB623BDB27BB0C0F8BA8B5E34538B1`。来源：[源码](../../GroupStreamParser.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1E9DE367CEDCB04B06C6BD9020DEA595B895FF1C64E0970655FB6A4E46965389`。来源：[源码](../../GroupStreamParser.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -129,8 +129,8 @@ private bool _actions;
 - `NationalSpire.PrivateStreamParser.Feed(string)`；输入表达式：`Actions.Feed(c.ToString())`；返回值紧邻使用处：`ExpressionStatementSyntax: Actions.Feed(c.ToString());`
 - `NationalSpire.PrivateStreamParser.Feed(string)`；输入表达式：`Actions.Feed(header)`；返回值紧邻使用处：`ExpressionStatementSyntax: Actions.Feed(header);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`Messages.Add(new(speaker.Groups[1].Value))`；返回值紧邻使用处：`ExpressionStatementSyntax: Messages.Add(new(speaker.Groups[1].Value));`
-- `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))                     { _actions = true; Actions.Feed(header); }                     else Append(header);`
-- `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.IsMatch(header, @"^\[\s*Actions\s*\]$", RegexOptions.IgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (Regex.IsMatch(header, @"^\[\s*Actions\s*\]$", RegexOptions.IgnoreCase)) _actions = true;                     else if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))                     { _actions = true; Actions.Feed(header); }                     else Append(header);`
+- `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Gift|Oath|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Gift|Oath|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))                      { _actions = true; Actions.Feed(header); }                      else Append(header);`
+- `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.IsMatch(header, @"^\[\s*Actions\s*\]$", RegexOptions.IgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (Regex.IsMatch(header, @"^\[\s*Actions\s*\]$", RegexOptions.IgnoreCase)) _actions = true;                      else if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Gift|Oath|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))                      { _actions = true; Actions.Feed(header); }                      else Append(header);`
 - `System.Text.RegularExpressions.Regex.Match(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.Match(header, @"^\[\s*Speaker\s*[:：]\s*([^\]\s]+)\s*\]$", RegexOptions.IgnoreCase)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Regex.Match(header, @"^\[\s*Speaker\s*[:：]\s*([^\]\s]+)\s*\]$", RegexOptions.IgnoreCase)`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`_header.Append(c)`；返回值紧邻使用处：`ExpressionStatementSyntax: _header.Append(c);`
 - `System.Text.StringBuilder.Clear()`；输入表达式：`_header.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _header.Clear();`

@@ -32,6 +32,14 @@ public static class CoachLineups
             .ThenByDescending(p => p.Rating + CareerEngine.StableHash(d.WorldId + p.Id + d.Season) % 180)
             .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList();
     }
+    public static void RefreshAiStarters(CareerData d)
+    {
+        var clubs = d.People.Where(p => EsportsWorld.IsProfessional(p) && !Coach(p)).ToLookup(p => p.ClubId);
+        foreach (var club in d.Esports.Clubs.Where(c => c.Id != d.Esports.OwnedClub?.ClubId))
+            club.PreferredStarters = clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))
+                .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)
+                .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList();
+    }
     private static List<string> CurrentRoster(CareerData d, string club) => d.Esports.Competitions
         .Where(c => c.Kind == "league" && c.Season <= d.Season && c.Rosters.ContainsKey(club))
         .OrderByDescending(c => c.Season).FirstOrDefault()?.Rosters[club] ?? Roster(d, club);

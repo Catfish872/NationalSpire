@@ -33,7 +33,7 @@ public partial class CareerScreen
             if (!published.Any(w => w.Week == _weeklyWeek)) { _weeklyWeek = published[0].Week; _weeklyIndex = 0; }
             var select = new OptionButton { Name = "WeeklyEditionSelector", CustomMinimumSize = new Vector2(210, 44) };
             _weeklySelector = select;
-            foreach (var edition in published) select.AddItem($"{edition.PeriodLabel} · 第 {edition.StartDay}—{edition.EndDay} 天", edition.Week);
+            foreach (var edition in published) select.AddItem($"{edition.PeriodLabel} · {GameCalendar.Range(data, edition.StartDay, edition.EndDay)}", edition.Week);
             select.Select(published.FindIndex(w => w.Week == _weeklyWeek));
             select.ItemSelected += index => { _weeklyWeek = select.GetItemId((int)index); _weeklyIndex = 0; _weeklyClock = 0; RenderWeeklySlide(data, false); };
             heading.AddChild(select);
@@ -144,7 +144,7 @@ public partial class CareerScreen
         var slide = issue?.Slides.FirstOrDefault(s => s.Id == parts[2]);
         if (issue == null || slide == null) { _content.AddChild(Text("这期周刊尚不可用。", 18, _muted)); return true; }
         issue.SeenRevision = issue.Revision; CareerStore.Save(data);
-        AddHeading(slide.Title, $"尖塔双周刊 · {issue.PeriodLabel} · 第 {issue.StartDay}—{issue.EndDay} 天" + (slide.Advertisement ? " · 俱乐部推广" : ""));
+        AddHeading(slide.Title, $"尖塔双周刊 · {issue.PeriodLabel} · {GameCalendar.Range(data, issue.StartDay, issue.EndDay)}" + (slide.Advertisement ? " · 俱乐部推广" : ""));
         if (slide.CeremonySeason > 0 && data.Ceremonies.Any(c => c.Season == slide.CeremonySeason))
         {
             var ceremony = Button("查看完整颁奖盛典   →", () =>

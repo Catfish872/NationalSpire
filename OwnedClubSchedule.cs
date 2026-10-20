@@ -82,7 +82,7 @@ public static class OwnedClubSchedule
             { c.EntrantClubs.Remove(id); c.EntrantCountries.Remove(id); }
         }
     }
-    public static void UpdateLineup(CareerData d)
+    public static void UpdateLineup(CareerData d, bool playerPositionChanged = false)
     {
         CharacterDeletion.RepairStarters(d, updateSchedule: false);
         if (CharacterDeletion.DeletedStarterVacancy(d)) return;
@@ -90,7 +90,32 @@ public static class OwnedClubSchedule
         foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(own.ClubId)))
         {
             SetLineup(d, c, own.ClubId, OfficialRoster(d));
+            if (playerPositionChanged)
+            {
+                // 当季出场由实际对阵保留，尚未出场的退报名者退出个人积分统计。
+                var participants = c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r)).ToHashSet();
+                foreach (string id in c.Entrants.Where(id => !participants.Contains(id)).ToArray())
+                {
+                    c.Entrants.Remove(id); c.Table.RemoveAll(row => row.PersonId == id);
+                    c.EntrantClubs.Remove(id); c.EntrantCountries.Remove(id);
+                }
+                c.PlayerEntered = participants.Contains("player"); c.PlayerReplacedId = "";
+                if (c.Kind == "league") d.Standings = c.PlayerEntered ? c.Table : [];
+            }
         }
+    }
+    public static string PlayerPositionTiming(CareerData d)
+    {
+        string club = d.Esports.OwnedClub!.ClubId;
+        var upcoming = d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(club))
+            .SelectMany(c => c.Fixtures.Where(f => f.HomeTeam == club || f.AwayTeam == club)
+                .GroupBy(f => (f.Round, f.HomeTeam, f.AwayTeam))
+                .Where(tie => tie.All(f => !f.Finished) && !CircuitWorld.ActiveTie(d, tie))
+                .Select(tie => (Competition: c, Fixture: tie.First())))
+            .OrderBy(x => x.Fixture.Day).FirstOrDefault();
+        return upcoming.Competition == null ? "席位立即调整，后续俱乐部赛事按新阵容安排。"
+            : "从" + PrivateAppointments.DateText(d, upcoming.Fixture.Day) + "的" + upcoming.Competition.Name + " · "
+                + CircuitWorld.RoundName(upcoming.Competition, upcoming.Fixture.Round) + "起使用新阵容。已开打的整轮对阵按原名单完成。";
     }
     private static void SetLineup(CareerData d, WorldCompetition c, string club, List<string> roster)
     {

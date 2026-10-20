@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>国际赛事国运分配至国家维护与发展，赛季开始结算维护和人均产值变化。</summary>
 public static class NationalDevelopment
@@ -12,11 +12,6 @@ public static class NationalDevelopment
     private static readonly int[] Costs = [100, 120, 150, 190, 240, 300, 380, 480, 600];
 
     private static readonly string[] Groups = ["经济", "社会", "民生"];
-
-    private static readonly Dictionary<string, double> GroupWeight = new()
-    {
-        ["经济"] = 0.40, ["社会"] = 0.25, ["民生"] = 0.35,
-    };
 
     /// <summary>GDP 增速的结构权重（合计 1.0）。用上赛季末的等级计算，所以收入也能纳入而不会自激。</summary>
     private static readonly Dictionary<string, double> GrowthWeight = new()
@@ -178,6 +173,35 @@ public static class NationalDevelopment
     public static int Cost(int level) => Costs[Math.Clamp(level, 0, 8)];
 
     public static string Description(string id, int level) => Get(id).Levels[Math.Clamp(level, 0, 9)];
+    public static double Enhancement(NationalLegacy n, string id, int day)
+    {
+        double progress = n.ExtraProgress.GetValueOrDefault(id) * Math.Pow(.5, Math.Max(0, day - n.ExtraProgressDay) / 14.0);
+        return progress / (600 + progress);
+    }
+    public static double IncomeBonus(CareerData d, string country) => d.Esports.Nations.FirstOrDefault(n => n.Country == country) is { } n
+        ? .2 * All.Average(i => Enhancement(n, i.Id, d.Day)) : 0;
+    private static void AddExtra(NationalLegacy n, IReadOnlyList<Indicator> indicators, double amount, int day)
+    {
+        if (indicators.Count == 0 || amount <= 0) return;
+        if (day != n.ExtraProgressDay)
+        {
+            double decay = Math.Pow(.5, Math.Max(0, day - n.ExtraProgressDay) / 14.0);
+            foreach (string id in n.ExtraProgress.Keys.ToArray()) n.ExtraProgress[id] *= decay;
+            n.ExtraProgressDay = day;
+        }
+        foreach (var indicator in indicators) n.ExtraProgress[indicator.Id] = n.ExtraProgress.GetValueOrDefault(indicator.Id) + amount / indicators.Count;
+    }
+    public static Dictionary<string, int[]> Snapshot(CareerData d, IEnumerable<string> countries) => countries.Distinct(StringComparer.Ordinal)
+        .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>()
+        .ToDictionary(n => n.Country, n => All.Select(i => Level(n, i.Id)).ToArray());
+    public static string Describe(IReadOnlyDictionary<string, int[]> snapshot) => string.Join("\n\n", snapshot.Select(pair => pair.Key + "生活与发展情况\n"
+        + string.Join("\n", All.Select((i, index) => $"{i.Name} {pair.Value[index]}级：{Description(i.Id, pair.Value[index])}"))));
+    public static string Context(CareerData d, IEnumerable<string> countries) => string.Join("\n\n", countries.Distinct(StringComparer.Ordinal)
+        .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>
+            n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))
+            + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")
+            + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："
+                + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。")))));
 
     /// <summary>旧档迁移：缺字段的国家按国别基值补齐，只做一次。</summary>
     public static void Ensure(CareerData d)
@@ -223,29 +247,35 @@ public static class NationalDevelopment
             PayMaintenance(d, n, ref maintenance);
             n.MaintenanceFunding = 0;
             n.ReportSeason = d.Season;
-            RecordChanges(n, before);
+            RememberChanges(d, n, RecordChanges(n, before));
         }
     }
 
-    public static List<string> Contribute(CareerData d, NationalLegacy n, int amount)
+    public static List<string> Contribute(CareerData d, NationalLegacy n, int amount, string source = "")
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.NationalContribution);
         Ensure(d);
         var before = All.ToDictionary(i => i.Id, i => Level(n, i.Id));
         int maintenance = Math.Min(3 * MaintenancePerGroup - n.MaintenanceFunding, amount);
         n.MaintenanceFunding += maintenance;
-        Upgrade(d, n, amount - maintenance);
+        Upgrade(d, n, amount * 7, source);
         var changes = RecordChanges(n, before);
-        if (n.NewsDay != d.Day) { n.NewsFortune = 0; n.NewsChanges.Clear(); }
-        n.NewsDay = d.Day; n.NewsFortune += amount;
-        foreach (string change in changes) if (!n.NewsChanges.Contains(change)) n.NewsChanges.Add(change);
+        RememberChanges(d, n, changes);
+        n.NewsFortune += amount;
         return changes;
+    }
+
+    private static void RememberChanges(CareerData d, NationalLegacy n, IEnumerable<string> changes)
+    {
+        if (n.NewsDay != d.Day) { n.NewsFortune = 0; n.NewsChanges.Clear(); }
+        n.NewsDay = d.Day;
+        foreach (string change in changes) if (!n.NewsChanges.Contains(change)) n.NewsChanges.Add(change);
     }
 
     private static List<string> RecordChanges(NationalLegacy n, Dictionary<string, int> before)
     {
         var changes = All.Where(i => before[i.Id] != Level(n, i.Id))
-            .Select(i => $"{n.Country}{i.Name} {before[i.Id]}→{Level(n, i.Id)}。").ToList();
+            .Select(i => $"{n.Country}{i.Name} {before[i.Id]}→{Level(n, i.Id)}。原有情况：{Description(i.Id, before[i.Id])}当前情况：{Description(i.Id, Level(n, i.Id))}").ToList();
         if (changes.Count > 0) n.LastReport = string.Join("", changes);
         return changes;
     }
@@ -264,10 +294,11 @@ public static class NationalDevelopment
         var competitions = d.Esports.Competitions.Where(c => c.Fixtures.Any(f => f.Day == n.NewsDay && f.Finished && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country))).ToArray();
         string matches = string.Join("\n", competitions.Select(c => WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))));
         CareerEngine.Publish(d, key, n.Country + "国运发展公报",
-            $"第{n.NewsDay}天，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)
+            $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)
             + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches
-            + "\n请围绕这些比赛与当地生活变化组织报道和人物讨论。没有指标变化时，不写成已经升级。", "国家发展", true, people);
-        n.NewsFortune = 0; n.NewsChanges.Clear();
+            + "\n" + Context(d, [n.Country])
+            + "\n请结合本次比赛与当地生活情况组织报道和人物讨论。各项指标的现状、上升、下降及建设进度以本次资料为准。人物从自己的身份、经历和处境出发，谈论这些变化带来的影响。", "国家发展", true, people);
+        n.NewsFortune = 0;
         return true;
     }
 
@@ -320,19 +351,44 @@ public static class NationalDevelopment
         foreach (var group in order)
         {
             if (budget >= MaintenancePerGroup) { budget -= MaintenancePerGroup; continue; }
+            double unfunded = 1 - budget / (double)MaintenancePerGroup; budget = 0;
+            var random = new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}:maintenance"));
+            if (random.NextDouble() >= .25 * unfunded) continue;
             if (Pick(d, n, group, ":maintain:", aboveZero: true) is not { } target) continue;
             n.Indicators[target] = Level(n, target) - 1;
             dropped.Add(target);
         }
+        if (dropped.Count == 0)
+        {
+            var baseline = BaseLevels.GetValueOrDefault(n.Country) ?? DefaultLevels;
+            var deficits = All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where(x => x.Deficit > 0).ToArray();
+            int total = deficits.Sum(x => x.Deficit);
+            var random = new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:recovery"));
+            if (total > 0 && random.NextDouble() < Math.Min(.75, .05 * total))
+            {
+                int pick = random.Next(total);
+                foreach (var item in deficits) { pick -= item.Deficit; if (pick < 0) { n.Indicators[item.Indicator.Id] = Level(n, item.Indicator.Id) + 1; break; } }
+            }
+        }
         return dropped;
     }
 
-    private static void Upgrade(CareerData d, NationalLegacy n, int budget)
+    private static void Upgrade(CareerData d, NationalLegacy n, int budget, string source)
     {
         if (budget <= 0) return;
-        foreach (var group in Groups)
+        var random = new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Day}:{source}:construction"));
+        int primary = random.Next(Groups.Length);
+        double main = .7 + random.NextDouble() * .2, secondary = (1 - main) * random.NextDouble();
+        double[] weights = new double[Groups.Length];
+        weights[primary] = main; weights[(primary + 1) % 3] = secondary; weights[(primary + 2) % 3] = 1 - main - secondary;
+        for (int groupIndex = 0; groupIndex < Groups.Length; groupIndex++)
         {
-            double pending = n.Pending.GetValueOrDefault(group) + budget * GroupWeight[group];
+            string group = Groups[groupIndex];
+            var indicators = InGroup(group);
+            var full = indicators.Where(i => Level(n, i.Id) == 9).ToArray();
+            double extra = budget * weights[groupIndex] * (full.Length == indicators.Count ? 1 : full.Length > 0 ? .2 : 0);
+            AddExtra(n, full, extra, d.Day);
+            double pending = n.Pending.GetValueOrDefault(group) + budget * weights[groupIndex] - extra;
             // 组内顺序是"确定性随机"：同一存档同一赛季可复现。只在未满级的项里挑，否则到顶的项会被反复撞上、白扔预算。
             foreach (var indicator in InGroup(group)
                 .OrderBy(i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick"))
@@ -344,6 +400,7 @@ public static class NationalDevelopment
                     n.Indicators[indicator.Id] = Level(n, indicator.Id) + 1;
                 }
             }
+            if (indicators.All(i => Level(n, i.Id) == 9)) { AddExtra(n, indicators, pending, d.Day); pending = 0; }
             n.Pending[group] = pending;
         }
     }

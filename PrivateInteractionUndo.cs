@@ -29,7 +29,7 @@ public static class PrivateInteractionHistory
     }
 
     private static JsonNode? Node<T>(T value) => JsonSerializer.SerializeToNode(value);
-    public static JsonObject Capture(CareerData d, string id, bool contract = false)
+    public static JsonObject Capture(CareerData d, string id, bool contract = false, bool gifts = false)
     {
         if (GroupChats.IsHuman(d, id))
             return new JsonObject { ["offers"] = Node(PrivateMessages.Mailbox(d).Conversations[id].Offers) };
@@ -49,6 +49,11 @@ public static class PrivateInteractionHistory
                 seats.PlayerNextPosition, seats.PlayerReplacement, seats.PlayerPositionRequest }) : null,
             ["privateMatches"] = Node(d.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == id).ToList())
         };
+        if (gifts)
+        {
+            snapshot["giftReceipts"] = Node(d.Life.Consumer.GiftReceipts);
+            snapshot["goodQuantities"] = Node(d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id).ToDictionary(g => g.Key, g => g.Sum(x => x.Quantity)));
+        }
         if (!contract) return snapshot;
         snapshot["club"] = p.ClubId; snapshot["role"] = p.Role;
         snapshot["position"] = p.ClubPosition;
@@ -71,7 +76,7 @@ public static class PrivateInteractionHistory
             var oldIds = before["events"]!.AsArray().Select(e => e!["Id"]!.GetValue<string>()).ToHashSet();
             foreach (var e in d.Life.Events.Where(e => !oldIds.Contains(e.Id) && !e.Id.StartsWith(d.LocalHumanId + "/"))) e.Id = d.LocalHumanId + "/" + e.Id;
         }
-        var after = Capture(d, id, contract);
+        var after = Capture(d, id, contract, before.ContainsKey("goodQuantities"));
         var change = Difference(before, after);
         if (change is { } pair) turn.InteractionUndo.Add(new() { Before = (JsonObject)pair.Before!, After = (JsonObject)pair.After!, Contract = contract });
     }
@@ -158,7 +163,7 @@ public static class PrivateInteractionHistory
         if (JsonNode.DeepEquals(current, after)) return before?.DeepClone();
         // 金额、累计学习等数值只撤回本次增减，保留后来发生的独立增减。
         bool additive = path is "/credits" or "/owned/CashFlow" or "/learning/ChanceShift" or "/learning/Exposure" or "/relation/Favour"
-            || path.StartsWith("/learning/Topics/") || path.StartsWith("/clubBudgets/");
+            || path.StartsWith("/learning/Topics/") || path.StartsWith("/clubBudgets/") || path.StartsWith("/goodQuantities/");
         if (additive && current?.GetValueKind() == JsonValueKind.Number && (before == null || before.GetValueKind() == JsonValueKind.Number) && after?.GetValueKind() == JsonValueKind.Number)
         {
             decimal value = current.Deserialize<decimal>() - after.Deserialize<decimal>() + (before?.Deserialize<decimal>() ?? 0);
@@ -172,6 +177,13 @@ public static class PrivateInteractionHistory
         if (GroupChats.IsHuman(d, id))
         { PrivateMessages.Mailbox(d).Conversations[id].Offers = state["offers"]!.Deserialize<List<PrivateOffer>>()!; return; }
         var p = CareerEngine.Person(d, id)!;
+        if (state["giftReceipts"] != null) d.Life.Consumer.GiftReceipts = state["giftReceipts"]!.Deserialize<HashSet<string>>()!;
+        if (state["goodQuantities"] is JsonObject quantities)
+            foreach (var pair in quantities)
+            {
+                var goods = d.Life.Consumer.Goods.Where(g => g.Id == pair.Key && !g.Consumed).ToArray();
+                if (goods.Length > 0) { goods[0].Quantity = pair.Value!.Deserialize<long>(); foreach (var extra in goods.Skip(1)) extra.Quantity = 0; }
+            }
         foreach (var field in state["profile"]!.AsObject()) PrivateProfileChanges.SetValue(p, field.Key, field.Value!.GetValue<string>());
         p.PrivateProfileReceipts = state["receipts"]!.Deserialize<HashSet<string>>()!;
         p.Learning = state["learning"]!.Deserialize<NpcLearning>()!;
@@ -254,7 +266,7 @@ public static class PrivateInteractionHistory
             return "这条旧回复未保存水平或状态变化前的数据，无法完整回退。新回复会保存回退记录。";
         foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())
         {
-            var state = Revert(Capture(d, c.PersonId, undo.Contract), undo.Before, undo.After);
+            var state = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities")), undo.Before, undo.After);
             Restore(d, c.PersonId, (JsonObject)state!, undo.Contract);
         }
         if (turn.InteractionUndo.Count == 0)

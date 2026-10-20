@@ -57,7 +57,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (_dialogOverlay != null)
         {
             if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape })
-            { GetViewport().SetInputAsHandled(); _cancelDialog?.Invoke(); }
+            { GetViewport().SetInputAsHandled(); _returnDialog?.Invoke(); }
             return;
         }
         if (_closePromptTest != null)
@@ -76,10 +76,20 @@ public partial class CareerScreen : Control, IScreenContext
             if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); _closeCharacterCard?.Invoke(); }
             return;
         }
+        if (_eventView?.Visible == true)
+        {
+            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); _eventView.Close?.Invoke(); }
+            return;
+        }
         if (_promptOverlay != null) return;
+        if (_dateView != null)
+        {
+            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); DateSceneExitChoices(); }
+            return;
+        }
         if (_privateOverlay != null)
         {
-            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); ClosePrivateMessages(); }
+            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); if (_contactMenu != null) CloseContactMenu(); else if (_chatContextMenu != null) CloseChatContextMenu(); else ClosePrivateMessages(); }
             return;
         }
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape })
@@ -157,7 +167,7 @@ public partial class CareerScreen : Control, IScreenContext
         foreach (var (node, visible) in _hidden) if (GodotObject.IsInstanceValid(node)) node.Visible = visible;
         _listCache?.Release(); QueueFree(); ActiveScreenContext.Instance.Update();
     }
-    public override void _ExitTree() { if (_listCache != null && IsInstanceValid(_listCache) && _listCache.IsInsideTree()) { _listCache.Release(); } if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); } _pageTween?.Kill(); _weeklyTween?.Kill(); if (_open == this) _open = null; }
+    public override void _ExitTree() { CloseDateScene(); if (_listCache != null && IsInstanceValid(_listCache) && _listCache.IsInsideTree()) { _listCache.Release(); } if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); } _pageTween?.Kill(); _weeklyTween?.Kill(); if (_open == this) _open = null; }
     private void FitStage()
     {
         float scale = Math.Min(Size.X / 1600f, Size.Y / 1000f);
@@ -263,7 +273,7 @@ public partial class CareerScreen : Control, IScreenContext
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
-        _status.Text = $"第 {data.Season} 赛季 · 第 {SeasonCalendar.Day(data, data.Day)} 天（累计第 {data.Day} 天）   评分 {data.Rating}   关注 {data.Fans}   可用资金 {CareerMoney.Compact(CareerMoney.Balance(data))}";
+        _status.Text = $"第 {data.Season} 赛季 · {GameCalendar.Text(data, data.Day)}   评分 {data.Rating}   关注 {data.Fans}   可用资金 {CareerMoney.Compact(CareerMoney.Balance(data))}";
         _status.TooltipText = "可用资金 " + CareerMoney.Format(CareerMoney.Balance(data)); _status.MouseFilter = MouseFilterEnum.Pass;
         if (_multiplayer != null)
         {
@@ -299,8 +309,11 @@ public partial class CareerScreen : Control, IScreenContext
         }
         AnimatePage();
         UpdateCommunityBadge(); _postSignature = Signature(data);
-        if (_multiplayer == null && newEvent && data.Ai.Enabled && data.Posts.FirstOrDefault()?.AuthorId != "player") _ = AiService.ProcessPendingAsync();
-        if (_multiplayer == null && data.Ai.Enabled && data.WeeklyEditions.Any(w => w.ProfilesWork.State == "idle" || w.NewsWork.State == "idle")) _ = AiService.ProcessWeeklyAsync();
+        if (_multiplayer == null && data.Ai.Enabled) ProactiveChats.StartQueued(data);
+        if (_multiplayer == null && (newEvent || data.Journey.ResumePublications) && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.Posts.FirstOrDefault()?.AuthorId != "player") _ = AiService.ProcessPendingAsync();
+        if (_multiplayer == null && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.WeeklyEditions.Any(w => w.ProfilesWork.State == "idle" || w.NewsWork.State == "idle")) _ = AiService.ProcessWeeklyAsync();
+        if (!EventJourney.PublicationsPaused(data)) data.Journey.ResumePublications = false;
+        ShowJourneyEncounter();
     }
 
     private string Signature(CareerData data) => string.Join('|', CommunityThreads.All(data).Select(p => $"{p.Id}:{p.Revision}:{p.VoteRevision}:{p.SeenRevision}:{p.AiPending}:{p.NewsGeneration.State}:{p.NewsGeneration.Error}:{p.NewsGeneration.WaitReason}:{p.ReactionGeneration.State}:{p.ReactionGeneration.Error}:{p.ReactionGeneration.WaitReason}:" + string.Join(',', p.Replies.Where(r => r.AuthorId == "player").Select(r => $"{r.Id}:{r.NeedsReaction}:{r.ReactionGeneration.State}:{r.ReactionGeneration.Error}:{r.ReactionGeneration.WaitReason}"))))
@@ -308,6 +321,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Home(CareerData data)
     {
+        EventCards(data, _content, data.Day);
         foreach (var (conversation, activity) in SocialAppointments.Due(data))
         {
             var reminder = Card(); _content.AddChild(reminder); var body = Inner(reminder);
@@ -329,14 +343,22 @@ public partial class CareerScreen : Control, IScreenContext
         var next = CareerEngine.NextMatch(data);
         bool noAvailableMatch = next == null && CareerEngine.NextAvailable(data) == null;
         intro.AddChild(Text(data.PendingMatchId != null ? "未完的攀登" : next?.Event ?? "从这里，走向世界赛场。", 36, _ink));
-        intro.AddChild(Text(data.PendingMatchId != null ? "比赛已经开始，完成对局后将自动生成战报。" : noAvailableMatch ? "当前没有可报名的比赛。可以在日程中推进日期，等待后续赛程或进入下个赛季。" : next == null ? "挑选一场比赛，开始新的攀登。" : $"对阵 {CareerEngine.DisplayName(data, next.OpponentId)}    ·    第 {SeasonCalendar.Day(data, next.Day)} 天    ·    最低进阶 {next.RequiredAscension}", 18, _muted));
+        intro.AddChild(Text(data.PendingMatchId != null ? "比赛已经开始，完成对局后将自动生成战报。" : noAvailableMatch ? "当前没有可报名的比赛。可以在日程中推进日期，等待后续赛程或进入下个赛季。" : next == null ? "挑选一场比赛，开始新的攀登。" : $"对阵 {CareerEngine.DisplayName(data, next.OpponentId)}    ·    {GameCalendar.Text(data, next.Day)}    ·    最低进阶 {next.RequiredAscension}", 18, _muted));
         intro.AddChild(Text(EsportsWorld.NextGoal(data), 15, CareerVisuals.Teal));
         intro.AddChild(new Control { CustomMinimumSize = new Vector2(0, 12) });
         var play = Button(data.PendingMatchId != null ? "查看进行中的比赛   →" : noAvailableMatch ? "查看日程并推进   →" : next == null ? "选择参赛赛事   →" : next.Day > data.Day ? "前往比赛日   →" : "准备出场   →", () =>
         {
-            if (next != null && next.Day > data.Day && data.PendingMatchId == null && !MultiplayerCommand("propose-advance", number: next.Day)) CareerEngine.AdvanceToMatch(data);
+            if (next != null && next.Day > data.Day && data.PendingMatchId == null && !MultiplayerCommand("propose-advance", "direct", number: next.Day)) CareerEngine.AdvanceToMatch(data);
             Visit(() => _tab = noAvailableMatch && data.PendingMatchId == null ? "日程" : "赛事");
         }, 260); Emphasize(play); intro.AddChild(play);
+        var activityDay = SocialAppointments.All(data).Where(a => a.Offer.State == "已确认").Select(a => PrivateAppointments.Date(data, a.Offer)).Where(day => day > data.Day).Select(day => (int?)day).Min();
+        if (activityDay is { } appointment && (next == null || appointment < next.Day))
+            intro.AddChild(Button("前往活动（" + GameCalendar.Text(data, appointment) + "）  →", () =>
+            {
+                if (MultiplayerCommand("propose-advance", "direct", number: appointment)) return;
+                CareerEngine.AdvanceToDay(data, appointment); Render();
+            }, 260));
+        JourneyResumeButton(data, intro);
         var poster = new VBoxContainer { CustomMinimumSize = new Vector2(276, 0) }; heroRow.AddChild(poster);
         poster.AddChild(new BroadcastPortrait { Art = AvatarAssets.Load(CareerAvatars.MainCharacter(data, "player"), CareerAvatars.HomeCardVariation(data), true), CustomMinimumSize = new Vector2(276, 192), SizeFlagsVertical = SizeFlags.ExpandFill });
         var playerTag = Button(CareerEngine.Name(data) + "   ↗", () => OpenPerson("player")); playerTag.SizeFlagsHorizontal = SizeFlags.ExpandFill;
@@ -367,7 +389,7 @@ public partial class CareerScreen : Control, IScreenContext
         nb.AddChild(Text("世界频道", 22, _ink)); nb.AddChild(Text("比赛战报 / 赛区动态 / 社区讨论", 14, _muted));
         foreach (var post in data.Posts.Take(2))
         {
-            nb.AddChild(WithAvatar(data, post.AuthorId, Text($"第 {SeasonCalendar.Day(data, post.Day)} 天  ·  {(CommunityThreads.NewsPending(data, post) ? "正在撰写" : post.Replies.Count + " 条讨论")}", 13, _gold), 36, true));
+            nb.AddChild(WithAvatar(data, post.AuthorId, Text($"{GameCalendar.Text(data, post.Day)}  ·  {(CommunityThreads.NewsPending(data, post) ? "正在撰写" : post.Replies.Count + " 条讨论")}", 13, _gold), 36, true));
             var link = Button(post.Title, () => OpenPost(post));
             link.SizeFlagsHorizontal = SizeFlags.ExpandFill; link.AutowrapMode = TextServer.AutowrapMode.WordSmart; link.Alignment = HorizontalAlignment.Left; nb.AddChild(link);
         }
@@ -415,12 +437,12 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Calendar(CareerData data)
     {
-        AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。挑选想参加的比赛；跳过日期时，会在你已报名的比赛日停下。");
+        AddHeading("赛季日程", $"本赛季共 {SeasonCalendar.Length(data) / 7} 周。跳过日期时，会在已报名比赛或已确认活动的当天停下。");
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); _content.AddChild(row);
         row.AddChild(TeamButton("推进一天", AdvanceCareerDay, 180));
-        var nextMatchButton = TeamButton("跳转到下一场比赛", () => { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); }, 260);
-        if (CareerEngine.NextMatch(data) == null)
-        { nextMatchButton.Text = "暂无已报名比赛"; nextMatchButton.Disabled = true; nextMatchButton.TooltipText = "可以推进一天、前往下个赛季，或选择尚可报名的比赛。"; }
+        var nextMatchButton = TeamButton("跳到下一个事件", () => { if (CareerEngine.NextEventDay(data) is not { } day) return; if (day == data.Day) { _selectedDay = day; Render(); return; } if (MultiplayerCommand("propose-advance", number: day)) return; CareerEngine.AdvanceToDay(data, day); _selectedDay = data.Day; Render(); }, 260);
+        if (CareerEngine.NextEventDay(data) == null)
+        { nextMatchButton.Disabled = true; nextMatchButton.TooltipText = "暂无已报名比赛或已确认活动。"; }
         row.AddChild(nextMatchButton);
         row.AddChild(TeamButton("跳过四周", () => { if (MultiplayerCommand("propose-advance", number: data.Day + 28)) return; CareerEngine.AdvanceToDay(data, data.Day + 28); _selectedDay = data.Day; Render(); }, 155));
         row.AddChild(TeamButton("下个赛季", () => { if (MultiplayerCommand("propose-advance", number: SeasonCalendar.End(data) + 1)) return; CareerEngine.AdvanceToDay(data, SeasonCalendar.End(data) + 1); _selectedDay = data.Day; Render(); }, 155));
@@ -440,32 +462,44 @@ public partial class CareerScreen : Control, IScreenContext
         for (int page = 0; page < SeasonCalendar.Length(data) / 28; page++)
         {
             int target = start + page * 28;
-            var period = Button($"第 {page * 4 + 1}—{page * 4 + 4} 周", () => { _selectedDay = target; Render(); }, 170);
+            var period = Button($"{GameCalendar.Date(data, target):M/d}—{GameCalendar.Date(data, target + 27):M/d}", () => { _selectedDay = target; Render(); }, 170);
             if (page == block) Emphasize(period);
             periods.AddChild(period);
         }
         var grid = new GridContainer { Columns = 7, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         grid.AddThemeConstantOverride("h_separation", 8); grid.AddThemeConstantOverride("v_separation", 8);
         _content.AddChild(grid);
+        var appointments = SocialAppointments.All(data).Where(x => x.Offer.State is "已确认" or "已赴约" or "已结束")
+            .ToLookup(x => PrivateAppointments.Date(data, x.Offer));
+        var matchesByDay = data.Matches.ToLookup(m => m.Day);
+        var fixturesByDay = data.Esports.Competitions.SelectMany(c => c.Fixtures.Select(f => (Competition: c, Fixture: f))).ToLookup(x => x.Fixture.Day);
+        var humanIds = data.HumanIds.Append("player").Append(data.LocalHumanId).Where(id => id.Length > 0).ToHashSet();
         for (int i = 0; i < 28; i++)
         {
             int day = blockStart + i;
-            var match = data.Matches.Where(m => m.Day == day).OrderByDescending(m => m.Registered).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
-            var world = data.Esports.Competitions.FirstOrDefault(c => c.Fixtures.Any(f => f.Day == day));
-            var appointment = SocialAppointments.All(data).FirstOrDefault(x => x.Offer.State is "已确认" or "已赴约" && PrivateAppointments.Date(data, x.Offer) == day);
-            string badge = match == null ? world == null ? "·" : "◇" : "◆";
-            var b = Button($"{day - start + 1:00}  {badge}\n{(match?.Event ?? appointment.Offer?.Title ?? world?.Name ?? "训练 / 新闻")}", () => { _selectedDay = day; Render(); }, 0);
-            b.CustomMinimumSize = new Vector2(0, 88);
-            b.SizeFlagsHorizontal = SizeFlags.ExpandFill; b.AutowrapMode = TextServer.AutowrapMode.WordSmart; b.AddThemeFontSizeOverride("font_size", 16);
-            b.Modulate = day < data.Day ? new Color("8591a0") : day == data.Day ? _gold : Colors.White;
+            var match = matchesByDay[day].OrderByDescending(m => m.Registered).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
+            var world = fixturesByDay[day].FirstOrDefault().Competition;
+            var appointment = appointments[day].FirstOrDefault();
+            var ordinaryDate = appointments[day].FirstOrDefault(a => a.Offer.GoodId != "grand-wedding");
+            bool entered = matchesByDay[day].Any(m => m.Registered) || fixturesByDay[day].Any(x => humanIds.Contains(x.Fixture.HomeId) || humanIds.Contains(x.Fixture.AwayId)
+                || x.Fixture.HomeParticipants.Any(humanIds.Contains) || x.Fixture.AwayParticipants.Any(humanIds.Contains));
+            var b = new CalendarDayButton { Name = "CalendarDay_" + day, Number = $"{GameCalendar.Date(data, day):M/d}",
+                Description = match?.Event ?? appointment.Offer?.Title ?? world?.Name ?? "训练 / 新闻",
+                Today = day == data.Day, Selected = day == shown, HasMatch = match != null || world != null, Registered = entered,
+                Question = data.Life.RandomEvents.Any(e => e.Day == day && e.State != "skipped"),
+                Bond = ordinaryDate.Conversation == null ? null : RelationshipPresentation.IconBond(PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(ordinaryDate.Conversation.PersonId) ?? new()),
+                Wedding = appointments[day].Any(a => a.Offer.GoodId == "grand-wedding") };
+            b.Pressed += () => { _selectedDay = day; Render(); };
+            b.Modulate = day < data.Day ? new Color("8591a0") : Colors.White;
             grid.AddChild(b);
         }
         var detail = Card(); _content.AddChild(detail);
-        var box = Inner(detail); box.AddChild(Text($"第 {shown - start + 1} 天", 24, _gold));
-        foreach (var (conversation, activity) in SocialAppointments.All(data).Where(x => PrivateAppointments.Date(data, x.Offer) == shown && x.Offer.State is "已确认" or "已赴约" or "未赴约"))
+        var box = Inner(detail); box.AddChild(Text(GameCalendar.Text(data, shown), 24, _gold));
+        EventCards(data, box, shown);
+        foreach (var (conversation, activity) in SocialAppointments.All(data).Where(x => PrivateAppointments.Date(data, x.Offer) == shown && x.Offer.State is "已确认" or "已赴约" or "已结束" or "未赴约"))
         {
             var activityRow = new HBoxContainer(); box.AddChild(activityRow);
-            activityRow.AddChild(Text(activity.Title + " · " + CareerEngine.DisplayName(data, conversation.PersonId) + " · " + activity.State, 18, CareerVisuals.Teal));
+            activityRow.AddChild(Text(activity.Title + " · " + CareerEngine.DisplayName(data, conversation.PersonId) + " · " + SocialAppointments.StatusText(data, activity), 18, CareerVisuals.Teal));
             activityRow.AddChild(Button("查看私信 →", () => OpenPrivateMessages(conversation.PersonId), 160));
         }
         foreach (var selected in data.Matches.Where(m => m.Day == shown))
@@ -512,7 +546,7 @@ public partial class CareerScreen : Control, IScreenContext
             box.AddChild(Text(match.Event, 27, _gold));
             bool placementPrize = data.Esports.Competitions.Any(c => c.Id == match.CompetitionId && c.Kind == "worldfinal" && c.PrizeVersion >= 1);
             if (placementPrize) box.AddChild(Text("本届名次奖金：冠军 $500,000，亚军 $250,000，四强 $100,000，八强 $50,000，十六强 $20,000，其余参赛者 $10,000。赛事结束时按最终名次领取。", 17, _gold));
-            box.AddChild(Text($"第 {SeasonCalendar.Day(data, match.Day)} 天  ·  对手 {opponent.PublicName}  ·  {(placementPrize ? "按最终名次领取奖金" : "奖金 " + CareerMoney.Format(match.Prize))}", 18, _ink));
+            box.AddChild(Text($"{GameCalendar.Text(data, match.Day)}  ·  对手 {opponent.PublicName}  ·  {(placementPrize ? "按最终名次领取奖金" : "奖金 " + CareerMoney.Format(match.Prize))}", 18, _ink));
             box.AddChild(Text($"对手擅长 {opponent.Character}，最高进阶 {opponent.MaxAscension}。比赛最低进阶 {match.RequiredAscension}。", 16, _muted));
             var chars = GameBridge.Characters();
             var selection = Card(); selection.Name = "MatchCharacterSelection";
@@ -578,7 +612,7 @@ public partial class CareerScreen : Control, IScreenContext
             var controls = new HBoxContainer(); controls.AddThemeConstantOverride("separation", 12); box.AddChild(controls);
             var enter = TeamButton(due ? "开始比赛" : "跳转到比赛日", async () =>
             {
-                if (!due) { if (MultiplayerCommand("propose-advance", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); return; }
+                if (!due) { if (MultiplayerCommand("propose-advance", "direct", number: CareerEngine.NextMatch(data)?.Day ?? data.Day + 1)) return; CareerEngine.AdvanceToMatch(data); Render(); return; }
                 if (chars.Count == 0) { Notice("没有可用角色。", true); return; }
                 if (MultiplayerCommand("propose-start", match.Id, number: (int)asc.Value)) return;
                 if (_starting) return;
@@ -625,7 +659,7 @@ public partial class CareerScreen : Control, IScreenContext
             var box = Inner(card);
             var entryReason = EsportsWorld.EntryReason(data, m);
             var status = m.Status == "待赛" ? (m.Registered ? "已报名" : entryReason == null ? "可报名" : "资格未满足") : m.Status;
-            box.AddChild(WithAvatar(data, m.OpponentId, Text($"第 {SeasonCalendar.Day(data, m.Day)} 天  ·  {m.Event}  ·  对手 {CareerEngine.DisplayName(data, m.OpponentId)}  ·  {status}", 17, m.Status == "待赛" ? _ink : _muted), 40, true));
+            box.AddChild(WithAvatar(data, m.OpponentId, Text($"{GameCalendar.Text(data, m.Day)}  ·  {m.Event}  ·  对手 {CareerEngine.DisplayName(data, m.OpponentId)}  ·  {status}", 17, m.Status == "待赛" ? _ink : _muted), 40, true));
             box.AddChild(Text($"{EsportsWorld.StageName(m.Kind)}    ·    最低进阶 {m.RequiredAscension}    ·    {(data.Esports.Competitions.Any(c => c.Id == m.CompetitionId && c.Kind == "worldfinal" && c.PrizeVersion >= 1) ? "按最终名次领取奖金" : "单场奖金 " + CareerMoney.Format(m.Prize))}", 14, _muted));
             if (m.Status == "待赛" && m.Day >= data.Day)
             {
@@ -696,7 +730,7 @@ public partial class CareerScreen : Control, IScreenContext
         var card = Card();
         var box = Inner(card);
         bool preparing = CommunityThreads.NewsPending(data, post);
-        box.AddChild(WithAvatar(data, post.AuthorId, Text($"{post.Category}  ·  第 {post.Day} 天  ·  {CareerEngine.DisplayName(data, post.AuthorId)}  ·  {(preparing ? "正在撰写" : post.Replies.Count + " 条回复")}", 14, _muted), 48, true));
+        box.AddChild(WithAvatar(data, post.AuthorId, Text($"{post.Category}  ·  {GameCalendar.Text(data, post.Day)}  ·  {CareerEngine.DisplayName(data, post.AuthorId)}  ·  {(preparing ? "正在撰写" : post.Replies.Count + " 条回复")}", 14, _muted), 48, true));
         var titleButton = Button(post.Title, () => OpenPost(post));
         titleButton.AutowrapMode = TextServer.AutowrapMode.WordSmart; titleButton.Alignment = HorizontalAlignment.Left; titleButton.SizeFlagsHorizontal = SizeFlags.ExpandFill; box.AddChild(titleButton);
         if (post.Revision > post.SeenRevision) box.AddChild(Text("● 有新内容", 14, new Color("f07878")));
@@ -763,7 +797,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (_multiplayer is { Host: false }) { box.AddChild(Text("AI 由主机统一生成，你无需配置服务或密钥。帖子、解说与周刊会自动同步。", 20, _ink)); AddMultiplayerReportButton(box); return; }
         _aiStatus = AiSettingsPanel.Build(box, data.Ai,
             () => { SaveAiSettings(data); AiService.RefreshConcurrency(data.Ai); },
-            () => GenerateContent(() => { _ = AiService.ProcessPendingAsync(data); }), () => OpenPromptSettings(data), Notice, () => _aiSettingsDirty = true,
+            () => GenerateContent(() => { _ = AiService.ProcessPendingAsync(data, automatic: false); }), () => OpenPromptSettings(data), Notice, () => _aiSettingsDirty = true,
             confirmSwitch: action => ShowCareerDialog("方案没有保存", "方案没有保存，确认切换吗？", () => { action(); return true; }, "确认切换",
                 contents: content =>
                 {

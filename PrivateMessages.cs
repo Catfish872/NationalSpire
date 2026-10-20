@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -7,6 +7,9 @@ namespace NationalSpire;
 /// <summary>关系、记录与交互分别保存；网络回复结束前不执行任何交互。</summary>
 public static class PrivateMessages
 {
+    public static bool VisibleInCommunications(PrivateTurn turn) => turn.Scene is not { Ending: false } && !(turn.UserDeleted && turn.ReplyDeleted);
+    public static bool ListedInCommunications(PrivateConversation c) => !c.Hidden && (!c.EventOnly || c.Turns.Any(t => t.RequestKind != "event"));
+    public static int UnreadInCommunications(PrivateConversation c) => c.Turns.Where(t => t.Status == "complete").Skip(Math.Max(0, c.SeenCount)).Count(t => t.RequestKind != "event" && VisibleInCommunications(t));
     public static object[] PublicMemory(CareerData data, CareerPerson person, IEnumerable<CommunityPost> posts, int day)
     {
         var humans = posts.SelectMany(p => p.RelatedPeople.Concat(p.Replies.Select(r => r.AuthorId)).Append(p.AuthorId))
@@ -32,7 +35,7 @@ public static class PrivateMessages
                     var lines = new List<(int Index, int Season, int Day, string Speaker, string Text)>();
                     if (t.Status != "complete" || t.Day > day) return lines;
                     if (!t.ReplyDeleted) lines.Add((i, t.Season, t.Day, person.PublicName, t.Reply));
-                    if (!t.UserDeleted) lines.Add((i, t.Season, t.Day, name, PrivateMessagePrompts.UserText(t, conversation)));
+                    if (!t.UserDeleted) lines.Add((i, t.Season, t.Day, t.RequestKind == "event" ? "共同经历" : name, PrivateMessagePrompts.UserText(data, t, conversation)));
                     return lines;
                 }).Take(10).Reverse().ToArray();
                 bool Available(PrivateSummary s) => s.Through > 0 && s.Through <= conversation.Turns.Count && conversation.Turns[s.Through - 1].Day <= day;
@@ -121,12 +124,13 @@ public static class PrivateMessages
         if (!box.Conversations.TryGetValue(id, out var c)) box.Conversations[id] = c = new() { PersonId = id };
         return c;
     }
-    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null)
+    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null, string proactiveReason = "")
     {
-        if ((string.IsNullOrWhiteSpace(text) && attachments?.Count is not > 0 && request == null) || text.Length > 8000) throw new ArgumentException("请填写消息或添加附件，正文最多 8000 字。");
+        if ((string.IsNullOrWhiteSpace(text) && attachments?.Count is not > 0 && request == null && proactiveReason.Length == 0) || text.Length > 8000) throw new ArgumentException("请填写消息或添加附件，正文最多 8000 字。");
         var c = Conversation(data, id);
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
-        var turn = new PrivateTurn { UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
+        if (proactiveReason.Length == 0) { c.Proactive.Unanswered = 0; c.Hidden = false; c.Forgotten = false; }
+        var turn = new PrivateTurn { ProactiveReason = proactiveReason, UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
         c.Turns.Add(turn); PrivateInteractionIds.Ensure(c); return turn;
     }
     public static int Completed(PrivateConversation c) => c.Turns.Skip(c.ContextStart).Count(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted));
@@ -138,13 +142,14 @@ public static class PrivateMessages
         foreach (var a in attachments)
         {
             if (a.Kind == "match") { if (PrivateAppointments.Error(data, person, a) is { } error) return error; }
+            else if (a.Kind is "gift" or "activity" or OathAttachments.Kind) { if (ChatAttachments.Prepare(data, person, a) is { } error) return error; }
             else if (a.Kind == "training") { if (ClubCoaching.TrainingError(data, person, a) is { } error) return error; }
             else if (a.Kind == "lineup") { if (CoachLineups.Error(data, person, a) is { } error) return error; a.Detail = CoachLineups.Prepare(data, a); }
             else if (a.Kind == "contract") { if (!OwnedClubs.CanOperate(data)) return "请先组建并管理自己的俱乐部。"; }
             else if (a.Kind == "result")
             {
                 var r = data.Results.FirstOrDefault(r => r.MatchId == a.MatchId); if (r == null) return "这份比赛记录已不存在。";
-                a.Detail = $"第{r.Day}天 · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · 第{r.Floor}层 · {MatchRules.Time(r.RunSeconds)}\n" + string.Join("、", r.Cards.Take(8));
+                a.Detail = $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · 第{r.Floor}层 · {MatchRules.Time(r.RunSeconds)}\n" + string.Join("、", r.Cards.Take(8));
             }
             else if (a.Kind == "post")
             {
@@ -170,9 +175,11 @@ public static class PrivateMessages
         }
         return null;
     }
-    public static string AttachmentTitle(PrivateOffer a) => a.Kind switch
+    public static string AttachmentTitle(CareerData data, PrivateOffer a) => a.Kind switch
     {
-        "match" => $"{a.Mode} · 第{a.Season}赛季第{a.Day}天 · A{a.Ascension}",
+        OathAttachments.Kind => "解除誓约",
+        "gift" => $"赠送 {a.Title} × {a.Quantity}", "activity" => $"{a.Title} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))}",
+        "match" => $"{a.Mode} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))} · A{a.Ascension}",
         "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子",
         CommunitySharing.Kind => a.Quote?.ReplyId.Length > 0 ? "分享评论" : "分享主楼",
         CommunityReporting.Kind => a.Quote?.ReplyId.Length > 0 ? "举报评论" : "举报主楼", "advice" => "附加文字", _ => "附件"
@@ -240,7 +247,7 @@ public static class PrivateMessages
     {
         if (turn.Applied) return;
         PrivateInteractionIds.Ensure(c);
-        var before = PrivateInteractionHistory.Capture(data, c.PersonId);
+        var before = PrivateInteractionHistory.Capture(data, c.PersonId, gifts: directives.Any(f => f.ContainsKey("Gift")));
         int favourBefore = Favour(data, c.PersonId), preceding = favourBefore;
         var favourTargets = directives.Select(FavourTarget).OfType<int>().ToList();
         bool confirmFavour = false;
@@ -255,6 +262,8 @@ public static class PrivateMessages
         foreach (var fields in directives)
         {
             if (fields.ContainsKey("Activity")) SocialAppointments.Respond(data, c, turn, fields);
+            if (fields.ContainsKey("Oath")) OathAttachments.Respond(data, c, turn, fields);
+            if (fields.ContainsKey("Gift")) ChatAttachments.Gift(data, c, turn, fields);
             if (fields.ContainsKey("Training")) ClubCoaching.AcceptTraining(data, c, turn, fields);
             if (fields.ContainsKey("Lineup")) CoachLineups.Respond(data, c, turn, fields);
             else if (fields.TryGetValue("Post", out var publication) && publication == "发布")
@@ -347,8 +356,9 @@ public sealed class PrivateStreamParser
     private int _depth;
     public string Text => _visible.ToString();
     public List<Dictionary<string, string>> Directives { get; } = [];
+    public List<(int Offset, Dictionary<string, string> Fields)> SceneCues { get; } = [];
     public string Error { get; private set; } = "";
-    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup)\s*[:：]", RegexOptions.IgnoreCase);
+    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Scene|Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup)\s*[:：]", RegexOptions.IgnoreCase);
     public void Feed(string text)
     {
         foreach (char ch in text)
@@ -366,15 +376,19 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day"]
+            string[] allowed = fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
                 : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]
                 : fields.ContainsKey("Skill") ? ["Skill", "Topic", "Evidence", "Reason"]
                 : fields.ContainsKey("Mood") ? ["Mood", "Days", "Evidence", "Reason"]
-                : fields.ContainsKey("Match") ? ["Match", "Season", "Day", "Ascension", "Mode"]
+                : fields.ContainsKey("Match") ? ["Match", "Season", "Day", "Date", "Ascension", "Mode"]
                 : fields.ContainsKey("Contract") ? ["Contract", "Signing", "Wage", "WinBonus", "Weeks", "Role"] : [];
-            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase) || _extraFields.Contains(k, StringComparer.OrdinalIgnoreCase))) Directives.Add(fields);
+            if (fields.Count > 0 && fields.Keys.All(k => allowed.Contains(k, StringComparer.OrdinalIgnoreCase) || _extraFields.Contains(k, StringComparer.OrdinalIgnoreCase)))
+            {
+                if (fields.ContainsKey("Scene")) SceneCues.Add((_visible.Length, fields));
+                else Directives.Add(fields);
+            }
             else Error = "交互格式不完整，未执行。";
         }
     }

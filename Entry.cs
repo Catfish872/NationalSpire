@@ -31,6 +31,8 @@ public static class Entry
         CareerEngine.PlayerNameSource = () => PlatformUtil.GetPlayerNameRaw(PlatformUtil.PrimaryPlatform, PlatformUtil.GetLocalPlayerId(PlatformUtil.PrimaryPlatform));
         CharacterIdentity.OriginalSource = GameCharacterNames.Originals;
         CharacterIdentity.Source = () => GameCharacterNames.Definitions(GameBridge.Characters());
+        CardKnowledge.Source = GameCardKnowledge.Read;
+        CardKnowledge.SourceVersion = () => MegaCrit.Sts2.Core.Localization.LocManager.Instance.Language;
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
         LiveCompatibility.Install(new Harmony("nationalspire.career"), typeof(Entry).Assembly);
         GD.Print("[NationalSpire] 生涯与社区模块已加载");

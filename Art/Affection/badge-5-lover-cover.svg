@@ -1,0 +1,25 @@
+<svg viewBox="-40 -34 80 68" xmlns="http://www.w3.org/2000/svg" width="240" height="204">
+  <title>92，75～100档，进度68%，恋人</title>
+  <defs>
+    <linearGradient id="nsb13-body" x1=".12" y1="0" x2=".85" y2="1">
+      <stop stop-color="#b25b80" />
+      <stop offset=".56" stop-color="#6d2d4d" />
+      <stop offset="1" stop-color="#6d2d4d" />
+    </linearGradient>
+    <linearGradient id="nsb13-heart" x1="0" y1="0" x2=".7" y2="1">
+      <stop stop-color="#ffd3dc" />
+      <stop offset=".42" stop-color="#e75270" />
+      <stop offset="1" stop-color="#aa244a" />
+    </linearGradient>
+  </defs>
+  <polygon points="-26,8 -32,0 -33,4 -26,10" fill="#ddc38b" />
+  <polygon points="-23,13 -29,5 -30,9 -23,15" fill="#aa9567" />
+  <polygon points="-20,18 -26,10 -27,14 -20,20" fill="#ddc38b" />
+  <polygon points="-17,23 -23,15 -24,19 -17,25" fill="#aa9567" />
+  <polygon points="26,8 32,0 33,4 26,10" fill="#ddc38b" />
+  <polygon points="23,13 29,5 30,9 23,15" fill="#aa9567" />
+  <polygon points="20,18 26,10 27,14 20,20" fill="#ddc38b" />
+  <polygon points="17,23 23,15 24,19 17,25" fill="#aa9567" />
+  <path d="M0 29.2C-1.5 27.6-6.2 24.9-6.2 21.9C-6.2 18.2-1.8 17.5 0 20.5C1.8 17.5 6.2 18.2 6.2 21.9C6.2 24.9 1.5 27.6 0 29.2Z" fill="url(#nsb13-heart)" stroke="#eac4d5" stroke-width=".55" />
+  <path d="M-4.5 21.9C-4.5 20.1-2.6 19.9-1.5 21" fill="none" stroke="#ffe4ee" stroke-width=".8" stroke-linecap="round" opacity=".85" />
+</svg>

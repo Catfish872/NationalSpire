@@ -14,7 +14,7 @@ public partial class CareerScreen
         {
             row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>
                 ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));
-            row.AddChild(ClubButton(o.PlayerReserve ? "申请恢复首发" : "申请退出首发", () => PlayerPositionDialog(d), 190));
+            row.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));
             if (o.PlayerPositionSeason > 0)
             {
                 box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));
@@ -35,13 +35,14 @@ public partial class CareerScreen
         var ids = reserve ? ClubCoaching.Replacements(d) : OwnedClubs.ReplaceableStarters(d);
         string selected = ids.FirstOrDefault() ?? "";
         Label? error = null;
-        ShowCareerDialog(reserve ? "下赛季转为轮换" : "下赛季恢复首发", "本赛季已确定的参赛安排继续执行。", () =>
+        ShowCareerDialog(reserve ? "退出首发" : "恢复首发", OwnedClubSchedule.PlayerPositionTiming(d), () =>
         {
             var result = ClubCoaching.SetPlayerPosition(d, reserve ? "轮换" : "首发", selected);
             if (result != null) { error!.Text = result; return false; }
             Render(); return true;
-        }, "提交申请", box =>
+        }, "确认调整", box =>
         {
+            box.AddChild(Text(CareerEngine.Name(d) + (reserve ? " · 首发 → 轮换" : " · 轮换 → 首发"), 18, _ink));
             if (ids.Count > 0) box.AddChild(ClubSelect(ids.Select(id => (reserve ? "接替首发 · " : "转入轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), 0, i => selected = ids[i]));
             error = Text(ids.Count == 0 ? "没有符合条件的接替人选，请先补齐阵容。" : "", 16, new Color("ee929d")); box.AddChild(error);
         });
@@ -125,6 +126,21 @@ public partial class CareerScreen
         if (request.State == "待生效") inner.AddChild(PrivateButton("取消调整", () => { if (send != null) send("lineup-cancel", new() { Offer = request.Id }); else PrivateCommand("dm-lineup-cancel", new() { Offer = request.Id }); }, 130));
     }
     private readonly HashSet<string> _privateExpandedTraining = [];
+    private Queue<CoachTrainingPlan> TrainingCompletions(IEnumerable<PrivateOffer> offers, long first, long end)
+    {
+        var ids = offers.Where(o => o.Kind == "training" && !o.MemoryDeleted).Select(o => o.Id).ToHashSet();
+        return new(ClubCoaching.TrainingPlans(ViewData).Where(p => p.State == "已完成" && p.CompletionOrder > 0
+            && p.CompletionOrder >= first && p.CompletionOrder < end && ids.Contains(p.Id)).OrderBy(p => p.CompletionOrder));
+    }
+    private void TrainingCompletionsThrough(Queue<CoachTrainingPlan> plans, long order)
+    {
+        while (plans.TryPeek(out var plan) && plan.CompletionOrder <= order)
+        {
+            plans.Dequeue();
+            _privateBody!.AddChild(PrivateLine(PrivateAppointments.DateText(ViewData, plan.CompletionDay) + " · " + GroupChats.Name(ViewData, plan.PersonId), 13, _muted));
+            PrivateTrainingCard(ViewData, plan, _privateBody);
+        }
+    }
     private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)
     {
         var panel = new PanelContainer { Name = "CoachTrainingCard" }; panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193440", "6aa9a8", 9, 18)); parent.AddChild(panel);

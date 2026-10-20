@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6D49A2B67107505AB5B6196BD6782E4815FDFF28A12AAA5AEDEDAF2BCC256001`。来源：[源码](../../CareerLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`01FFD1C6FCF432BF00157E14F0281DC260490C394E1ECC49D6114363338BCF54`。来源：[源码](../../CareerLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -115,19 +115,20 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](Coop/CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`
+**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](Coop/CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerLibrary.SelectedPath(string)`；`NationalSpire.CareerLibrary.ValidName(string)`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerLibrary.SelectedPath(string)`；`NationalSpire.CareerLibrary.ValidName(string)`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(d)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(d)`
 - `NationalSpire.CareerLibrary.SelectedPath(string)`；输入表达式：`SelectedPath(original)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SelectedPath(original)`
 - `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(System.IO.Path.GetFileName(f))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => ValidName(System.IO.Path.GetFileName(f))`
-- `NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool)`；输入表达式：`new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected)`；返回值紧邻使用处：`YieldStatementSyntax: yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected);`
+- `NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；输入表达式：`new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day))`；返回值紧邻使用处：`YieldStatementSyntax: yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));`
 - `NationalSpire.Coop.CoopJson.Read<T>(byte[])`；输入表达式：`CoopJson.Read<CareerData>(File.ReadAllBytes(file))`；返回值紧邻使用处：`AssignmentExpressionSyntax: d = CoopJson.Read<CareerData>(File.ReadAllBytes(file))`
+- `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(d, d.Day)`；返回值紧邻使用处：`ArgumentSyntax: GameCalendar.Text(d, d.Day)`
 - `NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Day(d, d.Day)`；返回值紧邻使用处：`ArgumentSyntax: SeasonCalendar.Day(d, d.Day)`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc))         {             CareerData? d = null; try { d = CoopJson.Read<CareerData>(File.ReadAllBytes(file)); } catch { }             if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected);         }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc))          {              CareerData? d = null; try { d = CoopJson.Read<CareerData>(File.ReadAllBytes(file)); } catch { }              if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending`
 - `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(folder)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Directory.Exists(folder)`
 - `System.IO.Directory.GetFiles(string, string)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, "national_spire_career*.json").Where`
@@ -147,13 +148,14 @@
 
 **调用者：** [`NationalSpire.CareerLibrary.Import(string, byte[])`](CareerLibrary.cs.md#symbol-b347de421d96)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`](Coop/CoopData.cs.md#symbol-3f5e7638f9e9)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`
+**调用：** [`NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`](Coop/CoopData.cs.md#symbol-3f5e7638f9e9)；[`NationalSpire.GameCalendar.Initialize(NationalSpire.CareerData)`](GameCalendar.cs.md#symbol-006ea3a9bcad)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`；`NationalSpire.GameCalendar.Initialize(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`；输入表达式：`CoopJson.PublicBytes(data)`；返回值紧邻使用处：`ArgumentSyntax: CoopJson.PublicBytes(data)`
+- `NationalSpire.GameCalendar.Initialize(NationalSpire.CareerData)`；输入表达式：`GameCalendar.Initialize(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: GameCalendar.Initialize(data);`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`BinaryExpressionSyntax: "national_spire_career-" + Guid.NewGuid().ToString("N")`
 - `System.IO.Directory.CreateDirectory(string)`；输入表达式：`Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!)`；返回值紧邻使用处：`ExpressionStatementSyntax: Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!);`
@@ -169,7 +171,7 @@
 
 ## `NationalSpire.CareerLibrary.Delete(string, string) — public static string Delete(string original, string path)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerStore.DeleteCareer(string, string)`](CareerStore.cs.md#symbol-1b17c0b3af7f)
 
@@ -182,15 +184,15 @@
 - `NationalSpire.CareerLibrary.SelectedPath(string)`；输入表达式：`SelectedPath(original)`；返回值紧邻使用处：`ArgumentSyntax: SelectedPath(original)`
 - `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(file)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ValidName(file)`
 - `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`
-- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase))             throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
+- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase))              throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
 - `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".broken-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-")`
 - `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".pre-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-")`
 - `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".reset-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-")`
-- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         }).Append(path)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         }).Append(path).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`moved.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: moved.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`moved.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string source in moved.AsEnumerable().Reverse()) File.Move(System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)), source);`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         }).Append(path).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         }).Append(path).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>         {             string suffix = p[path.Length..];             return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");         }).Append`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`moved.Add(source)`；返回值紧邻使用处：`ExpressionStatementSyntax: moved.Add(source);`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
@@ -221,7 +223,7 @@
 
 ## `NationalSpire.CareerLibrary.Export(NationalSpire.CareerData, byte[]?, byte[]?) — public static byte[] Export(CareerData data, byte[]? run = null, byte[]? backup = null)`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
@@ -252,7 +254,7 @@
 
 ## `NationalSpire.CareerLibrary.Import(string, byte[]) — public static string Import(string original, byte[] bytes)`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
@@ -296,7 +298,7 @@
 
 ## `NationalSpire.CareerLibrary.ExportDesktop(string, byte[]) — public static string ExportDesktop(string name, byte[] bytes)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`335466B339B3ADF2CFF3701C4465A23B39875201AFF9260784C2B67FCB24C150`。来源：[源码](../../AiRouting.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`AC17EC49911066D0F9694B9DBB88C62EE336BC3D3B12A2839628657D0E2F52BE`。来源：[源码](../../AiRouting.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -16,7 +16,7 @@ public static readonly (string Id, string Name)[] Tasks =
     [
         ("weekly", "周刊与介绍"), ("news", "发帖"), ("discussion", "回帖"),
         ("private", "私聊"), ("group", "群聊"), ("private-summary", "私聊总结"),
-        ("group-summary", "群聊总结"), ("arbitration", "聊天仲裁")
+        ("group-summary", "群聊总结"), ("arbitration", "聊天仲裁"), ("event", "随机事件")
     ];
 ```
 

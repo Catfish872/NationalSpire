@@ -1,0 +1,63 @@
+using System.Text.Json;
+
+namespace NationalSpire;
+
+public static class RandomEventPrompts
+{
+    private static readonly JsonSerializerOptions Json = new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+    public const string Story = """
+为玩家创作一段精彩、自然以及有趣的互动故事，并根据情况提供2-4个行动选项。故事需要保持完整，玩家的选项应当是故事的最终决定，无论如何在选择后这段故事会结束，所以你不能在选项里留下需要后续推进的故事发展伏笔。
+以玩家的游戏体验为核心目标，在事件中禁止做出无解困局、全部负面等导致玩家游戏体验下降的故事。
+""";
+    public const string Format = """
+按顺序输出逐行JSON：标题、故事正文、行动选项。每段正文使用一条story记录。每个选项包含option行动文字、result选择后的完整结局、effects实际效果。效果与结局相符，数值正负表示增加和减少。没有数值变化时effects填写空数组。
+故事和选项文字使用人物称呼，效果使用人物编号。result写明今天已经完成的结局；约战写明已经约定，其他交易、检测、退款等在本次结局内完成。涉及金额时，文字中的收支合计与wallet保持一致。
+格式示例：
+{"title":"雨后的屋檐"}
+{"story":"街角的雨停了，橱窗里还挂着几串水珠。"}
+{"option":"留下来修好设备","result":"你们完成修理，店员重新点亮了招牌。","effects":[{"wallet":-800},{"favour":"p2","value":3}]}
+{"option":"借用备用设备","result":"备用设备顺利接上电源，这次聚会照常结束。","effects":[]}
+可用效果及完整字段示例：
+{"wallet":-800}：玩家钱包变化，单位美元。
+{"fans":150}：玩家关注人数变化。
+{"clubFans":150}：玩家经营俱乐部的关注人数变化。
+{"item":"mouse","count":1}：玩家库存变化；商品编号来自本轮资料。
+{"favour":"p2","value":3}：指定人物对玩家的好感变化。
+{"impression":"p2","text":"愿意花时间把小事做好的人"}：指定人物对玩家的印象。
+{"status":"p2","name":"轻松专注","percent":2,"days":3}：人物模拟发挥的临时加成，percent填百分比，2表示2%，负数表示减弱。
+{"learning":"p2","percent":0.1}：人物长期模拟水平变化，0.1表示0.1%。
+{"market":"brand_id","percent":1.2}：指定品牌参考报价变化1.2%。
+{"development":"中国","points":2}：该国获得2点国运对应的建设投入。
+{"challenge":"p2","date":"2026-01-18","ascension":6,"mode":"切磋"}：与该人物约定一场比赛；mode填写切磋或挑战。选中后直接加入日程。
+人物、商品、品牌和日期采用本轮资料。临时状态通常为±1%至±3%、持续2至5天；长期学习通常为0.05%至0.2%；品牌行情通常为±0.3%至±1.5%；国运建设通常1至3点。好感一般变化1至4点，重要互动5至8点。资金与关注根据本轮经济参考、人物身份和事情规模选择。每项效果只填写对应示例中的字段。
+人物的行为承接其身份、关系和已知经历；资料中的恶意行为可选人物才可针对玩家实施欺骗、陷害或胁迫。人物也可以帮助玩家、提供提醒或与玩家共同遭遇问题。
+""";
+    public static List<Dictionary<string, string>> Compose(RandomEventRecord record, AiOptions? options = null) =>
+    [new() { ["role"] = "system", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + Format },
+     new() { ["role"] = "user", ["content"] = record.Materials }];
+
+    public static string Materials(CareerData d, RandomEventRecord e)
+    {
+        var people = e.People.Select(id => CareerEngine.Person(d, id)!).ToArray();
+        var search = new CommunityMemorySearch.Request();
+        var memories = CommunityMemorySearch.Retrieve(d, e.Seed, e.People.Append(GroupChats.Human(d)), d.Day, new HashSet<string>(), 8, request: search);
+        return JsonSerializer.Serialize(new
+        {
+            日期 = GameCalendar.Iso(d, d.Day), 事件时段 = "故事与所选结局都发生在今天，选择完成后游戏日期保持当天。约战效果登记未来比赛，当前结局写到约定达成为止。", 玩家 = CareerEngine.Name(d), 故事素材 = e.Seed,
+            玩家身份 = new { d.PlayerGender, d.Esports.Country, 职业 = d.PlayerCard?.Role ?? EsportsWorld.LicenseName(d), 人物介绍 = d.PlayerCard?.Biography ?? "", 俱乐部 = EsportsWorld.ClubName(d, d.Esports.ClubId) },
+            相关人物 = people.Select(p => new { 编号 = p.Id, 资料 = PrivatePublicContext.CharacterProfile(d, p), 经历 = PrivatePublicContext.Profiles(d, p, includeConversation: false), 好感 = PrivateMessages.Favour(d, p.Id), 关系 = PrivateMessages.Relation(d, p.Id) }),
+            恶意行为可选人物 = people.Where(p => PrivateMessages.Favour(d, p.Id) <= 0).Select(p => p.Id),
+            会话总结 = ChatTimeline.Summaries(d, e.People),
+            近期交流 = ChatTimeline.External(d, e.People).DistinctBy(x => (x.Order, x.Source)).OrderBy(x => x.Day).ThenBy(x => x.Order).TakeLast(20).Select(x => ChatTimeline.Text(d, x)),
+            社区资料 = memories.Select(m => new { 内容 = AiGeneratedText.Memory(m), 相关人物 = m.People.Select(id => new { 编号 = id, 名称 = GroupChats.Name(d, id) }), 日期 = GameCalendar.Text(d, m.Day) }),
+            国家生活 = NationalDevelopment.Context(d, people.Select(p => p.Country).Append(d.Esports.Country)),
+            当天比赛 = d.Matches.Where(m => m.Day == d.Day).Select(m => new { m.Event, m.Status, m.OpponentId, m.PlayerWon, m.PlayerFloor, m.PlayerSeconds }),
+            当天活动 = SocialAppointments.All(d).Where(a => PrivateAppointments.Date(d, a.Offer) == d.Day).Select(a => new { a.Offer.Title, a.Offer.Detail, a.Offer.State }),
+            经济参考 = new { 钱包美元 = CareerMoney.Balance(d) * 10, 个人关注 = d.Fans, 经营俱乐部 = d.Esports.OwnedClub?.ClubId,
+                日常收入参考美元 = Math.Max(100, CareerIncome.PersonalAttention(d.Fans) * 10 / 7), 资金建议 = "日常花费或小额报酬接近日常收入参考的5%至25%；重要机会可达50%至150%。根据实际商品价格和具体交易调整。" },
+            商品 = ConsumerCatalog.All.Where(g => g.Collectible).Select(g => new { 编号 = g.Id, g.Name, 价格美元 = ConsumerEngine.Price(g), 库存 = d.Life.Consumer.Goods.Where(x => x.Id == g.Id && !x.Consumed).Sum(x => x.Quantity) }),
+            品牌 = MarketCatalog.Assets.Where(a => !a.Forex).Select(a => new { 编号 = a.Id, a.Name }),
+            俱乐部 = d.Esports.Clubs.Where(c => c.Id == d.Esports.ClubId || people.Any(p => p.ClubId == c.Id)).Select(c => new { c.Id, c.Name })
+        }, Json);
+    }
+}

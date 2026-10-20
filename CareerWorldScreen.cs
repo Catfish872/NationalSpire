@@ -85,7 +85,7 @@ public partial class CareerScreen
             foreach (var f in round)
             {
                 var card = Card(); grid.AddChild(card); var box = Inner(card);
-                box.AddChild(Text($"第 {SeasonCalendar.Day(data, f.Day)} 天    ·    {(f.Finished ? f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束" : "待赛")}", 14, _muted));
+                box.AddChild(Text($"{GameCalendar.Text(data, f.Day)}    ·    {(f.Finished ? f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束" : "待赛")}", 14, _muted));
                 foreach (string id in new[] { f.HomeId, f.AwayId })
                 {
                     var name = PersonLink(data, id, (f.Finished && f.WinnerId == id ? "◆ " : "   ") + CareerEngine.DisplayName(data, id) + "   ↗", 40);
@@ -100,7 +100,7 @@ public partial class CareerScreen
     {
         ClubEntry(data);
         _content.AddChild(Text("合同与转会", 24, _gold));
-        _content.AddChild(Text($"转会窗口：每赛季第1—{SeasonCalendar.LeagueDeadline(data)}天。自由选手可随时签约；错过联赛报名期，将参加下季联赛。", 16, _muted));
+        _content.AddChild(Text($"本季转会窗口：{GameCalendar.Range(data, SeasonCalendar.Start(data) + 1, SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data))}。自由选手可随时签约；错过联赛报名期，将参加下季联赛。", 16, _muted));
         if (data.Esports.PlayerContract is { } current)
         {
             var own = Card(); _content.AddChild(own); var ob = Inner(own);
@@ -138,7 +138,7 @@ public partial class CareerScreen
             box.AddChild(Text($"俱乐部关注 {ClubAudience.Total(data, club.Id):N0} · 可用资金 {CareerMoney.Format(club.Budget)} · 青训 {data.People.Count(p => p.ClubId == club.Id && p.Role == "青训选手")} 人", 16, CareerVisuals.Teal));
             if (club.SeasonReport.Length > 0) box.AddChild(Text(club.SeasonReport, 15, _muted));
             foreach (var entry in club.Ledger.TakeLast(3))
-                box.AddChild(Text($"第{entry.Day}天 · {entry.Title} · {(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))}", 14, _muted));
+                box.AddChild(Text($"{GameCalendar.Text(data, entry.Day)} · {entry.Title} · {(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))}", 14, _muted));
             if (club.TrainingFund > 0) box.AddChild(Text($"待使用专项资金 {CareerMoney.Format(club.TrainingFund)}", 15, _gold));
             foreach (var p in data.People.Where(p => p.ClubId == club.Id && EsportsWorld.IsProfessional(p)).OrderByDescending(p => p.Rating))
                 box.AddChild(PersonLink(data, p.Id, $"{p.PublicName}  ·  {ClubRole(data, club.Id, p.Id)}  ↗", 40));
@@ -158,7 +158,7 @@ public partial class CareerScreen
         foreach (var h in data.Esports.Honors.AsEnumerable().Reverse())
         {
             var card = Card(); grid.AddChild(card); var box = Inner(card);
-            box.AddChild(Text($"第 {h.Season} 赛季    /    第 {SeasonCalendar.Day(data, h.Day)} 天", 14, _muted));
+            box.AddChild(Text($"第 {h.Season} 赛季    /    {GameCalendar.Text(data, h.Day)}", 14, _muted));
             box.AddChild(Text("◆ " + h.Title, 25, _gold)); box.AddChild(Text(h.Detail, 17, _ink));
         }
         _content.AddChild(Text("交手档案", 24, _gold));

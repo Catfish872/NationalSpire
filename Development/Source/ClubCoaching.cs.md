@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CC763CFAD9A74F38BC012016BA4A6D1D4C61A954B3B649E1B950DE7BC98486AB`。来源：[源码](../../ClubCoaching.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D84BDEFCFC4E73714E701DB50F63D0607AA1BCEE674D5100AF2D37BF56151458`。来源：[源码](../../ClubCoaching.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -268,11 +268,47 @@ public const string Protocol = """
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-d0c09a719644"></a>
+
+## `NationalSpire.CoachTrainingPlan.CompletionDay — public int CompletionDay`
+
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-612a29ec7eb1"></a>
+
+## `NationalSpire.CoachTrainingPlan.CompletionOrder — public long CompletionOrder`
+
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-a2ccd8d994ca"></a>
 
 ## `NationalSpire.CoachTrainingPlan.EndDay — public int EndDay`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -290,7 +326,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData) — public static bool PlayerFeatures(CareerData d)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CoachManagement(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-7f703533cff4)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-26fb5cc468c4)；[`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-7f8dbf0cc1e3)；[`NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c5c2fb20bef5)；[`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)；[`NationalSpire.ClubCoaching.SetPlayerCoach(NationalSpire.CareerData, bool)`](ClubCoaching.cs.md#symbol-fa4109028289)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Person(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-559e961ef669)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
@@ -310,7 +346,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData) — public static bool PlayerReserve(CareerData d)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CircuitWorld.EnrollLeague(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-8744d18514f7)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.OwnedClubs.RequiredAiStarters(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-462ebb119278)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
@@ -329,7 +365,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData) — public static bool PlayerCoach(CareerData d)`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.GroupTrainingPicker()`](GroupChatDialogs.cs.md#symbol-1e2068d8bf79)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CareerScreen.PrivateActions()`](PrivateMessageScreen.cs.md#symbol-6e8c11ead905)；[`NationalSpire.ClubCoaching.Advance(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-52a54f3b0a18)；[`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ClubCoaching.cs.md#symbol-061ee769bb78)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
@@ -348,9 +384,9 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson) — public static bool IsCoach(CareerPerson p)`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.PrivateIdentity(NationalSpire.CareerData, string, bool)`](PrivateMemoryScreen.cs.md#symbol-65caddca194f)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`NationalSpire.CareerTraining.Grow(NationalSpire.CareerData, string, int, int)`](CareerTraining.cs.md#symbol-8d0cf5a9811c)；[`NationalSpire.CircuitWorld.CooperativeRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string)`](CircuitWorld.cs.md#symbol-4d6f1758c06b)；[`NationalSpire.CircuitWorld.EnsureOpenEvents(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-73f52bc89477)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-a26fdb727aca)；[`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-190f8b335415)；[`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`](OwnedClubs.cs.md#symbol-64763de09f26)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
+**调用者：** [`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.PrivateIdentity(NationalSpire.CareerData, string, bool)`](PrivateMemoryScreen.cs.md#symbol-65caddca194f)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`NationalSpire.CareerTraining.Grow(NationalSpire.CareerData, string, int, int)`](CareerTraining.cs.md#symbol-8d0cf5a9811c)；[`NationalSpire.CircuitWorld.CooperativeRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string)`](CircuitWorld.cs.md#symbol-4d6f1758c06b)；[`NationalSpire.CircuitWorld.EnsureOpenEvents(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-73f52bc89477)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-a26fdb727aca)；[`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-190f8b335415)；[`NationalSpire.OwnedClubs.GroupPractice(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>, int, int?)`](OwnedClubs.cs.md#symbol-64763de09f26)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
 **调用：** 无已绑定显式调用。
 
@@ -366,7 +402,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Factor(NationalSpire.CareerPerson) — public static double Factor(CareerPerson p)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ClubPracticePreview(NationalSpire.CareerData, Godot.VBoxContainer, NationalSpire.ClubSigning, bool)`](OwnedClubScreen.cs.md#symbol-db042267110f)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.PrivatePublicContext.Profiles(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivatePublicContext.cs.md#symbol-3d184de3074e)
 
@@ -384,7 +420,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData) — public static double Factor(CareerData d)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ClubPracticePreview(NationalSpire.CareerData, Godot.VBoxContainer, NationalSpire.ClubSigning, bool)`](OwnedClubScreen.cs.md#symbol-db042267110f)；[`NationalSpire.CareerScreen.CoachManagement(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-7f703533cff4)；[`NationalSpire.OwnedClubs.PracticeBonus(NationalSpire.CareerData, string, int, int?)`](OwnedClubs.cs.md#symbol-5b2c48d0615a)
 
@@ -411,7 +447,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Scheduled(NationalSpire.CareerData, string) — public static bool Scheduled(CareerData d, string id)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CoachAppointmentDialog(NationalSpire.CareerData, string)`](CoachScreen.cs.md#symbol-e2df497af307)；[`NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-15fbcfa0d281)
 
@@ -440,7 +476,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string) — public static List<string> Replacements(CareerData d, string exclude = "")`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CoachAppointmentDialog(NationalSpire.CareerData, string)`](CoachScreen.cs.md#symbol-e2df497af307)；[`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-5e31a957c01c)；[`NationalSpire.CharacterDeletion.StarterCandidates(NationalSpire.CareerData, string)`](CharacterDeletion.cs.md#symbol-3d7604fa699e)；[`NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-15fbcfa0d281)；[`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-7f8dbf0cc1e3)；[`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)
 
@@ -469,7 +505,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string) — public static string? Appoint(CareerData d, string id, string replacement)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CoachAppointmentDialog(NationalSpire.CareerData, string)`](CoachScreen.cs.md#symbol-e2df497af307)；[`NationalSpire.OwnedClubs.Command(NationalSpire.CareerData, string, string, string)`](OwnedClubs.cs.md#symbol-12b38cf6ab67)
 
@@ -504,7 +540,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string) — private static void Convert(CareerData d, string id, string replacement)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.Appoint(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-15fbcfa0d281)；[`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)
 
@@ -527,9 +563,9 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string) — public static void Move(CareerData d, string id, string position)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CharacterDeletion.Promote(NationalSpire.CareerData, NationalSpire.CareerPerson, int)`](CharacterDeletion.cs.md#symbol-fdd2ed81eace)；[`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-4c320b941b55)；[`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)
+**调用者：** [`NationalSpire.CharacterDeletion.Promote(NationalSpire.CareerData, NationalSpire.CareerPerson, int)`](CharacterDeletion.cs.md#symbol-fdd2ed81eace)；[`NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d66005097ce8)；[`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-4c320b941b55)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.OwnedClubs.PositionList(NationalSpire.OwnedClubState, string)`](OwnedClubs.cs.md#symbol-11696548c7d5)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Remove(T)`
 
@@ -553,7 +589,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.SetPlayerCoach(NationalSpire.CareerData, bool) — public static string? SetPlayerCoach(CareerData d, bool value)`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.OwnedClubs.Command(NationalSpire.CareerData, string, string, string)`](OwnedClubs.cs.md#symbol-12b38cf6ab67)
 
@@ -576,7 +612,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string) — public static string? PlayerPositionError(CareerData d, string position, string replacement)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.SetPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-68aeffe9f915)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)
 
@@ -598,7 +634,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState) — internal static void ClearPlayerPosition(OwnedClubState o)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)；[`NationalSpire.ClubCoaching.SetPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-68aeffe9f915)；[`NationalSpire.CoachLineups.Cancel(NationalSpire.CareerData, string, string)`](CoachLineups.cs.md#symbol-0318496e1ce1)；[`NationalSpire.CoachLineups.Deleted(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-3582186565b4)；[`NationalSpire.CoachLineups.Register(NationalSpire.CareerData, NationalSpire.CoachLineupRequest)`](CoachLineups.cs.md#symbol-cd01b73a8985)；[`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)
 
@@ -620,49 +656,73 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.SetPlayerPosition(NationalSpire.CareerData, string, string) — public static string? SetPlayerPosition(CareerData d, string position, string replacement)`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-5e31a957c01c)；[`NationalSpire.OwnedClubs.Command(NationalSpire.CareerData, string, string, string)`](OwnedClubs.cs.md#symbol-12b38cf6ab67)
 
-**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`](ClubCoaching.cs.md#symbol-d8f43426e219)；[`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-7f8dbf0cc1e3)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CareerTraining.InvalidateForecast(NationalSpire.CareerData)`](CareerTraining.cs.md#symbol-5df788f3061f)；[`NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d66005097ce8)；[`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`](ClubCoaching.cs.md#symbol-d8f43426e219)；[`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-7f8dbf0cc1e3)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`](OwnedClubSchedule.cs.md#symbol-57e159140286)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`；`NationalSpire.CoachLineupRequest.ClubId`；`NationalSpire.CoachLineupRequest.First`；`NationalSpire.CoachLineupRequest.Id`；`NationalSpire.CoachLineupRequest.Second`；`NationalSpire.CoachLineupRequest.State`；`NationalSpire.EsportsCareer.LineupRequests`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.OwnedClubState.PlayerNextPosition`；`NationalSpire.OwnedClubState.PlayerPositionRequest`；`NationalSpire.OwnedClubState.PlayerPositionSeason`；`NationalSpire.OwnedClubState.PlayerReplacement`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CareerTraining.InvalidateForecast(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；`NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`；`NationalSpire.CoachLineupRequest.ClubId`；`NationalSpire.CoachLineupRequest.First`；`NationalSpire.CoachLineupRequest.Id`；`NationalSpire.CoachLineupRequest.Second`；`NationalSpire.CoachLineupRequest.State`；`NationalSpire.EsportsCareer.LineupRequests`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.OwnedClubState.PlayerPositionRequest`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(d);`
+- `NationalSpire.CareerTraining.InvalidateForecast(NationalSpire.CareerData)`；输入表达式：`CareerTraining.InvalidateForecast(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerTraining.InvalidateForecast(d);`
+- `NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`；输入表达式：`ApplyPlayerPosition(d, position, replacement)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplyPlayerPosition(d, position, replacement);`
 - `NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；输入表达式：`ClearPlayerPosition(o)`；返回值紧邻使用处：`ExpressionStatementSyntax: ClearPlayerPosition(o);`
 - `NationalSpire.ClubCoaching.PlayerPositionError(NationalSpire.CareerData, string, string)`；输入表达式：`PlayerPositionError(d, position, replacement)`；返回值紧邻使用处：`IsPatternExpressionSyntax: PlayerPositionError(d, position, replacement) is { } error`
+- `NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`；输入表达式：`OwnedClubSchedule.UpdateLineup(d, playerPositionChanged: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubSchedule.UpdateLineup(d, playerPositionChanged: true);`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.LineupRequests.FirstOrDefault(r => r.Id == o.PlayerPositionRequest && r.State == "待生效")`；返回值紧邻使用处：`IsPatternExpressionSyntax: d.Esports.LineupRequests.FirstOrDefault(r => r.Id == o.PlayerPositionRequest && r.State == "待生效") is { } pending`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.LineupRequests.Where(r => r.State == "待生效" && r.ClubId == o.ClubId              && (r.First == "player" || r.Second == "player" || r.First == replacement || r.Second == replacement))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var r in d.Esports.LineupRequests.Where(r => r.State == "待生效" && r.ClubId == o.ClubId              && (r.First == "player" || r.Second == "player" || r.First == replacement || r.Second == replacement))) r.State = "已替换";`
 
 **赋值（含属性/字段和局部值）：**
 
-- `o.PlayerNextPosition` = `position`
-- `o.PlayerPositionRequest` = `""`
-- `o.PlayerPositionSeason` = `d.Season + 1`
-- `o.PlayerReplacement` = `replacement`
 - `pending.State` = `"已取消"`
 - `r.State` = `"已替换"`
+
+<a id="symbol-d66005097ce8"></a>
+
+## `NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string) — private static void ApplyPlayerPosition(CareerData d, string position, string replacement)`
+
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)；[`NationalSpire.ClubCoaching.SetPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-68aeffe9f915)
+
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-62e6f802776a)；[`NationalSpire.OwnedClubs.UpdateRosterRole(NationalSpire.CareerPerson, string)`](OwnedClubs.cs.md#symbol-64e7ad9283a5)；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.Remove(T)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubs.UpdateRosterRole(NationalSpire.CareerPerson, string)`；`NationalSpire.OwnedClubState.PlayerReserve`；`NationalSpire.OwnedClubState.Starters`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(d, replacement)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: CareerEngine.Person(d, replacement)!`
+- `NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；输入表达式：`Move(d, incoming, "首发")`；返回值紧邻使用处：`ExpressionStatementSyntax: Move(d, incoming, "首发");`
+- `NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；输入表达式：`Move(d, outgoing, "轮换")`；返回值紧邻使用处：`ExpressionStatementSyntax: Move(d, outgoing, "轮换");`
+- `NationalSpire.OwnedClubs.UpdateRosterRole(NationalSpire.CareerPerson, string)`；输入表达式：`OwnedClubs.UpdateRosterRole(CareerEngine.Person(d, replacement)!, reserve ? "首发" : "轮换")`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubs.UpdateRosterRole(CareerEngine.Person(d, replacement)!, reserve ? "首发" : "轮换");`
+- `System.Collections.Generic.List<T>.IndexOf(T)`；输入表达式：`own.Starters.IndexOf(outgoing)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = own.Starters.IndexOf(outgoing)`
+- `System.Collections.Generic.List<T>.Insert(int, T)`；输入表达式：`own.Starters.Insert(slot, incoming)`；返回值紧邻使用处：`ExpressionStatementSyntax: own.Starters.Insert(slot, incoming);`
+- `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`own.Starters.Remove(incoming)`；返回值紧邻使用处：`ExpressionStatementSyntax: own.Starters.Remove(incoming);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `own.PlayerReserve` = `reserve`
 
 <a id="symbol-c152f62d57e4"></a>
 
 ## `NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData) — public static void SeasonStart(CareerData d)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)
 
-**调用：** [`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`](ClubCoaching.cs.md#symbol-d8f43426e219)；[`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-4c320b941b55)；[`NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-62e6f802776a)；[`NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d31f98e532af)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；[`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-a26fdb727aca)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.ReplaceableStarters(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-e1cbaaf9f832)；[`NationalSpire.OwnedClubs.ReservedStarter(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-4737fecea097)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.Remove(T)`
+**调用：** [`NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d66005097ce8)；[`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`](ClubCoaching.cs.md#symbol-d8f43426e219)；[`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-4c320b941b55)；[`NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-d31f98e532af)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；[`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-a26fdb727aca)；[`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)；[`NationalSpire.OwnedClubs.ReplaceableStarters(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-e1cbaaf9f832)；[`NationalSpire.OwnedClubs.ReservedStarter(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-4737fecea097)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.Remove(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`；`NationalSpire.CoachAppointment.PersonId`；`NationalSpire.CoachAppointment.Replacement`；`NationalSpire.CoachAppointment.Season`；`NationalSpire.CoachLineupRequest.Id`；`NationalSpire.CoachLineupRequest.Reason`；`NationalSpire.CoachLineupRequest.State`；`NationalSpire.EsportsCareer.LineupRequests`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.ReplaceableStarters(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.ReservedStarter(NationalSpire.CareerData, string)`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.OwnedClubState.CoachAppointments`；`NationalSpire.OwnedClubState.Contracts`；`NationalSpire.OwnedClubState.PlayerNextPosition`；`NationalSpire.OwnedClubState.PlayerPositionRequest`；`NationalSpire.OwnedClubState.PlayerPositionSeason`；`NationalSpire.OwnedClubState.PlayerReplacement`；`NationalSpire.OwnedClubState.PlayerReserve`；`NationalSpire.OwnedClubState.Starters`；`NationalSpire.OwnedPlayerContract.GuaranteedStarter`；`NationalSpire.OwnedPlayerContract.PersonId`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.Replacements(NationalSpire.CareerData, string)`；`NationalSpire.CoachAppointment.PersonId`；`NationalSpire.CoachAppointment.Replacement`；`NationalSpire.CoachAppointment.Season`；`NationalSpire.CoachLineupRequest.Id`；`NationalSpire.CoachLineupRequest.Reason`；`NationalSpire.CoachLineupRequest.State`；`NationalSpire.EsportsCareer.LineupRequests`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.ReplaceableStarters(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.ReservedStarter(NationalSpire.CareerData, string)`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.OwnedClubState.CoachAppointments`；`NationalSpire.OwnedClubState.Contracts`；`NationalSpire.OwnedClubState.PlayerNextPosition`；`NationalSpire.OwnedClubState.PlayerPositionRequest`；`NationalSpire.OwnedClubState.PlayerPositionSeason`；`NationalSpire.OwnedClubState.PlayerReplacement`；`NationalSpire.OwnedClubState.Starters`；`NationalSpire.OwnedPlayerContract.GuaranteedStarter`；`NationalSpire.OwnedPlayerContract.PersonId`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.ClubCoaching.ApplyPlayerPosition(NationalSpire.CareerData, string, string)`；输入表达式：`ApplyPlayerPosition(d, reserve ? "轮换" : "首发", o.PlayerReplacement)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplyPlayerPosition(d, reserve ? "轮换" : "首发", o.PlayerReplacement);`
 - `NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`；输入表达式：`ClearPlayerPosition(o)`；返回值紧邻使用处：`ExpressionStatementSyntax: ClearPlayerPosition(o);`
 - `NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`；输入表达式：`Convert(d, a.PersonId, a.Replacement)`；返回值紧邻使用处：`ExpressionStatementSyntax: Convert(d, a.PersonId, a.Replacement);`
-- `NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；输入表达式：`Move(d, "player", reserve ? "轮换" : "首发")`；返回值紧邻使用处：`ExpressionStatementSyntax: Move(d, "player", reserve ? "轮换" : "首发");`
-- `NationalSpire.ClubCoaching.Move(NationalSpire.CareerData, string, string)`；输入表达式：`Move(d, o.PlayerReplacement, reserve ? "首发" : "轮换")`；返回值紧邻使用处：`ExpressionStatementSyntax: Move(d, o.PlayerReplacement, reserve ? "首发" : "轮换");`
 - `NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`；输入表达式：`Notice(d, "教练调整未生效", "原席位保留，接替人选或合同条件已变化。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(d, "教练调整未生效", "原席位保留，接替人选或合同条件已变化。");`
 - `NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string)`；输入表达式：`Notice(d, "首发调整未生效", "原席位保留，接替人选或合同条件已变化。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(d, "首发调整未生效", "原席位保留，接替人选或合同条件已变化。");`
 - `NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；输入表达式：`PlayerFeatures(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: PlayerFeatures(d) && (reserve ? Replacements(d).Contains(o.PlayerReplacement)              : OwnedClubs.ReplaceableStarters(d).Contains(o.PlayerReplacement))`
@@ -684,7 +744,6 @@ public const string Protocol = """
 
 **赋值（含属性/字段和局部值）：**
 
-- `o.PlayerReserve` = `reserve`
 - `request.Reason` = `"接替人选或合同条件已变化。"`
 - `request.State` = `available ? "已生效" : "未生效"`
 
@@ -692,7 +751,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Notice(NationalSpire.CareerData, string, string) — private static void Notice(CareerData d, string title, string text)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.SeasonStart(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c152f62d57e4)
 
@@ -713,9 +772,9 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData) — public static IEnumerable<CoachTrainingPlan> TrainingPlans(CareerData d)`
 
-来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.ClubCoaching.Advance(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-52a54f3b0a18)；[`NationalSpire.ClubCoaching.StopTraining(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-eacca79a5d86)；[`NationalSpire.ClubCoaching.TrainingContext(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-b2b767ed4fea)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool)`](PrivateInteractionUndo.cs.md#symbol-de9e985d044d)；[`NationalSpire.PrivateMessagePrompts.OfferContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessagePrompts.cs.md#symbol-67bd27e9ea35)
+**调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.CareerScreen.TrainingCompletions(System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>, long, long)`](CoachScreen.cs.md#symbol-c316f7a67f3e)；[`NationalSpire.ClubCoaching.Advance(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-52a54f3b0a18)；[`NationalSpire.ClubCoaching.StopTraining(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-eacca79a5d86)；[`NationalSpire.ClubCoaching.TrainingContext(NationalSpire.CareerData, string)`](ClubCoaching.cs.md#symbol-b2b767ed4fea)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.PrivateMessagePrompts.OfferContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessagePrompts.cs.md#symbol-67bd27e9ea35)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`
 
@@ -732,7 +791,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.TrainingStore(NationalSpire.CareerData, string) — private static List<CoachTrainingPlan> TrainingStore(CareerData d, string club)`
 
-来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ClubCoaching.cs.md#symbol-fc1017e0877c)；[`NationalSpire.ClubCoaching.RestoreTraining(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.CoachTrainingPlan>)`](ClubCoaching.cs.md#symbol-0644d2f9c30d)
 
@@ -750,7 +809,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.RestoreTraining(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.CoachTrainingPlan>) — internal static void RestoreTraining(CareerData d, string person, List<CoachTrainingPlan> plans)`
 
-来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)
 
@@ -772,7 +831,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string) — private static bool TrainingMember(CareerData d, string person, string club)`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubCoaching.Advance(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-52a54f3b0a18)；[`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ClubCoaching.cs.md#symbol-061ee769bb78)
 
@@ -793,7 +852,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer) — public static string? TrainingError(CareerData d, string person, PrivateOffer attachment)`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateTrainingPicker()`](CoachScreen.cs.md#symbol-2609d8a7ba68)；[`NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ClubCoaching.cs.md#symbol-fc1017e0877c)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 
@@ -815,7 +874,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>) — public static void AcceptTraining(CareerData d, PrivateConversation c, PrivateTurn t, Dictionary<string, string> fields)`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -860,13 +919,13 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.Advance(NationalSpire.CareerData) — public static void Advance(CareerData d)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)
 
-**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`](CareerTraining.cs.md#symbol-20ac1d8e57c7)；[`NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-26fb5cc468c4)；[`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-190f8b335415)；[`NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-1ed5bef75319)；[`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-7ddb21934c39)；`NationalSpire.PrivateLearning.PrivateLearning()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Clamp(int, int, int)`
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`](CareerTraining.cs.md#symbol-20ac1d8e57c7)；[`NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-26fb5cc468c4)；[`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-190f8b335415)；[`NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-1ed5bef75319)；[`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-7ddb21934c39)；[`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-c362351c7a43)；`NationalSpire.PrivateLearning.PrivateLearning()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Clamp(int, int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.Learning`；`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；`NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData)`；`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`；`NationalSpire.CoachTrainingPlan.ClubId`；`NationalSpire.CoachTrainingPlan.CoachId`；`NationalSpire.CoachTrainingPlan.Content`；`NationalSpire.CoachTrainingPlan.Gained`；`NationalSpire.CoachTrainingPlan.Id`；`NationalSpire.CoachTrainingPlan.PaidWeeks`；`NationalSpire.CoachTrainingPlan.PersonId`；`NationalSpire.CoachTrainingPlan.StartDay`；`NationalSpire.CoachTrainingPlan.State`；`NationalSpire.CoachTrainingPlan.Weeks`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.NpcLearning.ChanceShift`；`NationalSpire.PrivateLearning.Id`；`NationalSpire.PrivateLearning.Reason`；`NationalSpire.PrivateLearning.Source`；`NationalSpire.PrivateLearning.Strength`；`NationalSpire.PrivateLearning.Topic`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.Learning`；`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；`NationalSpire.ClubCoaching.PlayerCoach(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`；`NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData)`；`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`；`NationalSpire.CoachTrainingPlan.ClubId`；`NationalSpire.CoachTrainingPlan.CoachId`；`NationalSpire.CoachTrainingPlan.CompletionDay`；`NationalSpire.CoachTrainingPlan.CompletionOrder`；`NationalSpire.CoachTrainingPlan.Content`；`NationalSpire.CoachTrainingPlan.Gained`；`NationalSpire.CoachTrainingPlan.Id`；`NationalSpire.CoachTrainingPlan.PaidWeeks`；`NationalSpire.CoachTrainingPlan.PersonId`；`NationalSpire.CoachTrainingPlan.StartDay`；`NationalSpire.CoachTrainingPlan.State`；`NationalSpire.CoachTrainingPlan.Weeks`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`；`NationalSpire.NpcLearning.ChanceShift`；`NationalSpire.PrivateLearning.Id`；`NationalSpire.PrivateLearning.Reason`；`NationalSpire.PrivateLearning.Source`；`NationalSpire.PrivateLearning.Strength`；`NationalSpire.PrivateLearning.Topic`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -876,13 +935,16 @@ public const string Protocol = """
 - `NationalSpire.ClubCoaching.TrainingMember(NationalSpire.CareerData, string, string)`；输入表达式：`TrainingMember(d, plan.PersonId, plan.ClubId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !TrainingMember(d, plan.PersonId, plan.ClubId)`
 - `NationalSpire.ClubCoaching.TrainingPlans(NationalSpire.CareerData)`；输入表达式：`TrainingPlans(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: TrainingPlans(d).Where`
 - `NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`；输入表达式：`CoachLineups.CanRequest(d, plan.CoachId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: plan.CoachId.Length > 0 ? CoachLineups.CanRequest(d, plan.CoachId) : PlayerCoach(d)`
+- `NationalSpire.GroupChats.NextOrder(NationalSpire.CareerData)`；输入表达式：`GroupChats.NextOrder(d)`；返回值紧邻使用处：`AssignmentExpressionSyntax: plan.CompletionOrder = GroupChats.NextOrder(d)`
 - `NationalSpire.PrivateLearning.PrivateLearning()`；输入表达式：`new PrivateLearning { Id = "coach:" + plan.Id + ":" + week, Topic = plan.Content, Strength = 1, Source = "coach:" + plan.Id + ":" + week, Reason = plan.Content }`；返回值紧邻使用处：`ArgumentSyntax: new PrivateLearning { Id = "coach:" + plan.Id + ":" + week, Topic = plan.Content, Strength = 1, Source = "coach:" + plan.Id + ":" + week, Reason = plan.Content }`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`TrainingPlans(d).Where(p => p.State == "进行中")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var plan in TrainingPlans(d).Where(p => p.State == "进行中"))          {              if (!(plan.CoachId.Length > 0 ? CoachLineups.CanRequest(d, plan.CoachId) : PlayerCoach(d))                  || plan.ClubId != d.Esports.ClubId || !TrainingMember(d, plan.PersonId, plan.ClubId)) { plan.State = "已取消"; continue; }              int due = Math.Clamp((d.Day - plan.StartDay) / 7, 0, plan.Weeks);              while (plan.PaidWeeks < due)              {                  int week = ++plan.PaidWeeks;                  var before = CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift;                  CareerTraining.RecordLesson(d, plan.PersonId, new PrivateLearning { Id = "coach:" + plan.Id + ":" + week, Topic = plan.Content, Strength = 1, Source = "coach:" + plan.Id + ":" + week, Reason = plan.Content });                  plan.Gained += CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift - before;              }              if (plan.PaidWeeks == plan.Weeks) plan.State = "已完成";          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`TrainingPlans(d).Where(p => p.State == "进行中")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var plan in TrainingPlans(d).Where(p => p.State == "进行中"))          {              if (!(plan.CoachId.Length > 0 ? CoachLineups.CanRequest(d, plan.CoachId) : PlayerCoach(d))                  || plan.ClubId != d.Esports.ClubId || !TrainingMember(d, plan.PersonId, plan.ClubId)) { plan.State = "已取消"; continue; }              int due = Math.Clamp((d.Day - plan.StartDay) / 7, 0, plan.Weeks);              while (plan.PaidWeeks < due)              {                  int week = ++plan.PaidWeeks;                  var before = CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift;                  CareerTraining.RecordLesson(d, plan.PersonId, new PrivateLearning { Id = "coach:" + plan.Id + ":" + week, Topic = plan.Content, Strength = 1, Source = "coach:" + plan.Id + ":" + week, Reason = plan.Content });                  plan.Gained += CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift - before;              }              if (plan.PaidWeeks == plan.Weeks)              {                  plan.State = "已完成";                  plan.CompletionDay = d.Day;                  plan.CompletionOrder = GroupChats.NextOrder(d);              }          }`
 - `System.Math.Clamp(int, int, int)`；输入表达式：`Math.Clamp((d.Day - plan.StartDay) / 7, 0, plan.Weeks)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Clamp((d.Day - plan.StartDay) / 7, 0, plan.Weeks)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `Id` = `"coach:" + plan.Id + ":" + week`
+- `plan.CompletionDay` = `d.Day`
+- `plan.CompletionOrder` = `GroupChats.NextOrder(d)`
 - `plan.Gained` += `CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift - before`
 - `plan.State` = `"已取消"`
 - `plan.State` = `"已完成"`
@@ -895,7 +957,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.StopTraining(NationalSpire.CareerData, string) — public static void StopTraining(CareerData d, string id)`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CharacterDeletion.Delete(NationalSpire.CareerData, string)`](CharacterDeletion.cs.md#symbol-2eb70f838afa)；[`NationalSpire.ClubCoaching.Convert(NationalSpire.CareerData, string, string)`](ClubCoaching.cs.md#symbol-4c320b941b55)；[`NationalSpire.OwnedClubs.Assign(NationalSpire.CareerData, string, string)`](OwnedClubs.cs.md#symbol-e97dde3c003f)；[`NationalSpire.OwnedClubs.Command(NationalSpire.CareerData, string, string, string)`](OwnedClubs.cs.md#symbol-12b38cf6ab67)；[`NationalSpire.OwnedClubs.Release(NationalSpire.CareerData, string, string)`](OwnedClubs.cs.md#symbol-ab8d716536a6)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
@@ -916,7 +978,7 @@ public const string Protocol = """
 
 ## `NationalSpire.ClubCoaching.TrainingContext(NationalSpire.CareerData, string) — public static string TrainingContext(CareerData d, string id)`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)
 

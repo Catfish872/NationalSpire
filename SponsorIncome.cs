@@ -35,7 +35,9 @@ public static class SponsorIncome
     {
         foreach (var contract in d.Esports.Sponsors.Where(c => c.EndedDay == 0).Concat(d.Esports.SponsorOffers)) Initialize(d, contract);
     }
-    public static int Retainer(CareerData d, SponsorContract contract) => (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract));
+    public static int Retainer(CareerData d, SponsorContract contract) => CareerIncome.WithDevelopment(d,
+        (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract)) + (contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0),
+        contract.TargetId == "player" ? d.Esports.Country : EsportsWorld.Club(d, contract.TargetId)?.Country ?? "");
     public static int WinBonus(CareerData d, SponsorContract contract) => (int)Math.Round(Basis(d, contract).Win * Multiplier(d, contract));
     private static double Multiplier(CareerData d, SponsorContract contract) => contract.TargetId == "player"
         ? CareerAudience.QuoteMultiplier(d.Fans) : CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId));

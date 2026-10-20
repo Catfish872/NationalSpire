@@ -106,9 +106,9 @@ internal partial class MarketEventRow : Button
         _change.CustomMinimumSize = new(72, 0); _change.HorizontalAlignment = HorizontalAlignment.Right; _change.VerticalAlignment = VerticalAlignment.Center;
         MarketVisuals.Style(this, "", false);
     }
-    internal void Bind(MarketEvent item, string title)
+    internal void Bind(CareerData data, MarketEvent item, string title)
     {
-        _day.Text = $"第 {item.Day} 天"; _title.Text = title;
+        _day.Text = $"{GameCalendar.Text(data, item.Day)}"; _title.Text = title;
         _change.Text = item.Change.ToString("+0.00%;-0.00%;0.00%");
         _change.AddThemeColorOverride("font_color", item.Change >= 0 ? CareerVisuals.Teal : new Color("f095a3"));
         MouseDefaultCursorShape = item.Person.Length > 0 ? CursorShape.PointingHand : CursorShape.Arrow;
@@ -118,6 +118,7 @@ internal partial class MarketEventRow : Button
 internal partial class DevelopmentGauge : Control
 {
     public int Level { get; init; }
+    public double Enhancement { get; init; }
     public DevelopmentGauge() { CustomMinimumSize = new(0, 16); SizeFlagsHorizontal = SizeFlags.ExpandFill; MouseFilter = MouseFilterEnum.Ignore; Resized += QueueRedraw; }
     public override void _Draw()
     {
@@ -128,6 +129,11 @@ internal partial class DevelopmentGauge : Control
             var rect = new Rect2(i * (width + 4), 1, width, Size.Y - 2);
             DrawRect(rect, i < Level ? color : new Color("0b1822"));
             DrawRect(rect, new Color(color, i < Level ? .8f : .22f), false, 1);
+        }
+        if (Enhancement > 0)
+        {
+            DrawRect(new Rect2(0, Size.Y - 4, Size.X * (float)Enhancement, 3), CareerVisuals.Gold);
+            DrawLine(new(0, 0), new(Size.X, 0), new Color(CareerVisuals.Gold, .65f), 2);
         }
     }
 }

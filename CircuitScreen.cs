@@ -128,7 +128,7 @@ public partial class CareerScreen
                 var card = Card(); _content.AddChild(card); var box = Inner(card); var first = tie.First();
                 string heading = c.TeamEvent ? $"{CircuitWorld.TeamName(data, c, first.HomeTeam)}  vs  {CircuitWorld.TeamName(data, c, first.AwayTeam)}" : "个人对决";
                 if (c.TeamEvent && tie.All(f => f.Finished)) heading += $"    {tie.Count(f => f.WinnerId == f.HomeId)} : {tie.Count(f => f.WinnerId == f.AwayId)}";
-                box.AddChild(Text($"第 {SeasonCalendar.Day(data, first.Day)} 天 · {heading}", 20, _gold));
+                box.AddChild(Text($"{GameCalendar.Text(data, first.Day)} · {heading}", 20, _gold));
                 foreach (var f in tie)
                 {
                     box.AddChild(FixtureDetails(data, SettlementRecords.CaptureDuel(data, f)));

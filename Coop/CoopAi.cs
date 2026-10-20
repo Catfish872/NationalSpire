@@ -66,7 +66,7 @@ public sealed class CoopAi(CoopCoordinator session)
     }
     private async Task ProcessPublications(bool retry)
     {
-        if (!session.Host || session.World == null) return;
+        if (!session.Host || session.World == null || !retry && EventJourney.PublicationsPaused(session.World.World)) return;
         _pending = true; if (_running) return; _running = true;
         string generation = _generation;
         try
@@ -75,6 +75,7 @@ public sealed class CoopAi(CoopCoordinator session)
             {
                 _pending = false;
                 var source = session.World;
+                if (!retry && EventJourney.PublicationsPaused(source.World)) break;
                 var data = CoopJson.Copy(source.World); data.Ai = AiSettingsStore.Load(new());
                 data.PrivateMemorySources = source.Members.ToDictionary(m => m.PersonId, m => CoopJson.Copy(m.Life.Mailbox));
                 var knownPosts = CommunityThreads.All(data).ToDictionary(p => p.Id, p => CoopJson.Hash(CoopJson.Bytes(p)));

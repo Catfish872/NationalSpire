@@ -9,6 +9,23 @@ public partial class CareerScreen
     private bool _mentionsChecked;
     private Control MentionText(CareerData data, string source, int size, Color color, IEnumerable<string>? related = null)
     {
+        var rich = new RichTextLabel { Name = "PersonMentionText", FitContent = true, ScrollActive = false,
+            SelectionEnabled = true, BbcodeEnabled = false, AutowrapMode = TextServer.AutowrapMode.WordSmart,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass };
+        rich.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
+        rich.AddThemeFontSizeOverride("normal_font_size", size);
+        rich.AddThemeColorOverride("default_color", color);
+        PaintMentionText(rich, data, source, related);
+        rich.MetaClicked += OpenMention;
+        return rich;
+    }
+    private void OpenMention(Variant meta)
+    {
+        string id = meta.AsString();
+        if (id == "player" || CareerEngine.Person(ViewData, id) != null) OpenPerson(id);
+    }
+    private void PaintMentionText(RichTextLabel rich, CareerData data, string source, IEnumerable<string>? related = null, bool dialogue = false)
+    {
         if (!_mentionsChecked)
         {
             // 只复用名称索引，每次重建页面仍核对完整姓名和别名；不缓存帖子内容或人物状态。
@@ -19,17 +36,29 @@ public partial class CareerScreen
         }
         string text = CareerMoney.Display(source);
         var matches = _mentions!.Find(text, related);
-        if (matches.Count == 0) return PrivateSelectableText(text, size, color);
-        var rich = new RichTextLabel { Name = "PersonMentionText", FitContent = true, ScrollActive = false,
-            SelectionEnabled = true, BbcodeEnabled = false, AutowrapMode = TextServer.AutowrapMode.WordSmart,
-            SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass };
-        rich.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
-        rich.AddThemeFontSizeOverride("normal_font_size", size);
-        rich.AddThemeColorOverride("default_color", color);
+        rich.Clear();
+        char quote = '\0';
+        void Plain(string value)
+        {
+            if (!dialogue) { rich.AddText(value); return; }
+            int start = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                char c = value[i];
+                if (quote == '\0' && c is '“' or '「' or '『' or '"')
+                {
+                    rich.AddText(value[start..i]); rich.PushColor(new Color("ebcb96"));
+                    quote = c switch { '“' => '”', '「' => '」', '『' => '』', _ => '"' }; start = i;
+                }
+                else if (quote != '\0' && (c == quote || c == '\n'))
+                { rich.AddText(value[start..(i + 1)]); rich.Pop(); quote = '\0'; start = i + 1; }
+            }
+            rich.AddText(value[start..]);
+        }
         int cursor = 0;
         foreach (var mention in matches)
         {
-            rich.AddText(text[cursor..mention.Start]);
+            Plain(text[cursor..mention.Start]);
             var person = CareerEngine.Person(data, mention.PersonId);
             string details = mention.PersonId == "player"
                 ? $"{CareerEngine.Name(data)} · {EsportsWorld.LicenseName(data)}\n{data.Esports.Country} · {EsportsWorld.ClubName(data, data.Esports.ClubId)}"
@@ -39,12 +68,6 @@ public partial class CareerScreen
             rich.AddText(text.Substring(mention.Start, mention.Length)); rich.Pop(); rich.Pop();
             cursor = mention.Start + mention.Length;
         }
-        rich.AddText(text[cursor..]);
-        rich.MetaClicked += meta =>
-        {
-            string id = meta.AsString();
-            if (id == "player" || CareerEngine.Person(data, id) != null) OpenPerson(id);
-        };
-        return rich;
+        Plain(text[cursor..]); if (quote != '\0') rich.Pop();
     }
 }

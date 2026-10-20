@@ -41,7 +41,7 @@ public sealed partial class CoopCoordinator : IDisposable
             if (!Host || hostWorld.World.Owner != Self) throw new InvalidOperationException("只有原主机能恢复这个世界。");
             if (hostWorld.World.Members.Any(m => m.Life.Version < CareerLife.Version))
                 storage.BackupBeforeDevelopment(hostWorld.World, hostWorld.Run);
-            World = hostWorld.World; NativeSave = hostWorld.Run; World.Epoch = Guid.NewGuid().ToString("N"); World.Proposal = null;
+            World = hostWorld.World; GameCalendar.Initialize(World.World); NativeSave = hostWorld.Run; World.Epoch = Guid.NewGuid().ToString("N"); World.Proposal = null;
             foreach (var member in World.Members) PrivateMessageCommands.Recover(member.Life);
             GroupChats.Recover(World.World);
             OwnedClubs.RepairContractRoster(World.World, World.Members.Select(m => m.Life.Mailbox));
@@ -75,6 +75,7 @@ public sealed partial class CoopCoordinator : IDisposable
         if (DateTime.UtcNow - _lastHeartbeat > TimeSpan.FromSeconds(3))
         {
             _lastHeartbeat = DateTime.UtcNow;
+            StartProactiveChats();
             if (Host && World is { Run: null, Proposal: null } idle &&
                 !idle.World.MatchHumanIds.ToHashSet().SetEquals(idle.Members.Where(m => Online.Contains(m.SteamId)).Select(m => m.PersonId)))
             {
@@ -233,6 +234,7 @@ public sealed partial class CoopCoordinator : IDisposable
         Changed?.Invoke();
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) TriggerAi?.Invoke(command.Kind);
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartPrivate(sender, command);
+        if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartEvent(sender, command);
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartGroup(sender, command);
     }
     public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)

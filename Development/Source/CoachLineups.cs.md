@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C1349508EB2753963F988F33B896A80DFD3363C1C3217A32542C0ABF07B69D5C`。来源：[源码](../../CoachLineups.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`FF228396B433EEE2F4F198A1FD3D604093BBE5BDB958610744FB54F6FBA892A0`。来源：[源码](../../CoachLineups.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -238,7 +238,7 @@ public const string Protocol = """
 
 来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-7ddb21934c39)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-f16167ebabfe)；[`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-e679a8998422)；[`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`](MarketDynamics.cs.md#symbol-01f5459a2989)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)
+**调用者：** [`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.CoachLineups.CanRequest(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-7ddb21934c39)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-f16167ebabfe)；[`NationalSpire.CoachLineups.RefreshAiStarters(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-f8128db20387)；[`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-e679a8998422)；[`NationalSpire.MarketDynamics.Partners(NationalSpire.CareerData, NationalSpire.MarketDynamics.SponsorLink[]?)`](MarketDynamics.cs.md#symbol-01f5459a2989)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)
 
 **调用：** `System.Collections.Generic.List<T>.Contains(T)`
 
@@ -301,11 +301,42 @@ public const string Protocol = """
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-f8128db20387"></a>
+
+## `NationalSpire.CoachLineups.RefreshAiStarters(NationalSpire.CareerData) — public static void RefreshAiStarters(CareerData d)`
+
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)
+
+**调用：** [`NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-86e0b50ffb0e)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`](MatchRules.cs.md#symbol-a0517de2db43)；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Id`；`NationalSpire.CareerClub.PreferredStarters`；`NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`；`NationalSpire.OwnedClubState.ClubId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`；输入表达式：`Coach(p)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Coach(p)`
+- `NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；输入表达式：`EsportsWorld.IsProfessional(p)`；返回值紧邻使用处：`BinaryExpressionSyntax: EsportsWorld.IsProfessional(p) && !Coach(p)`
+- `NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`；输入表达式：`MatchRules.ClearChance(d, p, 8)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => MatchRules.ClearChance(d, p, 8)`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: club.PreferredStarters = clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.People.Where(p => EsportsWorld.IsProfessional(p) && !Coach(p)).ToLookup(p => p.ClubId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.People.Where(p => EsportsWorld.IsProfessional(p) && !Coach(p)).ToLookup(p => p.ClubId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Clubs.Where(c => c.Id != d.Esports.OwnedClub?.ClubId)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var club in d.Esports.Clubs.Where(c => c.Id != d.Esports.OwnedClub?.ClubId))              club.PreferredStarters = clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList();`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.Where(p => EsportsWorld.IsProfessional(p) && !Coach(p))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.People.Where(p => EsportsWorld.IsProfessional(p) && !Coach(p)).ToLookup`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy`
+
+**赋值（含属性/字段和局部值）：**
+
+- `club.PreferredStarters` = `clubs[club.Id].OrderByDescending(p => MatchRules.ClearChance(d, p, 8))                  .ThenByDescending(p => p.Rating).ThenBy(p => p.Id, StringComparer.Ordinal)                  .Take(d.CooperativeMembers > 1 ? d.CooperativeMembers : 3).Select(p => p.Id).ToList()`
+
 <a id="symbol-6e3eb9676328"></a>
 
 ## `NationalSpire.CoachLineups.CurrentRoster(NationalSpire.CareerData, string) — private static List<string> CurrentRoster(CareerData d, string club)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-f16167ebabfe)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)
 
@@ -328,9 +359,9 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson) — public static string Position(CareerData d, CareerPerson p)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)；[`Preview()`](CoachScreen.cs.md#symbol-cc654d8c7ae5)
+**调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
 
 **调用：** [`NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-86e0b50ffb0e)；[`NationalSpire.CoachLineups.CurrentRoster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-6e3eb9676328)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.OwnedClubs.Position(NationalSpire.OwnedClubState, string)`](OwnedClubs.cs.md#symbol-e5d4bf00dda1)；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -351,7 +382,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Members(NationalSpire.CareerData, string) — public static List<CareerPerson> Members(CareerData d, string club)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)
 
@@ -372,9 +403,9 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Person(NationalSpire.CareerData, string) — public static CareerPerson? Person(CareerData d, string id)`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`Preview()`](CoachScreen.cs.md#symbol-cc654d8c7ae5)
+**调用者：** [`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)
 
@@ -393,7 +424,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData) — public static List<CareerPerson> Candidates(CareerData d)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)
 
@@ -422,7 +453,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer) — public static string? Error(CareerData d, string coach, PrivateOffer attachment)`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 
@@ -442,7 +473,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?) — private static string? MemberError(CareerData d, string club, string first, string second, string? firstPosition = null, string? secondPosition = null)`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-be04a02d4a9c)；[`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-99b1a0a2f49c)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)
 
@@ -480,9 +511,9 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Description(NationalSpire.CareerData, NationalSpire.CoachLineupRequest) — public static string Description(CareerData d, CoachLineupRequest r)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PrivateLineupCard(NationalSpire.CareerData, NationalSpire.CoachLineupRequest, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?)`](CoachScreen.cs.md#symbol-c01675f974f7)；[`NationalSpire.CoachLineups.Context(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-1299df81c255)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`Preview()`](CoachScreen.cs.md#symbol-cc654d8c7ae5)
+**调用者：** [`NationalSpire.CareerScreen.PrivateLineupCard(NationalSpire.CareerData, NationalSpire.CoachLineupRequest, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?)`](CoachScreen.cs.md#symbol-c01675f974f7)；[`NationalSpire.CoachLineups.Context(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-1299df81c255)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
 
 **调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)
 
@@ -500,7 +531,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer) — public static string Prepare(CareerData d, PrivateOffer a)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 
@@ -524,7 +555,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>) — public static void Respond(CareerData d, PrivateConversation c, PrivateTurn turn, Dictionary<string, string> fields)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -573,7 +604,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Register(NationalSpire.CareerData, NationalSpire.CoachLineupRequest) — private static void Register(CareerData d, CoachLineupRequest request)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-99b1a0a2f49c)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)
 
@@ -599,9 +630,9 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData) — public static void Merge(CareerData world, CareerData generated)`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-b25b18b4284d)
+**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-b7a78f32bf15)
 
 **调用：** [`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Register(NationalSpire.CareerData, NationalSpire.CoachLineupRequest)`](CoachLineups.cs.md#symbol-cd01b73a8985)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -625,7 +656,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Cancel(NationalSpire.CareerData, string, string) — public static string? Cancel(CareerData d, string coach, string id)`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
@@ -646,7 +677,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData) — public static void SeasonStart(CareerData d)`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)
 
@@ -686,7 +717,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Context(NationalSpire.CareerData, string) — public static string Context(CareerData d, string coach)`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)
 
@@ -708,7 +739,7 @@ public const string Protocol = """
 
 ## `NationalSpire.CoachLineups.Deleted(NationalSpire.CareerData, string) — public static void Deleted(CareerData d, string id)`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CharacterDeletion.Delete(NationalSpire.CareerData, string)`](CharacterDeletion.cs.md#symbol-2eb70f838afa)
 

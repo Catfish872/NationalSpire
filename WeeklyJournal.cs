@@ -107,7 +107,7 @@ public static class WeeklyJournal
             var matches = performances.Where(p => p.Id == id).ToList();
             if (matches.Count == 0) return "本期正式比赛0场。";
             return $"本期正式比赛 {matches.Count} 场，{matches.Count(p => p.Outcome.Contains('胜'))} 胜、{matches.Count(p => p.Outcome.Contains('平'))} 平、{matches.Count(p => p.Clear)} 次通关。"
-                + string.Join("；", matches.OrderByDescending(p => p.Day).Take(3).Select(p => $"第{p.Day}天 {p.Event}，对{p.Opponent} {p.Outcome}，赛事进阶{p.Ascension}，{MatchRules.Performance(p.Clear, p.Floor, p.Seconds)}" + (p.Challenge == null ? "" : "。" + p.Challenge)));
+                + string.Join("；", matches.OrderByDescending(p => p.Day).Take(3).Select(p => $"{GameCalendar.Text(data, p.Day)} {p.Event}，对{p.Opponent} {p.Outcome}，赛事进阶{p.Ascension}，{MatchRules.Performance(p.Clear, p.Floor, p.Seconds)}" + (p.Challenge == null ? "" : "。" + p.Challenge)));
         }
         foreach (var person in data.People)
         {
@@ -127,8 +127,8 @@ public static class WeeklyJournal
             issue.Profiles.Insert(0, new() { Id = "player", Name = CareerEngine.Name(data), Gender = data.PlayerGender,
                 Background = $"{data.Esports.Country}，{EsportsWorld.LicenseName(data)}；{CareerCommerce.PublicState(data, data.Day)}",
                 History = $"正式比赛累计{data.Wins}胜/{data.Draws}平/{data.Losses}负，评分{data.Rating}；赛事最高通关进阶{data.Esports.BestClear}。"
-                    + string.Join("；", data.Esports.Honors.TakeLast(3).Select(h => $"第{h.Day}天 {h.Title}")),
-                ThisWeek = WeekStats("player") + " " + string.Join("；", results.Select(r => $"第{r.Day}天：{r.Evidence.Summary()}")), Previous = data.PlayerIntroduction });
+                    + string.Join("；", data.Esports.Honors.TakeLast(3).Select(h => $"{GameCalendar.Text(data, h.Day)} {h.Title}")),
+                ThisWeek = WeekStats("player") + " " + string.Join("；", results.Select(r => $"{GameCalendar.Text(data, r.Day)}：{r.Evidence.Summary()}")), Previous = data.PlayerIntroduction });
 
         // 人口扩展后按与本期主线的关系选编；其余人物的数值档案实时更新，后续周刊继续轮换。
         if (data.Esports.EcosystemVersion >= 1)
@@ -144,7 +144,7 @@ public static class WeeklyJournal
         {
             var focus = results.OrderByDescending(r => r.Win).ThenByDescending(r => r.Ascension).ThenByDescending(r => r.Day).First();
             issue.Slides.Add(new() { Topic = "本期选手焦点", Character = focus.Character, Importance = focus.Win && focus.Ascension >= 8 ? 3 : 2,
-                People = ["player", focus.OpponentId], Facts = WeekStats("player") + $"。焦点对局：第{focus.Day}天，{CareerEngine.Name(data)}使用{CharacterIdentity.ForResult(focus)}，卡组：{string.Join('、', focus.DeckSummary)}。{focus.Evidence.Summary()}。关键牌面：{string.Join('；', focus.Cards.Take(5))}" });
+                People = ["player", focus.OpponentId], Facts = WeekStats("player") + $"。焦点对局：{GameCalendar.Text(data, focus.Day)}，{CareerEngine.Name(data)}使用{CharacterIdentity.ForResult(focus)}，卡组：{string.Join('、', focus.DeckSummary)}。{focus.Evidence.Summary()}。关键牌面：{string.Join('；', focus.Cards.Take(5))}" });
         }
         foreach (var competition in data.Esports.Competitions.Where(c => c.Fixtures.Any(f => f.Finished && f.Day >= start && f.Day <= data.Day))
             .OrderByDescending(c => c.Finished).ThenByDescending(c => c.Kind != "league").ThenByDescending(c => c.Country == data.Esports.Country).Take(2))
@@ -155,7 +155,7 @@ public static class WeeklyJournal
             issue.Slides.Add(new() { Topic = competition.Name, Character = CareerEngine.Person(data, personId)?.Character ?? results.LastOrDefault()?.Character ?? "铁甲战士",
                 Importance = competition.Finished || competition.Kind != "league" ? 3 : 2, People = fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Distinct().ToList(),
                 Facts = (competition.Finished ? $"冠军：{(competition.TeamEvent ? CircuitWorld.TeamName(data, competition, competition.ChampionTeam) : CareerEngine.DisplayName(data, competition.ChampionId))}。" : "比赛仍在进行。")
-                    + string.Join("；", fixtures.Select(f => $"第{f.Day}天 {CareerEngine.DisplayName(data, f.HomeId)} vs {CareerEngine.DisplayName(data, f.AwayId)}："
+                    + string.Join("；", fixtures.Select(f => $"{GameCalendar.Text(data, f.Day)} {CareerEngine.DisplayName(data, f.HomeId)} vs {CareerEngine.DisplayName(data, f.AwayId)}："
                         + (f.Draw ? "平局" : CareerEngine.DisplayName(data, f.WinnerId) + "胜") + (f.Walkover ? "（弃权判定）" : "")
                         + $"；赛事进阶{(competition.Modern ? f.Ascension : competition.Kind != "league" && (f.Day - 1) % 28 + 1 == 26 ? 9 : 8)}，双方表现 {MatchRules.Performance(f.HomeCleared, f.HomeFloor, f.HomeSeconds)} / {MatchRules.Performance(f.AwayCleared, f.AwayFloor, f.AwaySeconds)}")) });
         }
@@ -164,7 +164,7 @@ public static class WeeklyJournal
             .OrderByDescending(m => m.People.Contains("player")).ThenByDescending(m => m.Day).Take(3).ToList();
         if (events.Count > 0 || issue.Slides.Count == 0 && !data.Life.Events.Any(e => e.Day <= data.Day && e.EditionWeek == 0 && (e.Day >= start || e.Important)))
             issue.Slides.Add(new() { Topic = "赛场内外", Character = "储君", Importance = 1, People = events.SelectMany(m => m.People).Distinct().ToList(),
-                Facts = events.Count > 0 ? string.Join("\n", events.Select(m => $"第{m.Day}天 {m.Text}")) : "休赛周：本期正式比赛0场、重大事件0件，选题为简短休赛札记。" });
+                Facts = events.Count > 0 ? string.Join("\n", events.Select(m => $"{GameCalendar.Text(data, m.Day)} {m.Text}")) : "休赛周：本期正式比赛0场、重大事件0件，选题为简短休赛札记。" });
         // 公告与阶段成果使用原有周刊文章结构；旧的重要事项在实际刊出前继续保留。
         var publicEvents = data.Life.Events.Where(e => e.Day <= data.Day && e.EditionWeek == 0 && (e.Day >= start || e.Important))
             .OrderByDescending(e => e.Important).ThenByDescending(e => e.Id.EndsWith(":finish"))
@@ -174,7 +174,7 @@ public static class WeeklyJournal
             issue.Slides.Add(new() { Topic = group.Any(e => e.Important) ? "生涯与俱乐部要闻" : "赛场之外的新鲜事", Character = "储君",
                 Importance = group.Any(e => e.Important) ? 2 : 1, EventIds = group.Select(e => e.Id).ToList(),
                 People = group.SelectMany(e => e.People).Distinct().Take(8).ToList(),
-                Facts = string.Join("\n", group.Select(e => $"第{e.Day}天，{e.Title}：{e.Detail}")) });
+                Facts = string.Join("\n", group.Select(e => $"{GameCalendar.Text(data, e.Day)}，{e.Title}：{e.Detail}")) });
         var rng = new Random(CareerEngine.StableHash(data.WorldId + ":weekly:" + issue.Week));
         if (data.Esports.Clubs.Count > 0 && rng.Next(4) != 0)
         {

@@ -56,6 +56,7 @@ public partial class CareerScreen
             _content.AddChild(Text((ClubCoaching.PlayerReserve(data) ? "俱乐部轮换" : "俱乐部首发") + (ClubCoaching.PlayerCoach(data) ? " · 兼任教练" : ""), 18, CareerVisuals.Teal));
         var toolbar = ProfileActions(); toolbar.Name = "ProfileToolbar"; _content.AddChild(toolbar);
         toolbar.AddChild(Button("编辑角色", () => OpenCharacterCard(data, "player"), 165));
+        toolbar.AddChild(Button("设计立绘", () => OpenPortraitDesigner(data, "player"), 165));
         toolbar.AddChild(Button("更换头像", () => OpenAvatarSettings(data), 165));
         toolbar.AddChild(Button(_choosingFrame ? "收起头像框" : "更换头像框", () => { _choosingFrame = !_choosingFrame; Render(); }, 165));
         if (_choosingFrame) AvatarWardrobe(data, ProfileSection("头像框"));
@@ -100,10 +101,12 @@ public partial class CareerScreen
     {
         _content.AddChild(PlayerBanner(data, person.Id));
         PrivateProfile(data, person);
-        if (CanEditCharacter(data, person.Id))
         {
             var toolbar = ProfileActions(); _content.AddChild(toolbar);
-            toolbar.AddChild(Button("编辑角色", () => OpenCharacterCard(data, person.Id), 165));
+            toolbar.AddChild(Button("设计立绘", () => OpenPortraitDesigner(data, person.Id), 165));
+            toolbar.AddChild(Button("立绘与场景", () => OpenDateAssets(data, person.Id), 165));
+            if (CanEditCharacter(data, person.Id)) toolbar.AddChild(Button("编辑角色", () => OpenCharacterCard(data, person.Id), 165));
+            if (!GroupChats.IsHuman(data, person.Id)) toolbar.AddChild(Button("选择头像框", () => NpcAvatarFramePicker(data, person.Id), 165));
         }
         int total = person.Wins + person.Losses;
         ProfileStats(("累计战绩", $"{person.Wins} 胜  {person.Losses} 负"),

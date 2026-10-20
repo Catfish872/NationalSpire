@@ -22,6 +22,8 @@ public sealed class CoachTrainingPlan
     public int PaidWeeks { get; set; }
     public double Gained { get; set; }
     public string State { get; set; } = "进行中";
+    public int CompletionDay { get; set; }
+    public long CompletionOrder { get; set; }
     public int EndDay => StartDay + Weeks * 7;
 }
 
@@ -110,9 +112,23 @@ public static class ClubCoaching
         }
         foreach (var r in d.Esports.LineupRequests.Where(r => r.State == "待生效" && r.ClubId == o.ClubId
             && (r.First == "player" || r.Second == "player" || r.First == replacement || r.Second == replacement))) r.State = "已替换";
-        o.PlayerPositionRequest = "";
-        o.PlayerPositionSeason = d.Season + 1; o.PlayerNextPosition = position; o.PlayerReplacement = replacement;
+        ApplyPlayerPosition(d, position, replacement);
+        ClearPlayerPosition(o);
+        OwnedClubSchedule.UpdateLineup(d, playerPositionChanged: true);
+        CareerTraining.InvalidateForecast(d);
         CareerStore.Save(d); return null;
+    }
+    private static void ApplyPlayerPosition(CareerData d, string position, string replacement)
+    {
+        var own = d.Esports.OwnedClub!;
+        bool reserve = position == "轮换";
+        if (own.PlayerReserve == reserve) return;
+        string outgoing = reserve ? "player" : replacement, incoming = reserve ? replacement : "player";
+        int slot = own.Starters.IndexOf(outgoing);
+        Move(d, outgoing, "轮换"); Move(d, incoming, "首发");
+        own.Starters.Remove(incoming); own.Starters.Insert(slot, incoming);
+        own.PlayerReserve = reserve;
+        OwnedClubs.UpdateRosterRole(CareerEngine.Person(d, replacement)!, reserve ? "首发" : "轮换");
     }
     public static void SeasonStart(CareerData d)
     {
@@ -133,8 +149,7 @@ public static class ClubCoaching
             : OwnedClubs.ReplaceableStarters(d).Contains(o.PlayerReplacement));
         if (available)
         {
-            Move(d, o.PlayerReplacement, reserve ? "首发" : "轮换");
-            o.PlayerReserve = reserve; Move(d, "player", reserve ? "轮换" : "首发");
+            ApplyPlayerPosition(d, reserve ? "轮换" : "首发", o.PlayerReplacement);
         }
         else Notice(d, "首发调整未生效", "原席位保留，接替人选或合同条件已变化。");
         if (d.Esports.LineupRequests.FirstOrDefault(r => r.Id == o.PlayerPositionRequest && r.State == "待生效") is { } request)
@@ -205,7 +220,12 @@ public static class ClubCoaching
                 CareerTraining.RecordLesson(d, plan.PersonId, new PrivateLearning { Id = "coach:" + plan.Id + ":" + week, Topic = plan.Content, Strength = 1, Source = "coach:" + plan.Id + ":" + week, Reason = plan.Content });
                 plan.Gained += CareerEngine.Person(d, plan.PersonId)!.Learning.ChanceShift - before;
             }
-            if (plan.PaidWeeks == plan.Weeks) plan.State = "已完成";
+            if (plan.PaidWeeks == plan.Weeks)
+            {
+                plan.State = "已完成";
+                plan.CompletionDay = d.Day;
+                plan.CompletionOrder = GroupChats.NextOrder(d);
+            }
         }
     }
     public static void StopTraining(CareerData d, string id)

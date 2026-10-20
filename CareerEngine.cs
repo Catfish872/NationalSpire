@@ -7,6 +7,7 @@ public static class CareerEngine
     public static string PlayerName { get { try { var name = PlayerNameSource(); return string.IsNullOrWhiteSpace(name) ? "参赛选手" : name; } catch { return "参赛选手"; } } }
     public static bool NormalizeRoster(CareerData data)
     {
+        bool calendarUpgrade = GameCalendar.Initialize(data);
         CareerMigration.UpgradeRules(data);
         EsportsWorld.Initialize(data);
         WorldPeople.Enrich(data);
@@ -18,6 +19,7 @@ public static class CareerEngine
         bool nationalUpgrade = data.Esports.Nations.Any(n => n.DevelopmentVersion < NationalDevelopment.Version);
         NationalDevelopment.Ensure(data);
         bool changed = CircuitPeople.Replenish(data);
+        changed |= calendarUpgrade;
         changed |= nationalUpgrade;
         changed |= CareerMarket.Initialize(data);
         changed |= EsportsWorld.ClearInvalidRegistrations(data);
@@ -36,7 +38,7 @@ public static class CareerEngine
     }
     public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1)
     {
-        var data = new CareerData { CooperativeMembers = cooperativeMembers, LongSeasonsFrom = expanded ? 1 : 0, ContentPoolVersion = ContentPoolMigration.Version };
+        var data = new CareerData { CalendarStartYear = DateTime.Now.Year, CooperativeMembers = cooperativeMembers, LongSeasonsFrom = expanded ? 1 : 0, ContentPoolVersion = ContentPoolMigration.Version };
         // 旧赛制用于存档兼容回归；正常新生涯启用完整生态。
         if (!expanded) data.Esports.EcosystemVersion = -1;
         string[] characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
@@ -77,6 +79,9 @@ public static class CareerEngine
         return data;
     }
     public static CareerMatch? NextMatch(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).OrderBy(m => m.Day).ThenByDescending(m => m.CompetitionId.Length > 0).FirstOrDefault();
+    public static int? NextEventDay(CareerData d) => d.Matches.Where(m => m.Status == "待赛" && m.Registered).Select(m => m.Day)
+        .Concat(SocialAppointments.All(d).Where(x => x.Offer.State == "已确认").Select(x => PrivateAppointments.Date(d, x.Offer)))
+        .Where(day => day >= d.Day).Select(day => (int?)day).Min();
     public static CareerMatch? NextAvailable(CareerData d) => d.Matches.FirstOrDefault(m => m.Status == "待赛" && m.Day >= d.Day && EsportsWorld.EntryReason(d, m) == null);
     public static CareerPerson? Person(CareerData d, string id) => d.People.FirstOrDefault(p => p.Id == id) ?? d.DeletedPeople.GetValueOrDefault(id);
     public static string Name(CareerData d) => string.IsNullOrWhiteSpace(d.PlayerAlias) ? PlayerName : d.PlayerAlias;
@@ -85,6 +90,7 @@ public static class CareerEngine
     public static bool AdvanceOneDay(CareerData d)
     {
         if (d.Failure != null || d.PendingMatchId != null || NextMatch(d) is { } next && next.Day <= d.Day) return false;
+        EventJourney.Resume(d);
         MoveToNextDay(d); PublishMatchDay(d); CareerStore.Save(d); return true;
     }
     private static void MoveToNextDay(CareerData d)
@@ -111,21 +117,28 @@ public static class CareerEngine
         CareerCommerce.RefreshOffers(d);
         if (d.Esports.EcosystemVersion >= 1) CircuitWorld.AutoEntry(d);
         CareerMarket.Advance(d);
+        if (d.CooperativeMembers <= 1) ProactiveChats.Trigger(d);
     }
     public static int AdvanceToMatch(CareerData d)
     {
         var next = NextMatch(d); if (next == null) return 0;
         return AdvanceToDay(d, next.Day);
     }
-    public static int AdvanceToDay(CareerData d, int target)
+    public static int AdvanceToDay(CareerData d, int target, bool stopAtQuestions = true)
     {
         int count = 0;
+        if (target <= d.Day) return count;
         try
         {
             while (d.Day < target && count < 84 && d.Failure == null && d.PendingMatchId == null && !(NextMatch(d) is { } next && next.Day <= d.Day))
-            { MoveToNextDay(d); count++; if (SocialAppointments.Due(d).Any()) break; }
+            {
+                if (count == 0) EventJourney.Begin(d, target);
+                MoveToNextDay(d); count++;
+                bool ordinary = SocialAppointments.Due(d).Any() || NextMatch(d) is { } match && match.Day <= d.Day || d.Failure != null || d.PendingMatchId != null;
+                if (EventJourney.Stop(d, target, ordinary, stopAtQuestions && RandomEvents.Next(d, d.Day) != null)) break;
+            }
         }
-        finally { if (count > 0) { PublishMatchDay(d); PublicationBacklog.Compact(d); CareerStore.Save(d); } }
+        finally { if (count > 0) { PublishMatchDay(d); if (!EventJourney.PublicationsPaused(d)) { d.Journey.Destination = 0; PublicationBacklog.Compact(d); } CareerStore.Save(d); } }
         return count;
     }
     public static void PublishMatchDay(CareerData d)
@@ -137,7 +150,7 @@ public static class CareerEngine
         if (CommunityThreads.All(d).Any(p => p.EventKey == key)) return;
         var opponent = Person(d, match.OpponentId);
         string title = $"{match.Event}今日开赛，{Name(d)}对阵{opponent?.PublicName ?? "待公布对手"}";
-        string body = $"第{d.Day}天，{match.Event}即将进行。{Name(d)}已报名，对手为{opponent?.PublicName ?? "待公布对手"}，赛事进阶{match.RequiredAscension}。比赛尚未开始，暂无本场赛果。";
+        string body = $"{GameCalendar.Text(d, d.Day)}，{match.Event}即将进行。{Name(d)}已报名，对手为{opponent?.PublicName ?? "待公布对手"}，赛事进阶{match.RequiredAscension}。比赛尚未开始，暂无本场赛果。";
         if (d.CooperativeMembers > 1) body += $"双方以{d.CooperativeMembers}人队伍参赛。";
         Publish(d, key, title, body, "赛前讨论", true, ["player", match.OpponentId]);
     }
@@ -191,7 +204,7 @@ public static class CareerEngine
         var person = members[rng.Next(members.Count)];
         var league = d.Esports.Competitions.FirstOrDefault(c => c.Season == d.Season && c.Kind == "league" && c.Country == club.Country);
         var upcoming = league?.Fixtures.FirstOrDefault(f => f.Day >= d.Day && (f.HomeTeam == club.Id || f.AwayTeam == club.Id));
-        string date = upcoming == null ? "俱乐部进入休整阶段。" : $"下一轮联赛安排在第{upcoming.Day}天。";
+        string date = upcoming == null ? "俱乐部进入休整阶段。" : $"下一轮联赛安排在{GameCalendar.Text(d, upcoming.Day)}。";
         (string title, string body) = rng.Next(5) switch
         {
             0 => ($"{club.Name}开放训练室", $"{person.PublicName}参加俱乐部公开训练，分享{person.Character}的练习经历。{date}"),
@@ -328,6 +341,8 @@ public static class CareerEngine
         record.Settlement.Honors = d.Esports.Honors.Where(h => !honorsBefore.Contains(h.Title)).Select(h => h.Title).Take(4).ToList();
         d.PendingSettlementId = m.Id;
         CommunityThreads.RememberMatch(d, record);
+        WorldEvents.AfterMatch(d, m);
+        if (d.CooperativeMembers <= 1) ProactiveChats.Trigger(d, m);
         AvatarHonors.Capture(d);
         if (d.Results.Count > 200) d.Results.RemoveRange(0, d.Results.Count - 200);
         CareerStore.Save(d);
@@ -368,6 +383,7 @@ public static class CareerEngine
         post.Replies = authors.Take(replyCount).Select(p => new CommunityReply { AuthorId = p.Id, Body = CareerNarrative.FreshReply(d, p, category, match, rng.Next(), key, used) }).ToList();
         CommunityThreads.MakeOfflineThreads(post);
         var participants = post.Replies.Select(r => r.AuthorId).Append(post.AuthorId).Concat(post.RelatedPeople).ToHashSet();
+        post.CountryLevels = NationalDevelopment.Snapshot(d, d.People.Where(p => participants.Contains(p.Id)).Select(p => p.Country).Append(d.Esports.Country));
         post.PeopleAtEvent = d.People.Where(p => participants.Contains(p.Id)).Select(p => new CareerPerson
         {
             Id = p.Id, Name = p.Name, Handle = p.Handle, EditedCard = p.EditedCard, Gender = IdentityGender.Of(d, p.Id), Role = p.Role, Country = p.Country, ClubId = p.ClubId, Character = p.Character, Style = p.Style,

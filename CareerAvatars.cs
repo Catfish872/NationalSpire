@@ -44,6 +44,7 @@ public partial class CareerAvatar : Control
 {
     private StyleBoxFlat? _frame;
     public string PersonId { get; set; } = "";
+    public bool Simplified { get; init; }
     private AvatarIdentity? _identity;
     public AvatarIdentity? Identity { get => _identity; set { _identity = value; _frame = null; QueueRedraw(); } }
     private AvatarArt _art = new(null, CareerVisuals.Teal, "");
@@ -52,10 +53,11 @@ public partial class CareerAvatar : Control
     public override void _Draw()
     {
         var bounds = new Rect2(Vector2.Zero, Size);
-        _frame ??= CareerVisuals.Box("0b1b22", Identity?.Frame.Color ?? Art.Accent.ToHtml(), 8, 0);
-        DrawStyleBox(_frame, bounds);
-        float inset = Identity is { Frame.Grade: > 0 } framed ? Math.Min(Size.X, Size.Y) * (framed.Frame.Grade >= 6 ? .14f : .105f) : 4;
+        _frame ??= CareerVisuals.Box("0b1b22", Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? "00000000" : Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml(), Simplified ? 3 : 8, 0);
+        float inset = Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? Math.Min(Size.X, Size.Y) * .09f
+            : Identity is { DisplayFrame.Grade: > 0 } framed ? Math.Min(Size.X, Size.Y) * (framed.DisplayFrame.Grade >= 6 ? .14f : .105f) : Simplified ? Math.Min(2, Size.X * .06f) : 4;
         var inner = bounds.Grow(-inset);
+        DrawStyleBox(_frame, Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? inner : bounds);
         if (Art.Texture is { } texture && GodotObject.IsInstanceValid(texture) && texture.GetWidth() > 0 && texture.GetHeight() > 0)
         {
             // 仅取卡面中心的正方形；绘制资源，不添加拦截鼠标的子控件。
@@ -73,10 +75,12 @@ public partial class CareerAvatar : Control
     }
     private void DrawHonors(AvatarIdentity identity)
     {
-        var color = new Color(identity.Frame.Color);
-        int grade = identity.Frame.Grade;
+        var color = new Color(identity.UseOathFrame ? "dce6f1" : identity.DisplayFrame.Color);
+        int grade = identity.DisplayFrame.Grade;
         float w = Size.X, h = Size.Y;
-        if (grade > 0) DrawMetalFrame(identity.Frame);
+        if (identity.UseOathFrame) DrawTextureRect(AffectionArt.Texture("oath-frame"), new Rect2(-Size * .1f, Size * 1.2f), false);
+        else if (identity.SelectedFrame is "friend" or "intimate" or "lover" or "cat") DrawTextureRect(AffectionArt.Texture("frame-" + identity.SelectedFrame), new Rect2(Vector2.Zero, Size), false);
+        else if (grade > 0) DrawMetalFrame(identity.DisplayFrame);
         float radius = Math.Clamp(w * .175f, 7, 17);
         if (identity.Ascension >= 0)
         {
@@ -88,7 +92,7 @@ public partial class CareerAvatar : Control
             var font = GetThemeDefaultFont(); var textSize = font.GetStringSize(number, fontSize: fontSize);
             DrawString(font, center + new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2), number, fontSize: fontSize, modulate: Colors.White);
         }
-        if (identity.Role.Length == 0) return;
+        if (identity.Role.Length == 0 || identity.SelectedFrame == "cat") return;
         var origin = new Vector2(radius + 1, h - radius - 1);
         DrawCircle(origin, radius, new Color("0c1925"));
         DrawArc(origin, radius - 1, 0, Mathf.Tau, 24, new Color("7cc5c0"), 1, true);

@@ -9,13 +9,15 @@ public static partial class AiService
     public static List<PromptTestSource> TestSources(CareerData data, string scene) => scene switch
     {
         "news" => CommunityThreads.All(data).Where(p => p.AuthorId != "player" && data.People.Any(who => who.Id == p.AuthorId))
-            .OrderByDescending(p => p.Day).Select(p => new PromptTestSource(scene, p.Id, $"第 {p.Day} 天 · {p.Title}")).ToList(),
+            .OrderByDescending(p => p.Day).Select(p => new PromptTestSource(scene, p.Id, $"{GameCalendar.Text(data, p.Day)} · {p.Title}")).ToList(),
         "discussion" => CommunityThreads.All(data).OrderByDescending(p => p.Day)
-            .Select(p => new PromptTestSource(scene, p.Id, $"第 {p.Day} 天 · {p.Title}")).ToList(),
+            .Select(p => new PromptTestSource(scene, p.Id, $"{GameCalendar.Text(data, p.Day)} · {p.Title}")).ToList(),
         "profiles" => data.WeeklyEditions.OrderByDescending(w => w.Week).SelectMany(w => w.Profiles
             .Select(p => new PromptTestSource(scene, p.Id, $"第 {w.Week} 周 · {p.Name}", w.Week))).ToList(),
         "weekly" => data.WeeklyEditions.OrderByDescending(w => w.Week).SelectMany(w => w.Slides
             .Select(s => new PromptTestSource(scene, s.Id, $"第 {w.Week} 周 · {(s.Title.Length > 0 ? s.Title : s.Topic)}", w.Week))).ToList(),
+        "event" => new[] { new PromptTestSource(scene, "new", "本日新事件") }.Concat(data.Life.RandomEvents.Where(e => e.Materials.Length > 0)
+            .OrderByDescending(e => e.Day).Select(e => new PromptTestSource(scene, e.Id, GameCalendar.Text(data, e.Day) + " · " + e.Title))).ToList(),
         _ => []
     };
 
@@ -39,6 +41,16 @@ public static partial class AiService
                 context = BuildDiscussionPrompt(snapshot, new HashSet<string> { target }, [post]);
             }
         }
+        else if (source.Scene == "event")
+        {
+            var record = RandomEvents.Find(snapshot, source.Id);
+            if (record == null)
+            {
+                record = new() { Day = snapshot.Day }; snapshot.Life.RandomEvents.Add(record);
+                if (RandomEvents.Start(snapshot, record.Id) is { } error) throw new ArgumentException(error);
+            }
+            context = record.Materials; target = record.Id;
+        }
         else
         {
             var issue = snapshot.WeeklyEditions.Single(w => w.Week == source.Week);
@@ -59,7 +71,7 @@ public static partial class AiService
                     issue.StartDay - 1, new HashSet<string>(), 5);
             }
             else throw new ArgumentException("未知测试场景。");
-            context = BuildWeeklyContext(issue, source.Scene == "profiles");
+            context = BuildWeeklyContext(snapshot, issue, source.Scene == "profiles");
         }
         return new() { Source = source, Message = message, Snapshot = snapshot, Owner = data, Context = context, TargetId = target };
     }
@@ -82,6 +94,19 @@ public static partial class AiService
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentException("请先在 模组设置中填写密钥。");
             if (!TryGetEndpoint(connection.Endpoint, out var uri)) throw new ArgumentException("接口地址无效。");
             bool Current() => CareerStore.IsCurrent(owner) && owner.Ai.Enabled;
+            if (test.Source.Scene == "event")
+            {
+                using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(options.RequestTimeoutMinutes, 2, 30)));
+                PrivateForegroundQueue.Configure(options.MaxConcurrentRequests);
+                using var eventLease = await EnterPrivateQueue(owner, "prompt-preview/event", timeout.Token);
+                if (!Current() || Connection(owner.Ai, "event") != connection) throw new ArgumentException("设置或生涯已切换，请重新测试。");
+                CommunityThreads.SetWork(test.Work, "sending");
+                string result = await RequestPrivateAsync(options, RandomEventPrompts.Compose(new() { Materials = test.Context }, options), false, null,
+                    timeout.Token, context: "prompt-test-event", task: "event");
+                if (!Current()) throw new ArgumentException("设置或生涯已切换，本次结果已放弃。");
+                test.Previous = test.Result; test.Result = ApplyTestResponse(test.Snapshot, test, result);
+                CommunityThreads.SetWork(test.Work, "completed"); return;
+            }
             using var lease = await EnterQueueAsync(owner, ["prompt-preview"], [test.Work]);
             await WaitForRequestStartAsync(owner, [test.Work]);
             if (!Current()) throw new ArgumentException("设置或生涯已切换，请重新测试。");
@@ -117,6 +142,12 @@ public static partial class AiService
 
     private static string ApplyTestResponse(CareerData data, PromptTestSession test, string content)
     {
+        if (test.Source.Scene == "event")
+        {
+            var parser = new RandomEventParser(); parser.Feed(content); parser.Finish(); parser.Validate();
+            return parser.Title + "\n\n" + parser.Story + "\n" + string.Join("\n\n", parser.Options.Select((option, index) =>
+                (index + 1) + ". " + option.Text + "\n" + RandomEventEffects.Preview(data, option) + "\n" + option.Result));
+        }
         if (test.Source.Scene is "news" or "discussion")
         {
             var post = CommunityThreads.All(data).Single(p => p.Id == test.Source.Id);

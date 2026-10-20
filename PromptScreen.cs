@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -17,7 +17,7 @@ public partial class CareerScreen
         foreach (var edge in new[] { "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 60);
         var panel = Card(); margin.AddChild(panel); var box = Inner(panel);
         box.AddChild(Text("提示词配置", 28, _gold));
-        box.AddChild(Text("调整世界观与写作风格。回复格式、人物资料和历史记忆仍由模组管理。", 16, _muted));
+        var instruction = Text("调整世界观与写作风格。回复格式、人物资料和历史记忆仍由模组管理。", 16, _muted); box.AddChild(instruction);
         var templateTabs = new HBoxContainer(); templateTabs.AddThemeConstantOverride("separation", 12); box.AddChild(templateTabs);
         var templateNote = Text("", 16, _muted); box.AddChild(templateNote);
         var tabs = new HFlowContainer(); tabs.AddThemeConstantOverride("h_separation", 12); tabs.AddThemeConstantOverride("v_separation", 12); box.AddChild(tabs);
@@ -32,6 +32,7 @@ public partial class CareerScreen
         bool loading = false;
         void Show()
         {
+            instruction.Text = selected == "event" ? "随机事件模板用于编辑故事创作要求；程序统一附加输出格式与效果示例。" : "调整世界观与写作风格。回复格式、人物资料和历史记忆仍由模组管理。";
             loading = true; editor.Text = drafts[selected]; loading = false;
             var template = PromptLibrary.Template(data.Ai);
             deleteTemplate.Visible = PromptLibrary.CanDeleteTemplate(data.Ai, template.Id);
@@ -53,6 +54,7 @@ public partial class CareerScreen
             var previous = new Dictionary<string, string>(data.Ai.PromptOverrides);
             var banks = data.Ai.PromptTemplateOverrides.ToDictionary(p => p.Key, p => new Dictionary<string, string>(p.Value));
             var custom = new Dictionary<string, CustomPromptTemplate>(data.Ai.CustomPromptTemplates ?? new());
+            var pools = new Dictionary<string, Dictionary<string, List<EventPoolEntry>>>(data.Ai.EventPoolOverrides);
             try
             {
                 if (saveDrafts) SaveDrafts();
@@ -63,7 +65,7 @@ public partial class CareerScreen
             catch (Exception e)
             {
                 data.Ai.PromptTemplate = previousTemplate; data.Ai.PromptOverrides = previous;
-                data.Ai.PromptTemplateOverrides = banks; data.Ai.CustomPromptTemplates = custom;
+                data.Ai.PromptTemplateOverrides = banks; data.Ai.CustomPromptTemplates = custom; data.Ai.EventPoolOverrides = pools;
                 count.Text = e is ArgumentException ? e.Message : "未能保存，请检查存档文件夹的写入权限。";
                 return false;
             }
@@ -121,6 +123,8 @@ public partial class CareerScreen
         deleteTemplate.Name = "DeletePromptTemplate";
         deleteTemplate.AddThemeColorOverride("font_color", new Color("eea3ab"));
         templateTabs.AddChild(deleteTemplate);
+        var eventPools = Button("事件池", () => OpenEventPoolSettings(data), 130);
+        eventPools.Name = "OpenEventPools"; templateTabs.AddChild(eventPools);
         editor.TextChanged += () => { if (!loading) { drafts[selected] = editor.Text; count.Text = $"{editor.Text.Length} 字 · 修改尚未保存"; } };
         foreach (var section in PromptLibrary.Sections)
         {
@@ -160,7 +164,7 @@ public partial class CareerScreen
             try
             {
                 string path = PromptTransfer.WriteDesktop(PromptTransfer.Export(data.Ai, drafts));
-                count.Text = "已导出当前模板及全部场景（包括未保存的编辑）。";
+                count.Text = "已导出当前模板、事件池及全部场景（包括未保存的提示词编辑）。";
                 // 只打开文件所在位置，不执行导出的内容。
                 var result = OS.ShellShowInFileManager(path);
                 if (result != Error.Ok) count.Text = "导出成功，文件位于 " + path;
@@ -189,22 +193,29 @@ public partial class CareerScreen
         }
         Label preview = null!;
         string? destination = PromptLibrary.TemplateId(data.Ai);
-        ShowCareerDialog("导入提示词", "选择需要覆盖的模板。导入将替换目标模板的全部场景，并保存；当前未保存的编辑会丢弃。", () =>
+        ShowCareerDialog("导入提示词", "导入将替换目标模板的全部场景及文件所含事件池，并保存；旧文件保留目标事件池。当前未保存的编辑会丢弃。", () =>
         {
             string oldTemplate = data.Ai.PromptTemplate;
             var old = new Dictionary<string, string>(data.Ai.PromptOverrides);
             var banks = data.Ai.PromptTemplateOverrides.ToDictionary(p => p.Key, p => new Dictionary<string, string>(p.Value));
             var custom = new Dictionary<string, CustomPromptTemplate>(data.Ai.CustomPromptTemplates ?? new());
+            var pools = new Dictionary<string, Dictionary<string, List<EventPoolEntry>>>(data.Ai.EventPoolOverrides);
             try { PromptTransfer.Apply(data.Ai, bundle, destination); SaveAiSettings(data); imported(); return true; }
             catch
             {
-                data.Ai.PromptTemplate = oldTemplate; data.Ai.PromptOverrides = old; data.Ai.PromptTemplateOverrides = banks; data.Ai.CustomPromptTemplates = custom;
+                data.Ai.PromptTemplate = oldTemplate; data.Ai.PromptOverrides = old; data.Ai.PromptTemplateOverrides = banks; data.Ai.CustomPromptTemplates = custom; data.Ai.EventPoolOverrides = pools;
                 preview.Text = "导入未保存，请检查存档文件夹的写入权限。"; return false;
             }
         }, contents: box =>
         {
             string template = bundle.CustomTemplate?.Name ?? PromptLibrary.Templates.Single(t => t.Id == bundle.Template).Name;
             preview = Text($"{Path.GetFileName(path)}\n{template} · {bundle.Sections.Count} 个场景 · {bundle.Sections.Count(p => !p.Value.FollowDefault)} 项自定义", 17, _muted); box.AddChild(preview);
+            if (bundle.EventPools is { } eventPools)
+            {
+                var effective = EventPools.Build(eventPools);
+                box.AddChild(Text($"事件池：随机事件 {effective.Random.Length} 条 · 选手日常 {effective.DailyCount} 条", 17, _muted));
+            }
+            else box.AddChild(Text("文件未包含事件池，保留目标模板已有配置。", 17, _muted));
             box.AddChild(Text("导入到", 18, _ink));
             var targets = PromptLibrary.AvailableTemplates(data.Ai).ToList();
             var picker = new OptionButton { Name = "PromptImportTarget", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };

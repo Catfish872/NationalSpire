@@ -4,7 +4,7 @@ using NationalSpire.Coop;
 
 namespace NationalSpire;
 
-public sealed record CareerLibraryEntry(string Path, string Name, int Season, int Day, bool Current);
+public sealed record CareerLibraryEntry(string Path, string Name, int Season, int Day, bool Current, string Date);
 
 public static class CareerLibrary
 {
@@ -29,11 +29,12 @@ public static class CareerLibrary
         foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc))
         {
             CareerData? d = null; try { d = CoopJson.Read<CareerData>(File.ReadAllBytes(file)); } catch { }
-            if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected);
+            if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));
         }
     }
     public static string Create(string original, CareerData data)
     {
+        GameCalendar.Initialize(data);
         string path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(original)!, "national_spire_career-" + Guid.NewGuid().ToString("N") + ".json");
         Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path)!); File.WriteAllBytes(path, CoopJson.PublicBytes(data)); return path;
     }

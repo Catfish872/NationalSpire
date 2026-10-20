@@ -1,5 +1,31 @@
 # 保存、广播与恢复
 
+事件池配置沿 AiOptions.EventPoolOverrides 保存，编辑器一次保存调用一次 SaveAiSettings。单人 CareerStore.Save 成功保存当前生涯后更新 AiSettingsStore；多人 SaveAi 先保存房主本机 AI 配置，再递增世界 Revision 并沿原 Commit 广播公开状态。配置不新增网络消息类型，整池按现有 AiOptions 公开过滤保留在房主本机。WorldEvents.PublishDaily 经 EventPools.Get(CareerData) 读取素材：共同世界采用房主本机配置，单人采用当前 data.Ai。个人随机事件命令沿 CoopRandomEvents 的房主配置建立 Seed、Category、Materials，再通过原成员状态保存与事件流式回复。退出重进和断线重连使用已保存事件分类，修改模板影响后续首次抽取。旧配置缺少覆盖字段时默认空字典，旧事件缺少 Category 时按原内置 Seed 映射背景。失败恢复配置与草稿的顺序见 GAME_AND_UI。
+
+## 随机事件的个人资料与共同效果
+
+共同 World.Journey 保存原目的日期及随机事件暂停日，通过原世界快照同步；成员 View 从 World 复制该字段，事件故事仍属于各成员。ExecuteProposal 每推进一天按比赛和活动优先、途中事件其次的顺序停止；继续行程复用 propose-advance，沿原权限执行。CoopAi 在建立新自动发布任务及下一轮处理前检查暂停日，已开始的任务继续完成。关闭或重启后暂停规则随保存恢复；成员进入事件、留在当日与继续原行程均使用共同日期。
+
+RandomEventRecord 归成员 Life.RandomEvents，保存日期、状态、素材、人物、材料、故事、思维文字、选项、选择编号、公开选择及约战结果凭证。CoopRules.EventCommand 在现有权威副本上建立个人 View，执行 Start/Stop/Skip/Choose，再 Capture。Stop 取消同一成员事件请求并恢复旧选项，后续响应按 generating 状态检查放弃。新比赛、市场及国家建设同步回 World；钱包、库存、关系及经历归成员 Life。保存沿 Apply → Commit 递增操作版本并广播。
+
+CoopCoordinator.StartEvent 的 Current 读取发起人的最新视图；Save 核对世界、epoch及 generating 状态，只将同一事件的结果合入当前成员。每次完成或失败复制一次世界、递增一次 Revision，调用原 Commit。SceneLines 与随机事件 EventLive 使用 private-chunk；随机事件用 event:编号区分，仅发送发起人，包含正文、选项、Reasoning 和 Phase。分片属于内存显示，完整结果通过原快照保存与接收流程落盘。旧版分片缺省空 Reasoning 与排队阶段。public 偏好属于本机 ChatPreferences，按生涯键保存；最终选择的 Public 随事件进入成员快照。
+
+PrivateSnapshot 与 SnapshotEncoder 同时清除共同 World.Life 和其他成员的 RandomEvents；收件人保留自己的故事及材料。四名成员分别编码、解码的隔离检查通过。真实 Steam 跨机延迟及断线重连未在本次实测。关闭进程后未完成事件保留材料供重试；complete 与 Selected 保证已完成事件重复点击只读取结果。
+
+## 数量购买、会话管理与主动联系
+
+训练完成的 CompletionDay / CompletionOrder 与 CoachTrainingPlan 一起序列化。单人 CareerLife.Advance 调用 ClubCoaching.Advance；多人 AdvanceMembers 在成员视图执行生活结算，Capture 合并 Esports.CoachTraining 和经营者 OwnedClub，并更新共享 Chats.Order。后续完整快照及检查点包含完成位置，界面按所属会话训练编号读取。训练结算复用原保存和广播步骤。双协调器经内存传输与实际磁盘检查点验证房主、客机、重新载入的完成顺序一致；真实 Steam 跨机传输待测。
+
+group-rename：单人 CareerScreen.GroupCommand → GroupChats.Command → CareerStore.Save → 成功回调更新管理窗口 → 列表/群聊签名失效；多人 ICareerSession.Send → CoopRules.GroupCommand 在成员视图执行同一入口 → CaptureGroup → 原提交、检查点、完整广播和回执。名称与通知共同提交。保存异常沿现有界面状态显示，单人内存沿原保存流程保留，重新启动读取成功保存的快照。生成中的 ProcessGroupAsync 在发送完成、流式顺序预留及失败收尾时通过 Current 取得最新群数据，再保存回复，保留期间的改名。离开界面后原生成任务继续；切换生涯/房间沿原世界及 epoch 检查，断线后的名称与通知由检查点恢复。改名自身创建一条通知及字符串，复用原单人保存或多人事务副本和完整快照；新增后台任务及模型请求次数均为0。
+
+consumer-buy 由 CoopRules.Apply 在世界副本上创建成员视图，将 ConsumerOrder.Quantity 传入 ConsumerEngine.Buy，成功后 Capture 提交本人 Life.Consumer、余额与事件；库存随原快照序列化。私聊模型保存回调除 Mailbox/Relationships 外同步该成员 Consumer，使 Gift 的扣除和原回复一起提交。群聊使用 CaptureGroup 提交当前成员数据和共享 Chats，并合并 PrivateMemorySources 中其他真人信箱的实际修改。
+
+dm-proactive/dm-manage 与 group-proactive/group-manage 使用原命令、事务副本和回执。AdvanceMembers 在各成员个人视图触发主动联系；Settle 在正式赛后按各成员配置触发，并将 Chats 与个人 Life 合并。房主 Tick 的 StartProactiveChats 将已有 queued 轮次交给 StartPrivate/StartGroup；原互斥、保存、流式广播、退出和重连入口继续管理生成。
+
+专项验证使用两个真实 CoopCoordinator、内存传输与实际 CoopStorage 磁盘检查点：客机购买5件物品、配置30/45/10概率及4次上限、开启私聊及群聊 FinalAlwaysReply、隐藏会话、关闭两端后重新载入、重连与恢复会话，共17项检查通过。私聊设置、创建群聊、群聊设置从客机提交至接收完成分别246.97、285.90、269.15毫秒，含规则副本、磁盘、编码及接收，分配分别78061952、77882792、77775856字节；这些整体时间包含内部步骤。两个实例均在本机，Steam跨机网络留待联机实测。
+
+单人当季首发调整经 SetPlayerPosition → UpdateLineup → InvalidateForecast → CareerStore.Save 执行。生产保存继续写临时文件、保留有效备份并替换目标文件；本次实测使用隔离绑定文件。名单调整在保存前发生，保存异常沿原 CareerStore 抛出并记录，内存保持该次调整；重新启动读取最近成功保存的文件。单人岗位功能沿原 PlayerFeatures 范围提供，设置界面与 OwnedClubs.Command 共用该入口。旧下一季预约继续由原 SeasonStart 处理。
+
 ## 结算对阵详情
 
 单人 FinishMatch 在原赛果与同日比赛完成后调用 SettlementRecords.Capture，将 CompetitionScore.Duels 连同 SettlementRecord 写入 CareerResult；末尾沿原 CareerStore.Save 提交。多人 CoopRules.Settle 仍为各成员生成结算快照，随后沿原成员资料合并、检查点、回执和广播提交。新字段随现有 JSON 对象读取与复制，版本标识继续使用现有发布版本，比赛编号继续使用原 FixtureKey。
@@ -8,7 +34,7 @@
 
 ## 聊天页面的本地设置
 
-ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last 与 size。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看私聊人物或群成员档案后的Back从导航历史恢复对应会话、页面及滚动位置。
+ChatHistoryScreen 使用 Godot ConfigFile 读取 user://NationalSpire_chat.cfg，进程内首次打开通讯读取一次；WorldId:本机玩家编号分区保存 last、size 与 pins。pins按最近置顶在前保存人物编号或group:群编号，置顶操作写入本机配置一次，生涯保存及网络广播次数为0。选择会话及改变页大小时比较当前值，发生变化才保存一次。翻页与滚动在本机内存完成。配置写入失败记录 Godot 警告，当前界面继续使用已选择值。重新打开恢复最近私信或群聊，随后进入最新页面；查看私聊人物或群成员档案后的Back从导航历史恢复对应会话、页面及滚动位置。
 
 私信状态按钮及其右侧说明归当前身份控件，点击仅修改可见性，重建时收起；私信关系/好感按钮共用的人物详情展开设置归本机聊天配置；底栏居中状态、保留中心的按钮缩放占位、输入框放大状态与表情面板归当前通讯窗口。点击人物详情写入本机聊天设置一次；生涯保存与业务广播次数为0。放大/还原输入框、切换表情分类及插入的专用保存/广播次数为0；插入通过原TextEdit与草稿字典保留文字。私信与群聊共用表情入口及当前分类，关闭通讯清空训练详情展开集合并释放表情控件，人物详情展开状态由本机配置保留，原文字及附件草稿继续沿CareerScreen生命周期管理。头像与姓名打开档案共用OpenPrivatePerson，先将当前私聊人物、页码、滚动值写入本机Location，再保留输入草稿并沿关闭通讯和Visit入口跳转。返回沿OpenPrivateMessages及SelectPrivate恢复，读取和保存调用仍使用原偏好与已读入口。该布局改动沿用现有存档结构与房主/客机命令、检查点流程；真实联机交互与分阶段耗时仍待验证。
 
@@ -26,7 +52,7 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 
 ## 单人生涯保存的顺序
 
-社区主楼或评论改票由DiscussionVotes调用CommunityVotes.SetVote，实际变化后一次CareerStore.Save。保存抛错时恢复改票前选择及VoteRevision，再显示错误；成功后刷新本行按钮和数值。PlayerVotes随帖子JSON保存，页面切换和重新启动继续读取保存记录。旧内容通过CommunityVersion=4的一次升级取得程序评分。
+社区主楼或评论改票由DiscussionVotes调用CommunityVotes.SetVote，实际变化后一次CareerStore.Save。保存抛错时恢复改票前选择及VoteRevision，再显示错误；成功后刷新本行按钮和数值。PlayerVotes随帖子JSON保存，页面切换和重新启动继续读取保存记录。旧内容通过CommunityVersion=5的一次升级取得程序评分。
 
 新闻与社区回帖入队异常进入各自原失败收尾，任务状态保存后释放已取得的队列凭据，回帖先清理 ScheduledInteractions。单人继续由 CareerStore.Save 提交，多人公共新闻继续由 CoopAi.ExternalSave 合并改变的帖子并提交原检查点与广播，社区回帖继续使用原公共保存回调。成功路径的保存次数与提交顺序沿用原流程；入队失败新增执行原本被跳过的那次失败状态保存。保存自身失败仍向调用者报告，函数 finally 负责释放队列凭据。已保存失败状态在重启后继续供原重试入口读取；旧中断记录由 RecoverInterrupted 转为 failed。执行步骤与验证入口见[社区与周刊状态依赖](AI_FLOWS.md#社区与周刊状态依赖)。
 
@@ -90,6 +116,12 @@ PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life
 上一轮PR功能接入曾以旧诊断存档比较44组AI请求全文；这轮关注、国运和行情事实有明确变化，不沿用上一轮哈希一致结论。当前总结检查使用本地固定响应，覆盖私信和群聊大小总结失败、原文保留及原入口重试；不调用模型。旧日志缺少模型原始返回和完整异常栈，不能确认其全部越界均来自空choices；现入口已消除直接读取choices[0]的越界，并记录可定位的响应结构与异常栈。
 
 ## 加载、切换与删除
+
+GameCalendar.Initialize 在新建和旧档规范化入口写入 CalendarStartYear，沿原完整生涯保存。多人主持者加载世界时固定旧档年份；成员视图与检查点复制同一字段，客机使用收到的年份。后续真实日期只用于首次初始化。
+
+场景操作由 PrivateMessageCommands.Apply 执行；多人由 CoopRules 与 CoopPrivateMessages 将该成员 Life 合并回世界，保存检查点后广播。Scene/SceneLines/DateSceneStates、正式关系、婚礼服务引用与头像框选择跟随原个人资料；公开婚礼事件跟随原共享事件合并。客机看自己的私人记录，其他成员取得既有权限范围内的快照。
+
+专属约会开始、暂停、结束分别走原私聊命令的保存与同步。模型返回时通过 current/save 回调读取最新实例；离开页面释放界面素材，暂停或已保存场景可以恢复。关闭进程后正在生成的轮次沿原 Recover 恢复为可重试状态；场景已有正文和状态随生涯读回。两协调器、内存传输及实际磁盘检查点的12项验证通过，覆盖固定年份、赴约、开场、暂停、结束、个人可见性、重连。最近一次赴约/开场/暂停/结束命令整段耗时298.22/525.30/252.31/235.75毫秒，分配71.44/152.61/70.89/70.89MB，包含复制、文件与传输准备，不能作为单个本地计算步骤；真实Steam发送、断线及进程强制终止未实测。
 
 | 操作 | 当前调用与处理 | 后续依赖 |
 | --- | --- | --- |

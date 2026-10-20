@@ -6,11 +6,14 @@ public partial class CareerScreen
 {
     private Control? _dialogOverlay;
     private Action? _cancelDialog;
+    private Action? _returnDialog;
+    private Action? _openingDialogReturn;
 
     // 使用主视口内的控件，避免创建独立窗口触发游戏的失焦静音。
     private void ShowCareerDialog(string title, string message, Func<bool> confirm, string confirmText = "确认", Action<VBoxContainer>? contents = null, bool showCancel = true, bool compact = false, string cancelText = "取消")
     {
         if (_dialogOverlay != null) return;
+        var returnTo = _openingDialogReturn;
         var previousFocus = GetViewport().GuiGetFocusOwner();
         IEnumerable<Control> Controls(Node node)
         {
@@ -41,15 +44,22 @@ public partial class CareerScreen
         void CloseDialog()
         {
             if (closed) return; closed = true;
-            _dialogOverlay = null; _cancelDialog = null; shade.Hide(); _stage.RemoveChild(shade); shade.QueueFree();
+            _dialogOverlay = null; _cancelDialog = _returnDialog = null; shade.Hide(); _stage.RemoveChild(shade); shade.QueueFree();
             foreach (var entry in focus)
                 if (IsInstanceValid(entry.Control) && !entry.Control.IsQueuedForDeletion()) entry.Control.FocusMode = entry.Mode;
             if (IsInstanceValid(previousFocus) && previousFocus.IsInsideTree() && !previousFocus.IsQueuedForDeletion() && previousFocus.IsVisibleInTree()) previousFocus.GrabFocus();
         }
         _cancelDialog = CloseDialog;
-        var cancel = _privateOverlay != null ? PrivateButton(cancelText, CloseDialog, 110) : Button(cancelText, CloseDialog, 130); cancel.Name = "CareerDialogCancel"; if (showCancel) actions.AddChild(cancel);
-        void Accept() { if (!closed && confirm()) CloseDialog(); }
-        var accept = _privateOverlay != null ? PrivateButton(confirmText, Accept, 150) : Button(confirmText, Accept, 170); accept.Name = "CareerDialogConfirm";
+        void Return()
+        {
+            CloseDialog();
+            if (returnTo != null) Callable.From(() => { if (_privateOverlay != null) returnTo(); }).CallDeferred();
+        }
+        _returnDialog = Return;
+        var cancel = _privateOverlay != null ? PrivateButton(cancelText, Return, 110) : Button(cancelText, Return, 130); cancel.Name = "CareerDialogCancel"; if (showCancel) actions.AddChild(cancel);
+        void Accept() { if (!closed && confirm()) { if (confirmText is "关闭" or "完成") Return(); else CloseDialog(); } }
+        string acceptText = returnTo != null && confirmText is "关闭" or "完成" ? "返回" : confirmText;
+        var accept = _privateOverlay != null ? PrivateButton(acceptText, Accept, 150) : Button(acceptText, Accept, 170); accept.Name = "CareerDialogConfirm";
         if (_privateOverlay == null) accept.AddThemeStyleboxOverride("normal", CareerVisuals.Box("2c505c", "63d4c5", 8, 12));
         else if (confirmText != "关闭") { accept.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12)); accept.AddThemeColorOverride("font_color", new Color("172330")); }
         if (compact)

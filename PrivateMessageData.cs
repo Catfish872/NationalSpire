@@ -1,7 +1,8 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class PrivateMailbox
 {
+    public Dictionary<string, string> NpcAvatarFrames { get; set; } = [];
     public string LastPerson { get; set; } = "";
     public int Version { get; set; }
     public PrivateHistorySettings Settings { get; set; } = new();
@@ -21,15 +22,64 @@ public sealed class PrivateHistorySettings
             throw new ArgumentException("保留轮数须小于最大轮数；合并数量须在 2 与小总结上限之间。");
     }
 }
-public sealed class PrivateRelation
+public sealed class PrivateRelation : System.Text.Json.Serialization.IJsonOnDeserializing, System.Text.Json.Serialization.IJsonOnDeserialized
 {
-    public int Favour { get; set; }
+    private int _favour;
+    private string _relationship = "初识";
+    private bool _deserializing;
+    public int Favour
+    {
+        get => _favour;
+        set
+        {
+            int next = Math.Clamp(value, -100, 100);
+            if (next == _favour) return;
+            AnimationFrom = DisplayFavour(); AnimationStarted = Environment.TickCount64;
+            _favour = next;
+            if (!_deserializing) RefreshAppearance();
+        }
+    }
     public string Impression { get; set; } = "";
-    public string Relationship { get; set; } = "初识";
+    public string Relationship
+    {
+        get => _relationship;
+        set { _relationship = value ?? ""; if (!_deserializing) RefreshAppearance(); }
+    }
     public long Revision { get; set; }
+    public int HighestBond { get; set; }
+    public int? SelectedBond { get; set; }
+    public bool RingReceived { get; set; }
+    public bool WeddingCompleted { get; set; }
+    public bool OathConfirmed { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore] public RelationshipAppearance Appearance { get; private set; } = new(2, false, false);
+    internal int AnimationFrom { get; private set; }
+    internal long AnimationStarted { get; private set; }
+    internal int DisplayFavour()
+    {
+        double elapsed = Math.Max(0, Environment.TickCount64 - AnimationStarted);
+        int steps = Math.Abs(_favour - AnimationFrom);
+        double duration = Math.Min(750, Math.Max(180, steps * 35));
+        return elapsed >= duration ? _favour : AnimationFrom + Math.Sign(_favour - AnimationFrom) * (int)(steps * elapsed / duration);
+    }
+    internal void RefreshAppearance()
+    {
+        bool lover = OathConfirmed || SelectedBond >= 1;
+        Appearance = new(RelationshipPresentation.Tier(_favour), lover, _favour >= 85 && !OathConfirmed);
+        HighestBond = Math.Max(HighestBond, OathConfirmed ? 2 : lover ? 1 : 0);
+    }
+    void System.Text.Json.Serialization.IJsonOnDeserializing.OnDeserializing() => _deserializing = true;
+    void System.Text.Json.Serialization.IJsonOnDeserialized.OnDeserialized()
+    {
+        _deserializing = false; RefreshAppearance(); AnimationFrom = _favour; AnimationStarted = 0;
+    }
 }
 public sealed class PrivateConversation
 {
+    public bool EventOnly { get; set; }
+    public Dictionary<string, string> DateSceneStates { get; set; } = [];
+    public bool Hidden { get; set; }
+    public bool Forgotten { get; set; }
+    public ProactiveChatSettings Proactive { get; set; } = new();
     // 简短编号属于会话，删除或重新生成不回收，内部关联仍使用原始 Id。
     public long LastInteractionNumber { get; set; }
     public Dictionary<string, long> InteractionNumbers { get; set; } = [];
@@ -48,6 +98,10 @@ public sealed class PrivateConversation
 }
 public sealed class PrivateTurn
 {
+    public DateSceneRequest? Scene { get; set; }
+    public List<DateSceneLine> SceneLines { get; set; } = [];
+    public string ProactiveReason { get; set; } = "";
+    public bool ProactiveLast { get; set; }
     public long UserOrder { get; set; }
     public long ReplyOrder { get; set; }
     public List<PrivateInteractionUndo> InteractionUndo { get; set; } = [];
@@ -107,6 +161,13 @@ public sealed class PrivateSummary
 }
 public sealed class PrivateOffer
 {
+    public int RelationshipIntent { get; set; }
+    public bool MemoryDeleted { get; set; }
+    public string GoodId { get; set; } = "";
+    public string GoodVerb { get; set; } = "";
+    public int Quantity { get; set; } = 1;
+    public bool PublicAttendance { get; set; }
+    public string ServiceId { get; set; } = "";
     public string GroupId { get; set; } = "";
     public string CoachId { get; set; } = "";
     public bool CoachAccepted { get; set; }
@@ -190,7 +251,7 @@ public static class PrivateInteractionIds
         var offers = conversation.Offers.ToLookup(o => o.TurnId);
         foreach (var turn in conversation.Turns)
         {
-            foreach (var attachment in turn.Attachments.Where(a => a.Kind is "training" or "lineup")) Number(conversation, attachment);
+            foreach (var attachment in turn.Attachments.Where(a => a.Kind is "training" or "lineup" or "gift" or "activity")) Number(conversation, attachment);
             if (turn.Request is { Kind: "training" or "lineup" or "activity" } request) Number(conversation, request);
             foreach (var offer in offers[turn.Id].Where(o => o.Kind == "activity")) Number(conversation, offer);
         }

@@ -84,7 +84,7 @@ public partial class CareerScreen
             padding.AddThemeConstantOverride("margin_left", 4); padding.AddThemeConstantOverride("margin_right", 8);
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); padding.AddChild(row);
             var icon = new Control { Name = "PrivateRelationshipIcon", CustomMinimumSize = new(36, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter };
-            row.AddChild(icon); icon.AddChild(new PrivateOrnament { Kind = "bond", MouseFilter = MouseFilterEnum.Ignore });
+            row.AddChild(icon); icon.AddChild(new RelationshipIcon { Bond = RelationshipPresentation.IconBond(relation) });
             var valueLabel = PrivateLine(PrivateRelationshipText(value), 18, _ink); valueLabel.Name = "PrivateRelationshipValue";
             valueLabel.HorizontalAlignment = HorizontalAlignment.Right; valueLabel.VerticalAlignment = VerticalAlignment.Center; row.AddChild(valueLabel);
             padding.MinimumSizeChanged += () => bondButton.CustomMinimumSize = padding.GetCombinedMinimumSize();
@@ -102,9 +102,7 @@ public partial class CareerScreen
         }
         else identity.AddChild(favour);
         var medal = new Control { Name = "PrivateFavourIcon", CustomMinimumSize = new(94, 78) }; favour.AddChild(medal);
-        medal.AddChild(new PrivateOrnament { Kind = "favour", MouseFilter = MouseFilterEnum.Ignore });
-        var number = PrivateLine(relation.Favour.ToString(), 24, _gold); medal.AddChild(number);
-        number.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); number.OffsetBottom = -6; number.HorizontalAlignment = HorizontalAlignment.Center; number.VerticalAlignment = VerticalAlignment.Center;
+        medal.AddChild(new AffectionBadge { Relation = relation });
         var caption = PrivateLine("好感", 14, _muted); caption.Name = "PrivateFavourCaption"; caption.HorizontalAlignment = HorizontalAlignment.Center;
         if (showProfile)
         {
@@ -125,7 +123,7 @@ public partial class CareerScreen
         var relationship = new HBoxContainer { CustomMinimumSize = new(225, 0), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1 };
         relationship.AddThemeConstantOverride("separation", 12); details.AddChild(relationship);
         var emblem = new Control { CustomMinimumSize = new(36, 48) }; relationship.AddChild(emblem);
-        emblem.AddChild(new PrivateOrnament { Kind = "bond", MouseFilter = MouseFilterEnum.Ignore });
+        emblem.AddChild(new RelationshipIcon { Bond = RelationshipPresentation.IconBond(relation) });
         var relationText = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; relationText.AddThemeConstantOverride("separation", 8); relationship.AddChild(relationText);
         relationText.AddChild(PrivateLine("交往关系", 13, _gold));
         relationText.AddChild(PrivateText(relation.Relationship == "初识" ? PrivateMessages.RelationshipLabel(relation.Favour) : relation.Relationship, 18, _ink));
@@ -250,10 +248,10 @@ public partial class CareerScreen
         var heading = PrivateLine(title, 24, _ink); heading.HorizontalAlignment = HorizontalAlignment.Center; box.AddChild(heading);
         var caption = PrivateLine(detail, 17, _muted); caption.HorizontalAlignment = HorizontalAlignment.Center; box.AddChild(caption);
     }
-    private static string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is CommunitySharing.Kind or CommunityReporting.Kind && a.Quote is { } quote
+    private string PrivateAttachmentHeading(PrivateOffer a) => a.Kind is CommunitySharing.Kind or CommunityReporting.Kind && a.Quote is { } quote
         ? quote.AuthorName + (a.Kind == CommunityReporting.Kind ? " · 被举报内容" : quote.ReplyId.Length == 0 ? " · 帖子" : " · 评论") : a.Kind is "post" or "result"
-        ? a.Detail.Split('\n', 2)[0] is { Length: > 0 } title ? title : PrivateMessages.AttachmentTitle(a)
-        : a.Kind == "lineup" ? "调整阵容" : a.Kind == "training" ? $"训练计划 · {a.Weeks}周" : PrivateMessages.AttachmentTitle(a);
+        ? a.Detail.Split('\n', 2)[0] is { Length: > 0 } title ? title : PrivateMessages.AttachmentTitle(ViewData, a)
+        : a.Kind == "lineup" ? "调整阵容" : a.Kind == "training" ? $"训练计划 · {a.Weeks}周" : PrivateMessages.AttachmentTitle(ViewData, a);
     private PanelContainer PrivateAttachmentCard(PrivateOffer a, bool draft)
     {
         var card = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
@@ -293,7 +291,7 @@ public partial class CareerScreen
             var body = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; body.AddThemeConstantOverride("separation", 18); scroll.AddChild(body);
             body.AddChild(PrivateText(PrivateAttachmentHeading(a), 23, _gold));
             string detail = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..] : a.Detail;
-            body.AddChild(PrivateSelectableText(detail.Length > 0 ? detail : PrivateMessages.AttachmentTitle(a), 19, _ink));
+            body.AddChild(PrivateSelectableText(detail.Length > 0 ? detail : PrivateMessages.AttachmentTitle(ViewData, a), 19, _ink));
         }, showCancel: attach);
     }
     private void AttachPrivate(PrivateOffer attachment)
@@ -330,8 +328,8 @@ public partial class CareerScreen
         {
             var scroll = new ScrollContainer { CustomMinimumSize = new(730, 420), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; list.AddThemeConstantOverride("separation", 12); scroll.AddChild(list);
-            var choices = kind == "result" ? data.Results.AsEnumerable().Reverse().Take(30).Select(r => (Id: r.MatchId, Label: $"第{r.Day}天 · {r.Event} · {r.Outcome}"))
-                : CommunityThreads.All(data).OrderByDescending(p => p.Day).Take(50).Select(p => (Id: p.Id, Label: $"第{p.Day}天 · {p.Title}"));
+            var choices = kind == "result" ? data.Results.AsEnumerable().Reverse().Take(30).Select(r => (Id: r.MatchId, Label: $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome}"))
+                : CommunityThreads.All(data).OrderByDescending(p => p.Day).Take(50).Select(p => (Id: p.Id, Label: $"{GameCalendar.Text(data, p.Day)} · {p.Title}"));
             foreach (var entry in choices)
             {
                 var a = new PrivateOffer { Kind = kind, MatchId = entry.Id };
@@ -424,16 +422,13 @@ public partial class CareerScreen
                     var inner = new VBoxContainer(); inner.AddThemeConstantOverride("separation", 16); card.AddChild(inner);
                     var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); inner.AddChild(row);
                     var first = c.Turns.ElementAtOrDefault(s.From); var last = c.Turns.ElementAtOrDefault(s.Through - 1);
-                    string dates = first == null || last == null ? "已保存" : first.Day == last.Day
-                        ? $"第 {first.Season} 赛季 · 第 {SeasonCalendar.Day(data, first.Day)} 天" : first.Season == last.Season
-                        ? $"第 {first.Season} 赛季 · 第 {SeasonCalendar.Day(data, first.Day)}—{SeasonCalendar.Day(data, last.Day)} 天"
-                        : $"第 {first.Season} 赛季第 {SeasonCalendar.Day(data, first.Day)} 天—第 {last.Season} 赛季第 {SeasonCalendar.Day(data, last.Day)} 天";
+                    string dates = first == null || last == null ? "已保存" : GameCalendar.Range(data, first.Day, last.Day);
                     var label = PrivateLine(dates, 14, _gold); label.SizeFlagsHorizontal = SizeFlags.ExpandFill; row.AddChild(label);
-                    row.AddChild(PrivateButton("编辑", () => { _cancelDialog?.Invoke(); EditPrivateSummary(s, kind); }, 72));
+                    row.AddChild(PrivateButton("编辑", () => OpenChatDialog(() => EditPrivateSummary(s, kind)), 72));
                     row.AddChild(PrivateButton("删除", () =>
                     {
                         string warning = s.IsLatest(c.SmallSummaries.Concat(c.BigSummaries)) ? "" : "删除这条总结可能导致永久丢失记忆。";
-                        _cancelDialog?.Invoke(); ShowCareerDialog("删除这条总结", warning, () => { PrivateCommand("dm-summary-delete", new() { Entry = s.Id, Part = kind }); return true; }, "确认删除");
+                        OpenChatDialog(() => ShowCareerDialog("删除这条总结", warning, () => { PrivateCommand("dm-summary-delete", new() { Entry = s.Id, Part = kind }); return true; }, "确认删除"));
                     }, 72));
                     inner.AddChild(PrivateText(s.Text, 18, _ink));
                 }
@@ -463,7 +458,7 @@ public partial class CareerScreen
             box.AddChild(new HSeparator { Modulate = new Color("526a7c") });
             var clear = PrivateButton("清空聊天记录", () =>
             {
-                _cancelDialog?.Invoke(); ShowCareerDialog("清空当前聊天记录", "删除聊天及其未确认交互。总结、好感和已确认事项保留。", () => { PrivateCommand("dm-clear", new()); return true; }, "清空记录");
+                OpenChatDialog(() => ShowCareerDialog("清空当前聊天记录", "删除聊天及其未确认交互。总结、好感和已确认事项保留。", () => { PrivateCommand("dm-clear", new()); return true; }, "清空记录"));
             }, 180); clear.AddThemeColorOverride("font_color", new Color("ffb6b6")); clear.Disabled = !c.Turns.Any(t => !(t.UserDeleted && t.ReplyDeleted)); box.AddChild(clear);
         }, showCancel: false);
     }

@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -49,7 +49,7 @@ public partial class CareerScreen
             bool current = purchases.ThisSeason(good) || good.Promo;
             ConsumerVisuals.ProductStyle(card, current, good.Id == _shopSelected);
             var artwork = new Control { CustomMinimumSize = new(0, 100), SizeFlagsHorizontal = SizeFlags.ExpandFill }; box.AddChild(artwork);
-            var art = new LifestyleArt { Category = good.Category + " " + good.Name }; artwork.AddChild(art); art.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+            var art = new LifestyleArt { ProductId = good.Id, Category = good.Category + " " + good.Name }; artwork.AddChild(art); art.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
             if (label.Length > 0)
             {
                 var badge = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore }; artwork.AddChild(badge);
@@ -80,62 +80,31 @@ public partial class CareerScreen
     }
     private void ConsumerDetail(CareerData d, Good selected, ConsumerPurchases purchases, VBoxContainer body)
     {
-        body.AddChild(new LifestyleArt { Category = selected.Category + " " + selected.Name, CustomMinimumSize = new(0, 205), SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        body.AddChild(new LifestyleArt { ProductId = selected.Id, Category = selected.Category + " " + selected.Name, CustomMinimumSize = new(0, 205), SizeFlagsHorizontal = SizeFlags.ExpandFill });
         body.AddChild(Text(selected.Name, 28, _gold)); body.AddChild(Text(selected.Tier + " / " + selected.Category, 15, _muted));
         body.AddChild(Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal));
-        if (selected.Promo) body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}\n每赛季最多3次", 18, _ink));
+        if (selected.Promo) body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink));
+        if (!selected.Collectible) body.AddChild(Text("即时消费", 16, _muted));
         if (_shopOwned)
         {
             body.AddChild(Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted));
-            var owned = d.Life.Consumer.Goods.FirstOrDefault(g => g.Id == selected.Id && g.Durable);
-            foreach (var verb in selected.Verbs)
-            {
-                bool used = owned != null && owned.UsedSeason == d.Season && owned.UsedVerbs.Contains(verb.Id);
-                var button = Button(verb.Name + (used ? " · 本季已举办" : $" · ${ConsumerEngine.HospitalityFee(selected):N0}"), () => ConsumerInvite(d, selected, verb.Id, verb.Slots), 0);
-                button.Disabled = used; body.AddChild(button);
-            }
+            if (selected.Verbs.Length > 0) body.AddChild(Text("使用聊天输入栏的＋添加活动附件，约定日期和同行者。", 16, _muted));
         }
         else
         {
             if (selected.Durable) body.AddChild(Text("收藏后可举办\n" + string.Join("\n", selected.Verbs.Select(v => v.Name)), 18, _ink));
+            var quantity = new ConsumerQuantity { Minimum = 1 }; quantity.Initialize(1); body.AddChild(quantity);
             string? error = ConsumerEngine.BuyError(d, selected);
-            var purchase = Button(error ?? "确认购买", () => ConsumerSubmit(d, selected, "", []), 0); purchase.Disabled = error != null; body.AddChild(purchase);
-            if (selected.Slots > 0 && error == null) body.AddChild(Button("邀请同行", () => ConsumerInvite(d, selected, "", selected.Slots), 0));
+            var purchase = Button(error ?? "确认购买", () => ConsumerSubmit(d, selected, "", [], (int)quantity.Value), 0); purchase.Disabled = error != null; body.AddChild(purchase);
+            quantity.Changed += () => { int value = quantity.Value; var message = quantity.Valid ? ConsumerEngine.BuyError(d, selected, value) : "请输入有效的购买数量。"; purchase.Text = message ?? $"购买 · ${ConsumerEngine.Price(selected) * (decimal)value:N0}"; purchase.Disabled = message != null; };
         }
     }
-    private void ConsumerSubmit(CareerData d, Good good, string verb, List<string> guests)
+    private void ConsumerSubmit(CareerData d, Good good, string verb, List<string> guests, int quantity = 1)
     {
         string kind = verb.Length == 0 ? "consumer-buy" : "consumer-use";
-        if (MultiplayerCommand(kind, good.Id, text: JsonSerializer.Serialize(new ConsumerOrder(verb, guests)))) return;
-        var error = EconomicActions.Save(d, value => verb.Length == 0 ? ConsumerEngine.Buy(value, good.Id, guests) : ConsumerEngine.Use(value, good.Id, verb, guests));
+        if (MultiplayerCommand(kind, good.Id, text: JsonSerializer.Serialize(new ConsumerOrder(verb, guests, quantity)))) return;
+        var error = EconomicActions.Save(d, value => verb.Length == 0 ? ConsumerEngine.Buy(value, good.Id, guests, quantity) : ConsumerEngine.Use(value, good.Id, verb, guests));
         Render(); if (error != null) Notice(error, true);
-    }
-    private void ConsumerInvite(CareerData d, Good good, string verb, int slots)
-    {
-        var selected = new HashSet<string>();
-        ShowCareerDialog(good.Name, $"最多邀请{slots}位选手；好感达到5即可邀请。", () => { ConsumerSubmit(d, good, verb, selected.ToList()); return true; }, "确认", box =>
-        {
-            var search = new LineEdit { PlaceholderText = "搜索选手", SizeFlagsHorizontal = SizeFlags.ExpandFill }; box.AddChild(search);
-            var scroll = new ScrollContainer { CustomMinimumSize = new(500, 340), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
-            var list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; scroll.AddChild(list);
-            var counter = Text("已选择0人", 16, _muted); box.AddChild(counter);
-            void Fill(string query)
-            {
-                foreach (var child in list.GetChildren()) { list.RemoveChild(child); child.QueueFree(); }
-                foreach (var person in d.People.Where(p => ConsumerEngine.CanInvite(d, p.Id) && (p.PublicName.Contains(query, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).OrderByDescending(p => p.ClubId == d.Esports.ClubId).Take(40))
-                {
-                    var button = Button(person.PublicName, () => { }, 320); button.ToggleMode = true; button.ButtonPressed = selected.Contains(person.Id);
-                    button.Toggled += pressed =>
-                    {
-                        if (pressed && selected.Count >= slots) button.SetPressedNoSignal(false);
-                        else if (pressed) selected.Add(person.Id); else selected.Remove(person.Id);
-                        counter.Text = $"已选择{selected.Count}人";
-                    };
-                    list.AddChild(button);
-                }
-            }
-            search.TextChanged += Fill; Fill("");
-        });
     }
     private void FanChart(CareerData d)
     {

@@ -21,6 +21,8 @@ public partial class CareerScreen
         box.AddChild(title); box.AddChild(body); AddMentionPicker(body, box);
         title.TextChanged += value => _newPostTitle = value; body.TextChanged += () => _newPostBody = body.Text;
         var actions = new HBoxContainer(); box.AddChild(actions);
+        CommunityReplyExpressions.Attach(body, box, actions);
+        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
         actions.AddChild(Button("发布帖子", () =>
         {
             try
@@ -176,7 +178,7 @@ public partial class CareerScreen
     private void RenderPostHeader(CareerData data, CommunityPost post, VBoxContainer header)
     {
         header.AddChild(MentionText(data, post.Title, 30, _gold, post.RelatedPeople.Append(post.AuthorId)));
-        header.AddChild(Text($"第 {post.Day} 天 · {post.Category}", 16, _muted));
+        header.AddChild(Text($"{GameCalendar.Text(data, post.Day)} · {post.Category}", 16, _muted));
         RenderPostBackground(data, post, header);
         string country = CareerEngine.Person(data, post.AuthorId)?.Country ?? data.Esports.Country;
         bool preparing = CommunityThreads.NewsPending(data, post);
@@ -260,7 +262,7 @@ public partial class CareerScreen
             }
             var head = new HBoxContainer(); box.AddChild(head);
             var speaker = CareerEngine.Person(data, reply.AuthorId);
-            string caption = $"{CareerEngine.DisplayName(data, reply.AuthorId)}  ·  {speaker?.Country ?? data.Esports.Country}赛区\n{item.Floor}L" + (item.Depth > 0 ? $" · 楼中楼" : "") + $"  ·  第 {reply.Day} 天";
+            string caption = $"{CareerEngine.DisplayName(data, reply.AuthorId)}  ·  {speaker?.Country ?? data.Esports.Country}赛区\n{item.Floor}L" + (item.Depth > 0 ? $" · 楼中楼" : "") + $"  ·  {GameCalendar.Text(data, reply.Day)}";
             head.AddChild(WithAvatar(data, reply.AuthorId, Text(caption, 16, reply.AuthorId == "player" ? _gold : _ink), 42));
             head.AddChild(DiscussionVotes(data, post, reply));
             box.AddChild(MentionText(data, reply.Body, 17, _ink, post.RelatedPeople.Append(post.AuthorId).Append(reply.AuthorId)));

@@ -1,0 +1,26 @@
+<svg viewBox="-40 -34 80 68" xmlns="http://www.w3.org/2000/svg" width="240" height="204">
+  <title>37，25～49档，进度50%</title>
+  <defs>
+    <linearGradient id="nsb7-body" x1=".12" y1="0" x2=".85" y2="1">
+      <stop stop-color="#285561" />
+      <stop offset=".56" stop-color="#103440" />
+      <stop offset="1" stop-color="#103440" />
+    </linearGradient>
+    <linearGradient id="nsb7-heart" x1="0" y1="0" x2=".7" y2="1">
+      <stop stop-color="#ffd3dc" />
+      <stop offset=".42" stop-color="#e75270" />
+      <stop offset="1" stop-color="#aa244a" />
+    </linearGradient>
+  </defs>
+  <polygon points="-26,8 -32,0 -33,4 -26,10" fill="#ddc38b" />
+  <polygon points="-23,13 -29,5 -30,9 -23,15" fill="#aa9567" />
+  <polygon points="-20,18 -26,10 -27,14 -20,20" fill="#ddc38b" />
+  <polygon points="-17,23 -23,15 -24,19 -17,25" fill="#aa9567" />
+  <polygon points="26,8 32,0 33,4 26,10" fill="#ddc38b" />
+  <polygon points="23,13 29,5 30,9 23,15" fill="#aa9567" />
+  <polygon points="20,18 26,10 27,14 20,20" fill="#ddc38b" />
+  <polygon points="17,23 23,15 24,19 17,25" fill="#aa9567" />
+  <path d="M0 20 4 24 0 29-4 24Z" fill="#89ddd8" />
+  <path d="M0 20 4 24H0Z" fill="#bcf6ed" />
+  <path d="M0 24H4L0 29Z" fill="#53aeb1" />
+</svg>

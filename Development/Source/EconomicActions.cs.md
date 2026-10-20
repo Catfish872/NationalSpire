@@ -19,7 +19,7 @@
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>)`](ConsumerScreen.cs.md#symbol-a26966f14e5c)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)
 
 **调用：** [`NationalSpire.CareerData.EncodingHeader()`](CareerData.cs.md#symbol-09cee4b6558d)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](Coop/CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.EconomicActions.Copy(NationalSpire.CareerData, NationalSpire.CareerData)`](EconomicActions.cs.md#symbol-d4ca2504b704)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 

@@ -25,7 +25,7 @@ public partial class CareerScreen
         if (_lifeSection == "收支记录")
         {
             foreach (var entry in d.Life.Ledger.AsEnumerable().Reverse().Take(40))
-                _content.AddChild(Text($"第{entry.Day}天 · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink));
+                _content.AddChild(Text($"{GameCalendar.Text(d, entry.Day)} · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink));
             if (d.Life.Ledger.Count == 0) _content.AddChild(Text("新的收入和花销会记在这里。", 18, _muted));
             return;
         }
@@ -96,7 +96,7 @@ public partial class CareerScreen
         _content.AddChild(Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold));
         _content.AddChild(Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink));
         _content.AddChild(Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted));
-        _content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · 第 {d.Life.RestockDay} 天上新", 23, _gold));
+        _content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · {GameCalendar.Text(d, d.Life.RestockDay)}上新", 23, _gold));
         var store = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         store.AddThemeConstantOverride("h_separation", 16); store.AddThemeConstantOverride("v_separation", 16); _content.AddChild(store);
         foreach (var item in CareerRelics.Offers(d)) FigurineCard(d, store, item, false);
@@ -158,7 +158,7 @@ public partial class CareerScreen
         foreach (var e in events.Take(_lifeHistoryLimit))
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
-            box.AddChild(Text(e.Title, 21, _gold)); box.AddChild(Text($"第{e.Day}天 · {e.Topic}", 15, _muted)); box.AddChild(Text(e.Detail, 17, _ink));
+            box.AddChild(Text(e.Title, 21, _gold)); box.AddChild(Text($"{GameCalendar.Text(d, e.Day)} · {e.Topic}", 15, _muted)); box.AddChild(Text(e.Detail, 17, _ink));
             var post = CommunityThreads.All(d).FirstOrDefault(p => p.Id == e.PostId && p.NewsGeneration.State == "completed");
             if (post != null) box.AddChild(Button("查看相关讨论", () => OpenPost(post), 190));
         }

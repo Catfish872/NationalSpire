@@ -30,7 +30,7 @@ public sealed class GroupStreamParser
                     var speaker = Regex.Match(header, @"^\[\s*Speaker\s*[:：]\s*([^\]\s]+)\s*\]$", RegexOptions.IgnoreCase);
                     if (speaker.Success) Messages.Add(new(speaker.Groups[1].Value));
                     else if (Regex.IsMatch(header, @"^\[\s*Actions\s*\]$", RegexOptions.IgnoreCase)) _actions = true;
-                    else if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(header, @"^\[\s*(Favour|Attitude|Relationship|Training|Lineup|Activity|Gift|Oath|Contract|Match|Mood|Skill|Post|Profile)\s*[:：]", RegexOptions.IgnoreCase))
                     { _actions = true; Actions.Feed(header); }
                     else Append(header);
                 }

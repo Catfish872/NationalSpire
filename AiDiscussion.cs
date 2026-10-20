@@ -199,9 +199,12 @@ public static partial class AiService
         bool hasLatestEvidence = latest != null && memories.Any(m => m.Id.EndsWith(":result") && m.Day == latest.Day && m.People.Contains("player") && m.People.Contains(latest.OpponentId));
         var sharedGroups = new ChatTimeline.PublicMemoryRequest(data);
         var personas = people.Select(p => Persona(data, p, occasion, privatePosts: targets.Where(t => t.RelatedPeople.Contains(p.Id) || DiscussionPeople(data, t, requested).Any(s => s.Id == p.Id)), sharedGroups: sharedGroups)).ToArray();
-        return JsonSerializer.Serialize(new { day = data.Day, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender }, schedule = PublicSchedule.ForPrompt(schedule), playerRecord = PlayerPublicRecord(data, data.Day, !hasLatestEvidence && !contexts.Any(c => c.match != null)), queued, targets = contexts,
+        return JsonSerializer.Serialize(new { day = data.Day, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender }, schedule = PublicSchedule.ForPrompt(data, schedule), playerRecord = PlayerPublicRecord(data, data.Day, !hasLatestEvidence && !contexts.Any(c => c.match != null)), queued, targets = contexts,
             attitudeScale = PersonalityLibrary.AttitudeScale, 态度说明 = "涉及玩家时，采用对应帖子中面向该玩家的态度；其他话题使用人物本次态度。", people = personas, sharedGroupMemories = sharedGroups.Records,
             性格使用说明 = PersonalityLibrary.ProfileUsage, otherSpeakers = names, memory = memories,
+            countryConditions = NationalDevelopment.Context(data, people.Select(p => p.Country).Append(data.Esports.Country)),
+            cards = CardKnowledge.Find(string.Join("\n", targets.SelectMany(p => (requested.Contains(p.Id) && CommunityThreads.IsHuman(data, p.AuthorId) ? new[] { p.Title + "\n" + p.Body } : [])
+                .Concat(p.Replies.Where(r => requested.Contains(r.Id) && CommunityThreads.IsHuman(data, r.AuthorId)).Select(r => r.Body))))),
             career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak,
                 honors = data.Esports.Honors.TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }) } }, Json);
     }

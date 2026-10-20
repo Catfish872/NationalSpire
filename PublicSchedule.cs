@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>公开日程快照只记录已公布的对阵及历史赛果，不读取预先模拟的结果。</summary>
 public sealed class PublicSchedule
@@ -9,10 +9,10 @@ public sealed class PublicSchedule
     public List<PublicMatch> RelatedFixtures { get; set; } = [];
 
     // 保留存档快照，发送时为每条资料补齐当事人和状态含义。
-    public static object? ForPrompt(PublicSchedule? schedule) => schedule == null ? null : new
+    public static object? ForPrompt(CareerData data, PublicSchedule? schedule) => schedule == null ? null : new
     {
         schedule.AsOfDay,
-        资料日期 = $"生涯第{schedule.AsOfDay}天，以下Day均为生涯累计日期",
+        资料日期 = GameCalendar.Text(data, schedule.AsOfDay),
         Upcoming = schedule.Upcoming.Select(m => new { m.Day, m.Event, m.Ascension,
             参赛情况 = m.Status == "可报名，尚未报名"
                 ? $"{m.Home}可以报名{m.Event}，目前尚未报名；报名后预定对手为{m.Away}。"

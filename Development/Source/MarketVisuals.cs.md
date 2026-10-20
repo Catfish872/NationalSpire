@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0943DA10F32157FBEE0410012C0B50CAA6D8578706226D1FB7662331634C1B00`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0BFE123FA666E6AC0C9B2D72A9BB56C48B120FA4BEAC0610074B3A8430BF7790`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -278,28 +278,29 @@ private bool _margin;
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-30fd495127a5"></a>
+<a id="symbol-a69640a62077"></a>
 
-## `NationalSpire.MarketEventRow.Bind(NationalSpire.MarketEvent, string) — internal void Bind(MarketEvent item, string title)`
+## `NationalSpire.MarketEventRow.Bind(NationalSpire.CareerData, NationalSpire.MarketEvent, string) — internal void Bind(CareerData data, MarketEvent item, string title)`
 
 来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
-**调用：** `double.ToString(string?)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`
+**调用：** [`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`double.ToString(string?)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Teal`；`NationalSpire.MarketEvent.Change`；`NationalSpire.MarketEvent.Day`；`NationalSpire.MarketEvent.Person`；`NationalSpire.MarketEventRow._change`；`NationalSpire.MarketEventRow._day`；`NationalSpire.MarketEventRow._title`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Teal`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.MarketEvent.Change`；`NationalSpire.MarketEvent.Day`；`NationalSpire.MarketEvent.Person`；`NationalSpire.MarketEventRow._change`；`NationalSpire.MarketEventRow._day`；`NationalSpire.MarketEventRow._title`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `double.ToString(string?)`；输入表达式：`item.Change.ToString("+0.00%;-0.00%;0.00%")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _change.Text = item.Change.ToString("+0.00%;-0.00%;0.00%")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("f095a3")`；返回值紧邻使用处：`ConditionalExpressionSyntax: item.Change >= 0 ? CareerVisuals.Teal : new Color("f095a3")`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_change.AddThemeColorOverride("font_color", item.Change >= 0 ? CareerVisuals.Teal : new Color("f095a3"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _change.AddThemeColorOverride("font_color", item.Change >= 0 ? CareerVisuals.Teal : new Color("f095a3"));`
+- `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(data, item.Day)`；返回值紧邻使用处：`InterpolationSyntax: {GameCalendar.Text(data, item.Day)}`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_change.Text` = `item.Change.ToString("+0.00%;-0.00%;0.00%")`
-- `_day.Text` = `$"第 {item.Day} 天"`
+- `_day.Text` = `$"{GameCalendar.Text(data, item.Day)}"`
 - `_title.Text` = `title`
 - `MouseDefaultCursorShape` = `item.Person.Length > 0 ? CursorShape.PointingHand : CursorShape.Arrow`
 
@@ -321,11 +322,29 @@ private bool _margin;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-8fcafb01d662"></a>
+
+## `NationalSpire.DevelopmentGauge.Enhancement — public double Enhancement`
+
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-91afc5ed8f86"></a>
 
 ## `NationalSpire.DevelopmentGauge.DevelopmentGauge() — public DevelopmentGauge()`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)
 
@@ -348,21 +367,27 @@ private bool _margin;
 
 ## `NationalSpire.DevelopmentGauge._Draw() — public override void _Draw()`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.MarketVisuals.LevelColor(int)`](MarketVisuals.cs.md#symbol-0f0bdceb25d3)；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`
+**调用：** [`NationalSpire.MarketVisuals.LevelColor(int)`](MarketVisuals.cs.md#symbol-0f0bdceb25d3)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DevelopmentGauge.Level`；`NationalSpire.MarketVisuals.LevelColor(int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.DevelopmentGauge.Enhancement`；`NationalSpire.DevelopmentGauge.Level`；`NationalSpire.MarketVisuals.LevelColor(int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`DrawLine(new(0, 0), new(Size.X, 0), new Color(CareerVisuals.Gold, .65f), 2)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawLine(new(0, 0), new(Size.X, 0), new Color(CareerVisuals.Gold, .65f), 2);`
+- `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(new Rect2(0, Size.Y - 4, Size.X * (float)Enhancement, 3), CareerVisuals.Gold)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(0, Size.Y - 4, Size.X * (float)Enhancement, 3), CareerVisuals.Gold);`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(rect, i < Level ? color : new Color("0b1822"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(rect, i < Level ? color : new Color("0b1822"));`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；输入表达式：`DrawRect(rect, new Color(color, i < Level ? .8f : .22f), false, 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(rect, new Color(color, i < Level ? .8f : .22f), false, 1);`
+- `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(CareerVisuals.Gold, .65f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(CareerVisuals.Gold, .65f)`
 - `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, i < Level ? .8f : .22f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(color, i < Level ? .8f : .22f)`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("0b1822")`；返回值紧邻使用处：`ConditionalExpressionSyntax: i < Level ? color : new Color("0b1822")`
+- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(0, Size.Y - 4, Size.X * (float)Enhancement, 3)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(0, Size.Y - 4, Size.X * (float)Enhancement, 3)`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(i * (width + 4), 1, width, Size.Y - 2)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2(i * (width + 4), 1, width, Size.Y - 2)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 0)`；返回值紧邻使用处：`ArgumentSyntax: new(0, 0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Size.X, 0)`；返回值紧邻使用处：`ArgumentSyntax: new(Size.X, 0)`
 - `NationalSpire.MarketVisuals.LevelColor(int)`；输入表达式：`MarketVisuals.LevelColor(Level)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MarketVisuals.LevelColor(Level)`
 
 **赋值（含属性/字段和局部值）：**
@@ -372,11 +397,11 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>) — internal MarketPositionCard(Action close, Action<MarketOrder> submit)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
-**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-92ca60a13354)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
+**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-183827086673)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
 
 **字段、属性、事件及方法组引用：** `ActionButton(string, string, System.Action)`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketPositionCard._actions`；`NationalSpire.MarketPositionCard._apply`；`NationalSpire.MarketPositionCard._clear`；`NationalSpire.MarketPositionCard._close`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._icon`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._preview`；`NationalSpire.MarketPositionCard._proceeds`；`NationalSpire.MarketPositionCard._profit`；`NationalSpire.MarketPositionCard._revision`；`NationalSpire.MarketPositionCard._submit`；`NationalSpire.MarketPositionCard._terms`；`NationalSpire.MarketPositionCard._title`；`NationalSpire.MarketPositionCard.Apply()`；`NationalSpire.MarketPositionCard.Edit(bool)`；`NationalSpire.MarketPositionCard.Preview()`；`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`
 
@@ -435,11 +460,11 @@ private bool _margin;
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Text` = `"平仓"`
 
-<a id="symbol-92ca60a13354"></a>
+<a id="symbol-183827086673"></a>
 
 ## `ActionButton(string, string, System.Action) — Button ActionButton(string title, string icon, Action action)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
@@ -465,7 +490,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool) — internal void Bind(MarketPosition? p, MarketQuote? quote, long revision = 0, MarketExecution.Exit? projected = null, bool pending = false)`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.Unbind()`](MarketTerminal.cs.md#symbol-76844d4631c4)
 
@@ -533,7 +558,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Price(decimal) — private string Price(decimal value)`
 
-来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)
 
@@ -553,7 +578,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.DisplayScale — private decimal DisplayScale`
 
-来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -571,7 +596,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Edit(bool) — private void Edit(bool margin)`
 
-来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
@@ -599,11 +624,11 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Preview() — private void Preview()`
 
-来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
-**调用：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-b46380358b7b)；[`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-3e50cb7c29a1)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)
+**调用：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-160df92af6e9)；[`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-3e50cb7c29a1)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)
 
 **字段、属性、事件及方法组引用：** `Leverage(NationalSpire.MarketNumber)`；`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.MarketAmountInput.Amount`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.Margin`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._margin`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._preview`；`NationalSpire.MarketPositionCard._quote`；`NationalSpire.MarketPositionCard.Price(decimal)`；`NationalSpire.MarketQuote.Price`
 
@@ -621,11 +646,11 @@ private bool _margin;
 - `_preview.Text` = `"保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)              + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition) + " · 追加免手续费"`
 - `_preview.Text` = `"当前报价 " + Price(_quote!.Price) + (_position.Direction > 0 ? "；低于此价设置止损。" : "；高于此价设置止损。") + "\n触发后按实际成交均价平仓。"`
 
-<a id="symbol-b46380358b7b"></a>
+<a id="symbol-160df92af6e9"></a>
 
 ## `Leverage(NationalSpire.MarketNumber) — string Leverage(MarketNumber funds)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)
 
@@ -644,7 +669,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Apply() — private void Apply()`
 
-来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -666,7 +691,7 @@ private bool _margin;
 
 ## `NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder) — private void Send(MarketOrder order)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MarketPositionCard.Apply()`](MarketVisuals.cs.md#symbol-dd2c5ccf395d)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 

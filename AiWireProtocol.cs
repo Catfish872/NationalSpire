@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace NationalSpire;
@@ -45,7 +45,7 @@ internal sealed class AiWireProtocol
         foreach (string key in new[] { "memory", "communityMemory" })
             if (node[key] is JsonArray memories)
                 foreach (var memory in memories.OfType<JsonObject>()) { memory.Remove("Id"); memory.Remove("PostId"); }
-        Rewrite(node, _encode); return node.ToJsonString(Json);
+        Rewrite(node, _encode, calendar: _data); return node.ToJsonString(Json);
     }
     // 历史评论保留原帖与父回复。来源按帖子编号合并，人物使用具名身份。
     private void AddMemorySources(JsonNode node)
@@ -216,21 +216,22 @@ internal sealed class AiWireProtocol
             }
         else if (node is JsonArray array) foreach (var value in array) if (value != null) NormalizeFields(value);
     }
-    private static void Rewrite(JsonNode node, Dictionary<string, string> map, bool identifiers = false)
+    private static void Rewrite(JsonNode node, Dictionary<string, string> map, bool identifiers = false, CareerData? calendar = null)
     {
         if (node is JsonObject obj)
             foreach (var key in obj.Select(p => p.Key).ToArray())
             {
                 var value = obj[key]; bool id = IdFields.Contains(key);
+                if (calendar != null && GameCalendar.ConvertDateField(calendar, obj, key)) continue;
                 if (id && value is JsonValue text && text.TryGetValue<string>(out var raw) && map.TryGetValue(raw, out var replacement)) obj[key] = replacement;
-                else if (value != null) Rewrite(value, map, id);
+                else if (value != null) Rewrite(value, map, id, calendar);
             }
         else if (node is JsonArray array)
             for (int i = 0; i < array.Count; i++)
             {
                 var value = array[i];
                 if (identifiers && value is JsonValue text && text.TryGetValue<string>(out var raw) && map.TryGetValue(raw, out var replacement)) array[i] = replacement;
-                else if (value != null) Rewrite(value, map, identifiers);
+                else if (value != null) Rewrite(value, map, identifiers, calendar);
             }
     }
 }

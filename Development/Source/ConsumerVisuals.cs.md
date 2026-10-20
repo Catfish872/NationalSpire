@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1426E67A406541BC2ECE929851BB9EF6BCA82C2E23E37745AADE00505440CBCE`。来源：[源码](../../ConsumerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A14DCD1037EF657D9BC404086C1E4AFC5F915585371CB862B67BCB8166EEBA59`。来源：[源码](../../ConsumerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -173,7 +173,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 <a id="symbol-378d84a3bedd"></a>
 
-## `NationalSpire.ConsumerSeal.Count — public int Count`
+## `NationalSpire.ConsumerSeal.Count — public long Count`
 
 来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -220,7 +220,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 **调用：** [`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerCatalog.PromoPerSeason`；`NationalSpire.ConsumerSeal.Count`；`NationalSpire.ConsumerSeal.Current`；`NationalSpire.ConsumerSeal.Promo`；`NationalSpire.ConsumerSeal.Ticket`；`NationalSpire.ConsumerVisuals.Accent(bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerSeal.Current`；`NationalSpire.ConsumerSeal.Promo`；`NationalSpire.ConsumerSeal.Ticket`；`NationalSpire.ConsumerVisuals.Accent(bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -234,15 +234,15 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 - `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；输入表达式：`DrawPolyline([new(12, 2), new(22, 12), new(12, 22), new(2, 12), new(12, 2)], color, 1.5f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline([new(12, 2), new(22, 12), new(12, 22), new(2, 12), new(12, 2)], color, 1.5f, true);`
 - `Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；输入表达式：`DrawPolyline([new(6, 12), new(10, 16), new(18, 8)], color, 2.5f, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline([new(6, 12), new(10, 16), new(18, 8)], color, 2.5f, true);`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(new Rect2(2, 5, 20, 14), new Color(color, .18f))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(2, 5, 20, 14), new Color(color, .18f));`
-- `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(rect, i < Count ? color : new Color(color, .12f))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(rect, i < Count ? color : new Color(color, .12f));`
+- `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(rect, new Color(color, .3f + i * .2f))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(rect, new Color(color, .3f + i * .2f));`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(rect, new Color(color, .7f), false)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(rect, new Color(color, .7f), false);`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；输入表达式：`DrawRect(new Rect2(2, 5, 20, 14), color, false, 1.5f)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(2, 5, 20, 14), color, false, 1.5f);`
-- `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, .12f)`；返回值紧邻使用处：`ConditionalExpressionSyntax: i < Count ? color : new Color(color, .12f)`
 - `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, .18f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(color, .18f)`
 - `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, .2f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(color, .2f)`
+- `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, .3f + i * .2f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(color, .3f + i * .2f)`
 - `Godot.Color.Color(Godot.Color, float)`；输入表达式：`new Color(color, .7f)`；返回值紧邻使用处：`ArgumentSyntax: new Color(color, .7f)`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(2, 5, 20, 14)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(2, 5, 20, 14)`
-- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(i * 8, 6, 5, 13)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2(i * 8, 6, 5, 13)`
+- `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(i * 8, 14 - i * 4, 5, 5 + i * 4)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Rect2(i * 8, 14 - i * 4, 5, 5 + i * 4)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(10, 14)`；返回值紧邻使用处：`ArgumentSyntax: new(10, 14)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(10, 16)`；返回值紧邻使用处：`ExpressionElementSyntax: new(10, 16)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(12, 10)`；返回值紧邻使用处：`ArgumentSyntax: new(12, 10)`

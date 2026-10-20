@@ -281,13 +281,16 @@ internal partial class MarketTerminal : VBoxContainer
         var news = _data.Market.Events.AsEnumerable().Reverse().Where(e => e.Asset == _selected)
             .Select(e => (Event: e, Title: EventTitle(e, asset))).Where(e => e.Title.Length > 0).Take(_events.Length).ToArray();
         _selectedEvents = news.Select(e => e.Event).ToArray(); _newsTitle.Visible = news.Length > 0;
-        for (int i = 0; i < _events.Length; i++) { _events[i].Visible = i < news.Length; if (i < news.Length) _events[i].Bind(news[i].Event, news[i].Title); }
+        for (int i = 0; i < _events.Length; i++) { _events[i].Visible = i < news.Length; if (i < news.Length) _events[i].Bind(_data, news[i].Event, news[i].Title); }
         RefreshFee();
     }
     private void RefreshChart()
     {
         if (_data != null && MarketCatalog.ById.TryGetValue(_selected, out var asset))
+        {
+            _chart.Calendar = _data;
             _chart.Set(_data.Market.Quotes[_selected].History.TakeLast(_range).ToArray(), _data.WorldId + asset.Id, asset.Forex ? 1 : 10);
+        }
     }
     private string EventTitle(MarketEvent item, MarketAsset asset)
     {
@@ -369,7 +372,7 @@ internal partial class MarketTerminal : VBoxContainer
         }
         _tradePage = Math.Min(_tradePage, Math.Max(0, (account.Trades.Count - 1) / 5));
         var trades = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray();
-        for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"第{trades[i].Day}天 · {trades[i].Text}\n{CareerMoney.Compact(trades[i].Change)}" : "暂无成交"; }
+        for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"{GameCalendar.Text(_data, trades[i].Day)} · {trades[i].Text}\n{CareerMoney.Compact(trades[i].Change)}" : "暂无成交"; }
         if (remote && requestInspection) RequestInspection();
     }
     private void ToggleWatch()
@@ -403,6 +406,7 @@ public partial class MarketChart : Control
     private MarketPoint[] _points = [];
     private string _seed = "";
     private int _hover = -1;
+    public CareerData Calendar { get; set; } = new();
     private decimal _displayScale = 1;
     public MarketPoint[] Points { get => _points; set => Set(value, _seed); }
     public void Set(MarketPoint[] points, string seed, decimal displayScale = 1) { _points = points; _seed = seed; _displayScale = displayScale; _hover = -1; QueueRedraw(); }
@@ -433,12 +437,12 @@ public partial class MarketChart : Control
             DrawRect(new Rect2(x - Math.Max(1, step * .3f), Y(Math.Max(open, close)), Math.Max(2, step * .6f), Math.Max(2, Math.Abs(Y(open) - Y(close)))), color);
         }
         var last = _points[^1]; DrawLine(new(8, Y(last.Price)), new(area.End.X, Y(last.Price)), CareerVisuals.Gold, 1);
-        DrawString(font, new(8, Size.Y - 8), _points[0].Day > 0 ? "D" + _points[0].Day : "开市前", fontSize: 13, modulate: CareerVisuals.Muted);
-        DrawString(font, new(area.End.X - 48, Size.Y - 8), "D" + last.Day, fontSize: 13, modulate: CareerVisuals.Muted);
+        DrawString(font, new(8, Size.Y - 8), _points[0].Day > 0 ? GameCalendar.Date(Calendar, _points[0].Day).ToString("M/d") : "开市前", fontSize: 13, modulate: CareerVisuals.Muted);
+        DrawString(font, new(area.End.X - 48, Size.Y - 8), GameCalendar.Date(Calendar, last.Day).ToString("M/d"), fontSize: 13, modulate: CareerVisuals.Muted);
         if (_hover >= 0 && _hover < _points.Length)
         {
             float x = area.Position.X + step * (_hover + .5f); DrawLine(new(x, 28), new(x, area.End.Y), new Color("7b9b9c"));
-            DrawString(font, new(10, 20), $"第{_points[_hover].Day}天  开 {(_hover > 0 ? _points[_hover - 1].Price : _points[_hover].Price) * _displayScale:0.0000}  收 {_points[_hover].Price * _displayScale:0.0000}", fontSize: 14, modulate: CareerVisuals.Gold);
+            DrawString(font, new(10, 20), $"{GameCalendar.Text(Calendar, _points[_hover].Day)}  开 {(_hover > 0 ? _points[_hover - 1].Price : _points[_hover].Price) * _displayScale:0.0000}  收 {_points[_hover].Price * _displayScale:0.0000}", fontSize: 14, modulate: CareerVisuals.Gold);
         }
     }
 }

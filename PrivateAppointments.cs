@@ -48,19 +48,13 @@ public static class PrivateAppointments
                 : $"{player}与{CareerEngine.DisplayName(data, x.Conversation.PersonId)}") + $"已约定《{x.Offer.Title}》。{x.Offer.Detail}"));
         return matches.Concat(fixtures).Concat(activities).Distinct().ToList();
     }
-    public static string DateText(CareerData data, int date)
-    {
-        int season = Math.Max(1, data.Season);
-        while (season > 1 && date <= SeasonCalendar.Start(data, season)) season--;
-        while (date > SeasonCalendar.Start(data, season) + SeasonCalendar.Length(data, season)) season++;
-        return $"第{season}赛季第{date - SeasonCalendar.Start(data, season)}天";
-    }
+    public static string DateText(CareerData data, int date) => GameCalendar.Text(data, date);
     public static string DateRanges(CareerData data, IEnumerable<int> dates)
     {
         var values = dates.Distinct().Order().ToArray();
         if (values.Length == 0) return "暂无";
         var ranges = new List<string>(); int start = values[0], end = start;
-        void Add() => ranges.Add(start == end ? DateText(data, start) : DateText(data, start)[..^1] + "至" + SeasonCalendar.Day(data, end) + "天");
+        void Add() => ranges.Add(GameCalendar.Range(data, start, end));
         foreach (int date in values.Skip(1))
         {
             if (date == end + 1 && SeasonCalendar.Day(data, date) != 1) { end = date; continue; }
@@ -87,16 +81,22 @@ public static class PrivateAppointments
             var previous = PrivateMessages.Conversation(data, person).Offers.FirstOrDefault(o => o.Id == offer.ReplacesOfferId);
             if (previous != null && Cancel(data, previous) is { } cancellationError) return cancellationError;
         }
-        var match = new CareerMatch { Day = Date(data, offer), Event = "私信" + offer.Mode + " · " + CareerEngine.DisplayName(data, person), OpponentId = person,
-            Kind = offer.Mode == "挑战" ? "private-challenge" : "private-friendly", RequiredAscension = offer.Ascension, Registered = true, Prize = 0 };
-        data.Matches.Add(match); offer.MatchId = match.Id; offer.State = "已确认";
+        var match = CreateMatch(data, person, Date(data, offer), offer.Ascension, offer.Mode, "私信");
+        offer.MatchId = match.Id; offer.State = "已确认";
         if (PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
             PrivateInteractionHistory.Record(data, person, turn, before);
         return null;
     }
+    public static CareerMatch CreateMatch(CareerData data, string person, int day, int ascension, string mode, string source)
+    {
+        var match = new CareerMatch { Day = day, Event = source + mode + " · " + CareerEngine.DisplayName(data, person), OpponentId = person,
+            Kind = mode == "挑战" ? "private-challenge" : "private-friendly", RequiredAscension = ascension, Registered = true, Prize = 0 };
+        data.Matches.Add(match); return match;
+    }
     public static void Respond(CareerData data, PrivateConversation c, PrivateTurn turn, Dictionary<string, string> fields, string action)
     {
         if (action is not ("接受" or "邀请" or "拒绝" or "改期")) return;
+        if (!GameCalendar.NormalizeFields(data, fields)) { turn.Error += "\n请选择有效的约战日期。"; return; }
         int Read(string key, int fallback) => int.TryParse(fields.GetValueOrDefault(key), out int value) ? value : fallback;
         var request = turn.Attachments.LastOrDefault(a => a.Kind == "match" && a.Season == Read("Season", a.Season) && a.Day == Read("Day", a.Day))
             ?? turn.Attachments.LastOrDefault(a => a.Kind == "match") ?? (turn.Request?.Kind == "match" ? turn.Request : null);

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BCB0F3E6DF5E4E33BDEB73E553B060EA273A5FD6D4AE3BD80C1BF6674C60065F`。来源：[源码](../../AvatarHonors.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`4F6961AC7E25897F4607E35196EB95F21C6E3F3D6F2B2DDE086722F98B9196B1`。来源：[源码](../../AvatarHonors.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -28,9 +28,9 @@ public Dictionary<string, int> Places = [];
 private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<CareerData, Ranking> Rankings = new();
 ```
 
-<a id="symbol-464394b98e25"></a>
+<a id="symbol-234c7000b369"></a>
 
-## `NationalSpire.AvatarIdentity.Description — public string Description`
+## `NationalSpire.AvatarIdentity.Oath — public bool Oath`
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -38,7 +38,80 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Name`；`NationalSpire.AvatarIdentity.Ascension`；`NationalSpire.AvatarIdentity.Frame`；`NationalSpire.AvatarIdentity.Proof`；`NationalSpire.AvatarIdentity.Role`
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-2b327dd7bff0"></a>
+
+## `NationalSpire.AvatarIdentity.SelectedFrame — public string SelectedFrame`
+
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-e379de45a23f"></a>
+
+## `NationalSpire.AvatarIdentity.DisplayFrame — public AvatarFrame DisplayFrame`
+
+来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.NpcAvatarFrames.Find(string)`](NpcAvatarFrames.cs.md#symbol-f789cabb01cd)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarIdentity.Frame`；`NationalSpire.AvatarIdentity.SelectedFrame`；`NationalSpire.NpcAvatarFrames.Find(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.NpcAvatarFrames.Find(string)`；输入表达式：`NpcAvatarFrames.Find(SelectedFrame)`；返回值紧邻使用处：`BinaryExpressionSyntax: NpcAvatarFrames.Find(SelectedFrame) ?? Frame`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-e08b9d67d46f"></a>
+
+## `NationalSpire.AvatarIdentity.UseOathFrame — public bool UseOathFrame`
+
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarIdentity.Oath`；`NationalSpire.AvatarIdentity.SelectedFrame`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-464394b98e25"></a>
+
+## `NationalSpire.AvatarIdentity.Description — public string Description`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Name`；`NationalSpire.AvatarIdentity.Ascension`；`NationalSpire.AvatarIdentity.DisplayFrame`；`NationalSpire.AvatarIdentity.Proof`；`NationalSpire.AvatarIdentity.Role`；`NationalSpire.AvatarIdentity.UseOathFrame`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -50,7 +123,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.International(string) — private static bool International(string kind)`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)
 
@@ -68,7 +141,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.InvalidateRankings(NationalSpire.CareerData) — internal static void InvalidateRankings(CareerData data)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)
 
@@ -87,7 +160,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Rank(NationalSpire.CareerData, string) — private static int Rank(CareerData d, string id)`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)
 
@@ -120,11 +193,11 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 <a id="symbol-c5235b150918"></a>
 
-## `NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string) — private static Dictionary<string, string> Earned(CareerData d, string id)`
+## `NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string) — public static Dictionary<string, string> Earned(CareerData d, string id)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AvatarHonors.Capture(NationalSpire.CareerData)`](AvatarHonors.cs.md#symbol-d015fb4d8249)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)
+**调用者：** [`NationalSpire.AvatarHonors.Capture(NationalSpire.CareerData)`](AvatarHonors.cs.md#symbol-d015fb4d8249)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)
 
 **调用：** [`NationalSpire.AvatarHonors.International(string)`](AvatarHonors.cs.md#symbol-a504c5d98870)；[`NationalSpire.AvatarHonors.Rank(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-72230b2d2147)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -161,7 +234,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Capture(NationalSpire.CareerData) — public static void Capture(CareerData d)`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-8025e01818d7)
 
@@ -186,7 +259,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string) — public static string Role(CareerData d, string id)`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)
 
@@ -206,27 +279,35 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string) — public static AvatarIdentity ForPerson(CareerData d, string id)`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AvatarHonors.Byline(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-3d000083d4aa)；[`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](Coop/CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
+**调用者：** [`NationalSpire.AvatarHonors.Byline(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-3d000083d4aa)；[`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string)`](BroadcastVisuals.cs.md#symbol-936e32073293)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](Coop/CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)；[`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-3dcd574e340b)
 
-**调用：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；[`NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-ebc9b671821b)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；`NationalSpire.AvatarIdentity.AvatarIdentity(NationalSpire.AvatarFrame, int, string, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；[`NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-ebc9b671821b)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.NpcAvatarFrames.Find(string)`](NpcAvatarFrames.cs.md#symbol-f789cabb01cd)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；[`NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`](RelationshipPresentation.cs.md#symbol-bac5ded19066)；`NationalSpire.AvatarIdentity.AvatarIdentity(NationalSpire.AvatarFrame, int, string, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Id`；`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`；`NationalSpire.AvatarHonors.Frames`；`NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.AvatarFrames`；`NationalSpire.CareerData.AvatarHighestClear`；`NationalSpire.CareerData.HumanClears`；`NationalSpire.CareerData.HumanFrames`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.SelectedAvatarFrame`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.PrivateHighestClear`；`NationalSpire.CareerPerson.Wins`
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Grade`；`NationalSpire.AvatarFrame.Id`；`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`；`NationalSpire.AvatarHonors.Frames`；`NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string)`；`NationalSpire.AvatarIdentity.Oath`；`NationalSpire.AvatarIdentity.SelectedFrame`；`NationalSpire.CareerData.AvatarFrames`；`NationalSpire.CareerData.AvatarHighestClear`；`NationalSpire.CareerData.HumanClears`；`NationalSpire.CareerData.HumanFrames`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.SelectedAvatarFrame`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.PrivateHighestClear`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.NpcAvatarFrames.Find(string)`；`NationalSpire.PrivateMailbox.NpcAvatarFrames`；`NationalSpire.PrivateMailbox.Relations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`；输入表达式：`Earned(d, id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: id == "player" || d.HumanIds.Contains(id) ? d.AvatarFrames : Earned(d, id)`
 - `NationalSpire.AvatarHonors.Role(NationalSpire.CareerData, string)`；输入表达式：`Role(d, id)`；返回值紧邻使用处：`ArgumentSyntax: Role(d, id)`
-- `NationalSpire.AvatarIdentity.AvatarIdentity(NationalSpire.AvatarFrame, int, string, string)`；输入表达式：`new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""))`；返回值紧邻使用处：`ReturnStatementSyntax: return new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""));`
+- `NationalSpire.AvatarIdentity.AvatarIdentity(NationalSpire.AvatarFrame, int, string, string)`；输入表达式：`new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""))          {              Oath = id != "player" && !d.HumanIds.Contains(id) && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id)),              SelectedFrame = id != "player" && !d.HumanIds.Contains(id) && PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice) && NpcAvatarFrames.Find(choice) is { } chosen && (chosen.Grade == 0 || earned.ContainsKey(choice))                  && (choice != "oath" || RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))) ? choice : ""          }`；返回值紧邻使用处：`ReturnStatementSyntax: return new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""))          {              Oath = id != "player" && !d.HumanIds.Contains(id) && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id)),              SelectedFrame = id != "player" && !d.HumanIds.Contains(id) && PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice) && NpcAvatarFrames.Find(choice) is { } chosen && (chosen.Grade == 0 || earned.ContainsKey(choice))                  && (choice != "oath" || RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))) ? choice : ""          };`
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(d, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerEngine.Person(d, id)`
+- `NationalSpire.NpcAvatarFrames.Find(string)`；输入表达式：`NpcAvatarFrames.Find(choice)`；返回值紧邻使用处：`IsPatternExpressionSyntax: NpcAvatarFrames.Find(choice) is { } chosen`
+- `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(d).NpcAvatarFrames`
+- `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(d)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(d).Relations`
+- `NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`；输入表达式：`RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))`；返回值紧邻使用处：`BinaryExpressionSyntax: choice != "oath" || RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))`
+- `NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`；输入表达式：`RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))`；返回值紧邻使用处：`BinaryExpressionSyntax: id != "player" && !d.HumanIds.Contains(id) && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`earned.ContainsKey(choice)`；返回值紧邻使用处：`BinaryExpressionSyntax: chosen.Grade == 0 || earned.ContainsKey(choice)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`earned.ContainsKey(f.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => earned.ContainsKey(f.Id)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`earned.ContainsKey(selection)`；返回值紧邻使用处：`BinaryExpressionSyntax: selection != "auto" && earned.ContainsKey(selection)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`d.HumanClears.TryGetValue(id, out int cleared)`；返回值紧邻使用处：`ConditionalExpressionSyntax: d.HumanClears.TryGetValue(id, out int cleared) ? cleared : person is { Wins: > 0 } ? person.MaxAscension : -1`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice)`；返回值紧邻使用处：`BinaryExpressionSyntax: id != "player" && !d.HumanIds.Contains(id) && PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`Frames.FirstOrDefault(f => f.Id == selection)`；返回值紧邻使用处：`BinaryExpressionSyntax: Frames.FirstOrDefault(f => f.Id == selection) ?? best`
 - `System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`Frames.LastOrDefault(f => earned.ContainsKey(f.Id))`；返回值紧邻使用处：`BinaryExpressionSyntax: Frames.LastOrDefault(f => earned.ContainsKey(f.Id)) ?? Frames[0]`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`d.HumanFrames.GetValueOrDefault(id, "auto")`；返回值紧邻使用处：`ConditionalExpressionSyntax: id == "player" ? d.SelectedAvatarFrame : d.HumanFrames.GetValueOrDefault(id, "auto")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`earned.GetValueOrDefault(frame.Id, "")`；返回值紧邻使用处：`ArgumentSyntax: earned.GetValueOrDefault(frame.Id, "")`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id)`；返回值紧邻使用处：`ArgumentSyntax: PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id)`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`d.HumanIds.Contains(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: id == "player" || d.HumanIds.Contains(id)`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`d.HumanIds.Contains(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !d.HumanIds.Contains(id)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(highest, person.PrivateHighestClear)`；返回值紧邻使用处：`AssignmentExpressionSyntax: highest = Math.Max(highest, person.PrivateHighestClear)`
@@ -234,12 +315,14 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 **赋值（含属性/字段和局部值）：**
 
 - `highest` = `Math.Max(highest, person.PrivateHighestClear)`
+- `Oath` = `id != "player" && !d.HumanIds.Contains(id) && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))`
+- `SelectedFrame` = `id != "player" && !d.HumanIds.Contains(id) && PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice) && NpcAvatarFrames.Find(choice) is { } chosen && (chosen.Grade == 0 || earned.ContainsKey(choice))                  && (choice != "oath" || RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))) ? choice : ""`
 
 <a id="symbol-0a58a1c49eb1"></a>
 
 ## `NationalSpire.AvatarHonors.Select(NationalSpire.CareerData, string) — public static bool Select(CareerData d, string frame)`
 
-来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ChooseFrame(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-5700a0d050b5)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -260,7 +343,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Car
 
 ## `NationalSpire.AvatarHonors.Byline(NationalSpire.CareerData, string) — public static string Byline(CareerData d, string id)`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

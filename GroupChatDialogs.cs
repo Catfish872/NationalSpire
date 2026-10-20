@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -21,6 +21,10 @@ public partial class CareerScreen
             void Choice(string title, string detail, Action action)
             { var b = PrivateButton(title + "\n" + detail, () => { _cancelDialog?.Invoke(); Callable.From(action).CallDeferred(); }, 285); b.CustomMinimumSize = new(285, 78); grid.AddChild(b); }
             Choice("约一局", "选择群内对手", () => Pick("选择约战对象", PrivateMatchPicker));
+            Choice("赠送礼物", "选择接收者与物品", () => Pick("选择接收礼物的人", PrivateGiftPicker));
+            if (g.Members.Any(id => !GroupChats.IsHuman(ViewData, id) && PrivateMessages.Relation(ViewData, id).OathConfirmed))
+                Choice("解除誓约", "选择对象并提出解除请求", () => Pick("选择解除誓约的对象", PrivateOathAttachment));
+            Choice("约定活动", "选择参与者与日期", () => Pick("选择活动参与者", PrivateActivityPicker, false));
             Choice("制定训练计划", "选择受训队员与教练", () => Pick("选择受训队员", GroupTrainingPicker, false));
             Choice("调整阵容", "选择本队教练", () => Pick("选择负责教练", PrivateLineupPicker));
             Choice("商谈合同", "选择报价对象", () => Pick("选择商谈对象", () => AttachPrivate(new() { Kind = "contract" }), false));
@@ -84,7 +88,7 @@ public partial class CareerScreen
             var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions);
             actions.AddChild(PrivateButton("生成小总结", () => GroupCommand("group-summary", new() { Text = "small" }), 140));
             actions.AddChild(PrivateButton("合并长期记忆", () => GroupCommand("group-summary", new() { Text = "big" }), 150));
-            actions.AddChild(PrivateButton("清空聊天", () => { _cancelDialog?.Invoke(); ShowCareerDialog("清空群聊记录", "清空聊天原文，保留总结和已经生效的交互。", () => { GroupCommand("group-clear", new()); return true; }, "清空"); }, 110));
+            actions.AddChild(PrivateButton("清空聊天", () => OpenChatDialog(() => ShowCareerDialog("清空群聊记录", "清空聊天原文，保留总结和已经生效的交互。", () => { GroupCommand("group-clear", new()); return true; }, "清空")), 110));
             var scroll = new ScrollContainer { CustomMinimumSize = new(670, 350), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var items = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; items.AddThemeConstantOverride("separation", 14); scroll.AddChild(items);
             foreach (var (part, summaries) in new[] { ("big", g.BigSummaries), ("small", g.SmallSummaries) }) foreach (var s in summaries)
@@ -96,7 +100,7 @@ public partial class CareerScreen
                 row.AddChild(PrivateButton("删除", () =>
                 {
                     string warning = s.IsLatest(g.SmallSummaries.Concat(g.BigSummaries)) ? "" : "删除这条总结可能导致永久丢失记忆。";
-                    _cancelDialog?.Invoke(); ShowCareerDialog("删除这条总结", warning, () => { GroupCommand("group-summary-delete", new() { Interaction = new() { Entry = s.Id, Part = part } }); return true; }, "确认删除");
+                    OpenChatDialog(() => ShowCareerDialog("删除这条总结", warning, () => { GroupCommand("group-summary-delete", new() { Interaction = new() { Entry = s.Id, Part = part } }); return true; }, "确认删除"));
                 }, 90));
             }
         }, showCancel: false);

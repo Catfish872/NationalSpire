@@ -27,7 +27,7 @@ public static class CareerAudience
     public static double QuoteMultiplier(int fans) => Math.Pow(1 + Math.Max(0, fans) / 100000.0, .6390841180914144);
     public static double ClubMultiplier(int fans) => Math.Pow(1 + Math.Max(0, fans) / 100000.0, .662800438550683);
     public static int Quote(int original, int fans) => (int)Math.Round(original * QuoteMultiplier(fans));
-    public static int PromotionGain(int fans, int price, int used) => (int)Math.Round(price / 2.0 / (1 + .5 * used));
+    public static int PromotionGain(int fans, int price, long used) => (int)Math.Round(price / 2.0 / (1 + .5 * used));
     public static void Fixture(CareerData d, WorldCompetition c, WorldFixture f)
     {
         ClubAudience.Fixture(d, c, f);

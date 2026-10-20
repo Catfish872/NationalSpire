@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed record PromptSection(string Id, string Name, string DefaultText);
 public sealed record PromptTemplate(string Id, string Name, string Description);
@@ -13,7 +13,7 @@ public static partial class PromptLibrary
         人物习惯从固定流派、熟悉的核心牌和自己的练习经历理解成绩，对玩家兼顾抽牌、攻防、资源和终局的构筑方式感到陌生。评价尺度来自各自能力与经历：真实的速度、资源余量、徽章和连续成绩会带来佩服、好奇、学习意愿，也会改变过去的判断。日常交流仍有各自关心的话题和立场。
         赛事按通关、用时、楼层决定成绩：通关者优先；双方通关比较用时；双方止步比较到达楼层。赛报中的“赛事进阶”是这场赛事的公开进阶。
         这个世界的非职业选手完整通关平均花费八十至九十分钟，职业选手平均约一小时；强者参加较低进阶比赛会更稳、更快，大多数通关仍在四十五分钟以上。三十五分钟左右在当地已属于罕见的速通表现，中途失败的用时随止步楼层缩短。具体评论结合本场用时、赛事级别和已有记录形成。
-        世界中的普通玩家主要观赛和参加社区杯；青训通过选拔争取职业席位；职业选手效力于俱乐部。国内联赛连接世界大赛资格，洲际杯代表俱乐部，两赛季一届的世界杯代表国家；奇数赛季的世界总决赛决出个人冠军，其荣誉公示至下届结束。国际赛事的国运贡献用于选手奖励、国内训练与青训发展。人物身份、俱乐部归属、晋级与荣誉以本次资料中记载的状态为准。
+        世界中的普通玩家主要观赛和参加社区杯；青训通过选拔争取职业席位；职业选手效力于俱乐部。国内联赛连接世界大赛资格，洲际杯代表俱乐部，两赛季一届的世界杯代表国家；奇数赛季的世界总决赛决出个人冠军，其荣誉公示至下届结束。国际赛事的国运贡献用于选手奖励、国家建设，以及国内训练与青训发展。相关国家的当前条件和本次变化见所列资料。人物身份、俱乐部归属、晋级与荣誉以本次资料中记载的状态为准。
         游戏知识：铁甲战士常使用力量、生命与消耗；静默猎手常使用中毒、弃牌与多次攻击；故障机器人的球位、充能、触发和集中影响攻防；亡灵契约师的奥斯蒂可以承受部分攻击伤害并参与攻击，末日是另一条输出线；储君使用辉星，部分卡牌同时消耗能量和辉星。
         """),
         new("voice", "社区共同文风", """
@@ -44,6 +44,7 @@ public static partial class PromptLibrary
         new("group-summary", "群聊小总结", GroupChatPrompts.SmallSummary),
         new("group-long-summary", "群聊大总结", GroupChatPrompts.BigSummary),
         new("private", "私信提示词", PrivateMessagePrompts.Guide),
+        new("event", "随机事件", RandomEventPrompts.Story),
         new("private-summary", "私信小总结", PrivateMessagePrompts.SmallSummary),
         new("private-long-summary", "私信大总结", PrivateMessagePrompts.BigSummary),
     ];
@@ -73,17 +74,26 @@ public static partial class PromptLibrary
         foreach (var bank in options.PromptTemplateOverrides) Merge(bank.Value, bank.Key);
         options.PrivatePromptVersion = 1;
     }
+    internal static string EditableText(string id, string text)
+    {
+        if (id != "event") return text;
+        string normalized = text.Replace("\r\n", "\n"), format = RandomEventPrompts.Format.Replace("\r\n", "\n");
+        if (!normalized.Contains(format, StringComparison.Ordinal)) return text;
+        string story = normalized.Replace(format, "", StringComparison.Ordinal).Trim();
+        return story == RandomEventPrompts.Story.Replace("\r\n", "\n") ? RandomEventPrompts.Story : story;
+    }
     public static bool IsCustom(AiOptions options, string id) => options.PromptOverrides?.TryGetValue(id, out var text) == true && !string.IsNullOrWhiteSpace(text);
     public static string Get(AiOptions options, string id)
     {
         MergePrivatePrompt(options);
         string fallback = Default(options, id);
         return options.PromptOverrides != null && options.PromptOverrides.TryGetValue(id, out var custom)
-            && !string.IsNullOrWhiteSpace(custom) ? custom : fallback;
+            && !string.IsNullOrWhiteSpace(custom) ? EditableText(id, custom) : fallback;
     }
     public static void Save(AiOptions options, string id, string text)
     {
         MergePrivatePrompt(options);
+        text = EditableText(id, text);
         string fallback = Default(options, id);
         if (string.IsNullOrWhiteSpace(text)) throw new ArgumentException("提示词不能为空。");
         options.PromptOverrides ??= new();

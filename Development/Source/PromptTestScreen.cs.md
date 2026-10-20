@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`80F6242613512D749185A2A32F0B2CB5C83FDC716D51909B87FAA3EB6FC7D885`。来源：[源码](../../PromptTestScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`27048E60B2A9CAF92F7E4524FC5A232D0BAD93E0113EA83C73039DCDDEAB70B2`。来源：[源码](../../PromptTestScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,7 +23,7 @@ private Action? _closePromptTest;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
-**调用：** [`ChooseSources()`](PromptTestScreen.cs.md#symbol-b495d2c3d047)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Prepare()`](PromptTestScreen.cs.md#symbol-bb12916e300a)；[`Preview(string, string)`](PromptTestScreen.cs.md#symbol-ef689470fe03)；[`Refresh()`](PromptTestScreen.cs.md#symbol-e609e93f16bf)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-ba102e81e6b8)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.Timer.Timer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Uri.GetLeftPart(System.UriPartial)`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`
+**调用：** [`ChooseSources()`](PromptTestScreen.cs.md#symbol-a2cda68b242c)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Prepare()`](PromptTestScreen.cs.md#symbol-3429da3d9097)；[`Preview(string, string)`](PromptTestScreen.cs.md#symbol-d9ae57cb97e1)；[`Refresh()`](PromptTestScreen.cs.md#symbol-007f7562f9b8)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-cdc41fbb950f)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.Timer.Timer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Uri.GetLeftPart(System.UriPartial)`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`
 
 **字段、属性、事件及方法组引用：** `ChooseSources()`；`CloseTest()`；`NationalSpire.AiConnection.Endpoint`；`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._closePromptTest`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._promptTestSession`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.PromptTestSession.Message`；`NationalSpire.PromptTestSession.Running`；`NationalSpire.PromptTestSession.Source`；`NationalSpire.PromptTestSource.Scene`；`Prepare()`；`Preview(string, string)`；`Refresh()`；`ShowMaterial()`
 
@@ -132,7 +132,7 @@ private Action? _closePromptTest;
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 - `ZIndex` = `30`
 
-<a id="symbol-ef689470fe03"></a>
+<a id="symbol-d9ae57cb97e1"></a>
 
 ## `Preview(string, string) — TextEdit Preview(string title, string name)`
 
@@ -162,7 +162,7 @@ private Action? _closePromptTest;
 - `SizeFlagsVertical` = `SizeFlags.ExpandFill`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 
-<a id="symbol-b495d2c3d047"></a>
+<a id="symbol-a2cda68b242c"></a>
 
 ## `ChooseSources() — void ChooseSources()`
 
@@ -189,13 +189,13 @@ private Action? _closePromptTest;
 - `message.Visible` = `scene == "discussion"`
 - `sources` = `AiService.TestSources(data, scene)`
 
-<a id="symbol-bb12916e300a"></a>
+<a id="symbol-3429da3d9097"></a>
 
 ## `Prepare() — PromptTestSession Prepare()`
 
 来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-ba102e81e6b8)
+**调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-cdc41fbb950f)
 
 **调用：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；`System.ArgumentException.ArgumentException(string?)`
 
@@ -210,7 +210,7 @@ private Action? _closePromptTest;
 
 - `_promptTestSession` = `AiService.CreateTestSession(data, source, message.Text)`
 
-<a id="symbol-ba102e81e6b8"></a>
+<a id="symbol-cdc41fbb950f"></a>
 
 ## `ShowMaterial() — void ShowMaterial()`
 
@@ -218,7 +218,7 @@ private Action? _closePromptTest;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)
 
-**调用：** [`Prepare()`](PromptTestScreen.cs.md#symbol-bb12916e300a)；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
+**调用：** [`Prepare()`](PromptTestScreen.cs.md#symbol-3429da3d9097)；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PromptTestSession.Context`；`Prepare()`
 
@@ -238,7 +238,7 @@ private Action? _closePromptTest;
 - `material.Text` = `System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions                      { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
 - `WriteIndented` = `true`
 
-<a id="symbol-4541f5c07cf7"></a>
+<a id="symbol-d04ca74ffe50"></a>
 
 ## `CloseTest() — void CloseTest()`
 
@@ -261,7 +261,7 @@ private Action? _closePromptTest;
 
 - `_closePromptTest` = `null`
 
-<a id="symbol-e609e93f16bf"></a>
+<a id="symbol-007f7562f9b8"></a>
 
 ## `Refresh() — void Refresh()`
 

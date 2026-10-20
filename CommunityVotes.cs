@@ -15,21 +15,10 @@ public static class CommunityVotes
     public static long AudienceScore(CareerData data, CommunityReply reply)
         => (long)(reply.AudienceScore ?? 0) * (CommunityThreads.IsHuman(data, reply.AuthorId) ? PlayerReplyMultiplier : AudienceMultiplier);
 
-    // 长词在前，按命中片段前进；否定表达先于其中包含的肯定词匹配。
-    private static readonly (string Text, int Tone)[] Expressions =
-    [
-        ("不同意", -1), ("不赞同", -1), ("不支持", -1), ("不认可", -1), ("说得不对", -1),
-        ("并非垃圾", 0), ("不是垃圾", 0), ("不是造谣", 0), ("没有造谣", 0),
-        ("支持", 1), ("赞同", 1), ("认可", 1), ("说得对", 1), ("恭喜", 1), ("加油", 1),
-        ("感谢", 1), ("谢谢", 1), ("精彩", 1), ("厉害", 1), ("👍", 1),
-        ("反对", -1), ("质疑", -1), ("胡说", -1), ("造谣", -1), ("垃圾", -1), ("恶心", -1), ("👎", -1)
-    ];
-
     /// <summary>随正文更新统一计算主楼和评论；调用者沿原保存通道提交结果。</summary>
     public static void Update(CareerData data, CommunityPost post)
     {
         var people = data.People.ToDictionary(p => p.Id);
-        var replies = post.Replies.ToDictionary(r => r.Id);
         var children = post.Replies.ToLookup(r => r.ParentId);
         var followers = new Dictionary<string, int>();
         int Fans(string id)
@@ -42,37 +31,36 @@ public static class CommunityVotes
         double prominence = post.RelatedPeople.Select(Fans).DefaultIfEmpty(0).Max();
         double occasion = post.MatchKind switch
         { "worldcup" or "worldfinal" or "masters" => 3, "continental" => 2, "league" => 1.5, _ => 1 };
-        int Calculate(string id, string author, string body, string target, bool main, int responses)
+        int Calculate(string id, string author, string body, bool main, int responses)
         {
-            int fans = Fans(author), targetFans = target == author ? 0 : Fans(target);
-            int tone = Tone(body);
+            int fans = Fans(author);
             double reach = (12 + Math.Sqrt(fans) + .25 * Math.Sqrt(prominence)) * occasion
                 * (main ? 1 : .35) * (1 + .2 * Math.Log(1 + responses));
             if (body.Length < 8) reach *= .6;
             string seed = post.Id + ":" + id + ":" + body;
+            string authorSeed = post.Id + ":" + author;
             double support = .56 + Math.Min(.12, .018 * Math.Log10(1d + fans))
-                + .28 * (2 * Variation(seed, "stance") - 1) + .04 * tone;
-            // 提及对象的支持者改变投票倾向；相同俱乐部与熟人关系影响讨论接受度。
-            if (targetFans > 0) support += .22 * tone * Math.Sqrt(targetFans / (1d + fans + targetFans));
+                + .28 * (2 * Variation(authorSeed, "stance") - 1);
+            // 一篇讨论内同一作者共享受众倾向，单条内容只改变传播数量。
+            if (author == post.AuthorId) support += .04;
             if (people.TryGetValue(author, out var person))
             {
-                if (person.Connections.Contains(target)) support += .03 * tone;
-                if (people.TryGetValue(target, out var other) && other.ClubId.Length > 0
-                    && (person.ClubId == other.ClubId || person.SupportedClubId == other.ClubId)) support += .04 * tone;
+                if (person.Connections.Contains(post.AuthorId)) support += .03;
+                if (people.TryGetValue(post.AuthorId, out var other) && other.ClubId.Length > 0
+                    && (person.ClubId == other.ClubId || person.SupportedClubId == other.ClubId)) support += .04;
                 if (person.Role.Contains("职业", StringComparison.Ordinal) || person.Titles > 0) support += .02;
             }
             support = Math.Clamp(support, .05, .95);
-            return (int)Math.Round(reach * (.65 + .7 * Variation(seed, "reach")) * (2 * support - 1));
+            double score = reach * (.65 + .7 * Variation(seed, "reach")) * (2 * support - 1);
+            return score >= 0 ? (int)Math.Round(score)
+                : (int)Math.Round((2 * Variation(authorSeed, "mixed-reception") - .8) * Math.Pow(1 + Math.Abs(score), .2));
         }
         bool changed = false;
-        int root = Calculate(post.Id, post.AuthorId, post.Title + "\n" + post.Body,
-            post.MentionedPeople.FirstOrDefault() ?? post.RelatedPeople.FirstOrDefault(p => p != post.AuthorId) ?? "", true, post.Replies.Count);
+        int root = Calculate(post.Id, post.AuthorId, post.Title + "\n" + post.Body, true, post.Replies.Count);
         changed |= post.AudienceScore != root; post.AudienceScore = root;
         foreach (var reply in post.Replies)
         {
-            string target = reply.MentionedPeople.FirstOrDefault()
-                ?? (replies.TryGetValue(reply.ParentId, out var parent) ? parent.AuthorId : post.AuthorId);
-            int next = Calculate(reply.Id, reply.AuthorId, reply.Body, target, false, children[reply.Id].Count());
+            int next = Calculate(reply.Id, reply.AuthorId, reply.Body, false, children[reply.Id].Count());
             changed |= reply.AudienceScore != next; reply.AudienceScore = next;
         }
         if (changed) post.VoteRevision++;
@@ -80,16 +68,6 @@ public static class CommunityVotes
 
     private static double Variation(string seed, string purpose)
         => CareerEngine.StableHash(seed + ":audience:" + purpose) / (double)int.MaxValue;
-
-    private static int Tone(string body)
-    {
-        int total = 0;
-        for (int i = 0; i < body.Length; i++)
-            foreach (var expression in Expressions)
-                if (body.AsSpan(i).StartsWith(expression.Text, StringComparison.Ordinal))
-                { total += expression.Tone; i += expression.Text.Length - 1; break; }
-        return Math.Sign(total);
-    }
 
     private static int Choice(Dictionary<string, int>? votes, string voter)
         => votes?.GetValueOrDefault(voter) is -1 or 1 ? votes[voter] : 0;

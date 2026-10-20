@@ -36,6 +36,7 @@ public static class CircuitWorld
         CircuitLedger.SeasonStart(d);
         CircuitPeople.SeasonChange(d);
         CircuitPeople.Replenish(d);
+        CoachLineups.RefreshAiStarters(d);
         CoachLineups.SeasonStart(d);
         foreach (string nation in EsportsWorld.Countries)
         {
@@ -165,7 +166,7 @@ public static class CircuitWorld
             if (d.Matches.Any(m => m.FixtureId == f.Id)) continue;
             d.Matches.Add(new() { CompetitionId = c.Id, FixtureId = f.Id, Round = f.Round, Day = f.Day, Kind = c.Kind,
                 Event = c.Name + " · " + RoundName(c, f.Round), OpponentId = f.HomeId == "player" ? f.AwayId : f.HomeId,
-                RequiredAscension = f.Ascension, Prize = c.Kind == "league" ? 260 : c.Kind == "worldfinal" ? c.PrizeVersion >= 1 ? 0 : 600 + f.Round * 200 : 400 + f.Round * 180,
+                RequiredAscension = f.Ascension, Prize = c.Kind == "league" ? CareerIncome.LeaguePrize : c.Kind == "worldfinal" ? c.PrizeVersion >= 1 ? 0 : 600 + f.Round * 200 : 400 + f.Round * 180,
                 Registered = true, Seed = $"NS-{d.WorldId}-{f.Id}" });
         }
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();

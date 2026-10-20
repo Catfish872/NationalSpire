@@ -14,6 +14,7 @@ public static partial class AiService
     private static readonly SemaphoreSlim PrivateSummaryQueue = new(1, 1);
     public static readonly Dictionary<string, (string Turn, string Text)> PrivateLive = [];
     public static readonly Dictionary<string, (string Turn, string Text)> PrivateReasoningLive = [];
+    public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Lines)> PrivateSceneLive = [];
     public static string PrivateKey(CareerData data, string person) => data.WorldId + "/" + person;
     public static void CancelPrivate(CareerData data, string person)
     { if (PrivateRequests.TryGetValue(PrivateKey(data, person), out var cancel)) cancel.Cancel(); }
@@ -28,6 +29,7 @@ public static partial class AiService
         var resolve = current;
         current = () => resolve() is { } latest && PrivateMessages.CanChat(latest, person) && PrivateKey(latest, person) == key ? latest : null;
         if (PrivateRequests.ContainsKey(key)) return;
+        PrivateSceneLive.Remove(key);
         var conversation = PrivateMessages.Conversation(data, person);
         var turn = conversation.Turns.FirstOrDefault(t => t.Status == "queued"); if (turn == null) return;
         using var cancel = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
@@ -51,8 +53,9 @@ public static partial class AiService
             if (turn.Status != "queued") return;
             if (turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             originalFavour = PrivateMessages.Favour(data, person);
+            var contextSpans = new List<PrivateMessagePrompts.ContextSpan>();
             turn.Context = turn.RequestKind == "arbitration" ? SpireArbitration.Context(data, conversation, turn)
-                : PrivateMessagePrompts.Context(data, conversation, turn);
+                : PrivateMessagePrompts.Context(data, conversation, turn, contextSpans);
             turn.Status = "sending"; turn.Error = ""; save(data);
             if (turn.RequestKind == "arbitration")
             {
@@ -67,7 +70,7 @@ public static partial class AiService
                 SpireArbitration.Complete(data, conversation, turn, decision);
                 turn.Reasoning = record.ToString(); save(data); Notify(turn.Reply); return;
             }
-            var messages = PrivateMessagePrompts.Compose(data, conversation, turn);
+            var messages = PrivateMessagePrompts.Compose(data, conversation, turn, turn.Context, contextSpans);
             var parser = new PrivateStreamParser();
             var reasoning = new StringBuilder();
             var lastProgress = DateTime.MinValue;
@@ -75,7 +78,9 @@ public static partial class AiService
             {
                 parser.Feed(chunk); PrivateLive[key] = (turnId, parser.Text);
                 if ((DateTime.UtcNow - lastProgress).TotalMilliseconds < 100) return;
-                lastProgress = DateTime.UtcNow; Notify(parser.Text);
+                lastProgress = DateTime.UtcNow;
+                if (turn.Scene != null) PrivateSceneLive[key] = (turnId, DateScenes.TaggedLines(parser, turn.Scene));
+                Notify(parser.Text);
             }
             void Thinking(string chunk)
             {
@@ -93,7 +98,9 @@ public static partial class AiService
             if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");
             if (turn.ReplyOrder == 0) turn.ReplyOrder = GroupChats.NextOrder(data);
             turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error;
+            if (turn.Scene != null) turn.SceneLines = DateScenes.TaggedLines(parser, turn.Scene);
             PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);
+            ProactiveChats.CountReplies(conversation);
             turn.Regenerating = false; turn.PreviousReply = turn.PreviousReasoning = "";
             conversation.LastReplyOrder = Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1);
             save(data); Notify(turn.Reply);
@@ -118,7 +125,7 @@ public static partial class AiService
             }
             Diagnostics.Record("private.failed", new { person, turnId, error = FailureReason(e) });
         }
-        finally { PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateRequests.Remove(key); }
+        finally { PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateSceneLive.Remove(key); PrivateRequests.Remove(key); }
     }
 
     private static async Task<IDisposable> EnterPrivateQueue(CareerData data, string key, CancellationToken token)
@@ -243,7 +250,7 @@ public static partial class AiService
                 c.SummaryStatus = "正在整理聊天记忆"; save(data);
                 int end = c.Turns.FindLastIndex(t => t.Status == "complete") + 1;
                 PrivateInteractionIds.Ensure(c);
-                var snapshot = c.Turns.Skip(c.ContextStart).Take(end - c.ContextStart).Where(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted)).Select(t => new { 日期 = $"第 {t.Season} 赛季第 {t.Day - SeasonCalendar.Start(data, t.Season)} 天", 玩家 = t.UserDeleted ? null : PrivateMessagePrompts.UserText(t, c), 你 = t.ReplyDeleted ? null : t.Reply }).ToArray();
+                var snapshot = c.Turns.Skip(c.ContextStart).Take(end - c.ContextStart).Where(t => t.Status == "complete" && !(t.UserDeleted && t.ReplyDeleted)).Select(t => new { 日期 = GameCalendar.Text(data, t.Day), 玩家 = t.UserDeleted ? null : PrivateMessagePrompts.UserText(data, t, c), 你 = t.ReplyDeleted ? null : t.Reply }).ToArray();
                 string text = await Summarize(data, person, "private-summary", JsonSerializer.Serialize(snapshot, Json));
                 data = current(); if (data == null) return; c = PrivateMessages.Conversation(data, person);
                 if (c.MemoryRevision != revision) return;

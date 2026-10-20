@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5D1C31326A018C3BEC3277A4F331D4AB38AEEF6E4572397F01CF83A74142609B`。来源：[源码](../../CareerAudience.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`CD71C7F5570C63DE3ABAB3B736362F3AAC6E2037C8894A7A22954174C054EA6E`。来源：[源码](../../CareerAudience.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -59,7 +59,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Fans(string)`](CommunityVotes.cs.md#symbol-49d932e36f8d)；[`NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`](CareerAudience.cs.md#symbol-7ca5980a38d5)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
+**调用者：** [`Fans(string)`](CommunityVotes.cs.md#symbol-781408ef809e)；[`NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`](CareerAudience.cs.md#symbol-7ca5980a38d5)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
 **调用：** `System.Math.Clamp(int, int, int)`；`System.Math.Exp(double)`；`System.Math.Min(int, int)`；`System.Math.Round(double)`
 
@@ -193,13 +193,13 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d4f18e34de92"></a>
+<a id="symbol-e10664ed2197"></a>
 
-## `NationalSpire.CareerAudience.PromotionGain(int, int, int) — public static int PromotionGain(int fans, int price, int used)`
+## `NationalSpire.CareerAudience.PromotionGain(int, int, long) — public static int PromotionGain(int fans, int price, long used)`
 
 来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?)`](ConsumerEngine.cs.md#symbol-6a13be5c34c1)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)
 
 **调用：** `System.Math.Round(double)`
 

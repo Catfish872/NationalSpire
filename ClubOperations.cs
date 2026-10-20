@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class ClubOperations
 {
@@ -38,7 +38,7 @@ public static class ClubOperations
             string direction = club.Identity switch {
                 "商业俱乐部" => "本期继续安排品牌合作与观众活动", "争冠强队" => "教练组按近期比赛准备下一轮阵容",
                 "青训俱乐部" => "训练资源优先用于新人", _ => "保留资金，继续考察轮换人选" };
-            club.SeasonReport = $"第{d.Day}天：运营收入{CareerMoney.Format(income)}，人员与场地支出{CareerMoney.Format(wages)}，训练投入{CareerMoney.Format(training)}。"
+            club.SeasonReport = $"{GameCalendar.Text(d, d.Day)}：运营收入{CareerMoney.Format(income)}，人员与场地支出{CareerMoney.Format(wages)}，训练投入{CareerMoney.Format(training)}。"
                 + (progress.Count > 0 ? string.Join("；", progress) + "。" : "本期训练按计划完成。") + direction + "。";
             if (club.Id == d.Esports.ClubId && progress.Count > 0)
                 CareerLife.AddEvent(d, "club-progress-" + club.Id + "-" + d.Day, "俱乐部", club.Name + "公布阶段进展", string.Join("；", progress), youth.Select(p => p.Id).ToList());

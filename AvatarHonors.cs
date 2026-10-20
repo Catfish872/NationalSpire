@@ -3,7 +3,11 @@ namespace NationalSpire;
 public sealed record AvatarFrame(string Id, string Name, string Color, int Grade, string Requirement);
 public sealed record AvatarIdentity(AvatarFrame Frame, int Ascension, string Role, string Proof)
 {
-    public string Description => Frame.Name + (Role.Length > 0 ? " · " + Role : "")
+    public bool Oath { get; init; }
+    public string SelectedFrame { get; init; } = "";
+    public AvatarFrame DisplayFrame => NpcAvatarFrames.Find(SelectedFrame) ?? Frame;
+    public bool UseOathFrame => SelectedFrame == "oath" || SelectedFrame.Length == 0 && Oath;
+    public string Description => (UseOathFrame ? "钻戒誓约框" : DisplayFrame.Name) + (Role.Length > 0 ? " · " + Role : "")
         + (Ascension >= 0 ? $"\n最高通关进阶 {Ascension}" : "") + (Proof.Length > 0 ? "\n" + Proof : "");
 }
 
@@ -43,7 +47,7 @@ public static class AvatarHonors
         }
         return cache.Places.GetValueOrDefault(id, int.MaxValue);
     }
-    private static Dictionary<string, string> Earned(CareerData d, string id)
+    public static Dictionary<string, string> Earned(CareerData d, string id)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.Honors);
         var result = new Dictionary<string, string> { ["plain"] = "" };
@@ -96,7 +100,12 @@ public static class AvatarHonors
         var person = CareerEngine.Person(d, id);
         int highest = id == "player" ? d.AvatarHighestClear : d.HumanClears.TryGetValue(id, out int cleared) ? cleared : person is { Wins: > 0 } ? person.MaxAscension : -1;
         if (person != null && id != "player" && !d.HumanIds.Contains(id)) highest = Math.Max(highest, person.PrivateHighestClear);
-        return new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""));
+        return new(frame, highest, Role(d, id), earned.GetValueOrDefault(frame.Id, ""))
+        {
+            Oath = id != "player" && !d.HumanIds.Contains(id) && RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id)),
+            SelectedFrame = id != "player" && !d.HumanIds.Contains(id) && PrivateMessages.Mailbox(d).NpcAvatarFrames.TryGetValue(id, out string? choice) && NpcAvatarFrames.Find(choice) is { } chosen && (chosen.Grade == 0 || earned.ContainsKey(choice))
+                && (choice != "oath" || RelationshipPresentation.OathAppearance(PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id))) ? choice : ""
+        };
     }
     public static bool Select(CareerData d, string frame)
     {

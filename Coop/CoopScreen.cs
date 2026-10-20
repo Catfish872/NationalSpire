@@ -180,10 +180,10 @@ public partial class CoopScreen : Control, IScreenContext
         foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day))
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
-            Text(row, $"{cp.World.Name} · 第 {cp.World.World.Day} 天 · {cp.World.Members.Count} 位成员", 18);
+            Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
             Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
             bool deleting = false;
-            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季第{SeasonCalendar.Day(cp.World.World, cp.World.World.Day)}天\n从列表移除，文件保留在本机备份中。", async () =>
+            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
             {
                 if (deleting) return; deleting = true;
                 try

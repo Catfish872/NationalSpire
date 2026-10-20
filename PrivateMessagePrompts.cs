@@ -68,7 +68,7 @@ public static class PrivateMessagePrompts
 私信场景适配
 只写这个人实际发给对方的消息。情绪通过用词、语气、关心什么、对什么不服来表现，不添加旁白、动作描写或心理分析报告。性格可以影响偏好和反应，不能用来编造对方的战绩、发言和约定。
 口语中的省略可以省去双方已知的主语，不能把完整词语压成含混单字。禁止用“我认”“这话我也接住了”作为套话；承认错误就说清自己哪里说错，反驳就回应具体分歧，关心就说自己在意的事。不要把每次回应组织成先评价玩家、再解释道理、最后催比赛的固定三段。
-历史聊天用于承接发生过的事，其中的错误措辞不是文风范例。发出正文前检查用词和日期，日期写作“第4天”，保持自然语气，不在正文展示检查过程。
+历史聊天用于承接发生过的事，其中的错误措辞不是文风范例。发出正文前检查用词和日期，日期写作“1月4日”，保持自然语气，不在正文展示检查过程。
 """;
     public const string SmallSummary = "需要根据这些内容生成一段连贯的总结性文字（而不是具体的回复，请忽略所有对具体和直接回复的要求），要求：1. 使用单段自然语言表述，不加序号或分点；2. 最重要：必须聚焦提取核心要素，包括但不限于参与者身份（姓名/角色）、核心事件、关键时间节点、特殊需求、争议点及解决方案。这一点是核心要求，必须以这个为核心，不要忘记记录具体时间了哦，最好是日期，不然直接直接说“今天”可能在以后看来会搞晕的；3. 保留涉及金额/数量/规格等量化信息；4.不输出多余的解释性内容；5. 用简洁书面语整合信息，确保信息完整准确。注意：避免添加解释性内容，仅客观呈现对话要素的整合结果。6.以你的第一人称视角和性格口吻记录信息";
     public const string BigSummary = "将提供的最旧几条小总结合并为一段连贯的长期记忆。以人物的第一人称和性格口吻记录，保留双方身份、关系变化、关键事件、具体赛季与日期、承诺、争议及结果，以及金额、数量、合同和约战细节。已经变化的事实按照时间说明变化过程。用简洁的单段自然语言表述，仅输出总结正文。";
@@ -89,7 +89,7 @@ public static class PrivateMessagePrompts
 私信场景适配
 只写这个人实际发给对方的消息。情绪通过用词、语气、关心什么、对什么不服来表现，不添加旁白、动作描写或心理分析报告。性格可以影响偏好和反应，不能用来编造对方的战绩、发言和约定。
 口语中的省略可以省去双方已知的主语，不能把完整词语压成含混单字。禁止用“我认”“这话我也接住了”作为套话；承认错误就说清自己哪里说错，反驳就回应具体分歧，关心就说自己在意的事。不要把每次回应组织成先评价玩家、再解释道理、最后催比赛的固定三段。
-历史聊天用于承接发生过的事，其中的错误措辞不是文风范例。发出正文前检查用词和日期，日期写作“第4天”，保持自然语气，不在正文展示检查过程。
+历史聊天用于承接发生过的事，其中的错误措辞不是文风范例。发出正文前检查用词和日期，日期写作“1月4日”，保持自然语气，不在正文展示检查过程。
 """;
     public const string Protocol = """
 关系交互格式由程序识别，使用英文键名和半角标点，中文填写内容。发生变化时可在正文后附加
@@ -109,9 +109,9 @@ Skill 是变化程度，1、2、3 分别为局部细节、明确改进、解决�
 """;
     public const string MatchProtocol = """
 玩家明显表现或暗示出约战意愿时才可提出约战。只有输出下列格式，才会生成或更新约战交互，聊天中口头答应不会实际产生约战。
-[Match: 邀请, Season: 1, Day: 18, Ascension: 6, Mode: 切磋]
-Match 填邀请、接受、拒绝或改期。“邀请”表示提出约战；“接受”表示同意玩家的约战提议，仅当本轮消息的“附带内容”中有约战请求，明确列出类型、赛季、日期和进阶时使用；如果没有附件但是玩家有约战意向，则应该使用“邀请”来提出约战。邀请和接受均须玩家确认后才正式加入赛程。
-Season、Day 为赛季和赛季内日期，正文写“第1赛季第18天”；Ascension 为进阶，Mode 填切磋或挑战。日期结合双方日程商谈，尚未报名的赛事不占用日期。挑战公开赛果，两者均不计正式排名。
+[Match: 邀请, Date: 2026-01-18, Ascension: 6, Mode: 切磋]
+Match 填邀请、接受、拒绝或改期。“邀请”表示提出约战；“接受”表示同意玩家的约战提议，仅当本轮消息的“附带内容”中有约战请求，明确列出类型、日期和进阶时使用；如果没有附件但是玩家有约战意向，则应该使用“邀请”来提出约战。邀请和接受均须玩家确认后才正式加入赛程。
+Date 为公历日期，格式为YYYY-MM-DD，正文可写“1月18日”；Ascension 为进阶，Mode 填切磋或挑战。日期结合双方日程商谈，尚未报名的赛事不占用日期。挑战公开赛果，两者均不计正式排名。
 """;
     public const string PostProtocol = """
 玩家在对话中表现出明显的发帖意愿时，才可提出发帖，内容按双方商谈与已知事实撰写。标记生成待确认草稿，玩家确认后才实际发布。
@@ -136,18 +136,19 @@ Mood 表示更新后的短期状态等级，0为恢复正常。新状态替换�
 Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为美元；Weeks 为合同周数，Role 填首发、轮换、青训或教练。参考报价可由双方协商调整。玩家确认且执行成功后，自由选手立即加入，其他俱乐部成员下赛季加盟，转会费另计。
 """;
     public static readonly string[] SectionIds = ["private", "private-summary", "private-long-summary"];
-    public static List<Dictionary<string, string>> Compose(CareerData data, PrivateConversation c, PrivateTurn? pending = null)
+    public static List<Dictionary<string, string>> Compose(CareerData data, PrivateConversation c, PrivateTurn? pending = null,
+        string? preparedContext = null, List<ContextSpan>? preparedSpans = null)
     {
         using var measurement = UiPerformance.Measure(UiPerformance.Work.PrivateContext);
         var p = CareerEngine.Person(data, c.PersonId)!;
         List<Dictionary<string, string>> messages = [];
         void Add(string role, string text) => messages.Add(new() { ["role"] = role, ["content"] = text });
         Add("system", Section(data, "world") + "\n\n" + Section(data, "private") + "\n\n" + Protocol + "\n\n" + SkillProtocol + "\n\n" + MoodProtocol + "\n\n" + MatchProtocol + "\n\n" + PostProtocol + "\n\n" + ProfileProtocol
-            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
+            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + OathAttachments.Protocol + "\n\n" + ChatAttachments.GiftProtocol + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
         Add("user", $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n" + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
         var contextTurn = pending ?? new PrivateTurn { Day = data.Day, Season = data.Season };
-        var contextSpans = new List<ContextSpan>();
-        string freshContext = Context(data, c, contextTurn, contextSpans);
+        var contextSpans = preparedSpans ?? new List<ContextSpan>();
+        string freshContext = preparedContext != null && preparedSpans != null ? preparedContext : Context(data, c, contextTurn, contextSpans);
         string context = contextTurn.Context.Length > 0 ? contextTurn.Context : freshContext;
         // 保存的上下文可能来自重新生成或并发更新；不能用当前资料替换其事实。
         var ordered = context == freshContext ? OrderContext(context, contextSpans) : (Stable: "", Current: context);
@@ -162,19 +163,23 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         foreach (var s in c.SmallSummaries) Add("user", SummaryHeader(s, "聊天摘要") + s.Text);
         string externalSummaries = ChatTimeline.Summaries(data, [c.PersonId], excludePrivate: c.PersonId);
         if (externalSummaries.Length > 0) Add("user", externalSummaries);
-        if (data.Chats.Groups.Any(g => g.Members.Contains(c.PersonId))) Add("user", ChatTimeline.PrivateHistoryNote);
+        if (data.Chats.Groups.Any(g => ChatMembership.Knows(g, c.PersonId))) Add("user", ChatTimeline.PrivateHistoryNote);
         foreach (var entry in ChatTimeline.PrivateHistory(data, c, pending)) Add(entry.Role, ChatTimeline.Text(data, entry));
         if (pending != null)
         {
             Add("user", ordered.Current);
-            if (!pending.UserDeleted) Add("user", $"第 {pending.Season} 赛季第 {SeasonCalendar.Day(data, pending.Day)} 天，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(pending, c));
+            if (pending.Scene != null) Add("system", DateScenes.Guidance(pending.Scene));
+            if (pending.ProactiveReason.Length > 0) Add("user", ProactiveChats.Prompt(pending.ProactiveReason, pending.ProactiveLast));
+            else if (!pending.UserDeleted) Add("user", $"{GameCalendar.Text(data, pending.Day)}，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(data, pending, c));
+            if (!pending.UserDeleted && CardKnowledge.Find(pending.User) is { Length: > 0 } cards) Add("user", cards);
         }
         if (pending == null) Add("user", ordered.Current);
         return messages;
     }
-    public static string UserText(PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User
-        + (CommunityReporting.IsReport(turn) && !turn.UserDeleted ? "\n" + (forAi ? AiGeneratedText.Attachment(turn.Request!) : turn.Request!.Detail) : "")
-        + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(a) + (a.Kind is "training" or "lineup" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 ? "\n" + (forAi ? AiGeneratedText.Attachment(a) : a.Detail) : ""))));
+    public static string UserText(CareerData data, PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User
+        + (CommunityReporting.IsReport(turn) && !turn.UserDeleted ? "\n" + (forAi ? AiGeneratedText.Attachment(data, turn.Request!) + "\n" + ChatAttachments.ResponseGuide : turn.Request!.Detail) : "")
+        + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(data, a) + (a.Kind is "training" or "lineup" or "gift" or OathAttachments.Kind or "activity" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 || a.Kind == "activity" ? "\n" + (forAi ? ChatAttachments.Material(data, a, a.Kind == "activity" ? PrivateInteractionIds.Number(c, a) : a.Id) : a.Detail) : "")
+            + (forAi ? "\n" + ChatAttachments.ResponseInstructions(data, a, a.Kind is "gift" or OathAttachments.Kind or "activity" or "training" or "lineup" ? PrivateInteractionIds.Number(c, a) : a.Id) : ""))));
     public sealed record ContextSpan(int Start, int Length, string Group, string Key = "");
     private static (string Stable, string Current) OrderContext(string context, List<ContextSpan> spans)
     {
@@ -204,7 +209,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         PrivateInteractionIds.Ensure(c);
         var p = CareerEngine.Person(data, c.PersonId)!;
         var relation = PrivateMessages.Relation(data, c.PersonId);
-        string query = string.Join("\n", c.Turns.Where(t => t != turn && !t.UserDeleted && t.Status == "complete").TakeLast(2).Select(t => UserText(t, c, false)).Append(UserText(turn, c, false)))
+        string query = string.Join("\n", c.Turns.Where(t => t != turn && !t.UserDeleted && t.Status == "complete").TakeLast(2).Select(t => UserText(data, t, c, false)).Append(UserText(data, turn, c, false)))
             .Replace(p.PublicName, "").Replace(CareerEngine.Name(data), "");
         var postVersions = CommunityThreads.All(data).ToDictionary(post => post.Id, post => post.Revision);
         // 只排除与当前帖子版本一致的完整附件。旧引用保留原文，帖子后续发展仍可检索。
@@ -216,7 +221,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         var issue = (data.WeeklyEditions ?? []).Where(w => w.EndDay <= data.Day).MaxBy(w => w.EndDay);
         var calendar = Enumerable.Range(data.Day, 15).Select(day => new { Day = day, Entries = PrivateAppointments.Schedule(data, c.PersonId, day) }).ToArray();
         string player = CareerEngine.Name(data);
-        string text = $"当前日期：{PrivateAppointments.DateText(data, data.Day)}。\n\n";
+        string text = $"当前日期：{PrivateAppointments.DateText(data, data.Day)}。\n\n" + NationalDevelopment.Context(data, [data.Esports.Country, p.Country]) + "\n\n";
         var changing = new List<(int Start, int Length, string Group)>();
         string profile = PrivatePublicContext.Profiles(data, p, changing);
         int profileStart = text.Length, profileEnd = 0;
@@ -230,6 +235,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (profileEnd < profile.Length) spans?.Add(new(profileStart + profileEnd, profile.Length - profileEnd, "profile"));
         text += profile + $"\n\n{p.PublicName}对{player}的关系\n好感{relation.Favour}，关系为{relation.Relationship}。";
         if (relation.Relationship == "初识") text = text.Replace("关系为初识。", "私信关系处于初识阶段。" + (publicMemory.Length > 0 ? "已有公开经历见下方记录。" : ""));
+        text += RelationshipPresentation.Context(relation);
         if (relation.Impression.Length > 0) text += $"{p.PublicName}对{player}的印象是“{relation.Impression}”。";
         if (publicMemory.Length > 0)
         {
@@ -273,12 +279,13 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (turn.Request != null)
         {
             int requestStart = text.Length;
-            text += $"\n{player}通过界面向{p.PublicName}发起的请求\n" + OfferContext(data, c, turn.Request, true);
+            text += $"\n{player}通过界面向{p.PublicName}发起的请求\n" + OfferContext(data, c, turn.Request, true) + "\n" + ChatAttachments.ResponseInstructions(data, turn.Request, PrivateInteractionIds.Number(c, turn.Request));
             if (turn.Request.Kind == "match") spans?.Add(new(requestStart, text.Length - requestStart, "schedule"));
         }
-        var offers = c.Offers.Where(o => o.Kind is not ("lineup" or "favour")).TakeLast(8).Concat(c.Offers.Where(o => o.Kind == "activity" && o.State == "已确认")).Distinct().ToArray();
+        var offers = c.Offers.Where(o => !o.MemoryDeleted && o.Kind is not ("lineup" or "favour")).TakeLast(8)
+            .Concat(c.Offers.Where(o => !o.MemoryDeleted && o.Kind == "activity" && o.State == "已确认")).Distinct().ToArray();
         string training = ClubCoaching.TrainingContext(data, p.Id), lineups = CoachLineups.Context(data, p.Id);
-        string groupInteractions = string.Join("\n", data.Chats.Groups.Where(g => g.Members.Contains(p.Id)).Select(g =>
+        string groupInteractions = string.Join("\n", data.Chats.Groups.Where(g => ChatMembership.Knows(g, p.Id)).Select(g =>
         {
             string records = GroupChatPrompts.InteractionContext(data, g, 5, p.Id);
             return records.Length == 0 ? "" : $"<private_memory>\n群聊《{g.Name}》中的交互结果；知情人：{string.Join("、", g.Members.Select(id => GroupChats.Name(data, id)))}\n" + records + "\n</private_memory>";
@@ -294,8 +301,9 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     private static string OfferContext(CareerData data, PrivateConversation c, PrivateOffer o, bool fromPlayer = false)
     {
         string player = CareerEngine.Name(data), npc = CareerEngine.DisplayName(data, c.PersonId);
+        if (o.Kind is "gift" or OathAttachments.Kind) return o.Title + " · " + o.State + "\n" + o.Detail;
         if (o.Kind == "training") return $"{npc}已接受{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：{ClubCoaching.TrainingPlans(data).FirstOrDefault(p => p.Id == o.Id)?.State ?? o.State}。";
-        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，第{o.Season}赛季第{o.Day}天。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
+        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
         string state = o.State switch
         {
             "待确认" => $"等待{player}通过界面确认" + (o.Detail.Length > 0 ? $"；最近一次执行未成功：{o.Detail}" : ""),
@@ -314,7 +322,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
                 "改期" => $"{npc}向{player}提出改期",
                 _ => $"{npc}与{player}有一项约战提议"
             };
-            return $"{origin}，日期为第{o.Season}赛季第{o.Day}天，进阶{o.Ascension}，方式为{o.Mode}。{(fromPlayer ? $"等待{npc}答复" : state)}。";
+            return $"{origin}，日期为{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}，进阶{o.Ascension}，方式为{o.Mode}。{(fromPlayer ? $"等待{npc}答复" : state)}。";
         }
         if (fromPlayer) return $"{player}邀请{npc}商谈俱乐部合同，等待{npc}报价。";
         return $"{npc}向{player}提出合同报价：签字费{o.Signing}美元、周薪{o.Wage}美元、胜场奖金{o.WinBonus}美元，合同{o.Weeks}周，席位为{o.Role}。{state}。";

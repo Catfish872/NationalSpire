@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace NationalSpire;
 
@@ -171,7 +171,7 @@ public static class EsportsWorld
             if (DomesticRank(d) is < 1 or > 2) return "本赛季国内联赛未进入前二。";
             if (m.Kind == "worldcup" && w.BestClear < 8) return "国家队还要求至少一场生涯赛事中的进阶八通关。";
             var cup = d.Esports.Competitions.FirstOrDefault(c => c.Season == d.Season && c.Kind == m.Kind);
-            if (cup == null) return "等待第 19 天的国际赛事抽签。";
+            if (cup == null) return $"等待{GameCalendar.Text(d, SeasonCalendar.Start(d) + 19)}的国际赛事抽签。";
             if (m.Round > 1 && !cup.Fixtures.Any(f => f.Id == m.FixtureId && (f.HomeId == "player" || f.AwayId == "player"))) return "必须赢得上一轮淘汰赛才能晋级。";
             return null;
         }
@@ -475,7 +475,7 @@ public static class EsportsWorld
         if (!d.Esports.Offers.Contains(offer) || offer.ExpiresDay < d.Day || d.Esports.License < 3) return "合同已经失效。";
         if (d.PendingMatchId != null || d.Esports.Competitions.Any(c => c.Season == d.Season && c.PlayerEntered && !c.Finished && (!c.Modern || c.Fixtures.Any(f => f.Finished)))) return "当前赛事尚未结束，暂时不能转会。";
         int deadline = d.Esports.Competitions.Any(c => c.Season == d.Season && c.Modern) ? SeasonCalendar.LeagueDeadline(d) : 12;
-        if (d.Esports.ClubId.Length > 0 && SeasonCalendar.Day(d, d.Day) > deadline) return $"转会窗口为每赛季第 1—{deadline} 天。自由选手可随时签约，错过报名期则参加下一季联赛。";
+        if (d.Esports.ClubId.Length > 0 && SeasonCalendar.Day(d, d.Day) > deadline) return $"本季转会窗口为{GameCalendar.Range(d, SeasonCalendar.Start(d) + 1, SeasonCalendar.Start(d) + deadline)}。自由选手可随时签约，错过报名期则参加下一季联赛。";
         string old = ClubName(d, d.Esports.ClubId);
         CircuitWorld.LeavePreseason(d);
         d.Esports.ClubId = offer.ClubId; d.Credits += offer.SigningBonus; d.Esports.Offers.Clear();
@@ -494,7 +494,7 @@ public static class EsportsWorld
         CareerEngine.Publish(d, "transfer-" + d.Season, $"转会窗口：{a.PublicName}加盟{ClubName(d, a.ClubId)}", $"{Countries[country]}赛区完成阵容调整，{b.PublicName}同时转投{ClubName(d, b.ClubId)}。两支俱乐部都把国际赛事资格列为新赛季目标。", "转会", true, [a.Id, b.Id]);
     }
     public static string NextGoal(CareerData d) => d.Esports.EcosystemVersion >= 1 && d.Esports.License >= 3 && d.Esports.ClubId.Length > 0
-        ? CareerEngine.NextMatch(d) is { } next ? $"下一场：{next.Event} · 第 {SeasonCalendar.Day(d, next.Day)} 天，日程已安排" : "本阶段赛事结束，推进日程迎接新赛季"
+        ? CareerEngine.NextMatch(d) is { } next ? $"下一场：{next.Event} · {GameCalendar.Text(d, next.Day)}，日程已安排" : "本阶段赛事结束，推进日程迎接新赛季"
         : d.Esports.License switch
     {
         0 => "赢下街区杯，取得城市公开赛资格；通关后战平也能晋级。",

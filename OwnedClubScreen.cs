@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System.Text.Json;
 
 namespace NationalSpire;
@@ -293,7 +293,7 @@ public partial class CareerScreen
     {
         _content.AddChild(Button("← 返回赛事与俱乐部", () => OpenWorldSection("国运榜"), 230));
         var o = d.Esports.OwnedClub!;
-        var box = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"第 {o.FoundedDay} 天成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 第 {o.NextPayDay} 天", true);
+        var box = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"{GameCalendar.Text(d, o.FoundedDay)}成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 {GameCalendar.Text(d, o.NextPayDay)}", true);
         string currentRegion = EsportsWorld.Club(d, o.ClubId)!.Country;
         string selectedRegion = o.NextRegion.Length > 0 ? o.NextRegion : currentRegion;
         var regionRow = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
@@ -321,7 +321,7 @@ public partial class CareerScreen
         if (_ownerSection == "赞助")
         {
             var sb = ClubCard("俱乐部赞助", "8 周一约，原品牌自动续约。周收入与胜场奖金按付款时的关注数计算；也可提前选择下期品牌。");
-            if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, ClubAudience.Total(d, o.ClubId)))}  ·  赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(active, ClubAudience.Total(d, o.ClubId)))}  ·  第 {active.EndDay} 天到期", 20, _gold));
+            if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, ClubAudience.Total(d, o.ClubId)))}  ·  赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(active, ClubAudience.Total(d, o.ClubId)))}  ·  {GameCalendar.Text(d, active.EndDay)}到期", 20, _gold));
             foreach (string id in new[] { "steady", "results", "fans" })
             {
                 var s = OwnedClubs.SponsorQuote(d, id);
@@ -334,13 +334,13 @@ public partial class CareerScreen
             sb.AddChild(Text("联赛三连胜 · 关注 +600 · 签约奖 $6,000 · 每周 +$3,000\n联赛五连胜 · 关注 +1,200 · 签约奖 $12,000 · 每周 +$6,000", 17, _ink));
             sb.AddChild(Text("联赛冠军 · 关注 +3,000 · 签约奖 $20,000 · 每周 +$10,000\n亚军 +2,000 / $14,000 / $7,000，季军 +1,200 / $8,000 / $4,000\n其余名次也有奖励，洲际赛按名次翻倍。", 17, _muted));
             foreach (var deal in o.AchievementSponsors.Where(s => s.EndDay > d.Day).OrderByDescending(s => s.Weekly))
-                sb.AddChild(Text($"{deal.Title} · 每周 {CareerMoney.Format(deal.Weekly)} · 第 {deal.EndDay} 天到期", 17, CareerVisuals.Teal));
+                sb.AddChild(Text($"{deal.Title} · 每周 {CareerMoney.Format(deal.Weekly)} · {GameCalendar.Text(d, deal.EndDay)}到期", 17, CareerVisuals.Teal));
             ShowSponsors(d); return;
         }
         if (_ownerSection == "账目")
         {
             var lb = ClubCard("经营流水", "俱乐部收支计入钱包，以下单独列出经营记录。");
-            foreach (var e in o.Ledger.TakeLast(32).Reverse()) lb.AddChild(Text($"第 {e.Day} 天  ·  {e.Title}  ·  {(e.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs(e.Amount))}", 18, e.Amount >= 0 ? CareerVisuals.Teal : _ink));
+            foreach (var e in o.Ledger.TakeLast(32).Reverse()) lb.AddChild(Text($"{GameCalendar.Text(d, e.Day)}  ·  {e.Title}  ·  {(e.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs(e.Amount))}", 18, e.Amount >= 0 ? CareerVisuals.Teal : _ink));
             return;
         }
         CoachManagement(d);
@@ -362,7 +362,7 @@ public partial class CareerScreen
                     continue;
                 }
                 var c = o.Contracts.Single(c => c.PersonId == id); var p = CareerEngine.Person(d, id)!;
-                rb.AddChild(Text((role == "教练" ? "" : $"进阶 {p.MaxAscension} · A8 预计通关率 {MatchRules.ClearChance(d, p, 8) * 100:0.#}%\n") + $"{OwnedClubs.PlanName(c.Plan)} · 周薪 {CareerMoney.Format(c.Wage)} · 获胜 {CareerMoney.Format(c.WinBonus)} · 第 {c.EndDay} 天续约", 17, _muted));
+                rb.AddChild(Text((role == "教练" ? "" : $"进阶 {p.MaxAscension} · A8 预计通关率 {MatchRules.ClearChance(d, p, 8) * 100:0.#}%\n") + $"{OwnedClubs.PlanName(c.Plan)} · 周薪 {CareerMoney.Format(c.Wage)} · 获胜 {CareerMoney.Format(c.WinBonus)} · {GameCalendar.Text(d, c.EndDay)}续约", 17, _muted));
                 var partners = o.Contracts.Where(other => role != "教练" && other.Position != "教练" && other.PersonId != id && OwnedClubs.Position(o, other.PersonId) != role).Select(other => other.PersonId).ToList();
                 var actions = new HFlowContainer(); rb.AddChild(actions);
                 if (partners.Count > 0)

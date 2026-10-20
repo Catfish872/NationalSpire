@@ -80,12 +80,12 @@ public partial class CareerScreen
         CareerVisuals.ClearContent(_privateHeading!);
         var heading = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _privateHeading!.AddChild(heading);
         heading.AddChild(PrivateLine(g.Name, 26, _gold)); heading.AddChild(PrivateLine(g.Members.Count + " 位成员", 14, _muted));
-        _privateHeading.AddChild(PrivateButton("群成员", () => GroupMemberPicker(g, people => GroupCommand("group-add", new() { People = people })), 110));
         if (busy) _privateHeading.AddChild(PrivateButton("停止生成", () => GroupCommand("group-stop", new()), 110));
         CareerVisuals.ClearContent(_privateBody);
         var visibleTurns = _groupPages.Visible.ToArray();
         long first = _groupPages.Page == 0 ? 0 : visibleTurns.FirstOrDefault()?.Order ?? 0;
         long end = _groupPages.Next?.Order ?? long.MaxValue;
+        var completions = TrainingCompletions(g.Forgotten ? [] : g.Interactions.Values.SelectMany(c => c.Offers), first, end);
         var entries = g.Entries.Where(e => e.Order >= first && e.Order < end).OrderBy(e => e.Order).ToArray();
         var notices = new Queue<GroupEntry>(entries);
         int lastDay = 0;
@@ -94,13 +94,16 @@ public partial class CareerScreen
             while (notices.TryPeek(out var entry) && entry.Order <= order)
             {
                 notices.Dequeue(); lastDay = entry.Day;
+                TrainingCompletionsThrough(completions, entry.Order);
                 _privateBody.AddChild(PrivateLine(PrivateAppointments.DateText(ViewData, entry.Day) + " · " + entry.Text, 13, _muted));
             }
+            TrainingCompletionsThrough(completions, order);
         }
         var events = entries.Select(e => (e.Order, Notice: (GroupEntry?)e, Turn: (GroupTurn?)null))
             .Concat(visibleTurns.Select(t => (t.Order, Notice: (GroupEntry?)null, Turn: (GroupTurn?)t))).OrderBy(x => x.Order);
         foreach (var item in events)
         {
+            TrainingCompletionsThrough(completions, item.Order);
             if (item.Notice != null) { NoticesThrough(item.Notice.Order); continue; }
             var t = item.Turn!;
             if (lastDay != t.Day) { _privateBody.AddChild(PrivateLine(PrivateAppointments.DateText(ViewData, t.Day), 13, _muted)); lastDay = t.Day; }
@@ -149,6 +152,7 @@ public partial class CareerScreen
                 else if (t.Status == "complete" && (t.Replies.Count > 0 || t.Raw.Length > 0) && t.ArbitrationTargets.Count == 0) _privateBody.AddChild(PrivateButton("重新生成本轮", () => GroupCommand("group-regenerate", new()), 180));
             }
         }
+        TrainingCompletionsThrough(completions, long.MaxValue);
         if (_groupPages.Count == 0 && entries.Length == 0) _privateBody.AddChild(PrivateText("开始群聊", 20, _muted));
         if (ChatAtLatest && g.Seen.GetValueOrDefault(GroupChats.Human(ViewData)) < g.Turns.Count(t => t.Status == "complete")) GroupCommand("group-read", new());
         FinishChatPage(bottom);
@@ -158,7 +162,17 @@ public partial class CareerScreen
         bool self = person == GroupChats.Human(ViewData);
         var row = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddThemeConstantOverride("separation", 12); _privateBody!.AddChild(row);
         if (self) row.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(40, 0) });
-        else row.AddChild(Avatar(ViewData, person, 38, open: () => OpenGroupPerson(person)));
+        else
+        {
+            var portrait = new VBoxContainer { Name = "GroupSpeaker_" + person, SizeFlagsVertical = SizeFlags.ShrinkBegin };
+            portrait.AddThemeConstantOverride("separation", 3); row.AddChild(portrait);
+            portrait.AddChild(Avatar(ViewData, person, 38, open: () => OpenGroupPerson(person)));
+            if (!GroupChats.IsHuman(ViewData, person))
+            {
+                var badge = new Control { Name = "GroupFavour_" + person, CustomMinimumSize = new(38, 42), TooltipText = "对你的好感：" + PrivateMessages.Relation(ViewData, person).Favour };
+                portrait.AddChild(badge); badge.AddChild(new AffectionBadge { Relation = PrivateMessages.Relation(ViewData, person), Compact = true });
+            }
+        }
         var contents = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 4 }; contents.AddThemeConstantOverride("separation", 5); row.AddChild(contents);
         contents.AddChild(PrivateLine(GroupChats.Name(ViewData, person), 14, self ? _gold : CareerVisuals.Teal));
         var bubble = new PanelContainer(); bubble.AddThemeStyleboxOverride("panel", CareerVisuals.Box(self ? "304b60" : "223649", self ? "597f98" : "405c72", 10, 14)); contents.AddChild(bubble);
@@ -169,6 +183,7 @@ public partial class CareerScreen
     }
     private void GroupOffer(GroupChat g, GroupEffect e, PrivateOffer o)
     {
+        if (o.Kind is "gift" or OathAttachments.Kind) { GiftReceipt(o); return; }
         void Send(string kind, PrivateMessageCommand command) => GroupCommand("group-offer-" + kind, new() { Lane = e.Lane, Interaction = command });
         if (o.Kind == "training" && ClubCoaching.TrainingPlans(ViewData).FirstOrDefault(p => p.Id == o.Id) is { } plan) { PrivateTrainingCard(ViewData, plan, _privateBody!, Send); return; }
         if (o.Kind == "lineup" && ViewData.Esports.LineupRequests.FirstOrDefault(r => r.Id == o.Id) is { } request) { PrivateLineupCard(ViewData, request, _privateBody!, Send); return; }
@@ -177,7 +192,7 @@ public partial class CareerScreen
         string title = o.Kind switch { "match" => "约战", "contract" => "合同报价", "activity" => o.Title, "publish" => "社区发帖", "training" => "训练计划", "lineup" => "阵容调整", "favour" => "好感调整", _ => o.Kind };
         box.AddChild(PrivateText(GroupChats.Name(ViewData, e.Person) + " · " + title + " · " + o.State, 18, _gold));
         if (o.Kind == "contract") box.AddChild(PrivateText($"签字费 ${o.Signing:#,0.##} · 周薪 ${o.Wage:#,0.##}\n胜场奖金 ${o.WinBonus:#,0.##} · {o.Weeks}周 · {o.Role}", 16, _ink));
-        if (o.Kind is "match" or "activity") box.AddChild(PrivateText($"第{o.Season}赛季第{o.Day}天" + (o.Kind == "match" ? $" · A{o.Ascension} · {o.Mode}" : " · " + string.Join("、", o.Participants.Select(id => GroupChats.Name(ViewData, id)))), 16, _ink));
+        if (o.Kind is "match" or "activity") box.AddChild(PrivateText($"{GameCalendar.Text(ViewData, PrivateAppointments.Date(ViewData, o))}" + (o.Kind == "match" ? $" · A{o.Ascension} · {o.Mode}" : " · " + string.Join("、", o.Participants.Select(id => GroupChats.Name(ViewData, id)))), 16, _ink));
         if (o.Kind == "publish") box.AddChild(PrivateText(o.Title, 19, _ink));
         if (o.Kind == "favour") box.AddChild(PrivateText($"对{GroupChats.Name(ViewData, e.Target.Length > 0 ? e.Target : e.Human)}的好感 {o.FavourBefore} → {o.FavourTargets.LastOrDefault()}", 17, _ink));
         if (o.Detail.Length > 0) box.AddChild(PrivateSelectableText(o.Detail, 16, _ink));
@@ -193,7 +208,11 @@ public partial class CareerScreen
         if (e.Human == GroupChats.Human(ViewData))
         {
             if (o.State == "待确认") { Action(o.Kind == "favour" ? "应用" : o.Kind == "publish" ? "确认发布" : "确认", "confirm"); Action(o.Kind == "favour" ? "保留原值" : "拒绝", "decline"); }
-            if (o.Kind == "activity" && o.State == "已确认" && PrivateAppointments.Date(ViewData, o) == ViewData.Day) Action("确认赴约", "attend");
+            if (o.Kind == "activity" && o.State == "已确认" && PrivateAppointments.Date(ViewData, o) == ViewData.Day)
+            {
+                Action("私密赴约", "attend");
+                actions.AddChild(PrivateButton("公开赴约", () => Send("attend", new() { Offer = o.Id, Part = "public" }), 120));
+            }
             if (o.Kind == "activity" && o.State == "已确认") Action("取消", "decline");
         }
     }
@@ -260,6 +279,7 @@ public partial class CareerScreen
                     foreach (var old in row.GetChildren().OfType<CareerAvatar>()) { old.Hide(); old.QueueFree(); }
                     var avatar = Avatar(d, person.Id, 36, false); row.AddChild(avatar); row.MoveChild(avatar, 0);
                     check.SetMeta("person", person.Id); check.Text = person.PublicName + " · " + person.Role;
+                    PickerRing(row, d, person.Id);
                     check.TooltipText = check.Text;
                 }
                 check.SetPressedNoSignal(selected.Contains(person.Id));

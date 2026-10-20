@@ -135,8 +135,9 @@ public static partial class AiService
         builder.Path = path;
         uri = builder.Uri; return true;
     }
-    public static async Task ProcessPendingAsync(CareerData? requestedData = null)
+    public static async Task ProcessPendingAsync(CareerData? requestedData = null, bool automatic = true)
     {
+        if (automatic && EventJourney.PublicationsPaused(requestedData ?? CareerStore.Data)) return;
         await Task.WhenAll(ProcessNewsAsync(null, requestedData), ProcessWeeklyAsync(requestedData));
     }
     public static Task RetryNewsAsync(string postId) => ProcessNewsAsync(postId);
