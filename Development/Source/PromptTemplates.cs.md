@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B6BE31EF33287439932FFC8D3F0CD87BE968EA7AEBAE095EE1209E6474288288`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6FAE612A1011E474FF12002AC57AAC6FE719E61984B3DB9D3A40D745E3F6E368`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -159,11 +159,13 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, legacyEvent)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, legacyEvent);`
 - `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, presetText)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, presetText);`
 - `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, text)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, text);`
 - `NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；输入表达式：`TemplateId(options)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = TemplateId(options)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue(id, out var presetText)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: preset?.TryGetValue(id, out var presetText)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue(template, out var custom)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: options.CustomPromptTemplates?.TryGetValue(template, out var custom)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`custom.Sections.TryGetValue("events", out var legacyEvent)`；返回值紧邻使用处：`BinaryExpressionSyntax: id == "event" && custom.Sections.TryGetValue("events", out var legacyEvent)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`custom.Sections.TryGetValue(id, out var text)`；返回值紧邻使用处：`IfStatementSyntax: if (custom.Sections.TryGetValue(id, out var text)) return EditableText(id, text);`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`(template == "legacy" ? LegacySections : Sections).First(s => s.Id == id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText`
 
@@ -175,7 +177,7 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string) — public static void SelectTemplate(AiOptions options, string id)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)
 

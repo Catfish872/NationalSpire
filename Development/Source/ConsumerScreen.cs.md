@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8A068CDE893974961160884DBF2EFB14167F6EBD592FE389164F876F62E91FBF`。来源：[源码](../../ConsumerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0CDF1B5E21E179FCAEF17D26601DAE9DE59101DB1037E1318AA840BA9C4EF69D`。来源：[源码](../../ConsumerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -210,9 +210,9 @@ private int _shopPage;
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-5012d526c517)
 
-**调用：** [`NationalSpire.CareerAudience.PromotionGain(int, int, long)`](CareerAudience.cs.md#symbol-e10664ed2197)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-723a34b6e2cb)；[`NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`](ConsumerEngine.cs.md#symbol-e824ab276330)；[`NationalSpire.ConsumerPurchases.Day(NationalSpire.Good)`](ConsumerPurchases.cs.md#symbol-0d5481a79067)；[`NationalSpire.ConsumerQuantity.ConsumerQuantity()`](ConsumerGiftControls.cs.md#symbol-0eddfdec0f89)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)；[`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`](PrivateAppointments.cs.md#symbol-1c549626b284)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LifestyleArt.LifestyleArt()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+**调用：** [`NationalSpire.CareerAudience.PromotionGain(int, int, long)`](CareerAudience.cs.md#symbol-e10664ed2197)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-723a34b6e2cb)；[`NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-09b4e1679d14)；[`NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`](ConsumerEngine.cs.md#symbol-e824ab276330)；[`NationalSpire.ConsumerPurchases.Day(NationalSpire.Good)`](ConsumerPurchases.cs.md#symbol-0d5481a79067)；[`NationalSpire.ConsumerQuantity.ConsumerQuantity()`](ConsumerGiftControls.cs.md#symbol-0eddfdec0f89)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)；[`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`](PrivateAppointments.cs.md#symbol-1c549626b284)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LifestyleArt.LifestyleArt()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.PromotionGain(int, int, long)`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._shopOwned`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`；`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`；`NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`；`NationalSpire.ConsumerPurchases.Day(NationalSpire.Good)`；`NationalSpire.ConsumerQuantity.Changed`；`NationalSpire.ConsumerQuantity.Initialize(int)`；`NationalSpire.ConsumerQuantity.Minimum`；`NationalSpire.ConsumerQuantity.Valid`；`NationalSpire.ConsumerQuantity.Value`；`NationalSpire.Good.Category`；`NationalSpire.Good.Collectible`；`NationalSpire.Good.Durable`；`NationalSpire.Good.Id`；`NationalSpire.Good.Name`；`NationalSpire.Good.Promo`；`NationalSpire.Good.Tier`；`NationalSpire.Good.Verbs`；`NationalSpire.GoodVerb.Name`；`NationalSpire.LifestyleArt.Category`；`NationalSpire.LifestyleArt.ProductId`；`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerAudience.PromotionGain(int, int, long)`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._shopOwned`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ConsumerCatalog.PromoPerSeason`；`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`；`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`；`NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good)`；`NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`；`NationalSpire.ConsumerPurchases.Day(NationalSpire.Good)`；`NationalSpire.ConsumerQuantity.Changed`；`NationalSpire.ConsumerQuantity.Initialize(int)`；`NationalSpire.ConsumerQuantity.Maximum`；`NationalSpire.ConsumerQuantity.Minimum`；`NationalSpire.ConsumerQuantity.Valid`；`NationalSpire.ConsumerQuantity.Value`；`NationalSpire.Good.Category`；`NationalSpire.Good.Collectible`；`NationalSpire.Good.Durable`；`NationalSpire.Good.Id`；`NationalSpire.Good.Name`；`NationalSpire.Good.Promo`；`NationalSpire.Good.Tier`；`NationalSpire.Good.Verbs`；`NationalSpire.GoodVerb.Name`；`NationalSpire.LifestyleArt.Category`；`NationalSpire.LifestyleArt.ProductId`；`NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -225,6 +225,7 @@ private int _shopPage;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text(selected.Name, 28, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text(selected.Name, 28, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`body.AddChild(Text(selected.Tier + " / " + selected.Category, 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: body.AddChild(Text(selected.Tier + " / " + selected.Category, 15, _muted));`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 205)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 205)`
@@ -237,6 +238,7 @@ private int _shopPage;
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(selected.Name, 28, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text(selected.Name, 28, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(selected.Tier + " / " + selected.Category, 15, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(selected.Tier + " / " + selected.Category, 15, _muted)`
 - `NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`；输入表达式：`ConsumerEngine.BuyError(d, selected, value)`；返回值紧邻使用处：`ConditionalExpressionSyntax: quantity.Valid ? ConsumerEngine.BuyError(d, selected, value) : "请输入有效的购买数量。"`
@@ -244,19 +246,23 @@ private int _shopPage;
 - `NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`；输入表达式：`ConsumerEngine.Price(selected)`；返回值紧邻使用处：`ArgumentSyntax: ConsumerEngine.Price(selected)`
 - `NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`；输入表达式：`ConsumerEngine.Price(selected)`；返回值紧邻使用处：`BinaryExpressionSyntax: ConsumerEngine.Price(selected) * (decimal)value`
 - `NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`；输入表达式：`ConsumerEngine.Price(selected)`；返回值紧邻使用处：`InterpolationSyntax: {ConsumerEngine.Price(selected):N0}`
+- `NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good)`；输入表达式：`ConsumerEngine.RemainingPurchases(d, selected)`；返回值紧邻使用处：`ArgumentSyntax: ConsumerEngine.RemainingPurchases(d, selected)`
+- `NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good)`；输入表达式：`ConsumerEngine.RemainingPurchases(d, selected)`；返回值紧邻使用处：`InterpolationSyntax: {ConsumerEngine.RemainingPurchases(d, selected)}`
 - `NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`；输入表达式：`ConsumerEngine.Uses(d, selected.Id)`；返回值紧邻使用处：`ArgumentSyntax: ConsumerEngine.Uses(d, selected.Id)`
 - `NationalSpire.ConsumerPurchases.Day(NationalSpire.Good)`；输入表达式：`purchases.Day(selected)`；返回值紧邻使用处：`ArgumentSyntax: purchases.Day(selected)`
-- `NationalSpire.ConsumerQuantity.ConsumerQuantity()`；输入表达式：`new ConsumerQuantity { Minimum = 1 }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ConsumerQuantity { Minimum = 1 }`
+- `NationalSpire.ConsumerQuantity.ConsumerQuantity()`；输入表达式：`new ConsumerQuantity { Minimum = 1, Maximum = Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected)) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ConsumerQuantity { Minimum = 1, Maximum = Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected)) }`
 - `NationalSpire.ConsumerQuantity.Initialize(int)`；输入表达式：`quantity.Initialize(1)`；返回值紧邻使用处：`ExpressionStatementSyntax: quantity.Initialize(1);`
 - `NationalSpire.LifestyleArt.LifestyleArt()`；输入表达式：`new LifestyleArt { ProductId = selected.Id, Category = selected.Category + " " + selected.Name, CustomMinimumSize = new(0, 205), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`ArgumentSyntax: new LifestyleArt { ProductId = selected.Id, Category = selected.Category + " " + selected.Name, CustomMinimumSize = new(0, 205), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `NationalSpire.PrivateAppointments.DateText(NationalSpire.CareerData, int)`；输入表达式：`PrivateAppointments.DateText(d, purchases.Day(selected))`；返回值紧邻使用处：`BinaryExpressionSyntax: "最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected))`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", selected.Verbs.Select(v => v.Name))`；返回值紧邻使用处：`BinaryExpressionSyntax: "收藏后可举办\n" + string.Join("\n", selected.Verbs.Select(v => v.Name))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`selected.Verbs.Select(v => v.Name)`；返回值紧邻使用处：`ArgumentSyntax: selected.Verbs.Select(v => v.Name)`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Maximum = Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected))`
 
 **赋值（含属性/字段和局部值）：**
 
 - `Category` = `selected.Category + " " + selected.Name`
 - `CustomMinimumSize` = `new(0, 205)`
+- `Maximum` = `Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected))`
 - `Minimum` = `1`
 - `ProductId` = `selected.Id`
 - `purchase.Disabled` = `error != null`
@@ -269,7 +275,7 @@ private int _shopPage;
 
 ## `NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int) — private void ConsumerSubmit(CareerData d, Good good, string verb, List<string> guests, int quantity = 1)`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)
 
@@ -295,7 +301,7 @@ private int _shopPage;
 
 ## `NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData) — private void FanChart(CareerData d)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 

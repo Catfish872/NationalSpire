@@ -119,7 +119,7 @@ public static class ConsumerCatalog
         Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);
 
         // ── 富裕 $300,000–$1,000,000：耐用品带动词，每种活动每季各 1 次 ──
-        Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);   // 娱乐：可带 3 人，每月一次
+        Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3);
         Wear(Rich, "出行", "suv", "硬派越野车", 350_000,
             new("camp", "露营同行", 4, 10), new("offroad", "越野体验", 2, 10), new("convoy", "车队巡游", 6, 10));
         Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,

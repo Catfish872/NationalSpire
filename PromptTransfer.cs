@@ -38,6 +38,8 @@ public static class PromptTransfer
             bundle.Sections[section.Id] = new() { Text = text,
                 FollowDefault = Normalize(text) == Normalize(PromptLibrary.Default(options, section.Id)) };
         }
+        foreach (var extra in options.PromptOverrides.Where(p => !PromptLibrary.Sections.Any(s => s.Id == p.Key)))
+            bundle.Sections[extra.Key] = new() { Text = extra.Value, FollowDefault = false };
         Validate(bundle);
         return JsonSerializer.Serialize(bundle, Json);
     }
@@ -49,6 +51,10 @@ public static class PromptTransfer
     private static string Normalize(string text) => text.Replace("\r\n", "\n").Trim();
     private static void Validate(Bundle bundle)
     {
+        if (bundle.Sections is { } legacy && !legacy.ContainsKey("event") && legacy.TryGetValue("events", out var previous))
+            legacy["event"] = new() { Text = previous.Text, FollowDefault = previous.FollowDefault };
+        if (bundle.CustomTemplate?.Sections is { } customLegacy && !customLegacy.ContainsKey("event") && customLegacy.TryGetValue("events", out var previousText))
+            customLegacy["event"] = previousText;
         if (bundle.EventPools != null) NationalSpire.EventPools.Validate(bundle.EventPools);
         if (bundle.Sections?.TryGetValue("event", out var eventSection) == true)
             eventSection.Text = PromptLibrary.EditableText("event", eventSection.Text);
@@ -87,12 +93,12 @@ public static class PromptTransfer
             var custom = bundle.CustomTemplate;
             if (custom == null || !bundle.Template.StartsWith("custom-", StringComparison.Ordinal) || !Guid.TryParseExact(bundle.Template[7..], "N", out _)
                 || !PromptLibrary.Templates.Any(t => t.Id == custom.BaseTemplate)
-                || custom.Sections == null || custom.Sections.Count != PromptLibrary.Sections.Count
+                || custom.Sections == null
                 || PromptLibrary.Sections.Any(s => !custom.Sections.TryGetValue(s.Id, out var text) || string.IsNullOrWhiteSpace(text)))
                 throw new ArgumentException("文件中的自建模板不完整。");
             PromptLibrary.ValidateTemplateName(new(), custom.Name);
         }
-        if (bundle.Sections == null || bundle.Sections.Count != PromptLibrary.Sections.Count
+        if (bundle.Sections == null
             || PromptLibrary.Sections.Any(s => !bundle.Sections.TryGetValue(s.Id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text)))
             throw new ArgumentException("文件需要包含全部场景，每项提示词不能为空。");
     }
@@ -107,15 +113,18 @@ public static class PromptTransfer
             var source = new AiOptions { PromptTemplate = bundle.Template };
             if (bundle.CustomTemplate is { } definition) source.CustomPromptTemplates[bundle.Template] = definition;
             var texts = bundle.Sections.ToDictionary(p => p.Key,
-                p => p.Value.FollowDefault ? PromptLibrary.Default(source, p.Key) : p.Value.Text);
+                p => p.Value.FollowDefault && PromptLibrary.Sections.Any(s => s.Id == p.Key) ? PromptLibrary.Default(source, p.Key) : p.Value.Text);
+            if (bundle.CustomTemplate is { } extras)
+                foreach (var extra in extras.Sections.Where(p => !PromptLibrary.Sections.Any(s => s.Id == p.Key)))
+                    texts.TryAdd(extra.Key, extra.Value);
             PromptLibrary.SelectTemplate(options, targetTemplate);
-            options.PromptOverrides = texts.Where(p => Normalize(p.Value) != Normalize(PromptLibrary.Default(options, p.Key)))
+            options.PromptOverrides = texts.Where(p => !PromptLibrary.Sections.Any(s => s.Id == p.Key) || Normalize(p.Value) != Normalize(PromptLibrary.Default(options, p.Key)))
                 .ToDictionary(p => p.Key, p => p.Value);
             options.PrivatePromptVersion = 1;
             if (bundle.EventPools != null) NationalSpire.EventPools.Save(options, bundle.EventPools);
             return;
         }
-        var overrides = bundle.Sections.Where(p => !p.Value.FollowDefault).ToDictionary(p => p.Key, p => p.Value.Text);
+        var overrides = bundle.Sections.Where(p => !p.Value.FollowDefault || !PromptLibrary.Sections.Any(s => s.Id == p.Key)).ToDictionary(p => p.Key, p => p.Value.Text);
         if (bundle.CustomTemplate is { } custom)
         {
             string name = custom.Name.Trim(), original = name;

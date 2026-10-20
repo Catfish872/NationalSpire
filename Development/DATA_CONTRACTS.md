@@ -30,6 +30,8 @@ ClubOffer.IncomeVersion 标记本人合同已完成工资×2、胜场和目标�
 
 ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为持有数量，GiftReceipts 保存已接受礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件；Gift 接受才扣除数量。交互回退恢复对应数量差额，并保留其后购买结果。
 
+ConsumerState.PromoUsed 以商品编号记录各运营商品本季累计购买数量，Season 标识所属赛季。ConsumerEngine.RemainingPurchases 将本季记录与 ConsumerCatalog.PromoPerSeason=3 比较，为 BuyError 和商城详情提供同一剩余额度。历史超过3次的记录完整保留，余额和收益沿原记录；新赛季恢复每项3次。没有新增存档字段。单人及多人各玩家沿原 Consumer 数据保存次数。
+
 NationalLegacy.ExtraProgress 保存各满级指标的增强进度，ExtraProgressDay 标记衰减起算日期；读取按14天半衰期计算，新贡献时先将存量折算到当天再追加。CommunityPost.CountryLevels 保存事件当时各相关国家九项等级，用于历史新闻资料。即时私聊、群聊、玩家发帖及讨论请求读取当前国家状态。
 
 ### 会话可见性和主动联系字段

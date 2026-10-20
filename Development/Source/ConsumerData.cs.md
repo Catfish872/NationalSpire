@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CEB17B2F9473A1BF90970CCE2061E8DE97223E9CCF5750C85AAAB078D8109767`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`447EEB50249AD4D1063A36255FCAC3DE015009F565685A71151A666F46795201`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -538,7 +538,7 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3);`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("auction", "小型拍卖夜", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("auction", "小型拍卖夜", 6, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("brunch", "周末早午餐", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("brunch", "周末早午餐", 6, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("camp", "露营同行", 4, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("camp", "露营同行", 4, 10)`

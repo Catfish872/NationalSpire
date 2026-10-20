@@ -14,7 +14,9 @@ EventPoolChecks 33项覆盖默认顺序、空分类、原本无素材分类新�
 
 群聊管理窗口顶部提供当前名称输入框及等高的保存名称按钮，输入有效名称后通过原 GroupCommand 发送 group-rename。空白名称在当前窗口提示填写，编辑时清除提示；保存成功关闭窗口并沿原签名刷新列表与标题。GroupChats.Command 去除首尾空格、比较当前名称，发生变化时修改 GroupChat.Name、追加带日期/操作者/原名称/新名称的 GroupEntry 通知并增加 Revision。当前可见群聊的真人成员可操作，queued/sending 期间同样可改名；相同名称保持现有名称和通知。聊天编号、轮次及附件关联继续使用原 Id。通知通过现有 GroupChatScreen 的 Entries 路径显示，沿原聊天时间线和总结窗口供后续请求读取。
 
-ConsumerScreen 的数量输入经 ConsumerOrder.Quantity 进入 ConsumerEngine.Buy；消费资格统一由 BuyError 检查数量和钱包金额。实物收藏显示累计数量，即时消费品以一次性消费标记区分。原购买季限与冷却判定已从 BuyError 移除；耐用品活动仍使用已有费用、参与者和使用次数规则。活动从通讯加号菜单进入 PrivateActivityPicker，指定物品时同时记录 GoodId/GoodVerb，接受后交给统一日程；赴约按钮选择私密或公开，公开赴约由 CareerLife.AddEvent 记录事实。
+ConsumerScreen 的数量输入经 ConsumerOrder.Quantity 进入 ConsumerEngine.Buy；消费资格统一由 BuyError 检查数量、运营剩余次数和钱包金额。买热搜、粉丝团运营、推广投放、专访投放各自每赛季限3次，批量购买按数量计次。RemainingPurchases 读取当前赛季 PromoUsed 对应商品，返回剩余次数，普通商品返回 int.MaxValue；界面数量上限与提交校验共用此入口。剩余为0时数量控件保留1，购买按钮显示限次说明并禁用。商品卡显示本季已用/3次，详情显示每季上限和剩余次数。旧档超过3次保留原次数、资金和收益，本季停止购买；Uses 在赛季变化时返回0，首次购买沿原 Season 清空上季计数。实物收藏显示累计数量，即时消费品以一次性消费标记区分。普通商品继续允许重复购买；耐用品活动仍使用已有费用、参与者和使用次数规则。luxtravel 目录名称为奢侈单人旅游，价格30万美元，既有账目、帖子和已保存文字继续保持原样。活动从通讯加号菜单进入 PrivateActivityPicker，指定物品时同时记录 GoodId/GoodVerb，接受后交给统一日程；赴约按钮选择私密或公开，公开赴约由 CareerLife.AddEvent 记录事实。
+
+运营限制读取一次商品次数，查询量与购买记录总数无关；打开详情读取剩余次数用于说明及数量控件，点击提交继续经过 BuyError。新增读取不复制数据、不保存、不广播，也不增加缓存；购买成功沿原单次消费事务保存，多人由原成员视图提交。关闭页面或切换生涯时读取对应玩家已保存记录。PromotionLimitChecks 53项通过，覆盖四项独立计数、批量额度、超额整单保持原数据、旧档6次及序列化读回、换季、普通商品重复购买、旅游名称，以及2人/4人各成员真实 CoopRules.Apply 的购买与超额结果。Release编译通过；本次未执行真实游戏界面或Steam跨机验证。逐次耗时、分配量及测量范围见本地 PERFORMANCE 的运营商品限次章节。
 
 ChatAttachmentScreen 的礼物选择器显示实际库存，群聊先选择接收者，再填写物品与数量。ChatManagementScreen 提供当前会话主动联系设置、隐藏/清除私聊、解散/清除群聊以及两类移出成员操作；隐藏私聊与解散群聊通过恢复列表进入。管理操作经原 PrivateCommand/GroupCommand 提交并刷新当前页面。正在生成时沿现有会话管理检查等待生成结束。
 

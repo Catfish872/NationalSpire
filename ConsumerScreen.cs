@@ -84,6 +84,7 @@ public partial class CareerScreen
         body.AddChild(Text(selected.Name, 28, _gold)); body.AddChild(Text(selected.Tier + " / " + selected.Category, 15, _muted));
         body.AddChild(Text($"${ConsumerEngine.Price(selected):N0}", 32, CareerVisuals.Teal));
         if (selected.Promo) body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink));
+        if (selected.Promo) body.AddChild(Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted));
         if (!selected.Collectible) body.AddChild(Text("即时消费", 16, _muted));
         if (_shopOwned)
         {
@@ -93,7 +94,7 @@ public partial class CareerScreen
         else
         {
             if (selected.Durable) body.AddChild(Text("收藏后可举办\n" + string.Join("\n", selected.Verbs.Select(v => v.Name)), 18, _ink));
-            var quantity = new ConsumerQuantity { Minimum = 1 }; quantity.Initialize(1); body.AddChild(quantity);
+            var quantity = new ConsumerQuantity { Minimum = 1, Maximum = Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected)) }; quantity.Initialize(1); body.AddChild(quantity);
             string? error = ConsumerEngine.BuyError(d, selected);
             var purchase = Button(error ?? "确认购买", () => ConsumerSubmit(d, selected, "", [], (int)quantity.Value), 0); purchase.Disabled = error != null; body.AddChild(purchase);
             quantity.Changed += () => { int value = quantity.Value; var message = quantity.Valid ? ConsumerEngine.BuyError(d, selected, value) : "请输入有效的购买数量。"; purchase.Text = message ?? $"购买 · ${ConsumerEngine.Price(selected) * (decimal)value:N0}"; purchase.Disabled = message != null; };

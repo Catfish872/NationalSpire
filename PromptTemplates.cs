@@ -200,6 +200,7 @@ BOSS：
         if (options.CustomPromptTemplates?.TryGetValue(template, out var custom) == true)
         {
             if (custom.Sections.TryGetValue(id, out var text)) return EditableText(id, text);
+            if (id == "event" && custom.Sections.TryGetValue("events", out var legacyEvent)) return EditableText(id, legacyEvent);
             template = custom.BaseTemplate;
         }
         // 独立预设只覆盖其提供的模块；旧模板和玩家已保存的修改继续使用原有内容。

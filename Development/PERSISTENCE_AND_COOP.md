@@ -282,3 +282,7 @@ ListAsync 后台列出目录，逐项使用 LoadAsync；损坏目录沿原列表
 | 检查点写入中断 | Manifest 最后替换、current / previous Load | 恢复完整配套资料；实际中断测试与写入逻辑核对分开记录 |
 
 CoopNativeRun 的原版存储与检查点钩子属于独立链路。序列化、保存节点或广播修改必须连同原版恢复一起审阅，不能仅验证 CareerData 文本相同。
+
+2026-10-21 自动保存专项使用 `NationalSpire.MultiplayerTests/Run-Production.ps1 -Members 2 -AutomaticSave`。专项启用真实 CoopSavePatch、绑定 CoopRuntime.Session/Native、设置原版 shouldSave=true，通过 EnterMapCoord 触发 SaveManager → RunSaveManager → CoopSavePatch → CoopNativeRun.Save → Commit → Storage/Broadcast。普通既有模式仍使用原来的显式保存测试；该模式只能证明已有检查点恢复，不能证明自然推进触发自动保存。专项不直接调用 Native.Save 制造推进后的检查点。
+
+本地两个进程的房主25项、客机7项通过，检查首次地图入口和下一层自动更新检查点、两人最新生命101、客机完整快照一致、三次暂停恢复后牌组生命章节及双方地图一致。首个地图推进完整操作121.17毫秒，下一层229.45毫秒，均包含原版房间进入、同步及保存等待，Revision各增加1；未单独测量各内部步骤和分配量。平台为本机 ENet，菜单转场使用测试实现；没有加载报告者的第三方角色模组，没有验证 Steam 跨机断线或实际画面点击。原始资料在 `.artifacts/import-reconnect-20261021/`。该诊断包恢复文件停留在开局10秒的原因尚未复现，本次未修改多人生产保存逻辑。

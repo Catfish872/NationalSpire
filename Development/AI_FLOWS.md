@@ -69,6 +69,10 @@ NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、Rela
 
 PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本，PromptTransfer 负责导入导出。旧模板缺少新场景时使用该场景默认文本补齐，不要求玩家原模板已有全部场景。
 
+导入导出按已知场景逐项检查，额外场景字段保留。events 在缺少 event 时作为随机事件创作要求读取；两者同时存在时 event 优先，events 原文保留。Default 读取自建模板定义，Get 读取个人修改；Read/Apply 的 Validate 在补默认值前处理别名。date 等附加字段只随模板保存和导出，当前请求仍按已知场景读取。Export 将额外个人修改一并写入 Sections；Apply 导入已有目标模板时将额外定义保存到目标模板的覆盖字典，保证再次导出保留原文；未知字段不调用内置场景默认值查询。版本1、2、3共用上述兼容入口。每次操作遍历模板场景及额外字段，配置保存沿原界面入口，没有新增模型调用、保存或广播。配置字典直接读取，不增加缓存。
+
+2026-10-21 使用诊断包内含 date/events 的自建模板执行 `NationalSpire.Tests/Check-PromptCompatibility.ps1`，38项通过，包含13个场景正文往返、额外字段保留、导入内置目标模板后导出、版本1/2/3及新旧随机事件字段同时存在。261220字符模板的导出、读取、应用、再次导出读取完整操作，首次34.66毫秒、再次13.70毫秒；当前线程分配7.43MB和5.48MB。以上为完整操作时间，未与内部步骤重复相加；未执行模型调用或界面文件选择。
+
 EventPools 统一读取随机事件与选手日常池。默认数据来自 RandomEventSeeds 的110条素材及其背景分类、WorldEvents.Topics 的36条普通日常、WorldMatchLife.MatchTopics 的48条赛后日常。固定10个随机事件分类、8个普通日常分类和8个赛后日常分类。随机事件按条目抽取，分类只选择画面；WorldEvents.PublishDaily 通过 Get(CareerData) 读取日常，继续按分类抽取、同类间隔14天、同人间隔42天，赛后分类要求人物近7天有已完成比赛。国运发展与市场动态保留专门候选和各1.5权重，其余分类权重1。被编辑分类按完整列表替换；缺省分类继续使用内置内容；空分类不提供候选；随机事件全部为空时采用内置110条，日常全部为空时继续处理国运和市场候选。
 
 PromptTransfer 新导出 Version=3，EventPools 字段保存当前模板按分类的覆盖列表，键为 event:分类或 daily:分类，条目包含 Title、Detail；未修改分类省略。Read 支持版本1/2/3；旧文件缺少 EventPools 时 Apply 保留目标模板的池配置。新版文件提供 EventPools 时替换目标配置，空字典表示全部跟随内置。CreateTemplate 复制基础模板当前池覆盖，DeleteTemplate 清理对应池。固定 Format 仍由 RandomEventPrompts.Compose 追加，池内容作为选中的材料进入原请求，不新增模型调用。

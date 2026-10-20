@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4907155876D04B4BCBB938E70FD1BD7725980E8CEBC9FD3B0C2135A2295B703F`。来源：[源码](../../ConsumerPurchases.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5CD470C7FDADA8135782043C33D8A141FCCE2916B74828DA4DC0F95B068A038D`。来源：[源码](../../ConsumerPurchases.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -171,7 +171,7 @@ private readonly Dictionary<string, long> _quantities;
 
 **调用：** [`NationalSpire.ConsumerPurchases.Owned(NationalSpire.Good)`](ConsumerPurchases.cs.md#symbol-494acd691ab1)；[`NationalSpire.ConsumerPurchases.Promotions(NationalSpire.Good)`](ConsumerPurchases.cs.md#symbol-81c188784d64)；[`NationalSpire.ConsumerPurchases.Quantity(NationalSpire.Good)`](ConsumerPurchases.cs.md#symbol-ec47685a5ee4)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerPurchases.Owned(NationalSpire.Good)`；`NationalSpire.ConsumerPurchases.Promotions(NationalSpire.Good)`；`NationalSpire.ConsumerPurchases.Quantity(NationalSpire.Good)`；`NationalSpire.Good.Collectible`；`NationalSpire.Good.Promo`
+**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerCatalog.PromoPerSeason`；`NationalSpire.ConsumerPurchases.Owned(NationalSpire.Good)`；`NationalSpire.ConsumerPurchases.Promotions(NationalSpire.Good)`；`NationalSpire.ConsumerPurchases.Quantity(NationalSpire.Good)`；`NationalSpire.Good.Collectible`；`NationalSpire.Good.Promo`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 

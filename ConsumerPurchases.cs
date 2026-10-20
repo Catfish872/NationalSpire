@@ -25,6 +25,6 @@ public sealed class ConsumerPurchases
     public bool ThisSeason(Good good) => _current.Contains(good.Id);
     public long Promotions(Good good) => _promotions.GetValueOrDefault(good.Id);
     public IEnumerable<Good> Collection => ConsumerCatalog.All.Where(Owned);
-    public string Label(Good good) => good.Promo ? $"本季 {Promotions(good)} 次"
+    public string Label(Good good) => good.Promo ? $"本季 {Promotions(good)}/{ConsumerCatalog.PromoPerSeason} 次"
         : Owned(good) ? $"持有 ×{Quantity(good)}" : good.Collectible ? "" : "即时消费";
 }

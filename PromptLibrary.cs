@@ -87,6 +87,8 @@ public static partial class PromptLibrary
     {
         MergePrivatePrompt(options);
         string fallback = Default(options, id);
+        if (id == "event" && !options.PromptOverrides.ContainsKey(id) && options.PromptOverrides.TryGetValue("events", out var legacyEvent)
+            && !string.IsNullOrWhiteSpace(legacyEvent)) return EditableText(id, legacyEvent);
         return options.PromptOverrides != null && options.PromptOverrides.TryGetValue(id, out var custom)
             && !string.IsNullOrWhiteSpace(custom) ? EditableText(id, custom) : fallback;
     }

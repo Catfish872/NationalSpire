@@ -17,11 +17,16 @@ public static class ConsumerEngine
         s.InventoryVersion = 1;
     }
     public static long Uses(CareerData d, string id) => d.Life.Consumer.Season == d.Season ? d.Life.Consumer.PromoUsed.GetValueOrDefault(id) : 0;
+    public static int RemainingPurchases(CareerData d, Good good) => good.Promo
+        ? (int)Math.Max(0, ConsumerCatalog.PromoPerSeason - Uses(d, good.Id)) : int.MaxValue;
     public static int Price(Good good) => good.Category == "数码" && good.Tier == ConsumerCatalog.Mass ? Math.Max(10, good.Price / 5)
         : good.Id == "ebike" ? 6000 : good.Price;
     public static string? BuyError(CareerData d, Good good, int quantity = 1)
     {
         if (quantity < 1) return "请选择购买数量。";
+        int remaining = RemainingPurchases(d, good);
+        if (good.Promo && quantity > remaining)
+            return $"每赛季限{ConsumerCatalog.PromoPerSeason}次，本季剩余{remaining}次。";
         if (CareerMoney.Balance(d) < Price(good) / 10m * quantity) return "当前资金不足。";
         return null;
     }

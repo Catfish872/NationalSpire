@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0FC7DDC8096AAE73C4A8DEA2FE71ABF30F1ED44395D153DA965BA8CB946FA3DE`。来源：[源码](../../PromptLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DD8ADE81C5C89FF2D83CD78115A250A22147E5A86548156A846CA9C8B04AC166`。来源：[源码](../../PromptLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -191,7 +191,7 @@
 
 **调用者：** [`ChangeTemplate(System.Action, string, bool)`](PromptScreen.cs.md#symbol-32c868c23420)；[`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.Coop.CoopCoordinator.Broadcast()`](Coop/CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.PortraitDesigns.Messages(NationalSpire.CareerData, string, NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-3f8b0db3fc3f)；[`NationalSpire.PrivateMessagePrompts.Section(NationalSpire.CareerData, string)`](PrivateMessagePrompts.cs.md#symbol-9529e63edd53)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Editorial(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-cdd41a28416a)；[`NationalSpire.RandomEventPrompts.Compose(NationalSpire.RandomEventRecord, NationalSpire.AiOptions?)`](RandomEventPrompts.cs.md#symbol-81f58f271386)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
-**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`
 
@@ -199,8 +199,12 @@
 
 - `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；输入表达式：`Default(options, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Default(options, id)`
 - `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, custom)`；返回值紧邻使用处：`ConditionalExpressionSyntax: options.PromptOverrides != null && options.PromptOverrides.TryGetValue(id, out var custom)              && !string.IsNullOrWhiteSpace(custom) ? EditableText(id, custom) : fallback`
+- `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, legacyEvent)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, legacyEvent);`
 - `NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`；输入表达式：`MergePrivatePrompt(options)`；返回值紧邻使用处：`ExpressionStatementSyntax: MergePrivatePrompt(options);`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(custom)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(custom)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(legacyEvent)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(legacyEvent)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`options.PromptOverrides.ContainsKey(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !options.PromptOverrides.ContainsKey(id)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`options.PromptOverrides.TryGetValue("events", out var legacyEvent)`；返回值紧邻使用处：`BinaryExpressionSyntax: id == "event" && !options.PromptOverrides.ContainsKey(id) && options.PromptOverrides.TryGetValue("events", out var legacyEvent)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`options.PromptOverrides.TryGetValue(id, out var custom)`；返回值紧邻使用处：`BinaryExpressionSyntax: options.PromptOverrides != null && options.PromptOverrides.TryGetValue(id, out var custom)`
 
 **赋值（含属性/字段和局部值）：**
@@ -210,7 +214,7 @@
 
 ## `NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string) — public static void Save(AiOptions options, string id, string text)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
@@ -241,7 +245,7 @@
 
 ## `NationalSpire.PromptLibrary.Reset(NationalSpire.AiOptions, string) — public static void Reset(AiOptions options, string id)`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
@@ -260,7 +264,7 @@
 
 ## `NationalSpire.PromptLibrary.Editorial(NationalSpire.AiOptions, string) — public static string Editorial(AiOptions options, string scene)`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`](AiPrompts.cs.md#symbol-7a07a16bbdcd)
 
