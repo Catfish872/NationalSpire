@@ -57,6 +57,8 @@ public sealed class CareerData
     public Dictionary<string, List<string>> BroadcastHistory { get; set; } = [];
     public int IdentityVersion { get; set; }
     public int CommunityVersion { get; set; }
+    // 社区点赞公式版本（载入时一次性重算旧帖/楼中楼分数）。
+    public int CommunityVoteVersion { get; set; }
     public List<CommunityPost> SavedThreads { get; set; } = [];
     public List<CommunityMemory> CommunityMemories { get; set; } = [];
     public EsportsCareer Esports { get; set; } = new();
