@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`53E05436C9C2C3633548739046AD3538F335367A55C798979C1CEDEE32ACC907`。来源：[源码](../../RandomEvents.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9F67632E17B3B4A5A8EFB747C9BC096A3D5030EFF517C487FA9C3E2E9E479E4B`。来源：[源码](../../RandomEvents.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -58,45 +58,72 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 - `e.Error` = `"生成已停止，可以重新生成或跳过。"`
 - `e.State` = `e.Options.Count > 0 ? "ready" : "failed"`
 
-<a id="symbol-3df9d24e1f2c"></a>
+<a id="symbol-7f3bd43c6b7a"></a>
 
-## `NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData) — public static void Ensure(CareerData d)`
+## `NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData, int?) — public static void Ensure(CareerData d, int? fromDay = null)`
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)
+**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, bool, int, int)`](RandomEvents.cs.md#symbol-8716e3f7b803)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`](RandomEvents.cs.md#symbol-f818531770d4)；`NationalSpire.RandomEventRecord.RandomEventRecord()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(int, int)`；`System.Random.Next(int, int)`；`System.Random.Random(int)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`](RandomEvents.cs.md#symbol-f818531770d4)；`NationalSpire.RandomEventRecord.RandomEventRecord()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<long>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(long, long)`；`System.Random.NextInt64(long, long)`；`System.Random.Random(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerLifeState.RandomEvents`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerLifeState.RandomEventMaxDays`；`NationalSpire.CareerLifeState.RandomEventMinDays`；`NationalSpire.CareerLifeState.RandomEvents`；`NationalSpire.CareerLifeState.RandomEventsEnabled`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(d.WorldId + ":questions:" + day)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(d.WorldId + ":questions:" + day)`
-- `NationalSpire.RandomEventRecord.RandomEventRecord()`；输入表达式：`new() { Day = day }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = day }`
+- `NationalSpire.RandomEventRecord.RandomEventRecord()`；输入表达式：`new() { Day = (int)day }`；返回值紧邻使用处：`ArgumentSyntax: new() { Day = (int)day }`
 - `NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`；输入表达式：`RememberMatches(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberMatches(d);`
-- `System.Collections.Generic.IEnumerable<int>.Max()`；输入表达式：`d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max()`；返回值紧邻使用处：`ArgumentSyntax: d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max()`
-- `System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；输入表达式：`d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`d.Life.RandomEvents.Select(e => e.Day + 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`dates.Add((int)day)`；返回值紧邻使用处：`IfStatementSyntax: if (dates.Add((int)day)) d.Life.RandomEvents.Add(new() { Day = (int)day });`
+- `System.Collections.Generic.IEnumerable<long>.Max()`；输入表达式：`d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max()`；返回值紧邻使用处：`ArgumentSyntax: d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max()`
+- `System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；输入表达式：`d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`d.Life.RandomEvents.Select(e => (long)e.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`d.Life.RandomEvents.Select(e => e.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.RandomEvents.Select(e => e.Day).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`d.Life.RandomEvents.Select(e => e.Day).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.Life.RandomEvents.Select(e => e.Day).ToHashSet()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Life.RandomEvents.Where(e => e.Day < d.Day && e.State is not ("complete" or "skipped"))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var e in d.Life.RandomEvents.Where(e => e.Day < d.Day && e.State is not ("complete" or "skipped"))) e.State = "skipped";`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.Life.RandomEvents.Add(new() { Day = day })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.RandomEvents.Add(new() { Day = day });`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(d.Day, d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(d.Day, d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max())`
-- `System.Random.Next(int, int)`；输入表达式：`random.Next(6, 11)`；返回值紧邻使用处：`AssignmentExpressionSyntax: day += random.Next(6, 11)`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.Life.RandomEvents.Add(new() { Day = (int)day })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.RandomEvents.Add(new() { Day = (int)day });`
+- `System.Math.Max(long, long)`；输入表达式：`Math.Max(d.Day, d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max())`；返回值紧邻使用处：`BinaryExpressionSyntax: fromDay ?? Math.Max(d.Day, d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max())`
+- `System.Random.NextInt64(long, long)`；输入表达式：`random.NextInt64(first ? 6 : d.Life.RandomEventMinDays, (long)(first ? 10 : d.Life.RandomEventMaxDays) + 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: day += random.NextInt64(first ? 6 : d.Life.RandomEventMinDays, (long)(first ? 10 : d.Life.RandomEventMaxDays) + 1)`
 - `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash(d.WorldId + ":questions:" + day))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash(d.WorldId + ":questions:" + day))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `day` += `random.Next(6, 11)`
-- `Day` = `day`
+- `day` += `random.NextInt64(first ? 6 : d.Life.RandomEventMinDays, (long)(first ? 10 : d.Life.RandomEventMaxDays) + 1)`
+- `Day` = `(int)day`
 - `e.State` = `"skipped"`
+- `first` = `false`
+
+<a id="symbol-8716e3f7b803"></a>
+
+## `NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, bool, int, int) — public static void SetFrequency(CareerData d, bool enabled, int minimum, int maximum)`
+
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.RandomEventSettings()`](RandomEventScreen.cs.md#symbol-6c1195d3802b)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)
+
+**调用：** [`NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData, int?)`](RandomEvents.cs.md#symbol-7f3bd43c6b7a)；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.RandomEventMaxDays`；`NationalSpire.CareerLifeState.RandomEventMinDays`；`NationalSpire.CareerLifeState.RandomEvents`；`NationalSpire.CareerLifeState.RandomEventsEnabled`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.Materials`；`NationalSpire.RandomEventRecord.Options`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Story`；`NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData, int?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData, int?)`；输入表达式：`Ensure(d, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: Ensure(d, d.Day);`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `d.Life.RandomEventMaxDays` = `maximum`
+- `d.Life.RandomEventMinDays` = `minimum`
+- `d.Life.RandomEventsEnabled` = `enabled`
 
 <a id="symbol-20d7a260dcab"></a>
 
 ## `NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string) — public static RandomEventRecord? Find(CareerData d, string id)`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](RandomEvents.cs.md#symbol-c949f4a092a3)；[`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`](RandomEvents.cs.md#symbol-b7d9c2f158f5)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-3b62c8ad1ca6)；[`Save(NationalSpire.CareerData)`](Coop/CoopRandomEvents.cs.md#symbol-5bd2269a96bc)
+**调用者：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](RandomEvents.cs.md#symbol-c949f4a092a3)；[`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`](RandomEvents.cs.md#symbol-b7d9c2f158f5)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-3b62c8ad1ca6)；[`Save(NationalSpire.CareerData)`](Coop/CoopRandomEvents.cs.md#symbol-e8b36b263cbf)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -113,7 +140,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string) — public static string? Start(CareerData d, string id)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；[`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)
 
@@ -160,7 +187,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string) — public static string? Custom(CareerData d, string id, string action)`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)
 
@@ -187,7 +214,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool) — public static string? ChooseCustom(CareerData d, string id, bool publicly)`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)
 
@@ -209,7 +236,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string) — public static string? Skip(CareerData d, string id)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.CareerScreen.ShowJourneyEncounter()`](EventJourneyScreen.cs.md#symbol-4e94d6a77974)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)
 
@@ -231,7 +258,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool) — public static string? Choose(CareerData d, string id, int index, bool publicly)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](Coop/CoopRandomEvents.cs.md#symbol-dde49f27790c)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](RandomEvents.cs.md#symbol-c949f4a092a3)
 
@@ -266,7 +293,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.Remember(NationalSpire.CareerData, NationalSpire.RandomEventRecord, string, string) — private static void Remember(CareerData d, RandomEventRecord e, string id, string fact)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData)`](RandomEvents.cs.md#symbol-f818531770d4)
 
@@ -313,9 +340,9 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEvents.RememberMatches(NationalSpire.CareerData) — public static void RememberMatches(CareerData d)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData)`](RandomEvents.cs.md#symbol-3df9d24e1f2c)
+**调用者：** [`NationalSpire.RandomEvents.Ensure(NationalSpire.CareerData, int?)`](RandomEvents.cs.md#symbol-7f3bd43c6b7a)
 
 **调用：** [`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.RandomEvents.Remember(NationalSpire.CareerData, NationalSpire.RandomEventRecord, string, string)`](RandomEvents.cs.md#symbol-e25f0d98c349)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -339,7 +366,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Kind(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>) — public static string Kind(Dictionary<string, JsonElement> e)`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Diagnostics.RecordEventCheck(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption, string)`](EventDiagnostics.cs.md#symbol-cb8ce43827bb)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-1a41c3fc699a)；[`NationalSpire.RandomEventEffects.Person(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>)`](RandomEvents.cs.md#symbol-4c2ca1a5a966)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)
 
@@ -358,7 +385,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Number(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>, string) — private static decimal Number(Dictionary<string, JsonElement> e, string key)`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-1a41c3fc699a)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)
 
@@ -379,7 +406,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Text(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>, string) — private static string Text(Dictionary<string, JsonElement> e, string key)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-1a41c3fc699a)；[`NationalSpire.RandomEventEffects.Person(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>)`](RandomEvents.cs.md#symbol-4c2ca1a5a966)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)
 
@@ -398,7 +425,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Person(System.Collections.Generic.Dictionary<string, System.Text.Json.JsonElement>) — internal static string Person(Dictionary<string, JsonElement> e)`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-1a41c3fc699a)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)
 
@@ -418,7 +445,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption) — public static string? Check(CareerData d, RandomEventRecord record, RandomEventOption option)`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventCustomScreen.cs.md#symbol-e43ecd579917)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](RandomEvents.cs.md#symbol-c949f4a092a3)
 
@@ -438,7 +465,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption) — private static string? CheckEffects(CareerData d, RandomEventRecord record, RandomEventOption option)`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-09ecc3f9af33)
 
@@ -511,7 +538,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption) — public static string Preview(CareerData d, RandomEventOption option)`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`](RandomEventScreen.cs.md#symbol-5fbf79c036d6)
 
@@ -556,7 +583,7 @@ private static readonly string[] Kinds = ["wallet", "fans", "clubFans", "item", 
 
 ## `NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption) — public static void Apply(CareerData d, RandomEventRecord record, RandomEventOption option)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)
 

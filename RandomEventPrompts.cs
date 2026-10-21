@@ -7,6 +7,7 @@ public static class RandomEventPrompts
     private static readonly JsonSerializerOptions Json = new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
     private const string Participants = "资料中的相关人物是本次参与者。人物效果使用本次参与者中的人物编号；相关人物为空时，创作玩家独自经历的单人事件。";
     private const string PlayerFacts = "玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。";
+    internal const string WorldGuidance = "世界观资料用于保持社会背景、人物认知和实力尺度一致。故事以本次素材中的人物、处境和情感为中心，让世界设定通过生活细节自然体现。卡牌、怪物和打法知识在情节确有需要时使用，不要强行套用或强制使用；普通生活题材按其自身的趣味展开。叙述文风与人物语言遵循随机事件模板中的创作要求，文笔优美引人入胜。";
     public const string Story = """
 为玩家创作一段精彩、自然以及有趣的互动故事，并根据情况提供2-4个行动选项。故事需要保持完整，玩家的选项应当是故事的最终决定，无论如何在选择后这段故事会结束，所以你不能在选项里留下需要后续推进的故事发展伏笔。
 以玩家的游戏体验为核心目标，在事件中禁止做出无解困局、全部负面等导致玩家游戏体验下降的故事。
@@ -83,6 +84,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 """;
     internal static string PlayerRecord(CareerData data) => JsonSerializer.Serialize(new
     {
+        玩家资料 = PrivatePublicContext.PlayerProfile(data),
         玩家战绩 = new
         {
             正式比赛累计 = new { 胜 = data.Wins, 平 = data.Draws, 负 = data.Losses },
@@ -95,8 +97,8 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
     public static List<Dictionary<string, string>> Compose(CareerData data, RandomEventRecord record, AiOptions? options = null, bool custom = false)
     {
         List<Dictionary<string, string>> messages =
-        [new() { ["role"] = "system", ["content"] = EffectInstructions(data) },
-         new() { ["role"] = "user", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data) + "\n" + record.Materials }];
+        [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(options ?? data.Ai, "world") + "\n\n" + WorldGuidance + "\n\n" + EffectInstructions(data) },
+         new() { ["role"] = "user", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + (record.PublicPosts.Length > 0 ? record.PublicPosts + "\n" : "") + PlayerRecord(data) + "\n" + record.Materials }];
         if (custom)
         {
             messages.Add(new() { ["role"] = "assistant", ["content"] = JsonSerializer.Serialize(new { title = record.Title, story = record.Story }, Json) });
@@ -109,16 +111,17 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
     {
         var people = e.People.Select(id => CareerEngine.Person(d, id)!).ToArray();
         var search = new CommunityMemorySearch.Request();
+        var recentPlayerPosts = search.RecentPlayerPosts(d, d.Day);
+        e.PublicPosts = PrivatePublicContext.PostBodies(d, recentPlayerPosts);
         var memories = CommunityMemorySearch.Retrieve(d, e.Seed, e.People.Append(GroupChats.Human(d)), d.Day, new HashSet<string>(), 8, request: search);
         return JsonSerializer.Serialize(new
         {
             日期 = GameCalendar.Iso(d, d.Day), 事件时段 = "故事与所选结局都发生在今天，选择完成后游戏日期保持当天。约战效果登记未来比赛，当前结局写到约定达成为止。", 玩家 = CareerEngine.Name(d), 故事素材 = e.Seed,
-            玩家身份 = new { d.PlayerGender, d.Esports.Country, 职业 = d.PlayerCard?.Role ?? EsportsWorld.LicenseName(d), 人物介绍 = d.PlayerCard?.Biography ?? "", 俱乐部 = EsportsWorld.ClubName(d, d.Esports.ClubId) },
-            相关人物 = people.Select(p => new { 编号 = p.Id, 资料 = PrivatePublicContext.CharacterProfile(d, p), 经历 = PrivatePublicContext.Profiles(d, p, includeConversation: false), 好感 = PrivateMessages.Favour(d, p.Id), 关系 = PrivateMessages.Relation(d, p.Id) }),
+            相关人物 = people.Select(p => new { 编号 = p.Id, 资料 = PrivatePublicContext.CharacterProfile(d, p), 经历 = PrivatePublicContext.Profiles(d, p, includeConversation: false, includePlayer: false), 好感 = PrivateMessages.Favour(d, p.Id), 关系 = PrivateMessages.Relation(d, p.Id) }),
             恶意行为可选人物 = people.Where(p => PrivateMessages.Favour(d, p.Id) <= 0).Select(p => p.Id),
             会话总结 = ChatTimeline.Summaries(d, e.People),
             近期交流 = ChatTimeline.External(d, e.People).DistinctBy(x => (x.Order, x.Source)).OrderBy(x => x.Day).ThenBy(x => x.Order).TakeLast(20).Select(x => ChatTimeline.Text(d, x)),
-            社区资料 = memories.Select(m => new { 内容 = AiGeneratedText.Memory(m), 相关人物 = m.People.Select(id => new { 编号 = id, 名称 = GroupChats.Name(d, id) }), 日期 = GameCalendar.Text(d, m.Day) }),
+            社区资料 = PrivatePublicContext.CommunitySources(d, memories, e.People.Append(GroupChats.Human(d)), e.Seed, search, recentPlayerPosts),
             国家生活 = NationalDevelopment.Context(d, people.Select(p => p.Country).Append(d.Esports.Country)),
             当天比赛 = d.Matches.Where(m => m.Day == d.Day).Select(m => new { m.Event, m.Status, m.OpponentId, m.PlayerWon, m.PlayerFloor, m.PlayerSeconds }),
             当天活动 = SocialAppointments.All(d).Where(a => PrivateAppointments.Date(d, a.Offer) == d.Day).Select(a => new { a.Offer.Title, a.Offer.Detail, a.Offer.State }),

@@ -80,6 +80,12 @@ FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。Pr
 
 事件池配置以分类是否存在区分跟随默认和自定义：缺少键使用内置，存在空列表表示该分类为空。记录中的 Title 用于日常标题，Detail 用于日常内容或随机事件素材；日常继续替换 {人}、{队}。随机事件新 Category 字段保存抽取时分类，旧记录缺省为空时按原 Seed 查 RandomEventSeeds 的内置映射；已生成自定义事件修改模板后仍保留原画面分类。提示词文件版本3及旧文件缺字段行为见 AI_FLOWS。
 
+## 随机事件频率和公开帖快照
+
+CareerLifeState.RandomEventsEnabled 默认true，RandomEventMinDays/RandomEventMaxDays 默认7/11，均按当前生涯保存；多人归各成员Life，View/Capture及既有快照负责保存恢复。界面整数输入最小为1，最大输入框下界随最小输入框变化，存储类型为Int32。旧JSON缺少字段时采用上述默认值。SetFrequency 写入三项设置，删除今天以后 State=waiting 且 Materials、Story、Options 均为空的日期记录，然后从当天按新区间重新安排。当天、已经生成材料或故事、完成和跳过的记录原样保留。关闭保留设置值及当前可处理事件，后续Ensure仍处理比赛记忆，日期循环停止新增。再次启用从当天重排。日期计算使用Int64，超出游戏Int32日期范围时结束安排。
+
+RandomEventRecord.PublicPosts 保存首次材料整理时的完整近期玩家公开原帖正文，Materials 保存其他社区正文与选中评论，两者按帖子编号合并后仅提供一次正文。字段随原事件生成保存、成员快照和重试恢复；旧记录缺少字段时为空。普通私聊与群聊的同类材料按每次请求生成，仍使用原Context快照和消息格式。
+
 ## AI 连接方案与本机凭据
 
 AiOptions.ConnectionProfiles 以稳定编号保存 AiConnectionProfile{Name, Endpoint, Model}，TaskProfiles 以八种任务编号指向连接方案编号。旧配置首次由 AiRouting.Ensure 将 Endpoint/Model 写入 default；缺少某任务选择时使用 default。创建方案使用 Guid 的 N 格式编号，重命名只改变 Name。旧 Endpoint/Model 继续作为读取早期配置的来源，保存 default 时同步两项。全局 Enabled、并发、间隔、等待时间、帖子批量与提示词仍属于 AiOptions。
@@ -157,7 +163,7 @@ Life.RandomEvents 保存随机事件。State 使用 waiting/generating/ready/fai
 
 RandomEventRecord.People 初始保存抽取的0—3名人物编号；完成选择时，Choose 将所选效果实际涉及的现有NPC编号去重补入，数量随实际所选效果确定。RandomEventEffects.Person 供人物检查、效果预览及所选目标累计共用。Materials 保持生成当时的原文，新增 People 随原事件一次保存，用于人物共同经历、公开资料、界面名单和 RememberMatches 的赛果关联。普通选项与自定义行动使用同一完成路径；旧 ready 事件直接适用当前检查，旧 complete 事件继续凭 Selected/complete 保持幂等。多人 EventCommand 在 View 上结算，Capture 保存成员 Life、人物状态及关联资料，再沿原 Commit 保存与同步。
 
-随机事件请求中的玩家战绩是 PlayerRecord(CareerData) 临时生成的JSON资料，沿 Compose 拼接。正式比赛累计直接读取 Wins/Draws/Losses；近期最多5条直接读取 Results 的 Day/Event/Opponent/Outcome，日期转换为公历文本。简表保持原赛果字段含义，未序列化 CareerResult 的牌组、楼层、用时、奖励、Evidence、Settlement 或战报内容。单人来源为当前生涯，多人来源为当前成员个人视图，试写来源为已选材料的 Snapshot。事件、存档格式及模板导入导出结构沿用现有字段，旧 Materials 可直接与新简表组合。
+随机事件请求中的玩家资料及战绩是 PlayerRecord(CareerData) 临时生成的JSON资料，沿 Compose 拼接。玩家资料通过 PrivatePublicContext.PlayerProfile 复用聊天的角色卡、身份和生涯事实整理函数，单独提供一次；Materials 内NPC的 Profiles 设置 includePlayer:false，避免每名NPC重复玩家段落。正式比赛累计直接读取 Wins/Draws/Losses；近期最多5条直接读取 Results 的 Day/Event/Opponent/Outcome，日期转换为公历文本。简表保持原赛果字段含义，未序列化 CareerResult 的牌组、楼层、用时、奖励、Evidence、Settlement 或战报内容。单人来源为当前生涯，多人来源为当前成员个人视图，试写来源为已选材料的 Snapshot。事件、存档格式及模板导入导出结构沿用现有字段，旧 Materials 可直接与新玩家资料及简表组合。新 Materials 的社区资料为 CommunitySources 整理后的字符串，包含所选原帖、事件事实和按原规则整理的评论上下文；旧数组形式仍作为 Materials 原文直接使用。材料在首次生成时保存，重试和自由行动复用；独立玩家资料在每次 Compose 读取当前视图。
 
 CareerData.Journey 保存 EventJourney.Destination 与 PausedDay，归共同日历；旧档缺省为零，表示普通停留。ResumePublications 使用 JsonIgnore，仅提示当前界面在恢复时启动原自动生成；重新加载由原主菜单请求入口读取 PausedDay。事件内容仍属于个人 Life.RandomEvents，共同旅途状态不包含人物和故事。
 
@@ -227,7 +233,7 @@ PrivateInteractionHistory.Capture 的合同快照增加 refillPeople、refillPos
 | CommunityPost 原始主题/事实/赛果与正文/Replies | 事件发布、玩家提交、模型应用 | 原始事实与模型正文分开；parentId 指向同帖上文 |
 | CommunityPost / CommunityReply.AudienceScore | Remember → CommunityVotes.Update | 可空 Int32 受众原始净赞数；沿用 JSON 键 AiNetScore。界面按主楼/NPC 评论乘6、玩家评论乘16，再加手动票 |
 | CommunityPost / CommunityReply.PlayerVotes | CommunityVotes.SetVote | 以实际玩家编号为键保存 -1 / +1，取消时移除键；Choice 读取当前玩家，Score 用 Int64 汇总按作者类型放大后的程序评分与全部有效玩家票 |
-| CommunityMemory | 公开事实和讨论整理 | 本地检索、上下文；来源 PostId、人物和日期参与过滤 |
+| CommunityMemory | 公开事实和讨论整理 | 本地检索、上下文；来源 PostId、人物和日期参与过滤。自动发帖与社区回帖的近期玩家公开帖补充复用既有 :fact 原帖记录、Kind 与原文；先取近28天最多三篇，再按 PostId 合并，重复名额不递补，无新增持久字段 |
 | CommunityPromptContext 的评论集合、PublicMemoryRequest 的共享群聊、AiWireProtocol 的 communitySources | 一次请求内建立 | 发送前序列化；来自现有帖子、评论和群聊。引用编号只用于请求，持久数据仍归原对象管理；PrivateTurn.Context 按原保存节点记录整段材料 |
 | CommunityPost.AiSourceBody / CommunityMemory.AiText / PrivateOffer.AiDetail | RememberMatch、CoopRules.Settle、Remember、PrepareAttachments 在生成职业事实时填写；仅有差异时保存 | 原字段负责界面和检索；AiGeneratedText 供请求读取，缺失回退原字段。WhenWritingNull 省略空字段。旧档不迁移，既有 JSON 深复制、保存、权限过滤和广播继续管理这些字段 |
 | WeeklyEdition 与生成阶段 | WeeklyJournal 捕获事实；AiWeekly 应用结果 | 双周档案、文章、界面、重试；事实快照和生成状态不是同一项数据 |

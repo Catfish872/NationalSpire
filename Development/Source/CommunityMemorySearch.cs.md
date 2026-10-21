@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`DADA30D476354BBB8EB86CB508204DDD318DE2EFC875F9D669DBA1D6CD0716D3`。来源：[源码](../../CommunityMemorySearch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6467D7B0319E197C7E08F8A1A6DC3B0D0ED6FA9562FCD47FF20E68CE0AC0C3B1`。来源：[源码](../../CommunityMemorySearch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,6 +14,7 @@
 private readonly Dictionary<string, HashSet<string>> _terms = new(StringComparer.Ordinal);
 private readonly Dictionary<(CareerData Data, int Day, string Query), Search> _searches = [];
 private readonly Dictionary<(CareerData Data, int Day), Dictionary<string, PostActivity>> _posts = [];
+private readonly Dictionary<(CareerData Data, int Day), List<CommunityPost>> _recentPlayerPosts = [];
 private readonly Dictionary<(CommunityPost Post, string Query), bool> _topics = [];
 private readonly Dictionary<(CareerData Data, int Day, string Person), List<CommunityMemory>> _acquaintances = [];
 private readonly Dictionary<(CareerData Data, int Day), (Dictionary<string, CommunityPost> Posts, ILookup<string, CommunityMemory> People)> _acquaintancePools = [];
@@ -28,7 +29,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Request.AcquaintancePool(NationalSpire.CareerData) — internal (Dictionary<string, CommunityPost> Posts, ILookup<string, CommunityMemory> People) AcquaintancePool(CareerData data)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.PrivateAcquaintance(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-5c9e3196ce58)
 
@@ -61,9 +62,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Request.Posts(NationalSpire.CareerData) — internal Dictionary<string, PostActivity> Posts(CareerData data)`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PrivatePublicContext.SelectCommunity(NationalSpire.CareerData, NationalSpire.CareerPerson, string, System.Collections.Generic.ISet<string>?, NationalSpire.CommunityMemorySearch.Request?)`](PrivatePublicContext.cs.md#symbol-434624537026)
+**调用者：** [`NationalSpire.CommunityMemorySearch.Request.RecentPlayerPosts(NationalSpire.CareerData, int)`](CommunityMemorySearch.cs.md#symbol-4ac65acae692)；[`NationalSpire.PrivatePublicContext.CommunitySources(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityMemory>, System.Collections.Generic.IEnumerable<string>, string, NationalSpire.CommunityMemorySearch.Request, System.Collections.Generic.IReadOnlyList<NationalSpire.CommunityPost>?)`](PrivatePublicContext.cs.md#symbol-f1edd24c9a6e)；[`NationalSpire.PrivatePublicContext.SelectCommunity(NationalSpire.CareerData, NationalSpire.CareerPerson, string, System.Collections.Generic.ISet<string>?, NationalSpire.CommunityMemorySearch.Request?)`](PrivatePublicContext.cs.md#symbol-434624537026)
 
 **调用：** [`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.NewsPending(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-87fd384e7842)；`NationalSpire.CommunityMemorySearch.PostActivity.PostActivity(NationalSpire.CommunityPost, System.Collections.Generic.Dictionary<string, int>, bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -93,9 +94,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Request.Topic(NationalSpire.CommunityPost, string) — internal bool Topic(CommunityPost post, string query)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-ba0de9837f75)
+**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-1d36f4c023fa)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -111,11 +112,41 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 - `result` = `MatchesTopic(query, post.Title + "\n" + post.Body, this)`
 
+<a id="symbol-4ac65acae692"></a>
+
+## `NationalSpire.CommunityMemorySearch.Request.RecentPlayerPosts(NationalSpire.CareerData, int) — public IReadOnlyList<CommunityPost> RecentPlayerPosts(CareerData data, int day)`
+
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?)`](CommunityMemorySearch.cs.md#symbol-43d223752125)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)
+
+**调用：** [`NationalSpire.CommunityMemorySearch.Request.Posts(NationalSpire.CareerData)`](CommunityMemorySearch.cs.md#symbol-6d86e3dcd515)；[`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CommunityMemorySearch.PostActivity.Post`；`NationalSpire.CommunityMemorySearch.Request._recentPlayerPosts`；`NationalSpire.CommunityMemorySearch.Request.Posts(NationalSpire.CareerData)`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Day`；`NationalSpire.CommunityPost.PersonalPost`；`NationalSpire.CommunityPost.RelatedPeople`；`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CommunityMemorySearch.Request.Posts(NationalSpire.CareerData)`；输入表达式：`Posts(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Posts(data).Values`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => CommunityThreads.IsHuman(data, id)`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, p.AuthorId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；输入表达式：`_recentPlayerPosts.Add((data, day), posts)`；返回值紧邻使用处：`ExpressionStatementSyntax: _recentPlayerPosts.Add((data, day), posts);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_recentPlayerPosts.TryGetValue((data, day), out var posts)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_recentPlayerPosts.TryGetValue((data, day), out var posts)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`；返回值紧邻使用处：`BinaryExpressionSyntax: p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Posts(data).Values.Select(a => a.Post)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Posts(data).Values.Select(a => a.Post)                      .Where`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take(3)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take(3).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take(3).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: posts = Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take(3).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending`
+
+**赋值（含属性/字段和局部值）：**
+
+- `posts` = `Posts(data).Values.Select(a => a.Post)                      .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)                          || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))                      .OrderByDescending(p => p.Day).Take(3).ToList()`
+
 <a id="symbol-a0786238240c"></a>
 
 ## `NationalSpire.CommunityMemorySearch.Request.Acquaintance(NationalSpire.CareerData, NationalSpire.CareerPerson) — internal List<CommunityMemory> Acquaintance(CareerData data, CareerPerson person)`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivatePublicContext.SelectCommunity(NationalSpire.CareerData, NationalSpire.CareerPerson, string, System.Collections.Generic.ISet<string>?, NationalSpire.CommunityMemorySearch.Request?)`](PrivatePublicContext.cs.md#symbol-434624537026)
 
@@ -138,9 +169,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string) — internal Search Prepare(CareerData data, int day, string query)`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-f933ce4e4ad8)
+**调用者：** [`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?)`](CommunityMemorySearch.cs.md#symbol-43d223752125)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.BuildSearch(NationalSpire.CareerData, int, System.Collections.Generic.HashSet<string>)`](CommunityMemorySearch.cs.md#symbol-a0f6a3280fc9)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -161,9 +192,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Request.GetTerms(string) — internal HashSet<string> GetTerms(string text)`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；[`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`](CommunityMemorySearch.cs.md#symbol-44f4b761a62f)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-f933ce4e4ad8)；[`NationalSpire.CommunityMemorySearch.TopicScore(string, NationalSpire.CommunityReply, NationalSpire.CommunityMemorySearch.Request)`](CommunityMemorySearch.cs.md#symbol-719e0030a43a)；[`NationalSpire.CommunityPromptContext.SelectReplies(System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int, System.Collections.Generic.IEnumerable<string>, string, NationalSpire.CommunityMemorySearch.Request)`](CommunityPromptContext.cs.md#symbol-bf9e66b04457)
+**调用者：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；[`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`](CommunityMemorySearch.cs.md#symbol-44f4b761a62f)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?)`](CommunityMemorySearch.cs.md#symbol-43d223752125)；[`NationalSpire.CommunityMemorySearch.TopicScore(string, NationalSpire.CommunityReply, NationalSpire.CommunityMemorySearch.Request)`](CommunityMemorySearch.cs.md#symbol-719e0030a43a)；[`NationalSpire.CommunityPromptContext.SelectReplies(System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int, System.Collections.Generic.IEnumerable<string>, string, NationalSpire.CommunityMemorySearch.Request, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?)`](CommunityPromptContext.cs.md#symbol-20bcf5974618)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -183,11 +214,11 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Terms(string) — private static HashSet<string> Terms(string text)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityMemorySearch.BuildSearch(NationalSpire.CareerData, int, System.Collections.Generic.HashSet<string>)`](CommunityMemorySearch.cs.md#symbol-a0f6a3280fc9)；[`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；[`NationalSpire.CommunityMemorySearch.ReplyTerms.Get(string)`](CommunityMemorySearch.cs.md#symbol-a1e834000caf)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-f933ce4e4ad8)
+**调用者：** [`NationalSpire.CommunityMemorySearch.BuildSearch(NationalSpire.CareerData, int, System.Collections.Generic.HashSet<string>)`](CommunityMemorySearch.cs.md#symbol-a0f6a3280fc9)；[`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；[`NationalSpire.CommunityMemorySearch.ReplyTerms.Get(string)`](CommunityMemorySearch.cs.md#symbol-a1e834000caf)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?)`](CommunityMemorySearch.cs.md#symbol-43d223752125)
 
-**调用：** [`Chinese(char)`](CommunityMemorySearch.cs.md#symbol-3031147dca39)；[`Latin(char)`](CommunityMemorySearch.cs.md#symbol-f0dba47a47e5)；`string.Substring(int, int)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`
+**调用：** [`Chinese(char)`](CommunityMemorySearch.cs.md#symbol-bb9b66b7d5ce)；[`Latin(char)`](CommunityMemorySearch.cs.md#symbol-58837bf70714)；`string.Substring(int, int)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`
 
 **字段、属性、事件及方法组引用：** `Chinese(char)`；`Latin(char)`
 
@@ -205,11 +236,11 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-f0dba47a47e5"></a>
+<a id="symbol-58837bf70714"></a>
 
 ## `Latin(char) — static bool Latin(char c)`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)
 
@@ -223,11 +254,11 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-3031147dca39"></a>
+<a id="symbol-bb9b66b7d5ce"></a>
 
 ## `Chinese(char) — static bool Chinese(char c)`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)
 
@@ -245,9 +276,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?) — public static bool MatchesTopic(string query, string text, Request? request = null)`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityMemorySearch.Request.Topic(NationalSpire.CommunityPost, string)`](CommunityMemorySearch.cs.md#symbol-e2d99449e7e2)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`](PrivatePublicContext.cs.md#symbol-b4d8110deb5b)
+**调用者：** [`NationalSpire.CommunityMemorySearch.Request.Topic(NationalSpire.CommunityPost, string)`](CommunityMemorySearch.cs.md#symbol-e2d99449e7e2)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`](PrivatePublicContext.cs.md#symbol-b4d8110deb5b)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(System.Collections.Generic.HashSet<string>, System.Collections.Generic.HashSet<string>)`](CommunityMemorySearch.cs.md#symbol-84bd8ee29a0a)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`
 
@@ -270,7 +301,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.MatchesTopic(System.Collections.Generic.HashSet<string>, System.Collections.Generic.HashSet<string>) — private static bool MatchesTopic(HashSet<string> queryTerms, HashSet<string> textTerms)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)
 
@@ -290,7 +321,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.ReplyTerms.Get(string) — internal HashSet<string> Get(string text)`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.TopicScore(System.Collections.Generic.HashSet<string>, NationalSpire.CommunityReply)`](CommunityMemorySearch.cs.md#symbol-1574d9dfc61f)
 
@@ -311,7 +342,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.TopicScore(string, NationalSpire.CommunityReply, NationalSpire.CommunityMemorySearch.Request) — public static double TopicScore(string query, CommunityReply reply, Request request)`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -331,9 +362,9 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.TopicScore(System.Collections.Generic.HashSet<string>, NationalSpire.CommunityReply) — internal static double TopicScore(HashSet<string> queryTerms, CommunityReply reply)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityMemorySearch.TopicScore(string, NationalSpire.CommunityReply, NationalSpire.CommunityMemorySearch.Request)`](CommunityMemorySearch.cs.md#symbol-719e0030a43a)；[`NationalSpire.CommunityPromptContext.SelectReplies(System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int, System.Collections.Generic.IEnumerable<string>, string, NationalSpire.CommunityMemorySearch.Request)`](CommunityPromptContext.cs.md#symbol-bf9e66b04457)
+**调用者：** [`NationalSpire.CommunityMemorySearch.TopicScore(string, NationalSpire.CommunityReply, NationalSpire.CommunityMemorySearch.Request)`](CommunityMemorySearch.cs.md#symbol-719e0030a43a)；[`NationalSpire.CommunityPromptContext.SelectReplies(System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int, System.Collections.Generic.IEnumerable<string>, string, NationalSpire.CommunityMemorySearch.Request, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?)`](CommunityPromptContext.cs.md#symbol-20bcf5974618)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.ReplyTerms.Get(string)`](CommunityMemorySearch.cs.md#symbol-a1e834000caf)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Math.Max(int, int)`；`System.Math.Sqrt(double)`；`System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.GetOrCreateValue(TKey)`
 
@@ -355,7 +386,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.PrivateAcquaintance(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.CommunityMemorySearch.Request?) — public static List<CommunityMemory> PrivateAcquaintance(CareerData data, CareerPerson person, Request? request = null)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.Request.Acquaintance(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CommunityMemorySearch.cs.md#symbol-a0786238240c)
 
@@ -398,11 +429,11 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 - `PostId` = `m.PostId`
 - `Text` = `posts.TryGetValue(m.PostId, out var post) ? $"《{post.Title}》中的记录：{AiGeneratedText.Memory(m)}" : AiGeneratedText.Memory(m)`
 
-<a id="symbol-b0ac4439e971"></a>
+<a id="symbol-ed8228a01c2a"></a>
 
 ## `Own(NationalSpire.CommunityMemory) — bool Own(CommunityMemory m)`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -420,56 +451,71 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-f933ce4e4ad8"></a>
+<a id="symbol-43d223752125"></a>
 
-## `NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?) — public static List<CommunityMemory> Retrieve(CareerData data, string query, IEnumerable<string> people, int day, ISet<string> excludedPosts, int count = 6, ISet<string>? excludedMemories = null, bool requireTopic = false, Request? request = null)`
+## `NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?) — public static List<CommunityMemory> Retrieve(CareerData data, string query, IEnumerable<string> people, int day, ISet<string> excludedPosts, int count = 6, ISet<string>? excludedMemories = null, bool requireTopic = false, Request? request = null, IEnumerable<CommunityPost>? playerTopics = null)`
 
-来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildDiscussionPrompt(NationalSpire.CareerData, System.Collections.Generic.ISet<string>, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiDiscussion.cs.md#symbol-142a77613e08)；[`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)；[`NationalSpire.AiService.CreateTestSession(NationalSpire.CareerData, NationalSpire.PromptTestSource, string)`](PromptTesting.cs.md#symbol-c81f52ee7090)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.PrivatePublicContext.SelectCommunity(NationalSpire.CareerData, NationalSpire.CareerPerson, string, System.Collections.Generic.ISet<string>?, NationalSpire.CommunityMemorySearch.Request?)`](PrivatePublicContext.cs.md#symbol-434624537026)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)
 
-**调用：** [`NationalSpire.AiGeneratedText.Memory(NationalSpire.CommunityMemory)`](AiGeneratedText.cs.md#symbol-ff263d7615f1)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`](CommunityMemorySearch.cs.md#symbol-44f4b761a62f)；[`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.CommunityMemory.CommunityMemory()`；`NationalSpire.CommunityMemorySearch.Request.Request()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Log(double)`
+**调用：** [`NationalSpire.AiGeneratedText.Memory(NationalSpire.CommunityMemory)`](AiGeneratedText.cs.md#symbol-ff263d7615f1)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`](CommunityMemorySearch.cs.md#symbol-44f4b761a62f)；[`NationalSpire.CommunityMemorySearch.Request.RecentPlayerPosts(NationalSpire.CareerData, int)`](CommunityMemorySearch.cs.md#symbol-4ac65acae692)；[`NationalSpire.CommunityMemorySearch.Terms(string)`](CommunityMemorySearch.cs.md#symbol-96d927ec7e23)；[`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.CommunityMemory.CommunityMemory()`；`NationalSpire.CommunityMemorySearch.Request.Request()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Log(double)`
 
-**字段、属性、事件及方法组引用：** `(string id, int weight).id`；`(string id, int weight).weight`；`NationalSpire.AiGeneratedText.Memory(NationalSpire.CommunityMemory)`；`NationalSpire.CommunityMemory.Day`；`NationalSpire.CommunityMemory.Id`；`NationalSpire.CommunityMemory.Kind`；`NationalSpire.CommunityMemory.People`；`NationalSpire.CommunityMemory.PostId`；`NationalSpire.CommunityMemory.Text`；`NationalSpire.CommunityMemorySearch.ConversationNoise`；`NationalSpire.CommunityMemorySearch.Document.Matches`；`NationalSpire.CommunityMemorySearch.Document.Memory`；`NationalSpire.CommunityMemorySearch.Document.Topic`；`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`；`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`；`NationalSpire.CommunityMemorySearch.Search.ById`；`NationalSpire.CommunityMemorySearch.Search.ByPost`；`NationalSpire.CommunityMemorySearch.Search.Documents`；`NationalSpire.CommunityMemorySearch.Search.Frequencies`；`NationalSpire.CommunityMemorySearch.Search.Topics`；`NationalSpire.CommunityMemorySearch.Terms(string)`；`NationalSpire.GameText.Plain(string)`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.CommunityRetrieve`；`Score(NationalSpire.CommunityMemorySearch.Document)`
+**字段、属性、事件及方法组引用：** `(string id, int weight).id`；`(string id, int weight).weight`；`NationalSpire.AiGeneratedText.Memory(NationalSpire.CommunityMemory)`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.OfficialAscensionVerified`；`NationalSpire.CommunityMemory.Day`；`NationalSpire.CommunityMemory.Id`；`NationalSpire.CommunityMemory.Kind`；`NationalSpire.CommunityMemory.People`；`NationalSpire.CommunityMemory.PostId`；`NationalSpire.CommunityMemory.Text`；`NationalSpire.CommunityMemorySearch.ConversationNoise`；`NationalSpire.CommunityMemorySearch.Document.Matches`；`NationalSpire.CommunityMemorySearch.Document.Memory`；`NationalSpire.CommunityMemorySearch.Document.Topic`；`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`；`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`；`NationalSpire.CommunityMemorySearch.Request.RecentPlayerPosts(NationalSpire.CareerData, int)`；`NationalSpire.CommunityMemorySearch.Search.ById`；`NationalSpire.CommunityMemorySearch.Search.ByPost`；`NationalSpire.CommunityMemorySearch.Search.Documents`；`NationalSpire.CommunityMemorySearch.Search.Frequencies`；`NationalSpire.CommunityMemorySearch.Search.Topics`；`NationalSpire.CommunityMemorySearch.Terms(string)`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.EventKey`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.RelatedPeople`；`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.GameText.Plain(string)`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.CommunityRetrieve`；`Score(NationalSpire.CommunityMemorySearch.Document)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiGeneratedText.Memory(NationalSpire.CommunityMemory)`；输入表达式：`AiGeneratedText.Memory(d.Memory)`；返回值紧邻使用处：`ArgumentSyntax: AiGeneratedText.Memory(d.Memory)`
 - `NationalSpire.CommunityMemory.CommunityMemory()`；输入表达式：`new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) }`；返回值紧邻使用处：`ConditionalExpressionSyntax: d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory`
 - `NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`；输入表达式：`.GetTerms(query)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: request?.GetTerms(query)`
-- `NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`；输入表达式：`(request ?? new()).Prepare(data, day, query)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = (request ?? new()).Prepare(data, day, query)`
-- `NationalSpire.CommunityMemorySearch.Request.Request()`；输入表达式：`new()`；返回值紧邻使用处：`BinaryExpressionSyntax: request ?? new()`
+- `NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`；输入表达式：`request.Prepare(data, day, query)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = request.Prepare(data, day, query)`
+- `NationalSpire.CommunityMemorySearch.Request.RecentPlayerPosts(NationalSpire.CareerData, int)`；输入表达式：`request.RecentPlayerPosts(data, day)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = request.RecentPlayerPosts(data, day)`
+- `NationalSpire.CommunityMemorySearch.Request.Request()`；输入表达式：`new()`；返回值紧邻使用处：`AssignmentExpressionSyntax: request ??= new()`
 - `NationalSpire.CommunityMemorySearch.Terms(string)`；输入表达式：`Terms(query)`；返回值紧邻使用处：`BinaryExpressionSyntax: request?.GetTerms(query) ?? Terms(query)`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => CommunityThreads.IsHuman(data, id)`
+- `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, p.AuthorId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.IsHuman(data, p.AuthorId)              || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(AiGeneratedText.Memory(d.Memory))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Text = GameText.Plain(AiGeneratedText.Memory(d.Memory))`
 - `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.CommunityRetrieve)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.CommunityRetrieve)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, int>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, int>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`new Dictionary<string, int>(search.Frequencies, StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, int>(search.Frequencies, StringComparer.OrdinalIgnoreCase)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`search.ById.TryGetValue(post.Id + ":fact", out var document)`；返回值紧邻使用处：`BinaryExpressionSyntax: supplied.Add(post.Id) && search.ById.TryGetValue(post.Id + ":fact", out var document)`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`supplied.Add(post.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: supplied.Add(post.Id) && search.ById.TryGetValue(post.Id + ":fact", out var document)`
 - `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`ConversationNoise.Contains(t)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ConversationNoise.Contains(t)`
 - `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`excludedIds.Contains(d.Memory.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !excludedIds.Contains(d.Memory.Id)`
 - `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<string>()`；返回值紧邻使用处：`BinaryExpressionSyntax: excludedMemories ?? new HashSet<string>()`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`.Any(p => CommunityThreads.IsHuman(data, p.AuthorId)              || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))              || data.Results.Any(r => r.Day <= day && r.OfficialAscensionVerified && p.EventKey == "match" + r.MatchId))`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: playerTopics?.Any(p => CommunityThreads.IsHuman(data, p.AuthorId)              || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))              || data.Results.Any(r => r.Day <= day && r.OfficialAscensionVerified && p.EventKey == "match" + r.MatchId))`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Memory.People.Any(identities.ContainsKey)`；返回值紧邻使用处：`BinaryExpressionSyntax: d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Results.Any(r => r.Day <= day && r.OfficialAscensionVerified && p.EventKey == "match" + r.MatchId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.IsHuman(data, p.AuthorId)              || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))              || data.Results.Any(r => r.Day <= day && r.OfficialAscensionVerified && p.EventKey == "match" + r.MatchId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.IsHuman(data, p.AuthorId)              || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))`
 - `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`(excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id]))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat(excluded.Select(d => d.Memory.PostId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat(excluded.Select(d => d.Memory.PostId)).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`selected.Select(d => d.Memory.PostId).Concat(excludedPosts)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`queryTerms.Count(t => !ConversationNoise.Contains(t))`；返回值紧邻使用处：`BinaryExpressionSyntax: queryTerms.Count(t => !ConversationNoise.Contains(t)) < 2`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`people.Where(id => id != "player" && id != "desk").Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: people.Where(id => id != "player" && id != "desk").Distinct()              .Select`
 - `System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`(excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`people.Where(id => id != "player" && id != "desk").Distinct()              .Select((id, index) => (id, weight: index < 3 ? 8 : 3))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: people.Where(id => id != "player" && id != "desk").Distinct()              .Select((id, index) => (id, weight: index < 3 ? 8 : 3)).ToDictionary`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`(excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`excluded.Select(d => d.Memory.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: excluded.Select(d => d.Memory.Id).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`excluded.Select(d => d.Memory.PostId)`；返回值紧邻使用处：`ArgumentSyntax: excluded.Select(d => d.Memory.PostId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`selected.Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: selected.Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`selected.Select(d => d.Memory.PostId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: selected.Select(d => d.Memory.PostId).Concat`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`excludedPosts.SelectMany(id => search.ByPost[id])`；返回值紧邻使用处：`ArgumentSyntax: excludedPosts.SelectMany(id => search.ByPost[id])`
-- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`(excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`frequencies.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => Math.Log(1 + (countAvailable + 1.0) / p.Value), StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = frequencies.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => Math.Log(1 + (countAvailable + 1.0) / p.Value), StringComparer.OrdinalIgnoreCase)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`people.Where(id => id != "player" && id != "desk").Distinct()              .Select((id, index) => (id, weight: index < 3 ? 8 : 3)).ToDictionary(x => x.id, x => x.weight)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = people.Where(id => id != "player" && id != "desk").Distinct()              .Select((id, index) => (id, weight: index < 3 ? 8 : 3)).ToDictionary(x => x.id, x => x.weight)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`excluded.Select(d => d.Memory.Id).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = excluded.Select(d => d.Memory.Id).ToHashSet()`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList();`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat(excluded.Select(d => d.Memory.PostId)).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat(excluded.Select(d => d.Memory.PostId)).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take(count).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`selected.Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return selected.Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList();`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`(excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })              .Take`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`frequencies.Where(p => p.Value > 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: frequencies.Where(p => p.Value > 0).ToDictionary`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`people.Where(id => id != "player" && id != "desk")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: people.Where(id => id != "player" && id != "desk").Distinct`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`perPost.GetValueOrDefault(d.Memory.PostId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = perPost.GetValueOrDefault(d.Memory.PostId)`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`selected.Add(document)`；返回值紧邻使用处：`ExpressionStatementSyntax: selected.Add(document);`
 - `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`(requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))              .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)              .Where`
 - `System.Math.Log(double)`；输入表达式：`Math.Log(1 + (countAvailable + 1.0) / p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => Math.Log(1 + (countAvailable + 1.0) / p.Value)`
 
@@ -481,13 +527,14 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 - `People` = `d.Memory.People`
 - `perPost[d.Memory.PostId]` = `used + 1`
 - `PostId` = `d.Memory.PostId`
+- `request` ??= `new()`
 - `Text` = `GameText.Plain(AiGeneratedText.Memory(d.Memory))`
 
-<a id="symbol-15004463e36f"></a>
+<a id="symbol-aa56dd910891"></a>
 
 ## `Score(NationalSpire.CommunityMemorySearch.Document) — double Score(Document doc)`
 
-来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -511,7 +558,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Search.Documents — internal List<Document> Documents`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -529,7 +576,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Search.Frequencies — internal Dictionary<string, int> Frequencies`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -547,7 +594,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Search.ById — internal Dictionary<string, Document> ById`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -566,7 +613,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Search.ByPost — internal ILookup<string, Document> ByPost`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -585,7 +632,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.Search.Topics — internal List<Document> Topics`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -605,7 +652,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 ## `NationalSpire.CommunityMemorySearch.BuildSearch(NationalSpire.CareerData, int, System.Collections.Generic.HashSet<string>) — private static Search BuildSearch(CareerData data, int day, HashSet<string> queryTerms)`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.Request.Prepare(NationalSpire.CareerData, int, string)`](CommunityMemorySearch.cs.md#symbol-44f4b761a62f)
 

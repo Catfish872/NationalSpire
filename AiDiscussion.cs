@@ -191,7 +191,7 @@ public static partial class AiService
         var memoryPeople = targets.SelectMany(p => p.RelatedPeople).Concat(scheduledOpponents)
             .Concat(contexts.SelectMany(p => p.conversation).Where(r => !CommunityThreads.IsHuman(data, r.AuthorId)).Select(r => r.AuthorId))
             .Concat(people.Select(p => p.Id));
-        var memories = CommunityMemorySearch.Retrieve(data, query, memoryPeople, data.Day, new HashSet<string>(), 8, suppliedMemory);
+        var memories = CommunityMemorySearch.Retrieve(data, query, memoryPeople, data.Day, new HashSet<string>(), 8, suppliedMemory, playerTopics: targets);
         var names = targets.Select(p => p.AuthorId).Concat(contexts.SelectMany(p => p.conversation.Select(r => r.AuthorId)))
             .Where(id => id != "player" && people.All(p => p.Id != id)).Distinct()
             .Select(id => new { Id = id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id) });

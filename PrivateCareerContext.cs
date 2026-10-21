@@ -8,7 +8,7 @@ public static partial class PrivatePublicContext
         .Where(a => a.PersonId == id && a.Day <= d.Day && a.Points > 0 && a.Season > d.Season - 4 && a.Season <= d.Season)
         .OrderByDescending(a => a.Points).ThenByDescending(a => a.Season).Take(6).Sum(a => a.Points);
     // 动态事实独立于保存的提示词和人物自述，直接使用当前生涯中已发生的记录。
-    private static void AppendCareerDetails(StringBuilder b, CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null, bool includeConversation = true)
+    private static void AppendCareerDetails(StringBuilder b, CareerData d, CareerPerson p, List<(int Start, int Length, string Group)>? changing = null, bool includeConversation = true, bool includePlayer = true)
     {
         string player = CareerEngine.Name(d);
         var meetings = d.Results.Where(r => r.Day <= d.Day && (r.OpponentId == p.Id || r.OpponentParticipants.Contains(p.Id))).OrderBy(r => r.Day).ToArray();
@@ -19,17 +19,7 @@ public static partial class PrivatePublicContext
         }
         AppendRecentResults(b, d, p);
         if (b.Length > resultsStart) changing?.Add((resultsStart, b.Length - resultsStart, "results"));
-        foreach (var competition in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished))
-        {
-            var ranked = EsportsWorld.Ranked(competition).ToList();
-            foreach (string id in new[] { p.Id, Human(d) })
-            {
-                var teams = competition.Rosters.Where(r => r.Value.Contains(id)).Select(r => competition.Kind == "worldcup" ? r.Key + "国家队" : EsportsWorld.ClubName(d, r.Key)).ToArray();
-                if (teams.Length > 0) b.AppendLine($"{Name(d, id)}已列入{competition.Name}的{string.Join("、", teams)}参赛名单。");
-                int index = ranked.FindIndex(s => s.PersonId == id);
-                if (index >= 0) b.AppendLine($"{Name(d, id)}在本赛季{competition.Name}的当前积分榜排名为第{index + 1}，积分{ranked[index].Points}，{ranked[index].Wins}胜{ranked[index].Losses}负{ranked[index].Draws}平；赛事仍在进行。");
-            }
-        }
+        AppendStandings(b, d, includePlayer ? [p.Id, Human(d)] : [p.Id]);
         if (d.Esports.OwnedClub is { } owned)
         {
             if (owned.Contracts.FirstOrDefault(c => c.PersonId == p.Id && c.SignedDay <= d.Day) is { } contract)
@@ -37,8 +27,7 @@ public static partial class PrivatePublicContext
             if (owned.Transfers.FirstOrDefault(t => !t.Arrived && t.Contract.PersonId == p.Id && t.Contract.SignedDay <= d.Day) is { } transfer)
                 b.AppendLine($"{p.PublicName}已签订转会合同，将于第{transfer.ArrivalSeason}赛季从{EsportsWorld.ClubName(d, transfer.SellerId)}加盟{EsportsWorld.ClubName(d, owned.ClubId)}，约定位置为{transfer.Position}；当前尚未加盟。签字费{CareerMoney.Format(transfer.Contract.Signing)}，周薪{CareerMoney.Format(transfer.Contract.Wage)}，胜场奖金{CareerMoney.Format(transfer.Contract.WinBonus)}，加盟后合同{transfer.Contract.Days / 7}周。");
         }
-        if (d.Esports.PlayerContract is { } playerContract && playerContract.ClubId == d.Esports.ClubId)
-            b.AppendLine($"{player}与{EsportsWorld.ClubName(d, playerContract.ClubId)}的现有合同：{CareerCommerce.ClubTerms(playerContract)}。");
+        if (includePlayer) AppendPlayerContract(b, d);
         // 只读取本次会话的缘由。共享的状态数值不能用来获取另一名玩家的私信内容。
         double mood = CareerTraining.MoodLevel(p, d.Day);
         if (mood != 0)
@@ -54,6 +43,27 @@ public static partial class PrivatePublicContext
         foreach (var activity in d.Life.Activities.Where(a => a.StartedDay <= d.Day && a.Status == "进行中" &&
             (a.PersonId == p.Id || a.TrainingTargets.Contains(p.Id))))
             b.AppendLine($"{p.PublicName}正在参与{activity.Title}，{PrivateAppointments.DateText(d, activity.StartedDay)}开始，预计{PrivateAppointments.DateText(d, activity.FinishDay)}结束。{activity.Detail}");
+    }
+
+    private static void AppendStandings(StringBuilder b, CareerData d, IEnumerable<string> identities)
+    {
+        foreach (var competition in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished))
+        {
+            var ranked = EsportsWorld.Ranked(competition).ToList();
+            foreach (string id in identities)
+            {
+                var teams = competition.Rosters.Where(r => r.Value.Contains(id)).Select(r => competition.Kind == "worldcup" ? r.Key + "国家队" : EsportsWorld.ClubName(d, r.Key)).ToArray();
+                if (teams.Length > 0) b.AppendLine($"{Name(d, id)}已列入{competition.Name}的{string.Join("、", teams)}参赛名单。");
+                int index = ranked.FindIndex(s => s.PersonId == id);
+                if (index >= 0) b.AppendLine($"{Name(d, id)}在本赛季{competition.Name}的当前积分榜排名为第{index + 1}，积分{ranked[index].Points}，{ranked[index].Wins}胜{ranked[index].Losses}负{ranked[index].Draws}平；赛事仍在进行。");
+            }
+        }
+    }
+
+    private static void AppendPlayerContract(StringBuilder b, CareerData d)
+    {
+        if (d.Esports.PlayerContract is { } playerContract && playerContract.ClubId == d.Esports.ClubId)
+            b.AppendLine($"{CareerEngine.Name(d)}与{EsportsWorld.ClubName(d, playerContract.ClubId)}的现有合同：{CareerCommerce.ClubTerms(playerContract)}。");
     }
 
     internal static void AppendRecentResults(StringBuilder b, CareerData d, CareerPerson p)

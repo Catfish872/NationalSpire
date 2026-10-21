@@ -145,13 +145,14 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         void Add(string role, string text) => messages.Add(new() { ["role"] = role, ["content"] = text });
         Add("system", Section(data, "world") + "\n\n" + Section(data, "private") + "\n\n" + Protocol + "\n\n" + SkillProtocol + "\n\n" + MoodProtocol + "\n\n" + MatchProtocol + "\n\n" + PostProtocol + "\n\n" + ProfileProtocol
             + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + OathAttachments.Protocol + "\n\n" + ChatAttachments.GiftProtocol + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
-        Add("user", $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n" + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
         var contextTurn = pending ?? new PrivateTurn { Day = data.Day, Season = data.Season };
         var contextSpans = preparedSpans ?? new List<ContextSpan>();
         string freshContext = preparedContext != null && preparedSpans != null ? preparedContext : Context(data, c, contextTurn, contextSpans);
         string context = contextTurn.Context.Length > 0 ? contextTurn.Context : freshContext;
         // 保存的上下文可能来自重新生成或并发更新；不能用当前资料替换其事实。
-        var ordered = context == freshContext ? OrderContext(context, contextSpans) : (Stable: "", Current: context);
+        var ordered = context == freshContext ? OrderContext(context, contextSpans) : (Public: "", Stable: "", Current: context);
+        if (ordered.Public.Length > 0) Add("user", ordered.Public);
+        Add("user", $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n" + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
         if (ordered.Stable.Length > 0) Add("user", ordered.Stable);
         string SummaryHeader(PrivateSummary s, string kind)
         {
@@ -181,14 +182,14 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         + (turn.Attachments.Count == 0 ? "" : "\n附带内容\n" + string.Join("\n\n", turn.Attachments.Select(a => PrivateMessages.AttachmentTitle(data, a) + (a.Kind is "training" or "lineup" or "gift" or OathAttachments.Kind or "activity" ? " · 编号" + PrivateInteractionIds.Number(c, a) : "") + (a.Detail.Length > 0 || a.Kind == "activity" ? "\n" + (forAi ? ChatAttachments.Material(data, a, a.Kind == "activity" ? PrivateInteractionIds.Number(c, a) : a.Id) : a.Detail) : "")
             + (forAi ? "\n" + ChatAttachments.ResponseInstructions(data, a, a.Kind is "gift" or OathAttachments.Kind or "activity" or "training" or "lineup" ? PrivateInteractionIds.Number(c, a) : a.Id) : ""))));
     public sealed record ContextSpan(int Start, int Length, string Group, string Key = "");
-    private static (string Stable, string Current) OrderContext(string context, List<ContextSpan> spans)
+    private static (string Public, string Stable, string Current) OrderContext(string context, List<ContextSpan> spans)
     {
         var pieces = new List<(string Text, string Group, string Key)>();
         bool publicBelow = context.Contains("私信关系处于初识阶段。已有公开经历见下方记录。", StringComparison.Ordinal);
         int end = 0;
         foreach (var span in spans.OrderBy(s => s.Start))
         {
-            if (span.Start < end || span.Start + span.Length > context.Length) return ("", context);
+            if (span.Start < end || span.Start + span.Length > context.Length) return ("", "", context);
             if (span.Start > end) pieces.Add((context[end..span.Start], "current", ""));
             string group = publicBelow && span.Group is "public-heading" or "public" or "topic" ? "current" : span.Group;
             pieces.Add((context.Substring(span.Start, span.Length), group, span.Key));
@@ -201,7 +202,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             + string.Concat(pieces.Where(p => p.Group == "public").OrderBy(p => p.Key, StringComparer.Ordinal).Select(p => p.Text.TrimEnd() + "\n\n"));
         string current = string.Concat(new[] { "current", "topic", "schedule", "learning", "mood" }
             .SelectMany(group => pieces.Where(p => p.Group == group).Select(p => p.Group == "topic" ? p.Text.TrimEnd() + "\n\n" : p.Text)));
-        return (stable, current);
+        return (string.Concat(pieces.Where(p => p.Group == "player-public").Select(p => p.Text)), stable, current);
     }
     public static string Context(CareerData data, PrivateConversation c, PrivateTurn turn, List<ContextSpan>? spans = null)
     {
@@ -217,11 +218,14 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
             .SelectMany(t => t.Attachments).Where(a => a.Kind == "post" && a.PostRevision > 0 && postVersions.GetValueOrDefault(a.MatchId) == a.PostRevision)
             .Select(a => a.MatchId).ToHashSet();
         var completePosts = new List<(string Id, string Text)>();
-        string publicMemory = PrivatePublicContext.Community(data, p, query, suppliedPosts, completePosts, search);
+        var recentPlayerPosts = search.RecentPlayerPosts(data, data.Day).Where(p => !suppliedPosts.Contains(p.Id)).ToArray();
+        string publicMemory = PrivatePublicContext.Community(data, p, query, suppliedPosts, completePosts, search, recentPlayerPosts);
         var issue = (data.WeeklyEditions ?? []).Where(w => w.EndDay <= data.Day).MaxBy(w => w.EndDay);
         var calendar = Enumerable.Range(data.Day, 15).Select(day => new { Day = day, Entries = PrivateAppointments.Schedule(data, c.PersonId, day) }).ToArray();
         string player = CareerEngine.Name(data);
-        string text = $"当前日期：{PrivateAppointments.DateText(data, data.Day)}。\n\n" + NationalDevelopment.Context(data, [data.Esports.Country, p.Country]) + "\n\n";
+        string text = PrivatePublicContext.PostBodies(data, recentPlayerPosts);
+        if (text.Length > 0) { text += "\n\n"; spans?.Add(new(0, text.Length, "player-public")); }
+        text += $"当前日期：{PrivateAppointments.DateText(data, data.Day)}。\n\n" + NationalDevelopment.Context(data, [data.Esports.Country, p.Country]) + "\n\n";
         var changing = new List<(int Start, int Length, string Group)>();
         string profile = PrivatePublicContext.Profiles(data, p, changing);
         int profileStart = text.Length, profileEnd = 0;

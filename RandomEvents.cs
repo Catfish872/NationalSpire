@@ -15,17 +15,28 @@ public static class RandomEvents
         e.State = e.Options.Count > 0 ? "ready" : "failed"; e.Error = "生成已停止，可以重新生成或跳过。";
         return null;
     }
-    public static void Ensure(CareerData d)
+    public static void Ensure(CareerData d, int? fromDay = null)
     {
         foreach (var e in d.Life.RandomEvents.Where(e => e.Day < d.Day && e.State is not ("complete" or "skipped"))) e.State = "skipped";
-        int day = Math.Max(d.Day, d.Life.RandomEvents.Select(e => e.Day + 1).DefaultIfEmpty(d.Day).Max());
+        long day = fromDay ?? Math.Max(d.Day, d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max());
+        bool first = fromDay == null && d.Life.RandomEvents.Count == 0 && d.Life.RandomEventMinDays == 7 && d.Life.RandomEventMaxDays == 11;
+        var dates = d.Life.RandomEvents.Select(e => e.Day).ToHashSet();
         var random = new Random(CareerEngine.StableHash(d.WorldId + ":questions:" + day));
-        while (day <= d.Day + 28)
+        while (d.Life.RandomEventsEnabled && day <= (long)d.Day + 28)
         {
-            day += random.Next(6, 11);
-            d.Life.RandomEvents.Add(new() { Day = day });
+            day += random.NextInt64(first ? 6 : d.Life.RandomEventMinDays, (long)(first ? 10 : d.Life.RandomEventMaxDays) + 1);
+            if (day > int.MaxValue) break;
+            if (dates.Add((int)day)) d.Life.RandomEvents.Add(new() { Day = (int)day });
+            first = false;
         }
         RememberMatches(d);
+    }
+    public static void SetFrequency(CareerData d, bool enabled, int minimum, int maximum)
+    {
+        d.Life.RandomEventsEnabled = enabled;
+        d.Life.RandomEventMinDays = minimum; d.Life.RandomEventMaxDays = maximum;
+        d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0);
+        Ensure(d, d.Day);
     }
     public static RandomEventRecord? Find(CareerData d, string id) => d.Life.RandomEvents.FirstOrDefault(e => e.Id == id);
     public static string? Start(CareerData d, string id)

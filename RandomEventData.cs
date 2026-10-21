@@ -19,6 +19,7 @@ public sealed class RandomEventRecord
     public string Category { get; set; } = "";
     public List<string> People { get; set; } = [];
     public string Materials { get; set; } = "";
+    public string PublicPosts { get; set; } = "";
     public string Title { get; set; } = "未知的际遇";
     public string Story { get; set; } = "";
     public string Reasoning { get; set; } = "";

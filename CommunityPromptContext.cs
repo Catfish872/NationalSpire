@@ -6,7 +6,7 @@ namespace NationalSpire;
 public static class CommunityPromptContext
 {
     public static Dictionary<string, List<CommunityReply>> SelectReplies(IEnumerable<CommunityPost> sources, int day,
-        IEnumerable<string> participants, string query, CommunityMemorySearch.Request request)
+        IEnumerable<string> participants, string query, CommunityMemorySearch.Request request, IEnumerable<CommunityMemory>? sourceMemories = null)
     {
         using var measurement = UiPerformance.Measure(UiPerformance.Work.CommunityBranches);
         var people = participants.ToHashSet();
@@ -19,7 +19,9 @@ public static class CommunityPromptContext
         var topical = candidates.Select(x => (Item: x, Score: CommunityMemorySearch.TopicScore(queryTerms, x.Reply)))
             .Where(x => x.Score > 0).OrderByDescending(x => x.Score).ThenByDescending(x => x.Item.Reply.Day)
             .ThenBy(x => x.Item.Reply.Id, StringComparer.Ordinal).Take(8).Select(x => x.Item);
-        var anchors = recent.Concat(topical).DistinctBy(x => (x.Post.Id, x.Reply.Id)).ToLookup(x => x.Post.Id, x => x.Reply);
+        var required = sourceMemories?.Select(m => m.Id).ToHashSet();
+        var anchors = recent.Concat(topical).Concat(candidates.Where(x => required?.Contains(x.Post.Id + ":" + x.Reply.Id) == true))
+            .DistinctBy(x => (x.Post.Id, x.Reply.Id)).ToLookup(x => x.Post.Id, x => x.Reply);
         var result = new Dictionary<string, List<CommunityReply>>();
         foreach (var post in posts)
         {

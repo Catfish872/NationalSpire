@@ -8,6 +8,7 @@ public static class CommunityMemorySearch
         private readonly Dictionary<string, HashSet<string>> _terms = new(StringComparer.Ordinal);
         private readonly Dictionary<(CareerData Data, int Day, string Query), Search> _searches = [];
         private readonly Dictionary<(CareerData Data, int Day), Dictionary<string, PostActivity>> _posts = [];
+        private readonly Dictionary<(CareerData Data, int Day), List<CommunityPost>> _recentPlayerPosts = [];
         private readonly Dictionary<(CommunityPost Post, string Query), bool> _topics = [];
         private readonly Dictionary<(CareerData Data, int Day, string Person), List<CommunityMemory>> _acquaintances = [];
         private readonly Dictionary<(CareerData Data, int Day), (Dictionary<string, CommunityPost> Posts, ILookup<string, CommunityMemory> People)> _acquaintancePools = [];
@@ -38,6 +39,18 @@ public static class CommunityMemorySearch
             if (!_topics.TryGetValue((post, query), out bool result))
                 _topics.Add((post, query), result = MatchesTopic(query, post.Title + "\n" + post.Body, this));
             return result;
+        }
+        public IReadOnlyList<CommunityPost> RecentPlayerPosts(CareerData data, int day)
+        {
+            if (!_recentPlayerPosts.TryGetValue((data, day), out var posts))
+            {
+                posts = Posts(data).Values.Select(a => a.Post)
+                    .Where(p => p.Day >= day - 27 && p.Day <= day && (CommunityThreads.IsHuman(data, p.AuthorId)
+                        || p.PersonalPost && p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))))
+                    .OrderByDescending(p => p.Day).Take(3).ToList();
+                _recentPlayerPosts.Add((data, day), posts);
+            }
+            return posts;
         }
         internal List<CommunityMemory> Acquaintance(CareerData data, CareerPerson person)
         {
@@ -142,14 +155,15 @@ public static class CommunityMemorySearch
             Text = posts.TryGetValue(m.PostId, out var post) ? $"《{post.Title}》中的记录：{AiGeneratedText.Memory(m)}" : AiGeneratedText.Memory(m)
         }).ToList();
     }
-    public static List<CommunityMemory> Retrieve(CareerData data, string query, IEnumerable<string> people, int day, ISet<string> excludedPosts, int count = 6, ISet<string>? excludedMemories = null, bool requireTopic = false, Request? request = null)
+    public static List<CommunityMemory> Retrieve(CareerData data, string query, IEnumerable<string> people, int day, ISet<string> excludedPosts, int count = 6, ISet<string>? excludedMemories = null, bool requireTopic = false, Request? request = null, IEnumerable<CommunityPost>? playerTopics = null)
     {
         using var measurement = UiPerformance.Measure(UiPerformance.Work.CommunityRetrieve);
         var identities = people.Where(id => id != "player" && id != "desk").Distinct()
             .Select((id, index) => (id, weight: index < 3 ? 8 : 3)).ToDictionary(x => x.id, x => x.weight);
         var queryTerms = request?.GetTerms(query) ?? Terms(query);
         if (requireTopic && queryTerms.Count(t => !ConversationNoise.Contains(t)) < 2) return [];
-        var search = (request ?? new()).Prepare(data, day, query);
+        request ??= new();
+        var search = request.Prepare(data, day, query);
         var excluded = (excludedMemories ?? new HashSet<string>()).Where(search.ById.ContainsKey).Select(id => search.ById[id]).Concat(excludedPosts.SelectMany(id => search.ByPost[id])).DistinctBy(d => d.Memory.Id).ToArray();
         var excludedIds = excluded.Select(d => d.Memory.Id).ToHashSet();
         var frequencies = new Dictionary<string, int>(search.Frequencies, StringComparer.OrdinalIgnoreCase);
@@ -161,10 +175,21 @@ public static class CommunityMemorySearch
             + (doc.Memory.Kind == "fact" ? 1 : 0) + 1.0 / (1 + Math.Max(0, day - doc.Memory.Day) / 28.0);
         // 人物与话题匹配优先，日期只作轻微加权；久远的交手不会因过期而失去检索机会。
         var perPost = new Dictionary<string, int>();
-        return (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))
+        var selected = (requireTopic ? search.Topics : search.Documents).Where(d => !excludedIds.Contains(d.Memory.Id) && (requireTopic ? d.Topic : d.Matches.Length > 0 || d.Memory.People.Any(identities.ContainsKey)))
             .OrderByDescending(Score).ThenByDescending(d => d.Memory.Day)
             .Where(d => { int used = perPost.GetValueOrDefault(d.Memory.PostId); perPost[d.Memory.PostId] = used + 1; return used < 2; })
-            .Take(count).Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList();
+            .Take(count).ToList();
+        if (playerTopics?.Any(p => CommunityThreads.IsHuman(data, p.AuthorId)
+            || p.RelatedPeople.Any(id => CommunityThreads.IsHuman(data, id))
+            || data.Results.Any(r => r.Day <= day && r.OfficialAscensionVerified && p.EventKey == "match" + r.MatchId)) == true)
+        {
+            // 先确定三篇近期公开帖，再合并同帖；重复项占用名额，正文沿用同一记录与输出入口。
+            var recent = request.RecentPlayerPosts(data, day);
+            var supplied = selected.Select(d => d.Memory.PostId).Concat(excludedPosts).Concat(excluded.Select(d => d.Memory.PostId)).ToHashSet();
+            foreach (var post in recent)
+                if (supplied.Add(post.Id) && search.ById.TryGetValue(post.Id + ":fact", out var document)) selected.Add(document);
+        }
+        return selected.Select(d => d.Memory.Kind == "fact" ? new CommunityMemory { Id = d.Memory.Id, PostId = d.Memory.PostId, Day = d.Memory.Day, Kind = d.Memory.Kind, People = d.Memory.People, Text = GameText.Plain(AiGeneratedText.Memory(d.Memory)) } : d.Memory).ToList();
     }
     internal sealed record Document(CommunityMemory Memory, int TermCount, string[] Matches, bool Topic);
     internal sealed class Search(List<Document> documents, Dictionary<string, int> frequencies)

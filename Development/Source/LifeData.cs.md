@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`61C0FE81FB442B381849D700E81959C5F115E400C25CE7BCBE09575D3A9D6A15`。来源：[源码](../../LifeData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C59BD639D21A9C6A9B0B742C1B260FD1ED621DE1552D14156DE09910DC611460`。来源：[源码](../../LifeData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -31,11 +31,65 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-41b6b282e150"></a>
+
+## `NationalSpire.CareerLifeState.RandomEventsEnabled — public bool RandomEventsEnabled`
+
+来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-cfd03bfb4bc4"></a>
+
+## `NationalSpire.CareerLifeState.RandomEventMinDays — public int RandomEventMinDays`
+
+来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-8d3340f05216"></a>
+
+## `NationalSpire.CareerLifeState.RandomEventMaxDays — public int RandomEventMaxDays`
+
+来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-9989dc309809"></a>
 
 ## `NationalSpire.CareerLifeState.Consumer — public ConsumerState Consumer`
 
-来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -54,7 +108,7 @@
 
 ## `NationalSpire.CareerLifeState.Trading — public MarketAccount Trading`
 
-来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -73,7 +127,7 @@
 
 ## `NationalSpire.CareerLifeState.CreditFraction — public decimal CreditFraction`
 
-来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -91,7 +145,7 @@
 
 ## `NationalSpire.CareerLifeState.Mailbox — public PrivateMailbox Mailbox`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -110,7 +164,7 @@
 
 ## `NationalSpire.CareerLifeState.RepairReceipts — public HashSet<string> RepairReceipts`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -128,7 +182,7 @@
 
 ## `NationalSpire.CareerLifeState.RepairNotices — public List<string> RepairNotices`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -146,7 +200,7 @@
 
 ## `NationalSpire.CareerLifeState.Version — public int Version`
 
-来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -164,7 +218,7 @@
 
 ## `NationalSpire.CareerLifeState.OfferRound — public int OfferRound`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -182,7 +236,7 @@
 
 ## `NationalSpire.CareerLifeState.LastDecisionDay — public int LastDecisionDay`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -200,7 +254,7 @@
 
 ## `NationalSpire.CareerLifeState.Preparation — public int Preparation`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -218,7 +272,7 @@
 
 ## `NationalSpire.CareerLifeState.Facilities — public int Facilities`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -236,7 +290,7 @@
 
 ## `NationalSpire.CareerLifeState.Figurines — public Dictionary<string, FigurineState> Figurines`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -254,7 +308,7 @@
 
 ## `NationalSpire.CareerLifeState.Shop — public List<string> Shop`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +326,7 @@
 
 ## `NationalSpire.CareerLifeState.RestockDay — public int RestockDay`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -290,7 +344,7 @@
 
 ## `NationalSpire.CareerLifeState.RelicVersion — public int RelicVersion`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -308,7 +362,7 @@
 
 ## `NationalSpire.CareerLifeState.NextOfferDay — public int NextOfferDay`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -326,7 +380,7 @@
 
 ## `NationalSpire.CareerLifeState.NextProjectDay — public int NextProjectDay`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -344,7 +398,7 @@
 
 ## `NationalSpire.CareerLifeState.NextWorldEventDay — public int NextWorldEventDay`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -362,7 +416,7 @@
 
 ## `NationalSpire.CareerLifeState.ReservedDailyDay — public int ReservedDailyDay`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -380,7 +434,7 @@
 
 ## `NationalSpire.CareerLifeState.PostMatchDailyDay — public int PostMatchDailyDay`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -398,7 +452,7 @@
 
 ## `NationalSpire.CareerLifeState.PostMatchDailyCount — public int PostMatchDailyCount`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -416,7 +470,7 @@
 
 ## `NationalSpire.CareerLifeState.PrizeTotal — public long PrizeTotal`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -434,7 +488,7 @@
 
 ## `NationalSpire.CareerLifeState.Activities — public List<LifeActivity> Activities`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -452,7 +506,7 @@
 
 ## `NationalSpire.CareerLifeState.Events — public List<LifeEvent> Events`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -470,7 +524,7 @@
 
 ## `NationalSpire.CareerLifeState.Ledger — public List<FinanceEntry> Ledger`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -488,7 +542,7 @@
 
 ## `NationalSpire.CareerLifeState.Collection — public Dictionary<string, string> Collection`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -506,7 +560,7 @@
 
 ## `NationalSpire.CareerLifeState.Relationships — public Dictionary<string, int> Relationships`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -524,7 +578,7 @@
 
 ## `NationalSpire.CareerLifeState.LastTopics — public Dictionary<string, int> LastTopics`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -542,7 +596,7 @@
 
 ## `NationalSpire.CareerLifeState.GrowthThisSeason — public Dictionary<string, int> GrowthThisSeason`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -560,7 +614,7 @@
 
 ## `NationalSpire.CareerLifeState.GrowthSeason — public int GrowthSeason`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -578,7 +632,7 @@
 
 ## `NationalSpire.LifeActivity.TermsVersion — public int TermsVersion`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -596,7 +650,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingKind — public string TrainingKind`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -614,7 +668,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingTargets — public List<string> TrainingTargets`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -632,7 +686,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingStart — public int TrainingStart`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -650,7 +704,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingEnd — public int TrainingEnd`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -668,7 +722,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingWeeksPaid — public int TrainingWeeksPaid`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -686,7 +740,7 @@
 
 ## `NationalSpire.LifeActivity.TrainingGained — public Dictionary<string, int> TrainingGained`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -704,7 +758,7 @@
 
 ## `NationalSpire.LifeActivity.TemporaryPoints — public int TemporaryPoints`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -722,7 +776,7 @@
 
 ## `NationalSpire.LifeActivity.WeeklyGrowthPoints — public int WeeklyGrowthPoints`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -740,7 +794,7 @@
 
 ## `NationalSpire.LifeActivity.DefensePoints — public int DefensePoints`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -758,7 +812,7 @@
 
 ## `NationalSpire.LifeActivity.Round — public int Round`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -776,7 +830,7 @@
 
 ## `NationalSpire.LifeActivity.PaidCost — public int PaidCost`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -794,7 +848,7 @@
 
 ## `NationalSpire.LifeActivity.Id — public string Id`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -812,7 +866,7 @@
 
 ## `NationalSpire.LifeActivity.Kind — public string Kind`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -830,7 +884,7 @@
 
 ## `NationalSpire.LifeActivity.Variant — public string Variant`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -848,7 +902,7 @@
 
 ## `NationalSpire.LifeActivity.Title — public string Title`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -866,7 +920,7 @@
 
 ## `NationalSpire.LifeActivity.Detail — public string Detail`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -884,7 +938,7 @@
 
 ## `NationalSpire.LifeActivity.PersonId — public string PersonId`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -902,7 +956,7 @@
 
 ## `NationalSpire.LifeActivity.ClubId — public string ClubId`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -920,7 +974,7 @@
 
 ## `NationalSpire.LifeActivity.Setting — public string Setting`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -938,7 +992,7 @@
 
 ## `NationalSpire.LifeActivity.Cost — public int Cost`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -956,7 +1010,7 @@
 
 ## `NationalSpire.LifeActivity.OfferedDay — public int OfferedDay`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -974,7 +1028,7 @@
 
 ## `NationalSpire.LifeActivity.ExpiresDay — public int ExpiresDay`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -992,7 +1046,7 @@
 
 ## `NationalSpire.LifeActivity.StartedDay — public int StartedDay`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1010,7 +1064,7 @@
 
 ## `NationalSpire.LifeActivity.FinishDay — public int FinishDay`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1028,7 +1082,7 @@
 
 ## `NationalSpire.LifeActivity.Duration — public int Duration`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1046,7 +1100,7 @@
 
 ## `NationalSpire.LifeActivity.ProgressDay — public int ProgressDay`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1064,7 +1118,7 @@
 
 ## `NationalSpire.LifeActivity.Public — public bool Public`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1082,7 +1136,7 @@
 
 ## `NationalSpire.LifeActivity.LongProject — public bool LongProject`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1100,7 +1154,7 @@
 
 ## `NationalSpire.LifeActivity.Status — public string Status`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1118,7 +1172,7 @@
 
 ## `NationalSpire.LifeActivity.Result — public string Result`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1136,7 +1190,7 @@
 
 ## `NationalSpire.LifeEvent.Id — public string Id`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1154,7 +1208,7 @@
 
 ## `NationalSpire.LifeEvent.Day — public int Day`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1172,7 +1226,7 @@
 
 ## `NationalSpire.LifeEvent.Topic — public string Topic`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1190,7 +1244,7 @@
 
 ## `NationalSpire.LifeEvent.Title — public string Title`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1208,7 +1262,7 @@
 
 ## `NationalSpire.LifeEvent.Detail — public string Detail`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1226,7 +1280,7 @@
 
 ## `NationalSpire.LifeEvent.People — public List<string> People`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1244,7 +1298,7 @@
 
 ## `NationalSpire.LifeEvent.Important — public bool Important`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1262,7 +1316,7 @@
 
 ## `NationalSpire.LifeEvent.PostId — public string PostId`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1280,7 +1334,7 @@
 
 ## `NationalSpire.LifeEvent.EditionWeek — public int EditionWeek`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1298,7 +1352,7 @@
 
 ## `NationalSpire.FinanceEntry.Day — public int Day`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1316,7 +1370,7 @@
 
 ## `NationalSpire.FinanceEntry.Title — public string Title`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1334,7 +1388,7 @@
 
 ## `NationalSpire.FinanceEntry.Amount — public decimal Amount`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1352,7 +1406,7 @@
 
 ## `NationalSpire.FinanceEntry.Balance — public decimal Balance`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1370,9 +1424,9 @@
 
 ## `NationalSpire.CareerMoney.Format(decimal) — public static string Format(decimal units)`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-58346e5f927e)；[`NationalSpire.CareerCommerce.Capture(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-02ba08b48a24)；[`NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-3a2c86700d2c)；[`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerCommerce.Spend(NationalSpire.CareerData, NationalSpire.CareerClub, int)`](CareerCommerce.cs.md#symbol-d9f436df636e)；[`NationalSpire.CareerCommerce.SponsorTerms(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-3ed7cf5a8f49)；[`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)；[`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerMoney.Historical(string)`](LifeData.cs.md#symbol-cb85455756cc)；[`NationalSpire.CareerRelics.Business(NationalSpire.CareerData, NationalSpire.LifeActivity, int)`](CareerRelics.cs.md#symbol-2a0ab3c0872b)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-27a995f7ce9f)；[`NationalSpire.CareerScreen.ClubEntry(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-cebea5b172ab)；[`NationalSpire.CareerScreen.ClubMarket(NationalSpire.CareerData, bool)`](OwnedClubScreen.cs.md#symbol-b1e2f4fe72a4)；[`NationalSpire.CareerScreen.ClubProfileActions(NationalSpire.CareerData, NationalSpire.CareerPerson, Godot.VBoxContainer)`](OwnedClubScreen.cs.md#symbol-07281993c5a0)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.ClubWeeklyFinance(Godot.VBoxContainer, NationalSpire.OwnedSponsor?, int, decimal, int)`](OwnedClubScreen.cs.md#symbol-e4836a392d68)；[`NationalSpire.CareerScreen.ClubWizard(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-8f3c0cb211aa)；[`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b665478390f0)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData)`](TeamPreparationScreen.cs.md#symbol-57b7570c5a7d)；[`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)；[`NationalSpire.ClubOperations.TryTransfer(NationalSpire.CareerData, NationalSpire.CareerClub)`](ClubOperations.cs.md#symbol-91ececd875b5)；[`NationalSpire.Coop.CoopCareerSession.Team`](Coop/CoopCareerSession.cs.md#symbol-cbe9a2f65cf3)；[`NationalSpire.MarketDynamics.TryPublish(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-9d095f6ad885)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.NationalFortune.Impact(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](NationalFortune.cs.md#symbol-96a45ca5bf6b)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.ArrangeTransfer(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-66be5c09e822)；[`NationalSpire.OwnedClubs.AwardCommercial(NationalSpire.CareerData, string, string, int, int)`](OwnedClubs.cs.md#symbol-6b465628386d)；[`NationalSpire.OwnedClubs.CreationError(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-c66d40eab5e9)；[`NationalSpire.PrivatePublicContext.AppendCareerDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool)`](PrivateCareerContext.cs.md#symbol-2e7904202268)；[`NationalSpire.PrivatePublicContext.ContractTerms(NationalSpire.CareerData, NationalSpire.OwnedPlayerContract)`](PrivateCareerContext.cs.md#symbol-5fd0dbcab017)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-77a4bddd229b)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-d40a9c189dd2)；[`UpdateReward()`](CareerScreen.cs.md#symbol-d4a08b3c3dea)
+**调用者：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-58346e5f927e)；[`NationalSpire.CareerCommerce.Capture(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-02ba08b48a24)；[`NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-3a2c86700d2c)；[`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerCommerce.Spend(NationalSpire.CareerData, NationalSpire.CareerClub, int)`](CareerCommerce.cs.md#symbol-d9f436df636e)；[`NationalSpire.CareerCommerce.SponsorTerms(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-3ed7cf5a8f49)；[`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)；[`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerMoney.Historical(string)`](LifeData.cs.md#symbol-cb85455756cc)；[`NationalSpire.CareerRelics.Business(NationalSpire.CareerData, NationalSpire.LifeActivity, int)`](CareerRelics.cs.md#symbol-2a0ab3c0872b)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-27a995f7ce9f)；[`NationalSpire.CareerScreen.ClubEntry(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-cebea5b172ab)；[`NationalSpire.CareerScreen.ClubMarket(NationalSpire.CareerData, bool)`](OwnedClubScreen.cs.md#symbol-b1e2f4fe72a4)；[`NationalSpire.CareerScreen.ClubProfileActions(NationalSpire.CareerData, NationalSpire.CareerPerson, Godot.VBoxContainer)`](OwnedClubScreen.cs.md#symbol-07281993c5a0)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.ClubWeeklyFinance(Godot.VBoxContainer, NationalSpire.OwnedSponsor?, int, decimal, int)`](OwnedClubScreen.cs.md#symbol-e4836a392d68)；[`NationalSpire.CareerScreen.ClubWizard(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-8f3c0cb211aa)；[`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b665478390f0)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData)`](TeamPreparationScreen.cs.md#symbol-57b7570c5a7d)；[`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.ClubOperations.Advance(NationalSpire.CareerData)`](ClubOperations.cs.md#symbol-213a7e731998)；[`NationalSpire.ClubOperations.TryTransfer(NationalSpire.CareerData, NationalSpire.CareerClub)`](ClubOperations.cs.md#symbol-91ececd875b5)；[`NationalSpire.Coop.CoopCareerSession.Team`](Coop/CoopCareerSession.cs.md#symbol-cbe9a2f65cf3)；[`NationalSpire.MarketDynamics.TryPublish(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-9d095f6ad885)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.NationalFortune.Impact(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](NationalFortune.cs.md#symbol-96a45ca5bf6b)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.ArrangeTransfer(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-66be5c09e822)；[`NationalSpire.OwnedClubs.AwardCommercial(NationalSpire.CareerData, string, string, int, int)`](OwnedClubs.cs.md#symbol-6b465628386d)；[`NationalSpire.OwnedClubs.CreationError(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-c66d40eab5e9)；[`NationalSpire.PrivatePublicContext.AppendCareerDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.List<(int Start, int Length, string Group)>?, bool, bool)`](PrivateCareerContext.cs.md#symbol-1bdcc4afe2f7)；[`NationalSpire.PrivatePublicContext.ContractTerms(NationalSpire.CareerData, NationalSpire.OwnedPlayerContract)`](PrivateCareerContext.cs.md#symbol-5fd0dbcab017)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-77a4bddd229b)；[`Quote(decimal)`](MarketTerminal.cs.md#symbol-d40a9c189dd2)；[`UpdateReward()`](CareerScreen.cs.md#symbol-d4a08b3c3dea)
 
 **调用：** [`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；`decimal.ToString(string?, System.IFormatProvider?)`；`System.Math.Abs(decimal)`
 
@@ -1391,7 +1445,7 @@
 
 ## `NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber) — public static string Format(MarketNumber units)`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)
 
@@ -1410,7 +1464,7 @@
 
 ## `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber) — public static string Compact(MarketNumber units)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)；[`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)；[`Summary(string, decimal, decimal, Godot.Color)`](MarketScreen.cs.md#symbol-79a28ef9c10b)
 
@@ -1430,7 +1484,7 @@
 
 ## `NationalSpire.CareerMoney.Balance(NationalSpire.CareerData) — public static decimal Balance(CareerData d)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`](LifeData.cs.md#symbol-bcb55555a432)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](Coop/CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.Diagnostics.RecordEventCheck(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption, string)`](EventDiagnostics.cs.md#symbol-cb8ce43827bb)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；[`NationalSpire.OwnedClubs.PayDebt(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-98b9722b6128)；[`NationalSpire.OwnedClubs.RecruitError(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-af6739305612)；[`NationalSpire.OwnedClubs.Release(NationalSpire.CareerData, string, string)`](OwnedClubs.cs.md#symbol-ab8d716536a6)；[`NationalSpire.OwnedClubs.SettleResults(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7c6dba67fe98)；[`NationalSpire.OwnedClubs.TransferError(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-dd969fd199a4)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.RandomEventEffects.CheckEffects(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-1a41c3fc699a)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 
@@ -1448,7 +1502,7 @@
 
 ## `NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal) — public static void Add(CareerData d, decimal amount)`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；[`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 
@@ -1470,7 +1524,7 @@
 
 ## `NationalSpire.CareerMoney.Display(string) — public static string Display(string text)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`](MentionScreen.cs.md#symbol-97692853b81c)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)
 
@@ -1491,7 +1545,7 @@
 
 ## `NationalSpire.CareerMoney.Historical(string) — public static string Historical(string text)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)
 
@@ -1512,7 +1566,7 @@
 
 ## `NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal) — public static void Record(CareerData d, string title, decimal amount)`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerCommerce.SignedClub(NationalSpire.CareerData, NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-4e9fe3d551a9)；[`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Buy(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b350b30a8d9)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 

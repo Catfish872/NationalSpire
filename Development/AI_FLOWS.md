@@ -2,11 +2,11 @@
 
 ## 随机事件流程
 
-首页或日历的 EventCards → OpenRandomEvent → EventCommand 接收开始、停止、跳过或选择。RandomEvents.Start 在当天首次开始时通过 EventPools.SelectRandom 读取当前模板的有效素材，默认110条，抽取0—3名可交流人物；最近24项素材参与排重，当前池全部用过后从当前池重新抽取。人物、Seed、Category 和 Materials 此时保存，重新生成继续复用。日历问号只表示日期。每次开始保存一次 generating；ProcessEventAsync 使用现有 PrivateForegroundQueue、EnterPrivateQueue 和 RequestPrivateAsync(task:event)，成功或失败再保存一次。进入事件页面与途中弹窗本身不会发起随机事件模型请求；开始生成才调用一次模型。
+首页或日历的 EventCards → OpenRandomEvent → EventCommand 接收开始、停止、跳过或选择。RandomEvents.Start 在当天首次开始时通过 EventPools.SelectRandom 读取当前模板的有效素材，默认110条，抽取0—3名可交流人物；最近24项素材参与排重，当前池全部用过后从当前池重新抽取。人物、Seed、Category、Materials 和 PublicPosts 此时保存，重新生成继续复用。日历问号只表示日期。每次开始保存一次 generating；ProcessEventAsync 使用现有 PrivateForegroundQueue、EnterPrivateQueue 和 RequestPrivateAsync(task:event)，成功或失败再保存一次。进入事件页面与途中弹窗本身不会发起随机事件模型请求；开始生成才调用一次模型。
 
-RandomEventPrompts.Compose 的前两条消息固定为 system:EffectInstructions按当前经营身份生成的效果说明、参与者引导及玩家事实要求 与 user:当前 event 模板、PlayerRecord生成的精简玩家战绩、已保存 Materials。参与者引导说明相关人物是本次参与者，人物效果使用其中的人物编号，相关人物为空时创作玩家独自经历的单人事件。玩家事实要求为：玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。该要求由程序加入首次生成、自由行动续写和试写的系统消息。引导单独拼接，旧 Format 保留原文供旧模板识别；已有 Materials 直接复用。首次生成及试写在末尾追加 user:InitialFormat，要求 title、story 和2—4条 option/result/effects；此请求只说明首次创作任务。四种内置模板的可编辑部分为 Story，格式与效果说明由程序提供。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 和旧自建模板缺少 event 时补齐 Story。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。Format 保留原版 LegacyInitialFormat 与 LegacyEffects 的逐字组合，供旧模板识别。实际 InitialFormat 移除笼统的数值正负表示增加和减少，由各效果分别说明。EffectInstructions 明确五类人物目标均为NPC，status/learning只调整NPC模拟比赛能力；补齐整数、商品/品牌/国家编号、临时状态期限、建设非负点数及约战日期/进阶/模式的解释。OwnedClubs.IsOwner为真时才加入clubFans整条示例和说明；未经营俱乐部时系统消息不出现该效果。首次、自由行动和试写共用Compose；Story及Continuation沿用原文。Materials 包含玩家身份、人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项私聊/群聊及共同经历、CommunityMemorySearch 检索的8项社区材料、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。Profiles 使用 includeConversation:false，交流统一由 ChatTimeline 提供。恶意行为可选人物只有好感≤0的本次人物。公开方式归界面。
+RandomEventPrompts.Compose 的前两条消息固定为 system:当前 world 模板、WorldGuidance世界观使用引导与 EffectInstructions按当前经营身份生成的效果说明、参与者引导及玩家事实要求 与 user:当前 event 模板、已保存 PublicPosts 近期公开原帖正文、PlayerRecord生成的独立玩家资料及精简战绩、已保存 Materials。参与者引导说明相关人物是本次参与者，人物效果使用其中的人物编号，相关人物为空时创作玩家独自经历的单人事件。玩家事实要求为：玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。该要求由程序加入首次生成、自由行动续写和试写的系统消息。引导单独拼接，旧 Format 保留原文供旧模板识别；已有 Materials 直接复用。首次生成及试写在末尾追加 user:InitialFormat，要求 title、story 和2—4条 option/result/effects；此请求只说明首次创作任务。攻击性弱化版的 event 默认内容由 PromptPresets/reduced-aggression.json 提供，原样采用作者当前配置中的基础故事要求及千恋万花人物语气示例；其他三种内置模板沿用 Story。已有个人修改仍由 PromptLibrary.Get 优先读取。格式与效果说明由程序提供。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 缺少 event 时按所属模板补齐当前默认内容；旧自建模板沿原基础模板查询规则处理。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。Format 保留原版 LegacyInitialFormat 与 LegacyEffects 的逐字组合，供旧模板识别。实际 InitialFormat 移除笼统的数值正负表示增加和减少，由各效果分别说明。EffectInstructions 明确五类人物目标均为NPC，status/learning只调整NPC模拟比赛能力；补齐整数、商品/品牌/国家编号、临时状态期限、建设非负点数及约战日期/进阶/模式的解释。OwnedClubs.IsOwner为真时才加入clubFans整条示例和说明；未经营俱乐部时系统消息不出现该效果。首次、自由行动和试写共用Compose；Story及Continuation沿用原文。Materials 包含人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项私聊/群聊及共同经历、CommunityMemorySearch 检索的8项社区材料及其帖子正文和评论上下文、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。随机事件的 Profiles 使用 includeConversation:false、includePlayer:false，交流统一由 ChatTimeline 提供，玩家段落由 PlayerRecord 单独提供；私聊及群聊的 Profiles 默认行为保持原样。恶意行为可选人物只有好感≤0的本次人物。公开方式归界面。
 
-自由行动沿 EventCommand → RandomEvents.Custom 保存 CustomAction 和 CustomState=generating，随后复用 ProcessEventAsync 的队列、event 连接方案、思维解析和保存回调，额外调用一次模型。Compose(custom:true) 在相同前两条消息之后追加 assistant:原标题与故事的JSON、user:Continuation及玩家行动JSON。Continuation 使用已批准的50—200字结局要求，明确延续上文故事的文风、叙述口吻和人物说话方式，并遵循当前模板的具体文风要求；当前引导采用字段说明，移除了原短篇过程概述示例。模型只输出 result/effects；原选项及其结局、效果不加入续写请求。可编辑模板每次重新读取，人物资料、私聊/群聊、总结和帖子沿用本次保存的 Materials。模板、玩家战绩及 Materials 相同时，前两条消息逐字一致，后端可以复用文本前缀缓存；修改模板后采用修改后的文字。
+自由行动沿 EventCommand → RandomEvents.Custom 保存 CustomAction 和 CustomState=generating，随后复用 ProcessEventAsync 的队列、event 连接方案、思维解析和保存回调，额外调用一次模型。Compose(custom:true) 在相同前两条消息之后追加 assistant:原标题与故事的JSON、user:Continuation及玩家行动JSON。Continuation 使用已批准的50—200字结局要求，明确延续上文故事的文风、叙述口吻和人物说话方式，并遵循当前模板的具体文风要求；当前引导采用字段说明，移除了原短篇过程概述示例。模型只输出 result/effects；原选项及其结局、效果不加入续写请求。可编辑模板每次重新读取，人物资料、私聊/群聊、总结和帖子沿用本次保存的 Materials，近期公开原帖正文沿用 PublicPosts。新帖发布后，已展开事件继续使用首次材料；新事件重新选择。旧事件缺少 PublicPosts 时默认为空，仍使用原 Materials。世界观模板、随机事件模板、玩家资料及战绩、Materials 相同时，前两条消息逐字一致，后端可以复用文本前缀缓存；修改模板后采用修改后的文字。
 
 首次模型逐行输出 title、story 和含 option/result/effects 的选项。RandomEventParser.Feed 保留跨分片 JSON，LiveStory 还原尚未结束的正文字符串；完整选项进入 Options。自定义模式累计单个JSON对象，兼容多行缩进及代码围栏，流式期间提取 result 字符串；Finish 完整解析后将 CustomAction 直接绑定到选项 Text。Validate 在首次模式要求故事及2—4个完整选项，自定义模式要求一个完整结局。ProcessEventAsync 每100毫秒最多更新一次 EventLive，另在入队和获得名额时立即通知。Phase 区分排队、等待响应、思考和书写；Reasoning 复用 RequestPrivateAsync 的专用思维字段与 LeadingReasoningStream 标签解析。自由行动成功只替换 CustomOption/CustomReasoning/CustomState，原故事与选项保留。RandomEventEffects.Check 检查预览和可执行状态；玩家确认时 ChooseCustom 将此选项追加到原列表，再调用原 Choose，沿同一效果、共同经历及公开事实入口结算。
 
@@ -26,9 +26,39 @@ Choose 先检查整个选项，再应用一次，保存 Selected、Public 和 co
 
 RandomEventPrompts.Compose 必须传入当前 CareerData。PlayerRecord 读取该视图的 Wins/Draws/Losses，发送与生涯界面一致的正式比赛累计胜平负；读取 Results 按日期从新到旧取最多5场，仅序列化公历日期、赛事、对手和 Outcome。Outcome 表示赛事胜负，Win 表示是否通关，两者分别使用。少于5场发送已有条目，空 Results 发送空数组，累计战绩继续读取原计数。近期记录包含 Results 中已保存的正式比赛及私下约战，累计计数仍按既有正式比赛口径。
 
-简表在当前模板之后、原 Materials 之前拼接一次，归程序生成的资料。普通生成与自由行动沿 ProcessEventAsync 传入当前生涯；多人沿成员 View 读取个人战绩；试写使用 test.Snapshot，材料选择后保持该副本战绩。PlayerRecord 每次组织请求重新计算，未加入事件持久字段；旧事件重试直接补充当前战绩，原 Seed、People、Materials 和已生成正文沿原生命周期保存。战绩变化后下一次请求读取新值，初次与续写在模板、战绩和 Materials 相同时保留同一文本前缀。该补充只影响随机事件请求，其他聊天和战报入口沿原实现。
+PlayerRecord 同时通过 PrivatePublicContext.PlayerProfile 提供一次独立玩家资料，零参与者事件同样提供。PlayerProfile 与 Profiles 复用 AppendPlayerProfile、AppendAwards、AppendProfileClub、AppendStandings 和 AppendPlayerContract，读取姓名、游戏名、性别、国家、职业、参赛资格、角色卡打法与介绍、擅长角色、身份、地区、说话习惯、性格、俱乐部及岗位、国家队、世界积分、荣誉、赞助、周刊介绍和最高通关。独立段落使用故事场景称呼；公开比赛逐进阶统计和三场详细赛果继续仅用于原聊天 Profiles，事件仍使用既有五场简表。NPC的 Profiles 保留其自身经历、双方交手和当前事实，移除重复的玩家段落、玩家积分榜及合同。原聊天 Profiles 的默认输出和动态分段保持一致。
+
+独立玩家资料及简表在当前模板之后、原 Materials 之前拼接一次，归程序生成的资料。普通生成与自由行动沿 ProcessEventAsync 传入当前生涯；多人沿成员 View 读取个人资料及战绩；试写使用 test.Snapshot，材料选择后保持该副本资料。PlayerRecord 每次组织请求重新计算，未加入事件持久字段；旧事件重试直接补充当前玩家资料及战绩，原 Seed、People、Materials 和已生成正文沿原生命周期保存。玩家资料或战绩变化后下一次请求读取新值，初次与续写在模板、玩家资料、战绩和 Materials 相同时保留同一文本前缀。该补充只影响随机事件请求，其他聊天和战报入口沿原实现。
 
 战绩专项验证并入 EventParticipantChecks，合计62项；实际传输替身检查首次及试写请求携带简表，随机事件87项、途中停留33项及自由行动离线43项通过。真实诊断中的2胜0平0负、两场获胜记录仅增加158字符；五场上限、空记录、乱序日期、赛事胜负与通关分离、成员个人统计和模板/原材料复用均已检查。当前证据位于维护者本地 .artifacts/event-record-20261021；本次没有发起外部模型调用。
+
+随机事件社区来源沿 Materials → CommunityMemorySearch.Retrieve → PrivatePublicContext.CommunitySources → CommunityText → PostTexts/CommunityPromptContext.SelectReplies/Comments。Retrieve 继续使用本次素材、参与者和玩家、当前日期、8条上限及同帖最多2条的原策略。CommunitySources 只把这些命中的现存可见原帖按编号去重，随后进入私聊 Community 共用的 CommunityText，提供完整正文、发帖者、日期和对应事件事实。SelectReplies 的可选 sourceMemories 参数把实际命中的评论加入现有选择起点，再沿同一父回复及后续回应规则整理。私聊、群聊默认省略该参数，原选择规则保持一致。原帖删除或不可用时复用 CommunityText 原有的事实、已生成正文及命中记录保留处理，按编号去重，继续区分事实与发言观点。检索与展开在同一个 Request 内完成，共用可见帖子和词汇计算；退出后释放请求集合。
+
+社区资料作为 Materials 内的字符串随首次 generating 一起保存一次。重试、重新生成、自由行动继续使用该材料；已有事件内的旧数组形式仍作为原 Materials 文本直接拼接，继续兼容。PlayerRecord 读取当前视图，社区资料保持首次材料快照；切换生涯、关闭页面、进程退出和多人断线沿原事件流程处理。没有增加模型请求、保存、广播或新的跨请求缓存，未来日程仍按原范围提供当天比赛与活动。
+
+2026-10-22 EventContextChecks 在3.92MB和18.27MB诊断副本各通过51项；覆盖单人事件、1/3名参与者、独立玩家事实仅出现一次、首次及续写前缀、旧材料、保存读回、命中评论父链和后续回应、删除来源、重试复用、两名多人成员各自的角色卡。较小副本的3名NPC还逐字对照修改前的完整 Profiles、动态分段和 Community 输出，全部一致。ContextSelectionChecks 31项、随机事件87项、旅途33项、含真实私聊群聊记录的 CustomEventChecks 43项通过；本次未调用外部模型或实测Steam网络与游戏界面。
+
+性能原始逐次结果保留在维护者本地 .artifacts/event-context-20261022/after.json 及 large/after.json。每组按0、1、3名参与者各执行3次 Materials+Compose，文件分别记录材料整理、请求组织和整次耗时、当前线程分配量及请求字符数；完整计时包含内部步骤，累计值只相加整次操作。较小副本1596人、70条社区记忆、7篇现存帖，九次完整耗时为25.0046/0.5461/0.3610、6.0475/0.5204/0.4904、0.5601/0.5442/0.5749毫秒，累计34.6492毫秒、3828728字节；较大副本1604人、1137条社区记忆、95篇现存帖，九次为27.6184/3.1059/19.6098、9.5548/2.6842/2.4657、3.0160/2.8320/3.0224毫秒，累计73.9092毫秒、12114552字节。首次操作包含相关函数首次执行开销；测量前已整理3名NPC的原聊天资料。两组和自由行动回归在独立进程同时执行，因此结果含进程间调度影响。每次 Materials 检索一次并展开所选来源，每次 Compose 计算一次玩家段落、序列化一次资料并拼接请求；未保存或广播。多人个人资料已验证，房主及客机网络性能未测量。
+
+## 世界观模板的实际接入
+
+世界观与游戏知识使用 PromptLibrary.Get(options, world) 读取当前所选模板及个人修改，缺省内容沿原模板查询入口提供。社区发帖、回帖、周刊文章和人物介绍由 AiService.ComposeSystem → PromptLibrary.Editorial 加入系统消息。私聊通过 PrivateMessagePrompts.Compose → Section，群聊通过 GroupChatPrompts.Compose → Section 加入系统消息；两处 Section 优先使用多人房主广播的 PrivatePromptSnapshot，缺省时读取本机当前模板。CoopCoordinator.Broadcast 把房主的 world 与聊天模板一同写入客机快照；房主实际处理聊天时清空旧快照并读取当前房主设置。
+
+约会、约会日记与结束后的普通私聊感想使用同一 PrivateMessagePrompts.Compose，世界观随首条系统消息进入请求，场景及日记引导随后追加。私聊仲裁、社区举报的 SpireArbitration.Compose 和群聊仲裁的 GroupArbitration.Compose 也加入 world。PortraitDesign.Messages 将 world 放进角色外观设计请求的用户资料。私聊小总结、大总结通过 Summarize 读取专用总结模板、人物身份、性格和待总结内容；群聊小总结、大总结通过 SummarizeGroupAsync 读取专用总结模板及原文或小总结；这四种总结请求没有单独拼接 world。
+
+随机事件由 RandomEventPrompts.Compose 在首条系统消息先加入 world，再加入 WorldGuidance，最后加入原效果说明；Get 每次读取传入 options，参数缺省时使用 data.Ai。第二条用户消息继续使用原 event 模板、PlayerRecord 和 Materials；首次格式与自由行动续写引导分别沿原后续消息加入。AiRandomEvents.ProcessEventAsync 及 PromptTesting 的事件分支共用 Compose，覆盖首次生成、重试、自由行动与试写。多人 StartEvent.Current 使用房主当前 AiSettingsStore 配置，成员视图继续提供个人战绩及事件材料。已经保存的故事与 Materials 沿原记录保留，下一次生成读取当时的世界观。此处每次新增一次 Get 查询和一次系统消息字符串拼接，增加的字符包括所选 world、WorldGuidance原文及分隔换行；请求次数、材料整理次数、保存和同步次数均沿原流程，没有新增缓存。
+
+2026-10-21 WorldPromptChecks 35项通过，覆盖四个内置模板、自建模板、修改即时生效、导入导出、缺省配置、首次与续写共同前缀及私聊、群聊、发帖、回帖、人物介绍、周刊的实际消息。随机事件87项、途中停留33项和自由行动43项通过。使用18.27MB诊断存档副本、当前 reduced-aggression 模板及 DeepSeek 事件连接，三组固定素材分别生成加入前后完整回复，共六次真实请求，全部通过现有故事、选项、结局和效果解析；每组仅改变系统消息中的世界观，其他消息逐字相同。当前世界观5507字符，每次请求增加5509字符，服务报告增加3632个输入 token。六次外部请求分别26.55、23.18、21.89、21.41、19.21、21.25秒，包含模型和网络等待，每组只抽样一次。完整请求、响应和可阅读对照保留在维护者本地 .artifacts/world-prompt-20261021/live。
+
+同一测试进程中，首次 Compose 4.8303毫秒、当前线程分配287256字节；再次首次模式0.0477、0.0119毫秒，各分配65816字节；续写模式0.0211、0.0121毫秒，各分配66984字节。五次 Compose 累计4.9231毫秒，分别测量完整调用，没有把内部计时重复相加。测试请求约2.99万字符，包含诊断副本中真实人物、交流记录、总结、帖子及经济资料。此项只测请求组织，材料整理与模型等待另列；多人房主和客机网络、游戏内完整交互此次未重新实测。
+
+WorldGuidance的当前原文为：世界观资料用于保持社会背景、人物认知和实力尺度一致。故事以本次素材中的人物、处境和情感为中心，让世界设定通过生活细节自然体现。卡牌、怪物和打法知识在情节确有需要时使用，不要强行套用或强制使用；普通生活题材按其自身的趣味展开。叙述文风与人物语言遵循随机事件模板中的创作要求，文笔优美引人入胜。引导由程序按完整原文加入一次，适用于首次生成、重试、自由行动及试写；世界观、素材、记忆、模板与后续格式消息继续沿原入口组织。
+
+本次世界观使用引导验证：使用用户提供的profile3诊断副本（career.json 3.92MB）和当前DeepSeek连接，礼物场景直接复用原事件保存的Materials，生活偶遇及比赛复盘按同一副本整理材料。每组保留同一世界观全文、事件模板和其他消息，仅增加WorldGuidance及分隔换行，共147字符、服务报告86个输入token。三组共六次真实请求；五份通过原解析器，一份比赛复盘回复首条story漏写右花括号，服务finish_reason为stop，完整原始回复已保留。测试入口现可独立重读已保存请求及响应，逐字核对发送内容后解析，不重复调用模型；当前43项核对通过。随机事件87项、途中停留33项、自由行动43项通过。模板预设逐项核对确认仅新增event，706字符与当前配置原文完全一致，原有其他场景保持相同内容。
+
+对照样本中，加入引导后的生活偶遇正文减少了具体怪物和卡名；粉丝礼物仍采用尖塔周边并列举卡牌，题材多样性尚未达到稳定验证。六份完整回复、请求、原始响应及解析错误位于维护者本地 .artifacts/event-world-guidance-20261021/live。前五次外部请求分别25.25、14.72、15.52、24.47、20.77秒，第六次解析异常前未保存HTTP耗时，标为未记录，未以其他计时替代。
+
+本次副本的Compose首次4.6740毫秒、分配301512字节；再次首次模式0.0512、0.0108毫秒，各分配51808字节；续写模式0.0232、0.0234毫秒，各分配52976字节。五次完整调用累计4.7826毫秒、511080字节，未重复相加内部计时。测试请求约2.09万字符，使用原人物、帖子、交流记录及总结入口；材料整理和外部等待另计，多人房主/客机网络及游戏界面此次未重新实测。
 
 ## 按任务选择连接方案
 
@@ -275,11 +305,27 @@ Favour 表示目标值，大幅调整进入玩家确认。群聊下方还显示�
 
 私信和群聊共用 PrivatePublicContext.SelectCommunity 选择历史帖子。每个人按原有的 1/2/1/2/2/2 类候选收集最多十篇；群聊分别收集背景和话题候选，再按帖子编号合并。选中的帖子正文和事件事实完整发送。PostTexts 的 includeConversation=false 分支提供正文；主动附带的帖子继续使用默认的 PostTexts 路径。
 
-CommunityPromptContext.SelectReplies 对整次请求的已选帖子统一选择评论：取参与者（含玩家）最近八条，再取与查询至少匹配两个有效词组、按匹配数除以评论词组数平方根排序的八条。词组采用英文数字词及相邻汉字对，沿用 CommunityMemorySearch 的日常用语过滤表。重复评论按帖子编号和评论编号合并；每个起点补齐全部父回复，再补一条日期最近、同日按原评论顺序靠后的直接回应。最终评论数量随父回复链长度变化。时间相同的候选使用评论编号确定顺序。Comments 输出原评论全文、作者、日期和回复对象，标题关联到同次请求内的完整原帖；观点标签与原始事件事实分别提供。
+CommunityPromptContext.SelectReplies 对整次请求的已选帖子统一选择评论：取参与者（含玩家）最近八条，再取与查询至少匹配两个有效词组、按匹配数除以评论词组数平方根排序的八条。词组采用英文数字词及相邻汉字对，沿用 CommunityMemorySearch 的日常用语过滤表。可选 sourceMemories 另将实际检索命中的评论设为起点，随机事件使用该参数，原私聊和群聊保持缺省调用。重复评论按帖子编号和评论编号合并；每个起点补齐全部父回复，再补一条日期最近、同日按原评论顺序靠后的直接回应。最终评论数量随父回复链长度变化。时间相同的候选使用评论编号确定顺序。Comments 输出原评论全文、作者、日期和回复对象，标题关联到同次请求内的完整原帖；观点标签与原始事件事实分别提供。
+
+私聊、群聊、随机事件与上述新闻入口共用 Request.RecentPlayerPosts(data, day)：在当前请求可见原帖集合中，按过去28个游戏日、玩家作者或关联玩家的PersonalPost、发布日期降序取最多三篇；先取三篇再合并已有来源，重复不递补。每次同步整理只筛选和排序一次，Request 按生涯对象和日期缓存，调用结束释放。常规检索的数量、候选及排序照旧；群聊整个请求共享三篇。私聊已有当前版本完整帖子附件时，该帖直接使用附件，消耗补充名额。普通NPC新闻继续由原常规检索选择。
+
+PrivatePublicContext.PostBodies 共用 PostTexts(includeConversation:false)，返回完整标题、作者、日期、原文和已有原始事件事实。Community 与 CommunitySources 合并近期原帖和常规结果，再用 suppliedBodies 排除前部已提供的正文；评论仍由同一个 SelectReplies 对合并集合选择，并在后部提供父回复及回应。私聊通过 ContextSpan 的 player-public 段，在固定系统模板后、人物资料前输出原帖；群聊在系统模板后输出同一组正文，再提供群成员资料。随机事件 Materials 保存 PublicPosts，并从社区资料中排除重复正文；Compose 将其放在 event 模板后、玩家资料前。随机事件自由行动与首次生成的前两条消息保持相同。原帖及模板不变时，这段文本不受当前聊天查询影响；新帖发布或原帖更新后，下次新请求重新组织前缀。私聊原保存 Context 与当前重建内容不一致时继续使用原保存全文，不用当前资料改写过去事实。旧事件沿原 Materials 恢复。私聊和群聊没有新增持久化字段；随机事件的 PublicPosts 随原两次保存和个人快照传递，检索本身新增保存、广播和模型调用次数均为零。
+
+PublicEntryChecks 使用第168天诊断存档重建场景，检查两名无私聊历史的路人、查询变化、两路正文去重、0/1/2名参与者事件、6/40人群聊、事件保存往返、发新帖后的前缀更新及旧事件快照保留，离线51项通过。真实DeepSeek私聊追加一次请求，模型明确提及玩家已发布失联公告；实际输入67196 token，命中缓存49152 token，这是完整玩家模板请求，不能当作本次补充增量。公告正文329字符；原社区片段的只读对照中，私聊增加331字符、群聊增加329字符、事件消息增加339字符，常规已选同帖时零增加。不同帖长和评论分支会改变增量。
+
+正常2224条社区记录下，完整私聊首次116.194毫秒，后续4.766至8.960毫秒；两名NPC群聊首次14.992毫秒，后续5.028至8.037毫秒；事件材料首次14.923毫秒。22240条扩展记录的私聊三次224.291/45.326/34.202毫秒，群聊38.952/58.732/34.586毫秒，事件17.696/15.938/16.437毫秒。40名NPC群聊首次59.861毫秒、再次48.596毫秒，分配24178648/21817864字节。逐次准确值、累计值及分配量以本地 public-context-settings-20261022/entries/checks.json 为准；完整调用包含内部步骤，不能相加为一次耗时。以上使用生产上下文代码及游戏替身，无磁盘保存和网络广播，真实Steam通信未实测。
 
 GroupChatPrompts.Compose 在早部放置背景帖正文，在当前材料部分放置新增话题正文及全请求的评论分支。PrivateMessagePrompts.Context 生成同样分开的正文与评论；OrderContext 按固定来源编号组织背景正文，话题正文和评论位于当前材料部分。排序后的帖子之间保留分段空白。已有 PrivateTurn.Context 仍作为本轮保存快照使用；没有保存快照的请求使用本次整理结果。
 
-自动发帖的 BuildNewsContext 对整个批次调用一次 Retrieve，最多六条；社区回帖的 BuildDiscussionPrompt 对整个请求取八条；周刊取五条。CommunityThreads.Remember 分别保存事件事实全文、已生成帖子正文全文，以及每次更新时最后十二条评论的全文。Put 按记录编号更新，之前保存的其他评论继续留在 CommunityMemories。Retrieve 对同一 PostId 最多选两条；人物列表前三人的匹配权重各为8，其余各为3，人物得分累加，日期得分为1/(1+间隔天数/28)。自动发帖采用文字片段相交或人物相交的候选条件。
+自动发帖的 BuildNewsContext 对整个批次调用一次 Retrieve，常规最多六条；社区回帖的 BuildDiscussionPrompt 对整个请求常规取八条；周刊取五条。CommunityThreads.Remember 分别保存事件事实全文、已生成帖子正文全文，以及每次更新时最后十二条评论的全文。Put 按记录编号更新，之前保存的其他评论继续留在 CommunityMemories。Retrieve 常规结果对同一 PostId 最多选两条；人物列表前三人的匹配权重各为8，其余各为3，人物得分累加，日期得分为1/(1+间隔天数/28)。自动发帖采用文字片段相交或人物相交的候选条件。
+
+BuildNewsContext 与 BuildDiscussionPrompt 分别将当前 pending / targets 传入 Retrieve 的可选 playerTopics 参数。缺省调用保持原有选择。当前目标作者或关联人物包含实际玩家编号，或目标 EventKey 对应截至请求日期已经核实的玩家比赛结果时，Retrieve 在常规结果之后补充近期公开原帖：候选为玩家自发帖，以及 PersonalPost 为真且关联玩家的私聊发布帖；发布日期在请求日期减27至请求日期之间，按日期从近到远先取三篇，整个请求共用名额。同日沿现有帖子枚举顺序。然后按 PostId 合并常规命中、excludedPosts 和 excludedMemories 对应帖子，重复项直接消耗候选名额，后续帖子不递补。普通NPC新闻继续由常规检索选择。
+
+新闻与回帖的近期公开帖补充直接读取 Remember 已保存的 :fact 原帖记录，该编号的 Kind 仍按原有规则保留 opinion。常规与补充命中一起经过 Retrieve 最后的同一段记录输出及 AiWireProtocol.Encode，标题、正文、署名、日期、来源与观点分类使用同一份原始资料；常规已命中同帖评论时继续沿原评论及来源展开提供内容。补充不会另行选择整帖评论。候选可见性复用 Request.Posts，词汇与原帖记录复用同一 Request 的 Search；每次请求至多筛选和排序一次公开帖集合，返回集合只增加最多三条既有记录引用。缓存于请求结束后释放；新闻与回帖补充无新增模型调用、存档字段、保存或网络广播。单人及房主/个人视图均读取调用者已有 CareerData，IsHuman 识别 player 与 HumanIds；旧档使用既有原帖记录。请求失败、离开、切档和断线仍由原请求与保存流程处理。
+
+PlayerPublicContextChecks 用私聊发布、同帖评论命中、当前目标已提供正文、28天边界、未来帖子、实际多人编号和匹配比赛事实验证上述入口；常规及补充取得的同一原帖记录与 Encode 输出逐字相等，重复时第四篇不递补。诊断场景按第168天恢复，移除后来生成的第24周周刊及同日后续私聊发布帖；旧网络日志曾截断，所用材料为存档重建。原常规六条逐字段一致，额外一篇失联公告进入新闻与回帖请求。当前 DeepSeek 连接各生成一次前后对照，原存档系统模板一致，输入由88722增至88920 token；修改后评论明确提及6月11日协寻公告及失联数周，两份回复均通过 ReadResponseCompletion → Decode → ApplyResponse 的真实解析和整批提交。针对性23项、原上下文31项、社区182项及周刊51项检查通过。
+
+该诊断副本2224条公开记录下，启用补充的三次检索为7.128/6.428/6.904毫秒，各分配1419840字节；原规则为6.651/6.580/6.353毫秒，分配1115928至1116280字节。首次完整新闻上下文104.212毫秒、分配17043448字节，重复三次8.116/7.511/7.723毫秒、分配1880896至1882776字节。扩展为22240条记录时，原规则首次词汇缓存构建285.854毫秒，重复57.072/72.285毫秒；补充开启后复用该缓存的三次为56.985/64.221/55.802毫秒，各约1084万字节。首次缓存分配约1.20亿字节，另一轮首次曾为314.228毫秒，以上大样本不是补充路径独立冷启动对照。上下文总耗时包含内部检索，分别记录，不相加；网络生成71.314/68.625秒另列。性能来自独立测试进程使用生产上下文源码与游戏替身；多人仅检查实际编号，无真实房主、客机网络计时。完整逐次数据、请求、回复及安装哈希在维护者本地 .artifacts/player-public-fix-20261022，源码依赖索引使用真实生产引用重新生成，307文件、4581成员、0编译诊断、0未绑定调用。
 
 发送社区和周刊请求前，AiWireProtocol.Encode 为 memory/communityMemory 中的独立历史评论补充 sourcePostId、sourceReplyId、author 和 parentId。AddMemorySources 按帖子编号合并 communitySources，提供原帖标题、作者、日期、正文、对应事件事实及父评论全文。当前 targets 已提供的正文和父评论沿用该目标资料。源帖已经归档删除时，原 CommunityMemory.Text 继续提供记录。随后移除存档检索编号 Id、PostId，统一转换模型使用的短编号。Kind 保持 fact/opinion 原分类；新增来源字段用于阅读上下文，响应父级权限仍由当前 targets 的 conversation 判定。
 

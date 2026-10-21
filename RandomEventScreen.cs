@@ -32,6 +32,7 @@ public partial class CareerScreen
         var view = new EventStoryView(); _eventView = view;
         view.Paint = (label, value) => PaintMentionText(label, ViewData, value, RandomEvents.Find(ViewData, id)?.People, true);
         view.OpenPerson = OpenMention;
+        view.Settings = RandomEventSettings;
         view.ContinueJourney = ContinueEventJourney;
         _stage.AddChild(view); view.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         view.Public.SetPressedNoSignal(ChatPreferences.GetValue(ChatPreferenceKey, "event-public", false).AsBool());
@@ -42,6 +43,44 @@ public partial class CareerScreen
         view.ConfirmCustom = () => EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed);
         view.Choose = index => EventCommand("event-choose", index, view.Public.ButtonPressed);
         view.Tick = RefreshRandomEvent; RefreshRandomEvent();
+    }
+    private void RandomEventSettings()
+    {
+        var current = ViewData.Life;
+        CheckButton? enabled = null; SpinBox? minimum = null, maximum = null;
+        ShowCareerDialog("随机事件设置", "在设定的天数范围内随机安排下一次际遇。", () =>
+        {
+            minimum!.Apply(); maximum!.Apply();
+            int min = (int)minimum.Value, max = (int)maximum.Value;
+            bool on = enabled!.ButtonPressed;
+            if (!MultiplayerCommand("event-settings", on ? "enabled" : "disabled", max.ToString(System.Globalization.CultureInfo.InvariantCulture), min,
+                accepted: () => { _eventSignature = ""; RefreshRandomEvent(); }))
+            {
+                RandomEvents.SetFrequency(ViewData, on, min, max); CareerStore.Save(ViewData);
+                _eventSignature = ""; RefreshRandomEvent();
+            }
+            return true;
+        }, "保存设置", box =>
+        {
+            enabled = new CheckButton { Name = "RandomEventsEnabled", Text = "启用随机事件", ButtonPressed = current.RandomEventsEnabled, CustomMinimumSize = new(0, 44) }; box.AddChild(enabled);
+            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); box.AddChild(row);
+            SpinBox Field(string caption, int value, string name)
+            {
+                var panel = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("142936", "466371", 8, 18)); row.AddChild(panel);
+                var fields = new VBoxContainer(); fields.AddThemeConstantOverride("separation", 12); panel.AddChild(fields);
+                fields.AddChild(Text(caption, 17, _muted));
+                var input = new SpinBox { Name = name, MinValue = 1, MaxValue = int.MaxValue, Step = 1, Value = value,
+                    Suffix = "天", UpdateOnTextChanged = true, Editable = current.RandomEventsEnabled, CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                fields.AddChild(input); return input;
+            }
+            minimum = Field("最小间隔", current.RandomEventMinDays, "RandomEventMinimum");
+            maximum = Field("最大间隔", current.RandomEventMaxDays, "RandomEventMaximum");
+            maximum.MinValue = minimum.Value;
+            minimum.ValueChanged += value => maximum.MinValue = value;
+            enabled.Toggled += value => { minimum.Editable = value; maximum.Editable = value; };
+            box.AddChild(Text("保存后重新安排未来尚未展开的事件。当天事件和已经生成的故事继续保留。", 16, _muted));
+        });
     }
     private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null, string? action = null)
     {
@@ -71,7 +110,7 @@ public partial class CareerScreen
 
 public partial class EventStoryView : Control
 {
-    public Action? Close, Start, Stop, Skip, Tick, ContinueJourney;
+    public Action? Close, Start, Stop, Skip, Tick, ContinueJourney, Settings;
     public Action<int>? Choose;
     public Action<RichTextLabel, string>? Paint;
     public Action<Variant>? OpenPerson;
@@ -144,6 +183,7 @@ public partial class EventStoryView : Control
         var footer = new HBoxContainer(); footer.AddThemeConstantOverride("separation", 12); body.AddChild(footer);
         Public = new CheckButton { Text = "公开这段经历", TooltipText = "所选结局可成为后续社区报道的材料。", CustomMinimumSize = new(0, 42) }; footer.AddChild(Public);
         footer.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        var settings = ActionButton("设置", () => Settings?.Invoke()); settings.Name = "RandomEventSettings"; footer.AddChild(settings);
         _stop = ActionButton("停止生成", () => Stop?.Invoke()); _stop.Name = "StopRandomEvent"; footer.AddChild(_stop);
         _retry = ActionButton("重新生成", () => Start?.Invoke()); _retry.Name = "RetryRandomEvent"; footer.AddChild(_retry);
         _skip = ActionButton("跳过事件", () => Skip?.Invoke()); _skip.Name = "SkipRandomEvent"; footer.AddChild(_skip);

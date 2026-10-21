@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`973E19A713A93250025DCB82D3D07526B4B619F4BD07108147B8133FEAAB1D25`。来源：[源码](../../RandomEventData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`3A0370F38109EB073C4181408F258677FB66EE1FD15D2961CCB631E66D43DFE9`。来源：[源码](../../RandomEventData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -196,11 +196,29 @@ private readonly StringBuilder _pending = new();
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-969ddadbc14c"></a>
+
+## `NationalSpire.RandomEventRecord.PublicPosts — public string PublicPosts`
+
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-9094ca155c3e"></a>
 
 ## `NationalSpire.RandomEventRecord.Title — public string Title`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -218,7 +236,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Story — public string Story`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -236,7 +254,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Reasoning — public string Reasoning`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -254,7 +272,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Options — public List<RandomEventOption> Options`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +290,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.CustomAction — public string CustomAction`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -290,7 +308,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.CustomState — public string CustomState`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -308,7 +326,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.CustomOption — public RandomEventOption? CustomOption`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -326,7 +344,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.CustomReasoning — public string CustomReasoning`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -344,7 +362,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Error — public string Error`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -362,7 +380,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Selected — public int Selected`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -380,7 +398,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.Public — public bool Public`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -398,7 +416,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.MatchIds — public List<string> MatchIds`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -416,7 +434,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventRecord.RememberedMatches — public HashSet<string> RememberedMatches`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -434,7 +452,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventOption.Text — public string Text`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -452,7 +470,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventOption.Result — public string Result`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -470,7 +488,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventOption.Effects — public List<Dictionary<string, JsonElement>> Effects`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -488,7 +506,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.EventStatus.Source — public string Source`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -506,7 +524,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.EventStatus.Name — public string Name`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -524,7 +542,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.EventStatus.Until — public int Until`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -542,7 +560,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.EventStatus.Percent — public double Percent`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -560,7 +578,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Title — public string Title`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -578,7 +596,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Story — public string Story`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -596,7 +614,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Options — public List<RandomEventOption> Options`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -614,7 +632,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.LiveStory — public string LiveStory`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -636,7 +654,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Feed(string) — public void Feed(string chunk)`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)
 
@@ -659,7 +677,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Finish() — public void Finish()`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)
 
@@ -685,7 +703,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Validate() — public void Validate()`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ApplyTestResponse(NationalSpire.CareerData, NationalSpire.PromptTestSession, string)`](PromptTesting.cs.md#symbol-7208c4c08018)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)
 
@@ -707,7 +725,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.Read(string) — private void Read(string line)`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventParser.Feed(string)`](RandomEventData.cs.md#symbol-af55d7453f88)；[`NationalSpire.RandomEventParser.Finish()`](RandomEventData.cs.md#symbol-9fff6310dec5)
 
@@ -749,7 +767,7 @@ private readonly StringBuilder _pending = new();
 
 ## `NationalSpire.RandomEventParser.PartialStory(string, string) — private static string PartialStory(string text, string field)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventParser.LiveStory`](RandomEventData.cs.md#symbol-4cd2ab5bd045)
 

@@ -80,6 +80,9 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         protocols = Regex.Replace(protocols, @"\[(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup):([^\]\n]*)\]", m =>
             "[" + m.Groups[1].Value + ":" + m.Groups[2].Value + ", Actor: p2" + (m.Groups[1].Value is "Favour" or "Attitude" or "Relationship" or "Match" ? ", Target: p1" : "") + "]");
         Add("system", Section(d, "world") + "\n\n" + Section(d, "group") + "\n\n" + protocols + "\n\n" + SocialAppointments.GroupProtocol + "\n\n" + OathAttachments.GroupProtocol + "\n\n" + ChatAttachments.GroupGiftProtocol + "\n\n" + Format + "\n" + ChatTimeline.Privacy);
+        var search = new CommunityMemorySearch.Request();
+        var recentPlayerPosts = search.RecentPlayerPosts(d, d.Day);
+        Add("user", PrivatePublicContext.PostBodies(d, recentPlayerPosts));
         var profiles = new StringBuilder($"当前群聊：《{g.Name}》\n群成员：\n");
         foreach (string id in g.Members)
         {
@@ -104,7 +107,6 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         Add("user", profiles.ToString());
         Add("user", NationalDevelopment.Context(d, g.Members.Select(id => CareerEngine.Person(d, id)?.Country ?? d.Esports.Country)));
         var fixedPosts = new Dictionary<string, CommunityPost>(); var topicPosts = new Dictionary<string, CommunityPost>();
-        var search = new CommunityMemorySearch.Request();
         string query = string.Join("\n", g.Turns.Where(t => t.Status == "complete").TakeLast(2).Select(t => t.Text).Append(pending?.Text ?? ""));
         foreach (var p in g.Members.Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().Where(p => !GroupChats.IsHuman(d, p.Id)))
         {
@@ -113,7 +115,8 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
             foreach (var post in baseline) fixedPosts.TryAdd(post.Id, post);
             foreach (var post in topical) topicPosts.TryAdd(post.Id, post);
         }
-        var allPosts = fixedPosts.Values.Concat(topicPosts.Values).DistinctBy(p => p.Id).ToArray();
+        var allPosts = fixedPosts.Values.Concat(topicPosts.Values).Concat(recentPlayerPosts).DistinctBy(p => p.Id).ToArray();
+        foreach (var post in recentPlayerPosts) { fixedPosts.Remove(post.Id); topicPosts.Remove(post.Id); }
         var comments = CommunityPromptContext.SelectReplies(allPosts, d.Day, g.Members, query, search);
         string Body(CommunityPost post) => PrivatePublicContext.PostTexts(d, post, new CareerPerson(), includeConversation: false).Ai;
         Add("user", string.Join("\n\n", fixedPosts.OrderBy(x => x.Key, StringComparer.Ordinal).Select(x => Body(x.Value))));

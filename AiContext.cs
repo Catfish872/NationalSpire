@@ -63,7 +63,7 @@ public static partial class AiService
                 : Persona(data, snapshot.Who, occasion, cutoff, snapshot.Day, person.Personality, privatePosts: personalPosts, sharedGroups: sharedGroups);
         }
         var memories = CommunityMemorySearch.Retrieve(data, string.Join(" ", pending.Select(p => p.Title + " " + p.Body)),
-            pending.SelectMany(p => p.RelatedPeople).Concat(persons.Select(p => p.Id)), contextDay, excluded);
+            pending.SelectMany(p => p.RelatedPeople).Concat(persons.Select(p => p.Id)), contextDay, excluded, playerTopics: pending);
         var posts = pending.Select(p => new
         {
             p.Id, p.AuthorId, topic = p.SourceTitle.Length > 0 ? p.SourceTitle : p.Title,

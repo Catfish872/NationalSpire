@@ -5,6 +5,11 @@ public static partial class CoopRules
     private static string? EventCommand(CoopWorld w, CoopMember member, CoopCommand command)
     {
         var d = View(w, member); d.Ai = AiSettingsStore.Load(new());
+        if (command.Kind == "event-settings")
+        {
+            RandomEvents.SetFrequency(d, command.Target == "enabled", command.Number, int.Parse(command.Text, System.Globalization.CultureInfo.InvariantCulture));
+            Capture(w, member, d); return null;
+        }
         string? error = command.Kind switch
         {
             "event-custom" => RandomEvents.Custom(d, command.Target, command.Text),
