@@ -2,13 +2,15 @@
 
 ## 逻辑层与职责
 
-随机事件由 RandomEvents 负责日期、抽取、选择及经历记录，EventPools 共用随机事件和选手日常的默认分类、模板覆盖、缓存与批量编辑转换，EventPoolScreen 提供提示词配置中的事件池入口。RandomEventPrompts/RandomEventParser/AiService.ProcessEventAsync 负责材料和一次流式请求，RandomEventEffects 统一检查、显示与应用效果；RandomEventScreen 是首页和日历共用入口，EventJourney 统一记录途中停留与自动发布暂停，EventJourneyScreen 连接途中窗口、首页和结果页继续行程。钱包、库存、人物好感、学习、行情、国家建设及约战调用已有模块。CoopRandomEvents 负责成员命令及仅发给事件发起人的流式结果，完整快照过滤见 PERSISTENCE_AND_COOP。具体状态、保存次数、上下文范围及旧档行为见 AI_FLOWS 和 DATA_CONTRACTS。
+随机事件由 RandomEvents 负责日期、抽取、选择、自定义行动和经历记录，EventPools 共用随机事件和选手日常的默认分类、模板覆盖、缓存与批量编辑转换，EventPoolScreen 提供提示词配置中的事件池入口。RandomEventPrompts/RandomEventParser/AiService.ProcessEventAsync 共用首次及自由行动的材料、流式传输、思维解析和保存；Compose通过PlayerRecord读取当前生涯或试写副本的累计胜平负及最近5场四列赛果。RandomEventEffects 统一检查、显示与应用效果，Person 统一提取人物效果目标，Choose 将所选目标补入 People 后记录经历与公开资料。RandomEventScreen 是首页和日历共用入口，RandomEventCustomScreen 是同一 EventStoryView 的输入、预览与确认部分；EventJourney 统一记录途中停留与自动发布暂停，EventJourneyScreen 连接途中窗口、首页和结果页继续行程。钱包、库存、人物好感、学习、行情、国家建设及约战调用已有模块。CoopRandomEvents 负责成员命令及仅发给事件发起人的流式结果，完整快照过滤见 PERSISTENCE_AND_COOP。具体状态、保存次数、上下文范围及旧档行为见 AI_FLOWS 和 DATA_CONTRACTS。
+
+ConsumerPickerScreen.ConsumerEditor 是聊天赠礼、活动与商城附件的共同编辑入口。ConsumerProducts 共用图标卡片、名称搜索、常驻分类和奢侈等级两排标签与每页10项翻页；商品按 ConsumerEngine.Price 降序排列，同价保留目录顺序，自行约定活动位于全部等级的第一张卡片。ConsumerEdit 仅保存当前弹窗中的对象、数量、日期和文字草稿。PeoplePickerScreen.PeoplePicker 统一群成员和商城人物选择的头像、筛选、搜索与可见行复用；熟悉的人按好感降序排列，同值保留候选顺序。ConsumerCommerceScreen 最终费用确认调用原 ConsumerAttachments.Prepare；单人保存成功或多人回执后才进入会话。具体流程见 GAME_AND_UI 的商城附件章节。
 
 公历统一入口为 GameCalendar：CalendarStartYear 随生涯保存，Date/Text/Iso/Day 负责累计天数与公历互换；NormalizeFields 供活动、约战解析共用。AiWireProtocol 在既有 JSON 遍历中调用 ConvertDateField，CommunitySharing 与 AiGeneratedText 负责旧结构化附件的日期显示，聊天正文保留原文。
 
 正式关系由 RelationshipGifts.Accept 与 OathAttachments.Respond 写入 PrivateRelation；WeddingAppointments 连接已接受礼物、已付款服务、活动与婚礼完成。AvatarHonors 和 NpcAvatarFrames 读取正式状态与原荣誉决定外观。普通好感变动继续调用原 ChangeFavour。
 
-专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。
+专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。DateDiaries 管理单次约会日记，DateDiaryScreen 复用 PR 作者的列表与卡片界面。结束约会通过原私聊队列生成一次普通感想及隐藏日记；日记集合仅供查看，普通请求沿原聊天与总结机制组织上下文。
 
 联系人行、日历、徽章、商品图标与数量控件采用 PR 原控件：ContactRowButton、CalendarDayButton、AffectionVisuals、ConsumerProductArt、ConsumerGiftControls。通讯分类、置顶、右键和管理继续调用现有入口；ChatContacts 只组织显示资料。
 
@@ -46,7 +48,7 @@
 
 群聊改名入口：ChatManagementScreen.ChatManageDialog → CareerScreen.GroupCommand → GroupChats.Command，使用已有 Name、Entries 和 Revision，由原保存与多人 CaptureGroup 同步，GroupChatScreen、GroupChatPrompts 和 SummarizeGroupAsync 读取。
 
-生活与会话入口：ConsumerEngine.Buy 统一数量购买与库存迁移；ChatAttachments 统一附件资料、标记格式和礼物实际扣除；SocialAppointments 统一邀约、接受、改期、取消、赴约。ChatMembership 统一私聊隐藏与清除、群聊解散与恢复、移出成员和可见记忆范围。ProactiveChats 统一设置、触发、已回复轮数和请求启动；单人与联机共享规则，联机启动由 CoopCoordinator.StartProactiveChats 执行。
+生活与会话入口：ConsumerCommerceScreen 复用聊天赠礼、成员选择与活动日历编辑器，最终确认才调用 ConsumerAttachments.Prepare。ConsumerAttachments 统一付款附件、临时物品、拒绝返还和即时活动赴约；ConsumerEngine.Season 共用跨赛季邀请计数清理。ConsumerEngine.Buy 统一数量购买与库存迁移；ChatAttachments 统一附件资料、标记格式和礼物实际扣除；SocialAppointments 统一邀约、接受、改期、取消、赴约。ChatMembership 统一私聊隐藏与清除、群聊解散与恢复、移出成员和可见记忆范围。ProactiveChats 统一设置、触发、已回复轮数和请求启动；单人与联机共享规则，联机启动由 CoopCoordinator.StartProactiveChats 执行。
 
 CardKnowledge.Find 统一读取玩家本轮文字中的卡牌名称；GameCardKnowledge 从游戏已加载定义建立资料，语言变化更新索引。WorldEvents.AfterMatch 与 Advance 共用 PublishDaily；WorldMatchLife 提供48条赛后生活素材。CoachLineups.RefreshAiStarters 在 CircuitWorld.StartSeason 中接续人物补员、先于阵容请求生效与新赛程生成。
 

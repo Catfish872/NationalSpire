@@ -9,8 +9,9 @@ public static class RandomEvents
         .OrderBy(e => e.Day).FirstOrDefault();
     public static string? Stop(CareerData d, string id)
     {
-        var e = Find(d, id); if (e == null || e.State != "generating") return null;
+        var e = Find(d, id); if (e == null || e.State != "generating" && e.CustomState != "generating") return null;
         AiService.CancelEvent(d, id);
+        e.CustomState = e.CustomOption == null ? "idle" : "ready";
         e.State = e.Options.Count > 0 ? "ready" : "failed"; e.Error = "生成已停止，可以重新生成或跳过。";
         return null;
     }
@@ -41,22 +42,46 @@ public static class RandomEvents
             e.People = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id)).OrderBy(_ => random.Next()).Take(random.Next(4)).Select(p => p.Id).ToList();
             e.Materials = RandomEventPrompts.Materials(d, e);
         }
+        e.CustomOption = null; e.CustomAction = ""; e.CustomState = "idle"; e.CustomReasoning = "";
         e.State = "generating"; e.Error = ""; return null;
+    }
+    public static string? Custom(CareerData d, string id, string action)
+    {
+        var e = Find(d, id);
+        if (e == null || e.Day != d.Day || e.State != "ready") return "请先展开当天的故事。";
+        if (AiService.EventBusy(d, id)) return "当前内容正在生成。";
+        if (!d.Ai.Enabled) return "启用AI后可以生成行动结局。";
+        if (string.IsNullOrWhiteSpace(action)) return "请填写你的行动。";
+        action = action.Trim();
+        if (action != e.CustomAction) e.CustomOption = null;
+        e.CustomAction = action; e.CustomState = "generating"; e.Error = ""; return null;
+    }
+    public static string? ChooseCustom(CareerData d, string id, bool publicly)
+    {
+        var e = Find(d, id);
+        if (e?.State == "complete") return null;
+        if (e is not { State: "ready", CustomState: "ready", CustomOption: { } option }) return "请等待行动结局生成完成。";
+        if (RandomEventEffects.Check(d, e, option) is { } error) return error;
+        e.Options.Add(option);
+        return Choose(d, id, e.Options.Count - 1, publicly);
     }
     public static string? Skip(CareerData d, string id)
     {
         var e = Find(d, id); if (e == null) return "事件已经不存在。";
-        if (e.State != "complete") { e.State = "skipped"; AiService.CancelEvent(d, id); }
+        if (e.State != "complete") { e.State = "skipped"; e.CustomState = e.CustomOption == null ? "idle" : "ready"; AiService.CancelEvent(d, id); }
         return null;
     }
     public static string? Choose(CareerData d, string id, int index, bool publicly)
     {
         var e = Find(d, id); if (e == null) return "事件已经不存在。";
         if (e.State == "complete") return null;
+        if (e.CustomState == "generating") return "请等待行动结局生成完成，或停止生成后选择。";
         if (e.State != "ready" || index < 0 || index >= e.Options.Count) return "请等待该事件的选项生成完成。";
         var option = e.Options[index];
         if (RandomEventEffects.Check(d, e, option) is { } error) return error;
         RandomEventEffects.Apply(d, e, option);
+        foreach (string person in option.Effects.Select(RandomEventEffects.Person).Where(id => id.Length > 0))
+            if (!e.People.Contains(person)) e.People.Add(person);
         e.Selected = index; e.Public = publicly; e.State = "complete";
         string fact = e.Story.Trim() + "\n玩家选择：" + option.Text + "\n实际结果：" + option.Result;
         Remember(d, e, e.Id, fact);
@@ -97,6 +122,11 @@ public static class RandomEventEffects
     private static decimal Number(Dictionary<string, JsonElement> e, string key) => e[key].ValueKind == JsonValueKind.Number ? e[key].GetDecimal()
         : decimal.Parse(e[key].GetString()!, System.Globalization.CultureInfo.InvariantCulture);
     private static string Text(Dictionary<string, JsonElement> e, string key) => e[key].GetString() ?? "";
+    internal static string Person(Dictionary<string, JsonElement> e)
+    {
+        string kind = Kind(e);
+        return kind is "favour" or "impression" or "status" or "learning" or "challenge" ? Text(e, kind) : "";
+    }
     public static string? Check(CareerData d, RandomEventRecord record, RandomEventOption option)
     {
         decimal wallet = CareerMoney.Balance(d) * 10;
@@ -108,7 +138,7 @@ public static class RandomEventEffects
                 string kind = Kind(e);
                 if (kind.Length == 0 || Kinds.Count(e.ContainsKey) != 1) return "这一选项的效果格式有误，可以选择其他选项或重新生成。";
                 if (kind is "favour" or "impression" or "status" or "learning" or "challenge")
-                    if (!record.People.Contains(Text(e, kind)) || !PrivateMessages.CanChat(d, Text(e, kind))) return "选项涉及的人物已不在本次事件中。";
+                    if (!PrivateMessages.CanChat(d, Person(e))) return "选项涉及的人物编号未对应到当前存档中的人物。";
                 switch (kind)
                 {
                     case "wallet": wallet += Number(e, kind); if (wallet < 0) return "钱包余额不足，可选择其他方案或跳过。"; break;
@@ -144,7 +174,7 @@ public static class RandomEventEffects
         foreach (var e in option.Effects)
             try
             {
-                string kind = Kind(e), person = kind is "favour" or "impression" or "status" or "learning" or "challenge" ? CareerEngine.DisplayName(d, Text(e, kind)) : "";
+                string kind = Kind(e), id = Person(e), person = id.Length > 0 ? CareerEngine.DisplayName(d, id) : "";
                 lines.Add(kind switch
                 {
                     "wallet" => "钱包 " + (Number(e, kind) >= 0 ? "+" : "−") + CareerMoney.Format(Math.Abs(Number(e, kind)) / 10),

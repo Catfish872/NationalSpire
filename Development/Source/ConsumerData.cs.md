@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`447EEB50249AD4D1063A36255FCAC3DE015009F565685A71151A666F46795201`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1F7EBAFE6F783C92A139B4D9CCC65ED3697999B89F279D56CE804B55B2908A57`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -36,11 +36,47 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-1478b5393fc8"></a>
+
+## `NationalSpire.ConsumerState.TemporaryGoods — public List<ConsumerTemporaryGood> TemporaryGoods`
+
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-7c899ed04d09"></a>
+
+## `NationalSpire.ConsumerState.Attachments — public List<ConsumerAttachment> Attachments`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-a0ff7ed3bb7b"></a>
 
 ## `NationalSpire.ConsumerState.GiftReceipts — public HashSet<string> GiftReceipts`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -58,7 +94,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.Goods — public List<OwnedGood> Goods`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -76,7 +112,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.BoughtDay — public Dictionary<string, int> BoughtDay`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -94,7 +130,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.PromoUsed — public Dictionary<string, long> PromoUsed`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -112,7 +148,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.Season — public int Season`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -130,7 +166,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.InvitedThisSeason — public Dictionary<string, int> InvitedThisSeason`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -148,7 +184,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.LifetimeSpent — public decimal LifetimeSpent`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -166,7 +202,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.PurchaseCount — public long PurchaseCount`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -184,7 +220,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerState.PartyCount — public int PartyCount`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -202,7 +238,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Quantity — public long Quantity`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -220,7 +256,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Id — public string Id`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -238,7 +274,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Name — public string Name`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -256,7 +292,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.BoughtDay — public int BoughtDay`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -274,7 +310,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Season — public int Season`
 
-来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -292,7 +328,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Price — public int Price`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -310,7 +346,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Durable — public bool Durable`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -328,7 +364,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.Consumed — public bool Consumed`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -346,7 +382,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.UsedVerbs — public List<string> UsedVerbs`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -364,7 +400,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.OwnedGood.UsedSeason — public int UsedSeason`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -382,7 +418,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.Good.Durable — public bool Durable`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -396,17 +432,91 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2900dbf01d61"></a>
+<a id="symbol-6b777a057190"></a>
 
-## `NationalSpire.Good.Collectible — public bool Collectible`
+## `NationalSpire.Good.Instant — public bool Instant`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Good.Category`；`NationalSpire.Good.Durable`
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.Collectible`；`NationalSpire.Good.Promo`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-1d01fc7ed993"></a>
+
+## `NationalSpire.Good.InstantActivity — public bool InstantActivity`
+
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.Id`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-5756ffe3e9c9"></a>
+
+## `NationalSpire.Good.Giftable — public bool Giftable`
+
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.InstantActivity`；`NationalSpire.Good.Promo`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-2f3e5607bdb7"></a>
+
+## `NationalSpire.Good.Activities — public IEnumerable<GoodVerb> Activities`
+
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Math.Max(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.Durable`；`NationalSpire.Good.InstantActivity`；`NationalSpire.Good.Name`；`NationalSpire.Good.Slots`；`NationalSpire.Good.Verbs`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("experience", Name, Math.Max(1, Slots), 10)`；返回值紧邻使用处：`ExpressionElementSyntax: new("experience", Name, Math.Max(1, Slots), 10)`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(1, Slots)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(1, Slots)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-2900dbf01d61"></a>
+
+## `NationalSpire.Good.Collectible — public bool Collectible`
+
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Good.Category`；`NationalSpire.Good.Durable`；`NationalSpire.Good.Id`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -418,9 +528,9 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.Get(string) — public static Good? Get(string id)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.PrivateActivityPicker(string, string)`](ChatAttachmentScreen.cs.md#symbol-658aa5efcda4)；[`NationalSpire.CareerScreen.PrivateGiftPicker()`](ChatAttachmentScreen.cs.md#symbol-53b0d3e663d2)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ChatAttachments.cs.md#symbol-114368537271)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-09ecc3f9af33)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Advance(NationalSpire.CareerData)`](ConsumerAttachments.cs.md#symbol-1591069d644f)；[`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-f88b230b016a)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)；[`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-09ecc3f9af33)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；[`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -437,7 +547,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.InTier(string) — public static IEnumerable<Good> InTier(string tier)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
 
@@ -456,7 +566,7 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.Categories(string) — public static IEnumerable<string> Categories(string tier)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -477,11 +587,11 @@ public static readonly Good[] All = Build();
 
 ## `NationalSpire.ConsumerCatalog.Build() — private static Good[] Build()`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-2166804196af)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-e09e2e466eb0)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
+**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-198cb79dad5e)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-955c5c003d05)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
 
 **字段、属性、事件及方法组引用：** `Item(string, string, string, string, int, bool, bool, int)`；`NationalSpire.ConsumerCatalog.Luxury`；`NationalSpire.ConsumerCatalog.Mass`；`NationalSpire.ConsumerCatalog.Middle`；`NationalSpire.ConsumerCatalog.Promo`；`NationalSpire.ConsumerCatalog.Rich`；`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`
 
@@ -489,6 +599,10 @@ public static readonly Good[] All = Build();
 
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item("誓约", "誓约", "grand-wedding", "盛大婚礼", 1_500_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item("誓约", "誓约", "grand-wedding", "盛大婚礼", 1_500_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item("誓约", "誓约", "oath-ring", "誓约之戒", 100_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item("誓约", "誓约", "oath-ring", "誓约之戒", 100_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Luxury, "穿戴", "bespoke-jewelry", "高定珠宝套装", 2_200_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Luxury, "穿戴", "bespoke-jewelry", "高定珠宝套装", 2_200_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Luxury, "旅行", "aurora-retreat", "极光玻璃屋假期", 3_200_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Luxury, "旅行", "aurora-retreat", "极光玻璃屋假期", 3_200_000, repeatable: true, slots: 1);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Luxury, "收藏", "concert-piano", "珍藏音乐会钢琴", 2_800_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Luxury, "收藏", "concert-piano", "珍藏音乐会钢琴", 2_800_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Luxury, "娱乐", "island-dinner", "私人海岛烛光晚宴", 4_500_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Luxury, "娱乐", "island-dinner", "私人海岛烛光晚宴", 4_500_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "穿戴", "jacket", "户外冲锋衣", 2_200)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "穿戴", "jacket", "户外冲锋衣", 2_200);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "穿戴", "sneakers", "限量球鞋", 2_800)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "穿戴", "sneakers", "限量球鞋", 2_800);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "穿戴", "suit", "定制西服", 9_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "穿戴", "suit", "定制西服", 9_000);`
@@ -499,7 +613,9 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "家居", "coffeemachine", "高级咖啡机", 5_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "家居", "coffeemachine", "高级咖啡机", 5_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "家居", "lamp", "暖光台灯", 400)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "家居", "lamp", "暖光台灯", 400);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "家居", "plant", "桌边绿植", 200)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "家居", "plant", "桌边绿植", 200);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "礼物", "seasonal-bouquet", "时令花束", 180)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "礼物", "seasonal-bouquet", "时令花束", 180);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "cake", "生日蛋糕", 120)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "cake", "生日蛋糕", 120);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "coffee", "手冲咖啡豆", 150)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "coffee", "手冲咖啡豆", 150);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "icecream", "街角甜筒", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "icecream", "街角甜筒", 20);`
@@ -522,23 +638,33 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "出行", "car", "私家车", 45_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "出行", "car", "私家车", 45_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "出行", "ebike", "高端电助力车", 30_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "出行", "ebike", "高端电助力车", 30_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "穿戴", "luxwatch", "高级腕表", 60_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "穿戴", "luxwatch", "高级腕表", 60_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "穿戴", "silk-shawl", "手绘真丝披肩", 45_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "穿戴", "silk-shawl", "手绘真丝披肩", 45_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "健康", "coach", "私教课包", 50_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "健康", "coach", "私教课包", 50_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "居住", "apartment", "小公寓首付", 80_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "居住", "apartment", "小公寓首付", 80_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "居住", "studio", "独立工作室", 100_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "居住", "studio", "独立工作室", 100_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "数码", "cinema", "家庭影院", 90_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "数码", "cinema", "家庭影院", 90_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "推广", "promo", "推广投放", 120_000, promo: true);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000);`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("auction", "小型拍卖夜", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("auction", "小型拍卖夜", 6, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("brunch", "周末早午餐", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("brunch", "周末早午餐", 6, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("camp", "露营同行", 4, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("camp", "露营同行", 4, 10)`
@@ -585,11 +711,11 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2166804196af"></a>
+<a id="symbol-198cb79dad5e"></a>
 
 ## `Item(string, string, string, string, int, bool, bool, int) — void Item(string tier, string category, string id, string name, int price, bool repeatable = false, bool promo = false, int slots = 0)`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerCatalog.Build()`](ConsumerData.cs.md#symbol-326fd7a8724c)
 
@@ -605,11 +731,11 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e09e2e466eb0"></a>
+<a id="symbol-955c5c003d05"></a>
 
 ## `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[]) — void Wear(string tier, string category, string id, string name, int price, params GoodVerb[] verbs)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerCatalog.Build()`](ConsumerData.cs.md#symbol-326fd7a8724c)
 

@@ -86,6 +86,10 @@ public partial class CareerScreen
         if (selected.Promo) body.AddChild(Text($"本次新增关注 {CareerAudience.PromotionGain(d.Fans, ConsumerEngine.Price(selected), ConsumerEngine.Uses(d, selected.Id)):N0}", 18, _ink));
         if (selected.Promo) body.AddChild(Text($"每赛季限{ConsumerCatalog.PromoPerSeason}次 · 本季剩余{ConsumerEngine.RemainingPurchases(d, selected)}次", 16, _muted));
         if (!selected.Collectible) body.AddChild(Text("即时消费", 16, _muted));
+        if (selected.Giftable) body.AddChild(Button("赠送礼物", () => ConsumerTarget(selected, false), 0));
+        if (selected.Activities.Any()) body.AddChild(Button("邀约活动", () => ConsumerTarget(selected, true), 0));
+        if (selected.Instant && ConsumerAttachments.Available(d, selected) > 0)
+            body.AddChild(Text($"当天临时保留 ×{ConsumerAttachments.Available(d, selected)} · {GameCalendar.Text(d, d.Day)}有效", 16, CareerVisuals.Teal));
         if (_shopOwned)
         {
             body.AddChild(Text("最近购买 · " + PrivateAppointments.DateText(d, purchases.Day(selected)), 16, _muted));
@@ -96,7 +100,7 @@ public partial class CareerScreen
             if (selected.Durable) body.AddChild(Text("收藏后可举办\n" + string.Join("\n", selected.Verbs.Select(v => v.Name)), 18, _ink));
             var quantity = new ConsumerQuantity { Minimum = 1, Maximum = Math.Max(1, ConsumerEngine.RemainingPurchases(d, selected)) }; quantity.Initialize(1); body.AddChild(quantity);
             string? error = ConsumerEngine.BuyError(d, selected);
-            var purchase = Button(error ?? "确认购买", () => ConsumerSubmit(d, selected, "", [], (int)quantity.Value), 0); purchase.Disabled = error != null; body.AddChild(purchase);
+            var purchase = Button(error ?? "确认购买", () => ConsumerConfirmPurchase(d, selected, (int)quantity.Value), 0); purchase.Disabled = error != null; body.AddChild(purchase);
             quantity.Changed += () => { int value = quantity.Value; var message = quantity.Valid ? ConsumerEngine.BuyError(d, selected, value) : "请输入有效的购买数量。"; purchase.Text = message ?? $"购买 · ${ConsumerEngine.Price(selected) * (decimal)value:N0}"; purchase.Disabled = message != null; };
         }
     }

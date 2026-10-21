@@ -96,10 +96,12 @@ public static partial class AiService
             if (turn.Status != "sending") return;
             if (SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");
+            if (turn.Scene is { Ending: false } && DateScenes.ReplyFailure(parser.Text) is { } rejection) throw new InvalidDataException(rejection);
             if (turn.ReplyOrder == 0) turn.ReplyOrder = GroupChats.NextOrder(data);
             turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error;
             if (turn.Scene != null) turn.SceneLines = DateScenes.TaggedLines(parser, turn.Scene);
             PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);
+            DateDiaries.Complete(conversation, turn, parser.Directives);
             ProactiveChats.CountReplies(conversation);
             turn.Regenerating = false; turn.PreviousReply = turn.PreviousReasoning = "";
             conversation.LastReplyOrder = Math.Max(DateTime.UtcNow.Ticks, PrivateMessages.Mailbox(data).Conversations.Values.Max(x => x.LastReplyOrder) + 1);
@@ -125,7 +127,12 @@ public static partial class AiService
             }
             Diagnostics.Record("private.failed", new { person, turnId, error = FailureReason(e) });
         }
-        finally { PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateSceneLive.Remove(key); PrivateRequests.Remove(key); }
+        finally
+        {
+            PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateSceneLive.Remove(key); PrivateRequests.Remove(key);
+            if (current() is { } latest && PrivateMessages.Conversation(latest, person).Turns.FirstOrDefault(t => t.Status == "queued")?.Scene?.Ending == true)
+                _ = ProcessPrivateAsync(current, save, person, progress);
+        }
     }
 
     private static async Task<IDisposable> EnterPrivateQueue(CareerData data, string key, CancellationToken token)

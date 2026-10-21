@@ -20,6 +20,8 @@ public static class PrivateMessageCommands
 {
     public static string? Apply(CareerData data, string kind, string person, PrivateMessageCommand command)
     {
+        if (kind == "consumer-attach") return ConsumerAttachments.Prepare(data, person, command.Part, command.Request!);
+        if (kind == "consumer-remove") return ConsumerAttachments.Remove(data, command.Entry);
         if (kind == "dm-avatar-frame") return NpcAvatarFrames.Select(data, person, command.Text);
         if (kind == "dm-settings") { command.Settings!.Validate(); PrivateMessages.Mailbox(data).Settings = command.Settings; return null; }
         if (kind is "dm-date-open" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
@@ -92,6 +94,7 @@ public static class PrivateMessageCommands
                 if (command.Request?.Kind == "match" && PrivateAppointments.Error(data, person, command.Request) is { } requestError) return requestError;
                 if (PrivateMessages.PrepareAttachments(data, person, command.Attachments) is { } attachmentError) return attachmentError;
                 var sent = PrivateMessages.Enqueue(data, person, command.Text, command.Request, command.Attachments);
+                ConsumerAttachments.Sent(data, command.Attachments);
                 if (command.Scene != null) { sent.Scene = Coop.CoopJson.Copy(command.Scene); sent.Scene.Opening = false; c.DateSceneStates[command.Scene.OfferId] = "active"; }
                 return null;
             case "dm-select": PrivateMessages.Mailbox(data).LastPerson = person; return null;
@@ -113,11 +116,11 @@ public static class PrivateMessageCommands
                 { PrivateMessages.ConfirmFavour(data, c, offer, kind == "dm-confirm"); return null; }
                 if (offer.Kind == "activity")
                 {
-                    if (kind == "dm-decline") { if (offer.State is not ("待确认" or "已确认")) return "这项活动已处理。"; offer.State = "已取消"; return null; }
+                    if (kind == "dm-decline") { if (offer.State is not ("待确认" or "已确认")) return "这项活动已处理。"; offer.State = "已取消"; ConsumerAttachments.Resolve(data, offer, false); return null; }
                     return SocialAppointments.Confirm(data, c, offer);
                 }
                 if (offer.Kind == "publish" && kind == "dm-decline")
-                { if (offer.State != "待确认") return "已发布的帖子请在社区查看。"; offer.State = "已取消"; return null; }
+                { if (offer.State != "待确认") return "已发布的帖子请在社区查看。"; offer.State = "已取消"; ConsumerAttachments.Resolve(data, offer, false); return null; }
                 if (kind == "dm-decline") return offer.Kind == "contract" && offer.State != "待确认" ? "已签订的合同请在选手档案中管理。" : PrivateAppointments.Cancel(data, offer);
                 if (offer.Kind == "publish") { var result = PrivateProfileChanges.Publish(data, person, offer); if (result == null) SpireArbitration.Merge(data, PrivateMessages.Mailbox(data)); return result; }
                 string? confirmationError = offer.Kind == "match" ? PrivateAppointments.Confirm(data, person, offer) : PrivateContracts.Confirm(data, person, offer, command.Replacement);

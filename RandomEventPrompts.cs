@@ -5,11 +5,13 @@ namespace NationalSpire;
 public static class RandomEventPrompts
 {
     private static readonly JsonSerializerOptions Json = new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+    private const string Participants = "资料中的相关人物是本次参与者。人物效果使用本次参与者中的人物编号；相关人物为空时，创作玩家独自经历的单人事件。";
+    private const string PlayerFacts = "玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。";
     public const string Story = """
 为玩家创作一段精彩、自然以及有趣的互动故事，并根据情况提供2-4个行动选项。故事需要保持完整，玩家的选项应当是故事的最终决定，无论如何在选择后这段故事会结束，所以你不能在选项里留下需要后续推进的故事发展伏笔。
 以玩家的游戏体验为核心目标，在事件中禁止做出无解困局、全部负面等导致玩家游戏体验下降的故事。
 """;
-    public const string Format = """
+    public const string InitialFormat = """
 按顺序输出逐行JSON：标题、故事正文、行动选项。每段正文使用一条story记录。每个选项包含option行动文字、result选择后的完整结局、effects实际效果。效果与结局相符，数值正负表示增加和减少。没有数值变化时effects填写空数组。
 故事和选项文字使用人物称呼，效果使用人物编号。result写明今天已经完成的结局；约战写明已经约定，其他交易、检测、退款等在本次结局内完成。涉及金额时，文字中的收支合计与wallet保持一致。
 格式示例：
@@ -17,6 +19,8 @@ public static class RandomEventPrompts
 {"story":"街角的雨停了，橱窗里还挂着几串水珠。"}
 {"option":"留下来修好设备","result":"你们完成修理，店员重新点亮了招牌。","effects":[{"wallet":-800},{"favour":"p2","value":3}]}
 {"option":"借用备用设备","result":"备用设备顺利接上电源，这次聚会照常结束。","effects":[]}
+""";
+    public const string Effects = """
 可用效果及完整字段示例：
 {"wallet":-800}：玩家钱包变化，单位美元。
 {"fans":150}：玩家关注人数变化。
@@ -32,10 +36,42 @@ public static class RandomEventPrompts
 人物、商品、品牌和日期采用本轮资料。临时状态通常为±1%至±3%、持续2至5天；长期学习通常为0.05%至0.2%；品牌行情通常为±0.3%至±1.5%；国运建设通常1至3点。好感一般变化1至4点，重要互动5至8点。资金与关注根据本轮经济参考、人物身份和事情规模选择。每项效果只填写对应示例中的字段。
 人物的行为承接其身份、关系和已知经历；资料中的恶意行为可选人物才可针对玩家实施欺骗、陷害或胁迫。人物也可以帮助玩家、提供提醒或与玩家共同遭遇问题。
 """;
-    public static List<Dictionary<string, string>> Compose(RandomEventRecord record, AiOptions? options = null) =>
-    [new() { ["role"] = "system", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + Format },
-     new() { ["role"] = "user", ["content"] = record.Materials }];
+    public const string Format = InitialFormat + "\n" + Effects;
+    public const string Continuation = """
+上轮故事已经生成完成。玩家现在提出了一项自定义行动，本轮任务是承接已有故事，为这项行动写出完整结局及实际效果。
 
+沿用前文模板中的文风、人物塑造和游戏体验要求。根据前文提供的信息和玩家的实际选择，将这个故事推进到结束，结束段文本在50-200字左右。
+
+结局应当延续上文故事的文风、叙述口吻和人物说话方式，按照前文模板中的具体文风要求写成故事正文的结尾，让玩家能够读到行动发生后的故事。
+
+本轮输出一条JSON记录，包含result、effects两个字段：
+result填写这项行动结束后的完整结局。
+effects按照前文的效果字段规则填写实际变化；没有实际变化时填写空数组。
+""";
+    internal static string PlayerRecord(CareerData data) => JsonSerializer.Serialize(new
+    {
+        玩家战绩 = new
+        {
+            正式比赛累计 = new { 胜 = data.Wins, 平 = data.Draws, 负 = data.Losses },
+            近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new
+            {
+                日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome
+            })
+        }
+    }, Json);
+    public static List<Dictionary<string, string>> Compose(CareerData data, RandomEventRecord record, AiOptions? options = null, bool custom = false)
+    {
+        List<Dictionary<string, string>> messages =
+        [new() { ["role"] = "system", ["content"] = Effects + "\n" + Participants + "\n" + PlayerFacts },
+         new() { ["role"] = "user", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data) + "\n" + record.Materials }];
+        if (custom)
+        {
+            messages.Add(new() { ["role"] = "assistant", ["content"] = JsonSerializer.Serialize(new { title = record.Title, story = record.Story }, Json) });
+            messages.Add(new() { ["role"] = "user", ["content"] = Continuation + "\n" + JsonSerializer.Serialize(new { action = record.CustomAction }, Json) });
+        }
+        else messages.Add(new() { ["role"] = "user", ["content"] = InitialFormat });
+        return messages;
+    }
     public static string Materials(CareerData d, RandomEventRecord e)
     {
         var people = e.People.Select(id => CareerEngine.Person(d, id)!).ToArray();

@@ -247,7 +247,7 @@ public partial class CareerScreen
             if (turn.RequestKind == "event") { _privateBody.AddChild(PrivateText(turn.User, 17, CareerVisuals.Teal)); continue; }
             if (turn.Arbitration is { } ruling) _privateBody.AddChild(ArbitrationCard(data, ruling));
             else if (turn.RequestKind == "arbitration") _privateBody.AddChild(Text("尖塔仲裁 · " + (turn.Status == "failed" ? "审理中断" : "正在审理"), 20, _gold));
-            if (!turn.UserDeleted && turn.ProactiveReason.Length == 0) AddPrivateBubble(turn.User, true, turn);
+            if (!turn.UserDeleted && turn.ProactiveReason.Length == 0 && turn.Scene?.Ending != true) AddPrivateBubble(turn.User, true, turn);
             string reasoning = turn.Status == "sending" && turn.Id == thought.Turn ? thinking : turn.Reasoning;
             if (!turn.ReplyDeleted && (reasoning.Length > 0 || turn.Status == "sending"))
             {
@@ -357,7 +357,7 @@ public partial class CareerScreen
                 _ = AiService.ProcessInteractionsAsync([published.MatchId], data);
             if (kind == "dm-arbitration-apology" && CareerEngine.Person(data, person)!.Arbitrations.FirstOrDefault(r => r.Id == command.Entry) is { PostId.Length: > 0 } ruling)
                 _ = AiService.ProcessInteractionsAsync([ruling.PostId], data);
-            if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-date-open" or "dm-date-revise") _ = AiService.ProcessPrivateAsync(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
+            if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-date-open" or "dm-date-end" or "dm-date-revise") _ = AiService.ProcessPrivateAsync(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
             if (kind == "dm-summary") _ = AiService.SummarizePrivateManually(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
         }
         catch (Exception e) { if (_privateStatus != null) _privateStatus.Text = AiService.FailureReason(e); if (_dateView != null) _dateView.Status.Text = AiService.FailureReason(e); }
@@ -494,6 +494,8 @@ public partial class CareerScreen
         }
         if (offer.Kind == "activity")
         {
+            if (PrivateMessages.Conversation(data, _privatePerson).DateSceneStates.GetValueOrDefault(offer.Id) == "ended")
+            { AddCompletedDateCard(data, _privatePerson, offer); return; }
             var panel = new PanelContainer { Name = "SocialActivityCard" };
             panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("203448", "70acae", 10, 20)); _privateBody!.AddChild(panel);
             var inner = Inner(panel); inner.AddThemeConstantOverride("separation", 12);
@@ -584,6 +586,8 @@ public partial class CareerScreen
         var box = ProfileSection("与你的关系");
         box.AddChild(PrivateIdentity(data, person.Id, false));
         box.AddChild(PrivateButton("发送私信", () => OpenPrivateMessages(person.Id), 160));
+        if (DateDiaries.Records(PrivateMessages.Conversation(data, person.Id)).Count > 0)
+            box.AddChild(PrivateButton("约会日记", () => DateDiaryDialog(data, person.Id), 160));
     }
 }
 

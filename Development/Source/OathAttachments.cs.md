@@ -49,7 +49,7 @@ public const string Protocol = """
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PrivateOathAttachment()`](ChatAttachmentScreen.cs.md#symbol-cefd5039c4e6)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ChatAttachments.cs.md#symbol-114368537271)
+**调用者：** [`NationalSpire.CareerScreen.PrivateOathAttachment()`](ChatAttachmentScreen.cs.md#symbol-cefd5039c4e6)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)
 
 **调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)
 

@@ -14,7 +14,7 @@ public sealed partial class CoopCoordinator
     {
         if (Host || World == null) return;
         var part = Read<CoopPrivatePart>(wire);
-        if (part.Person.Length > 256 || part.Part.Total > 400000 || !(part.Person.StartsWith("event:") ? World.Members.Single(m => m.SteamId == Self).Life.RandomEvents.Any(e => e.Id == part.Person[6..] && e.State == "generating") : part.Person.StartsWith("group:") ? World.World.Chats.Groups.Any(g => "group:" + g.Id == part.Person && g.Members.Contains(World.Members.Single(m => m.SteamId == Self).PersonId)) : PrivateMessages.CanChat(World.World, part.Person))) return;
+        if (part.Person.Length > 256 || part.Part.Total > 400000 || !(part.Person.StartsWith("event:") ? World.Members.Single(m => m.SteamId == Self).Life.RandomEvents.Any(e => e.Id == part.Person[6..] && (e.State == "generating" || e.CustomState == "generating")) : part.Person.StartsWith("group:") ? World.World.Chats.Groups.Any(g => "group:" + g.Id == part.Person && g.Members.Contains(World.Members.Single(m => m.SteamId == Self).PersonId)) : PrivateMessages.CanChat(World.World, part.Person))) return;
         if (!_privateAssemblers.TryGetValue(part.Person, out var assembler))
         {
             if (_privateAssemblers.Count >= 64) _privateAssemblers.Remove(_privateAssemblers.Keys.First());
@@ -44,7 +44,7 @@ public sealed partial class CoopCoordinator
     }
     private void StartPrivate(ulong sender, CoopCommand command)
     {
-        if (!Host || World == null || command.Kind is not ("dm-date-open" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
+        if (!Host || World == null || command.Kind is not ("dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
         string worldId = World.Id, epoch = World.Epoch;
         CareerData? Current()
         {

@@ -88,6 +88,7 @@ public static class CareerLife
     private static int Hash(CareerData d, string key) => CareerEngine.StableHash(d.WorldId + ":life:" + key);
     public static void Advance(CareerData d)
     {
+        ConsumerAttachments.Advance(d);
         Ensure(d);
         if (d.Esports.EcosystemVersion < 1) return;
         CareerRelics.Advance(d);

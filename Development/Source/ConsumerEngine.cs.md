@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B4142691C2CCAFAE012C749A72FDB6E8F80AC156D08DD8878D571C8D36552A50`。来源：[源码](../../ConsumerEngine.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`861B645ACCC49F51427257E9E2A98FA9742C5052E63C1F7F5CB42923B2F90C4D`。来源：[源码](../../ConsumerEngine.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,16 +11,15 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-public const int InviteFavourGate = 5;
 ```
 
 <a id="symbol-268b12fc6723"></a>
 
 ## `NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData) — public static void Ensure(CareerData d)`
 
-来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)
+**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)
 
 **调用：** [`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-723a34b6e2cb)；`NationalSpire.OwnedGood.OwnedGood()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
@@ -52,7 +51,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string) — public static long Uses(CareerData d, string id)`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-09b4e1679d14)
 
@@ -71,7 +70,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.RemainingPurchases(NationalSpire.CareerData, NationalSpire.Good) — public static int RemainingPurchases(CareerData d, Good good)`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)
 
@@ -91,9 +90,9 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.Price(NationalSpire.Good) — public static int Price(Good good)`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`](ConsumerEngine.cs.md#symbol-57cd1c96aca4)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.CareerScreen.ConsumerConfirmPurchase(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerCommerceScreen.cs.md#symbol-deb0704ef9e4)；[`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`](ConsumerEngine.cs.md#symbol-57cd1c96aca4)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)
 
 **调用：** `System.Math.Max(int, int)`
 
@@ -110,7 +109,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int) — public static string? BuyError(CareerData d, Good good, int quantity = 1)`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)
 
@@ -131,18 +130,17 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.CanInvite(NationalSpire.CareerData, string) — public static bool CanInvite(CareerData d, string id)`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`](ConsumerEngine.cs.md#symbol-1d085530bebc)
+**调用者：** [`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`](ConsumerEngine.cs.md#symbol-1d085530bebc)
 
-**调用：** [`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.HumanIds`；`NationalSpire.ConsumerEngine.InviteFavourGate`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.HumanIds`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.CanChat(d, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: id != "player" && !d.HumanIds.Contains(id)          && PrivateMessages.CanChat(d, id)`
-- `NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Favour(d, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateMessages.Favour(d, id) >= InviteFavourGate`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`d.HumanIds.Contains(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !d.HumanIds.Contains(id)`
 
 **赋值（含属性/字段和局部值）：**
@@ -152,7 +150,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int) — private static string? Guests(CareerData d, IReadOnlyList<string> ids, int slots)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)
 
@@ -163,7 +161,7 @@ public const int InviteFavourGate = 5;
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.ConsumerEngine.CanInvite(NationalSpire.CareerData, string)`；输入表达式：`CanInvite(d, id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CanInvite(d, id)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`ids.Any(id => !CanInvite(d, id))`；返回值紧邻使用处：`ConditionalExpressionSyntax: ids.Any(id => !CanInvite(d, id)) ? "邀请对象需要能够联系，且好感达到5。" : null`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`ids.Any(id => !CanInvite(d, id))`；返回值紧邻使用处：`ConditionalExpressionSyntax: ids.Any(id => !CanInvite(d, id)) ? "请选择能够联系的邀请对象。" : null`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；输入表达式：`ids.Distinct().Count()`；返回值紧邻使用处：`BinaryExpressionSyntax: ids.Distinct().Count() != ids.Count`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`ids.Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ids.Distinct().Count`
 
@@ -172,11 +170,11 @@ public const int InviteFavourGate = 5;
 
 <a id="symbol-f873e9cbaf82"></a>
 
-## `NationalSpire.ConsumerEngine.Season(NationalSpire.CareerData) — private static void Season(CareerData d)`
+## `NationalSpire.ConsumerEngine.Season(NationalSpire.CareerData) — internal static void Season(CareerData d)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)
+**调用者：** [`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)
 
 **调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
 
@@ -198,9 +196,9 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int) — public static string? Buy(CareerData d, string id, IReadOnlyList<string>? invitees = null, int quantity = 1)`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
 **调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerMoney.Add(NationalSpire.CareerData, decimal)`](LifeData.cs.md#symbol-bcb55555a432)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.BuyError(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerEngine.cs.md#symbol-9a6a5bbc9c38)；[`NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`](ConsumerEngine.cs.md#symbol-57cd1c96aca4)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`](ConsumerEngine.cs.md#symbol-1d085530bebc)；[`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-723a34b6e2cb)；[`NationalSpire.ConsumerEngine.PromotionGain(int, long, int)`](ConsumerEngine.cs.md#symbol-57e00990f59c)；[`NationalSpire.ConsumerEngine.Season(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-f873e9cbaf82)；[`NationalSpire.ConsumerEngine.Uses(NationalSpire.CareerData, string)`](ConsumerEngine.cs.md#symbol-e824ab276330)；[`NationalSpire.ConsumerEvents.Purchase(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>)`](ConsumerEvents.cs.md#symbol-046119a7c75d)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
 
@@ -241,9 +239,9 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.HospitalityFee(NationalSpire.Good) — public static int HospitalityFee(Good good)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool)`](ConsumerEngine.cs.md#symbol-2d5bf22bd5bc)
 
 **调用：** 无已绑定显式调用。
 
@@ -259,7 +257,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long) — public static void ChangeInventory(CareerData d, Good good, long quantity)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)
 
@@ -297,7 +295,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.PromotionGain(int, long, int) — public static int PromotionGain(int price, long used, int quantity)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)
 
@@ -319,7 +317,7 @@ public const int InviteFavourGate = 5;
 
 ## `NationalSpire.ConsumerEngine.Use(NationalSpire.CareerData, string, string, System.Collections.Generic.IReadOnlyList<string>, bool) — public static string? Use(CareerData d, string goodId, string verbId, IReadOnlyList<string> guests, bool publicly = true)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)
 

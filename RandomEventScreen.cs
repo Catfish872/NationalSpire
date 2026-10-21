@@ -38,29 +38,32 @@ public partial class CareerScreen
         view.Public.Toggled += value => { ChatPreferences.SetValue(ChatPreferenceKey, "event-public", value); WriteChatPreferences(); };
         view.Close = () => { view.QueueFree(); _eventView = null; Render(); };
         view.Start = () => EventCommand("event-start"); view.Stop = () => EventCommand("event-stop"); view.Skip = () => EventCommand("event-skip");
+        view.Custom = action => EventCommand("event-custom", action: action);
+        view.ConfirmCustom = () => EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed);
         view.Choose = index => EventCommand("event-choose", index, view.Public.ButtonPressed);
         view.Tick = RefreshRandomEvent; RefreshRandomEvent();
     }
-    private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null)
+    private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null, string? action = null)
     {
         string target = id ?? _eventId;
         void Updated() { if (_eventView != null) RefreshRandomEvent(); else Render(); }
-        if (MultiplayerCommand(kind, target, publicly ? "public" : "private", option, accepted: Updated)) return;
+        if (MultiplayerCommand(kind, target, action ?? (publicly ? "public" : "private"), option, accepted: Updated)) return;
         var d = ViewData; string? error = kind switch
         {
+            "event-custom" => RandomEvents.Custom(d, target, action ?? ""), "event-custom-choose" => RandomEvents.ChooseCustom(d, target, publicly),
             "event-start" => RandomEvents.Start(d, target), "event-skip" => RandomEvents.Skip(d, target), "event-stop" => RandomEvents.Stop(d, target),
             "event-choose" => RandomEvents.Choose(d, target, option, publicly), _ => null
         };
         if (error != null) { if (_eventView != null) { _eventView.Status.Text = error; _eventView.Status.Show(); } else ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false); return; }
         CareerStore.Save(d); Updated();
-        if (kind == "event-start") _ = AiService.ProcessEventAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, target);
+        if (kind is "event-start" or "event-custom") _ = AiService.ProcessEventAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, target);
     }
     private void RefreshRandomEvent()
     {
         if (_eventView == null || !IsInstanceValid(_eventView)) return;
         var d = ViewData; var e = RandomEvents.Find(d, _eventId); if (e == null) { _eventView.Close?.Invoke(); return; }
-        var live = e.State == "generating" ? AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id)) : null;
-        string signature = e.State + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id) + CareerMoney.Balance(d);
+        var live = e.State == "generating" || e.CustomState == "generating" ? AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id)) : null;
+        string signature = e.State + e.CustomState + e.CustomAction + e.CustomOption?.Result + e.CustomReasoning + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id) + CareerMoney.Balance(d) + _eventView.CustomInputText;
         if (_eventSignature == signature) return; _eventSignature = signature;
         _eventView.Display(d, e, live, AiService.EventBusy(d, e.Id) || live != null);
     }
@@ -130,6 +133,7 @@ public partial class EventStoryView : Control
         _story = Rich(20); _story.Name = "EventStory"; _reading.AddChild(_story);
         _start = new EventStoryButton { Caption = "展开这段故事", Detail = "人物、赛程与此刻的生活，在这里相遇", Mark = "?", CustomMinimumSize = new(0, 100) }; _start.Pressed += () => Start?.Invoke(); _reading.AddChild(_start);
         _options = new VBoxContainer(); _options.AddThemeConstantOverride("separation", 12); _reading.AddChild(_options);
+        BuildCustomAction(_reading);
         _resultBox = new VBoxContainer(); _resultBox.AddThemeConstantOverride("separation", 16); _reading.AddChild(_resultBox);
         _resultBox.AddChild(Words("你的选择", 14, Muted));
         var decisionPanel = new PanelContainer(); decisionPanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("203a46", "748577", 8, 18)); _resultBox.AddChild(decisionPanel);
@@ -174,7 +178,7 @@ public partial class EventStoryView : Control
     private void SetText(RichTextLabel label, string text) { if (Paint != null) Paint(label, text); else label.Text = text; }
     public void Display(CareerData d, RandomEventRecord e, EventLive? live, bool busy)
     {
-        bool complete = e.State == "complete", generating = e.State == "generating", skipped = e.State == "skipped";
+        bool complete = e.State == "complete", generating = e.State == "generating", customBusy = e.CustomState == "generating", skipped = e.State == "skipped";
         if (_lastState != e.State) { if (complete) { _scroll.ScrollVertical = 0; _showHistory = false; } _lastState = e.State; }
         string art = RandomEventArt.Select(e);
         if (_artId != art)
@@ -188,22 +192,22 @@ public partial class EventStoryView : Control
         SetText(_people, string.Join("\n", e.People.Select(id => GroupChats.Name(d, id))));
         _date.Text = "际遇  /  " + GameCalendar.Text(d, e.Day);
         _title.Text = live?.Title is { Length: > 0 } title && title != "未知的际遇" ? title : e.Title;
-        string story = live?.Story ?? e.Story;
+        string story = customBusy ? e.Story : live?.Story ?? e.Story;
         if (e.State == "waiting") story = "赛程之外，也有值得停留的片刻。\n\n从这里展开一段故事，或把今天留给其他安排。";
         if (skipped) story = "你把这段时间留给了其他安排。";
         if (generating && story.Length == 0) story = "故事正在酝酿，人物与此刻的经历将在这里相遇。";
         if (_storyText != story) { _storyText = story; SetText(_story, story); }
         _story.Visible = !complete || _showHistory; _history.Visible = complete;
         _start.Visible = e.State == "waiting";
-        _stop.Visible = generating && busy;
+        _stop.Visible = (generating || customBusy) && busy;
         _retry.Visible = !complete && !skipped && e.State != "waiting" && (!generating || !busy);
-        _retry.Disabled = busy; _retry.Text = e.State == "failed" || generating ? "重试生成" : "重新生成";
+        _retry.Visible &= !customBusy; _retry.Disabled = busy; _retry.Text = e.State == "failed" || generating ? "重试生成" : "重新生成";
         _skip.Visible = !complete && !skipped;
         Public.Visible = !complete && !skipped;
         Status.Text = e.Error; Status.Visible = e.Error.Length > 0;
         _phase.Text = complete ? (e.Public ? "已完成 · 公开经历" : "已完成 · 私密经历") : skipped ? "已跳过" : generating ? (live?.Phase ?? "正在恢复请求") + (live?.Options > 0 ? " · 已收到" + live.Options + "个选项" : "") : e.State == "ready" ? "选择一个行动，让这段故事落下句点" : "";
         _phase.Visible = _phase.Text.Length > 0;
-        string thought = live?.Reasoning ?? e.Reasoning; _thinking.Visible = thought.Length > 0;
+        string thought = customBusy ? live?.Reasoning ?? e.CustomReasoning : _customExpanded ? e.CustomReasoning : e.Reasoning; _thinking.Visible = thought.Length > 0;
         if (_thought.Text != thought) _thought.Text = thought;
         if (!_thinking.Visible) _thinkingScroll.Visible = false;
         _resultBox.Visible = complete;
@@ -219,21 +223,23 @@ public partial class EventStoryView : Control
                 ShowResultEffects(d, chosen);
             }
         }
+        DisplayCustom(d, e, customBusy ? live : null, busy);
         var choices = e.State == "ready" ? e.Options : live?.Choices ?? [];
         var errors = choices.Select(o => RandomEventEffects.Check(d, e, o)).ToArray();
-        string signature = e.State + ":" + choices.Count + ":" + string.Join("|", errors);
+        string signature = e.State + ":" + busy + ":" + choices.Count + ":" + string.Join("|", errors);
         if (_choiceSignature == signature) return; _choiceSignature = signature;
         CareerVisuals.ClearContent(_options);
         if (e.State is "ready" or "generating")
             for (int i = 0; i < choices.Count; i++)
             {
                 int index = i; var option = choices[i]; string? error = errors[i];
-                var button = new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || error != null, TooltipText = error ?? "", Paint = Paint };
+                var button = new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || busy || customBusy || error != null, TooltipText = error ?? "", Paint = Paint };
                 button.Pressed += () => Choose?.Invoke(index); _options.AddChild(button);
                 if (error != null) _options.AddChild(Words(error, 14, new("d0aaa0")));
             }
     }
-    private void ShowResultEffects(CareerData data, RandomEventOption option)
+    private void ShowResultEffects(CareerData data, RandomEventOption option) => ShowResultEffects(data, option, _effects);
+    private void ShowResultEffects(CareerData data, RandomEventOption option, VBoxContainer _effects)
     {
         CareerVisuals.ClearContent(_effects); _effects.Visible = option.Effects.Count > 0;
         if (!_effects.Visible) return;

@@ -14,11 +14,11 @@ EventPoolChecks 33项覆盖默认顺序、空分类、原本无素材分类新�
 
 群聊管理窗口顶部提供当前名称输入框及等高的保存名称按钮，输入有效名称后通过原 GroupCommand 发送 group-rename。空白名称在当前窗口提示填写，编辑时清除提示；保存成功关闭窗口并沿原签名刷新列表与标题。GroupChats.Command 去除首尾空格、比较当前名称，发生变化时修改 GroupChat.Name、追加带日期/操作者/原名称/新名称的 GroupEntry 通知并增加 Revision。当前可见群聊的真人成员可操作，queued/sending 期间同样可改名；相同名称保持现有名称和通知。聊天编号、轮次及附件关联继续使用原 Id。通知通过现有 GroupChatScreen 的 Entries 路径显示，沿原聊天时间线和总结窗口供后续请求读取。
 
-ConsumerScreen 的数量输入经 ConsumerOrder.Quantity 进入 ConsumerEngine.Buy；消费资格统一由 BuyError 检查数量、运营剩余次数和钱包金额。买热搜、粉丝团运营、推广投放、专访投放各自每赛季限3次，批量购买按数量计次。RemainingPurchases 读取当前赛季 PromoUsed 对应商品，返回剩余次数，普通商品返回 int.MaxValue；界面数量上限与提交校验共用此入口。剩余为0时数量控件保留1，购买按钮显示限次说明并禁用。商品卡显示本季已用/3次，详情显示每季上限和剩余次数。旧档超过3次保留原次数、资金和收益，本季停止购买；Uses 在赛季变化时返回0，首次购买沿原 Season 清空上季计数。实物收藏显示累计数量，即时消费品以一次性消费标记区分。普通商品继续允许重复购买；耐用品活动仍使用已有费用、参与者和使用次数规则。luxtravel 目录名称为奢侈单人旅游，价格30万美元，既有账目、帖子和已保存文字继续保持原样。活动从通讯加号菜单进入 PrivateActivityPicker，指定物品时同时记录 GoodId/GoodVerb，接受后交给统一日程；赴约按钮选择私密或公开，公开赴约由 CareerLife.AddEvent 记录事实。
+ConsumerScreen 的数量输入经 ConsumerOrder.Quantity 进入 ConsumerEngine.Buy；消费资格统一由 BuyError 检查数量、运营剩余次数和钱包金额。买热搜、粉丝团运营、推广投放、专访投放各自每赛季限3次，批量购买按数量计次。RemainingPurchases 读取当前赛季 PromoUsed 对应商品，返回剩余次数，普通商品返回 int.MaxValue；界面数量上限与提交校验共用此入口。剩余为0时数量控件保留1，购买按钮显示限次说明并禁用。商品卡显示本季已用/3次，详情显示每季上限和剩余次数。旧档超过3次保留原次数、资金和收益，本季停止购买；Uses 在赛季变化时返回0，首次购买沿原 Season 清空上季计数。实物收藏显示累计数量，即时消费品以一次性消费标记区分。普通商品继续允许重复购买；耐用品活动仍使用已有费用、参与者和使用次数规则。luxtravel 目录名称为超级奢侈旅游，价格30万美元，既有账目、帖子和已保存文字继续保持原样。活动从通讯加号菜单进入 PrivateActivityPicker，指定物品时同时记录 GoodId/GoodVerb，接受后交给统一日程；赴约按钮选择私密或公开，公开赴约由 CareerLife.AddEvent 记录事实。
 
 运营限制读取一次商品次数，查询量与购买记录总数无关；打开详情读取剩余次数用于说明及数量控件，点击提交继续经过 BuyError。新增读取不复制数据、不保存、不广播，也不增加缓存；购买成功沿原单次消费事务保存，多人由原成员视图提交。关闭页面或切换生涯时读取对应玩家已保存记录。PromotionLimitChecks 53项通过，覆盖四项独立计数、批量额度、超额整单保持原数据、旧档6次及序列化读回、换季、普通商品重复购买、旅游名称，以及2人/4人各成员真实 CoopRules.Apply 的购买与超额结果。Release编译通过；本次未执行真实游戏界面或Steam跨机验证。逐次耗时、分配量及测量范围见本地 PERFORMANCE 的运营商品限次章节。
 
-ChatAttachmentScreen 的礼物选择器显示实际库存，群聊先选择接收者，再填写物品与数量。ChatManagementScreen 提供当前会话主动联系设置、隐藏/清除私聊、解散/清除群聊以及两类移出成员操作；隐藏私聊与解散群聊通过恢复列表进入。管理操作经原 PrivateCommand/GroupCommand 提交并刷新当前页面。正在生成时沿现有会话管理检查等待生成结束。
+ChatAttachmentScreen 的礼物及活动选择器调用 ConsumerEditor，使用10张图标卡片、名称搜索、常驻分类标签与翻页。自行约定活动是独立卡片；活动固定数量1，礼物提供 ConsumerQuantity。群聊原附件入口先选成员，商城入口在同一个编辑窗口选择私聊或群聊、成员、数量或日期。ChatManagementScreen 提供当前会话主动联系设置、隐藏/清除私聊、解散/清除群聊以及两类移出成员操作；隐藏私聊与解散群聊通过恢复列表进入。管理操作经原 PrivateCommand/GroupCommand 提交并刷新当前页面。正在生成时沿现有会话管理检查等待生成结束。
 
 WorldEvents.Advance 沿用原3至6天日常抽取日期；抽中当天有玩家待赛时保存 ReservedDailyDay。正式赛后 AfterMatch 先调用 CareerLife.PublishPending(includeToday:true)，将已完成公开活动纳入原事件汇总。事件的 PostId 负责已发布识别，批次键由日期及事件编号集合生成。当天尚有比赛时按0.35/(1+当天额外日常篇数)^2抽取额外日常；最后一场结束释放 ReservedDailyDay 对应的日常。PublishDaily 共用普通生活、48条赛后素材、国运和市场候选；赛后素材人物必须具有近7天已完成比赛，附带 FixtureFacts 生成的真实成绩。正文生成继续使用原人物日常提示词。
 
@@ -117,7 +117,7 @@ SponsorIncome 统一基础金额迁移及个人/普通俱乐部金额计算。�
 
 个人首次签约支付本季款；后续赛季通过原 SeasonStart 付款，胜场通过 PlayerMatch 付款。已付赛季不补差额，重复赛果不重复付款。个人两季合同在 RefreshOffers 到期时自动延长两季；已结束历史合同不恢复。当前合同也提供三种下期报价，原28天邀请有效期继续适用；选择只保存 NextOffer、不扣款或提前付款，可在生效前重新选择。到期将旧合同结束、所选合同生效，再由原 PaidSeason 处理当季款；没有选择则延续原品牌及基础金额。自建俱乐部沿用原56天自动续约，周结与胜场按当时关注乘已存基数。赞助页面显示当前预计金额、自动续约说明和已选下期方案。旧工资、签字费、比赛奖金、已发放资金不受此迁移影响。
 
-商品、耐用品活动、宣发共用 ConsumerEngine。受邀 NPC 必须可联系且好感至少5，人数由商品规定；同一 NPC 每季首次受邀增加规定好感，后续加1。宣发按购买数量逐次计算显示美元价格/(本季已购次数+2)，每次采用原四舍五入；PromotionGain 合并相同收益的连续次数，大批量购买沿用逐次结果。普通消费继续生成消费事实，个人内容和社区活动基础关注乘20。
+商品、耐用品活动、宣发共用 ConsumerEngine。CanInvite 只检查人物可联系，人数由商品规定；商品活动沿同一规则，允许任意好感的可联系人选。同一 NPC 每季首次受邀增加规定好感，后续加1。宣发按购买数量逐次计算显示美元价格/(本季已购次数+2)，每次采用原四舍五入；PromotionGain 合并相同收益的连续次数，大批量购买沿用逐次结果。普通消费继续生成消费事实，个人内容和社区活动基础关注乘20。
 
 ### 品牌赛事影响与新闻素材
 
@@ -139,7 +139,7 @@ v0.26.19专项MarketExperienceChecks通过90项，包含同季完整职业联赛
 
 Life → ConsumerShop 每次刷新创建一次 ConsumerPurchases，只读取当前 ViewData.Life.Consumer。构造函数复制 BoughtDay 与本季 PromoUsed，再遍历 Goods 一次：同款保留较晚购买日期，本季记录写入临时集合；没有跨页面或跨玩家的数据缓存。Collection 遍历商品目录并按 Good.Collectible 与是否存在购买日期选择，每款一张卡片。Good.Collectible 包含原有可举办活动商品，以及收藏、数码、穿戴、家居、出行、居住分类；它只控制展示，不参与 BuyError、Buy、Use 的资格判断。类别按当前展示集合生成，先选择类别，再分页，每页六件。切入“我的收藏”清空原类别选择。
 
-ConsumerPurchases.Label 给出本季已购、本季已体验、往季已收藏或宣发次数；ConsumerShop 使用 ConsumerVisuals 的独立缓存样式和 ConsumerSeal 的单控件绘制：青色勾选、金色菱形收藏徽章、体验票根或三格宣发进度。四种样式只含颜色及尺寸，不持有生涯资料；绘制无逐帧处理，不修改共享主题或字体。商品图与购买价格仍可见，商品详情继续调用 ConsumerEngine.BuyError 决定按钮状态。收藏详情通过 PrivateAppointments.DateText 显示最近购买日期；只有目录内原有 Verbs 生成活动按钮，实际活动仍由 ConsumerSubmit → ConsumerEngine.Use 处理。
+ConsumerPurchases.Label 给出本季已购、本季已体验、往季已收藏或宣发次数；ConsumerShop 使用 ConsumerVisuals 的独立缓存样式和 ConsumerSeal 的单控件绘制：青色勾选、金色菱形收藏徽章、体验票根或三格宣发进度。四种样式只含颜色及尺寸，不持有生涯资料；绘制无逐帧处理，不修改共享主题或字体。商品图与购买价格仍可见，商品详情继续调用 ConsumerEngine.BuyError 决定按钮状态。收藏详情通过 PrivateAppointments.DateText 显示最近购买日期；Good.Activities 统一提供耐用品原 Verbs 与即时体验活动。活动编辑复用 PrivateActivityPicker 与 AppointmentCalendar，接受后沿 SocialAppointments 保存日程；耐用品赴约调用 ConsumerEngine.Use，即时已付款活动调用 ConsumerAttachments.Attend。
 
 商品卡本体为Button，装饰子控件忽略鼠标，由整卡接收点击；ProductStyle缓存选中和悬停样式。Select只更新当前六张卡片样式并重建右侧ConsumerDetail，不重建页面、不自动购买、不随悬停切换。
 
@@ -591,6 +591,8 @@ Render → ShowJourneyEncounter 每次本机遇到同一事件只显示一次途
 
 OpenRandomEvent 创建 EventStoryView，左侧显示背景与人物，右侧为独立滚动阅读区。开始前、生成中和选项生成后均可跳过；生成时可停止，ready/failed 状态可重新生成。进度显示排队、等待响应、思考与书写，思维文字可展开。选项使用 EventStoryButton 的编号圆章、边线和多行文字，效果由 RandomEventEffects.Preview 提供；完成后思考与故事折叠入口排列在同一行，随后显示所选行动、结局和效果。数值效果使用自动换行的独立卡片，人物印象、临时状态和约战各占一行，文字共用 Preview。Rich 工厂使用空 focus 样式，保留文字选择和人物链接。公开开关沿 ChatPreferences 的生涯键保存 event-public，缺省 false；已完成记录显示其实际 Public 值。
 
+ready 状态在原选项之后显示写下你的行动卡片。展开后同一阅读区显示 TextEdit、流式结局、效果卡片和返回/生成/确认按钮，原选项暂时收起。DisplayCustom 分别比较正文文字和已解析的 CustomOption 引用；完整正文先于效果到达时，ready 状态仍刷新效果。_customEffectsOption 仅属于当前 EventStoryView，新结果替换、输入变更或重新生成时更新或清除预览；重复显示同一选项复用效果控件。ShowResultEffects 与事件结果页面共用，资金和好感等使用紧凑卡片，印象、状态和约战使用宽卡片。返回原选项保留当前输入；编辑已生成的行动会隐藏旧确认按钮，重新提交后绑定新文字。停止和失败保留原故事与选项，错误沿页面 Status 显示。确认按钮先用原 RandomEventEffects.Check 检查整个结局，点击时再走同一业务校验和结算。关闭页面后已提交请求继续，重进恢复已保存行动及预览；未提交输入归当前 EventStoryView，关闭时释放。普通/小窗口均通过同一 ScrollContainer 阅读。
+
 PaintMentionText 是普通内容与随机事件共用的人名匹配入口。随机事件传入本次 People 并启用引号染色，原文和保存内容保持原样；选项点击执行整个选项，故事和结局中的姓名链接进入档案。CareerNavigation.Location.Event 记录来源事件，OpenPerson 隐藏事件窗口，Back 显示原窗口并保留阅读位置。返回事件主界面后按 Esc 关闭事件，档案界面的 Esc 沿原导航返回。关闭窗口释放纹理与控件，后台生成继续。
 
 RandomEventArt 将110条素材分为10类，按事件编号和素材稳定选择原版事件图或已有约会背景；首次开始前使用中性背景，重新生成和回看使用同一选择。类别只供本地画面使用。原版图从游戏资源加载；约会背景共用 DateSceneView.CreateBackground。每次背景变化解码一次，流式刷新复用当前纹理；正文按内容变化更新，选项仅在状态、数量或可执行条件变化时重建。人物名称索引沿原页面缓存与姓名变更检查。
@@ -697,7 +699,17 @@ AppearanceLibrary.Import 输入ZIP路径，以整包SHA-256去重；已保存的
 
 Apply 复制包内设计和图片映射，改为当前人物编号，读取并保留当前人物的背景、缩放、播放设置和书签，通过 CharacterDesignPackage.Installation 同时写入人物设计与素材配置。应用不修改CareerData。写入异常时复用Installation恢复原两份文件；共用图片缓存继续留存。关闭窗口、退出进程、切换存档及推进日期后，库文件继续可选；各角色的配置相互独立。形象包属于本机资源，单人、房主、客机使用相同入口，不触发生涯保存、模型请求或网络广播。
 
-ConsumerDetail 已移除商城购买处及收藏处的直接邀约按钮，收藏页显示从聊天＋附件约定活动的说明。购买仍走ConsumerSubmit，聊天活动继续走PrivateActivityPicker、SocialAppointments与ConsumerEngine.Use。既有商品价格、库存和活动费用规则沿用原实现。
+ConsumerDetail 的购买先显示商品、数量、总额及即时单人使用或加入库存的确认。商城赠礼/活动按钮直接打开一次 ConsumerEditor，在同一窗口填写数量或日历、选择一个私聊或一个群聊及成员；活动数量固定1，赠礼单选一人，群聊活动在所选群内选择参与者。PeoplePicker 与原 GroupMemberPicker 共用头像、名称搜索、熟悉的人/同俱乐部/近期对手/近期发帖回帖者筛选及可见行复用。每次打开建立候选索引，筛选扫描候选；熟悉的人按 PrivateMessages.Favour 降序，同值保留候选顺序，勾选保持当前排序。近期对手和近期作者继续按其索引顺序，其余筛选保留原选中优先规则；滚动只更新可见行。
+
+聊天礼物/活动调用同一编辑器。ConsumerProducts 打开时按 ConsumerEngine.Price 降序排序一次并保存当前弹窗的选项引用数组，同价保留目录顺序。自行约定活动位于全部等级的第一张卡片，图标复用 LifestyleArt.Icon 的活动与计划日历纹理，绘制范围限于卡片内的61像素图标区。分类和奢侈等级分别使用常驻标签，等级名称及次序取自 ConsumerCatalog.TierOrder，只列当前可用商品涉及的等级；具体等级仅包含对应商品。名称搜索、分类、等级共同筛选，每次扫描选项并重建至多10张卡片。修改筛选或搜索后返回第一页，翻页和筛选保留当前选中商品。关闭或重开弹窗后重建上述数组与筛选；这些界面操作的生涯保存和网络广播均为0。商品图标复用 LifestyleArt/ConsumerProductArt，数量复用 ConsumerQuantity，活动日期复用 AppointmentCalendar。
+
+编辑完成后直接显示 ConsumerAttachmentConfirmation：商品图标、接收者或同行者、日期、使用现有数量、补购数量和本次付款。取消通过同一 ConsumerEdit 返回原对象、数量、日期及填写文字；草稿只在弹窗中保存，关闭全部窗口或进程后释放。资格和费用错误留在当前窗口显示。确认成功关闭弹窗后延迟打开相应聊天并恢复附件，单人沿 EconomicActions.Save，联机等 consumer-attach 成功回执。即时商品显示当天返还及次日清理说明；耐用品赠礼显示接受才扣库存，耐用品活动显示物品保留与原招待费。礼物、活动、合同分别使用对应卡片标题。
+
+CommerceRevisionUiChecks 在1646人物的诊断存档副本上，以真实Godot控件和鼠标操作通过34项及20张截图，覆盖1600×1000、1280×720、选人和数量共用编辑器、取消保留、连续两次确认添加、低好感活动、群聊选人、熟悉的人好感排序/同值顺序/实际勾选、新建群聊与邀请成员、10卡翻页/搜索/分类与等级组合、保留已选商品、日历图标、聊天实际添加、自由行动流式/预览/返回/确认。专项覆盖完整结局先到效果后到、相同结局重新生成不同效果、生成中清理旧效果及重复刷新复用控件。模型和保存回调采用测试替身；当前提示词的真实模型另行通过45项检查。生产游戏及Steam双机界面未实测，原始证据在维护者本地 .artifacts/commerce-polish-20261021。
+
+商品用途由 Good.Giftable / InstantActivity / Activities 共用：冰淇淋、饮品、零食、花束及巧克力使用赠礼；火锅、电影、游戏厅、KTV、剧场、演唱会、SPA、美食游、海滩及超级奢侈旅游使用活动；耐用品保留原活动。16件 PR 商品沿作者价格增加花束、巧克力、野餐、星空馆、香水、披肩、陶艺、观星小住、八音盒、吊坠、热气球、木屋周末、珠宝、钢琴、极光假期及海岛晚宴。原宣传商品仍走每季3次规则。婚礼和关系礼物继续原附件要求。
+
+约会结束后在普通私聊显示一次自然感想；已完成约会卡片与人物资料可打开 DateDiaryDialog。日记列表和卡片沿用 PR 作者界面代码，日期改用 GameCalendar，正文只读。1600×1000与1280×720独立Godot界面验证购买取消、付款前返回、移除返还、私聊拒绝、群聊选人及数量、活动日历、场景赴约/结束、感想及日记查看，共13项检查与截图通过。该测试使用真实生产控件和鼠标输入，模型与存储采用替身；真实模型语义和磁盘协调器分别验证，Steam双机仍待实测。
 
 验证：实际三个内置ZIP共30张立绘通过解析、跨人物及跨生涯应用、原ZIP移除后复用、重复导入去重、人物资料保留与显示设置保留检查；23项断言和真实Godot页面布局检查通过。Release构建通过，NuGet漏洞数据因网络不可用未取得。逐次耗时、分配量与页面截图见维护者本地 `.artifacts/appearance-library/`；此功能没有实际多人网络发送步骤。
 

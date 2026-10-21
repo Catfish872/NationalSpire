@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -168,7 +168,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (pending != null)
         {
             Add("user", ordered.Current);
-            if (pending.Scene != null) Add("system", DateScenes.Guidance(pending.Scene));
+            if (pending.Scene != null) Add("system", pending.Scene.Ending ? DateDiaries.Guidance(c, pending.Scene) : DateScenes.Guidance(pending.Scene));
             if (pending.ProactiveReason.Length > 0) Add("user", ProactiveChats.Prompt(pending.ProactiveReason, pending.ProactiveLast));
             else if (!pending.UserDeleted) Add("user", $"{GameCalendar.Text(data, pending.Day)}，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(data, pending, c));
             if (!pending.UserDeleted && CardKnowledge.Find(pending.User) is { Length: > 0 } cards) Add("user", cards);

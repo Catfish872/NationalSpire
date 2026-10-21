@@ -241,73 +241,14 @@ public partial class CareerScreen
     }
     private void GroupMemberPicker(GroupChat? group, Action<List<string>> accept, bool existing = false, string title = "", bool single = false)
     {
-        var selected = new HashSet<string>(); string search = "", filter = "全部"; Label? count = null;
-        var d = ViewData;
-        var opponents = d.Results.AsEnumerable().Reverse().SelectMany(r => r.OpponentParticipants.Append(r.OpponentId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
-        var authors = CommunityThreads.All(d).OrderByDescending(p => p.Day).SelectMany(p => p.Replies.AsEnumerable().Reverse().Select(r => r.AuthorId).Prepend(p.AuthorId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
-        var familiar = d.Life.Mailbox.Conversations.Where(c => c.Value.Turns.Any(t => t.Status == "complete")).Select(c => c.Key)
-            .Concat(d.Life.Mailbox.Relations.Keys).Concat(GroupChats.Visible(d).SelectMany(g => g.Turns).SelectMany(t => t.Replies).Select(r => r.Author)).ToHashSet();
+        var selected = new HashSet<string>(); var d = ViewData;
         var candidates = d.People.Where(p => p.Id != GroupChats.Human(d) && (group == null || existing == group.Members.Contains(p.Id))).ToArray();
-        CareerPerson[] people = []; ScrollContainer? scroll = null; Control? list = null;
-        var rows = new List<(HBoxContainer Row, CheckBox Check)>();
-        const int rowHeight = 64;
-        void ShowRows()
-        {
-            using var timing = UiPerformance.Measure(UiPerformance.Work.MemberRows);
-            if (scroll == null || list == null) return;
-            int first = Math.Clamp(scroll.ScrollVertical / rowHeight, 0, Math.Max(0, people.Length - 1));
-            int visible = Math.Min(people.Length - first, (int)Math.Ceiling(Math.Max(330, scroll.Size.Y) / rowHeight) + 1);
-            while (rows.Count < visible)
-            {
-                var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); list.AddChild(row);
-                var check = new CheckBox { SizeFlagsHorizontal = SizeFlags.ExpandFill, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis };
-                row.AddChild(check); rows.Add((row, check));
-                check.Toggled += value =>
-                {
-                    string id = check.GetMeta("person").AsString();
-                    if (value) { if (single) selected.Clear(); selected.Add(id); } else selected.Remove(id);
-                    count!.Text = "已选择 " + selected.Count + " 人";
-                    if (single) foreach (var other in rows) other.Check.SetPressedNoSignal(selected.Contains(other.Check.GetMeta("person", "").AsString()));
-                };
-            }
-            for (int i = 0; i < rows.Count; i++)
-            {
-                var (row, check) = rows[i]; row.Visible = i < visible; if (i >= visible) continue;
-                var person = people[first + i];
-                if (check.GetMeta("person", "").AsString() != person.Id)
-                {
-                    foreach (var old in row.GetChildren().OfType<CareerAvatar>()) { old.Hide(); old.QueueFree(); }
-                    var avatar = Avatar(d, person.Id, 36, false); row.AddChild(avatar); row.MoveChild(avatar, 0);
-                    check.SetMeta("person", person.Id); check.Text = person.PublicName + " · " + person.Role;
-                    PickerRing(row, d, person.Id);
-                    check.TooltipText = check.Text;
-                }
-                check.SetPressedNoSignal(selected.Contains(person.Id));
-                row.Position = new(0, (first + i) * rowHeight); row.Size = new(list.Size.X, rowHeight - 8);
-            }
-        }
-        void Refresh()
-        {
-            using var timing = UiPerformance.Measure(UiPerformance.Work.MemberFilter);
-            people = candidates.Where(p => p.PublicName.Contains(search, StringComparison.OrdinalIgnoreCase) || p.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
-                .Where(p => filter switch
-                {
-                    "熟悉的人" => familiar.Contains(p.Id),
-                    "同俱乐部" => d.Esports.ClubId.Length > 0 && p.ClubId == d.Esports.ClubId,
-                    "近期对手" => opponents.ContainsKey(p.Id), "近期发帖回帖者" => authors.ContainsKey(p.Id), _ => true
-                }).OrderBy(p => filter == "近期对手" ? opponents[p.Id] : filter == "近期发帖回帖者" ? authors[p.Id] : selected.Contains(p.Id) ? -1 : 0).ToArray();
-            list!.CustomMinimumSize = new(0, people.Length * rowHeight); scroll!.ScrollVertical = 0; ShowRows();
-        }
-        ShowCareerDialog(title.Length > 0 ? title : group == null ? "新建群聊" : "添加群成员", "", () => { var chosen = selected.ToList(); Callable.From(() => accept(chosen)).CallDeferred(); return true; }, group == null ? "创建" : "确定", box =>
+        ShowCareerDialog(title.Length > 0 ? title : group == null ? "新建群聊" : "添加群成员", "", () =>
+        { var chosen = selected.ToList(); Callable.From(() => accept(chosen)).CallDeferred(); return true; }, group == null ? "创建" : "确定", box =>
         {
             if (group == null) { var name = new LineEdit { Text = _groupCreateName, PlaceholderText = "群聊名称" }; name.TextChanged += value => _groupCreateName = value; box.AddChild(name); }
-            var searchBox = new LineEdit { PlaceholderText = "搜索名称", CustomMinimumSize = new(600, 44) }; searchBox.TextChanged += value => { search = value; Refresh(); }; box.AddChild(searchBox);
-            var picker = new OptionButton { CustomMinimumSize = new(0, 42) }; foreach (string f in new[] { "全部", "熟悉的人", "同俱乐部", "近期对手", "近期发帖回帖者" }) picker.AddItem(f); picker.ItemSelected += index => { filter = picker.GetItemText((int)index); Refresh(); }; box.AddChild(picker);
             if (group != null && !existing) box.AddChild(PrivateText("当前成员：" + string.Join("、", group.Members.Select(id => GroupChats.Name(d, id))), 15, _muted));
-            scroll = new ScrollContainer { CustomMinimumSize = new(600, 330), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
-            list = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }; scroll.AddChild(list);
-            scroll.GetVScrollBar().ValueChanged += _ => ShowRows(); list.Resized += ShowRows; scroll.Resized += ShowRows;
-            count = PrivateLine("已选择 0 人", 15, CareerVisuals.Teal); box.AddChild(count); Refresh();
+            PeoplePicker(box, candidates, selected, single, () => { }, 300);
         });
     }
 }

@@ -51,6 +51,8 @@ public static class PrivateInteractionHistory
         };
         if (gifts)
         {
+            snapshot["consumerAttachments"] = Node(d.Life.Consumer.Attachments);
+            snapshot["temporaryGoods"] = Node(d.Life.Consumer.TemporaryGoods);
             snapshot["giftReceipts"] = Node(d.Life.Consumer.GiftReceipts);
             snapshot["goodQuantities"] = Node(d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id).ToDictionary(g => g.Key, g => g.Sum(x => x.Quantity)));
         }
@@ -177,6 +179,8 @@ public static class PrivateInteractionHistory
         if (GroupChats.IsHuman(d, id))
         { PrivateMessages.Mailbox(d).Conversations[id].Offers = state["offers"]!.Deserialize<List<PrivateOffer>>()!; return; }
         var p = CareerEngine.Person(d, id)!;
+        if (state["consumerAttachments"] != null) d.Life.Consumer.Attachments = state["consumerAttachments"]!.Deserialize<List<ConsumerAttachment>>()!;
+        if (state["temporaryGoods"] != null) d.Life.Consumer.TemporaryGoods = state["temporaryGoods"]!.Deserialize<List<ConsumerTemporaryGood>>()!.Where(x => x.Day == d.Day).ToList();
         if (state["giftReceipts"] != null) d.Life.Consumer.GiftReceipts = state["giftReceipts"]!.Deserialize<HashSet<string>>()!;
         if (state["goodQuantities"] is JsonObject quantities)
             foreach (var pair in quantities)
@@ -266,7 +270,7 @@ public static class PrivateInteractionHistory
             return "这条旧回复未保存水平或状态变化前的数据，无法完整回退。新回复会保存回退记录。";
         foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())
         {
-            var state = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities")), undo.Before, undo.After);
+            var state = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After);
             Restore(d, c.PersonId, (JsonObject)state!, undo.Contract);
         }
         if (turn.InteractionUndo.Count == 0)

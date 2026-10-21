@@ -7,6 +7,8 @@ public static partial class CoopRules
         var d = View(w, member); d.Ai = AiSettingsStore.Load(new());
         string? error = command.Kind switch
         {
+            "event-custom" => RandomEvents.Custom(d, command.Target, command.Text),
+            "event-custom-choose" => RandomEvents.ChooseCustom(d, command.Target, command.Text == "public"),
             "event-start" => RandomEvents.Start(d, command.Target),
             "event-skip" => RandomEvents.Skip(d, command.Target),
             "event-stop" => RandomEvents.Stop(d, command.Target),
@@ -15,7 +17,7 @@ public static partial class CoopRules
         };
         if (error != null) return error;
         Capture(w, member, d);
-        if (command.Kind == "event-choose")
+        if (command.Kind is "event-choose" or "event-custom-choose")
         {
             w.World.Matches = d.Matches; w.World.Market = d.Market; w.World.Esports.Nations = d.Esports.Nations;
             foreach (var match in d.Matches.Where(m => RandomEvents.Find(d, command.Target)?.MatchIds.Contains(m.Id) == true)) match.Registered = true;
@@ -27,7 +29,7 @@ public sealed partial class CoopCoordinator
 {
     private void StartEvent(ulong sender, CoopCommand command)
     {
-        if (!Host || World == null || command.Kind != "event-start") return;
+        if (!Host || World == null || command.Kind is not ("event-start" or "event-custom")) return;
         string worldId = World.Id, epoch = World.Epoch;
         CareerData? Current()
         {
@@ -41,7 +43,7 @@ public sealed partial class CoopCoordinator
             var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
             var member = copy.Members.Single(m => m.SteamId == sender);
             int index = member.Life.RandomEvents.FindIndex(e => e.Id == command.Target);
-            if (index < 0 || member.Life.RandomEvents[index].State != "generating") return;
+            if (index < 0 || member.Life.RandomEvents[index].State != "generating" && member.Life.RandomEvents[index].CustomState != "generating") return;
             member.Life.RandomEvents[index] = RandomEvents.Find(data, command.Target)!;
             copy.Revision++; Commit(copy, NativeSave);
         }

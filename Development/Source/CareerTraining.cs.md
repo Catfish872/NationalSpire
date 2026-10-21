@@ -445,7 +445,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-b7a78f32bf15)
+**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-08dfeba4e37a)
 
 **调用：** [`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`](CareerTraining.cs.md#symbol-20ac1d8e57c7)；[`NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`](CareerTraining.cs.md#symbol-ef124ea1d16b)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 

@@ -124,11 +124,11 @@ public static class PrivateMessages
         if (!box.Conversations.TryGetValue(id, out var c)) box.Conversations[id] = c = new() { PersonId = id };
         return c;
     }
-    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null, string proactiveReason = "")
+    public static PrivateTurn Enqueue(CareerData data, string id, string text, PrivateOffer? request = null, List<PrivateOffer>? attachments = null, string proactiveReason = "", bool queueAfterCurrent = false)
     {
         if ((string.IsNullOrWhiteSpace(text) && attachments?.Count is not > 0 && request == null && proactiveReason.Length == 0) || text.Length > 8000) throw new ArgumentException("请填写消息或添加附件，正文最多 8000 字。");
         var c = Conversation(data, id);
-        if (c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
+        if (!queueAfterCurrent && c.Turns.Any(t => t.Status is "queued" or "sending")) throw new InvalidOperationException("请等待当前回复，或先停止生成。");
         if (proactiveReason.Length == 0) { c.Proactive.Unanswered = 0; c.Hidden = false; c.Forgotten = false; }
         var turn = new PrivateTurn { ProactiveReason = proactiveReason, UserOrder = GroupChats.NextOrder(data), User = text.Trim(), Day = data.Day, Season = data.Season, Request = request, RequestKind = request?.Kind ?? "", Attachments = attachments ?? [] };
         c.Turns.Add(turn); PrivateInteractionIds.Ensure(c); return turn;
@@ -247,7 +247,7 @@ public static class PrivateMessages
     {
         if (turn.Applied) return;
         PrivateInteractionIds.Ensure(c);
-        var before = PrivateInteractionHistory.Capture(data, c.PersonId, gifts: directives.Any(f => f.ContainsKey("Gift")));
+        var before = PrivateInteractionHistory.Capture(data, c.PersonId, gifts: directives.Any(f => f.ContainsKey("Gift") || f.ContainsKey("Activity")));
         int favourBefore = Favour(data, c.PersonId), preceding = favourBefore;
         var favourTargets = directives.Select(FavourTarget).OfType<int>().ToList();
         bool confirmFavour = false;
@@ -358,7 +358,7 @@ public sealed class PrivateStreamParser
     public List<Dictionary<string, string>> Directives { get; } = [];
     public List<(int Offset, Dictionary<string, string> Fields)> SceneCues { get; } = [];
     public string Error { get; private set; } = "";
-    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Scene|Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup)\s*[:：]", RegexOptions.IgnoreCase);
+    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Scene|Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup|DateDiary)\s*[:：]", RegexOptions.IgnoreCase);
     public void Feed(string text)
     {
         foreach (char ch in text)
@@ -376,7 +376,7 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
+            string[] allowed = fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
                 : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]

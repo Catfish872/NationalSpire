@@ -4,19 +4,31 @@
 
 首页或日历的 EventCards → OpenRandomEvent → EventCommand 接收开始、停止、跳过或选择。RandomEvents.Start 在当天首次开始时通过 EventPools.SelectRandom 读取当前模板的有效素材，默认110条，抽取0—3名可交流人物；最近24项素材参与排重，当前池全部用过后从当前池重新抽取。人物、Seed、Category 和 Materials 此时保存，重新生成继续复用。日历问号只表示日期。每次开始保存一次 generating；ProcessEventAsync 使用现有 PrivateForegroundQueue、EnterPrivateQueue 和 RequestPrivateAsync(task:event)，成功或失败再保存一次。进入事件页面与途中弹窗本身不会发起随机事件模型请求；开始生成才调用一次模型。
 
-RandomEventPrompts.Compose 返回 system 与本次 user 两段。system 由 PromptLibrary.Get(options,"event") 与固定 RandomEventPrompts.Format 拼接；四种内置模板的可编辑部分为 Story。正式生成与试写共用 Compose，默认最终请求原文保持一致。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 和旧自建模板缺少 event 时补齐 Story。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。其他自定义文字保持原样，程序始终追加固定协议。Materials 包含玩家身份、人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项交流、CommunityMemorySearch 按整次请求检索的8项社区材料、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。Profiles 使用 includeConversation:false，交流统一由 ChatTimeline 提供。恶意行为可选人物只有好感≤0的本次人物。公开方式由界面选择。
+RandomEventPrompts.Compose 的前两条消息固定为 system:Effects、参与者引导及玩家事实要求 与 user:当前 event 模板、PlayerRecord生成的精简玩家战绩、已保存 Materials。参与者引导说明相关人物是本次参与者，人物效果使用其中的人物编号，相关人物为空时创作玩家独自经历的单人事件。玩家事实要求为：玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。该要求由程序加入首次生成、自由行动续写和试写的系统消息。引导单独拼接，旧 Format 保留原文供旧模板识别；已有 Materials 直接复用。首次生成及试写在末尾追加 user:InitialFormat，要求 title、story 和2—4条 option/result/effects；此请求只说明首次创作任务。四种内置模板的可编辑部分为 Story，格式与效果说明由程序提供。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 和旧自建模板缺少 event 时补齐 Story。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。Format 保留为 InitialFormat 与 Effects 的组合，供旧模板识别。Materials 包含玩家身份、人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项私聊/群聊及共同经历、CommunityMemorySearch 检索的8项社区材料、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。Profiles 使用 includeConversation:false，交流统一由 ChatTimeline 提供。恶意行为可选人物只有好感≤0的本次人物。公开方式归界面。
 
-模型逐行输出 title、story 和含 option/result/effects 的选项。RandomEventParser.Feed 保留跨分片 JSON，LiveStory 还原尚未结束的正文字符串；完整选项进入 Options。ProcessEventAsync 每100毫秒最多更新一次 EventLive，另在入队和获得名额时立即通知。Phase 区分排队、等待响应、思考和书写；Reasoning 复用 RequestPrivateAsync 的专用思维字段与 LeadingReasoningStream 标签解析。RandomEventParser.Validate 共用于正式生成与试写，要求故事及2—4个具有结局的选项。RandomEventEffects.Check 检查后开放点击；生成中的已解析选项提前显示效果。ready/failed 及中断后遗留的 generating 均可重新生成；正在运行时显示停止按钮。
+自由行动沿 EventCommand → RandomEvents.Custom 保存 CustomAction 和 CustomState=generating，随后复用 ProcessEventAsync 的队列、event 连接方案、思维解析和保存回调，额外调用一次模型。Compose(custom:true) 在相同前两条消息之后追加 assistant:原标题与故事的JSON、user:Continuation及玩家行动JSON。Continuation 使用已批准的50—200字结局要求，明确延续上文故事的文风、叙述口吻和人物说话方式，并遵循当前模板的具体文风要求；当前引导采用字段说明，移除了原短篇过程概述示例。模型只输出 result/effects；原选项及其结局、效果不加入续写请求。可编辑模板每次重新读取，人物资料、私聊/群聊、总结和帖子沿用本次保存的 Materials。模板、玩家战绩及 Materials 相同时，前两条消息逐字一致，后端可以复用文本前缀缓存；修改模板后采用修改后的文字。
+
+首次模型逐行输出 title、story 和含 option/result/effects 的选项。RandomEventParser.Feed 保留跨分片 JSON，LiveStory 还原尚未结束的正文字符串；完整选项进入 Options。自定义模式累计单个JSON对象，兼容多行缩进及代码围栏，流式期间提取 result 字符串；Finish 完整解析后将 CustomAction 直接绑定到选项 Text。Validate 在首次模式要求故事及2—4个完整选项，自定义模式要求一个完整结局。ProcessEventAsync 每100毫秒最多更新一次 EventLive，另在入队和获得名额时立即通知。Phase 区分排队、等待响应、思考和书写；Reasoning 复用 RequestPrivateAsync 的专用思维字段与 LeadingReasoningStream 标签解析。自由行动成功只替换 CustomOption/CustomReasoning/CustomState，原故事与选项保留。RandomEventEffects.Check 检查预览和可执行状态；玩家确认时 ChooseCustom 将此选项追加到原列表，再调用原 Choose，沿同一效果、共同经历及公开事实入口结算。
 
 PromptTesting.TestSources(event) 提供本日新事件及已经保存材料的事件。CreateTestSession 复制一次生涯，选择新事件时只在副本中抽取，其他事件直接复用 Materials。试写沿 event 连接和 PrivateForegroundQueue，通过同一 Compose、传输、解析、验证和效果预览入口完成一次请求；结果写入独立 PromptTestSession，保留前后两版，效果执行和正式事件保存次数均为零。连接及生涯检查沿原试写规则。
 
 Choose 先检查整个选项，再应用一次，保存 Selected、Public 和 complete。钱包美元在此除以10一次；库存使用 ConsumerEngine.ChangeInventory；好感使用 PrivateMessages.ChangeFavour；临时百分比进入 NpcLearning.EventStatuses，长期百分比进入 ChanceShift；品牌行情使用 CareerMarket.EventPrice → Price → MarketClearing 原结算入口；建设使用 NationalDevelopment.Contribute；约战复用 PrivateAppointments.Error/CreateMatch，直接进入原日程。库存、钱包、人物编号和约战日期采用原规则，数值建议在材料中提供。
 
+人物效果通过 RandomEventEffects.Person 统一提取 favour/impression/status/learning/challenge 的目标编号，Check 按当前存档中可交流人物检查；名单外的现有NPC同样可以结算。Choose 在 Apply 完成后，将所选效果中的人物编号去重补入 People，再调用 Remember 和公开资料入口。原抽取人物保留，其他未选选项的人物保持原状。预览、普通选项、自由行动及多人命令均使用这一处理。旧 ready 事件进入页面即可重新检查，使用原已生成故事和效果；complete 事件沿原完成凭证返回。Materials 仍保存生成当时的人物与记忆资料，结算增加的 People 用于经历、显示、公开资料及后续约战赛果。
+
 所选故事、行动与结局写成 RequestKind:event 的 PrivateTurn，参与人物各一份，共用 UserOrder，event:事件编号去重。ReplyDeleted=true，User 保存共同经历。ChatTimeline.PrivateHistory 将其标为共同经历；External 按事件轮次编号去重并保留知情人。原自动总结在后续聊天达到既有阈值时整理这些记录。没有会话时建立 EventOnly 会话供上下文读取，出现普通聊天后联系人列表显示。ListedInCommunications 同时供联系人列表和通讯初次打开时的自动选择使用。UnreadInCommunications 在原 SeenCount 之后仅统计可见的非 event 轮次，历史事件记录立即适用；共同经历仍进入上下文和自动总结。原清除私聊记忆入口同时清除事件轮次。约战完成后 RememberMatches 追加真实赛果；待赛、进行中均不写结果。公开选择调用 CareerLife.AddEvent，参与者包含本地玩家编号，沿用原发帖优先级与跳日/赛后时机。
 
 跳过不提交选项效果或人物记录，生成中跳过同时取消请求。Stop 取消请求并将有旧选项的事件恢复为 ready，首次生成则改为 failed；命令保存一次，取消后的后台任务只清理队列和流式字典。重新生成期间保存原故事、选项和思维记录，成功才整体替换，失败继续使用上一版。关闭界面允许后台继续；切换生涯或事件状态改变后旧结果不提交。进程中断保留 generating 与材料，重新进入可重试；重试使用当前 event 方案及模板。Selected/complete 随生涯保存，用于重复点击与重载去重。旧存档缺省空 RandomEvents 和 Reasoning，首次 CareerLife.Ensure 添加未来问号。
 
-2026-10-21 v0.27：RandomEventChecks 通过85项，EventJourneyChecks 通过33项；社区182项、周刊53项、独立试写19项通过。默认实际请求原文逐字比较通过，旧模板拆分和往返通过。请求使用模拟传输，存储使用回调；本轮未新增真实模型调用。原始记录在 .artifacts/v027-checks-final，既有 DeepSeek 故事验证仍在 .artifacts/random-events-verified。
+参与者引导加入前的验证：CustomEventChecks 45项通过，包含真实诊断存档副本中的人物、私聊/群聊和帖子、模板替换、共同前缀、文风衔接原文、分片与多行JSON、停止/失败恢复、序列化读回和重复确认。当前配置模型 gemini-3.5-flash 的真实首次生成16.305351秒、自由行动续写3.6289311秒，结局及3项效果解析成功；结局245字符、其中206个汉字，长度要求为模型创作指导。实际请求前两条消息逐字相同，共19918字符。服务未提供可核实的缓存命中统计。原始完整请求、结果和耗时位于维护者本地 .artifacts/commerce-polish-20261021/live。原随机事件85项及日期旅途33项回归证据仍位于 .artifacts/commerce-revision-20261021。
+
+参与人物处理使用2026-10-21 profile3诊断副本验证：1596名人物、零初始参与者的四个原选项全部可执行；51项涵盖所选人物去重、好感/印象/状态/学习/约战、共同经历、公开资料、实际赛果、存档读回和客机命令。Godot1600×1000真实鼠标9项通过，从原途中提示进入、选择、查看结果到返回重开；单人存储采用界面测试替身。随机事件85项、途中停留33项、自由行动离线43项及双协调器11项回归通过。原始资料位于维护者本地 .artifacts/event-participants-20261021；本次提示词检查采用实际拼接结果，模型调用次数为零。
+
+RandomEventPrompts.Compose 必须传入当前 CareerData。PlayerRecord 读取该视图的 Wins/Draws/Losses，发送与生涯界面一致的正式比赛累计胜平负；读取 Results 按日期从新到旧取最多5场，仅序列化公历日期、赛事、对手和 Outcome。Outcome 表示赛事胜负，Win 表示是否通关，两者分别使用。少于5场发送已有条目，空 Results 发送空数组，累计战绩继续读取原计数。近期记录包含 Results 中已保存的正式比赛及私下约战，累计计数仍按既有正式比赛口径。
+
+简表在当前模板之后、原 Materials 之前拼接一次，归程序生成的资料。普通生成与自由行动沿 ProcessEventAsync 传入当前生涯；多人沿成员 View 读取个人战绩；试写使用 test.Snapshot，材料选择后保持该副本战绩。PlayerRecord 每次组织请求重新计算，未加入事件持久字段；旧事件重试直接补充当前战绩，原 Seed、People、Materials 和已生成正文沿原生命周期保存。战绩变化后下一次请求读取新值，初次与续写在模板、战绩和 Materials 相同时保留同一文本前缀。该补充只影响随机事件请求，其他聊天和战报入口沿原实现。
+
+战绩专项验证并入 EventParticipantChecks，合计62项；实际传输替身检查首次及试写请求携带简表，随机事件87项、途中停留33项及自由行动离线43项通过。真实诊断中的2胜0平0负、两场获胜记录仅增加158字符；五场上限、空记录、乱序日期、赛事胜负与通关分离、成员个人统计和模板/原材料复用均已检查。当前证据位于维护者本地 .artifacts/event-record-20261021；本次没有发起外部模型调用。
 
 ## 按任务选择连接方案
 
@@ -140,7 +152,11 @@ ProcessPrivateAsync 首次构建 Context 时同时记录 ContextSpan，保存 se
 
 ### 场景、关系与公历协议
 
-专属约会由 dm-date-open/dm-send 发起，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。请求末尾附加 DateScenes.Guidance，包括已审阅的 Scene/Emotion/Background 格式及该次真实素材编号。PrivateStreamParser 记录 SceneCues；完成后 TaggedLines 生成显示元数据，原 Reply 保留正文。回复成功沿原解析与请求状态判断。结束约会更新活动与状态，模型调用仍按原自动总结条件进行。
+专属约会由 dm-date-open/dm-send 发起，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。请求末尾附加 DateScenes.Guidance，包括已审阅的 Scene/Emotion/Background 格式及该次真实素材编号。PrivateStreamParser 记录 SceneCues；完成后 TaggedLines 生成显示元数据，原 Reply 保留正文。回复成功沿原解析与请求状态判断。结束约会的 dm-date-end → DateScenes.Leave 更新场景和婚礼状态，DateDiaries.Begin 建立当次条目，PrivateMessages.Enqueue 将结束感想作为隐藏系统事件排入原私聊队列。当前场景仍在生成时先取消旧请求，结束轮通过 queueAfterCurrent 留在其后；原请求 finally 再启动排队轮。单人 PrivateCommand 和多人 StartPrivate 都将 dm-date-end 交给同一处理器。重复结束读取 ended 状态，排队次数保持一次。
+
+结束轮 Compose 改用 DateDiaries.Guidance，传入本次约会全部已完成轮次，一次模型调用同时输出普通私聊感想与隐藏 DateDiary/Location。PrivateStreamParser 分离标记，PrivateMessages.Apply 沿原交互规则处理，DateDiaries.Complete 保存日记和地点，再沿原完成保存回调提交。Location 位于标记闭合括号之后或日记末尾的明确地点字段也可提取，普通感想显示时移除字段。缺少日记标记保留感想并提示，玩家可沿原重新生成重试；自动总结仍按原条件执行，日记功能没有单独再调用第二次模型。普通请求沿原聊天、自动总结与公开材料组织，不附加 DateDiaries 列表。
+
+普通约会场景最终正文经 DateScenes.ReplyFailure 检查，规则复用 PR 中的道德审查拒绝表达与 NSFW 检测；游戏名和比赛讨论沿正常正文处理。检测对象为最终正文，不读取 Reasoning；命中时轮次 failed，交互效果保持执行前状态，由玩家使用原重试按钮继续。结束感想沿普通私聊路径。
 
 Activity/Match 的新示例使用 Date: yyyy-MM-dd。NormalizeFields 将 Date 换算为原 Season/Day 再进入既有解析和日程校验；旧 Season/Day 仍可解析。各附件的实际日期和完整示例由 ChatAttachments.ResponseInstructions 从统一协议生成。AiWireProtocol 对结构化 JSON 中 day/Day/*Day 整数日期换名为 date/Date/*Date 并输出ISO日期，零日期输出null，Days时长字段维持数值。CommunitySharing.Text(data, quote) 从已保存 Quote 重新组织日期；AiGeneratedText.Attachment(data, offer) 对旧举报JSON的日期字段进行同样转换，原聊天、评论和事件正文逐字保留。
 

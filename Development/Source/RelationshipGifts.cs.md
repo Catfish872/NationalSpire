@@ -19,7 +19,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)；[`RelationshipChoice()`](ChatAttachmentScreen.cs.md#symbol-ca9dd9c19af5)
+**调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-1a2f8d82e83f)；[`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)
 
 **调用：** 无已绑定显式调用。
 
@@ -37,7 +37,7 @@
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ChatAttachments.cs.md#symbol-114368537271)；[`NationalSpire.RelationshipGifts.Accept(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-821bf6a43163)；[`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-315d5a4ef0fd)；[`NationalSpire.RelationshipGifts.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-a99c2d3aea53)
+**调用者：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.RelationshipGifts.Accept(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-821bf6a43163)；[`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-315d5a4ef0fd)；[`NationalSpire.RelationshipGifts.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-a99c2d3aea53)
 
 **调用：** [`NationalSpire.RelationshipGifts.Special(string)`](RelationshipGifts.cs.md#symbol-d05881b51110)
 
@@ -56,7 +56,7 @@
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ChatAttachments.cs.md#symbol-114368537271)
+**调用者：** [`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)
 
 **调用：** [`NationalSpire.PrivateMessages.Favour(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-13f25fec3dea)；[`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)
 
@@ -76,7 +76,7 @@
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ChatAttachments.cs.md#symbol-114368537271)
+**调用者：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)
 
 **调用：** [`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)
 

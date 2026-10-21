@@ -1,9 +1,8 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>消费写入当前玩家 Life；联机通过现有个人视图及 Capture 提交。</summary>
 public static class ConsumerEngine
 {
-    public const int InviteFavourGate = 5;
     public static void Ensure(CareerData d)
     {
         var s = d.Life.Consumer;
@@ -31,11 +30,11 @@ public static class ConsumerEngine
         return null;
     }
     public static bool CanInvite(CareerData d, string id) => id != "player" && !d.HumanIds.Contains(id)
-        && PrivateMessages.CanChat(d, id) && PrivateMessages.Favour(d, id) >= InviteFavourGate;
+        && PrivateMessages.CanChat(d, id);
     private static string? Guests(CareerData d, IReadOnlyList<string> ids, int slots)
         => ids.Count > slots || ids.Distinct().Count() != ids.Count ? "邀请名单超过人数或存在重复。"
-            : ids.Any(id => !CanInvite(d, id)) ? "邀请对象需要能够联系，且好感达到5。" : null;
-    private static void Season(CareerData d)
+            : ids.Any(id => !CanInvite(d, id)) ? "请选择能够联系的邀请对象。" : null;
+    internal static void Season(CareerData d)
     {
         var s = d.Life.Consumer;
         if (s.Season == d.Season) return;

@@ -106,6 +106,7 @@ public static class GroupChats
                 ArbitrationTargets = kind == "group-arbitrate" ? command.People.Where(g.Members.Contains).Where(id => PrivateMessages.CanChat(d, id)).Distinct().ToList() : [] };
             foreach (var a in t.Attachments) { a.Id = (++g.LastInteractionNumber).ToString(); a.GroupId = g.Id; a.CoachAccepted = false; }
             if (kind == "group-send" && !g.Members.Any(id => CanSpeak(d, id))) t.Status = "complete";
+            ConsumerAttachments.Sent(d, t.Attachments);
             g.Turns.Add(t);
         }
         else if (kind == "group-retry")

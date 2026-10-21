@@ -21,7 +21,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-5012d526c517)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-8376c45db5bc)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-5012d526c517)
 
 **调用：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-0db6dc7411c3)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 

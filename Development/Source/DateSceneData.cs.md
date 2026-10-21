@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`90A200F59FBBE7BE0DD5A7215B5EEEC5905A789245E62FA6DCC0B5A6165C6CA3`。来源：[源码](../../DateSceneData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6A088E762E4BD8CC65B9C2948DBDAF817A8BF76F0FDEB1B5288C57F9722C37F7`。来源：[源码](../../DateSceneData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -369,15 +369,18 @@ public const int MaxLineCharacters = 48;
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
-**调用：** [`NationalSpire.AiService.CancelPrivate(NationalSpire.CareerData, string)`](AiPrivateMessages.cs.md#symbol-14a6fc19e1c1)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`](PrivateMessageCommands.cs.md#symbol-82b01f18fa69)；[`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-4cb46102c2e0)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.AiService.CancelPrivate(NationalSpire.CareerData, string)`](AiPrivateMessages.cs.md#symbol-14a6fc19e1c1)；[`NationalSpire.DateDiaries.Begin(NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](DateDiaries.cs.md#symbol-25266fe7f850)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`](PrivateMessageCommands.cs.md#symbol-82b01f18fa69)；[`NationalSpire.PrivateMessages.Enqueue(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer?, System.Collections.Generic.List<NationalSpire.PrivateOffer>?, string, bool)`](PrivateMessages.cs.md#symbol-0e61d4a7bbb5)；[`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-4cb46102c2e0)；`NationalSpire.DateSceneRequest.DateSceneRequest()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.CancelPrivate(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.CancelPrivate(NationalSpire.CareerData, string)`；`NationalSpire.DateDiaries.Begin(NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`；`NationalSpire.DateSceneRequest.Detail`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateSceneRequest.Title`；`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；`NationalSpire.PrivateMessages.Enqueue(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer?, System.Collections.Generic.List<NationalSpire.PrivateOffer>?, string, bool)`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.Title`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AiService.CancelPrivate(NationalSpire.CareerData, string)`；输入表达式：`AiService.CancelPrivate(data, conversation.PersonId)`；返回值紧邻使用处：`ExpressionStatementSyntax: AiService.CancelPrivate(data, conversation.PersonId);`
+- `NationalSpire.DateDiaries.Begin(NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`；输入表达式：`DateDiaries.Begin(conversation, offer)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateDiaries.Begin(conversation, offer);`
+- `NationalSpire.DateSceneRequest.DateSceneRequest()`；输入表达式：`new() { OfferId = offerId, Title = offer.Title, Detail = offer.Detail, Ending = true }`；返回值紧邻使用处：`AssignmentExpressionSyntax: reflection.Scene = new() { OfferId = offerId, Title = offer.Title, Detail = offer.Detail, Ending = true }`
 - `NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；输入表达式：`Available(data, offer, conversation)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Available(data, offer, conversation)`
 - `NationalSpire.PrivateMessageCommands.RestoreInterrupted(NationalSpire.PrivateTurn, string)`；输入表达式：`PrivateMessageCommands.RestoreInterrupted(turn, "本次约会已结束，生成已停止。")`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateMessageCommands.RestoreInterrupted(turn, "本次约会已结束，生成已停止。");`
+- `NationalSpire.PrivateMessages.Enqueue(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer?, System.Collections.Generic.List<NationalSpire.PrivateOffer>?, string, bool)`；输入表达式：`PrivateMessages.Enqueue(data, conversation.PersonId, $"（系统事件：本次约会《{offer.Title}》已结束。请给玩家发送相处后的感想，并整理自己的约会日记。）", queueAfterCurrent: true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Enqueue(data, conversation.PersonId, $"（系统事件：本次约会《{offer.Title}》已结束。请给玩家发送相处后的感想，并整理自己的约会日记。）", queueAfterCurrent: true)`
 - `NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`WeddingAppointments.Complete(data, offer)`；返回值紧邻使用处：`ExpressionStatementSyntax: WeddingAppointments.Complete(data, offer);`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.Any(t => t.Scene is { Opening: true } scene && scene.OfferId == offerId)`；返回值紧邻使用处：`BinaryExpressionSyntax: conversation.DateSceneStates.GetValueOrDefault(offerId) is "active" or "paused"              || conversation.Turns.Any(t => t.Scene is { Opening: true } scene && scene.OfferId == offerId)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Offers.FirstOrDefault(o => o.Id == offerId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = conversation.Offers.FirstOrDefault(o => o.Id == offerId)`
@@ -388,13 +391,18 @@ public const int MaxLineCharacters = 48;
 **赋值（含属性/字段和局部值）：**
 
 - `conversation.DateSceneStates[offerId]` = `end ? "ended" : "paused"`
+- `Detail` = `offer.Detail`
+- `Ending` = `true`
 - `offer.State` = `"已结束"`
+- `OfferId` = `offerId`
+- `reflection.Scene` = `new() { OfferId = offerId, Title = offer.Title, Detail = offer.Detail, Ending = true }`
+- `Title` = `offer.Title`
 
 <a id="symbol-190a72e967ad"></a>
 
 ## `NationalSpire.DateScenes.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest) — public static string? Validate(CareerData data, PrivateConversation conversation, DateSceneRequest request)`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
 
@@ -423,11 +431,11 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest) — public static List<DateSceneLine> TaggedLines(PrivateStreamParser parser, DateSceneRequest scene)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-d1b345a01158)
 
-**调用：** [`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`Segment(int)`](DateSceneData.cs.md#symbol-7e4dae43c3dc)；`string.TrimEnd()`；`string.TrimStart()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`Segment(int)`](DateSceneData.cs.md#symbol-0eed008cbf1c)；`string.TrimEnd()`；`string.TrimStart()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `(int Offset, System.Collections.Generic.Dictionary<string, string> Fields).Fields`；`(int Offset, System.Collections.Generic.Dictionary<string, string> Fields).Offset`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.Emotions`；`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；`NationalSpire.PrivateStreamParser.SceneCues`；`NationalSpire.PrivateStreamParser.Text`；`Segment(int)`
 
@@ -452,11 +460,11 @@ public const int MaxLineCharacters = 48;
 - `fields` = `cue.Fields`
 - `line.Emotion` = `scene.DefaultEmotionId`
 
-<a id="symbol-7e4dae43c3dc"></a>
+<a id="symbol-0eed008cbf1c"></a>
 
 ## `Segment(int) — void Segment(int limit)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-00bcca1f004c)
 
@@ -479,7 +487,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string) — private static string? EmotionId(DateSceneRequest scene, string value)`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；[`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)
 
@@ -506,9 +514,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.InferEmotion(NationalSpire.DateSceneRequest, string) — private static string InferEmotion(DateSceneRequest scene, string text)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-2622f2de1b1c)
+**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-1a3588b38c19)
 
 **调用：** `string.Split(params char[]?)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string)`
 
@@ -527,11 +535,11 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?) — private static List<DateSceneLine> ReadSegment(string text, DateSceneRequest scene, Dictionary<string, string>? fields)`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Segment(int)`](DateSceneData.cs.md#symbol-7e4dae43c3dc)
+**调用者：** [`Segment(int)`](DateSceneData.cs.md#symbol-0eed008cbf1c)
 
-**调用：** [`Add(string)`](DateSceneData.cs.md#symbol-2622f2de1b1c)；[`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；`string.ToLowerInvariant()`；`string.Trim()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, string, System.Text.RegularExpressions.RegexOptions)`
+**调用：** [`Add(string)`](DateSceneData.cs.md#symbol-1a3588b38c19)；[`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；`string.ToLowerInvariant()`；`string.Trim()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, string, System.Text.RegularExpressions.RegexOptions)`
 
 **字段、属性、事件及方法组引用：** `Add(string)`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`
 
@@ -559,11 +567,11 @@ public const int MaxLineCharacters = 48;
 - `kind` = `"dialogue"`
 - `kind` = `"narration"`
 
-<a id="symbol-2622f2de1b1c"></a>
+<a id="symbol-1a3588b38c19"></a>
 
 ## `Add(string) — void Add(string part)`
 
-来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)
 
@@ -586,15 +594,34 @@ public const int MaxLineCharacters = 48;
 - `lines[0].Background` = `background`
 - `result[^1].Text` += `part`
 
+<a id="symbol-76bee931e453"></a>
+
+## `NationalSpire.DateScenes.ReplyFailure(string) — public static string? ReplyFailure(string text)`
+
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
+
+**调用：** `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；输入表达式：`Regex.IsMatch(text,          @"我(?:无法|不能)(?:为你|为您)?(?:生成|提供)|NSFW", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Regex.IsMatch(text,          @"我(?:无法|不能)(?:为你|为您)?(?:生成|提供)|NSFW", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)          ? "本轮回复包含模型拒绝生成的内容，请重新生成或编辑文字后发送。" : null`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-4bfd36365879"></a>
 
 ## `NationalSpire.DateScenes.Split(string, bool) — public static List<DateSceneLine> Split(string text, bool narration = false)`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-2622f2de1b1c)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
+**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-1a3588b38c19)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
 
-**调用：** [`Flush()`](DateSceneData.cs.md#symbol-b08d95d0415b)；`char.IsWhiteSpace(char)`；`string.Contains(char)`；`System.Collections.Generic.List<T>.List()`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.StringBuilder()`
+**调用：** [`Flush()`](DateSceneData.cs.md#symbol-972103714524)；`char.IsWhiteSpace(char)`；`string.Contains(char)`；`System.Collections.Generic.List<T>.List()`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.StringBuilder()`
 
 **字段、属性、事件及方法组引用：** `Flush()`
 
@@ -611,11 +638,11 @@ public const int MaxLineCharacters = 48;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-b08d95d0415b"></a>
+<a id="symbol-972103714524"></a>
 
 ## `Flush() — void Flush()`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.Split(string, bool)`](DateSceneData.cs.md#symbol-4bfd36365879)
 
@@ -646,9 +673,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ShortParts(string, int) — private static IEnumerable<string> ShortParts(string text, int limit)`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-b08d95d0415b)
+**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-972103714524)
 
 **调用：** `char.IsWhiteSpace(char)`；`string.Contains(char)`；`System.Globalization.StringInfo.ParseCombiningCharacters(string)`；`System.Math.Min(int, int)`
 
@@ -674,7 +701,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn) — public static List<DateSceneLine> Lines(PrivateTurn turn)`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateScenes.History(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-13e129fe5e9e)
 
@@ -708,7 +735,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>) — private static List<DateSceneLine> JoinNarration(List<DateSceneLine> lines)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-00bcca1f004c)
 
@@ -731,7 +758,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string) — public static string BackgroundAt(IEnumerable<DateSceneLine> lines, int index, string initial)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)
 
@@ -751,7 +778,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine) — public static string DisplayText(DateSceneLine line)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.History(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-13e129fe5e9e)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.DateSceneView.AppendLine(NationalSpire.DateSceneLine)`](DateSceneView.cs.md#symbol-eecb2292c03b)；[`NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D)`](DateSceneView.cs.md#symbol-1801b5d93aa1)
 
@@ -775,7 +802,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.History(NationalSpire.PrivateConversation, string, string, int, string, string) — public static string History(PrivateConversation conversation, string offerId, string currentTurn, int index, string player, string npc)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)
 

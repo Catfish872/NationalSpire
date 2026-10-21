@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`377D35B89D65519D54B6C1F58C6CF4334C34A6A37A8BCCE49F9E5299DA4745A5`。来源：[源码](../../RandomEventScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`210C93E37E1F1B996FBAEC36C40FF772D488721C202B2FD144BBE6F406199A30`。来源：[源码](../../RandomEventScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -48,9 +48,9 @@ private RichTextLabel? _captionLabel;
 
 **调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)
 
-**调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`](RandomEventScreen.cs.md#symbol-0f39ca3683aa)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventStoryButton.EventStoryButton()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventStoryButton.EventStoryButton()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.RandomEvents`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；`NationalSpire.CareerScreen.OpenRandomEvent(string)`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.Id`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Title`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.RandomEvents`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；`NationalSpire.CareerScreen.OpenRandomEvent(string)`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.Id`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Title`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -61,7 +61,7 @@ private RichTextLabel? _captionLabel;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(skip)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(skip);`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 92)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 92)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("跳过事件", () => EventCommand("event-skip", id: e.Id), 116)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("跳过事件", () => EventCommand("event-skip", id: e.Id), 116)`
-- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；输入表达式：`EventCommand("event-skip", id: e.Id)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-skip", id: e.Id)`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-skip", id: e.Id)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-skip", id: e.Id)`
 - `NationalSpire.CareerScreen.OpenRandomEvent(string)`；输入表达式：`OpenRandomEvent(e.Id)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => OpenRandomEvent(e.Id)`
 - `NationalSpire.EventStoryButton.EventStoryButton()`；输入表达式：`new EventStoryButton { Name = "QuestionEvent_" + e.Id, Caption = e.State == "complete" ? e.Title : "今日际遇", Detail = e.State == "complete" ? "查看你的选择与这段经历" : day > d.Day ? GameCalendar.Text(d, day) + " · 随机事件" : "生活中的另一种可能", Mark = "?", CustomMinimumSize = new(0, 92), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new EventStoryButton { Name = "QuestionEvent_" + e.Id, Caption = e.State == "complete" ? e.Title : "今日际遇", Detail = e.State == "complete" ? "查看你的选择与这段经历" : day > d.Day ? GameCalendar.Text(d, day) + " · 随机事件" : "生活中的另一种可能", Mark = "?", CustomMinimumSize = new(0, 92), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(d, day)`；返回值紧邻使用处：`BinaryExpressionSyntax: GameCalendar.Text(d, day) + " · 随机事件"`
@@ -88,9 +88,9 @@ private RichTextLabel? _captionLabel;
 
 **调用者：** [`NationalSpire.CareerScreen.Back()`](CareerNavigation.cs.md#symbol-08af62207fef)；[`NationalSpire.CareerScreen.EventCards(NationalSpire.CareerData, Godot.VBoxContainer, int)`](RandomEventScreen.cs.md#symbol-e27dca18c72a)；[`NationalSpire.CareerScreen.ShowJourneyEncounter()`](EventJourneyScreen.cs.md#symbol-4e94d6a77974)
 
-**调用：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`](RandomEventScreen.cs.md#symbol-0f39ca3683aa)；[`NationalSpire.CareerScreen.LoadChatPreferences()`](ChatHistoryScreen.cs.md#symbol-d1d5bc5023c7)；[`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`](MentionScreen.cs.md#symbol-97692853b81c)；[`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；[`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-20d7a260dcab)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.Show()`；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.Variant.AsBool()`；`NationalSpire.EventStoryView.EventStoryView()`
+**调用：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)；[`NationalSpire.CareerScreen.LoadChatPreferences()`](ChatHistoryScreen.cs.md#symbol-d1d5bc5023c7)；[`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`](MentionScreen.cs.md#symbol-97692853b81c)；[`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；[`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-20d7a260dcab)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.Show()`；`Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.Variant.AsBool()`；`NationalSpire.EventStoryView.EventStoryView()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventSignature`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`；`NationalSpire.CareerScreen.ContinueEventJourney()`；`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；`NationalSpire.CareerScreen.LoadChatPreferences()`；`NationalSpire.CareerScreen.OpenMention(Godot.Variant)`；`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`；`NationalSpire.CareerScreen.RefreshRandomEvent()`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen.WriteChatPreferences()`；`NationalSpire.EventStoryView.Choose`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.ContinueJourney`；`NationalSpire.EventStoryView.OpenPerson`；`NationalSpire.EventStoryView.Paint`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.Skip`；`NationalSpire.EventStoryView.Start`；`NationalSpire.EventStoryView.Stop`；`NationalSpire.EventStoryView.Tick`；`NationalSpire.RandomEventRecord.People`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventSignature`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.ChatPreferenceKey`；`NationalSpire.CareerScreen.ChatPreferences`；`NationalSpire.CareerScreen.ContinueEventJourney()`；`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；`NationalSpire.CareerScreen.LoadChatPreferences()`；`NationalSpire.CareerScreen.OpenMention(Godot.Variant)`；`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`；`NationalSpire.CareerScreen.RefreshRandomEvent()`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen.WriteChatPreferences()`；`NationalSpire.EventStoryView.Choose`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.ConfirmCustom`；`NationalSpire.EventStoryView.ContinueJourney`；`NationalSpire.EventStoryView.Custom`；`NationalSpire.EventStoryView.OpenPerson`；`NationalSpire.EventStoryView.Paint`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.Skip`；`NationalSpire.EventStoryView.Start`；`NationalSpire.EventStoryView.Stop`；`NationalSpire.EventStoryView.Tick`；`NationalSpire.RandomEventRecord.People`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -103,10 +103,12 @@ private RichTextLabel? _captionLabel;
 - `Godot.Node.QueueFree()`；输入表达式：`_eventView.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _eventView.QueueFree();`
 - `Godot.Node.QueueFree()`；输入表达式：`view.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: view.QueueFree();`
 - `Godot.Variant.AsBool()`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "event-public", false).AsBool()`；返回值紧邻使用处：`ArgumentSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "event-public", false).AsBool()`
-- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；输入表达式：`EventCommand("event-choose", index, view.Public.ButtonPressed)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: index => EventCommand("event-choose", index, view.Public.ButtonPressed)`
-- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；输入表达式：`EventCommand("event-skip")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-skip")`
-- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；输入表达式：`EventCommand("event-start")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-start")`
-- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`；输入表达式：`EventCommand("event-stop")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-stop")`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-choose", index, view.Public.ButtonPressed)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: index => EventCommand("event-choose", index, view.Public.ButtonPressed)`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed)`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-custom", action: action)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: action => EventCommand("event-custom", action: action)`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-skip")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-skip")`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-start")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-start")`
+- `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`；输入表达式：`EventCommand("event-stop")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => EventCommand("event-stop")`
 - `NationalSpire.CareerScreen.LoadChatPreferences()`；输入表达式：`LoadChatPreferences()`；返回值紧邻使用处：`ExpressionStatementSyntax: LoadChatPreferences();`
 - `NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`；输入表达式：`PaintMentionText(label, ViewData, value, RandomEvents.Find(ViewData, id)?.People, true)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: (label, value) => PaintMentionText(label, ViewData, value, RandomEvents.Find(ViewData, id)?.People, true)`
 - `NationalSpire.CareerScreen.RefreshRandomEvent()`；输入表达式：`RefreshRandomEvent()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshRandomEvent();`
@@ -123,7 +125,9 @@ private RichTextLabel? _captionLabel;
 - `_eventView` = `view`
 - `view.Choose` = `index => EventCommand("event-choose", index, view.Public.ButtonPressed)`
 - `view.Close` = `() => { view.QueueFree(); _eventView = null; Render(); }`
+- `view.ConfirmCustom` = `() => EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed)`
 - `view.ContinueJourney` = `ContinueEventJourney`
+- `view.Custom` = `action => EventCommand("event-custom", action: action)`
 - `view.OpenPerson` = `OpenMention`
 - `view.Paint` = `(label, value) => PaintMentionText(label, ViewData, value, RandomEvents.Find(ViewData, id)?.People, true)`
 - `view.Public.Toggled` += `value => { ChatPreferences.SetValue(ChatPreferenceKey, "event-public", value); WriteChatPreferences(); }`
@@ -132,27 +136,29 @@ private RichTextLabel? _captionLabel;
 - `view.Stop` = `() => EventCommand("event-stop")`
 - `view.Tick` = `RefreshRandomEvent`
 
-<a id="symbol-0f39ca3683aa"></a>
+<a id="symbol-07fb309a31aa"></a>
 
-## `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?) — private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null)`
+## `NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?) — private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null, string? action = null)`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EventCards(NationalSpire.CareerData, Godot.VBoxContainer, int)`](RandomEventScreen.cs.md#symbol-e27dca18c72a)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)
 
-**调用：** [`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`](CareerDialog.cs.md#symbol-d832b736b02b)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-3b62c8ad1ca6)；[`Updated()`](RandomEventScreen.cs.md#symbol-64fb573df8d6)；`Godot.CanvasItem.Show()`
+**调用：** [`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](RandomEvents.cs.md#symbol-c949f4a092a3)；[`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`](RandomEvents.cs.md#symbol-b7d9c2f158f5)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-3b62c8ad1ca6)；[`Updated()`](RandomEventScreen.cs.md#symbol-59662f07a6e1)；`Godot.CanvasItem.Show()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`；`NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.EventStoryView.Status`；`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`；`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`；`Updated()`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`；`NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.EventStoryView.Status`；`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`；`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`；`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`；`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`；`Updated()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Show()`；输入表达式：`_eventView.Status.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: _eventView.Status.Show();`
 - `NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`；输入表达式：`AiService.ProcessEventAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, target)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.ProcessEventAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, target)`
-- `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand(kind, target, publicly ? "public" : "private", option, accepted: Updated)`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand(kind, target, publicly ? "public" : "private", option, accepted: Updated)) return;`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string)`；输入表达式：`ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false);`
+- `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand(kind, target, action ?? (publicly ? "public" : "private"), option, accepted: Updated)`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand(kind, target, action ?? (publicly ? "public" : "private"), option, accepted: Updated)) return;`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false);`
 - `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(d)`；返回值紧邻使用处：`ConditionalExpressionSyntax: CareerStore.IsCurrent(d) ? d : null`
 - `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(d);`
 - `NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`；输入表达式：`RandomEvents.Choose(d, target, option, publicly)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-choose" => RandomEvents.Choose(d, target, option, publicly)`
+- `NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`；输入表达式：`RandomEvents.ChooseCustom(d, target, publicly)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-custom-choose" => RandomEvents.ChooseCustom(d, target, publicly)`
+- `NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`；输入表达式：`RandomEvents.Custom(d, target, action ?? "")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-custom" => RandomEvents.Custom(d, target, action ?? "")`
 - `NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Skip(d, target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-skip" => RandomEvents.Skip(d, target)`
 - `NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Start(d, target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-start" => RandomEvents.Start(d, target)`
 - `NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Stop(d, target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-stop" => RandomEvents.Stop(d, target)`
@@ -163,13 +169,13 @@ private RichTextLabel? _captionLabel;
 - `_` = `AiService.ProcessEventAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, target)`
 - `_eventView.Status.Text` = `error`
 
-<a id="symbol-64fb573df8d6"></a>
+<a id="symbol-59662f07a6e1"></a>
 
 ## `Updated() — void Updated()`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?)`](RandomEventScreen.cs.md#symbol-0f39ca3683aa)
+**调用者：** [`NationalSpire.CareerScreen.EventCommand(string, int, bool, string?, string?)`](RandomEventScreen.cs.md#symbol-07fb309a31aa)
 
 **调用：** [`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
@@ -187,25 +193,25 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.CareerScreen.RefreshRandomEvent() — private void RefreshRandomEvent()`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`Updated()`](RandomEventScreen.cs.md#symbol-64fb573df8d6)
+**调用者：** [`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`Updated()`](RandomEventScreen.cs.md#symbol-59662f07a6e1)
 
 **调用：** [`NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`](AiRandomEvents.cs.md#symbol-a251022ff4b2)；[`NationalSpire.AiService.EventKey(NationalSpire.CareerData, string)`](AiRandomEvents.cs.md#symbol-fadf0b2a4925)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-20d7a260dcab)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`；`NationalSpire.AiService.EventKey(NationalSpire.CareerData, string)`；`NationalSpire.AiService.EventLive`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventSignature`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.EventLive.Options`；`NationalSpire.EventLive.Phase`；`NationalSpire.EventLive.Reasoning`；`NationalSpire.EventLive.Story`；`NationalSpire.EventLive.Title`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`；`NationalSpire.RandomEventRecord.Error`；`NationalSpire.RandomEventRecord.Id`；`NationalSpire.RandomEventRecord.Options`；`NationalSpire.RandomEventRecord.Selected`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Title`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`；`NationalSpire.AiService.EventKey(NationalSpire.CareerData, string)`；`NationalSpire.AiService.EventLive`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.CareerScreen._eventId`；`NationalSpire.CareerScreen._eventSignature`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.EventLive.Options`；`NationalSpire.EventLive.Phase`；`NationalSpire.EventLive.Reasoning`；`NationalSpire.EventLive.Story`；`NationalSpire.EventLive.Title`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.CustomInputText`；`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`；`NationalSpire.RandomEventOption.Result`；`NationalSpire.RandomEventRecord.CustomAction`；`NationalSpire.RandomEventRecord.CustomOption`；`NationalSpire.RandomEventRecord.CustomReasoning`；`NationalSpire.RandomEventRecord.CustomState`；`NationalSpire.RandomEventRecord.Error`；`NationalSpire.RandomEventRecord.Id`；`NationalSpire.RandomEventRecord.Options`；`NationalSpire.RandomEventRecord.Selected`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Title`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_eventView)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsInstanceValid(_eventView)`
 - `NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`；输入表达式：`AiService.EventBusy(d, e.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: AiService.EventBusy(d, e.Id) || live != null`
-- `NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`；输入表达式：`AiService.EventBusy(d, e.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id)`
+- `NationalSpire.AiService.EventBusy(NationalSpire.CareerData, string)`；输入表达式：`AiService.EventBusy(d, e.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + e.CustomState + e.CustomAction + e.CustomOption?.Result + e.CustomReasoning + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id)`
 - `NationalSpire.AiService.EventKey(NationalSpire.CareerData, string)`；输入表达式：`AiService.EventKey(d, e.Id)`；返回值紧邻使用处：`ArgumentSyntax: AiService.EventKey(d, e.Id)`
-- `NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；输入表达式：`CareerMoney.Balance(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id) + CareerMoney.Balance(d)`
+- `NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；输入表达式：`CareerMoney.Balance(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + e.CustomState + e.CustomAction + e.CustomOption?.Result + e.CustomReasoning + e.Title + e.Error + e.Options.Count + e.Selected + live?.Title + live?.Story + live?.Options + live?.Reasoning + live?.Phase + AiService.EventBusy(d, e.Id) + CareerMoney.Balance(d)`
 - `NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`；输入表达式：`_eventView.Display(d, e, live, AiService.EventBusy(d, e.Id) || live != null)`；返回值紧邻使用处：`ExpressionStatementSyntax: _eventView.Display(d, e, live, AiService.EventBusy(d, e.Id) || live != null);`
 - `NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Find(d, _eventId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RandomEvents.Find(d, _eventId)`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _eventView.Close?.Invoke()`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id))`；返回值紧邻使用处：`ConditionalExpressionSyntax: e.State == "generating" ? AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id)) : null`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id))`；返回值紧邻使用处：`ConditionalExpressionSyntax: e.State == "generating" || e.CustomState == "generating" ? AiService.EventLive.GetValueOrDefault(AiService.EventKey(d, e.Id)) : null`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -215,7 +221,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Public — public CheckButton Public`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -233,7 +239,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Status — public Label Status`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -251,13 +257,13 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView._Ready() — public override void _Ready()`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.EventStoryView.ActionButton(string, System.Action)`](RandomEventScreen.cs.md#symbol-8068df83bcbc)；[`NationalSpire.EventStoryView.Layout()`](RandomEventScreen.cs.md#symbol-741edf2a9101)；[`NationalSpire.EventStoryView.Rich(int)`](RandomEventScreen.cs.md#symbol-b60c5aa36cb9)；[`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`](RandomEventScreen.cs.md#symbol-56ea79fa7863)；`Godot.CheckButton.CheckButton()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventEmblem.EventEmblem()`；`NationalSpire.EventStoryButton.EventStoryButton()`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.EventStoryView.ActionButton(string, System.Action)`](RandomEventScreen.cs.md#symbol-8068df83bcbc)；[`NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`](RandomEventCustomScreen.cs.md#symbol-9f8527a6f5e4)；[`NationalSpire.EventStoryView.Layout()`](RandomEventScreen.cs.md#symbol-741edf2a9101)；[`NationalSpire.EventStoryView.Rich(int)`](RandomEventScreen.cs.md#symbol-b60c5aa36cb9)；[`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`](RandomEventScreen.cs.md#symbol-56ea79fa7863)；`Godot.CheckButton.CheckButton()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventEmblem.EventEmblem()`；`NationalSpire.EventStoryButton.EventStoryButton()`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.EventStoryView._artSpace`；`NationalSpire.EventStoryView._artTitle`；`NationalSpire.EventStoryView._chapter`；`NationalSpire.EventStoryView._columns`；`NationalSpire.EventStoryView._continue`；`NationalSpire.EventStoryView._date`；`NationalSpire.EventStoryView._decision`；`NationalSpire.EventStoryView._effects`；`NationalSpire.EventStoryView._history`；`NationalSpire.EventStoryView._image`；`NationalSpire.EventStoryView._imageMaterial`；`NationalSpire.EventStoryView._options`；`NationalSpire.EventStoryView._paper`；`NationalSpire.EventStoryView._people`；`NationalSpire.EventStoryView._phase`；`NationalSpire.EventStoryView._reading`；`NationalSpire.EventStoryView._result`；`NationalSpire.EventStoryView._resultBox`；`NationalSpire.EventStoryView._retry`；`NationalSpire.EventStoryView._scroll`；`NationalSpire.EventStoryView._showHistory`；`NationalSpire.EventStoryView._skip`；`NationalSpire.EventStoryView._start`；`NationalSpire.EventStoryView._stay`；`NationalSpire.EventStoryView._stop`；`NationalSpire.EventStoryView._story`；`NationalSpire.EventStoryView._thinking`；`NationalSpire.EventStoryView._thinkingScroll`；`NationalSpire.EventStoryView._thought`；`NationalSpire.EventStoryView._title`；`NationalSpire.EventStoryView.ActionButton(string, System.Action)`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.ContinueJourney`；`NationalSpire.EventStoryView.Gold`；`NationalSpire.EventStoryView.Layout()`；`NationalSpire.EventStoryView.Muted`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.Rich(int)`；`NationalSpire.EventStoryView.Skip`；`NationalSpire.EventStoryView.Start`；`NationalSpire.EventStoryView.Status`；`NationalSpire.EventStoryView.Stop`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.EventStoryView._artSpace`；`NationalSpire.EventStoryView._artTitle`；`NationalSpire.EventStoryView._chapter`；`NationalSpire.EventStoryView._columns`；`NationalSpire.EventStoryView._continue`；`NationalSpire.EventStoryView._date`；`NationalSpire.EventStoryView._decision`；`NationalSpire.EventStoryView._effects`；`NationalSpire.EventStoryView._history`；`NationalSpire.EventStoryView._image`；`NationalSpire.EventStoryView._imageMaterial`；`NationalSpire.EventStoryView._options`；`NationalSpire.EventStoryView._paper`；`NationalSpire.EventStoryView._people`；`NationalSpire.EventStoryView._phase`；`NationalSpire.EventStoryView._reading`；`NationalSpire.EventStoryView._result`；`NationalSpire.EventStoryView._resultBox`；`NationalSpire.EventStoryView._retry`；`NationalSpire.EventStoryView._scroll`；`NationalSpire.EventStoryView._showHistory`；`NationalSpire.EventStoryView._skip`；`NationalSpire.EventStoryView._start`；`NationalSpire.EventStoryView._stay`；`NationalSpire.EventStoryView._stop`；`NationalSpire.EventStoryView._story`；`NationalSpire.EventStoryView._thinking`；`NationalSpire.EventStoryView._thinkingScroll`；`NationalSpire.EventStoryView._thought`；`NationalSpire.EventStoryView._title`；`NationalSpire.EventStoryView.ActionButton(string, System.Action)`；`NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`；`NationalSpire.EventStoryView.Close`；`NationalSpire.EventStoryView.ContinueJourney`；`NationalSpire.EventStoryView.Gold`；`NationalSpire.EventStoryView.Layout()`；`NationalSpire.EventStoryView.Muted`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.Rich(int)`；`NationalSpire.EventStoryView.Skip`；`NationalSpire.EventStoryView.Start`；`NationalSpire.EventStoryView.Status`；`NationalSpire.EventStoryView.Stop`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -366,6 +372,7 @@ private RichTextLabel? _captionLabel;
 - `NationalSpire.EventStoryView.ActionButton(string, System.Action)`；输入表达式：`ActionButton("停止生成", () => Stop?.Invoke())`；返回值紧邻使用处：`AssignmentExpressionSyntax: _stop = ActionButton("停止生成", () => Stop?.Invoke())`
 - `NationalSpire.EventStoryView.ActionButton(string, System.Action)`；输入表达式：`ActionButton("阅读故事经过 ▸", () => { _showHistory = !_showHistory; _story.Visible = _showHistory; _history.Text = _showHistory ? "收起故事经过 ▾" : "阅读故事经过 ▸"; })`；返回值紧邻使用处：`AssignmentExpressionSyntax: _history = ActionButton("阅读故事经过 ▸", () => { _showHistory = !_showHistory; _story.Visible = _showHistory; _history.Text = _showHistory ? "收起故事经过 ▾" : "阅读故事经过 ▸"; })`
 - `NationalSpire.EventStoryView.ActionButton(string, System.Action)`；输入表达式：`ActionButton("重新生成", () => Start?.Invoke())`；返回值紧邻使用处：`AssignmentExpressionSyntax: _retry = ActionButton("重新生成", () => Start?.Invoke())`
+- `NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`；输入表达式：`BuildCustomAction(_reading)`；返回值紧邻使用处：`ExpressionStatementSyntax: BuildCustomAction(_reading);`
 - `NationalSpire.EventStoryView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
 - `NationalSpire.EventStoryView.Rich(int)`；输入表达式：`Rich(15)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _thought = Rich(15)`
 - `NationalSpire.EventStoryView.Rich(int)`；输入表达式：`Rich(17)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _people = Rich(17)`
@@ -467,7 +474,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Layout() — private void Layout()`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)
 
@@ -487,9 +494,9 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Words(string, int, Godot.Color) — private static Label Words(string text, int size, Color color)`
 
-来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)
+**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)；[`NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`](RandomEventCustomScreen.cs.md#symbol-9f8527a6f5e4)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`](RandomEventScreen.cs.md#symbol-5fbf79c036d6)
 
 **调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Label.Label()`
 
@@ -510,9 +517,9 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Rich(int) — private RichTextLabel Rich(int size)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)
+**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)；[`NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`](RandomEventCustomScreen.cs.md#symbol-9f8527a6f5e4)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`](RandomEventScreen.cs.md#symbol-5fbf79c036d6)
 
 **调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
@@ -540,9 +547,9 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.ActionButton(string, System.Action) — private static Button ActionButton(string text, Action action)`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)
+**调用者：** [`NationalSpire.EventStoryView._Ready()`](RandomEventScreen.cs.md#symbol-d31ee33f7cb0)；[`NationalSpire.EventStoryView.BuildCustomAction(Godot.VBoxContainer)`](RandomEventCustomScreen.cs.md#symbol-9f8527a6f5e4)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Button.Button()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`
 
@@ -567,9 +574,9 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string) — private void SetText(RichTextLabel label, string text)`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)
+**调用者：** [`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventCustomScreen.cs.md#symbol-e43ecd579917)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`](RandomEventScreen.cs.md#symbol-5fbf79c036d6)
 
 **调用：** `System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
 
@@ -587,13 +594,13 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool) — public void Display(CareerData d, RandomEventRecord e, EventLive? live, bool busy)`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshRandomEvent()`](RandomEventScreen.cs.md#symbol-54853f1d507f)
 
-**调用：** [`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`](RandomEventScreen.cs.md#symbol-f7138d37ec2b)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)；[`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`](RandomEventScreen.cs.md#symbol-56ea79fa7863)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.RandomEventArt.Category(NationalSpire.RandomEventRecord)`](RandomEventArt.cs.md#symbol-4d27d6b0c40b)；[`NationalSpire.RandomEventArt.Load(string)`](RandomEventArt.cs.md#symbol-5147b98e47ca)；[`NationalSpire.RandomEventArt.Select(NationalSpire.RandomEventRecord)`](RandomEventArt.cs.md#symbol-e34111fd0431)；[`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-09ecc3f9af33)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；`Godot.Color.Color(string)`；`Godot.GodotObject.Dispose()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`int.ToString()`；`NationalSpire.EventStoryButton.EventStoryButton()`；`string.Join(string?, params string?[])`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventCustomScreen.cs.md#symbol-e43ecd579917)；[`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`](RandomEventScreen.cs.md#symbol-f7138d37ec2b)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)；[`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`](RandomEventScreen.cs.md#symbol-56ea79fa7863)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.RandomEventArt.Category(NationalSpire.RandomEventRecord)`](RandomEventArt.cs.md#symbol-4d27d6b0c40b)；[`NationalSpire.RandomEventArt.Load(string)`](RandomEventArt.cs.md#symbol-5147b98e47ca)；[`NationalSpire.RandomEventArt.Select(NationalSpire.RandomEventRecord)`](RandomEventArt.cs.md#symbol-e34111fd0431)；[`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-09ecc3f9af33)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；`Godot.Color.Color(string)`；`Godot.GodotObject.Dispose()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`int.ToString()`；`NationalSpire.EventStoryButton.EventStoryButton()`；`string.Join(string?, params string?[])`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Journey`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.EventJourney.Destination`；`NationalSpire.EventLive.Choices`；`NationalSpire.EventLive.Options`；`NationalSpire.EventLive.Phase`；`NationalSpire.EventLive.Reasoning`；`NationalSpire.EventLive.Story`；`NationalSpire.EventLive.Title`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.EventStoryButton.Paint`；`NationalSpire.EventStoryView._artId`；`NationalSpire.EventStoryView._artTitle`；`NationalSpire.EventStoryView._chapter`；`NationalSpire.EventStoryView._choiceSignature`；`NationalSpire.EventStoryView._continue`；`NationalSpire.EventStoryView._date`；`NationalSpire.EventStoryView._decision`；`NationalSpire.EventStoryView._history`；`NationalSpire.EventStoryView._image`；`NationalSpire.EventStoryView._imageMaterial`；`NationalSpire.EventStoryView._lastState`；`NationalSpire.EventStoryView._options`；`NationalSpire.EventStoryView._ownedImage`；`NationalSpire.EventStoryView._people`；`NationalSpire.EventStoryView._phase`；`NationalSpire.EventStoryView._result`；`NationalSpire.EventStoryView._resultBox`；`NationalSpire.EventStoryView._resultText`；`NationalSpire.EventStoryView._retry`；`NationalSpire.EventStoryView._scroll`；`NationalSpire.EventStoryView._showHistory`；`NationalSpire.EventStoryView._skip`；`NationalSpire.EventStoryView._start`；`NationalSpire.EventStoryView._stay`；`NationalSpire.EventStoryView._stop`；`NationalSpire.EventStoryView._story`；`NationalSpire.EventStoryView._storyText`；`NationalSpire.EventStoryView._thinking`；`NationalSpire.EventStoryView._thinkingScroll`；`NationalSpire.EventStoryView._thought`；`NationalSpire.EventStoryView._title`；`NationalSpire.EventStoryView.Choose`；`NationalSpire.EventStoryView.Paint`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.EventStoryView.Status`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.RandomEventArt.Category(NationalSpire.RandomEventRecord)`；`NationalSpire.RandomEventArt.Load(string)`；`NationalSpire.RandomEventArt.Select(NationalSpire.RandomEventRecord)`；`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventOption.Result`；`NationalSpire.RandomEventOption.Text`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.Error`；`NationalSpire.RandomEventRecord.Options`；`NationalSpire.RandomEventRecord.People`；`NationalSpire.RandomEventRecord.Public`；`NationalSpire.RandomEventRecord.Reasoning`；`NationalSpire.RandomEventRecord.Seed`；`NationalSpire.RandomEventRecord.Selected`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Story`；`NationalSpire.RandomEventRecord.Title`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Journey`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.EventJourney.Destination`；`NationalSpire.EventLive.Choices`；`NationalSpire.EventLive.Options`；`NationalSpire.EventLive.Phase`；`NationalSpire.EventLive.Reasoning`；`NationalSpire.EventLive.Story`；`NationalSpire.EventLive.Title`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`NationalSpire.EventStoryButton.Paint`；`NationalSpire.EventStoryView._artId`；`NationalSpire.EventStoryView._artTitle`；`NationalSpire.EventStoryView._chapter`；`NationalSpire.EventStoryView._choiceSignature`；`NationalSpire.EventStoryView._continue`；`NationalSpire.EventStoryView._customExpanded`；`NationalSpire.EventStoryView._date`；`NationalSpire.EventStoryView._decision`；`NationalSpire.EventStoryView._history`；`NationalSpire.EventStoryView._image`；`NationalSpire.EventStoryView._imageMaterial`；`NationalSpire.EventStoryView._lastState`；`NationalSpire.EventStoryView._options`；`NationalSpire.EventStoryView._ownedImage`；`NationalSpire.EventStoryView._people`；`NationalSpire.EventStoryView._phase`；`NationalSpire.EventStoryView._result`；`NationalSpire.EventStoryView._resultBox`；`NationalSpire.EventStoryView._resultText`；`NationalSpire.EventStoryView._retry`；`NationalSpire.EventStoryView._scroll`；`NationalSpire.EventStoryView._showHistory`；`NationalSpire.EventStoryView._skip`；`NationalSpire.EventStoryView._start`；`NationalSpire.EventStoryView._stay`；`NationalSpire.EventStoryView._stop`；`NationalSpire.EventStoryView._story`；`NationalSpire.EventStoryView._storyText`；`NationalSpire.EventStoryView._thinking`；`NationalSpire.EventStoryView._thinkingScroll`；`NationalSpire.EventStoryView._thought`；`NationalSpire.EventStoryView._title`；`NationalSpire.EventStoryView.Choose`；`NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`；`NationalSpire.EventStoryView.Paint`；`NationalSpire.EventStoryView.Public`；`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.EventStoryView.Status`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`NationalSpire.RandomEventArt.Category(NationalSpire.RandomEventRecord)`；`NationalSpire.RandomEventArt.Load(string)`；`NationalSpire.RandomEventArt.Select(NationalSpire.RandomEventRecord)`；`NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventOption.Result`；`NationalSpire.RandomEventOption.Text`；`NationalSpire.RandomEventRecord.CustomReasoning`；`NationalSpire.RandomEventRecord.CustomState`；`NationalSpire.RandomEventRecord.Day`；`NationalSpire.RandomEventRecord.Error`；`NationalSpire.RandomEventRecord.Options`；`NationalSpire.RandomEventRecord.People`；`NationalSpire.RandomEventRecord.Public`；`NationalSpire.RandomEventRecord.Reasoning`；`NationalSpire.RandomEventRecord.Seed`；`NationalSpire.RandomEventRecord.Selected`；`NationalSpire.RandomEventRecord.State`；`NationalSpire.RandomEventRecord.Story`；`NationalSpire.RandomEventRecord.Title`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -604,7 +611,8 @@ private RichTextLabel? _captionLabel;
 - `Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；输入表达式：`_imageMaterial.SetShaderParameter("original", art.StartsWith("game:") ? 1f : 0f)`；返回值紧邻使用处：`ExpressionStatementSyntax: _imageMaterial.SetShaderParameter("original", art.StartsWith("game:") ? 1f : 0f);`
 - `int.ToString()`；输入表达式：`(i + 1).ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Mark = (i + 1).ToString()`
 - `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；输入表达式：`CareerVisuals.ClearContent(_options)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.ClearContent(_options);`
-- `NationalSpire.EventStoryButton.EventStoryButton()`；输入表达式：`new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || error != null, TooltipText = error ?? "", Paint = Paint }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || error != null, TooltipText = error ?? "", Paint = Paint }`
+- `NationalSpire.EventStoryButton.EventStoryButton()`；输入表达式：`new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || busy || customBusy || error != null, TooltipText = error ?? "", Paint = Paint }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new EventStoryButton { Name = "EventOption_" + i, Caption = option.Text, Detail = RandomEventEffects.Preview(d, option), Mark = (i + 1).ToString(), Disabled = generating || busy || customBusy || error != null, TooltipText = error ?? "", Paint = Paint }`
+- `NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`；输入表达式：`DisplayCustom(d, e, customBusy ? live : null, busy)`；返回值紧邻使用处：`ExpressionStatementSyntax: DisplayCustom(d, e, customBusy ? live : null, busy);`
 - `NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；输入表达式：`SetText(_decision, chosen.Text)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetText(_decision, chosen.Text);`
 - `NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；输入表达式：`SetText(_people, string.Join("\n", e.People.Select(id => GroupChats.Name(d, id))))`；返回值紧邻使用处：`ExpressionStatementSyntax: SetText(_people, string.Join("\n", e.People.Select(id => GroupChats.Name(d, id))));`
 - `NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；输入表达式：`SetText(_result, chosen.Result)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetText(_result, chosen.Result);`
@@ -619,7 +627,7 @@ private RichTextLabel? _captionLabel;
 - `NationalSpire.RandomEventArt.Select(NationalSpire.RandomEventRecord)`；输入表达式：`RandomEventArt.Select(e)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RandomEventArt.Select(e)`
 - `NationalSpire.RandomEventEffects.Check(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`；输入表达式：`RandomEventEffects.Check(d, e, o)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: o => RandomEventEffects.Check(d, e, o)`
 - `NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；输入表达式：`RandomEventEffects.Preview(d, option)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Detail = RandomEventEffects.Preview(d, option)`
-- `string.Join(string?, params string?[])`；输入表达式：`string.Join("|", errors)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + ":" + choices.Count + ":" + string.Join("|", errors)`
+- `string.Join(string?, params string?[])`；输入表达式：`string.Join("|", errors)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.State + ":" + busy + ":" + choices.Count + ":" + string.Join("|", errors)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", e.People.Select(id => GroupChats.Name(d, id)))`；返回值紧邻使用处：`ArgumentSyntax: string.Join("\n", e.People.Select(id => GroupChats.Name(d, id)))`
 - `string.StartsWith(string)`；输入表达式：`art.StartsWith("game:")`；返回值紧邻使用处：`ConditionalExpressionSyntax: art.StartsWith("game:") ? 1f : 0f`
 - `string.StartsWith(string)`；输入表达式：`art.StartsWith("game:")`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !art.StartsWith("game:")`
@@ -649,13 +657,14 @@ private RichTextLabel? _captionLabel;
 - `_resultText` = `result`
 - `_retry.Disabled` = `busy`
 - `_retry.Text` = `e.State == "failed" || generating ? "重试生成" : "重新生成"`
+- `_retry.Visible` &= `!customBusy`
 - `_retry.Visible` = `!complete && !skipped && e.State != "waiting" && (!generating || !busy)`
 - `_scroll.ScrollVertical` = `0`
 - `_showHistory` = `false`
 - `_skip.Visible` = `!complete && !skipped`
 - `_start.Visible` = `e.State == "waiting"`
 - `_stay.Visible` = `complete || skipped`
-- `_stop.Visible` = `generating && busy`
+- `_stop.Visible` = `(generating || customBusy) && busy`
 - `_story.Visible` = `!complete || _showHistory`
 - `_storyText` = `story`
 - `_thinking.Visible` = `thought.Length > 0`
@@ -665,7 +674,7 @@ private RichTextLabel? _captionLabel;
 - `button.Pressed` += `() => Choose?.Invoke(index)`
 - `Caption` = `option.Text`
 - `Detail` = `RandomEventEffects.Preview(d, option)`
-- `Disabled` = `generating || error != null`
+- `Disabled` = `generating || busy || customBusy || error != null`
 - `Mark` = `(i + 1).ToString()`
 - `Name` = `"EventOption_" + i`
 - `Paint` = `Paint`
@@ -681,13 +690,32 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption) — private void ShowResultEffects(CareerData data, RandomEventOption option)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)
 
+**调用：** [`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`](RandomEventScreen.cs.md#symbol-5fbf79c036d6)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.EventStoryView._effects`；`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer)`；输入表达式：`ShowResultEffects(data, option, _effects)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => ShowResultEffects(data, option, _effects)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-5fbf79c036d6"></a>
+
+## `NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption, Godot.VBoxContainer) — private void ShowResultEffects(CareerData data, RandomEventOption option, VBoxContainer _effects)`
+
+来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.EventStoryView.DisplayCustom(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventCustomScreen.cs.md#symbol-e43ecd579917)；[`NationalSpire.EventStoryView.ShowResultEffects(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEventScreen.cs.md#symbol-8328804c1b4d)
+
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.EventStoryView.Rich(int)`](RandomEventScreen.cs.md#symbol-b60c5aa36cb9)；[`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`](RandomEventScreen.cs.md#symbol-f7138d37ec2b)；[`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`](RandomEventScreen.cs.md#symbol-56ea79fa7863)；[`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-de44eea7b389)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.RandomEventOption.RandomEventOption()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventStoryView._effects`；`NationalSpire.EventStoryView.Muted`；`NationalSpire.EventStoryView.Rich(int)`；`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`；`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventOption.Effects`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventStoryView.Muted`；`NationalSpire.EventStoryView.Rich(int)`；`NationalSpire.EventStoryView.SetText(Godot.RichTextLabel, string)`；`NationalSpire.EventStoryView.Words(string, int, Godot.Color)`；`NationalSpire.RandomEventEffects.Preview(NationalSpire.CareerData, NationalSpire.RandomEventOption)`；`NationalSpire.RandomEventOption.Effects`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -725,7 +753,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 259 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -746,7 +774,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryView._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -768,7 +796,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryButton.Caption — public string Caption`
 
-来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -789,7 +817,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryButton.Detail — public string Detail`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -807,7 +835,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryButton.Mark — public string Mark`
 
-来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -825,11 +853,11 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryButton._Ready() — public override void _Ready()`
 
-来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`ResizeContent()`](RandomEventScreen.cs.md#symbol-2fe54069521c)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Label.Label()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventEmblem.EventEmblem()`
+**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`ResizeContent()`](RandomEventScreen.cs.md#symbol-086a10c76157)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Label.Label()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventEmblem.EventEmblem()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.EventStoryButton._caption`；`NationalSpire.EventStoryButton._captionLabel`；`NationalSpire.EventStoryButton._disabled`；`NationalSpire.EventStoryButton._hover`；`NationalSpire.EventStoryButton._normal`；`NationalSpire.EventStoryButton.Caption`；`NationalSpire.EventStoryButton.Detail`；`NationalSpire.EventStoryButton.Mark`；`ResizeContent()`
 
@@ -892,11 +920,11 @@ private RichTextLabel? _captionLabel;
 - `Size` = `new(44, 44)`
 - `Text` = `Detail`
 
-<a id="symbol-2fe54069521c"></a>
+<a id="symbol-086a10c76157"></a>
 
 ## `ResizeContent() — void ResizeContent()`
 
-来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EventStoryButton._Ready()`](RandomEventScreen.cs.md#symbol-3b729478e92e)
 
@@ -919,7 +947,7 @@ private RichTextLabel? _captionLabel;
 
 ## `NationalSpire.EventStoryButton._Draw() — public override void _Draw()`
 
-来源：源码第 284 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

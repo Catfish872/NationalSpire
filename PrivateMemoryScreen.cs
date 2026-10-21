@@ -274,12 +274,12 @@ public partial class CareerScreen
         }
         else
         {
-            string kind = a.Kind == "post" ? "帖子" : a.Kind == "result" ? "比赛记录" : a.Kind == "match" ? "比赛邀约" : a.Kind == "lineup" ? "阵容调整" : a.Kind == "training" ? "训练内容" : "合同邀约";
+            string kind = a.Kind switch { "post" => "帖子", "result" => "比赛记录", "match" => "比赛邀约", "lineup" => "阵容调整", "training" => "训练内容", "activity" => "活动邀约", "gift" => "赠送礼物", OathAttachments.Kind => "解除誓约", "contract" => "合同邀约", _ => "附加文字" };
             string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
             var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
         }
         row.AddChild(PrivateButton("查看", () => PreviewPrivateAttachment(a), 60));
-        if (draft) { var remove = PrivateButton("×", () => { PrivateAttachments.Remove(a); RefreshPrivateAttachments(); }, 36); remove.TooltipText = "移除这条附件"; row.AddChild(remove); }
+        if (draft) { var remove = PrivateButton("×", () => { if (a.ConsumerAttachmentId.Length > 0) RemoveConsumerDraft(a); else { PrivateAttachments.Remove(a); RefreshPrivateAttachments(); } }, 36); remove.TooltipText = "移除这条附件"; row.AddChild(remove); }
         return card;
     }
     private void PreviewPrivateAttachment(PrivateOffer a, bool attach = false)
@@ -311,6 +311,7 @@ public partial class CareerScreen
     private void RefreshPrivateAttachments()
     {
         if (_privateAttachments == null || _privateAttachmentScroll == null) return;
+        RestoreConsumerDrafts();
         bool follow = _privateScroll != null && _privateScroll.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90;
         CareerVisuals.ClearContent(_privateAttachments);
         foreach (var a in PrivateAttachments) _privateAttachments.AddChild(PrivateAttachmentCard(a, true));

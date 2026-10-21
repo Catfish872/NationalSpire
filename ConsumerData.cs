@@ -6,6 +6,8 @@ public sealed record ConsumerOrder(string Verb, List<string> Guests, int Quantit
 public sealed class ConsumerState
 {
     public int InventoryVersion { get; set; }
+    public List<ConsumerTemporaryGood> TemporaryGoods { get; set; } = [];
+    public List<ConsumerAttachment> Attachments { get; set; } = [];
     public HashSet<string> GiftReceipts { get; set; } = [];
     /// <summary>保留实物及其数量；即时消费由账目和事件记录。</summary>
     public List<OwnedGood> Goods { get; set; } = [];
@@ -44,8 +46,14 @@ public sealed record GoodVerb(string Id, string Name, int Slots, int Favor);
 public sealed record Good(string Id, string Tier, string Category, string Name, int Price, GoodVerb[] Verbs, bool Repeatable = false, bool Promo = false, int Slots = 0)
 {
     public bool Durable => Verbs.Length > 0;
+    public bool Instant => !Collectible && !Promo;
+    public bool InstantActivity => Id is "hotpot" or "movie" or "gameroom" or "karaoke" or "theatre" or "concert"
+        or "spa" or "foodtour" or "beach" or "luxtravel" or "picnic-date" or "planetarium-date" or "pottery-date"
+        or "observatory-stay" or "balloon-date" or "lakeside-weekend" or "aurora-retreat" or "island-dinner";
+    public bool Giftable => !Promo && !InstantActivity;
+    public IEnumerable<GoodVerb> Activities => Durable ? Verbs : InstantActivity ? [new("experience", Name, Math.Max(1, Slots), 10)] : [];
     /// <summary>实物收藏展示资格；不参与购买次数或活动资格判断。</summary>
-    public bool Collectible => Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住" or "誓约";
+    public bool Collectible => Id == "artisan-perfume" || Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住" or "誓约";
 }
 
 /// <summary>消费品目录：四档+ 运营；分类用于商城二级菜单。</summary>
@@ -119,7 +127,7 @@ public static class ConsumerCatalog
         Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);
 
         // ── 富裕 $300,000–$1,000,000：耐用品带动词，每种活动每季各 1 次 ──
-        Item(Rich, "旅行", "luxtravel", "奢侈单人旅游", 300_000, repeatable: true, slots: 3);
+        Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);
         Wear(Rich, "出行", "suv", "硬派越野车", 350_000,
             new("camp", "露营同行", 4, 10), new("offroad", "越野体验", 2, 10), new("convoy", "车队巡游", 6, 10));
         Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,
@@ -150,6 +158,22 @@ public static class ConsumerCatalog
         Item(Promo, "推广", "interview", "专访投放", 250_000, promo: true);
         Item("誓约", "誓约", "oath-ring", "誓约之戒", 100_000);
         Item("誓约", "誓约", "grand-wedding", "盛大婚礼", 1_500_000);
+        Item(Mass, "礼物", "seasonal-bouquet", "时令花束", 180);
+        Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240);
+        Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1);
+        Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1);
+        Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000);
+        Item(Middle, "穿戴", "silk-shawl", "手绘真丝披肩", 45_000);
+        Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1);
+        Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1);
+        Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000);
+        Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000);
+        Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1);
+        Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1);
+        Item(Luxury, "穿戴", "bespoke-jewelry", "高定珠宝套装", 2_200_000);
+        Item(Luxury, "收藏", "concert-piano", "珍藏音乐会钢琴", 2_800_000);
+        Item(Luxury, "旅行", "aurora-retreat", "极光玻璃屋假期", 3_200_000, repeatable: true, slots: 1);
+        Item(Luxury, "娱乐", "island-dinner", "私人海岛烛光晚宴", 4_500_000, repeatable: true, slots: 1);
         return list.ToArray();
     }
 }

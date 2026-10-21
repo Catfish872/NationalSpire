@@ -75,6 +75,7 @@ public sealed class PrivateRelation : System.Text.Json.Serialization.IJsonOnDese
 }
 public sealed class PrivateConversation
 {
+    public List<DateDiary> DateDiaries { get; set; } = [];
     public bool EventOnly { get; set; }
     public Dictionary<string, string> DateSceneStates { get; set; } = [];
     public bool Hidden { get; set; }
@@ -161,6 +162,7 @@ public sealed class PrivateSummary
 }
 public sealed class PrivateOffer
 {
+    public string ConsumerAttachmentId { get; set; } = "";
     public int RelationshipIntent { get; set; }
     public bool MemoryDeleted { get; set; }
     public string GoodId { get; set; } = "";

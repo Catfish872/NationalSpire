@@ -151,6 +151,12 @@ public static partial class CoopRules
                 case "market":
                     error = Trade(w, member, System.Text.Json.JsonSerializer.Deserialize<MarketOrder>(command.Text)!);
                     break;
+                case "consumer-attach":
+                case "consumer-remove":
+                    var attachmentView = View(w, member);
+                    error = PrivateMessageCommands.Apply(attachmentView, command.Kind, command.Target, System.Text.Json.JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text)!);
+                    if (error == null) Capture(w, member, attachmentView);
+                    break;
                 case "consumer-buy":
                 case "consumer-use":
                     var consumerView = View(w, member);

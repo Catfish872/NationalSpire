@@ -23,6 +23,10 @@ public sealed class RandomEventRecord
     public string Story { get; set; } = "";
     public string Reasoning { get; set; } = "";
     public List<RandomEventOption> Options { get; set; } = [];
+    public string CustomAction { get; set; } = "";
+    public string CustomState { get; set; } = "idle";
+    public RandomEventOption? CustomOption { get; set; }
+    public string CustomReasoning { get; set; } = "";
     public string Error { get; set; } = "";
     public int Selected { get; set; } = -1;
     public bool Public { get; set; }
@@ -44,22 +48,32 @@ public sealed class EventStatus
 }
 
 /// <summary>正文、选项和效果分开读取；完整选项才参与执行，流式半段仅用于显示。</summary>
-public sealed class RandomEventParser
+public sealed class RandomEventParser(string? customAction = null)
 {
     private readonly StringBuilder _pending = new();
     public string Title { get; private set; } = "未知的际遇";
     public string Story { get; private set; } = "";
     public List<RandomEventOption> Options { get; } = [];
-    public string LiveStory => Story + PartialStory(_pending.ToString());
+    public string LiveStory => customAction == null ? Story + PartialStory(_pending.ToString(), "story") : Options.FirstOrDefault()?.Result ?? PartialStory(_pending.ToString(), "result");
     public void Feed(string chunk)
     {
+        if (customAction != null) { _pending.Append(chunk); return; }
         foreach (char ch in chunk)
             if (ch == '\n') { Read(_pending.ToString()); _pending.Clear(); } else _pending.Append(ch);
     }
-    public void Finish() { Read(_pending.ToString()); _pending.Clear(); }
+    public void Finish()
+    {
+        string text = _pending.ToString().Trim();
+        if (customAction != null && text.StartsWith("```"))
+        {
+            int start = text.IndexOf('\n'), end = text.LastIndexOf("```", StringComparison.Ordinal);
+            if (start >= 0 && end > start) text = text[(start + 1)..end];
+        }
+        Read(text); _pending.Clear();
+    }
     public void Validate()
     {
-        if (Story.Trim().Length == 0 || Options.Count is < 2 or > 4 || Options.Any(o => o.Text.Length == 0 || o.Result.Length == 0))
+        if ((customAction == null ? Story.Trim().Length == 0 || Options.Count is < 2 or > 4 : Options.Count != 1) || Options.Any(o => o.Text.Length == 0 || o.Result.Trim().Length == 0))
             throw new InvalidDataException("故事或结局尚未完整生成，可以重试或跳过。");
     }
     private void Read(string line)
@@ -68,16 +82,16 @@ public sealed class RandomEventParser
         using var doc = JsonDocument.Parse(line); var root = doc.RootElement;
         if (root.TryGetProperty("title", out var title)) Title = title.GetString() ?? "";
         if (root.TryGetProperty("story", out var story)) Story += (story.GetString() ?? "") + "\n\n";
-        if (root.TryGetProperty("option", out var option)) Options.Add(new()
+        if (customAction != null ? root.TryGetProperty("result", out _) : root.TryGetProperty("option", out _)) Options.Add(new()
         {
-            Text = option.GetString() ?? "", Result = root.GetProperty("result").GetString() ?? "",
+            Text = customAction ?? root.GetProperty("option").GetString() ?? "", Result = root.GetProperty("result").GetString() ?? "",
             Effects = root.TryGetProperty("effects", out var effects) ? JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(effects.GetRawText()) ?? [] : []
         });
     }
-    private static string PartialStory(string text)
+    private static string PartialStory(string text, string field)
     {
-        int key = text.IndexOf("\"story\"", StringComparison.Ordinal); if (key < 0) return "";
-        int colon = text.IndexOf(':', key + 7); if (colon < 0) return "";
+        int key = text.IndexOf("\"" + field + "\"", StringComparison.Ordinal); if (key < 0) return "";
+        int colon = text.IndexOf(':', key + field.Length + 2); if (colon < 0) return "";
         int start = text.IndexOf('"', colon + 1); if (start < 0) return "";
         var result = new StringBuilder();
         for (int i = start + 1; i < text.Length; i++)

@@ -30,6 +30,10 @@ ClubOffer.IncomeVersion 标记本人合同已完成工资×2、胜场和目标�
 
 ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为持有数量，GiftReceipts 保存已接受礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件；Gift 接受才扣除数量。交互回退恢复对应数量差额，并保留其后购买结果。
 
+ConsumerState.TemporaryGoods 保存商品编号、累计日期和数量；仅当天可用于即时赠礼或活动附件。Attachments 保存付款编号、收件人物或群聊、日期、原 PrivateOffer 与状态。PrivateOffer.ConsumerAttachmentId 跨草稿、发送轮次、改期及回退共用付款身份，附件业务编号仍用于 AI 接受/拒绝。Prepare 补购不足数量并保存 draft；Sent 更新为 pending 并保存最终附件编号；Resolve 将礼物接受设为 used、活动接受设为 accepted，拒绝或取消设为 returned，并将即时商品累计到处理当天 TemporaryGoods。Attend 将已付款即时活动设为 used，沿原规则更新邀请次数和好感；耐用品赴约继续调用 ConsumerEngine.Use。重复命令和已处理收据沿原去重入口，Prepare 读取同一付款编号直接复用。
+
+Advance 清除早于当前日期的临时数量，将跨日未发送的即时附件设为 expired；pending 可跨日等待答复，accepted 保留至活动赴约。取消已接受即时活动返还到取消当天。正常购买即时使用并记录消费事实；附件补购复用同一 Buy 记账与购物事实，付款预留由 Attachments 负责。耐用品补购加入库存，赠礼接受时扣除，活动保留物品并沿用招待费。旧档缺少这两个列表及付款字段时使用空集合、空编号，原活动和礼物继续原流程。PrivateInteractionUndo 同时记录付款状态、临时数量、礼物收据与库存差额，重新生成从对应交互前状态继续。
+
 ConsumerState.PromoUsed 以商品编号记录各运营商品本季累计购买数量，Season 标识所属赛季。ConsumerEngine.RemainingPurchases 将本季记录与 ConsumerCatalog.PromoPerSeason=3 比较，为 BuyError 和商城详情提供同一剩余额度。历史超过3次的记录完整保留，余额和收益沿原记录；新赛季恢复每项3次。没有新增存档字段。单人及多人各玩家沿原 Consumer 数据保存次数。
 
 NationalLegacy.ExtraProgress 保存各满级指标的增强进度，ExtraProgressDay 标记衰减起算日期；读取按14天半衰期计算，新贡献时先将存量折算到当天再追加。CommunityPost.CountryLevels 保存事件当时各相关国家九项等级，用于历史新闻资料。即时私聊、群聊、玩家发帖及讨论请求读取当前国家状态。
@@ -135,7 +139,15 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 
 ## 聊天、总结与交互
 
-Life.RandomEvents 保存随机事件。State 使用 waiting/generating/ready/failed/complete/skipped；Selected=-1 表示尚未选择。重新生成保留原 Story/Options/Reasoning，成功后整体替换；停止或失败时存在旧选项则回到 ready，首次生成则进入 failed。Reasoning 缺省空字符串，Phase 仅存在于内存 EventLive。Effects 每项包含一个语义作用键及该类型所需字段；故事、行动、结局分开保存。钱包协议使用美元，执行时按原货币规则换算；百分比执行时除以100。默认字段说明来自程序固定的 RandomEventPrompts.Format；可编辑 event 模板仅保存故事要求，正式生成和试写共用 Compose 追加协议；检查、预览与执行统一在 RandomEventEffects。
+PrivateConversation.DateDiaries 保存本人物与当前玩家的约会条目：OfferId、赛季及日期、标题、活动内容、地点和第一人称日记。OfferId 标识一次约会，Begin 幂等建立条目。Complete 从同一次结束感想回复提取 DateDiary 与 Location，正文仍归 PrivateTurn.Reply，日记集合供 DateDiaryDialog 查看。未返回日记标记时保留已成功生成的感想并记录提示；原重生成可重试该轮。旧条目为空时 Records 从已有约会开场/结束记录组织可查看的历史资料，实际保存仍沿原会话。
+
+约会各轮正文继续进入原聊天时间线、总结和跨会话检索；日记集合没有接入普通上下文注入。结束请求额外读取当前 OfferId 下全部已完成约会轮次，按原删除标记选择正文，不读取其他日期的日记。大量日记增加存档体积，普通聊天请求内容不会因此逐次追加这些日记。
+
+Life.RandomEvents 保存随机事件。State 使用 waiting/generating/ready/failed/complete/skipped；Selected=-1 表示尚未选择。重新生成保留原 Story/Options/Reasoning，成功后整体替换；停止或失败时存在旧选项则回到 ready，首次生成则进入 failed。CustomAction 保存玩家提交的行动，CustomState 使用 idle/generating/ready，CustomOption 保存生成后的结局及效果，CustomReasoning 保存本次思维文字；旧存档分别缺省为空、idle、null和空。续写保留原 Story/Options，确认后才追加 CustomOption 并写 Selected/complete。换行动清除旧预览，同一行动重试保留上一份成功预览直至替换；停止或失败恢复 idle 或 ready。进程关闭时保留已保存的行动、预览或 generating 状态，重进可重新生成。Reasoning 缺省空字符串，Phase 仅存在于内存 EventLive。Effects 每项包含一个语义作用键及该类型所需字段；故事、行动、结局分开保存。钱包协议使用美元，执行时按原货币规则换算；百分比执行时除以100。InitialFormat/Effects/Continuation 归程序，可编辑 event 模板保存创作要求；正式生成、试写与续写共用 Compose；检查、预览与执行统一在 RandomEventEffects。
+
+RandomEventRecord.People 初始保存抽取的0—3名人物编号；完成选择时，Choose 将所选效果实际涉及的现有NPC编号去重补入，数量随实际所选效果确定。RandomEventEffects.Person 供人物检查、效果预览及所选目标累计共用。Materials 保持生成当时的原文，新增 People 随原事件一次保存，用于人物共同经历、公开资料、界面名单和 RememberMatches 的赛果关联。普通选项与自定义行动使用同一完成路径；旧 ready 事件直接适用当前检查，旧 complete 事件继续凭 Selected/complete 保持幂等。多人 EventCommand 在 View 上结算，Capture 保存成员 Life、人物状态及关联资料，再沿原 Commit 保存与同步。
+
+随机事件请求中的玩家战绩是 PlayerRecord(CareerData) 临时生成的JSON资料，沿 Compose 拼接。正式比赛累计直接读取 Wins/Draws/Losses；近期最多5条直接读取 Results 的 Day/Event/Opponent/Outcome，日期转换为公历文本。简表保持原赛果字段含义，未序列化 CareerResult 的牌组、楼层、用时、奖励、Evidence、Settlement 或战报内容。单人来源为当前生涯，多人来源为当前成员个人视图，试写来源为已选材料的 Snapshot。事件、存档格式及模板导入导出结构沿用现有字段，旧 Materials 可直接与新简表组合。
 
 CareerData.Journey 保存 EventJourney.Destination 与 PausedDay，归共同日历；旧档缺省为零，表示普通停留。ResumePublications 使用 JsonIgnore，仅提示当前界面在恢复时启动原自动生成；重新加载由原主菜单请求入口读取 PausedDay。事件内容仍属于个人 Life.RandomEvents，共同旅途状态不包含人物和故事。
 

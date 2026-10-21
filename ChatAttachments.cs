@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>私信和群聊共同使用附件编号及实际物品资料，交互动作由标记决定。</summary>
 public static class ChatAttachments
@@ -88,7 +88,7 @@ public static class ChatAttachments
         return matching.Length == 1 ? matching[0] : null;
     }
 
-    public static string? Prepare(CareerData d, string person, PrivateOffer a)
+    public static string? Prepare(CareerData d, string person, PrivateOffer a, bool shopping = false)
     {
         if (a.Kind == OathAttachments.Kind) return OathAttachments.Prepare(d, person, a);
         if (a.Kind == "activity")
@@ -99,8 +99,8 @@ public static class ChatAttachments
             return WeddingAppointments.Error(d, a);
         }
         var good = ConsumerCatalog.Get(a.GoodId);
-        if (good == null || !good.Collectible || a.Quantity < 1) return "请选择礼物和数量。";
-        if (d.Life.Consumer.Goods.Where(g => g.Id == a.GoodId && !g.Consumed).Sum(g => g.Quantity) < a.Quantity) return "现有物品数量不足。";
+        if (good == null || !good.Giftable || a.Quantity < 1) return "请选择礼物和数量。";
+        if (!shopping && ConsumerAttachments.Find(d, a) == null && ConsumerAttachments.Available(d, good) < a.Quantity) return "现有物品数量不足。";
         if (RelationshipGifts.Error(d, person, a) is { } relationshipError) return relationshipError;
         a.RelationshipIntent = RelationshipGifts.Intent(a);
         a.ActorId = person; a.Title = good.Name;
@@ -125,13 +125,15 @@ public static class ChatAttachments
         {
             if (RelationshipGifts.Error(d, c.PersonId, a) is { } relationshipError) { turn.Error += "\n" + relationshipError; return; }
             var goods = d.Life.Consumer.Goods.Where(g => g.Id == a.GoodId && !g.Consumed).ToArray();
-            if (goods.Sum(g => g.Quantity) < a.Quantity) { turn.Error += "\n礼物库存已变化，请调整赠送数量。"; return; }
-            long remaining = a.Quantity;
+            bool prepaid = ConsumerCatalog.Get(a.GoodId)?.Instant == true && ConsumerAttachments.Find(d, a) != null;
+            if (!prepaid && goods.Sum(g => g.Quantity) < a.Quantity) { turn.Error += "\n礼物库存已变化，请调整赠送数量。"; return; }
+            long remaining = prepaid ? 0 : a.Quantity;
             foreach (var good in goods) { long count = Math.Min(remaining, good.Quantity); good.Quantity -= count; remaining -= count; }
             RelationshipGifts.Accept(d, c.PersonId, a);
         }
+        ConsumerAttachments.Resolve(d, a, action == "接受");
         d.Life.Consumer.GiftReceipts.Add(receipt);
         c.Offers.Add(new() { Id = a.Id, Kind = "gift", TurnId = turn.Id, GoodId = a.GoodId, Quantity = a.Quantity,
-            ActorId = a.ActorId, Title = a.Title, Detail = a.Detail, RelationshipIntent = a.RelationshipIntent, State = action == "接受" ? "已接受" : "已拒绝" });
+            ConsumerAttachmentId = a.ConsumerAttachmentId, ActorId = a.ActorId, Title = a.Title, Detail = a.Detail, RelationshipIntent = a.RelationshipIntent, State = action == "接受" ? "已接受" : "已拒绝" });
     }
 }

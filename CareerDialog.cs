@@ -10,7 +10,7 @@ public partial class CareerScreen
     private Action? _openingDialogReturn;
 
     // 使用主视口内的控件，避免创建独立窗口触发游戏的失焦静音。
-    private void ShowCareerDialog(string title, string message, Func<bool> confirm, string confirmText = "确认", Action<VBoxContainer>? contents = null, bool showCancel = true, bool compact = false, string cancelText = "取消")
+    private void ShowCareerDialog(string title, string message, Func<bool> confirm, string confirmText = "确认", Action<VBoxContainer>? contents = null, bool showCancel = true, bool compact = false, string cancelText = "取消", bool returnOutsideChat = false)
     {
         if (_dialogOverlay != null) return;
         var returnTo = _openingDialogReturn;
@@ -53,7 +53,7 @@ public partial class CareerScreen
         void Return()
         {
             CloseDialog();
-            if (returnTo != null) Callable.From(() => { if (_privateOverlay != null) returnTo(); }).CallDeferred();
+            if (returnTo != null) Callable.From(() => { if (_privateOverlay != null || returnOutsideChat) returnTo(); }).CallDeferred();
         }
         _returnDialog = Return;
         var cancel = _privateOverlay != null ? PrivateButton(cancelText, Return, 110) : Button(cancelText, Return, 130); cancel.Name = "CareerDialogCancel"; if (showCancel) actions.AddChild(cancel);

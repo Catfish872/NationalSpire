@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class SocialAppointments
 {
@@ -45,6 +45,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
             if (old != null && old.State is "待确认" or "已确认") old.State = "已取消";
             else if (old == null && attachment != null) c.Offers.Add(new() { Id = attachment.Id, Kind = "activity", TurnId = t.Id, Title = attachment.Title, Detail = attachment.Detail,
                 Season = attachment.Season, Day = attachment.Day, Participants = attachment.Participants.ToList(), State = "已取消" });
+            if ((old ?? attachment) is { } cancelled) ConsumerAttachments.Resolve(d, cancelled, false);
             return;
         }
         if (action is not ("邀请" or "改期" or "接受")) return;
@@ -53,7 +54,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
         if (action is "接受" or "改期" && basis == null) { t.Error += "\n请在活动附件中明确本次处理的活动编号。"; return; }
         var o = new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", basis?.Title ?? ""),
             Detail = fields.GetValueOrDefault("Detail", basis?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "",
-            ServiceId = basis?.ServiceId ?? "", GoodId = basis?.GoodId ?? "", GoodVerb = basis?.GoodVerb ?? "", Participants = basis?.Participants.ToList() ?? [GroupChats.Human(d), c.PersonId] };
+            ConsumerAttachmentId = basis?.ConsumerAttachmentId ?? "", ServiceId = basis?.ServiceId ?? "", GoodId = basis?.GoodId ?? "", GoodVerb = basis?.GoodVerb ?? "", Participants = basis?.Participants.ToList() ?? [GroupChats.Human(d), c.PersonId] };
         o.Season = int.TryParse(fields.GetValueOrDefault("Season"), out int season) ? season : basis?.Season ?? -1;
         o.Day = int.TryParse(fields.GetValueOrDefault("Day"), out int day) ? day : basis?.Day ?? -1;
         if (string.IsNullOrWhiteSpace(o.Title) || o.Season < 1 || o.Day < 1 || o.Day > SeasonCalendar.Length(d, o.Season))
@@ -64,7 +65,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
             t.Error += "\n" + ExpiredDate; return;
         }
         bool accepted = attachment != null && o.Title == attachment.Title && o.Detail == attachment.Detail && o.Day == attachment.Day && o.Season == attachment.Season;
-        if (accepted) { o.Id = attachment!.Id; o.State = "已确认"; }
+        if (accepted) { o.Id = attachment!.Id; o.State = "已确认"; ConsumerAttachments.Resolve(d, o, true); }
         c.Offers.Add(o);
     }
     public static string? Confirm(CareerData d, PrivateConversation c, PrivateOffer o)
@@ -74,7 +75,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
         var source = c.Turns.FirstOrDefault(t => t.Id == o.TurnId);
         var before = source == null ? null : PrivateInteractionHistory.Capture(d, c.PersonId);
         if (c.Offers.FirstOrDefault(x => x.Id == o.ReplacesOfferId) is { } old) old.State = "已改期";
-        o.State = "已确认";
+        o.State = "已确认"; ConsumerAttachments.Resolve(d, o, true);
         if (source != null && before != null) PrivateInteractionHistory.Record(d, c.PersonId, source, before);
         return null;
     }
@@ -83,7 +84,9 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
         if (o.Kind != "activity" || o.State != "已确认" || PrivateAppointments.Date(d, o) != d.Day) return "这项活动当前不能赴约。";
         var people = o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray();
         if (WeddingAppointments.Error(d, o) is { } weddingError) return weddingError;
-        if (o.GoodId.Length > 0 && o.GoodId != WeddingAppointments.GoodId && ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly) is { } error) return error;
+        if (ConsumerCatalog.Get(o.GoodId)?.InstantActivity == true)
+        { if (ConsumerAttachments.Attend(d, o, publicly) is { } paidError) return paidError; }
+        else if (o.GoodId.Length > 0 && o.GoodId != WeddingAppointments.GoodId && ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly) is { } error) return error;
         o.PublicAttendance = publicly; o.State = "已赴约";
         if (!scene) WeddingAppointments.Complete(d, o);
         if (publicly && o.GoodId.Length == 0) PublishAttendance(d, o);

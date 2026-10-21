@@ -632,7 +632,7 @@ public const string Protocol = """
 
 来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-b7a78f32bf15)
+**调用者：** [`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-08dfeba4e37a)
 
 **调用：** [`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Register(NationalSpire.CareerData, NationalSpire.CoachLineupRequest)`](CoachLineups.cs.md#symbol-cd01b73a8985)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 

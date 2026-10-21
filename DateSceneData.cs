@@ -63,6 +63,9 @@ public static class DateScenes
         if (end)
         {
             offer.State = "已结束";
+            DateDiaries.Begin(conversation, offer);
+            var reflection = PrivateMessages.Enqueue(data, conversation.PersonId, $"（系统事件：本次约会《{offer.Title}》已结束。请给玩家发送相处后的感想，并整理自己的约会日记。）", queueAfterCurrent: true);
+            reflection.Scene = new() { OfferId = offerId, Title = offer.Title, Detail = offer.Detail, Ending = true };
             if (entered) WeddingAppointments.Complete(data, offer);
 
         }
@@ -168,6 +171,9 @@ public static class DateScenes
         }
         Add(text[at..]); return result;
     }
+    public static string? ReplyFailure(string text) => Regex.IsMatch(text,
+        @"我(?:无法|不能)(?:为你|为您)?(?:生成|提供)|NSFW", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+        ? "本轮回复包含模型拒绝生成的内容，请重新生成或编辑文字后发送。" : null;
     public const int MaxLineCharacters = 48;
     public static List<DateSceneLine> Split(string text, bool narration = false)
     {
