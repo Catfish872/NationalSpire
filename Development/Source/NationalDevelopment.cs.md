@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EE47DD504DD28D9B47157D2E01D5FAC439CABE8C0DEE1183C44B140B27A841E8`。来源：[源码](../../NationalDevelopment.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`387544C5FEB84151AD23B4F5A2811D6D1AC1B02B7CB585AB510559739921B56D`。来源：[源码](../../NationalDevelopment.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,8 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-public const int Version = 1;
-private const int MaintenancePerGroup = 40;
+public const int Version = 2;
 private static readonly int[] Costs = [100, 120, 150, 190, 240, 300, 380, 480, 600];
 private static readonly string[] Groups = ["经济", "社会", "民生"];
 private static readonly Dictionary<string, double> GrowthWeight = new()
@@ -170,7 +169,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Get(string) — public static Indicator Get(string id)`
 
-来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.Description(string, int)`](NationalDevelopment.cs.md#symbol-eb5d5925eb64)
 
@@ -189,9 +188,9 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.InGroup(string) — public static IReadOnlyList<Indicator> InGroup(string group)`
 
-来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`](NationalDevelopment.cs.md#symbol-2430ad41a5d9)；[`NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool)`](NationalDevelopment.cs.md#symbol-ba4f9575e17b)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-e2c38799891f)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -209,9 +208,9 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Cost(int) — public static int Cost(int level)`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-e2c38799891f)
+**调用者：** [`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`](NationalDevelopment.cs.md#symbol-a22a051d52fb)
 
 **调用：** `System.Math.Clamp(int, int, int)`
 
@@ -228,7 +227,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Description(string, int) — public static string Description(string id, int level)`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.Describe(System.Collections.Generic.IReadOnlyDictionary<string, int[]>)`](NationalDevelopment.cs.md#symbol-c1e9840d78ca)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)
 
@@ -248,9 +247,9 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int) — public static double Enhancement(NationalLegacy n, string id, int day)`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.NationalDevelopment.IncomeBonus(NationalSpire.CareerData, string)`](NationalDevelopment.cs.md#symbol-ab03f52da056)
+**调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.IncomeBonus(NationalSpire.CareerData, string)`](NationalDevelopment.cs.md#symbol-ab03f52da056)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`](NationalDevelopment.cs.md#symbol-a22a051d52fb)
 
 **调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`；`System.Math.Pow(double, double)`
 
@@ -269,7 +268,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.IncomeBonus(NationalSpire.CareerData, string) — public static double IncomeBonus(CareerData d, string country)`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerIncome.WithDevelopment(NationalSpire.CareerData, int, string)`](CareerIncome.cs.md#symbol-550f85c3235c)
 
@@ -286,36 +285,54 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-b92c3e8ce452"></a>
+<a id="symbol-8a989c8967b7"></a>
 
-## `NationalSpire.NationalDevelopment.AddExtra(NationalSpire.NationalLegacy, System.Collections.Generic.IReadOnlyList<NationalSpire.NationalDevelopment.Indicator>, double, int) — private static void AddExtra(NationalLegacy n, IReadOnlyList<Indicator> indicators, double amount, int day)`
+## `NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int) — private static void DecayExtra(NationalLegacy n, int day)`
 
-来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-e2c38799891f)
+**调用者：** [`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`](NationalDevelopment.cs.md#symbol-a22a051d52fb)
 
-**调用：** `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`；`System.Math.Pow(double, double)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(int, int)`；`System.Math.Pow(double, double)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalLegacy.ExtraProgress`；`NationalSpire.NationalLegacy.ExtraProgressDay`
+**字段、属性、事件及方法组引用：** `NationalSpire.NationalLegacy.ExtraProgress`；`NationalSpire.NationalLegacy.ExtraProgressDay`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`n.ExtraProgress.Keys.ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string id in n.ExtraProgress.Keys.ToArray()) n.ExtraProgress[id] *= decay;`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.ExtraProgress.GetValueOrDefault(indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.ExtraProgress.GetValueOrDefault(indicator.Id) + amount / indicators.Count`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`n.ExtraProgress.Keys.ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string id in n.ExtraProgress.Keys.ToArray())          {              double value = n.ExtraProgress[id] * decay;              n.ExtraProgress[id] = value >= 600.0 / 99 ? value : 0;          }`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, day - n.ExtraProgressDay)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(0, day - n.ExtraProgressDay) / 14.0`
 - `System.Math.Pow(double, double)`；输入表达式：`Math.Pow(.5, Math.Max(0, day - n.ExtraProgressDay) / 14.0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Pow(.5, Math.Max(0, day - n.ExtraProgressDay) / 14.0)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `n.ExtraProgress[id]` *= `decay`
-- `n.ExtraProgress[indicator.Id]` = `n.ExtraProgress.GetValueOrDefault(indicator.Id) + amount / indicators.Count`
+- `n.ExtraProgress[id]` = `value >= 600.0 / 99 ? value : 0`
 - `n.ExtraProgressDay` = `day`
+
+<a id="symbol-0878696b10a0"></a>
+
+## `NationalSpire.NationalDevelopment.ProgressText(NationalSpire.NationalLegacy, string) — public static string ProgressText(NationalLegacy n, string id)`
+
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)
+
+**调用：** [`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Progress`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, id) == 9`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Progress.GetValueOrDefault(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = n.Progress.GetValueOrDefault(id)`
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-005df41f7e42"></a>
 
 ## `NationalSpire.NationalDevelopment.Snapshot(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>) — public static Dictionary<string, int[]> Snapshot(CareerData d, IEnumerable<string> countries)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`](CareerEngine.cs.md#symbol-cd8fd2c800e7)
 
@@ -341,7 +358,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Describe(System.Collections.Generic.IReadOnlyDictionary<string, int[]>) — public static string Describe(IReadOnlyDictionary<string, int[]> snapshot)`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildNewsContext(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiContext.cs.md#symbol-7b21630a9e2c)
 
@@ -364,39 +381,31 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>) — public static string Context(CareerData d, IEnumerable<string> countries)`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.BuildDiscussionPrompt(NationalSpire.CareerData, System.Collections.Generic.ISet<string>, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiDiscussion.cs.md#symbol-142a77613e08)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.NationalDevelopment.TryPublish(NationalSpire.CareerData, System.Random)`](NationalDevelopment.cs.md#symbol-620f6dd04f3a)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)
 
-**调用：** [`NationalSpire.NationalDevelopment.Description(string, int)`](NationalDevelopment.cs.md#symbol-eb5d5925eb64)；[`NationalSpire.NationalDevelopment.InGroup(string)`](NationalDevelopment.cs.md#symbol-1688e440426e)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** [`NationalSpire.NationalDevelopment.Description(string, int)`](NationalDevelopment.cs.md#symbol-eb5d5925eb64)；[`NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`](NationalDevelopment.cs.md#symbol-1d0f36f34ac7)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.ProgressText(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-0878696b10a0)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.IEnumerable.OfType<TResult>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Description(string, int)`；`NationalSpire.NationalDevelopment.Groups`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Indicator.Name`；`NationalSpire.NationalDevelopment.InGroup(string)`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.NewsChanges`；`NationalSpire.NationalLegacy.NewsDay`；`NationalSpire.NationalLegacy.Pending`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Description(string, int)`；`NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Indicator.Name`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.ProgressText(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.NewsChanges`；`NationalSpire.NationalLegacy.NewsDay`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.NationalDevelopment.Description(string, int)`；输入表达式：`Description(i.Id, Level(n, i.Id) + 1)`；返回值紧邻使用处：`BinaryExpressionSyntax: i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1)`
 - `NationalSpire.NationalDevelopment.Description(string, int)`；输入表达式：`Description(i.Id, Level(n, i.Id))`；返回值紧邻使用处：`InterpolationSyntax: {Description(i.Id, Level(n, i.Id))}`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(g)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(g).Any`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(g)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(g).Where`
+- `NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`；输入表达式：`Enhancement(n, i.Id, d.Day)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Enhancement(n, i.Id, d.Day) is var extra`
 - `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`ArgumentSyntax: Level(n, i.Id)`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) + 1`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) < 9`
 - `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`InterpolationSyntax: {Level(n, i.Id)}`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1)))`；返回值紧邻使用处：`BinaryExpressionSyntax: "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1)))`
+- `NationalSpire.NationalDevelopment.ProgressText(NationalSpire.NationalLegacy, string)`；输入表达式：`ProgressText(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: i.Name + "：" + ProgressText(n, i.Id)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("", n.NewsChanges)`；返回值紧邻使用处：`ConditionalExpressionSyntax: n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。"`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。")))`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。")))`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n\n", countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。")))))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => string.Join("\n\n", countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。")))))`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`InGroup(g).Any(i => Level(n, i.Id) < 9)`；返回值紧邻使用处：`ConditionalExpressionSyntax: InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。"`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : "")))`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : "")))`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n\n", countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : "")))))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => string.Join("\n\n", countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : "")))))`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`countries.Distinct(StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: countries.Distinct(StringComparer.Ordinal)          .Select`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Nations.FirstOrDefault(n => n.Country == country)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}")`；返回值紧邻使用处：`ArgumentSyntax: All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}")`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。"))))`；返回值紧邻使用处：`ArgumentSyntax: countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。"))))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : ""))`；返回值紧邻使用处：`ArgumentSyntax: All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : ""))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : ""))))`；返回值紧邻使用处：`ArgumentSyntax: countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select(n =>              n.Country + "当前生活与发展情况\n" + string.Join("\n", All.Select(i => $"{i.Name} {Level(n, i.Id)}级：{Description(i.Id, Level(n, i.Id))}"))              + "\n本日已完成的等级变化：" + (n.NewsDay == d.Day && n.NewsChanges.Count > 0 ? string.Join("", n.NewsChanges) : "各项等级维持上述现状。")              + "\n" + string.Join("\n", All.Select(i => i.Name + "：" + ProgressText(n, i.Id)                  + (Enhancement(n, i.Id, d.Day) is var extra && extra > 0 ? $"，临时增强+{extra:0.#%}" : ""))))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。"))`；返回值紧邻使用处：`ArgumentSyntax: Groups.Select(g => g + $"建设进度{n.Pending.GetValueOrDefault(g):0.#}："                  + (InGroup(g).Any(i => Level(n, i.Id) < 9) ? "发展目标：" + string.Join("、", InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))) : "各项已达到9级，新增建设进度用于临时增强。"))`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))`；返回值紧邻使用处：`ArgumentSyntax: InGroup(g).Where(i => Level(n, i.Id) < 9).Select(i => i.Name + "，" + Description(i.Id, Level(n, i.Id) + 1))`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`InGroup(g).Where(i => Level(n, i.Id) < 9)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(g).Where(i => Level(n, i.Id) < 9).Select`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Pending.GetValueOrDefault(g)`；返回值紧邻使用处：`InterpolationSyntax: {n.Pending.GetValueOrDefault(g):0.#}`
 - `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: countries.Distinct(StringComparer.Ordinal)          .Select(country => d.Esports.Nations.FirstOrDefault(n => n.Country == country)).OfType<NationalLegacy>().Select`
 
 **赋值（含属性/字段和局部值）：**
@@ -406,36 +415,46 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData) — public static void Ensure(CareerData d)`
 
-来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](Coop/CoopCoordinator.cs.md#symbol-778097f34ec3)；[`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
 
-**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.NationalDevelopment.Cost(int)`](NationalDevelopment.cs.md#symbol-519bf129507f)；[`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-8a989c8967b7)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.BaseGdp`；`NationalSpire.NationalDevelopment.BaseLevels`；`NationalSpire.NationalDevelopment.DefaultLevels`；`NationalSpire.NationalDevelopment.Groups`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.MaintenancePerGroup`；`NationalSpire.NationalDevelopment.Version`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.DevelopmentVersion`；`NationalSpire.NationalLegacy.Gdp`；`NationalSpire.NationalLegacy.Indicators`；`NationalSpire.NationalLegacy.MaintenanceFunding`；`NationalSpire.NationalLegacy.Pending`；`NationalSpire.NationalLegacy.ReportSeason`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.BaseGdp`；`NationalSpire.NationalDevelopment.BaseLevels`；`NationalSpire.NationalDevelopment.Cost(int)`；`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；`NationalSpire.NationalDevelopment.DefaultLevels`；`NationalSpire.NationalDevelopment.Indicator.Group`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.Version`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.DevelopmentVersion`；`NationalSpire.NationalLegacy.ExtraProgress`；`NationalSpire.NationalLegacy.Gdp`；`NationalSpire.NationalLegacy.Indicators`；`NationalSpire.NationalLegacy.MaintenanceFunding`；`NationalSpire.NationalLegacy.Pending`；`NationalSpire.NationalLegacy.Progress`；`NationalSpire.NationalLegacy.ReportSeason`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.NationalDevelopment.Cost(int)`；输入表达式：`Cost(Level(n, i.Id))`；返回值紧邻使用处：`BinaryExpressionSyntax: balance / Cost(Level(n, i.Id))`
+- `NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；输入表达式：`DecayExtra(n, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: DecayExtra(n, d.Day);`
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`ArgumentSyntax: Level(n, i.Id)`
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) == 9`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`n.Pending.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: n.Pending.Clear();`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`n.Indicators.ContainsKey(All[i].Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !n.Indicators.ContainsKey(All[i].Id)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；输入表达式：`n.Pending.TryAdd(group, 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: n.Pending.TryAdd(group, 0);`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`BaseGdp.GetValueOrDefault(n.Country, 20000)`；返回值紧邻使用处：`AssignmentExpressionSyntax: n.Gdp = BaseGdp.GetValueOrDefault(n.Country, 20000)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`BaseLevels.GetValueOrDefault(n.Country)`；返回值紧邻使用处：`BinaryExpressionSyntax: BaseLevels.GetValueOrDefault(n.Country) ?? DefaultLevels`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.ExtraProgress.GetValueOrDefault(i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.ExtraProgress.GetValueOrDefault(i.Id) + balance`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Pending.GetValueOrDefault(i.Group)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Pending.GetValueOrDefault(i.Group) / 3`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Progress.GetValueOrDefault(i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Progress.GetValueOrDefault(i.Id) + balance / Cost(Level(n, i.Id))`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(n.ReportSeason, d.Season)`；返回值紧邻使用处：`AssignmentExpressionSyntax: n.ReportSeason = Math.Max(n.ReportSeason, d.Season)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `n.DevelopmentVersion` = `Version`
+- `n.ExtraProgress[i.Id]` = `n.ExtraProgress.GetValueOrDefault(i.Id) + balance`
 - `n.Gdp` = `BaseGdp.GetValueOrDefault(n.Country, 20000)`
 - `n.Indicators[All[i].Id]` = `levels[i]`
-- `n.MaintenanceFunding` = `3 * MaintenancePerGroup`
-- `n.ReportSeason` = `d.Season`
+- `n.MaintenanceFunding` = `0`
+- `n.Progress[i.Id]` = `n.Progress.GetValueOrDefault(i.Id) + balance / Cost(Level(n, i.Id))`
+- `n.ReportSeason` = `Math.Max(n.ReportSeason, d.Season)`
 
 <a id="symbol-b758e69d4a1d"></a>
 
 ## `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string) — public static int Level(NationalLegacy n, string id)`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.MarketDynamics.Anchors(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-9a7ffea26eec)；[`NationalSpire.NationalDevelopment.Breakdown(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-eccbfc720363)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)；[`NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`](NationalDevelopment.cs.md#symbol-2430ad41a5d9)；[`NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool)`](NationalDevelopment.cs.md#symbol-ba4f9575e17b)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)；[`NationalSpire.NationalDevelopment.Snapshot(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-005df41f7e42)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-e2c38799891f)
+**调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.MarketDynamics.Anchors(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-9a7ffea26eec)；[`NationalSpire.NationalDevelopment.Breakdown(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-eccbfc720363)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)；[`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.ProgressText(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-0878696b10a0)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)；[`NationalSpire.NationalDevelopment.Snapshot(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-005df41f7e42)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`](NationalDevelopment.cs.md#symbol-a22a051d52fb)
 
 **调用：** `System.Array.FindIndex<T>(T[], System.Predicate<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Clamp(int, int, int)`
 
@@ -455,7 +474,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int) — public static int SeasonFortune(CareerData d, string country, int season)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
 
@@ -475,41 +494,36 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData) — public static void SeasonStart(CareerData d)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)
 
-**调用：** [`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-b5d4218e2bb4)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`](NationalDevelopment.cs.md#symbol-2430ad41a5d9)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)；[`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-da40d19d79df)；[`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`](NationalDevelopment.cs.md#symbol-a5f9343d73de)；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
+**调用：** [`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-8a989c8967b7)；[`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-b5d4218e2bb4)；[`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`](NationalDevelopment.cs.md#symbol-a5f9343d73de)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`；`NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`；`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.MaintenanceFunding`；`NationalSpire.NationalLegacy.ReportSeason`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`；`NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`；`NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.ReportSeason`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；输入表达式：`DecayExtra(n, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: DecayExtra(n, d.Day);`
 - `NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`；输入表达式：`Ensure(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: Ensure(d);`
 - `NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`；输入表达式：`GrowGdp(n, SeasonFortune(d, n.Country, d.Season - 1))`；返回值紧邻使用处：`ExpressionStatementSyntax: GrowGdp(n, SeasonFortune(d, n.Country, d.Season - 1));`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: i => Level(n, i.Id)`
-- `NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`；输入表达式：`PayMaintenance(d, n, ref maintenance)`；返回值紧邻使用处：`ExpressionStatementSyntax: PayMaintenance(d, n, ref maintenance);`
-- `NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`；输入表达式：`RecordChanges(n, before)`；返回值紧邻使用处：`ArgumentSyntax: RecordChanges(n, before)`
-- `NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`RememberChanges(d, n, RecordChanges(n, before))`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberChanges(d, n, RecordChanges(n, before));`
 - `NationalSpire.NationalDevelopment.SeasonFortune(NationalSpire.CareerData, string, int)`；输入表达式：`SeasonFortune(d, n.Country, d.Season - 1)`；返回值紧邻使用处：`ArgumentSyntax: SeasonFortune(d, n.Country, d.Season - 1)`
-- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`All.ToDictionary(i => i.Id, i => Level(n, i.Id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = All.ToDictionary(i => i.Id, i => Level(n, i.Id))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `n.MaintenanceFunding` = `0`
 - `n.ReportSeason` = `d.Season`
 
 <a id="symbol-c1f2a8832691"></a>
 
 ## `NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string) — public static List<string> Contribute(CareerData d, NationalLegacy n, int amount, string source = "")`
 
-来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.NationalFortune.Add(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, int)`](NationalFortune.cs.md#symbol-b9fd32a76496)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)
+**调用者：** [`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.NationalFortune.Develop(NationalSpire.CareerData, NationalSpire.WorldFixture, System.Collections.Generic.Dictionary<string, int>, string)`](NationalFortune.cs.md#symbol-bf74c6df6fa2)；[`NationalSpire.RandomEventEffects.Apply(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.RandomEventOption)`](RandomEvents.cs.md#symbol-886f350e91dc)
 
-**调用：** [`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)；[`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-da40d19d79df)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-e2c38799891f)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-7b51466d6927)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`](NationalDevelopment.cs.md#symbol-538b1f362d23)；[`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-da40d19d79df)；[`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`](NationalDevelopment.cs.md#symbol-a22a051d52fb)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.MaintenancePerGroup`；`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`；`NationalSpire.NationalLegacy.MaintenanceFunding`；`NationalSpire.NationalLegacy.NewsFortune`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.NationalContribution`
+**字段、属性、事件及方法组引用：** `NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Ensure(NationalSpire.CareerData)`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`；`NationalSpire.NationalLegacy.LastReport`；`NationalSpire.NationalLegacy.NewsFortune`；`NationalSpire.NationalLegacy.NewsPending`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.NationalContribution`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -517,23 +531,25 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 - `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: i => Level(n, i.Id)`
 - `NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>)`；输入表达式：`RecordChanges(n, before)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RecordChanges(n, before)`
 - `NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`RememberChanges(d, n, changes)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberChanges(d, n, changes);`
-- `NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`；输入表达式：`Upgrade(d, n, amount * 7, source)`；返回值紧邻使用处：`ExpressionStatementSyntax: Upgrade(d, n, amount * 7, source);`
+- `NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string)`；输入表达式：`Upgrade(d, n, amount * 7.0, source)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Upgrade(d, n, amount * 7.0, source)`
 - `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.NationalContribution)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.NationalContribution)`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("", changes)`；返回值紧邻使用处：`AssignmentExpressionSyntax: n.LastReport = string.Join("", changes)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`All.ToDictionary(i => i.Id, i => Level(n, i.Id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = All.ToDictionary(i => i.Id, i => Level(n, i.Id))`
-- `System.Math.Min(int, int)`；输入表达式：`Math.Min(3 * MaintenancePerGroup - n.MaintenanceFunding, amount)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(3 * MaintenancePerGroup - n.MaintenanceFunding, amount)`
+- `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`changes.AddRange(enhancements)`；返回值紧邻使用处：`ExpressionStatementSyntax: changes.AddRange(enhancements);`
 
 **赋值（含属性/字段和局部值）：**
 
-- `n.MaintenanceFunding` += `maintenance`
+- `n.LastReport` = `string.Join("", changes)`
 - `n.NewsFortune` += `amount`
+- `n.NewsPending` = `amount != 0 || n.NewsPending == true`
 
 <a id="symbol-da40d19d79df"></a>
 
 ## `NationalSpire.NationalDevelopment.RememberChanges(NationalSpire.CareerData, NationalSpire.NationalLegacy, System.Collections.Generic.IEnumerable<string>) — private static void RememberChanges(CareerData d, NationalLegacy n, IEnumerable<string> changes)`
 
-来源：源码第 268 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
+**调用者：** [`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)
 
 **调用：** `System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -554,9 +570,9 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.RecordChanges(NationalSpire.NationalLegacy, System.Collections.Generic.Dictionary<string, int>) — private static List<string> RecordChanges(NationalLegacy n, Dictionary<string, int> before)`
 
-来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
+**调用者：** [`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)
 
 **调用：** [`NationalSpire.NationalDevelopment.Description(string, int)`](NationalDevelopment.cs.md#symbol-eb5d5925eb64)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -582,18 +598,18 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.NewsCandidates(NationalSpire.CareerData) — public static NationalLegacy[] NewsCandidates(CareerData d)`
 
-来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.TryPublish(NationalSpire.CareerData, System.Random)`](NationalDevelopment.cs.md#symbol-620f6dd04f3a)；[`NationalSpire.WorldEvents.PublishDaily(NationalSpire.CareerData, System.Random, string)`](WorldEvents.cs.md#symbol-8fcd6ba2bc77)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalLegacy.NewsDay`；`NationalSpire.NationalLegacy.NewsFortune`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.NationalLegacy.NewsDay`；`NationalSpire.NationalLegacy.NewsFortune`；`NationalSpire.NationalLegacy.NewsPending`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`d.Esports.Nations          .Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7).ToArray()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => d.Esports.Nations          .Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Nations          .Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Esports.Nations          .Where(n => n.NewsFortune > 0 && d.Day - n.NewsDay <= 7).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`d.Esports.Nations          .Where(n => (n.NewsPending ?? n.NewsFortune != 0) && d.Day - n.NewsDay <= 7).ToArray()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => d.Esports.Nations          .Where(n => (n.NewsPending ?? n.NewsFortune != 0) && d.Day - n.NewsDay <= 7).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Nations          .Where(n => (n.NewsPending ?? n.NewsFortune != 0) && d.Day - n.NewsDay <= 7)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Esports.Nations          .Where(n => (n.NewsPending ?? n.NewsFortune != 0) && d.Day - n.NewsDay <= 7).ToArray`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -602,25 +618,25 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.TryPublish(NationalSpire.CareerData, System.Random) — public static bool TryPublish(CareerData d, Random random)`
 
-来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.WorldEvents.PublishDaily(NationalSpire.CareerData, System.Random, string)`](WorldEvents.cs.md#symbol-8fcd6ba2bc77)
 
 **调用：** [`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`](CareerEngine.cs.md#symbol-cd8fd2c800e7)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](NationalDevelopment.cs.md#symbol-b710a79bb597)；[`NationalSpire.NationalDevelopment.NewsCandidates(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e576507dcbf6)；[`NationalSpire.SpireArbitration.Banned(NationalSpire.CareerPerson, int)`](SpireArbitration.cs.md#symbol-05f06b3ee7b9)；[`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`](WorldEvents.cs.md#symbol-04c812704f65)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Random.Next(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.NationalDevelopment.NewsCandidates(NationalSpire.CareerData)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.Gdp`；`NationalSpire.NationalLegacy.NewsChanges`；`NationalSpire.NationalLegacy.NewsDay`；`NationalSpire.NationalLegacy.NewsFortune`；`NationalSpire.SpireArbitration.Banned(NationalSpire.CareerPerson, int)`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.Fortune`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.NationalDevelopment.NewsCandidates(NationalSpire.CareerData)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.Gdp`；`NationalSpire.NationalLegacy.NewsChanges`；`NationalSpire.NationalLegacy.NewsDay`；`NationalSpire.NationalLegacy.NewsFortune`；`NationalSpire.NationalLegacy.NewsPending`；`NationalSpire.SpireArbitration.Banned(NationalSpire.CareerPerson, int)`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.Fortune`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`；输入表达式：`CareerEngine.Publish(d, key, n.Country + "国运发展公报",              $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])              + "\n请结合本次比赛与当地生活情况组织报道和人物讨论。各项指标的现状、上升、下降及建设进度以本次资料为准。人物从自己的身份、经历和处境出发，谈论这些变化带来的影响。", "国家发展", true, people)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerEngine.Publish(d, key, n.Country + "国运发展公报",              $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])              + "\n请结合本次比赛与当地生活情况组织报道和人物讨论。各项指标的现状、上升、下降及建设进度以本次资料为准。人物从自己的身份、经历和处境出发，谈论这些变化带来的影响。", "国家发展", true, people);`
+- `NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`；输入表达式：`CareerEngine.Publish(d, key, n.Country + "国运发展公报",              $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中国运净变化{n.NewsFortune:+0;-0;0}。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])              + "\n请结合本次比赛与当地生活情况组织报道和人物讨论。各项指标的现状、上升、下降及建设进度以本次资料为准。人物从自己的身份、经历和处境出发，谈论这些变化带来的影响。", "国家发展", true, people)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerEngine.Publish(d, key, n.Country + "国运发展公报",              $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中国运净变化{n.NewsFortune:+0;-0;0}。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])              + "\n请结合本次比赛与当地生活情况组织报道和人物讨论。各项指标的现状、上升、下降及建设进度以本次资料为准。人物从自己的身份、经历和处境出发，谈论这些变化带来的影响。", "国家发展", true, people);`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(key + p.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => CareerEngine.StableHash(key + p.Id)`
 - `NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；输入表达式：`EsportsWorld.IsProfessional(p)`；返回值紧邻使用处：`BinaryExpressionSyntax: p.Country == n.Country && EsportsWorld.IsProfessional(p)`
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(d, n.NewsDay)`；返回值紧邻使用处：`InterpolationSyntax: {GameCalendar.Text(d, n.NewsDay)}`
-- `NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`Context(d, [n.Country])`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])`
+- `NationalSpire.NationalDevelopment.Context(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`Context(d, [n.Country])`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中国运净变化{n.NewsFortune:+0;-0;0}。" + string.Join("", n.NewsChanges)              + $"当前人均GDP {n.Gdp:N0}美元/年。\n" + matches              + "\n" + Context(d, [n.Country])`
 - `NationalSpire.NationalDevelopment.NewsCandidates(NationalSpire.CareerData)`；输入表达式：`NewsCandidates(d)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = NewsCandidates(d)`
 - `NationalSpire.SpireArbitration.Banned(NationalSpire.CareerPerson, int)`；输入表达式：`SpireArbitration.Banned(p, d.Day)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !SpireArbitration.Banned(p, d.Day)`
 - `NationalSpire.WorldEvents.FixtureFacts(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`；输入表达式：`WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c => WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("", n.NewsChanges)`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中新增{n.NewsFortune}国运。" + string.Join("", n.NewsChanges)`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("", n.NewsChanges)`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(d, n.NewsDay)}，{n.Country}在国际赛事中国运净变化{n.NewsFortune:+0;-0;0}。" + string.Join("", n.NewsChanges)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", competitions.Select(c => WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = string.Join("\n", competitions.Select(c => WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => f.Day == n.NewsDay && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)))))`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Any(f => f.Day == n.NewsDay && f.Finished && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c => c.Fixtures.Any(f => f.Day == n.NewsDay && f.Finished && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country))`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)`；返回值紧邻使用处：`BinaryExpressionSyntax: f.Day == n.NewsDay && f.Finished && f.Fortune.Any(a => c.EntrantCountries.GetValueOrDefault(a.Key) == n.Country)`
@@ -640,16 +656,17 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 **赋值（含属性/字段和局部值）：**
 
 - `n.NewsFortune` = `0`
+- `n.NewsPending` = `false`
 
 <a id="symbol-eccbfc720363"></a>
 
 ## `NationalSpire.NationalDevelopment.Breakdown(NationalSpire.NationalLegacy, int) — public static GrowthBreakdown Breakdown(NationalLegacy n, int fortune)`
 
-来源：源码第 316 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 323 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-b5d4218e2bb4)
 
-**调用：** [`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`NationalSpire.NationalDevelopment.GrowthBreakdown.GrowthBreakdown(double, double, double, double, double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Log2(double)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`NationalSpire.NationalDevelopment.GrowthBreakdown.GrowthBreakdown(double, double, double, double, double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`；`System.Math.Log2(double)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.BaseGrowth`；`NationalSpire.NationalDevelopment.FortuneCap`；`NationalSpire.NationalDevelopment.FortuneGrowth`；`NationalSpire.NationalDevelopment.GrowthCeiling`；`NationalSpire.NationalDevelopment.GrowthFloor`；`NationalSpire.NationalDevelopment.GrowthWeight`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.LevelGrowth`；`NationalSpire.NationalLegacy.Gdp`
 
@@ -658,10 +675,9 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 - `NationalSpire.NationalDevelopment.GrowthBreakdown.GrowthBreakdown(double, double, double, double, double)`；输入表达式：`new GrowthBreakdown(BaseGrowth * convergence, structural * LevelGrowth * convergence, FortuneGrowth * strength * convergence,              convergence, Math.Clamp(basis * convergence, GrowthFloor, GrowthCeiling))`；返回值紧邻使用处：`ReturnStatementSyntax: return new GrowthBreakdown(BaseGrowth * convergence, structural * LevelGrowth * convergence, FortuneGrowth * strength * convergence,              convergence, Math.Clamp(basis * convergence, GrowthFloor, GrowthCeiling));`
 - `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, indicator.Id) - 5`
 - `System.Math.Clamp(double, double, double)`；输入表达式：`Math.Clamp(basis * convergence, GrowthFloor, GrowthCeiling)`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(basis * convergence, GrowthFloor, GrowthCeiling)`
+- `System.Math.Clamp(int, int, int)`；输入表达式：`Math.Clamp(fortune, -FortuneCap, FortuneCap)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Clamp(fortune, -FortuneCap, FortuneCap) / (double)FortuneCap`
 - `System.Math.Log2(double)`；输入表达式：`Math.Log2(Math.Max(1000, n.Gdp) / 40000.0)`；返回值紧邻使用处：`BinaryExpressionSyntax: 0.35 * Math.Log2(Math.Max(1000, n.Gdp) / 40000.0)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(1000, n.Gdp)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(1000, n.Gdp) / 40000.0`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(fortune, 0)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(fortune, 0)`
-- `System.Math.Min(int, int)`；输入表达式：`Math.Min(Math.Max(fortune, 0), FortuneCap)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Min(Math.Max(fortune, 0), FortuneCap) / (double)FortuneCap`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -671,7 +687,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.GrowGdp(NationalSpire.NationalLegacy, int) — private static void GrowGdp(NationalLegacy n, int fortune)`
 
-来源：源码第 328 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 335 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
 
@@ -698,7 +714,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.SeasonsPerYear(NationalSpire.CareerData) — public static double SeasonsPerYear(CareerData d)`
 
-来源：源码第 342 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.QuarterlyGdp(NationalSpire.CareerData, NationalSpire.NationalLegacy)`](NationalDevelopment.cs.md#symbol-7ac5ee741f9b)
 
@@ -717,7 +733,7 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 ## `NationalSpire.NationalDevelopment.QuarterlyGdp(NationalSpire.CareerData, NationalSpire.NationalLegacy) — public static int QuarterlyGdp(CareerData d, NationalLegacy n)`
 
-来源：源码第 345 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 352 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -733,88 +749,41 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2430ad41a5d9"></a>
+<a id="symbol-a22a051d52fb"></a>
 
-## `NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int) — private static List<string> PayMaintenance(CareerData d, NationalLegacy n, ref int budget)`
+## `NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, double, string) — private static List<string> Upgrade(CareerData d, NationalLegacy n, double budget, string source)`
 
-来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)
-
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.NationalDevelopment.InGroup(string)`](NationalDevelopment.cs.md#symbol-1688e440426e)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；[`NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool)`](NationalDevelopment.cs.md#symbol-ba4f9575e17b)；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Math.Max(int, int)`；`System.Math.Min(double, double)`；`System.Random.Next(int)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
-
-**字段、属性、事件及方法组引用：** `(NationalSpire.NationalDevelopment.Indicator Indicator, int Deficit).Deficit`；`(NationalSpire.NationalDevelopment.Indicator Indicator, int Deficit).Indicator`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.BaseLevels`；`NationalSpire.NationalDevelopment.DefaultLevels`；`NationalSpire.NationalDevelopment.Groups`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.InGroup(string)`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalDevelopment.MaintenancePerGroup`；`NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.Indicators`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}:maintenance")`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}:maintenance")`
-- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:recovery")`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:recovery")`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(g)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(g).Sum`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: baseline[index] - Level(n, i.Id)`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: i => Level(n, i.Id)`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, item.Indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, item.Indicator.Id) + 1`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, target)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, target) - 1`
-- `NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool)`；输入表达式：`Pick(d, n, group, ":maintain:", aboveZero: true)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Pick(d, n, group, ":maintain:", aboveZero: true) is not { } target`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id))).ThenBy`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id))))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where`
-- `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`deficits.Sum(x => x.Deficit)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = deficits.Sum(x => x.Deficit)`
-- `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`InGroup(g).Sum(i => Level(n, i.Id))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => InGroup(g).Sum(i => Level(n, i.Id))`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where(x => x.Deficit > 0).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where(x => x.Deficit > 0).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id))).ThenBy(g => g, StringComparer.Ordinal).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id))).ThenBy(g => g, StringComparer.Ordinal).ToList()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where(x => x.Deficit > 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: All.Select((i, index) => (Indicator: i, Deficit: Math.Max(0, baseline[index] - Level(n, i.Id)))).Where(x => x.Deficit > 0).ToArray`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`BaseLevels.GetValueOrDefault(n.Country)`；返回值紧邻使用处：`BinaryExpressionSyntax: BaseLevels.GetValueOrDefault(n.Country) ?? DefaultLevels`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`dropped.Add(target)`；返回值紧邻使用处：`ExpressionStatementSyntax: dropped.Add(target);`
-- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id))).ThenBy(g => g, StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Groups.OrderBy(g => InGroup(g).Sum(i => Level(n, i.Id))).ThenBy(g => g, StringComparer.Ordinal).ToList`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, baseline[index] - Level(n, i.Id))`；返回值紧邻使用处：`ArgumentSyntax: Deficit: Math.Max(0, baseline[index] - Level(n, i.Id))`
-- `System.Math.Min(double, double)`；输入表达式：`Math.Min(.75, .05 * total)`；返回值紧邻使用处：`BinaryExpressionSyntax: random.NextDouble() < Math.Min(.75, .05 * total)`
-- `System.Random.Next(int)`；输入表达式：`random.Next(total)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = random.Next(total)`
-- `System.Random.NextDouble()`；输入表达式：`random.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: random.NextDouble() < Math.Min(.75, .05 * total)`
-- `System.Random.NextDouble()`；输入表达式：`random.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: random.NextDouble() >= .25 * unfunded`
-- `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}:maintenance"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}:maintenance"))`
-- `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:recovery"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:recovery"))`
-
-**赋值（含属性/字段和局部值）：**
-
-- `budget` -= `MaintenancePerGroup`
-- `budget` = `0`
-- `n.Indicators[item.Indicator.Id]` = `Level(n, item.Indicator.Id) + 1`
-- `n.Indicators[target]` = `Level(n, target) - 1`
-- `pick` -= `item.Deficit`
-
-<a id="symbol-e2c38799891f"></a>
-
-## `NationalSpire.NationalDevelopment.Upgrade(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string) — private static void Upgrade(CareerData d, NationalLegacy n, int budget, string source)`
-
-来源：源码第 376 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 355 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.NationalDevelopment.Contribute(NationalSpire.CareerData, NationalSpire.NationalLegacy, int, string)`](NationalDevelopment.cs.md#symbol-c1f2a8832691)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.NationalDevelopment.AddExtra(NationalSpire.NationalLegacy, System.Collections.Generic.IReadOnlyList<NationalSpire.NationalDevelopment.Indicator>, double, int)`](NationalDevelopment.cs.md#symbol-b92c3e8ce452)；[`NationalSpire.NationalDevelopment.Cost(int)`](NationalDevelopment.cs.md#symbol-519bf129507f)；[`NationalSpire.NationalDevelopment.InGroup(string)`](NationalDevelopment.cs.md#symbol-1688e440426e)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Random.Next(int)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.NationalDevelopment.Cost(int)`](NationalDevelopment.cs.md#symbol-519bf129507f)；[`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`](NationalDevelopment.cs.md#symbol-8a989c8967b7)；[`NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`](NationalDevelopment.cs.md#symbol-1d0f36f34ac7)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Abs(double)`；`System.Math.Max(double, double)`；`System.Math.Min(double, double)`；`System.Random.Next(int)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.NationalDevelopment.AddExtra(NationalSpire.NationalLegacy, System.Collections.Generic.IReadOnlyList<NationalSpire.NationalDevelopment.Indicator>, double, int)`；`NationalSpire.NationalDevelopment.Cost(int)`；`NationalSpire.NationalDevelopment.Groups`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.InGroup(string)`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.Indicators`；`NationalSpire.NationalLegacy.Pending`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.NationalDevelopment.All`；`NationalSpire.NationalDevelopment.Cost(int)`；`NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；`NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`；`NationalSpire.NationalDevelopment.Groups`；`NationalSpire.NationalDevelopment.Indicator.Group`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.Indicator.Name`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Country`；`NationalSpire.NationalLegacy.ExtraProgress`；`NationalSpire.NationalLegacy.Indicators`；`NationalSpire.NationalLegacy.Progress`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Day}:{source}:construction")`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Day}:{source}:construction")`
-- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick")`
-- `NationalSpire.NationalDevelopment.AddExtra(NationalSpire.NationalLegacy, System.Collections.Generic.IReadOnlyList<NationalSpire.NationalDevelopment.Indicator>, double, int)`；输入表达式：`AddExtra(n, full, extra, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddExtra(n, full, extra, d.Day);`
-- `NationalSpire.NationalDevelopment.AddExtra(NationalSpire.NationalLegacy, System.Collections.Generic.IReadOnlyList<NationalSpire.NationalDevelopment.Indicator>, double, int)`；输入表达式：`AddExtra(n, indicators, pending, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddExtra(n, indicators, pending, d.Day);`
-- `NationalSpire.NationalDevelopment.Cost(int)`；输入表达式：`Cost(Level(n, indicator.Id))`；返回值紧邻使用处：`AssignmentExpressionSyntax: pending -= Cost(Level(n, indicator.Id))`
-- `NationalSpire.NationalDevelopment.Cost(int)`；输入表达式：`Cost(Level(n, indicator.Id))`；返回值紧邻使用处：`BinaryExpressionSyntax: pending >= Cost(Level(n, indicator.Id))`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(group)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = InGroup(group)`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(group)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(group)                  .OrderBy`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) < 9`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) == 9`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, indicator.Id)`；返回值紧邻使用处：`ArgumentSyntax: Level(n, indicator.Id)`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, indicator.Id) + 1`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, indicator.Id) < 9`
-- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`indicators.All(i => Level(n, i.Id) == 9)`；返回值紧邻使用处：`IfStatementSyntax: if (indicators.All(i => Level(n, i.Id) == 9)) { AddExtra(n, indicators, pending, d.Day); pending = 0; }`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`InGroup(group)                  .OrderBy(i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(group)                  .OrderBy(i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick"))                  .Where`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`indicators.Where(i => Level(n, i.Id) == 9).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = indicators.Where(i => Level(n, i.Id) == 9).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`indicators.Where(i => Level(n, i.Id) == 9)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: indicators.Where(i => Level(n, i.Id) == 9).ToArray`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`InGroup(group)                  .OrderBy(i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick"))                  .Where(i => Level(n, i.Id) < 9)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var indicator in InGroup(group)                  .OrderBy(i => CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{i.Id}:pick"))                  .Where(i => Level(n, i.Id) < 9))              {                  while (Level(n, indicator.Id) < 9 && pending >= Cost(Level(n, indicator.Id)))                  {                      pending -= Cost(Level(n, indicator.Id));                      n.Indicators[indicator.Id] = Level(n, indicator.Id) + 1;                  }              }`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Pending.GetValueOrDefault(group)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.Pending.GetValueOrDefault(group) + budget * weights[groupIndex]`
+- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{source}:0")`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{source}:0") % full.Count`
+- `NationalSpire.NationalDevelopment.Cost(int)`；输入表达式：`Cost(9 - level)`；返回值紧邻使用处：`BinaryExpressionSyntax: .8 * Cost(9 - level)`
+- `NationalSpire.NationalDevelopment.Cost(int)`；输入表达式：`Cost(level)`；返回值紧邻使用处：`ConditionalExpressionSyntax: sign > 0 ? Cost(level) : .8 * Cost(9 - level)`
+- `NationalSpire.NationalDevelopment.DecayExtra(NationalSpire.NationalLegacy, int)`；输入表达式：`DecayExtra(n, d.Day)`；返回值紧邻使用处：`ExpressionStatementSyntax: DecayExtra(n, d.Day);`
+- `NationalSpire.NationalDevelopment.Enhancement(NationalSpire.NationalLegacy, string, int)`；输入表达式：`Enhancement(n, indicator.Id, d.Day)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Enhancement(n, indicator.Id, d.Day)`
+- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Level(n, id)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`All.Where(i => i.Group == Groups[group])`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var indicator in All.Where(i => i.Group == Groups[group]))          {              string id = indicator.Id;              double delta = budget * weights[group] / 3;              if (delta < 0)              {                  double used = Math.Min(n.ExtraProgress.GetValueOrDefault(id), -delta);                  double remaining = n.ExtraProgress.GetValueOrDefault(id) - used;                  n.ExtraProgress[id] = remaining >= 600.0 / 99 ? remaining : 0;                  delta += used;              }              int sign = delta > 0 ? 1 : -1;              double amount = Math.Abs(delta), progress = n.Progress.GetValueOrDefault(id);              while (amount > 1e-8)              {                  int level = Level(n, id);                  double cost = sign > 0 ? Cost(level) : .8 * Cost(9 - level);                  if (level == 9 && sign > 0)                  {                      double used = Math.Min(amount, Math.Max(0, -progress) * cost);                      progress += used / cost;                      if (amount - used > 1e-8) { overflow += amount - used; full.Add(indicator); }                      break;                  }                  if (level == 0 && sign < 0) { progress = Math.Max(0, progress - amount / cost); break; }                  double needed = (1 - sign * progress) * cost;                  if (amount < needed - 1e-8) { progress += sign * amount / cost; break; }                  amount -= needed; progress = 0; n.Indicators[id] = level + sign;              }              n.Progress[id] = progress;          }`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.ExtraProgress.GetValueOrDefault(id)`；返回值紧邻使用处：`ArgumentSyntax: n.ExtraProgress.GetValueOrDefault(id)`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.ExtraProgress.GetValueOrDefault(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.ExtraProgress.GetValueOrDefault(id) - used`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.ExtraProgress.GetValueOrDefault(indicator.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: n.ExtraProgress.GetValueOrDefault(indicator.Id) + overflow`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`n.Progress.GetValueOrDefault(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = n.Progress.GetValueOrDefault(id)`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`changes.Add($"{n.Country}{indicator.Name}临时增强 {before:0.#%}→{after:0.#%}。新增满级建设投入已计入，增强随日期逐渐衰减。")`；返回值紧邻使用处：`ExpressionStatementSyntax: changes.Add($"{n.Country}{indicator.Name}临时增强 {before:0.#%}→{after:0.#%}。新增满级建设投入已计入，增强随日期逐渐衰减。");`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`full.Add(indicator)`；返回值紧邻使用处：`ExpressionStatementSyntax: full.Add(indicator);`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Indicator>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Indicator>()`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
+- `System.Math.Abs(double)`；输入表达式：`Math.Abs(delta)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Abs(delta)`
+- `System.Math.Max(double, double)`；输入表达式：`Math.Max(0, -progress)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Max(0, -progress) * cost`
+- `System.Math.Max(double, double)`；输入表达式：`Math.Max(0, progress - amount / cost)`；返回值紧邻使用处：`AssignmentExpressionSyntax: progress = Math.Max(0, progress - amount / cost)`
+- `System.Math.Min(double, double)`；输入表达式：`Math.Min(amount, Math.Max(0, -progress) * cost)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(amount, Math.Max(0, -progress) * cost)`
+- `System.Math.Min(double, double)`；输入表达式：`Math.Min(n.ExtraProgress.GetValueOrDefault(id), -delta)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(n.ExtraProgress.GetValueOrDefault(id), -delta)`
 - `System.Random.Next(int)`；输入表达式：`random.Next(Groups.Length)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = random.Next(Groups.Length)`
 - `System.Random.NextDouble()`；输入表达式：`random.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: (1 - main) * random.NextDouble()`
 - `System.Random.NextDouble()`；输入表达式：`random.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: random.NextDouble() * .2`
@@ -822,33 +791,17 @@ private const double GrowthFloor = -0.02, GrowthCeiling = 0.04;
 
 **赋值（含属性/字段和局部值）：**
 
-- `n.Indicators[indicator.Id]` = `Level(n, indicator.Id) + 1`
-- `n.Pending[group]` = `pending`
-- `pending` -= `Cost(Level(n, indicator.Id))`
-- `pending` = `0`
+- `amount` -= `needed`
+- `delta` += `used`
+- `n.ExtraProgress[id]` = `remaining >= 600.0 / 99 ? remaining : 0`
+- `n.ExtraProgress[indicator.Id]` = `value >= 600.0 / 99 ? value : 0`
+- `n.Indicators[id]` = `level + sign`
+- `n.Progress[id]` = `progress`
+- `overflow` += `amount - used`
+- `progress` += `sign * amount / cost`
+- `progress` += `used / cost`
+- `progress` = `0`
+- `progress` = `Math.Max(0, progress - amount / cost)`
 - `weights[(primary + 1) % 3]` = `secondary`
 - `weights[(primary + 2) % 3]` = `1 - main - secondary`
 - `weights[primary]` = `main`
-
-<a id="symbol-ba4f9575e17b"></a>
-
-## `NationalSpire.NationalDevelopment.Pick(NationalSpire.CareerData, NationalSpire.NationalLegacy, string, string, bool) — private static string? Pick(CareerData d, NationalLegacy n, string group, string salt, bool aboveZero)`
-
-来源：源码第 408 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.NationalDevelopment.PayMaintenance(NationalSpire.CareerData, NationalSpire.NationalLegacy, ref int)`](NationalDevelopment.cs.md#symbol-2430ad41a5d9)
-
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.NationalDevelopment.InGroup(string)`](NationalDevelopment.cs.md#symbol-1688e440426e)；[`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`](NationalDevelopment.cs.md#symbol-b758e69d4a1d)；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
-
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Season`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.NationalDevelopment.Indicator.Id`；`NationalSpire.NationalDevelopment.InGroup(string)`；`NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；`NationalSpire.NationalLegacy.Country`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}{salt}")`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash($"{d.WorldId}:{n.Country}:{d.Season}:{group}{salt}") & 0x7fffffff`
-- `NationalSpire.NationalDevelopment.InGroup(string)`；输入表达式：`InGroup(group)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(group).Where`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) < 9`
-- `NationalSpire.NationalDevelopment.Level(NationalSpire.NationalLegacy, string)`；输入表达式：`Level(n, i.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: Level(n, i.Id) > 0`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`InGroup(group).Where(i => aboveZero ? Level(n, i.Id) > 0 : Level(n, i.Id) < 9).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = InGroup(group).Where(i => aboveZero ? Level(n, i.Id) > 0 : Level(n, i.Id) < 9).ToList()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`InGroup(group).Where(i => aboveZero ? Level(n, i.Id) > 0 : Level(n, i.Id) < 9)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: InGroup(group).Where(i => aboveZero ? Level(n, i.Id) > 0 : Level(n, i.Id) < 9).ToList`
-
-**赋值（含属性/字段和局部值）：**

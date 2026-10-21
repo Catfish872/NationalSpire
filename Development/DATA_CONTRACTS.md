@@ -101,9 +101,10 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 - FailureDecision.Result 保存失利待选择的原成绩，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。已正式结算的历史继续沿用原记录。
 
 - WorldCompetition.FortuneVersion：0 为旧赛事，整届结束发放；1 为新建国际赛事，逐场发放。旧档已生成赛事保持 0，防止重复发放历史赛果。
-- WorldFixture.FortuneSettled 防止重复确认赛果；PromotionSettled 防止重复补充团体晋级贡献；Fortune 保存各人的本场贡献，DevelopmentChanges 保存实际等级变化。预生成成绩不设置收据。
+- WorldFixture.FortuneSettled 防止重复确认赛果；PromotionSettled 防止重复结算团体胜负贡献；Fortune 保存各人的有符号本场贡献，DevelopmentChanges 保存实际等级及临时增强变化。团体整轮完成后统一结算，建设变化写入最后完成的对局。预生成成绩不设置收据。
 - CircuitAward.Completed 默认 true，兼容旧荣誉。逐场创建记录为 false、积分为 0；最终 Settle 在原记录补充名次和积分。世界荣誉只取完成记录，国运榜读取进行中的贡献；积分完成后主动失效 AvatarHonors 排名缓存。
-- NationalLegacy.Indicators 为九项等级，Pending 为三类未用建设余额，MaintenanceFunding 为本赛季维护额度；DevelopmentVersion、ReportSeason 用于迁移和换季去重。首次启用给予当前赛季 120 维护额度，不追扣历史维护。NewsDay/NewsFortune/NewsChanges 保存公报候选，LastReport 供界面读取。
+- NationalLegacy.Indicators 为九项0至9等级；Progress 按指标编号保存有符号的当前等级进度，达到+1升级、达到−1降级。ExtraProgress 按指标保存满级后的原始建设量，ExtraProgressDay 为衰减基准日期。DevelopmentVersion=2 表示逐指标进度结构；升级时将旧 Pending 类别余额均分给类内三项，未满级换算为升级进度，满级加入增强量，随后清空 Pending、MaintenanceFunding。迁移保留既有等级与衰减后的增强量，ReportSeason 至少为当前赛季；再次读取不重复迁移。
+- NewsDay/NewsFortune/NewsChanges 保存本日有符号贡献与实际变化，NewsPending 标识尚未报道，即使正负贡献相抵为0仍可报道；旧档 null 沿用 NewsFortune 非0判定。TryPublish 成功登记帖子后清除待报道状态。LastReport 保留最近一次实际变化供界面读取。ReportSeason 去重换季GDP更新，换季维护扣款与随机等级恢复已移除。国家 Treasury 随正负贡献增减；俱乐部补贴只使用非负储备，玩家钱包仅领取正国运奖励。字段沿原赛果、日期或商品命令一起保存及广播，未增加独立保存或网络消息。
 - CareerResult.Simulated 默认 false。模拟成绩仍写入原结果、荣誉、评分、奖金、关注和职业最高进阶；主要战报与结算标明模拟。RunSeconds 保存实际抽取的用时：以原平均用时为基准上下3%，根据原胜负收窄可取范围，平局沿用原整数秒。用时使用 WorldId、match.Seed 和独立用途后缀确定，Sample 返回值随正式结算写入原字段；旧的已完成结果继续保留。模拟不产生原版对局、原版战斗记录、牌组或战斗证据。
 - CareerPerson.Fans 可空，null 时从 CareerAudience 读取初值，NPC 首次增加关注时写入整数。真人以 CoopMember.Fans 为准，RefreshPeople 更新显示人物。旧玩家关注不重算。
 - CareerData.Market 为公开共同行情。MarketCatalog统一整理地区品牌及CareerCommerce.LegacySponsors提供的旧版品牌，按地区、类别及名称去重，当前201项资产。旧版通用品牌沿用中国地区和原类别。CatalogVersion保存MarketCatalog.Version，由完整资产编号列表及60条起始曲线规则生成；PricingVersion=1 表示旧待处理外汇信号已计入报价。LastDay 为最后更新日，Revision 为报价版本。每项 Quote 保存现价、前价及最多180条价格；SyntheticThrough 区分补入的模拟前史。Market.Events 保存最多240条公开市场事件，NewsDay为已选入新闻的截止日期，同时用于市场新闻七天间隔；只选择最近七天且晚于此日期的最多八条事件。

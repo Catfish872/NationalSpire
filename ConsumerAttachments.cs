@@ -38,7 +38,7 @@ public static class ConsumerAttachments
             var verb = good.Activities.FirstOrDefault(v => v.Id == a.GoodVerb);
             if (verb == null) return "请选择这件商品对应的活动。";
             var guests = a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray();
-            if (guests.Length > verb.Slots || guests.Any(id => !ConsumerEngine.CanInvite(d, id))) return $"这项活动最多邀请{verb.Slots}人，请选择能够联系的受邀者。";
+            if (ConsumerEngine.Guests(d, guests, verb.Slots) is { } guestError) return guestError;
         }
         int buy = ToBuy(d, good, a.Kind == "activity" ? 1 : a.Quantity);
         if (buy > 0 && ConsumerEngine.Buy(d, good.Id, quantity: buy) is { } paymentError) return paymentError;
@@ -82,9 +82,10 @@ public static class ConsumerAttachments
     public static string? Attend(CareerData d, PrivateOffer a, bool publicly)
     {
         if (Find(d, a) is not { State: "accepted" } saved) return "这项活动的付款记录已不可使用。";
-        saved.State = "used";
         var good = ConsumerCatalog.Get(a.GoodId)!; var verb = good.Activities.Single(v => v.Id == a.GoodVerb);
         var guests = a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray();
+        if (ConsumerEngine.Guests(d, guests, verb.Slots) is { } error) return error;
+        saved.State = "used";
         ConsumerEngine.Season(d);
         var s = d.Life.Consumer; s.PartyCount++;
         foreach (string id in guests)

@@ -57,7 +57,7 @@ CardKnowledge.Find 统一读取玩家本轮文字中的卡牌名称；GameCardKn
 | 模块 | 统一入口 | 输入、输出和下游 |
 | --- | --- | --- |
 | 逐场国运 | NationalFortune.Confirm | FinishFixture 的已确认赛果 → Fixture 收据、CircuitAward 累计、国家资金和 Contribute；CircuitLedger.Settle 补全最终名次，MatchImpact 提供结算及战报文字 |
-| 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 国运同时补充维护额度和建设余额；换季计算 GDP 和维护不足下降；WorldEvents 的原有随机事件时机发布公报，继续使用 Publish 与原有社区生成队列 |
+| 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 有符号国运按原三类随机权重推动九项升级或降级；满级溢出投入一项增强，每次有效投入进入结算说明；换季更新GDP和增强衰减；WorldEvents 沿原时机发布上升或下降公报，继续使用 Publish 与原有社区生成队列 |
 | 玩家模拟 | PlayerSimulation.Sample / Run | 本人真实历史优先、选定进阶优先 → 原抽取成绩 → VaryTime 在保持本场胜负的范围内按均值上下3%浮动用时 → RunPerformance；单人 FinishMatch、多人提议确认后 Settle；失利进入 FailureDecision，MatchFailure.RestoreMatch 统一恢复原种子和对手，确认原失败或进入实际重赛后再正式结算 |
 | 关注与报价 | CareerAudience、ClubAudience、SeasonCeremony | 玩家和NPC共用比赛/冠军奖励；ClubAudience.Total 汇总独立关注及现役选手影响；新报价共用两条倍率曲线；奖项保存实际AudienceReward供单人及多人收据使用 |
 | 消费 | ConsumerEngine.Buy / Use | 商品目录、本人 Consumer、邀请对象与关系 → 钱包、物品、关系和公开事实；单人 EconomicActions.Save，多人 Apply/Capture |

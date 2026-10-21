@@ -39,7 +39,7 @@ public sealed class OwnedGood
     public int UsedSeason { get; set; }
 }
 
-/// <summary>耐用品活动：Slots 为邀请人数，Favor 为首次邀请的好感变化。</summary>
+/// <summary>活动的 Slots 为受邀人数上限，0表示沿用群聊名单；Favor 为首次邀请的好感变化。</summary>
 public sealed record GoodVerb(string Id, string Name, int Slots, int Favor);
 
 /// <summary>商品 Price 为显示美元金额；只有宣发活动增加关注，普通消费产生社区事件。</summary>
@@ -51,7 +51,7 @@ public sealed record Good(string Id, string Tier, string Category, string Name, 
         or "spa" or "foodtour" or "beach" or "luxtravel" or "picnic-date" or "planetarium-date" or "pottery-date"
         or "observatory-stay" or "balloon-date" or "lakeside-weekend" or "aurora-retreat" or "island-dinner";
     public bool Giftable => !Promo && !InstantActivity;
-    public IEnumerable<GoodVerb> Activities => Durable ? Verbs : InstantActivity ? [new("experience", Name, Math.Max(1, Slots), 10)] : [];
+    public IEnumerable<GoodVerb> Activities => Durable ? Verbs : InstantActivity ? [new("experience", Name, Slots, 10)] : [];
     /// <summary>实物收藏展示资格；不参与购买次数或活动资格判断。</summary>
     public bool Collectible => Id == "artisan-perfume" || Durable || Category is "收藏" or "数码" or "穿戴" or "家居" or "出行" or "居住" or "誓约";
 }
@@ -82,7 +82,7 @@ public static class ConsumerCatalog
         Item(Mass, "零食甜品", "milktea", "限定奶茶", 30);
         Item(Mass, "零食甜品", "cake", "生日蛋糕", 120);
         Item(Mass, "零食甜品", "coffee", "手冲咖啡豆", 150);
-        Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 3);
+        Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 0);
         Item(Mass, "数码", "mouse", "电竞鼠标", 900);
         Item(Mass, "数码", "keyboard", "机械键盘", 2_000);
         Item(Mass, "数码", "earbuds", "降噪耳机", 2_500);
@@ -103,11 +103,11 @@ public static class ConsumerCatalog
         Item(Mass, "家居", "bedding", "高档床品", 2_600);
         Item(Mass, "家居", "airpurifier", "静音空气净化器", 3_200);
         Item(Mass, "家居", "coffeemachine", "高级咖啡机", 5_000);
-        Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 3);
-        Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 3);
-        Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 3);
-        Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 3);
-        Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 3);
+        Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 0);
+        Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 0);
+        Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 0);
+        Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 0);
+        Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 0);
         Item(Mass, "收藏", "magazine", "创刊号杂志", 700);
         Item(Mass, "收藏", "poster", "限量签名海报", 1_600);
         Item(Mass, "收藏", "figure", "纪念手办", 3_600);
@@ -121,35 +121,35 @@ public static class ConsumerCatalog
         Item(Middle, "居住", "apartment", "小公寓首付", 80_000);
         Item(Middle, "居住", "studio", "独立工作室", 100_000);
         Item(Middle, "健康", "coach", "私教课包", 50_000);
-        Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3);
-        Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3);
+        Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 0);
+        Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 0);
         Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true);
-        Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);
+        Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 0);
 
         // ── 富裕 $300,000–$1,000,000：耐用品带动词，每种活动每季各 1 次 ──
-        Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);
+        Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 0);
         Wear(Rich, "出行", "suv", "硬派越野车", 350_000,
-            new("camp", "露营同行", 4, 10), new("offroad", "越野体验", 2, 10), new("convoy", "车队巡游", 6, 10));
+            new("camp", "露营同行", 0, 10), new("offroad", "越野体验", 0, 10), new("convoy", "车队巡游", 0, 10));
         Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,
-            new("tasting", "品酒会", 6, 10), new("auction", "小型拍卖夜", 6, 10), new("gift", "赠酒", 1, 10));
+            new("tasting", "品酒会", 0, 10), new("auction", "小型拍卖夜", 0, 10), new("gift", "赠酒", 1, 10));
         Wear(Rich, "娱乐", "theater", "私人影音室", 400_000,
-            new("premiere", "首映观影会", 6, 10), new("marathon", "通宵影展", 4, 10), new("review", "复盘放映", 6, 10));
+            new("premiere", "首映观影会", 0, 10), new("marathon", "通宵影展", 0, 10), new("review", "复盘放映", 0, 10));
         Wear(Rich, "出行", "sportscar", "跑车", 500_000,
-            new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 6, 10), new("roadtrip", "自驾远行", 2, 10));
+            new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 0, 10), new("roadtrip", "自驾远行", 0, 10));
         Wear(Rich, "居住", "villa", "独栋别墅", 800_000,
-            new("party", "办一场 party", 6, 10), new("dinner", "家宴", 6, 10), new("openhouse", "开放日", 6, 10));
+            new("party", "办一场 party", 0, 10), new("dinner", "家宴", 0, 10), new("openhouse", "开放日", 0, 10));
         Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,
-            new("party", "楼顶 party", 6, 10), new("view", "夜景小聚", 4, 10), new("brunch", "周末早午餐", 6, 10));
+            new("party", "楼顶 party", 0, 10), new("view", "夜景小聚", 0, 10), new("brunch", "周末早午餐", 0, 10));
 
         // ── 顶奢 $2,000,000+：名誉收藏（同构、规格更高）──
         Wear(Luxury, "居住", "estate", "庄园", 2_500_000,
-            new("party", "庄园宴会", 6, 12), new("garden", "花园茶会", 6, 12), new("open", "庄园开放日", 6, 12));
+            new("party", "庄园宴会", 0, 12), new("garden", "花园茶会", 0, 12), new("open", "庄园开放日", 0, 12));
         Wear(Luxury, "收藏", "art", "当代艺术收藏", 3_000_000,
-            new("preview", "私人预展", 6, 12), new("salon", "艺术沙龙", 6, 12), new("loan", "出借展出", 1, 12));
+            new("preview", "私人预展", 0, 12), new("salon", "艺术沙龙", 0, 12), new("loan", "出借展出", 1, 12));
         Wear(Luxury, "出行", "yacht", "大型游艇", 6_000_000,
-            new("sail", "出海", 6, 12), new("dinner", "海上晚宴", 6, 12), new("regatta", "帆船观摩", 6, 12));
+            new("sail", "出海", 0, 12), new("dinner", "海上晚宴", 0, 12), new("regatta", "帆船观摩", 0, 12));
         Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,
-            new("feast", "岛宴", 6, 15), new("retreat", "闭门集训营", 6, 15), new("festival", "岛上音乐节", 6, 15));
+            new("feast", "岛宴", 0, 15), new("retreat", "闭门集训营", 0, 15), new("festival", "岛上音乐节", 0, 15));
 
         // ── 运营：每项每赛季 3 次，价格固定不递增 ──
         Item(Promo, "热搜", "hotsearch", "买热搜", 50_000, promo: true);

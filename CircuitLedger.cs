@@ -110,8 +110,8 @@ public static class CircuitLedger
             int previousYear = Year(d.Season - 1);
             foreach (var nation in d.Esports.Nations)
             {
-                int gain = Math.Min(1500, Fortune(d, nation.Country, previousYear));
-                int spending = Math.Min(nation.Treasury, gain); nation.Treasury -= spending; nation.Development += spending;
+                int gain = Math.Clamp(Fortune(d, nation.Country, previousYear), 0, 1500);
+                int spending = Math.Min(Math.Max(0, nation.Treasury), gain); nation.Treasury -= spending; nation.Development += spending;
                 foreach (var club in d.Esports.Clubs.Where(c => c.Country == nation.Country))
                 {
                     int share = spending / d.Esports.Clubs.Count(c => c.Country == nation.Country);

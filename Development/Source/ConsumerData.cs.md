@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1F7EBAFE6F783C92A139B4D9CCC65ED3697999B89F279D56CE804B55B2908A57`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9DC11CA1C0955E154517D0D5514EA9546E4D7194BB431336EF81384CA2EE4CC5`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -494,14 +494,13 @@ public static readonly Good[] All = Build();
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Math.Max(int, int)`
+**调用：** `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Good.Durable`；`NationalSpire.Good.InstantActivity`；`NationalSpire.Good.Name`；`NationalSpire.Good.Slots`；`NationalSpire.Good.Verbs`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("experience", Name, Math.Max(1, Slots), 10)`；返回值紧邻使用处：`ExpressionElementSyntax: new("experience", Name, Math.Max(1, Slots), 10)`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(1, Slots)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(1, Slots)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("experience", Name, Slots, 10)`；返回值紧邻使用处：`ExpressionElementSyntax: new("experience", Name, Slots, 10)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -591,7 +590,7 @@ public static readonly Good[] All = Build();
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-198cb79dad5e)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-955c5c003d05)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
+**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-be93238a8d33)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-ade1eb7c9eca)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
 
 **字段、属性、事件及方法组引用：** `Item(string, string, string, string, int, bool, bool, int)`；`NationalSpire.ConsumerCatalog.Luxury`；`NationalSpire.ConsumerCatalog.Mass`；`NationalSpire.ConsumerCatalog.Middle`；`NationalSpire.ConsumerCatalog.Promo`；`NationalSpire.ConsumerCatalog.Rich`；`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`
 
@@ -617,7 +616,7 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "cake", "生日蛋糕", 120)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "cake", "生日蛋糕", 120);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "chocolate-box", "手工巧克力礼盒", 240);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "coffee", "手冲咖啡豆", 150)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "coffee", "手冲咖啡豆", 150);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "hotpot", "请客火锅", 300, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "icecream", "街角甜筒", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "icecream", "街角甜筒", 20);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "零食甜品", "milktea", "限定奶茶", 30)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "零食甜品", "milktea", "限定奶茶", 30);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "收藏", "figure", "纪念手办", 3_600)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "收藏", "figure", "纪念手办", 3_600);`
@@ -634,13 +633,13 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "数码", "phone", "旗舰手机", 6_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "数码", "phone", "旗舰手机", 6_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "数码", "projector", "家用投影", 7_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "数码", "projector", "家用投影", 7_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "数码", "watch", "智能手表", 4_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "数码", "watch", "智能手表", 4_000);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 3);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 3);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 3);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "concert", "演唱会门票", 1_500, slots: 0);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "gameroom", "游戏厅通宵", 800, slots: 0);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "karaoke", "KTV 包厢", 1_000, slots: 0);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "movie", "包场看电影", 600, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "picnic-date", "双人草坪野餐", 360, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "planetarium-date", "星空馆之约", 480, repeatable: true, slots: 1);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Mass, "娱乐", "theatre", "小剧场包场", 1_200, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "出行", "car", "私家车", 45_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "出行", "car", "私家车", 45_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "出行", "ebike", "高端电助力车", 30_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "出行", "ebike", "高端电助力车", 30_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "穿戴", "luxwatch", "高级腕表", 60_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "穿戴", "luxwatch", "高级腕表", 60_000);`
@@ -649,11 +648,11 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "居住", "apartment", "小公寓首付", 80_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "居住", "apartment", "小公寓首付", 80_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "居住", "studio", "独立工作室", 100_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "居住", "studio", "独立工作室", 100_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "礼物", "artisan-perfume", "调香师定制香水", 32_000);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 3);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "beach", "海岛度假", 70_000, repeatable: true, slots: 0);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "foodtour", "美食巡礼", 35_000, repeatable: true, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "observatory-stay", "山顶观星小住", 65_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "ski", "滑雪季卡", 40_000, repeatable: true);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "旅行", "spa", "温泉度假", 30_000, repeatable: true, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "数码", "cinema", "家庭影院", 90_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "数码", "cinema", "家庭影院", 90_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Middle, "娱乐", "pottery-date", "双人陶艺工坊", 35_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Promo, "热搜", "fandom", "粉丝团运营", 30_000, promo: true);`
@@ -663,55 +662,55 @@ public static readonly Good[] All = Build();
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "穿戴", "gem-pendant", "星光宝石吊坠", 450_000);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "balloon-date", "日出热气球之旅", 380_000, repeatable: true, slots: 1);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "lakeside-weekend", "湖畔木屋周末", 600_000, repeatable: true, slots: 1);`
-- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 3);`
+- `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "旅行", "luxtravel", "超级奢侈旅游", 300_000, repeatable: true, slots: 0);`
 - `Item(string, string, string, string, int, bool, bool, int)`；输入表达式：`Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000)`；返回值紧邻使用处：`ExpressionStatementSyntax: Item(Rich, "收藏", "custom-music-box", "匠人定制八音盒", 320_000);`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("auction", "小型拍卖夜", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("auction", "小型拍卖夜", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("brunch", "周末早午餐", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("brunch", "周末早午餐", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("camp", "露营同行", 4, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("camp", "露营同行", 4, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("convoy", "车队巡游", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("convoy", "车队巡游", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("dinner", "海上晚宴", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("dinner", "海上晚宴", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("dinner", "家宴", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("dinner", "家宴", 6, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("auction", "小型拍卖夜", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("auction", "小型拍卖夜", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("brunch", "周末早午餐", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("brunch", "周末早午餐", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("camp", "露营同行", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("camp", "露营同行", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("convoy", "车队巡游", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("convoy", "车队巡游", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("dinner", "海上晚宴", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("dinner", "海上晚宴", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("dinner", "家宴", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("dinner", "家宴", 0, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("drive", "载一人兜风", 1, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("drive", "载一人兜风", 1, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("feast", "岛宴", 6, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("feast", "岛宴", 6, 15)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("festival", "岛上音乐节", 6, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("festival", "岛上音乐节", 6, 15)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("garden", "花园茶会", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("garden", "花园茶会", 6, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("feast", "岛宴", 0, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("feast", "岛宴", 0, 15)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("festival", "岛上音乐节", 0, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("festival", "岛上音乐节", 0, 15)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("garden", "花园茶会", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("garden", "花园茶会", 0, 12)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("gift", "赠酒", 1, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("gift", "赠酒", 1, 10)`
 - `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("loan", "出借展出", 1, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("loan", "出借展出", 1, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("marathon", "通宵影展", 4, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("marathon", "通宵影展", 4, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("offroad", "越野体验", 2, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("offroad", "越野体验", 2, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("open", "庄园开放日", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("open", "庄园开放日", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("openhouse", "开放日", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("openhouse", "开放日", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "办一场 party", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "办一场 party", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "楼顶 party", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "楼顶 party", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "庄园宴会", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "庄园宴会", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("premiere", "首映观影会", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("premiere", "首映观影会", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("preview", "私人预展", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("preview", "私人预展", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("regatta", "帆船观摩", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("regatta", "帆船观摩", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("retreat", "闭门集训营", 6, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("retreat", "闭门集训营", 6, 15)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("review", "复盘放映", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("review", "复盘放映", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("roadtrip", "自驾远行", 2, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("roadtrip", "自驾远行", 2, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("sail", "出海", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("sail", "出海", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("salon", "艺术沙龙", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("salon", "艺术沙龙", 6, 12)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("show", "车友聚会", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("show", "车友聚会", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("tasting", "品酒会", 6, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("tasting", "品酒会", 6, 10)`
-- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("view", "夜景小聚", 4, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("view", "夜景小聚", 4, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("marathon", "通宵影展", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("marathon", "通宵影展", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("offroad", "越野体验", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("offroad", "越野体验", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("open", "庄园开放日", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("open", "庄园开放日", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("openhouse", "开放日", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("openhouse", "开放日", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "办一场 party", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "办一场 party", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "楼顶 party", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "楼顶 party", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("party", "庄园宴会", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("party", "庄园宴会", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("premiere", "首映观影会", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("premiere", "首映观影会", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("preview", "私人预展", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("preview", "私人预展", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("regatta", "帆船观摩", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("regatta", "帆船观摩", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("retreat", "闭门集训营", 0, 15)`；返回值紧邻使用处：`ArgumentSyntax: new("retreat", "闭门集训营", 0, 15)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("review", "复盘放映", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("review", "复盘放映", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("roadtrip", "自驾远行", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("roadtrip", "自驾远行", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("sail", "出海", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("sail", "出海", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("salon", "艺术沙龙", 0, 12)`；返回值紧邻使用处：`ArgumentSyntax: new("salon", "艺术沙龙", 0, 12)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("show", "车友聚会", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("show", "车友聚会", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("tasting", "品酒会", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("tasting", "品酒会", 0, 10)`
+- `NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；输入表达式：`new("view", "夜景小聚", 0, 10)`；返回值紧邻使用处：`ArgumentSyntax: new("view", "夜景小聚", 0, 10)`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Good>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Good>()`
 - `System.Collections.Generic.List<T>.ToArray()`；输入表达式：`list.ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return list.ToArray();`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "出行", "yacht", "大型游艇", 6_000_000,              new("sail", "出海", 6, 12), new("dinner", "海上晚宴", 6, 12), new("regatta", "帆船观摩", 6, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "出行", "yacht", "大型游艇", 6_000_000,              new("sail", "出海", 6, 12), new("dinner", "海上晚宴", 6, 12), new("regatta", "帆船观摩", 6, 12));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "居住", "estate", "庄园", 2_500_000,              new("party", "庄园宴会", 6, 12), new("garden", "花园茶会", 6, 12), new("open", "庄园开放日", 6, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "居住", "estate", "庄园", 2_500_000,              new("party", "庄园宴会", 6, 12), new("garden", "花园茶会", 6, 12), new("open", "庄园开放日", 6, 12));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,              new("feast", "岛宴", 6, 15), new("retreat", "闭门集训营", 6, 15), new("festival", "岛上音乐节", 6, 15))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,              new("feast", "岛宴", 6, 15), new("retreat", "闭门集训营", 6, 15), new("festival", "岛上音乐节", 6, 15));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "收藏", "art", "当代艺术收藏", 3_000_000,              new("preview", "私人预展", 6, 12), new("salon", "艺术沙龙", 6, 12), new("loan", "出借展出", 1, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "收藏", "art", "当代艺术收藏", 3_000_000,              new("preview", "私人预展", 6, 12), new("salon", "艺术沙龙", 6, 12), new("loan", "出借展出", 1, 12));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "出行", "sportscar", "跑车", 500_000,              new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 6, 10), new("roadtrip", "自驾远行", 2, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "出行", "sportscar", "跑车", 500_000,              new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 6, 10), new("roadtrip", "自驾远行", 2, 10));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "出行", "suv", "硬派越野车", 350_000,              new("camp", "露营同行", 4, 10), new("offroad", "越野体验", 2, 10), new("convoy", "车队巡游", 6, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "出行", "suv", "硬派越野车", 350_000,              new("camp", "露营同行", 4, 10), new("offroad", "越野体验", 2, 10), new("convoy", "车队巡游", 6, 10));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,              new("party", "楼顶 party", 6, 10), new("view", "夜景小聚", 4, 10), new("brunch", "周末早午餐", 6, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,              new("party", "楼顶 party", 6, 10), new("view", "夜景小聚", 4, 10), new("brunch", "周末早午餐", 6, 10));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "居住", "villa", "独栋别墅", 800_000,              new("party", "办一场 party", 6, 10), new("dinner", "家宴", 6, 10), new("openhouse", "开放日", 6, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "居住", "villa", "独栋别墅", 800_000,              new("party", "办一场 party", 6, 10), new("dinner", "家宴", 6, 10), new("openhouse", "开放日", 6, 10));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,              new("tasting", "品酒会", 6, 10), new("auction", "小型拍卖夜", 6, 10), new("gift", "赠酒", 1, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,              new("tasting", "品酒会", 6, 10), new("auction", "小型拍卖夜", 6, 10), new("gift", "赠酒", 1, 10));`
-- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "娱乐", "theater", "私人影音室", 400_000,              new("premiere", "首映观影会", 6, 10), new("marathon", "通宵影展", 4, 10), new("review", "复盘放映", 6, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "娱乐", "theater", "私人影音室", 400_000,              new("premiere", "首映观影会", 6, 10), new("marathon", "通宵影展", 4, 10), new("review", "复盘放映", 6, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "出行", "yacht", "大型游艇", 6_000_000,              new("sail", "出海", 0, 12), new("dinner", "海上晚宴", 0, 12), new("regatta", "帆船观摩", 0, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "出行", "yacht", "大型游艇", 6_000_000,              new("sail", "出海", 0, 12), new("dinner", "海上晚宴", 0, 12), new("regatta", "帆船观摩", 0, 12));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "居住", "estate", "庄园", 2_500_000,              new("party", "庄园宴会", 0, 12), new("garden", "花园茶会", 0, 12), new("open", "庄园开放日", 0, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "居住", "estate", "庄园", 2_500_000,              new("party", "庄园宴会", 0, 12), new("garden", "花园茶会", 0, 12), new("open", "庄园开放日", 0, 12));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,              new("feast", "岛宴", 0, 15), new("retreat", "闭门集训营", 0, 15), new("festival", "岛上音乐节", 0, 15))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "居住", "island", "私人岛屿", 20_000_000,              new("feast", "岛宴", 0, 15), new("retreat", "闭门集训营", 0, 15), new("festival", "岛上音乐节", 0, 15));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Luxury, "收藏", "art", "当代艺术收藏", 3_000_000,              new("preview", "私人预展", 0, 12), new("salon", "艺术沙龙", 0, 12), new("loan", "出借展出", 1, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Luxury, "收藏", "art", "当代艺术收藏", 3_000_000,              new("preview", "私人预展", 0, 12), new("salon", "艺术沙龙", 0, 12), new("loan", "出借展出", 1, 12));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "出行", "sportscar", "跑车", 500_000,              new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 0, 10), new("roadtrip", "自驾远行", 0, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "出行", "sportscar", "跑车", 500_000,              new("drive", "载一人兜风", 1, 10), new("show", "车友聚会", 0, 10), new("roadtrip", "自驾远行", 0, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "出行", "suv", "硬派越野车", 350_000,              new("camp", "露营同行", 0, 10), new("offroad", "越野体验", 0, 10), new("convoy", "车队巡游", 0, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "出行", "suv", "硬派越野车", 350_000,              new("camp", "露营同行", 0, 10), new("offroad", "越野体验", 0, 10), new("convoy", "车队巡游", 0, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,              new("party", "楼顶 party", 0, 10), new("view", "夜景小聚", 0, 10), new("brunch", "周末早午餐", 0, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "居住", "penthouse", "顶层公寓", 1_000_000,              new("party", "楼顶 party", 0, 10), new("view", "夜景小聚", 0, 10), new("brunch", "周末早午餐", 0, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "居住", "villa", "独栋别墅", 800_000,              new("party", "办一场 party", 0, 10), new("dinner", "家宴", 0, 10), new("openhouse", "开放日", 0, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "居住", "villa", "独栋别墅", 800_000,              new("party", "办一场 party", 0, 10), new("dinner", "家宴", 0, 10), new("openhouse", "开放日", 0, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,              new("tasting", "品酒会", 0, 10), new("auction", "小型拍卖夜", 0, 10), new("gift", "赠酒", 1, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "收藏", "cellar", "私人酒窖", 350_000,              new("tasting", "品酒会", 0, 10), new("auction", "小型拍卖夜", 0, 10), new("gift", "赠酒", 1, 10));`
+- `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`；输入表达式：`Wear(Rich, "娱乐", "theater", "私人影音室", 400_000,              new("premiere", "首映观影会", 0, 10), new("marathon", "通宵影展", 0, 10), new("review", "复盘放映", 0, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Wear(Rich, "娱乐", "theater", "私人影音室", 400_000,              new("premiere", "首映观影会", 0, 10), new("marathon", "通宵影展", 0, 10), new("review", "复盘放映", 0, 10));`
 
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-198cb79dad5e"></a>
+<a id="symbol-be93238a8d33"></a>
 
 ## `Item(string, string, string, string, int, bool, bool, int) — void Item(string tier, string category, string id, string name, int price, bool repeatable = false, bool promo = false, int slots = 0)`
 
@@ -731,7 +730,7 @@ public static readonly Good[] All = Build();
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-955c5c003d05"></a>
+<a id="symbol-ade1eb7c9eca"></a>
 
 ## `Wear(string, string, string, string, int, params NationalSpire.GoodVerb[]) — void Wear(string tier, string category, string id, string name, int price, params GoodVerb[] verbs)`
 
