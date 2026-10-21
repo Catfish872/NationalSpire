@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D527DC5E8F6EE34A25C74C1D3B911D0320D4450DA143C762143E01277628FEAC`。来源：[源码](../../CardKnowledge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`083D4787AB867B3A2FD2AC0923C43452BD58E68DFC1A2056631B8D81D0E94DF4`。来源：[源码](../../CardKnowledge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -70,7 +70,7 @@ private static Dictionary<char, CardReference[]> _index = [];
 - `char.ToUpperInvariant(char)`；输入表达式：`char.ToUpperInvariant(text[i])`；返回值紧邻使用处：`ArgumentSyntax: char.ToUpperInvariant(text[i])`
 - `string?.AsSpan(int)`；输入表达式：`text.AsSpan(i)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: text.AsSpan(i).StartsWith`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(text)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(text)) return "";`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", found.Values.Select(c => c.Description))`；返回值紧邻使用处：`BinaryExpressionSyntax: "本轮提及的卡牌\n" + string.Join("\n", found.Values.Select(c => c.Description))`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", found.Values.Select(c => c.Description))`；返回值紧邻使用处：`BinaryExpressionSyntax: "卡牌参考资料\n以下资料由卡名匹配自动补充。请结合上下文，只有确实在谈对应卡牌时才参考其效果；日常用词按原意理解，顺着当前话题自然回应。\n" + string.Join("\n", found.Values.Select(c => c.Description))`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, CardReference>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, CardReference>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；输入表达式：`found.TryAdd(card.Id, card)`；返回值紧邻使用处：`ExpressionStatementSyntax: found.TryAdd(card.Id, card);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`index.TryGetValue(char.ToUpperInvariant(text[i]), out var candidates)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !index.TryGetValue(char.ToUpperInvariant(text[i]), out var candidates)`

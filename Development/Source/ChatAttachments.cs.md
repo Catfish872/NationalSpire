@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`970F0FD8BCB6570DE2ABF1A54E2EAC2AE781C33AD9D4275EA6D2F4D6C3078F5A`。来源：[源码](../../ChatAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`35C210F78516458DB121D628E11F7358DC0166349AFF0003CC528A3D306742D1`。来源：[源码](../../ChatAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@ public const string GiftProtocol = """
 拒绝礼物：
 [Gift: 拒绝, Id: 12]
 只有标记才登记交互，口头答应无法触发实际效果。
-礼物附件附有确定恋人关系或缔结誓约的请求时，接受礼物同时确认该项关系变化；拒绝礼物则保持当前关系。
+普通礼物附件附有确定恋人关系的请求时，接受礼物后成为恋人。接受誓约之戒或盛大婚礼后，双方可以择期举办婚礼；完成婚礼活动后正式缔结誓约。拒绝礼物则保持当前关系。
 """;
 ```
 
@@ -33,9 +33,9 @@ public const string GiftProtocol = """
 
 **调用者：** [`NationalSpire.GroupChatPrompts.UserText(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChatPrompts.cs.md#symbol-28b2a2534bee)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.CareerData, NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-2e632c46656c)
 
-**调用：** [`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-baf7d6edae6c)；[`NationalSpire.GroupChat.Alias(string)`](GroupChatData.cs.md#symbol-917ad43aeded)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(string, string?)`；`string.StartsWith(string)`；`string.TrimEnd(char)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, System.Text.RegularExpressions.MatchEvaluator)`
+**调用：** [`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-baf7d6edae6c)；[`NationalSpire.GroupChat.Alias(string)`](GroupChatData.cs.md#symbol-917ad43aeded)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-315d5a4ef0fd)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(string, string?)`；`string.StartsWith(string)`；`string.TrimEnd(char)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, System.Text.RegularExpressions.MatchEvaluator)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatAttachments.GiftProtocol`；`NationalSpire.ChatAttachments.GroupGiftProtocol`；`NationalSpire.ChatAttachments.ResponseGuide`；`NationalSpire.ClubCoaching.Protocol`；`NationalSpire.CoachLineups.Protocol`；`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`；`NationalSpire.GroupChat.Alias(string)`；`NationalSpire.OathAttachments.GroupProtocol`；`NationalSpire.OathAttachments.Kind`；`NationalSpire.OathAttachments.Protocol`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateMessagePrompts.ContractProtocol`；`NationalSpire.PrivateMessagePrompts.MatchProtocol`；`NationalSpire.PrivateOffer.ActorId`；`NationalSpire.PrivateOffer.Ascension`；`NationalSpire.PrivateOffer.CoachId`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Mode`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.Title`；`NationalSpire.SocialAppointments.GroupProtocol`；`NationalSpire.SocialAppointments.Protocol`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatAttachments.GiftProtocol`；`NationalSpire.ChatAttachments.GroupGiftProtocol`；`NationalSpire.ChatAttachments.ResponseGuide`；`NationalSpire.ClubCoaching.Protocol`；`NationalSpire.CoachLineups.Protocol`；`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`；`NationalSpire.GroupChat.Alias(string)`；`NationalSpire.OathAttachments.GroupProtocol`；`NationalSpire.OathAttachments.Kind`；`NationalSpire.OathAttachments.Protocol`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateMessagePrompts.ContractProtocol`；`NationalSpire.PrivateMessagePrompts.MatchProtocol`；`NationalSpire.PrivateOffer.ActorId`；`NationalSpire.PrivateOffer.Ascension`；`NationalSpire.PrivateOffer.CoachId`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Mode`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.Title`；`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`；`NationalSpire.SocialAppointments.GroupProtocol`；`NationalSpire.SocialAppointments.Protocol`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -46,6 +46,7 @@ public const string GiftProtocol = """
 - `NationalSpire.GroupChat.Alias(string)`；输入表达式：`group.Alias(sender)`；返回值紧邻使用处：`BinaryExpressionSyntax: ", Target: " + group.Alias(sender)`
 - `NationalSpire.GroupChat.Alias(string)`；输入表达式：`group.Alias(sender)`；返回值紧邻使用处：`BinaryExpressionSyntax: "Actor: " + group.Alias(sender)`
 - `NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Date(data, a)`；返回值紧邻使用处：`ArgumentSyntax: PrivateAppointments.Date(data, a)`
+- `NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`；输入表达式：`RelationshipGifts.Description(a)`；返回值紧邻使用处：`BinaryExpressionSyntax: "\n" + RelationshipGifts.Description(a)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", formats)`；返回值紧邻使用处：`BinaryExpressionSyntax: ResponseGuide + "\n交互格式：\n" + (group == null ? "" : "[Actions]\n") + string.Join("\n", formats)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("|", a.Participants.Select(group.Alias))`；返回值紧邻使用处：`BinaryExpressionSyntax: "Participants: " + string.Join("|", a.Participants.Select(group.Alias))`
 - `string.Replace(string, string?)`；输入表达式：`examples[0].Replace("Match: 邀请", "Match: " + action)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: action => examples[0].Replace("Match: 邀请", "Match: " + action)`
@@ -91,7 +92,7 @@ public const string GiftProtocol = """
 
 ## `NationalSpire.ChatAttachments.GroupGiftProtocol — public static string GroupGiftProtocol`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -112,7 +113,7 @@ public const string GiftProtocol = """
 
 ## `NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>) — public static PrivateOffer? Find(PrivateConversation c, PrivateTurn turn, string kind, Dictionary<string, string> fields)`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.OathAttachments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](OathAttachments.cs.md#symbol-80bb2ac38dee)；[`NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](SocialAppointments.cs.md#symbol-33a4725630bd)
 
@@ -145,7 +146,7 @@ public const string GiftProtocol = """
 
 ## `NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool) — public static string? Prepare(CareerData d, string person, PrivateOffer a, bool shopping = false)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.GroupChats.Command(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-e0439deb45ac)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 
@@ -183,7 +184,7 @@ public const string GiftProtocol = """
 
 ## `NationalSpire.ChatAttachments.Material(NationalSpire.CareerData, NationalSpire.PrivateOffer, string) — public static string Material(CareerData data, PrivateOffer a, string number)`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChatPrompts.UserText(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChatPrompts.cs.md#symbol-28b2a2534bee)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.CareerData, NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-2e632c46656c)
 
@@ -204,7 +205,7 @@ public const string GiftProtocol = """
 
 ## `NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>) — public static void Gift(CareerData d, PrivateConversation c, PrivateTurn turn, Dictionary<string, string> fields)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 

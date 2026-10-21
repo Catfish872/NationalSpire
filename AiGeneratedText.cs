@@ -9,6 +9,8 @@ public static class AiGeneratedText
     {
         if (offer.Kind == CommunitySharing.Kind && offer.Quote is { } quote) return CommunitySharing.Text(data, quote);
         string text = offer.AiDetail ?? offer.Detail;
+        if (offer.Kind == "gift" && RelationshipGifts.Special(offer.GoodId))
+            text = text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal);
         const string report = "社区举报案件材料\n";
         if (offer.Kind == CommunityReporting.Kind && offer.AiDetail != null && text.StartsWith(report, StringComparison.Ordinal))
         {

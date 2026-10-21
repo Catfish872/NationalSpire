@@ -19,11 +19,12 @@ public static class RelationshipPresentation
     public static void CompleteWedding(CareerData data, string person)
     {
         var relation = PrivateMessages.Relation(data, person);
-        relation.WeddingCompleted = true;
+        relation.WeddingCompleted = true; relation.OathConfirmed = true;
+        relation.SelectedBond = 2;
         relation.RefreshAppearance(); relation.Revision++;
         PrivateInteractionHistory.PreserveRelation(PrivateMessages.Mailbox(data), data.Chats, GroupChats.Human(data), person,
-            [nameof(PrivateRelation.WeddingCompleted)]);
+            [nameof(PrivateRelation.WeddingCompleted), nameof(PrivateRelation.OathConfirmed), nameof(PrivateRelation.SelectedBond)]);
     }
-    public static string Context(PrivateRelation relation) => "\n正式关系：" + (relation.OathConfirmed ? "已缔结誓约" : relation.SelectedBond >= 1 ? "恋人" : "尚未确定恋人关系")
+    public static string Context(PrivateRelation relation) => "\n正式关系：" + (OathAppearance(relation) ? "已缔结誓约" : relation.SelectedBond >= 1 ? "恋人" : "尚未确定恋人关系")
         + "；婚礼记录：" + (relation.WeddingCompleted ? "已举办婚礼。" : "尚未举办婚礼。");
 }

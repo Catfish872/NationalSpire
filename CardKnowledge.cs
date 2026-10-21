@@ -35,6 +35,6 @@ public static class CardKnowledge
                 { longest = card.Name.Length; found.TryAdd(card.Id, card); }
             if (longest > 0) i += longest - 1;
         }
-        return found.Count == 0 ? "" : "本轮提及的卡牌\n" + string.Join("\n", found.Values.Select(c => c.Description));
+        return found.Count == 0 ? "" : "卡牌参考资料\n以下资料由卡名匹配自动补充。请结合上下文，只有确实在谈对应卡牌时才参考其效果；日常用词按原意理解，顺着当前话题自然回应。\n" + string.Join("\n", found.Values.Select(c => c.Description));
     }
 }

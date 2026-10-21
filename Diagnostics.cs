@@ -8,7 +8,7 @@ namespace NationalSpire;
 /// <summary>保留有界的运行记录；导出时合并生涯、请求和游戏日志，统一隐藏凭据。</summary>
 public static partial class Diagnostics
 {
-    public const string ModVersion = "0.27.5";
+    public const string ModVersion = "0.27.6";
 
     // 开赛失败逐次记录；读取诊断资料失败时仍保留最初的异常及其余资料。
     public static string RecordStartFailure(string stage, Exception error,
@@ -42,6 +42,7 @@ public static partial class Diagnostics
     public static void Configure(string directory)
     {
         lock (Gate) _directory = directory;
+        MigrateLogs();
     }
 
     public static void RegisterSecret(string? secret)
@@ -87,24 +88,18 @@ public static partial class Diagnostics
             string body;
             using (new LogMeasure(LogWork.Serialize, category)) body = detail is string s ? s : JsonSerializer.Serialize(detail, Json);
             body = Redact(body);
-            bool clipped = body.Length > 131072;
-            if (clipped) body = body[..131072];
             string line;
-            using (new LogMeasure(LogWork.Serialize, category)) line = JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, category, detail = body, clipped }, Json);
+            using (new LogMeasure(LogWork.Serialize, category)) line = JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, category, detail = body, clipped = false }, Json);
             var waiting = new LogMeasure(LogWork.WaitForWrite, category);
             lock (Gate)
             {
                 waiting.Dispose();
                 Events.Enqueue(line); _eventChars += line.Length;
-                while (Events.Count > 512 || _eventChars > LogLimit) _eventChars -= Events.Dequeue().Length;
+                while (Events.Count > 1 && (Events.Count > 512 || _eventChars > LogLimit)) _eventChars -= Events.Dequeue().Length;
                 _peakEvents = Math.Max(_peakEvents, Events.Count); _peakEventChars = Math.Max(_peakEventChars, _eventChars);
                 if (_directory == null) return;
                 using var writing = new LogMeasure(LogWork.Write, category);
-                Directory.CreateDirectory(_directory);
-                string path = Path.Combine(_directory, "national-spire.log");
-                if (File.Exists(path) && new FileInfo(path).Length > LogLimit)
-                    File.Move(path, path + ".previous", true);
-                File.AppendAllText(path, line + "\n", Encoding.UTF8);
+                WriteLog("national-spire.log", line);
             }
         }
         catch (Exception e) { lock (Gate) _writeError = e.GetType().Name + ": " + e.Message; }
@@ -119,7 +114,7 @@ public static partial class Diagnostics
             if (ErrorCounts.Count >= 64 && !ErrorCounts.ContainsKey(signature)) ErrorCounts.Remove(ErrorCounts.Keys.First());
             count = ErrorCounts.GetValueOrDefault(signature) + 1; ErrorCounts[signature] = count;
         }
-        if (count <= 3 || count % 100 == 0) Record(category, new { occurrences = count, exception = error.ToString() });
+        Record(category, new { occurrences = count, exception = error.ToString() });
     }
 
     public static Dictionary<string, string> CapturePeerLogs(string gameLogDirectory, string status, string? worldId = null)
@@ -134,7 +129,7 @@ public static partial class Diagnostics
         lock (Gate)
         {
             files["error-counts.json"] = JsonSerializer.Serialize(ErrorCounts, Json);
-            string events = string.Join('\n', Events); files["session-events.jsonl"] = events.Length > 262144 ? events[^262144..] : events;
+            files["session-events.jsonl"] = string.Join('\n', Events);
             directory = _directory;
         }
         void Tail(string path, string entry)
@@ -142,23 +137,23 @@ public static partial class Diagnostics
             try
             {
                 using var input = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
-                long skipped = Math.Max(0, input.Length - 262144); input.Seek(skipped, SeekOrigin.Begin);
-                using var reader = new StreamReader(input, Encoding.UTF8, true);
-                if (skipped > 0) reader.ReadLine();
-                files[entry] = reader.ReadToEnd(); notes.Add(entry + " ← " + Path.GetFileName(path) + (skipped > 0 ? "（仅末尾256 KiB）" : ""));
+                using var snapshot = new TraceSnapshot(input, input.Length);
+                using var reader = new StreamReader(snapshot, Encoding.UTF8, true);
+                files[entry] = reader.ReadToEnd(); notes.Add(entry + " ← " + Path.GetFileName(path));
             }
             catch (Exception e) { notes.Add(entry + "：" + e.Message); }
         }
-        if (directory != null && File.Exists(Path.Combine(directory, "national-spire.log"))) Tail(Path.Combine(directory, "national-spire.log"), "mod-log.txt");
+        foreach (var log in ReadLogs("national-spire.log")) files["mod-logs/" + log.Key] = log.Value;
         try
         {
             int index = 0;
-            if (Directory.Exists(gameLogDirectory)) foreach (var log in new DirectoryInfo(gameLogDirectory).EnumerateFiles("*.log").OrderByDescending(f => f.LastWriteTimeUtc).Take(3))
+            if (Directory.Exists(gameLogDirectory)) foreach (var log in new DirectoryInfo(gameLogDirectory).EnumerateFiles("*.log").OrderByDescending(f => f.LastWriteTimeUtc).Take(5))
                 Tail(log.FullName, "game-log-" + (++index) + ".txt");
             if (index == 0) notes.Add("未找到游戏日志。");
         }
         catch (Exception e) { notes.Add(e.Message); }
-        foreach (var trace in ReadMatchTraces(worldId, latestOnly: true)) files["latest-match.jsonl"] = trace.Value;
+        files["latest-match.jsonl"] = string.Join('\n', ReadMatchTraces(worldId).Select(p => p.Value.TrimEnd('\n')));
+        files["random-events.jsonl"] = ReadEventRecords();
         files["notes.txt"] = string.Join('\n', notes);
         return files.ToDictionary(p => p.Key, p => Redact(p.Value));
     }
@@ -187,10 +182,8 @@ public static partial class Diagnostics
                 try
                 {
                     using var input = new FileStream(log, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
-                    long skipped = Math.Max(0, input.Length - LogLimit);
-                    input.Seek(skipped, SeekOrigin.Begin);
-                    using var reader = new StreamReader(input, Encoding.UTF8, true);
-                    if (skipped > 0) { reader.ReadLine(); notes.Add(entry + $"：仅保留末尾 {LogLimit} 字节，省略较早约 {skipped} 字节。"); }
+                    using var snapshot = new TraceSnapshot(input, input.Length);
+                    using var reader = new StreamReader(snapshot, Encoding.UTF8, true);
                     Write(entry, reader.ReadToEnd());
                 }
                 catch (Exception e) { notes.Add(entry + "：" + Redact(e.ToString())); }
@@ -210,6 +203,7 @@ public static partial class Diagnostics
             if (performanceDirectory != null && File.Exists(Path.Combine(performanceDirectory, "ui-performance.json")))
                 LogFile(Path.Combine(performanceDirectory, "ui-performance.json"), "ui-last-snapshot.json");
             foreach (var trace in ReadMatchTraces(data.WorldId)) Write("matches/" + trace.Key, trace.Value);
+            Write("random-events.jsonl", ReadEventRecords());
             if (cooperative != null) Section("cooperative.json", () => cooperative);
             if (peerReports != null) foreach (var report in peerReports) Write(report.Key, report.Value);
             if (RuntimeSnapshot != null) Section("runtime.json", RuntimeSnapshot);
@@ -223,16 +217,11 @@ public static partial class Diagnostics
                 if (_writeError.Length > 0) notes.Add("运行日志写入失败：" + Redact(_writeError));
             }
             Write("session-events.jsonl", string.Join('\n', events));
-            if (directory != null)
-                foreach (string name in new[] { "national-spire.log", "national-spire.log.previous" })
-                {
-                    string log = Path.Combine(directory, name);
-                    if (File.Exists(log)) LogFile(log, "mod-logs/" + name);
-                }
+            foreach (var log in ReadLogs("national-spire.log")) Write("mod-logs/" + log.Key, log.Value);
             try
             {
                 var logs = Directory.Exists(gameLogDirectory) ? new DirectoryInfo(gameLogDirectory).EnumerateFiles("*.log")
-                    .OrderByDescending(f => f.LastWriteTimeUtc).Take(3).ToArray() : [];
+                    .OrderByDescending(f => f.LastWriteTimeUtc).Take(5).ToArray() : [];
                 if (logs.Length == 0) notes.Add("未找到游戏日志；其余报告内容已保留。");
                 foreach (var log in logs) LogFile(log.FullName, "game-logs/" + log.Name);
             }
@@ -240,9 +229,10 @@ public static partial class Diagnostics
             Write("说明.txt", "问题报告 v" + ModVersion + "\n\n包含当前模组生涯、比赛种子及路线、社区和生成状态、运行环境、最近请求与错误记录。\n"
                 + "AI 请求记录含发送的提示词和收到的内容，便于排查上下文与格式问题。凭据已自动隐藏。\n"
                 + "请同时说明操作步骤、发生时间以及预期结果。截图可另附。\n"
-                + "日志按大小轮换，每份最多导出末尾 2 MiB；单条记录最多保留 131072 个字符并标注 clipped。\n"
-                + "matches 目录独立保存本生涯的多人比赛路线与进度，不随普通日志轮换；队友报告附最近一场比赛记录。\n"
-                + "导出缺失项及截取情况：\n" + (notes.Count == 0 ? "所有项目读取完成。" : string.Join("\n", notes)));
+                + "普通运行、随机事件和比赛日志各保留最近五份文件，达到约2 MiB后在下一条写入前轮换；超过轮换点的完整记录仍然保留。较早文件随轮换清除。\n"
+                + "随机事件包含完整请求、原始回复和效果检查现场；比赛日志按本生涯编号导出。队友报告包含其保留范围内的完整记录。\n"
+                + "日志读取到导出开始时的完整记录边界；凭据自动隐藏，文件全文随报告导出。\n"
+                + "导出缺失项：\n" + (notes.Count == 0 ? "所有项目读取完成。" : string.Join("\n", notes)));
             return path;
         }
         catch { if (File.Exists(path)) File.Delete(path); throw; }

@@ -57,6 +57,7 @@ public static class ChatAttachments
             formats.Insert(1, $"[Training: 拒绝, Id: {number}, Actor: {group.Alias(a.CoachId)}]");
         }
         return ResponseGuide + "\n交互格式：\n" + (group == null ? "" : "[Actions]\n") + string.Join("\n", formats)
+            + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "")
             + (a.Kind == "activity" ? "\n接受时按玩家附件填写活动资料；改期时填写商谈后的日期和内容；取消时填写对应活动的资料。" : "");
     }
     public const string GiftProtocol = """
@@ -68,7 +69,7 @@ public static class ChatAttachments
 拒绝礼物：
 [Gift: 拒绝, Id: 12]
 只有标记才登记交互，口头答应无法触发实际效果。
-礼物附件附有确定恋人关系或缔结誓约的请求时，接受礼物同时确认该项关系变化；拒绝礼物则保持当前关系。
+普通礼物附件附有确定恋人关系的请求时，接受礼物后成为恋人。接受誓约之戒或盛大婚礼后，双方可以择期举办婚礼；完成婚礼活动后正式缔结誓约。拒绝礼物则保持当前关系。
 """;
     public static string GroupGiftProtocol => GiftProtocol
         .Replace("每条礼物标记完整填写 Gift、Id。", "每条礼物标记完整填写 Gift、Id、Actor。Actor 填接收者的编号。")

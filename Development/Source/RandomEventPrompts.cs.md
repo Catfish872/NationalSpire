@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4647BD77CCA25949C8025E848054BBA740126A11B3B54CDEA3A84DD8549E62E4`。来源：[源码](../../RandomEventPrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`42832AAE90763E54B65CE6ABA0ABE7B95B5B25D0087C72D75B1591099772496F`。来源：[源码](../../RandomEventPrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -18,7 +18,7 @@ public const string Story = """
 为玩家创作一段精彩、自然以及有趣的互动故事，并根据情况提供2-4个行动选项。故事需要保持完整，玩家的选项应当是故事的最终决定，无论如何在选择后这段故事会结束，所以你不能在选项里留下需要后续推进的故事发展伏笔。
 以玩家的游戏体验为核心目标，在事件中禁止做出无解困局、全部负面等导致玩家游戏体验下降的故事。
 """;
-public const string InitialFormat = """
+private const string LegacyInitialFormat = """
 按顺序输出逐行JSON：标题、故事正文、行动选项。每段正文使用一条story记录。每个选项包含option行动文字、result选择后的完整结局、effects实际效果。效果与结局相符，数值正负表示增加和减少。没有数值变化时effects填写空数组。
 故事和选项文字使用人物称呼，效果使用人物编号。result写明今天已经完成的结局；约战写明已经约定，其他交易、检测、退款等在本次结局内完成。涉及金额时，文字中的收支合计与wallet保持一致。
 格式示例：
@@ -27,7 +27,7 @@ public const string InitialFormat = """
 {"option":"留下来修好设备","result":"你们完成修理，店员重新点亮了招牌。","effects":[{"wallet":-800},{"favour":"p2","value":3}]}
 {"option":"借用备用设备","result":"备用设备顺利接上电源，这次聚会照常结束。","effects":[]}
 """;
-public const string Effects = """
+private const string LegacyEffects = """
 可用效果及完整字段示例：
 {"wallet":-800}：玩家钱包变化，单位美元。
 {"fans":150}：玩家关注人数变化。
@@ -43,7 +43,8 @@ public const string Effects = """
 人物、商品、品牌和日期采用本轮资料。临时状态通常为±1%至±3%、持续2至5天；长期学习通常为0.05%至0.2%；品牌行情通常为±0.3%至±1.5%；国运建设通常1至3点。好感一般变化1至4点，重要互动5至8点。资金与关注根据本轮经济参考、人物身份和事情规模选择。每项效果只填写对应示例中的字段。
 人物的行为承接其身份、关系和已知经历；资料中的恶意行为可选人物才可针对玩家实施欺骗、陷害或胁迫。人物也可以帮助玩家、提供提醒或与玩家共同遭遇问题。
 """;
-public const string Format = InitialFormat + "\n" + Effects;
+public const string Format = LegacyInitialFormat + "\n" + LegacyEffects;
+public static readonly string InitialFormat = LegacyInitialFormat.Replace("，数值正负表示增加和减少", "");
 public const string Continuation = """
 上轮故事已经生成完成。玩家现在提出了一项自定义行动，本轮任务是承接已有故事，为这项行动写出完整结局及实际效果。
 
@@ -57,11 +58,30 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 """;
 ```
 
+<a id="symbol-d6775aac28bc"></a>
+
+## `NationalSpire.RandomEventPrompts.EffectInstructions(NationalSpire.CareerData) — internal static string EffectInstructions(CareerData data)`
+
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool)`](RandomEventPrompts.cs.md#symbol-81999ba65eb3)
+
+**调用：** [`NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-8c9ea9f33c3c)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.Participants`；`NationalSpire.RandomEventPrompts.PlayerFacts`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.OwnedClubs.IsOwner(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.IsOwner(data)`；返回值紧邻使用处：`ConditionalExpressionSyntax: OwnedClubs.IsOwner(data) ? "\n\n{\"clubFans\":150}：玩家经营俱乐部的关注人数变化，填写整数。" : ""`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-abde1c36176c"></a>
 
 ## `NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData) — internal static string PlayerRecord(CareerData data)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool)`](RandomEventPrompts.cs.md#symbol-81999ba65eb3)
 
@@ -84,20 +104,21 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 ## `NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool) — public static List<Dictionary<string, string>> Compose(CareerData data, RandomEventRecord record, AiOptions? options = null, bool custom = false)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData)`](RandomEventPrompts.cs.md#symbol-abde1c36176c)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.RandomEventPrompts.EffectInstructions(NationalSpire.CareerData)`](RandomEventPrompts.cs.md#symbol-d6775aac28bc)；[`NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData)`](RandomEventPrompts.cs.md#symbol-abde1c36176c)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string action>.action`；`<anonymous type: string title, string story>.story`；`<anonymous type: string title, string story>.title`；`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`；`NationalSpire.RandomEventPrompts.Continuation`；`NationalSpire.RandomEventPrompts.Effects`；`NationalSpire.RandomEventPrompts.InitialFormat`；`NationalSpire.RandomEventPrompts.Json`；`NationalSpire.RandomEventPrompts.Participants`；`NationalSpire.RandomEventPrompts.PlayerFacts`；`NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.Story`；`NationalSpire.RandomEventRecord.CustomAction`；`NationalSpire.RandomEventRecord.Materials`；`NationalSpire.RandomEventRecord.Story`；`NationalSpire.RandomEventRecord.Title`
+**字段、属性、事件及方法组引用：** `<anonymous type: string action>.action`；`<anonymous type: string title, string story>.story`；`<anonymous type: string title, string story>.title`；`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`；`NationalSpire.RandomEventPrompts.Continuation`；`NationalSpire.RandomEventPrompts.EffectInstructions(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.InitialFormat`；`NationalSpire.RandomEventPrompts.Json`；`NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.Story`；`NationalSpire.RandomEventRecord.CustomAction`；`NationalSpire.RandomEventRecord.Materials`；`NationalSpire.RandomEventRecord.Story`；`NationalSpire.RandomEventRecord.Title`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`；输入表达式：`PromptLibrary.Get(options, "event")`；返回值紧邻使用处：`ConditionalExpressionSyntax: options == null ? Story : PromptLibrary.Get(options, "event")`
+- `NationalSpire.RandomEventPrompts.EffectInstructions(NationalSpire.CareerData)`；输入表达式：`EffectInstructions(data)`；返回值紧邻使用处：`AssignmentExpressionSyntax: ["content"] = EffectInstructions(data)`
 - `NationalSpire.RandomEventPrompts.PlayerRecord(NationalSpire.CareerData)`；输入表达式：`PlayerRecord(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "assistant", ["content"] = JsonSerializer.Serialize(new { title = record.Title, story = record.Story }, Json) }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["role"] = "assistant", ["content"] = JsonSerializer.Serialize(new { title = record.Title, story = record.Story }, Json) }`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "system", ["content"] = Effects + "\n" + Participants + "\n" + PlayerFacts }`；返回值紧邻使用处：`ExpressionElementSyntax: new() { ["role"] = "system", ["content"] = Effects + "\n" + Participants + "\n" + PlayerFacts }`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "system", ["content"] = EffectInstructions(data) }`；返回值紧邻使用处：`ExpressionElementSyntax: new() { ["role"] = "system", ["content"] = EffectInstructions(data) }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "user", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data) + "\n" + record.Materials }`；返回值紧邻使用处：`ExpressionElementSyntax: new() { ["role"] = "user", ["content"] = (options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data) + "\n" + record.Materials }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "user", ["content"] = Continuation + "\n" + JsonSerializer.Serialize(new { action = record.CustomAction }, Json) }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["role"] = "user", ["content"] = Continuation + "\n" + JsonSerializer.Serialize(new { action = record.CustomAction }, Json) }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["role"] = "user", ["content"] = InitialFormat }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["role"] = "user", ["content"] = InitialFormat }`
@@ -111,7 +132,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 - `["content"]` = `(options == null ? Story : PromptLibrary.Get(options, "event")) + "\n" + PlayerRecord(data) + "\n" + record.Materials`
 - `["content"]` = `Continuation + "\n" + JsonSerializer.Serialize(new { action = record.CustomAction }, Json)`
-- `["content"]` = `Effects + "\n" + Participants + "\n" + PlayerFacts`
+- `["content"]` = `EffectInstructions(data)`
 - `["content"]` = `InitialFormat`
 - `["content"]` = `JsonSerializer.Serialize(new { title = record.Title, story = record.Story }, Json)`
 - `["role"]` = `"assistant"`
@@ -122,7 +143,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 ## `NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord) — public static string Materials(CareerData d, RandomEventRecord e)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)
 

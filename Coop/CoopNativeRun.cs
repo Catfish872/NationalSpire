@@ -339,9 +339,14 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
     }
     public void Save(SerializableRun save)
     {
-        if (!session.Host || session.World?.Run == null || session.World.Run.Phase == "paused") return;
+        if (!session.Host || session.World?.Run == null || session.World.Run.Phase == "paused")
+        { Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" }); return; }
+        Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,
+            save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() });
         Validate(save); var next = session.World.RunCheckpoint(); next.Run!.Phase = "running";
-        session.Commit(next, Encode(save));
+        byte[] bytes = Encode(save);
+        session.Commit(next, bytes);
+        Diagnostics.RecordMatch(session.World, "autosave-committed", new { checkpointBytes = bytes.Length, hash = CoopJson.Hash(bytes), revision = session.World.Revision });
     }
     private void Fail(Exception e)
     {

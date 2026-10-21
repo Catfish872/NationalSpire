@@ -9,7 +9,7 @@ public static partial class Diagnostics
 {
     private static string TraceKey(string value) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 
-    /// <summary>按生涯和对局独立保存，结算清除实时状态后仍可核对原路线与显示结果。</summary>
+    /// <summary>比赛完整记录使用统一轮换，导出时按记录中的生涯编号选择。</summary>
     public static void RecordMatch(CoopWorld world, string stage, object? detail = null, bool includePlan = false)
     {
         using var measure = new LogMeasure(LogWork.Match, stage);
@@ -44,42 +44,26 @@ public static partial class Diagnostics
                 waiting.Dispose();
                 if (_directory == null) return;
                 using var writing = new LogMeasure(LogWork.Write, stage);
-                string folder = Path.Combine(_directory, "matches", TraceKey(world.World.WorldId));
-                Directory.CreateDirectory(folder);
-                File.AppendAllText(Path.Combine(folder, TraceKey(run.Attempt) + ".jsonl"), line + "\n", new UTF8Encoding(false));
+                WriteLog("matches.jsonl", line);
             }
         }
         catch (Exception e) { Error("match.diagnostics", e); }
     }
 
-    private static IEnumerable<KeyValuePair<string, string>> ReadMatchTraces(string? worldId, bool latestOnly = false)
+    private static IEnumerable<KeyValuePair<string, string>> ReadMatchTraces(string? worldId)
     {
-        string? directory;
-        lock (Gate) directory = _directory;
-        if (directory == null || string.IsNullOrEmpty(worldId)) yield break;
-        FileInfo[] files;
-        try
+        if (string.IsNullOrEmpty(worldId)) yield break;
+        foreach (var file in ReadLogs("matches.jsonl").Concat(LegacyLogs(Path.Combine("matches", TraceKey(worldId)), "*.jsonl")))
         {
-            string folder = Path.Combine(directory, "matches", TraceKey(worldId));
-            if (!Directory.Exists(folder)) yield break;
-            var ordered = new DirectoryInfo(folder).EnumerateFiles("*.jsonl").OrderByDescending(f => f.LastWriteTimeUtc);
-            files = (latestOnly ? ordered.Take(1) : ordered).ToArray();
-        }
-        catch (Exception e) { Error("match.diagnostics.read", e); yield break; }
-        // 每次只处理一份比赛记录，避免所有比赛正文同时驻留内存；读取时释放写入锁。
-        foreach (var file in files)
-        {
-            string? content = null;
-            try
-            {
-                // 在写入锁内打开当前文件，写入器关闭后取得完整记录边界。
-                var input = OpenTraceSnapshot(file.FullName, out long length);
-                using var snapshot = new TraceSnapshot(input, length);
-                using var reader = new StreamReader(snapshot, Encoding.UTF8, true);
-                content = Redact(reader.ReadToEnd());
-            }
-            catch (Exception e) { Error("match.diagnostics.read", e); }
-            if (content != null) yield return new(file.Name, content);
+            var content = new StringBuilder();
+            foreach (string line in file.Value.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                try
+                {
+                    using var record = JsonDocument.Parse(line);
+                    if (record.RootElement.GetProperty("world").GetString() == worldId) content.AppendLine(line);
+                }
+                catch (Exception error) { Error("match.diagnostics.read", error); }
+            if (content.Length > 0) yield return new(file.Key, Redact(content.ToString()));
         }
     }
 

@@ -165,6 +165,7 @@ public static partial class AiService
         progress = chunk => { received.Append(chunk); leading.Feed(chunk); };
         void RememberUsage(JsonElement root) { if (root.TryGetProperty("usage", out var usage) && usage.ValueKind == JsonValueKind.Object) lastUsage = usage.Clone(); }
         Diagnostics.Record("private.request", new { trace, context, stream, connection.Model, connection.ProfileId, messages = messages.Count, characters = messages.Sum(m => m["content"].Length) });
+        if (task == "event") Diagnostics.RecordEvent(context, trace, "request", new { connection.Model, connection.ProfileId, stream, messages });
         try
         {
             using var response = await PrivateTransport(request, token);
@@ -232,6 +233,8 @@ public static partial class AiService
         {
             if (lastUsage is { } usage) Diagnostics.Record("private.usage", new { trace, context, usage });
             Diagnostics.Record("private.response", new { trace, context, connection.Model, connection.ProfileId, stream, error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
+            if (task == "event") Diagnostics.RecordEvent(context, trace, "response", new { connection.Model, connection.ProfileId, stream, messages,
+                error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
         }
     }
     private static string PrivateReasoning(JsonElement message)

@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`663D5CA8F632103B7EF9D291CCCCD0353520223E916FA5AC220DD160892F77D7`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F486C6DC2E4AA41E036F5F3C2FED6AC3B55CDDB1CF4C192135E53FA7EA23BB71`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.Coop.CoopSettings`、`NationalSpire.Coop.ICoopPauseScene`、`NationalSpire.Coop.CoopGamePauseScene`、`NationalSpire.Coop.CoopRuntime`、`NationalSpire.Coop.CoopMenuPatch`、`NationalSpire.Coop.CoopContextPatch`、`NationalSpire.Coop.CoopPathPatch`、`NationalSpire.Coop.CoopSavePatch`、`NationalSpire.Coop.CoopHistoryPatch`、`NationalSpire.Coop.CoopReturnPatch`、`NationalSpire.Coop.CoopDisconnectMenuPatch`。
+类型：`NationalSpire.Coop.CoopSettings`、`NationalSpire.Coop.ICoopPauseScene`、`NationalSpire.Coop.CoopGamePauseScene`、`NationalSpire.Coop.CoopRuntime`、`NationalSpire.Coop.CoopMenuPatch`、`NationalSpire.Coop.CoopContextPatch`、`NationalSpire.Coop.CoopPathPatch`、`NationalSpire.Coop.CoopSaveEntryPatch`、`NationalSpire.Coop.CoopSavePatch`、`NationalSpire.Coop.CoopHistoryPatch`、`NationalSpire.Coop.CoopReturnPatch`、`NationalSpire.Coop.CoopDisconnectMenuPatch`。
 
 字段、事件及初始值（源码原样）：
 
@@ -844,11 +844,51 @@ private int _pausedCount;
 
 - `__result` = `"national_spire_coop_native/" + CoopRuntime.Current!.Session!.World!.Id + "/" + Path.GetFileName(fileName)`
 
+<a id="symbol-b92b27282db4"></a>
+
+## `NationalSpire.Coop.CoopSaveEntryPatch.TargetMethod() — public static MethodBase TargetMethod()`
+
+来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.Method(typeof(RunSaveManager), nameof(RunSaveManager.SaveRun), [typeof(MegaCrit.Sts2.Core.Rooms.AbstractRoom)])`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => AccessTools.Method(typeof(RunSaveManager), nameof(RunSaveManager.SaveRun), [typeof(MegaCrit.Sts2.Core.Rooms.AbstractRoom)])`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-17b0cee32be9"></a>
+
+## `NationalSpire.Coop.CoopSaveEntryPatch.Prefix() — public static void Prefix()`
+
+来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；`System.Enum.ToString()`
+
+**字段、属性、事件及方法组引用：** `<anonymous type: bool shouldSave, string network, string attempt, int? floor, string phase>.attempt`；`<anonymous type: bool shouldSave, string network, string attempt, int? floor, string phase>.floor`；`<anonymous type: bool shouldSave, string network, string attempt, int? floor, string phase>.network`；`<anonymous type: bool shouldSave, string network, string attempt, int? floor, string phase>.phase`；`<anonymous type: bool shouldSave, string network, string attempt, int? floor, string phase>.shouldSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Floor`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRuntime.Bound`；`NationalSpire.Coop.CoopRuntime.Current`；`NationalSpire.Coop.CoopRuntime.Session`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("coop.autosave.diagnostics", error)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("coop.autosave.diagnostics", error);`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.autosave.request", new { shouldSave = RunManager.Instance.ShouldSave,              network = RunManager.Instance.NetService.Type.ToString(), attempt = CoopRuntime.Current?.Session?.World?.Run?.Attempt,              floor = CoopRuntime.Current?.Session?.World?.Run?.Floor, phase = CoopRuntime.Current?.Session?.World?.Run?.Phase })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.autosave.request", new { shouldSave = RunManager.Instance.ShouldSave,              network = RunManager.Instance.NetService.Type.ToString(), attempt = CoopRuntime.Current?.Session?.World?.Run?.Attempt,              floor = CoopRuntime.Current?.Session?.World?.Run?.Floor, phase = CoopRuntime.Current?.Session?.World?.Run?.Phase });`
+- `System.Enum.ToString()`；输入表达式：`RunManager.Instance.NetService.Type.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: network = RunManager.Instance.NetService.Type.ToString()`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-0b112d9b0a96"></a>
 
 ## `NationalSpire.Coop.CoopSavePatch.TargetMethod() — public static MethodBase TargetMethod()`
 
-来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 288 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -867,7 +907,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopSavePatch.Prefix(MegaCrit.Sts2.Core.Saves.SerializableRun, bool, ref System.Threading.Tasks.Task) — public static bool Prefix(SerializableRun save, bool isMultiplayer, ref Task __result)`
 
-来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -890,7 +930,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopHistoryPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunHistory) — public static bool Prefix(RunHistory history)`
 
-来源：源码第 288 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -910,7 +950,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopReturnPatch.Postfix(System.Threading.Tasks.Task) — public static void Postfix(Task __result)`
 
-来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 312 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -929,7 +969,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopDisconnectMenuPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunManager, ref System.Threading.Tasks.Task) — public static bool Prefix(RunManager __instance, ref Task __result)`
 
-来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

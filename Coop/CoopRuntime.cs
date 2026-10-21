@@ -271,6 +271,18 @@ public static class CoopPathPatch
     }
 }
 [HarmonyPatch]
+public static class CoopSaveEntryPatch
+{
+    public static MethodBase TargetMethod() => AccessTools.Method(typeof(RunSaveManager), nameof(RunSaveManager.SaveRun), [typeof(MegaCrit.Sts2.Core.Rooms.AbstractRoom)]);
+    public static void Prefix()
+    {
+        try { if (CoopRuntime.Bound) Diagnostics.Record("coop.autosave.request", new { shouldSave = RunManager.Instance.ShouldSave,
+            network = RunManager.Instance.NetService.Type.ToString(), attempt = CoopRuntime.Current?.Session?.World?.Run?.Attempt,
+            floor = CoopRuntime.Current?.Session?.World?.Run?.Floor, phase = CoopRuntime.Current?.Session?.World?.Run?.Phase }); }
+        catch (Exception error) { Diagnostics.Error("coop.autosave.diagnostics", error); }
+    }
+}
+[HarmonyPatch]
 public static class CoopSavePatch
 {
     public static MethodBase TargetMethod() => AccessTools.Method(typeof(RunSaveManager), nameof(RunSaveManager.SaveRun), [typeof(SerializableRun), typeof(bool)]);

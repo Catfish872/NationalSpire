@@ -52,6 +52,7 @@ public static partial class AiService
             if (d != null && EventKey(d, id) == key && RandomEvents.Find(d, id) is { } latest && (custom ? latest.CustomState : latest.State) == "generating")
             { if (custom) { latest.CustomState = latest.CustomOption == null ? "idle" : "ready"; latest.CustomReasoning = thoughts.ToString(); } else { latest.State = latest.Options.Count > 0 ? "ready" : "failed"; if (latest.Options.Count == 0) latest.Reasoning = thoughts.ToString(); } latest.Error = error is OperationCanceledException ? "生成已停止，可以重试或跳过。" : FailureReason(error); save(d); }
             Diagnostics.Record("event.failed", new { id, error = FailureReason(error) });
+            Diagnostics.RecordEvent(key, Guid.NewGuid().ToString("N"), "generation-failed", new { id, custom, exception = error.ToString(), record = e });
         }
         finally { EventRequests.Remove(key); EventLive.Remove(key); }
     }

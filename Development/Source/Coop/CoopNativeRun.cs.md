@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`D12C09741F8F62AFE363B028CD9F9ADD1378C74920059A568C8E9ABE60D5F0B5`。来源：[源码](../../../Coop/CoopNativeRun.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`993444CB0C44A268D6A1086220CCFF6ED7B1248CF6CC1F6E2EEABCF4F3D5A249`。来源：[源码](../../../Coop/CoopNativeRun.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -962,16 +962,22 @@ private string _waitingStage = "";
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.Coop.CoopSavePatch.Prefix(MegaCrit.Sts2.Core.Saves.SerializableRun, bool, ref System.Threading.Tasks.Task)`](CoopRuntime.cs.md#symbol-5743aede4fef)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-e1fc04234566)；[`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-6504cc92be0b)；[`NationalSpire.Coop.CoopWorld.RunCheckpoint()`](CoopData.cs.md#symbol-37c5b2e81f81)
+**调用：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-e1fc04234566)；[`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-6504cc92be0b)；[`NationalSpire.Coop.CoopWorld.RunCheckpoint()`](CoopData.cs.md#symbol-37c5b2e81f81)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`](../MatchDiagnostics.cs.md#symbol-2f83ebe4626e)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.RunCheckpoint()`
+**字段、属性、事件及方法组引用：** `<anonymous type: bool Host, string attempt, string phase, string reason>.attempt`；`<anonymous type: bool Host, string attempt, string phase, string reason>.phase`；`<anonymous type: bool Host, string attempt, string phase, string reason>.reason`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.checkpointBytes`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.hp`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.visited`；`<anonymous type: int checkpointBytes, string hash, long revision>.checkpointBytes`；`<anonymous type: int checkpointBytes, string hash, long revision>.hash`；`<anonymous type: int checkpointBytes, string hash, long revision>.revision`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.RunCheckpoint()`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；输入表达式：`session.Commit(next, Encode(save))`；返回值紧邻使用处：`ExpressionStatementSyntax: session.Commit(next, Encode(save));`
-- `NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；输入表达式：`Encode(save)`；返回值紧邻使用处：`ArgumentSyntax: Encode(save)`
+- `NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；输入表达式：`session.Commit(next, bytes)`；返回值紧邻使用处：`ExpressionStatementSyntax: session.Commit(next, bytes);`
+- `NationalSpire.Coop.CoopJson.Hash(byte[])`；输入表达式：`CoopJson.Hash(bytes)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: hash = CoopJson.Hash(bytes)`
+- `NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；输入表达式：`Encode(save)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Encode(save)`
 - `NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`；输入表达式：`Validate(save)`；返回值紧邻使用处：`ExpressionStatementSyntax: Validate(save);`
 - `NationalSpire.Coop.CoopWorld.RunCheckpoint()`；输入表达式：`session.World.RunCheckpoint()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = session.World.RunCheckpoint()`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" });`
+- `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World, "autosave-committed", new { checkpointBytes = bytes.Length, hash = CoopJson.Hash(bytes), revision = session.World.Revision })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World, "autosave-committed", new { checkpointBytes = bytes.Length, hash = CoopJson.Hash(bytes), revision = session.World.Revision });`
+- `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,              save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,              save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() });`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`save.Players.Select(p => p.CurrentHp)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: save.Players.Select(p => p.CurrentHp).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`save.Players.Select(p => p.CurrentHp).ToArray()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: hp = save.Players.Select(p => p.CurrentHp).ToArray()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -981,7 +987,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Fail(System.Exception) — private void Fail(Exception e)`
 
-来源：源码第 346 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 351 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun()`](CoopNativeRun.cs.md#symbol-77d1b0a8ef74)；[`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.Join(string, bool)`](CoopNativeRun.cs.md#symbol-a3ff2d717caf)；[`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)
 
@@ -1006,7 +1012,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Close() — public void Close()`
 
-来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 358 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)；[`NationalSpire.Coop.CoopRuntime._Process(double)`](CoopRuntime.cs.md#symbol-ec1513bd09b1)；[`NationalSpire.Coop.CoopRuntime.Disconnect()`](CoopRuntime.cs.md#symbol-a4550fd42c36)；[`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)
 
@@ -1044,7 +1050,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.PlayerChanged(NationalSpire.Coop.NativeLobbyApi.Member, bool) — private void PlayerChanged(NativeLobbyApi.Member player, bool isRandomCharacterResolution)`
 
-来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)
 

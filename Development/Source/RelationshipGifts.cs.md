@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`50FCC6ABA3DA8D18688A603219D058EB251C47C76F5DFFA6AD05C7D4FA4B198D`。来源：[源码](../../RelationshipGifts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`33C27549C41B744FACA143EF5A6F6702518F0732D18D4B6A8C19469EF956C805`。来源：[源码](../../RelationshipGifts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -19,7 +19,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-1a2f8d82e83f)；[`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)
+**调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-4cac190b7ec0)；[`NationalSpire.AiGeneratedText.Attachment(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](AiGeneratedText.cs.md#symbol-ac6a46b66492)；[`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)；[`NationalSpire.WeddingAppointments.Services(NationalSpire.CareerData)`](WeddingAppointments.cs.md#symbol-2dfb2ee379ae)
 
 **调用：** 无已绑定显式调用。
 
@@ -76,7 +76,7 @@
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)
+**调用者：** [`NationalSpire.AiGeneratedText.Attachment(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](AiGeneratedText.cs.md#symbol-ac6a46b66492)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ChatAttachments.ResponseInstructions(NationalSpire.CareerData, NationalSpire.PrivateOffer, string, NationalSpire.GroupChat?, string)`](ChatAttachments.cs.md#symbol-f98de794e2ca)
 
 **调用：** [`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)
 
@@ -84,7 +84,7 @@
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`；输入表达式：`Intent(offer)`；返回值紧邻使用处：`SwitchExpressionSyntax: Intent(offer) switch      {          1 => "附加请求：确定恋人关系；接受礼物后成为恋人。",          2 => "附加请求：缔结誓约；接受礼物后确定誓约关系。",          _ => ""      }`
+- `NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`；输入表达式：`Intent(offer)`；返回值紧邻使用处：`SwitchExpressionSyntax: Intent(offer) switch      {          1 => "附加请求：确定恋人关系；接受礼物后成为恋人。",          2 => "附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。",          _ => ""      }`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -99,17 +99,16 @@
 
 **调用：** [`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；[`NationalSpire.PrivateRelation.RefreshAppearance()`](PrivateMessageData.cs.md#symbol-fbf6e9bf540b)；[`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-4e26695a8286)；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateRelation.OathConfirmed`；`NationalSpire.PrivateRelation.RefreshAppearance()`；`NationalSpire.PrivateRelation.Revision`；`NationalSpire.PrivateRelation.RingReceived`；`NationalSpire.PrivateRelation.SelectedBond`；`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`
+**字段、属性、事件及方法组引用：** `NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateRelation.RefreshAppearance()`；`NationalSpire.PrivateRelation.Revision`；`NationalSpire.PrivateRelation.RingReceived`；`NationalSpire.PrivateRelation.SelectedBond`；`NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Relation(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Relation(data, person)`
 - `NationalSpire.PrivateRelation.RefreshAppearance()`；输入表达式：`relation.RefreshAppearance()`；返回值紧邻使用处：`ExpressionStatementSyntax: relation.RefreshAppearance();`
 - `NationalSpire.RelationshipGifts.Intent(NationalSpire.PrivateOffer)`；输入表达式：`Intent(offer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Intent(offer)`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(relation.SelectedBond ?? 0, intent)`；返回值紧邻使用处：`AssignmentExpressionSyntax: relation.SelectedBond = Math.Max(relation.SelectedBond ?? 0, intent)`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(relation.SelectedBond ?? 0, 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: relation.SelectedBond = Math.Max(relation.SelectedBond ?? 0, 1)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `relation.OathConfirmed` = `true`
 - `relation.RingReceived` = `true`
-- `relation.SelectedBond` = `Math.Max(relation.SelectedBond ?? 0, intent)`
+- `relation.SelectedBond` = `Math.Max(relation.SelectedBond ?? 0, 1)`

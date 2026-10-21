@@ -14,15 +14,14 @@ public static class RelationshipGifts
     public static string Description(PrivateOffer offer) => Intent(offer) switch
     {
         1 => "附加请求：确定恋人关系；接受礼物后成为恋人。",
-        2 => "附加请求：缔结誓约；接受礼物后确定誓约关系。",
+        2 => "附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。",
         _ => ""
     };
     public static void Accept(CareerData data, string person, PrivateOffer offer)
     {
         int intent = Intent(offer); if (intent == 0) return;
         var relation = PrivateMessages.Relation(data, person);
-        relation.SelectedBond = Math.Max(relation.SelectedBond ?? 0, intent);
-        if (intent >= 2) relation.OathConfirmed = true;
+        relation.SelectedBond = Math.Max(relation.SelectedBond ?? 0, 1);
         if (offer.GoodId == "oath-ring") relation.RingReceived = true;
         relation.RefreshAppearance(); relation.Revision++;
     }

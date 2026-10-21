@@ -8,7 +8,9 @@ ConsumerPickerScreen.ConsumerEditor 是聊天赠礼、活动与商城附件的�
 
 公历统一入口为 GameCalendar：CalendarStartYear 随生涯保存，Date/Text/Iso/Day 负责累计天数与公历互换；NormalizeFields 供活动、约战解析共用。AiWireProtocol 在既有 JSON 遍历中调用 ConvertDateField，CommunitySharing 与 AiGeneratedText 负责旧结构化附件的日期显示，聊天正文保留原文。
 
-正式关系由 RelationshipGifts.Accept 与 OathAttachments.Respond 写入 PrivateRelation；WeddingAppointments 连接已接受礼物、已付款服务、活动与婚礼完成。AvatarHonors 和 NpcAvatarFrames 读取正式状态与原荣誉决定外观。普通好感变动继续调用原 ChangeFavour。
+正式关系由 RelationshipGifts.Accept 与 OathAttachments.Respond 写入 PrivateRelation；WeddingAppointments 将已接受的誓约之戒或盛大婚礼连接到原活动日程；RelationshipPresentation.CompleteWedding 在活动完成时统一写入誓约与婚礼状态。AvatarHonors 和 NpcAvatarFrames 读取正式状态与原荣誉决定外观。普通好感变动继续调用原 ChangeFavour。
+
+Diagnostics.Record、RecordEvent 和 RecordMatch 负责各自记录的字段与脱敏，统一调用 LogStorage.WriteLog → AppendLog 完整写入与五份轮换。Configure 调用 MigrateLogs 处理旧独立事件及对局文件。ReadLogs 为 Export、CapturePeerLogs、ReadEventRecords 与 ReadMatchTraces 提供打开时固定长度的完整文件快照，TraceSnapshot 约束读取边界；普通会话、待写队列、效果错误摘要和错误计数的归属及范围见 DATA_CONTRACTS。LogPerformance 只累计固定阶段并覆盖固定统计文件。CoopDiagnostics 管理一次收集的缓存、缺片重发和释放；CoopWire 的诊断分支共用原压缩、分片和完整性校验入口。自动保存补丁及实际提交证据见 PERSISTENCE_AND_COOP。
 
 专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。DateDiaries 管理单次约会日记，DateDiaryScreen 复用 PR 作者的列表与卡片界面。结束约会通过原私聊队列生成一次普通感想及隐藏日记；日记集合仅供查看，普通请求沿原聊天与总结机制组织上下文。
 

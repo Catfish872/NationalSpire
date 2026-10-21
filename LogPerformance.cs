@@ -51,7 +51,8 @@ public static partial class Diagnostics
         object retained;
         lock (Gate) retained = new { events = Events.Count, eventCharacters = _eventChars,
             peakEvents = _peakEvents, peakEventCharacters = _peakEventChars, errorKinds = ErrorCounts.Count,
-            distinctCredentials = Secrets.Count, writeError = _writeError, performanceWriteError = _performanceWriteError };
+            distinctCredentials = Secrets.Count, writeError = _writeError, performanceWriteError = _performanceWriteError,
+            pendingRecords = PendingLogs.Values.Sum(q => q.Count), pendingBytes = PendingBytes.Values.Sum(), expiredPendingRecords = _expiredPendingRecords };
         lock (CostGate)
             return new { startedUtc = CostStarted, capturedUtc = DateTimeOffset.UtcNow, processId = Environment.ProcessId, retained,
                 note = "耗时含线程等待；分配量为调用线程累计分配，并非存活内存。父阶段包含子阶段，禁止相加。导出统计在本次导出结束后更新。",

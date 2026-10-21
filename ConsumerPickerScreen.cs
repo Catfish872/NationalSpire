@@ -72,7 +72,7 @@ public partial class CareerScreen
         var initialPeople = shop?.People ?? (group.Length > 0 ? _groupSelection : new List<string> { person });
         var choices = activity
             ? ConsumerCatalog.All.Where(g => shopping ? g.Id == shop!.Good : ConsumerAttachments.Available(d, g) > 0).SelectMany(g => g.Activities.Select(v => new ConsumerChoice(g, v)))
-                .Concat(WeddingAppointments.Services(d).Where(s => !shopping && initialPeople.Count == 1 && initialPeople[0] == s.Person).Select(s => new ConsumerChoice(ConsumerCatalog.Get(WeddingAppointments.GoodId), WeddingAppointments.Verb, s.Id))).ToArray()
+                .Concat(WeddingAppointments.Services(d).Where(s => !shopping && initialPeople.Count == 1 && initialPeople[0] == s.Person).Select(s => new ConsumerChoice(ConsumerCatalog.Get(s.GoodId), WeddingAppointments.Verb, s.Id))).ToArray()
             : ConsumerCatalog.All.Where(g => g.Giftable && (shopping ? g.Id == shop!.Good : ConsumerAttachments.Available(d, g) > 0)).Select(g => new ConsumerChoice(g)).ToArray();
         if (activity && !shopping) choices = new[] { new ConsumerChoice(null) }.Concat(choices).ToArray();
         var edit = retained ?? new ConsumerEdit { People = initialPeople.Where(id => id.Length > 0 && !GroupChats.IsHuman(d, id)).ToHashSet(), Group = group, Season = previous?.Season ?? d.Season, Day = previous?.Day ?? SeasonCalendar.Day(d, d.Day), Quantity = previous?.Quantity ?? 1, Relationship = previous?.RelationshipIntent ?? 0 };
@@ -108,7 +108,7 @@ public partial class CareerScreen
             {
                 string id = edit.People.FirstOrDefault() ?? ""; var relation = id.Length > 0 ? PrivateMessages.Relation(d, id) : null; bool special = RelationshipGifts.Special(edit.Choice?.Good?.Id ?? "");
                 relationship.Visible = id.Length > 0 && !special && relation!.Favour >= 60 && relation.SelectedBond is not >= 1 && !relation.OathConfirmed;
-                hint!.Text = special ? "好感达到85后可以赠送；对方接受后确定誓约关系。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""; hint.Visible = hint.Text.Length > 0;
+                hint!.Text = special ? "好感达到85后可以赠送；对方接受后可以择期举办婚礼，完成婚礼活动后正式缔结誓约。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""; hint.Visible = hint.Text.Length > 0;
             }
         }
         void ReturnEditor() => ConsumerEditor(activity, shop, previous, goodId, verbId, edit);

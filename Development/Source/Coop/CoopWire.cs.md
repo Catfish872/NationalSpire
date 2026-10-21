@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`978D89E850470745EC9FB97EB4716EF8F6F4B8E72329EB0F010FF3A91D174D1A`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`83ACECE36F586B6A518128895B2CDF0B24F3E9EF973AB9184912E29E217EA111`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -255,9 +255,9 @@ private DateTime _started;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-67ad26af4646"></a>
+<a id="symbol-d89dceccb833"></a>
 
-## `NationalSpire.Coop.CoopAssembler.Split(byte[]) — public static IEnumerable<CoopPart> Split(byte[] raw)`
+## `NationalSpire.Coop.CoopAssembler.Split(byte[], bool) — public static IEnumerable<CoopPart> Split(byte[] raw, bool diagnostic = false)`
 
 来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -284,13 +284,13 @@ private DateTime _started;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-3bc9f4a00527"></a>
+<a id="symbol-8c8a54666033"></a>
 
-## `NationalSpire.Coop.CoopAssembler.Complete.Decode() — public byte[] Decode()`
+## `NationalSpire.Coop.CoopAssembler.Complete.Decode(bool) — public byte[] Decode(bool diagnostic = false)`
 
 来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`Step()`](CoopReception.cs.md#symbol-41b14a0db411)
+**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`Step()`](CoopReception.cs.md#symbol-41b14a0db411)
 
 **调用：** [`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Array.CopyTo(System.Array, int)`；`System.IO.Compression.BrotliStream.BrotliStream(System.IO.Stream, System.IO.Compression.CompressionMode)`；`System.IO.Compression.BrotliStream.Read(System.Span<byte>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.MemoryStream(byte[])`；`System.IO.MemoryStream.ToArray()`；`System.IO.MemoryStream.Write(byte[], int, int)`
 
@@ -320,7 +320,7 @@ private DateTime _started;
 
 来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)
 
@@ -341,14 +341,36 @@ private DateTime _started;
 
 **调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart)`](CoopWire.cs.md#symbol-b544da8202a5)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)
 
-**调用：** [`NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-35fc52cbee4a)；[`NationalSpire.Coop.CoopAssembler.Complete.Decode()`](CoopWire.cs.md#symbol-3bc9f4a00527)
+**调用：** [`NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-35fc52cbee4a)；[`NationalSpire.Coop.CoopAssembler.Complete.Decode(bool)`](CoopWire.cs.md#symbol-8c8a54666033)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；`NationalSpire.Coop.CoopAssembler.Complete.Decode()`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；`NationalSpire.Coop.CoopAssembler.Complete.Decode(bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；输入表达式：`Collect(p, received)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode()`
-- `NationalSpire.Coop.CoopAssembler.Complete.Decode()`；输入表达式：`.Decode()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode()`
+- `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime)`；输入表达式：`Collect(p, received)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode(diagnostic)`
+- `NationalSpire.Coop.CoopAssembler.Complete.Decode(bool)`；输入表达式：`.Decode(diagnostic)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Collect(p, received)?.Decode(diagnostic)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-dcb9a42ff122"></a>
+
+## `NationalSpire.Coop.CoopAssembler.Missing() — internal int[]? Missing()`
+
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.CollectDiagnosticReports(System.TimeSpan?)`](CoopDiagnostics.cs.md#symbol-44ff9d375651)
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Linq.Enumerable.Range(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopAssembler._header`；`NationalSpire.Coop.CoopAssembler._parts`；`NationalSpire.Coop.CoopPart.Count`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`_parts.ContainsKey(i)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_parts.ContainsKey(i)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Enumerable.Range(0, _header.Count).Where(i => !_parts.ContainsKey(i)).ToArray()`；返回值紧邻使用处：`ConditionalExpressionSyntax: _header == null ? null : Enumerable.Range(0, _header.Count).Where(i => !_parts.ContainsKey(i)).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Enumerable.Range(0, _header.Count).Where(i => !_parts.ContainsKey(i))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, _header.Count).Where(i => !_parts.ContainsKey(i)).ToArray`
+- `System.Linq.Enumerable.Range(int, int)`；输入表达式：`Enumerable.Range(0, _header.Count)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, _header.Count).Where`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -357,9 +379,9 @@ private DateTime _started;
 
 ## `NationalSpire.Coop.CoopAssembler.Collect(NationalSpire.Coop.CoopPart, System.DateTime) — internal Complete? Collect(CoopPart p, DateTime received)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
+**调用者：** [`NationalSpire.Coop.CoopAssembler.Add(NationalSpire.Coop.CoopPart, System.DateTime)`](CoopWire.cs.md#symbol-e6ffa10e5388)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)
 
 **调用：** `NationalSpire.Coop.CoopAssembler.Complete.Complete(NationalSpire.Coop.CoopPart, byte[][])`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Min(int, int)`；`System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；`System.TimeSpan.FromSeconds(long)`；`T[]?.AsSpan<T>()`
 

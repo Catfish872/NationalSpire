@@ -1,5 +1,15 @@
 # 数据归属与使用约定
 
+## 随机事件诊断记录
+
+Diagnostics.RecordEvent 的 context 关联实际请求来源，正式事件为 WorldId/event/事件编号；attempt 采用每轮传输的独立 trace。请求、回复、生成失败和效果检查分别作为完整 JSON 行追加到 random-events.jsonl，请求与回复通过 context/attempt 对应。回复包含实际 messages、原始 content、reasoning、连接方案编号及异常；重新生成使用新 trace。ProcessEventAsync 另记 generation-failed 的事件现场。记录属于设备本机诊断目录，房主代成员执行时保存在房主；生涯、实时快照和操作版本沿用原数据归属。
+
+普通 national-spire.log、随机事件 random-events.jsonl、比赛 matches.jsonl 共用 LogStorage.WriteLog → AppendLog。每类保留当前及最近四份历史文件；当前文件达到2097152字节后，在下一条写入前轮换。每条全文写入，超大记录可以使单份超过轮换点。每类通常约10MiB；实际字节数由完整记录的边界决定，并非硬性总量上限。旧 random-events/*.json、matches/**/*.jsonl 在 Configure 时依时间完整迁入，成功后删除原文件；读取或写入失败的旧文件继续随报告导出。切换生涯沿用设备日志目录，关闭进程保留磁盘文件。
+
+临时文件写入失败时，WriteLog 将完整行加入按类别管理的内存队列，后台每秒重试；内存按每类五份轮换点保留最近完整记录，至少保留最新一条超大记录。过期整条记录计入 expiredPendingRecords，导出包含仍待写入的完整行和写入错误。进程关闭会结束内存重试，尚未落盘内容无法保证在重启后恢复。普通会话内存保留最多512条、约2Mi字符且至少保留最新完整记录；错误计数保留64种，全部错误仍逐次写入磁盘。性能统计为固定阶段累计，覆盖固定文件。玩家主动导出的 ZIP 由玩家管理。
+
+效果检查按事件来源、原选项及错误摘要去重，内存只保留最近512个摘要。现场包含 Day/Season、玩家编号和昵称、参与人物、完整 RandomEventRecord、原选项及位置、自定义标记、人物目标匹配结果、钱包美元、关注、经营身份及库存。Export 与 CapturePeerLogs 读取同一套保留文件：持锁打开文件并固定读取长度，释放锁后读取全文；轮换期间打开的文件仍可读取。凭据统一经过 Redact。版本修改前已经删除或截断的历史内容无法恢复。
+
 ## 结算对阵详情
 
 CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表。每项 Home/Away 为 CompetitionPlayer 列表，Id 用于头像和人物档案，Name 保存结算时姓名；HomePerformance/AwayPerformance 保存格式化后的通关、楼层与用时，WinnerId 标记胜方，Status 为待赛、弃权判定、平局或已结束。合作赛名单来自比赛实际出场记录，整队共用一份成绩。CaptureCompetition 创建这些独立列表，原赛事和人物后续变更各自生效，结算中的姓名和成绩沿用快照。
@@ -12,9 +22,9 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 
 CareerData.CalendarStartYear 是本生涯第1天对应的公历年份，第1天固定为该年1月1日。新建生涯时记录当前年份；旧档缺省0，在 NormalizeRoster 或多人主持者加载时由 GameCalendar.Initialize 写入升级年份，之后随原保存及完整快照固定。文件复制与再次启动读取已保存年份。内部 Day、Season、LongSeasonsFrom 和所有原赛事编号继续用于排序及计算；系统展示经 GameCalendar 换算。原文里的旧日期属于历史文字。
 
-PrivateRelation.SelectedBond 表示主动确认的关系阶段，1为恋人、2为誓约；OathConfirmed 表示当前誓约，RingReceived 和 WeddingCompleted 记录经历。普通好感数值继续使用 Favour。RelationshipGifts 在发送和接受时共用60/85门槛；普通礼物支持恋人请求，专属礼物形成誓约。OathAttachments 接受解除时取消当前誓约，保留婚礼及收礼历史，并回到恋人关系。现有交互快照与 PreserveRelation 负责重新生成的恢复和后续独立关系操作的保留。
+PrivateRelation.SelectedBond 表示主动确认的关系阶段，1为恋人、2为誓约；OathConfirmed 表示当前誓约，RingReceived 和 WeddingCompleted 记录经历。普通好感数值继续使用 Favour。RelationshipGifts 在发送和接受时共用60/85门槛；普通礼物支持恋人请求；接受誓约之戒或盛大婚礼后将 SelectedBond 至少设为1，戒指另记 RingReceived，两者均解锁择期婚礼。完成婚礼才将 OathConfirmed、WeddingCompleted 设为true并将 SelectedBond 设为2。OathAttachments 接受解除时取消当前誓约，保留婚礼及收礼历史，并回到恋人关系。现有交互快照与 PreserveRelation 负责重新生成的恢复和后续独立关系操作的保留。
 
-PrivateOffer.RelationshipIntent 属于本次礼物请求；ServiceId 将婚礼活动关联到已接受的婚礼礼物。服务编号为 GroupId/礼物Id，私聊的 GroupId 为空。Services 汇总当前玩家私聊及群聊交互会话，按礼物 Quantity 减去已赴约或已结束活动次数；购买、收礼扣库存、赴约使用服务分别沿原入口执行。
+PrivateOffer.RelationshipIntent 属于本次礼物请求；ServiceId 将婚礼活动关联到已接受的誓约之戒或盛大婚礼礼物。服务编号为 GroupId/礼物Id，私聊的 GroupId 为空。Services 汇总当前玩家私聊及群聊交互会话，同时返回原 GoodId，按礼物 Quantity 减去已赴约或已结束活动次数；购买、收礼扣库存、赴约使用服务分别沿原入口执行。
 
 PrivateMailbox.NpcAvatarFrames 保存当前玩家为各NPC选择的头像框。缺省使用原荣誉；婚礼完成且当前誓约有效时自动显示钻戒框。CharacterDeletion 删除自建角色时一并删除该信箱的选择记录。其他玩家信箱继续由既有多人个人资料处理。
 

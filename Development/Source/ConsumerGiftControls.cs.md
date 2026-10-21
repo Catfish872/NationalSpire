@@ -234,7 +234,7 @@ private LineEdit _number = null!;
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-1a2f8d82e83f)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
+**调用者：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-4cac190b7ec0)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
 
 **调用：** `int.ToString(System.IFormatProvider?)`；`System.Math.Clamp(int, int, int)`
 

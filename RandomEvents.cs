@@ -129,6 +129,12 @@ public static class RandomEventEffects
     }
     public static string? Check(CareerData d, RandomEventRecord record, RandomEventOption option)
     {
+        string? error = CheckEffects(d, record, option);
+        if (error != null) Diagnostics.RecordEventCheck(d, record, option, error);
+        return error;
+    }
+    private static string? CheckEffects(CareerData d, RandomEventRecord record, RandomEventOption option)
+    {
         decimal wallet = CareerMoney.Balance(d) * 10;
         var stock = d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id).ToDictionary(g => g.Key, g => (decimal)g.Sum(x => x.Quantity));
         try

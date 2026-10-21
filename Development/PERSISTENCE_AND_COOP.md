@@ -1,8 +1,20 @@
 # 保存、广播与恢复
 
+## 自动保存诊断入口
+
+CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 ShouldSave、网络类型、尝试编号及当前阶段，使原版因 ShouldSave 跳过下层保存的情况也留下入口证据。该补丁只观察入口。原 CoopSavePatch 仍拦截 SerializableRun 的联机保存并调用 CoopNativeRun.Save。Save 对客机、对局不存在和暂停分别记录跳过原因；正式保存前记录旧检查点字节数、实际章节、运行秒数、访问地图坐标数和各玩家生命，ValidateRun 后编码一次、Commit 一次，成功后记录新字节数、哈希及 Revision。诊断失败由 Diagnostics 自身处理，比赛的保存和广播顺序沿用原实现。
+
+2026-10-21 本机两个独立 Godot 进程使用真实原版对局、Harmony 保存入口和 ENet，房主25项、客机7项通过。两次地图推进为130.2374和260.1274毫秒，均包含原版操作、同步和保存等待，Revision 各增加1；此次未单独测量内部步骤及分配量。入口、实际保存前和提交后记录均存在。测试没有加载报告者第三方角色模组，也没有验证 Steam 跨机重连；报告者返回首层的原始原因仍待对应现场。原始记录保留在本地 .artifacts/log-stress-20261021-c/native-save。
+
 事件池配置沿 AiOptions.EventPoolOverrides 保存，编辑器一次保存调用一次 SaveAiSettings。单人 CareerStore.Save 成功保存当前生涯后更新 AiSettingsStore；多人 SaveAi 先保存房主本机 AI 配置，再递增世界 Revision 并沿原 Commit 广播公开状态。配置不新增网络消息类型，整池按现有 AiOptions 公开过滤保留在房主本机。WorldEvents.PublishDaily 经 EventPools.Get(CareerData) 读取素材：共同世界采用房主本机配置，单人采用当前 data.Ai。个人随机事件命令沿 CoopRandomEvents 的房主配置建立 Seed、Category、Materials，再通过原成员状态保存与事件流式回复。退出重进和断线重连使用已保存事件分类，修改模板影响后续首次抽取。旧配置缺少覆盖字段时默认空字典，旧事件缺少 Category 时按原内置 Seed 映射背景。失败恢复配置与草稿的顺序见 GAME_AND_UI。
 
 ## 随机事件的个人资料与共同效果
+
+随机事件详细诊断由执行模型请求的设备在本机保存，房主代成员执行时保存在房主。RequestPrivateAsync 在 task:event 请求前和请求结束各写入一次完整诊断，原生成、保存和广播次数沿用现有流程。CapturePeerLogs 收集普通五份日志、随机事件、当前世界的比赛记录、会话记录及最近五份原版游戏日志全文；现场字段及轮换见 DATA_CONTRACTS 的随机事件诊断记录。
+
+CoopCoordinator.CollectDiagnostics 重复点击复用正在进行的同一任务。房主向在线成员发送 diagnostics-request；成员在游戏线程调用 CaptureDiagnostics 一次，后台序列化、脱敏、压缩并缓存该次分片。Tick/PumpDiagnostics 每次发送一个24000字节分片。房主每三秒请求尚缺分片，成员复用缓存重发；完整收到后后台校验、解压、读取与脱敏，主线程 Tick 发布报告。诊断专用 CoopAssembler 使用既有分片格式，完整报告按实际大小组装，普通业务同步的原有容量条件继续由其独立分支处理。缺片和损坏片在诊断通道内重试，日志记录真实错误；游戏同步状态继续按原流程运行。
+
+默认收集在成员保持在线时继续等待；调用者可显式提供 timeout。离线、关闭会话或切换 Epoch 后，已收集报告及未收集成员状态一并输出。完成后 diagnostics-done 清理成员缓存，协调器 Dispose 调用 CloseDiagnostics；房主 finally 等待解码任务后清理组装、报告和后台任务引用。一次报告会暂存完整字节数组和分片，内存随本次报告大小增加，收集结束释放引用；这不是常量内存的流式 ZIP。导出只读当前保留范围，实际磁盘或网络故障写入报告状态。
 
 共同 World.Journey 保存原目的日期及随机事件暂停日，通过原世界快照同步；成员 View 从 World 复制该字段，事件故事仍属于各成员。ExecuteProposal 每推进一天按比赛和活动优先、途中事件其次的顺序停止；继续行程复用 propose-advance，沿原权限执行。CoopAi 在建立新自动发布任务及下一轮处理前检查暂停日，已开始的任务继续完成。关闭或重启后暂停规则随保存恢复；成员进入事件、留在当日与继续原行程均使用共同日期。
 

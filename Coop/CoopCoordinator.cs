@@ -67,6 +67,7 @@ public sealed partial class CoopCoordinator : IDisposable
         if (_closed) return;
         _transport.Update();
         PumpReceived();
+        PumpDiagnostics();
         if (!Host)
             foreach (var pending in _pendingCommands.Values.ToArray())
                 if (pending.Reply == null && DateTime.UtcNow - pending.Sent >= TimeSpan.FromSeconds(3)) Retry(pending.Command);
@@ -141,7 +142,7 @@ public sealed partial class CoopCoordinator : IDisposable
             }
             if (!Host && sender != _transport.Owner) return;
             if (Host && (World == null || !World.Members.Any(m => m.SteamId == sender) || !_seen.ContainsKey(sender))) return;
-            if (wire.Kind is "diagnostics-request" or "diagnostics-part") { ReceiveDiagnostic(sender, wire); return; }
+            if (wire.Kind is "diagnostics-request" or "diagnostics-part" or "diagnostics-done") { ReceiveDiagnostic(sender, wire); return; }
             if (wire.Kind == "private-chunk") { ReceivePrivate(wire, received); return; }
             if (wire.Kind is "market-query" or "market-answer") { ReceiveMarket(sender, wire); return; }
             switch (wire.Kind)
@@ -265,5 +266,5 @@ public sealed partial class CoopCoordinator : IDisposable
         foreach (var member in World.Members.Where(m => m.SteamId != Self))
             foreach (var part in parts) Send(member.SteamId, "live", part);
     }
-    public void Dispose() { _closed = true; CloseReceived(); _transport.Received -= Receive; _transport.Dispose(); }
+    public void Dispose() { _closed = true; CloseDiagnostics(); CloseReceived(); _transport.Received -= Receive; _transport.Dispose(); }
 }
