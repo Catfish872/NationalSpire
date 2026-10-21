@@ -33,6 +33,7 @@ public static class RandomEvents
     }
     public static void SetFrequency(CareerData d, bool enabled, int minimum, int maximum)
     {
+        minimum = Math.Max(1, minimum); maximum = Math.Max(minimum, maximum);
         d.Life.RandomEventsEnabled = enabled;
         d.Life.RandomEventMinDays = minimum; d.Life.RandomEventMaxDays = maximum;
         d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0);
@@ -49,12 +50,107 @@ public static class RandomEvents
             var random = new Random(CareerEngine.StableHash(d.WorldId + ":event:" + e.Id));
             var used = d.Life.RandomEvents.Where(x => x.Seed.Length > 0).TakeLast(24).Select(x => x.Seed).ToHashSet();
             var selected = EventPools.SelectRandom(d.Ai, used, random);
-            e.Seed = selected.Detail; e.Category = selected.Category;
-            e.People = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id)).OrderBy(_ => random.Next()).Take(random.Next(4)).Select(p => p.Id).ToList();
+            // 本地魔改：事件素材前缀标记参与者池，可叠加（同时出现时取交集）：
+            //   【相识】= 最近论坛互动 / 私聊过 / 人际关联 / 同俱乐部 / 有好感（至少有交集的人）
+            //   【同战队】【恋人】【同国家】【异性】= 对应范围；未标记 = 全部 NPC 完全随机。
+            var filters = new HashSet<string>();
+            string seedDetail = StripMarkers(selected.Detail, filters);
+            e.Seed = seedDetail; e.Category = selected.Category;
+            e.People = SelectPeople(d, random, filters.Count == 0 ? null : filters);
             e.Materials = RandomEventPrompts.Materials(d, e);
         }
         e.CustomOption = null; e.CustomAction = ""; e.CustomState = "idle"; e.CustomReasoning = "";
         e.State = "generating"; e.Error = ""; return null;
+    }
+    // 本地魔改：事件素材前缀 → 参与者池筛选条件（可叠加，取交集）。见 Start。
+    internal static readonly (string Marker, string Filter)[] PoolMarkers =
+    [
+        ("【相识】", "acquaint"), ("【熟人】", "acquaint"), ("【认识】", "acquaint"), ("[相识]", "acquaint"),
+        ("【同战队】", "team"), ("[同战队]", "team"),
+        ("【恋人】", "lover"), ("[恋人]", "lover"),
+        ("【同国家】", "country"), ("[同国家]", "country"),
+        ("【异性】", "opposite"), ("[异性]", "opposite")
+    ];
+    // 本地魔改：filters=null 时全部可私聊 NPC 完全随机 0-3 人；否则按条件取交集后抽 1-3 人（可为 0 人）。
+    internal static List<string> SelectPeople(CareerData d, Random random, ISet<string>? filters)
+    {
+        string human = GroupChats.Human(d);
+        var candidates = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id))
+            .Select(p => p.Id).ToHashSet();
+        if (candidates.Count == 0) return [];
+        var score = new Dictionary<string, int>();
+        void Bump(string id, int value)
+        {
+            if (id.Length == 0 || !candidates.Contains(id)) return;
+            score[id] = score.GetValueOrDefault(id) + value;
+        }
+        var conversations = PrivateMessages.Mailbox(d).Conversations;
+        foreach (string id in candidates)
+        {
+            var person = CareerEngine.Person(d, id);
+            if (conversations.ContainsKey(id)) Bump(id, 5);      // 私聊过 = 认识
+            if (person == null) continue;
+            if (person.Connections.Contains(human)) Bump(id, 4); // 人际关联
+            if (d.Esports.ClubId.Length > 0 && (person.ClubId == d.Esports.ClubId || person.SupportedClubId == d.Esports.ClubId)) Bump(id, 3);
+            if (PrivateMessages.Favour(d, id) > 0) Bump(id, 1);
+        }
+        int since = d.Day - 14;
+        foreach (var post in CommunityThreads.All(d).Where(p => p.Day >= since))
+        {
+            bool playerThread = CommunityThreads.IsHuman(d, post.AuthorId);
+            bool playerReplied = post.Replies.Any(r => CommunityThreads.IsHuman(d, r.AuthorId));
+            if (!playerThread && playerReplied) Bump(post.AuthorId, 6);   // 玩家去别人帖里互动
+            if (playerThread || post.RelatedPeople.Contains(human))
+                foreach (var reply in post.Replies.Where(r => !CommunityThreads.IsHuman(d, r.AuthorId)))
+                    Bump(reply.AuthorId, 6);                               // 别人在玩家的帖子/相关帖里回复
+            foreach (var reply in post.Replies.Where(r => !CommunityThreads.IsHuman(d, r.AuthorId)))
+                if (post.Replies.Any(r => r.Id == reply.ParentId && CommunityThreads.IsHuman(d, r.AuthorId)))
+                    Bump(reply.AuthorId, 4);                               // 回复了玩家的楼层
+        }
+        // 未标记事件：全部可私聊 NPC 完全随机，数量保持原来的 0–3。
+        if (filters == null)
+            return candidates.OrderBy(_ => random.Next()).Take(random.Next(4)).ToList();
+        IEnumerable<string> pool = candidates;
+        if (filters.Contains("acquaint")) pool = pool.Where(id => score.GetValueOrDefault(id) > 0);
+        if (filters.Contains("team")) pool = pool.Where(id => SameTeam(d, id));
+        if (filters.Contains("lover")) pool = pool.Where(id => IsLover(d, id));
+        if (filters.Contains("country")) pool = pool.Where(id => SameCountry(d, id));
+        if (filters.Contains("opposite")) pool = pool.Where(id => IsOppositeSex(d, id));
+        var list = pool.ToList();
+        if (list.Count == 0) return []; // 条件池为空：不塞不符合条件的陌生人
+        int count = Math.Min(random.Next(1, 4), list.Count);
+        return (filters.Contains("acquaint")
+            ? list.OrderByDescending(id => score.GetValueOrDefault(id) + random.Next(3)).ThenBy(_ => random.Next())
+            : list.OrderBy(_ => random.Next())).Take(count).ToList();
+    }
+    private static bool SameTeam(CareerData d, string id)
+        => d.Esports.ClubId.Length > 0 && CareerEngine.Person(d, id) is { } p && p.ClubId == d.Esports.ClubId;
+    private static bool SameCountry(CareerData d, string id)
+        => d.Esports.Country.Length > 0 && CareerEngine.Person(d, id) is { } p && p.Country == d.Esports.Country;
+    private static bool IsLover(CareerData d, string id)
+    {
+        var relation = PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id);
+        return relation is { } r && (r.SelectedBond is >= 1 || r.OathConfirmed);
+    }
+    private static bool IsOppositeSex(CareerData d, string id)
+    {
+        string player = IdentityGender.Of(d, "player");
+        if (player is not ("男" or "女")) return false;
+        string gender = IdentityGender.Of(d, id);
+        return gender is "男" or "女" && gender != player;
+    }
+    // 剥离素材行首的参与者池前缀，返回真正交给 AI 的故事素材；filters 收集对应条件。
+    internal static string StripMarkers(string detail, ISet<string> filters)
+    {
+        string seed = detail;
+        while (true)
+        {
+            bool hit = false;
+            foreach (var (marker, filter) in PoolMarkers)
+                if (seed.StartsWith(marker, StringComparison.Ordinal))
+                { filters.Add(filter); seed = seed[marker.Length..].TrimStart(); hit = true; break; }
+            if (!hit) return seed;
+        }
     }
     public static string? Custom(CareerData d, string id, string action)
     {
@@ -91,7 +187,7 @@ public static class RandomEvents
         var option = e.Options[index];
         if (RandomEventEffects.Check(d, e, option) is { } error) return error;
         RandomEventEffects.Apply(d, e, option);
-        foreach (string person in option.Effects.Select(RandomEventEffects.Person).Where(id => id.Length > 0))
+        foreach (string person in option.Effects.Select(effect => RandomEventEffects.PersonId(d, effect)).Where(id => id.Length > 0 && id != "player"))
             if (!e.People.Contains(person)) e.People.Add(person);
         e.Selected = index; e.Public = publicly; e.State = "complete";
         string fact = e.Story.Trim() + "\n玩家选择：" + option.Text + "\n实际结果：" + option.Result;
@@ -138,6 +234,26 @@ public static class RandomEventEffects
         string kind = Kind(e);
         return kind is "favour" or "impression" or "status" or "learning" or "challenge" ? Text(e, kind) : "";
     }
+    internal static bool IsPlayer(CareerData d, string id) => id == "player" || d.HumanIds.Contains(id);
+    // 人物引用宽容解析：编号 → 玩家/玩家别名 → 现役/历史人物编号 → 现役/历史人物姓名/别名唯一匹配。
+    internal static string Resolve(CareerData d, string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return "";
+        if (IsPlayer(d, text)) return text;
+        if (text == CareerEngine.Name(d) || text == d.PlayerAlias || d.PlayerNameAliases.Contains(text)) return "player";
+        if (CareerEngine.Person(d, text) != null) return text;
+        var matches = d.People.Concat(d.DeletedPeople.Values)
+            .Where(p => p.Name == text || p.PublicName == text || p.Handle == text || p.HandleAliases.Contains(text))
+            .DistinctBy(p => p.Id).ToList();
+        return matches.Count == 1 ? matches[0].Id : "";
+    }
+    internal static string PersonId(CareerData d, Dictionary<string, JsonElement> e) => Resolve(d, Person(e));
+    private static CareerPerson? TargetPerson(CareerData d, string id)
+    {
+        if (id.Length == 0) return null;
+        if (id == "player") { d.PlayerCard ??= CharacterCards.Read(d, "player"); return d.PlayerCard; }
+        return CareerEngine.Person(d, id);
+    }
     public static string? Check(CareerData d, RandomEventRecord record, RandomEventOption option)
     {
         string? error = CheckEffects(d, record, option);
@@ -155,7 +271,17 @@ public static class RandomEventEffects
                 string kind = Kind(e);
                 if (kind.Length == 0 || Kinds.Count(e.ContainsKey) != 1) return "这一选项的效果格式有误，可以选择其他选项或重新生成。";
                 if (kind is "favour" or "impression" or "status" or "learning" or "challenge")
-                    if (!PrivateMessages.CanChat(d, Person(e))) return "选项涉及的人物编号未对应到当前存档中的人物。";
+                {
+                    string personId = PersonId(d, e);
+                    if (personId.Length == 0) return "选项涉及的人物编号未对应到当前存档中的人物。";
+                    if (kind == "challenge")
+                    {
+                        if (IsPlayer(d, personId)) return "约战对象不能是玩家本人。";
+                        if (TargetPerson(d, personId) == null) return "选项涉及的人物编号未对应到当前存档中的人物。";
+                    }
+                    if (kind is "status" or "learning" && TargetPerson(d, personId) == null)
+                        return "选项涉及的人物编号未对应到当前存档中的人物。";
+                }
                 switch (kind)
                 {
                     case "wallet": wallet += Number(e, kind); if (wallet < 0) return "钱包余额不足，可选择其他方案或跳过。"; break;
@@ -191,7 +317,7 @@ public static class RandomEventEffects
         foreach (var e in option.Effects)
             try
             {
-                string kind = Kind(e), id = Person(e), person = id.Length > 0 ? CareerEngine.DisplayName(d, id) : "";
+                string kind = Kind(e), id = Resolve(d, Person(e)), person = id.Length > 0 ? CareerEngine.DisplayName(d, id) : "";
                 lines.Add(kind switch
                 {
                     "wallet" => "钱包 " + (Number(e, kind) >= 0 ? "+" : "−") + CareerMoney.Format(Math.Abs(Number(e, kind)) / 10),
@@ -219,10 +345,18 @@ public static class RandomEventEffects
                 case "fans": d.Fans = Math.Max(0, d.Fans + (int)Number(e, kind)); break;
                 case "clubFans": d.Esports.OwnedClub!.Fans = Math.Max(0, d.Esports.OwnedClub.Fans + (int)Number(e, kind)); break;
                 case "item": ConsumerEngine.ChangeInventory(d, ConsumerCatalog.Get(Text(e, kind))!, (long)Number(e, "count")); break;
-                case "favour": PrivateMessages.ChangeFavour(d, Text(e, kind), (int)Number(e, "value")); break;
-                case "impression": var relation = PrivateMessages.Relation(d, Text(e, kind)); relation.Impression = Text(e, "text"); relation.Revision++; break;
-                case "status": CareerEngine.Person(d, Text(e, kind))!.Learning.EventStatuses.Add(new() { Source = record.Id, Name = Text(e, "name"), Percent = (double)Number(e, "percent"), Until = d.Day + (int)Number(e, "days") }); CareerTraining.InvalidateForecast(d); break;
-                case "learning": CareerEngine.Person(d, Text(e, kind))!.Learning.ChanceShift += (double)Number(e, "percent") / 100; CareerTraining.InvalidateForecast(d); break;
+                case "favour":
+                    if (!IsPlayer(d, Resolve(d, Text(e, kind)))) PrivateMessages.ChangeFavour(d, Resolve(d, Text(e, kind)), (int)Number(e, "value")); break;
+                case "impression":
+                    if (!IsPlayer(d, Resolve(d, Text(e, kind)))) { var relation = PrivateMessages.Relation(d, Resolve(d, Text(e, kind))); relation.Impression = Text(e, "text"); relation.Revision++; } break;
+                case "status":
+                    if (TargetPerson(d, Resolve(d, Text(e, kind))) is { } statusTarget)
+                    { statusTarget.Learning.EventStatuses.Add(new() { Source = record.Id, Name = Text(e, "name"), Percent = (double)Number(e, "percent"), Until = d.Day + (int)Number(e, "days") }); CareerTraining.InvalidateForecast(d); }
+                    break;
+                case "learning":
+                    if (TargetPerson(d, Resolve(d, Text(e, kind))) is { } learningTarget)
+                    { learningTarget.Learning.ChanceShift += (double)Number(e, "percent") / 100; CareerTraining.InvalidateForecast(d); }
+                    break;
                 case "market": CareerMarket.EventPrice(d, Text(e, kind), Number(e, "percent"), record.Id, record.Title); break;
                 case "development": NationalDevelopment.Contribute(d, d.Esports.Nations.Single(n => n.Country == Text(e, kind)), (int)Number(e, "points"), record.Title); break;
                 case "challenge":
