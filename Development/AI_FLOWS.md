@@ -42,6 +42,10 @@ PlayerRecord 同时通过 PrivatePublicContext.PlayerProfile 提供一次独立�
 
 ## 世界观模板的实际接入
 
+国运日常新版与攻击性弱化版的内置 world 默认内容分别采用作者本机对应模板的当前全文。两份相对原默认值仅增加生活状况要求：新版增加39字符，要求发帖、评论等展现当地民众生活并符合当前国运等级、数值及描述；弱化版增加50字符，在同一要求前补充关注国运数值和变动。其他文字逐字保留。PromptLibrary.BuildCurrent 的 world 常量与内嵌 PromptPresets/reduced-aggression.json 分别提供这两个默认值；读取和覆盖顺序、模板切换、导入导出、保存及广播继续使用下述原入口。个人已保存修改仍优先生效，更新默认值不改写个人配置或已有故事。
+
+2026-10-22 验证：编译后的两个 Default 返回值分别为5575、5557字符，与本机对应配置逐字相等；源码和资源与修改前比较，其他内容保持一致。旧模板缺少板块兼容104项、内置模板47项通过，Debug测试项目及Release模组构建成功。独立PowerShell进程通过反射连续读取每个默认值5次，包含反射调用和计时的完整本地调用耗时：新版4.3579、0.1496、0.0064、0.0022、0.0018毫秒；弱化版13.1499、0.0166、0.0081、0.0025、0.0018毫秒；十次累计17.6968毫秒。对应当前线程分配分别为301872/4408/2488/2496/2504及154016/2456/2464/2472/2480字节，包含PowerShell及反射开销；首次包含原Lazy资源初始化。原始结果保留在维护者本地.artifacts/template-defaults-20261022/verification.json。本次只更新默认文本，没有新增检索、数据复制、保存、广播或缓存；仍使用原模板缓存和个人覆盖入口。真实模型回复、多人网络及游戏界面此次未重新实测。
+
 世界观与游戏知识使用 PromptLibrary.Get(options, world) 读取当前所选模板及个人修改，缺省内容沿原模板查询入口提供。社区发帖、回帖、周刊文章和人物介绍由 AiService.ComposeSystem → PromptLibrary.Editorial 加入系统消息。私聊通过 PrivateMessagePrompts.Compose → Section，群聊通过 GroupChatPrompts.Compose → Section 加入系统消息；两处 Section 优先使用多人房主广播的 PrivatePromptSnapshot，缺省时读取本机当前模板。CoopCoordinator.Broadcast 把房主的 world 与聊天模板一同写入客机快照；房主实际处理聊天时清空旧快照并读取当前房主设置。
 
 约会、约会日记与结束后的普通私聊感想使用同一 PrivateMessagePrompts.Compose，世界观随首条系统消息进入请求，场景及日记引导随后追加。私聊仲裁、社区举报的 SpireArbitration.Compose 和群聊仲裁的 GroupArbitration.Compose 也加入 world。PortraitDesign.Messages 将 world 放进角色外观设计请求的用户资料。私聊小总结、大总结通过 Summarize 读取专用总结模板、人物身份、性格和待总结内容；群聊小总结、大总结通过 SummarizeGroupAsync 读取专用总结模板及原文或小总结；这四种总结请求没有单独拼接 world。

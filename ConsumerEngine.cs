@@ -31,8 +31,9 @@ public static class ConsumerEngine
     }
     public static bool CanInvite(CareerData d, string id) => id != "player" && !d.HumanIds.Contains(id)
         && PrivateMessages.CanChat(d, id);
-    private static string? Guests(CareerData d, IReadOnlyList<string> ids, int slots)
-        => ids.Count > slots || ids.Distinct().Count() != ids.Count ? "邀请名单超过人数或存在重复。"
+    public static string? Guests(CareerData d, IReadOnlyList<string> ids, int slots)
+        => slots > 0 && ids.Count > slots ? $"这项活动最多邀请{slots}人。"
+            : ids.Distinct().Count() != ids.Count ? "邀请名单中存在重复人物。"
             : ids.Any(id => !CanInvite(d, id)) ? "请选择能够联系的邀请对象。" : null;
     internal static void Season(CareerData d)
     {

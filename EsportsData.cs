@@ -169,12 +169,15 @@ public sealed class NationalLegacy
     public double GrowthConvergence { get; set; }
     public Dictionary<string, int> Indicators { get; set; } = [];
     public Dictionary<string, double> Pending { get; set; } = [];
+    /// <summary>九项指标各自的升降进度，正负1分别触发升级和降级。</summary>
+    public Dictionary<string, double> Progress { get; set; } = [];
     public int ReportSeason { get; set; }
     public int DevelopmentVersion { get; set; }
     public int MaintenanceFunding { get; set; }
     public string LastReport { get; set; } = "";
     public int NewsDay { get; set; }
     public int NewsFortune { get; set; }
+    public bool? NewsPending { get; set; }
     public List<string> NewsChanges { get; set; } = [];
     public string Country { get; set; } = "";
     public int Treasury { get; set; }

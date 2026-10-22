@@ -22,7 +22,7 @@ public partial class CareerScreen
         var header = Card(); main.AddChild(header); var body = Inner(header);
         body.AddChild(Text(nation.Country + " / 国家发展", 32, _gold));
         var metrics = new HBoxContainer(); body.AddChild(metrics);
-        foreach (var (title, value) in new[] { ("人均GDP / 年", $"${nation.Gdp:N0}"), ("本季贡献", NationalDevelopment.SeasonFortune(d, nation.Country, d.Season).ToString("N0")), ("经济增长", $"{nation.GdpGrowth:+0.0%;-0.0%;0.0%}"), ("维护资金", nation.MaintenanceFunding + " / 120") })
+        foreach (var (title, value) in new[] { ("人均GDP / 年", $"${nation.Gdp:N0}"), ("本季国运变化", NationalDevelopment.SeasonFortune(d, nation.Country, d.Season).ToString("+0;-0;0")), ("经济增长", $"{nation.GdpGrowth:+0.0%;-0.0%;0.0%}"), ("增强项目", NationalDevelopment.All.Count(i => NationalDevelopment.Enhancement(nation, i.Id, d.Day) > 0) + " / 9") })
         {
             var box = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; metrics.AddChild(box);
             box.AddChild(Text(title, 15, _muted)); box.AddChild(Text(value, 27, CareerVisuals.Teal));
@@ -46,9 +46,10 @@ public partial class CareerScreen
         var selected = NationalDevelopment.All.First(i => i.Id == _developmentIndicator);
         description.AddChild(Text(selected.Name, 26, _gold));
         description.AddChild(Text(NationalDevelopment.Description(selected.Id, NationalDevelopment.Level(nation, selected.Id)), 21, _ink));
+        description.AddChild(Text(NationalDevelopment.ProgressText(nation, selected.Id), 17, CareerVisuals.Teal));
         var report = Card(); lower.AddChild(report); var news = Inner(report); news.AddChild(Text("赛场贡献与发展", 23, _gold));
-        foreach (var contribution in d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune > 0).OrderByDescending(a => a.Day).Take(4))
-            news.AddChild(Text($"{GameCalendar.Text(d, contribution.Day)} · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  +{contribution.Fortune}国运", 17, _ink));
+        foreach (var contribution in d.Esports.CircuitAwards.Where(a => a.Country == nation.Country && a.Fortune != 0).OrderByDescending(a => a.Day).Take(4))
+            news.AddChild(Text($"{GameCalendar.Text(d, contribution.Day)} · {CareerEngine.DisplayName(d, contribution.PersonId)}\n{contribution.Event}  {contribution.Fortune:+0;-0;0}国运", 17, _ink));
         if (nation.LastReport.Length > 0) news.AddChild(Text(nation.LastReport, 16, CareerVisuals.Teal));
     }
 }
