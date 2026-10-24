@@ -74,6 +74,8 @@ public static partial class CoopRules
         w.World.Esports.CoachTraining = d.Esports.CoachTraining;
         if (m.SteamId == w.Owner) w.World.Esports.OwnedClub = d.Esports.OwnedClub;
         w.World.Posts = d.Posts; w.World.SavedThreads = d.SavedThreads; w.World.CommunityMemories = d.CommunityMemories;
+        // 点赞公式迁移标记跟随共同帖子一起写回，保证每个成员只重算一次。
+        w.World.CommunityVoteVersion = d.CommunityVoteVersion;
         foreach (var ev in m.Life.Events)
         {
             ev.People = ev.People.Select(id => id == "player" ? m.PersonId : id).ToList();

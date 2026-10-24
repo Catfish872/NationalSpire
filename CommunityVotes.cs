@@ -11,6 +11,9 @@ public static class CommunityVotes
     // 沿用社区展示倍率，玩家亲自投票继续按一票计算。
     private const int AudienceMultiplier = 6;
     private const int PlayerReplyMultiplier = 16;
+    // 本地魔改：立场权重下调（0.28→0.18），真人作者 support 设置保底；版本号用于载入时重算旧帖分数。
+    public const int FormulaVersion = 2;
+    private const double StanceWeight = .18;
     public static long AudienceScore(int? basis) => (long)(basis ?? 0) * AudienceMultiplier;
     public static long AudienceScore(CareerData data, CommunityReply reply)
         => (long)(reply.AudienceScore ?? 0) * (CommunityThreads.IsHuman(data, reply.AuthorId) ? PlayerReplyMultiplier : AudienceMultiplier);
@@ -40,7 +43,7 @@ public static class CommunityVotes
             string seed = post.Id + ":" + id + ":" + body;
             string authorSeed = post.Id + ":" + author;
             double support = .56 + Math.Min(.12, .018 * Math.Log10(1d + fans))
-                + .28 * (2 * Variation(authorSeed, "stance") - 1);
+                + StanceWeight * (2 * Variation(authorSeed, "stance") - 1);
             // 一篇讨论内同一作者共享受众倾向，单条内容只改变传播数量。
             if (author == post.AuthorId) support += .04;
             if (people.TryGetValue(author, out var person))
@@ -50,6 +53,9 @@ public static class CommunityVotes
                     && (person.ClubId == other.ClubId || person.SupportedClubId == other.ClubId)) support += .04;
                 if (person.Role.Contains("职业", StringComparison.Ordinal) || person.Titles > 0) support += .02;
             }
+            // 本地魔改：真人作者（玩家/联机队友）的受众支持率保底，粉丝越多越不会被单次立场抽样压成负分。
+            if (author == "player" || data.HumanIds.Contains(author))
+                support = Math.Max(support, .5 + Math.Min(.12, .018 * Math.Log10(1d + fans)));
             support = Math.Clamp(support, .05, .95);
             double score = reach * (.65 + .7 * Variation(seed, "reach")) * (2 * support - 1);
             return score >= 0 ? (int)Math.Round(score)
