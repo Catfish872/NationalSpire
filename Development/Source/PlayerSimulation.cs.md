@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F1D13ACF0ADFDF0BF95C451DBABCBDFFB54030F15B42D3FB922B9844EDFA1514`。来源：[源码](../../PlayerSimulation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F682A2FC205F8818BE8B076ED3995B8CE5947BF1301A185E287A564C41DEBBC5`。来源：[源码](../../PlayerSimulation.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -13,26 +13,48 @@
 ```csharp
 ```
 
-<a id="symbol-a3059e9b8f34"></a>
+<a id="symbol-9052f555e290"></a>
 
-## `NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?) — public static RunPerformance Sample(CareerData d, CareerMatch match, IEnumerable<CareerResult>? history = null, int? ascension = null)`
+## `NationalSpire.PlayerSimulation.WinChance(int, int, int) — public static double WinChance(int wins, int losses, int draws)`
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.PlayerSimulation.Run(NationalSpire.CareerData, NationalSpire.CareerMatch, string, string, int?)`](PlayerSimulation.cs.md#symbol-4d8d262e25f1)
+**调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`](PlayerSimulation.cs.md#symbol-bf5a9912f02b)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`](MatchRules.cs.md#symbol-a0517de2db43)；[`NationalSpire.MatchRules.CompletionCenter(bool, double)`](MatchRules.cs.md#symbol-40633d1bd8b1)；[`NationalSpire.MatchRules.RivalTimeScale(int)`](MatchRules.cs.md#symbol-47435ccfb229)；[`NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`](PlayerSimulation.cs.md#symbol-5df053d02744)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；`System.Collections.Generic.IEnumerable<TSource>.Average<TSource>(System.Func<TSource, double>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Floor(double)`；`System.Math.Max(double, double)`；`System.Math.Min(double, double)`；`System.Random.Next(int)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
+**调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.RivalLevel`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.OpponentWon`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Floor`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.CareerResult.PlayedAscension`；`NationalSpire.CareerResult.RunSeconds`；`NationalSpire.CareerResult.Simulated`；`NationalSpire.CareerResult.Win`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`；`NationalSpire.MatchRules.CompletionCenter(bool, double)`；`NationalSpire.MatchRules.RivalTimeScale(int)`；`NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.PlayerSimulation`
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-bf5a9912f02b"></a>
+
+## `NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?) — public static RunPerformance Sample(CareerData d, CareerMatch match, IEnumerable<CareerResult>? history = null, int? ascension = null, double? winChance = null)`
+
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.PlayerSimulation.Run(NationalSpire.CareerData, NationalSpire.CareerMatch, string, string, int?)`](PlayerSimulation.cs.md#symbol-4d8d262e25f1)
+
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`](MatchRules.cs.md#symbol-a0517de2db43)；[`NationalSpire.MatchRules.CompletionCenter(bool, double)`](MatchRules.cs.md#symbol-40633d1bd8b1)；[`NationalSpire.MatchRules.RivalTimeScale(int)`](MatchRules.cs.md#symbol-47435ccfb229)；[`NationalSpire.PlayerSimulation.EnsureWin(NationalSpire.CareerMatch, NationalSpire.RunPerformance)`](PlayerSimulation.cs.md#symbol-e664b91aae7d)；[`NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`](PlayerSimulation.cs.md#symbol-5df053d02744)；[`NationalSpire.PlayerSimulation.WinChance(int, int, int)`](PlayerSimulation.cs.md#symbol-9052f555e290)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；`System.Collections.Generic.IEnumerable<TSource>.Average<TSource>(System.Func<TSource, double>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Floor(double)`；`System.Math.Max(double, double)`；`System.Math.Min(double, double)`；`System.Random.Next(int)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.CooperativeMembers`；`NationalSpire.CareerData.Draws`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.RivalLevel`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.OpponentWon`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Floor`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.CareerResult.PlayedAscension`；`NationalSpire.CareerResult.RunSeconds`；`NationalSpire.CareerResult.Simulated`；`NationalSpire.CareerResult.Win`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`；`NationalSpire.MatchRules.CompletionCenter(bool, double)`；`NationalSpire.MatchRules.RivalTimeScale(int)`；`NationalSpire.PlayerSimulation.EnsureWin(NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；`NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；`NationalSpire.PlayerSimulation.WinChance(int, int, int)`；`NationalSpire.RunPerformance.Seconds`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.PlayerSimulation`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(d.WorldId + ":player-simulation-outcome:" + match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(d.WorldId + ":player-simulation-outcome:" + match.Seed)`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed)`
 - `NationalSpire.MatchRules.ClearChance(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?)`；输入表达式：`MatchRules.ClearChance(d, p, levelPlayed)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => MatchRules.ClearChance(d, p, levelPlayed)`
 - `NationalSpire.MatchRules.CompletionCenter(bool, double)`；输入表达式：`MatchRules.CompletionCenter(true, chance)`；返回值紧邻使用处：`BinaryExpressionSyntax: MatchRules.CompletionCenter(true, chance) + (d.CooperativeMembers > 1 ? 1800 : 0)`
 - `NationalSpire.MatchRules.RivalTimeScale(int)`；输入表达式：`MatchRules.RivalTimeScale(d.RivalLevel)`；返回值紧邻使用处：`AssignmentExpressionSyntax: mean *= MatchRules.RivalTimeScale(d.RivalLevel)`
-- `NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)))`；返回值紧邻使用处：`ReturnStatementSyntax: return VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)));`
-- `NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`VaryTime(d, match, new(true, 0, mean))`；返回值紧邻使用处：`ReturnStatementSyntax: return VaryTime(d, match, new(true, 0, mean));`
+- `NationalSpire.PlayerSimulation.EnsureWin(NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`EnsureWin(match, first)`；返回值紧邻使用处：`ReturnStatementSyntax: return EnsureWin(match, first);`
+- `NationalSpire.PlayerSimulation.EnsureWin(NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`EnsureWin(match, result)`；返回值紧邻使用处：`ConditionalExpressionSyntax: outcomeRng.NextDouble() < (winChance ?? WinChance(d.Wins, d.Losses, d.Draws)) ? EnsureWin(match, result) : result`
+- `NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)))`
+- `NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance)`；输入表达式：`VaryTime(d, match, new(true, 0, mean))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = VaryTime(d, match, new(true, 0, mean))`
+- `NationalSpire.PlayerSimulation.WinChance(int, int, int)`；输入表达式：`WinChance(d.Wins, d.Losses, d.Draws)`；返回值紧邻使用处：`BinaryExpressionSyntax: winChance ?? WinChance(d.Wins, d.Losses, d.Draws)`
 - `NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；输入表达式：`new(clear, floor, similar.Average(r => r.RunSeconds!.Value))`；返回值紧邻使用处：`ArgumentSyntax: new(clear, floor, similar.Average(r => r.RunSeconds!.Value))`
 - `NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；输入表达式：`new(true, 0, mean)`；返回值紧邻使用处：`ArgumentSyntax: new(true, 0, mean)`
 - `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.PlayerSimulation)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.PlayerSimulation)`
@@ -54,59 +76,85 @@
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`records.Where(r => r.Win == clear)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: records.Where(r => r.Win == clear).ToArray`
 - `System.Math.Floor(double)`；输入表达式：`Math.Floor(match.OpponentSeconds.Value)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Floor(match.OpponentSeconds.Value) - 1`
 - `System.Math.Max(double, double)`；输入表达式：`Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1)`
+- `System.Math.Min(double, double)`；输入表达式：`Math.Min(first.Seconds, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Seconds = Math.Min(first.Seconds, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`
 - `System.Math.Min(double, double)`；输入表达式：`Math.Min(mean, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`；返回值紧邻使用处：`AssignmentExpressionSyntax: mean = Math.Min(mean, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(similar.Length)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(similar.Length)`
+- `System.Random.NextDouble()`；输入表达式：`outcomeRng.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: outcomeRng.NextDouble() < (winChance ?? WinChance(d.Wins, d.Losses, d.Draws))`
 - `System.Random.NextDouble()`；输入表达式：`rng.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: rng.NextDouble() < (double)records.Count(r => r.Win) / records.Length`
+- `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-outcome:" + match.Seed))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-outcome:" + match.Seed))`
 - `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed))`
 
 **赋值（含属性/字段和局部值）：**
 
+- `first` = `first with { Seconds = Math.Min(first.Seconds, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1)) }`
 - `mean` *= `MatchRules.RivalTimeScale(d.RivalLevel)`
 - `mean` = `Math.Min(mean, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`
 - `records` = `actual`
 - `records` = `level`
+- `Seconds` = `Math.Min(first.Seconds, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1))`
+
+<a id="symbol-e664b91aae7d"></a>
+
+## `NationalSpire.PlayerSimulation.EnsureWin(NationalSpire.CareerMatch, NationalSpire.RunPerformance) — private static RunPerformance EnsureWin(CareerMatch match, RunPerformance result)`
+
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`](PlayerSimulation.cs.md#symbol-bf5a9912f02b)
+
+**调用：** [`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`](MatchRules.cs.md#symbol-08f53c7e29ff)；`NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；`System.Math.Floor(double)`；`System.Math.Max(int, int)`；`System.Math.Round(double, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerMatch.OpponentFloor`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.OpponentWon`；`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`；`NationalSpire.RunPerformance.Cleared`；`NationalSpire.RunPerformance.Floor`；`NationalSpire.RunPerformance.Seconds`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`；输入表达式：`MatchRules.Compare(settled, new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0))`；返回值紧邻使用处：`BinaryExpressionSyntax: MatchRules.Compare(settled, new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0)) > 0`
+- `NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；输入表达式：`new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0)`；返回值紧邻使用处：`ArgumentSyntax: new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0)`
+- `System.Math.Floor(double)`；输入表达式：`Math.Floor(settled.Seconds)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Floor(settled.Seconds) + 1`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(1, result.Floor)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Floor = Math.Max(1, result.Floor)`
+- `System.Math.Round(double, int)`；输入表达式：`Math.Round(result.Seconds, 3)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Seconds = Math.Round(result.Seconds, 3)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `Floor` = `Math.Max(1, result.Floor)`
+- `match.OpponentFloor` = `result.Floor - 1`
+- `match.OpponentSeconds` = `Math.Floor(settled.Seconds) + 1`
+- `match.OpponentWon` = `false`
+- `result` = `result with { Floor = Math.Max(1, result.Floor) }`
+- `Seconds` = `Math.Round(result.Seconds, 3)`
 
 <a id="symbol-5df053d02744"></a>
 
 ## `NationalSpire.PlayerSimulation.VaryTime(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.RunPerformance) — private static RunPerformance VaryTime(CareerData d, CareerMatch match, RunPerformance result)`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?)`](PlayerSimulation.cs.md#symbol-a3059e9b8f34)
+**调用者：** [`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`](PlayerSimulation.cs.md#symbol-bf5a9912f02b)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`](MatchRules.cs.md#symbol-08f53c7e29ff)；`NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；`System.Math.BitDecrement(double)`；`System.Math.Floor(double)`；`System.Math.Max(double, double)`；`System.Math.Min(double, double)`；`System.Random.NextDouble()`；`System.Random.Random(int)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；`System.Random.NextDouble()`；`System.Random.Random(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.OpponentWon`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`；`NationalSpire.RunPerformance.Cleared`；`NationalSpire.RunPerformance.Seconds`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.RunPerformance.Seconds`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(d.WorldId + ":player-simulation-time:" + match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(d.WorldId + ":player-simulation-time:" + match.Seed)`
-- `NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`；输入表达式：`MatchRules.Compare(result, new(true, 0, match.OpponentSeconds.Value))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = MatchRules.Compare(result, new(true, 0, match.OpponentSeconds.Value))`
-- `NationalSpire.RunPerformance.RunPerformance(bool, int, double)`；输入表达式：`new(true, 0, match.OpponentSeconds.Value)`；返回值紧邻使用处：`ArgumentSyntax: new(true, 0, match.OpponentSeconds.Value)`
-- `System.Math.BitDecrement(double)`；输入表达式：`Math.BitDecrement(opponent)`；返回值紧邻使用处：`ArgumentSyntax: Math.BitDecrement(opponent)`
-- `System.Math.Floor(double)`；输入表达式：`Math.Floor(match.OpponentSeconds.Value)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Floor(match.OpponentSeconds.Value)`
-- `System.Math.Max(double, double)`；输入表达式：`Math.Max(lower, opponent + 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: lower = Math.Max(lower, opponent + 1)`
-- `System.Math.Min(double, double)`；输入表达式：`Math.Min(upper, Math.BitDecrement(opponent))`；返回值紧邻使用处：`AssignmentExpressionSyntax: upper = Math.Min(upper, Math.BitDecrement(opponent))`
 - `System.Random.NextDouble()`；输入表达式：`rng.NextDouble()`；返回值紧邻使用处：`BinaryExpressionSyntax: (upper - lower) * rng.NextDouble()`
 - `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-time:" + match.Seed))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-time:" + match.Seed))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `lower` = `Math.Max(lower, opponent + 1)`
 - `Seconds` = `lower + (upper - lower) * rng.NextDouble()`
-- `upper` = `Math.Min(upper, Math.BitDecrement(opponent))`
 
 <a id="symbol-4d8d262e25f1"></a>
 
 ## `NationalSpire.PlayerSimulation.Run(NationalSpire.CareerData, NationalSpire.CareerMatch, string, string, int?) — public static string? Run(CareerData d, CareerMatch match, string character, string characterId, int? ascension = null)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
-**调用：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-27c230d3a150)；[`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?)`](PlayerSimulation.cs.md#symbol-a3059e9b8f34)
+**调用：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-27c230d3a150)；[`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`](PlayerSimulation.cs.md#symbol-bf5a9912f02b)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Status`；`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?)`；`NationalSpire.RunPerformance.Cleared`；`NationalSpire.RunPerformance.Floor`；`NationalSpire.RunPerformance.Seconds`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Status`；`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`；`NationalSpire.RunPerformance.Cleared`；`NationalSpire.RunPerformance.Floor`；`NationalSpire.RunPerformance.Seconds`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -114,6 +162,6 @@
 - `NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`EsportsWorld.EntryReason(d, match)`；返回值紧邻使用处：`IsPatternExpressionSyntax: EsportsWorld.EntryReason(d, match) is { } error`
 - `NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PrepareOpponent(d, match)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchRules.PrepareOpponent(d, match);`
 - `NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PrepareSeed(d, match)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchRules.PrepareSeed(d, match);`
-- `NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?)`；输入表达式：`Sample(d, match, ascension: ascension)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Sample(d, match, ascension: ascension)`
+- `NationalSpire.PlayerSimulation.Sample(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<NationalSpire.CareerResult>?, int?, double?)`；输入表达式：`Sample(d, match, ascension: ascension)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Sample(d, match, ascension: ascension)`
 
 **赋值（含属性/字段和局部值）：**

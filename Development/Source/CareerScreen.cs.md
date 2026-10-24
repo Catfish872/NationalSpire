@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`529BA382812D5DC743617B0646CDFB66D14CC0EEA89FE96158E8649CA4E07A86`。来源：[源码](../../CareerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`282392247743C7CCC5D6DB532774513582F72F543423CCF6936C78856CA234BF`。来源：[源码](../../CareerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -1959,6 +1959,6 @@ private long _frameTime;
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(left, y)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(left, y)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(right, bottom)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(right, bottom)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(right, y)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(right, y)`
-- `System.Math.Clamp(float, float, float)`；输入表达式：`Math.Clamp(result.Floor / 55f, 0.03f, 1f)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Clamp(result.Floor / 55f, 0.03f, 1f) * (bottom - top)`
+- `System.Math.Clamp(float, float, float)`；输入表达式：`Math.Clamp(result.Floor / 55f, 0.03f, 1f)`；返回值紧邻使用处：`ConditionalExpressionSyntax: result.Win ? 1f : Math.Clamp(result.Floor / 55f, 0.03f, 1f)`
 
 **赋值（含属性/字段和局部值）：**

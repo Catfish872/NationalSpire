@@ -344,7 +344,8 @@ public static partial class CoopRules
                     participant.Character = characters.Order(StringComparer.Ordinal).ElementAt(CareerEngine.StableHash(match.Seed + ":" + participant.SteamId) % characters.Count);
                     simulation.Characters[participant.SteamId] = participant.Character;
                 }
-                var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), simulation.Ascension);
+                var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), simulation.Ascension,
+                    PlayerSimulation.WinChance(played.Sum(m => m.Wins), played.Sum(m => m.Losses), played.Sum(m => m.Draws)));
                 var players = played.Select(m => new CoopLivePlayer(m.SteamId, m.Character, 0, 0, !performance.Cleared)).ToList();
                 w = Settle(w, simulation.Attempt, performance.Cleared, false, performance.Floor, performance.Seconds, players,
                     simulated: true);

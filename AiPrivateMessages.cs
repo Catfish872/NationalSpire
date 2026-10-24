@@ -157,8 +157,6 @@ public static partial class AiService
         var connection = Connection(options, task);
         if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
         if (!TryGetEndpoint(connection.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
-        if (tools != null && endpoint.Host.Equals("api.deepseek.com", StringComparison.OrdinalIgnoreCase))
-            endpoint = new UriBuilder(endpoint) { Path = "/beta/chat/completions" }.Uri;
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", connection.Key);
         var payload = new Dictionary<string, object> { ["model"] = connection.Model, ["messages"] = messages, ["stream"] = stream };

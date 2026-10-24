@@ -87,7 +87,7 @@ public partial class CareerScreen
             {
                 var entry = new VBoxContainer(); entry.AddThemeConstantOverride("separation", 10); results.AddChild(entry);
                 ProfileEntry(entry, result.Event, result.Outcome, _ink);
-                entry.AddChild(Text($"{MatchRules.AscensionLabel(result)} · 第 {result.Floor} 层", 15, _muted));
+                entry.AddChild(Text($"{MatchRules.AscensionLabel(result)} · {MatchRules.Performance(result.Win, result.Floor, result.RunSeconds)}", 15, _muted));
             }
         }
         if (_multiplayer == null)

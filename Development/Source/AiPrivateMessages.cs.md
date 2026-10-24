@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E25240E297CDEE3831BCB1FC4EC6823A086B5ED5E05A950E42679A3F7D3B2A6C`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A282F327DFF22998F7415653B7F0B65BF71EE19348E85ECA14F8FC61C0C78424`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -340,7 +340,7 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 **调用者：** [`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, string)`](AiPrivateMessages.cs.md#symbol-1b3123f418a5)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`Event()`](AiPrivateMessages.cs.md#symbol-77c1fc00552e)；[`FinishText()`](AiPrivateMessages.cs.md#symbol-dc8b71e7b71c)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordEvent(string, string, string, object)`](EventDiagnostics.cs.md#symbol-4f71ceb40a6e)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；[`NationalSpire.LeadingReasoningStream.Feed(string)`](LeadingReasoningStream.cs.md#symbol-db75a9cd1314)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-39a9f7abb3ab)；`NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；`string.Equals(string?, System.StringComparison)`；`string.IsNullOrEmpty(string?)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Enum.ToString()`；`System.Func<T1, T2, TResult>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.IOException.IOException(string?)`；`System.IO.StreamReader.ReadLineAsync(System.Threading.CancellationToken)`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpContent.ReadAsStreamAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpContent.ReadAsStringAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpRequestException.HttpRequestException(string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateObject()`；`System.Text.Json.JsonElement.GetArrayLength()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`；`System.UriBuilder.UriBuilder(System.Uri)`
+**调用：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`FinishText()`](AiPrivateMessages.cs.md#symbol-105a40137cba)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`](AiService.cs.md#symbol-80abc5b58bda)；[`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`](AiService.cs.md#symbol-e8b1c4ed9086)；[`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordEvent(string, string, string, object)`](EventDiagnostics.cs.md#symbol-4f71ceb40a6e)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；[`NationalSpire.LeadingReasoningStream.Feed(string)`](LeadingReasoningStream.cs.md#symbol-db75a9cd1314)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-395b4fe860dd)；`NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；`string.IsNullOrEmpty(string?)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Enum.ToString()`；`System.Func<T1, T2, TResult>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.IOException.IOException(string?)`；`System.IO.StreamReader.ReadLineAsync(System.Threading.CancellationToken)`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Net.Http.Headers.AuthenticationHeaderValue.AuthenticationHeaderValue(string, string?)`；`System.Net.Http.HttpContent.ReadAsStreamAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpContent.ReadAsStringAsync(System.Threading.CancellationToken)`；`System.Net.Http.HttpRequestException.HttpRequestException(string?)`；`System.Net.Http.HttpRequestMessage.HttpRequestMessage(System.Net.Http.HttpMethod, System.Uri?)`；`System.Net.Http.StringContent.StringContent(string, System.Text.Encoding?, string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateObject()`；`System.Text.Json.JsonElement.GetArrayLength()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
 **字段、属性、事件及方法组引用：** `<anonymous type: string Model, string ProfileId, bool stream, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, string error, string content, string reasoning>.content`；`<anonymous type: string Model, string ProfileId, bool stream, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, string error, string content, string reasoning>.error`；`<anonymous type: string Model, string ProfileId, bool stream, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, string error, string content, string reasoning>.reasoning`；`<anonymous type: string name>.name`；`<anonymous type: string trace, string context, bool stream, string Model, string ProfileId, int messages, int characters>.characters`；`<anonymous type: string trace, string context, bool stream, string Model, string ProfileId, int messages, int characters>.messages`；`<anonymous type: string trace, string context, string Model, string ProfileId, bool stream, string error, string content, string reasoning>.content`；`<anonymous type: string trace, string context, string Model, string ProfileId, bool stream, string error, string content, string reasoning>.error`；`<anonymous type: string trace, string context, string Model, string ProfileId, bool stream, string error, string content, string reasoning>.reasoning`；`<anonymous type: string trace, string context, string Model, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, object[] tools, object tool_choice, object thinking>.thinking`；`<anonymous type: string trace, string context, string Model, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, object[] tools, object tool_choice, object thinking>.tool_choice`；`<anonymous type: string trace, string context, string Model, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> messages, object[] tools, object tool_choice, object thinking>.tools`；`<anonymous type: string trace, string context, string[] fields, string choices>.choices`；`<anonymous type: string trace, string context, string[] fields, string choices>.fields`；`<anonymous type: string trace, string context, System.Collections.Generic.List<NationalSpire.ChatToolCall> calls, string error, string transportError>.calls`；`<anonymous type: string trace, string context, System.Collections.Generic.List<NationalSpire.ChatToolCall> calls, string error, string transportError>.error`；`<anonymous type: string trace, string context, System.Collections.Generic.List<NationalSpire.ChatToolCall> calls, string error, string transportError>.transportError`；`<anonymous type: string type, <anonymous type: string name> function>.function`；`<anonymous type: string type, <anonymous type: string name> function>.type`；`<anonymous type: string type>.type`；`Event()`；`FinishText()`；`NationalSpire.AiConnection.Endpoint`；`NationalSpire.AiConnection.Key`；`NationalSpire.AiConnection.Model`；`NationalSpire.AiConnection.ProfileId`；`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.HttpFailure(System.Net.Http.HttpResponseMessage)`；`NationalSpire.AiService.Json`；`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`；`NationalSpire.AiService.PrivateTransport`；`NationalSpire.AiService.TryGetEndpoint(string?, out System.Uri)`；`NationalSpire.ChatToolRequest.Calls`；`NationalSpire.ChatToolRequest.Definitions`；`NationalSpire.ChatToolRequest.Error`；`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordEvent(string, string, string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`；`NationalSpire.LeadingReasoningStream.Feed(string)`；`RememberUsage(System.Text.Json.JsonElement)`；`ToolText(string)`
 
@@ -367,7 +367,6 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 - `NationalSpire.LeadingReasoningStream.Feed(string)`；输入表达式：`leading.Feed(chunk)`；返回值紧邻使用处：`ExpressionStatementSyntax: leading.Feed(chunk);`
 - `NationalSpire.LeadingReasoningStream.LeadingReasoningStream(System.Action<string>, System.Action<string>)`；输入表达式：`new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LeadingReasoningStream(chunk => { visible.Append(chunk); onContent?.Invoke(chunk); }, reasoning)`
 - `RememberUsage(System.Text.Json.JsonElement)`；输入表达式：`RememberUsage(document.RootElement)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberUsage(document.RootElement);`
-- `string.Equals(string?, System.StringComparison)`；输入表达式：`endpoint.Host.Equals("api.deepseek.com", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: tools != null && endpoint.Host.Equals("api.deepseek.com", StringComparison.OrdinalIgnoreCase)`
 - `string.IsNullOrEmpty(string?)`；输入表达式：`string.IsNullOrEmpty(chunk)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrEmpty(chunk)`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(chunk)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(chunk)`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(connection.Key)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");`
@@ -425,16 +424,13 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 - `System.Text.StringBuilder.ToString()`；输入表达式：`received.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: content = received.ToString()`
 - `System.Text.StringBuilder.ToString()`；输入表达式：`thoughts.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: reasoning = thoughts.ToString()`
 - `System.Text.StringBuilder.ToString()`；输入表达式：`visible.ToString()`；返回值紧邻使用处：`ReturnStatementSyntax: return visible.ToString();`
-- `System.UriBuilder.UriBuilder(System.Uri)`；输入表达式：`new UriBuilder(endpoint) { Path = "/beta/chat/completions" }`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new UriBuilder(endpoint) { Path = "/beta/chat/completions" }.Uri`
 
 **赋值（含属性/字段和局部值）：**
 
 - `["messages"]` = `messages`
 - `["model"]` = `connection.Model`
 - `["stream"]` = `stream`
-- `endpoint` = `new UriBuilder(endpoint) { Path = "/beta/chat/completions" }.Uri`
 - `failure` = `FailureReason(e)`
-- `Path` = `"/beta/chat/completions"`
 - `payload["thinking"]` = `new { type = "disabled" }`
 - `payload["tool_choice"]` = `new { type = "function", function = new { name = "send_message" } }`
 - `payload["tools"]` = `tools.Definitions`
@@ -444,11 +440,11 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 - `request.Headers.Authorization` = `new AuthenticationHeaderValue("Bearer", connection.Key)`
 - `textSource` = `1`
 
-<a id="symbol-542215f57a19"></a>
+<a id="symbol-95daa646e9cc"></a>
 
 ## `ToolText(string) — void ToolText(string chunk)`
 
-来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -464,11 +460,11 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 - `textSource` = `2`
 
-<a id="symbol-dc8b71e7b71c"></a>
+<a id="symbol-105a40137cba"></a>
 
 ## `FinishText() — void FinishText()`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
@@ -488,13 +484,13 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-39a9f7abb3ab"></a>
+<a id="symbol-395b4fe860dd"></a>
 
 ## `RememberUsage(System.Text.Json.JsonElement) — void RememberUsage(JsonElement root)`
 
-来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-77c1fc00552e)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
 **调用：** `System.Text.Json.JsonElement.Clone()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -509,15 +505,15 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 - `lastUsage` = `usage.Clone()`
 
-<a id="symbol-77c1fc00552e"></a>
+<a id="symbol-29b10fe25b87"></a>
 
 ## `Event() — void Event()`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
-**调用：** [`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-39a9f7abb3ab)；`string.Trim()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetArrayLength()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-417a8e8e5b88)；[`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)；[`RememberUsage(System.Text.Json.JsonElement)`](AiPrivateMessages.cs.md#symbol-395b4fe860dd)；`string.Trim()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetArrayLength()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement)`；`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`；`RememberUsage(System.Text.Json.JsonElement)`；`ToolText(string)`
 
@@ -555,9 +551,9 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 ## `NationalSpire.AiService.PrivateReasoning(System.Text.Json.JsonElement) — private static string PrivateReasoning(JsonElement message)`
 
-来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-77c1fc00552e)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
 **调用：** `System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -575,7 +571,7 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 ## `NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string) — private static async Task SummarizePrivateAsync(Func<CareerData?> current, Action<CareerData> save, string person)`
 
-来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-88f72cb1c19e)
 
@@ -640,7 +636,7 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 ## `NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string) — private static Task<string> Summarize(CareerData data, string person, string section, string content)`
 
-来源：源码第 317 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 315 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)
 
@@ -670,7 +666,7 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 
 ## `NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, string) — private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages, string task)`
 
-来源：源码第 323 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 321 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.AiService.SummarizeGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, string)`](AiGroupChats.cs.md#symbol-1e6e737dbe88)
 

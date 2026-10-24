@@ -150,7 +150,8 @@ public static class PrivateMessages
             else if (a.Kind == "result")
             {
                 var r = data.Results.FirstOrDefault(r => r.MatchId == a.MatchId); if (r == null) return "这份比赛记录已不存在。";
-                a.Detail = $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · 第{r.Floor}层 · {MatchRules.Time(r.RunSeconds)}\n" + string.Join("、", r.Cards.Take(8));
+                a.Detail = $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · {MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}"
+                    + (r.Win ? "" : " · " + MatchRules.Time(r.RunSeconds)) + "\n" + string.Join("、", r.Cards.Take(8));
             }
             else if (a.Kind == "post")
             {

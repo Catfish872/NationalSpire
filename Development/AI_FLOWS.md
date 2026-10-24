@@ -1,4 +1,4 @@
-﻿# AI 请求、交互与记忆
+# AI 请求、交互与记忆
 
 ## 随机事件流程
 
@@ -208,7 +208,7 @@ DateDiaries.Guidance 只由 Compose 在 pending.Scene.Ending=true 时添加本�
 
 ChatTools.Create 只提供 send_message，按 Reasoning、Replies、Interactions 的顺序定义三个必填字段，并设置 strict=true。Reasoning 整理本轮事实、人物反应及交互决定；Replies 是完整正文段落数组；Interactions 用 Type 选择原交互字段，没有交互填空数组。群聊段落先写 Speaker，当前约会段落先写场景资料，再写 Reply。严格格式要求每个对象的字段全部必填，原协议可省略的字段通过 anyOf 枚举字段组合，保持原省略含义。比如只调整好感时仍可只提供 Favour，态度和关系沿原值保留。ChatTools.CompletePrompt 在工具模式消息末尾追加原有固定提交说明，玩家模板与前文资料保持原顺序；群聊使用 GroupSpeech 的 Replies 说明并引用 SpeechFormat 的接话顺序规则，ActorFormat 保留交互字段条件。共同活动采用工具专用的 ChatTools.ActivityIntentGuidance，人物同意参加时按实际日期和内容登记邀请。新邀请和处理待处理附件沿各自原动作及编号规则，已赴约活动继续当前场景。
 
-RequestPrivateAsync 仅在这轮携带 ChatToolRequest 时增加 tools、thinking.type=disabled 与指定 send_message 的 tool_choice。直接连接 api.deepseek.com 时使用 /beta/chat/completions；其他已配置路由地址保持原地址。关闭工具模式继续采用原请求。每轮主回复保持一次模型请求，附件与普通聊天使用同一入口。JSON和SSE共用 Feed，按 index 累积函数名、编号和完整参数。ChatReplyStream 逐字符解析参数，跨分片保留 JSON 字符串、转义和 Unicode 状态：Reasoning 进入既有 thinking 回调与轮次 Reasoning；Replies 进入既有正文回调，群聊增加 Speaker，约会增加场景标记。人物编号晚于正文返回时暂存该段文字，获得编号后显示；完成后复核场景位置。完整返回后再将 Interactions 转为原 Directives，由 PrivateMessages.Apply、GroupInteractions.Apply、DateScenes.TaggedLines、DateDiaries.Complete 执行、显示和保存。
+RequestPrivateAsync 仅在这轮携带 ChatToolRequest 时增加 tools、thinking.type=disabled 与指定 send_message 的 tool_choice。工具模式与普通模式共用 TryGetEndpoint：完整的 /chat/completions 路径保持原样，填写服务根地址或 /v1 时补上 /chat/completions；域名、已有路径和查询参数沿玩家配置处理。直接连接官方 api.deepseek.com 与经过 apiagg 等转发服务均采用这一规则。玩家明确填写 /beta 时仍沿该路径请求。ChatTools.Create 保留 strict=true，RequestPrivateAsync 保留指定 send_message 的 tool_choice 和 thinking.type=disabled；普通官方接口接受这些参数的实测结果与 Beta 严格格式保证分别记录。关闭工具模式继续采用原请求。每轮主回复保持一次模型请求，附件与普通聊天使用同一入口。JSON和SSE共用 Feed，按 index 累积函数名、编号和完整参数。ChatReplyStream 逐字符解析参数，跨分片保留 JSON 字符串、转义和 Unicode 状态：Reasoning 进入既有 thinking 回调与轮次 Reasoning；Replies 进入既有正文回调，群聊增加 Speaker，约会增加场景标记。人物编号晚于正文返回时暂存该段文字，获得编号后显示；完成后复核场景位置。完整返回后再将 Interactions 转为原 Directives，由 PrivateMessages.Apply、GroupInteractions.Apply、DateScenes.TaggedLines、DateDiaries.Complete 执行、显示和保存。
 
 解析接受普通 assistant content、旧独立功能工具、缺少 Interactions 的统一回复及单项参数错误。普通正文和工具正文同时存在时，先出现的正文来源负责显示，完整原返回仍记录；工具交互继续处理。工具完成原因 tool_calls 按完整响应处理。单项读取失败记录原因，正文与其他完整交互继续处理；连接中断、停止、跨天及切换存档沿既有请求取消、状态检查、失败、重试和保存入口。每轮一次主请求，工具执行后直接完成本轮。
 
@@ -217,6 +217,7 @@ PrivateTurn/GroupTurn.ToolCalls 保存该轮原始函数名、编号与完整参
 诊断新增 chat.tools.request、chat.tools.response、chat.tools.applied，均调用已有 Diagnostics.Record，复用现有五份轮换文件。请求记录完整messages及tools，返回记录完整函数调用，应用记录具体轮次、解析字段及错误。trace/context关联传输，turnId关联执行；没有新增独立自动日志文件或长期内存队列。
 
 当前统一工具模式实测使用用户确认转发至官方 API 的现有连接，模型编号 deepseek。月光邮局诊断原轮次无附件约战与有附件约战各连续五次，均一次请求、两次保存回调，含完整分析说明、正文及实际约战卡片；正文100—314字符，首段1.81—3.98秒、完整3.39—5.68秒。原约会诊断三种场景循环连续五次，均完整显示分析说明和5—8段场景，完整3.14—5.58秒、两次保存回调。群聊沿原存档人物及上下文，通过 group-send 发送明确活动附件后连续五次，均三条正文、一项有效活动交互、五次保存回调、无交互错误，完整3.57—4.91秒。群聊原句仅提出今晚交流的样本，有继续询问内容并填写空交互的情况；这些资料单独保留，未算入明确活动附件的五次通过。每类五次均在同一组提示词和工具定义下执行；后续群聊专用说明调整未改变私聊和约会的请求定义。该结果说明这些样本通过，不代表所有未来回复都能正确判断交互。
+2026-10-25 官方地址修复验证：修改前使用临时密钥直接请求 https://api.deepseek.com/v1/chat/completions，模型 deepseek-v4-flash，保留与移除 strict 各六次，覆盖诊断中的训练接受、普通私聊、群聊邀约、约会开场和结束，十二次均返回完整 send_message 参数并通过格式检查；相同失败请求经 /beta/chat/completions、strict=true 仍返回 anyOf 参数格式错误。修改后通过生产 RequestPrivateAsync 的真实 HTTP 传输直接请求官方 /v1/chat/completions，保留 strict=true、指定 send_message 并关闭模型思考，返回 HTTP 200、261字正文及工具调用，185次正文回调，首段4126.70毫秒、整次6333.27毫秒、一次请求。该次复测使用保留的诊断请求资料和生产流式解析，没有执行游戏内交互结算。另以模拟响应验证七种配置地址在普通和工具模式下的最终路径，共十四项通过；首次39.27毫秒，后续0.046—13.12毫秒，十四次累计58.25毫秒，逐次分配16400—1577872字节。每次各一次请求，未增加保存、同步或长期缓存。既有工具模式生命周期回归235项通过，包含私聊、群聊、约会、日记和测试文件保存恢复。模拟响应检查与真实网络测试分别记录。本轮没有经 apiagg 进行实网复测，也没有运行 Godot 界面或 Steam 多人连接。
 
 上述请求、完整参数和结果分别保留在本地 .artifacts/unified-reply-strict-private-final、unified-reply-strict-date-final、unified-reply-strict-group-activity-final。该组统一工具、普通正文、旧独立工具及缺少交互字段的离线回归通过；原群聊与约会诊断全文重放、原字段定义一致性、逐字符转义及Unicode解析通过；主客机协调器模拟14项通过。该组保存由回调计数，后续完整生命周期与界面证据见下段。按钮悬浮说明为开启严格工具调用及使用API允许的强制工具调用，其余文字保留，包括已测试DeepSeek官方API、其他渠道可用性未知。
 

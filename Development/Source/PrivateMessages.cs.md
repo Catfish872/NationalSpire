@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`FC3C113B171E69A7BC9907FA5317EA6F9F2DCFB981ACCCF8FBF1B8D16809A2D4`。来源：[源码](../../PrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D004DD375BD4CDE258E120CEC760167F574CC5D6D3CE88B9AC8A0FDF49E959BC`。来源：[源码](../../PrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -515,9 +515,9 @@ private bool _json, _quoted, _escaped;
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateSharePicker(string)`](PrivateMemoryScreen.cs.md#symbol-b8d901a6cb80)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
-**调用：** [`NationalSpire.AiGeneratedText.Different(string, string)`](AiGeneratedText.cs.md#symbol-8a7bdafb8195)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ClubCoaching.cs.md#symbol-061ee769bb78)；[`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-be04a02d4a9c)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CommunitySharing.cs.md#symbol-b6e3b5a6b60e)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`NationalSpire.PrivateAppointments.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-e7f8b7355ddf)；[`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`](PrivatePublicContext.cs.md#symbol-b4d8110deb5b)；`NationalSpire.PrivateOffer.PrivateOffer()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.AiGeneratedText.Different(string, string)`](AiGeneratedText.cs.md#symbol-8a7bdafb8195)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](ClubCoaching.cs.md#symbol-061ee769bb78)；[`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-be04a02d4a9c)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CommunitySharing.cs.md#symbol-b6e3b5a6b60e)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.MatchRules.Performance(bool, int, double?)`](MatchRules.cs.md#symbol-b38635e79223)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`NationalSpire.PrivateAppointments.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-e7f8b7355ddf)；[`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`](PrivatePublicContext.cs.md#symbol-b4d8110deb5b)；`NationalSpire.PrivateOffer.PrivateOffer()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 
-**字段、属性、事件及方法组引用：** `(string Original, string Ai).Ai`；`(string Original, string Ai).Original`；`NationalSpire.AiGeneratedText.Different(string, string)`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Cards`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Event`；`NationalSpire.CareerResult.Floor`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.CareerResult.PlayedAscension`；`NationalSpire.CareerResult.RunSeconds`；`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`；`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityPost.Title`；`NationalSpire.CommunitySharing.Kind`；`NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.OathAttachments.Kind`；`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；`NationalSpire.PrivateAppointments.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.AiDetail`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.MatchId`；`NationalSpire.PrivateOffer.PostRevision`；`NationalSpire.PrivateOffer.Quote`；`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`
+**字段、属性、事件及方法组引用：** `(string Original, string Ai).Ai`；`(string Original, string Ai).Original`；`NationalSpire.AiGeneratedText.Different(string, string)`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Cards`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Event`；`NationalSpire.CareerResult.Floor`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.CareerResult.PlayedAscension`；`NationalSpire.CareerResult.RunSeconds`；`NationalSpire.CareerResult.Win`；`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`；`NationalSpire.ClubCoaching.TrainingError(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityPost.Title`；`NationalSpire.CommunitySharing.Kind`；`NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.MatchRules.Performance(bool, int, double?)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.OathAttachments.Kind`；`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；`NationalSpire.PrivateAppointments.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.AiDetail`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.MatchId`；`NationalSpire.PrivateOffer.PostRevision`；`NationalSpire.PrivateOffer.Quote`；`NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -530,12 +530,13 @@ private bool _json, _quoted, _escaped;
 - `NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`CommunitySharing.Prepare(data, prepared)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CommunitySharing.Prepare(data, prepared) is { } error`
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(data).FirstOrDefault`
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(data, r.Day)`；返回值紧邻使用处：`InterpolationSyntax: {GameCalendar.Text(data, r.Day)}`
-- `NationalSpire.MatchRules.Time(double?)`；输入表达式：`MatchRules.Time(r.RunSeconds)`；返回值紧邻使用处：`InterpolationSyntax: {MatchRules.Time(r.RunSeconds)}`
+- `NationalSpire.MatchRules.Performance(bool, int, double?)`；输入表达式：`MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)`；返回值紧邻使用处：`InterpolationSyntax: {MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}`
+- `NationalSpire.MatchRules.Time(double?)`；输入表达式：`MatchRules.Time(r.RunSeconds)`；返回值紧邻使用处：`BinaryExpressionSyntax: " · " + MatchRules.Time(r.RunSeconds)`
 - `NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.CanOperate(data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !OwnedClubs.CanOperate(data)`
 - `NationalSpire.PrivateAppointments.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Error(data, person, a)`；返回值紧邻使用处：`IsPatternExpressionSyntax: PrivateAppointments.Error(data, person, a) is { } error`
 - `NationalSpire.PrivateOffer.PrivateOffer()`；输入表达式：`new PrivateOffer { Kind = a.Kind, Quote = a.Quote }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateOffer { Kind = a.Kind, Quote = a.Quote }`
 - `NationalSpire.PrivatePublicContext.PostTexts(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CareerPerson?, string, System.Collections.Generic.IEnumerable<NationalSpire.CommunityMemory>?, NationalSpire.CommunityMemorySearch.Request?, bool)`；输入表达式：`PrivatePublicContext.PostTexts(data, p, CareerEngine.Person(data, person)!)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivatePublicContext.PostTexts(data, p, CareerEngine.Person(data, person)!)`
-- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", r.Cards.Take(8))`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · 第{r.Floor}层 · {MatchRules.Time(r.RunSeconds)}\n" + string.Join("、", r.Cards.Take(8))`
+- `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("、", r.Cards.Take(8))`；返回值紧邻使用处：`BinaryExpressionSyntax: $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · {MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}"                      + (r.Win ? "" : " · " + MatchRules.Time(r.RunSeconds)) + "\n" + string.Join("、", r.Cards.Take(8))`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`CommunityThreads.All(data).FirstOrDefault(p => p.Id == a.MatchId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.All(data).FirstOrDefault(p => p.Id == a.MatchId)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Results.FirstOrDefault(r => r.MatchId == a.MatchId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.Results.FirstOrDefault(r => r.MatchId == a.MatchId)`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`r.Cards.Take(8)`；返回值紧邻使用处：`ArgumentSyntax: r.Cards.Take(8)`
@@ -545,7 +546,7 @@ private bool _json, _quoted, _escaped;
 **赋值（含属性/字段和局部值）：**
 
 - `a.AiDetail` = `AiGeneratedText.Different(a.Detail, p.Title + "\n" + text.Ai)`
-- `a.Detail` = `$"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · 第{r.Floor}层 · {MatchRules.Time(r.RunSeconds)}\n" + string.Join("、", r.Cards.Take(8))`
+- `a.Detail` = `$"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · {MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}"                      + (r.Win ? "" : " · " + MatchRules.Time(r.RunSeconds)) + "\n" + string.Join("、", r.Cards.Take(8))`
 - `a.Detail` = `CoachLineups.Prepare(data, a)`
 - `a.Detail` = `p.Title + "\n" + text.Original`
 - `a.PostRevision` = `p.Revision`
@@ -561,7 +562,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.AttachmentTitle(NationalSpire.CareerData, NationalSpire.PrivateOffer) — public static string AttachmentTitle(CareerData data, PrivateOffer a)`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PreviewPrivateAttachment(NationalSpire.PrivateOffer, bool)`](PrivateMemoryScreen.cs.md#symbol-5c877df45b85)；[`NationalSpire.CareerScreen.PrivateAttachmentHeading(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-a28ca2e86dec)；[`NationalSpire.GroupChatPrompts.UserText(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChatPrompts.cs.md#symbol-28b2a2534bee)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.CareerData, NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-2e632c46656c)
 
@@ -581,7 +582,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.Manage(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, NationalSpire.PrivateMessageCommand) — public static string? Manage(CareerData data, PrivateConversation c, string kind, PrivateMessageCommand command)`
 
-来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -635,7 +636,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.FinishSmallSummary(NationalSpire.PrivateConversation, NationalSpire.PrivateHistorySettings, int, string) — public static void FinishSmallSummary(PrivateConversation c, PrivateHistorySettings settings, int snapshotEnd, string text)`
 
-来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)
 
@@ -668,7 +669,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.FinishBigSummary(NationalSpire.PrivateConversation, System.Collections.Generic.IReadOnlyCollection<string>, string) — public static void FinishBigSummary(PrivateConversation c, IReadOnlyCollection<string> ids, string text)`
 
-来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)
 
@@ -703,7 +704,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?) — public static void Apply(CareerData data, PrivateConversation c, PrivateTurn turn, IReadOnlyList<Dictionary<string, string>> directives, int? originalFavour = null)`
 
-来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)
 
@@ -840,7 +841,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.FavourTarget(System.Collections.Generic.Dictionary<string, string>) — private static int? FavourTarget(Dictionary<string, string> fields)`
 
-来源：源码第 332 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -862,7 +863,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool) — public static void ConfirmFavour(CareerData data, PrivateConversation c, PrivateOffer offer, bool apply)`
 
-来源：源码第 336 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -888,7 +889,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.Money(System.Collections.Generic.Dictionary<string, string>, string) — private static decimal Money(Dictionary<string, string> fields, string key)`
 
-来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 348 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -908,7 +909,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateMessages.Number(System.Collections.Generic.Dictionary<string, string>, string) — private static int Number(Dictionary<string, string> fields, string key)`
 
-来源：源码第 348 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -928,7 +929,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.PrivateStreamParser(params string[]) — public PrivateStreamParser(params string[] extraFields)`
 
-来源：源码第 355 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；[`NationalSpire.GroupStreamParser.Actions`](GroupStreamParser.cs.md#symbol-7a8171171ad4)
 
@@ -947,7 +948,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.SceneJson — public bool SceneJson`
 
-来源：源码第 359 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 360 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -965,7 +966,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Text — public string Text`
 
-来源：源码第 360 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 361 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -984,7 +985,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Directives — public List<Dictionary<string, string>> Directives`
 
-来源：源码第 361 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1002,7 +1003,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.SceneCues — public List<(int Offset, Dictionary<string, string> Fields)> SceneCues`
 
-来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1020,7 +1021,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Error — public string Error`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 364 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1038,7 +1039,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Known(string) — private static bool Known(string text)`
 
-来源：源码第 364 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 365 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)；[`NationalSpire.PrivateStreamParser.Finish()`](PrivateMessages.cs.md#symbol-90306db26d5a)
 
@@ -1057,7 +1058,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Feed(string) — public void Feed(string text)`
 
-来源：源码第 365 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 366 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；[`NationalSpire.GroupStreamParser.Feed(string)`](GroupStreamParser.cs.md#symbol-9d7375d651fe)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-a004e611929b)
 
@@ -1120,7 +1121,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.ReadSceneJson(string) — private bool ReadSceneJson(string text)`
 
-来源：源码第 420 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 421 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)
 
@@ -1150,7 +1151,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Finish() — public void Finish()`
 
-来源：源码第 439 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 440 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；[`NationalSpire.GroupStreamParser.Finish()`](GroupStreamParser.cs.md#symbol-4f31ed556cc9)
 
@@ -1177,7 +1178,7 @@ private bool _json, _quoted, _escaped;
 
 ## `NationalSpire.PrivateStreamParser.Segments(string) — private static IEnumerable<string> Segments(string text)`
 
-来源：源码第 448 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 449 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)
 

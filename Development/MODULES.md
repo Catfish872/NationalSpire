@@ -63,7 +63,7 @@ CardKnowledge.Find 统一读取玩家本轮文字中的卡牌名称；GameCardKn
 | --- | --- | --- |
 | 逐场国运 | NationalFortune.Confirm | FinishFixture 的已确认赛果 → Fixture 收据、CircuitAward 累计、国家资金和 Contribute；CircuitLedger.Settle 补全最终名次，MatchImpact 提供结算及战报文字 |
 | 国家发展 | NationalDevelopment.Contribute / SeasonStart / TryPublish | 有符号国运按原三类随机权重推动九项升级或降级；满级溢出投入一项增强，每次有效投入进入结算说明；换季更新GDP和增强衰减；WorldEvents 沿原时机发布上升或下降公报，继续使用 Publish 与原有社区生成队列 |
-| 玩家模拟 | PlayerSimulation.Sample / Run | 本人真实历史优先、选定进阶优先 → 原抽取成绩 → VaryTime 在保持本场胜负的范围内按均值上下3%浮动用时 → RunPerformance；单人 FinishMatch、多人提议确认后 Settle；失利进入 FailureDecision，MatchFailure.RestoreMatch 统一恢复原种子和对手，确认原失败或进入实际重赛后再正式结算 |
+| 玩家模拟 | PlayerSimulation.WinChance / Sample / Run | 当前资料胜率决定保障获胜的概率；本人真实历史优先、选定进阶优先采样通关及失败楼层，VaryTime 按同类平均用时上下3%浮动；EnsureWin 仅在保障获胜且实际成绩未胜时降低本场对手成绩。多人传入参赛成员合计胜负平的胜率。单人 FinishMatch、多人提议确认后 Settle；失利进入 FailureDecision，MatchFailure.RestoreMatch 恢复原种子和对手，确认原失败或实际重赛后正式结算。成绩文字共用 MatchRules.Performance，图表按通关标记显示满高 |
 | 关注与报价 | CareerAudience、ClubAudience、SeasonCeremony | 玩家和NPC共用比赛/冠军奖励；ClubAudience.Total 汇总独立关注及现役选手影响；新报价共用两条倍率曲线；奖项保存实际AudienceReward供单人及多人收据使用 |
 | 消费 | ConsumerEngine.Buy / Use | 商品目录、本人 Consumer、邀请对象与关系 → 钱包、物品、关系和公开事实；单人 EconomicActions.Save，多人 Apply/Capture |
 | 消费事件 | ConsumerEvents.Purchase / Activity | 成功购买、活动结果 → 当天购物合并记录或独立已完成聚会记录；CareerLife.AddEvent 保存公开事实，原日期推进流程汇总发布 |

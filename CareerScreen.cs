@@ -914,7 +914,7 @@ public partial class ResultChart : Control
         for (int i = 0; i < Results.Count; i++)
         {
             var result = Results[i];
-            float height = Math.Clamp(result.Floor / 55f, 0.03f, 1f) * (bottom - top);
+            float height = (result.Win ? 1f : Math.Clamp(result.Floor / 55f, 0.03f, 1f)) * (bottom - top);
             var color = result.Win ? new Color("efc777") : new Color("5b8098");
             DrawRect(new Rect2(left + i * slot + slot * .18f, bottom - height, slot * .64f, height), color);
         }
