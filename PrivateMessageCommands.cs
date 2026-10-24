@@ -4,6 +4,7 @@ namespace NationalSpire;
 
 public sealed class PrivateMessageCommand
 {
+    public bool? ToolMode { get; set; }
     public DateSceneRequest? Scene { get; set; }
     public bool SceneAttendance { get; set; }
     public string Text { get; set; } = "";
@@ -19,6 +20,16 @@ public sealed class PrivateMessageCommand
 public static class PrivateMessageCommands
 {
     public static string? Apply(CareerData data, string kind, string person, PrivateMessageCommand command)
+    {
+        var error = ApplyCore(data, kind, person, command);
+        if (error == null && kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-date-open" or "dm-date-end" or "dm-date-revise")
+        {
+            var pending = PrivateMessages.Conversation(data, person).Turns.LastOrDefault(t => t.Status == "queued");
+            if (pending != null) { pending.ToolMode = command.ToolMode ?? data.Ai.ChatTools; pending.ToolCalls.Clear(); }
+        }
+        return error;
+    }
+    private static string? ApplyCore(CareerData data, string kind, string person, PrivateMessageCommand command)
     {
         if (kind == "consumer-attach") return ConsumerAttachments.Prepare(data, person, command.Part, command.Request!);
         if (kind == "consumer-remove") return ConsumerAttachments.Remove(data, command.Entry);

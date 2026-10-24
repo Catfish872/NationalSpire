@@ -101,12 +101,16 @@ public partial class CareerScreen
         ClubEntry(data);
         _content.AddChild(Text("合同与转会", 24, _gold));
         _content.AddChild(Text($"本季转会窗口：{GameCalendar.Range(data, SeasonCalendar.Start(data) + 1, SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data))}。自由选手可随时签约；错过联赛报名期，将参加下季联赛。", 16, _muted));
-        if (data.Esports.PlayerContract is { } current)
+        if (data.Esports.ClubId.Length > 0)
         {
             var own = Card(); _content.AddChild(own); var ob = Inner(own);
-            ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, current.ClubId), 24, _gold));
-            ob.AddChild(Text(CareerCommerce.ClubTerms(current), 17, _ink));
-            ob.AddChild(Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal));
+            ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId), 24, _gold));
+            if (data.Esports.PlayerContract is { } current)
+            {
+                ob.AddChild(Text(CareerCommerce.ClubTerms(current), 17, _ink));
+                ob.AddChild(Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal));
+            }
+            ob.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
         }
         var offers = data.Esports.Offers.Where(o => o.ExpiresDay >= data.Day).ToList();
         if (offers.Count == 0) _content.AddChild(Text(data.Esports.License < 3 ? "通过青训选拔后，俱乐部会发来第一批合同。" : "目前没有待处理合同。合同机会会随新赛季与国际成绩更新。", 17, _muted));

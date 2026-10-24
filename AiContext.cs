@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -11,7 +11,7 @@ public static partial class AiService
             data.PlayerCard.Style, data.PlayerCard.Biography, Personality = PersonalityLibrary.PromptProfile(data.PlayerCard.Personality), Character = CharacterIdentity.Name(data, data.PlayerCard.Character) },
         introduction = data.PlayerIntroductionDay <= day ? data.PlayerIntroduction : "",
         introductionAsOfDay = data.PlayerIntroductionDay <= day ? data.PlayerIntroductionDay : 0,
-        worldHonors = CircuitLedger.PublicStanding(data, "player", day),
+        competitionRecord = PrivatePublicContext.PlayerCompetitionRecord(data, day),
         cooperationAsOfDay = day,
         cooperation = CareerCommerce.PublicState(data, day),
         recentEvidence = data.Results.Where(r => includeEvidence && r.OfficialAscensionVerified && r.Day <= day && r.Kind != "private-friendly").TakeLast(1)
@@ -76,8 +76,6 @@ public static partial class AiService
         return JsonSerializer.Serialize(new
         {
             day = data.Day, season = data.Season, player = new { name = CareerEngine.Name(data), gender = data.PlayerGender },
-            // 荣誉带日期，避免把后来取得的头衔写入旧新闻。
-            honors = data.Esports.Honors.Where(h => h.Day <= contextDay).TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }),
             seasonHistory = data.SeasonHistory.TakeLast(2).Select(s => new { s.Season, s.Rank, s.Points }),
             schedules = pending.GroupBy(p => p.Day).Select(group => PublicSchedule.ForPrompt(data, group.Key == data.Day
                 ? PublicSchedule.Capture(data, group.SelectMany(p => p.RelatedPeople)) : group.Select(p => p.Schedule).FirstOrDefault(s => s != null))),

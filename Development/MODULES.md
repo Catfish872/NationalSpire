@@ -2,6 +2,10 @@
 
 ## 逻辑层与职责
 
+ChatTools统一管理send_message工具定义、原协议转换、提示词末尾引导及原交互字段转换。ChatToolRequest按调用索引拼接参数，ChatReplyStream逐字符还原Reasoning和Replies，完整返回后再解析Interactions。PrivateMessagePrompts/GroupChatPrompts决定请求材料，AiService.RequestPrivateAsync接收普通正文及工具，私聊和群聊处理器继续调用各自原业务执行入口。工具模式关闭原生思考，通过工具同时提交分析说明、正文和交互；解析保留普通正文和旧工具兼容。ChatToolToggle负责本机共用开关，数据归属和请求关系分别见DATA_CONTRACTS与AI_FLOWS。
+
+GroupChatPrompts.SpeechFormat提供普通群聊发言格式及完整示例，ChatTools.GroupSpeech引用其中的接话顺序规则，工具正文按Replies中的Speaker排列；ActorFormat保留交互字段规则。GroupStreamParser统一提取标准和变体标题中的人物编号，供AiGroupChats完成回复及GroupChatScreen实时显示；群成员、真人与封禁检查仍由GroupChats.SpeechUnavailable执行。
+
 随机事件由 RandomEvents 负责日期、抽取、选择、自定义行动和经历记录，EventPools 共用随机事件和选手日常的默认分类、模板覆盖、缓存与批量编辑转换，EventPoolScreen 提供提示词配置中的事件池入口。RandomEventPrompts/RandomEventParser/AiService.ProcessEventAsync 共用首次及自由行动的材料、流式传输、思维解析和保存；Compose通过PlayerRecord读取当前生涯或试写副本的累计胜平负及最近5场四列赛果。RandomEventEffects 统一检查、显示与应用效果，Person 统一提取人物效果目标，Choose 将所选目标补入 People 后记录经历与公开资料。RandomEventScreen 是首页和日历共用入口，RandomEventCustomScreen 是同一 EventStoryView 的输入、预览与确认部分；EventJourney 统一记录途中停留与自动发布暂停，EventJourneyScreen 连接途中窗口、首页和结果页继续行程。钱包、库存、人物好感、学习、行情、国家建设及约战调用已有模块。CoopRandomEvents 负责成员命令及仅发给事件发起人的流式结果，完整快照过滤见 PERSISTENCE_AND_COOP。具体状态、保存次数、上下文范围及旧档行为见 AI_FLOWS 和 DATA_CONTRACTS。
 
 ConsumerPickerScreen.ConsumerEditor 是聊天赠礼、活动与商城附件的共同编辑入口。ConsumerProducts 共用图标卡片、名称搜索、常驻分类和奢侈等级两排标签与每页10项翻页；商品按 ConsumerEngine.Price 降序排列，同价保留目录顺序，自行约定活动位于全部等级的第一张卡片。ConsumerEdit 仅保存当前弹窗中的对象、数量、日期和文字草稿。PeoplePickerScreen.PeoplePicker 统一群成员和商城人物选择的头像、筛选、搜索与可见行复用；熟悉的人按好感降序排列，同值保留候选顺序。ConsumerCommerceScreen 最终费用确认调用原 ConsumerAttachments.Prepare；单人保存成功或多人回执后才进入会话。具体流程见 GAME_AND_UI 的商城附件章节。
@@ -12,7 +16,7 @@ ConsumerPickerScreen.ConsumerEditor 是聊天赠礼、活动与商城附件的�
 
 Diagnostics.Record、RecordEvent 和 RecordMatch 负责各自记录的字段与脱敏，统一调用 LogStorage.WriteLog → AppendLog 完整写入与五份轮换。Configure 调用 MigrateLogs 处理旧独立事件及对局文件。ReadLogs 为 Export、CapturePeerLogs、ReadEventRecords 与 ReadMatchTraces 提供打开时固定长度的完整文件快照，TraceSnapshot 约束读取边界；普通会话、待写队列、效果错误摘要和错误计数的归属及范围见 DATA_CONTRACTS。LogPerformance 只累计固定阶段并覆盖固定统计文件。CoopDiagnostics 管理一次收集的缓存、缺片重发和释放；CoopWire 的诊断分支共用原压缩、分片和完整性校验入口。自动保存补丁及实际提交证据见 PERSISTENCE_AND_COOP。
 
-专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。DateDiaries 管理单次约会日记，DateDiaryScreen 复用 PR 作者的列表与卡片界面。结束约会通过原私聊队列生成一次普通感想及隐藏日记；日记集合仅供查看，普通请求沿原聊天与总结机制组织上下文。
+专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。DateScenes.Guidance 从同一叙述规则生成普通括号说明或Replies中的场景字段说明；ChatReplyStream实时传入场景资料，ChatToolRequest在完整返回后复核SceneCues。当前约会的正文场景 JSON 仍由 PrivateStreamParser.SceneJson 转为同一 SceneCues，流式显示和最终保存共用此入口。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。DateDiaries 管理单次约会日记，DateDiaryScreen 复用 PR 作者的列表与卡片界面。结束约会通过原私聊队列生成一次普通感想及隐藏日记；日记集合仅供查看，普通请求沿原聊天与总结机制组织上下文。
 
 联系人行、日历、徽章、商品图标与数量控件采用 PR 原控件：ContactRowButton、CalendarDayButton、AffectionVisuals、ConsumerProductArt、ConsumerGiftControls。通讯分类、置顶、右键和管理继续调用现有入口；ChatContacts 只组织显示资料。
 
@@ -25,6 +29,7 @@ Diagnostics.Record、RecordEvent 和 RecordMatch 负责各自记录的字段与�
 | 私信身份与表情 | PrivateMemoryScreen、PrivateMessageScreen、CommunityReplyExpressions | 当前人物与关系、本机配置中的人物详情展开状态、TextEdit光标/选区、当前聊天模式 | 头像/姓名档案入口、关系15字折行及右对齐、关系/好感共用自然高度详情、收起消除边框及好感文字显隐、ID顶端对齐头像、名片按两者底边居中、所有状态共用布局及独立方形状态按钮/右侧说明、ID/关系/好感1.25倍悬停亮度、与社区共用的50项Emoji/41项颜文字两行滚动选择器 | 人物详情展开状态按世界、玩家及人物写入本机聊天配置；表情面板归通讯窗口，关闭释放；插入沿原文字草稿路径，私信/群聊共用入口与分类状态，发送沿原业务 |
 | 生涯规则 | CareerEngine、SeasonCalendar、EsportsWorld、CircuitWorld、CircuitLedger | 当前日期、赛事、人物、报名、失败待选择 | 赛程、赛果、奖励、公开事实、档案 | 修改传入生涯数据；部分入口直接调用 CareerStore.Save |
 | 合同与培养 | OwnedClubs、OwnedClubSchedule、ClubOperations、ClubCoaching、CoachLineups、CareerTraining | 所属俱乐部、合同、席位、训练计划、预约转会 | 当前阵容、未来比赛名单、培养效果、账目 | 修改俱乐部与发展数据；名单变化传给赛事同步入口 |
+| 退出俱乐部 | ClubDeparture、ClubDepartureScreen；CoachScreen、CareerWorldScreen、CoopRules 调用 | 当前归属、经营资料、待赛及已完赛对阵、真人名单 | 自由选手身份、AI 原队、未来阵容、合同邀请及离队事实 | 统一 Leave 保存；多人沿全员提议、检查点和快照；预约转会继续由 OwnedClubs.ArriveTransfers 履行 |
 | 人物与资料 | WorldPeople、ExpandedPeople、CircuitPeople、CharacterCards、CharacterDeletion、PlayerIdentity、NpcRecords、PersonalityLibrary | 人物身份、编辑、删除、战绩、内容池 | 界面、模拟、候选发言者、提示词 | 维护真实人物编号及历史人物引用；显示名与姓名历史单独处理 |
 | 角色卡个人态度 | CharacterCardScreen → CharacterCards → PrivateMessages.EditRelation → PrivateInteractionHistory.PreserveRelation | 本次实际编辑的字段、当前玩家 Life、NPC 编号、群聊交互方向 | 私信、群聊、社区与生活中的现有关系读取入口 | 写入同一份 PrivateRelation 和旧好感索引；仅移除被覆盖字段的旧回退数据，PNG 不交换三项 |
 | 社区与刊物 | CommunityThreads、WeeklyJournal、PublicationBacklog、CareerNarrative、CommunityMemorySearch、CommunityPromptContext | 赛果与事件、玩家发帖回帖、公开事实与观点 | 待生成任务、帖子、周刊、人物介绍、检索结果 | 事实、生成任务、成品、已读状态分别保存 |

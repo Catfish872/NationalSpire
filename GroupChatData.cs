@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>群聊属于生涯，原始消息只保存一份；跨会话上下文通过来源读取。</summary>
 public sealed class ChatWorld
@@ -56,6 +56,8 @@ public sealed class GroupEntry
 }
 public sealed class GroupTurn
 {
+    public bool? ToolMode { get; set; }
+    public List<ChatToolCall> ToolCalls { get; set; } = [];
     public string ProactiveReason { get; set; } = "";
     public bool ProactiveLast { get; set; }
     public List<string> ArbitrationTargets { get; set; } = [];
@@ -85,6 +87,7 @@ public sealed class GroupEffect
 }
 public sealed class GroupCommand
 {
+    public bool? ToolMode { get; set; }
     public string Text { get; set; } = "";
     public List<string> People { get; set; } = [];
     public List<PrivateOffer> Attachments { get; set; } = [];

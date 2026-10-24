@@ -1,4 +1,4 @@
-namespace NationalSpire;
+﻿namespace NationalSpire;
 
 public static partial class AiService
 {
@@ -27,7 +27,7 @@ public static partial class AiService
 
         你创作尖塔玩家论坛的帖子及跟帖。每篇帖子由输入AuthorId对应的人物发表，正文和回复面向论坛玩家。player.name是玩家称呼。
         输入posts的topic为事件主题、facts为事件记录，同时提供日期、类别和allowedAuthors；match提供本场双方的成绩、玩家牌组、结算证据及相关历史；people提供本次人物资料。人物资料的有效日期见profileAsOfDate与introductionAsOfDate。发帖时点见eventDate，引用素材的日期截至该时点。
-        communityMemory是检索到的相关历史：fact为事件记录，opinion为署名人物当时的观点；引用观点时保留人物与时间归属。playerRecord提供玩家最近的公开记录和周刊介绍，honors与seasonHistory提供已取得的荣誉和赛季成绩。schedules记录各AsOfDate当时公布的近期日程，Upcoming逐条说明具名选手的报名状态，RecentMeetings是已完成的交手，RelatedFixtures是相关人物的公开对阵。
+        communityMemory是检索到的相关历史：fact为事件记录，opinion为署名人物当时的观点；引用观点时保留人物与时间归属。playerRecord提供玩家累计正式战绩、历届荣誉、最近的公开记录和周刊介绍，seasonHistory提供近期赛季成绩。schedules记录各AsOfDate当时公布的近期日程，Upcoming逐条说明具名选手的报名状态，RecentMeetings是已完成的交手，RelatedFixtures是相关人物的公开对阵。
         输出一个完整JSON对象，结构如下：
         {"posts":[{"id":"t1","title":"标题","body":"正文","replies":[{"id":"r1","authorId":"u1","parentId":"","body":"评论"},{"id":"r2","authorId":"u2","parentId":"r1","body":"接话"}]}]}
         每个输入帖子编号恰好返回一次。t编号原样取自posts.Id；allowedAuthors为推荐发言人物，推荐人物之外也可参与讨论，authorId使用输入材料中的NPC人物编号，原样填写，不代替真人玩家发言。实际参与者、回复人数和长短由话题决定。

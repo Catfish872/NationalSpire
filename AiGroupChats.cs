@@ -51,6 +51,7 @@ public static partial class AiService
                 turn.Status = "complete"; turn.Reasoning = reasoning.ToString(); g.Revision++; save(d); return;
             }
             var messages = GroupChatPrompts.Compose(d, g, turn);
+            var tools = ChatTools.Enabled(d.Ai, turn.ToolMode) ? ChatTools.Create(d, group: g) : null;
             await RequestPrivateAsync(d.Ai, messages, true, chunk =>
             {
                 raw.Append(chunk); parser.Feed(chunk); GroupLive[key] = raw.ToString();
@@ -64,12 +65,14 @@ public static partial class AiService
                     }
                 }
                 if ((DateTime.UtcNow - sent).TotalMilliseconds >= 100) { sent = DateTime.UtcNow; Notify(); }
-            }, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "group");
+            }, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "group", tools: tools);
             cancel.Token.ThrowIfCancellationRequested(); parser.Finish();
+            tools?.Apply(parser.Actions);
             Diagnostics.Record("group.parsed", new { group, turn = id, speakers = parser.Messages.Select(s => s.Author).ToArray(), interactions = parser.Actions.Directives, error = parser.Error });
             d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); turn = g?.Turns.FirstOrDefault(x => x.Id == id);
             if (d == null || g == null || turn?.Status != "sending") return;
-            turn.Raw = raw.ToString(); turn.Reasoning = reasoning.ToString(); turn.Error = parser.Error;
+            turn.Raw = raw.ToString(); turn.Reasoning = reasoning.ToString(); turn.Error = parser.Error + tools?.Error;
+            turn.ToolCalls = tools?.Calls.ToList() ?? [];
             int speechIndex = -1;
             foreach (var speech in parser.Messages)
             {
@@ -82,6 +85,7 @@ public static partial class AiService
             }
             if (turn.Replies.Count == 0 && parser.Actions.Directives.Count == 0) throw new InvalidDataException("没有返回可识别的群聊消息，请重试。");
             GroupInteractions.Apply(d, g, turn, parser.Actions.Directives);
+            if (tools != null) Diagnostics.Record("chat.tools.applied", new { kind = "group", group, turnId = id, parser.Actions.Directives, turn.Error, turn.Notices });
             turn.Status = "complete";
             ProactiveChats.CountReplies(g, turn.Sender);
             g.Revision++; save(d); Notify();

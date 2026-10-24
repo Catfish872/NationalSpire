@@ -110,6 +110,7 @@ public partial class CareerScreen
         more.SizeFlagsVertical = SizeFlags.Fill; left.AddChild(more);
         BuildChatPagination(actions);
         var sendActions = new HBoxContainer { Name = "PrivateComposerSendActions" }; sendActions.AddThemeConstantOverride("separation", 7); actions.AddChild(sendActions);
+        BuildChatToolToggle(sendActions);
         var shortcut = PrivateLine("Ctrl + Enter 发送", 12, _muted);
         shortcut.Name = "PrivateSendShortcut"; shortcut.SizeFlagsVertical = SizeFlags.ShrinkCenter;
         var shortcutMargin = new MarginContainer { SizeFlagsVertical = SizeFlags.ShrinkCenter };
@@ -339,6 +340,7 @@ public partial class CareerScreen
     }
     private void PrivateCommand(string kind, PrivateMessageCommand command, Action? accepted = null)
     {
+        command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
         string person = _privatePerson;
         if (_multiplayer != null)
         { _multiplayer.Send(kind, person, JsonSerializer.Serialize(command), accepted: () => { accepted?.Invoke(); _multiplayer.Refresh(); _privateListSignature = _privateSignature = ""; }); return; }
@@ -394,8 +396,9 @@ public partial class CareerScreen
         // 预览包含当前草稿，既不保存也不发送。
         var copy = JsonSerializer.Deserialize<PrivateConversation>(JsonSerializer.Serialize(c))!;
         var pending = copy.Turns.LastOrDefault(t => t.Status is "queued" or "sending");
-        if (pending == null) { pending = new() { Day = d.Day, Season = d.Season, User = _privateInput?.Text ?? "", Attachments = PrivateAttachments.ToList() }; copy.Turns.Add(pending); }
+        if (pending == null) { pending = new() { ToolMode = AiSettingsStore.Load(d.Ai).ChatTools, Day = d.Day, Season = d.Season, User = _privateInput?.Text ?? "", Attachments = PrivateAttachments.ToList() }; copy.Turns.Add(pending); }
         string preview = string.Join("\n\n────────────────\n\n", PrivateMessagePrompts.Compose(d, copy, pending).Select(m => m["role"] + "\n" + m["content"]));
+        if (ChatTools.Enabled(d.Ai, pending.ToolMode)) preview += "\n\ntools\n" + JsonSerializer.Serialize(ChatTools.Create(d, copy, pending).Definitions, new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         ShowCareerDialog("私信提示词预览", "当前草稿与实际上下文。交互格式由模组管理。", () => true, "关闭", box =>
         {
             var edit = new TextEdit { Text = preview, Editable = false, CustomMinimumSize = new(950, 580), WrapMode = TextEdit.LineWrappingMode.Boundary }; edit.AddThemeFontSizeOverride("font_size", 16); box.AddChild(edit);

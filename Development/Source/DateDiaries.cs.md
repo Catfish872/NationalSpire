@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5C8035624C2A5ACC1B28D4A848626C3AA63EABA4FC1C42B546C15CE76D3C31B1`。来源：[源码](../../DateDiaries.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6504551BC80EB900FACC101BA33A52CA97EC18EE26341AEC9C4BF34EAD73C030`。来源：[源码](../../DateDiaries.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,11 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+public const string Protocol = "本次约会已由玩家明确结束。先以NPC身份发送自然的私信感想，再在回复末尾附一条隐藏日记标记："
+            + "[DateDiary: 用NPC第一人称写下这次相处的经过、印象与感受, Location: 实际约会地点]。"
+            + "日记依据下面完整的本次约会记录，约150至350字；只经历开场时如实简述。地点未明确时写地点未明确。"
+            + "日记与私信同一轮输出；日记标记放在正文之后，内容中的方括号改用中文圆括号。其余私信交互标记沿用原规则。\n";
+public const string ToolEnding = "本次约会已结束。本轮同时提交两项内容：Replies填写NPC发给玩家的自然私聊感想；Interactions填写一项Type为date_diary的日记记录，DateDiary用NPC第一人称记述本次经过、印象与感受，约150至350字，Location填写实际地点，地点未明确时写地点未明确。只经历开场时如实简述。已有日记时根据本次完整记录重新整理，返回内容用于更新同一篇日记。其他实际交互按各项说明另行填写。";
 ```
 
 <a id="symbol-cbe88c909001"></a>
@@ -143,7 +148,7 @@
 
 ## `NationalSpire.DateDiaries.Records(NationalSpire.PrivateConversation) — public static IReadOnlyList<DateDiary> Records(PrivateConversation conversation)`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`](DateDiaryScreen.cs.md#symbol-fb4ba1a3b5fa)；[`NationalSpire.CareerScreen.PrivateProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PrivateMessageScreen.cs.md#symbol-8e28d3a34860)
 
@@ -177,7 +182,7 @@
 
 ## `NationalSpire.DateDiaries.Begin(NationalSpire.PrivateConversation, NationalSpire.PrivateOffer) — public static DateDiary Begin(PrivateConversation conversation, PrivateOffer offer)`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateDiaries.Complete(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](DateDiaries.cs.md#symbol-947bb3a428c9)；[`NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool)`](DateSceneData.cs.md#symbol-81bdbfbfe1d8)
 
@@ -204,19 +209,20 @@
 
 ## `NationalSpire.DateDiaries.Guidance(NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest) — public static string Guidance(PrivateConversation conversation, DateSceneRequest scene)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?, string?, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-de94bbbea5ea)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string player, string npc>.npc`；`<anonymous type: string player, string npc>.player`；`<anonymous type: string Title, string Detail, System.Collections.Generic.IEnumerable<<anonymous type: string player, string npc>> turns>.turns`；`NationalSpire.DateSceneRequest.Detail`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateSceneRequest.Title`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.PrivateTurn.User`；`NationalSpire.PrivateTurn.UserDeleted`
+**字段、属性、事件及方法组引用：** `<anonymous type: string player, string npc>.npc`；`<anonymous type: string player, string npc>.player`；`<anonymous type: string Title, string Detail, System.Collections.Generic.IEnumerable<<anonymous type: string player, string npc>> turns>.turns`；`NationalSpire.ChatTools.InPrompt`；`NationalSpire.DateDiaries.Protocol`；`NationalSpire.DateDiaries.ToolEnding`；`NationalSpire.DateSceneRequest.Detail`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateSceneRequest.Title`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.PrivateTurn.User`；`NationalSpire.PrivateTurn.UserDeleted`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply })`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.Where(t => t.Scene?.OfferId == scene.OfferId && !t.Scene.Ending && t.Status == "complete")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = conversation.Turns.Where(t => t.Scene?.OfferId == scene.OfferId && !t.Scene.Ending && t.Status == "complete")`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`；返回值紧邻使用处：`BinaryExpressionSyntax: "本次约会已由玩家明确结束。先以NPC身份发送自然的私信感想，再在回复末尾附一条隐藏日记标记："              + "[DateDiary: 用NPC第一人称写下这次相处的经过、印象与感受, Location: 实际约会地点]。"              + "日记依据下面完整的本次约会记录，约150至350字；只经历开场时如实简述。地点未明确时写地点未明确。"              + "日记与私信同一轮输出；日记标记放在正文之后，内容中的方括号改用中文圆括号。其余私信交互标记沿用原规则。\n"              + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`；返回值紧邻使用处：`BinaryExpressionSyntax: Protocol              + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`；返回值紧邻使用处：`BinaryExpressionSyntax: ToolEnding + "以下为本次约会的完整记录。\n"              + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) })`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -225,7 +231,7 @@
 
 ## `NationalSpire.DateDiaries.Complete(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>) — public static void Complete(PrivateConversation conversation, PrivateTurn turn, IEnumerable<Dictionary<string, string>> directives)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
 

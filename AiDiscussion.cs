@@ -1,4 +1,4 @@
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -205,8 +205,7 @@ public static partial class AiService
             countryConditions = NationalDevelopment.Context(data, people.Select(p => p.Country).Append(data.Esports.Country)),
             cards = CardKnowledge.Find(string.Join("\n", targets.SelectMany(p => (requested.Contains(p.Id) && CommunityThreads.IsHuman(data, p.AuthorId) ? new[] { p.Title + "\n" + p.Body } : [])
                 .Concat(p.Replies.Where(r => requested.Contains(r.Id) && CommunityThreads.IsHuman(data, r.AuthorId)).Select(r => r.Body))))),
-            career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak,
-                honors = data.Esports.Honors.TakeLast(3).Select(h => new { h.Title, h.Day, h.Season }) } }, Json);
+            career = new { data.Esports.Country, data.Esports.BestClear, data.Esports.WinStreak } }, Json);
     }
     private static HashSet<string> ReplyAuthors(CareerData data) => data.People
         .Where(p => !CommunityThreads.IsHuman(data, p.Id)).Select(p => p.Id).ToHashSet();

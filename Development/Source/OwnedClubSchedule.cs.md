@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B32598407D6D2297032D9B1F28711C1E3F2A8AF114859A310C10BDC11C90E65C`。来源：[源码](../../OwnedClubSchedule.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B98B9A2EF09FF46DEDC6A09056D9D1DF4F85E1A07B459D395CDAC3011B4DD68B`。来源：[源码](../../OwnedClubSchedule.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -128,7 +128,7 @@
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`](OwnedClubSchedule.cs.md#symbol-57e159140286)
+**调用者：** [`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.RefreshClub(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-d65310152f62)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`](OwnedClubSchedule.cs.md#symbol-57e159140286)
 
 **调用：** [`NationalSpire.OwnedClubs.ActiveHumans(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-49a6a4a933e2)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -271,13 +271,73 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-d65310152f62"></a>
+
+## `NationalSpire.OwnedClubSchedule.RefreshClub(NationalSpire.CareerData, string) — public static void RefreshClub(CareerData d, string club)`
+
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.ClubDeparture.Leave(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-1579a5b3a3c8)；[`NationalSpire.OwnedClubs.ArriveTransfers(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-2429e4910b3f)
+
+**调用：** [`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-e679a8998422)；[`NationalSpire.OwnedClubSchedule.OfficialRoster(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-d58acd091dd3)；[`NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-6dd76ce51c51)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubSchedule.OfficialRoster(NationalSpire.CareerData)`；`NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；`NationalSpire.OwnedClubState.ClubId`；`NationalSpire.WorldCompetition.Finished`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.TeamEvent`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`；输入表达式：`CoachLineups.Roster(d, club)`；返回值紧邻使用处：`ConditionalExpressionSyntax: d.Esports.OwnedClub?.ClubId == club ? OfficialRoster(d) : CoachLineups.Roster(d, club)`
+- `NationalSpire.OwnedClubSchedule.OfficialRoster(NationalSpire.CareerData)`；输入表达式：`OfficialRoster(d)`；返回值紧邻使用处：`ConditionalExpressionSyntax: d.Esports.OwnedClub?.ClubId == club ? OfficialRoster(d) : CoachLineups.Roster(d, club)`
+- `NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；输入表达式：`RefreshRoster(d, c, club, roster)`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshRoster(d, c, club, roster);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`c.Rosters.ContainsKey(club)`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(club)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(club))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(club)))              RefreshRoster(d, c, club, roster);`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-6dd76ce51c51"></a>
+
+## `NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>) — public static void RefreshRoster(CareerData d, WorldCompetition c, string club, List<string> roster)`
+
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CircuitWorld.EnrollLeague(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-8744d18514f7)；[`NationalSpire.OwnedClubSchedule.RefreshClub(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-d65310152f62)
+
+**调用：** [`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.Remove(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.PersonId`；`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.PlayerEntered`；`NationalSpire.WorldCompetition.PlayerReplacedId`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.Table`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；输入表达式：`SetLineup(d, c, club, roster)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetLineup(d, c, club, roster);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`c.EntrantClubs.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: c.EntrantClubs.Remove(id);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`c.EntrantCountries.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: c.EntrantCountries.Remove(id);`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`participants.Contains(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !participants.Contains(id)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player"))`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Rosters.Values.Any(r => r.Contains("player")) || c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player"))`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Rosters.Values.Any(r => r.Contains("player"))`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Rosters.Values.Any(r => r.Contains("player")) || c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player"))`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r)).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`c.Rosters.Values.SelectMany(r => r)`；返回值紧邻使用处：`ArgumentSyntax: c.Rosters.Values.SelectMany(r => r)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`c.Entrants.Where(id => !participants.Contains(id)).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string id in c.Entrants.Where(id => !participants.Contains(id)).ToArray())          {              c.Entrants.Remove(id); c.Table.RemoveAll(row => row.PersonId == id);              c.EntrantClubs.Remove(id); c.EntrantCountries.Remove(id);          }`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r)).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r)).ToHashSet()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Entrants.Where(id => !participants.Contains(id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Entrants.Where(id => !participants.Contains(id)).ToArray`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`c.Rosters[club].Contains("player")`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Rosters[club].Contains("player") && !roster.Contains("player")`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`r.Contains("player")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r => r.Contains("player")`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`roster.Contains("player")`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !roster.Contains("player")`
+- `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`c.Entrants.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: c.Entrants.Remove(id);`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`c.Table.RemoveAll(row => row.PersonId == id)`；返回值紧邻使用处：`ExpressionStatementSyntax: c.Table.RemoveAll(row => row.PersonId == id);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `c.PlayerEntered` = `c.Rosters.Values.Any(r => r.Contains("player")) || c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player"))`
+- `c.PlayerReplacedId` = `""`
+
 <a id="symbol-78f0326d7e56"></a>
 
 ## `NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>) — private static void SetLineup(CareerData d, WorldCompetition c, string club, List<string> roster)`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.OwnedClubSchedule.TransferArrived(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-cff14090b004)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`](OwnedClubSchedule.cs.md#symbol-57e159140286)
+**调用者：** [`NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-6dd76ce51c51)；[`NationalSpire.OwnedClubSchedule.TransferArrived(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-cff14090b004)；[`NationalSpire.OwnedClubSchedule.UpdateLineup(NationalSpire.CareerData, bool)`](OwnedClubSchedule.cs.md#symbol-57e159140286)
 
 **调用：** [`NationalSpire.CircuitWorld.ActiveTie(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>)`](CircuitWorld.cs.md#symbol-055c6e88b6b6)；[`NationalSpire.CircuitWorld.UpdatePlayerMatches(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IReadOnlySet<string>)`](CircuitWorld.cs.md#symbol-550cd6bd9364)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；`NationalSpire.CareerStanding.CareerStanding()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`
 

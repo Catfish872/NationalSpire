@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EEB5D5CA012F48EC1F3A9527D842EC6CC80BC39F9FEA855FBAD8A305CAED5130`。来源：[源码](../../CoachScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6C0A1F9C25841354A7CAD2D8AC557F64F9155A1501B9C184EB377B594603D315`。来源：[源码](../../CoachScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,14 +22,16 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 **调用者：** [`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.ClubAction(NationalSpire.CareerData, string, string, string, System.Action?)`](OwnedClubScreen.cs.md#symbol-9c161e058b4e)；[`NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`](OwnedClubScreen.cs.md#symbol-745c5ca62e51)；[`NationalSpire.CareerScreen.ClubCard(string, string?, bool)`](OwnedClubScreen.cs.md#symbol-dea530bc8e29)；[`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-5e31a957c01c)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.ClubAction(NationalSpire.CareerData, string, string, string, System.Action?)`](OwnedClubScreen.cs.md#symbol-9c161e058b4e)；[`NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`](OwnedClubScreen.cs.md#symbol-745c5ca62e51)；[`NationalSpire.CareerScreen.ClubCard(string, string?, bool)`](OwnedClubScreen.cs.md#symbol-dea530bc8e29)；[`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-5e31a957c01c)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`](CareerSession.cs.md#symbol-a13f3923812a)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-d1aa71b14a7b)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ClubAction(NationalSpire.CareerData, string, string, string, System.Action?)`；`NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`；`NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；`NationalSpire.CoachAppointment.PersonId`；`NationalSpire.CoachAppointment.Season`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubState.CoachAppointments`；`NationalSpire.OwnedClubState.PlayerCoach`；`NationalSpire.OwnedClubState.PlayerNextPosition`；`NationalSpire.OwnedClubState.PlayerPositionSeason`；`NationalSpire.OwnedClubState.PlayerReplacement`；`NationalSpire.OwnedClubState.PlayerReserve`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ClubAction(NationalSpire.CareerData, string, string, string, System.Action?)`；`NationalSpire.CareerScreen.ClubButton(string, System.Action, int)`；`NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；`NationalSpire.CareerScreen.ClubLeaveDialog()`；`NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；`NationalSpire.CoachAppointment.PersonId`；`NationalSpire.CoachAppointment.Season`；`NationalSpire.EsportsCareer.OwnedClub`；`NationalSpire.OwnedClubState.CoachAppointments`；`NationalSpire.OwnedClubState.PlayerCoach`；`NationalSpire.OwnedClubState.PlayerNextPosition`；`NationalSpire.OwnedClubState.PlayerPositionSeason`；`NationalSpire.OwnedClubState.PlayerReplacement`；`NationalSpire.OwnedClubState.PlayerReserve`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`positionActions.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: positionActions.AddThemeConstantOverride("separation", 12);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("h_separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("h_separation", 12);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("v_separation", 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("v_separation", 10);`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.HFlowContainer.HFlowContainer()`；输入表达式：`new HFlowContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HFlowContainer()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(pending)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(pending);`
@@ -37,8 +39,11 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`pending.AddChild(ClubButton("取消调整", () => ClubAction(d, "coach-cancel", target: a.PersonId), 120))`；返回值紧邻使用处：`ExpressionStatementSyntax: pending.AddChild(ClubButton("取消调整", () => ClubAction(d, "coach-cancel", target: a.PersonId), 120));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`pending.AddChild(Text($"{CareerEngine.DisplayName(d, a.PersonId)} · 第{a.Season}赛季转任教练", 17, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: pending.AddChild(Text($"{CareerEngine.DisplayName(d, a.PersonId)} · 第{a.Season}赛季转任教练", 17, _muted));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`positionActions.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190))`；返回值紧邻使用处：`ExpressionStatementSyntax: positionActions.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`positionActions.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190))`；返回值紧邻使用处：`ExpressionStatementSyntax: positionActions.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>                  ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>                  ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(positionActions)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(positionActions);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(Text($"当前陪练系数 ×{ClubCoaching.Factor(d):0.#}", 20, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(Text($"当前陪练系数 ×{ClubCoaching.Factor(d):0.#}", 20, CareerVisuals.Teal));`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, a.PersonId)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(d, a.PersonId)}`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(d, o.PlayerReplacement)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(d, o.PlayerReplacement)}`
@@ -52,11 +57,12 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 - `NationalSpire.CareerScreen.ClubCard(string, string?, bool)`；输入表达式：`ClubCard("教练与席位", "教练提升轮换与青训陪练效果，多名教练取最高加成。")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ClubCard("教练与席位", "教练提升轮换与青训陪练效果，多名教练取最高加成。")`
 - `NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData)`；输入表达式：`PlayerPositionDialog(d)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => PlayerPositionDialog(d)`
 - `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; })`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () =>                  ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; })`
+- `NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；输入表达式：`TeamButton("退出俱乐部", ClubLeaveDialog, 190)`；返回值紧邻使用处：`ArgumentSyntax: TeamButton("退出俱乐部", ClubLeaveDialog, 190)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{CareerEngine.DisplayName(d, a.PersonId)} · 第{a.Season}赛季转任教练", 17, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"{CareerEngine.DisplayName(d, a.PersonId)} · 第{a.Season}赛季转任教练", 17, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"当前陪练系数 ×{ClubCoaching.Factor(d):0.#}", 20, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text($"当前陪练系数 ×{ClubCoaching.Factor(d):0.#}", 20, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold)`
 - `NationalSpire.ClubCoaching.Factor(NationalSpire.CareerData)`；输入表达式：`ClubCoaching.Factor(d)`；返回值紧邻使用处：`InterpolationSyntax: {ClubCoaching.Factor(d):0.#}`
-- `NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；输入表达式：`ClubCoaching.PlayerFeatures(d)`；返回值紧邻使用处：`IfStatementSyntax: if (ClubCoaching.PlayerFeatures(d))          {              row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>                  ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));              row.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));              if (o.PlayerPositionSeason > 0)              {                  box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));                  box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170));              }          }`
+- `NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`；输入表达式：`ClubCoaching.PlayerFeatures(d)`；返回值紧邻使用处：`IfStatementSyntax: if (ClubCoaching.PlayerFeatures(d))          {              row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>                  ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));              var positionActions = new HBoxContainer(); positionActions.AddThemeConstantOverride("separation", 12); row.AddChild(positionActions);              positionActions.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));              positionActions.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));              if (o.PlayerPositionSeason > 0)              {                  box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));                  box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170));              }          }          else row.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -65,7 +71,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.PlayerPositionDialog(NationalSpire.CareerData) — private void PlayerPositionDialog(CareerData d)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CoachManagement(NationalSpire.CareerData)`](CoachScreen.cs.md#symbol-7f703533cff4)
 
@@ -104,7 +110,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.CoachAppointmentDialog(NationalSpire.CareerData, string) — private void CoachAppointmentDialog(CareerData d, string id)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)
 
@@ -142,7 +148,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.PrivateTrainingPicker() — private void PrivateTrainingPicker()`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -193,11 +199,11 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.PrivateLineupPicker() — private void PrivateLineupPicker()`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.ClubSelect(string[], int, System.Action<int>)`](OwnedClubScreen.cs.md#symbol-d2eca2f3e48f)；[`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`](PrivateMessageScreen.cs.md#symbol-fb5e88f4639a)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-be04a02d4a9c)；[`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-f16167ebabfe)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)；`Godot.Color.Color(string)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.ClubSelect(string[], int, System.Action<int>)`](OwnedClubScreen.cs.md#symbol-d2eca2f3e48f)；[`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`](PrivateMessageScreen.cs.md#symbol-fb5e88f4639a)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-be04a02d4a9c)；[`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-f16167ebabfe)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`Preview()`](CoachScreen.cs.md#symbol-019409d8f84e)；`Godot.Color.Color(string)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Season`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`；`NationalSpire.CareerScreen.ClubSelect(string[], int, System.Action<int>)`；`NationalSpire.CareerScreen.PrivateText(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`；`NationalSpire.CoachLineups.Error(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`；`NationalSpire.CoachLineups.Position(NationalSpire.CareerData, NationalSpire.CareerPerson)`；`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.FirstPerson`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.SecondPerson`；`Preview()`
 
@@ -245,11 +251,11 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 - `second` = `members[i].Id`
 - `SecondPerson` = `second`
 
-<a id="symbol-48eb899babe4"></a>
+<a id="symbol-019409d8f84e"></a>
 
 ## `Preview() — void Preview()`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)
 
@@ -278,7 +284,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.PrivateLineupCard(NationalSpire.CareerData, NationalSpire.CoachLineupRequest, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?) — private void PrivateLineupCard(CareerData data, CoachLineupRequest request, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)
 
@@ -319,7 +325,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.TrainingCompletions(System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>, long, long) — private Queue<CoachTrainingPlan> TrainingCompletions(IEnumerable<PrivateOffer> offers, long first, long end)`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)
 
@@ -345,7 +351,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.TrainingCompletionsThrough(System.Collections.Generic.Queue<NationalSpire.CoachTrainingPlan>, long) — private void TrainingCompletionsThrough(Queue<CoachTrainingPlan> plans, long order)`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NoticesThrough(long)`](GroupChatScreen.cs.md#symbol-cfcadd7edb2e)
 
@@ -370,7 +376,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CareerScreen.PrivateTrainingCard(NationalSpire.CareerData, NationalSpire.CoachTrainingPlan, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?) — private void PrivateTrainingCard(CareerData data, CoachTrainingPlan plan, VBoxContainer parent, Action<string, PrivateMessageCommand>? send = null)`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)；[`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.CareerScreen.TrainingCompletionsThrough(System.Collections.Generic.Queue<NationalSpire.CoachTrainingPlan>, long)`](CoachScreen.cs.md#symbol-9deab8f6abda)
 
@@ -441,7 +447,7 @@ private readonly HashSet<string> _privateExpandedTraining = [];
 
 ## `NationalSpire.CoachTrainingDisclosureButton._Draw() — public override void _Draw()`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -108,7 +108,10 @@ public partial class CareerScreen
     private void PreviewGroupPrompt()
     {
         var g = CurrentGroup!;
-        string text = JsonSerializer.Serialize(GroupChatPrompts.Compose(ViewData, g, new() { Sender = GroupChats.Human(ViewData), Day = ViewData.Day, Order = ViewData.Chats.Order + 1, Text = _privateInput!.Text, Attachments = PrivateAttachments }), new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        var pending = new GroupTurn { ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools, Sender = GroupChats.Human(ViewData), Day = ViewData.Day, Order = ViewData.Chats.Order + 1, Text = _privateInput!.Text, Attachments = PrivateAttachments };
+        var json = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+        string text = JsonSerializer.Serialize(GroupChatPrompts.Compose(ViewData, g, pending), json);
+        if (pending.ToolMode == true) text += "\n\ntools\n" + JsonSerializer.Serialize(ChatTools.Create(ViewData, group: g).Definitions, json);
         ShowCareerDialog("群聊提示词预览", "", () => true, "关闭", box =>
         {
             var edit = new TextEdit { Text = text, Editable = false, CustomMinimumSize = new(900, 520), WrapMode = TextEdit.LineWrappingMode.Boundary }; box.AddChild(edit);

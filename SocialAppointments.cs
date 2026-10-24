@@ -51,6 +51,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
         if (action is not ("邀请" or "改期" or "接受")) return;
         if (old != null && action is "邀请" or "接受") return;
         var basis = old ?? attachment;
+        if (action == "接受" && basis == null && fields.GetValueOrDefault("Id", "") is "" or "0") action = "邀请";
         if (action is "接受" or "改期" && basis == null) { t.Error += "\n请在活动附件中明确本次处理的活动编号。"; return; }
         var o = new PrivateOffer { Kind = "activity", TurnId = t.Id, Title = fields.GetValueOrDefault("Title", basis?.Title ?? ""),
             Detail = fields.GetValueOrDefault("Detail", basis?.Detail ?? ""), ReplacesOfferId = old?.Id ?? "",

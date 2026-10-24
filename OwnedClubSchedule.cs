@@ -117,6 +117,26 @@ public static class OwnedClubSchedule
             : "从" + PrivateAppointments.DateText(d, upcoming.Fixture.Day) + "的" + upcoming.Competition.Name + " · "
                 + CircuitWorld.RoundName(upcoming.Competition, upcoming.Fixture.Round) + "起使用新阵容。已开打的整轮对阵按原名单完成。";
     }
+    public static void RefreshClub(CareerData d, string club)
+    {
+        var roster = d.Esports.OwnedClub?.ClubId == club ? OfficialRoster(d) : CoachLineups.Roster(d, club);
+        foreach (var c in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished && c.TeamEvent && c.Rosters.ContainsKey(club)))
+            RefreshRoster(d, c, club, roster);
+    }
+    public static void RefreshRoster(CareerData d, WorldCompetition c, string club, List<string> roster)
+    {
+        bool removedPlayer = c.Rosters[club].Contains("player") && !roster.Contains("player");
+        SetLineup(d, c, club, roster);
+        var participants = c.Fixtures.SelectMany(f => new[] { f.HomeId, f.AwayId }).Concat(c.Rosters.Values.SelectMany(r => r)).ToHashSet();
+        c.PlayerEntered = c.Rosters.Values.Any(r => r.Contains("player")) || c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player"));
+        // 已出场者的成绩保留，赛前退出者的空报名记录移除。
+        foreach (string id in c.Entrants.Where(id => !participants.Contains(id)).ToArray())
+        {
+            c.Entrants.Remove(id); c.Table.RemoveAll(row => row.PersonId == id);
+            c.EntrantClubs.Remove(id); c.EntrantCountries.Remove(id);
+        }
+        if (removedPlayer) c.PlayerReplacedId = "";
+    }
     private static void SetLineup(CareerData d, WorldCompetition c, string club, List<string> roster)
     {
         c.Rosters[club] = roster;

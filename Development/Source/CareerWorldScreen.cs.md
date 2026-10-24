@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`442D3287BB7EE9EEDDCA18716D6EDB0FE77BD104272B818FBED01B32FBE739E5`。来源：[源码](../../CareerWorldScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`BB8B4A2EEFB18D210BFA775B1F47EEE40460137F8A442930A91C95ED89E39145`。来源：[源码](../../CareerWorldScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -206,7 +206,7 @@ private int _clubLimit = 8;
 
 **调用：** [`NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-3a2c86700d2c)；[`NationalSpire.CareerCommerce.ClubWins(NationalSpire.CareerData, string)`](CareerCommerce.cs.md#symbol-9f53c8b6cc20)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-27a995f7ce9f)；[`NationalSpire.CareerScreen.ClubEntry(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-cebea5b172ab)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)；[`NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`](CareerSession.cs.md#symbol-a13f3923812a)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.GameCalendar.Range(NationalSpire.CareerData, int, int)`](GameCalendar.cs.md#symbol-57fa2dd71e81)；[`NationalSpire.SeasonCalendar.LeagueDeadline(NationalSpire.CareerData)`](SeasonCalendar.cs.md#symbol-bca858704a5e)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；`Godot.Color.Color(string)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Color`；`NationalSpire.CareerClub.Country`；`NationalSpire.CareerClub.Identity`；`NationalSpire.CareerClub.Motto`；`NationalSpire.CareerClub.Name`；`NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`；`NationalSpire.CareerCommerce.ClubWins(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ClubEntry(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ClubOffer.ClubId`；`NationalSpire.ClubOffer.ExpiresDay`；`NationalSpire.ClubOffer.GoalWins`；`NationalSpire.EsportsCareer.ClubGoalSeason`；`NationalSpire.EsportsCareer.License`；`NationalSpire.EsportsCareer.Offers`；`NationalSpire.EsportsCareer.PlayerContract`；`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.GameCalendar.Range(NationalSpire.CareerData, int, int)`；`NationalSpire.SeasonCalendar.LeagueDeadline(NationalSpire.CareerData)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Color`；`NationalSpire.CareerClub.Country`；`NationalSpire.CareerClub.Identity`；`NationalSpire.CareerClub.Motto`；`NationalSpire.CareerClub.Name`；`NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`；`NationalSpire.CareerCommerce.ClubWins(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ClubEntry(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ClubLeaveDialog()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ClubOffer.ClubId`；`NationalSpire.ClubOffer.ExpiresDay`；`NationalSpire.ClubOffer.GoalWins`；`NationalSpire.EsportsCareer.ClubGoalSeason`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsCareer.License`；`NationalSpire.EsportsCareer.Offers`；`NationalSpire.EsportsCareer.PlayerContract`；`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.GameCalendar.Range(NationalSpire.CareerData, int, int)`；`NationalSpire.SeasonCalendar.LeagueDeadline(NationalSpire.CareerData)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -221,7 +221,8 @@ private int _clubLimit = 8;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"邀请剩余 {offer.ExpiresDay - data.Day + 1} 天 · 每季津贴与目标奖励各领取一次", 16, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"邀请剩余 {offer.ExpiresDay - data.Day + 1} 天 · 每季津贴与目标奖励各领取一次", 16, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(CareerCommerce.ClubTerms(offer), 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(CareerCommerce.ClubTerms(offer), 17, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(club.Identity + " · " + club.Motto, 16, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(club.Identity + " · " + club.Motto, 16, CareerVisuals.Teal));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, current.ClubId), 24, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, current.ClubId), 24, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`ob.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190))`；返回值紧邻使用处：`ExpressionStatementSyntax: ob.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId), 24, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: ob.AddChild(Text("当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId), 24, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`ob.AddChild(Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal))`；返回值紧邻使用处：`ExpressionStatementSyntax: ob.AddChild(Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`ob.AddChild(Text(CareerCommerce.ClubTerms(current), 17, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: ob.AddChild(Text(CareerCommerce.ClubTerms(current), 17, _ink));`
 - `NationalSpire.CareerCommerce.ClubTerms(NationalSpire.ClubOffer)`；输入表达式：`CareerCommerce.ClubTerms(current)`；返回值紧邻使用处：`ArgumentSyntax: CareerCommerce.ClubTerms(current)`
@@ -237,7 +238,8 @@ private int _clubLimit = 8;
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`；输入表达式：`ShowSponsors(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowSponsors(data);`
 - `NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；输入表达式：`TeamButton("接受合同", () => { if (MultiplayerCommand("propose-club", offer.ClubId)) return; var error = EsportsWorld.AcceptOffer(data, offer); Render(); Notice(error ?? "签约成功！前往日程查看比赛。", error != null); }, 180)`；返回值紧邻使用处：`ArgumentSyntax: TeamButton("接受合同", () => { if (MultiplayerCommand("propose-club", offer.ClubId)) return; var error = EsportsWorld.AcceptOffer(data, offer); Render(); Notice(error ?? "签约成功！前往日程查看比赛。", error != null); }, 180)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("当前合同 · " + EsportsWorld.ClubName(data, current.ClubId), 24, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("当前合同 · " + EsportsWorld.ClubName(data, current.ClubId), 24, _gold)`
+- `NationalSpire.CareerScreen.TeamButton(string, System.Action, int)`；输入表达式：`TeamButton("退出俱乐部", ClubLeaveDialog, 190)`；返回值紧邻使用处：`ArgumentSyntax: TeamButton("退出俱乐部", ClubLeaveDialog, 190)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId), 24, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId), 24, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("合同与转会", 24, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("合同与转会", 24, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{club.Name} / {club.Country}", 24, new Color(club.Color))`；返回值紧邻使用处：`ArgumentSyntax: Text($"{club.Name} / {club.Country}", 24, new Color(club.Color))`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal)`；返回值紧邻使用处：`ArgumentSyntax: Text($"本季球队目标：{CareerCommerce.ClubWins(data, current.ClubId)} / {current.GoalWins} 胜" + (data.Esports.ClubGoalSeason == data.Season ? " · 奖励已发放" : ""), 17, CareerVisuals.Teal)`
@@ -249,7 +251,7 @@ private int _clubLimit = 8;
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(data.Esports.License < 3 ? "通过青训选拔后，俱乐部会发来第一批合同。" : "目前没有待处理合同。合同机会会随新赛季与国际成绩更新。", 17, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(data.Esports.License < 3 ? "通过青训选拔后，俱乐部会发来第一批合同。" : "目前没有待处理合同。合同机会会随新赛季与国际成绩更新。", 17, _muted)`
 - `NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`；输入表达式：`EsportsWorld.AcceptOffer(data, offer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = EsportsWorld.AcceptOffer(data, offer)`
 - `NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.Club(data, offer.ClubId)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: EsportsWorld.Club(data, offer.ClubId)!`
-- `NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.ClubName(data, current.ClubId)`；返回值紧邻使用处：`BinaryExpressionSyntax: "当前合同 · " + EsportsWorld.ClubName(data, current.ClubId)`
+- `NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.ClubName(data, data.Esports.ClubId)`；返回值紧邻使用处：`BinaryExpressionSyntax: "当前合同 · " + EsportsWorld.ClubName(data, data.Esports.ClubId)`
 - `NationalSpire.GameCalendar.Range(NationalSpire.CareerData, int, int)`；输入表达式：`GameCalendar.Range(data, SeasonCalendar.Start(data) + 1, SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data))`；返回值紧邻使用处：`InterpolationSyntax: {GameCalendar.Range(data, SeasonCalendar.Start(data) + 1, SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data))}`
 - `NationalSpire.SeasonCalendar.LeagueDeadline(NationalSpire.CareerData)`；输入表达式：`SeasonCalendar.LeagueDeadline(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data)`
 - `NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Start(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: SeasonCalendar.Start(data) + 1`
@@ -264,7 +266,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData) — private void ClubDirectory(CareerData data)`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)
 
@@ -347,7 +349,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.Honors(NationalSpire.CareerData) — private void Honors(CareerData data)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
@@ -397,7 +399,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.CompetitionRules() — private void CompetitionRules()`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 

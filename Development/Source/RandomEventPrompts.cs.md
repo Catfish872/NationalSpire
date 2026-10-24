@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2E9902505879629D34A7F4BF339F1F08F277529C1B44A49E9E68766B248EEC1F`。来源：[源码](../../RandomEventPrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A91D3068C09DE88B24B59DD5086B938A8412E6022D78BE718249CD8DFB975302`。来源：[源码](../../RandomEventPrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -88,7 +88,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 **调用：** [`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-baf7d6edae6c)；[`NationalSpire.PrivatePublicContext.PlayerProfile(NationalSpire.CareerData)`](PrivatePublicContext.cs.md#symbol-cc53e81aac6a)；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: <anonymous type: int 胜, int 平, int 负> 正式比赛累计, System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛>.近期比赛`；`<anonymous type: <anonymous type: int 胜, int 平, int 负> 正式比赛累计, System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛>.正式比赛累计`；`<anonymous type: int 胜, int 平, int 负>.负`；`<anonymous type: int 胜, int 平, int 负>.平`；`<anonymous type: int 胜, int 平, int 负>.胜`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.对手`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.结果`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.日期`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.赛事`；`<anonymous type: string 玩家资料, <anonymous type: <anonymous type: int 胜, int 平, int 负> 正式比赛累计, System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛> 玩家战绩>.玩家战绩`；`<anonymous type: string 玩家资料, <anonymous type: <anonymous type: int 胜, int 平, int 负> 正式比赛累计, System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛> 玩家战绩>.玩家资料`；`NationalSpire.CareerData.Draws`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Event`；`NationalSpire.CareerResult.Opponent`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`；`NationalSpire.PrivatePublicContext.PlayerProfile(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.Json`
+**字段、属性、事件及方法组引用：** `<anonymous type: string 日期, string 赛事, string 对手, string 结果>.对手`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.结果`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.日期`；`<anonymous type: string 日期, string 赛事, string 对手, string 结果>.赛事`；`<anonymous type: string 玩家资料, <anonymous type: System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛> 玩家战绩>.玩家战绩`；`<anonymous type: string 玩家资料, <anonymous type: System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛> 玩家战绩>.玩家资料`；`<anonymous type: System.Collections.Generic.IEnumerable<<anonymous type: string 日期, string 赛事, string 对手, string 结果>> 近期比赛>.近期比赛`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Event`；`NationalSpire.CareerResult.Opponent`；`NationalSpire.CareerResult.Outcome`；`NationalSpire.GameCalendar.Iso(NationalSpire.CareerData, int)`；`NationalSpire.PrivatePublicContext.PlayerProfile(NationalSpire.CareerData)`；`NationalSpire.RandomEventPrompts.Json`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -97,7 +97,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`data.Results.OrderByDescending(r => r.Day)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Results.OrderByDescending(r => r.Day).Take`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: 近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`data.Results.OrderByDescending(r => r.Day).Take(5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Results.OrderByDescending(r => r.Day).Take(5).Select`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new      {          玩家资料 = PrivatePublicContext.PlayerProfile(data),          玩家战绩 = new          {              正式比赛累计 = new { 胜 = data.Wins, 平 = data.Draws, 负 = data.Losses },              近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })          }      }, Json)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.Serialize(new      {          玩家资料 = PrivatePublicContext.PlayerProfile(data),          玩家战绩 = new          {              正式比赛累计 = new { 胜 = data.Wins, 平 = data.Draws, 负 = data.Losses },              近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })          }      }, Json)`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new      {          玩家资料 = PrivatePublicContext.PlayerProfile(data),          玩家战绩 = new          {              近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })          }      }, Json)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.Serialize(new      {          玩家资料 = PrivatePublicContext.PlayerProfile(data),          玩家战绩 = new          {              近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new              {                  日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome              })          }      }, Json)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -106,7 +106,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 ## `NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool) — public static List<Dictionary<string, string>> Compose(CareerData data, RandomEventRecord record, AiOptions? options = null, bool custom = false)`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
@@ -146,7 +146,7 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
 
 ## `NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord) — public static string Materials(CareerData d, RandomEventRecord e)`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)
 

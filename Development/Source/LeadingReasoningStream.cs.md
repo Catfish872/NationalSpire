@@ -22,7 +22,7 @@ private int state;
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)
+**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)；[`ToolText(string)`](AiPrivateMessages.cs.md#symbol-542215f57a19)
 
 **调用：** `string.IndexOf(string, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Min(int, int)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 
@@ -60,7 +60,7 @@ private int state;
 
 来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string)`](AiPrivateMessages.cs.md#symbol-4da425dc52d5)
+**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-dc8b71e7b71c)
 
 **调用：** `System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 

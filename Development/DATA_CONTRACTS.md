@@ -88,6 +88,8 @@ RandomEventRecord.PublicPosts 保存首次材料整理时的完整近期玩家�
 
 ## AI 连接方案与本机凭据
 
+AiOptions.ChatTools 是跨生涯共享的本机聊天工具开关，旧配置缺少该字段时为false。PrivateMessageCommand/GroupCommand.ToolMode 是发送者选择的可空模式，接受命令后写入 PrivateTurn/GroupTurn.ToolMode；null沿用执行端设置。ToolCalls保存本轮ChatToolCall{Index,Id,Name,Arguments}，Index只用于该次响应中的分片排序，Id为服务返回的调用编号，不作为生涯或交互编号。统一 send_message 参数按 Reasoning、Replies、Interactions 排列：Reasoning进入原轮次的Reasoning；Replies按顺序保存Reply正文，群聊含Speaker，当前约会含Scene/Emotion/Background；Interactions各项以Type选择原业务字段。严格格式中的可选字段通过anyOf字段组合保留原可省略含义。原始参数保存于ToolCalls，后续上下文读取原正文、交互和总结；这些参数与Reasoning不额外逐轮附加。解析继续兼容普通正文、旧独立工具及缺少Interactions的回复。实际效果字段继续使用原交互编号和业务含义。保存、回退、清除和广播关系见 AI_FLOWS 的聊天工具模式。
+
 AiOptions.ConnectionProfiles 以稳定编号保存 AiConnectionProfile{Name, Endpoint, Model}，TaskProfiles 以八种任务编号指向连接方案编号。旧配置首次由 AiRouting.Ensure 将 Endpoint/Model 写入 default；缺少某任务选择时使用 default。创建方案使用 Guid 的 N 格式编号，重命名只改变 Name。旧 Endpoint/Model 继续作为读取早期配置的来源，保存 default 时同步两项。全局 Enabled、并发、间隔、等待时间、帖子批量与提示词仍属于 AiOptions。
 
 AiSettingsStore.Load 每个进程首次读取 user://national_spire_ai_settings.json，转换旧配置后保留 _options；后续调用复用对象。Save 通过原临时文件替换入口写入，内容与路径均和 _saved 相同时复用已有文件。界面连接字段属于当前控件草稿，保存时才替换该方案；任务分配及一键应用直接修改 TaskProfiles 后调用原保存回调。单人回调为 CareerStore.Save，先保存生涯，再保存本机设置；多人回调为 CoopCareerSession.SaveAi，先保存本机设置，再沿原 Commit 更新 Enabled、Revision、检查点和公开快照。
@@ -218,6 +220,10 @@ Create保存待发时的预览；dm-send的PrepareAttachments按来源编号逐�
 PNG 仍使用 CharacterCardPng.Bundle Version=1 和原 Fields。导出只交换人物资料，导入只建立新人物，不携带好感、关系或印象；新人物使用0、初识、空印象。旧命令缺少 Relation 时按原人物编辑流程执行，旧存档继续由 Mailbox(CareerLifeState) 执行原迁移。字符长度限制取消，必填、非法字符、重名、数值及合同规则保持；多人整体容量限制保持原规则。
 
 ## 赛事、阵容、资料与记忆
+
+CareerClub.Transfers 保存原经营者离队时尚未到队的已付款 OwnedTransfer，缺省为空列表。ClubDeparture.Leave 从 OwnedClubState.Transfers 移交这些记录，保留 ArrivalSeason、Contract、SellerId、ReplaceId 和交互来源编号；将独立关注保存到 CareerClub.Fans，非真人首发保存到 PreferredStarters，教练训练记录转入 Esports.CoachTraining。OwnedClubState 随后清空，当前 ClubId、PlayerContract 及真人岗位解除；进行中的原队教练训练和涉及真人的待生效 LineupRequest 标为已取消。个人资料及原俱乐部对象继续保存。
+
+OwnedClubs.TransferReserved 同时检查当前经营队和各 CareerClub.Transfers，继续保留预约人物。ArriveTransfers 即使当前没有自建队也会办理这些预约；CompleteTransfer 共用归属、合同起止日期与 Arrived 写入，随后补员、刷新买卖双方未来名单并记录到队事实。原付款继续有效，到队后移除 CareerClub.Transfers 中对应记录。再次创建使用新唯一编号，旧队及历史引用继续使用旧编号。新增列表沿原 JSON 保存、深复制、多人快照和恢复流程传递；旧档读取空列表。
 
 OwnedTransfer.ArrivalSeason 记录签字时约定的到队赛季；新记录由 TransferSeason 按开赛日期决定，已有记录继续读取所存日期。Arrived 表示已经转移归属及合同，Contract.SignedDay/EndDay 从实际到队日期起算。SourceTurnId/SourceHumanId 将跨季到队交互关联到签字时的私聊轮次；当天到队由外层 PrivateContracts.Confirm 记录同一次合同回退。
 

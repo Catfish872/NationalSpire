@@ -96,7 +96,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-1d36f4c023fa)
+**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-58fbf46b2274)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 

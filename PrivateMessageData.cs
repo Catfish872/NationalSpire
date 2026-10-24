@@ -99,6 +99,8 @@ public sealed class PrivateConversation
 }
 public sealed class PrivateTurn
 {
+    public bool? ToolMode { get; set; }
+    public List<ChatToolCall> ToolCalls { get; set; } = [];
     public DateSceneRequest? Scene { get; set; }
     public List<DateSceneLine> SceneLines { get; set; } = [];
     public string ProactiveReason { get; set; } = "";

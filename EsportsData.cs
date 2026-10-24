@@ -41,6 +41,8 @@ public sealed class EsportsCareer
 }
 public sealed class CareerClub
 {
+    // 玩家移交俱乐部后，已付款预约继续归原队履行；到队后移除。
+    public List<OwnedTransfer> Transfers { get; set; } = [];
     public int Fans { get; set; }
     public HashSet<string> AudienceReceipts { get; set; } = [];
     public List<string> PreferredStarters { get; set; } = [];

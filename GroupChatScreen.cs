@@ -225,6 +225,7 @@ public partial class CareerScreen
     }
     private void GroupCommand(string kind, GroupCommand command, Action? accepted = null)
     {
+        command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
         string id = _privateGroup;
         if (_multiplayer != null) { _multiplayer.Send(kind, id, JsonSerializer.Serialize(command), accepted: () => { accepted?.Invoke(); _multiplayer.Refresh(); _groupSignature = _privateListSignature = ""; if (kind == "group-create") SelectGroup(GroupChats.Visible(ViewData).Last().Id); }); return; }
         var d = ViewData;

@@ -233,6 +233,7 @@ public static class OwnedClubs
         string region = draft.Region.Length == 0 ? d.Esports.Country : draft.Region;
         CircuitWorld.LeavePreseason(d);
         string id = "owned-" + d.WorldId;
+        if (d.Esports.Clubs.Any(c => c.Id == id)) id += "-" + Guid.NewGuid().ToString("N");
         var own = new OwnedClubState { HumanWeeklyWage = HumanWeeklyWage, HumanWinBonus = HumanWinBonus, ClubId = id, FoundedDay = d.Day, NextPayDay = d.Day + 7, Fans = StartingFans(d), EconomyVersion = 1,
             Starters = ActiveHumans(d), Reserves = Humans(d).Except(ActiveHumans(d)).ToList(), ManagerId = d.LocalHumanId.Length > 0 ? d.LocalHumanId : "player", Sponsor = SponsorQuote(d, draft.Sponsor) };
         d.Esports.OwnedClub = own;
@@ -339,7 +340,8 @@ public static class OwnedClubs
         CareerStore.Save(d); return null;
     }
     public static decimal ExitFee(CareerData d, OwnedPlayerContract c) => Math.Min(4, Math.Max(0, (c.EndDay - d.Day + 6) / 7)) * c.Wage;
-    public static bool TransferReserved(CareerData d, string id) => d.Esports.OwnedClub?.Transfers.Any(t => !t.Arrived && t.Contract.PersonId == id) == true;
+    public static bool TransferReserved(CareerData d, string id) => d.Esports.OwnedClub?.Transfers.Any(t => !t.Arrived && t.Contract.PersonId == id) == true
+        || d.Esports.Clubs.Any(c => c.Transfers.Any(t => !t.Arrived && t.Contract.PersonId == id));
     public static bool ReservedStarter(CareerData d, string id) => id.Length > 0 && d.Esports.OwnedClub?.Transfers.Any(t => !t.Arrived && t.ReplaceId == id) == true;
     public static List<string> ReplaceableStarters(CareerData d) => d.Esports.OwnedClub!.Starters.Where(id => !Humans(d).Contains(id)
         && !d.Esports.OwnedClub.Contracts.Any(c => c.PersonId == id && c.GuaranteedStarter) && !ReservedStarter(d, id)).ToList();
@@ -388,6 +390,23 @@ public static class OwnedClubs
     // 赛前签约当天或已约定的赛季开始时到队，合同金额沿用签字时的报价。
     public static void ArriveTransfers(CareerData d)
     {
+        foreach (var club in d.Esports.Clubs.Where(c => c.Transfers.Count > 0))
+        foreach (var transfer in club.Transfers.Where(t => !t.Arrived && t.ArrivalSeason <= d.Season).ToArray())
+        {
+            CompleteTransfer(d, club.Id, transfer);
+            if (transfer.Position == "首发")
+            {
+                club.PreferredStarters.Remove(transfer.ReplaceId);
+                club.PreferredStarters.Insert(0, transfer.Contract.PersonId);
+            }
+            CircuitPeople.Replenish(d);
+            OwnedClubSchedule.RefreshClub(d, club.Id);
+            OwnedClubSchedule.RefreshClub(d, transfer.SellerId);
+            CareerLife.AddEvent(d, "transfer-arrived-" + club.Id + "-" + transfer.Contract.PersonId + "-" + transfer.Contract.SignedDay,
+                "转会", CareerEngine.DisplayName(d, transfer.Contract.PersonId) + "加盟" + club.Name,
+                "此前已签订的加盟合同按期生效，进入" + transfer.Position + "阵容。", [transfer.Contract.PersonId], true);
+            club.Transfers.Remove(transfer);
+        }
         if (!IsOwner(d)) return;
         var o = d.Esports.OwnedClub!;
         foreach (var transfer in o.Transfers.Where(t => !t.Arrived && t.ArrivalSeason <= d.Season))
@@ -405,15 +424,12 @@ public static class OwnedClubs
             try
             {
                 if (turn != null) before = PrivateInteractionHistory.Capture(d, p.Id, true);
-                c.SignedDay = d.Day; c.EndDay = d.Day + c.Days;
                 if (transfer.Position == "首发")
                 {
                     o.Starters.Remove(transfer.ReplaceId); o.Reserves.Add(transfer.ReplaceId); UpdateRosterRole(CareerEngine.Person(d, transfer.ReplaceId)!, "轮换");
                 }
-                c.Position = transfer.Position;
                 o.Contracts.Add(c); PositionList(o, transfer.Position).Add(p.Id);
-                p.ClubId = o.ClubId; UpdateRosterRole(p, transfer.Position);
-                transfer.Arrived = true;
+                CompleteTransfer(d, o.ClubId, transfer);
                 // 私信个人视图以单人组织聊天，赛事名单仍按实际出场人数更新。
                 int members = d.CooperativeMembers;
                 try
@@ -427,6 +443,13 @@ public static class OwnedClubs
             }
             finally { d.Life.Mailbox = originalMailbox; d.LocalHumanId = originalHuman; }
         }
+    }
+    private static void CompleteTransfer(CareerData d, string club, OwnedTransfer transfer)
+    {
+        var contract = transfer.Contract;
+        contract.SignedDay = d.Day; contract.EndDay = d.Day + contract.Days; contract.Position = transfer.Position;
+        var person = CareerEngine.Person(d, contract.PersonId)!;
+        person.ClubId = club; UpdateRosterRole(person, transfer.Position); transfer.Arrived = true;
     }
     public static void Pay(CareerData d, string title, decimal amount)
     {

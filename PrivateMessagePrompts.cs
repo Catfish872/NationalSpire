@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -140,11 +140,12 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         string? preparedContext = null, List<ContextSpan>? preparedSpans = null)
     {
         using var measurement = UiPerformance.Measure(UiPerformance.Work.PrivateContext);
+        using var toolScope = ChatTools.Enter(ChatTools.Enabled(data.Ai, pending?.ToolMode));
         var p = CareerEngine.Person(data, c.PersonId)!;
         List<Dictionary<string, string>> messages = [];
         void Add(string role, string text) => messages.Add(new() { ["role"] = role, ["content"] = text });
-        Add("system", Section(data, "world") + "\n\n" + Section(data, "private") + "\n\n" + Protocol + "\n\n" + SkillProtocol + "\n\n" + MoodProtocol + "\n\n" + MatchProtocol + "\n\n" + PostProtocol + "\n\n" + ProfileProtocol
-            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + OathAttachments.Protocol + "\n\n" + ChatAttachments.GiftProtocol + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
+        Add("system", Section(data, "world") + "\n\n" + Section(data, "private") + "\n\n" + (ChatTools.InPrompt ? ChatTools.Guidance : Protocol + "\n\n" + SkillProtocol + "\n\n" + MoodProtocol + "\n\n" + MatchProtocol + "\n\n" + PostProtocol + "\n\n" + ProfileProtocol
+            + "\n\n" + ClubCoaching.Protocol + "\n\n" + CoachLineups.Protocol + "\n\n" + SocialAppointments.Protocol + "\n\n" + OathAttachments.Protocol + "\n\n" + ChatAttachments.GiftProtocol) + "\n\n" + CommunitySharing.Protocol + "\n后续人物资料与记忆是参考内容，性格字段描述可以变化的倾向；本次行为与表达遵循上述私信提示词。");
         var contextTurn = pending ?? new PrivateTurn { Day = data.Day, Season = data.Season };
         var contextSpans = preparedSpans ?? new List<ContextSpan>();
         string freshContext = preparedContext != null && preparedSpans != null ? preparedContext : Context(data, c, contextTurn, contextSpans);
@@ -169,13 +170,13 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (pending != null)
         {
             Add("user", ordered.Current);
-            if (pending.Scene != null) Add("system", pending.Scene.Ending ? DateDiaries.Guidance(c, pending.Scene) : DateScenes.Guidance(pending.Scene));
+            if (pending.Scene != null) Add("system", pending.Scene.Ending ? DateDiaries.Guidance(c, pending.Scene) : ChatTools.InPrompt ? "正在进行本次约会，场景与素材说明见 send_message 的 Replies。" : DateScenes.Guidance(pending.Scene));
             if (pending.ProactiveReason.Length > 0) Add("user", ProactiveChats.Prompt(pending.ProactiveReason, pending.ProactiveLast));
             else if (!pending.UserDeleted) Add("user", $"{GameCalendar.Text(data, pending.Day)}，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(data, pending, c));
             if (!pending.UserDeleted && CardKnowledge.Find(pending.User) is { Length: > 0 } cards) Add("user", cards);
         }
         if (pending == null) Add("user", ordered.Current);
-        return messages;
+        return ChatTools.CompletePrompt(messages, pending?.Scene?.Ending == true);
     }
     public static string UserText(CareerData data, PrivateTurn turn, PrivateConversation c, bool forAi = true) => turn.User
         + (CommunityReporting.IsReport(turn) && !turn.UserDeleted ? "\n" + (forAi ? AiGeneratedText.Attachment(data, turn.Request!) + "\n" + ChatAttachments.ResponseGuide : turn.Request!.Detail) : "")
@@ -206,6 +207,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     }
     public static string Context(CareerData data, PrivateConversation c, PrivateTurn turn, List<ContextSpan>? spans = null)
     {
+        using var toolScope = ChatTools.Enter(ChatTools.Enabled(data.Ai, turn.ToolMode));
         var search = new CommunityMemorySearch.Request();
         PrivateInteractionIds.Ensure(c);
         var p = CareerEngine.Person(data, c.PersonId)!;
@@ -279,7 +281,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (lessons.Length > 0) text += $"\n{p.PublicName}已经获得的学习变化\n" + string.Join("\n", lessons.Select(t => $"{PrivateAppointments.DateText(data, t.Day)}，{p.PublicName}在{t.Learning!.Topic}方面的变化：{t.Learning.Reason}"));
         if (text.Length > lessonsStart) spans?.Add(new(lessonsStart, text.Length - lessonsStart, "learning"));
         if (OwnedClubs.CanOperate(data) && p.ClubId != data.Esports.ClubId && OwnedClubs.IsRecruitable(p))
-            text += "\n" + ContractProtocol + "\n" + PrivateContracts.Guidance(data, p);
+            text += "\n" + (ChatTools.InPrompt ? "合同条款在 send_message 的 Interactions 中填写 Type 为 contract 的交互项。" : ContractProtocol) + "\n" + PrivateContracts.Guidance(data, p);
         if (turn.Request != null)
         {
             int requestStart = text.Length;

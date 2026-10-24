@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B189A70E75AEF5B75B7A86EC70C667F472A14B9037FDA8CBEC320751658A7111`。来源：[源码](../../PrivateMessageData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`93076D37E19758D57FFD84CC05AF3036930E7ACF492EAEE08694E6B9859FEB24`。来源：[源码](../../PrivateMessageData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -203,7 +203,7 @@ private bool _deserializing;
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.CareerScreen.PrivateSettings()`](PrivateMessageScreen.cs.md#symbol-e86e401f7314)；[`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
+**调用者：** [`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.CareerScreen.PrivateSettings()`](PrivateMessageScreen.cs.md#symbol-e86e401f7314)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
 **调用：** `System.ArgumentException.ArgumentException(string?)`
 
@@ -889,11 +889,47 @@ private bool _deserializing;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-8245624e2b62"></a>
+
+## `NationalSpire.PrivateTurn.ToolMode — public bool? ToolMode`
+
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-cdc75e4c87e5"></a>
+
+## `NationalSpire.PrivateTurn.ToolCalls — public List<ChatToolCall> ToolCalls`
+
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-8d4579f4afac"></a>
 
 ## `NationalSpire.PrivateTurn.Scene — public DateSceneRequest? Scene`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -911,7 +947,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.SceneLines — public List<DateSceneLine> SceneLines`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -929,7 +965,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.ProactiveReason — public string ProactiveReason`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -947,7 +983,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.ProactiveLast — public bool ProactiveLast`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -965,7 +1001,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.UserOrder — public long UserOrder`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -983,7 +1019,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.ReplyOrder — public long ReplyOrder`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1001,7 +1037,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.InteractionUndo — public List<PrivateInteractionUndo> InteractionUndo`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1019,7 +1055,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Arbitration — public ArbitrationRecord? Arbitration`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1037,7 +1073,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.ProfileChanges — public List<PrivateProfileChange> ProfileChanges`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1055,7 +1091,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Attachments — public List<PrivateOffer> Attachments`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1073,7 +1109,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.UserDeleted — public bool UserDeleted`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1091,7 +1127,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.ReplyDeleted — public bool ReplyDeleted`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1109,7 +1145,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Id — public string Id`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1129,7 +1165,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Day — public int Day`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1147,7 +1183,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Season — public int Season`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1165,7 +1201,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.User — public string User`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1183,7 +1219,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Reply — public string Reply`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1201,7 +1237,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Reasoning — public string Reasoning`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1219,7 +1255,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Regenerating — public bool Regenerating`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1237,7 +1273,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.PreviousReply — public string PreviousReply`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1255,7 +1291,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.PreviousReasoning — public string PreviousReasoning`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1273,7 +1309,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Context — public string Context`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1291,7 +1327,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Status — public string Status`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1309,7 +1345,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Error — public string Error`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1327,7 +1363,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Applied — public bool Applied`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1345,7 +1381,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Learning — public PrivateLearning? Learning`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1363,7 +1399,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Mood — public PrivateMood? Mood`
 
-来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1381,7 +1417,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.RequestKind — public string RequestKind`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1399,7 +1435,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateTurn.Request — public PrivateOffer? Request`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1417,7 +1453,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Id — public string Id`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1435,7 +1471,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Source — public string Source`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1453,7 +1489,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Topic — public string Topic`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1471,7 +1507,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Reason — public string Reason`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1489,7 +1525,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Strength — public int Strength`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1507,7 +1543,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Ascension — public int Ascension`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1525,7 +1561,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.Before — public double Before`
 
-来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1543,7 +1579,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateLearning.After — public double After`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1561,7 +1597,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Id — public string Id`
 
-来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1579,7 +1615,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Source — public string Source`
 
-来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1597,7 +1633,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Strength — public int Strength`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1615,7 +1651,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Day — public int Day`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1633,7 +1669,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Days — public int Days`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1651,7 +1687,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Reason — public string Reason`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1669,7 +1705,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Ascension — public int Ascension`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1687,7 +1723,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.Before — public double Before`
 
-来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1705,7 +1741,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateMood.After — public double After`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1723,7 +1759,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateSummary.From — public int From`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1741,7 +1777,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateSummary.Id — public string Id`
 
-来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1761,7 +1797,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateSummary.Text — public string Text`
 
-来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1779,7 +1815,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateSummary.Through — public int Through`
 
-来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1797,9 +1833,9 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateSummary.IsLatest(System.Collections.Generic.IEnumerable<NationalSpire.PrivateSummary>) — public bool IsLatest(IEnumerable<PrivateSummary> summaries)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.GroupMemory()`](GroupChatDialogs.cs.md#symbol-bf729ae9b3eb)；[`NationalSpire.GroupChats.Command(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-e0439deb45ac)；[`NationalSpire.PrivateMessages.Manage(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, NationalSpire.PrivateMessageCommand)`](PrivateMessages.cs.md#symbol-2b57951bede9)；[`Section(string)`](PrivateMemoryScreen.cs.md#symbol-3776534c6c5a)
+**调用者：** [`NationalSpire.CareerScreen.GroupMemory()`](GroupChatDialogs.cs.md#symbol-bf729ae9b3eb)；[`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)；[`NationalSpire.PrivateMessages.Manage(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, NationalSpire.PrivateMessageCommand)`](PrivateMessages.cs.md#symbol-2b57951bede9)；[`Section(string)`](PrivateMemoryScreen.cs.md#symbol-3776534c6c5a)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -1816,7 +1852,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.ConsumerAttachmentId — public string ConsumerAttachmentId`
 
-来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1834,7 +1870,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.RelationshipIntent — public int RelationshipIntent`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1852,7 +1888,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.MemoryDeleted — public bool MemoryDeleted`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1870,7 +1906,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.GoodId — public string GoodId`
 
-来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1888,7 +1924,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.GoodVerb — public string GoodVerb`
 
-来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1906,7 +1942,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Quantity — public int Quantity`
 
-来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1924,7 +1960,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.PublicAttendance — public bool PublicAttendance`
 
-来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1942,7 +1978,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.ServiceId — public string ServiceId`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1960,7 +1996,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.GroupId — public string GroupId`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1978,7 +2014,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.CoachId — public string CoachId`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1996,7 +2032,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.CoachAccepted — public bool CoachAccepted`
 
-来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2014,7 +2050,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.ActorId — public string ActorId`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2032,7 +2068,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Participants — public List<string> Participants`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2050,7 +2086,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.RelatedPeople — public List<string> RelatedPeople`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2068,7 +2104,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.FavourBefore — public int FavourBefore`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2086,7 +2122,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.FavourTargets — public List<int> FavourTargets`
 
-来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2104,7 +2140,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.FirstPerson — public string FirstPerson`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2122,7 +2158,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.SecondPerson — public string SecondPerson`
 
-来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2140,7 +2176,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.ReplacesOfferId — public string ReplacesOfferId`
 
-来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2158,7 +2194,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.PostRevision — public long PostRevision`
 
-来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2176,7 +2212,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Title — public string Title`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2194,7 +2230,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.ResponseAction — public string ResponseAction`
 
-来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2212,7 +2248,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Id — public string Id`
 
-来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2232,7 +2268,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.TurnId — public string TurnId`
 
-来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2250,7 +2286,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Kind — public string Kind`
 
-来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2268,7 +2304,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.State — public string State`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2286,7 +2322,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Detail — public string Detail`
 
-来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2304,7 +2340,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.AiDetail — public string? AiDetail`
 
-来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2322,7 +2358,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Quote — public CommunityQuote? Quote`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2340,7 +2376,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Season — public int Season`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2358,7 +2394,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Day — public int Day`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2376,7 +2412,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Ascension — public int Ascension`
 
-来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2394,7 +2430,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Mode — public string Mode`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2412,7 +2448,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Signing — public decimal Signing`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2430,7 +2466,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Wage — public decimal Wage`
 
-来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2448,7 +2484,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.WinBonus — public decimal WinBonus`
 
-来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2466,7 +2502,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Weeks — public int Weeks`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2484,7 +2520,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.Role — public string Role`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2502,7 +2538,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateOffer.MatchId — public string MatchId`
 
-来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2520,7 +2556,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostId — public string PostId`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2538,7 +2574,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.ReplyId — public string ReplyId`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2556,7 +2592,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.ParentId — public string ParentId`
 
-来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2574,7 +2610,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostRevision — public long PostRevision`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2592,7 +2628,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostTitle — public string PostTitle`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2610,7 +2646,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostAuthorId — public string PostAuthorId`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2628,7 +2664,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostAuthorName — public string PostAuthorName`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2646,7 +2682,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostBody — public string PostBody`
 
-来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2664,7 +2700,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostSourceBody — public string PostSourceBody`
 
-来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2682,7 +2718,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostAiSourceBody — public string? PostAiSourceBody`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2700,7 +2736,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.PostDay — public int PostDay`
 
-来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2718,7 +2754,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.AuthorId — public string AuthorId`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2736,7 +2772,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.AuthorName — public string AuthorName`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2754,7 +2790,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.Body — public string Body`
 
-来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2772,7 +2808,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.Day — public int Day`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2790,7 +2826,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuote.Parents — public List<CommunityQuoteReply> Parents`
 
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2808,7 +2844,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.Id — public string Id`
 
-来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2826,7 +2862,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.ParentId — public string ParentId`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2844,7 +2880,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.AuthorId — public string AuthorId`
 
-来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2862,7 +2898,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.AuthorName — public string AuthorName`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2880,7 +2916,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.Body — public string Body`
 
-来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2898,7 +2934,7 @@ private bool _deserializing;
 
 ## `NationalSpire.CommunityQuoteReply.Day — public int Day`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -2916,7 +2952,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateInteractionIds.Number(NationalSpire.PrivateConversation, NationalSpire.PrivateOffer) — public static string Number(PrivateConversation conversation, PrivateOffer offer)`
 
-来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Execute(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupArbitration.cs.md#symbol-b38ef0bc526d)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation)`](PrivateMessageData.cs.md#symbol-2a4d65cc20f8)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessagePrompts.OfferContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessagePrompts.cs.md#symbol-67bd27e9ea35)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.CareerData, NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-2e632c46656c)
 
@@ -2938,7 +2974,7 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateInteractionIds.Ensure(NationalSpire.PrivateConversation) — public static void Ensure(PrivateConversation conversation)`
 
-来源：源码第 251 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Execute(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupArbitration.cs.md#symbol-b38ef0bc526d)；[`NationalSpire.AiService.SummarizePrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](AiPrivateMessages.cs.md#symbol-198521296d15)；[`NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ClubCoaching.cs.md#symbol-fc1017e0877c)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.PrivateMessagePrompts.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-4b9d12b26f65)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.Enqueue(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer?, System.Collections.Generic.List<NationalSpire.PrivateOffer>?, string, bool)`](PrivateMessages.cs.md#symbol-0e61d4a7bbb5)；[`NationalSpire.PrivateMessages.PublicMemory(NationalSpire.CareerData, NationalSpire.CareerPerson, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>, int)`](PrivateMessages.cs.md#symbol-81234ccf975f)；[`NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](SocialAppointments.cs.md#symbol-33a4725630bd)
 
@@ -2963,9 +2999,9 @@ private bool _deserializing;
 
 ## `NationalSpire.PrivateInteractionIds.Resolve(NationalSpire.PrivateConversation, string?) — public static string? Resolve(PrivateConversation conversation, string? number)`
 
-来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-10ee34a4e855)；[`NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ClubCoaching.cs.md#symbol-fc1017e0877c)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](SocialAppointments.cs.md#symbol-33a4725630bd)
+**调用者：** [`NationalSpire.ChatAttachments.Find(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, string, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-10ee34a4e855)；[`NationalSpire.ClubCoaching.AcceptTraining(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ClubCoaching.cs.md#symbol-fc1017e0877c)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](SocialAppointments.cs.md#symbol-33a4725630bd)
 
 **调用：** `long.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out long)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

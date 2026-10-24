@@ -6,6 +6,7 @@ public static class ChatAttachments
     public const string ResponseGuide = "请根据交互格式要求来回应附件，口头回复不会视为成功回应。";
     public static string ResponseInstructions(CareerData data, PrivateOffer a, string number, GroupChat? group = null, string sender = "")
     {
+        if (ChatTools.InPrompt) return ChatTools.AttachmentGuide + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "");
         string protocol = a.Kind switch
         {
             "gift" => group == null ? GiftProtocol : GroupGiftProtocol,

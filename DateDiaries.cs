@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace NationalSpire;
@@ -17,6 +17,11 @@ public sealed class DateDiary
 /// <summary>约会日记独立于聊天分页和自动记忆压缩；与结束感想共用一次模型调用。</summary>
 public static class DateDiaries
 {
+    public const string Protocol = "本次约会已由玩家明确结束。先以NPC身份发送自然的私信感想，再在回复末尾附一条隐藏日记标记："
+            + "[DateDiary: 用NPC第一人称写下这次相处的经过、印象与感受, Location: 实际约会地点]。"
+            + "日记依据下面完整的本次约会记录，约150至350字；只经历开场时如实简述。地点未明确时写地点未明确。"
+            + "日记与私信同一轮输出；日记标记放在正文之后，内容中的方括号改用中文圆括号。其余私信交互标记沿用原规则。\n";
+    public const string ToolEnding = "本次约会已结束。本轮同时提交两项内容：Replies填写NPC发给玩家的自然私聊感想；Interactions填写一项Type为date_diary的日记记录，DateDiary用NPC第一人称记述本次经过、印象与感受，约150至350字，Location填写实际地点，地点未明确时写地点未明确。只经历开场时如实简述。已有日记时根据本次完整记录重新整理，返回内容用于更新同一篇日记。其他实际交互按各项说明另行填写。";
     public static IReadOnlyList<DateDiary> Records(PrivateConversation conversation)
     {
         var records = conversation.DateDiaries.ToList();
@@ -41,10 +46,9 @@ public static class DateDiaries
     public static string Guidance(PrivateConversation conversation, DateSceneRequest scene)
     {
         var turns = conversation.Turns.Where(t => t.Scene?.OfferId == scene.OfferId && !t.Scene.Ending && t.Status == "complete");
-        return "本次约会已由玩家明确结束。先以NPC身份发送自然的私信感想，再在回复末尾附一条隐藏日记标记："
-            + "[DateDiary: 用NPC第一人称写下这次相处的经过、印象与感受, Location: 实际约会地点]。"
-            + "日记依据下面完整的本次约会记录，约150至350字；只经历开场时如实简述。地点未明确时写地点未明确。"
-            + "日记与私信同一轮输出；日记标记放在正文之后，内容中的方括号改用中文圆括号。其余私信交互标记沿用原规则。\n"
+        if (ChatTools.InPrompt) return ToolEnding + "以下为本次约会的完整记录。\n"
+            + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) });
+        return Protocol
             + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) });
     }
     public static void Complete(PrivateConversation conversation, PrivateTurn turn, IEnumerable<Dictionary<string, string>> directives)

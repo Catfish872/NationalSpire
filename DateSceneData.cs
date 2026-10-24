@@ -37,9 +37,22 @@ public static class DateScenes
 [Scene: narration, Emotion: neutral, Background: current]窗边透进柔和的光，桌上的茶还冒着热气。
 开场先描写约定地点及人物外观、姿态，再由人物说话。后续承接玩家本轮消息。玩家的发言和行动由玩家决定。活动、赠礼等交互继续使用各自格式。
 """;
-    public static string Guidance(DateSceneRequest scene) => Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId)
-        + "\n当前场景资料：" + JsonSerializer.Serialize(new { scene.Title, scene.Detail, scene.Opening, defaultEmotion = scene.DefaultEmotionId,
+    public static string Guidance(DateSceneRequest scene, bool tools = false)
+    {
+        string protocol = Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId);
+        if (tools)
+        {
+            string Example(string kind, string reply) => JsonSerializer.Serialize(new { Scene = kind, Emotion = scene.DefaultEmotionId, Background = "current", Reply = reply },
+                new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+            protocol = protocol.Replace("台词与旁白分行输出，每段开头填写Scene、Emotion、Background。", "每段台词或旁白按顺序写入 send_message 的 Replies，每段先填 Scene、Emotion、Background，再填写这一段完整文字 Reply。")
+                .Replace("[Scene: dialogue, Emotion: " + scene.DefaultEmotionId + ", Background: current]今天想先去哪里走走？", Example("dialogue", "今天想先去哪里走走？"))
+                .Replace("[Scene: narration, Emotion: " + scene.DefaultEmotionId + ", Background: current]窗边透进柔和的光，桌上的茶还冒着热气。", Example("narration", "窗边透进柔和的光，桌上的茶还冒着热气。"))
+                .Replace("台词示例：", "Replies 中的台词参数示例：").Replace("旁白示例：", "Replies 中的旁白参数示例：")
+                .Replace("各自格式", "Interactions 中各项的参数规则");
+        }
+        return protocol + "\n当前场景资料：" + JsonSerializer.Serialize(new { scene.Title, scene.Detail, scene.Opening, defaultEmotion = scene.DefaultEmotionId,
             emotions = scene.Emotions, backgrounds = scene.Backgrounds, currentBackground = scene.CurrentBackground });
+    }
     public static bool SafeBackgroundId(string id) => id.Length is > 0 and <= 100 && id.All(c => char.IsLetterOrDigit(c) || c is '_' or '-');
     public static bool OneToOne(CareerData data, PrivateOffer offer, PrivateConversation? conversation) => offer.Kind == "activity" && offer.GroupId.Length == 0
         && (offer.Participants.Count == 0 || offer.Participants.Distinct().Count() == 2

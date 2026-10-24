@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace NationalSpire;
 
@@ -87,7 +87,6 @@ effects按照前文的效果字段规则填写实际变化；没有实际变化�
         玩家资料 = PrivatePublicContext.PlayerProfile(data),
         玩家战绩 = new
         {
-            正式比赛累计 = new { 胜 = data.Wins, 平 = data.Draws, 负 = data.Losses },
             近期比赛 = data.Results.OrderByDescending(r => r.Day).Take(5).Select(r => new
             {
                 日期 = GameCalendar.Iso(data, r.Day), 赛事 = r.Event, 对手 = r.Opponent, 结果 = r.Outcome

@@ -12,7 +12,11 @@ public static class GroupInteractions
             if (source.ContainsKey("Activity") && source.TryGetValue("Id", out string? activityId) && activityId != "0")
             {
                 // 同一附件使用发起者的交互记录，成员分别确认时共同更新同一项日程。
-                var existing = g.Interactions.FirstOrDefault(lane => lane.Value.Offers.Any(o => o.Kind == "activity" && o.Id == activityId));
+                var existing = g.Interactions.FirstOrDefault(lane =>
+                {
+                    string? id = PrivateInteractionIds.Resolve(lane.Value, activityId);
+                    return lane.Value.Offers.Any(o => o.Kind == "activity" && o.Id == id);
+                });
                 if (existing.Value != null) actor = existing.Value.PersonId;
                 else if (t.Attachments.Any(a => a.Kind == "activity" && a.Id == activityId)) actor = t.Sender;
             }

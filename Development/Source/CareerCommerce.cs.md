@@ -100,7 +100,7 @@ private static readonly string[][] Brands = [
 
 来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.Upgrade(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-d734109c7eea)；[`NationalSpire.CircuitPeople.Ensure(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-f59ba7354968)
+**调用者：** [`NationalSpire.CareerCommerce.Upgrade(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-d734109c7eea)；[`NationalSpire.CircuitPeople.Ensure(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-f59ba7354968)；[`NationalSpire.ClubDeparture.Leave(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-1579a5b3a3c8)
 
 **调用：** [`NationalSpire.CareerCommerce.IdentityIndex(NationalSpire.CareerData, string)`](CareerCommerce.cs.md#symbol-e72ebe7c108f)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.RegionalOrganizations.ClubDescription(NationalSpire.CareerData, NationalSpire.CareerClub, int)`](RegionalOrganizations.cs.md#symbol-4c326b6a0e3d)
 

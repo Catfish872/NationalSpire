@@ -277,7 +277,7 @@ public const string Protocol = """
 
 来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.CoachLineups.CurrentRoster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-6e3eb9676328)；[`NationalSpire.OwnedClubSchedule.TransferArrived(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-cff14090b004)
+**调用者：** [`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.CoachLineups.CurrentRoster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-6e3eb9676328)；[`NationalSpire.OwnedClubSchedule.RefreshClub(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-d65310152f62)；[`NationalSpire.OwnedClubSchedule.TransferArrived(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-cff14090b004)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-86e0b50ffb0e)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
@@ -361,7 +361,7 @@ public const string Protocol = """
 
 来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
+**调用者：** [`NationalSpire.CareerScreen.PrivateLineupPicker()`](CoachScreen.cs.md#symbol-78315f2693ca)；[`NationalSpire.CoachLineups.Candidates(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-17ae59ab26cf)；[`NationalSpire.CoachLineups.MemberError(NationalSpire.CareerData, string, string, string, string?, string?)`](CoachLineups.cs.md#symbol-ee32acfaf806)；[`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`NationalSpire.GroupChatPrompts.Compose(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn?)`](GroupChatPrompts.cs.md#symbol-a333ef13db23)；[`NationalSpire.PrivatePublicContext.AppendClubDetails(System.Text.StringBuilder, NationalSpire.CareerData, NationalSpire.CareerClub, string, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivateCareerContext.cs.md#symbol-7b4c2e1f7909)；[`Preview()`](CoachScreen.cs.md#symbol-019409d8f84e)
 
 **调用：** [`NationalSpire.CoachLineups.Coach(NationalSpire.CareerPerson)`](CoachLineups.cs.md#symbol-86e0b50ffb0e)；[`NationalSpire.CoachLineups.CurrentRoster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-6e3eb9676328)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.OwnedClubs.Position(NationalSpire.OwnedClubState, string)`](OwnedClubs.cs.md#symbol-e5d4bf00dda1)；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -405,7 +405,7 @@ public const string Protocol = """
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
+**调用者：** [`NationalSpire.CoachLineups.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CoachLineups.cs.md#symbol-fac9e8c2eaeb)；[`NationalSpire.CoachLineups.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](CoachLineups.cs.md#symbol-902b00bf585f)；[`Preview()`](CoachScreen.cs.md#symbol-019409d8f84e)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)
 
@@ -513,7 +513,7 @@ public const string Protocol = """
 
 来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PrivateLineupCard(NationalSpire.CareerData, NationalSpire.CoachLineupRequest, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?)`](CoachScreen.cs.md#symbol-c01675f974f7)；[`NationalSpire.CoachLineups.Context(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-1299df81c255)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`Preview()`](CoachScreen.cs.md#symbol-48eb899babe4)
+**调用者：** [`NationalSpire.CareerScreen.PrivateLineupCard(NationalSpire.CareerData, NationalSpire.CoachLineupRequest, Godot.VBoxContainer, System.Action<string, NationalSpire.PrivateMessageCommand>?)`](CoachScreen.cs.md#symbol-c01675f974f7)；[`NationalSpire.CoachLineups.Context(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-1299df81c255)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.GroupChatPrompts.InteractionContext(NationalSpire.CareerData, NationalSpire.GroupChat, int, string, string)`](GroupChatPrompts.cs.md#symbol-ccc55b5e837d)；[`Preview()`](CoachScreen.cs.md#symbol-019409d8f84e)
 
 **调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)
 
@@ -658,7 +658,7 @@ public const string Protocol = """
 
 来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PrivateMessageCommands.Apply(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-81ef5fba41b8)
+**调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
 **调用：** [`NationalSpire.ClubCoaching.ClearPlayerPosition(NationalSpire.OwnedClubState)`](ClubCoaching.cs.md#symbol-d8f43426e219)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

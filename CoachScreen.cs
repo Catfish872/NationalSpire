@@ -14,13 +14,16 @@ public partial class CareerScreen
         {
             row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>
                 ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));
-            row.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));
+            var positionActions = new HBoxContainer(); positionActions.AddThemeConstantOverride("separation", 12); row.AddChild(positionActions);
+            positionActions.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));
+            positionActions.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
             if (o.PlayerPositionSeason > 0)
             {
                 box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));
                 box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170));
             }
         }
+        else row.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
         foreach (var a in o.CoachAppointments)
         {
             var pending = new HFlowContainer(); box.AddChild(pending);

@@ -67,6 +67,16 @@ public static class GroupChats
     }
     public static string? Command(CareerData d, string kind, string id, GroupCommand command)
     {
+        var error = CommandCore(d, kind, id, command);
+        if (error == null && kind is "group-send" or "group-retry" or "group-regenerate")
+        {
+            var pending = d.Chats.Groups.FirstOrDefault(g => g.Id == id)?.Turns.LastOrDefault(t => t.Status == "queued");
+            if (pending != null) { pending.ToolMode = command.ToolMode ?? d.Ai.ChatTools; pending.ToolCalls.Clear(); }
+        }
+        return error;
+    }
+    private static string? CommandCore(CareerData d, string kind, string id, GroupCommand command)
+    {
         if (MatchFailure.Locked(d) is { } locked) return locked;
         if (kind == "group-create") { Create(d, command.Text, command.People); return null; }
         if (kind == "group-manage")
@@ -131,7 +141,7 @@ public static class GroupChats
         }
         else if (kind == "group-clear")
         {
-            foreach (var t in g.Turns) { t.Text = ""; t.Replies.Clear(); t.Raw = t.Reasoning = ""; t.Attachments.Clear(); }
+            foreach (var t in g.Turns) { t.Text = ""; t.Replies.Clear(); t.Raw = t.Reasoning = ""; t.ToolCalls.Clear(); t.Attachments.Clear(); }
         }
         else if (kind == "group-settings" && command.Settings is { } settings)
         {

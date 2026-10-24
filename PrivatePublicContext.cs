@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 
 namespace NationalSpire;
 
@@ -62,7 +62,8 @@ public static partial class PrivatePublicContext
         string player = CareerEngine.Name(d);
         b.AppendLine($"\n{player}的当前资料");
         b.AppendLine($"{player}是{(person == null ? "本次故事中的" : "与你聊天的")}玩家，性别为{d.PlayerGender}，来自{d.Esports.Country}；职业为{d.PlayerCard?.Role ?? EsportsWorld.LicenseName(d)}，参赛资格为{EsportsWorld.LicenseName(d)}。");
-        b.AppendLine($"{player}的本生涯比赛战绩为{d.Wins}胜{d.Losses}负、{d.Draws}平，评分{d.Rating}，关注{d.Fans}。");
+        b.AppendLine(PlayerCompetitionRecord(d));
+        b.AppendLine($"{player}的评分{d.Rating}，关注{d.Fans}。");
         var results = d.Results.Where(r => r.Day <= d.Day && r.Kind != "private-friendly").ToArray();
         int highest = results.Where(r => r.Win).Select(ActualAscension).Append(d.LocalHumanId.Length == 0 ? d.Esports.BestClear : -1).Max();
         b.AppendLine(highest >= 0 ? $"{player}的生涯最高通关：进阶{highest}。" : $"{player}尚无已确认的生涯通关进阶记录。");
@@ -101,12 +102,25 @@ public static partial class PrivatePublicContext
         if (d.Esports.NationalTeam) b.AppendLine($"{player}入选{d.Esports.Country}国家队。");
         if (d.LocalHumanId.Length == 0) b.AppendLine($"{player}当前连胜{d.Esports.WinStreak}场，世界积分{WorldPoints(d, "player")}。");
         else b.AppendLine($"{player}的个人世界积分为{WorldPoints(d, Human(d))}。");
-        AppendAwards(b, d, Human(d), player);
-        foreach (var group in d.Esports.Honors.Where(h => h.Day <= d.Day).GroupBy(h => (h.Title, Team: d.LocalHumanId.Length > 0 && !h.Id.StartsWith("ceremony-") && !h.Id.StartsWith("top20-"))))
-            b.AppendLine($"{(group.Key.Team ? player + "所在合作队伍" : player)}的荣誉：{group.Key.Title}（{string.Join("、", group.Select(h => "第" + h.Season + "赛季").Distinct())}）。");
         if (CareerCommerce.ActiveSponsor(d) is { } sponsor && sponsor.SignedDay <= d.Day) b.AppendLine($"{player}的个人赞助商：{sponsor.Brand}，合作期为第{sponsor.StartSeason}至{sponsor.EndSeason}赛季。{sponsor.Description}");
         if (d.LocalHumanId.Length == 0 && d.PlayerIntroduction.Length > 0 && d.PlayerIntroductionDay <= d.Day)
             b.AppendLine($"{PrivateAppointments.DateText(d, d.PlayerIntroductionDay)}的{player}周刊档案：{d.PlayerIntroduction}");
+    }
+
+    /// <summary>累计正式赛果采用生涯计数；荣誉按指定日期筛选，并按赛事名次合并全部赛季。</summary>
+    public static string PlayerCompetitionRecord(CareerData d, int? honorDay = null)
+    {
+        int cutoff = honorDay ?? d.Day;
+        string player = CareerEngine.Name(d);
+        var b = new StringBuilder();
+        int total = d.Wins + d.Losses + d.Draws;
+        b.AppendLine(total == 0 ? $"{player}截至{GameCalendar.Iso(d, d.Day)}尚无正式比赛记录。"
+            : $"{player}截至{GameCalendar.Iso(d, d.Day)}的本生涯正式比赛累计{total}场：{d.Wins}胜、{d.Losses}负、{d.Draws}平，胜率{(double)d.Wins / total:P1}（胜场÷总场数，总场数包含平局）。");
+        foreach (var group in d.Esports.CircuitAwards.Where(a => a.PersonId == Human(d) && a.Day <= cutoff).GroupBy(a => (a.Event, a.Place)))
+            b.AppendLine($"{player}的赛事荣誉：{group.Key.Event}{group.Key.Place}（{string.Join("、", group.Select(a => a.Season).Distinct().Order().Select(season => "第" + season + "赛季"))}）。");
+        foreach (var group in d.Esports.Honors.Where(h => h.Day <= cutoff).GroupBy(h => (h.Title, Team: d.LocalHumanId.Length > 0 && !h.Id.StartsWith("ceremony-") && !h.Id.StartsWith("top20-"))))
+            b.AppendLine($"{(group.Key.Team ? player + "所在合作队伍" : player)}的荣誉：{group.Key.Title}（{string.Join("、", group.Select(h => h.Season).Distinct().Order().Select(season => "第" + season + "赛季"))}）。");
+        return b.ToString().TrimEnd();
     }
 
     private static void AppendAwards(StringBuilder b, CareerData d, string id, string name)

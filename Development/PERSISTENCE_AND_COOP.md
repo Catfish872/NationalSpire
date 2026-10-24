@@ -40,6 +40,14 @@ dm-proactive/dm-manage 与 group-proactive/group-manage 使用原命令、事务
 
 单人当季首发调整经 SetPlayerPosition → UpdateLineup → InvalidateForecast → CareerStore.Save 执行。生产保存继续写临时文件、保留有效备份并替换目标文件；本次实测使用隔离绑定文件。名单调整在保存前发生，保存异常沿原 CareerStore 抛出并记录，内存保持该次调整；重新启动读取最近成功保存的文件。单人岗位功能沿原 PlayerFeatures 范围提供，设置界面与 OwnedClubs.Command 共用该入口。旧下一季预约继续由原 SeasonStart 处理。
 
+## 退出俱乐部
+
+单人 ClubLeaveDialog 确认时读取最新 ViewData，经 ClubDeparture.Error 后调用 Leave：移交原队 → 清除真人归属、合同及相关安排 → Replenish → RefreshClub → 刷新邀请及训练预测 → AddEvent → 一次 CareerStore.Save。随后清除本页建队草稿、恢复阵容分区并 Render。取消只关闭窗口；离开页面或关闭进程后读取最近保存的归属。保存沿用原临时文件、备份和替换步骤，实际写入异常继续沿原保存入口处理；本功能没有增加独立存储或恢复机制。
+
+多人同一按钮提交 propose-leave-club，复用 CoopRules.Apply 的房主权限、在线人数、当前对局、会话版本、收据和提议规则。房主建立全队离队提议，所有参与者确认后由 ExecuteProposal 调用同一 ClubDeparture.Leave，个人钱包继续保存在各 CoopMember。命令规则在原世界副本执行；Detached 保存回调继续交给协调器，成功后沿原 Commit 检查点 → 回执 → 完整广播 → 客机检查点 → 刷新顺序完成。各 CareerClub.Transfers 随原快照持久保存。重复确认使用原收据，取消保留原俱乐部，断线恢复使用最新成功保存的检查点。
+
+验证覆盖两个真实 CoopCoordinator、内存传输、双方实际磁盘检查点、关闭并重建协调器、客机重连及再次接受合同；2人和4人的提议、取消、全员确认由规则检查覆盖。真实 Steam 跨机发送待实测。生产 CareerStore 的隔离文件保存、Read 重新读取、备份和再签约均通过；具体耗时见本地 PERFORMANCE 的退出俱乐部章节。
+
 ## 结算对阵详情
 
 单人 FinishMatch 在原赛果与同日比赛完成后调用 SettlementRecords.Capture，将 CompetitionScore.Duels 连同 SettlementRecord 写入 CareerResult；末尾沿原 CareerStore.Save 提交。多人 CoopRules.Settle 仍为各成员生成结算快照，随后沿原成员资料合并、检查点、回执和广播提交。新字段随现有 JSON 对象读取与复制，版本标识继续使用现有发布版本，比赛编号继续使用原 FixtureKey。

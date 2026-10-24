@@ -1,4 +1,4 @@
-# AI 请求、交互与记忆
+﻿# AI 请求、交互与记忆
 
 ## 随机事件流程
 
@@ -28,7 +28,7 @@ RandomEventPrompts.Compose 必须传入当前 CareerData。PlayerRecord 读取�
 
 PlayerRecord 同时通过 PrivatePublicContext.PlayerProfile 提供一次独立玩家资料，零参与者事件同样提供。PlayerProfile 与 Profiles 复用 AppendPlayerProfile、AppendAwards、AppendProfileClub、AppendStandings 和 AppendPlayerContract，读取姓名、游戏名、性别、国家、职业、参赛资格、角色卡打法与介绍、擅长角色、身份、地区、说话习惯、性格、俱乐部及岗位、国家队、世界积分、荣誉、赞助、周刊介绍和最高通关。独立段落使用故事场景称呼；公开比赛逐进阶统计和三场详细赛果继续仅用于原聊天 Profiles，事件仍使用既有五场简表。NPC的 Profiles 保留其自身经历、双方交手和当前事实，移除重复的玩家段落、玩家积分榜及合同。原聊天 Profiles 的默认输出和动态分段保持一致。
 
-独立玩家资料及简表在当前模板之后、原 Materials 之前拼接一次，归程序生成的资料。普通生成与自由行动沿 ProcessEventAsync 传入当前生涯；多人沿成员 View 读取个人资料及战绩；试写使用 test.Snapshot，材料选择后保持该副本资料。PlayerRecord 每次组织请求重新计算，未加入事件持久字段；旧事件重试直接补充当前玩家资料及战绩，原 Seed、People、Materials 和已生成正文沿原生命周期保存。玩家资料或战绩变化后下一次请求读取新值，初次与续写在模板、玩家资料、战绩和 Materials 相同时保留同一文本前缀。该补充只影响随机事件请求，其他聊天和战报入口沿原实现。
+独立玩家资料及简表在当前模板之后、原 Materials 之前拼接一次，归程序生成的资料。普通生成与自由行动沿 ProcessEventAsync 传入当前生涯；多人沿成员 View 读取个人资料及战绩；试写使用 test.Snapshot，材料选择后保持该副本资料。PlayerRecord 每次组织请求重新计算，未加入事件持久字段；旧事件重试直接补充当前玩家资料及战绩，原 Seed、People、Materials 和已生成正文沿原生命周期保存。玩家资料或战绩变化后下一次请求读取新值，初次与续写在模板、玩家资料、战绩和 Materials 相同时保留同一文本前缀。该段近期赛果用于随机事件；累计战绩与历届荣誉经 PlayerProfile 接入共用 PlayerCompetitionRecord，其他聊天和战报使用同一整理函数。
 
 战绩专项验证并入 EventParticipantChecks，合计62项；实际传输替身检查首次及试写请求携带简表，随机事件87项、途中停留33项及自由行动离线43项通过。真实诊断中的2胜0平0负、两场获胜记录仅增加158字符；五场上限、空记录、乱序日期、赛事胜负与通关分离、成员个人统计和模板/原材料复用均已检查。当前证据位于维护者本地 .artifacts/event-record-20261021；本次没有发起外部模型调用。
 
@@ -180,13 +180,81 @@ GroupChatPrompts.Compose 创建一个 CommunityMemorySearch.Request，交给各�
 
 MatchesTopic 仍要求两个非闲聊词命中。Retrieve 的词频统计仅检查查询词，但最终计分仍按原文词集合的原顺序累加，保持浮点分数和同分排序。候选、日期、人物权重、排除范围、选帖数量、回复分支与保密判断仍由原规则计算。
 
+## 玩家累计战绩与历届荣誉
+
+PrivatePublicContext.PlayerCompetitionRecord(d, honorDay) 是玩家正式比赛累计与历届荣誉的共用整理入口。输入当前玩家视图，honorDay 缺省为当前日期；返回文字，无存档副作用。总场数使用 Wins + Losses + Draws，胜率使用 Wins / 总场数，明确包含平局并标出统计日期；零场时说明尚无正式比赛记录。CircuitAwards 读取当前玩家编号对应记录，Honors 沿用原个人及合作队伍归属。按截止日期筛选，同一赛事与名次或同一荣誉合并全部赛季，赛季升序排列。
+
+AppendPlayerProfile 调用本入口一次，私聊、约会 Context 与随机事件 PlayerRecord → PlayerProfile 因而获得同一份资料；GroupChatPrompts.Compose 在成员资料中调用一次；AiService.PlayerPublicRecord 在新闻和评论上下文调用一次，写入 competitionRecord。新闻荣誉采用该批帖子的最早日期，评论采用当前日期；累计计数明确标注当前统计日期。旧 worldHonors 最近两项与顶层 honors 最近三项由完整归并结果替代，seasonHistory 维持原近期赛季范围。各入口的近期比赛与战斗详情仍沿原材料提供。
+
+每次请求只遍历荣誉并合并赛季，没有新增模型调用、保存、同步或跨请求缓存。旧存档使用原计数和荣誉列表，下一次组织请求直接生效。验证使用工作区 RecentChatRepairChecks 的 --recent-chat-repairs，覆盖五届冠军、平局、零场、日期截点、各入口共用资料及保存副本恢复。
+
 ## 单人私信完整流程
+
+普通模式的 SocialAppointments.Protocol、GroupProtocol 和 PrivateMessagePrompts.SkillProtocol 保持原协议文字。ChatTools.ActivityIntentGuidance 仅在工具模式的 send_message 总说明接入一次：玩家主动提出活动，就视为有参加意愿；人物答应后就登记活动，无须玩家再重复确认或说明具体小时。ChatTools.ActivityProtocol 从原活动协议生成工具专用文字，说明文字邀约使用邀请和编号0，接受活动附件使用接受和附件编号；工具示例标题为接受玩家活动附件中的安排。普通协议继续采用原动作字段说明和示例标题。ChatTools.OrdinaryGuidance 在工具总说明列出需要登记的各类决定、变化及结束轮日记任务，只有全部未发生时才填写空交互。ChatTools.CompletePrompt 保持本次修改前的消息结构和提交内容，约会结束轮继续使用 DateDiaries.ToolEnding。原工具中的商谈具体时刻及形式引导已移除。活动日期、参数、卡片确认、执行、保存及同步沿原入口处理，每轮模型请求和保存次数保持原实现。工具说明随每次请求构造，模板和上下文继续采用原缓存范围；没有新增长期缓存。
+
+群聊活动在 GroupInteractions.Apply 中先使用 PrivateInteractionIds.Resolve，把模型填写的短编号或完整编号转换为已有活动的内部编号，再确定所属人物。随后同一活动的重复决定沿原去重机制合并，SocialAppointments.Respond 读取同一记录。玩家卡片确认继续通过 group-offer-confirm → SocialAppointments.Confirm 完成。此修正覆盖普通和工具模式，没有新增编号或持久字段。
+
+约会结束的完整记录说明、最后提交要求、工具示例和 Interactions 字段说明共同采用 DateDiaries.ToolEnding。已有日记时仍要求整理日记，DateDiaries.Complete 更新同一 OfferId 的条目；漏交时保留旧日记并记录本轮错误。普通聊天、约会开场及中途保持各自原提交说明。ChatTools.TeachingGuidance 仅插入工具的学习交互说明，使用玩家批准的原文区分玩家与NPC：玩家接受教学、NPC担任教学者时不登记学习，NPC听取新做法、形成新理解并决定采用时按原条件登记。工具内原普通聊天无需任何标记的句子收窄为没有上述学习变化时省略skill交互，其他交互分别判断。普通 SkillProtocol 保持原文。
 
 ProcessPrivateAsync 首次构建 Context 时同时记录 ContextSpan，保存 sending 状态后将同一文本和分段传入 Compose。复用仅在该次请求内有效，跨请求重新读取资料；Compose 仍核对该轮已保存 Context，已有恢复路径保持。三个存档副本共12次完整请求对照逐字一致。294轮私聊的完整本地准备旧路径313.48/127.92/154.08/150.77毫秒，复用后68.17/82.74/78.49/79.93毫秒；后者含 Context，计时不相加，分配约22.47MB/次。首个旧路径测量还包含首次缓存建立，不能当作独立冷启动对照。
 
+### 聊天工具模式
+
+AiOptions.ChatTools 由本机 AiSettingsStore 保存，缺省false。BuildChatToolToggle 在私聊、群聊共用输入栏读取及修改这一份设置；发送、重试、重新生成及约会命令通过 ToolMode 把选择写入对应 PrivateTurn/GroupTurn。多人命令将 ToolMode 随原命令发送，房主重载自己的连接配置后仍使用该轮明确指定的模式；自动生成且没有指定模式的轮次读取执行端 AiOptions。更改按钮只影响后续请求，已经发送的请求沿原模式完成。仲裁、总结、社区及随机事件请求继续使用原协议。
+
+PrivateMessagePrompts.Compose/Context 与 GroupChatPrompts.Compose 进入 ChatTools.Enter 同步作用域。世界观、玩家模板、人物资料、帖子和评论、私聊群聊记录、总结与赛程沿原入口组织；固定交互说明转入 ChatTools.Create 返回的 tools。Describe 从原协议转换参数示例，原业务说明继续是同一来源。私聊合同交互沿用经营俱乐部、人物可招募且不在本俱乐部的条件；Context 明确通过 send_message.Interactions 的 contract 项提交合同条款。群聊保留 Actor/Target/Participants/Related/Coach，Speaker 只确定正文发言者。约会场景写入正文段落的 Scene/Emotion/Background，结束轮增加 date_diary 交互，日记规则共用 DateDiaries.Protocol。
+
+DateDiaries.Guidance 只由 Compose 在 pending.Scene.Ending=true 时添加本次完整约会记录；工具模式要求感想填写到 send_message.Replies，日记填写到 Interactions 的 date_diary 项。普通私聊、开场及中途场景均沿各自说明。ChatTools.Guidance 说明长期性格、观念和习惯变化采用 profile，并以判断依据与具体尖塔学习作区分；CompletePrompt 要求正文已经作出的各类交互决定在 Interactions 中填写。人物资料、学习、状态的判定与结算仍由原业务函数执行。
+
+ChatTools.Create 只提供 send_message，按 Reasoning、Replies、Interactions 的顺序定义三个必填字段，并设置 strict=true。Reasoning 整理本轮事实、人物反应及交互决定；Replies 是完整正文段落数组；Interactions 用 Type 选择原交互字段，没有交互填空数组。群聊段落先写 Speaker，当前约会段落先写场景资料，再写 Reply。严格格式要求每个对象的字段全部必填，原协议可省略的字段通过 anyOf 枚举字段组合，保持原省略含义。比如只调整好感时仍可只提供 Favour，态度和关系沿原值保留。ChatTools.CompletePrompt 在工具模式消息末尾追加原有固定提交说明，玩家模板与前文资料保持原顺序；群聊使用 GroupSpeech 的 Replies 说明并引用 SpeechFormat 的接话顺序规则，ActorFormat 保留交互字段条件。共同活动采用工具专用的 ChatTools.ActivityIntentGuidance，人物同意参加时按实际日期和内容登记邀请。新邀请和处理待处理附件沿各自原动作及编号规则，已赴约活动继续当前场景。
+
+RequestPrivateAsync 仅在这轮携带 ChatToolRequest 时增加 tools、thinking.type=disabled 与指定 send_message 的 tool_choice。直接连接 api.deepseek.com 时使用 /beta/chat/completions；其他已配置路由地址保持原地址。关闭工具模式继续采用原请求。每轮主回复保持一次模型请求，附件与普通聊天使用同一入口。JSON和SSE共用 Feed，按 index 累积函数名、编号和完整参数。ChatReplyStream 逐字符解析参数，跨分片保留 JSON 字符串、转义和 Unicode 状态：Reasoning 进入既有 thinking 回调与轮次 Reasoning；Replies 进入既有正文回调，群聊增加 Speaker，约会增加场景标记。人物编号晚于正文返回时暂存该段文字，获得编号后显示；完成后复核场景位置。完整返回后再将 Interactions 转为原 Directives，由 PrivateMessages.Apply、GroupInteractions.Apply、DateScenes.TaggedLines、DateDiaries.Complete 执行、显示和保存。
+
+解析接受普通 assistant content、旧独立功能工具、缺少 Interactions 的统一回复及单项参数错误。普通正文和工具正文同时存在时，先出现的正文来源负责显示，完整原返回仍记录；工具交互继续处理。工具完成原因 tool_calls 按完整响应处理。单项读取失败记录原因，正文与其他完整交互继续处理；连接中断、停止、跨天及切换存档沿既有请求取消、状态检查、失败、重试和保存入口。每轮一次主请求，工具执行后直接完成本轮。
+
+PrivateTurn/GroupTurn.ToolCalls 保存该轮原始函数名、编号与完整参数，随原生涯和多人快照提交。后续上下文读取原正文、实际交互及现有总结，原始工具参数与 Reasoning 作为查看及诊断资料保存，不额外逐轮附加。重新生成和重试清除原调用数据；清除聊天或修改NPC回复时相应清除调用数据。ChatToolRequest、ChatReplyStream 及字符串缓冲只属于当前请求，完成或失败后随调用释放，没有新增长期缓存。工具定义按模式、群聊与场景资料生成，每次请求生成一次；切换模式后可重新建立模型前缀缓存。检索材料的原顺序和范围保留，两处提示词预览显示实际工具定义。保存节点与多人流式广播继续复用原入口。
+
+诊断新增 chat.tools.request、chat.tools.response、chat.tools.applied，均调用已有 Diagnostics.Record，复用现有五份轮换文件。请求记录完整messages及tools，返回记录完整函数调用，应用记录具体轮次、解析字段及错误。trace/context关联传输，turnId关联执行；没有新增独立自动日志文件或长期内存队列。
+
+当前统一工具模式实测使用用户确认转发至官方 API 的现有连接，模型编号 deepseek。月光邮局诊断原轮次无附件约战与有附件约战各连续五次，均一次请求、两次保存回调，含完整分析说明、正文及实际约战卡片；正文100—314字符，首段1.81—3.98秒、完整3.39—5.68秒。原约会诊断三种场景循环连续五次，均完整显示分析说明和5—8段场景，完整3.14—5.58秒、两次保存回调。群聊沿原存档人物及上下文，通过 group-send 发送明确活动附件后连续五次，均三条正文、一项有效活动交互、五次保存回调、无交互错误，完整3.57—4.91秒。群聊原句仅提出今晚交流的样本，有继续询问内容并填写空交互的情况；这些资料单独保留，未算入明确活动附件的五次通过。每类五次均在同一组提示词和工具定义下执行；后续群聊专用说明调整未改变私聊和约会的请求定义。该结果说明这些样本通过，不代表所有未来回复都能正确判断交互。
+
+上述请求、完整参数和结果分别保留在本地 .artifacts/unified-reply-strict-private-final、unified-reply-strict-date-final、unified-reply-strict-group-activity-final。该组统一工具、普通正文、旧独立工具及缺少交互字段的离线回归通过；原群聊与约会诊断全文重放、原字段定义一致性、逐字符转义及Unicode解析通过；主客机协调器模拟14项通过。该组保存由回调计数，后续完整生命周期与界面证据见下段。按钮悬浮说明为开启严格工具调用及使用API允许的强制工具调用，其余文字保留，包括已测试DeepSeek官方API、其他渠道可用性未知。
+
+完整入口回归由工作区 NationalSpire.Tests/ToolModeCoverageChecks.cs 的 --tool-mode-coverage 执行，离线235项覆盖私聊和群聊的开关、发送、重新生成、失败重试、纯附件、主动联系、停止及重试，12类交互在两种聊天中的逐字参数转换，以及约会开场、中途、暂停继续、失败修订、结束失败重试、重复结束、结束后重新生成。保存回调将完整副本写入测试文件并反序列化核对；测试项目链接生产源码并使用存储替身。只传输原协议的六类请求核对 tools、tool_choice、thinking 均未注入；完整调用关系另经源码核对，覆盖仲裁、总结、形象设计、随机事件及试写。
+
+最终提示词的真实 DeepSeek 验证保留在本地 .artifacts/tool-mode-dates-final 与 tool-mode-all-final。约会连续5次完整流程，每次开场、中途、暂停继续、结束各一次请求、共8次保存回调，结束感想110—160字符，日记内容与地点完整，只有结束轮包含日记要求。五次全流程耗时16704.61/16680.65/15813.01/13839.28/15054.13毫秒，包含网络、模型和测试文件读写。另有17次原请求重放验证赠礼接受和拒绝、约战、发帖、合同、训练、阵容、水平、状态与人物资料；其中人物资料连续5次经 PrivateMessages.Apply 写入并检查字段值，再保存及读取副本。普通安慰样本未形成状态变化，空交互单独记录。私聊、群聊各3次关系询问、活动邀约、解除誓约经过实际命令和处理器；活动及解除誓约均登记，原有关系未改变的询问保持空交互。该组共23次真实请求；原请求重放除人物资料外核对模型与解析结果，其他业务规则由原253项交互测试覆盖。
+
+NationalSpire.MultiplayerTests/ToolLifecycleUiChecks.cs 的 --production-ui --tool-lifecycle-ui 使用真实生产程序集和 Godot 控件、隔离用户目录，重放真实模型结束回复。15项检查覆盖两处悬浮文字、私聊群聊共享开关、设置清除内存后从文件恢复、两种提示词预览、赴约、场景发送、模拟结束连接失败、原界面重试、感想和日记显示；4次请求、13次保存回调，截图保留在本地 .artifacts/tool-mode-production-ui。该保存使用 ExternalSave 写测试文件，不包含正式 CareerStore 备份链；真实Steam多人及游戏内实际网络故障未实测。主客机协调器工具模拟14项、群聊1746项及模型返回兼容46项通过。
+
+最终增量分片性能保留在本地 .artifacts/tool-unified-complete/offline-performance.json：1000字符61片三次0.7243/0.6981/0.6577毫秒，分配329104/320944/310600字节；300000字符18001片三次125.9346/128.4647/121.4367毫秒，分配50630360/45376976/45376976字节。测量包含工具构造、模拟分片编码、增量处理及全文解析。18项命令处理包含测试文件序列化、写入和反序列化，首次370.31毫秒，再次134.38—243.46毫秒；首次含初始化，不能当作群聊上下文单项性能。该次修改增加固定说明文本，工具构造、请求数、保存和广播入口维持原路径。
+
+本地分片处理包含工具定义构造、模拟JSON分片创建、增量读取及最终全文解析，1000字符三次0.746/0.762/0.695毫秒，分配328784/320624/310280字节；300000字符18001片三次134.69/145.07/113.63毫秒，分配50635288/45376656/45376656字节。这里含JSON编码后的网络分片对象分配，不等于游戏常驻占用或单帧成本。约会无网络全文重放首次140.20毫秒、再次5.14/7.43/3.80/2.92毫秒，首次含上下文和解析初始化。含服务等待的完整请求与本地步骤分别记录，嵌套耗时不累加。请求内字符串随本轮完成释放；完整调用参数沿原聊天保存与清理机制保留，自动诊断沿已有五份轮换入口保存。
+
+旧版独立功能工具模式的模型实测使用当时存档副本、月光邮局原旅行邀约、玩家修改后的模板和当前连接的deepseek。两次关闭中一次缺少交互，两次开启均生成活动确认卡片；另一次11人群聊工具邀约登记成功。完整私聊本地准备24.26/39.19/28.51/19.65毫秒（依次关闭/开启/关闭/开启）；11人、1646名人物、120篇帖子群聊准备60.38毫秒、分配约21.0MB。服务等待单列为5.0至8.0秒。另有两次复用原轮次上下文的对照，关闭均遗漏、开启均登记；这组不作为新鲜上下文的耗时依据。真实Godot鼠标操作核对共享按钮、悬浮说明和1600×1000/1280×800布局。模拟主客机协调器验证模式传递、正文回传、交互归属及保存同步；真实Steam多人未实测。完整请求与回包保留在本地 .artifacts/chat-tools-20261024-final，界面证据位于 .artifacts/chat-tools-ui。
+
+旧版独立功能工具模式的补充模型实测位于本地 .artifacts/chat-tools-other-interactions-20261024：使用上述同一存档副本、当前模板和deepseek，共15次请求，均有可显示正文。私聊赠礼接受扣除2件、拒绝保留原3件；私聊及11人群聊约战生成待确认卡片，代发帖生成待确认草稿，群聊赠礼归属月光邮局并扣除2件。训练登记一周计划，阵容调整登记下赛季待生效请求，合同登记完整报价，均经原业务入口执行且没有交互错误。教学、持续习惯变化各测试2次，各有1次正文明确表示采纳而未调用工具，另1次分别实际记录学习和档案变化；工具模式仍有偶发遗漏。安慰场景回复仍表达担忧，没有状态工具，不能据此断言状态交互遗漏。参数核对另发现4次调用省略Reply、1次群聊赠礼多填Target；这些样本均有正常正文并正常结算。PowerShell反射驱动首次准备276.11/301.46毫秒，其余43.27至155.77毫秒，含宿主及首次调用开销，与前述C#驱动测量条件不同；服务等待2.53至10.49秒。测试未修改真实生涯、全局设置及实现源码，样本数不代表长期成功率；本轮没有实测誓约解除、约会场景及结束日记的模型调用。
+
+群聊人物标题回归位于本地 .artifacts/group-speaker-robustness-20261024。诊断包190554中的三次完整响应逐字重放，经 ProcessGroupAsync、原交互执行与完成保存回调，均保留全部5条发言；另一次连接提前结束保留原传输失败处理。诊断原请求的13条消息仅替换固定正文格式说明，12项工具定义与原记录逐项相同，重新调用deepseek两次均显示5条发言，分别登记1项、2项工具，Error与Notices为空；总耗时13.86/22.03秒，每轮一次请求、7次保存回调。测试保存回调仅计数，未改写正式存档；本次未启动真实游戏或Steam多人。
+
+该存档包含1596名人物、7篇帖子、6名群成员与1轮群聊。无网络的三次完整响应重放耗时134.37/5.81/21.32毫秒，分配5059680/3163584/2795144字节，每次7次保存回调；首项包含首次上下文与解析初始化。解析器已初始化后的404字符逐字解析为0.0389/0.0348毫秒、各分配25616字节；40499字符及500条发言为2.31/2.36毫秒、各分配2496944字节。完整响应重放与单独解析是不同测量，耗时不相加。标题检查覆盖22种写法及任意两段、逐字分片，普通正文编号引用、普通括号及未闭合的中文括号继续显示。群聊本地回归1747项、普通模式主客机模拟13项、工具模式主客机模拟14项通过。
+
+统一工具模式的随机对照保留在本地 .artifacts/tool-mode-random-20261024。ToolModeCoverageChecks 的 random 模式以固定种子20261024抽取文案并打乱顺序，私聊、单NPC群聊分别覆盖文字活动邀约、代发帖、长期判断习惯、普通闲聊、词义询问和未采纳的错误打法假设，共12次真实DeepSeek请求，另保留首次发现问题的1次请求。全部复用完整生产提示词、命令、处理器与原业务执行；保存回调写入隔离文件，反序列化后逐项核对人物状态与群聊交互会话。代发帖2次建立待确认草稿，长期习惯2次实际写入判断依据。6次对照均未登记活动、帖子、学习、状态或人物档案变化；其中1次按原关系规则将好感从7更新到10。文字活动邀约2次均错误填写接受及编号0，私聊Error或群聊Notices记录缺少活动附件编号，实际没有建立活动；另一次首次请求同样失败，因此该项仍未通过。完整12次请求合计42620.19毫秒，包含服务等待与文件保存，逐次2304.92—4681.32毫秒；37次保存回调合计613.21毫秒，逐场景25.08—72.04毫秒、累计线程分配20.71—53.66MB，包含完整测试存档序列化及文件写入，与生产上下文单项性能不同。本轮测试未启动游戏、Godot或真实Steam多人，正式提示词与玩家存档未修改。
+
+活动说明统一来自 SocialAppointments.Protocol，普通私聊、普通群聊、附件说明及 ChatTools.Features/Describe 均复用；说明区分文字新提议的邀请和附件安排的接受。PrivateAppointments.Respond 对比赛约战已有接受且没有本轮约战请求时改为邀请的处理，两种输出模式经原 PrivateMessages.Apply 或 GroupInteractions.Apply 进入该函数，转换继续生效。生活活动统一通过 SocialAppointments.Respond：完成日期换算、已有活动编号解析及附件匹配后，接受动作的 Id 为空或0且没有匹配到已有活动或附件时，将本次局部 action 改为邀请，沿原创建流程建立待确认活动。有效附件、已有活动、其他无效编号、改期和取消继续使用原处理。原字段字典、模型返回及已保存旧轮次保持原内容；转换在每次执行该交互时生效，重新生成、保存及多人广播仍由原调用者完成。
+
+只调整活动说明的真实模型验证位于本地 .artifacts/tool-activity-clarification-20261024。工具模式下，私聊和单NPC群聊的文字邀约、活动附件接受各5次；另有普通模式对应4次，共24次。工具群聊文字邀约5次生成待确认活动，两种工具聊天的附件接受各5次生成已确认活动；工具私聊文字邀约1次生成待确认活动，4次错误填写接受和编号0。普通私聊两次、普通群聊附件一次通过，普通群聊文字邀约同样填写接受和编号0，活动未建立。当时实际通过19/24，失败5次均有Error或Notices；没有其他功能交互。这组记录用于保留共用执行入口修复前的失败依据。
+
+执行入口修复后的验证位于本地 .artifacts/activity-conversion-final-20261024：ToolModeCoverageChecks.ActivityCompatibility 将上述5条原始失败返回经真实命令及Process处理器重放，全部建立待确认活动；另有36种私聊/群聊、普通/工具模式组合检查空编号、0、其他无效编号、有效附件、0编号唯一附件匹配、已有活动、改期、取消及空交互，均符合各自原有处理或本次转换。ActivityInteractions 再调用真实DeepSeek24次，工具模式四种组合各连续5次、普通模式四种组合各1次，全部有正文、正确活动状态、相同日期和参与者、保存及反序列化后相同活动；新文字邀请保持待确认，接受有效附件为已确认。没有额外功能交互。测试共116项检查通过；原群聊回归1748项及模拟主客机传输13项通过。本轮使用单NPC群聊及存储替身写隔离文件，未启动真实游戏、Godot或Steam多人。
+
+修复后真实请求合计74863.73毫秒，逐次2423.31—4491.14毫秒，含模型、网络及测试保存；65次保存回调合计946.58毫秒，逐场景保存累计分配20.73—53.93MB，包含完整测试存档序列化。已完成前置重放后，Respond 独立测量正常0条活动五次0.0298/0.0257/0.0296/0.0330/0.0298毫秒、各1288字节；2000条未编号既有活动五次71.8002/77.9157/70.4493/69.2038/73.6678毫秒、601472/592200/592200/592200/592200字节，包含原Ensure建立编号及全部原活动检查。这里不是进程冷启动性能；独立步骤与完整请求嵌套，耗时不相加。转换只增加一次固定条件判断，每条交互执行一次，沿用原集合、保存次数、同步入口及缓存规则。
+
 ### 场景、关系与公历协议
 
-专属约会由 dm-date-open/dm-send 发起，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。请求末尾附加 DateScenes.Guidance，包括已审阅的 Scene/Emotion/Background 格式及该次真实素材编号。PrivateStreamParser 记录 SceneCues；完成后 TaggedLines 生成显示元数据，原 Reply 保留正文。回复成功沿原解析与请求状态判断。结束约会的 dm-date-end → DateScenes.Leave 更新场景和婚礼状态，DateDiaries.Begin 建立当次条目，PrivateMessages.Enqueue 将结束感想作为隐藏系统事件排入原私聊队列。当前场景仍在生成时先取消旧请求，结束轮通过 queueAfterCurrent 留在其后；原请求 finally 再启动排队轮。单人 PrivateCommand 和多人 StartPrivate 都将 dm-date-end 交给同一处理器。重复结束读取 ended 状态，排队次数保持一次。
+专属约会由 dm-date-open/dm-send 发起，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。普通模式在请求末尾附加 DateScenes.Guidance，保留 Scene/Emotion/Background 括号格式及该次真实素材编号。工具模式由 ChatTools.Create 调用 Guidance(scene, tools: true)，从同一 Protocol 转换场景输出说明：每段在 send_message.Replies 中填写 Scene/Emotion/Background/Reply，场景资料与叙述规则沿用同一来源。PrivateStreamParser 记录 SceneCues；完成后 TaggedLines 生成显示元数据，原 Reply 保留正文。回复成功沿原解析与请求状态判断。结束约会的 dm-date-end → DateScenes.Leave 更新场景和婚礼状态，DateDiaries.Begin 建立当次条目，PrivateMessages.Enqueue 将结束感想作为隐藏系统事件排入原私聊队列。当前场景仍在生成时先取消旧请求，结束轮通过 queueAfterCurrent 留在其后；原请求 finally 再启动排队轮。单人 PrivateCommand 和多人 StartPrivate 都将 dm-date-end 交给同一处理器。重复结束读取 ended 状态，排队次数保持一次。
+
+ProcessPrivateAsync 只对 Scene.Ending=false 的当前约会启用 PrivateStreamParser.SceneJson。正文中完整的场景 JSON 对象可包含 Scene/Emotion/Background 及可选 Reply；Scene 为 dialogue 或 narration，三个场景字段均为字符串，其余普通 JSON 保留原文。ReadSceneJson 将对象转成同一 SceneCues，并将 Reply 写入可见正文，随后紧跟的文字继续使用该场景。流式状态记录括号深度、字符串和转义，跨分片保持；未完成 JSON 在 Finish 时恢复原文。普通私聊、群聊和结束日记沿原解析路径。该处理只改变显示资料，不新增交互、网络请求、保存节点或自动日志；缓冲随本轮解析器释放，完整正文和场景行沿原 PrivateTurn 保存、同步和重试机制管理。工具模式和普通模式约会都可读取这种场景对象。
+
+旧版独立功能工具模式的约会回归位于本地 .artifacts/date-tool-repair-20261024-live，复用测试入口 --date-tool-checks。193454 诊断包的三轮原始回复经过 dm-regenerate、ProcessPrivateAsync、交互执行及两次保存回调重放：开场台词与旁白、第二轮纯旁白及第三轮正文前的场景 JSON 均恢复对应显示资料，第三轮保留完整台词。仅替换 scene 工具说明，将原始请求的全部消息与其他11项工具逐项保留，deepseek 实测三轮均调用 scene、显示正文、完成状态且 Error 为空；分别3/5/3段，表情与背景进入原显示资料。每轮一次请求、两次保存回调，完整耗时8616.11/4258.10/4995.10毫秒，分配7169024/3715232/4098928字节；耗时含服务等待，不作为本地性能。无网络三轮完整重放164.88/6.05/9.52毫秒，分配3452320/2175896/1657520字节，首次含初始化。216字符逐字解析首次0.06毫秒、再次0.03毫秒，各分配17152字节；216000字符含2000项场景对象，16.90/16.52毫秒、各分配15373088字节。保存回调仅计数，正式生涯和设置保持原文件。分片、普通 JSON、未完成文本、普通模式逐字说明及原交互解析均通过，模型返回兼容46项、交互规则253项通过。真实 Godot 画面、真实磁盘保存与 Steam 多人本轮未实测。
 
 结束轮 Compose 改用 DateDiaries.Guidance，传入本次约会全部已完成轮次，一次模型调用同时输出普通私聊感想与隐藏 DateDiary/Location。PrivateStreamParser 分离标记，PrivateMessages.Apply 沿原交互规则处理，DateDiaries.Complete 保存日记和地点，再沿原完成保存回调提交。Location 位于标记闭合括号之后或日记末尾的明确地点字段也可提取，普通感想显示时移除字段。缺少日记标记保留感想并提示，玩家可沿原重新生成重试；自动总结仍按原条件执行，日记功能没有单独再调用第二次模型。普通请求沿原聊天、自动总结与公开材料组织，不附加 DateDiaries 列表。
 
@@ -279,6 +347,8 @@ CardKnowledge.Find 分别由 PrivateMessagePrompts.Compose、GroupChatPrompts.Co
 | GroupInteractions | Actor / Target / Participants / Related 与标记 | 解析真实成员，按人物方向建立 Lane，复用私信规则 | 卡片、关系、训练、活动、发帖等 |
 | PrivateMessages.Apply | 有效轮次、标记及原好感 | 合同/约战提案、关系、学习、状态、资料、训练与活动规则结果 | 保存、卡片、记忆、回退 |
 | 各业务规则 | 人物、日期、附件、合同、席位、资金等 | 成功状态或原因；有的提案等待玩家确认 | 不因正文“同意了”而自动成功 |
+
+GroupStreamParser 是生成处理和 GroupChatScreen 实时显示共用的人物标题入口。标准 [Speaker: p2] 沿原路径识别；行首或缩进后的简写兼容编号与姓名换位、Speaker/发言人/说话人/人物/角色标签、大小写、中英文冒号，以及方括号、中文方括号和圆括号。裸写 Speaker: p2 后换行、p2：正文也进入同一编号提取函数。简写要求标题中有一个明确的p编号；普通括号、简写标题中的多个编号及正文中间的[p3]引用按原正文保留。编号归属仍由群成员表及 SpeechUnavailable 核对。解析器仅保留当前未结束标题和本轮已有消息；换行或完整标题结束后释放标题内容，静态正则与标签表复用，未新增跨请求缓存或自动日志。
 
 当前无附件的约战“接受”按既有统一处理转换为邀请；有附件时核对该请求。邀请与接受仍需玩家确认后进入正式赛程。已经过期的邀约日期仍由规则拒绝并显示原因，不直接通过。
 

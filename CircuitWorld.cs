@@ -115,7 +115,12 @@ public static class CircuitWorld
     {
         if (ClubCoaching.PlayerReserve(d) || c.PlayerEntered || !c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)) return;
         c.PlayerReplacedId = roster.Contains("player") ? "" : roster[0];
-        if (c.PlayerReplacedId.Length > 0) Replace(d, c, c.PlayerReplacedId, "player");
+        if (c.PlayerReplacedId.Length > 0)
+        {
+            if (c.Fixtures.Any(f => f.Finished))
+                OwnedClubSchedule.RefreshRoster(d, c, d.Esports.ClubId, roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList());
+            else Replace(d, c, c.PlayerReplacedId, "player");
+        }
         c.PlayerEntered = true; d.Standings = c.Table; SchedulePlayer(d, c);
     }
     public static void LeavePreseason(CareerData d)

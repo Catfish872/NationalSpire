@@ -326,10 +326,11 @@ public static partial class CoopRules
                     if (sender != w.Owner) { error = "团队安排由房主操作。"; break; }
                     if (w.Proposal != null) { error = "请先完成或取消当前提议。"; break; }
                     string kind = command.Kind[8..];
-                    if (kind is not ("advance" or "register" or "club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
+                    if (kind is not ("advance" or "register" or "club" or "leave-club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
+                    if (kind == "leave-club" && ClubDeparture.Error(w.World) is { } departureError) { error = departureError; break; }
                     if (kind == "resume" && w.Run?.Phase != "paused") { error = "正在连接比赛，请等待连接完成。"; break; }
                     var proposal = new CoopProposal { Kind = kind, Target = command.Target, Number = command.Number, Votes = [sender], Participants = online.ToHashSet(), Label = ProposalLabel(w, kind, command.Target, command.Number) };
-                    if (kind is "start" or "resume" or "simulate") w.Proposal = proposal;
+                    if (kind is "start" or "resume" or "simulate" or "leave-club") w.Proposal = proposal;
                     else error = ExecuteProposal(w, proposal, characters);
                     break;
             }
@@ -361,13 +362,14 @@ public static partial class CoopRules
         "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
         "simulate" => "模拟 " + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到{GameCalendar.Text(w.World, number)}", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
-        "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
+        "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "leave-club" => "全队退出 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
     };
     private static string? ExecuteProposal(CoopWorld w, CoopProposal p, IReadOnlySet<string> characters)
     {
         var d = w.World;
         switch (p.Kind)
         {
+            case "leave-club": return ClubDeparture.Leave(d);
             case "dm-match": return ConfirmPrivateMatch(w, p);
             case "enter":
                 w.CareerStarted = true; w.EntrySequence++; return null;

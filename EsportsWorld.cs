@@ -469,6 +469,11 @@ public static class EsportsWorld
             d.Esports.Offers.Add(CareerCommerce.Quote(d, club));
         }
     }
+    public static void RefreshClubOffers(CareerData d)
+    {
+        d.Esports.Offers.RemoveAll(o => o.ExpiresDay < d.Day);
+        if (d.Esports.License >= 3) MakeOffers(d, false);
+    }
     public static string? AcceptOffer(CareerData d, ClubOffer offer)
     {
         if (OwnedClubs.IsOwner(d)) return "你正在经营自己的俱乐部。";

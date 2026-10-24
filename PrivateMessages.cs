@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace NationalSpire;
@@ -196,7 +197,7 @@ public static class PrivateMessages
         if (command.Text.Length > 16000) return "内容最多 16000 字。";
         if (kind == "dm-clear")
         {
-            foreach (var t in c.Turns) { t.User = t.Reply = t.Context = t.Reasoning = ""; t.UserDeleted = t.ReplyDeleted = true; t.Attachments.Clear(); t.Request = null; }
+            foreach (var t in c.Turns) { t.User = t.Reply = t.Context = t.Reasoning = ""; t.UserDeleted = t.ReplyDeleted = true; t.ToolCalls.Clear(); t.Attachments.Clear(); t.Request = null; }
             c.ContextStart = c.Turns.Count; c.SeenCount = c.Turns.Count(t => t.Status == "complete");
         }
         else if (kind is "dm-summary-edit" or "dm-summary-delete")
@@ -220,7 +221,7 @@ public static class PrivateMessages
             bool user = command.Part == "user", delete = kind == "dm-delete";
             if (!delete && string.IsNullOrWhiteSpace(command.Text)) return "消息不能为空。";
             if (user) { t.User = delete ? "" : command.Text.Trim(); t.UserDeleted = delete; if (delete) { t.Attachments.Clear(); t.Request = null; } }
-            else { t.Reply = delete ? "" : command.Text.Trim(); t.ReplyDeleted = delete; t.Reasoning = ""; }
+            else { t.Reply = delete ? "" : command.Text.Trim(); t.ReplyDeleted = delete; t.Reasoning = ""; t.ToolCalls.Clear(); }
             t.Context = "";
         }
         RemoveDeletedOffers(c);
@@ -354,6 +355,8 @@ public sealed class PrivateStreamParser
     public PrivateStreamParser(params string[] extraFields) => _extraFields = extraFields;
     private readonly StringBuilder _visible = new(), _pending = new();
     private int _depth;
+    private bool _json, _quoted, _escaped;
+    public bool SceneJson { get; init; }
     public string Text => _visible.ToString();
     public List<Dictionary<string, string>> Directives { get; } = [];
     public List<(int Offset, Dictionary<string, string> Fields)> SceneCues { get; } = [];
@@ -363,8 +366,30 @@ public sealed class PrivateStreamParser
     {
         foreach (char ch in text)
         {
-            if (_pending.Length == 0) { if (ch == '[') { _pending.Append(ch); _depth = 1; } else _visible.Append(ch); continue; }
+            if (_pending.Length == 0)
+            {
+                if (ch == '[' || SceneJson && ch == '{') { _pending.Append(ch); _depth = 1; _json = ch == '{'; }
+                else _visible.Append(ch);
+                continue;
+            }
             _pending.Append(ch);
+            if (_json)
+            {
+                if (_quoted)
+                {
+                    if (_escaped) _escaped = false;
+                    else if (ch == '\\') _escaped = true;
+                    else if (ch == '"') _quoted = false;
+                }
+                else if (ch == '"') _quoted = true;
+                else if (ch == '{') _depth++;
+                else if (ch == '}' && --_depth == 0)
+                {
+                    string json = _pending.ToString(); _pending.Clear(); _json = false;
+                    if (!ReadSceneJson(json)) _visible.Append(json);
+                }
+                continue;
+            }
             if (ch == '[') _depth++;
             if (ch != ']' || --_depth != 0) continue;
             string block = _pending.ToString(); _pending.Clear();
@@ -392,13 +417,33 @@ public sealed class PrivateStreamParser
             else Error = "交互格式不完整，未执行。";
         }
     }
+    private bool ReadSceneJson(string text)
+    {
+        try
+        {
+            using var json = JsonDocument.Parse(text);
+            var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var p in json.RootElement.EnumerateObject())
+            {
+                if (p.Value.ValueKind != JsonValueKind.String || !new[] { "Scene", "Emotion", "Background", "Reply" }.Contains(p.Name, StringComparer.OrdinalIgnoreCase)
+                    || !fields.TryAdd(p.Name, p.Value.GetString()!)) return false;
+            }
+            if (!fields.TryGetValue("Scene", out var kind) || kind is not ("dialogue" or "narration") || !fields.ContainsKey("Emotion") || !fields.ContainsKey("Background")) return false;
+            fields.Remove("Reply", out string? reply);
+            SceneCues.Add((_visible.Length, fields));
+            if (reply != null) _visible.Append(reply);
+            return true;
+        }
+        catch (JsonException) { return false; }
+    }
     public void Finish()
     {
         if (_pending.Length == 0) return;
-        if (Known(_pending.ToString())) Error = "交互标记没有结束，未执行。";
+        if (!_json && Known(_pending.ToString())) Error = "交互标记没有结束，未执行。";
         else _visible.Append(_pending);
         _pending.Clear();
         _depth = 0;
+        _json = _quoted = _escaped = false;
     }
     private static IEnumerable<string> Segments(string text)
     {

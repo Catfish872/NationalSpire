@@ -297,6 +297,7 @@ public sealed class AiOptions : System.Text.Json.Serialization.IJsonOnDeserializ
 {
     public Dictionary<string, AiConnectionProfile> ConnectionProfiles { get; set; } = new();
     public Dictionary<string, string> TaskProfiles { get; set; } = new();
+    public bool ChatTools { get; set; }
     public int PrivatePromptVersion { get; set; }
     public Dictionary<string, Dictionary<string, List<EventPoolEntry>>> EventPoolOverrides { get; set; } = new();
     public string PromptTemplate { get; set; } = PromptLibrary.DefaultTemplate;

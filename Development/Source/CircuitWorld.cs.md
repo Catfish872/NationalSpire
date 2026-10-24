@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EED8D43AF50646C25B4BC1404C12BFA7B00DD12DDE05DD4B9343F80594AF1A7F`。来源：[源码](../../CircuitWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`23868860CB880A49195E2EDD39681AC5506670398E706073C78A773889F0AAAE`。来源：[源码](../../CircuitWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -291,16 +291,20 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 **调用者：** [`NationalSpire.CircuitWorld.AutoEntry(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-43c8211433d7)；[`NationalSpire.OwnedClubSchedule.Rebuild(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](OwnedClubSchedule.cs.md#symbol-def76591afef)
 
-**调用：** [`NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string)`](CircuitWorld.cs.md#symbol-5de3ffb44c8c)；[`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-bf4a0401a0ec)；[`NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c5c2fb20bef5)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string)`](CircuitWorld.cs.md#symbol-5de3ffb44c8c)；[`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-bf4a0401a0ec)；[`NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-c5c2fb20bef5)；[`NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-6dd76ce51c51)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Standings`；`NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string)`；`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`；`NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.WorldCompetition.PlayerEntered`；`NationalSpire.WorldCompetition.PlayerReplacedId`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.Table`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Standings`；`NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string)`；`NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`；`NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.PlayerEntered`；`NationalSpire.WorldCompetition.PlayerReplacedId`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.Table`；`NationalSpire.WorldFixture.Finished`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string)`；输入表达式：`Replace(d, c, c.PlayerReplacedId, "player")`；返回值紧邻使用处：`ExpressionStatementSyntax: Replace(d, c, c.PlayerReplacedId, "player");`
 - `NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition)`；输入表达式：`SchedulePlayer(d, c)`；返回值紧邻使用处：`ExpressionStatementSyntax: SchedulePlayer(d, c);`
 - `NationalSpire.ClubCoaching.PlayerReserve(NationalSpire.CareerData)`；输入表达式：`ClubCoaching.PlayerReserve(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: ClubCoaching.PlayerReserve(d) || c.PlayerEntered`
+- `NationalSpire.OwnedClubSchedule.RefreshRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`；输入表达式：`OwnedClubSchedule.RefreshRoster(d, c, d.Esports.ClubId, roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList())`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubSchedule.RefreshRoster(d, c, d.Esports.ClubId, roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList());`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !c.Rosters.TryGetValue(d.Esports.ClubId, out var roster)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Any(f => f.Finished)`；返回值紧邻使用处：`IfStatementSyntax: if (c.Fixtures.Any(f => f.Finished))                  OwnedClubSchedule.RefreshRoster(d, c, d.Esports.ClubId, roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList());              else Replace(d, c, c.PlayerReplacedId, "player");`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`roster.Select(id => id == c.PlayerReplacedId ? "player" : id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList()`；返回值紧邻使用处：`ArgumentSyntax: roster.Select(id => id == c.PlayerReplacedId ? "player" : id).ToList()`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`roster.Contains("player")`；返回值紧邻使用处：`ConditionalExpressionSyntax: roster.Contains("player") ? "" : roster[0]`
 
 **赋值（含属性/字段和局部值）：**
@@ -313,7 +317,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.LeavePreseason(NationalSpire.CareerData) — public static void LeavePreseason(CareerData d)`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.OwnedClubs.CreateCore(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-21d1184d2591)
 
@@ -338,7 +342,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.Snapshot(NationalSpire.CareerData, NationalSpire.WorldCompetition) — private static void Snapshot(CareerData d, WorldCompetition c)`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)
 
@@ -376,7 +380,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.Replace(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string) — private static void Replace(CareerData d, WorldCompetition c, string oldId, string newId)`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.EnrollLeague(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-8744d18514f7)；[`NationalSpire.CircuitWorld.LeavePreseason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-713aae182e5e)
 
@@ -406,7 +410,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int) — private static int DayOf(WorldCompetition c, int round)`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.AddRound(NationalSpire.WorldCompetition, System.Collections.Generic.List<string>, int)`](CircuitWorld.cs.md#symbol-a8864822cc92)
 
@@ -424,7 +428,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.AddTie(NationalSpire.WorldCompetition, string, string, int, int) — private static void AddTie(WorldCompetition c, string home, string away, int round, int day)`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.AddRound(NationalSpire.WorldCompetition, System.Collections.Generic.List<string>, int)`](CircuitWorld.cs.md#symbol-a8864822cc92)；[`NationalSpire.CircuitWorld.BuildLeague(NationalSpire.CareerData, string, string)`](CircuitWorld.cs.md#symbol-a4180110ef1d)
 
@@ -457,7 +461,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.AddRound(NationalSpire.WorldCompetition, System.Collections.Generic.List<string>, int) — private static void AddRound(WorldCompetition c, List<string> entrants, int round)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.AdvanceCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition, int, bool)`](CircuitWorld.cs.md#symbol-0318d361b72c)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)
 
@@ -478,7 +482,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.SchedulePlayer(NationalSpire.CareerData, NationalSpire.WorldCompetition) — public static void SchedulePlayer(CareerData d, WorldCompetition c)`
 
-来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitWorld.AdvanceCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition, int, bool)`](CircuitWorld.cs.md#symbol-0318d361b72c)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.CircuitWorld.EnrollLeague(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-8744d18514f7)；[`NationalSpire.CircuitWorld.UpdatePlayerMatches(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IReadOnlySet<string>)`](CircuitWorld.cs.md#symbol-550cd6bd9364)；[`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-6b77d7c9e9bf)
 
@@ -515,9 +519,9 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.ActiveTie(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.WorldFixture>) — internal static bool ActiveTie(CareerData d, IEnumerable<WorldFixture> tie)`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.PlayerPositionTiming(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-f0ca76b12647)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)
+**调用者：** [`NationalSpire.ClubDeparture.Error(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-6a8d833b4197)；[`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.PlayerPositionTiming(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-f0ca76b12647)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -535,7 +539,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.UpdatePlayerMatches(NationalSpire.CareerData, NationalSpire.WorldCompetition, System.Collections.Generic.IReadOnlySet<string>) — internal static void UpdatePlayerMatches(CareerData d, WorldCompetition c, IReadOnlySet<string> changed)`
 
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueRosterRepair.Apply(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](LeagueRosterRepair.cs.md#symbol-fdba5c7c50e5)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)
 
@@ -557,7 +561,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.AdvanceCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition, int, bool) — public static void AdvanceCompetition(CareerData d, WorldCompetition c, int day, bool publish)`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -602,7 +606,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool) — public static void CreateFinals(CareerData d, bool publish)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -750,7 +754,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.ReplayTie(NationalSpire.CareerData, NationalSpire.CareerMatch) — public static bool ReplayTie(CareerData d, CareerMatch m)`
 
-来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)
 
@@ -780,7 +784,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.CooperativeRoster(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string) — public static List<CareerPerson> CooperativeRoster(CareerData d, WorldCompetition? c, string leaderId, string seed)`
 
-来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 298 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerAudience.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](CareerAudience.cs.md#symbol-889a215412c7)；[`NationalSpire.CircuitWorld.CooperativePerformance(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string, int?)`](CircuitWorld.cs.md#symbol-72dc5f2576da)；[`NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`](CommentatorSelection.cs.md#symbol-e47ee769b462)；[`NationalSpire.Coop.CoopRules.Opponents(NationalSpire.Coop.CoopWorld, NationalSpire.CareerMatch)`](Coop/CoopRules.cs.md#symbol-ddfb352cda97)；[`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)；[`NationalSpire.MatchRules.TeamChance(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string, int, int)`](MatchRules.cs.md#symbol-bd837370982f)；[`NationalSpire.SeasonCeremony.Participants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`](SeasonCeremony.cs.md#symbol-c038c48114b1)
 
@@ -827,7 +831,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.EnsureHumanRosters(NationalSpire.CareerData) — public static void EnsureHumanRosters(CareerData d)`
 
-来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 313 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.SetParticipants(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>)`](Coop/CoopParticipants.cs.md#symbol-bc80580d2b20)
 
@@ -857,7 +861,7 @@ public static readonly int[] LeagueDays = [10, 12, 14, 16, 18];
 
 ## `NationalSpire.CircuitWorld.CooperativePerformance(NationalSpire.CareerData, NationalSpire.WorldCompetition?, string, string, int?) — public static CareerPerson CooperativePerformance(CareerData d, WorldCompetition? c, string id, string seed, int? day = null)`
 
-来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 325 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MatchRules.Simulate(NationalSpire.CareerData, string, int, string, int?, bool, NationalSpire.WorldCompetition?, string?)`](MatchRules.cs.md#symbol-8fd1cedc82b2)
 

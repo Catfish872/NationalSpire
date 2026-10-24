@@ -315,6 +315,18 @@ SetPlayerPosition 调用 UpdateLineup(playerPositionChanged:true)，复用 SetLi
 
 该操作更新一次岗位，遍历当前赛季尚在进行的本队赛事，按组更新 Fixture，刷新训练预测后调用一次 CareerStore.Save。名单、分组和参赛者集合只在当前操作存在，原比赛编号、种子和日期继续使用。离开页面与读档使用保存后的名单；旧 PlayerPositionSeason 预约继续在 SeasonStart 到期执行，新确认的当季操作替换原预约。此入口沿用单人自建俱乐部范围。PlayerPositionChecks 覆盖144项，实际Godot界面和隔离磁盘保存见 PERFORMANCE 中当季首发与决赛主动联系章节。
 
+### 退出俱乐部
+
+普通俱乐部从赛事与俱乐部的俱乐部页面，在合同与转会的当前合同卡片点击退出俱乐部。自建俱乐部在教练与席位卡片中，与退出首发或恢复首发并排显示退出俱乐部；多人界面由房主操作。两处共用 ClubLeaveDialog 和 ClubDeparture.Leave。普通确认文案为退出后可能无法再次加入同俱乐部，是否确认；经营者确认文案增加永久失去俱乐部管理权，其中永久失去使用红色加粗。取消只关闭窗口。
+
+ClubDeparture.Error 检查当前归属、待完成比赛、失败待选择及本队已开打的同组对阵。完成这些比赛后可离队。Leave 清除本人及联机队友的俱乐部归属和岗位、当前合同、正在进行的原队教练训练，以及涉及真人的待生效席位申请。个人资金、商品、关系和正式成绩保留。经营者离开时，原俱乐部沿 CareerCommerce.ConfigureClub 转为普通 AI 经营，保留名称、NPC、独立关注、历史成绩和已付款预约转会。
+
+随后复用 CircuitPeople.Replenish 补员，OwnedClubSchedule.RefreshClub → RefreshRoster → SetLineup 更新当前赛季本队尚未结束的团体赛事；只替换整组尚未开打的对阵。历史成绩、比赛编号、日期、种子继续使用原值。个人赛与国家队赛保持原报名。RefreshRoster 按现行名单与待赛对阵更新 PlayerEntered；已离队玩家留在完成场次中作为历史记录。CircuitWorld.EnrollLeague 在已有完成场次时也调用 RefreshRoster，再签约只更新未来整组待赛名单。
+
+离队清空当前积分视图，RefreshClubOffers 按现有职业资格、国内俱乐部候选与最多三份邀请规则更新报价，再使训练预测缓存失效，记录公开离队事实并保存。后续接受合同、创建俱乐部继续使用原资格、日期和资金条件；原队再次签约仅取得选手身份。再次创建俱乐部时，已有基础编号采用新的唯一后缀，原队继续存在。保存及多人投票顺序见 PERSISTENCE_AND_COOP 的退出俱乐部章节；逐次性能和验证边界见本地 PERFORMANCE 对应章节。
+
+### 赛前转会
+
 赛前转会统一由 OwnedClubs.TransferSeason 调用 CanJoinThisSeason：当前日期早于本季最早联赛日期，且本季联赛全部对阵尚待赛，新签转会当天到队；其余情况填写下一赛季。TransferTime 为俱乐部签约面板、确认窗口、私信提示词和合同卡片提供同一到队说明。已有 OwnedTransfer.ArrivalSeason 继续作为执行日期，ArriveTransfers 在该赛季到来时办理。
 
 ArrangeTransfer 写入转会记录，沿 Pay 收取一次转会费和签字费并增加原队预算；当天到队时立即调用 ArriveTransfers，设置 SignedDay/EndDay、合同、人物 ClubId 和首发接替关系，再调用 OwnedClubSchedule.TransferArrived。该入口先复用 CircuitPeople.Replenish 的俱乐部补员规则，再通过 UpdateLineup / SetLineup 更新本队未来名单。原队所在的赛前联赛保留仍在原队的报名选手，空位由 CoachLineups.Roster 提供现有队员。SetLineup 按整组待赛对阵修改参赛者，将变更场次集合交给 CircuitWorld.UpdatePlayerMatches；随后清理双方赛前联赛的退报名选手和空积分行。原赛程日期、轮次、队伍和已有正式成绩继续沿用。
@@ -646,6 +658,8 @@ AddDateSceneAction 在具备可用立绘的已确认一对一活动旁建立专�
 商品图标及数量使用 ConsumerProductArt/ConsumerGiftControls 原控件，赠礼从现有聊天附件进入。群成员选择与社区分享人物选择复用 PickerRing 显示收戒与婚礼记录。Godot独立界面项目验证7处布局，包括联系人、日历、数量、约会入口、旁白、台词和退出窗口；317×521与1024×1536立绘及版本3ZIP往返通过。真实游戏和Steam跨机仍须另行验证。
 
 ### 普通通讯的分页与操作状态
+
+BuildPrivateComposerActions供私聊及群聊共用，调用BuildChatToolToggle在Ctrl + Enter发送说明左侧加入ChatToolMode按钮。ChatToolIcon绘制同色线框及勾选状态；开启采用现有青色，关闭采用灰蓝色。Toggled更新本机AiSettingsStore并同步当前视图，打开其他会话时读取同一份设置。按钮与其他底栏按钮共用CompactButtons缩放和布局；TooltipText说明用途。保存异常写入Diagnostics.Error，当前聊天界面继续操作。两处提示词预览在工具模式下附带同一ChatTools.Create生成的完整定义。
 
 通讯顶部显示齿轮和关闭按钮。ChatSettingsMenu 与左侧会话条目的右键菜单 ShowChatContextMenu 共用 ChatMenuItems，提供置顶/取消置顶、聊天记录设置、主动联系、私聊管理或群聊管理、记忆管理、提示词预览、恢复会话；群聊另显示添加群成员。菜单标明人物或群名。右键展开保留当前聊天，选择设置时调用 SelectPrivate/SelectGroup 切换目标，继续沿原草稿、已读和分页入口处理；置顶只更新本机排序。PrivateIdentity 独占人物标题行，群聊标题显示名称和人数；生成期间沿原入口显示停止生成。右键菜单在当前通讯控件内建立，按鼠标位置并预留8像素边距限制在视口内，点击空白或按Escape关闭菜单，关闭通讯释放菜单。
 
