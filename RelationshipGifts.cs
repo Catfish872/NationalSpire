@@ -3,6 +3,7 @@ namespace NationalSpire;
 /// <summary>赠礼关系请求在发送及接受时使用同一门槛；普通礼物继续按原库存流程执行。</summary>
 public static class RelationshipGifts
 {
+    public const string WeddingSteps = "需要由玩家后续再在附加请求中发起婚礼活动；完成玩家后续发起的婚礼活动后正式缔结誓约，不需要你自行发起婚礼活动。";
     public static bool Special(string good) => good is "oath-ring" or "grand-wedding";
     public static int Intent(PrivateOffer offer) => Special(offer.GoodId) ? 2 : offer.RelationshipIntent == 1 ? 1 : 0;
     public static string? Error(CareerData data, string person, PrivateOffer offer)
@@ -14,7 +15,7 @@ public static class RelationshipGifts
     public static string Description(PrivateOffer offer) => Intent(offer) switch
     {
         1 => "附加请求：确定恋人关系；接受礼物后成为恋人。",
-        2 => "附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。",
+        2 => "附加请求：接受礼物后，" + WeddingSteps,
         _ => ""
     };
     public static void Accept(CareerData data, string person, PrivateOffer offer)

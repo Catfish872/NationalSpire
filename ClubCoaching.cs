@@ -165,6 +165,14 @@ public static class ClubCoaching
     public const string Protocol = """
 本轮附件中存在训练计划时，根据具体内容和情况决定是否接受；接受须输出 [Training: 接受, Id: 12]，Id 填对应训练附件的编号；口头答应不会实际生效。接受已有训练的新安排会刷新期限，不叠加训练效果或时长。如果没有训练计划附件但是玩家有安排训练的意向，则先在正文中商谈训练内容，收到对应附件后再输出接受训练标记。
 """;
+    public const string GroupProtocol = """
+根据训练附件的安排，逐一决定每名受训者接受或拒绝。Training 填接受或拒绝，Id 填对应训练附件的编号，Actor 填本次接受或拒绝训练的全部受训者编号，多人以竖线分隔。作出相同决定的受训者合并填写一项交互。负责教练采用附件中的安排，Actor 表示受训者。接受后登记训练；拒绝后不建立这份训练。
+接受已有训练的新安排会刷新期限，不叠加训练效果或时长。处理训练附件时，逐一核对附件中的受训者，将每人的决定登记到对应交互中。
+接受训练：
+[Training: 接受, Id: 12, Actor: p2|p3|p4]
+拒绝训练：
+[Training: 拒绝, Id: 12, Actor: p2|p3|p4]
+""";
     // 自建俱乐部沿用原存储位置，普通俱乐部训练由生涯保存。
     public static IEnumerable<CoachTrainingPlan> TrainingPlans(CareerData d) =>
         d.Esports.CoachTraining.Concat(d.Esports.OwnedClub?.CoachTraining ?? []);
@@ -184,7 +192,7 @@ public static class ClubCoaching
     {
         if (attachment.CoachId.Length > 0)
         {
-            if (!attachment.CoachAccepted || !CoachLineups.CanRequest(d, attachment.CoachId)) return "训练尚未由本队教练接受。";
+            if (!CoachLineups.CanRequest(d, attachment.CoachId)) return "负责训练的教练须为本队教练。";
         }
         else if (!PlayerCoach(d)) return "请先在俱乐部兼任教练。";
         if (!TrainingMember(d, person, d.Esports.ClubId)) return "训练对象须为本队选手。";
@@ -193,10 +201,18 @@ public static class ClubCoaching
     }
     public static void AcceptTraining(CareerData d, PrivateConversation c, PrivateTurn t, Dictionary<string, string> fields)
     {
-        if (fields.GetValueOrDefault("Training") != "接受") return;
+        string action = fields.GetValueOrDefault("Training", "");
+        if (action is not ("接受" or "拒绝")) return;
         PrivateInteractionIds.Ensure(c);
-        var a = t.Attachments.FirstOrDefault(a => a.Kind == "training" && a.Id == PrivateInteractionIds.Resolve(c, fields.GetValueOrDefault("Id")));
+        var a = ChatAttachments.Find(c, t, "training", fields);
         if (a == null) { t.Error += "\n缺少对应训练附件，未执行。"; return; }
+        string suffix = ":" + a.Id;
+        if (c.Offers.Any(o => o.Kind == "training" && o.State == "已接受" && o.Id.EndsWith(suffix, StringComparison.Ordinal))) return;
+        if (action == "拒绝")
+        {
+            c.Offers.Add(new() { Id = t.Id + suffix, Kind = "training", TurnId = t.Id, State = "已拒绝", Detail = a.Detail, Weeks = a.Weeks });
+            return;
+        }
         if (TrainingError(d, c.PersonId, a) is { } error) { t.Error += "\n" + error; return; }
         var plans = TrainingStore(d, d.Esports.ClubId);
         string id = t.Id + ":" + a.Id;

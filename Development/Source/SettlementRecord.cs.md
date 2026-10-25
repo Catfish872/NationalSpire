@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0605AC153727EBC2BAE63C56FDD17B2D6194E3834EBE3C8DBFC0AA8E6BCCB7EE`。来源：[源码](../../SettlementRecord.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F5891D884289AC23EE5842C2B4FFB7937C841859FB8D01565F052D213E8BA656`。来源：[源码](../../SettlementRecord.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -359,16 +359,20 @@
 
 **调用者：** [`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)
 
-**调用：** `NationalSpire.SettlementStanding.SettlementStanding()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；[`Rank(int)`](SettlementRecord.cs.md#symbol-16ccdaf24bff)；`NationalSpire.SettlementStanding.SettlementStanding()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.SettlementRecord.Standings`；`NationalSpire.SettlementStanding.Detail`；`NationalSpire.SettlementStanding.Nearby`；`NationalSpire.SettlementStanding.Title`；`NationalSpire.SettlementStanding.Value`
+**字段、属性、事件及方法组引用：** `(NationalSpire.CareerStanding Standing, int Rank).Rank`；`(NationalSpire.CareerStanding Standing, int Rank).Standing`；`NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；`NationalSpire.SettlementRecord.Standings`；`NationalSpire.SettlementStanding.Detail`；`NationalSpire.SettlementStanding.Nearby`；`NationalSpire.SettlementStanding.Title`；`NationalSpire.SettlementStanding.Value`；`Rank(int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.SettlementStanding.SettlementStanding()`；输入表达式：`new() { Title = title, Value = $"第 {index + 1} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() }`；返回值紧邻使用处：`ArgumentSyntax: new() { Title = title, Value = $"第 {index + 1} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() }`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`snapshot.Standings.Add(new() { Title = title, Value = $"第 {index + 1} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() })`；返回值紧邻使用处：`ExpressionStatementSyntax: snapshot.Standings.Add(new() { Title = title, Value = $"第 {index + 1} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() });`
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Rankings(c).ToDictionary`
+- `NationalSpire.SettlementStanding.SettlementStanding()`；输入表达式：`new() { Title = title, Value = $"第 {Rank(index)} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() }`；返回值紧邻使用处：`ArgumentSyntax: new() { Title = title, Value = $"第 {Rank(index)} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() }`
+- `Rank(int)`；输入表达式：`Rank(i)`；返回值紧邻使用处：`InterpolationSyntax: {Rank(i):00}`
+- `Rank(int)`；输入表达式：`Rank(index)`；返回值紧邻使用处：`InterpolationSyntax: {Rank(index)}`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank)`；返回值紧邻使用处：`ConditionalExpressionSyntax: title == "联赛个人" && c != null ? EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank) : null`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`snapshot.Standings.Add(new() { Title = title, Value = $"第 {Rank(index)} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() })`；返回值紧邻使用处：`ExpressionStatementSyntax: snapshot.Standings.Add(new() { Title = title, Value = $"第 {Rank(index)} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",                  Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() });`
 - `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`table.FindIndex(r => r.PersonId == id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = table.FindIndex(r => r.PersonId == id)`
 - `System.Func<T, TResult>.Invoke(T)`；输入表达式：`name(table[i].PersonId)`；返回值紧邻使用处：`InterpolationSyntax: {name(table[i].PersonId)}`
 - `System.Linq.Enumerable.Range(int, int)`；输入表达式：`Enumerable.Range(Math.Max(0, Math.Min(index - 1, table.Count - 4)), Math.Min(4, table.Count))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Enumerable.Range(Math.Max(0, Math.Min(index - 1, table.Count - 4)), Math.Min(4, table.Count))`
@@ -379,15 +383,34 @@
 **赋值（含属性/字段和局部值）：**
 
 - `Detail` = `$"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负"`
-- `Nearby` = `nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`
+- `Nearby` = `nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList()`
 - `Title` = `title`
-- `Value` = `$"第 {index + 1} 名"`
+- `Value` = `$"第 {Rank(index)} 名"`
+
+<a id="symbol-16ccdaf24bff"></a>
+
+## `Rank(int) — int Rank(int i)`
+
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`AddTable(string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-a55341dc2255)
+
+**调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.PersonId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.GetValueOrDefault(table[i].PersonId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: ranks?.GetValueOrDefault(table[i].PersonId)`
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-a18df6d5e1f5"></a>
 
 ## `NationalSpire.CompetitionReview.Id — public string Id`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -405,7 +428,7 @@
 
 ## `NationalSpire.CompetitionReview.Name — public string Name`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -423,7 +446,7 @@
 
 ## `NationalSpire.CompetitionReview.CapturedDay — public int CapturedDay`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -441,7 +464,7 @@
 
 ## `NationalSpire.CompetitionReview.PreviousMatchDay — public int? PreviousMatchDay`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -459,7 +482,7 @@
 
 ## `NationalSpire.CompetitionReview.CompletedFixtures — public List<string> CompletedFixtures`
 
-来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -477,7 +500,7 @@
 
 ## `NationalSpire.CompetitionReview.Tables — public List<CompetitionTable> Tables`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -495,7 +518,7 @@
 
 ## `NationalSpire.CompetitionReview.Scores — public List<CompetitionScore> Scores`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -513,7 +536,7 @@
 
 ## `NationalSpire.CompetitionTable.Id — public string Id`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -531,7 +554,7 @@
 
 ## `NationalSpire.CompetitionTable.Title — public string Title`
 
-来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -549,7 +572,7 @@
 
 ## `NationalSpire.CompetitionTable.Note — public string Note`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -567,7 +590,7 @@
 
 ## `NationalSpire.CompetitionTable.Rows — public List<CompetitionRow> Rows`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -585,7 +608,7 @@
 
 ## `NationalSpire.CompetitionRow.Id — public string Id`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -603,7 +626,7 @@
 
 ## `NationalSpire.CompetitionRow.Name — public string Name`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -621,7 +644,7 @@
 
 ## `NationalSpire.CompetitionRow.PlayerRelated — public bool PlayerRelated`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -639,7 +662,7 @@
 
 ## `NationalSpire.CompetitionRow.Rank — public int Rank`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -657,7 +680,7 @@
 
 ## `NationalSpire.CompetitionRow.Points — public int Points`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -675,7 +698,7 @@
 
 ## `NationalSpire.CompetitionRow.PreviousRank — public int? PreviousRank`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -693,7 +716,7 @@
 
 ## `NationalSpire.CompetitionRow.PreviousPoints — public int? PreviousPoints`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -711,7 +734,7 @@
 
 ## `NationalSpire.CompetitionRow.Record — public string Record`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -729,7 +752,7 @@
 
 ## `NationalSpire.CompetitionScore.Day — public int Day`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -747,7 +770,7 @@
 
 ## `NationalSpire.CompetitionScore.Round — public string Round`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -765,7 +788,7 @@
 
 ## `NationalSpire.CompetitionScore.Home — public string Home`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -783,7 +806,7 @@
 
 ## `NationalSpire.CompetitionScore.Away — public string Away`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -801,7 +824,7 @@
 
 ## `NationalSpire.CompetitionScore.Score — public string Score`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -819,7 +842,7 @@
 
 ## `NationalSpire.CompetitionScore.Outcome — public string Outcome`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -837,7 +860,7 @@
 
 ## `NationalSpire.CompetitionScore.PlayerRelated — public bool PlayerRelated`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -855,7 +878,7 @@
 
 ## `NationalSpire.CompetitionScore.Duels — public List<CompetitionDuel> Duels`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -873,7 +896,7 @@
 
 ## `NationalSpire.CompetitionPlayer.Id — public string Id`
 
-来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -891,7 +914,7 @@
 
 ## `NationalSpire.CompetitionPlayer.Name — public string Name`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -909,7 +932,7 @@
 
 ## `NationalSpire.CompetitionDuel.Home — public List<CompetitionPlayer> Home`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -927,7 +950,7 @@
 
 ## `NationalSpire.CompetitionDuel.Away — public List<CompetitionPlayer> Away`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -945,7 +968,7 @@
 
 ## `NationalSpire.CompetitionDuel.HomePerformance — public string HomePerformance`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -963,7 +986,7 @@
 
 ## `NationalSpire.CompetitionDuel.AwayPerformance — public string AwayPerformance`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -981,7 +1004,7 @@
 
 ## `NationalSpire.CompetitionDuel.WinnerId — public string WinnerId`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -999,7 +1022,7 @@
 
 ## `NationalSpire.CompetitionDuel.Status — public string Status`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1017,7 +1040,7 @@
 
 ## `NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture) — public static string FixtureKey(WorldFixture f)`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
 
@@ -1035,11 +1058,11 @@
 
 ## `NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?) — public static CompetitionDuel CaptureDuel(CareerData d, WorldFixture f, bool? finished = null)`
 
-来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)；[`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
 
-**调用：** [`Performance(bool, int, double?)`](SettlementRecord.cs.md#symbol-17097482a0e8)；[`Players(string, System.Collections.Generic.List<string>)`](SettlementRecord.cs.md#symbol-d4589a5e83b5)；`NationalSpire.CompetitionDuel.CompetitionDuel()`
+**调用：** [`Performance(bool, int, double?)`](SettlementRecord.cs.md#symbol-22a456ef9531)；[`Players(string, System.Collections.Generic.List<string>)`](SettlementRecord.cs.md#symbol-2e3b488238a6)；`NationalSpire.CompetitionDuel.CompetitionDuel()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CompetitionDuel.Away`；`NationalSpire.CompetitionDuel.AwayPerformance`；`NationalSpire.CompetitionDuel.Home`；`NationalSpire.CompetitionDuel.HomePerformance`；`NationalSpire.CompetitionDuel.Status`；`NationalSpire.CompetitionDuel.WinnerId`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayFloor`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayParticipants`；`NationalSpire.WorldFixture.AwaySeconds`；`NationalSpire.WorldFixture.Draw`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeFloor`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeParticipants`；`NationalSpire.WorldFixture.HomeSeconds`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`；`Performance(bool, int, double?)`；`Players(string, System.Collections.Generic.List<string>)`
 
@@ -1060,11 +1083,11 @@
 - `Status` = `!complete ? "待赛" : f.Walkover ? "弃权判定" : f.Draw ? "平局" : "已结束"`
 - `WinnerId` = `complete && !f.Draw ? f.WinnerId : ""`
 
-<a id="symbol-17097482a0e8"></a>
+<a id="symbol-22a456ef9531"></a>
 
 ## `Performance(bool, int, double?) — string Performance(bool cleared, int floor, double? seconds)`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)
 
@@ -1080,11 +1103,11 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d4589a5e83b5"></a>
+<a id="symbol-2e3b488238a6"></a>
 
 ## `Players(string, System.Collections.Generic.List<string>) — List<CompetitionPlayer> Players(string leader, List<string> participants)`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)
 
@@ -1108,11 +1131,11 @@
 
 ## `NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview) — public static Dictionary<CompetitionScore, List<CompetitionDuel>> ScoreDuels(CareerData d, CompetitionReview review)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CompetitionOverview(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementScreen.cs.md#symbol-f0fb4e109457)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-27622a9f36b4)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-a34af86206dd)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.CompetitionReview.CapturedDay`；`NationalSpire.CompetitionReview.CompletedFixtures`；`NationalSpire.CompetitionReview.Id`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Duels`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Round`；`Round(int)`
 
@@ -1149,11 +1172,11 @@
 
 - `result[score]` = `lookup[(score.Round, score.Home, score.Away, score.Day)]                  .SelectMany(g => g.Select(f => CaptureDuel(d, f, completed.Contains(FixtureKey(f))))).ToList()`
 
-<a id="symbol-27622a9f36b4"></a>
+<a id="symbol-a34af86206dd"></a>
 
 ## `Round(int) — string Round(int round)`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.ScoreDuels(NationalSpire.CareerData, NationalSpire.CompetitionReview)`](SettlementRecord.cs.md#symbol-0e3bef1aba9f)
 
@@ -1172,11 +1195,11 @@
 
 ## `NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>) — private static CompetitionReview CaptureCompetition(CareerData d, CareerMatch m, WorldCompetition c, int season, Dictionary<string, int> worldPoints)`
 
-来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)
 
-**调用：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-2bebc56beafd)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`](CircuitLedger.cs.md#symbol-7d3715dcef4e)；[`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-ca39b3e6a0f0)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-df66edefd0e4)；[`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-e1c8da2589ba)；`NationalSpire.CompetitionReview.CompetitionReview()`；`NationalSpire.CompetitionScore.CompetitionScore()`；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-3fe268608156)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`](CircuitLedger.cs.md#symbol-7d3715dcef4e)；[`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-ca39b3e6a0f0)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`](SettlementRecord.cs.md#symbol-6835127996c4)；[`Round(int)`](SettlementRecord.cs.md#symbol-43baa324f487)；[`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-ed6cd9a12803)；`NationalSpire.CompetitionReview.CompetitionReview()`；`NationalSpire.CompetitionScore.CompetitionScore()`；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Max<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `(int Round, string HomeTeam, string AwayTeam).AwayTeam`；`(int Round, string HomeTeam, string AwayTeam).HomeTeam`；`(int Round, string HomeTeam, string AwayTeam).Round`；`(string Id, int Points).Id`；`(string Id, int Points).Points`；`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerResult.CompetitionId`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Settlement`；`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`；`NationalSpire.CircuitLedger.Year(int)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.CircuitWorld.TeamTable(NationalSpire.WorldCompetition)`；`NationalSpire.CompetitionReview.CapturedDay`；`NationalSpire.CompetitionReview.CompletedFixtures`；`NationalSpire.CompetitionReview.Id`；`NationalSpire.CompetitionReview.Name`；`NationalSpire.CompetitionReview.PreviousMatchDay`；`NationalSpire.CompetitionReview.Scores`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionScore.Away`；`NationalSpire.CompetitionScore.Day`；`NationalSpire.CompetitionScore.Duels`；`NationalSpire.CompetitionScore.Home`；`NationalSpire.CompetitionScore.Outcome`；`NationalSpire.CompetitionScore.PlayerRelated`；`NationalSpire.CompetitionScore.Round`；`NationalSpire.CompetitionScore.Score`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；`NationalSpire.SettlementRecord.Competition`；`NationalSpire.SettlementRecord.Season`；`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；`NationalSpire.SettlementRecords.FixtureKey(NationalSpire.WorldFixture)`；`NationalSpire.WorldCompetition.ChampionId`；`NationalSpire.WorldCompetition.ChampionTeam`；`NationalSpire.WorldCompetition.EntrantClubs`；`NationalSpire.WorldCompetition.EntrantCountries`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Rosters`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Draw`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.Walkover`；`NationalSpire.WorldFixture.WinnerId`；`Round(int)`；`Row(string, string, string, bool, int, int, string)`
 
@@ -1288,11 +1311,11 @@
 - `Title` = `"参赛选手 · 世界积分"`
 - `Title` = `"国家国运榜"`
 
-<a id="symbol-df66edefd0e4"></a>
+<a id="symbol-43baa324f487"></a>
 
 ## `Round(int) — string Round(int round)`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
@@ -1307,13 +1330,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e1c8da2589ba"></a>
+<a id="symbol-ed6cd9a12803"></a>
 
 ## `Row(string, string, string, bool, int, int, string) — CompetitionRow Row(string table, string id, string name, bool own, int rank, int points, string record)`
 
-来源：源码第 249 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 251 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-2bebc56beafd)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
+**调用者：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-3fe268608156)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
 **调用：** `NationalSpire.CompetitionRow.CompetitionRow()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -1336,24 +1359,27 @@
 - `Rank` = `rank`
 - `Record` = `record`
 
-<a id="symbol-2bebc56beafd"></a>
+<a id="symbol-3fe268608156"></a>
 
 ## `AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>) — void AddLeagueTable(string id, string title, List<CareerStanding> standings, string own, Func<string, string> name)`
 
-来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
-**调用：** [`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-e1c8da2589ba)；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；[`Row(string, string, string, bool, int, int, string)`](SettlementRecord.cs.md#symbol-ed6cd9a12803)；`NationalSpire.CompetitionTable.CompetitionTable()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`Row(string, string, string, bool, int, int, string)`
+**字段、属性、事件及方法组引用：** `(NationalSpire.CareerStanding Standing, int Rank).Rank`；`(NationalSpire.CareerStanding Standing, int Rank).Standing`；`NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.CompetitionReview.Tables`；`NationalSpire.CompetitionTable.Id`；`NationalSpire.CompetitionTable.Note`；`NationalSpire.CompetitionTable.Rows`；`NationalSpire.CompetitionTable.Title`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；`Row(string, string, string, bool, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CompetitionTable.CompetitionTable()`；输入表达式：`new CompetitionTable { Id = id, Title = title, Note = "积分相同时，按赛事规则排列" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CompetitionTable { Id = id, Title = title, Note = "积分相同时，按赛事规则排列" }`
-- `Row(string, string, string, bool, int, int, string)`；输入表达式：`Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负")`；返回值紧邻使用处：`ArgumentSyntax: Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负")`
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Rankings(c).ToDictionary`
+- `Row(string, string, string, bool, int, int, string)`；输入表达式：`Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, ranks?.GetValueOrDefault(r.PersonId) ?? i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负")`；返回值紧邻使用处：`ArgumentSyntax: Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, ranks?.GetValueOrDefault(r.PersonId) ?? i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负")`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank)`；返回值紧邻使用处：`ConditionalExpressionSyntax: id == "personal" ? EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank) : null`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.GetValueOrDefault(r.PersonId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: ranks?.GetValueOrDefault(r.PersonId)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`review.Tables.Add(table)`；返回值紧邻使用处：`ExpressionStatementSyntax: review.Tables.Add(table);`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"))`；返回值紧邻使用处：`ExpressionStatementSyntax: table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"));`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, ranks?.GetValueOrDefault(r.PersonId) ?? i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"))`；返回值紧邻使用处：`ExpressionStatementSyntax: table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, ranks?.GetValueOrDefault(r.PersonId) ?? i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"));`
 - `System.Func<T, TResult>.Invoke(T)`；输入表达式：`name(r.PersonId)`；返回值紧邻使用处：`ArgumentSyntax: name(r.PersonId)`
 
 **赋值（含属性/字段和局部值）：**

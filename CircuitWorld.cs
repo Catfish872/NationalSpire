@@ -227,7 +227,7 @@ public static class CircuitWorld
         var leagues = d.Esports.Competitions.Where(c => c.Season == d.Season && c.Modern && c.Kind == "league").ToList();
         if (leagues.Count != 8 || leagues.Any(c => !c.Finished)) return;
         // 国内个人表现前二自动进入总决赛，其余席位按有效积分和本季表现补齐。
-        var qualified = leagues.SelectMany(c => EsportsWorld.Ranked(c).Where(t => !d.DeletedPeople.ContainsKey(t.PersonId)).Take(2).Select(t => t.PersonId)).Distinct().ToList();
+        var qualified = leagues.SelectMany(c => EsportsWorld.DirectQualifiers(d, c)).Distinct().ToList();
         string previousChampion = d.Esports.CircuitAwards.LastOrDefault(a => a.Kind == "worldfinal" && a.Place == "冠军")?.PersonId ?? "";
         if (previousChampion.Length > 0 && !d.DeletedPeople.ContainsKey(previousChampion) && (previousChampion == "player" ? leagues.Any(c => c.PlayerEntered) : CareerEngine.Person(d, previousChampion) is { } defending && EsportsWorld.IsProfessional(defending))) qualified.Add(previousChampion);
         qualified = qualified.Distinct().ToList();

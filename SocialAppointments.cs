@@ -21,9 +21,8 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 只有标记才登记交互，口头答应无法触发实际效果。
 """;
     public static string GroupProtocol => Protocol
-        .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")
-        .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")
-        .Replace("Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p1", "Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p2");
+        .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor。Actor 填已经谈妥的完整参与者编号，包括参加活动的玩家，多人以竖线分隔。一项共同活动输出一条标记。处理活动附件时，逐一核对附件中的参与者，将已谈妥的完整名单填写到 Actor。")
+        .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1|p2|p3]");
     public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> All(CareerData d)
         => PrivateMessages.Mailbox(d).Conversations.Values.Concat(d.Chats.Groups.SelectMany(g => g.Interactions.Where(x => x.Key.StartsWith(GroupChats.Human(d) + "/")).Select(x => x.Value))).SelectMany(c => c.Offers.Where(o => o.Kind == "activity").Select(o => (c, o)));
     public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> Due(CareerData d)

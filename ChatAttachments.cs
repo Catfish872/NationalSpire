@@ -6,14 +6,14 @@ public static class ChatAttachments
     public const string ResponseGuide = "请根据交互格式要求来回应附件，口头回复不会视为成功回应。";
     public static string ResponseInstructions(CareerData data, PrivateOffer a, string number, GroupChat? group = null, string sender = "")
     {
-        if (ChatTools.InPrompt) return ChatTools.AttachmentGuide + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "");
+        if (ChatTools.InPrompt && a.Kind is not ("training" or "activity")) return ChatTools.AttachmentGuide + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "");
         string protocol = a.Kind switch
         {
             "gift" => group == null ? GiftProtocol : GroupGiftProtocol,
             OathAttachments.Kind => group == null ? OathAttachments.Protocol : OathAttachments.GroupProtocol,
             "activity" => group == null ? SocialAppointments.Protocol : SocialAppointments.GroupProtocol,
             "match" => PrivateMessagePrompts.MatchProtocol,
-            "training" => ClubCoaching.Protocol,
+            "training" => group == null ? ClubCoaching.Protocol : ClubCoaching.GroupProtocol,
             "lineup" => CoachLineups.Protocol,
             "contract" => PrivateMessagePrompts.ContractProtocol,
             _ => ""
@@ -39,11 +39,11 @@ public static class ChatAttachments
             if (a.Kind == "match") text = text.Replace("Ascension: 6", "Ascension: " + a.Ascension).Replace("Mode: 切磋", "Mode: " + a.Mode);
             if (group != null)
             {
-                if (a.Kind == "activity") text = text.Replace("Actor: p1", "Actor: " + group.Alias(sender))
-                    .Replace("Participants: p1|p2|p3", "Participants: " + string.Join("|", a.Participants.Select(group.Alias)));
+                if (a.Kind == "activity") text = text.Replace("Actor: p1|p2|p3", "Actor: " + string.Join("|", a.Participants.Select(group.Alias)));
+                else if (a.Kind == "training") text = text.Replace("Actor: p2|p3|p4", "Actor: " + string.Join("|", a.Participants.Select(group.Alias)));
                 else if (a.Kind is "gift" or OathAttachments.Kind) text = text.Replace("Actor: p2", "Actor: " + actor);
                 else text = text.TrimEnd(']') + ", Actor: " + actor + (a.Kind == "match" ? ", Target: " + group.Alias(sender) : "") + "]";
-                if (a.Kind is "training" or "match" or "contract" && a.Participants.Count > 1)
+                if (a.Kind is "match" or "contract" && a.Participants.Count > 1)
                 {
                     formats.AddRange(a.Participants.Where(p => p != sender).Select(p => text.Replace("Actor: " + actor + (a.Kind == "match" ? "," : "]"),
                         "Actor: " + group.Alias(p) + (a.Kind == "match" ? "," : "]"))));
@@ -52,11 +52,7 @@ public static class ChatAttachments
             }
             formats.Add(text);
         }
-        if (group != null && a.Kind == "training" && a.CoachId.Length > 0)
-        {
-            formats.Insert(0, $"[Training: 同意, Id: {number}, Actor: {group.Alias(a.CoachId)}]");
-            formats.Insert(1, $"[Training: 拒绝, Id: {number}, Actor: {group.Alias(a.CoachId)}]");
-        }
+        if (ChatTools.InPrompt) return ChatTools.AttachmentGuide + "\n交互示例：\n" + ChatTools.Describe(string.Join("\n", formats));
         return ResponseGuide + "\n交互格式：\n" + (group == null ? "" : "[Actions]\n") + string.Join("\n", formats)
             + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "")
             + (a.Kind == "activity" ? "\n接受时按玩家附件填写活动资料；改期时填写商谈后的日期和内容；取消时填写对应活动的资料。" : "");
@@ -70,8 +66,8 @@ public static class ChatAttachments
 拒绝礼物：
 [Gift: 拒绝, Id: 12]
 只有标记才登记交互，口头答应无法触发实际效果。
-普通礼物附件附有确定恋人关系的请求时，接受礼物后成为恋人。接受誓约之戒或盛大婚礼后，双方可以择期举办婚礼；完成婚礼活动后正式缔结誓约。拒绝礼物则保持当前关系。
-""";
+普通礼物附件附有确定恋人关系的请求时，接受礼物后成为恋人。接受誓约之戒或盛大婚礼后，
+""" + RelationshipGifts.WeddingSteps + "拒绝礼物则保持当前关系。";
     public static string GroupGiftProtocol => GiftProtocol
         .Replace("每条礼物标记完整填写 Gift、Id。", "每条礼物标记完整填写 Gift、Id、Actor。Actor 填接收者的编号。")
         .Replace("[Gift: 接受, Id: 12]", "[Gift: 接受, Id: 12, Actor: p2]")

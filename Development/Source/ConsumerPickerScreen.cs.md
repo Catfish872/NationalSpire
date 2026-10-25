@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3321D7763CFDF3455467C5362D286D70AF2A8AE5BCC65D4FAACBF98AE4ABEC37`。来源：[源码](../../ConsumerPickerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8CE192D72D7015CB4120CDF51835E5DE87FF33FC6BC25575386F8F8C54B91A22`。来源：[源码](../../ConsumerPickerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -240,7 +240,7 @@ public int Quantity = 1, Season, Day, Relationship;
 
 来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerTarget(NationalSpire.Good, bool)`](ConsumerCommerceScreen.cs.md#symbol-4d2c83181e84)；[`NationalSpire.CareerScreen.PrivateActivityPicker(string, string, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?)`](ChatAttachmentScreen.cs.md#symbol-1f0cb820099b)；[`NationalSpire.CareerScreen.PrivateGiftPicker(NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?)`](ChatAttachmentScreen.cs.md#symbol-bd49b7253d4e)；[`ReturnEditor()`](ConsumerPickerScreen.cs.md#symbol-5121619aff2c)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerTarget(NationalSpire.Good, bool)`](ConsumerCommerceScreen.cs.md#symbol-4d2c83181e84)；[`NationalSpire.CareerScreen.PrivateActivityPicker(string, string, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?)`](ChatAttachmentScreen.cs.md#symbol-1f0cb820099b)；[`NationalSpire.CareerScreen.PrivateGiftPicker(NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?)`](ChatAttachmentScreen.cs.md#symbol-bd49b7253d4e)；[`ReturnEditor()`](ConsumerPickerScreen.cs.md#symbol-3854743a5c61)
 
 **调用：** [`Calendar()`](ConsumerPickerScreen.cs.md#symbol-8eb2036c6dbc)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-4cac190b7ec0)；[`Error(string)`](ConsumerPickerScreen.cs.md#symbol-2499f8db4ac1)；[`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Available(NationalSpire.CareerData, NationalSpire.Good)`](ConsumerAttachments.cs.md#symbol-6c24344e1310)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.Price(NationalSpire.Good)`](ConsumerEngine.cs.md#symbol-723a34b6e2cb)；[`NationalSpire.ConsumerQuantity.ConsumerQuantity()`](ConsumerGiftControls.cs.md#symbol-0eddfdec0f89)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；[`NationalSpire.WeddingAppointments.Services(NationalSpire.CareerData)`](WeddingAppointments.cs.md#symbol-2dfb2ee379ae)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.CheckButton.CheckButton()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.SpinBox.SpinBox()`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerScreen.ConsumerChoice.ConsumerChoice(NationalSpire.Good?, NationalSpire.GoodVerb?, string)`；`NationalSpire.CareerScreen.ConsumerEdit.ConsumerEdit()`；`NationalSpire.ConsumerComposer.ConsumerComposer(string, string, string, System.Collections.Generic.List<string>)`；`NationalSpire.LifestyleArt.LifestyleArt()`；`NationalSpire.PrivateOffer.PrivateOffer()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.Math.Min(int, int)`
 
@@ -550,7 +550,7 @@ public int Quantity = 1, Season, Day, Relationship;
 - `edit.Detail` = `edit.Choice?.Good is { } g ? "使用" + g.Name + "开展" + edit.Title : ""`
 - `edit.Quantity` = `quantity.Value`
 - `edit.Title` = `edit.Choice?.Verb?.Name ?? ""`
-- `hint!.Text` = `special ? "好感达到85后可以赠送；对方接受后可以择期举办婚礼，完成婚礼活动后正式缔结誓约。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""`
+- `hint!.Text` = `special ? "对方接收后，玩家可以在聊天的“+”号中选择“约定活动”，并选择其中的婚礼活动。从该入口完成婚礼即可正式缔结誓约。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""`
 - `hint.Visible` = `hint.Text.Length > 0`
 - `quantity.Maximum` = `Math.Max(1, quantity.Maximum)`
 - `quantity.Maximum` = `shopping ? int.MaxValue : (int)Math.Min(int.MaxValue, edit.Choice?.Good is { } g ? ConsumerAttachments.Available(d, g) : 1)`
@@ -558,7 +558,7 @@ public int Quantity = 1, Season, Day, Relationship;
 - `selection!.Text` = `edit.Choice?.Caption ?? "暂无可用物品"`
 - `title!.Text` = `edit.Title`
 
-<a id="symbol-5121619aff2c"></a>
+<a id="symbol-3854743a5c61"></a>
 
 ## `ReturnEditor() — void ReturnEditor()`
 
@@ -577,7 +577,7 @@ public int Quantity = 1, Season, Day, Relationship;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-32f75dea4de7"></a>
+<a id="symbol-526ebcd28e67"></a>
 
 ## `FitContent() — void FitContent()`
 
@@ -609,7 +609,7 @@ public int Quantity = 1, Season, Day, Relationship;
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)
 
-**调用：** [`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-8f92d347159a)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.HashSet<T>.Clear()`
+**调用：** [`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-bfd48d04a658)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.HashSet<T>.Clear()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.ConsumerEdit.Group`；`NationalSpire.CareerScreen.ConsumerEdit.People`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.ViewData`；`Show(bool)`
 
@@ -638,7 +638,7 @@ public int Quantity = 1, Season, Day, Relationship;
 - `groupsTab.Name` = `"RecipientGroups"`
 - `groupsTab.ToggleMode` = `true`
 
-<a id="symbol-8f92d347159a"></a>
+<a id="symbol-bfd48d04a658"></a>
 
 ## `Show(bool) — void Show(bool groups)`
 
@@ -646,7 +646,7 @@ public int Quantity = 1, Season, Day, Relationship;
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)
 
-**调用：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-e164aa9ee502)；[`Members()`](ConsumerPickerScreen.cs.md#symbol-b19728da69ca)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int)`](PeoplePickerScreen.cs.md#symbol-80a307ead785)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-0aa3d7203ee8)；[`Members()`](ConsumerPickerScreen.cs.md#symbol-cf168b0ee57f)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int)`](PeoplePickerScreen.cs.md#symbol-80a307ead785)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`
 
 **字段、属性、事件及方法组引用：** `Groups()`；`Members()`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerScreen.ConsumerEdit.People`；`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`
 
@@ -685,13 +685,13 @@ public int Quantity = 1, Season, Day, Relationship;
 - `search.TextChanged` += `_ => Groups()`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-b19728da69ca"></a>
+<a id="symbol-cf168b0ee57f"></a>
 
 ## `Members() — void Members()`
 
 来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-e164aa9ee502)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-8f92d347159a)
+**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-0aa3d7203ee8)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-bfd48d04a658)
 
 **调用：** [`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int)`](PeoplePickerScreen.cs.md#symbol-80a307ead785)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -713,15 +713,15 @@ public int Quantity = 1, Season, Day, Relationship;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e164aa9ee502"></a>
+<a id="symbol-0aa3d7203ee8"></a>
 
 ## `Groups() — void Groups()`
 
 来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-e164aa9ee502)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-8f92d347159a)
+**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-0aa3d7203ee8)；[`Show(bool)`](ConsumerPickerScreen.cs.md#symbol-bfd48d04a658)
 
-**调用：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-e164aa9ee502)；[`Members()`](ConsumerPickerScreen.cs.md#symbol-b19728da69ca)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-0aa3d7203ee8)；[`Members()`](ConsumerPickerScreen.cs.md#symbol-cf168b0ee57f)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Groups()`；`Members()`；`NationalSpire.CareerScreen.ConsumerEdit.Group`；`NationalSpire.CareerScreen.ConsumerEdit.People`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.GroupChat.Id`；`NationalSpire.GroupChat.Members`；`NationalSpire.GroupChat.Name`；`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`
 

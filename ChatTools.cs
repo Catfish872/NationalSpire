@@ -25,6 +25,7 @@ public static class ChatTools
         {
             messages.Add(new() { ["role"] = "system", ["content"] = ending ? DateDiaries.ToolEnding : "请调用 send_message 完成本轮回复，按 Reasoning、Replies、Interactions 的顺序填写。Reasoning 根据本轮提供的事实整理人物反应与实际交互决定；Replies 保持前文模板要求的文风、人物语言和篇幅，填写完整正文。正文中已经作出的交互决定，包括邀请、接受、拒绝、改期，以及学习、状态和人物资料变化，都在 Interactions 中填写对应交互。普通聊天也填写完整 Replies，确实没有交互时 Interactions 填 []。" });
         }
+        foreach (var message in messages) message["content"] = GroupInteractions.PromptText(message["content"]);
         return messages;
     }
     internal sealed record Feature(string Name, string Key, string Description, string[] Fields);
@@ -36,7 +37,7 @@ public static class ChatTools
         new("profile", "Profile", PrivateMessagePrompts.ProfileProtocol, ["Profile", "Value", "Reason"]),
         new("match", "Match", PrivateMessagePrompts.MatchProtocol, ["Match", "Date", "Ascension", "Mode"]),
         new("contract", "Contract", PrivateMessagePrompts.ContractProtocol, ["Contract", "Signing", "Wage", "WinBonus", "Weeks", "Role"]),
-        new("training", "Training", ClubCoaching.Protocol, ["Training", "Id"]),
+        new("training", "Training", group ? ClubCoaching.GroupProtocol : ClubCoaching.Protocol, ["Training", "Id"]),
         new("lineup", "Lineup", CoachLineups.Protocol, ["Lineup", "Id"]),
         new("activity", "Activity", ActivityProtocol(group), ["Activity", "Id", "Title", "Date", "Detail"]),
         new("gift", "Gift", group ? ChatAttachments.GroupGiftProtocol : ChatAttachments.GiftProtocol, ["Gift", "Id"]),
@@ -55,7 +56,10 @@ public static class ChatTools
         {
             var sample = new PrivateStreamParser("Actor", "Target", "Participants", "Related", "Coach"); sample.Feed(m.Value); sample.Finish();
             var fields = sample.Directives.FirstOrDefault() ?? sample.SceneCues.FirstOrDefault().Fields;
-            return fields == null ? m.Value : JsonSerializer.Serialize(fields.ToDictionary(p => p.Key, p =>
+            if (fields == null) return m.Value;
+            if (fields.ContainsKey("Training")) fields["Type"] = "training";
+            if (fields.ContainsKey("Activity")) fields["Type"] = "activity";
+            return JsonSerializer.Serialize(fields.ToDictionary(p => p.Key, p =>
                 p.Key is "Favour" or "Skill" or "Mood" or "Days" or "Ascension" or "Signing" or "Wage" or "WinBonus" or "Weeks" && int.TryParse(p.Value, out int n) ? (object)n : p.Value),
                 new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         });
@@ -80,17 +84,17 @@ public static class ChatTools
             if (group != null) fields.Add("Actor");
             if (group != null) fields.AddRange(f.Name switch
             {
-                "relationship" or "match" => ["Target"], "activity" => ["Participants"],
-                "post" => ["Related"], "training" => ["Coach"], _ => Array.Empty<string>()
+                "relationship" or "match" => ["Target"],
+                "post" => ["Related"], _ => Array.Empty<string>()
             });
             var properties = fields.ToDictionary(k => k, k => (object)new Dictionary<string, object>
             {
                 ["type"] = k is "Favour" or "Skill" or "Mood" or "Days" or "Ascension" or "Signing" or "Wage" or "WinBonus" or "Weeks" ? "integer" : "string",
                 ["description"] = k switch
                 {
-                    "Actor" => "作出决定或变化的人物编号，活动采用实际发起人。",
+                    "Actor" => f.Name == "activity" ? "已经谈妥的完整活动参与者编号，包括参加活动的玩家，多人以竖线分隔。"
+                        : f.Name == "training" ? "本次接受或拒绝训练的全部受训者编号，多人以竖线分隔。" : "作出决定或变化的人物编号。",
                     "Target" => "关系或约战的对方人物编号。",
-                    "Participants" => "共同活动已经谈妥的完整参与者编号，以竖线分隔。",
                     "Related" => "发帖希望回应的人物编号，以竖线分隔。",
                     "Coach" => "训练教练的人物编号。",
                     "Id" => "邀请新活动填0；接受、拒绝或改期时填写本轮对应类型的待处理卡片实际编号。",
@@ -102,7 +106,6 @@ public static class ChatTools
             if (f.Key.Length > 0) required.AddRange(f.Fields);
             if (group != null) required.Add("Actor");
             if (group != null && f.Name is "relationship" or "match") required.Add("Target");
-            if (group != null && f.Name == "activity") required.Add("Participants");
             // 活动意愿统一放在工具总说明，字段说明只保留动作与参数规则。
             string description = Describe(f.Description);
             if (f.Name == "skill") description = description.Replace("普通聊天无需附带任何工具参数。", "本轮没有上述学习变化时省略 skill 交互，其他交互按各自说明判断。");
@@ -111,7 +114,7 @@ public static class ChatTools
                     .Replace("玩家提供了具体、适用条件明确的做法", "交流中提供了具体、适用条件明确的做法")
                     + "\n" + Describe(string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7
                         || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4
-                        || f.Name == "training" && index == 5 || f.Name == "post" && index == 6)));
+                        || f.Name == "post" && index == 6)));
 
             // 严格格式要求对象内的字段全部必填，用字段组合保留原协议的可省略参数。
             string[] optional = properties.Keys.Except(required).ToArray();
@@ -140,7 +143,7 @@ public static class ChatTools
         if (group != null)
         {
             exampleReply["Reply"] = "明天一起看录像吧，我把今天没弄明白的地方整理好。";
-            exampleAction = new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p2", ["Participants"] = "p1|p2" };
+            exampleAction = new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" };
         }
         string exampleReasoning = group != null ? "共同活动已有成员同意参加，按实际日期、内容与谈妥的参与者登记一项活动邀请。" : "双方已经表达再次切磋的意向，按本轮实际日期与进阶登记邀请。";
         bool ending = turn?.Scene?.Ending == true;

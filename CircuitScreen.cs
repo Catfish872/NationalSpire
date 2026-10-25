@@ -117,7 +117,7 @@ public partial class CareerScreen
             int rank = 0;
             foreach (var row in CircuitWorld.TeamTable(c)) _content.AddChild(Text($"{++rank:00}   {CircuitWorld.TeamName(data, c, row.PersonId)}    {row.Points}分    {row.Wins}胜 {row.Draws}平 {row.Losses}负", 19, row.PersonId == data.Esports.ClubId ? _gold : _ink));
             _content.AddChild(Text("奇数赛季个人表现前二自动进入世界总决赛；其余席位按世界积分和本季表现补齐。", 17, CareerVisuals.Teal));
-            foreach (var row in EsportsWorld.Ranked(c).Take(6)) _content.AddChild(PersonLink(data, row.PersonId, $"{CareerEngine.DisplayName(data, row.PersonId)}   {row.Wins}胜 {row.Losses}负   ↗", 36));
+            foreach (var (row, personalRank) in EsportsWorld.Rankings(c).Take(6)) _content.AddChild(PersonLink(data, row.PersonId, $"{personalRank:00}   {CareerEngine.DisplayName(data, row.PersonId)}   {row.Wins}胜 {row.Losses}负   ↗", 36));
         }
         foreach (var round in c.Fixtures.GroupBy(f => f.Round).OrderBy(g => g.Key))
         {

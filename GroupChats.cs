@@ -114,7 +114,7 @@ public static class GroupChats
             }
             var t = new GroupTurn { Sender = Human(d), Day = d.Day, Order = NextOrder(d), Text = command.Text, Attachments = command.Attachments,
                 ArbitrationTargets = kind == "group-arbitrate" ? command.People.Where(g.Members.Contains).Where(id => PrivateMessages.CanChat(d, id)).Distinct().ToList() : [] };
-            foreach (var a in t.Attachments) { a.Id = (++g.LastInteractionNumber).ToString(); a.GroupId = g.Id; a.CoachAccepted = false; }
+            foreach (var a in t.Attachments) { a.Id = (++g.LastInteractionNumber).ToString(); a.GroupId = g.Id; }
             if (kind == "group-send" && !g.Members.Any(id => CanSpeak(d, id))) t.Status = "complete";
             ConsumerAttachments.Sent(d, t.Attachments);
             g.Turns.Add(t);
@@ -134,7 +134,6 @@ public static class GroupChats
             if (Rewind(probe, probeGroup, probeGroup.Turns[^1]) is { } error) return error;
             Rewind(d, g, last);
             last.Status = "queued"; last.Replies.Clear(); last.SpeechOrders.Clear(); last.Raw = last.Error = last.Reasoning = "";
-            foreach (var attachment in last.Attachments) attachment.CoachAccepted = false;
             int at = g.Turns.Count - 1;
             g.SmallSummaries.RemoveAll(s => s.Through > at); g.BigSummaries.RemoveAll(s => s.Through > at);
             g.SummarizedThrough = g.SmallSummaries.Concat(g.BigSummaries).Select(s => s.Through).DefaultIfEmpty(0).Max();

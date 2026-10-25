@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`59FB0E299426B8F14DECDA2871F0580CECCAC564D880E9F323E71902B16D134A`。来源：[源码](../../SocialAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`AB491B2817C9DB1A81A1301EBF9F02A1297E9CBE07B14C9D596F1420DD461CAD`。来源：[源码](../../SocialAppointments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -62,9 +62,8 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace("Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p1", "Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p2")`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace("Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p1", "Id: 0, Title: 一起看录像, Date: 2026-01-18, Detail: 讨论今天的比赛, Actor: p2")`
-- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1, Participants: p1|p2|p3]")          .Replace`
-- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor、Participants。Actor 填活动发起人的编号；Participants 填已经谈妥的完整参与者名单，以竖线分隔。一项共同活动输出一条标记。")          .Replace`
+- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor。Actor 填已经谈妥的完整参与者编号，包括参加活动的玩家，多人以竖线分隔。一项共同活动输出一条标记。处理活动附件时，逐一核对附件中的参与者，将已谈妥的完整名单填写到 Actor。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1|p2|p3]")`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor。Actor 填已经谈妥的完整参与者编号，包括参加活动的玩家，多人以竖线分隔。一项共同活动输出一条标记。处理活动附件时，逐一核对附件中的参与者，将已谈妥的完整名单填写到 Actor。")          .Replace("Detail: 讨论今天的比赛]", "Detail: 讨论今天的比赛, Actor: p1|p2|p3]")`
+- `string.Replace(string, string?)`；输入表达式：`Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor。Actor 填已经谈妥的完整参与者编号，包括参加活动的玩家，多人以竖线分隔。一项共同活动输出一条标记。处理活动附件时，逐一核对附件中的参与者，将已谈妥的完整名单填写到 Actor。")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Protocol          .Replace("每条活动标记完整填写 Activity、Id、Title、Date、Detail。", "群聊活动完整填写 Activity、Id、Title、Date、Detail、Actor。Actor 填已经谈妥的完整参与者编号，包括参加活动的玩家，多人以竖线分隔。一项共同活动输出一条标记。处理活动附件时，逐一核对附件中的参与者，将已谈妥的完整名单填写到 Actor。")          .Replace`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -73,7 +72,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.All(NationalSpire.CareerData) — public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> All(CareerData d)`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.NextEventDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-0dbe0f2d1cdc)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.PrivateAppointments.Schedule(NationalSpire.CareerData, string, int)`](PrivateAppointments.cs.md#symbol-8d91a4d33a55)；[`NationalSpire.RandomEventPrompts.Materials(NationalSpire.CareerData, NationalSpire.RandomEventRecord)`](RandomEventPrompts.cs.md#symbol-a96ac205ab9d)；[`NationalSpire.SocialAppointments.Due(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-d348017d127b)；[`NationalSpire.SocialAppointments.Expire(NationalSpire.CareerData)`](SocialAppointments.cs.md#symbol-53508b4eaa4e)
 
@@ -101,7 +100,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.Due(NationalSpire.CareerData) — public static IEnumerable<(PrivateConversation Conversation, PrivateOffer Offer)> Due(CareerData d)`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int, bool)`](CareerEngine.cs.md#symbol-0c04b8ec5f73)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-fecbe30f550e)
 
@@ -122,7 +121,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.Expire(NationalSpire.CareerData) — public static void Expire(CareerData d)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](Coop/CoopRules.cs.md#symbol-bc24477e89ba)
 
@@ -144,7 +143,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>) — public static void Respond(CareerData d, PrivateConversation c, PrivateTurn t, Dictionary<string, string> fields)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)
 
@@ -217,7 +216,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer) — public static string? Confirm(CareerData d, PrivateConversation c, PrivateOffer o)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -243,7 +242,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool) — public static string? Attend(CareerData d, PrivateOffer o, bool publicly = false, bool scene = false)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -275,7 +274,7 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
 
 ## `NationalSpire.SocialAppointments.PublishAttendance(NationalSpire.CareerData, NationalSpire.PrivateOffer) — internal static void PublishAttendance(CareerData d, PrivateOffer o)`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)；[`NationalSpire.WeddingAppointments.Complete(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-4cb46102c2e0)
 

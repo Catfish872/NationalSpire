@@ -129,7 +129,7 @@ EventPools.Get(AiOptions) 用 ConditionalWeakTable 按配置对象、当前模�
 
 附件回应提示由 ChatAttachments.ResponseGuide 统一定义，原文为：请根据交互格式要求来回应附件，口头回复不会视为成功回应。PrivateMessagePrompts.UserText 的 AI 材料分支、Context 中玩家界面请求和 GroupChatPrompts.UserText 在每份附件资料末尾调用 ChatAttachments.ResponseInstructions；社区举报的专用资料分支添加 ResponseGuide。覆盖礼物、活动、约战、训练、阵容、合同、比赛记录、帖子、评论引用和附加文字。UserText(forAi:false) 保持检索用原文。固定系统提示词继续使用既有协议；附件提示随当前轮次及历史附件材料组织，每份只添加一次，保存的附件正文保持原值。
 
-ResponseInstructions 输入 PrivateOffer、当前会话使用的附件编号、可选 GroupChat 及发送者编号，返回回应提示和适用的完整格式示例。示例从 GiftProtocol、SocialAppointments.Protocol/GroupProtocol、MatchProtocol、ClubCoaching.Protocol、CoachLineups.Protocol、ContractProtocol 提取，代入实际附件编号、活动资料、约战条件和群成员编号。礼物列接受/拒绝；活动列接受/改期/取消；约战列接受/拒绝/改期；训练列受训者接受，群聊另列指定教练同意/拒绝；阵容列同意/拒绝；合同沿用要价格式。群聊附带 Actions 行，多名训练、约战或合同对象分别具有完整示例。参考资料类附件返回 ResponseGuide。函数只创建字符串和示例列表；编号映射仍由 PrivateInteractionIds 管理，保存及广播沿调用者原流程执行。
+ResponseInstructions 输入 PrivateOffer、当前会话使用的附件编号、可选 GroupChat 及发送者编号，返回回应提示和适用的完整格式示例。示例从 GiftProtocol、SocialAppointments.Protocol/GroupProtocol、MatchProtocol、ClubCoaching.Protocol/GroupProtocol、CoachLineups.Protocol、ContractProtocol 提取，代入实际附件编号、活动资料、约战条件和群成员编号。礼物列接受/拒绝；活动列接受/改期/取消；约战列接受/拒绝/改期；群聊训练按全部受训者列出一条接受、一条拒绝示例，教练采用附件中的安排；阵容列同意/拒绝；合同沿用要价格式。群聊普通格式附带 Actions 行，约战或合同仍按对象给出示例；工具模式通过 ChatTools.Describe 将相同业务说明与实际示例转换为带 Type 的 JSON。多人活动和训练示例均只使用 Actor，字段列表以竖线分隔。参考资料类附件返回 ResponseGuide。函数只创建字符串和示例列表；编号映射仍由 PrivateInteractionIds 管理，保存及广播沿调用者原流程执行。
 
 验证：附件格式与原业务检查共891项，覆盖六类交互的私聊/群聊完整字段、实际编号、多人训练及取消活动名单。当前存档的11个场景分别调用 deepseek 与 ollama，每对请求的 messages 完全相同；deepseek 的7个场景、ollama 的11个场景达到预期标记及程序执行结果。deepseek 私聊收礼、群聊收礼、群聊拒礼及群聊取消活动遗漏标记。两模型均有日程或比赛细节偏离资料的正文，本次标记通过数量仅表示交互执行。群聊共同活动多条接受标记按同一附件归并为一项；新生成的取消记录复制附件 Participants。测试使用存档副本，经原解析器和交互入口执行，正式存档保持原值。11次本地上下文整理累计分别818.83/808.15毫秒，分配180749464/180737736字节；两个进程各重新启动一次，首次最高169.92/166.25毫秒。外部请求累计37.93/98.24秒，单列于本地整理；群聊冷启动100毫秒目标仍待完成。原始请求、响应、逐次计时和语义核对保留在本地验证资料。
 
@@ -187,6 +187,18 @@ PrivatePublicContext.PlayerCompetitionRecord(d, honorDay) 是玩家正式比赛�
 AppendPlayerProfile 调用本入口一次，私聊、约会 Context 与随机事件 PlayerRecord → PlayerProfile 因而获得同一份资料；GroupChatPrompts.Compose 在成员资料中调用一次；AiService.PlayerPublicRecord 在新闻和评论上下文调用一次，写入 competitionRecord。新闻荣誉采用该批帖子的最早日期，评论采用当前日期；累计计数明确标注当前统计日期。旧 worldHonors 最近两项与顶层 honors 最近三项由完整归并结果替代，seasonHistory 维持原近期赛季范围。各入口的近期比赛与战斗详情仍沿原材料提供。
 
 每次请求只遍历荣誉并合并赛季，没有新增模型调用、保存、同步或跨请求缓存。旧存档使用原计数和荣誉列表，下一次组织请求直接生效。验证使用工作区 RecentChatRepairChecks 的 --recent-chat-repairs，覆盖五届冠军、平局、零场、日期截点、各入口共用资料及保存副本恢复。
+
+## NPC完整荣誉
+
+PrivatePublicContext.NpcHonors(d, id, name, day) 统一返回具名荣誉文字，day 缺省为当前日期。读取截止日期内全部 CircuitAwards，以及 Ceremonies 中本人获得的个人奖、年度TOP前8名和所属俱乐部集体奖。俱乐部奖以该获奖期间的 EntrantClubs 与已完成且实际参与的 Fixtures 核对归属；年度奖检查对应四个赛季，赛季奖检查当季。本人及俱乐部的历史数据来自原存档，返回文字时不修改记录。
+
+赛事荣誉使用记录中的 Event、Place、Country；Country 表示参赛赛区，不采用赛事举办地。联赛MVP从原获奖 Reason 的俱乐部联赛全称保留赛区；俱乐部集体奖保留获奖俱乐部名称和所属赛区。同一名称、赛区和名次合并全部赛季，以第1、2赛季的形式排列。只输出一个人物荣誉标题和逐项荣誉，不加入颁奖细则。年度TOP仅保留前8名的具体名次及赛季。
+
+排序依次为世界总决赛、国家队世界杯、洲际俱乐部冠军杯、其他国际赛事、国内联赛；同类赛事按名次排列。之后依次为年度个人奖、年度TOP前8、赛季个人奖、联赛MVP、俱乐部集体奖。同类同名次再按最近取得赛季降序排列。
+
+Profiles → AppendAwards 用于私聊、约会和随机事件 Materials 的人物经历；群聊 Compose 在各NPC成员资料中调用；新闻和评论共用的 Persona 写入 worldHonors；BuildWeeklyContext 在选手介绍更新和周刊正文两种请求中写入 honors，并采用周刊截止日期。玩家仍使用 PlayerCompetitionRecord。组织文字只在原请求准备时执行，没有新增模型调用、存档字段、保存、同步或跨请求缓存；已有存档下一次请求直接采用完整记录。
+
+HonorWeddingChecks 的 --honor-wedding-checks 覆盖原诊断人物的完整赛季、历史赛区、排序、MVP、年度TOP边界、日期截止、随机事件材料及其余共用入口，并检查50赛季和人物跨赛区记录。原诊断单人物首次整理9.7毫秒、后续低于0.1毫秒；50赛季整理0.36毫秒、分配141080字节。该两人群聊完整上下文两次为4.03与11.78毫秒、各约3.1MB分配，未增加保存或广播；这些是本地整理测量，未包含模型网络等待，也不代表Steam跨机实测。
 
 ## 单人私信完整流程
 
@@ -314,7 +326,23 @@ group-rename 追加的 GroupEntry 通知通过 GroupChatPrompts.Compose 的 own 
 
 Compose 在本轮消息位置追加 ProactiveChats.Prompt，包含真实触发原因，最后一次附加等待玩家回应的提示。主动轮次通过 ProactiveReason 区分，历史组织保留 NPC 回复；CountReplies 在完成后重算连续次数。纯附件发送也重置连续联系次数。
 
-GroupInteractions.Apply 先解析人物编号、附件和成员资格，再按交互人物分组调用 PrivateMessages.Apply 或 SocialAppointments.Respond。同一轮中字段完全相同的 Activity 标记共用一次处理；不同日期、内容或参与者继续作为各自提议处理。共同活动按附件发起者归入同一交互记录；新建、改期和取消沿原交互回退记录保存。三名成员重复输出同一改期的复现检查现产生一项安排。
+GroupInteractions.Apply 从当前群的本轮及此前轮次读取附件，按附件编号去重，当前附件优先。Expand 将训练 Actor 名单展开为每名受训者，兼容旧回复中的逐人记录；旧教练表态沿兼容路径跳过，教练身份及训练条件由 ClubCoaching.TrainingError 读取附件判断。新活动 Actor 表示完整参与者，进入现有执行代码时转换为内部 GroupParticipants；旧回复的 Actor 与 Participants 组合仍可解析。同一附件的逐人活动回应沿原安排保留完整名单，已有活动改期沿用原名单。同轮相同训练决定去重；相同活动决定合并为一个安排。多人接受同一附件后，活动归入附件发起者的同一交互记录，不为每人复制日程。
+
+每个群的人物交互记录继续由 GroupChats.InLane 交给 PrivateMessages.Apply 或 SocialAppointments.Respond。ClubCoaching.AcceptTraining 通过 ChatAttachments.Find 在当前人物会话内寻找当前或历史附件；接受后建立该受训者的训练与接受记录，拒绝后记录拒绝。相同附件已有接受记录时再次接受复用原计划；新附件仍按原规则替换当前训练。训练的教练、期限、内容和资格判断保持由原训练模块负责。群内本轮生成的临时 PrivateTurn 同时携带明确引用的历史附件；查找范围保持在当前群的对应人物记录中。各群及私聊的同号附件分别处理。新建、改期、取消及训练变化沿 PrivateInteractionHistory 保存与回退，广播仍由原命令和生成完成回调执行。
+
+模型材料统一使用 Actor，存档中的 PrivateOffer.Participants 继续保存实际参与者。ChatTools.CompletePrompt 在返回完整请求前调用 GroupInteractions.PromptText，仅把旧 Activity 标记或 JSON 中的 Participants 转为 Actor；字段前后顺序和多行 JSON 均可转换，聊天原文及已保存总结保持原值。训练说明由 ClubCoaching.GroupProtocol 同时供普通和工具格式读取，工具示例仍由 Describe 转换，新增说明没有附加系统消息。PrivateMessagePrompts.Context 经 GroupChatPrompts.InteractionContext 读取当前人物参加的群活动，判断依据仍是实际保存的参与者；同一活动能进入每名参与者的私聊资料。
+
+验证入口 NationalSpire.Tests/GroupBatchChecks.cs 使用原诊断中14人、65轮历史和已有总结的存档副本，经官方 https://api.deepseek.com/v1/chat/completions、deepseek-v4-flash 实际请求。最终连续5次工具模式均完整登记多人训练及多人活动，受训人数分别2、3、4、5、11，含跨轮回应；工具保持 strict=true、指定 send_message、thinking.type=disabled。普通模式另测5次，其中4次未交标记，1次返回的训练与活动两条标记均解析执行成功。此前一次跨轮工具测试漏人，修改训练逐人判断说明后重新连续验证，失败原文与最终结果均保留在本地。97项针对性本地检查涵盖批量/逐人/混合返回、去重、跨轮、拒绝、工具数组名单、群间同号隔离、旧格式、保存重读和参与者私聊读取；另有1750项群聊与13项模拟主客机传输检查通过。真实返回重放10次分别测量分片解析、业务执行及保存重读，复用原生产入口。
+
+最终10次请求的完整上下文为14.3万—14.8万字符，保留原历史窗口和总结；仅把自动总结触发间隔调整为1000以隔离主回复测试，原材料仍保留。真实 SSE 在测试中先缓冲用于保存原文，再交原流式解析，验证分片与实际登记，不测首字延迟。工具5次网络分别6.31、5.96、7.45、5.65、4.77秒；每次主回复请求一次，保存回调分别6、6、10、6、5次（含流式发言顺序保存）。上下文首次整理分别153.25、72.55、66.65、66.69、118.56毫秒，再次整理74.73、30.95、31.56、32.85、32.08毫秒；首次分配38.46—39.12MB，再次17.55—18.16MB。100毫秒目标在两次首次整理中仍超标。测试没有实际游戏界面点击，也没有真实远程客机或断线测试；保存、赴约和私聊读取使用存档副本中的真实业务入口。
+
+上述正文点名的测试后，又按玩家要求进行高难度验证：每轮正文严格为大家训练，仅一份训练附件，保留原群14名成员、65轮历史、总结、私聊与帖子资料。五次使用随机种子251025至251029选择2、3、4、5、11名受训者，全部实际工具返回均覆盖对应名单，训练登记及保存重读通过。额外教练表态沿旧格式兼容跳过，逐人多条回复继续兼容；训练说明保持根据训练附件的安排，逐一决定每名受训者接受或拒绝的原文。普通模式同条件另测5次，2次分别返回2人、3人的有效训练接受，全部解析登记；其余3次没有交互标记。模型漏交和程序解析结果分别记录。
+
+高难度工具5次的首次上下文整理为105.63、115.42、69.66、96.55、81.42毫秒，再次为60.79、39.14、30.51、34.57、40.25毫秒；首次分配37.64—37.84MB，再次约16.74MB。网络分别5.86、4.76、4.39、6.64、5.29秒，每次主请求一次、保存回调6、6、6、8、8次。普通模式首次51.95—90.04毫秒，再次21.15—121.78毫秒，个别再次执行也超过100毫秒。最终普通群聊回归1744项及模拟主客机传输13项通过，工具模式模拟传输14项通过。单独运行旧 CoachChecks 整套检查时，在预约教练仍在原队的合同断言失败，尚未运行到训练检查；本次没有修改该合同转会流程，此项保留为未通过记录，不计入群聊附件通过数。
+
+最终针对性检查扩展至116项，增加原私聊历史、私聊与群聊总结原文保留，以及受训者私聊读取实际训练的检查。PrivateMessagePrompts.OfferContext 对已拒绝的训练单独生成实际人物、周数和内容组成的拒绝结果文字，已接受分支原文保留；该分支仅描述保存结果，训练协议原文沿用玩家确认版本。私聊拒绝附件经 PrivateMessages.Apply 保存后，不建立新训练；下一轮 Context 及保存重读均显示已拒绝，原有训练与已接受文字保持。真实返回重放同时复查这些人物的训练资料与原私聊、总结保持情况。
+
+拒绝资料修正后，重新从原诊断构造上述5次高难度工具请求与5次普通请求，10份完整 messages 与真实测试保存的请求逐字一致。最终源码下重放10份真实返回，工具解析0.322—0.397毫秒、业务执行0.567—6.663毫秒、JSON序列化及重读173.253—194.960毫秒；普通解析0.021—0.132毫秒、业务执行0.037—10.300毫秒、JSON序列化及重读183.824—260.103毫秒。这里的保存测量只含测试存档副本的序列化和反序列化，磁盘写入与真实网络广播没有计入；上下文、解析、执行与保存各自计时，不与包含它们的整次请求时间相加。全部原始逐次耗时和分配量保留在本地验证结果中。
 
 CardKnowledge.Find 分别由 PrivateMessagePrompts.Compose、GroupChatPrompts.Compose、AiDiscussion 的玩家发帖/回帖材料调用。输入仅为本轮玩家文字，首次按 SourceVersion 建立首字索引，完整名称按最长匹配并按卡牌编号去重；当前语言变化后重建。动态描述位于本轮资料，固定指令前缀沿用原值。匹配结果统一使用卡牌参考资料标题，紧接说明：以下资料由卡名匹配自动补充。请结合上下文，只有确实在谈对应卡牌时才参考其效果；日常用词按原意理解，顺着当前话题自然回应。空匹配继续返回空字符串。检索、卡牌效果与玩家模板保持原流程，语境判断由生成回复的模型结合聊天材料执行。GameCardKnowledge 使用当前加载卡牌定义生成名称及效果资料。此处只生成请求材料，保存、广播和缓存失效条件沿用原流程。
 
@@ -345,7 +373,7 @@ CardKnowledge.Find 分别由 PrivateMessagePrompts.Compose、GroupChatPrompts.Co
 | LeadingReasoningStream | 响应开头完整 think 标签，允许跨分片 | 思考与后续正文分开；思考示例不交给交互解析 | RequestPrivateAsync 的 reasoning 与正文回调 |
 | PrivateStreamParser | 私信正文流 | 显示正文、Directives、Error | 私信页面与 PrivateMessages.Apply |
 | GroupStreamParser | 群聊正文流、Speaker、统一交互区 | Messages、Actions.Directives、Error | 逐条界面与 GroupInteractions.Apply |
-| GroupInteractions | Actor / Target / Participants / Related 与标记 | 解析真实成员，按人物方向建立 Lane，复用私信规则 | 卡片、关系、训练、活动、发帖等 |
+| GroupInteractions | Actor / Target / Related 与标记，兼容旧 Participants | 解析完整参与者或受训者名单，按人物方向建立 Lane，复用私信规则 | 卡片、关系、训练、活动、发帖等 |
 | PrivateMessages.Apply | 有效轮次、标记及原好感 | 合同/约战提案、关系、学习、状态、资料、训练与活动规则结果 | 保存、卡片、记忆、回退 |
 | 各业务规则 | 人物、日期、附件、合同、席位、资金等 | 成功状态或原因；有的提案等待玩家确认 | 不因正文“同意了”而自动成功 |
 

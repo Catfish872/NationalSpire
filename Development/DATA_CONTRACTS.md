@@ -100,7 +100,7 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 
 ## 国运、模拟与经济数据
 
-- FailureDecision.Result 保存失利待选择的原成绩，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。已正式结算的历史继续沿用原记录。
+- FailureDecision.Result 保存失利或未通关获胜的待选择原成绩，Outcome 保存真实胜负，Win 表示通关，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。FailureDecision 类型、Failure 字段与命令编号沿用旧档格式。原始成绩及选择另写入现有轮换诊断，清除待选择对象继续保留已写入日志。已正式结算的历史继续沿用原记录。
 
 - WorldCompetition.FortuneVersion：0 为旧赛事，整届结束发放；1 为新建国际赛事，逐场发放。旧档已生成赛事保持 0，防止重复发放历史赛果。
 - WorldFixture.FortuneSettled 防止重复确认赛果；PromotionSettled 防止重复结算团体胜负贡献；Fortune 保存各人的有符号本场贡献，DevelopmentChanges 保存实际等级及临时增强变化。团体整轮完成后统一结算，建设变化写入最后完成的对局。预生成成绩不设置收据。
@@ -157,6 +157,10 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 旧记录可能没有同日顺序。ChatTimeline 明确注明旧记录缺少先后信息。日期仍以天为单位，不新增实际时间字段。
 
 ## 聊天、总结与交互
+
+群聊模型输出中的 Actor 在活动中保存完整参与者编号，在训练中保存本次作出相同决定的全部受训者编号，多人以竖线分隔。其他交互沿各自原人物方向处理。模型说明及示例统一使用 Actor；GroupInteractions.Expand 在执行时转换为原内部 GroupParticipants，最终仍写入 PrivateOffer.Participants。旧存档及旧返回中的 Participants 保留读取兼容，构造模型请求时只转换材料副本，存档原文保持原值。
+
+训练附件保留 CoachId、Participants、Weeks、Detail 和原附件 Id。CoachAccepted 已从数据类移除，旧 JSON 中的同名属性由现有反序列化忽略；教练采用附件安排。ClubCoaching.AcceptTraining 在当前会话的附件历史中按编号查找，接受记录和计划仍归对应受训者。接受记录中的内部编号以冒号加原附件编号结尾，重复接受同一附件据此复用原计划；各会话和群人物记录分别查找，不形成全局附件编号。训练拒绝保存为已拒绝的 training offer，不建立新计划。重新生成仍沿现有交互历史恢复计划及卡片。
 
 PrivateConversation.DateDiaries 保存本人物与当前玩家的约会条目：OfferId、赛季及日期、标题、活动内容、地点和第一人称日记。OfferId 标识一次约会，Begin 幂等建立条目。Complete 从同一次结束感想回复提取 DateDiary 与 Location，正文仍归 PrivateTurn.Reply，日记集合供 DateDiaryDialog 查看。未返回日记标记时保留已成功生成的感想并记录提示；原重生成可重试该轮。旧条目为空时 Records 从已有约会开场/结束记录组织可查看的历史资料，实际保存仍沿原会话。
 

@@ -64,12 +64,12 @@ public partial class CareerScreen
         if (c.Finished) _content.AddChild(WithAvatar(data, c.ChampionId, Text($"冠军：{CareerEngine.DisplayName(data, c.ChampionId)}    ·    {(c.Kind == "worldcup" ? EsportsWorld.HistoricCountry(data, c, c.ChampionId) : EsportsWorld.ClubName(data, EsportsWorld.HistoricClub(data, c, c.ChampionId)))}", 23, CareerVisuals.Teal), 56));
         if (c.Kind == "league")
         {
-            _content.AddChild(Text("排名依次比较：积分、胜场、通关次数、赛前顺位。三轮结束后，前二获得国际赛事候选资格。", 16, _muted));
-            var table = Card(); _content.AddChild(table); var tb = Inner(table); int rank = 0;
-            foreach (var row in EsportsWorld.Ranked(c))
+            _content.AddChild(Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。", 16, _muted));
+            var table = Card(); _content.AddChild(table); var tb = Inner(table);
+            foreach (var (row, rank) in EsportsWorld.Rankings(c))
             {
                 var line = new HBoxContainer(); tb.AddChild(line);
-                var name = PersonLink(data, row.PersonId, $"{++rank:00}   {CareerEngine.DisplayName(data, row.PersonId)}   ↗", 36); line.AddChild(name);
+                var name = PersonLink(data, row.PersonId, $"{rank:00}   {CareerEngine.DisplayName(data, row.PersonId)}   ↗", 36); line.AddChild(name);
                 line.AddChild(Text($"{EsportsWorld.ClubName(data, EsportsWorld.HistoricClub(data, c, row.PersonId))}    ·    {row.Points} 分    ·    {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负    ·    {row.Clears} 次通关", 16, row.PersonId == "player" ? _gold : _muted));
             }
         }

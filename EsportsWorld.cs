@@ -23,12 +23,45 @@ public static class EsportsWorld
         : p.Role is "职业选手" or "世界顶尖" || p.AbilityTemplate is "职业选手" or "世界顶尖";
     public static string StageName(string kind) => kind switch { "local" => "社区赛事", "city" => "城市公开赛", "academy" => "青训选拔", "open" => "赛区巡回公开赛", "league" => "国内职业联赛", "continental" => "洲际俱乐部冠军杯", "worldcup" => "国家队世界杯", "worldfinal" => "世界总决赛", "masters" => "世界纪录邀请赛", _ => "历史赛事" };
     public static string CupRound(string kind, int round) => kind == "worldcup" ? new[] { "八强赛", "半决赛", "决赛" }[Math.Clamp(round - 1, 0, 2)] : new[] { "十六强赛", "八强赛", "半决赛", "决赛" }[Math.Clamp(round - 1, 0, 3)];
-    public static IEnumerable<CareerStanding> Ranked(WorldCompetition c) => c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending(x => x.Clears).ThenBy(x => c.Entrants.IndexOf(x.PersonId));
+    /// <summary>已结束比赛的通关用时参与个人排名，全部竞技指标相同的选手使用同一名次。</summary>
+    public static IReadOnlyList<(CareerStanding Standing, int Rank)> Rankings(WorldCompetition c)
+    {
+        var times = new Dictionary<string, (double Seconds, int Count)>();
+        foreach (var f in c.Fixtures.Where(f => c.Kind == "league" && f.Finished))
+        {
+            Add(f.HomeId, f.HomeCleared, f.HomeSeconds);
+            Add(f.AwayId, f.AwayCleared, f.AwaySeconds);
+        }
+        double Mean(string id) => times.TryGetValue(id, out var t) ? t.Seconds / t.Count : 0;
+        var sorted = c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)
+            .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy(x => c.Entrants.IndexOf(x.PersonId)).ToArray();
+        var result = new List<(CareerStanding Standing, int Rank)>(sorted.Length);
+        int rank = 0;
+        for (int i = 0; i < sorted.Length; i++)
+        {
+            var row = sorted[i];
+            if (c.Kind != "league" || i == 0 || row.Points != sorted[i - 1].Points || row.Wins != sorted[i - 1].Wins ||
+                row.Clears != sorted[i - 1].Clears || Mean(row.PersonId) != Mean(sorted[i - 1].PersonId)) rank = i + 1;
+            result.Add((row, rank));
+        }
+        return result;
+        void Add(string id, bool cleared, double? seconds)
+        {
+            if (!cleared || !seconds.HasValue) return;
+            var t = times.GetValueOrDefault(id); times[id] = (t.Seconds + seconds.Value, t.Count + 1);
+        }
+    }
+    public static IEnumerable<CareerStanding> Ranked(WorldCompetition c) => Rankings(c).Select(r => r.Standing);
+    public static int Rank(WorldCompetition c, string id) => Rankings(c).FirstOrDefault(r => r.Standing.PersonId == id).Rank;
+    public static IEnumerable<string> DirectQualifiers(CareerData d, WorldCompetition c) => Rankings(c)
+        .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)
+        .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))
+        .Take(2).Select(r => r.Standing.PersonId);
     public static WorldCompetition? PlayerLeague(CareerData d) => d.Esports.Competitions.FirstOrDefault(c => c.Season == d.Season && c.Kind == "league" && c.Country == (Club(d, d.Esports.ClubId)?.Country ?? d.Esports.Country));
     public static int DomesticRank(CareerData d)
     {
         var c = PlayerLeague(d); if (c == null || !c.PlayerEntered) return 0;
-        return Ranked(c).ToList().FindIndex(x => x.PersonId == "player") + 1;
+        return Rank(c, "player");
     }
 
     public static void Initialize(CareerData d)

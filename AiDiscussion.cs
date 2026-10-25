@@ -130,7 +130,7 @@ public static partial class AiService
             ["Role"] = p.Role, ["Country"] = p.Country, ["profileAsOfDay"] = known ? (int?)(profileDay ?? data.Day) : null,
             ["club"] = known ? EsportsWorld.ClubName(data, p.ClubId) : null, ["Character"] = CharacterIdentity.Name(data, p.Character), ["Style"] = p.Style,
             ["identities"] = p.Identities, ["familiarPeople"] = p.Connections.Take(2).Select(id => CareerEngine.DisplayName(data, id)),
-            ["worldHonors"] = CircuitLedger.PublicStanding(data, p.Id, day ?? data.Day), ["MaxAscension"] = known ? (int?)p.MaxAscension : null,
+            ["worldHonors"] = PrivatePublicContext.NpcHonors(data, p.Id, p.PublicName, day ?? data.Day), ["MaxAscension"] = known ? (int?)p.MaxAscension : null,
             ["Wins"] = known ? (int?)p.Wins : null, ["Losses"] = known ? (int?)p.Losses : null,
             ["introduction"] = p.IntroductionDay <= (day ?? data.Day) ? p.AiIntroduction : "",
             ["introductionAsOfDay"] = p.IntroductionDay <= (day ?? data.Day) ? p.IntroductionDay : 0,

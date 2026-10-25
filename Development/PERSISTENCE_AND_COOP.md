@@ -95,9 +95,9 @@ Data 属性不只是获取字段：首次读取会加载文件、恢复备份、
 
 ## 经济操作的提交、同步与恢复
 
-模拟失利的 FinishMatch 在写入正式赛果前保存 Failure.Result 与原对手 Opponent，返回待选择界面。确认失败经 MatchFailure.RestoreMatch 恢复原比赛参数，再执行完整结算；实际重赛沿原 GameBridge 保存绑定并启动游戏，开局成功后清除原 Failure。退出或切换后由完整生涯恢复待选择。旧 Opponent 缺省值在再次选择时补齐，计算发生在该次选择中。单人正式资料、多人个人战绩、国运、行情、帖子及结算收据在最终确认或实际重赛完成时写入。
+实际或模拟比赛失利、未通关获胜的 FinishMatch 在写入正式赛果前保存 Failure.Result 与原对手 Opponent，返回待选择界面。确认结果经 MatchFailure.RestoreMatch 恢复原比赛参数，再执行完整结算；实际重赛沿原 GameBridge 保存绑定并启动游戏，开局成功后清除原 Failure。退出或切换后由完整生涯恢复待选择。旧 Opponent 缺省值在再次选择时补齐，计算发生在该次选择中。单人正式资料、多人个人战绩、国运、行情、帖子及结算收据在最终确认或实际重赛完成时写入。原始尝试、确认及重赛选择写入既有诊断轮换文件，待选择对象清除后仍可按比赛、种子、时间和尝试编号追溯。
 
-多人 Settle 的失利分支保留 Run.Terminal 和 decision 阶段。failure-retry 保存 RetryRequested 并建立原 start 投票；取消投票保留 Terminal，failure-confirm 仍可结算原模拟成绩。全队确认时在 Apply 候选副本中清除旧 Run 并 Prepare；成功形成新实际对局，失败返回原 World。每条命令继续执行原检查点、回执和广播；断线及进程关闭后从已提交检查点恢复。二人/四人专项已实际写入、读取检查点，并验证取消后确认与真实重赛最终结算；Steam断线和原版启动的本轮实际操作待实测。
+多人 Settle 的待选择分支保留 Run.Terminal 和 decision 阶段，失利与未通关获胜共用此分支。failure-retry 保存 RetryRequested 并建立原 start 投票；取消投票保留 Terminal，failure-confirm 仍可结算原实际或模拟成绩。全队确认时在 Apply 候选副本中清除旧 Run 并 Prepare；成功形成新实际对局，失败返回原 World。每条命令继续执行原检查点、回执和广播；断线及进程关闭后从已提交检查点恢复。二人/四人专项已实际写入、读取检查点，并验证取消后确认与真实重赛最终结算；Steam断线和原版启动的本轮实际操作待实测。
 
 FinishMatch → CompleteMatchDay在原赛后保存之前完成当天NPC赛果、签表、奖励和行情。单人仍由FinishMatch末尾Save提交；多人仍在CoopRules.Settle副本中计算，之后Distribute/Capture、Commit、检查点和广播一次完成。没有增加保存或广播，没有修改重试、回执及断线恢复。Fixture的MarketSettled和已完成标识、AddRound已有轮次判定确保再次EndDay不重复结算。玩家同日其他未赛场次保持待赛；其他人的私人持仓仍由原快照过滤规则处理。
 
@@ -123,7 +123,7 @@ Account是单账户包装，调用Accounts(MarketState,IReadOnlyList<MarketAccou
 
 Trade开平仓、Fixture和Advance共用上述入口；没有异步间隙、额外保存或广播。margin与stop修改本人Trading，新仓同时更新市场Revision；EconomicActions经RevisionCopy复制标量版本并复制个人资金资料，成功一次保存，失败完整恢复。追加与止损设置、取消均检查QuoteRevision；界面输入时不提交，确认后立即收起编辑区，避免同一展开表单重复确认。多人仍由原命令Id、Epoch和Revision去重与鉴权。旧档无StopPrice时不增加止损，InitialMargin在首次追加前从旧Margin填写，原成本及手续费不重新定价。
 
-行情目录补齐与旧档PricingVersion升级共用原加载事务。Initialize按统一品牌目录补齐缺少的报价和60条起始曲线，记录目录指纹；首次检查资产键后使用当前MarketState的CheckedQuoteCount缓存。JSON复制及恢复检查点重建运行期缓存。原Quote、History、钱包和仓位继续沿用；补齐结果随原保存或Commit提交。离开页面、关闭进程及断线继续由原完整存档和检查点恢复。旧档 PricingVersion 升级在原加载事务中处理遗留信号；多人恢复由 InitializeMarket 先绑定全部账户，再 Initialize，最后沿原恢复 Commit 保存。失败决定和同成绩加赛均在正式 Fixture 之前返回，因此没有行情变化；确认失败只正式结算一次。重赛不需要撤销已计价信号，也没有新增封锁交易条件。
+行情目录补齐与旧档PricingVersion升级共用原加载事务。Initialize按统一品牌目录补齐缺少的报价和60条起始曲线，记录目录指纹；首次检查资产键后使用当前MarketState的CheckedQuoteCount缓存。JSON复制及恢复检查点重建运行期缓存。原Quote、History、钱包和仓位继续沿用；补齐结果随原保存或Commit提交。离开页面、关闭进程及断线继续由原完整存档和检查点恢复。旧档 PricingVersion 升级在原加载事务中处理遗留信号；多人恢复由 InitializeMarket 先绑定全部账户，再 Initialize，最后沿原恢复 Commit 保存。结果待选择和同成绩加赛均在正式 Fixture 之前返回，因此没有行情变化；确认结果只正式结算一次。重赛不需要撤销已计价信号，也没有新增封锁交易条件。
 
 PrivateSnapshot 与 SnapshotEncoder 同时清空共同 Life 及其他成员 Life 的 Consumer、Trading，本人数据保留。编码使用只读默认空值字节，不共享可修改个人集合。消费事实按原公开事件处理；私信保存回调读取最新成员，只合并对应信箱、关系与交互，不覆盖交易账户。
 

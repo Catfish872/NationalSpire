@@ -350,8 +350,7 @@ public partial class CareerScreen
             if (PrivateMessageCommands.Apply(data, kind, person, command) is { } error)
             {
                 if (kind == "dm-confirm") { CareerStore.Save(data); _privateSignature = ""; }
-                _privateStatus!.Text = error;
-                if (_dateView != null) _dateView.Status.Text = error;
+                ShowPrivateCommandError(error);
                 return;
             }
             CareerStore.Save(data); accepted?.Invoke(); _privateListSignature = _privateSignature = "";
@@ -362,7 +361,14 @@ public partial class CareerScreen
             if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-date-open" or "dm-date-end" or "dm-date-revise") _ = AiService.ProcessPrivateAsync(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
             if (kind == "dm-summary") _ = AiService.SummarizePrivateManually(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
         }
-        catch (Exception e) { if (_privateStatus != null) _privateStatus.Text = AiService.FailureReason(e); if (_dateView != null) _dateView.Status.Text = AiService.FailureReason(e); }
+        catch (Exception e) { ShowPrivateCommandError(AiService.FailureReason(e)); }
+    }
+    private void ShowPrivateCommandError(string error)
+    {
+        if (_privateStatus != null) { _privateStatus.Text = error; _privateStatus.Show(); }
+        if (_dateView != null) _dateView.Status.Text = error;
+        if (_dialogOverlay?.FindChild("DateAttendanceError", true, false) is Label reason)
+        { reason.Text = error; reason.Show(); }
     }
     private void PrivateSettings()
     {

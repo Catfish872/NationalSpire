@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`59291BF7429AF35486F39DD6EB02DCDA9F9129A0019F40A9F67CD289323DAA07`。来源：[源码](../../PrivateMessagePrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`51674FDA4B35CBC795F40F9A76A25CA4F60F0C8630AD5B75AD5B4D648264FBE0`。来源：[源码](../../PrivateMessagePrompts.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -523,7 +523,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 ## `NationalSpire.PrivateMessagePrompts.Section(NationalSpire.CareerData, string) — internal static string Section(CareerData data, string id)`
 
-来源：源码第 336 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?, string?, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-de94bbbea5ea)；[`NationalSpire.SpireArbitration.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-6116255f39e7)
 
@@ -543,7 +543,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 ## `NationalSpire.PrivateMessagePrompts.Serialize<T>(T) — private static string Serialize<T>(T value)`
 
-来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?, string?, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-de94bbbea5ea)
 

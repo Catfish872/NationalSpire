@@ -125,8 +125,64 @@ public static partial class PrivatePublicContext
 
     private static void AppendAwards(StringBuilder b, CareerData d, string id, string name)
     {
-        foreach (var group in d.Esports.CircuitAwards.Where(a => a.PersonId == id && a.Day <= d.Day).GroupBy(a => (a.Event, a.Place)))
-            b.AppendLine($"{name}的赛事荣誉：{group.Key.Event}{group.Key.Place}（{string.Join("、", group.Select(a => "第" + a.Season + "赛季").Distinct())}）。");
+        if (NpcHonors(d, id, name) is { Length: > 0 } honors) b.AppendLine(honors);
+    }
+
+    /// <summary>按发生日期整理人物的赛事及颁奖荣誉；历史赛区随记录读取，同类荣誉合并全部赛季。</summary>
+    public static string NpcHonors(CareerData d, string id, string name, int? day = null)
+    {
+        int cutoff = day ?? d.Day;
+        var rows = new List<(string Title, string Region, int Category, int Place, int Season)>();
+        var results = d.Esports.CircuitAwards.Where(a => a.PersonId == id && a.Day <= cutoff).ToArray();
+        foreach (var a in results)
+        {
+            int category = a.Kind switch { "worldfinal" => 0, "worldcup" => 1, "continental" => 2, "league" => 4, _ => 3 };
+            int place = a.Stage > 0 ? a.Stage : a.Place == "冠军" ? 1 : a.Place == "亚军" ? 2
+                : int.TryParse(System.Text.RegularExpressions.Regex.Match(a.Place, @"\d+").Value, out int rank) ? rank : int.MaxValue;
+            rows.Add((a.Event + a.Place, a.Country.Length > 0 ? "代表" + a.Country + "赛区" : "", category, place, a.Season));
+        }
+        foreach (var ceremony in d.Ceremonies.Where(c => c.Day <= cutoff))
+        {
+            foreach (var award in ceremony.Awards)
+            {
+                bool received = award.WinnerId == id || award.Recipients.Contains(id);
+                if (!received && award.ClubId.Length > 0)
+                {
+                    int first = award.Title.StartsWith("年度", StringComparison.Ordinal) ? ceremony.Season - 3 : ceremony.Season;
+                    received = d.Esports.Competitions.Any(c => c.Season >= first && c.Season <= ceremony.Season
+                        && c.EntrantClubs.GetValueOrDefault(id) == award.ClubId && c.Fixtures.Any(f => f.Finished && !f.Walkover
+                            && (f.HomeId == id || f.AwayId == id || f.HomeParticipants.Contains(id) || f.AwayParticipants.Contains(id))));
+                }
+                if (!received) continue;
+                string title = award.Title, region = "";
+                int category = award.ClubId.Length > 0 ? 9 : title.StartsWith("年度", StringComparison.Ordinal) ? 5 : title == "联赛 MVP" ? 8 : 7;
+                if (award.ClubId.Length > 0)
+                {
+                    title += "·" + award.WinnerName;
+                    if (EsportsWorld.Club(d, award.ClubId) is { Country.Length: > 0 } club) region = club.Country + "赛区";
+                }
+                else if (title == "联赛 MVP")
+                {
+                    var league = System.Text.RegularExpressions.Regex.Match(award.Reason, @"^(.+?俱乐部联赛)");
+                    if (league.Success) title = league.Groups[1].Value + "MVP";
+                }
+                rows.Add((title, region, category, title.StartsWith("年度", StringComparison.Ordinal) ? 0 : 1, ceremony.Season));
+            }
+            foreach (var rank in ceremony.YearTop.Where(r => r.Id == id && r.Place is >= 1 and <= 8))
+                rows.Add(($"年度TOP第{rank.Place}名", "", 6, rank.Place, ceremony.Season));
+        }
+        var grouped = rows.GroupBy(r => (r.Title, r.Region, r.Category, r.Place))
+            .OrderBy(g => g.Key.Category).ThenBy(g => g.Key.Place).ThenByDescending(g => g.Max(r => r.Season))
+            .ThenBy(g => g.Key.Title, StringComparer.Ordinal).ThenBy(g => g.Key.Region, StringComparer.Ordinal);
+        var b = new StringBuilder();
+        foreach (var group in grouped)
+        {
+            if (b.Length == 0) b.AppendLine(name + "的荣誉：");
+            b.Append(group.Key.Title).Append('（');
+            if (group.Key.Region.Length > 0) b.Append(group.Key.Region).Append('；');
+            b.Append('第').Append(string.Join("、", group.Select(r => r.Season).Distinct().Order())).AppendLine("赛季）。");
+        }
+        return b.ToString().TrimEnd();
     }
 
     private static void AppendProfileClub(StringBuilder b, CareerData d, string id, string name, string speaker,

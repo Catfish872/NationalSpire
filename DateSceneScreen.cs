@@ -251,6 +251,7 @@ public partial class CareerScreen
                         () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });
                     choices.AddChild(choice);
                 }
+                var error = Text("", 16, new Color("ee929d")); error.Name = "DateAttendanceError"; error.Hide(); box.AddChild(error);
             }, showCancel: false);
         };
         row.AddChild(button);

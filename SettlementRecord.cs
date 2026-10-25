@@ -78,8 +78,10 @@ public static partial class SettlementRecords
             int index = table.FindIndex(r => r.PersonId == id); if (index < 0) return;
             var row = table[index];
             var nearby = Enumerable.Range(Math.Max(0, Math.Min(index - 1, table.Count - 4)), Math.Min(4, table.Count));
-            snapshot.Standings.Add(new() { Title = title, Value = $"第 {index + 1} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",
-                Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {i + 1:00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() });
+            var ranks = title == "联赛个人" && c != null ? EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank) : null;
+            int Rank(int i) => ranks?.GetValueOrDefault(table[i].PersonId) ?? i + 1;
+            snapshot.Standings.Add(new() { Title = title, Value = $"第 {Rank(index)} 名", Detail = $"{row.Points} 分 · {row.Wins} 胜 {row.Draws} 平 {row.Losses} 负",
+                Nearby = nearby.Select(i => $"{(table[i].PersonId == id ? "▸" : " ")} {Rank(i):00}  {name(table[i].PersonId)} · {table[i].Points} 分").ToList() });
         }
     }
 }
@@ -255,9 +257,10 @@ public static partial class SettlementRecords
         void AddLeagueTable(string id, string title, List<CareerStanding> standings, string own, Func<string, string> name)
         {
             var table = new CompetitionTable { Id = id, Title = title, Note = "积分相同时，按赛事规则排列" };
+            var ranks = id == "personal" ? EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank) : null;
             for (int i = 0; i < standings.Count; i++)
             {
-                var r = standings[i]; table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"));
+                var r = standings[i]; table.Rows.Add(Row(id, r.PersonId, name(r.PersonId), r.PersonId == own, ranks?.GetValueOrDefault(r.PersonId) ?? i + 1, r.Points, $"{r.Wins}胜 {r.Draws}平 {r.Losses}负"));
             }
             review.Tables.Add(table);
         }

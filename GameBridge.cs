@@ -82,6 +82,7 @@ public static class GameBridge
             long savedAt = clock.ElapsedMilliseconds;
             stage = "执行原生开局";
             await (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!;
+            if (data.Failure != null) MatchFailure.Record(data, "retry-started");
             data.Failure = null; CareerStore.Save(data);
             GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");
             Diagnostics.Record("match.started", new { match.Id, match.Seed, ascension, saveMs = savedAt - preparedAt, prepareMs = preparedAt, startMs = clock.ElapsedMilliseconds - savedAt });

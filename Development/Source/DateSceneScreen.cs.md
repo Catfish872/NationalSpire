@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4DF7C4A79BBA82564FA8B8CF8243A83B64C688091B83E6B56AB97C22A4182A6B`。来源：[源码](../../DateSceneScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F8926A9CD1D2D775EF330F4942692E0E3C555626095DEE5F0BF3BAF5D8907EC0`。来源：[源码](../../DateSceneScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -526,17 +526,20 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 **调用者：** [`NationalSpire.CareerScreen.AddPrivateOffer(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateMessageScreen.cs.md#symbol-c7881d245b3d)
 
-**调用：** [`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.DateScenes.OneToOne(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-dccb0fff0030)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.DateChoiceButton.DateChoiceButton()`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`](PrivateMessageScreen.cs.md#symbol-7d2faf7b7d58)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.DateScenes.OneToOne(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-dccb0fff0030)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.DateChoiceButton.DateChoiceButton()`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；`NationalSpire.CareerScreen.PromptDateScene(string)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.DateChoiceButton.Caption`；`NationalSpire.DateChoiceButton.Public`；`NationalSpire.DateChoiceButton.Subtitle`；`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.DateScenes.OneToOne(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateMessageCommand.Offer`；`NationalSpire.PrivateMessageCommand.Part`；`NationalSpire.PrivateMessageCommand.SceneAttendance`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.State`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；`NationalSpire.CareerScreen.PromptDateScene(string)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.DateChoiceButton.Caption`；`NationalSpire.DateChoiceButton.Public`；`NationalSpire.DateChoiceButton.Subtitle`；`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.DateScenes.OneToOne(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateMessageCommand.Offer`；`NationalSpire.PrivateMessageCommand.Part`；`NationalSpire.PrivateMessageCommand.SceneAttendance`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.State`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Callable.CallDeferred(params Godot.Variant[])`；输入表达式：`Callable.From(() => PromptDateScene(offer.Id)).CallDeferred()`；返回值紧邻使用处：`ExpressionStatementSyntax: Callable.From(() => PromptDateScene(offer.Id)).CallDeferred();`
 - `Godot.Callable.From(System.Action)`；输入表达式：`Callable.From(() => PromptDateScene(offer.Id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Callable.From(() => PromptDateScene(offer.Id)).CallDeferred`
+- `Godot.CanvasItem.Hide()`；输入表达式：`error.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: error.Hide();`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("ee929d")`；返回值紧邻使用处：`ArgumentSyntax: new Color("ee929d")`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`choices.AddThemeConstantOverride("separation", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: choices.AddThemeConstantOverride("separation", 20);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(choices)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(choices);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(error)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(error);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`choices.AddChild(choice)`；返回值紧邻使用处：`ExpressionStatementSyntax: choices.AddChild(choice);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(button);`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(150, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(150, 48)`
@@ -545,7 +548,8 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 - `NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?)`；输入表达式：`PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); })`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); })`
 - `NationalSpire.CareerScreen.PromptDateScene(string)`；输入表达式：`PromptDateScene(offer.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: PromptDateScene(offer.Id);`
 - `NationalSpire.CareerScreen.PromptDateScene(string)`；输入表达式：`PromptDateScene(offer.Id)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => PromptDateScene(offer.Id)`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }              }, showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }              }, showCancel: false);`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }                  var error = Text("", 16, new Color("ee929d")); error.Name = "DateAttendanceError"; error.Hide(); box.AddChild(error);              }, showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }                  var error = Text("", 16, new Color("ee929d")); error.Name = "DateAttendanceError"; error.Hide(); box.AddChild(error);              }, showCancel: false);`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, new Color("ee929d"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 16, new Color("ee929d"))`
 - `NationalSpire.DateChoiceButton.DateChoiceButton()`；输入表达式：`new DateChoiceButton { Name = "ExclusiveDate", Caption = conversation.DateSceneStates.GetValueOrDefault(offer.Id) == "paused" ? "继续约会" : "专属约会", CustomMinimumSize = new(150, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new DateChoiceButton { Name = "ExclusiveDate", Caption = conversation.DateSceneStates.GetValueOrDefault(offer.Id) == "paused" ? "继续约会" : "专属约会", CustomMinimumSize = new(150, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter }`
 - `NationalSpire.DateChoiceButton.DateChoiceButton()`；输入表达式：`new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`；输入表达式：`DateScenes.Available(data, offer, conversation)`；返回值紧邻使用处：`BinaryExpressionSyntax: attend || DateScenes.Available(data, offer, conversation)`
@@ -558,12 +562,13 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 **赋值（含属性/字段和局部值）：**
 
-- `button.Pressed` += `() =>          {              if (!attend) { PromptDateScene(offer.Id); return; }              ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }              }, showCancel: false);          }`
+- `button.Pressed` += `() =>          {              if (!attend) { PromptDateScene(offer.Id); return; }              ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>              {                  var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);                  foreach (bool visible in new[] { false, true })                  {                      var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",                          Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,                          CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };                      choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });                      choices.AddChild(choice);                  }                  var error = Text("", 16, new Color("ee929d")); error.Name = "DateAttendanceError"; error.Hide(); box.AddChild(error);              }, showCancel: false);          }`
 - `Caption` = `conversation.DateSceneStates.GetValueOrDefault(offer.Id) == "paused" ? "继续约会" : "专属约会"`
 - `Caption` = `visible ? "公开赴约" : "私密赴约"`
 - `choice.Pressed` += `() => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },                          () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); })`
 - `CustomMinimumSize` = `new(150, 48)`
 - `CustomMinimumSize` = `new(290, 150)`
+- `error.Name` = `"DateAttendanceError"`
 - `Name` = `"ExclusiveDate"`
 - `Name` = `visible ? "DatePublicChoice" : "DatePrivateChoice"`
 - `Offer` = `offer.Id`
@@ -578,7 +583,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.SelectDateBackground(string) — private void SelectDateBackground(string id)`
 
-来源：源码第 258 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 259 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)
 
@@ -601,9 +606,9 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.ApplyDateBackground() — private void ApplyDateBackground()`
 
-来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-42869169eaa3)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)
 
 **调用：** [`NationalSpire.CareerScreen.SelectDateBackground(string)`](DateSceneScreen.cs.md#symbol-4d37da1a3f4b)；[`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)；[`NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string)`](DateSceneData.cs.md#symbol-e19b4e66ad48)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`string.Concat(System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -631,7 +636,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.AdvanceDateScene() — private void AdvanceDateScene()`
 
-来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -658,7 +663,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.SendDateScene() — private void SendDateScene()`
 
-来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -687,7 +692,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.CanRegenerateDate(NationalSpire.PrivateTurn?) — private bool CanRegenerateDate(PrivateTurn? turn)`
 
-来源：源码第 304 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 305 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RegenerateDateScene()`](DateSceneScreen.cs.md#symbol-c589255edb6a)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
 
@@ -705,7 +710,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.RegenerateDateScene() — private void RegenerateDateScene()`
 
-来源：源码第 306 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 307 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -734,7 +739,7 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.EditFailedDateScene() — private void EditFailedDateScene()`
 
-来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 323 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -769,11 +774,11 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 ## `NationalSpire.CareerScreen.DateSceneSettings() — private void DateSceneSettings()`
 
-来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 335 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Apply()`](DateSceneScreen.cs.md#symbol-42869169eaa3)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`](CareerFilePicker.cs.md#symbol-ca0ccac08c64)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)；[`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.Remove(string)`](DateSceneBackgrounds.cs.md#symbol-b7d6d0097052)；[`Offset(string, double, System.Action<double>)`](DateSceneScreen.cs.md#symbol-adbc1ce7d5e5)；[`PopulateBackgrounds()`](DateSceneScreen.cs.md#symbol-0110ed8c19a2)；[`Save()`](DateSceneScreen.cs.md#symbol-d6c3d52fa370)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSlider.HSlider()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Range.SetValueNoSignal(double)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(float, float, float)`；`System.Math.Clamp(int, int, int)`
+**调用：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`](CareerFilePicker.cs.md#symbol-ca0ccac08c64)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)；[`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.Remove(string)`](DateSceneBackgrounds.cs.md#symbol-b7d6d0097052)；[`Offset(string, double, System.Action<double>)`](DateSceneScreen.cs.md#symbol-bb49db0d5686)；[`PopulateBackgrounds()`](DateSceneScreen.cs.md#symbol-bb23956847a8)；[`Save()`](DateSceneScreen.cs.md#symbol-5e2413f0aa95)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSlider.HSlider()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Range.SetValueNoSignal(double)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(float, float, float)`；`System.Math.Clamp(int, int, int)`
 
 **字段、属性、事件及方法组引用：** `Apply()`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dateAssets`；`NationalSpire.CareerScreen._dateBackground`；`NationalSpire.CareerScreen._dateBackgrounds`；`NationalSpire.CareerScreen._dateIndex`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateView`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.ShowDateLine()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.DateSceneAssets.AutoBackground`；`NationalSpire.DateSceneAssets.Background`；`NationalSpire.DateSceneAssets.BlurAmount`；`NationalSpire.DateSceneAssets.FontSize`；`NationalSpire.DateSceneAssets.LetterSpacing`；`NationalSpire.DateSceneAssets.PanelFade`；`NationalSpire.DateSceneAssets.ShowAffectionBadge`；`NationalSpire.DateSceneAssets.SpriteScale`；`NationalSpire.DateSceneAssets.SpriteX`；`NationalSpire.DateSceneAssets.SpriteY`；`NationalSpire.DateSceneAssets.TextOutline`；`NationalSpire.DateSceneAssets.TextSpeed`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；`NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`；`NationalSpire.DateSceneBackgrounds.Import(string)`；`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`；`NationalSpire.DateSceneBackgrounds.Remove(string)`；`NationalSpire.DateSceneView.InstantSpeed`；`Offset(string, double, System.Action<double>)`；`PopulateBackgrounds()`；`Save()`
 
@@ -949,13 +954,13 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 - `Value` = `assets.SpriteScale`
 - `Value` = `assets.TextSpeed`
 
-<a id="symbol-42869169eaa3"></a>
+<a id="symbol-1f00e77adbe1"></a>
 
 ## `Apply() — void Apply()`
 
-来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`Save()`](DateSceneScreen.cs.md#symbol-d6c3d52fa370)
+**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`Save()`](DateSceneScreen.cs.md#symbol-5e2413f0aa95)
 
 **调用：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)；[`NationalSpire.DateSceneView.AffectionVisibility(bool)`](DateSceneView.cs.md#symbol-7da14922fda4)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
@@ -973,15 +978,15 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 
 - `_dateView.TextSpeed` = `assets.TextSpeed`
 
-<a id="symbol-d6c3d52fa370"></a>
+<a id="symbol-5e2413f0aa95"></a>
 
 ## `Save() — void Save()`
 
-来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 340 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`Offset(string, double, System.Action<double>)`](DateSceneScreen.cs.md#symbol-adbc1ce7d5e5)
+**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`Offset(string, double, System.Action<double>)`](DateSceneScreen.cs.md#symbol-bb49db0d5686)
 
-**调用：** [`Apply()`](DateSceneScreen.cs.md#symbol-42869169eaa3)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)
+**调用：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)
 
 **字段、属性、事件及方法组引用：** `Apply()`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`
 
@@ -993,11 +998,11 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0110ed8c19a2"></a>
+<a id="symbol-bb23956847a8"></a>
 
 ## `PopulateBackgrounds() — void PopulateBackgrounds()`
 
-来源：源码第 346 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
 
@@ -1018,15 +1023,15 @@ private (string Path, DateTime DesignTime, DateTime AssetTime, bool Ready) _date
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-adbc1ce7d5e5"></a>
+<a id="symbol-bb49db0d5686"></a>
 
 ## `Offset(string, double, System.Action<double>) — SpinBox Offset(string axis, double value, Action<double> change)`
 
-来源：源码第 387 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 388 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Save()`](DateSceneScreen.cs.md#symbol-d6c3d52fa370)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.SpinBox.SpinBox()`；`Godot.Vector2.Vector2(float, float)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Save()`](DateSceneScreen.cs.md#symbol-5e2413f0aa95)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.SpinBox.SpinBox()`；`Godot.Vector2.Vector2(float, float)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`Save()`
 

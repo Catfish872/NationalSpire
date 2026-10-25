@@ -240,7 +240,7 @@ public partial class CoopRuntime : Node
     {
         if (Session?.World?.Run is not { Terminal: { } result } run || !Session.Host || run.Phase == "decision") return;
         var next = CoopRules.Settle(Session.World, run.Attempt, result.Win, false, result.Floor, result.Seconds, result.Players, result.Details);
-        Session.Commit(next, null); if (next.World.Failure == null) _ = Ai!.Process(); Status = next.World.Failure == null ? "比赛已经结算" : "请选择重赛或确认失败";
+        Session.Commit(next, null); if (next.World.Failure == null) _ = Ai!.Process(); Status = next.World.Failure == null ? "比赛已经结算" : "请选择重赛或确认结果";
     }
 }
 

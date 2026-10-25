@@ -20,6 +20,15 @@ public static class PlayerSimulation
         if (actual.Length > 0) records = actual;
         var level = records.Where(r => (r.PlayedAscension ?? r.Ascension) == levelPlayed).ToArray();
         if (level.Length > 0) records = level;
+        var opponentBefore = new RunPerformance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0);
+        RunPerformance Recorded(RunPerformance result)
+        {
+            Diagnostics.Record("match.simulation", new { d.WorldId, d.Season, d.Day, match.Id, match.Seed, levelPlayed,
+                d.Wins, d.Losses, d.Draws, winChance = winChance ?? WinChance(d.Wins, d.Losses, d.Draws),
+                history = records.Select(r => new { r.MatchId, r.Simulated, r.Win, r.Floor, r.RunSeconds, r.Ascension, r.PlayedAscension }),
+                player = result, opponentBefore, opponentAfter = new RunPerformance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds ?? 0) });
+            return result;
+        }
         if (records.Length == 0)
         {
             var professionals = d.People.Where(EsportsWorld.IsProfessional).ToArray();
@@ -31,7 +40,7 @@ public static class PlayerSimulation
             var first = VaryTime(d, match, new(true, 0, mean));
             if (match.OpponentWon && match.OpponentSeconds is > 0)
                 first = first with { Seconds = Math.Min(first.Seconds, Math.Max(.001, Math.Floor(match.OpponentSeconds.Value) - 1)) };
-            return EnsureWin(match, first);
+            return Recorded(EnsureWin(match, first));
         }
         var rng = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation:" + match.Seed));
         bool clear = rng.NextDouble() < (double)records.Count(r => r.Win) / records.Length;
@@ -39,7 +48,7 @@ public static class PlayerSimulation
         int floor = clear ? 0 : similar[rng.Next(similar.Length)].Floor;
         var result = VaryTime(d, match, new(clear, floor, similar.Average(r => r.RunSeconds!.Value)));
         var outcomeRng = new Random(CareerEngine.StableHash(d.WorldId + ":player-simulation-outcome:" + match.Seed));
-        return outcomeRng.NextDouble() < (winChance ?? WinChance(d.Wins, d.Losses, d.Draws)) ? EnsureWin(match, result) : result;
+        return Recorded(outcomeRng.NextDouble() < (winChance ?? WinChance(d.Wins, d.Losses, d.Draws)) ? EnsureWin(match, result) : result);
     }
 
     private static RunPerformance EnsureWin(CareerMatch match, RunPerformance result)

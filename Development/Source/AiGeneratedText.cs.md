@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C75F4BA172A0DF6DF4C5066E05E7C5F002E74C239B3E694EF2772679E71690C0`。来源：[源码](../../AiGeneratedText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`59FD8E518D5836B642B99C259E23EAEF1590011957D60454D6346011F8569E99`。来源：[源码](../../AiGeneratedText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -67,7 +67,8 @@
 - `NationalSpire.GameCalendar.ConvertJsonDates(NationalSpire.CareerData, System.Text.Json.Nodes.JsonNode)`；输入表达式：`GameCalendar.ConvertJsonDates(data, node)`；返回值紧邻使用处：`ExpressionStatementSyntax: GameCalendar.ConvertJsonDates(data, node);`
 - `NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`；输入表达式：`RelationshipGifts.Description(offer)`；返回值紧邻使用处：`ArgumentSyntax: RelationshipGifts.Description(offer)`
 - `NationalSpire.RelationshipGifts.Special(string)`；输入表达式：`RelationshipGifts.Special(offer.GoodId)`；返回值紧邻使用处：`BinaryExpressionSyntax: offer.Kind == "gift" && RelationshipGifts.Special(offer.GoodId)`
-- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`
+- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)                  .Replace("附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)                  .Replace("附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`
+- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)                  .Replace`
 - `string.StartsWith(string, System.StringComparison)`；输入表达式：`text.StartsWith(report, StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: offer.Kind == CommunityReporting.Kind && offer.AiDetail != null && text.StartsWith(report, StringComparison.Ordinal)`
 - `System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；输入表达式：`new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`；返回值紧邻使用处：`ArgumentSyntax: new() { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`
 - `System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；输入表达式：`System.Text.Json.Nodes.JsonNode.Parse(text[report.Length..])`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: System.Text.Json.Nodes.JsonNode.Parse(text[report.Length..])!`
@@ -76,13 +77,13 @@
 **赋值（含属性/字段和局部值）：**
 
 - `Encoder` = `System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping`
-- `text` = `text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`
+- `text` = `text.Replace("附加请求：缔结誓约；接受礼物后确定誓约关系。", RelationshipGifts.Description(offer), StringComparison.Ordinal)                  .Replace("附加请求：接受礼物后可以择期举办婚礼；完成婚礼活动后正式缔结誓约。", RelationshipGifts.Description(offer), StringComparison.Ordinal)`
 
 <a id="symbol-8a7bdafb8195"></a>
 
 ## `NationalSpire.AiGeneratedText.Different(string, string) — public static string? Different(string original, string ai)`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunitySharing.Prepare(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](CommunitySharing.cs.md#symbol-b6e3b5a6b60e)；[`NationalSpire.CommunityThreads.RememberMatch(NationalSpire.CareerData, NationalSpire.CareerResult)`](CommunityThreads.cs.md#symbol-fe6de6f8dd52)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](Coop/CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 

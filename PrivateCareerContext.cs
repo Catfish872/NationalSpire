@@ -49,13 +49,13 @@ public static partial class PrivatePublicContext
     {
         foreach (var competition in d.Esports.Competitions.Where(c => c.Season == d.Season && !c.Finished))
         {
-            var ranked = EsportsWorld.Ranked(competition).ToList();
+            var ranked = EsportsWorld.Rankings(competition);
             foreach (string id in identities)
             {
                 var teams = competition.Rosters.Where(r => r.Value.Contains(id)).Select(r => competition.Kind == "worldcup" ? r.Key + "国家队" : EsportsWorld.ClubName(d, r.Key)).ToArray();
                 if (teams.Length > 0) b.AppendLine($"{Name(d, id)}已列入{competition.Name}的{string.Join("、", teams)}参赛名单。");
-                int index = ranked.FindIndex(s => s.PersonId == id);
-                if (index >= 0) b.AppendLine($"{Name(d, id)}在本赛季{competition.Name}的当前积分榜排名为第{index + 1}，积分{ranked[index].Points}，{ranked[index].Wins}胜{ranked[index].Losses}负{ranked[index].Draws}平；赛事仍在进行。");
+                var entry = ranked.FirstOrDefault(s => s.Standing.PersonId == id);
+                if (entry.Standing is { } row) b.AppendLine($"{Name(d, id)}在本赛季{competition.Name}的当前积分榜排名为第{entry.Rank}，积分{row.Points}，{row.Wins}胜{row.Losses}负{row.Draws}平；赛事仍在进行。");
             }
         }
     }

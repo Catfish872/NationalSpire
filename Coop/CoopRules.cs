@@ -195,15 +195,16 @@ public static partial class CoopRules
                     break;
                 case "failure-confirm":
                     if (sender != w.Owner) return (original, Reject("比赛结果由房主确认。"));
-                    if (w.Run?.Terminal is not { } terminal || w.World.Failure == null) return (original, Reject("没有待确认的失败。"));
+                    if (w.Run?.Terminal is not { } terminal || w.World.Failure == null) return (original, Reject("没有待确认的比赛结果。"));
                     bool simulatedFailure = w.World.Failure.Result.Simulated;
                     MatchFailure.RestoreMatch(w.World);
+                    MatchFailure.Record(w.World, "confirm");
                     w.World.Failure = null;
                     w = Settle(w, w.Run.Attempt, terminal.Win, false, terminal.Floor, terminal.Seconds, terminal.Players, terminal.Details, true, simulated: simulatedFailure);
                     break;
                 case "failure-retry":
                     if (sender != w.Owner) return (original, Reject("重赛由房主安排。"));
-                    if (w.World.Failure == null) return (original, Reject("没有待选择的失败。"));
+                    if (w.World.Failure == null) return (original, Reject("没有待选择的比赛结果。"));
                     if (!full) return (original, Reject("重赛需要2—4位在线队员。"));
                     var retried = MatchFailure.Retry(w.World, command.Text == "new");
                     w.LatestCheckpoint = "";
@@ -549,6 +550,7 @@ public static partial class CoopRules
             competition, m.Seed);
         m.OpponentPrepared = true; m.OpponentWon = perf.Cleared; m.OpponentFloor = perf.Floor; m.OpponentSeconds = perf.Seconds;
         w.Run = new() { MatchId = m.Id, Seed = m.Seed, Ascension = ascension, Characters = roster.ToDictionary(p => p.SteamId, p => p.RandomCharacter ? CareerEngine.RandomCharacterChoice : p.Character), Opponents = rivals.Select(p => p.Id).ToList() };
+        if (d.Failure != null) MatchFailure.Record(d, "retry-started");
         d.Failure = null;
         m.ChosenAscension = d.SelectedAscension = ascension;
         Diagnostics.RecordMatch(w, "prepared");

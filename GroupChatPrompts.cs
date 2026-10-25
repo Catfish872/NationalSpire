@@ -24,12 +24,12 @@ public static class GroupChatPrompts
 行，到时一起讨论。
 """;
     public const string ActorFormat = """
-Speaker 只能填写本群可发言的 NPC 编号，不替真人发言。Actor 通常填写作出决定或变化的 NPC；Activity 的 Actor 可以填写实际提出活动的玩家。账号已封禁的 NPC 不能发言或发起交互。
+Speaker 只能填写本群可发言的 NPC 编号，不替真人发言。Actor 通常填写作出决定或变化的 NPC；活动填写完整参与者，训练填写全部受训者，多人以竖线分隔。账号已封禁的 NPC 不能发言或发起交互。
 所有发言之后，另起一行 [Actions]，再逐条输出实际发生的交互标记。没有交互可以省略 Actions。只有标记才登记交互，口头答应不代替标记。
 交互沿用下方字段，并在每项标记内增加 Actor（作出决定或变化的人物编号）。关系和约战增加 Target（对方编号）。Actor 不能省略，也不能根据最后一位发言者推断。
 NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀请, Actor: p2, Target: p3, Date: 2026-01-18, Ascension: 6, Mode: 切磋]；Actor 填发起者，Target 填对手，日期与进阶按实际商谈填写。
 例如 [Favour: 40, Actor: p2, Target: p1] 表示 p2 对 p1 的好感更新为40；[Skill: 1, Actor: p2, Topic: 选牌, Reason: 理解了精简牌组的条件] 只改变 p2 的学习。
-本轮训练附件指定 NPC 教练时，教练先用 [Training: 同意, Actor: p3, Id: 12] 或拒绝表态，受训者再用 [Training: 接受, Actor: p2, Id: 12]；玩家已担任教练的附件由受训者直接接受。Id 填对应训练附件的编号。如果没有训练附件但是玩家有安排训练的意向，则教练和受训者先在正文中商谈，收到对应附件后再输出训练标记。
+活动和训练按各自说明合并填写多人名单，其他交互分别填写作出决定或变化的人物。
 发帖 Actor 为作者，Related 可指定希望在帖子下回应的人物，例如 [Post: 发布, Actor: p2, Related: p3|p4, Title: 训练小结, Body: 发帖正文]。指定的相关人物也会参与该帖的回复。
 以下交互条件分别适用于实际 Actor；其中对玩家的关系使用 Target 指明，人物只能提交自己的状态、学习与档案变化。普通发言不需要交互标记。
 """;
@@ -40,7 +40,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         + (a.Participants.Count > 0 ? "\n对象：" + string.Join("、", a.Participants.Select(id => g.Alias(id) + " " + GroupChats.Name(d, id))) : "")
         + (a.ActorId.Length > 0 ? "\n处理人：" + g.Alias(a.ActorId) + " " + GroupChats.Name(d, a.ActorId) : "")
         + (a.CoachId.Length > 0 ? "\n负责教练：" + g.Alias(a.CoachId) + " " + GroupChats.Name(d, a.CoachId) : "") + "\n"
-        + (a.Kind == "activity" ? ChatAttachments.Material(d, a, a.Id).TrimEnd(']') + ", Actor: " + g.Alias(t.Sender) + ", Participants: " + string.Join("|", a.Participants.Select(g.Alias)) + "]" : AiGeneratedText.Attachment(d, a))
+        + (a.Kind == "activity" ? ChatAttachments.Material(d, a, a.Id).TrimEnd(']') + ", Actor: " + string.Join("|", a.Participants.Select(g.Alias)) + "]" : AiGeneratedText.Attachment(d, a))
         + "\n" + ChatAttachments.ResponseInstructions(d, a, a.Id, g, t.Sender))));
     internal static string InteractionContext(CareerData d, GroupChat g, int recent, string person = "", string turnId = "")
     {
@@ -84,12 +84,12 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
         void Add(string role, string text) { if (text.Length > 0) messages.Add(new() { ["role"] = role, ["content"] = text }); }
         var protocols = string.Join("\n", PrivateMessagePrompts.Protocol, PrivateMessagePrompts.SkillProtocol, PrivateMessagePrompts.MoodProtocol,
             PrivateMessagePrompts.MatchProtocol, PrivateMessagePrompts.PostProtocol, PrivateMessagePrompts.ProfileProtocol,
-            PrivateMessagePrompts.ContractProtocol, ClubCoaching.Protocol, CoachLineups.Protocol)
+            PrivateMessagePrompts.ContractProtocol, ClubCoaching.GroupProtocol, CoachLineups.Protocol)
             .Replace("你可以从玩家的具体讲解中", "各人可以从交流中的具体讲解中")
             .Replace("玩家提供了具体、适用条件明确的做法", "交流中提供了具体、适用条件明确的做法");
         // 例子补齐人物，避免旧私信例子与群聊固定协议互相矛盾。
         protocols = Regex.Replace(protocols, @"\[(Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Training|Lineup):([^\]\n]*)\]", m =>
-            "[" + m.Groups[1].Value + ":" + m.Groups[2].Value + ", Actor: p2" + (m.Groups[1].Value is "Favour" or "Attitude" or "Relationship" or "Match" ? ", Target: p1" : "") + "]");
+            m.Value.Contains("Actor:", StringComparison.Ordinal) ? m.Value : "[" + m.Groups[1].Value + ":" + m.Groups[2].Value + ", Actor: p2" + (m.Groups[1].Value is "Favour" or "Attitude" or "Relationship" or "Match" ? ", Target: p1" : "") + "]");
         Add("system", Section(d, "world") + "\n\n" + Section(d, "group") + "\n\n" + (ChatTools.InPrompt ? ChatTools.Guidance + "\n" + ChatTools.GroupSpeech : protocols + "\n\n" + SocialAppointments.GroupProtocol + "\n\n" + OathAttachments.GroupProtocol + "\n\n" + ChatAttachments.GroupGiftProtocol + "\n\n" + Format) + "\n" + ChatTimeline.Privacy);
         var search = new CommunityMemorySearch.Request();
         var recentPlayerPosts = search.RecentPlayerPosts(d, d.Day);
@@ -104,6 +104,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
                 profiles.AppendLine(JsonSerializer.Serialize(PrivatePublicContext.CharacterProfile(d, p), new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
                 profiles.AppendLine($"评分{p.Rating}，最高通关进阶{p.MaxAscension}，所属俱乐部{EsportsWorld.ClubName(d, p.ClubId)}，席位{CoachLineups.Position(d, p)}。");
                 PrivatePublicContext.AppendRecentResults(profiles, d, p);
+                if (!GroupChats.IsHuman(d, id)) profiles.AppendLine(PrivatePublicContext.NpcHonors(d, p.Id, p.PublicName));
             }
         }
         profiles.AppendLine("性格使用说明：" + PersonalityLibrary.ProfileUsage);

@@ -174,7 +174,6 @@ public sealed class PrivateOffer
     public string ServiceId { get; set; } = "";
     public string GroupId { get; set; } = "";
     public string CoachId { get; set; } = "";
-    public bool CoachAccepted { get; set; }
     public string ActorId { get; set; } = "";
     public List<string> Participants { get; set; } = [];
     public List<string> RelatedPeople { get; set; } = [];

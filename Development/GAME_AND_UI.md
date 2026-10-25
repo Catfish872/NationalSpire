@@ -61,9 +61,9 @@ CareerScreen.AiSettings → AiSettingsPanel.Build 是单人和多人房主共用
 
 ## 玩家主动模拟比赛
 
-开赛页面“模拟本场”读取选定职业、进阶和当天已报名比赛，调用 PlayerSimulation.Run。检查当前未完成对局和失败选择，再复用 EntryReason、PrepareSeed、PrepareOpponent；Sample 返回成绩后调用 FinishMatch。获胜正常结算，失利进入 FailureDecision，通关但用时较慢也进入同一选择。平局沿用 ReplayTie。Failure 存在时，CareerScreen.Render 显示原失败选择界面，AdvanceOneDay 等待玩家完成选择。
+开赛页面的模拟本场读取选定职业、进阶和当天已报名比赛，调用 PlayerSimulation.Run，再复用 EntryReason、PrepareSeed、PrepareOpponent；Sample 返回成绩后调用 FinishMatch。通关获胜正常结算；失利以及未通关但获胜都进入 FailureDecision。平局沿用 ReplayTie。Failure 存在时，CareerScreen.Render 显示结果选择界面，AdvanceOneDay 等待玩家选择。实际比赛、模拟、单人、多人及私人约战均经过同一 FinishMatch 判断；显式退赛沿原立即结算。
 
-FinishMatch 先用局部变量比较成绩；失利待选择时仅写入 Failure.Result、Failure.Opponent，清理 PendingMatchId/PendingSince 并保存。正式 CareerMatch 的 PlayerFloor、PlayedAscension、PlayerSeconds、Draw、PlayerWon 在此分支返回后赋值。奖励、关注、评分、荣誉、Fixture、CompleteMatchDay、国运、行情和战报均沿正式结算继续执行。原失败成绩保存在待选择对象中，历史采样读取正式 Results。
+FinishMatch 先用局部变量比较成绩；待选择时仅写入 Failure.Result、Failure.Opponent，清理 PendingMatchId/PendingSince 并保存。正式 CareerMatch 的 PlayerFloor、PlayedAscension、PlayerSeconds、Draw、PlayerWon 在此分支返回后赋值。奖励、关注、评分、荣誉、Fixture、CompleteMatchDay、国运、行情、战报、CommunityThreads.RememberMatch、WorldEvents.AfterMatch 与 ProactiveChats.Trigger 均在正式结算时执行，周刊及人物上下文读取正式 Results。Outcome 保存真实胜负，Win 单独表示是否通关。SettlementScreen 按 Outcome 显示动态标题，按钮为同种子重赛、新种子重赛和确认结果；比赛锁和多人状态文字同步使用确认结果。确认沿原 FinishMatch(confirmFailure:true) 执行一次；重赛沿原实际开局路径。
 
 FailureAction 的同种子/新种子按钮调用 MatchFailure.Retry，再沿 GameBridge.StartMatch 进入实际游戏。模拟失利按 Failure.Result.CharacterId 读取本次职业，并传入 PlayedAscension（缺省取 Ascension）；同种子恢复原对手成绩，新种子重新准备对手。RestoreMatch 在每次选择及确认时读取原种子、原对手快照，避免新种子开局中断后混用新对手与原失败。GameBridge 开局成功才清除 Failure；准备失败仍保留原决定。Confirm 读取原成绩和 Simulated 标记后，传入 confirmFailure=true 正式结算。
 
@@ -87,44 +87,39 @@ Sample 两个分支统一调用 VaryTime(d, match, result)，输入为历史采�
 
 ProfileScreen 的近期成绩和 PrivateMessages 的赛果附件统一调用 MatchRules.Performance，以 Win=true 显示通关及用时，以 Win=false 显示失败楼层；附件保留失败用时。ResultChart 以通关标记显示满高，失败按楼层比例显示。旧通关记录 Floor=0 直接正确显示，数据保持原值。
 
-多人 propose-simulate 经现有成员确认后，Prepare 建立比赛参数；随机职业按本场种子和成员身份选择，以本次 Characters 中的成员确定参赛者，合并其历史并合计胜负平计数，调用同一 Sample，再由 Settle 处理。失利时 Run.Phase=decision，Terminal 保存原团队成绩；个人 Results、资金分配及 Settlements 在正式确认后写入。房主选择重赛建立原 start 提议，原 Terminal 保留到全队确认；取消提议后仍可确认原失败。执行 start 时在命令副本内释放旧 Run，由 Prepare 建立真实对局；准备失败沿 Apply 返回原对象。请求校验、重复收据、Revision、检查点和广播共用原命令流程。
+多人 propose-simulate 经现有成员确认后，Prepare 建立比赛参数；随机职业按本场种子和成员身份选择，以本次 Characters 中的成员确定参赛者，合并其历史并合计胜负平计数，调用同一 Sample，再由 Settle 处理。失利或未通关获胜时 Run.Phase=decision，Terminal 保存原团队成绩；个人 Results、资金分配及 Settlements 在正式确认后写入。房主选择重赛建立原 start 提议，原 Terminal 保留到全队确认；取消提议后仍可确认原成绩。执行 start 时在命令副本内释放旧 Run，由 Prepare 建立真实对局；准备失败沿 Apply 返回原对象。请求校验、重复收据、Revision、检查点和广播共用原命令流程。
 
-生产规则源码的 .NET 9 测试入口 --player-simulation-checks 通过7604项：历史优先级及用时上下3%、资料100%胜率与50%通关率分别采样、25%胜率千次抽样、正常对手下自然获胜或失利与平局、0层失败边界、资料编辑后采用新计数、调整后对手JSON恢复，以及单人、二人和四人实际规则命令结算。多人测试将世界胜率设为0、成员胜率设为100%，核对实际采用参赛成员资料。--simulation-failure-checks 通过188项，覆盖未通关失利与通关较慢、确认、同/新种子重赛、准备中断、旧记录缺省对手快照、序列化恢复、重复确认、二人/四人检查点保存读取、取消准备和实际重赛结算；待确认阶段正式资料全文哈希保持一致。通关0层文字由现有 Performance 接口验证，生产模组编译覆盖 ProfileScreen、PrivateMessages 和 ResultChart；Godot实际页面、Steam网络收发及原版实际开局尚未实测。
+生产规则源码的.NET 9测试入口 --player-simulation-checks 通过7608项，保留历史优先级、资料胜率、真实与模拟成绩、用时及多人命令覆盖。--simulation-failure-checks 通过279项：实际与模拟未通关获胜、失利、确认、同种子与新种子重赛、取消准备、原对手恢复、模组角色编号、二人/四人命令和磁盘检查点恢复。待确认阶段对战绩、资金、荣誉、赛事、国运、行情、帖子、社区记忆、人物私聊群聊与活动计算完整正式资料哈希，保持一致；确认后只增加一次正式结果。
 
-失利分支保留一个 CareerResult 和一个 RunPerformance；每次选择读取原快照，旧记录缺省快照时按原种子计算一次。单人待选择保存一次；多人沿原 Apply/Settle 整体复制、检查点和广播，准备投票每名成员一条命令。以下是2026-10-25本地规则测量，毫秒及当前线程分配字节均包含内部调用。单人结算使用新建完整世界，模拟采样大数据使用明确给定的历史数组。采样自身及完整结算分别计时，表中完整流程与其内部命令耗时不能相加。
+结果日志复用Diagnostics.Record与现有五份轮换。Sample写入match.simulation：筛选后的历史赛果、当前胜负平和胜率、比赛种子、模拟成绩与调整前后对手。FinishMatch写入match.result：生涯、赛季、日期、尝试编号、比赛、种子、角色、进阶、原始成绩、比较结果和战斗资料。MatchFailure.Record在待选择、确认、同种子或新种子重赛、成功准备时写入match.decision，包含原Failure.Attempt、Result、Opponent与当前比赛参数；清除待选择状态继续保留已写入日志。日志保留范围、失败重试和完整导出沿既有统一管理，新增自动文件类型与独立传输类型均为0。279项测试实际写入普通日志149093字节，导出核对保留模拟来源、原始成绩和选择过程。
 
-| 采样数据 | 首次毫秒 / 字节 | 再次毫秒 / 字节 | 两次累计毫秒 |
-| --- | --- | --- | --- |
-| 1人合并200条历史采样 | 0.1236 / 33280 | 0.0351 / 30040 | 0.1587 |
-| 1人合并10000条历史采样 | 2.7132 / 1593352 | 1.4817 / 1464184 | 4.1949 |
-| 2人合并400条历史采样 | 0.0656 / 58152 | 0.0613 / 58152 | 0.1269 |
-| 2人合并20000条历史采样 | 4.3472 / 3057440 | 3.8720 / 2926344 | 8.2192 |
-| 4人合并800条历史采样 | 0.1562 / 114360 | 0.1522 / 114360 | 0.3084 |
-| 4人合并40000条历史采样 | 23.2689 / 6112816 | 7.9033 / 5850648 | 31.1722 |
+独立Godot 4.5.1 / OpenGL界面测试使用生产SettlementScreen与FinishMatch、内存保存和离线AI替身，在1600×1000和1280×800分别检查未通关获胜与失利页面，实际触发确认按钮。动态标题、三项按钮和横向/底部布局均通过，截图位于本地.artifacts/result-ranking-20261025/ui。Steam传输、强制终止进程及原版实际重赛开局本轮未实测。
 
-进程首次无历史采样2.9420毫秒、6320字节。单人首次完整模拟结算26.8038毫秒、990088字节。
+2026-10-25实测采用.NET 9。逐次耗时和分配位于本地.artifacts/result-ranking-20261025/retry-final/retry.json与simulation/simulation.json。计时包含内部调用，整次流程与内部步骤不能相加：
 
-| 多人操作 | 毫秒 | 字节 |
+| 操作 | 耗时（毫秒） | 当前线程分配（字节） |
 | --- | --- | --- |
-| 2人/历史无历史/propose-simulate/成员1 | 91.6223 | 14414720 |
-| 2人/历史无历史/confirm/成员2 | 634.8884 | 87954424 |
-| 2人模拟提议至全员确认/历史无历史 | 727.1891 | 102369944 |
-| 2人/历史有历史/propose-simulate/成员1 | 61.4467 | 14232432 |
-| 2人/历史有历史/confirm/成员2 | 382.0497 | 85757224 |
-| 2人模拟提议至全员确认/历史有历史 | 443.5183 | 99990392 |
-| 4人/历史无历史/propose-simulate/成员1 | 47.0592 | 14667088 |
-| 4人/历史无历史/confirm/成员2 | 26.0896 | 14668456 |
-| 4人/历史无历史/confirm/成员3 | 19.8648 | 14668816 |
-| 4人/历史无历史/confirm/成员4 | 267.1199 | 146959112 |
-| 4人模拟提议至全员确认/历史无历史 | 360.1510 | 190964712 |
-| 4人/历史有历史/propose-simulate/成员1 | 17.9657 | 13246376 |
-| 4人/历史有历史/confirm/成员2 | 25.1198 | 13247472 |
-| 4人/历史有历史/confirm/成员3 | 17.2000 | 13247840 |
-| 4人/历史有历史/confirm/成员4 | 229.8983 | 132344376 |
-| 4人模拟提议至全员确认/历史有历史 | 290.2036 | 172087304 |
+| 单人未通关获胜待确认，6次 | 1.6450—2.6411 | 33720—33768 |
+| 单人首次无历史采样 | 35.9508 | 304048 |
+| 单人完整首次模拟结算 | 56.1667 | 1378960 |
+| 采样200/400/800条历史，首次 | 1.1337 / 1.9673 / 3.7231 | 871544 / 1470344 / 2936600 |
+| 采样一万/两万/四万条压力输入，首次 | 53.5028 / 89.4787 / 181.9777 | 36555424 / 65029312 / 113319104 |
+| 二人确认原失利/原获胜 | 351.1493 / 236.5018 | 84941280 / 84665232 |
+| 四人确认原失利/原获胜 | 258.9061 / 255.1120 | 113896736 / 128823144 |
+| 二人实际重赛最终结算，两次 | 320.7706 / 216.9007 | 71130664 / 70934064 |
+| 四人实际重赛最终结算，两次 | 218.1542 / 245.9049 | 102879440 / 116282864 |
 
-完整二人结算命令最高634.8884毫秒，超过300毫秒目标；本次记录此事实，当前改动仅涉及模拟采样、胜率处理及成绩显示。四人完整模拟提议至全员确认包含四条顺序命令。原始逐次采样、命令及重赛计时位于维护者本地 NationalSpire.Tests/bin/validation/player-profile-simulation/simulation.json 和 retry.json。模型与网络等待均未计入。
+完整多人确认及重赛包含原世界复制、赛事和市场结算，最高351.1493毫秒，尚超过300毫秒目标。完整多人模拟提议至确认最高572.8120毫秒；此流程包含内部命令。压力采样的分配包含完整来源日志序列化，正式Results沿原数量范围。规则测试使用内存保存回调和本地多人命令；检查点单独实际写盘并读回，其耗时也保存在逐次报告中。网络与模型请求次数为0，未将替身流程当成Steam网络或原版比赛实测。
 
+### 联赛个人排名与直接晋级
+
+EsportsWorld.Rankings统一计算个人名次：积分、胜场、通关次数依次降序，再比较已结束比赛中已通关场次的平均秒数，较快者在前。HomeId/AwayId对应选手的已通关且有秒数记录的场次参与求平均；没有可用秒数时取0。全部竞技指标与平均用时相同使用相同名次，后续名次按前方人数计算，例如1、1、1、4。Entrants报名顺序只稳定显示顺序。Ranked返回此顺序的积分行，Rank返回指定选手名次。每次从当前Fixture计算，缓存数量为0；日期推进、重赛及读档自然采用当前正式成绩。
+
+DomesticRank、CircuitLedger.Settle、CareerEngine.AwardSeason、结算摘要和完整积分榜、首页和开赛积分榜、现代与旧赛事界面、PrivatePublicContext.AppendStandings均读取同一名次。CircuitLedger每届结算建立一次名次字典，确定CircuitAward.Stage/Place/Points；文本沿个人第N名格式。AI各入口从这些赛事资料与已保存荣誉读取名次。旧档已保存的荣誉、奖金、收官帖子、生成回复及历史结算快照继续保留原值，本次改动适用于重新计算与后续结算。
+
+DirectQualifiers读取同一排名，每赛区选择两个直接名额；同名次时优先player，其余NPC按Entrants报名顺序。CreateFinals复用此入口，再沿原卫冕冠军与世界积分规则补齐32人。名额取舍保持相同竞技名次。主玩家继续使用player编号，联机队友沿原有资格处理。
+
+--league-ranking-checks使用原诊断ZIP第24赛季中国联赛的21人、63场数据，20项检查通过：玩家按平均通关用时由第3变第1，正式荣誉为个人第1名、300世界积分，结算摘要和完整表保持一致；另覆盖相同用时使用同一名次、未通关用时排除、排序指标优先级及两个直接名额的玩家优先规则。完整排序首次4.9624毫秒、4360字节；后续11次0.0148—0.0740毫秒、3880字节。一次遍历Fixture、一次排序Table、一次建立名次列表，保存与同步次数为0。逐次报告位于本地.artifacts/result-ranking-20261025/ranking-final/league-ranking.json。
 ## 逐场国运与国家发展
 
 FinishFixture 确认胜负后调用 NationalFortune.Confirm。世界总决赛各轮胜方贡献为75、80、90、100、255；洲际杯为20、35、45、80；世界杯为60、90、210。负方扣除同等国运，同国对阵国运变化为0。三届个人冠军沿途总额分别为600、180、360。国内比赛、约战沿用原国运范围。
@@ -683,11 +678,15 @@ SendDateScene → SendPrivate 在接受回调中清空本次场景编辑器、�
 
 AddDateSceneAction 在具备可用立绘的已确认一对一活动旁建立专属约会按钮。按钮先复用公开/私密赴约选择，再进入原 DateSceneView。HasDateArt 按素材路径与文件修改时间缓存资格；进入时验证并加载默认图，其他表情按显示需要载入。当前场景纹理按哈希复用；缺失表情使用已有默认图并显示读取说明；CloseDateScene 释放本场景纹理。切换人物、生涯或退出页面会关闭场景；播放位置由本机素材书签保存。
 
+赴约失败的界面说明统一由 ShowPrivateCommandError 更新：PrivateCommand 收到执行错误或捕获异常后显示聊天状态栏；专属赴约选择弹窗仍打开时，同时显示 DateAttendanceError 标签，供玩家直接查看原因并保留原选择窗口。多人原有 Message → Notice 错误通知在通讯打开时调用同一入口。此函数只更新当前控件的文字和可见状态，失败时的活动状态、费用、保存及广播沿用原执行流程；弹窗关闭时释放其标签。AttendanceErrorUiChecks 在独立 Godot 界面中实际点击两种普通赴约及两种专属赴约，通过12项检查，覆盖同季重复举办、费用不足、物品不足、关闭弹窗、恢复条件后赴约及一次扣费；1600×1000和1280×800截图已核对。六次提示更新耗时依次为0.0046、0.0022、0.0008、0.0007、0.0007、0.0007毫秒，线程分配均为0字节。多人仅验证回执共用的 Notice 入口，跨机传输未在此次测试执行；保存使用独立界面测试的替身。
+
 场景的暂停保留 active/paused 数据和聊天轮次，允许跨日期返回；结束写 ended 和活动已结束，正在生成的本场景请求沿 RestoreInterrupted/CancelPrivate 终止。普通聊天列表、实时显示和未读过滤 Scene 轮次，查看场景历史及模型上下文继续读取原记录。自动总结继续读取原私聊记录和既有总结条件。
 
-婚礼商品价格为150万美元，誓约之戒为10万美元。专属礼物好感门槛85，普通礼物的确定恋人选项门槛60，发送及接受均调用同一校验。誓约之戒或盛大婚礼接受后，在现有活动附件中解锁对应礼物的婚礼卡片，可选择日期后发送邀请。ChatAttachments.GiftProtocol、ResponseInstructions 与 RelationshipGifts.Description 同时向 AI 说明接受礼物后可以择期举办婚礼，完成活动才正式缔结誓约；AiGeneratedText 读取旧附件时将已知旧说明换为同一口径。婚礼安排引用原收礼记录，赴约通过 IsWedding 识别两种来源，复用原服务次数。普通赴约即完成婚礼；专属约会在结束时完成。WeddingAppointments.Complete 同步确认誓约和婚礼经历，公开婚礼在完成时登记一次事实，之后由原跳日/赛后事件汇总发帖。
+婚礼商品价格为150万美元，誓约之戒为10万美元。专属礼物好感门槛85，普通礼物的确定恋人选项门槛60，发送及接受均调用同一校验。誓约之戒或盛大婚礼接受后，在现有活动附件中解锁对应礼物的婚礼卡片，可选择日期后发送邀请。RelationshipGifts.WeddingSteps 是AI婚礼流程文字的同一来源，Description 与 ChatAttachments.GiftProtocol 引用此文字，群聊协议与工具定义继续从该共用协议生成。原文为：需要由玩家后续再在附加请求中发起婚礼活动；完成玩家后续发起的婚礼活动后正式缔结誓约，不需要你自行发起婚礼活动。ResponseInstructions 继续引用 Description；AiGeneratedText 读取旧附件时将两种已知程序旧说明换为同一文字，原聊天显示记录保持原文。婚礼安排引用原收礼记录，赴约通过 IsWedding 识别两种来源，复用原服务次数。普通赴约即完成婚礼；专属约会在结束时完成。WeddingAppointments.Complete 同步确认誓约和婚礼经历，公开婚礼在完成时登记一次事实，之后由原跳日/赛后事件汇总发帖。
 
-婚礼验证使用实际 Godot 控件点击赠礼、发送、选择婚礼卡片及日期、确认邀请和赴约。戒指与婚礼两条路线共16项通过，六张截图已检查；收礼后仍为恋人，赴约后出现誓约状态及钻戒头像框。测试私信响应使用本地固定模型返回，未调用外部服务。规则验证75项通过，涵盖普通与专属约会婚礼完成、服务使用次数及重新生成恢复。资料保留在本地 .artifacts/wedding-log-fix-20261021。
+ConsumerEditor 的两种专属礼物共用同一处界面提示：对方接收后，玩家可以在聊天的“+”号中选择“约定活动”，并选择其中的婚礼活动。从该入口完成婚礼即可正式缔结誓约。该提示在原有商品选择刷新时赋值，沿用原文字控件和布局。
+
+婚礼验证使用实际 Godot 控件点击赠礼、发送、选择婚礼卡片及日期、确认邀请和赴约。戒指与婚礼两条路线共16项及6处布局通过，六张截图已检查；收礼后仍为恋人，赴约后出现誓约状态及钻戒头像框。界面测试私信响应使用本地固定模型返回。2026-10-25另用原诊断赠礼轮次，直接请求 https://api.deepseek.com/v1/chat/completions、deepseek-v4-flash，无聚合服务；普通模式采用原标记协议，工具模式使用strict:true、指定send_message、thinking disabled及流式返回。最终两种模式各完成收礼和婚礼附件两次请求，每次原处理管线保存两次，保留原始SSE并交由实际解析执行。两种模式都未自行发起活动，后续玩家附件接受、赴约、头像框解锁及保存重读通过；模型调整内容时按原规则由玩家确认后赴约。此前普通模式一次口头收礼但漏标记，仍保留为未解决的普通模式生成波动，未改普通格式协议。真实接口与规则检查共89项通过，资料保留在本地 .artifacts/honor-wedding-20261025；游戏主进程及Steam跨机未实测。
 
 商品图标及数量使用 ConsumerProductArt/ConsumerGiftControls 原控件，赠礼从现有聊天附件进入。群成员选择与社区分享人物选择复用 PickerRing 显示收戒与婚礼记录。Godot独立界面项目验证7处布局，包括联系人、日历、数量、约会入口、旁白、台词和退出窗口；317×521与1024×1536立绘及版本3ZIP往返通过。真实游戏和Steam跨机仍须另行验证。
 

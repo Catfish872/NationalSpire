@@ -97,12 +97,14 @@ public static partial class AiService
     internal static string BuildWeeklyContext(CareerData data, WeeklyEdition issue, bool profiles)
     {
         if (profiles) return JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,
-            profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous }) }, Json);
+            profiles = issue.Profiles.Select(p => new { p.Id, p.Name, p.Gender, p.Background, History = GameText.Plain(p.History), ThisWeek = GameText.Plain(p.ThisWeek), p.Previous,
+                honors = CommunityThreads.IsHuman(data, p.Id) ? null : PrivatePublicContext.NpcHonors(data, p.Id, p.Name, issue.EndDay) }) }, Json);
         var selected = CameoContent.GeneratedSlides(issue).SelectMany(s => s.People).ToHashSet();
         return JsonSerializer.Serialize(new { week = issue.Week, fromDay = issue.StartDay, asOfDay = issue.EndDay,
             cooperation = issue.Cooperation,
             slides = CameoContent.GeneratedSlides(issue).Select(s => new { s.Id, s.Topic, Facts = GameText.Plain(s.Facts), advertisement = s.Advertisement }),
-            profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous }),
+            profiles = issue.Profiles.Where(p => selected.Contains(p.Id)).Select(p => new { p.Name, p.Gender, p.Background, introduction = p.Updated.Length > 0 ? p.Updated : p.Previous,
+                honors = CommunityThreads.IsHuman(data, p.Id) ? null : PrivatePublicContext.NpcHonors(data, p.Id, p.Name, issue.EndDay) }),
             memory = issue.Memory, schedule = PublicSchedule.ForPrompt(data, issue.Schedule) }, Json);
     }
     internal static void ApplyWeeklyResponse(CareerData data, WeeklyEdition issue, bool profiles, string content)

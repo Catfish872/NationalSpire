@@ -308,6 +308,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
     {
         string player = CareerEngine.Name(data), npc = CareerEngine.DisplayName(data, c.PersonId);
         if (o.Kind is "gift" or OathAttachments.Kind) return o.Title + " · " + o.State + "\n" + o.Detail;
+        if (o.Kind == "training" && o.State == "已拒绝") return $"{npc}已拒绝{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：已拒绝。";
         if (o.Kind == "training") return $"{npc}已接受{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：{ClubCoaching.TrainingPlans(data).FirstOrDefault(p => p.Id == o.Id)?.State ?? o.State}。";
         if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
         string state = o.State switch

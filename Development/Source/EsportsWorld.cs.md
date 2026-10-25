@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`65BC9698B6CC3E74980FACCC96C54A739F0BBE85FF4B7DCB722044BF4FEE9572`。来源：[源码](../../EsportsWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A1FE333DDD949912FDD9F5FCABEE524AEEFF2E69DF17861D6962029F5842F5A0`。来源：[源码](../../EsportsWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -42,7 +42,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerCommerce.SignedClub(NationalSpire.CareerData, NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-4e9fe3d551a9)；[`NationalSpire.CareerCommerce.Upgrade(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-d734109c7eea)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CharacterCardPng.Reference(NationalSpire.CareerData, string)`](CharacterCardPng.cs.md#symbol-6126f1f4718d)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CharacterDeletion.Delete(NationalSpire.CareerData, string)`](CharacterDeletion.cs.md#symbol-2eb70f838afa)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.CircuitPeople.Ensure(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-f59ba7354968)；[`NationalSpire.ClubAudience.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](ClubAudience.cs.md#symbol-2ba02e4068ba)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.ClubDeparture.Leave(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-1579a5b3a3c8)；[`NationalSpire.ClubOperations.TryTransfer(NationalSpire.CareerData, NationalSpire.CareerClub)`](ClubOperations.cs.md#symbol-91ececd875b5)；[`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-e679a8998422)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](EsportsWorld.cs.md#symbol-c2c7de2d1f49)；[`NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-fcdf6a1b178e)；[`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-ed217f617f49)；[`NationalSpire.MarketDynamics.Sponsors(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-80d7f294a5d5)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.ArrangeTransfer(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-66be5c09e822)；[`NationalSpire.OwnedClubSchedule.ApplyNextRegion(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-f50b11cb9486)；[`NationalSpire.OwnedClubSchedule.ChangeRegion(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-b24bb65463ab)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)；[`NationalSpire.PrivatePublicContext.AppendProfileClub(System.Text.StringBuilder, NationalSpire.CareerData, string, string, string, System.Collections.Generic.HashSet<string>, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivatePublicContext.cs.md#symbol-86aa17702d8d)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)；[`NationalSpire.SponsorIncome.Retainer(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-0442434a4986)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)
+**调用者：** [`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerCommerce.SignedClub(NationalSpire.CareerData, NationalSpire.ClubOffer)`](CareerCommerce.cs.md#symbol-4e9fe3d551a9)；[`NationalSpire.CareerCommerce.Upgrade(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-d734109c7eea)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CharacterCardPng.Reference(NationalSpire.CareerData, string)`](CharacterCardPng.cs.md#symbol-6126f1f4718d)；[`NationalSpire.CharacterCards.Validate(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, bool)`](CharacterCards.cs.md#symbol-43d6137cec3b)；[`NationalSpire.CharacterDeletion.Delete(NationalSpire.CareerData, string)`](CharacterDeletion.cs.md#symbol-2eb70f838afa)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.CircuitPeople.Ensure(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-f59ba7354968)；[`NationalSpire.ClubAudience.Fixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](ClubAudience.cs.md#symbol-2ba02e4068ba)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.ClubDeparture.Leave(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-1579a5b3a3c8)；[`NationalSpire.ClubOperations.TryTransfer(NationalSpire.CareerData, NationalSpire.CareerClub)`](ClubOperations.cs.md#symbol-91ececd875b5)；[`NationalSpire.CoachLineups.Roster(NationalSpire.CareerData, string)`](CoachLineups.cs.md#symbol-e679a8998422)；[`NationalSpire.CoachLineups.SeasonStart(NationalSpire.CareerData)`](CoachLineups.cs.md#symbol-e6f5b5e37a12)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](EsportsWorld.cs.md#symbol-c2c7de2d1f49)；[`NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-fcdf6a1b178e)；[`NationalSpire.MarketDynamics.Links(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-ed217f617f49)；[`NationalSpire.MarketDynamics.Sponsors(NationalSpire.CareerData)`](MarketDynamics.cs.md#symbol-80d7f294a5d5)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.ArrangeTransfer(NationalSpire.CareerData, NationalSpire.ClubSigning, NationalSpire.OwnedPlayerContract?)`](OwnedClubs.cs.md#symbol-66be5c09e822)；[`NationalSpire.OwnedClubSchedule.ApplyNextRegion(NationalSpire.CareerData)`](OwnedClubSchedule.cs.md#symbol-f50b11cb9486)；[`NationalSpire.OwnedClubSchedule.ChangeRegion(NationalSpire.CareerData, string)`](OwnedClubSchedule.cs.md#symbol-b24bb65463ab)；[`NationalSpire.OwnedClubSchedule.SetLineup(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<string>)`](OwnedClubSchedule.cs.md#symbol-78f0326d7e56)；[`NationalSpire.PrivatePublicContext.AppendProfileClub(System.Text.StringBuilder, NationalSpire.CareerData, string, string, string, System.Collections.Generic.HashSet<string>, System.Collections.Generic.List<(int Start, int Length, string Group)>?)`](PrivatePublicContext.cs.md#symbol-86aa17702d8d)；[`NationalSpire.PrivatePublicContext.NpcHonors(NationalSpire.CareerData, string, string, int?)`](PrivatePublicContext.cs.md#symbol-d2f1f79d745e)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)；[`NationalSpire.SponsorIncome.Retainer(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-0442434a4986)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -250,25 +250,143 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-1382bbc5c3c3"></a>
+
+## `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition) — public static IReadOnlyList<(CareerStanding Standing, int Rank)> Rankings(WorldCompetition c)`
+
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`AddLeagueTable(string, string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-3fe268608156)；[`AddTable(string, System.Collections.Generic.List<NationalSpire.CareerStanding>, string, System.Func<string, string>)`](SettlementRecord.cs.md#symbol-a55341dc2255)；[`NationalSpire.CareerScreen.Competition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CareerWorldScreen.cs.md#symbol-35113b1f49bd)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.EsportsWorld.DirectQualifiers(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-7fe711fa72d4)；[`NationalSpire.EsportsWorld.Rank(NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-a18431d51c62)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；[`NationalSpire.PrivatePublicContext.AppendStandings(System.Text.StringBuilder, NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](PrivateCareerContext.cs.md#symbol-874198610f4a)
+
+**调用：** [`Add(string, bool, double?)`](EsportsWorld.cs.md#symbol-11e175e50cbd)；[`Mean(string)`](EsportsWorld.cs.md#symbol-b3380c2ec0ce)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.List(int)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+
+**字段、属性、事件及方法组引用：** `Add(string, bool, double?)`；`Mean(string)`；`NationalSpire.CareerStanding.Clears`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Table`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwaySeconds`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeSeconds`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Add(string, bool, double?)`；输入表达式：`Add(f.AwayId, f.AwayCleared, f.AwaySeconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: Add(f.AwayId, f.AwayCleared, f.AwaySeconds);`
+- `Add(string, bool, double?)`；输入表达式：`Add(f.HomeId, f.HomeCleared, f.HomeSeconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: Add(f.HomeId, f.HomeCleared, f.HomeSeconds);`
+- `Mean(string)`；输入表达式：`Mean(row.PersonId)`；返回值紧邻使用处：`BinaryExpressionSyntax: Mean(row.PersonId) != Mean(sorted[i - 1].PersonId)`
+- `Mean(string)`；输入表达式：`Mean(sorted[i - 1].PersonId)`；返回值紧邻使用处：`BinaryExpressionSyntax: Mean(row.PersonId) != Mean(sorted[i - 1].PersonId)`
+- `Mean(string)`；输入表达式：`Mean(x.PersonId)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: x => Mean(x.PersonId)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, (double Seconds, int Count)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, (double Seconds, int Count)>()`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy(x => c.Entrants.IndexOf(x.PersonId)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy(x => c.Entrants.IndexOf(x.PersonId)).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Fixtures.Where(f => c.Kind == "league" && f.Finished)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var f in c.Fixtures.Where(f => c.Kind == "league" && f.Finished))          {              Add(f.HomeId, f.HomeCleared, f.HomeSeconds);              Add(f.AwayId, f.AwayCleared, f.AwaySeconds);          }`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`result.Add((row, rank))`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Add((row, rank));`
+- `System.Collections.Generic.List<T>.IndexOf(T)`；输入表达式：`c.Entrants.IndexOf(x.PersonId)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: x => c.Entrants.IndexOf(x.PersonId)`
+- `System.Collections.Generic.List<T>.List(int)`；输入表达式：`new List<(CareerStanding Standing, int Rank)>(sorted.Length)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<(CareerStanding Standing, int Rank)>(sorted.Length)`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy(x => c.Entrants.IndexOf(x.PersonId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy(x => c.Entrants.IndexOf(x.PersonId)).ToArray`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy(x => Mean(x.PersonId)).ThenBy`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending(x => x.Clears).ThenBy`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)              .ThenByDescending`
+
+**赋值（含属性/字段和局部值）：**
+
+- `rank` = `i + 1`
+
+<a id="symbol-b3380c2ec0ce"></a>
+
+## `Mean(string) — double Mean(string id)`
+
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+
+**字段、属性、事件及方法组引用：** `(double Seconds, int Count).Count`；`(double Seconds, int Count).Seconds`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`times.TryGetValue(id, out var t)`；返回值紧邻使用处：`ConditionalExpressionSyntax: times.TryGetValue(id, out var t) ? t.Seconds / t.Count : 0`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-11e175e50cbd"></a>
+
+## `Add(string, bool, double?) — void Add(string id, bool cleared, double? seconds)`
+
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)
+
+**调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+
+**字段、属性、事件及方法组引用：** `(double Seconds, int Count).Count`；`(double Seconds, int Count).Seconds`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`times.GetValueOrDefault(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = times.GetValueOrDefault(id)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `times[id]` = `(t.Seconds + seconds.Value, t.Count + 1)`
+
 <a id="symbol-fce13966e68e"></a>
 
 ## `NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition) — public static IEnumerable<CareerStanding> Ranked(WorldCompetition c)`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Competition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CareerWorldScreen.cs.md#symbol-35113b1f49bd)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.ModernCompetition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CircuitScreen.cs.md#symbol-6edbcc2815f7)；[`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)；[`NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-c5417410642e)；[`NationalSpire.EsportsWorld.DomesticRank(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-dfb7f2f9a1ef)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)；[`NationalSpire.PrivatePublicContext.AppendStandings(System.Text.StringBuilder, NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](PrivateCareerContext.cs.md#symbol-874198610f4a)；[`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
+**调用者：** [`NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-c5417410642e)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)；[`NationalSpire.SettlementRecords.Capture(NationalSpire.CareerData, NationalSpire.CareerMatch, int)`](SettlementRecord.cs.md#symbol-8ce7adcb9168)；[`NationalSpire.SettlementRecords.CaptureCompetition(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.WorldCompetition, int, System.Collections.Generic.Dictionary<string, int>)`](SettlementRecord.cs.md#symbol-62f41904fd5e)
 
-**调用：** `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.Clears`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Table`
+**字段、属性、事件及方法组引用：** `(NationalSpire.CareerStanding Standing, int Rank).Standing`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending`
-- `System.Collections.Generic.List<T>.IndexOf(T)`；输入表达式：`c.Entrants.IndexOf(x.PersonId)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: x => c.Entrants.IndexOf(x.PersonId)`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending(x => x.Clears).ThenBy(x => c.Entrants.IndexOf(x.PersonId))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending(x => x.Clears).ThenBy(x => c.Entrants.IndexOf(x.PersonId))`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending(x => x.Clears)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending(x => x.Clears).ThenBy`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Table.OrderByDescending(x => x.Points).ThenByDescending(x => x.Wins).ThenByDescending`
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Rankings(c).Select(r => r.Standing)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Rankings(c).Select(r => r.Standing)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-a18431d51c62"></a>
+
+## `NationalSpire.EsportsWorld.Rank(NationalSpire.WorldCompetition, string) — public static int Rank(WorldCompetition c, string id)`
+
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.EsportsWorld.DomesticRank(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-dfb7f2f9a1ef)
+
+**调用：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `(NationalSpire.CareerStanding Standing, int Rank).Rank`；`(NationalSpire.CareerStanding Standing, int Rank).Standing`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c).FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`Rankings(c).FirstOrDefault(r => r.Standing.PersonId == id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c).FirstOrDefault(r => r.Standing.PersonId == id).Rank`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-7fe711fa72d4"></a>
+
+## `NationalSpire.EsportsWorld.DirectQualifiers(NationalSpire.CareerData, NationalSpire.WorldCompetition) — public static IEnumerable<string> DirectQualifiers(CareerData d, WorldCompetition c)`
+
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)
+
+**调用：** [`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`
+
+**字段、属性、事件及方法组引用：** `(NationalSpire.CareerStanding Standing, int Rank).Rank`；`(NationalSpire.CareerStanding Standing, int Rank).Standing`；`NationalSpire.CareerData.DeletedPeople`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；`NationalSpire.WorldCompetition.Entrants`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`d.DeletedPeople.ContainsKey(r.Standing.PersonId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !d.DeletedPeople.ContainsKey(r.Standing.PersonId)`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))          .Take(2).Select(r => r.Standing.PersonId)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))          .Take(2).Select(r => r.Standing.PersonId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))          .Take(2)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))          .Take(2).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy`
+- `System.Collections.Generic.List<T>.IndexOf(T)`；输入表达式：`c.Entrants.IndexOf(r.Standing.PersonId)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: r => c.Entrants.IndexOf(r.Standing.PersonId)`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy(r => c.Entrants.IndexOf(r.Standing.PersonId))          .Take`
+- `System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Rankings(c)          .Where(r => !d.DeletedPeople.ContainsKey(r.Standing.PersonId)).OrderBy(r => r.Rank)          .ThenBy(r => r.Standing.PersonId == "player" ? 0 : 1).ThenBy`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -277,7 +395,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData) — public static WorldCompetition? PlayerLeague(CareerData d)`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)；[`NationalSpire.CircuitWorld.AutoEntry(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-43c8211433d7)；[`NationalSpire.EsportsWorld.DomesticRank(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-dfb7f2f9a1ef)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.EsportsWorld.NextGoal(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-469e0396c2c6)；[`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-6b77d7c9e9bf)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)；[`NationalSpire.OwnedClubs.CreateCore(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-21d1184d2591)；[`NationalSpire.OwnedClubSchedule.Join(NationalSpire.CareerData, string?)`](OwnedClubSchedule.cs.md#symbol-e637b6152d8b)；[`NationalSpire.OwnedClubSchedule.Rebuild(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](OwnedClubSchedule.cs.md#symbol-def76591afef)
 
@@ -297,20 +415,18 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.DomesticRank(NationalSpire.CareerData) — public static int DomesticRank(CareerData d)`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.AwardSeason(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-5263bac7b01c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
-**调用：** [`NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-fcdf6a1b178e)；[`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-fce13966e68e)；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
+**调用：** [`NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-fcdf6a1b178e)；[`NationalSpire.EsportsWorld.Rank(NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-a18431d51c62)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerStanding.PersonId`；`NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`；`NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；`NationalSpire.WorldCompetition.PlayerEntered`
+**字段、属性、事件及方法组引用：** `NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`；`NationalSpire.EsportsWorld.Rank(NationalSpire.WorldCompetition, string)`；`NationalSpire.WorldCompetition.PlayerEntered`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.EsportsWorld.PlayerLeague(NationalSpire.CareerData)`；输入表达式：`PlayerLeague(d)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PlayerLeague(d)`
-- `NationalSpire.EsportsWorld.Ranked(NationalSpire.WorldCompetition)`；输入表达式：`Ranked(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Ranked(c).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`Ranked(c).ToList()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Ranked(c).ToList().FindIndex`
-- `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`Ranked(c).ToList().FindIndex(x => x.PersonId == "player")`；返回值紧邻使用处：`BinaryExpressionSyntax: Ranked(c).ToList().FindIndex(x => x.PersonId == "player") + 1`
+- `NationalSpire.EsportsWorld.Rank(NationalSpire.WorldCompetition, string)`；输入表达式：`Rank(c, "player")`；返回值紧邻使用处：`ReturnStatementSyntax: return Rank(c, "player");`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -319,7 +435,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData) — public static void Initialize(CareerData d)`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
 
@@ -437,11 +553,11 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool) — public static void StartSeason(CareerData d, bool migrating = false)`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)
 
-**调用：** [`Add(int, string, string, int, int, string, int)`](EsportsWorld.cs.md#symbol-5183cd28391b)；[`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)；[`NationalSpire.EsportsWorld.CupRound(string, int)`](EsportsWorld.cs.md#symbol-8ca865fa29de)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.EsportsWorld.MakeOffers(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-6c986135b9e6)；[`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-6b77d7c9e9bf)；[`NationalSpire.EsportsWorld.SnapshotEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-dcf87e8a91bd)；[`NationalSpire.EsportsWorld.StageName(string)`](EsportsWorld.cs.md#symbol-c0445cae874d)；[`NationalSpire.EsportsWorld.TransferWindow(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-d57dc117ca97)；`NationalSpire.CareerStanding.CareerStanding()`；`NationalSpire.WorldCompetition.WorldCompetition()`；`NationalSpire.WorldFixture.WorldFixture()`；`string.StartsWith(string)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Collections.Generic.List<T>.RemoveAt(int)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`
+**调用：** [`Add(int, string, string, int, int, string, int)`](EsportsWorld.cs.md#symbol-c60bb0b66bc7)；[`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)；[`NationalSpire.EsportsWorld.CupRound(string, int)`](EsportsWorld.cs.md#symbol-8ca865fa29de)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.EsportsWorld.MakeOffers(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-6c986135b9e6)；[`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-6b77d7c9e9bf)；[`NationalSpire.EsportsWorld.SnapshotEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-dcf87e8a91bd)；[`NationalSpire.EsportsWorld.StageName(string)`](EsportsWorld.cs.md#symbol-c0445cae874d)；[`NationalSpire.EsportsWorld.TransferWindow(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-d57dc117ca97)；`NationalSpire.CareerStanding.CareerStanding()`；`NationalSpire.WorldCompetition.WorldCompetition()`；`NationalSpire.WorldFixture.WorldFixture()`；`string.StartsWith(string)`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Collections.Generic.List<T>.RemoveAt(int)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`
 
 **字段、属性、事件及方法组引用：** `Add(int, string, string, int, int, string, int)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerHonor.Id`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`；`NationalSpire.ClubOffer.ExpiresDay`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsCareer.EcosystemVersion`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.EsportsCareer.License`；`NationalSpire.EsportsCareer.NationalTeam`；`NationalSpire.EsportsCareer.Offers`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.CupRound(string, int)`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.EsportsWorld.MakeOffers(NationalSpire.CareerData, bool)`；`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`；`NationalSpire.EsportsWorld.SnapshotEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition)`；`NationalSpire.EsportsWorld.StageName(string)`；`NationalSpire.EsportsWorld.TransferWindow(NationalSpire.CareerData)`；`NationalSpire.WorldCompetition.Country`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.Table`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Round`
 
@@ -511,11 +627,11 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 - `Season` = `d.Season`
 - `Table` = `entrants.Select(id => new CareerStanding { PersonId = id }).ToList()`
 
-<a id="symbol-5183cd28391b"></a>
+<a id="symbol-c60bb0b66bc7"></a>
 
 ## `Add(int, string, string, int, int, string, int) — void Add(int day, string kind, string title, int ascension, int prize, string opponent = "", int round = 0)`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)
 
@@ -545,7 +661,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.LeagueSlot(NationalSpire.CareerData, NationalSpire.WorldCompetition) — private static string LeagueSlot(CareerData d, WorldCompetition c)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-6b77d7c9e9bf)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)
 
@@ -565,7 +681,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.RefreshLeagueMatches(NationalSpire.CareerData) — public static bool RefreshLeagueMatches(CareerData d)`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 160 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](Coop/CoopCoordinator.cs.md#symbol-778097f34ec3)；[`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](EsportsWorld.cs.md#symbol-c2c7de2d1f49)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)；[`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)
 
@@ -595,7 +711,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch) — public static string? EntryReason(CareerData d, CareerMatch m)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.ExcludedAutomaticPreview(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CareerEngine.cs.md#symbol-ff6b96537297)；[`NationalSpire.CareerEngine.NextAvailable(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-0b8521a25ad9)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.Coop.CoopRules.Prepare(NationalSpire.Coop.CoopWorld, string, int, System.Collections.Generic.IReadOnlySet<string>, System.Collections.Generic.IReadOnlySet<ulong>?)`](Coop/CoopRules.cs.md#symbol-570bf786ec18)；[`NationalSpire.EsportsWorld.ClearInvalidRegistrations(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-b694be794ed8)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)；[`NationalSpire.PlayerSimulation.Run(NationalSpire.CareerData, NationalSpire.CareerMatch, string, string, int?)`](PlayerSimulation.cs.md#symbol-4d8d262e25f1)；[`NationalSpire.PrivateAppointments.Schedule(NationalSpire.CareerData, string, int)`](PrivateAppointments.cs.md#symbol-8d91a4d33a55)；[`NationalSpire.PublicSchedule.Capture(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](PublicSchedule.cs.md#symbol-0253014360da)
 
@@ -623,7 +739,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.ClearInvalidRegistrations(NationalSpire.CareerData) — public static bool ClearInvalidRegistrations(CareerData d)`
 
-来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)；[`NationalSpire.CareerEngine.PublishMatchDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-1e1428a365f6)；[`NationalSpire.CircuitWorld.AutoEntry(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-43c8211433d7)；[`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](Coop/CoopCoordinator.cs.md#symbol-778097f34ec3)；[`NationalSpire.EsportsWorld.AfterPlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool)`](EsportsWorld.cs.md#symbol-c0b4fbf0a978)；[`NationalSpire.OwnedClubs.CreateCore(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubs.cs.md#symbol-21d1184d2591)
 
@@ -646,7 +762,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool) — public static string? Register(CareerData d, CareerMatch m, bool value)`
 
-来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.SetRegistration(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](CareerEngine.cs.md#symbol-a453368fed28)
 
@@ -688,7 +804,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.ReplaceEntrant(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, string) — private static void ReplaceEntrant(CareerData d, WorldCompetition c, string oldId, string newId)`
 
-来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)
 
@@ -720,7 +836,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.SnapshotEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition) — private static void SnapshotEntrants(CareerData d, WorldCompetition c)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-c5417410642e)；[`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)
 
@@ -744,7 +860,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.CupSlot(NationalSpire.CareerData, NationalSpire.WorldCompetition) — private static string CupSlot(CareerData d, WorldCompetition c)`
 
-来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.RefreshCupMatches(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-713d46cc7d52)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)
 
@@ -767,7 +883,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.EndDay(NationalSpire.CareerData, int, bool) — public static void EndDay(CareerData d, int day, bool publish = true)`
 
-来源：源码第 245 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 278 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.MoveToNextDay(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-3836a38a7da9)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)
 
@@ -786,7 +902,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.CompleteMatchDay(NationalSpire.CareerData) — public static void CompleteMatchDay(CareerData d)`
 
-来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)
 
@@ -805,7 +921,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool) — private static void SettleDay(CareerData d, int day, bool publish, bool includePlayer)`
 
-来源：源码第 250 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.CompleteMatchDay(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-f3ef54e98cea)；[`NationalSpire.EsportsWorld.EndDay(NationalSpire.CareerData, int, bool)`](EsportsWorld.cs.md#symbol-ae784907b7fa)
 
@@ -874,11 +990,11 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.SimulateFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture) — private static void SimulateFixture(CareerData d, WorldCompetition c, WorldFixture f)`
 
-来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
-**调用：** [`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)；[`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`](MatchRules.cs.md#symbol-08f53c7e29ff)；[`Run(string, string)`](EsportsWorld.cs.md#symbol-f996697a7a19)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.List<T>.IndexOf(T)`
+**调用：** [`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`](EsportsWorld.cs.md#symbol-f16aef3da82a)；[`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`](MatchRules.cs.md#symbol-08f53c7e29ff)；[`Run(string, string)`](EsportsWorld.cs.md#symbol-509ef9827714)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.List<T>.IndexOf(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.DeletedPeople`；`NationalSpire.CareerData.WorldId`；`NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool)`；`NationalSpire.MatchRules.Compare(NationalSpire.RunPerformance, NationalSpire.RunPerformance)`；`NationalSpire.RunPerformance.Cleared`；`NationalSpire.RunPerformance.Floor`；`NationalSpire.RunPerformance.Seconds`；`NationalSpire.WorldCompetition.Entrants`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Modern`；`NationalSpire.WorldFixture.Ascension`；`NationalSpire.WorldFixture.AwayCleared`；`NationalSpire.WorldFixture.AwayFloor`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwaySeconds`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.HomeCleared`；`NationalSpire.WorldFixture.HomeFloor`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeSeconds`；`NationalSpire.WorldFixture.Id`；`NationalSpire.WorldFixture.Walkover`；`Run(string, string)`
 
@@ -916,11 +1032,11 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 - `score` = `MatchRules.Compare(a, b)`
 - `walkover` |= `a.Floor < 0 || b.Floor < 0`
 
-<a id="symbol-f996697a7a19"></a>
+<a id="symbol-509ef9827714"></a>
 
 ## `Run(string, string) — RunPerformance Run(string id, string seed)`
 
-来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SimulateFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](EsportsWorld.cs.md#symbol-562b8ecacdbf)
 
@@ -940,7 +1056,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.ResolvePlayerFixture(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool) — public static void ResolvePlayerFixture(CareerData d, CareerMatch m, bool playerClear, bool abandoned)`
 
-来源：源码第 319 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 352 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)
 
@@ -971,7 +1087,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.FinishFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, string, bool) — private static void FinishFixture(CareerData d, WorldCompetition c, WorldFixture f, string winner, bool draw)`
 
-来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 371 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.ResolvePlayerFixture(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool)`](EsportsWorld.cs.md#symbol-38ed5773dbb2)；[`NationalSpire.EsportsWorld.SimulateFixture(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](EsportsWorld.cs.md#symbol-562b8ecacdbf)
 
@@ -1011,7 +1127,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.BreakKnockoutTie(NationalSpire.CareerData, NationalSpire.CareerMatch) — public static void BreakKnockoutTie(CareerData d, CareerMatch m)`
 
-来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 400 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)
 
@@ -1035,7 +1151,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool) — private static void CreateInternational(CareerData d, bool publish)`
 
-来源：源码第 376 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 409 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -1085,7 +1201,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.AddCupRound(NationalSpire.WorldCompetition, System.Collections.Generic.List<string>, int, int) — private static void AddCupRound(WorldCompetition c, List<string> entrants, int round, int day)`
 
-来源：源码第 395 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 428 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-c5417410642e)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -1110,7 +1226,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.RefreshCupMatches(NationalSpire.CareerData, NationalSpire.WorldCompetition) — private static void RefreshCupMatches(CareerData d, WorldCompetition c)`
 
-来源：源码第 399 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 432 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.CreateInternational(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-c5417410642e)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)；[`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -1138,7 +1254,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool) — private static void Crown(CareerData d, WorldCompetition c, bool publish)`
 
-来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 450 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.SettleDay(NationalSpire.CareerData, int, bool, bool)`](EsportsWorld.cs.md#symbol-0a6be40070dd)
 
@@ -1168,7 +1284,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.AfterPlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool) — public static void AfterPlayerMatch(CareerData d, CareerMatch m, bool runClear, bool abandoned)`
 
-来源：源码第 431 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 464 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)
 
@@ -1203,7 +1319,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.Milestone(NationalSpire.CareerData, string, string, string, int, int) — public static void Milestone(CareerData d, string id, string title, string detail, int fans, int money)`
 
-来源：源码第 452 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 485 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitLedger.Settle(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CircuitLedger.cs.md#symbol-8ff7b69864e0)；[`NationalSpire.EsportsWorld.AfterPlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool)`](EsportsWorld.cs.md#symbol-c0b4fbf0a978)；[`NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](EsportsWorld.cs.md#symbol-c2c7de2d1f49)；[`NationalSpire.EsportsWorld.Register(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](EsportsWorld.cs.md#symbol-3857851acceb)
 
@@ -1234,7 +1350,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.MakeOffers(NationalSpire.CareerData, bool) — private static void MakeOffers(CareerData d, bool international)`
 
-来源：源码第 460 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 493 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.AfterPlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool)`](EsportsWorld.cs.md#symbol-c0b4fbf0a978)；[`NationalSpire.EsportsWorld.Crown(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](EsportsWorld.cs.md#symbol-c2c7de2d1f49)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)；[`NationalSpire.EsportsWorld.RefreshClubOffers(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-11dee47d7b53)；[`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)
 
@@ -1267,7 +1383,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.RefreshClubOffers(NationalSpire.CareerData) — public static void RefreshClubOffers(CareerData d)`
 
-来源：源码第 472 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 505 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ClubDeparture.Leave(NationalSpire.CareerData)`](ClubDeparture.cs.md#symbol-1579a5b3a3c8)
 
@@ -1287,7 +1403,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer) — public static string? AcceptOffer(CareerData d, ClubOffer offer)`
 
-来源：源码第 477 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 510 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-fecbe30f550e)
 
@@ -1328,7 +1444,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.TransferWindow(NationalSpire.CareerData) — private static void TransferWindow(CareerData d)`
 
-来源：源码第 493 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 526 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)
 
@@ -1356,7 +1472,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 ## `NationalSpire.EsportsWorld.NextGoal(NationalSpire.CareerData) — public static string NextGoal(CareerData d)`
 
-来源：源码第 501 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 534 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 

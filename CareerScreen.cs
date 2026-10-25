@@ -375,12 +375,11 @@ public partial class CareerScreen : Control, IScreenContext
         var columns = new HBoxContainer(); _content.AddChild(columns);
         var ranking = Card(); ranking.SizeFlagsStretchRatio = .9f; columns.AddChild(ranking); var rb = Inner(ranking);
         rb.AddChild(Text("国内职业联赛", 22, _ink)); rb.AddChild(Text("本赛季联赛积分", 14, _muted));
-        int rank = 0;
         if (data.Standings.Count == 0) rb.AddChild(Text("通过青训选拔、签约俱乐部后，就能登上职业赛场。", 17, _muted));
-        foreach (var entry in (EsportsWorld.PlayerLeague(data) is { PlayerEntered: true } league ? EsportsWorld.Ranked(league) : Enumerable.Empty<CareerStanding>()).Take(5))
+        foreach (var (entry, rank) in (EsportsWorld.PlayerLeague(data) is { PlayerEntered: true } league ? EsportsWorld.Rankings(league) : []).Take(5))
         {
             var row = new HBoxContainer(); rb.AddChild(row);
-            var number = Text($"{++rank:00}", 19, rank <= 3 ? _gold : _muted); number.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; number.CustomMinimumSize = new Vector2(38, 0); row.AddChild(number);
+            var number = Text($"{rank:00}", 19, rank <= 3 ? _gold : _muted); number.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; number.CustomMinimumSize = new Vector2(38, 0); row.AddChild(number);
             row.AddChild(WithAvatar(data, entry.PersonId, Text(CareerEngine.DisplayName(data, entry.PersonId), 19, entry.PersonId == "player" ? _gold : _ink), 36, true));
             var points = Text($"{entry.Points} 分", 18, _muted); points.AutowrapMode = TextServer.AutowrapMode.Off; points.CustomMinimumSize = new Vector2(65, 0); points.HorizontalAlignment = HorizontalAlignment.Right; points.SizeFlagsHorizontal = SizeFlags.ShrinkEnd; row.AddChild(points);
         }
@@ -670,10 +669,8 @@ public partial class CareerScreen : Control, IScreenContext
             _content.AddChild(card);
         }
         _content.AddChild(Text("完整积分榜", 22, _gold));
-        int rank = 0;
-        foreach (var standing in EsportsWorld.PlayerLeague(data) is { PlayerEntered: true } currentLeague ? EsportsWorld.Ranked(currentLeague) : Enumerable.Empty<CareerStanding>())
+        foreach (var (standing, rank) in EsportsWorld.PlayerLeague(data) is { PlayerEntered: true } currentLeague ? EsportsWorld.Rankings(currentLeague) : [])
         {
-            rank++;
             var card = Card();
             Inner(card).AddChild(WithAvatar(data, standing.PersonId, Text($"{rank:00}   {CareerEngine.DisplayName(data, standing.PersonId)}   ·   {standing.Points} 分   ·   {standing.Wins} 胜 {standing.Losses} 负", 17, standing.PersonId == "player" ? _gold : _ink), 40, true));
             _content.AddChild(card);
@@ -836,6 +833,7 @@ public partial class CareerScreen : Control, IScreenContext
 
     private void Notice(string message, bool error)
     {
+        if (error && _privateOverlay != null) ShowPrivateCommandError(message);
         _notice.Text = message; _notice.Show(); _noticeRemaining = error ? 0 : 4;
         _notice.AddThemeColorOverride("font_color", error ? new Color("f29b9b") : _gold);
     }

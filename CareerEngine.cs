@@ -243,15 +243,22 @@ public static class CareerEngine
         int playerFloor = Math.Max(0, floor); double playerSeconds = Math.Round(runSeconds, 3);
         int comparison = forfeit ? -1 : MatchRules.Compare(new(runClear, playerFloor, playerSeconds),
             new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value));
-        if (!confirmFailure && !forfeit && comparison < 0)
+        string attempt = Guid.NewGuid().ToString("N");
+        Diagnostics.Record("match.result", new { d.WorldId, d.Season, d.Day, attempt, m.Id, m.Seed,
+            simulated, confirmFailure, forfeit, abandoned, character, characterId, ascension,
+            player = new RunPerformance(runClear, playerFloor, playerSeconds),
+            opponent = new RunPerformance(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value),
+            comparison, cards, deckSummary, evidence });
+        if (!confirmFailure && !forfeit && (comparison < 0 || !runClear && comparison > 0))
         {
             if (d.Failure != null) return;
-            d.Failure = new() { Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
+            d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
                 CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
-                Day = d.Day, Event = m.Event, Outcome = "失利", Character = character, CharacterId = characterId,
+                Day = d.Day, Event = m.Event, Outcome = comparison > 0 ? "获胜" : "失利", Character = character, CharacterId = characterId,
                 Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
                 Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, Simulated = simulated, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
             d.PendingMatchId = null; d.PendingSince = 0;
+            MatchFailure.Record(d, "pending");
             CareerStore.Save(d); return;
         }
         m.PlayerFloor = playerFloor; m.PlayedAscension = ascension; m.PlayerSeconds = playerSeconds;

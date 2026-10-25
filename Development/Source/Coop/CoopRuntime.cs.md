@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`F486C6DC2E4AA41E036F5F3C2FED6AC3B55CDDB1CF4C192135E53FA7EA23BB71`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6481B5473BC325BFB998C5906A1D36CB411A1CB1B98A237A65E1F48C99F3E704`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -768,7 +768,7 @@ private int _pausedCount;
 **赋值（含属性/字段和局部值）：**
 
 - `_` = `Ai!.Process()`
-- `Status` = `next.World.Failure == null ? "比赛已经结算" : "请选择重赛或确认失败"`
+- `Status` = `next.World.Failure == null ? "比赛已经结算" : "请选择重赛或确认结果"`
 
 <a id="symbol-898c6637244f"></a>
 

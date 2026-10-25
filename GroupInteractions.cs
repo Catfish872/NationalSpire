@@ -1,12 +1,17 @@
 ﻿namespace NationalSpire;
 
+using System.Text.Json;
+using System.Text.RegularExpressions;
+
 public static class GroupInteractions
 {
     public static void Apply(CareerData d, GroupChat g, GroupTurn t, IEnumerable<Dictionary<string, string>> actions)
     {
         if (t.Effects.Count > 0) return;
+        var attachments = t.Attachments.Concat(g.Turns.TakeWhile(previous => previous != t).Reverse().SelectMany(previous => previous.Attachments))
+            .DistinctBy(a => a.Id).ToArray();
         var pending = new Dictionary<(string Actor, string Target), List<Dictionary<string, string>>>();
-        foreach (var source in actions)
+        foreach (var source in Expand(g, t, actions, attachments))
         {
             string actor = g.Resolve(source.GetValueOrDefault("Actor", ""));
             if (source.ContainsKey("Activity") && source.TryGetValue("Id", out string? activityId) && activityId != "0")
@@ -18,7 +23,8 @@ public static class GroupInteractions
                     return lane.Value.Offers.Any(o => o.Kind == "activity" && o.Id == id);
                 });
                 if (existing.Value != null) actor = existing.Value.PersonId;
-                else if (t.Attachments.Any(a => a.Kind == "activity" && a.Id == activityId)) actor = t.Sender;
+                else if (attachments.Any(a => a.Kind == "activity" && a.Id == activityId))
+                    actor = g.Turns.FirstOrDefault(previous => previous.Attachments.Any(a => a.Kind == "activity" && a.Id == activityId))?.Sender ?? t.Sender;
             }
             if (actor.Length == 0 && source.ContainsKey("Gift"))
             {
@@ -34,11 +40,6 @@ public static class GroupInteractions
             else if (target.Length == 0) target = t.Sender;
             if (source.ContainsKey("Match") && !GroupChats.IsHuman(d, target))
             { t.Notices.Add(GroupChats.Name(d, actor) + "与" + GroupChats.Name(d, target) + "的约战：当前版本暂不支持 NPC 间约战，后续更新支持。"); continue; }
-            if (source.ContainsKey("Training") && t.Attachments.FirstOrDefault(a => a.Id == source.GetValueOrDefault("Id") && a.CoachId == actor) is { } plan)
-            {
-                plan.CoachAccepted = source["Training"] is "同意" or "接受";
-                t.Notices.Add(GroupChats.Name(d, actor) + (plan.CoachAccepted ? "接受负责训练计划" : "拒绝负责训练计划") + " " + plan.Id); continue;
-            }
             if ((source.ContainsKey("Favour") || source.ContainsKey("Attitude") || source.ContainsKey("Relationship")) && !g.Members.Contains(target))
             { t.Notices.Add(GroupChats.Name(d, actor) + "的关系变化未生效：对象编号无效。"); continue; }
             var fields = new Dictionary<string, string>(source, StringComparer.OrdinalIgnoreCase);
@@ -48,7 +49,13 @@ public static class GroupInteractions
             // 参与人保留在本次交互上，不通过正文猜测身份。
             fields["GroupParticipants"] = source.GetValueOrDefault("Participants", "");
             fields["GroupRelated"] = source.GetValueOrDefault("Related", "");
-            if (fields.ContainsKey("Activity") && list.Any(previous => previous.Count == fields.Count
+            if (fields.ContainsKey("Activity") && list.FirstOrDefault(previous => previous.Count == fields.Count
+                && fields.Where(field => field.Key != "GroupParticipants").All(field => previous.TryGetValue(field.Key, out var value) && value == field.Value)) is { } sameActivity)
+            {
+                sameActivity["GroupParticipants"] = string.Join("|", ResolvePeople(g, sameActivity["GroupParticipants"] + "|" + fields["GroupParticipants"]).Select(g.Alias));
+                continue;
+            }
+            if (fields.ContainsKey("Training") && list.Any(previous => previous.Count == fields.Count
                 && fields.All(field => previous.TryGetValue(field.Key, out var value) && value == field.Value))) continue;
             list.Add(fields);
         }
@@ -61,8 +68,9 @@ public static class GroupInteractions
                 string turnId = t.Id + ":" + key.Actor + ":" + target;
                 var local = new PrivateTurn { Id = turnId, Status = "complete", Day = t.Day, Season = d.Season, User = t.Text,
                     Reply = string.Join("\n", t.Replies.Where(r => r.Author == key.Actor).Select(r => r.Text)),
-                    Attachments = t.Attachments.Where(a => a.Kind == "match" ? a.Participants.Contains(key.Actor)
-                        : a.Participants.Count == 0 || a.Participants.Contains(key.Actor) || a.ActorId == key.Actor).ToList() };
+                    Attachments = attachments.Where(a => t.Attachments.Contains(a) || fields.Any(f => a.Kind is "training" or "activity" && a.Id == f.GetValueOrDefault("Id")))
+                        .Where(a => a.Kind == "activity" || (a.Kind == "match" ? a.Participants.Contains(key.Actor)
+                            : a.Participants.Count == 0 || a.Participants.Contains(key.Actor) || a.ActorId == key.Actor)).ToList() };
                 // 无正文的有效决定仍有明确行为描述，沿用私信交互的完整回复条件。
                 if (local.Reply.Length == 0) local.Reply = string.Join("；", fields.Select(f => string.Join("，", f.Select(x => x.Key + ":" + x.Value))));
                 c.Turns.Add(local);
@@ -120,4 +128,62 @@ public static class GroupInteractions
     }
     public static List<string> ResolvePeople(GroupChat g, string text) => text.Trim('[', ']').Split(new[] { ',', '，', ';', '；', '|', ' ' }, StringSplitOptions.RemoveEmptyEntries)
         .Select(g.Resolve).Where(g.Members.Contains).Distinct().ToList();
+
+    private static IEnumerable<Dictionary<string, string>> Expand(GroupChat g, GroupTurn t,
+        IEnumerable<Dictionary<string, string>> actions, PrivateOffer[] attachments)
+    {
+        foreach (var source in actions)
+        {
+            if (source.ContainsKey("Training"))
+            {
+                var plan = attachments.FirstOrDefault(a => a.Kind == "training" && a.Id == source.GetValueOrDefault("Id"));
+                var people = ResolvePeople(g, source.GetValueOrDefault("Actor", ""));
+                if (people.Count == 0) { yield return source; continue; }
+                foreach (string person in people)
+                {
+                    // 旧回复中的教练同意不再是训练执行条件，受训者决定分别进入原登记流程。
+                    if (person == plan?.CoachId) continue;
+                    yield return new(source, StringComparer.OrdinalIgnoreCase) { ["Actor"] = g.Alias(person) };
+                }
+            }
+            else if (source.ContainsKey("Activity") && !source.ContainsKey("Participants"))
+            {
+                string id = source.GetValueOrDefault("Id", "");
+                var original = attachments.FirstOrDefault(a => a.Kind == "activity" && a.Id == id);
+                var existing = g.Interactions.Values.SelectMany(lane => lane.Offers.Where(o => o.Kind == "activity"
+                    && o.Id == PrivateInteractionIds.Resolve(lane, id))).FirstOrDefault();
+                string people = source.GetValueOrDefault("Actor", "");
+                // 逐人接受同一活动仍指向附件中的完整安排。
+                if (original != null && source.GetValueOrDefault("Activity") == "接受")
+                    people = string.Join("|", original.Participants.Select(g.Alias));
+                else if (ResolvePeople(g, people).Count <= 1 && (existing ?? original) is { } basis)
+                    people = string.Join("|", basis.Participants.Select(g.Alias));
+                yield return new(source, StringComparer.OrdinalIgnoreCase) { ["Actor"] = g.Alias(t.Sender), ["Participants"] = people };
+            }
+            else yield return source;
+        }
+    }
+
+    /// <summary>仅转换模型材料中的旧活动字段，聊天及存档原文保持原值。</summary>
+    public static string PromptText(string text)
+    {
+        if (!text.Contains("Participants", StringComparison.Ordinal)) return text;
+        text = Regex.Replace(text, @"\[Activity:[^\r\n\]]+\]", match =>
+        {
+            var parser = new PrivateStreamParser("Actor", "Participants"); parser.Feed(match.Value); parser.Finish();
+            var fields = parser.Directives.FirstOrDefault();
+            if (fields == null || !fields.Remove("Participants", out string? people)) return match.Value;
+            fields["Actor"] = people;
+            return "[" + string.Join(", ", fields.Select(field => field.Key + ": " + field.Value)) + "]";
+        });
+        return Regex.Replace(text, "\\{[^{}]*\"Participants\"[^{}]*\\}", match =>
+        {
+            Dictionary<string, JsonElement>? fields;
+            try { fields = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(match.Value); }
+            catch (JsonException) { return match.Value; }
+            if (fields == null || !fields.ContainsKey("Activity") || !fields.Remove("Participants", out var people)) return match.Value;
+            fields["Actor"] = people;
+            return JsonSerializer.Serialize(fields, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        });
+    }
 }

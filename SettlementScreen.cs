@@ -68,7 +68,7 @@ public partial class CareerScreen
             var choices = Card(); choices.Name = "FailureChoices"; _content.AddChild(choices);
             var body = Inner(choices); body.AddThemeConstantOverride("separation", 16);
             var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 16); body.AddChild(actions);
-            foreach (var choice in new[] { ("同种子重赛", "same"), ("新种子重赛", "new"), ("确认失败", "confirm") })
+            foreach (var choice in new[] { ("同种子重赛", "same"), ("新种子重赛", "new"), ("确认结果", "confirm") })
             {
                 var button = Button(choice.Item1, () => ResolveFailure(choice.Item2), 0);
                 button.SizeFlagsHorizontal = SizeFlags.ExpandFill; button.CustomMinimumSize = new(0, 58);

@@ -108,7 +108,7 @@ public partial class CareerScreen
             {
                 string id = edit.People.FirstOrDefault() ?? ""; var relation = id.Length > 0 ? PrivateMessages.Relation(d, id) : null; bool special = RelationshipGifts.Special(edit.Choice?.Good?.Id ?? "");
                 relationship.Visible = id.Length > 0 && !special && relation!.Favour >= 60 && relation.SelectedBond is not >= 1 && !relation.OathConfirmed;
-                hint!.Text = special ? "好感达到85后可以赠送；对方接受后可以择期举办婚礼，完成婚礼活动后正式缔结誓约。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""; hint.Visible = hint.Text.Length > 0;
+                hint!.Text = special ? "对方接收后，玩家可以在聊天的“+”号中选择“约定活动”，并选择其中的婚礼活动。从该入口完成婚礼即可正式缔结誓约。" : relationship.Visible ? "对方接受礼物后，确定恋人关系。" : ""; hint.Visible = hint.Text.Length > 0;
             }
         }
         void ReturnEditor() => ConsumerEditor(activity, shop, previous, goodId, verbId, edit);

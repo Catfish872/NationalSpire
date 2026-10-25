@@ -39,11 +39,12 @@ public static class CircuitLedger
         if (!c.Finished || d.Esports.CircuitAwards.Any(a => a.CompetitionId == c.Id && a.Completed)) return;
         OwnedClubs.SettleAchievements(d);
         int roundCount = CircuitWorld.RoundCount(c);
+        var leagueRanks = c.Kind == "league" ? EsportsWorld.Rankings(c).ToDictionary(r => r.Standing.PersonId, r => r.Rank) : null;
         foreach (string id in c.Entrants)
         {
             bool champion = c.TeamEvent ? c.Rosters[c.ChampionTeam].Contains(id) : id == c.ChampionId;
             int lastRound = c.Fixtures.Where(f => f.HomeId == id || f.AwayId == id).Select(f => f.Round).DefaultIfEmpty(1).Max();
-            int rank = c.Kind == "league" ? EsportsWorld.Ranked(c).ToList().FindIndex(t => t.PersonId == id) + 1 : champion ? 1 : 1 << (roundCount - lastRound + 1);
+            int rank = c.Kind == "league" ? leagueRanks!.GetValueOrDefault(id) : champion ? 1 : 1 << (roundCount - lastRound + 1);
             string place = c.Kind == "league" ? $"个人第{rank}名" : champion ? "冠军" : rank == 2 ? "亚军" : $"{rank}强";
             int points = c.Kind == "league" ? rank switch { 1 => 300, 2 => 180, <= 4 => 105, <= 8 => 54, _ => 20 }
                 : c.Kind == "worldfinal" ? rank switch { 1 => 1500, 2 => 900, 4 => 525, 8 => 270, 16 => 120, _ => 50 } : 0;

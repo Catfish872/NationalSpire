@@ -1,6 +1,6 @@
 namespace NationalSpire;
 
-/// <summary>失败成绩在玩家确认前只保存为待选择记录，不进入任何正式结算入口。</summary>
+/// <summary>失利或未通关获胜的成绩先保存为待选择记录，确认后执行正式结算。</summary>
 public sealed class FailureDecision
 {
     public string Attempt { get; set; } = Guid.NewGuid().ToString("N");
@@ -12,20 +12,28 @@ public sealed class FailureDecision
 
 public static class MatchFailure
 {
-    public static string? Locked(CareerData d) => d.Failure == null ? null : "请先选择重赛或确认失败。";
+    public static string? Locked(CareerData d) => d.Failure == null ? null : "请先选择重赛或确认结果。";
+    public static void Record(CareerData d, string stage) => Diagnostics.Record("match.decision", new
+    {
+        d.WorldId, d.Season, d.Day, stage, decision = d.Failure,
+        match = d.Matches.Where(m => m.Id == d.Failure?.Result.MatchId).Select(m => new
+        { m.Id, m.Seed, m.Status, m.ChosenAscension, m.OpponentPrepared, m.OpponentWon, m.OpponentFloor, m.OpponentSeconds }).FirstOrDefault()
+    });
     public static void Confirm(CareerData d)
     {
         if (d.Failure is not { } failure) return;
         var r = failure.Result;
         var match = RestoreMatch(d);
+        Record(d, "confirm");
         d.Failure = null;
         CareerEngine.FinishMatch(d, match, r.Win, failure.Abandoned, r.Floor, r.Character,
             r.PlayedAscension ?? r.Ascension, r.Cards, r.RunSeconds ?? 0, r.DeckSummary, r.Evidence, r.CharacterId, confirmFailure: true, simulated: r.Simulated);
     }
     public static CareerMatch Retry(CareerData d, bool newSeed)
     {
-        var failure = d.Failure ?? throw new InvalidOperationException("没有待选择的失败。");
+        var failure = d.Failure ?? throw new InvalidOperationException("没有待选择的比赛结果。");
         var m = RestoreMatch(d);
+        Record(d, newSeed ? "retry-new" : "retry-same");
         if (newSeed)
         {
             m.Seed = "NS" + Guid.NewGuid().ToString("N")[..12].ToUpperInvariant();
