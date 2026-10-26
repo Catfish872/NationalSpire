@@ -80,6 +80,18 @@ public static class DateSceneBackgrounds
         var items = library.ToList(); var pictures = items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)).ToList();
         return pictures;
     }
+    public static string At(IEnumerable<DateSceneBackground> library, IReadOnlyList<DateSceneLine> lines, int index, string initial, string openingContext)
+    {
+        var choices = AutomaticChoices(library);
+        var available = choices.Select(b => b.Id).ToHashSet(StringComparer.Ordinal);
+        string id = DateScenes.BackgroundAt(lines, index, initial, available);
+        if (available.Contains(id)) return id;
+        if (index < 0 || lines.Count == 0) return "";
+        // 首个已显示的旁白用于无有效背景时的保底；后续回忆/计划不参与重新评分。
+        // 从请求起点与已播放前缀重建，流式、完成和书签恢复使用同一结果。
+        string context = lines.Take(index + 1).FirstOrDefault(l => l.Narration && !string.IsNullOrWhiteSpace(l.Text))?.Text ?? openingContext;
+        return Closest(choices, context);
+    }
     public static string Closest(IEnumerable<DateSceneBackground> library, string context, string current = "")
     {
         // AI负责语义匹配；本地评分用于首帧以及缺失/失效标注的保底。

@@ -58,12 +58,25 @@ public sealed record BroadcastLine(string Topic, string Text, bool Analyst)
 {
     public string SpeakerId { get; init; } = "";
     public string Role { get; init; } = "commentator";
+    [System.Text.Json.Serialization.JsonIgnore]
+    public Func<Func<string, string>, string>? Rewrite { get; init; }
 }
 
 /// <summary>由可核实的局内事实选择解说；累计表现与发言冷却分别记录。</summary>
 public static partial class LiveCommentary
 {
     private static readonly Dictionary<string, string[]> Lines = [];
+    internal static IEnumerable<KeyValuePair<string, string[]>> DateContentBanks()
+        => Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value))
+            .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value)))
+            .Concat(MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value)))
+            .Concat(MomentTails.Select(p => KeyValuePair.Create("事实补句：" + p.Key, p.Value)));
+    internal static string RewriteParts(Func<string, string> rewrite, string main, string separator, string tail, IReadOnlyDictionary<string, string> facts)
+    {
+        string text = rewrite(main) + separator + (tail.Length > 0 ? rewrite(tail) : "");
+        foreach (var (key, value) in facts) text = text.Replace("{" + key + "}", value, StringComparison.Ordinal);
+        return text;
+    }
     public static BroadcastLine? Speak(BroadcastMemory memory, string topic, double seconds, string seed, Dictionary<string, string> facts, bool force = false)
     {
         var bank = Lines.GetValueOrDefault(topic) ?? AtmosphereBanks.GetValueOrDefault(topic) ?? MomentBanks.GetValueOrDefault(topic);
@@ -81,7 +94,9 @@ public static partial class LiveCommentary
         string text = main + tail;
         foreach (var (key, value) in facts) text = text.Replace("{" + key + "}", value, StringComparison.Ordinal);
         if (text.Contains('{')) return null;
-        if (tail.Length == 0) text = LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts);
+        string extra = tail, separator = "";
+        if (tail.Length == 0) text = LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts,
+            (join, source) => { separator = join; extra = source; });
         RememberPhrase(memory, topic, main, bank.Length);
         if (facts.TryGetValue("tail", out string? suppliedTail))
             foreach (var (key, variants) in MomentTails)
@@ -94,7 +109,8 @@ public static partial class LiveCommentary
         memory.PhraseIndices[topic] = index + 1; memory.TopicTimes[topic] = seconds; memory.LastSpoke = seconds;
         memory.RecentTopics.Add(topic); if (memory.RecentTopics.Count > 8) memory.RecentTopics.RemoveAt(0);
         memory.RecentLines.Add(text); if (memory.RecentLines.Count > 5) memory.RecentLines.RemoveAt(0);
-        return new(topic, text, index % 2 == 1);
+        var capturedFacts = new Dictionary<string, string>(facts);
+        return new(topic, text, index % 2 == 1) { Rewrite = rewrite => RewriteParts(rewrite, main, separator, extra, capturedFacts) };
     }
     private static string SelectPhrase(BroadcastMemory memory, string key, string[] bank, string seed, int index)
     {

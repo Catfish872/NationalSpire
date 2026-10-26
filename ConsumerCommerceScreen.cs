@@ -21,7 +21,7 @@ public partial class CareerScreen
         int buy = ConsumerAttachments.ToBuy(data, good, quantity);
         string explanation = good.Instant
             ? "拒绝或移除附件后，商品返回当天临时物品，可再次使用；下一天清除。已接受的活动保留至赴约。"
-            : attachment.Kind == "gift" ? "对方接受才扣除赠送物品，拒绝后物品保留。" : $"活动后物品继续保留，赴约招待费 ${ConsumerEngine.HospitalityFee(good):N0}。";
+            : attachment.Kind == "gift" ? "添加附件时预留物品；移除附件或对方拒绝后归还，接受后完成赠送。" : $"活动后物品继续保留，赴约招待费 ${ConsumerEngine.HospitalityFee(good):N0}。";
         _openingDialogReturn = returnTo ?? (() =>
         {
             if (attachment.Kind == "gift") PrivateGiftPicker(target, attachment);
@@ -40,7 +40,8 @@ public partial class CareerScreen
             if (_multiplayer != null) _multiplayer.Send("consumer-attach", target.Person, JsonSerializer.Serialize(command), accepted: Accepted);
             else
             {
-                string? result = EconomicActions.Save(data, d => ConsumerAttachments.Prepare(d, target.Person, target.Group, attachment));
+                var prepared = Coop.CoopJson.Copy(attachment);
+                string? result = EconomicActions.Save(data, d => ConsumerAttachments.Prepare(d, target.Person, target.Group, prepared));
                 if (result != null) { error!.Text = result; error.Show(); return false; }
                 Callable.From(Accepted).CallDeferred();
             }
@@ -76,6 +77,32 @@ public partial class CareerScreen
     {
         void Accepted() { _multiplayer?.Refresh(); PrivateAttachments.RemoveAll(x => x.ConsumerAttachmentId == a.ConsumerAttachmentId); RefreshPrivateAttachments(); }
         if (_multiplayer != null) _multiplayer.Send("consumer-remove", _privatePerson, JsonSerializer.Serialize(new PrivateMessageCommand { Entry = a.ConsumerAttachmentId }), accepted: Accepted);
-        else { ConsumerAttachments.Remove(ViewData, a.ConsumerAttachmentId); CareerStore.Save(ViewData); Accepted(); }
+        else
+        {
+            string? error = EconomicActions.Save(ViewData, d => ConsumerAttachments.Remove(d, a.ConsumerAttachmentId));
+            if (error != null) { if (_privateStatus != null) _privateStatus.Text = error; return; }
+            Accepted();
+        }
+    }
+    private void ReserveConsumerDraft(PrivateOffer attachment)
+    {
+        var prepared = Coop.CoopJson.Copy(attachment);
+        string person = _privateGroup.Length > 0 ? prepared.ActorId : _privatePerson;
+        string group = _privateGroup;
+        prepared.GroupId = group;
+        if (group.Length > 0 && prepared.Participants.Count == 0) prepared.Participants = _groupSelection.ToList();
+        void Accepted()
+        {
+            _multiplayer?.Refresh(); RestoreConsumerDrafts(); RefreshPrivateAttachments();
+            if (IsInstanceValid(_privateInput) && _privateInput!.IsVisibleInTree()) _privateInput.GrabFocus();
+        }
+        if (_multiplayer != null)
+            _multiplayer.Send("consumer-reserve", person, JsonSerializer.Serialize(new PrivateMessageCommand { Request = prepared, Part = group }), accepted: Accepted);
+        else
+        {
+            string? error = EconomicActions.Save(ViewData, d => ConsumerAttachments.Prepare(d, person, group, prepared, buyMissing: false));
+            if (error != null) { if (_privateStatus != null) _privateStatus.Text = error; return; }
+            Accepted();
+        }
     }
 }

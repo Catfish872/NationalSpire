@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6DA03E32D94F6ABB1E37FDF1132DD1796EF8D6E5B04BC59836499918D9E14797`。来源：[源码](../../CareerTraining.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2C5B8507C94347EAF983FA4DF2FF2AEF4F2599E0424B4204ED3F8AF99876772C`。来源：[源码](../../CareerTraining.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -449,13 +449,15 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 **调用：** [`NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`](CareerTraining.cs.md#symbol-20ac1d8e57c7)；[`NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`](CareerTraining.cs.md#symbol-ef124ea1d16b)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；`NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.Learning`；`NationalSpire.PrivateTurn.Mood`；`NationalSpire.PrivateTurn.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；`NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.DatePartyEffects`；`NationalSpire.PrivateTurn.Learning`；`NationalSpire.PrivateTurn.Mood`；`NationalSpire.PrivateTurn.Status`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；输入表达式：`RecordLesson(world, c.PersonId, turn.Learning)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordLesson(world, c.PersonId, turn.Learning);`
+- `NationalSpire.CareerTraining.RecordLesson(NationalSpire.CareerData, string, NationalSpire.PrivateLearning)`；输入表达式：`RecordLesson(world, person, effect.Learning)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordLesson(world, person, effect.Learning);`
 - `NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`；输入表达式：`RecordMood(world, c.PersonId, turn.Mood)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordMood(world, c.PersonId, turn.Mood);`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Turns.Where(t => t.Status == "complete" && t.Applied)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var turn in c.Turns.Where(t => t.Status == "complete" && t.Applied))              {                  if (turn.Learning != null) RecordLesson(world, c.PersonId, turn.Learning);                  if (turn.Mood != null) RecordMood(world, c.PersonId, turn.Mood);              }`
+- `NationalSpire.CareerTraining.RecordMood(NationalSpire.CareerData, string, NationalSpire.PrivateMood)`；输入表达式：`RecordMood(world, person, effect.Mood)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordMood(world, person, effect.Mood);`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Turns.Where(t => t.Status == "complete" && t.Applied)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var turn in c.Turns.Where(t => t.Status == "complete" && t.Applied)) { if (turn.Learning != null) RecordLesson(world, c.PersonId, turn.Learning); if (turn.Mood != null) RecordMood(world, c.PersonId, turn.Mood); foreach (var (person, effect) in turn.DatePartyEffects) { if (effect.Learning != null) RecordLesson(world, person, effect.Learning); if (effect.Mood != null) RecordMood(world, person, effect.Mood); } }`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -464,7 +466,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Multiplayer(NationalSpire.CareerData) — public static bool Multiplayer(CareerData d)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.ClubCoaching.PlayerFeatures(NationalSpire.CareerData)`](ClubCoaching.cs.md#symbol-e30d7b812432)；[`NationalSpire.ClubPrograms.CanOffer(NationalSpire.CareerData, string)`](OwnedClubs.cs.md#symbol-359a3dbeb02e)
 
@@ -482,7 +484,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.IsTraining(NationalSpire.LifeActivity) — public static bool IsTraining(LifeActivity a)`
 
-来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)；[`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerRelics.Duration(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-5a1db0b8215e)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, string, int, bool)`](CareerTraining.cs.md#symbol-3a66a2b5dee0)
 
@@ -500,7 +502,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Kind(string) — public static string Kind(string title)`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.DefenseRate(NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-fd2a6fa461b6)；[`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.CareerTraining.Details(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-2710ec7157e0)；[`NationalSpire.CareerTraining.GrowthAvailable(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-3e4c518bdd2a)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)；[`NationalSpire.CareerTraining.TemporaryRate(NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-653406f1507e)；[`NationalSpire.CareerTraining.WeeklyRate(NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-250ae2e1f544)；[`NationalSpire.LifeCatalog.Build()`](LifeCatalog.cs.md#symbol-fca7f4607860)
 
@@ -518,7 +520,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Targets(NationalSpire.CareerData) — public static List<CareerPerson> Targets(CareerData d)`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.Beneficiaries(NationalSpire.CareerData, NationalSpire.LifeActivity, string)`](CareerTraining.cs.md#symbol-676286a5e3f7)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)
 
@@ -547,7 +549,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.ActiveRoster(NationalSpire.CareerData, string) — public static bool ActiveRoster(CareerData d, string id)`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.Offer(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-06bdec919490)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)；[`NationalSpire.CareerTraining.Beneficiaries(NationalSpire.CareerData, NationalSpire.LifeActivity, string)`](CareerTraining.cs.md#symbol-676286a5e3f7)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)
 
@@ -568,7 +570,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.WeeklyRate(NationalSpire.LifeActivity) — private static int WeeklyRate(LifeActivity a)`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)
 
@@ -587,7 +589,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.TemporaryRate(NationalSpire.LifeActivity) — private static int TemporaryRate(LifeActivity a)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)
 
@@ -606,7 +608,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.DefenseRate(NationalSpire.LifeActivity) — private static int DefenseRate(LifeActivity a)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool)`](CareerTraining.cs.md#symbol-feb4623577e9)
 
@@ -625,7 +627,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Snapshot(NationalSpire.CareerData, NationalSpire.LifeActivity, bool) — public static void Snapshot(CareerData d, LifeActivity a, bool legacy = false)`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)
 
@@ -664,7 +666,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.SeasonAt(NationalSpire.CareerData, int) — private static int SeasonAt(CareerData d, int day)`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-b1b089f2949d)；[`NationalSpire.CareerTraining.ExpectedGrowth(NationalSpire.CareerData, NationalSpire.LifeActivity, string, int)`](CareerTraining.cs.md#symbol-19da8bbb9563)
 
@@ -685,7 +687,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.ExpectedGrowth(NationalSpire.CareerData, NationalSpire.LifeActivity, string, int) — internal static int ExpectedGrowth(CareerData d, LifeActivity a, string id, int weekly)`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.ClubPrograms.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-35a5fe8029e5)
 
@@ -713,7 +715,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.ApplyGrowth(NationalSpire.PlayerDevelopment, int, int) — private static int ApplyGrowth(PlayerDevelopment state, int amount, int season)`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.ExpectedGrowth(NationalSpire.CareerData, NationalSpire.LifeActivity, string, int)`](CareerTraining.cs.md#symbol-19da8bbb9563)；[`NationalSpire.CareerTraining.Grow(NationalSpire.CareerData, string, int, int)`](CareerTraining.cs.md#symbol-8d0cf5a9811c)
 
@@ -742,7 +744,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.GrowthCost(double, double, double) — private static double GrowthCost(double total, double current, double gain)`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.ApplyGrowth(NationalSpire.PlayerDevelopment, int, int)`](CareerTraining.cs.md#symbol-8561a0248a6c)
 
@@ -769,7 +771,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static void Advance(CareerData d, LifeActivity a)`
 
-来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)；[`NationalSpire.ClubPrograms.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-b01f1c3252f6)
 
@@ -794,7 +796,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Gains(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Gains(CareerData d, LifeActivity a)`
 
-来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerTraining.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-b1b089f2949d)；[`NationalSpire.OwnedClubs.CompleteActivity(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-d53f4fbd3e4e)
 
@@ -815,7 +817,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Grow(NationalSpire.CareerData, string, int, int) — public static int Grow(CareerData d, string id, int amount, int season)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 208 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerTraining.Advance(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-b1b089f2949d)；[`NationalSpire.OwnedClubs.Advance(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-7fe29c98085a)；[`NationalSpire.OwnedClubs.CompleteActivity(NationalSpire.CareerData, NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-d53f4fbd3e4e)
 
@@ -841,7 +843,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Permanent(NationalSpire.CareerData, string, int) — public static double Permanent(CareerData d, string id, int ascension)`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MatchRules.Evaluate(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?, bool)`](MatchRules.cs.md#symbol-92264d5fcfdd)
 
@@ -860,7 +862,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, int, bool) — public static double Temporary(CareerData d, WorldCompetition c, string id, int day, bool defense = false)`
 
-来源：源码第 213 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -879,7 +881,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, string, int, bool) — public static double Temporary(CareerData d, string id, int day, bool defense = false)`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Temporary(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, int, bool)`](CareerTraining.cs.md#symbol-1e515dfbe146)；[`NationalSpire.MatchRules.Evaluate(NationalSpire.CareerData, NationalSpire.CareerPerson, int, int?, bool)`](MatchRules.cs.md#symbol-92264d5fcfdd)
 
@@ -905,7 +907,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Beneficiaries(NationalSpire.CareerData, NationalSpire.LifeActivity, string) — private static List<string> Beneficiaries(CareerData d, LifeActivity a, string kind)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-8fa9f91feb98)；[`NationalSpire.CareerTraining.Details(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-2710ec7157e0)；[`NationalSpire.CareerTraining.GrowthAvailable(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-3e4c518bdd2a)
 
@@ -928,7 +930,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.GrowthAvailable(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static bool GrowthAvailable(CareerData d, LifeActivity a)`
 
-来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)
 
@@ -950,7 +952,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Description(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Description(CareerData d, LifeActivity a)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Expected(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-44d430d90686)
 
@@ -999,7 +1001,7 @@ public static readonly string[] LearningTopics = ["选牌", "出牌", "路线", 
 
 ## `NationalSpire.CareerTraining.Details(NationalSpire.CareerData, NationalSpire.LifeActivity) — public static string Details(CareerData d, LifeActivity a)`
 
-来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 277 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
 

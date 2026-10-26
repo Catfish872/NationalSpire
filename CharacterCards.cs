@@ -112,6 +112,7 @@ public static class CharacterCards
         if (p.CustomClearChance is { } rate && (!double.IsFinite(rate) || rate < 0 || rate > 1)) return "模拟通关率应在 0%—100% 之间。";
         if (p.Personality == null || p.Personality.AttitudeMin < -5 || p.Personality.AttitudeMax > 5 || p.Personality.AttitudeMin > -1 || p.Personality.AttitudeMax < 1) return "态度下界为 -5 至 -1，上界为 1 至 5。";
         if (p.Personality.Dimensions().Append(p.Personality.Kind).Any(s => s == null)) return "性格描述无效。";
+        if (PersonalityPools.SelectionError(p.Personality, p.Gender) is { } personalityError) return personalityError;
         if (edit.Relation != null && (edit.Target == "player" || d.HumanIds.Contains(edit.Target))) return "对你的态度仅用于 NPC。";
         if (edit.Relation?.Favour is < -100 or > 100) return "好感应在 -100—100 之间。";
         if (p.ClubId.Length > 0 && EsportsWorld.Club(d, p.ClubId) == null || p.SupportedClubId.Length > 0 && EsportsWorld.Club(d, p.SupportedClubId) == null) return "俱乐部已不存在。";

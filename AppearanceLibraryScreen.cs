@@ -5,7 +5,7 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private void BuildAppearanceLibrary(VBoxContainer parent, CareerData data, string person,
-        Action<(PortraitDesign Design, DateSceneAssets Assets)> applied)
+        Action<(PortraitDesign Design, DateSceneAssets Assets)> applied, Action<string, Action>? importPackage = null)
     {
         var panel = new PanelContainer(); panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232f", "365664", 12, 14)); parent.AddChild(panel);
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 20); panel.AddChild(row);
@@ -44,9 +44,17 @@ public partial class CareerScreen
             int index = Array.FindIndex(entries, e => e.Id == id) + 1; choices.Select(index); Select(index);
         }
         choices.ItemSelected += index => Select((int)index);
-        actions.AddChild(Button("导入并保存形象包", () => PickNestedFile("导入角色形象包", [".zip"], path =>
+        actions.AddChild(Button(importPackage == null ? "导入并保存形象包" : "导入角色 / 立绘包", () => PickNestedFile("导入角色形象包", [".zip"], path =>
         {
             if (!CareerStore.IsCurrent(data)) return;
+            if (importPackage != null)
+            {
+                Callable.From(() => { if (IsInstanceValid(info)) importPackage(path, () =>
+                {
+                    try { var entry = AppearanceLibrary.Import(data, path); Refresh(entry.Id); }
+                    catch (Exception e) { info.Text = "立绘已导入，形象库保存失败：" + e.Message; }
+                }); }).CallDeferred(); return;
+            }
             try { var entry = AppearanceLibrary.Import(data, path); Refresh(entry.Id); }
             catch (Exception e) { info.Text = "导入失败：" + e.Message; }
         }), 200));

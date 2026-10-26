@@ -1,9 +1,15 @@
 using Godot;
-using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace NationalSpire;
+
+/// <summary>Per-person presentation values; positive Y moves the portrait upward.</summary>
+public sealed record DatePortraitPlacement(double Scale = 1, double Y = 0)
+{
+    public DatePortraitPlacement Normalized() => new(Math.Clamp(double.IsFinite(Scale) ? Scale : 1, .25, 2.5), Math.Clamp(double.IsFinite(Y) ? Y : 0, -200, 200));
+    public static DatePortraitPlacement FromAssets(DateSceneAssets assets) => new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY).Normalized();
+}
 
 public sealed class DateSceneAssets
 {
@@ -25,6 +31,9 @@ public sealed class DateSceneAssets
     public double LetterSpacing { get; set; } = 1;
     public double PanelFade { get; set; }
     public Dictionary<string, DateSceneBookmark> Bookmarks { get; set; } = [];
+    public string GameVoice { get; set; } = "";
+    public bool PresentationConfirmed { get; set; }
+    public bool UseDefaultPortrait { get; set; }
 }
 public sealed class DateSceneBookmark
 {
@@ -64,6 +73,15 @@ public static class DateSceneAssetStore
         var assets = File.Exists(path) ? JsonSerializer.Deserialize<DateSceneAssets>(File.ReadAllText(path), PortraitDesigns.Json) ?? new() : new();
         if (!assets.Blur) { assets.BlurAmount = 0; assets.Blur = true; }
         return assets;
+    }
+    public static bool HasImportedSprites(CareerData data, string person)
+    {
+        try
+        {
+            return Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values).Any(hash =>
+                hash.Length == 64 && hash.All(char.IsAsciiHexDigit) && File.Exists(BlobPath(hash)));
+        }
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException or JsonException) { return false; }
     }
     public static void Save(CareerData data, string person, DateSceneAssets assets)
     {
@@ -114,7 +132,7 @@ public static class DateSceneAssetStore
         }
         else if (EmotionForSprite(design, filename) == id) id = filename;
         byte[] bytes = File.ReadAllBytes(file); using var image = ReadImage(bytes, true);
-        string hash = Hash(bytes); Store(bytes, hash); assets.OutfitId = design.SelectedOutfit; assets.Sprites[id] = hash;
+        string hash = Hash(bytes); Store(bytes, hash); assets.OutfitId = design.SelectedOutfit; assets.Sprites[id] = hash; assets.UseDefaultPortrait = false;
     }
     public static string StoreSprite(byte[] bytes)
     {
@@ -142,58 +160,10 @@ public static class DateSceneAssetStore
     }
     public static void ImportPack(DateSceneAssets assets, PortraitDesign design, string path)
     {
-        using var archive = Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? ZipFile.OpenRead(path) : null;
-        if (archive != null && !archive.Entries.Any(e => e.FullName == "manifest.json")) { ImportNamedPack(assets, design, archive); return; }
-        byte[] Read(string name)
-        {
-            if (name.Contains('\\') || name.StartsWith('/') || name.Split('/').Any(p => p is ".." or "." || p.Contains(':'))) throw new InvalidDataException("清单中的图片路径无效。");
-            if (archive != null)
-            {
-                var found = archive.Entries.Where(e => e.FullName == name).ToArray();
-                if (found.Length != 1) throw new InvalidDataException("立绘包缺少或重复文件：" + name);
-                if (found[0].Length > 64 * 1024 * 1024) throw new InvalidDataException("单张图片超过64MB，请缩小文件后重新导出。");
-                using var input = found[0].Open(); using var output = new MemoryStream(); input.CopyTo(output); return output.ToArray();
-            }
-            string root = Path.GetFullPath(Path.GetDirectoryName(path)!) + Path.DirectorySeparatorChar;
-            string resolved = Path.GetFullPath(Path.Combine(root, name.Replace('/', Path.DirectorySeparatorChar)));
-            if (!resolved.StartsWith(root, StringComparison.OrdinalIgnoreCase)) throw new InvalidDataException("图片路径超出清单目录。");
-            return File.ReadAllBytes(resolved);
-        }
-        using var json = JsonDocument.Parse(archive == null ? File.ReadAllBytes(path) : Read("manifest.json")); var manifest = json.RootElement;
-        string character = "character_" + Hash(System.Text.Encoding.UTF8.GetBytes(design.PersonId))[..16];
-        if (manifest.GetProperty("characterId").GetString() != character || manifest.GetProperty("outfitId").GetString() != design.SelectedOutfit) throw new InvalidDataException("清单与当前角色或套装不匹配，请使用该角色当前套装导出的清单。");
-        var accepted = new Dictionary<string, (string Hash, byte[] Bytes)>(); var allowed = design.Emotions.Where(e => e.Enabled).Select(e => e.Id).ToHashSet();
-        foreach (var entry in manifest.GetProperty("sprites").EnumerateArray())
-        {
-            string id = entry.GetProperty("emotionId").GetString() ?? "", file = entry.GetProperty("file").GetString() ?? "";
-            if (!allowed.Contains(id) || accepted.ContainsKey(id) || !file.EndsWith('/' + id + ".png", StringComparison.Ordinal)) throw new InvalidDataException("情绪ID、文件名或启用状态与设计不匹配：" + id);
-            byte[] bytes = Read(file); using var image = ReadImage(bytes, true); accepted.Add(id, (Hash(bytes), bytes));
-        }
-        if (!accepted.ContainsKey(design.DefaultEmotionId)) throw new InvalidDataException("立绘包缺少默认差分：" + design.DefaultEmotionId);
-        foreach (var item in accepted.Values) Store(item.Bytes, item.Hash);
-        assets.OutfitId = design.SelectedOutfit; assets.Sprites = accepted.ToDictionary(p => p.Key, p => p.Value.Hash);
-    }
-    private static void ImportNamedPack(DateSceneAssets assets, PortraitDesign design, ZipArchive archive)
-    {
-        var accepted = new Dictionary<string, (string Hash, byte[] Bytes)>();
-        long total = 0;
-        foreach (var entry in archive.Entries.Where(e => e.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) && !e.FullName.StartsWith("__MACOSX/")))
-        {
-            if (entry.FullName.Contains('\\') || entry.FullName.StartsWith('/') || entry.FullName.Split('/').Any(p => p is ".." or "." || p.Contains(':')))
-                throw new InvalidDataException("立绘包中的图片路径无效。");
-            string id = Path.GetFileNameWithoutExtension(entry.Name);
-            if (EmotionForSprite(design, id) == null || accepted.ContainsKey(id)) throw new InvalidDataException("PNG文件名须为情绪ID或情绪ID_数字，且文件名唯一：" + id);
-            total += entry.Length;
-            if (entry.Length > 64 * 1024 * 1024 || total > 512L * 1024 * 1024) throw new InvalidDataException("立绘包过大，请分批导入。");
-            using var input = entry.Open(); using var output = new MemoryStream(); input.CopyTo(output); byte[] bytes = output.ToArray();
-            using var image = ReadImage(bytes, true); accepted.Add(id, (Hash(bytes), bytes));
-        }
-        if (accepted.Count == 0) throw new InvalidDataException("立绘包中没有PNG图片。");
-        var merged = new Dictionary<string, string>(assets.Outfits.GetValueOrDefault(design.SelectedOutfit) ?? []);
-        foreach (var item in accepted) merged[item.Key] = item.Value.Hash;
-        if (!merged.Keys.Any(id => EmotionForSprite(design, id) == design.DefaultEmotionId)) throw new InvalidDataException($"请提供{design.DefaultEmotionId}.png或{design.DefaultEmotionId}_数字.png默认立绘。");
-        foreach (var item in accepted.Values) Store(item.Bytes, item.Hash);
-        assets.OutfitId = design.SelectedOutfit; assets.Sprites = merged;
+        var plan = PortraitPackageImport.Read(null, path, design);
+        if (plan.Unknown(design).Length > 0) throw new InvalidDataException("请在导入窗口确认新情绪差分后导入。");
+        var merged = PortraitPackageImport.Merge(plan, design, assets, new HashSet<string>());
+        assets.OutfitId = merged.Assets.OutfitId; assets.Outfits = merged.Assets.Outfits;
     }
     public static string ImportBackground(string path)
     {

@@ -89,6 +89,7 @@ public partial class LiveRunBridge : Node
     }
     public override void _ExitTree()
     {
+        ResumeDateRun();
         CombatManager.Instance.CombatSetUp -= OnCombat;
         CombatManager.Instance.CombatWon -= OnWon;
         CombatManager.Instance.History.Changed -= OnHistoryChanged;
@@ -116,6 +117,7 @@ public partial class LiveRunBridge : Node
         if (_ended) return;
         if (_faulted || !CareerStore.IsCurrent(_data) || _data.PendingMatchId != _match.Id)
         { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
+        if (_match.DateGame != null) AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused);
         _tick += delta;
         _mapCheck += delta;
         if (_tick < .2) return;
@@ -124,29 +126,52 @@ public partial class LiveRunBridge : Node
     }
     private static List<RouteNode> CopyMap(ActMap map, int act, bool secondBoss)
         => LiveMaps.Copy(map, act, secondBoss);
-    private void EnsurePlan()
+    // 同一次刷新内共享原生地图快照；刷新结束即释放，下次建图读取当前实际地图。
+    private List<RouteNode>? _planningMap;
+    private List<RouteNode> PlanningMap()
+    {
+        if (_planningMap != null) return _planningMap;
+        using var timing = UiPerformance.Measure(UiPerformance.Work.LiveMapPlan);
+        return _planningMap = LiveMaps.Read(_run, _match, false);
+    }
+    private void EnsurePlan(ref bool changed)
     {
         if (_match.Live != null) { _match.Live.Commentary.SharedPhrases = _data.BroadcastHistory; return; }
         if (_run.Map is NullActMap) return;
         MatchRules.PrepareOpponent(_data, _match);
-        var maps = LiveMaps.Read(_run, _match, false);
+        var maps = PlanningMap();
         int hp = GameCharacterNames.StartingHp(_rival.Character);
         _match.Live = RivalSimulation.Create(_match, _rival, maps, hp);
         _match.Live.Commentary.SharedPhrases = _data.BroadcastHistory;
-        CareerStore.Save(_data);
+        changed = true;
     }
     private void UpdateRace()
     {
-        EnsurePlan();
+        using var timing = UiPerformance.Measure(UiPerformance.Work.LiveUpdate);
+        bool changed = false;
+        try { RefreshRace(ref changed); }
+        finally
+        {
+            _planningMap = null;
+            // 路线、进度和请求在同一轮结束时保存一次，提前返回或界面异常也保留已完成的数据更新。
+            if (changed)
+            {
+                using var saving = UiPerformance.Measure(UiPerformance.Work.LiveSave);
+                CareerStore.Save(_data);
+            }
+        }
+    }
+    private void RefreshRace(ref bool changed)
+    {
+        EnsurePlan(ref changed);
         if (_match.Live is not { Steps.Count: > 0 } live) return;
-        _voices ??= new(_data, _match, live.Commentary, [_rival.Id]);
         double seconds = RunManager.Instance.RunTime;
-        if (RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)) CareerStore.Save(_data);
+        changed |= RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds);
         if (RivalSimulation.TryAdjustPace(live, seconds, _run.CurrentActIndex, _run.TotalFloor))
         {
             Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,
                 playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End });
-            CareerStore.Save(_data);
+            changed = true;
         }
         var progress = RivalSimulation.At(live, seconds);
         if (!ReferenceEquals(_lastMap, _run.Map))
@@ -157,11 +182,13 @@ public partial class LiveRunBridge : Node
         // 部分事件原地修改地图对象；地图打开时低频复核，避免显示失效路线。
         if (_mapCheck >= 1 && NMapScreen.Instance?.IsOpen == true)
         { _mapCheck = 0; CalibrateMap(live); }
+        if (_match.DateGame != null) { UpdateDateGame(live, progress, seconds, ref changed); if (_datePause != null) return; }
+        _voices ??= new(_data, _match, live.Commentary, _match.DateGame?.People ?? [_rival.Id]);
         if (_run.TotalFloor > live.Commentary.RouteFloor)
         {
             var observation = new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentMapPoint?.PointType.ToString() ?? "", Hp = _player.Creature.CurrentHp, MaxHp = _player.Creature.MaxHp };
             Emit(LiveCommentary.Route(live.Commentary, observation, CareerEngine.Name(_data), _match.Seed, seconds));
-            CareerStore.Save(_data);
+            changed = true;
         }
         Emit(LiveCommentary.Rival(live, progress, CareerEngine.Name(_data), _rival.PublicName, _match.Seed, seconds));
         if (!_commentaryFaulted)
@@ -190,7 +217,8 @@ public partial class LiveRunBridge : Node
         {
             foreach (var change in _shop.Read(_run))
                 _voices.Shop(change.Kind, change.Item, change.DeckSize, change.Gold, CareerEngine.Name(_data), _run.TotalFloor, seconds, change.CardType);
-            _voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds);
+            _voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds,
+                _match.DateGame == null ? null : new[] { (_rival.Id, progress, live.MaxHp) }.Concat(_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp))));
             _voices.Ambient(CombatManager.Instance.IsInProgress && !CombatManager.Instance.IsEnding, _run.TotalFloor, seconds);
             Emit(_voices.Poll(seconds, live.Commentary.LastSpoke));
         }
@@ -201,7 +229,7 @@ public partial class LiveRunBridge : Node
         string status = progress.Finished ? progress.Dead ? $"止步第 {progress.Step.Floor} 层" : "已通关 · " + MatchRules.Time(_match.OpponentSeconds)
             : $"第 {progress.Step.Act + 1} 幕 · 第 {progress.Step.Floor} 层 · {RivalSimulation.RoomName(progress.Step.Kind)}";
         if (!_mapCompatible && progress.Step.Act == _run.CurrentActIndex) status += " · 独立路线";
-        _hud.SetRace(_rival.PublicName, status, progress.Hp, live.MaxHp, progress.Step.Act != _run.CurrentActIndex, seconds);
+        if (_match.DateGame == null) _hud.SetRace(_rival.PublicName, status, progress.Hp, live.MaxHp, progress.Step.Act != _run.CurrentActIndex, seconds);
         if (seconds >= _mapRetryAt)
             try { UpdateMap(live, progress, seconds); }
             catch (Exception e) { Diagnostics.Error("live.map", e); _mapRetryAt = seconds + 5; _mapPoints = null; if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); GD.PushWarning("[NationalSpire] 地图标记等待重建：" + e.Message); }
@@ -307,6 +335,7 @@ public partial class LiveRunBridge : Node
     {
         if (!ReferenceEquals(state.RunState, _run)) return;
         _battle = new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentRoom?.RoomType.ToString() ?? "Monster" };
+        _dateCombatStarted = RunManager.Instance.RunTime; _dateCombatAct = _run.CurrentActIndex;
     }
     private void HpChanged(int before, int after)
     {
@@ -336,12 +365,23 @@ public partial class LiveRunBridge : Node
         if (_faulted || _battle == null || _match.Live == null) return;
         _battle.Hp = _player.Creature.CurrentHp; _battle.MaxHp = _player.Creature.MaxHp;
         _battle.Turn = Math.Max(_battle.Turn, _player.PlayerCombatState?.TurnNumber ?? 1);
+        if (_match.DateGame is { } game)
+            DateGameTriggers.CombatWon(game, _battle.Kind, _dateCombatAct, _battle.Floor, _dateCombatStarted, RunManager.Instance.RunTime, _battle.CompleteObservation);
         Emit(LiveCommentary.Finish(_match.Live.Commentary, _battle, CareerEngine.Name(_data), _match.Seed, RunManager.Instance.RunTime));
         _battle = null; _pendingLoss = 0; CareerStore.Save(_data);
     }
     private void Emit(BroadcastLine? line)
     {
         if (line == null || _commentaryFaulted) return;
+        if (_match.DateGame is { } game)
+        {
+            if (line.Role == "audience" || game.People.Count == 0) return;
+            string personId = game.People.Contains(line.SpeakerId) ? line.SpeakerId : game.People[Random.Shared.Next(game.People.Count)];
+            if (!_dateAvatars.TryGetValue(personId, out var art)) _dateAvatars[personId] = art = (CareerAvatars.ForPerson(_data, personId), AvatarHonors.ForPerson(_data, personId));
+            _hud.Say(LiveVoices.Byline(CareerEngine.DisplayName(_data, personId), line.Role), DateGameVoices.Style(_data, game, personId, line), line.Topic, art.Art, art.Identity);
+            if (_match.Live != null) _match.Live.Commentary.LastSpoke = RunManager.Instance.RunTime;
+            return;
+        }
         var speakers = CommentatorSelection.ForMatch(_data, _match);
         var person = line.SpeakerId.Length > 0 ? CareerEngine.Person(_data, line.SpeakerId)
             : speakers.Count > 0 ? speakers[(line.Analyst ? 1 : 0) % speakers.Count] : null;

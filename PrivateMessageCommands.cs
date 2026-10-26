@@ -22,9 +22,9 @@ public static class PrivateMessageCommands
     public static string? Apply(CareerData data, string kind, string person, PrivateMessageCommand command)
     {
         var error = ApplyCore(data, kind, person, command);
-        if (error == null && kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-date-open" or "dm-date-end" or "dm-date-revise")
+        if (error == null && kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-date-game-next" or "dm-date-invite")
         {
-            var pending = PrivateMessages.Conversation(data, person).Turns.LastOrDefault(t => t.Status == "queued");
+            var pending = PrivateMessages.Conversation(data, kind == "dm-date-invite" ? command.Replacement : person).Turns.LastOrDefault(t => t.Status == "queued");
             if (pending != null) { pending.ToolMode = command.ToolMode ?? data.Ai.ChatTools; pending.ToolCalls.Clear(); }
         }
         return error;
@@ -32,6 +32,7 @@ public static class PrivateMessageCommands
     private static string? ApplyCore(CareerData data, string kind, string person, PrivateMessageCommand command)
     {
         if (kind == "consumer-attach") return ConsumerAttachments.Prepare(data, person, command.Part, command.Request!);
+        if (kind == "consumer-reserve") return ConsumerAttachments.Prepare(data, person, command.Part, command.Request!, buyMissing: false);
         if (kind == "consumer-remove") return ConsumerAttachments.Remove(data, command.Entry);
         if (kind == "dm-avatar-frame") return NpcAvatarFrames.Select(data, person, command.Text);
         if (kind == "dm-settings") { command.Settings!.Validate(); PrivateMessages.Mailbox(data).Settings = command.Settings; return null; }
@@ -42,14 +43,26 @@ public static class PrivateMessageCommands
             return PrivateMessages.Manage(data, c, kind, command);
         switch (kind)
         {
+            case "dm-date-diary-delete": return DateDiaries.Delete(data, person, command.Offer);
+            case "dm-date-game-next":
+                return command.Scene == null ? "场景信息缺失。" : DateGames.FollowUp(data, c, command.Scene);
+            case "dm-date-game-cancel": return DateGames.Cancel(data, person, command.Offer);
+            case "dm-date-invite": return DateSceneInvitations.Invite(data, person, command.Offer, command.Replacement);
             case "dm-date-revise":
                 if (AiService.PrivateBusy(data, person) || c.Turns.Any(t => t.Status is "queued" or "sending")) return "请等待上一条请求停止后再发送。";
                 var revision = c.Turns.LastOrDefault();
-                if (revision == null || revision.Id != command.Entry || revision.Status != "failed" || revision.Scene is not { Ending: false } || revision.UserDeleted || revision.ReplyDeleted) return "这条约会消息已不可修订，请刷新场景。";
-                if (DateScenes.Validate(data, c, revision.Scene) is { } revisionError) return revisionError;
+                if (revision == null || revision.Id != command.Entry || revision.Status is not ("failed" or "complete") || revision.Scene is not { Ending: false } || revision.UserDeleted || revision.ReplyDeleted || revision.RequestKind == "arbitration") return "这条约会消息已不可修订，请刷新场景。";
                 if (string.IsNullOrWhiteSpace(command.Text)) return "请填写消息。";
-                revision.User = command.Text.Trim(); revision.Status = "queued"; revision.Error = revision.Reply = revision.Reasoning = "";
-                revision.Context = ""; revision.SceneLines.Clear(); c.MemoryRevision++;
+                if (revision.Status == "complete" && revision.Scene.Opening) return "这轮是场景开场，请从玩家输入的轮次重新输入。";
+                if (revision.DateInvitation is { State: "accepted" }) return "此回复已加入共同约会，请在约会日程中处理后续安排。";
+                var revisedScene = Coop.CoopJson.Copy(revision.Scene);
+                if (DateScenes.Validate(data, c, revisedScene, retained: true) is { } revisionError) return revisionError;
+                if (revision.Status == "complete" && PrivateInteractionHistory.Rewind(data, c, revision) is { } revisionRewindError) return revisionRewindError;
+                revision.Scene = revisedScene;
+                revision.Scene.GameEvent = "";
+                revision.User = command.Text; revision.Status = "queued"; revision.Error = revision.Reply = revision.Reasoning = "";
+                revision.Regenerating = false; revision.PreviousReply = revision.PreviousReasoning = "";
+                revision.Context = ""; revision.SceneLines.Clear(); revision.SceneChoices.Clear(); c.MemoryRevision++;
                 return null;
             case "dm-date-pause": case "dm-date-end":
                 return DateScenes.Leave(data, c, command.Offer, kind == "dm-date-end");
@@ -94,12 +107,22 @@ public static class PrivateMessageCommands
                 if (latest == null || latest.Id != command.Entry || latest.Status != "complete" || latest.UserDeleted || latest.ReplyDeleted || latest.RequestKind == "arbitration")
                     return "只能重新生成最新一条完整回复。";
                 if (latest.Scene != null && DateScenes.Validate(data, c, latest.Scene) is { } regenerateSceneError) return regenerateSceneError;
+                if (latest.DateInvitation is { State: "accepted" }) return "此回复已加入共同约会，请在约会日程中处理后续安排。";
                 if (PrivateInteractionHistory.Rewind(data, c, latest) is { } rewindError) return rewindError;
+                if (latest.DateInvitation is { } invitation) invitation.State = "pending";
                 latest.PreviousReply = latest.Reply; latest.PreviousReasoning = latest.Reasoning;
                 latest.Regenerating = true; latest.Status = "queued"; latest.Reply = ""; latest.Reasoning = ""; latest.Error = "";
+                latest.SceneChoices.Clear();
                 // 后台旧总结失效；新回复从撤回后的关系、日程和资料重新生成。
                 c.MemoryRevision++; return null;
             case "dm-send":
+                if (command.Scene != null) { command.Scene.GameEvent = ""; command.Scene.GameMatchId = ""; }
+                if (command.Attachments.Any(a => a.Kind == DateGames.AttachmentKind))
+                {
+                    if (command.Scene == null || command.Attachments.Count(a => a.Kind == DateGames.AttachmentKind) != 1
+                        || command.Attachments.Any(a => a.Kind == DateGames.AttachmentKind && a.MatchId != command.Scene.OfferId)) return "请在当前约会场景中发送开局邀请。";
+                    command.Scene.GameInvitation = true;
+                }
                 if (command.Scene != null && DateScenes.Validate(data, c, command.Scene) is { } dateError) return dateError;
                 if (CareerEngine.Person(data, person) is { } banned && SpireArbitration.Muted(banned)) return "该角色账号已封禁；仍可查看记录、申请仲裁及要求履行致歉。";
                 if (command.Request?.Kind == "match" && PrivateAppointments.Error(data, person, command.Request) is { } requestError) return requestError;
@@ -169,7 +192,7 @@ public static class PrivateMessageCommands
     {
         foreach (var c in life.Mailbox.Conversations.Values)
         {
-            PrivateMessages.RemoveDeletedOffers(c);
+            PrivateMessages.RemoveDeletedOffers(c, life.Mailbox);
             c.SummaryStatus = ""; c.SummaryRequest = "";
             foreach (var t in c.Turns.Where(t => t.Status is "queued" or "sending")) RestoreInterrupted(t, "上次回复中断，可以重试。");
         }

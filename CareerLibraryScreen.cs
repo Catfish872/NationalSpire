@@ -13,7 +13,7 @@ public partial class CareerScreen
             var toolbar = new HBoxContainer(); toolbar.AddThemeConstantOverride("separation", 12); box.AddChild(toolbar);
             if (_multiplayer == null) toolbar.AddChild(Button("新建生涯", () =>
             {
-                try { var fresh = CareerEngine.CreateNew(); fresh.Ai = ViewData.Ai; var path = CareerLibrary.Create(CareerStore.DefaultPath, fresh); _boundData = CareerStore.SwitchCareer(path); _cancelDialog?.Invoke(); ResetNavigation(); Render(); }
+                try { BeginNpcSetup(false); }
                 catch (Exception e) { Notice(e.Message, true); }
             }, 180));
             toolbar.AddChild(Button("导入存档", () => { _cancelDialog?.Invoke(); OpenFilePicker("导入生涯", [".zip"], async path =>

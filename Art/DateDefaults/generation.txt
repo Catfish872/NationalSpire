@@ -1,0 +1,10 @@
+Default date-scene portraits
+Source: generated with the built-in GPT Image tool for this project, 2026-10-20.
+Format: RGBA PNG, 1024 x 1536, transparent outside the character.
+Usage: gender-based fallback only; player imports take priority. Included in the mod assembly.
+Female revision: 2026-10-21, built-in GPT Image. Proportions and natural neutral pose reference: bundled haruka.zip and charlotte.zip. Male image unchanged.
+
+[
+  "2026-10-21 replacement: 1024 x 1536 RGBA transparent black female silhouette. Reference the bundled haruka/charlotte neutral sprites for petite youthful anime proportions and a relaxed natural gesture. Compact build, small shoulders, moderately large anime head; simple shoulder-length hair, ordinary human ears, modest long-sleeve blouse, knee-length flared skirt, flat shoes. Head tilted slightly, shoulders relaxed, hands loosely together in front, weight on one leg. Near-black face, hair, clothes, limbs and shoes; subtle charcoal interior separation; clean antialiased silhouette. Single full-body figure with transparent margins. Outside pixels alpha 0. Exclude scenery, glow, lettering, cat ears and tail.",
+  "Use case: stylized-concept. Asset type: default male NPC standing sprite for a Japanese visual novel, a single FULL BODY adult human male BLACK SILHOUETTE on true alpha transparent background. 1024x1536 portrait canvas. Head and feet fully inside image with about 6% top and bottom padding. Centered front view, slim adult anime proportions, softly tousled short hair, relaxed simple open casual jacket over shirt, straight trousers and casual shoes, arms relaxed slightly away from sides. Same graceful uncluttered Japanese visual-novel standing portrait proportions as a female anime sprite. Entire character near-black charcoal silhouette, with only extremely subtle dark-charcoal interior contour hints, featureless face, clean solid shape and anti-aliased edges. Exclude any scenery, floor shadow, glow, text, checkerboard, frame. Deliver one true RGBA PNG with transparent pixels outside the figure. One generation only; immediately deliver."
+]

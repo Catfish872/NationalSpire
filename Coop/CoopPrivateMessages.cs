@@ -44,8 +44,9 @@ public sealed partial class CoopCoordinator
     }
     private void StartPrivate(ulong sender, CoopCommand command)
     {
-        if (!Host || World == null || command.Kind is not ("dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
+        if (!Host || World == null || command.Kind is not ("dm-date-invite" or "dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-summary")) return;
         string worldId = World.Id, epoch = World.Epoch;
+        string recipient = command.Kind == "dm-date-invite" ? JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options)!.Replacement : command.Target;
         CareerData? Current()
         {
             if (_closed || World?.Id != worldId || World.Epoch != epoch) return null;
@@ -58,28 +59,29 @@ public sealed partial class CoopCoordinator
             var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
             var member = copy.Members.Single(m => m.SteamId == sender);
             copy.World.Chats.Order = Math.Max(copy.World.Chats.Order, data.Chats.Order);
+            DateGroupBridge.Merge(copy.World, data);
             member.Life.Mailbox = data.Life.Mailbox; member.Life.Relationships = data.Life.Relationships;
             member.Life.Consumer = data.Life.Consumer;
             CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);
             PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);
             SpireArbitration.Merge(copy.World, member.Life.Mailbox);
             CoachLineups.Merge(copy.World, data);
-            foreach (var match in data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == command.Target))
+            foreach (var match in data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == recipient))
             {
                 int index = copy.World.Matches.FindIndex(m => m.Id == match.Id);
                 if (index >= 0) copy.World.Matches[index] = CoopJson.Copy(match);
             }
             CoopRules.RefreshPeople(copy); copy.Revision++; Commit(copy, NativeSave);
         }
-        if (command.Kind == "dm-summary") { _ = AiService.SummarizePrivateManually(Current, Save, command.Target); return; }
-        _ = AiService.ProcessPrivateAsync(Current, Save, command.Target, (turn, text) =>
+        if (command.Kind == "dm-summary") { _ = AiService.SummarizePrivateManually(Current, Save, recipient); return; }
+        _ = AiService.ProcessPrivateAsync(Current, Save, recipient, (turn, text) =>
         {
             if (!_closed && World?.Epoch == epoch && sender != Self)
                 // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。
-                foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,
-                    AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",
-                    AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))
-                    Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));
+                foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence,
+                    AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "",
+                    AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines))))
+                    Send(sender, "private-chunk", new CoopPrivatePart(recipient, part));
         });
     }
     public static CoopWorld PrivateSnapshot(CoopWorld source, ulong recipient)

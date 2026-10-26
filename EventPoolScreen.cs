@@ -16,7 +16,7 @@ public partial class CareerScreen
         foreach (string edge in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 26);
         var card = Card(); margin.AddChild(card); var box = Inner(card); box.AddThemeConstantOverride("separation", 12);
         var heading = new HBoxContainer(); box.AddChild(heading);
-        heading.AddChild(Text("事件池", 28, _gold));
+        heading.AddChild(Text("随机池编辑", 28, _gold));
         var templateName = Text(PromptLibrary.Template(data.Ai).Name, 17, _muted); templateName.SizeFlagsHorizontal = SizeFlags.ExpandFill; templateName.HorizontalAlignment = HorizontalAlignment.Right; heading.AddChild(templateName);
         var tabs = new HBoxContainer(); tabs.AddThemeConstantOverride("separation", 12); box.AddChild(tabs);
         var summary = Text("", 16, _muted); box.AddChild(summary);
@@ -120,6 +120,7 @@ public partial class CareerScreen
             { if (!Commit()) { foreach (var pair in typeButtons) pair.Value.SetPressedNoSignal(pair.Key == Daily()); return; } category = daily ? "daily:观众" : "event:日常"; ShowCategories(daily); ShowCategory(); }, 150);
             button.Name = daily ? "DailyPoolTab" : "RandomPoolTab"; button.ToggleMode = true; typeButtons[daily] = button; tabs.AddChild(button);
         }
+        var personalityTab = Button("性格池", () => OpenPersonalityPool(data), 150); personalityTab.Name = "PersonalityPoolTab"; tabs.AddChild(personalityTab);
         categories.ItemSelected += i =>
         {
             string next = categories.GetItemMetadata((int)i).AsString();

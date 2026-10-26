@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace NationalSpire;
 
-/// <summary>仅交换可编辑提示词。默认项保留跟随模板更新的语义，不交换账户配置。</summary>
+/// <summary>交换可编辑提示词、事件池与性格池。默认项保留跟随模板更新的语义。</summary>
 public static class PromptTransfer
 {
     public sealed class Bundle
@@ -15,6 +15,7 @@ public static class PromptTransfer
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public CustomPromptTemplate? CustomTemplate { get; set; }
         [JsonRequired] public Dictionary<string, Section> Sections { get; set; } = [];
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public Dictionary<string, List<EventPoolEntry>>? EventPools { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] public PersonalityPool? PersonalityPool { get; set; }
     }
     public sealed class Section
     {
@@ -29,7 +30,8 @@ public static class PromptTransfer
     };
     public static string Export(AiOptions options, IReadOnlyDictionary<string, string> drafts)
     {
-        var bundle = new Bundle { Version = 3, Template = PromptLibrary.TemplateId(options), EventPools = NationalSpire.EventPools.Overrides(options) };
+        var bundle = new Bundle { Version = 4, Template = PromptLibrary.TemplateId(options), EventPools = NationalSpire.EventPools.Overrides(options),
+            PersonalityPool = PersonalityPools.Read(options) };
         if (options.CustomPromptTemplates?.TryGetValue(bundle.Template, out var custom) == true)
         { bundle.CustomTemplate = new() { Name = custom.Name, BaseTemplate = custom.BaseTemplate, Sections = custom.Sections.ToDictionary(p => p.Key, p => PromptLibrary.EditableText(p.Key, p.Value)) }; }
         foreach (var section in PromptLibrary.Sections)
@@ -56,6 +58,7 @@ public static class PromptTransfer
         if (bundle.CustomTemplate?.Sections is { } customLegacy && !customLegacy.ContainsKey("event") && customLegacy.TryGetValue("events", out var previousText))
             customLegacy["event"] = previousText;
         if (bundle.EventPools != null) NationalSpire.EventPools.Validate(bundle.EventPools);
+        if (bundle.PersonalityPool != null) PersonalityPools.Validate(bundle.PersonalityPool);
         if (bundle.Sections?.TryGetValue("event", out var eventSection) == true)
             eventSection.Text = PromptLibrary.EditableText("event", eventSection.Text);
         if (bundle.CustomTemplate?.Sections?.TryGetValue("event", out var eventText) == true)
@@ -82,9 +85,9 @@ public static class PromptTransfer
                 && (!sections.TryGetValue(id, out var item) || item == null || string.IsNullOrWhiteSpace(item.Text)))
                 sections[id] = new() { FollowDefault = true, Text = bundle.CustomTemplate?.Sections?.GetValueOrDefault(id) ?? text };
         }
-        if (bundle.Format != "national-spire-prompts" || bundle.Version is not (1 or 2 or 3))
+        if (bundle.Format != "national-spire-prompts" || bundle.Version is not (1 or 2 or 3 or 4))
             throw new ArgumentException("不支持此提示词文件格式或版本。");
-        if (bundle.Version == 1 || (bundle.Version == 3 && bundle.CustomTemplate == null))
+        if (bundle.Version == 1 || (bundle.Version >= 3 && bundle.CustomTemplate == null))
         {
             if (bundle.CustomTemplate != null || !PromptLibrary.Templates.Any(t => t.Id == bundle.Template)) throw new ArgumentException("文件中的提示词模板不存在。");
         }
@@ -121,7 +124,7 @@ public static class PromptTransfer
             options.PromptOverrides = texts.Where(p => !PromptLibrary.Sections.Any(s => s.Id == p.Key) || Normalize(p.Value) != Normalize(PromptLibrary.Default(options, p.Key)))
                 .ToDictionary(p => p.Key, p => p.Value);
             options.PrivatePromptVersion = 1;
-            if (bundle.EventPools != null) NationalSpire.EventPools.Save(options, bundle.EventPools);
+            ApplyPools(options, bundle);
             return;
         }
         var overrides = bundle.Sections.Where(p => !p.Value.FollowDefault || !PromptLibrary.Sections.Any(s => s.Id == p.Key)).ToDictionary(p => p.Key, p => p.Value.Text);
@@ -137,7 +140,12 @@ public static class PromptTransfer
         PromptLibrary.SelectTemplate(options, bundle.Template);
         options.PromptOverrides = overrides;
         options.PrivatePromptVersion = 1;
+        ApplyPools(options, bundle);
+    }
+    private static void ApplyPools(AiOptions options, Bundle bundle)
+    {
         if (bundle.EventPools != null) NationalSpire.EventPools.Save(options, bundle.EventPools);
+        if (bundle.PersonalityPool != null) options.PersonalityPool = Coop.CoopJson.Copy(bundle.PersonalityPool);
     }
     public static string Desktop => Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
     public static string WriteDesktop(string json)

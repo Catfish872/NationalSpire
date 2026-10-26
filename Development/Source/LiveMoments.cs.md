@@ -241,7 +241,7 @@ private static readonly Dictionary<string, string[]> MomentTails = [];
 
 来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.LiveCommentary.MomentFacts(string, int, int)`](LiveMoments.cs.md#symbol-a7429ac6e843)；[`NationalSpire.LiveCommentary.MomentTail(NationalSpire.BroadcastMemory, string, string, int)`](LiveMoments.cs.md#symbol-d358a4a6cc39)；[`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；`int.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(double, double)`
 
@@ -275,7 +275,7 @@ private static readonly Dictionary<string, string[]> MomentTails = [];
 
 来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LiveCommentary.MomentFacts(string, int, int)`](LiveMoments.cs.md#symbol-a7429ac6e843)；[`NationalSpire.LiveCommentary.MomentTail(NationalSpire.BroadcastMemory, string, string, int)`](LiveMoments.cs.md#symbol-d358a4a6cc39)；[`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；`int.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 

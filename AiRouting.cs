@@ -39,6 +39,23 @@ public static class AiRouting
     public static AiConnectionProfile Profile(AiOptions options, string task)
         => options.ConnectionProfiles[ProfileId(options, task)];
 
+    /// <summary>同一任务的所有选择入口共用校验与保存；保存失败恢复原选择。</summary>
+    public static void Assign(AiOptions options, string task, string profile, Action save)
+    {
+        Ensure(options); task = Category(task);
+        if (!Tasks.Any(t => t.Id == task) || !options.ConnectionProfiles.ContainsKey(profile))
+            throw new ArgumentException("请选择有效的任务和连接方案。");
+        if (ProfileId(options, task) == profile) return;
+        bool hadPrevious = options.TaskProfiles.TryGetValue(task, out string? previous);
+        options.TaskProfiles[task] = profile;
+        try { save(); }
+        catch
+        {
+            if (hadPrevious) options.TaskProfiles[task] = previous!; else options.TaskProfiles.Remove(task);
+            throw;
+        }
+    }
+
     public static string NextName(AiOptions options)
     {
         Ensure(options);

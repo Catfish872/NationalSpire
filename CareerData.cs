@@ -2,6 +2,11 @@ namespace NationalSpire;
 
 public sealed class CareerData
 {
+    public PersonalityPool? NpcPersonalityPool { get; set; }
+    public bool NpcSetupPending { get; set; }
+    public List<DateGameRule> DateGameRules { get; set; } = DateGames.Defaults();
+    public DateGameTiming DateGameTiming { get; set; } = new();
+    public Dictionary<string, DateVoiceEdits> DateGameVoiceEdits { get; set; } = [];
     public EventJourney Journey { get; set; } = new();
     public int CalendarStartYear { get; set; }
     // 仅供同步序列化前替换顶层字段；不得传给业务规则，编码后必须深复制。
@@ -106,6 +111,7 @@ public sealed class SeasonRecap
 
 public sealed class CareerMatch
 {
+    public DateGameState? DateGame { get; set; }
     public List<string> CommentatorIds { get; set; } = [];
     public bool RegistrationDeclined { get; set; }
     public LiveMatchState? Live { get; set; }
@@ -295,6 +301,7 @@ public sealed class CareerResult
 
 public sealed class AiOptions : System.Text.Json.Serialization.IJsonOnDeserializing, System.Text.Json.Serialization.IJsonOnDeserialized
 {
+    public PersonalityPool? PersonalityPool { get; set; }
     public Dictionary<string, AiConnectionProfile> ConnectionProfiles { get; set; } = new();
     public Dictionary<string, string> TaskProfiles { get; set; } = new();
     public bool ChatTools { get; set; }

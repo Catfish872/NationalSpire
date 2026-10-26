@@ -52,7 +52,7 @@ public static class ChatTools
     public static string Describe(string protocol)
     {
         // 旧协议仍是业务含义的唯一来源，工具示例只转换表达形式。
-        string result = Regex.Replace(protocol, @"\[(?:Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup|Scene|DateDiary):[^\r\n\]]+\]", m =>
+        string result = Regex.Replace(protocol, @"\[(?:Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup|Scene|DateDiary|DateChoice|DateJoin|DateGame):[^\r\n\]]+\]", m =>
         {
             var sample = new PrivateStreamParser("Actor", "Target", "Participants", "Related", "Coach"); sample.Feed(m.Value); sample.Finish();
             var fields = sample.Directives.FirstOrDefault() ?? sample.SceneCues.FirstOrDefault().Fields;
@@ -68,11 +68,39 @@ public static class ChatTools
             .Replace("日记标记放在正文之后，内容中的方括号改用中文圆括号。", "日记内容写入工具参数。")
             .Replace("隐藏日记标记", "日记工具参数").Replace("标记", "工具参数").Replace("交互格式", "工具参数").Replace("方括号内的内容使用全角括号代替半角方括号。", "");
     }
+    /// <summary>只转换程序拥有的格式说明；人物设定、素材描述及游戏事实保持原文。</summary>
+    public static string SceneGuidance(string protocol)
+    {
+        string text = Regex.Replace(protocol, @"(?m)^\[Scene:[^\r\n\]]+\]([^\r\n]*)", m =>
+        {
+            var parser = new PrivateStreamParser(); parser.Feed(m.Value); parser.Finish();
+            var fields = parser.SceneCues.First().Fields.ToDictionary(p => p.Key, p => p.Value);
+            fields["Reply"] = m.Groups[1].Value;
+            return JsonSerializer.Serialize(fields, DateSceneParty.PromptJson);
+        });
+        return Describe(text)
+            .Replace("每个完整句子单独成行，每行开头填写Scene、Emotion、Background", "每个完整句子独立写入send_message.Replies，先填Scene、Emotion、Background，再填Reply")
+            .Replace("每个完整台词句子都独立写一个Scene工具参数", "每个完整台词句子都独立写入一个Replies对象")
+            .Replace("各用一行 {\"DateChoice\":\"建议文字\"}", "各在Interactions中填一项Type为date_choice、DateChoice为建议文字的对象")
+            .Replace("只输出这两条工具参数，不另写选项标题", "两项建议分别填写date_choice交互，正文保持当前场景内容")
+            .Replace("并在正文后输出", "并在Interactions中提交")
+            .Replace("随后各自输出", "随后各自在Interactions中提交Type为date_game的交互")
+            .Replace("各自格式", "Interactions中各项的参数规则");
+    }
     public static ChatToolRequest Create(CareerData data, PrivateConversation? conversation = null, PrivateTurn? turn = null, GroupChat? group = null)
     {
+        bool date = turn?.Scene is { Ending: false }, party = date && turn!.Scene!.Participants.Count > 1;
         var features = Features(group != null).ToList();
         if (turn?.Scene is { Ending: false } scene)
+        {
             features.Add(new("scene", "Scene", DateScenes.Guidance(scene, tools: true), ["Scene", "Emotion", "Background"]));
+            features.Add(new("date_choice", "DateChoice", "每轮提供两项不同的玩家回应或动作建议，每项最多24字；使用两条date_choice交互，等待玩家选择后才执行。", ["DateChoice"]));
+            if (scene.GameInvitation) features.Add(new("date_game", "DateGame", SceneGuidance(DateGames.InvitationProtocol), ["DateGame", "Actor"]));
+        }
+        if (turn?.DateInvitation != null)
+            features.Add(new("date_join", "DateJoin", SceneGuidance(DateSceneInvitations.Protocol), ["DateJoin"]));
+        if (party) features = features.Select(f => f.Name is "relationship" or "skill" or "mood" or "profile"
+            ? f with { Fields = [.. f.Fields, "Actor"], Description = f.Description + "\nActor填写本次约会中实际发生变化的NPC完整PersonId，关系变化的对象为玩家。" } : f).ToList();
         if (turn?.Scene is { Ending: true })
             features.Add(new("date_diary", "DateDiary", DateDiaries.ToolEnding, ["DateDiary", "Location"]));
         if (group == null && conversation != null && CareerEngine.Person(data, conversation.PersonId) is { } person
@@ -104,7 +132,7 @@ public static class ChatTools
             properties["Type"] = new { type = "string", @enum = new[] { f.Name } };
             var required = new List<string> { "Type" };
             if (f.Key.Length > 0) required.AddRange(f.Fields);
-            if (group != null) required.Add("Actor");
+            if (group != null || party && f.Name is "relationship" or "skill" or "mood" or "profile") required.Add("Actor");
             if (group != null && f.Name is "relationship" or "match") required.Add("Target");
             // 活动意愿统一放在工具总说明，字段说明只保留动作与参数规则。
             string description = Describe(f.Description);
@@ -127,15 +155,17 @@ public static class ChatTools
         }).ToArray();
         var replyProperties = new Dictionary<string, object>();
         if (group != null) replyProperties["Speaker"] = new { type = "string", description = "本段实际发言者，填写本群可发言的NPC编号，先于 Reply 填写。" };
+        if (party) replyProperties["Speaker"] = new { type = "string", description = "本段实际发言者的完整PersonId；旁白填空字符串，先于Reply填写。" };
         if (turn?.Scene is { Ending: false })
             foreach (string key in new[] { "Scene", "Emotion", "Background" })
                 replyProperties[key] = new { type = "string", description = "沿用本次约会场景资料中的 " + key + "，先于 Reply 填写。" };
         replyProperties["Reply"] = new { type = "string", description = "本段完整正文，保持当前模板要求的文风与篇幅，包含角色语言或约会旁白。" };
         string replyDescription = turn?.Scene is { Ending: false } active
-            ? Describe(DateScenes.Guidance(active, tools: true)) : "按发言顺序填写完整正文。";
+            ? DateScenes.Guidance(active, tools: true) : "按发言顺序填写完整正文。";
         object[] interactions = definitions;
         var exampleReply = new Dictionary<string, object>();
         if (group != null) exampleReply["Speaker"] = "p2";
+        if (party) exampleReply["Speaker"] = turn!.Scene!.Participants[0].PersonId;
         if (turn?.Scene is { Ending: false } exampleScene)
         { exampleReply["Scene"] = "dialogue"; exampleReply["Emotion"] = exampleScene.DefaultEmotionId; exampleReply["Background"] = "current"; }
         exampleReply["Reply"] = "明天再切磋一局吧，我把今天没弄明白的地方整理好。";
@@ -145,7 +175,13 @@ public static class ChatTools
             exampleReply["Reply"] = "明天一起看录像吧，我把今天没弄明白的地方整理好。";
             exampleAction = new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" };
         }
+        if (date)
+        {
+            exampleReply["Reply"] = "刚才聊得很开心，你还想去哪里走走？";
+            exampleAction = new() { ["Type"] = "date_choice", ["DateChoice"] = "（指向附近的小路。）一起走走吧。" };
+        }
         string exampleReasoning = group != null ? "共同活动已有成员同意参加，按实际日期、内容与谈妥的参与者登记一项活动邀请。" : "双方已经表达再次切磋的意向，按本轮实际日期与进阶登记邀请。";
+        if (date) exampleReasoning = "承接当前约会交流，填写逐句内容与两项待玩家选择的回应。";
         bool ending = turn?.Scene?.Ending == true;
         if (ending)
         {
@@ -153,15 +189,19 @@ public static class ChatTools
             exampleReasoning = "本次相处已结束，根据完整记录发送感想，并整理这场约会的日记。";
             exampleAction = new() { ["Type"] = "date_diary", ["DateDiary"] = "今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。", ["Location"] = "地点未明确" };
         }
-        string example = JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = new[] { exampleAction } }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        var exampleActions = new List<Dictionary<string, object>> { exampleAction };
+        if (date && !ending) exampleActions.Add(new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" });
+        string example = JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         object[] tools = [new { type = "function", function = new { name = "send_message", strict = true, description = Guidance + (group != null ? "\n共同活动已有日期，且正文中有人明确表示参加时，Interactions 同时登记 activity 邀请，填写已谈妥的活动内容和参与者。正文与交互登记同一个决定。" : "") + "\n以下只演示参数组织，人物、日期、进阶和正文取自本轮实际交流：\n" + example + "\n" + ActivityIntentGuidance + "\n" + OrdinaryGuidance + (ending ? "\n" + DateDiaries.ToolEnding : ""),
             parameters = new { type = "object", properties = new Dictionary<string, object>
             {
                 ["Reasoning"] = new { type = "string", description = (group != null ? "区分生活活动与比赛约战：生活活动已有日期且成员明确同意参加时，按已谈妥的活动内容和完整参与者登记同一项活动邀请；比赛约战再填写比赛进阶与方式。" : "") + "先核对人物、日期、待处理卡片的实际类型和编号、当前活动是否已经确认或赴约，再根据已有事实和交流资料整理人物反应、回复安排及实际交互决定。新约定采用邀请；正在履行的活动继续当前场景。" },
                 ["Replies"] = new { type = "array", description = replyDescription, items = new { type = "object", properties = replyProperties, required = replyProperties.Keys.ToArray(), additionalProperties = false } },
-                ["Interactions"] = new { type = "array", description = ending ? DateDiaries.ToolEnding : "必须填写本轮的全部实际交互，无交互填 []。每项的 Type 选择其类型，其余字段按该项说明填写。", items = new { anyOf = interactions } }
+                ["Interactions"] = new { type = "array", description = ending ? DateDiaries.ToolEnding : date
+                    ? "填写本轮实际交互，并填写两项date_choice玩家建议。" + (party ? "每名NPC的关系、学习、状态和档案变化使用其完整PersonId作为Actor。" : "") + "约会对局邀请使用date_game逐人回应；该约会对局沿当前活动开始。"
+                    : "必须填写本轮的全部实际交互，无交互填 []。每项的 Type 选择其类型，其余字段按该项说明填写。", items = new { anyOf = interactions } }
             }, required = new[] { "Reasoning", "Replies", "Interactions" }, additionalProperties = false } } }];
-        return new(features, tools, group != null);
+        return new(features, tools, group != null, date, party);
     }
 }
 
@@ -182,10 +222,11 @@ public sealed class ChatToolRequest
     private readonly Dictionary<int, ChatReplyStream> _streams = [];
     public object[] Definitions { get; }
     public bool Group { get; }
+    private readonly bool _scene, _party;
     public List<ChatToolCall> Calls { get; } = [];
     public string Error { get; private set; } = "";
-    internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group)
-    { _features = features.ToDictionary(f => f.Name, StringComparer.OrdinalIgnoreCase); Definitions = definitions; Group = group; }
+    internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group, bool scene = false, bool party = false)
+    { _features = features.ToDictionary(f => f.Name, StringComparer.OrdinalIgnoreCase); Definitions = definitions; Group = group; _scene = scene; _party = party; }
     public void Feed(JsonElement message, Action<string>? progress = null, Action<string>? reasoning = null)
     {
         if (!message.TryGetProperty("tool_calls", out var calls) || calls.ValueKind != JsonValueKind.Array) return;
@@ -203,7 +244,7 @@ public sealed class ChatToolRequest
                 if (call.Name == "send_message")
                 {
                     if (!_streams.TryGetValue(index, out var reader))
-                    { reader = new(Group); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); }
+                    { reader = new(Group, _scene, _party); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); }
                     else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning);
                 }
             }
@@ -281,10 +322,11 @@ public sealed class ChatToolRequest
     public void Apply(PrivateStreamParser parser)
     {
         int sceneOffset = 0;
-        foreach (var (fields, reply, _) in Read())
+        foreach (var (fields, reply, speaker) in Read())
         {
             if (fields.ContainsKey("Scene"))
             {
+                if (speaker.Length > 0) fields["Speaker"] = speaker;
                 int offset = parser.Text.IndexOf(reply, sceneOffset, StringComparison.Ordinal);
                 parser.SceneCues.Add((Math.Max(0, offset), fields));
                 if (offset >= 0) sceneOffset = offset + reply.Length;
@@ -295,7 +337,7 @@ public sealed class ChatToolRequest
 }
 
 /// <summary>只增量读取正文段落的字符串；参数全文由调用记录保存，交互在完整解析后执行。</summary>
-internal sealed class ChatReplyStream(bool group)
+internal sealed class ChatReplyStream(bool group, bool scene = false, bool party = false)
 {
     private sealed class Frame(char kind, bool replies, bool paragraph)
     {
@@ -316,7 +358,8 @@ internal sealed class ChatReplyStream(bool group)
         var output = new StringBuilder(); var analysis = new StringBuilder();
         void Flush(Frame frame)
         {
-            if (frame.Pending.Length == 0 || frame.Paragraph && group && !frame.Metadata.ContainsKey("Speaker")) return;
+            if (frame.Pending.Length == 0 || frame.Paragraph && (group || party) && !frame.Metadata.ContainsKey("Speaker")) return;
+            if (frame.Paragraph && scene && new[] { "Scene", "Emotion", "Background" }.Any(key => !frame.Metadata.ContainsKey(key))) return;
             int count = frame.Pending.Length;
             if (char.IsHighSurrogate(frame.Pending[count - 1])) count--;
             if (count == 0) return;
@@ -327,7 +370,8 @@ internal sealed class ChatReplyStream(bool group)
                 if (group) output.Append("[Speaker: ").Append(frame.Metadata["Speaker"]).Append("]\n");
                 else if (frame.Metadata.ContainsKey("Scene"))
                     output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral"))
-                        .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")).Append(']');
+                        .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current"))
+                        .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append(']');
                 frame.Opened = true;
             }
             output.Append(frame.Pending.ToString(0, count)); frame.Pending.Remove(0, count);

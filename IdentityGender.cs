@@ -5,8 +5,12 @@ public static class IdentityGender
 {
     public const string Unset = "未设置";
     public static readonly string[] Choices = [Unset, "男", "女"];
-    public static string Assigned(CareerData data, string id) =>
-        new Random(CareerEngine.StableHash(data.WorldId + ":gender:" + id)).Next(2) == 0 ? "男" : "女";
+    public static string Assigned(CareerData data, string id)
+    {
+        var categoryGender = PersonalityPools.Category(data, id)?.Gender;
+        return categoryGender is "男" or "女" ? categoryGender
+            : new Random(CareerEngine.StableHash(data.WorldId + ":gender:" + id)).Next(2) == 0 ? "男" : "女";
+    }
     public static string Of(CareerData data, string id)
     {
         if (id == "player") return Choices.Contains(data.PlayerGender) ? data.PlayerGender : Unset;
@@ -25,7 +29,8 @@ public static class IdentityGender
             else if (data.HumanIds.Contains(person.Id) || person.Id.StartsWith("human-"))
             { if (!Choices.Contains(person.Gender)) person.Gender = Unset; }
             else if (person.Gender is not ("男" or "女"))
-                person.Gender = HumanNames.KnownGender(person.Country, person.Name) ?? Assigned(data, person.Id);
+                person.Gender = data.NpcPersonalityPool != null ? Assigned(data, person.Id)
+                    : HumanNames.KnownGender(person.Country, person.Name) ?? Assigned(data, person.Id);
         }
         var genders = data.People.ToDictionary(p => p.Id, p => p.Gender);
         foreach (var person in data.Posts.Concat(data.SavedThreads).SelectMany(p => p.PeopleAtEvent))

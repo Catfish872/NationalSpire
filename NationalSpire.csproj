@@ -17,6 +17,7 @@
   <ItemGroup><EmbeddedResource Include="Cameos/*" LogicalName="NationalSpire.Cameos.%(Filename)%(Extension)" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="PromptPresets/*.json" LogicalName="NationalSpire.PromptPresets.%(Filename)%(Extension)" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="Art/Affection/*.svg" LogicalName="NationalSpire.Affection.%(Filename)%(Extension)" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="Art/DateDefaults/*.png" LogicalName="NationalSpire.DateDefaults.%(Filename)%(Extension)" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="date-backgrounds/*" LogicalName="NationalSpire.DateBackgrounds.%(Filename)%(Extension)" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="appearance-packs/*.zip" LogicalName="NationalSpire.Appearance.%(Filename)%(Extension)" /></ItemGroup>
   <Target Name="CopyModFiles" AfterTargets="Build" Condition="'$(DeployMod)' != 'false'">

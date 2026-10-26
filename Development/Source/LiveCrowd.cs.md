@@ -69,7 +69,7 @@ private int _crowdFloor = -1;
 
 来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.LiveVoices.Add(NationalSpire.BroadcastLine?, double, string?, bool, double)`](LiveVoices.cs.md#symbol-09cc5837543a)；[`NationalSpire.LiveVoices.ClearCombatChatter(bool)`](LiveCrowd.cs.md#symbol-e8e2ca38a1de)；[`NationalSpire.LiveVoices.Hash(string)`](LiveVoices.cs.md#symbol-8ecd046e0f8e)；[`NationalSpire.LiveVoices.Line(string, string, NationalSpire.CareerPerson?, System.Collections.Generic.Dictionary<string, string>)`](LiveVoices.cs.md#symbol-1b186645d9df)；[`NationalSpire.LiveVoices.RestoreVoiceClock(double)`](LiveCrowd.cs.md#symbol-ee58b4cd422c)；[`NationalSpire.LiveVoices.Spectator(string, string?, bool)`](LiveVoices.cs.md#symbol-57831f321298)；[`NationalSpire.LiveVoices.Tone(NationalSpire.CareerPerson)`](LiveVoices.cs.md#symbol-c3c21233cc88)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
 

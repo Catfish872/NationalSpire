@@ -64,7 +64,7 @@ public static class CareerStore
                     }
                     else LoadNotice = "生涯文件无法读取，已保留原文件并建立新生涯。";
                 }
-                _data ??= CareerEngine.CreateNew();
+                if (_data == null) { _data = CareerEngine.CreateNew(); _data.NpcSetupPending = true; }
                 PrivateMessageCommands.Recover(_data.Life);
                 GroupChats.Recover(_data);
                 bool clubMarket = _data.Esports.EcosystemVersion >= 1 && (_data.Esports.OwnedClub is { EconomyVersion: < 1 } || _data.Esports.FreeAgentVersion < 2 || _data.People.Any(p => p.Id.StartsWith("free-agent-") && p.RecruitVersion < 1));
@@ -102,6 +102,7 @@ public static class CareerStore
                 PublicationBacklog.Compact(_data, false);
                 bool editedNews = CareerNarrative.RepairNews(_data);
                 bool upgradedCommunity = CommunityThreads.Normalize(_data);
+                upgradedCommunity |= DateGames.Upgrade(_data);
                 upgradedCommunity |= CommunityThreads.RecoverInterrupted(_data);
                 upgradedCommunity |= WeeklyJournal.Recover(_data);
                 if (upgrading) LoadNotice = "生涯已更新，原有战绩和奖励已保留，并已备份存档。";
@@ -125,6 +126,7 @@ public static class CareerStore
         var data = JsonSerializer.Deserialize<CareerData>(File.ReadAllText(path), Json)
             ?? throw new InvalidDataException("生涯存档为空。");
         if (data.Version > 4) throw new NotSupportedException("生涯文件来自更新版本，请更新模组后再打开。");
+        if (data.NpcPersonalityPool != null) PersonalityPools.Validate(data.NpcPersonalityPool);
         if (data.Day < 1 || data.Season < 1 || data.LongSeasonsFrom < 0 || data.Day <= SeasonCalendar.Start(data) || data.Day > SeasonCalendar.End(data) || data.People is not { Count: > 0 }
             || data.Matches == null || data.Results == null || data.Posts == null || data.Standings == null || data.Ai == null)
             throw new InvalidDataException("生涯数据结构不完整。");
@@ -166,16 +168,20 @@ public static class CareerStore
 
     public static CareerData ResetCareer()
     {
+        var fresh = CareerEngine.CreateNew(); fresh.Ai = Data.Ai; return ReplaceFreshCareer(fresh);
+    }
+
+    public static CareerData ReplaceFreshCareer(CareerData fresh)
+    {
         lock (Gate)
         {
             var old = Data;
             var path = Paths[old];
             Save(old);
             File.Copy(path, path + ".reset-" + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff"), false);
-            _data = CareerEngine.CreateNew();
-            _data.Ai = old.Ai;
+            _data = fresh;
             Paths[_data] = path;
-            Save(_data);
+            try { Save(_data); } catch { Paths.Remove(fresh); _data = old; throw; }
             return _data;
         }
     }

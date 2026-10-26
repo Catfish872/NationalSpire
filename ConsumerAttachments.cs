@@ -15,6 +15,7 @@ public sealed class ConsumerAttachment
     public string Group { get; set; } = "";
     public int Day { get; set; }
     public string State { get; set; } = "draft";
+    public long ReservedQuantity { get; set; }
     public PrivateOffer Offer { get; set; } = new();
 }
 
@@ -25,10 +26,32 @@ public static class ConsumerAttachments
         : d.Life.Consumer.Goods.Where(x => x.Id == good.Id && !x.Consumed).Sum(x => x.Quantity);
     public static int ToBuy(CareerData d, Good good, int quantity) => (int)Math.Max(0, quantity - Available(d, good));
     public static ConsumerAttachment? Find(CareerData d, PrivateOffer a) => d.Life.Consumer.Attachments.FirstOrDefault(x => x.Id == a.ConsumerAttachmentId);
-    public static string? Prepare(CareerData d, string person, string group, PrivateOffer a)
+    public static string? Validate(CareerData d, string person, string group, PrivateOffer a, string state)
+    {
+        if (a.ConsumerAttachmentId.Length == 0) return null;
+        if (Find(d, a) is not { } saved) return "这份附件的库存记录属于原赠送者，请由原赠送者继续处理。";
+        if (saved.State != state) return "这份附件已处理，请重新选择物品。";
+        if (saved.Person != person || saved.Group != group || saved.Offer.Kind != a.Kind
+            || saved.Offer.GoodId != a.GoodId || saved.Offer.Quantity != a.Quantity
+            || saved.Offer.RelationshipIntent != a.RelationshipIntent)
+            return "这份附件的接收者、商品或数量已变化，请重新选择。";
+        return null;
+    }
+    public static string? ValidateDrafts(CareerData d, string person, string group, List<PrivateOffer> attachments)
+    {
+        var ids = new HashSet<string>();
+        foreach (var a in attachments.Where(a => a.ConsumerAttachmentId.Length > 0))
+        {
+            if (!ids.Add(a.ConsumerAttachmentId)) return "每份库存附件只能发送一次。";
+            if (Validate(d, group.Length > 0 ? a.ActorId : person, group, a, "draft") is { } error) return error;
+        }
+        return null;
+    }
+    public static string? Prepare(CareerData d, string person, string group, PrivateOffer a, bool buyMissing = true)
     {
         ConsumerEngine.Ensure(d);
-        if (Find(d, a) != null) return null;
+        if (a.ConsumerAttachmentId.Length > 0) return Validate(d, person, group, a, "draft");
+        if (a.Kind is not ("gift" or "activity")) return "请选择礼物或活动附件。";
         var good = ConsumerCatalog.Get(a.GoodId);
         if (good == null || a.Quantity < 1) return "请选择商品和数量。";
         if (group.Length > 0 && !GroupChats.Visible(d).Any(g => g.Id == group && g.Members.Contains(person))) return "请选择有效的群聊和成员。";
@@ -41,10 +64,24 @@ public static class ConsumerAttachments
             if (ConsumerEngine.Guests(d, guests, verb.Slots) is { } guestError) return guestError;
         }
         int buy = ToBuy(d, good, a.Kind == "activity" ? 1 : a.Quantity);
+        if (!buyMissing && buy > 0) return "可用库存不足，请调整赠送数量。";
         if (buy > 0 && ConsumerEngine.Buy(d, good.Id, quantity: buy) is { } paymentError) return paymentError;
         a.ConsumerAttachmentId = Guid.NewGuid().ToString("N"); a.GroupId = group;
         if (good.Instant) Take(d, good.Id, a.Quantity);
-        d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, Offer = Coop.CoopJson.Copy(a) });
+        long reserved = 0;
+        if (!good.Instant && a.Kind == "gift")
+        {
+            long remaining = a.Quantity;
+            foreach (var stack in d.Life.Consumer.Goods.Where(g => g.Id == good.Id && !g.Consumed))
+            {
+                long taken = Math.Min(stack.Quantity, remaining); stack.Quantity -= taken; remaining -= taken;
+                if (remaining == 0) break;
+            }
+            // 零数量记录保留购买元数据，便于取消附件与重生成恢复同一批库存。
+            reserved = a.Quantity;
+        }
+        d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day,
+            ReservedQuantity = reserved, Offer = Coop.CoopJson.Copy(a) });
         return null;
     }
     private static void Take(CareerData d, string id, int quantity)
@@ -61,9 +98,12 @@ public static class ConsumerAttachments
     }
     public static void Resolve(CareerData d, PrivateOffer a, bool accepted)
     {
-        if (Find(d, a) is not { } saved || saved.State is "returned" or "used") return;
+        if (Find(d, a) is not { } saved || saved.State is "returned" or "used" or "expired") return;
         if (accepted) { saved.State = a.Kind == "activity" ? "accepted" : "used"; return; }
         saved.State = "returned";
+        a = saved.Offer;
+        if (saved.ReservedQuantity > 0 && ConsumerCatalog.Get(a.GoodId) is { } good)
+        { ConsumerEngine.ChangeInventory(d, good, saved.ReservedQuantity); return; }
         if (ConsumerCatalog.Get(a.GoodId)?.Instant != true) return;
         var stack = d.Life.Consumer.TemporaryGoods.FirstOrDefault(x => x.Id == a.GoodId && x.Day == d.Day);
         if (stack == null) d.Life.Consumer.TemporaryGoods.Add(new() { Id = a.GoodId, Day = d.Day, Quantity = a.Quantity });

@@ -40,6 +40,14 @@ PlayerRecord 同时通过 PrivatePublicContext.PlayerProfile 提供一次独立�
 
 性能原始逐次结果保留在维护者本地 .artifacts/event-context-20261022/after.json 及 large/after.json。每组按0、1、3名参与者各执行3次 Materials+Compose，文件分别记录材料整理、请求组织和整次耗时、当前线程分配量及请求字符数；完整计时包含内部步骤，累计值只相加整次操作。较小副本1596人、70条社区记忆、7篇现存帖，九次完整耗时为25.0046/0.5461/0.3610、6.0475/0.5204/0.4904、0.5601/0.5442/0.5749毫秒，累计34.6492毫秒、3828728字节；较大副本1604人、1137条社区记忆、95篇现存帖，九次为27.6184/3.1059/19.6098、9.5548/2.6842/2.4657、3.0160/2.8320/3.0224毫秒，累计73.9092毫秒、12114552字节。首次操作包含相关函数首次执行开销；测量前已整理3名NPC的原聊天资料。两组和自由行动回归在独立进程同时执行，因此结果含进程间调度影响。每次 Materials 检索一次并展开所选来源，每次 Compose 计算一次玩家段落、序列化一次资料并拼接请求；未保存或广播。多人个人资料已验证，房主及客机网络性能未测量。
 
+## 新世界首帖启动
+
+NpcGeneration.ApplySettings 由单人 Create 和房主 Connect 的全新世界分支共同调用；应用选定的 AiOptions 后，若 AI 已开启，将新档 ecosystem 首帖标为 AiPending 并补齐 PublicSchedule 快照。已有存档加载继续沿原迁移逻辑。CareerScreen.Render 在首次获得帖子编号及之后编号变化时调用 ProcessPendingAsync(data)，继续检查 NpcSetupPending、单人归属和 EventJourney 暂停状态。房主仍在确认进入共同生涯后通过 CoopAi.Process 取队列，客机沿原广播读取结果。
+
+ProcessNewsAsync 继续负责筛选、queued/sending/completed/failed 状态、短编号协议、新闻路由、请求间隔及并发限制；首帖使用已导入的 world/news 和原人物性格资料。任务进入 queued 后重复刷新沿状态筛选去重；失败保留原重试入口，切换生涯后由 IsCurrent 拦截回写。关闭 AI 的新世界保留原离线帖子。此改动沿用完整请求生成和周刊调度；实际发送时间仍受现有请求间隔控制。
+
+2026-10-24 验证：Release 构建零警告、零错误；本地 Godot 回归共 1743 项通过。本轮使用合成世界、内存传输替身及完整 Render 共用调度，验证导入后首帖使用对应新闻提示词、模拟响应完成回写、连续五次刷新仍只发送一次，以及离线状态保持零请求。独立测试进程隔离原版首页统计与角色资源；真实服务调用和真实联机网络未验证。1596 人新世界生成及设置应用合计 241.4674 毫秒、当前线程分配 115639120 字节，包含原世界生成的全部下游；单次导入复制一份 AiOptions，折叠开关复用已创建的滑条，打开与导入阶段保存及广播次数为 0。文件读取、真实网络等待、房主与客机网络耗时本轮未单独测量。人工复现：创建新世界→世界设定→导入提示词→选择完整 JSON→填写或沿用密钥→生成并开始→社区，观察首帖由生成中转为新内容；取消文件选择、导入非法文件以及反复展开比例时应保留当前草稿。
+
 ## 世界观模板的实际接入
 
 国运日常新版与攻击性弱化版的内置 world 默认内容分别采用作者本机对应模板的当前全文。两份相对原默认值仅增加生活状况要求：新版增加39字符，要求发帖、评论等展现当地民众生活并符合当前国运等级、数值及描述；弱化版增加50字符，在同一要求前补充关注国运数值和变动。其他文字逐字保留。PromptLibrary.BuildCurrent 的 world 常量与内嵌 PromptPresets/reduced-aggression.json 分别提供这两个默认值；读取和覆盖顺序、模板切换、导入导出、保存及广播继续使用下述原入口。个人已保存修改仍优先生效，更新默认值不改写个人配置或已有故事。
@@ -48,7 +56,7 @@ PlayerRecord 同时通过 PrivatePublicContext.PlayerProfile 提供一次独立�
 
 世界观与游戏知识使用 PromptLibrary.Get(options, world) 读取当前所选模板及个人修改，缺省内容沿原模板查询入口提供。社区发帖、回帖、周刊文章和人物介绍由 AiService.ComposeSystem → PromptLibrary.Editorial 加入系统消息。私聊通过 PrivateMessagePrompts.Compose → Section，群聊通过 GroupChatPrompts.Compose → Section 加入系统消息；两处 Section 优先使用多人房主广播的 PrivatePromptSnapshot，缺省时读取本机当前模板。CoopCoordinator.Broadcast 把房主的 world 与聊天模板一同写入客机快照；房主实际处理聊天时清空旧快照并读取当前房主设置。
 
-约会、约会日记与结束后的普通私聊感想使用同一 PrivateMessagePrompts.Compose，世界观随首条系统消息进入请求，场景及日记引导随后追加。私聊仲裁、社区举报的 SpireArbitration.Compose 和群聊仲裁的 GroupArbitration.Compose 也加入 world。PortraitDesign.Messages 将 world 放进角色外观设计请求的用户资料。私聊小总结、大总结通过 Summarize 读取专用总结模板、人物身份、性格和待总结内容；群聊小总结、大总结通过 SummarizeGroupAsync 读取专用总结模板及原文或小总结；这四种总结请求没有单独拼接 world。
+约会、约会日记与结束后的普通私聊感想使用同一 PrivateMessagePrompts.Compose，世界观随首条系统消息进入请求，场景及日记引导随后追加。活跃约会、普通私信与结束感想统一读取 private，保留玩家当前私信提示词全文。私聊仲裁、社区举报的 SpireArbitration.Compose 和群聊仲裁的 GroupArbitration.Compose 也加入 world。PortraitDesign.Messages 将 world 放进角色外观设计请求的用户资料。私聊小总结、大总结通过 Summarize 读取专用总结模板、人物身份、性格和待总结内容；群聊小总结、大总结通过 SummarizeGroupAsync 读取专用总结模板及原文或小总结；这四种总结请求没有单独拼接 world。
 
 随机事件由 RandomEventPrompts.Compose 在首条系统消息先加入 world，再加入 WorldGuidance，最后加入原效果说明；Get 每次读取传入 options，参数缺省时使用 data.Ai。第二条用户消息继续使用原 event 模板、PlayerRecord 和 Materials；首次格式与自由行动续写引导分别沿原后续消息加入。AiRandomEvents.ProcessEventAsync 及 PromptTesting 的事件分支共用 Compose，覆盖首次生成、重试、自由行动与试写。多人 StartEvent.Current 使用房主当前 AiSettingsStore 配置，成员视图继续提供个人战绩及事件材料。已经保存的故事与 Materials 沿原记录保留，下一次生成读取当时的世界观。此处每次新增一次 Get 查询和一次系统消息字符串拼接，增加的字符包括所选 world、WorldGuidance原文及分隔换行；请求次数、材料整理次数、保存和同步次数均沿原流程，没有新增缓存。
 
@@ -68,9 +76,11 @@ WorldGuidance的当前原文为：世界观资料用于保持社会背景、人�
 
 AiRouting.Tasks 定义九项选择：weekly 周刊与介绍、news 发帖、discussion 回帖、private 私聊、group 群聊、private-summary 私聊总结、group-summary 群聊总结、arbitration 聊天仲裁、event 随机事件。随机事件未单独指定方案时使用 default。Category 将 profiles 归入 weekly，将 private-long-summary/group-long-summary 归入各自总结。自动帖子正文和同次生成的首批评论共用 news；玩家发帖或留言后生成的回应使用 discussion。两种聊天仲裁共用 arbitration，大小总结及手动/自动总结使用各自聊天的总结方案。
 
+主设置沿 AiTaskRoutePicker，聊天快捷入口沿单层 PopupMenu；两处共用 AiRouting.Assign → SaveAiSettings。快捷入口点击后直接向上展开方案名称列表，选中立即保存并关闭。选择只更新任务映射；约会沿 private 路由，群聊沿 group。已发出的请求继续使用原连接快照，后续请求读取最新映射。保存失败恢复原字典项，凭据沿原方案缓存读取。
+
 全部请求通过 AiService.Connection(options, task) → AiRouting.ProfileId 读取任务指向，再从 ConnectionProfiles 取得地址、模型和显示名称，从 ProfileKey 取得该方案密钥。返回 AiConnection 值快照。新闻、回帖、周刊在原队列及间隔等待结束后取得快照；普通聊天和仲裁在等待结束后调用 RequestPrivateAsync，SummaryRequest 在原总结信号量通过后调用同一入口。请求消息结构、解析器、总结条件、并发和间隔继续由原模块管理。
 
-RequestPrivateAsync 的 task 缺省 private；群聊调用者传 group，两种仲裁传 arbitration，总结调用者传 private-summary/group-summary。BuildNewsPayload 可接收本次快照模型，独立 BuildPayload 查询 news。每次实际发送只取得一次连接快照，各请求持有地址、模型和密钥字符串引用。请求期间编辑设置后，已发送请求继续用本次快照完成；完成结果仍检查生涯、轮次和原任务状态。失败保存沿原入口处理，再次点击重试时读取当时的任务选择及已保存方案。
+RequestPrivateAsync 的 task 缺省 private；单人和多人约会均沿用 private 连接方案。群聊调用者传 group，两种仲裁传 arbitration，总结调用者传 private-summary/group-summary。BuildNewsPayload 可接收本次快照模型，独立 BuildPayload 查询 news。每次实际发送只取得一次连接快照，各请求持有地址、模型和密钥字符串引用。请求期间编辑设置后，已发送请求继续用本次快照完成；完成结果仍检查生涯、轮次和原任务状态。失败保存沿原入口处理，再次点击重试时读取当时的任务选择及已保存方案。
 
 提示词试写按 Source.Scene 选择同一任务方案。PromptTestScreen 的确认窗口展示实际接收地址和材料；确认时及排队结束后校验该次连接，地址、模型或密钥变化时提示重新确认。重新测试展示当前方案，响应返回后的配置编辑保持本次结果有效；生涯归属与启用状态仍由 Current 校验。模型列表查询使用编辑框地址和密钥草稿，留空时读取当前方案保存的密钥；返回结果仍由原 queryRevision 和控件有效性决定是否显示。
 
@@ -86,6 +96,11 @@ WorldEvents在原随机事件时机按题材加权抽取（国运发展/市场�
 
 正式比赛 FinishMatch 在 CompleteMatchDay 补齐NPC赛果后，用 WorldEvents.FixtureFacts 读取本赛事、当天、同轮次的已完成对阵，追加到战报 RelatedFacts、SourceBody 和 Body，再由 CommunityThreads.Remember 更新可检索资料。内容包含各席位姓名、通关/楼层、用时及团体比分；同日另一场玩家比赛仍待赛时只写“尚未完成”。AiContext.MatchContext 读取 RelatedFacts，因此即使采用结构化比赛资料而不直接使用 SourceBody，也能获得完整同轮事实。单人模拟、真人对局及多人 Settle 共用此入口，之后沿原保存与新闻生成队列执行，不推迟到下一天，也不调用额外模型。FixtureFacts 同时供市场消息和国运公报使用。
 ## 输入组织与输出使用
+PersonalityLibrary.PromptProfile 在原性格维度上提供所选类别名称、具体性格名称和两层提示词；ProfileUsage 说明两者共同使用。PrivatePublicContext.CharacterProfile、GroupChatPrompts、DateSceneParty 的参与者资料及社区 Persona 复用这一入口，私聊、群聊、约会及社区继续沿各自原有请求与流式解析流程。性格选择和生成使用本地权重抽样，角色卡导入与池编辑均通过本地校验完成。用户的私信/群聊模板保留原文本；新风格数据作为人物资料参与组合，用户可在池中修改默认预置的五种女性风格。
+
+本轮本地验收对 PrivateMessagePrompts.Compose（普通私聊/多人约会）与 GroupChatPrompts.Compose 的完整消息数组检查共同类别提示词及具体风格提示词同时存在；模型回复品质及真实接口时延留待玩家测试。
+
+
 
 | 请求 | 主要组织入口 | 上游数据 | 输出使用者 |
 | --- | --- | --- | --- |
@@ -115,19 +130,23 @@ NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、Rela
 
 PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本，PromptTransfer 负责导入导出。旧模板缺少新场景时使用该场景默认文本补齐，不要求玩家原模板已有全部场景。
 
-导入导出按已知场景逐项检查，额外场景字段保留。events 在缺少 event 时作为随机事件创作要求读取；两者同时存在时 event 优先，events 原文保留。Default 读取自建模板定义，Get 读取个人修改；Read/Apply 的 Validate 在补默认值前处理别名。date 等附加字段只随模板保存和导出，当前请求仍按已知场景读取。Export 将额外个人修改一并写入 Sections；Apply 导入已有目标模板时将额外定义保存到目标模板的覆盖字典，保证再次导出保留原文；未知字段不调用内置场景默认值查询。版本1、2、3共用上述兼容入口。每次操作遍历模板场景及额外字段，配置保存沿原界面入口，没有新增模型调用、保存或广播。配置字典直接读取，不增加缓存。
+导入导出按已知场景逐项检查，额外场景字段保留。events 在缺少 event 时作为随机事件创作要求读取；两者同时存在时 event 优先，events 原文保留。Default 读取自建模板定义，Get 读取个人修改；Read/Apply 的 Validate 在补默认值前处理别名。date 继续作为已有的额外配置字段保留，约会实际调用 private。导入指定目标模板时按原来源模板解释默认项，再写入目标。Export 将其他额外个人修改一并写入 Sections；Apply 导入已有目标模板时将额外定义保存到目标模板的覆盖字典，保证再次导出保留原文；未知字段不调用内置场景默认值查询。版本1、2、3共用上述兼容入口。每次操作遍历模板场景及额外字段，配置保存沿原界面入口，没有新增模型调用、保存或广播。配置字典直接读取，不增加缓存。
 
 2026-10-21 使用诊断包内含 date/events 的自建模板执行 `NationalSpire.Tests/Check-PromptCompatibility.ps1`，38项通过，包含13个场景正文往返、额外字段保留、导入内置目标模板后导出、版本1/2/3及新旧随机事件字段同时存在。261220字符模板的导出、读取、应用、再次导出读取完整操作，首次34.66毫秒、再次13.70毫秒；当前线程分配7.43MB和5.48MB。以上为完整操作时间，未与内部步骤重复相加；未执行模型调用或界面文件选择。
 
 EventPools 统一读取随机事件与选手日常池。默认数据来自 RandomEventSeeds 的110条素材及其背景分类、WorldEvents.Topics 的36条普通日常、WorldMatchLife.MatchTopics 的48条赛后日常。固定10个随机事件分类、8个普通日常分类和8个赛后日常分类。随机事件按条目抽取，分类只选择画面；WorldEvents.PublishDaily 通过 Get(CareerData) 读取日常，继续按分类抽取、同类间隔14天、同人间隔42天，赛后分类要求人物近7天有已完成比赛。国运发展与市场动态保留专门候选和各1.5权重，其余分类权重1。被编辑分类按完整列表替换；缺省分类继续使用内置内容；空分类不提供候选；随机事件全部为空时采用内置110条，日常全部为空时继续处理国运和市场候选。
 
-PromptTransfer 新导出 Version=3，EventPools 字段保存当前模板按分类的覆盖列表，键为 event:分类或 daily:分类，条目包含 Title、Detail；未修改分类省略。Read 支持版本1/2/3；旧文件缺少 EventPools 时 Apply 保留目标模板的池配置。新版文件提供 EventPools 时替换目标配置，空字典表示全部跟随内置。CreateTemplate 复制基础模板当前池覆盖，DeleteTemplate 清理对应池。固定 Format 仍由 RandomEventPrompts.Compose 追加，池内容作为选中的材料进入原请求，不新增模型调用。
+PromptTransfer 新导出 Version=4，PersonalityPool 字段包含 PersonalityPools.Read 返回的完整两级性格池（包含内置默认池），类别、具体性格、权重及完整提示词沿原合同保存。Read 先通过 PersonalityPools.Validate 校验，ApplyPools 深复制到 AiOptions.PersonalityPool；省略或 null 时保留当前性格池。已生成人物的风格快照继续保留。独立 national-spire-personalities JSON 的导入导出保持原接口。EventPools 字段保存当前模板按分类的覆盖列表，键为 event:分类或 daily:分类，条目包含 Title、Detail；未修改分类省略。Read 支持版本1/2/3/4；旧文件缺少 EventPools 时 Apply 保留目标模板的池配置。新版文件提供 EventPools 时替换目标配置，空字典表示全部跟随内置。CreateTemplate 复制基础模板当前池覆盖，DeleteTemplate 清理对应池。固定 Format 仍由 RandomEventPrompts.Compose 追加，池内容作为选中的材料进入原请求，不新增模型调用。
+
+2026-10-25 合并性格池与单层模型选择专项 69 项、通讯导出与实际请求路由回归 33 项、完整约会生态回归 2489 项通过。使用隔离 Godot 4.5.1 用户目录与合成传输验证完整请求，外部 API 调用为零；覆盖版本1/2/3/4、内置/自建模板、指定目标模板、无池旧文件保留、独立性格文件、三类别及12,000字长提示词逐字往返、非法池前置校验、真实导入确认和保存失败回退、新世界导入刷新比例及最终池保存。82,809字符合并文件的导出→读取→应用共三次为2.5809/2.6779/2.6198ms，每次托管分配907,440字节；每轮包含原合同校验与池深复制，计时排除磁盘及模型网络等待。原始断言、合成请求与截图保留在本机 .godot/ui-validation-tools/date-party-test，构建日志在 .godot/model-pool-20261025。本轮保持游戏安装文件原样，正式游戏内及真实联机仍待后续测试。
 
 EventPools.Get(AiOptions) 用 ConditionalWeakTable 按配置对象、当前模板编号与覆盖字典引用缓存 Random/Daily 数组；Save 校验并复制分类列表，替换当前模板字典并清理缓存。切换模板、导入、恢复默认后的保存都会重新构建；普通读取复用数组。WorldEvents 的共同世界视图通过 Get(CareerData) 读取房主 AiSettingsStore，个人随机事件沿原 CoopRandomEvents 的房主配置读取。生成请求只传入抽中的素材，整池保留在本机配置。已经保存的事件素材、材料和分类不随模板变化。
 
 交互格式、字段含义与关键条件由程序固定注入。群聊会将私信协议示例补上 Actor / Target，再注入群聊 Format。可编辑模板仍决定文风，但不承担唯一格式约束。
 
 附件回应提示由 ChatAttachments.ResponseGuide 统一定义，原文为：请根据交互格式要求来回应附件，口头回复不会视为成功回应。PrivateMessagePrompts.UserText 的 AI 材料分支、Context 中玩家界面请求和 GroupChatPrompts.UserText 在每份附件资料末尾调用 ChatAttachments.ResponseInstructions；社区举报的专用资料分支添加 ResponseGuide。覆盖礼物、活动、约战、训练、阵容、合同、比赛记录、帖子、评论引用和附加文字。UserText(forAi:false) 保持检索用原文。固定系统提示词继续使用既有协议；附件提示随当前轮次及历史附件材料组织，每份只添加一次，保存的附件正文保持原值。
+
+婚礼选择来自附件 WeddingServiceIds，AI继续沿原 Activity 标记处理接受、改期和取消。WeddingAppointments.Description 统一生成结婚对象与宾客身份说明，ChatAttachments.ResponseInstructions、私聊与群聊交互上下文、DateScenes.Validate 的开场/续聊/结束材料及公开婚礼事实共同读取。模型保留原服务引用，程序按已接受礼物解析实际对象。完整请求使用合成人物在本地构建核对，外部API调用次数为0。
 
 ResponseInstructions 输入 PrivateOffer、当前会话使用的附件编号、可选 GroupChat 及发送者编号，返回回应提示和适用的完整格式示例。示例从 GiftProtocol、SocialAppointments.Protocol/GroupProtocol、MatchProtocol、ClubCoaching.Protocol/GroupProtocol、CoachLineups.Protocol、ContractProtocol 提取，代入实际附件编号、活动资料、约战条件和群成员编号。礼物列接受/拒绝；活动列接受/改期/取消；约战列接受/拒绝/改期；群聊训练按全部受训者列出一条接受、一条拒绝示例，教练采用附件中的安排；阵容列同意/拒绝；合同沿用要价格式。群聊普通格式附带 Actions 行，约战或合同仍按对象给出示例；工具模式通过 ChatTools.Describe 将相同业务说明与实际示例转换为带 Type 的 JSON。多人活动和训练示例均只使用 Actor，字段列表以竖线分隔。参考资料类附件返回 ResponseGuide。函数只创建字符串和示例列表；编号映射仍由 PrivateInteractionIds 管理，保存及广播沿调用者原流程执行。
 
@@ -263,13 +282,32 @@ NationalSpire.MultiplayerTests/ToolLifecycleUiChecks.cs 的 --production-ui --to
 
 ### 场景、关系与公历协议
 
-专属约会由 dm-date-open/dm-send 发起，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。普通模式在请求末尾附加 DateScenes.Guidance，保留 Scene/Emotion/Background 括号格式及该次真实素材编号。工具模式由 ChatTools.Create 调用 Guidance(scene, tools: true)，从同一 Protocol 转换场景输出说明：每段在 send_message.Replies 中填写 Scene/Emotion/Background/Reply，场景资料与叙述规则沿用同一来源。PrivateStreamParser 记录 SceneCues；完成后 TaggedLines 生成显示元数据，原 Reply 保留正文。回复成功沿原解析与请求状态判断。结束约会的 dm-date-end → DateScenes.Leave 更新场景和婚礼状态，DateDiaries.Begin 建立当次条目，PrivateMessages.Enqueue 将结束感想作为隐藏系统事件排入原私聊队列。当前场景仍在生成时先取消旧请求，结束轮通过 queueAfterCurrent 留在其后；原请求 finally 再启动排队轮。单人 PrivateCommand 和多人 StartPrivate 都将 dm-date-end 交给同一处理器。重复结束读取 ended 状态，排队次数保持一次。
+约会对局的预制发言由DateGameContent交换本地触发条件和七种口吻正文/补句，沿现有事实触发与冷却播报；导出、编辑和导入的模型请求次数为0。“设计立绘”的导出继续读取当前设计数据，基准提示词内保留模型约束；差分采用连续编号及固定默认图局部修改指令，ZIP固定三份Markdown。导出过程自身使用0次推测或生图调用。
 
-ProcessPrivateAsync 只对 Scene.Ending=false 的当前约会启用 PrivateStreamParser.SceneJson。正文中完整的场景 JSON 对象可包含 Scene/Emotion/Background 及可选 Reply；Scene 为 dialogue 或 narration，三个场景字段均为字符串，其余普通 JSON 保留原文。ReadSceneJson 将对象转成同一 SceneCues，并将 Reply 写入可见正文，随后紧跟的文字继续使用该场景。流式状态记录括号深度、字符串和转义，跨分片保持；未完成 JSON 在 Finish 时恢复原文。普通私聊、群聊和结束日记沿原解析路径。该处理只改变显示资料，不新增交互、网络请求、保存节点或自动日志；缓冲随本轮解析器释放，完整正文和场景行沿原 PrivateTurn 保存、同步和重试机制管理。工具模式和普通模式约会都可读取这种场景对象。
+专属约会由 dm-date-open/dm-send 发起；局内回应请求与结算续聊使用 dm-date-game-next，沿用同一私聊处理器、同一模型方案、公开帖子选择和自动总结。普通模式在请求末尾附加 DateScenes.Guidance，包括 Scene/Emotion/Background 格式及该次真实素材编号；严格工具模式将同一说明放入 send_message.Replies，逐段提交 Scene/Emotion/Background/Reply，多人时同时提交 Speaker。ChatTools.SceneGuidance 仅转换程序拥有的格式说明与示例，人物资料、素材描述和已验证的游戏事实原文保留。多人请求将扮演对象扩展为全体在场 NPC，追加 Speaker 完整人物编号与各人物的独立差分白名单；协议要求至少两名 NPC 彼此回应、重复接话，并提供使用实际人物编号与可用差分的 A→B→A→B 结构示例。每个完整台词句独立标记 Speaker/Emotion，人物观点、说话方式及私人记忆边界继续沿用原规则；人数不设业务上限。各人物资料、关系及有限近期记忆进入本轮保存的 Context，私人记忆标明归属。PrivateStreamParser 在多人物场景接收 Actor；DateSceneEffects 经 PrivateMessages.Apply 分别应用关系、状态、档案与学习，原消息仍保存在主联系人信箱。其他参与者后续 Context 按非删除、非遗忘的共享轮次读取共同经历。PrivateStreamParser 记录 SceneCues；TaggedLines 先识别完整句并决定该句的显式或推断差分，再按48个文字元素的目标长度分页；同一句的各显示片段保留该句差分，后续完整句仍独立从该人物白名单判断表情。SplitSentences 统一负责句末标点与括号旁白边界，ShortParts 仅负责长度分页；顿号及其相邻边界保持连续。ExpressionSpans 识别括号颜文字和文字表情的完整范围，SentenceTail 将紧随句末的表情并入该句；分页沿 Unicode 文字元素边界并避开颜文字内部，单个超长颜文字保持完整。中文动作括号继续参与旁白判定。流式输入截在 emoji 的代理对中间时保留未完成文本，后续分片沿同一解析链补齐。中途出现行内情绪标记时从该标记起采用新差分；流式重解析与完成后 SceneLines 使用同一处理。DateSceneView.AppendLine 在流式补齐说话人或情绪时刷新立绘并保留已显示字数；元数据相同的续写继续使用当前随机差分。完成后用 SceneLines.Text 拼接规范 Reply，清理兼容的行内情绪标记，防止正文不一致导致显示元数据被回退；清理后只有标记的空回复按失败处理。生成下一轮约会请求时，ChatTimeline 经 DateScenes.PromptHistory 恢复历史每句的 Scene/Speaker/Emotion/Background，玩家历史消息标明面向约会场景；普通私信的历史格式保持原样。同一流式回复在普通模式末尾输出两条 [DateChoice: 建议文字]；工具模式在 Interactions 中提交两项 Type=date_choice、DateChoice=建议文字。PrivateStreamParser 将其作为独立元数据收集，DateScenes.Choices 校验长度、去重并取前两条，ProcessPrivateAsync 保存到 PrivateTurn.SceneChoices；选项参与完整快照保存，逐句播报与历史台词只使用 SceneLines。界面在完整回复播放后显示选项，选中后沿原 dm-send 生成下一轮，手动输入使用同一入口。缺项只补本地兜底选项；格式瑕疵沿原错误字段记录。回复成功沿原解析与请求状态判断。
+
+ProcessPrivateAsync在取得前台名额后和响应提交前，通过DateGroupBridge.SourceActive重新检查群聊来源活动。等待名额或生成期间来源已结束、已取消或已移除时，沿原失败入口保存玩家输入及已有流式正文，释放请求锁，交互保持未结算；结束后的日记总结继续走Ending分支。该校验读取当前保存回调提供的视图，与邀请接受、场景可用性及共享日程回写使用相同来源规则。
+
+加入当前活动使用 dm-date-invite 在受邀者信箱排队，普通模式读取 DateJoin，工具模式读取 Type=date_join 的 DateJoin 字段；接受后由 DateSceneInvitations 扩展原名单；同一轮使用原私聊请求方案与保存回调。约会输入栏的双剑按钮创建 date-game 附件，发送端核对场景和活动编号后设置 Scene.GameInvitation；所有参加 NPC 输出 DateGame: 接受及对应 Actor 后登记一次 private-friendly 切磋；工具模式使用 Type=date_game、DateGame、Actor，并沿同一个 DateGames.Respond 校验和登记入口。首次接受邀请后，播放结束显示开始/取消选项，开始后选择角色与进阶；取消命令只撤销待赛记录。PendingMatchId 已绑定原生对局时，局内聊天播放结束恢复输入与返回对局入口。战斗内沿用原 LiveCommentary 与 LiveVoices 的事实和触发器，由约会 NPC 输出对手内心及解说；DateGameVoices 为男性原句、女性默认及五种性格提供本地台词。聊天事件经DateGames.RequestChat绑定实际NPC与已选口吻台词，在HUD独立框体中显示20秒并等待玩家接受；超时清空待回应数据，触发记录与冷却保留，API调用次数为0。点击回应后冻结到期计时，等待安全帧暂停原生对局；回应请求后把真实楼层、幕数、生命、用时、NPC 模拟进程和实际播出的口吻台词传入原流式约会请求。DateGames.FollowUp核对当前生涯、主联系人、活动和对局编号，先保存Scene.GameEvent/GameMatchId/GameChatRequest/GameContext及队列轮次，再经ClearChatRequest消费待回应正文、人物、台词及截止时间。GameChatRequest保留实际播出的请求缘由，GameContext从绑定对局的Snapshot重建。ProcessPrivateAsync取得请求名额后再次调用DateGames.ValidateContext，使用发送时的最新楼层、生命和用时；普通输入、失败重试及重新输入共用此入口。已绑定的轮次遇到另一个进行中对局时转为失败并保留输入，阻止旧局请求发送。旧记录缺少GameChatRequest时从原GameContext中的聊天缘由恢复。游戏结束时叠加最终楼层、用时、通关与切磋结果，ResultTurnId使重复通知复用一轮。旧生成尚在进行时仅结算后续允许排队，ProcessPrivateAsync释放旧请求后接续该轮。自动事件输入仅作本轮AI上下文；ChatTimeline.PrivateHistory、External和DateSceneParty.SharedMemory剔除历史中的自动续聊指令，保留玩家和NPC交流并标明历史对局编号，Scene界面历史继续隐藏系统消息。当前事实经DateGames.PromptContext形成独立current_date_game消息，普通与严格工具模式采用同一消息；工具说明只引用该事实块。NPC正文照常逐句播放。普通dm-send清除入场事件字段，使用当前对局上下文；已完成或失败的局内回复均可重新输入，修订保留GameMatchId并清空GameEvent。手动继续约会只恢复编辑区，选项与手动输入都等待玩家提交。以上流程保留单次请求边生成边播放，生成选项所需内容包含在同一回复内。
+
+逐句流式播放继续采用现有 100 毫秒节流与末尾句段缓冲，单人和多人约会正式一轮均产生一次流式主请求；自动总结继续独立按既有阈值运行。DateSceneParty.Context 复用已有主联系人资料，只补充其他人物的档案、关系及最近2条摘要和3轮普通私信。场景协议与附加资料采用直接中文的紧凑 JSON。DateScenes.PromptMaterials 按完整情绪编号和描述内容对字典去重，以 emotionSets 保存每套完整字典，各参与者的 emotions 引用该套编号；不同描述或不同编号继续分开，人物自己的白名单与完整描述保留。参与列表存在时由列表提供主联系人素材，省去顶层重复字段。PromptHistory 将相邻、同旁白类型、同 Speaker、同 Emotion 且后段没有新 Background 的显示片段合为一个历史标记；新背景、说话人或情绪边界继续分开。该整理仅改变发给下一轮模型的表示，已存 Reply、SceneLines、原文和界面分页保持原样；当前模型输出仍要求逐句标注。
+
+DateScenes.Protocol 的场景连续性规则以 currentBackground 及 backgrounds 说明为本轮开始地点，Title/Detail 保留原活动安排。实际到达新地点或发生时间变化时输出相应背景编号，其后 current 继承最近发生的转场；回忆、提及、计划及待选建议保留现场背景。显示端将当前选中ID带入下一轮 SceneRequest，流式与完成状态共用背景解析入口。保持原私聊模板、世界观和历史组合；date 专用模板继续保持未接入，主请求次数保持一次。2026-10-23 合成完整 Compose 请求已检查当前 restaurant、原公园活动、历史、玩家本轮输入和连续性规则同时存在，私聊模板全文保留；材料保存为 background-retention-synthetic-request.json，真实API调用0次。
+
+ProcessPrivateAsync 与 ProcessGroupAsync 在取得前台队列名额后启动 RequestTimeoutMinutes 计时，排队期间使用同一取消对象响应停止操作。EnterPrivateQueue 的 private.queue 记录类型、等待毫秒和是否取得名额；private.prepared/group.prepared 记录准备耗时、消息数量及适用的参与人数。RequestPrivateAsync 的 private.timing 记录首段思考、首段可见正文、传输总毫秒及输入/输出字符数；网络计时从该发送入口开始，排队与准备分别记录。上述计时条目仅含类别、耗时与数量。SSE 读取到完整 finish_reason=stop 帧或 [DONE] 后立即交付并释放响应，保留截止该帧已经解析的 usage；stop 后另发的 usage 尾帧随连接释放跳过。JSON 回退、异常结束、截断和用户取消继续沿原成功/失败处理。失败保留输入。约会底栏“重新输入”只恢复本机编辑器；玩家再次发送时，dm-date-revise 接受最新完整玩家轮次或失败轮次的修订。完整轮次先沿 PrivateInteractionHistory.Rewind 撤回其交互，随后替换 User，清空旧 Reply、Reasoning、Context、SceneLines 和 SceneChoices，以原轮次编号重新入队；原附件继续使用。MemoryRevision 使旧后台总结失效。修订后的请求按回退后的当前资料与历史重新组合，沿原前台队列和流式接口执行一次主请求。失败/中断保留修改后的输入，旧正文保持清空；普通重试与其他界面的重新生成继续沿原入口。开发者测试使用本地文本分片喂给同一个解析器和显示控件，API、自动总结、交互写入和生涯保存调用均为零。
+
+2026-10-22 最终构建使用相同存档和设置连续离线重建，输入文件校验确认两次运行间保持一致：双人请求128387→122030字符（减少4.95%），单人122657→116299字符（减少5.18%）；单人对照沿用相同历史，仅调整当前参与者。世界观与私信模板全文保持一致，date附加字段未进入请求。首次/再次完整本地准备耗时：双人147.922/102.429→134.810/109.906毫秒，单人127.383/103.030→127.219/91.353毫秒；该计时包含Context与Compose，不能与其子阶段相加。两种场景每轮均保留一次主请求。本地556条检查及性能记录通过，覆盖完整请求、原文/情绪字典/历史边界、stop后连接永久保活、DONE/JSON、异常结束、队列取消和名额释放；真实API调用为0，原存档与配置写入为0。现场慢请求样本在首段正文出现前等待约180秒后超时，同轮重试约26秒完成；本轮确认请求材料缩减和完成帧及时交付，真实服务生成速度及真实联机仍需后续实测。
+
+结束约会的 dm-date-end → DateScenes.Leave 更新场景和婚礼状态，DateDiaries.Begin 建立当次条目，PrivateMessages.Enqueue 将结束感想作为隐藏系统事件排入原私聊队列。当前场景仍在生成时先取消旧请求，结束轮通过 queueAfterCurrent 留在其后；原请求 finally 再启动排队轮。单人 PrivateCommand 和多人 StartPrivate 都将 dm-date-end 交给同一处理器。重复结束读取 ended 状态，排队次数保持一次。
+严格工具模式沿上游 ChatToolRequest / ChatReplyStream 增量读取正文。多人 Replies 的 Speaker 为完整 PersonId，个人关系、学习、状态与档案交互的 Actor 为对应人物编号；普通群聊继续使用群内别名。流式读取等待说话人及场景元数据齐全后输出该段，支持正文属性先于元数据出现。完整返回后 ChatToolRequest.Apply 复核 SceneCues 与 Directives，再由 DateSceneEffects 分派现有业务入口；网络失败和取消沿原处理器保留输入，完成前保持交互尚未执行。开场、发送、重新输入、局内请求续聊、结束、重试以及加入活动都记录该轮 ToolMode；加入活动的模式写入实际受邀者轮次。旧档缺少 ChatTools 时默认关闭，关闭模式沿原括号格式。
+
+2026-10-24 基于上游0.27.9的兼容迁移使用真实Godot 4.5.1控件、隔离用户目录和合成网络传输完成1643项检查及性能记录。新增工具回归覆盖1/2/5名NPC、1至17字符的多种分片、相同台词的说话人归属、情绪差分、两项回应、逐人好感、接受约战、加入约会、日记与存档往返；旧格式、游戏返回、背景保持、回忆、赠礼预留、多人成婚、角色包和性格池沿既有回归检查。该次工具回归合计362.02毫秒、149737456字节分配，包含重复工具构造、合成分片编码、逐片场景解析与完整处理器调用，作为测试整体记录；每次完整回复仍为一次主请求。无界面运行在鼠标锁定检查处停止，实际渲染复核通过；旧测试的请求反射参数已随上游新增工具参数更新。真实API及Steam联机未调用，当前游戏内运行尚待验证。脱敏的合成完整请求/响应及逐项结果保留在本机 .godot/ui-validation-tools/date-party-test/migration-0279-request-*.json、migration-0279-response-*.json 和 results-migration-0279-final-rendered.json。 同日战斗上下文专项先以合成进度19→23层复现发送仍用19层的旧快照，再用普通及工具模式核验发送前刷新、消费聊天请求后保留触发缘由、旧局记录标记、修订原轮次、失败重试、排队时切换对局保护及32层结算续聊。修复后实际渲染完整回归通过1680项检查与性能记录；专项整体215.58ms、12,131,128字节分配，包含构造请求、合成SSE、完整处理器和断言，外部网络等待为0。完整合成请求保存在battle-context-False.json与battle-context-True.json，逐项结果见results-battle-context-final-rendered.json；三者均位于同一本机验证目录。真实游戏内连续两局及外部模型回复仍待复验。
+
+ProcessPrivateAsync 只对 Scene.Ending=false 的当前约会启用 PrivateStreamParser.SceneJson。正文中完整的场景 JSON 对象可包含 Scene/Emotion/Background 及可选 Speaker、Reply；Scene 为 dialogue 或 narration，三个场景字段均为字符串，其余普通 JSON 保留原文。ReadSceneJson 将对象转成同一 SceneCues，并将 Reply 写入可见正文，随后紧跟的文字继续使用该场景。流式状态记录括号深度、字符串和转义，跨分片保持；未完成 JSON 在 Finish 时恢复原文。普通私聊、群聊和结束日记沿原解析路径。该处理只改变显示资料，不新增交互、网络请求、保存节点或自动日志；缓冲随本轮解析器释放，完整正文和场景行沿原 PrivateTurn 保存、同步和重试机制管理。工具模式和普通模式约会都可读取这种场景对象。
 
 旧版独立功能工具模式的约会回归位于本地 .artifacts/date-tool-repair-20261024-live，复用测试入口 --date-tool-checks。193454 诊断包的三轮原始回复经过 dm-regenerate、ProcessPrivateAsync、交互执行及两次保存回调重放：开场台词与旁白、第二轮纯旁白及第三轮正文前的场景 JSON 均恢复对应显示资料，第三轮保留完整台词。仅替换 scene 工具说明，将原始请求的全部消息与其他11项工具逐项保留，deepseek 实测三轮均调用 scene、显示正文、完成状态且 Error 为空；分别3/5/3段，表情与背景进入原显示资料。每轮一次请求、两次保存回调，完整耗时8616.11/4258.10/4995.10毫秒，分配7169024/3715232/4098928字节；耗时含服务等待，不作为本地性能。无网络三轮完整重放164.88/6.05/9.52毫秒，分配3452320/2175896/1657520字节，首次含初始化。216字符逐字解析首次0.06毫秒、再次0.03毫秒，各分配17152字节；216000字符含2000项场景对象，16.90/16.52毫秒、各分配15373088字节。保存回调仅计数，正式生涯和设置保持原文件。分片、普通 JSON、未完成文本、普通模式逐字说明及原交互解析均通过，模型返回兼容46项、交互规则253项通过。真实 Godot 画面、真实磁盘保存与 Steam 多人本轮未实测。
 
-结束轮 Compose 改用 DateDiaries.Guidance，传入本次约会全部已完成轮次，一次模型调用同时输出普通私聊感想与隐藏 DateDiary/Location。PrivateStreamParser 分离标记，PrivateMessages.Apply 沿原交互规则处理，DateDiaries.Complete 保存日记和地点，再沿原完成保存回调提交。Location 位于标记闭合括号之后或日记末尾的明确地点字段也可提取，普通感想显示时移除字段。缺少日记标记保留感想并提示，玩家可沿原重新生成重试；自动总结仍按原条件执行，日记功能没有单独再调用第二次模型。普通请求沿原聊天、自动总结与公开材料组织，不附加 DateDiaries 列表。
+结束轮 Compose 改用 DateDiaries.Guidance，以主联系人身份传入本次约会全部已完成轮次；多人轮次通过 DateScenes.PromptHistory 保留每句说话人编号与显示标记，一次模型调用同时输出普通私聊感想与隐藏 DateDiary/Location。PrivateStreamParser 分离标记，PrivateMessages.Apply 沿原交互规则处理，DateDiaries.Complete 保存日记和地点，再沿原完成保存回调提交。Location 位于标记闭合括号之后或日记末尾的明确地点字段也可提取，普通感想显示时移除字段。缺少日记标记保留感想并提示，玩家可沿原重新生成重试；自动总结仍按原条件执行，日记功能没有单独再调用第二次模型。普通请求沿原聊天、自动总结与公开材料组织，不附加 DateDiaries 列表。
 
 普通约会场景最终正文经 DateScenes.ReplyFailure 检查，规则复用 PR 中的道德审查拒绝表达与 NSFW 检测；游戏名和比赛讨论沿正常正文处理。检测对象为最终正文，不读取 Reasoning；命中时轮次 failed，交互效果保持执行前状态，由玩家使用原重试按钮继续。结束感想沿普通私聊路径。
 

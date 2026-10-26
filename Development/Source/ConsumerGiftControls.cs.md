@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D2E63A0C340DA67A8A4E48AF58F7B4BE4FD271B37422665D1E9E9F298F597F4B`。来源：[源码](../../ConsumerGiftControls.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5DF26251E65F13603A41A419AFC95C136427DF51916828ABE21653AE2F339BAC`。来源：[源码](../../ConsumerGiftControls.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.ConsumerQuantity`、`NationalSpire.GiftRingMark`、`NationalSpire.CareerScreen`。
+类型：`NationalSpire.ConsumerQuantity`、`NationalSpire.GiftRingMark`、`NationalSpire.PickerPortraitMark`、`NationalSpire.CareerScreen`。
 
 字段、事件及初始值（源码原样）：
 
@@ -276,7 +276,7 @@ private LineEdit _number = null!;
 
 来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerScreen.PickerRing(Godot.HBoxContainer, NationalSpire.CareerData, string)`](ConsumerGiftControls.cs.md#symbol-e35b8d3e088f)
+**调用者：** [`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerScreen.PickerRing(Godot.HBoxContainer, NationalSpire.CareerData, string, bool, bool)`](ConsumerGiftControls.cs.md#symbol-e35b8d3e088f)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`
 
@@ -339,15 +339,70 @@ private LineEdit _number = null!;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e35b8d3e088f"></a>
+<a id="symbol-4fc0876be7c6"></a>
 
-## `NationalSpire.CareerScreen.PickerRing(Godot.HBoxContainer, NationalSpire.CareerData, string) — private static void PickerRing(HBoxContainer row, CareerData data, string person)`
+## `NationalSpire.PickerPortraitMark.PickerPortraitMark() — public PickerPortraitMark()`
 
 来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
+**调用者：** [`NationalSpire.CareerScreen.PickerRing(Godot.HBoxContainer, NationalSpire.CareerData, string, bool, bool)`](ConsumerGiftControls.cs.md#symbol-e35b8d3e088f)
+
+**调用：** `Godot.Vector2.Vector2(float, float)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(20, 20)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(20, 20)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `CustomMinimumSize` = `new(20, 20)`
+- `MouseFilter` = `MouseFilterEnum.Ignore`
+
+<a id="symbol-e9626bd1cda4"></a>
+
+## `NationalSpire.PickerPortraitMark._Draw() — public override void _Draw()`
+
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Min(float, float)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；输入表达式：`DrawPolyline(outline.Select(p => center + p * scale).ToArray(), Colors.White, 1.5f * scale, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline(outline.Select(p => center + p * scale).ToArray(), Colors.White, 1.5f * scale, true);`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-1, -4)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-1, -4)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-3, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-3, -7)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-5, 1)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-5, 1)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-5, 7)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-5, 7)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-7, -5)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-7, -5)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(-9, -1)`；返回值紧邻使用处：`ExpressionElementSyntax: new(-9, -1)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(1, -4)`；返回值紧邻使用处：`ExpressionElementSyntax: new(1, -4)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(3, -7)`；返回值紧邻使用处：`ExpressionElementSyntax: new(3, -7)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(5, 1)`；返回值紧邻使用处：`ExpressionElementSyntax: new(5, 1)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(5, 7)`；返回值紧邻使用处：`ExpressionElementSyntax: new(5, 7)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(7, -5)`；返回值紧邻使用处：`ExpressionElementSyntax: new(7, -5)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(9, -1)`；返回值紧邻使用处：`ExpressionElementSyntax: new(9, -1)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`outline.Select(p => center + p * scale)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: outline.Select(p => center + p * scale).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`outline.Select(p => center + p * scale).ToArray()`；返回值紧邻使用处：`ArgumentSyntax: outline.Select(p => center + p * scale).ToArray()`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(Size.X, Size.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: Math.Min(Size.X, Size.Y) / 20`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-e35b8d3e088f"></a>
+
+## `NationalSpire.CareerScreen.PickerRing(Godot.HBoxContainer, NationalSpire.CareerData, string, bool, bool) — private static void PickerRing(HBoxContainer row, CareerData data, string person, bool portraitSlot = false, bool hasPortrait = false)`
+
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
 **调用者：** [`ShowRows()`](CommunityShareScreen.cs.md#symbol-2e7b710b7d77)；[`ShowRows()`](PeoplePickerScreen.cs.md#symbol-0dac44c0ee6b)
 
-**调用：** [`NationalSpire.GiftRingMark.GiftRingMark()`](ConsumerGiftControls.cs.md#symbol-6a60dc1ee43f)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；`Godot.GodotObject.HasMeta(Godot.StringName)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Resource.Duplicate(bool)`；`Godot.Variant.AsSingle()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；`Godot.GodotObject.HasMeta(Godot.StringName)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Resource.Duplicate(bool)`；`Godot.Variant.AsSingle()`；[`NationalSpire.GiftRingMark.GiftRingMark()`](ConsumerGiftControls.cs.md#symbol-6a60dc1ee43f)；[`NationalSpire.PickerPortraitMark.PickerPortraitMark()`](ConsumerGiftControls.cs.md#symbol-4fc0876be7c6)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.IEnumerable.OfType<TResult>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GiftRingMark.Completed`；`NationalSpire.PrivateMailbox.Relations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateRelation.RingReceived`；`NationalSpire.PrivateRelation.WeddingCompleted`
 
@@ -356,30 +411,38 @@ private LineEdit _number = null!;
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`button.AddThemeStyleboxOverride(state, style)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeStyleboxOverride(state, style);`
 - `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`button.GetThemeStylebox(state)`；返回值紧邻使用处：`IsPatternExpressionSyntax: button.GetThemeStylebox(state) is not StyleBoxFlat original`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`mark.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight)`；返回值紧邻使用处：`ExpressionStatementSyntax: mark.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight);`
+- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`portrait.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight)`；返回值紧邻使用处：`ExpressionStatementSyntax: portrait.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight);`
 - `Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`button.GetMeta(key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: button.GetMeta(key).AsSingle`
 - `Godot.GodotObject.HasMeta(Godot.StringName)`；输入表达式：`button.HasMeta(key)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !button.HasMeta(key)`
 - `Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`button.SetMeta(key, original.ContentMarginRight)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.SetMeta(key, original.ContentMarginRight);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`button.AddChild(mark)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddChild(mark);`
-- `Godot.Node.GetChildren(bool)`；输入表达式：`button.GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: button.GetChildren().OfType<GiftRingMark>`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`button.AddChild(portrait)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddChild(portrait);`
+- `Godot.Node.GetChildren(bool)`；输入表达式：`button.GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: button.GetChildren().Where`
 - `Godot.Node.GetChildren(bool)`；输入表达式：`row.GetChildren()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetChildren().OfType<Button>`
 - `Godot.Node.QueueFree()`；输入表达式：`previous.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: previous.QueueFree();`
 - `Godot.Node.RemoveChild(Godot.Node)`；输入表达式：`button.RemoveChild(previous)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.RemoveChild(previous);`
 - `Godot.Resource.Duplicate(bool)`；输入表达式：`original.Duplicate()`；返回值紧邻使用处：`CastExpressionSyntax: (StyleBoxFlat)original.Duplicate()`
-- `Godot.Variant.AsSingle()`；输入表达式：`button.GetMeta(key).AsSingle()`；返回值紧邻使用处：`BinaryExpressionSyntax: button.GetMeta(key).AsSingle() + (relation?.RingReceived == true ? 28 : 0)`
+- `Godot.Variant.AsSingle()`；输入表达式：`button.GetMeta(key).AsSingle()`；返回值紧邻使用处：`BinaryExpressionSyntax: button.GetMeta(key).AsSingle() + (portraitSlot ? 56 : relation?.RingReceived == true ? 28 : 0)`
 - `NationalSpire.GiftRingMark.GiftRingMark()`；输入表达式：`new GiftRingMark { Name = "PickerOathMark", Completed = relation.WeddingCompleted }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new GiftRingMark { Name = "PickerOathMark", Completed = relation.WeddingCompleted }`
+- `NationalSpire.PickerPortraitMark.PickerPortraitMark()`；输入表达式：`new PickerPortraitMark { Name = "PickerPortraitMark" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PickerPortraitMark { Name = "PickerPortraitMark" }`
 - `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(data).Relations`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`row.GetChildren().OfType<Button>().FirstOrDefault()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = row.GetChildren().OfType<Button>().FirstOrDefault()`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`button.GetChildren().OfType<GiftRingMark>().ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var previous in button.GetChildren().OfType<GiftRingMark>().ToArray()) { button.RemoveChild(previous); previous.QueueFree(); }`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`button.GetChildren().Where(c => c is GiftRingMark or PickerPortraitMark).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var previous in button.GetChildren().Where(c => c is GiftRingMark or PickerPortraitMark).ToArray()) { button.RemoveChild(previous); previous.QueueFree(); }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`button.GetChildren().Where(c => c is GiftRingMark or PickerPortraitMark)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: button.GetChildren().Where(c => c is GiftRingMark or PickerPortraitMark).ToArray`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(person)`
-- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`button.GetChildren().OfType<GiftRingMark>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: button.GetChildren().OfType<GiftRingMark>().ToArray`
 - `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`row.GetChildren().OfType<Button>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: row.GetChildren().OfType<Button>().FirstOrDefault`
 
 **赋值（含属性/字段和局部值）：**
 
 - `Completed` = `relation.WeddingCompleted`
+- `Name` = `"PickerOathMark"`
+- `Name` = `"PickerPortraitMark"`
 - `mark.OffsetBottom` = `10`
 - `mark.OffsetLeft` = `-32`
 - `mark.OffsetRight` = `-12`
 - `mark.OffsetTop` = `-10`
-- `Name` = `"PickerOathMark"`
-- `style.ContentMarginRight` = `button.GetMeta(key).AsSingle() + (relation?.RingReceived == true ? 28 : 0)`
+- `portrait.OffsetBottom` = `10`
+- `portrait.OffsetLeft` = `-60`
+- `portrait.OffsetRight` = `-40`
+- `portrait.OffsetTop` = `-10`
+- `style.ContentMarginRight` = `button.GetMeta(key).AsSingle() + (portraitSlot ? 56 : relation?.RingReceived == true ? 28 : 0)`

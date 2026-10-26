@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`51568757DD74314D689F566837C3CEE39757A143CEF5EFDCA1556BFD0EE3280E`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`3CFB527544D021047853AFA3CC66A5B178C000B354BBC260828797FF9C796A1E`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -32,6 +32,7 @@ private Dictionary<MapCoord, NMapPoint>? _mapPoints;
 private NMapScreen? _mapScreen;
 private ActMap? _lastMap;
 private bool _mapCompatible = true;
+private List<RouteNode>? _planningMap;
 ```
 
 <a id="symbol-4c738a13c885"></a>
@@ -159,9 +160,9 @@ private bool _mapCompatible = true;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.QueueFree()`
+**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.QueueFree()`；[`NationalSpire.LiveRunBridge.ResumeDateRun()`](LiveDateGame.cs.md#symbol-9d0f51bc5495)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge.Current`；`NationalSpire.LiveRunBridge.HpChanged(int, int)`；`NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState)`；`NationalSpire.LiveRunBridge.OnHistoryChanged()`；`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveRunBridge.Current`；`NationalSpire.LiveRunBridge.HpChanged(int, int)`；`NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState)`；`NationalSpire.LiveRunBridge.OnHistoryChanged()`；`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`；`NationalSpire.LiveRunBridge.ResumeDateRun()`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._player`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -169,20 +170,21 @@ private bool _mapCompatible = true;
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.QueueFree();`
 - `Godot.Node.QueueFree()`；输入表达式：`_hud.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.QueueFree();`
 - `Godot.Node.QueueFree()`；输入表达式：`_mapOverlay!.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.QueueFree();`
+- `NationalSpire.LiveRunBridge.ResumeDateRun()`；输入表达式：`ResumeDateRun()`；返回值紧邻使用处：`ExpressionStatementSyntax: ResumeDateRun();`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_player.Creature.CurrentHpChanged` -= `HpChanged`
 - `CombatManager.Instance.CombatSetUp` -= `OnCombat`
 - `CombatManager.Instance.CombatWon` -= `OnWon`
 - `CombatManager.Instance.History.Changed` -= `OnHistoryChanged`
 - `Current` = `null`
+- `_player.Creature.CurrentHpChanged` -= `HpChanged`
 
 <a id="symbol-65a24868959d"></a>
 
 ## `NationalSpire.LiveRunBridge.Guard(System.Action, bool) — internal static void Guard(Action action, bool commentaryOnly = false)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-74af22831368)；[`NationalSpire.LiveRunBridge._Process(double)`](LiveRunBridge.cs.md#symbol-d7e63bc009ff)；[`NationalSpire.LiveRunBridge.OnHistoryChanged()`](LiveRunBridge.cs.md#symbol-10bf254b1599)；[`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`](LiveRunBridge.cs.md#symbol-df914af86259)；[`NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun)`](LiveRunBridge.cs.md#symbol-5639c4c6edfd)；[`NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-81cb2332df19)；[`NationalSpire.LiveVictoryPatch.Prefix(bool)`](LiveRunBridge.cs.md#symbol-363ebe5825ab)
 
@@ -207,13 +209,13 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`](LiveDateGame.cs.md#symbol-4bd2094f6d33)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.UpdateRace()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.UpdateRace()`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -221,6 +223,7 @@ private bool _mapCompatible = true;
 - `Godot.CanvasItem.Hide()`；输入表达式：`_mapOverlay!.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.Hide();`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide();`
 - `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(_data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(_data)`
+- `NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`；输入表达式：`AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused)`；返回值紧邻使用处：`ExpressionStatementSyntax: AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused);`
 - `NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；输入表达式：`Guard(UpdateRace)`；返回值紧邻使用处：`ExpressionStatementSyntax: Guard(UpdateRace);`
 
 **赋值（含属性/字段和局部值）：**
@@ -233,7 +236,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.CopyMap(MegaCrit.Sts2.Core.Map.ActMap, int, bool) — private static List<RouteNode> CopyMap(ActMap map, int act, bool secondBoss)`
 
-来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -248,23 +251,43 @@ private bool _mapCompatible = true;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0dd1ac28e6cd"></a>
+<a id="symbol-733c41e89044"></a>
 
-## `NationalSpire.LiveRunBridge.EnsurePlan() — private void EnsurePlan()`
+## `NationalSpire.LiveRunBridge.PlanningMap() — private List<RouteNode> PlanningMap()`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
-**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.GameCharacterNames.StartingHp(string)`](GameCharacterNames.cs.md#symbol-1bb238743407)；[`NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`](LiveMaps.cs.md#symbol-c878186b1e5a)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.RivalSimulation.Create(NationalSpire.CareerMatch, NationalSpire.CareerPerson, System.Collections.Generic.IReadOnlyList<NationalSpire.RouteNode>, int)`](LiveMatch.cs.md#symbol-d351643744da)
+**调用：** [`NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`](LiveMaps.cs.md#symbol-c878186b1e5a)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastMemory.SharedPhrases`；`NationalSpire.CareerData.BroadcastHistory`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.GameCharacterNames.StartingHp(string)`；`NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.RivalSimulation.Create(NationalSpire.CareerMatch, NationalSpire.CareerPerson, System.Collections.Generic.IReadOnlyList<NationalSpire.RouteNode>, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._planningMap`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.LiveMapPlan`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(_data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(_data);`
+- `NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`；输入表达式：`LiveMaps.Read(_run, _match, false)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _planningMap = LiveMaps.Read(_run, _match, false)`
+- `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.LiveMapPlan)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.LiveMapPlan)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_planningMap` = `LiveMaps.Read(_run, _match, false)`
+
+<a id="symbol-0dd1ac28e6cd"></a>
+
+## `NationalSpire.LiveRunBridge.EnsurePlan(ref bool) — private void EnsurePlan(ref bool changed)`
+
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
+
+**调用：** [`NationalSpire.GameCharacterNames.StartingHp(string)`](GameCharacterNames.cs.md#symbol-1bb238743407)；[`NationalSpire.LiveRunBridge.PlanningMap()`](LiveRunBridge.cs.md#symbol-733c41e89044)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.RivalSimulation.Create(NationalSpire.CareerMatch, NationalSpire.CareerPerson, System.Collections.Generic.IReadOnlyList<NationalSpire.RouteNode>, int)`](LiveMatch.cs.md#symbol-d351643744da)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastMemory.SharedPhrases`；`NationalSpire.CareerData.BroadcastHistory`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerPerson.Character`；`NationalSpire.GameCharacterNames.StartingHp(string)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRunBridge.PlanningMap()`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.RivalSimulation.Create(NationalSpire.CareerMatch, NationalSpire.CareerPerson, System.Collections.Generic.IReadOnlyList<NationalSpire.RouteNode>, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
 - `NationalSpire.GameCharacterNames.StartingHp(string)`；输入表达式：`GameCharacterNames.StartingHp(_rival.Character)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GameCharacterNames.StartingHp(_rival.Character)`
-- `NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`；输入表达式：`LiveMaps.Read(_run, _match, false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = LiveMaps.Read(_run, _match, false)`
+- `NationalSpire.LiveRunBridge.PlanningMap()`；输入表达式：`PlanningMap()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PlanningMap()`
 - `NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PrepareOpponent(_data, _match)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchRules.PrepareOpponent(_data, _match);`
 - `NationalSpire.RivalSimulation.Create(NationalSpire.CareerMatch, NationalSpire.CareerPerson, System.Collections.Generic.IReadOnlyList<NationalSpire.RouteNode>, int)`；输入表达式：`RivalSimulation.Create(_match, _rival, maps, hp)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _match.Live = RivalSimulation.Create(_match, _rival, maps, hp)`
 
@@ -272,85 +295,115 @@ private bool _mapCompatible = true;
 
 - `_match.Live.Commentary.SharedPhrases` = `_data.BroadcastHistory`
 - `_match.Live` = `RivalSimulation.Create(_match, _rival, maps, hp)`
+- `changed` = `true`
 
 <a id="symbol-9566200347bc"></a>
 
 ## `NationalSpire.LiveRunBridge.UpdateRace() — private void UpdateRace()`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`](LiveAtmosphere.cs.md#symbol-0b25ed42c5ca)；[`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`](LiveCommentary.cs.md#symbol-dd61728b3570)；[`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-931725c8305b)；[`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`](LiveCommentary.cs.md#symbol-7a552211c71b)；[`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`](LiveAtmosphere.cs.md#symbol-5475ccc1b529)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)；[`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-64cfa3e4c0ca)；[`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`](LiveRaceHud.cs.md#symbol-cfd9d62c7d32)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.EnsurePlan()`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)；[`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`](LiveShopObserver.cs.md#symbol-76febe44c2f1)；[`NationalSpire.LiveVoices.Ambient(bool, int, double)`](LiveCrowd.cs.md#symbol-789980beddf3)；[`NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`](LiveVoices.cs.md#symbol-3ffa230aebe8)；[`NationalSpire.LiveVoices.Poll(double, double)`](LiveVoices.cs.md#symbol-fc95fe2519bc)；[`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`](LiveVoices.cs.md#symbol-ea0ff7a1e0eb)；[`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`](LiveVoices.cs.md#symbol-44512aead226)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`](LiveMatch.cs.md#symbol-78308976d2a9)；[`NationalSpire.RivalSimulation.RoomName(string)`](LiveMatch.cs.md#symbol-2c599e9f210a)；[`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`](LiveMatch.cs.md#symbol-719ee73c10ff)；[`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`](LiveMatch.cs.md#symbol-dc9f5474f9f6)；`Godot.CanvasItem.Hide()`；`Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；`NationalSpire.BattleObservation.BattleObservation()`；`object.ReferenceEquals(object?, object?)`；`System.Enum.ToString()`
+**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.adjustedActs`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.finish`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.match`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerAct`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerFloor`；`NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.RouteFloor`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`；`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`；`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.PaceAdjustedActs`；`NationalSpire.LiveMatchState.PaceNeutralUntil`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._lastMap`；`NationalSpire.LiveRunBridge._lossFloor`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapRetryAt`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._shop`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；`NationalSpire.LiveRunBridge.EnsurePlan()`；`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`；`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`；`NationalSpire.LiveShopChange.CardType`；`NationalSpire.LiveShopChange.DeckSize`；`NationalSpire.LiveShopChange.Gold`；`NationalSpire.LiveShopChange.Item`；`NationalSpire.LiveShopChange.Kind`；`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；`NationalSpire.LiveVoices.Ambient(bool, int, double)`；`NationalSpire.LiveVoices.Poll(double, double)`；`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Finished`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；`NationalSpire.RivalSimulation.RoomName(string)`；`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.End`；`NationalSpire.RivalStep.Floor`；`NationalSpire.RivalStep.Kind`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._planningMap`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.LiveSave`；`NationalSpire.UiPerformance.Work.LiveUpdate`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(_data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(_data);`
+- `NationalSpire.LiveRunBridge.RefreshRace(ref bool)`；输入表达式：`RefreshRace(ref changed)`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshRace(ref changed);`
+- `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.LiveSave)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.LiveSave)`
+- `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.LiveUpdate)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.LiveUpdate)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_planningMap` = `null`
+
+<a id="symbol-f03ac37c2ac4"></a>
+
+## `NationalSpire.LiveRunBridge.RefreshRace(ref bool) — private void RefreshRace(ref bool changed)`
+
+来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；`NationalSpire.BattleObservation.BattleObservation()`；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`](LiveAtmosphere.cs.md#symbol-0b25ed42c5ca)；[`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`](LiveCommentary.cs.md#symbol-dd61728b3570)；[`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-931725c8305b)；[`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`](LiveCommentary.cs.md#symbol-7a552211c71b)；[`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`](LiveAtmosphere.cs.md#symbol-5475ccc1b529)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)；[`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-64cfa3e4c0ca)；[`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`](LiveRaceHud.cs.md#symbol-cfd9d62c7d32)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)；[`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`](LiveShopObserver.cs.md#symbol-76febe44c2f1)；[`NationalSpire.LiveVoices.Ambient(bool, int, double)`](LiveCrowd.cs.md#symbol-789980beddf3)；[`NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`](LiveVoices.cs.md#symbol-3ffa230aebe8)；[`NationalSpire.LiveVoices.Poll(double, double)`](LiveVoices.cs.md#symbol-fc95fe2519bc)；[`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`](LiveVoices.cs.md#symbol-ea0ff7a1e0eb)；[`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`](LiveVoices.cs.md#symbol-44512aead226)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`](LiveMatch.cs.md#symbol-78308976d2a9)；[`NationalSpire.RivalSimulation.RoomName(string)`](LiveMatch.cs.md#symbol-2c599e9f210a)；[`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`](LiveMatch.cs.md#symbol-719ee73c10ff)；[`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`](LiveMatch.cs.md#symbol-dc9f5474f9f6)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`；`object.ReferenceEquals(object?, object?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.RouteFloor`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.DateGameState.Companions`；`NationalSpire.DateGameState.People`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`；`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`；`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.PaceAdjustedActs`；`NationalSpire.LiveMatchState.PaceNeutralUntil`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`；`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`；`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`；`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`；`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._datePause`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._lastMap`；`NationalSpire.LiveRunBridge._lossFloor`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapRetryAt`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._shop`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveShopChange.CardType`；`NationalSpire.LiveShopChange.DeckSize`；`NationalSpire.LiveShopChange.Gold`；`NationalSpire.LiveShopChange.Item`；`NationalSpire.LiveShopChange.Kind`；`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；`NationalSpire.LiveVoices.Ambient(bool, int, double)`；`NationalSpire.LiveVoices.Poll(double, double)`；`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Finished`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；`NationalSpire.RivalSimulation.RoomName(string)`；`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.End`；`NationalSpire.RivalStep.Floor`；`NationalSpire.RivalStep.Kind`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_mapOverlay!.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.Hide();`
 - `Godot.GD.PushWarning(string)`；输入表达式：`GD.PushWarning("[NationalSpire] 地图标记等待重建：" + e.Message)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushWarning("[NationalSpire] 地图标记等待重建：" + e.Message);`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide();`
-- `NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；输入表达式：`new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`；返回值紧邻使用处：`ArgumentSyntax: new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`
+- `NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；输入表达式：`new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`；返回值紧邻使用处：`ArgumentSyntax: new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`
 - `NationalSpire.BattleObservation.BattleObservation()`；输入表达式：`new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentMapPoint?.PointType.ToString() ?? "", Hp = _player.Creature.CurrentHp, MaxHp = _player.Creature.MaxHp }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentMapPoint?.PointType.ToString() ?? "", Hp = _player.Creature.CurrentHp, MaxHp = _player.Creature.MaxHp }`
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(_data)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(_data)`
-- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(_data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(_data);`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("live.map", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("live.map", e);`
-- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,                  playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,                  playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End });`
-- `NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；输入表达式：`LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds)`
-- `NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；输入表达式：`LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act,                  CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act,                  CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed)`
-- `NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；输入表达式：`LiveCommentary.PlayerLoss(live.Commentary, _run.TotalFloor, _pendingLoss, _player.Creature.CurrentHp,                          _player.Creature.MaxHp, CareerEngine.Name(_data), _match.Seed, seconds)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = LiveCommentary.PlayerLoss(live.Commentary, _run.TotalFloor, _pendingLoss, _player.Creature.CurrentHp,                          _player.Creature.MaxHp, CareerEngine.Name(_data), _match.Seed, seconds)`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex, playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex, playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End });`
+- `NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；输入表达式：`LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds)`
+- `NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；输入表达式：`LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act, CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act, CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed)`
+- `NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；输入表达式：`LiveCommentary.PlayerLoss(live.Commentary, _run.TotalFloor, _pendingLoss, _player.Creature.CurrentHp, _player.Creature.MaxHp, CareerEngine.Name(_data), _match.Seed, seconds)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = LiveCommentary.PlayerLoss(live.Commentary, _run.TotalFloor, _pendingLoss, _player.Creature.CurrentHp, _player.Creature.MaxHp, CareerEngine.Name(_data), _match.Seed, seconds)`
 - `NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`；输入表达式：`LiveCommentary.RebaseGap(live.Commentary, _run.TotalFloor, progress.Step.Floor, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: LiveCommentary.RebaseGap(live.Commentary, _run.TotalFloor, progress.Step.Floor, seconds);`
 - `NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`；输入表达式：`LiveCommentary.Rival(live, progress, CareerEngine.Name(_data), _rival.PublicName, _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Rival(live, progress, CareerEngine.Name(_data), _rival.PublicName, _match.Seed, seconds)`
 - `NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；输入表达式：`LiveCommentary.Route(live.Commentary, observation, CareerEngine.Name(_data), _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Route(live.Commentary, observation, CareerEngine.Name(_data), _match.Seed, seconds)`
-- `NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；输入表达式：`LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "",                      _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "",                      _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds)`
+- `NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；输入表达式：`LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds)`
 - `NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`；输入表达式：`_hud.SetRace(_rival.PublicName, status, progress.Hp, live.MaxHp, progress.Step.Act != _run.CurrentActIndex, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.SetRace(_rival.PublicName, status, progress.Hp, live.MaxHp, progress.Step.Act != _run.CurrentActIndex, seconds);`
 - `NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`；输入表达式：`CalibrateMap(live)`；返回值紧邻使用处：`ExpressionStatementSyntax: CalibrateMap(live);`
-- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(_voices.Poll(seconds, live.Commentary.LastSpoke))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(_voices.Poll(seconds, live.Commentary.LastSpoke));`
-- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(injury)`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(injury);`
-- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds));`
-- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act,                  CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act,                  CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed));`
+- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Atmosphere(live.Commentary, new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event, _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress), _match.Seed, seconds));`
+- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act, CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Gap(live.Commentary, _run.TotalFloor, progress.Step.Floor, _run.CurrentActIndex, progress.Step.Act, CareerEngine.Name(_data), _rival.PublicName, _player.Creature.CurrentHp, _player.Creature.MaxHp, seconds, _match.Seed));`
 - `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Rival(live, progress, CareerEngine.Name(_data), _rival.PublicName, _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Rival(live, progress, CareerEngine.Name(_data), _rival.PublicName, _match.Seed, seconds));`
 - `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Route(live.Commentary, observation, CareerEngine.Name(_data), _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Route(live.Commentary, observation, CareerEngine.Name(_data), _match.Seed, seconds));`
-- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "",                      _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "",                      _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds));`
-- `NationalSpire.LiveRunBridge.EnsurePlan()`；输入表达式：`EnsurePlan()`；返回值紧邻使用处：`ExpressionStatementSyntax: EnsurePlan();`
+- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.UnknownRoom(live.Commentary, _run.TotalFloor, _run.CurrentRoom?.RoomType.ToString() ?? "", _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, CareerEngine.Name(_data), _match.Seed, seconds));`
+- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(_voices.Poll(seconds, live.Commentary.LastSpoke))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(_voices.Poll(seconds, live.Commentary.LastSpoke));`
+- `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(injury)`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(injury);`
+- `NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`；输入表达式：`EnsurePlan(ref changed)`；返回值紧邻使用处：`ExpressionStatementSyntax: EnsurePlan(ref changed);`
 - `NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`；输入表达式：`ObservePotions(live.Commentary, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: ObservePotions(live.Commentary, seconds);`
+- `NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`；输入表达式：`UpdateDateGame(live, progress, seconds, ref changed)`；返回值紧邻使用处：`ExpressionStatementSyntax: UpdateDateGame(live, progress, seconds, ref changed);`
 - `NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`；输入表达式：`UpdateMap(live, progress, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: UpdateMap(live, progress, seconds);`
-- `NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；输入表达式：`_shop.Read(_run)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var change in _shop.Read(_run))                  _voices.Shop(change.Kind, change.Item, change.DeckSize, change.Gold, CareerEngine.Name(_data), _run.TotalFloor, seconds, change.CardType);`
+- `NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；输入表达式：`_shop.Read(_run)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var change in _shop.Read(_run)) _voices.Shop(change.Kind, change.Item, change.DeckSize, change.Gold, CareerEngine.Name(_data), _run.TotalFloor, seconds, change.CardType);`
 - `NationalSpire.LiveVoices.Ambient(bool, int, double)`；输入表达式：`_voices.Ambient(CombatManager.Instance.IsInProgress && !CombatManager.Instance.IsEnding, _run.TotalFloor, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: _voices.Ambient(CombatManager.Instance.IsInProgress && !CombatManager.Instance.IsEnding, _run.TotalFloor, seconds);`
-- `NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`new(_data, _match, live.Commentary, [_rival.Id])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _voices ??= new(_data, _match, live.Commentary, [_rival.Id])`
+- `NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`；输入表达式：`new(_data, _match, live.Commentary, _match.DateGame?.People ?? [_rival.Id])`；返回值紧邻使用处：`AssignmentExpressionSyntax: _voices ??= new(_data, _match, live.Commentary, _match.DateGame?.People ?? [_rival.Id])`
 - `NationalSpire.LiveVoices.Poll(double, double)`；输入表达式：`_voices.Poll(seconds, live.Commentary.LastSpoke)`；返回值紧邻使用处：`ArgumentSyntax: _voices.Poll(seconds, live.Commentary.LastSpoke)`
-- `NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；输入表达式：`_voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds)`；返回值紧邻使用处：`ExpressionStatementSyntax: _voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds);`
+- `NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；输入表达式：`_voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds, _match.DateGame == null ? null : new[] { (_rival.Id, progress, live.MaxHp) }.Concat(_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp))))`；返回值紧邻使用处：`ExpressionStatementSyntax: _voices.Rival(_run.TotalFloor, _run.CurrentActIndex, _player.Creature.CurrentHp, _player.Creature.MaxHp, progress, live, seconds, _match.DateGame == null ? null : new[] { (_rival.Id, progress, live.MaxHp) }.Concat(_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp))));`
 - `NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`；输入表达式：`_voices.Shop(change.Kind, change.Item, change.DeckSize, change.Gold, CareerEngine.Name(_data), _run.TotalFloor, seconds, change.CardType)`；返回值紧邻使用处：`ExpressionStatementSyntax: _voices.Shop(change.Kind, change.Item, change.DeckSize, change.Gold, CareerEngine.Name(_data), _run.TotalFloor, seconds, change.CardType);`
 - `NationalSpire.MatchRules.Time(double?)`；输入表达式：`MatchRules.Time(_match.OpponentSeconds)`；返回值紧邻使用处：`BinaryExpressionSyntax: "已通关 · " + MatchRules.Time(_match.OpponentSeconds)`
 - `NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；输入表达式：`RivalSimulation.At(live, seconds)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RivalSimulation.At(live, seconds)`
+- `NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；输入表达式：`RivalSimulation.At(m.Live!, seconds)`；返回值紧邻使用处：`ArgumentSyntax: RivalSimulation.At(m.Live!, seconds)`
 - `NationalSpire.RivalSimulation.RoomName(string)`；输入表达式：`RivalSimulation.RoomName(progress.Step.Kind)`；返回值紧邻使用处：`InterpolationSyntax: {RivalSimulation.RoomName(progress.Step.Kind)}`
-- `NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；输入表达式：`RivalSimulation.TryAdjustPace(live, seconds, _run.CurrentActIndex, _run.TotalFloor)`；返回值紧邻使用处：`IfStatementSyntax: if (RivalSimulation.TryAdjustPace(live, seconds, _run.CurrentActIndex, _run.TotalFloor))          {              Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,                  playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End });              CareerStore.Save(_data);          }`
-- `NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；输入表达式：`RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)`；返回值紧邻使用处：`IfStatementSyntax: if (RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)) CareerStore.Save(_data);`
-- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(_lastMap, _run.Map)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(_lastMap, _run.Map)`
+- `NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；输入表达式：`RivalSimulation.TryAdjustPace(live, seconds, _run.CurrentActIndex, _run.TotalFloor)`；返回值紧邻使用处：`IfStatementSyntax: if (RivalSimulation.TryAdjustPace(live, seconds, _run.CurrentActIndex, _run.TotalFloor)) { Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex, playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End }); changed = true; }`
+- `NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；输入表达式：`RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)`；返回值紧邻使用处：`AssignmentExpressionSyntax: changed |= RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`new[] { (_rival.Id, progress, live.MaxHp) }.Concat(_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp)))`；返回值紧邻使用处：`ConditionalExpressionSyntax: _match.DateGame == null ? null : new[] { (_rival.Id, progress, live.MaxHp) }.Concat(_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp)))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp))`；返回值紧邻使用处：`ArgumentSyntax: _match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => (m.OpponentId, RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp))`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`_match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _match.DateGame.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select`
 - `System.Enum.ToString()`；输入表达式：`.PointType.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _run.CurrentMapPoint?.PointType.ToString()`
 - `System.Enum.ToString()`；输入表达式：`.RoomType.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _run.CurrentRoom?.RoomType.ToString()`
+- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(_lastMap, _run.Map)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(_lastMap, _run.Map)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `Floor` = `_run.TotalFloor`
+- `Hp` = `_player.Creature.CurrentHp`
+- `Kind` = `_run.CurrentMapPoint?.PointType.ToString() ?? ""`
+- `MaxHp` = `_player.Creature.MaxHp`
 - `_lastMap` = `_run.Map`
 - `_mapCheck` = `0`
 - `_mapPoints` = `null`
 - `_mapRetryAt` = `seconds + 5`
 - `_pendingLoss` = `0`
-- `_voices` ??= `new(_data, _match, live.Commentary, [_rival.Id])`
-- `Floor` = `_run.TotalFloor`
-- `Hp` = `_player.Creature.CurrentHp`
-- `Kind` = `_run.CurrentMapPoint?.PointType.ToString() ?? ""`
-- `MaxHp` = `_player.Creature.MaxHp`
+- `_voices` ??= `new(_data, _match, live.Commentary, _match.DateGame?.People ?? [_rival.Id])`
+- `changed` = `true`
+- `changed` |= `RivalSimulation.UpgradeHealthPlan(live, _match, _rival, seconds)`
 - `status` += `" · 独立路线"`
 
 <a id="symbol-e509c91bb4f4"></a>
 
 ## `NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double) — private void ObservePotions(BroadcastMemory memory, double seconds)`
 
-来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 237 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.LiveCommentary.DiscardPotion(NationalSpire.BroadcastMemory, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-27c5783971c3)；[`NationalSpire.LiveCommentary.Potion(NationalSpire.BroadcastMemory, string, int, int, string, string, double)`](LiveMoments.cs.md#symbol-4eaf89b958c5)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelDb.GetByIdOrNull<T>(MegaCrit.Sts2.Core.Models.ModelId)`；`MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry.GetEntry(ulong)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`
 
@@ -380,7 +433,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.EnergyGained(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int) — public void EnergyGained(PlayerCombatState state, int gain)`
 
-来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 259 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-74af22831368)
 
@@ -402,7 +455,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.RewardSkipped(MegaCrit.Sts2.Core.Rewards.CardReward) — public void RewardSkipped(CardReward reward)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 266 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-81cb2332df19)
 
@@ -424,7 +477,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.RunEnded(bool) — public void RunEnded(bool victory)`
 
-来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 272 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveVictoryPatch.Prefix(bool)`](LiveRunBridge.cs.md#symbol-363ebe5825ab)
 
@@ -450,9 +503,9 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState) — private void CalibrateMap(LiveMatchState live)`
 
-来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 283 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.LiveMaps.Matches(MegaCrit.Sts2.Core.Map.ActMap, System.Collections.Generic.IEnumerable<NationalSpire.RivalStep>, int)`](LiveMaps.cs.md#symbol-b7456baf6c82)
 
@@ -470,9 +523,9 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double) — private void UpdateMap(LiveMatchState live, RivalProgress progress, double seconds)`
 
-来源：源码第 261 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`](LiveRunBridge.cs.md#symbol-2f08e8cbdbe3)；[`NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`](LiveRaceHud.cs.md#symbol-6200daa39f4a)；[`NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool)`](LiveRaceHud.cs.md#symbol-683532d7c3b5)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`MegaCrit.Sts2.Core.Map.MapCoord.MapCoord(int, int)`；`NationalSpire.RivalMapOverlay.RivalMapOverlay()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 
@@ -527,7 +580,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint) — private Vector2 MapPosition(NMapPoint point)`
 
-来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 318 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
@@ -548,7 +601,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom) — private void OnWon(CombatRoom room)`
 
-来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -567,7 +620,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.OnHistoryChanged() — private void OnHistoryChanged()`
 
-来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 321 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -590,31 +643,33 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState) — private void OnCombat(ICombatState state)`
 
-来源：源码第 306 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge._Ready()`](LiveRunBridge.cs.md#symbol-26fa8bae2af0)
 
-**调用：** `NationalSpire.BattleObservation.BattleObservation()`；`object.ReferenceEquals(object?, object?)`；`System.Enum.ToString()`
+**调用：** `NationalSpire.BattleObservation.BattleObservation()`；`System.Enum.ToString()`；`object.ReferenceEquals(object?, object?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._run`
+**字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._dateCombatAct`；`NationalSpire.LiveRunBridge._dateCombatStarted`；`NationalSpire.LiveRunBridge._run`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.BattleObservation.BattleObservation()`；输入表达式：`new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentRoom?.RoomType.ToString() ?? "Monster" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _battle = new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentRoom?.RoomType.ToString() ?? "Monster" }`
-- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(state.RunState, _run)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(state.RunState, _run)`
 - `System.Enum.ToString()`；输入表达式：`.RoomType.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _run.CurrentRoom?.RoomType.ToString()`
+- `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(state.RunState, _run)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(state.RunState, _run)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_battle` = `new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentRoom?.RoomType.ToString() ?? "Monster" }`
 - `Floor` = `_run.TotalFloor`
 - `Kind` = `_run.CurrentRoom?.RoomType.ToString() ?? "Monster"`
+- `_battle` = `new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentRoom?.RoomType.ToString() ?? "Monster" }`
+- `_dateCombatAct` = `_run.CurrentActIndex`
+- `_dateCombatStarted` = `RunManager.Instance.RunTime`
 
 <a id="symbol-f716e330add4"></a>
 
 ## `NationalSpire.LiveRunBridge.HpChanged(int, int) — private void HpChanged(int before, int after)`
 
-来源：源码第 311 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 340 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -638,7 +693,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry) — public void History(ICombatState state, CombatHistoryEntry entry)`
 
-来源：源码第 319 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 348 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OnHistoryChanged()`](LiveRunBridge.cs.md#symbol-10bf254b1599)
 
@@ -681,18 +736,19 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.FinishCombat() — public void FinishCombat()`
 
-来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-243aedb210e3)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.DateGameTriggers.CombatWon(NationalSpire.DateGameState, string, int, int, double, double, bool)`](DateGameTriggers.cs.md#symbol-e51142d802f7)；[`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-243aedb210e3)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`
+**字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.CompleteObservation`；`NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.DateGameTriggers.CombatWon(NationalSpire.DateGameState, string, int, int, double, double, bool)`；`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._dateCombatAct`；`NationalSpire.LiveRunBridge._dateCombatStarted`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(_data)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(_data)`
 - `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(_data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(_data);`
+- `NationalSpire.DateGameTriggers.CombatWon(NationalSpire.DateGameState, string, int, int, double, double, bool)`；输入表达式：`DateGameTriggers.CombatWon(game, _battle.Kind, _dateCombatAct, _battle.Floor, _dateCombatStarted, RunManager.Instance.RunTime, _battle.CompleteObservation)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateGameTriggers.CombatWon(game, _battle.Kind, _dateCombatAct, _battle.Floor, _dateCombatStarted, RunManager.Instance.RunTime, _battle.CompleteObservation);`
 - `NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；输入表达式：`LiveCommentary.Finish(_match.Live.Commentary, _battle, CareerEngine.Name(_data), _match.Seed, RunManager.Instance.RunTime)`；返回值紧邻使用处：`ArgumentSyntax: LiveCommentary.Finish(_match.Live.Commentary, _battle, CareerEngine.Name(_data), _match.Seed, RunManager.Instance.RunTime)`
 - `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；输入表达式：`Emit(LiveCommentary.Finish(_match.Live.Commentary, _battle, CareerEngine.Name(_data), _match.Seed, RunManager.Instance.RunTime))`；返回值紧邻使用处：`ExpressionStatementSyntax: Emit(LiveCommentary.Finish(_match.Live.Commentary, _battle, CareerEngine.Name(_data), _match.Seed, RunManager.Instance.RunTime));`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(_battle.Turn, _player.PlayerCombatState?.TurnNumber ?? 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _battle.Turn = Math.Max(_battle.Turn, _player.PlayerCombatState?.TurnNumber ?? 1)`
@@ -709,36 +765,48 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?) — private void Emit(BroadcastLine? line)`
 
-来源：源码第 342 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 373 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.EnergyGained(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-1d29bfc1f633)；[`NationalSpire.LiveRunBridge.FinishCombat()`](LiveRunBridge.cs.md#symbol-1e798ae2b209)；[`NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry)`](LiveRunBridge.cs.md#symbol-42aede5a364b)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.RewardSkipped(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-c012e2474371)；[`NationalSpire.LiveRunBridge.RunEnded(bool)`](LiveRunBridge.cs.md#symbol-d5b5bb6d87cd)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.LiveRunBridge.EnergyGained(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-1d29bfc1f633)；[`NationalSpire.LiveRunBridge.FinishCombat()`](LiveRunBridge.cs.md#symbol-1e798ae2b209)；[`NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry)`](LiveRunBridge.cs.md#symbol-42aede5a364b)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)；[`NationalSpire.LiveRunBridge.RewardSkipped(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-c012e2474371)；[`NationalSpire.LiveRunBridge.RunEnded(bool)`](LiveRunBridge.cs.md#symbol-d5b5bb6d87cd)
 
-**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CommentatorSelection.ForMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`](CommentatorSelection.cs.md#symbol-2c2966603311)；[`NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`](CommentatorSelection.cs.md#symbol-e47ee769b462)；[`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)；[`NationalSpire.LiveVoices.Byline(string, string)`](LiveVoices.cs.md#symbol-258e03700c96)；[`NationalSpire.LiveVoices.React(string, int, double)`](LiveVoices.cs.md#symbol-ca2aacab4a81)；`System.Collections.Generic.HashSet<T>.Contains(T)`
+**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CommentatorSelection.ForMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`](CommentatorSelection.cs.md#symbol-2c2966603311)；[`NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`](CommentatorSelection.cs.md#symbol-e47ee769b462)；[`NationalSpire.DateGameVoices.Style(NationalSpire.CareerData, NationalSpire.DateGameState, string, NationalSpire.BroadcastLine)`](DateGameVoices.cs.md#symbol-c55503cf04d2)；[`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)；[`NationalSpire.LiveVoices.Byline(string, string)`](LiveVoices.cs.md#symbol-258e03700c96)；[`NationalSpire.LiveVoices.React(string, int, double)`](LiveVoices.cs.md#symbol-ca2aacab4a81)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Random.Next(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.BroadcastLine.Analyst`；`NationalSpire.BroadcastLine.Role`；`NationalSpire.BroadcastLine.SpeakerId`；`NationalSpire.BroadcastLine.Text`；`NationalSpire.BroadcastLine.Topic`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CommentatorSelection.ForMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；`NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveVoices.Byline(string, string)`；`NationalSpire.LiveVoices.React(string, int, double)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.BroadcastLine.Analyst`；`NationalSpire.BroadcastLine.Role`；`NationalSpire.BroadcastLine.SpeakerId`；`NationalSpire.BroadcastLine.Text`；`NationalSpire.BroadcastLine.Topic`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CommentatorSelection.ForMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；`NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；`NationalSpire.DateGameState.People`；`NationalSpire.DateGameVoices.Style(NationalSpire.CareerData, NationalSpire.DateGameState, string, NationalSpire.BroadcastLine)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._dateAvatars`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveVoices.Byline(string, string)`；`NationalSpire.LiveVoices.React(string, int, double)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`AvatarHonors.ForPerson(_data, person.Id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: person != null ? AvatarHonors.ForPerson(_data, person.Id) : null`
+- `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`AvatarHonors.ForPerson(_data, personId)`；返回值紧邻使用处：`ArgumentSyntax: AvatarHonors.ForPerson(_data, personId)`
 - `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(_data, person.Id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: person != null ? CareerAvatars.ForPerson(_data, person.Id) : null`
+- `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(_data, personId)`；返回值紧邻使用处：`ArgumentSyntax: CareerAvatars.ForPerson(_data, personId)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, person.Id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: person != null ? CareerEngine.DisplayName(_data, person.Id) : line.Analyst ? "分析席" : "现场"`
-- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(_data, line.SpeakerId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: line.SpeakerId.Length > 0 ? CareerEngine.Person(_data, line.SpeakerId)              : speakers.Count > 0 ? speakers[(line.Analyst ? 1 : 0) % speakers.Count] : null`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, personId)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.DisplayName(_data, personId)`
+- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(_data, line.SpeakerId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: line.SpeakerId.Length > 0 ? CareerEngine.Person(_data, line.SpeakerId) : speakers.Count > 0 ? speakers[(line.Analyst ? 1 : 0) % speakers.Count] : null`
 - `NationalSpire.CommentatorSelection.ForMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；输入表达式：`CommentatorSelection.ForMatch(_data, _match)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommentatorSelection.ForMatch(_data, _match)`
 - `NationalSpire.CommentatorSelection.Participants(NationalSpire.CareerData, NationalSpire.CareerMatch, System.Collections.Generic.IEnumerable<string>?)`；输入表达式：`CommentatorSelection.Participants(_data, _match)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommentatorSelection.Participants(_data, _match).Contains`
-- `NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；输入表达式：`_hud.Say(LiveVoices.Byline(speaker, line.Role), line.Text, line.Topic, person != null ? CareerAvatars.ForPerson(_data, person.Id) : null,              person != null ? AvatarHonors.ForPerson(_data, person.Id) : null)`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.Say(LiveVoices.Byline(speaker, line.Role), line.Text, line.Topic, person != null ? CareerAvatars.ForPerson(_data, person.Id) : null,              person != null ? AvatarHonors.ForPerson(_data, person.Id) : null);`
+- `NationalSpire.DateGameVoices.Style(NationalSpire.CareerData, NationalSpire.DateGameState, string, NationalSpire.BroadcastLine)`；输入表达式：`DateGameVoices.Style(_data, game, personId, line)`；返回值紧邻使用处：`ArgumentSyntax: DateGameVoices.Style(_data, game, personId, line)`
+- `NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；输入表达式：`_hud.Say(LiveVoices.Byline(CareerEngine.DisplayName(_data, personId), line.Role), DateGameVoices.Style(_data, game, personId, line), line.Topic, art.Art, art.Identity)`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.Say(LiveVoices.Byline(CareerEngine.DisplayName(_data, personId), line.Role), DateGameVoices.Style(_data, game, personId, line), line.Topic, art.Art, art.Identity);`
+- `NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；输入表达式：`_hud.Say(LiveVoices.Byline(speaker, line.Role), line.Text, line.Topic, person != null ? CareerAvatars.ForPerson(_data, person.Id) : null, person != null ? AvatarHonors.ForPerson(_data, person.Id) : null)`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.Say(LiveVoices.Byline(speaker, line.Role), line.Text, line.Topic, person != null ? CareerAvatars.ForPerson(_data, person.Id) : null, person != null ? AvatarHonors.ForPerson(_data, person.Id) : null);`
+- `NationalSpire.LiveVoices.Byline(string, string)`；输入表达式：`LiveVoices.Byline(CareerEngine.DisplayName(_data, personId), line.Role)`；返回值紧邻使用处：`ArgumentSyntax: LiveVoices.Byline(CareerEngine.DisplayName(_data, personId), line.Role)`
 - `NationalSpire.LiveVoices.Byline(string, string)`；输入表达式：`LiveVoices.Byline(speaker, line.Role)`；返回值紧邻使用处：`ArgumentSyntax: LiveVoices.Byline(speaker, line.Role)`
 - `NationalSpire.LiveVoices.React(string, int, double)`；输入表达式：`.React(line.Topic, _run.TotalFloor, RunManager.Instance.RunTime)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _voices?.React(line.Topic, _run.TotalFloor, RunManager.Instance.RunTime)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_dateAvatars.TryGetValue(personId, out var art)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_dateAvatars.TryGetValue(personId, out var art)`
 - `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`CommentatorSelection.Participants(_data, _match).Contains(person.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: person != null && line.Role != "thought" && CommentatorSelection.Participants(_data, _match).Contains(person.Id)`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`game.People.Contains(line.SpeakerId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: game.People.Contains(line.SpeakerId) ? line.SpeakerId : game.People[Random.Shared.Next(game.People.Count)]`
+- `System.Random.Next(int)`；输入表达式：`Random.Shared.Next(game.People.Count)`；返回值紧邻使用处：`ArgumentSyntax: Random.Shared.Next(game.People.Count)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `_dateAvatars[personId]` = `art = (CareerAvatars.ForPerson(_data, personId), AvatarHonors.ForPerson(_data, personId))`
+- `_match.Live.Commentary.LastSpoke` = `RunManager.Instance.RunTime`
+- `art` = `(CareerAvatars.ForPerson(_data, personId), AvatarHonors.ForPerson(_data, personId))`
 - `live.Commentary.LastSpoke` = `RunManager.Instance.RunTime`
 
 <a id="symbol-9e4cba4dced9"></a>
 
 ## `NationalSpire.LiveRunReadyPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 403 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -757,7 +825,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun) — public static void Postfix(NRun __instance)`
 
-来源：源码第 364 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 404 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -779,7 +847,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveEnergyPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 414 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -798,7 +866,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveEnergyPatch.Prefix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, out int) — public static void Prefix(PlayerCombatState __instance, out int __state)`
 
-来源：源码第 375 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 415 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -817,7 +885,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int) — public static void Postfix(PlayerCombatState __instance, int __state)`
 
-来源：源码第 376 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 416 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -838,7 +906,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveSkippedRewardPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 383 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 423 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -857,7 +925,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward) — public static void Postfix(CardReward __instance)`
 
-来源：源码第 384 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 424 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -877,7 +945,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveVictoryPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 390 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 430 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -896,7 +964,7 @@ private bool _mapCompatible = true;
 
 ## `NationalSpire.LiveVictoryPatch.Prefix(bool) — public static void Prefix(bool isVictory)`
 
-来源：源码第 391 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 431 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -1,11 +1,11 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 namespace NationalSpire;
 
 // 固定项目、累计统计；页面计时和帧检测不执行磁盘写入。
 public static class UiPerformance
 {
-    public enum Work { Render, Clear, Profiles, Community, Matches, Avatar, Honors, Store, Frame, AvatarControl, PostCard, GroupRender, MemberRows, MemberFilter, PhoneOpen, PrivateList, PrivateListRows, PrivateChat, CoopCopy, CoopView, CoopSave, CoopSerialize, CoopWriteWorld, CoopWriteRun, CoopHash, CoopManifest, CoopCleanup, CoopBroadcast, CoopEncode, CoopCompress, CoopAssemble, CharacterPrepare, CharacterResourceRead, CharacterResourceParse, CharacterClassify, CharacterDefinitions, CharacterName, CoopReceive, CoopDecode, CoopPublish, CoopPrepareView, MarketAdvance, MarketTrade, NationalContribution, ConsumerOperation, PlayerSimulation, EconomicSave, GroupContext, PrivateContext, CommunitySelect, CommunityBranches, CommunityRetrieve, CommunityAcquaintance, ConsumerEditor, ConsumerProducts, Count }
+    public enum Work { Render, Clear, Profiles, Community, Matches, Avatar, Honors, Store, Frame, AvatarControl, PostCard, GroupRender, MemberRows, MemberFilter, PhoneOpen, PrivateList, PrivateListRows, PrivateChat, CoopCopy, CoopView, CoopSave, CoopSerialize, CoopWriteWorld, CoopWriteRun, CoopHash, CoopManifest, CoopCleanup, CoopBroadcast, CoopEncode, CoopCompress, CoopAssemble, CharacterPrepare, CharacterResourceRead, CharacterResourceParse, CharacterClassify, CharacterDefinitions, CharacterName, CoopReceive, CoopDecode, CoopPublish, CoopPrepareView, MarketAdvance, MarketTrade, NationalContribution, ConsumerOperation, PlayerSimulation, EconomicSave, GroupContext, PrivateContext, CommunitySelect, CommunityBranches, CommunityRetrieve, CommunityAcquaintance, ConsumerEditor, ConsumerProducts, LiveUpdate, LiveMapPlan, LiveSave, Count }
     internal static event Action<Work, double, long>? Measured;
     private sealed class Cost { public long Calls, Ticks, Bytes, Maximum; public long Over50; }
     private static readonly Cost[] Costs = Enumerable.Range(0, (int)Work.Count).Select(_ => new Cost()).ToArray();

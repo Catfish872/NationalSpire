@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`7224EB405E858402F78F5846F5A72CEE7458B40D657C9CB8EC099C58A2638CD7`。来源：[源码](../../LiveCommentary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`93B4A72284BC12FAA41F2DA6D6241F1C223C474E88E821F41E4E459FCEB4AC7D`。来源：[源码](../../LiveCommentary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -897,21 +897,90 @@ private static readonly Dictionary<string, string[]> Lines = [];
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-77bb54d4c2f4"></a>
+
+## `NationalSpire.BroadcastLine.Rewrite — public Func<Func<string, string>, string>? Rewrite`
+
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-f0a726313633"></a>
+
+## `NationalSpire.LiveCommentary.DateContentBanks() — internal static IEnumerable<KeyValuePair<string, string[]>> DateContentBanks()`
+
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateGameContent.BuildCatalog()`](DateGameContent.cs.md#symbol-ee6db67d591b)
+
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.KeyValuePair.Create<TKey, TValue>(TKey, TValue)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveCommentary.AtmosphereBanks`；`NationalSpire.LiveCommentary.Lines`；`NationalSpire.LiveCommentary.MomentBanks`；`NationalSpire.LiveCommentary.MomentTails`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))) .Concat`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))) .Concat(MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))) .Concat(MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value))) .Concat`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))) .Concat(MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value))) .Concat(MomentTails.Select(p => KeyValuePair.Create("事实补句：" + p.Key, p.Value)))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat(AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))) .Concat(MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value))) .Concat(MomentTails.Select(p => KeyValuePair.Create("事实补句：" + p.Key, p.Value)))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))`；返回值紧邻使用处：`ArgumentSyntax: AtmosphereBanks.Select(p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Lines.Select(p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)) .Concat`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value))`；返回值紧邻使用处：`ArgumentSyntax: MomentBanks.Select(p => KeyValuePair.Create("动作点评：" + p.Key, p.Value))`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`MomentTails.Select(p => KeyValuePair.Create("事实补句：" + p.Key, p.Value))`；返回值紧邻使用处：`ArgumentSyntax: MomentTails.Select(p => KeyValuePair.Create("事实补句：" + p.Key, p.Value))`
+- `System.Collections.Generic.KeyValuePair.Create<TKey, TValue>(TKey, TValue)`；输入表达式：`KeyValuePair.Create("事实补句：" + p.Key, p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => KeyValuePair.Create("事实补句：" + p.Key, p.Value)`
+- `System.Collections.Generic.KeyValuePair.Create<TKey, TValue>(TKey, TValue)`；输入表达式：`KeyValuePair.Create("动作点评：" + p.Key, p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => KeyValuePair.Create("动作点评：" + p.Key, p.Value)`
+- `System.Collections.Generic.KeyValuePair.Create<TKey, TValue>(TKey, TValue)`；输入表达式：`KeyValuePair.Create("对局解说：" + p.Key, p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => KeyValuePair.Create("对局解说：" + p.Key, p.Value)`
+- `System.Collections.Generic.KeyValuePair.Create<TKey, TValue>(TKey, TValue)`；输入表达式：`KeyValuePair.Create("路线闲聊：" + p.Key, p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => KeyValuePair.Create("路线闲聊：" + p.Key, p.Value)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-fd0c02e9b862"></a>
+
+## `NationalSpire.LiveCommentary.RewriteParts(System.Func<string, string>, string, string, string, System.Collections.Generic.IReadOnlyDictionary<string, string>) — internal static string RewriteParts(Func<string, string> rewrite, string main, string separator, string tail, IReadOnlyDictionary<string, string> facts)`
+
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；[`NationalSpire.LiveVoices.Phrase(string, System.Collections.Generic.Dictionary<string, string>, out System.Func<System.Func<string, string>, string>?)`](LiveVoices.cs.md#symbol-f50a3454a330)
+
+**调用：** `System.Func<T, TResult>.Invoke(T)`；`string.Replace(string, string?, System.StringComparison)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`rewrite(main)`；返回值紧邻使用处：`BinaryExpressionSyntax: rewrite(main) + separator`
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`rewrite(tail)`；返回值紧邻使用处：`ConditionalExpressionSyntax: tail.Length > 0 ? rewrite(tail) : ""`
+- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("{" + key + "}", value, StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = text.Replace("{" + key + "}", value, StringComparison.Ordinal)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `text` = `text.Replace("{" + key + "}", value, StringComparison.Ordinal)`
+
 <a id="symbol-28e751a76070"></a>
 
 ## `NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool) — public static BroadcastLine? Speak(BroadcastMemory memory, string topic, double seconds, string seed, Dictionary<string, string> facts, bool force = false)`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`](LiveAtmosphere.cs.md#symbol-0b25ed42c5ca)；[`NationalSpire.LiveCommentary.DiscardPotion(NationalSpire.BroadcastMemory, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-27c5783971c3)；[`NationalSpire.LiveCommentary.Energy(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-2a9d8e18ab22)；[`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-243aedb210e3)；[`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`](LiveCommentary.cs.md#symbol-dd61728b3570)；[`NationalSpire.LiveCommentary.ObserveTurn(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-8cbc1ed10ae3)；[`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-931725c8305b)；[`NationalSpire.LiveCommentary.PlayerVictory(NationalSpire.BroadcastMemory, bool, double, int, int, string, string, string)`](LiveMoments.cs.md#symbol-44f4d20ad966)；[`NationalSpire.LiveCommentary.Potion(NationalSpire.BroadcastMemory, string, int, int, string, string, double)`](LiveMoments.cs.md#symbol-4eaf89b958c5)；[`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`](LiveAtmosphere.cs.md#symbol-5475ccc1b529)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)；[`NationalSpire.LiveCommentary.SkipReward(NationalSpire.BroadcastMemory, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-fa1a12d0a085)；[`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-64cfa3e4c0ca)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LiveCommentary.DetailFamily(string)`](CommentaryFocus.cs.md#symbol-8a2891030435)；[`NationalSpire.LiveCommentary.FocusHistory(NationalSpire.BroadcastMemory, string)`](CommentaryFocus.cs.md#symbol-63c4d695beeb)；[`NationalSpire.LiveCommentary.RememberFocus(NationalSpire.BroadcastMemory, string, string)`](CommentaryFocus.cs.md#symbol-8c5e2b08bbdb)；[`NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`](LiveCommentary.cs.md#symbol-4e7a1f033d4d)；[`NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int)`](LiveCommentary.cs.md#symbol-f557c590d222)；[`NationalSpire.LiveCommentary.TopicFamily(string)`](CommentaryFocus.cs.md#symbol-0e93da952279)；[`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`](LiveSpeechComposer.cs.md#symbol-360bdc1037c5)；`NationalSpire.BroadcastLine.BroadcastLine(string, string, bool)`；`string.Contains(char)`；`string.Contains(string, System.StringComparison)`；`string.Replace(string, string?, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.RemoveAt(int)`
+**调用：** `NationalSpire.BroadcastLine.BroadcastLine(string, string, bool)`；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LiveCommentary.DetailFamily(string)`](CommentaryFocus.cs.md#symbol-8a2891030435)；[`NationalSpire.LiveCommentary.FocusHistory(NationalSpire.BroadcastMemory, string)`](CommentaryFocus.cs.md#symbol-63c4d695beeb)；[`NationalSpire.LiveCommentary.RememberFocus(NationalSpire.BroadcastMemory, string, string)`](CommentaryFocus.cs.md#symbol-8c5e2b08bbdb)；[`NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`](LiveCommentary.cs.md#symbol-4e7a1f033d4d)；[`NationalSpire.LiveCommentary.RewriteParts(System.Func<string, string>, string, string, string, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](LiveCommentary.cs.md#symbol-fd0c02e9b862)；[`NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int)`](LiveCommentary.cs.md#symbol-f557c590d222)；[`NationalSpire.LiveCommentary.TopicFamily(string)`](CommentaryFocus.cs.md#symbol-0e93da952279)；[`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?)`](LiveSpeechComposer.cs.md#symbol-360bdc1037c5)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.RemoveAt(int)`；`string.Contains(char)`；`string.Contains(string, System.StringComparison)`；`string.Replace(string, string?, System.StringComparison)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.PhraseIndices`；`NationalSpire.BroadcastMemory.RecentLines`；`NationalSpire.BroadcastMemory.RecentTopics`；`NationalSpire.BroadcastMemory.TopicTimes`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.LiveCommentary.AtmosphereBanks`；`NationalSpire.LiveCommentary.DetailFamily(string)`；`NationalSpire.LiveCommentary.FocusHistory(NationalSpire.BroadcastMemory, string)`；`NationalSpire.LiveCommentary.Lines`；`NationalSpire.LiveCommentary.MomentBanks`；`NationalSpire.LiveCommentary.MomentTails`；`NationalSpire.LiveCommentary.RememberFocus(NationalSpire.BroadcastMemory, string, string)`；`NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`；`NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int)`；`NationalSpire.LiveCommentary.TopicFamily(string)`；`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastLine.Rewrite`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.PhraseIndices`；`NationalSpire.BroadcastMemory.RecentLines`；`NationalSpire.BroadcastMemory.RecentTopics`；`NationalSpire.BroadcastMemory.TopicTimes`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.LiveCommentary.AtmosphereBanks`；`NationalSpire.LiveCommentary.DetailFamily(string)`；`NationalSpire.LiveCommentary.FocusHistory(NationalSpire.BroadcastMemory, string)`；`NationalSpire.LiveCommentary.Lines`；`NationalSpire.LiveCommentary.MomentBanks`；`NationalSpire.LiveCommentary.MomentTails`；`NationalSpire.LiveCommentary.RememberFocus(NationalSpire.BroadcastMemory, string, string)`；`NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`；`NationalSpire.LiveCommentary.RewriteParts(System.Func<string, string>, string, string, string, System.Collections.Generic.IReadOnlyDictionary<string, string>)`；`NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int)`；`NationalSpire.LiveCommentary.TopicFamily(string)`；`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.BroadcastLine.BroadcastLine(string, string, bool)`；输入表达式：`new(topic, text, index % 2 == 1)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(topic, text, index % 2 == 1);`
+- `NationalSpire.BroadcastLine.BroadcastLine(string, string, bool)`；输入表达式：`new(topic, text, index % 2 == 1) { Rewrite = rewrite => RewriteParts(rewrite, main, separator, extra, capturedFacts) }`；返回值紧邻使用处：`ReturnStatementSyntax: return new(topic, text, index % 2 == 1) { Rewrite = rewrite => RewriteParts(rewrite, main, separator, extra, capturedFacts) };`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(seed + topic + (int)(seconds / 110))`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(seed + topic + (int)(seconds / 110)) % 3`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(seed + topic)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(seed + topic) % bank.Length`
 - `NationalSpire.LiveCommentary.DetailFamily(string)`；输入表达式：`DetailFamily(key)`；返回值紧邻使用处：`ArgumentSyntax: DetailFamily(key)`
@@ -920,40 +989,45 @@ private static readonly Dictionary<string, string[]> Lines = [];
 - `NationalSpire.LiveCommentary.RememberFocus(NationalSpire.BroadcastMemory, string, string)`；输入表达式：`RememberFocus(memory, "topics", family)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberFocus(memory, "topics", family);`
 - `NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`；输入表达式：`RememberPhrase(memory, "moment:" + key, phrase, variants.Length)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberPhrase(memory, "moment:" + key, phrase, variants.Length);`
 - `NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int)`；输入表达式：`RememberPhrase(memory, topic, main, bank.Length)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberPhrase(memory, topic, main, bank.Length);`
+- `NationalSpire.LiveCommentary.RewriteParts(System.Func<string, string>, string, string, string, System.Collections.Generic.IReadOnlyDictionary<string, string>)`；输入表达式：`RewriteParts(rewrite, main, separator, extra, capturedFacts)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: rewrite => RewriteParts(rewrite, main, separator, extra, capturedFacts)`
 - `NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int)`；输入表达式：`SelectPhrase(memory, topic, bank, seed, index)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SelectPhrase(memory, topic, bank, seed, index)`
 - `NationalSpire.LiveCommentary.TopicFamily(string)`；输入表达式：`TopicFamily(topic)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = TopicFamily(topic)`
-- `NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`；输入表达式：`LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts)`
-- `string.Contains(char)`；输入表达式：`text.Contains('{')`；返回值紧邻使用处：`IfStatementSyntax: if (text.Contains('{')) return null;`
-- `string.Contains(string, System.StringComparison)`；输入表达式：`suppliedTail.Contains(p, StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal)`
-- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("{" + key + "}", value, StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = text.Replace("{" + key + "}", value, StringComparison.Ordinal)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`facts.TryGetValue("tail", out string? suppliedTail)`；返回值紧邻使用处：`IfStatementSyntax: if (facts.TryGetValue("tail", out string? suppliedTail))              foreach (var (key, variants) in MomentTails)                  foreach (string phrase in variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal)))                  {                      RememberPhrase(memory, "moment:" + key, phrase, variants.Length);                      RememberFocus(memory, "details", DetailFamily(key));                  }`
+- `NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?)`；输入表达式：`LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts, (join, source) => { separator = join; extra = source; })`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts, (join, source) => { separator = join; extra = source; })`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；输入表达式：`new Dictionary<string, string>(facts)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, string>(facts)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`facts.TryGetValue("tail", out string? suppliedTail)`；返回值紧邻使用处：`IfStatementSyntax: if (facts.TryGetValue("tail", out string? suppliedTail)) foreach (var (key, variants) in MomentTails) foreach (string phrase in variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal))) { RememberPhrase(memory, "moment:" + key, phrase, variants.Length); RememberFocus(memory, "details", DetailFamily(key)); }`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`FocusHistory(memory, "topics").TakeLast(12).Count(t => t == family)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = FocusHistory(memory, "topics").TakeLast(12).Count(t => t == family)`
 - `System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`；输入表达式：`FocusHistory(memory, "topics").TakeLast(12)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: FocusHistory(memory, "topics").TakeLast(12).Count`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string phrase in variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal)))                  {                      RememberPhrase(memory, "moment:" + key, phrase, variants.Length);                      RememberFocus(memory, "details", DetailFamily(key));                  }`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`facts.GetValueOrDefault("tail", "")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = facts.GetValueOrDefault("tail", "")`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`memory.PhraseIndices.GetValueOrDefault(topic, CareerEngine.StableHash(seed + topic) % bank.Length)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = memory.PhraseIndices.GetValueOrDefault(topic, CareerEngine.StableHash(seed + topic) % bank.Length)`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`memory.TopicTimes.GetValueOrDefault(topic, -1000)`；返回值紧邻使用处：`BinaryExpressionSyntax: seconds - memory.TopicTimes.GetValueOrDefault(topic, -1000)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string phrase in variants.Where(p => p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal))) { RememberPhrase(memory, "moment:" + key, phrase, variants.Length); RememberFocus(memory, "details", DetailFamily(key)); }`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AtmosphereBanks.GetValueOrDefault(topic)`；返回值紧邻使用处：`BinaryExpressionSyntax: AtmosphereBanks.GetValueOrDefault(topic) ?? MomentBanks.GetValueOrDefault(topic)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`Lines.GetValueOrDefault(topic)`；返回值紧邻使用处：`BinaryExpressionSyntax: Lines.GetValueOrDefault(topic) ?? AtmosphereBanks.GetValueOrDefault(topic) ?? MomentBanks.GetValueOrDefault(topic)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`MomentBanks.GetValueOrDefault(topic)`；返回值紧邻使用处：`BinaryExpressionSyntax: AtmosphereBanks.GetValueOrDefault(topic) ?? MomentBanks.GetValueOrDefault(topic)`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`facts.GetValueOrDefault("tail", "")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = facts.GetValueOrDefault("tail", "")`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`memory.PhraseIndices.GetValueOrDefault(topic, CareerEngine.StableHash(seed + topic) % bank.Length)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = memory.PhraseIndices.GetValueOrDefault(topic, CareerEngine.StableHash(seed + topic) % bank.Length)`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`memory.TopicTimes.GetValueOrDefault(topic, -1000)`；返回值紧邻使用处：`BinaryExpressionSyntax: seconds - memory.TopicTimes.GetValueOrDefault(topic, -1000)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`memory.RecentLines.Add(text)`；返回值紧邻使用处：`ExpressionStatementSyntax: memory.RecentLines.Add(text);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`memory.RecentTopics.Add(topic)`；返回值紧邻使用处：`ExpressionStatementSyntax: memory.RecentTopics.Add(topic);`
 - `System.Collections.Generic.List<T>.RemoveAt(int)`；输入表达式：`memory.RecentLines.RemoveAt(0)`；返回值紧邻使用处：`ExpressionStatementSyntax: memory.RecentLines.RemoveAt(0);`
 - `System.Collections.Generic.List<T>.RemoveAt(int)`；输入表达式：`memory.RecentTopics.RemoveAt(0)`；返回值紧邻使用处：`ExpressionStatementSyntax: memory.RecentTopics.RemoveAt(0);`
+- `string.Contains(char)`；输入表达式：`text.Contains('{')`；返回值紧邻使用处：`IfStatementSyntax: if (text.Contains('{')) return null;`
+- `string.Contains(string, System.StringComparison)`；输入表达式：`suppliedTail.Contains(p, StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: p.Length > 0 && suppliedTail.Contains(p, StringComparison.Ordinal)`
+- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`text.Replace("{" + key + "}", value, StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: text = text.Replace("{" + key + "}", value, StringComparison.Ordinal)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `Rewrite` = `rewrite => RewriteParts(rewrite, main, separator, extra, capturedFacts)`
+- `extra` = `source`
 - `memory.LastSpoke` = `seconds`
 - `memory.PhraseIndices[topic]` = `index + 1`
 - `memory.TopicTimes[topic]` = `seconds`
-- `text` = `LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts)`
+- `separator` = `join`
+- `text` = `LiveSpeechComposer.Compose(text, worldTopic, memory, seed, index, facts, (join, source) => { separator = join; extra = source; })`
 - `text` = `text.Replace("{" + key + "}", value, StringComparison.Ordinal)`
 
 <a id="symbol-f557c590d222"></a>
 
 ## `NationalSpire.LiveCommentary.SelectPhrase(NationalSpire.BroadcastMemory, string, string[], string, int) — private static string SelectPhrase(BroadcastMemory memory, string key, string[] bank, string seed, int index)`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveCommentary.MomentTail(NationalSpire.BroadcastMemory, string, string, int)`](LiveMoments.cs.md#symbol-d358a4a6cc39)；[`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)
 
@@ -974,7 +1048,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.RememberPhrase(NationalSpire.BroadcastMemory, string, string, int) — private static void RememberPhrase(BroadcastMemory memory, string key, string phrase, int variants)`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)
 
@@ -1000,7 +1074,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.Facts(NationalSpire.BattleObservation, string, NationalSpire.BroadcastMemory) — private static Dictionary<string, string> Facts(BattleObservation b, string name, BroadcastMemory m)`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-243aedb210e3)；[`NationalSpire.LiveCommentary.ObserveTurn(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-8cbc1ed10ae3)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)
 
@@ -1041,7 +1115,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.ObserveTurn(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double) — public static BroadcastLine? ObserveTurn(BroadcastMemory m, BattleObservation b, string name, string seed, double seconds)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopBroadcast.Changed()`](Coop/CoopBroadcast.cs.md#symbol-9cb809e0579a)；[`NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry)`](LiveRunBridge.cs.md#symbol-42aede5a364b)
 
@@ -1070,7 +1144,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double) — public static BroadcastLine? Finish(BroadcastMemory m, BattleObservation b, string name, string seed, double seconds)`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopBroadcast.Won(MegaCrit.Sts2.Core.Rooms.CombatRoom)`](Coop/CoopBroadcast.cs.md#symbol-bf9e47770d28)；[`NationalSpire.LiveRunBridge.FinishCombat()`](LiveRunBridge.cs.md#symbol-1e798ae2b209)
 
@@ -1108,9 +1182,9 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double) — public static BroadcastLine? Route(BroadcastMemory m, BattleObservation b, string name, string seed, double seconds)`
 
-来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.LiveCommentary.Facts(NationalSpire.BattleObservation, string, NationalSpire.BroadcastMemory)`](LiveCommentary.cs.md#symbol-322a2ab72924)；[`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)
 
@@ -1129,9 +1203,9 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double) — public static void RebaseGap(BroadcastMemory m, int playerFloor, int rivalFloor, double seconds)`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** `System.Math.Abs(int)`；`System.Math.Sign(int)`
 
@@ -1155,9 +1229,9 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 ## `NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string) — public static BroadcastLine? Gap(BroadcastMemory m, int playerFloor, int rivalFloor, int playerAct, int rivalAct,          string name, string rival, int hp, int maxHp, double seconds, string seed)`
 
-来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
 **调用：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；`int.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Math.Abs(int)`；`System.Math.Sign(int)`
 
