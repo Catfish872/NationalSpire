@@ -122,7 +122,7 @@ public event Action<ulong, CoopWire>? Received;
 
 来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
 **调用：** [`NationalSpire.Coop.CoopSteam.Member(ulong)`](CoopSteam.cs.md#symbol-6ecf0776c951)；`Steamworks.Callback<T>.Create(Steamworks.Callback<T>.DispatchDelegate)`；`Steamworks.SteamNetworkingIdentity.GetSteamID64()`；`Steamworks.SteamNetworkingMessages.AcceptSessionWithUser(ref Steamworks.SteamNetworkingIdentity)`；`Steamworks.SteamUser.BLoggedOn()`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
@@ -167,7 +167,7 @@ public event Action<ulong, CoopWire>? Received;
 
 来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
 **调用：** `int.ToString()`；`Steamworks.CallResult<T>.Create(Steamworks.CallResult<T>.APIDispatchDelegate)`；`Steamworks.CallResult<T>.Set(Steamworks.SteamAPICall_t, Steamworks.CallResult<T>.APIDispatchDelegate)`；`Steamworks.CSteamID.CSteamID(ulong)`；`Steamworks.SteamMatchmaking.CreateLobby(Steamworks.ELobbyType, int)`；`Steamworks.SteamMatchmaking.SetLobbyData(Steamworks.CSteamID, string, string)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.IOException.IOException(string?)`；`System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；`System.Threading.Tasks.TaskCompletionSource.TaskCompletionSource()`；`System.Threading.Tasks.TaskCompletionSource.TrySetException(System.Exception)`；`System.Threading.Tasks.TaskCompletionSource.TrySetResult()`；`System.TimeSpan.FromSeconds(long)`；`ulong.ToString()`
 
@@ -207,7 +207,7 @@ public event Action<ulong, CoopWire>? Received;
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
 **调用：** [`NationalSpire.Coop.CoopSteam.Member(ulong)`](CoopSteam.cs.md#symbol-6ecf0776c951)；`int.ToString()`；`Steamworks.CallResult<T>.Create(Steamworks.CallResult<T>.APIDispatchDelegate)`；`Steamworks.CallResult<T>.Set(Steamworks.SteamAPICall_t, Steamworks.CallResult<T>.APIDispatchDelegate)`；`Steamworks.CSteamID.CSteamID(ulong)`；`Steamworks.SteamMatchmaking.GetLobbyData(Steamworks.CSteamID, string)`；`Steamworks.SteamMatchmaking.JoinLobby(Steamworks.CSteamID)`；`string.Split(char, System.StringSplitOptions)`；`string.Trim()`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.IOException.IOException(string?)`；`System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；`System.Threading.Tasks.TaskCompletionSource.TaskCompletionSource()`；`System.Threading.Tasks.TaskCompletionSource.TrySetException(System.Exception)`；`System.Threading.Tasks.TaskCompletionSource.TrySetResult()`；`System.TimeSpan.FromSeconds(long)`；`ulong.TryParse(string?, out ulong)`
 
@@ -319,7 +319,7 @@ public event Action<ulong, CoopWire>? Received;
 
 来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.CancelConnection()`](CoopRuntime.cs.md#symbol-e77a969fcfd3)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.CancelConnection()`](CoopRuntime.cs.md#symbol-e77a969fcfd3)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
 **调用：** [`NationalSpire.Coop.CoopPacketAssembly.Clear()`](CoopWire.cs.md#symbol-cd6bfa17797d)；`Steamworks.Callback<T>.Dispose()`；`Steamworks.CallResult<T>.Dispose()`；`Steamworks.SteamMatchmaking.LeaveLobby(Steamworks.CSteamID)`；`Steamworks.SteamNetworkingIdentity.SetSteamID64(ulong)`；`Steamworks.SteamNetworkingIdentity.SteamNetworkingIdentity()`；`Steamworks.SteamNetworkingMessages.CloseChannelWithUser(ref Steamworks.SteamNetworkingIdentity, int)`；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.Queue<T>.Clear()`；`System.Threading.Tasks.TaskCompletionSource.TrySetCanceled()`
 

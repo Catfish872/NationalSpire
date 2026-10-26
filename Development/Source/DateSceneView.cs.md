@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EDB1D6673C45A0BE76F35DD1E18454E36B99B234AF85EED23BBD8D5A8E84656B`。来源：[源码](../../DateSceneView.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`7707E1B73C8FDCB4AF54F64BC02987DC8051408D6C87C0E35ED9C720D39B3BA1`。来源：[源码](../../DateSceneView.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,10 +11,16 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-public Action? Advance, Submit, AddAttachment, Settings, Exit, Tick, RetryStop, ReturnToEdit, Regenerate;
+public Action? Advance, Submit, AddAttachment, Settings, Exit, Tick, RetryStop, ReturnToEdit, EditPrevious, Resume;
 public Func<bool>? Blocked;
 public Func<string>? HistoryText;
+public Func<IReadOnlyList<DateHistoryEntry>>? HistoryEntries;
+public Action<string>? DeleteHistoryReply;
+private HBoxContainer _inputTools = null!;
+private VBoxContainer _gameChoices = null!, _replyChoices = null!;
 public const double InstantSpeed = 300;
+private bool _fastForwardHeld;
+private double _fastForwardPause;
 private TextureRect _background = null!, _backgroundPrevious = null!, _sprite = null!;
 private ShaderMaterial _backgroundMaterial = null!;
 private ShaderMaterial _previousBackgroundMaterial = null!;
@@ -30,14 +36,14 @@ private PanelContainer _nameBox = null!;
 private Control _favourHost = null!;
 private AffectionBadge _favourBadge = null!;
 private Label _relationText = null!, _relationDetail = null!;
-private int? _lastFavour;
-private double _deltaUntil;
-private string _favourDelta = "";
+private readonly Dictionary<string, (int Value, string Delta, ulong Until)> _shownFavour = [];
 private bool _showAffectionBadge = true;
 private MarginContainer _margin = null!;
 private Gradient _glass = null!;
 private PanelContainer _history = null!;
 private RichTextLabel _historyText = null!;
+private DateHistoryList _historyList = null!;
+private double? _historyRestoreScroll;
 private int _historyScrollPending;
 private VBoxContainer _body = null!, _composer = null!;
 private RichTextLabel _text = null!;
@@ -54,6 +60,7 @@ private bool _hintDismissed, _firstTypeFrame, _layingOut;
 private readonly Dictionary<ulong, float> _headRatios = [];
 private Button _waitAction = null!, _editFailure = null!;
 private static readonly Color Ink = new("eff4f6");
+private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 ```
 
 <a id="symbol-e3663899b3ff"></a>
@@ -110,11 +117,29 @@ private static readonly Color Ink = new("eff4f6");
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-5c4954b2b2aa"></a>
+
+## `NationalSpire.DateSceneView.ResumeGame — public Button ResumeGame`
+
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-d85856d49164"></a>
 
 ## `NationalSpire.DateSceneView.Status — public Label Status`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -128,17 +153,35 @@ private static readonly Color Ink = new("eff4f6");
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-01943e25d925"></a>
+<a id="symbol-0a56ec1008b5"></a>
 
-## `NationalSpire.DateSceneView.RegenerateButton — public Button RegenerateButton`
+## `NationalSpire.DateSceneView.EditPreviousButton — public Button EditPreviousButton`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-e9bcf9e73a55"></a>
+
+## `NationalSpire.DateSceneView.ExitButton — public Button ExitButton`
+
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -150,7 +193,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.HistoryOpen — public bool HistoryOpen`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -168,7 +211,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.DialogueHidden — public bool DialogueHidden`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -186,7 +229,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.InputMode — public bool InputMode`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -200,11 +243,154 @@ private static readonly Color Ink = new("eff4f6");
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-697ad465ef9e"></a>
+
+## `NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action) — public void SetReplyChoices(string first, Action chooseFirst, string second, Action chooseSecond)`
+
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)
+
+**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；[`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView._replyChoices`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_replyChoices.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.AddChild(button);`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 52)`；返回值紧邻使用处：`AssignmentExpressionSyntax: button.CustomMinimumSize = new(0, 52)`
+- `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；输入表达式：`CareerVisuals.ClearContent(_replyChoices)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.ClearContent(_replyChoices);`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton(caption, action, id, 0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ActionButton(caption, action, id, 0)`
+- `NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`；输入表达式：`AddChoiceCopy(button, caption)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChoiceCopy(button, caption);`
+- `NationalSpire.DateSceneView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
+
+**赋值（含属性/字段和局部值）：**
+
+- `button.ClipText` = `true`
+- `button.CustomMinimumSize` = `new(0, 52)`
+- `button.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `button.TooltipText` = `caption`
+
+<a id="symbol-ee5b6c67d3d5"></a>
+
+## `NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string) — private void AddChoiceCopy(Button choice, string text)`
+
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)
+
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Resource.Duplicate(bool)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.TextEdit.BeginComplexOperation()`；`Godot.TextEdit.EndComplexOperation()`；`Godot.TextEdit.GetCaretLine(int)`；`Godot.TextEdit.GetLine(int)`；`Godot.TextEdit.GetLineCount()`；`Godot.TextEdit.InsertTextAtCaret(string, int)`；`Godot.TextEdit.SelectAll()`；`Godot.TextEdit.SetCaretColumn(int, bool, int)`；`Godot.TextEdit.SetCaretLine(int, bool, bool, int, int)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；`System.Func<TResult>.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionArt.Texture(string)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`copy.AddThemeConstantOverride("icon_max_width", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: copy.AddThemeConstantOverride("icon_max_width", 20);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`choice.AddThemeStyleboxOverride(state, style)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddThemeStyleboxOverride(state, style);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`copy.AddThemeStyleboxOverride("hover", CareerVisuals.Box("ffffff14", "00000000", 5, 0))`；返回值紧邻使用处：`ExpressionStatementSyntax: copy.AddThemeStyleboxOverride("hover", CareerVisuals.Box("ffffff14", "00000000", 5, 0));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`copy.AddThemeStyleboxOverride(state, new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: copy.AddThemeStyleboxOverride(state, new StyleBoxEmpty());`
+- `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`choice.GetThemeStylebox(state)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: choice.GetThemeStylebox(state).Duplicate`
+- `Godot.Control.GrabFocus()`；输入表达式：`Editor.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.GrabFocus();`
+- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`copy.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight)`；返回值紧邻使用处：`ExpressionStatementSyntax: copy.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`choice.AddChild(copy)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddChild(copy);`
+- `Godot.Resource.Duplicate(bool)`；输入表达式：`choice.GetThemeStylebox(state).Duplicate()`；返回值紧邻使用处：`CastExpressionSyntax: (StyleBox)choice.GetThemeStylebox(state).Duplicate()`
+- `Godot.StyleBoxEmpty.StyleBoxEmpty()`；输入表达式：`new StyleBoxEmpty()`；返回值紧邻使用处：`ArgumentSyntax: new StyleBoxEmpty()`
+- `Godot.TextEdit.BeginComplexOperation()`；输入表达式：`Editor.BeginComplexOperation()`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.BeginComplexOperation();`
+- `Godot.TextEdit.EndComplexOperation()`；输入表达式：`Editor.EndComplexOperation()`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.EndComplexOperation();`
+- `Godot.TextEdit.GetCaretLine(int)`；输入表达式：`Editor.GetCaretLine()`；返回值紧邻使用处：`ArgumentSyntax: Editor.GetCaretLine()`
+- `Godot.TextEdit.GetLine(int)`；输入表达式：`Editor.GetLine(Editor.GetCaretLine())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Editor.GetLine(Editor.GetCaretLine()).Length`
+- `Godot.TextEdit.GetLineCount()`；输入表达式：`Editor.GetLineCount()`；返回值紧邻使用处：`BinaryExpressionSyntax: Editor.GetLineCount() - 1`
+- `Godot.TextEdit.InsertTextAtCaret(string, int)`；输入表达式：`Editor.InsertTextAtCaret(text)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.InsertTextAtCaret(text);`
+- `Godot.TextEdit.SelectAll()`；输入表达式：`Editor.SelectAll()`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.SelectAll();`
+- `Godot.TextEdit.SetCaretColumn(int, bool, int)`；输入表达式：`Editor.SetCaretColumn(Editor.GetLine(Editor.GetCaretLine()).Length)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.SetCaretColumn(Editor.GetLine(Editor.GetCaretLine()).Length);`
+- `Godot.TextEdit.SetCaretLine(int, bool, bool, int, int)`；输入表达式：`Editor.SetCaretLine(Editor.GetLineCount() - 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.SetCaretLine(Editor.GetLineCount() - 1);`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(36, 36)`；返回值紧邻使用处：`AssignmentExpressionSyntax: copy.CustomMinimumSize = new(36, 36)`
+- `NationalSpire.AffectionArt.Texture(string)`；输入表达式：`AffectionArt.Texture("date-choice-copy")`；返回值紧邻使用处：`AssignmentExpressionSyntax: copy.Icon = AffectionArt.Texture("date-choice-copy")`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("ffffff14", "00000000", 5, 0)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("ffffff14", "00000000", 5, 0)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("", () => { if (!InputMode || HistoryOpen || DialogueHidden || Blocked?.Invoke() == true || choice.Disabled) return; Editor.BeginComplexOperation(); Editor.SelectAll(); Editor.InsertTextAtCaret(text); Editor.EndComplexOperation(); Editor.GrabFocus(); Editor.SetCaretLine(Editor.GetLineCount() - 1); Editor.SetCaretColumn(Editor.GetLine(Editor.GetCaretLine()).Length); }, choice.Name + "Copy", 36)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ActionButton("", () => { if (!InputMode || HistoryOpen || DialogueHidden || Blocked?.Invoke() == true || choice.Disabled) return; Editor.BeginComplexOperation(); Editor.SelectAll(); Editor.InsertTextAtCaret(text); Editor.EndComplexOperation(); Editor.GrabFocus(); Editor.SetCaretLine(Editor.GetLineCount() - 1); Editor.SetCaretColumn(Editor.GetLine(Editor.GetCaretLine()).Length); }, choice.Name + "Copy", 36)`
+- `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Blocked?.Invoke()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `copy.CustomMinimumSize` = `new(36, 36)`
+- `copy.ExpandIcon` = `true`
+- `copy.Icon` = `AffectionArt.Texture("date-choice-copy")`
+- `copy.MouseDefaultCursorShape` = `CursorShape.PointingHand`
+- `copy.MouseFilter` = `MouseFilterEnum.Stop`
+- `copy.OffsetBottom` = `18`
+- `copy.OffsetLeft` = `-44`
+- `copy.OffsetRight` = `-8`
+- `copy.OffsetTop` = `-18`
+- `copy.TooltipText` = `"复制到输入框"`
+- `style.ContentMarginLeft` = `style.ContentMarginRight = 52`
+- `style.ContentMarginRight` = `52`
+
+<a id="symbol-0d0da39d688e"></a>
+
+## `NationalSpire.DateSceneView.AddInputAction(string, Godot.Texture2D, System.Action, string) — public Button AddInputAction(string name, Texture2D icon, Action action, string tooltip)`
+
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.AddDateGameActions()`](DateGameScreen.cs.md#symbol-fdf5726e3b97)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
+
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView._inputTools`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`button.AddThemeConstantOverride("icon_max_width", 24)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeConstantOverride("icon_max_width", 24);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_inputTools.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: _inputTools.AddChild(button);`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("", action, name, 48)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ActionButton("", action, name, 48)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `button.ExpandIcon` = `true`
+- `button.Icon` = `icon`
+- `button.TooltipText` = `tooltip`
+
+<a id="symbol-c0903cec21b6"></a>
+
+## `NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action) — public void ShowGameChoices(Action start, Action cancel)`
+
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ShowDateGameChoices(NationalSpire.CareerMatch)`](DateGameScreen.cs.md#symbol-d1774dd40624)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._replyChoices`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.Hide()`；输入表达式：`_composer.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_hint.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hint.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_nameBox.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _nameBox.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_replyChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.Hide();`
+- `Godot.CanvasItem.Show()`；输入表达式：`_gameChoices.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.Show();`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("172330")`；返回值紧邻使用处：`ArgumentSyntax: new Color("172330")`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`begin.AddThemeColorOverride("font_color", new Color("172330"))`；返回值紧邻使用处：`ExpressionStatementSyntax: begin.AddThemeColorOverride("font_color", new Color("172330"));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`begin.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: begin.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_gameChoices.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.AddChild(button);`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 52)`；返回值紧邻使用处：`AssignmentExpressionSyntax: button.CustomMinimumSize = new(0, 52)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)`
+- `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；输入表达式：`CareerVisuals.ClearContent(_gameChoices)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.ClearContent(_gameChoices);`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("取消对局", cancel, "DateGameCancel", 180)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ActionButton("取消对局", cancel, "DateGameCancel", 180)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("开始对局", start, "DateGameStart", 180)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ActionButton("开始对局", start, "DateGameStart", 180)`
+- `NationalSpire.DateSceneView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
+- `NationalSpire.DateSceneView.ShowInput(string, bool, bool)`；输入表达式：`ShowInput("")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowInput("");`
+
+**赋值（含属性/字段和局部值）：**
+
+- `InputMode` = `false`
+- `button.CustomMinimumSize` = `new(0, 52)`
+- `button.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+
 <a id="symbol-29d6e17b566c"></a>
 
 ## `NationalSpire.DateSceneView.TextSpeed — public double TextSpeed`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -214,6 +400,26 @@ private static readonly Color Ink = new("eff4f6");
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-1163895c4485"></a>
+
+## `NationalSpire.DateSceneView.CanFastForward — private bool CanFastForward`
+
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `Godot.CanvasItem.IsVisibleInTree()`；`System.Func<TResult>.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView._fastForwardHeld`；`NationalSpire.DateSceneView._text`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`IsVisibleInTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: _fastForwardHeld && IsVisibleInTree()`
+- `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Blocked?.Invoke()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -222,9 +428,9 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.AffectionVisibility(bool) — public void AffectionVisibility(bool visible)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)
 
@@ -241,37 +447,62 @@ private static readonly Color Ink = new("eff4f6");
 
 <a id="symbol-949c1add6c05"></a>
 
-## `NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation) — public void Relationship(PrivateRelation relation)`
+## `NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool) — public void Relationship(PrivateRelation relation, string person = "", bool animate = true)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting._Ready()`](DateSceneTesting.cs.md#symbol-2174d0446f18)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
-**调用：** [`NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation)`](AffectionVisuals.cs.md#symbol-4ff387bfe107)；`Godot.Time.GetTicksMsec()`
+**调用：** `Godot.Time.GetTicksMsec()`；[`NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation, bool)`](AffectionVisuals.cs.md#symbol-4ff387bfe107)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.WrapRelationship(string)`](DateSceneView.cs.md#symbol-d534753534b0)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation)`；`NationalSpire.DateSceneView._deltaUntil`；`NationalSpire.DateSceneView._favourBadge`；`NationalSpire.DateSceneView._favourDelta`；`NationalSpire.DateSceneView._lastFavour`；`NationalSpire.DateSceneView._relationDetail`；`NationalSpire.DateSceneView._relationText`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.Impression`；`NationalSpire.PrivateRelation.OathConfirmed`；`NationalSpire.PrivateRelation.Relationship`；`NationalSpire.PrivateRelation.SelectedBond`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation, bool)`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.WrapRelationship(string)`；`NationalSpire.DateSceneView._favourBadge`；`NationalSpire.DateSceneView._relationDetail`；`NationalSpire.DateSceneView._relationText`；`NationalSpire.DateSceneView._shownFavour`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.Impression`；`NationalSpire.PrivateRelation.OathConfirmed`；`NationalSpire.PrivateRelation.Relationship`；`NationalSpire.PrivateRelation.SelectedBond`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Time.GetTicksMsec()`；输入表达式：`Time.GetTicksMsec()`；返回值紧邻使用处：`BinaryExpressionSyntax: Time.GetTicksMsec() + 3500`
-- `Godot.Time.GetTicksMsec()`；输入表达式：`Time.GetTicksMsec()`；返回值紧邻使用处：`BinaryExpressionSyntax: Time.GetTicksMsec() < _deltaUntil`
-- `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation)`；输入表达式：`_favourBadge.Bind(relation)`；返回值紧邻使用处：`ExpressionStatementSyntax: _favourBadge.Bind(relation);`
+- `Godot.Time.GetTicksMsec()`；输入表达式：`Time.GetTicksMsec()`；返回值紧邻使用处：`BinaryExpressionSyntax: Time.GetTicksMsec() < previous.Until`
+- `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation, bool)`；输入表达式：`_favourBadge.Bind(relation, animate)`；返回值紧邻使用处：`ExpressionStatementSyntax: _favourBadge.Bind(relation, animate);`
+- `NationalSpire.DateSceneView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
+- `NationalSpire.DateSceneView.WrapRelationship(string)`；输入表达式：`WrapRelationship(label)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = WrapRelationship(label)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_shownFavour.TryGetValue(person, out var previous)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_shownFavour.TryGetValue(person, out var previous)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_deltaUntil` = `Time.GetTicksMsec() + 3500`
-- `_favourDelta` = `$"  {relation.Favour - previous:+0;-0}"`
-- `_lastFavour` = `relation.Favour`
 - `_relationDetail.Text` = `relation.Impression`
-- `_relationText.Text` = `(relation.OathConfirmed ? "誓约" : relation.SelectedBond >= 1 ? "恋人" : relation.Relationship)              + (Time.GetTicksMsec() < _deltaUntil ? _favourDelta : "")`
+- `_relationText.Text` = `wrapped`
+- `_shownFavour[person]` = `previous`
+- `previous` = `(relation.Favour, "", 0)`
+- `previous` = `(relation.Favour, $" {relation.Favour - previous.Value:+0;-0}", Time.GetTicksMsec() + 3500)`
+
+<a id="symbol-d534753534b0"></a>
+
+## `NationalSpire.DateSceneView.WrapRelationship(string) — private string WrapRelationship(string text)`
+
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool)`](DateSceneView.cs.md#symbol-949c1add6c05)
+
+**调用：** `Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`System.Globalization.StringInfo.ParseCombiningCharacters(string)`；`string.Contains(char)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._relationText`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；输入表达式：`_relationText.GetThemeFont("font")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _relationText.GetThemeFont("font").GetStringSize`
+- `Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；输入表达式：`_relationText.GetThemeFont("font").GetStringSize(text, fontSize: 18)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _relationText.GetThemeFont("font").GetStringSize(text, fontSize: 18).X`
+- `System.Globalization.StringInfo.ParseCombiningCharacters(string)`；输入表达式：`System.Globalization.StringInfo.ParseCombiningCharacters(text)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.Globalization.StringInfo.ParseCombiningCharacters(text)`
+- `string.Contains(char)`；输入表达式：`text.Contains('\n')`；返回值紧邻使用处：`BinaryExpressionSyntax: text.Contains('\n') || _relationText.GetThemeFont("font").GetStringSize(text, fontSize: 18).X <= 170`
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-1ed75a76342e"></a>
 
 ## `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int) — private Button ActionButton(string text, Action action, string name, int width = 100)`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.DateSceneView.AddInputAction(string, Godot.Texture2D, System.Action, string)`](DateSceneView.cs.md#symbol-0d0da39d688e)；[`NationalSpire.DateSceneView.AddSceneAction(string, string, System.Action)`](DateSceneCast.cs.md#symbol-97b88ee931cf)；[`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Button.Button()`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`
 
@@ -299,17 +530,18 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView._Ready() — public override void _Ready()`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`NationalSpire.DateSceneAssetStore.ContinueHintDismissed()`](DateSceneAssets.cs.md#symbol-ac5aec527a9d)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；[`NationalSpire.DateSceneView.ShowWaiting(string, bool)`](DateSceneView.cs.md#symbol-c6c25a66fde3)；[`SpacedFont(Godot.Control, string)`](DateSceneView.cs.md#symbol-e28b8217360a)；`Godot.Button.Button()`；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Gradient.Gradient()`；`Godot.GradientTexture2D.GradientTexture2D()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.TextEdit.TextEdit()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AffectionBadge.AffectionBadge()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** `Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Gradient.Gradient()`；`Godot.GradientTexture2D.GradientTexture2D()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.TextEdit.TextEdit()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AffectionBadge.AffectionBadge()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；`NationalSpire.DateHistoryList.DateHistoryList()`；[`NationalSpire.DateSceneAssetStore.ContinueHintDismissed()`](DateSceneAssets.cs.md#symbol-ac5aec527a9d)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；[`NationalSpire.DateSceneView.ShowWaiting(string, bool)`](DateSceneView.cs.md#symbol-c6c25a66fde3)；[`SpacedFont(Godot.Control, string)`](DateSceneView.cs.md#symbol-e28b8217360a)；`System.Action.Invoke()`；`System.Collections.IEnumerable.OfType<TResult>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`；`NationalSpire.DateSceneAssetStore.ContinueHintDismissed()`；`NationalSpire.DateSceneView._attachmentScroll`；`NationalSpire.DateSceneView._background`；`NationalSpire.DateSceneView._backgroundMaterial`；`NationalSpire.DateSceneView._backgroundPrevious`；`NationalSpire.DateSceneView._body`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._dialog`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._editorFont`；`NationalSpire.DateSceneView._favourBadge`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._glass`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._history`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView._interface`；`NationalSpire.DateSceneView._lineFont`；`NationalSpire.DateSceneView._margin`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._nameFont`；`NationalSpire.DateSceneView._navigation`；`NationalSpire.DateSceneView._previousBackgroundMaterial`；`NationalSpire.DateSceneView._relationDetail`；`NationalSpire.DateSceneView._relationText`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`；`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView.AddAttachment`；`NationalSpire.DateSceneView.Attachments`；`NationalSpire.DateSceneView.Click(Godot.InputEvent)`；`NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.Exit`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.Ink`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.OpenHistory()`；`NationalSpire.DateSceneView.Preferences(int, double, double)`；`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`；`NationalSpire.DateSceneView.Regenerate`；`NationalSpire.DateSceneView.RegenerateButton`；`NationalSpire.DateSceneView.RetryStop`；`NationalSpire.DateSceneView.ReturnToEdit`；`NationalSpire.DateSceneView.Send`；`NationalSpire.DateSceneView.Settings`；`NationalSpire.DateSceneView.ShowWaiting(string, bool)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.Submit`；`SpacedFont(Godot.Control, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`；`NationalSpire.DateSceneAssetStore.ContinueHintDismissed()`；`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；`NationalSpire.DateSceneView.AddAttachment`；`NationalSpire.DateSceneView.Attachments`；`NationalSpire.DateSceneView.Click(Godot.InputEvent)`；`NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.EditPrevious`；`NationalSpire.DateSceneView.EditPreviousButton`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.Exit`；`NationalSpire.DateSceneView.ExitButton`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.Ink`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.OpenHistory()`；`NationalSpire.DateSceneView.Preferences(int, double, double)`；`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`；`NationalSpire.DateSceneView.Resume`；`NationalSpire.DateSceneView.ResumeGame`；`NationalSpire.DateSceneView.RetryStop`；`NationalSpire.DateSceneView.ReturnToEdit`；`NationalSpire.DateSceneView.Send`；`NationalSpire.DateSceneView.Settings`；`NationalSpire.DateSceneView.ShowWaiting(string, bool)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.Submit`；`NationalSpire.DateSceneView._attachmentScroll`；`NationalSpire.DateSceneView._background`；`NationalSpire.DateSceneView._backgroundMaterial`；`NationalSpire.DateSceneView._backgroundPrevious`；`NationalSpire.DateSceneView._body`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._dialog`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._editorFont`；`NationalSpire.DateSceneView._favourBadge`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._glass`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._history`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView._inputTools`；`NationalSpire.DateSceneView._interface`；`NationalSpire.DateSceneView._lineFont`；`NationalSpire.DateSceneView._margin`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._nameFont`；`NationalSpire.DateSceneView._navigation`；`NationalSpire.DateSceneView._previousBackgroundMaterial`；`NationalSpire.DateSceneView._relationDetail`；`NationalSpire.DateSceneView._relationText`；`NationalSpire.DateSceneView._replyChoices`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`；`SpacedFont(Godot.Control, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Button.Button()`；输入表达式：`new Button { Name = "DateRelationshipDetails", TooltipText = "查看关系与印象", MouseDefaultCursorShape = CursorShape.PointingHand }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Button { Name = "DateRelationshipDetails", TooltipText = "查看关系与印象", MouseDefaultCursorShape = CursorShape.PointingHand }`
+- `Godot.CanvasItem.Hide()`；输入表达式：`ResumeGame.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: ResumeGame.Hide();`
 - `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(0,0,0,.75f)`；返回值紧邻使用处：`ExpressionElementSyntax: new Color(0,0,0,.75f)`
 - `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(0,0,0,0)`；返回值紧邻使用处：`ExpressionElementSyntax: new Color(0,0,0,0)`
 - `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(0,0,0,1)`；返回值紧邻使用处：`ExpressionElementSyntax: new Color(0,0,0,1)`
@@ -324,6 +556,8 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Color.Color(string)`；输入表达式：`new("f1ccdf")`；返回值紧邻使用处：`ArgumentSyntax: new("f1ccdf")`
 - `Godot.ColorRect.ColorRect()`；输入表达式：`new ColorRect { Name = "DateBackdrop", Color = new Color("0d1926"), MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new ColorRect { Name = "DateBackdrop", Color = new Color("0d1926"), MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.AcceptEvent()`；输入表达式：`AcceptEvent()`；返回值紧邻使用处：`ExpressionStatementSyntax: AcceptEvent();`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`Send.AddThemeColorOverride("font_color", new Color("172330"))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send.AddThemeColorOverride("font_color", new Color("172330"));`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`Status.AddThemeColorOverride("font_color", new("c1d1d8"))`；返回值紧邻使用处：`ExpressionStatementSyntax: Status.AddThemeColorOverride("font_color", new("c1d1d8"));`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_hint.AddThemeColorOverride("font_color", new("b3c7cf"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _hint.AddThemeColorOverride("font_color", new("b3c7cf"));`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_historyText.AddThemeColorOverride("default_color", Ink)`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyText.AddThemeColorOverride("default_color", Ink);`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_name.AddThemeColorOverride("font_color", new("ead09c"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _name.AddThemeColorOverride("font_color", new("ead09c"));`
@@ -333,35 +567,35 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`button.AddThemeColorOverride(state, Colors.White)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeColorOverride(state, Colors.White);`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`historyHint.AddThemeColorOverride("font_color", new("a8bcc8"))`；返回值紧邻使用处：`ExpressionStatementSyntax: historyHint.AddThemeColorOverride("font_color", new("a8bcc8"));`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`historyTitle.AddThemeColorOverride("font_color", new("ead09c"))`；返回值紧邻使用处：`ExpressionStatementSyntax: historyTitle.AddThemeColorOverride("font_color", new("ead09c"));`
-- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`Send.AddThemeColorOverride("font_color", new Color("172330"))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send.AddThemeColorOverride("font_color", new Color("172330"));`
-- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`Status.AddThemeColorOverride("font_color", new("c1d1d8"))`；返回值紧邻使用处：`ExpressionStatementSyntax: Status.AddThemeColorOverride("font_color", new("c1d1d8"));`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_body.AddThemeConstantOverride("separation", 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddThemeConstantOverride("separation", 10);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_composer.AddThemeConstantOverride("separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddThemeConstantOverride("separation", 8);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_gameChoices.AddThemeConstantOverride("separation", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.AddThemeConstantOverride("separation", 16);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_margin.AddThemeConstantOverride("margin_bottom", 64)`；返回值紧邻使用处：`ExpressionStatementSyntax: _margin.AddThemeConstantOverride("margin_bottom", 64);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_margin.AddThemeConstantOverride("margin_top", 40)`；返回值紧邻使用处：`ExpressionStatementSyntax: _margin.AddThemeConstantOverride("margin_top", 40);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_navigation.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: _navigation.AddThemeConstantOverride("separation", 12);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_relationDetail.AddThemeConstantOverride("outline_size", 5)`；返回值紧邻使用处：`ExpressionStatementSyntax: _relationDetail.AddThemeConstantOverride("outline_size", 5);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_replyChoices.AddThemeConstantOverride("separation", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.AddThemeConstantOverride("separation", 16);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_settings.AddThemeConstantOverride("separation", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddThemeConstantOverride("separation", 18);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`actions.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddThemeConstantOverride("separation", 12);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`historyBody.AddThemeConstantOverride("separation", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddThemeConstantOverride("separation", 22);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`tools.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: tools.AddThemeConstantOverride("separation", 12);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`Editor.AddThemeFontSizeOverride("font_size", 30)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeFontSizeOverride("font_size", 30);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`Status.AddThemeFontSizeOverride("font_size", 15)`；返回值紧邻使用处：`ExpressionStatementSyntax: Status.AddThemeFontSizeOverride("font_size", 15);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_historyText.AddThemeFontSizeOverride("normal_font_size", 27)`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyText.AddThemeFontSizeOverride("normal_font_size", 27);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_name.AddThemeFontSizeOverride("font_size", 31)`；返回值紧邻使用处：`ExpressionStatementSyntax: _name.AddThemeFontSizeOverride("font_size", 31);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_relationText.AddThemeFontSizeOverride("font_size", 19)`；返回值紧邻使用处：`ExpressionStatementSyntax: _relationText.AddThemeFontSizeOverride("font_size", 19);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_relationText.AddThemeFontSizeOverride("font_size", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: _relationText.AddThemeFontSizeOverride("font_size", 18);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_text.AddThemeFontSizeOverride("normal_font_size", 30)`；返回值紧邻使用处：`ExpressionStatementSyntax: _text.AddThemeFontSizeOverride("normal_font_size", 30);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`Editor.AddThemeFontSizeOverride("font_size", 30)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeFontSizeOverride("font_size", 30);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`historyHint.AddThemeFontSizeOverride("font_size", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyHint.AddThemeFontSizeOverride("font_size", 16);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`historyTitle.AddThemeFontSizeOverride("font_size", 28)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyTitle.AddThemeFontSizeOverride("font_size", 28);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`Status.AddThemeFontSizeOverride("font_size", 15)`；返回值紧邻使用处：`ExpressionStatementSyntax: Status.AddThemeFontSizeOverride("font_size", 15);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Editor.AddThemeStyleboxOverride("focus", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Editor.AddThemeStyleboxOverride("normal", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeStyleboxOverride("normal", new StyleBoxEmpty());`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Send.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10));`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_history.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10202bf5", "547787", 0, 42))`；返回值紧邻使用处：`ExpressionStatementSyntax: _history.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10202bf5", "547787", 0, 42));`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_historyText.AddThemeStyleboxOverride("focus", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyText.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_nameBox.AddThemeStyleboxOverride("panel", CareerVisuals.Box("172b3dd9", "63869880", 5, 12))`；返回值紧邻使用处：`ExpressionStatementSyntax: _nameBox.AddThemeStyleboxOverride("panel", CareerVisuals.Box("172b3dd9", "63869880", 5, 12));`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`button.AddThemeStyleboxOverride(state, new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeStyleboxOverride(state, new StyleBoxEmpty());`
-- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Editor.AddThemeStyleboxOverride("focus", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());`
-- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Editor.AddThemeStyleboxOverride("normal", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeStyleboxOverride("normal", new StyleBoxEmpty());`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`relationButton.AddThemeStyleboxOverride("hover", CareerVisuals.Box("302d42ec", "e5b8cf", 14, 0))`；返回值紧邻使用处：`ExpressionStatementSyntax: relationButton.AddThemeStyleboxOverride("hover", CareerVisuals.Box("302d42ec", "e5b8cf", 14, 0));`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`relationButton.AddThemeStyleboxOverride("normal", CareerVisuals.Box("182838dc", "b38ba780", 14, 0))`；返回值紧邻使用处：`ExpressionStatementSyntax: relationButton.AddThemeStyleboxOverride("normal", CareerVisuals.Box("182838dc", "b38ba780", 14, 0));`
-- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`Send.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10));`
 - `Godot.Control.Control()`；输入表达式：`new Control { Name = "DateDialogue", MouseFilter = MouseFilterEnum.Stop }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _dialog = new Control { Name = "DateDialogue", MouseFilter = MouseFilterEnum.Stop }`
 - `Godot.Control.Control()`；输入表达式：`new Control { Name = "DateFavour", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _favourHost = new Control { Name = "DateFavour", MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.Control()`；输入表达式：`new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _interface = new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`
@@ -376,28 +610,32 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`glass.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: glass.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`relationButton.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: relationButton.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Gradient.Gradient()`；输入表达式：`new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _glass = new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`
-- `Godot.GradientTexture2D.GradientTexture2D()`；输入表达式：`new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1),              Gradient = _glass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1),              Gradient = _glass }`
+- `Godot.GradientTexture2D.GradientTexture2D()`；输入表达式：`new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings = new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DateNavigation" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _navigation = new HBoxContainer { Name = "DateNavigation" }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
-- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _hint = new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateAdvanceHint", Text = "单击继续 ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _hint = new Label { Name = "DateAdvanceHint", Text = "单击继续 ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateImpression", Position = new(0, 84), Size = new(280, 0), AutowrapMode = TextServer.AutowrapMode.WordSmart, Visible = false, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _relationDetail = new Label { Name = "DateImpression", Position = new(0, 84), Size = new(280, 0), AutowrapMode = TextServer.AutowrapMode.WordSmart, Visible = false, MouseFilter = MouseFilterEnum.Ignore }`
-- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateRelationship", Position = new(96, 23), Size = new(170, 30), TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _relationText = new Label { Name = "DateRelationship", Position = new(96, 23), Size = new(170, 30), TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateRelationship", Position = new(96, 0), Size = new(170, 76), AutowrapMode = TextServer.AutowrapMode.WordSmart, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _relationText = new Label { Name = "DateRelationship", Position = new(96, 0), Size = new(170, 76), AutowrapMode = TextServer.AutowrapMode.WordSmart, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateSpeaker", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _name = new Label { Name = "DateSpeaker", MouseFilter = MouseFilterEnum.Ignore }`
-- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateStatus", AutowrapMode = TextServer.AutowrapMode.WordSmart, MaxLinesVisible = 2, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Status = new Label { Name = "DateStatus", AutowrapMode = TextServer.AutowrapMode.WordSmart, MaxLinesVisible = 2, MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Label.Label()`；输入表达式：`new Label { Name = "DateStatus", MaxLinesVisible = 1, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Pass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Status = new Label { Name = "DateStatus", MaxLinesVisible = 1, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Pass }`
 - `Godot.Label.Label()`；输入表达式：`new Label { Text = "对话记录" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Label { Text = "对话记录" }`
 - `Godot.Label.Label()`；输入表达式：`new Label { Text = "滚轮 / PageUp / PageDown 浏览 · Q / 右键 / Esc 返回", HorizontalAlignment = HorizontalAlignment.Center }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Label { Text = "滚轮 / PageUp / PageDown 浏览 · Q / 右键 / Esc 返回", HorizontalAlignment = HorizontalAlignment.Center }`
 - `Godot.MarginContainer.MarginContainer()`；输入表达式：`new MarginContainer { MouseFilter = MouseFilterEnum.Pass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _margin = new MarginContainer { MouseFilter = MouseFilterEnum.Pass }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_background)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_background);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_backgroundPrevious)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_backgroundPrevious);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_history)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_history);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_interface)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_interface);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_sprite)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_sprite);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(backdrop)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(backdrop);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_attachmentScroll.AddChild(Attachments)`；返回值紧邻使用处：`ExpressionStatementSyntax: _attachmentScroll.AddChild(Attachments);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_composer)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_composer);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_editFailure)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_editFailure);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_hint)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_hint);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_text)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_text);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_waitAction)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_waitAction);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(Status)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(Status);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(Editor)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(Editor);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(_attachmentScroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(_attachmentScroll);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(actions);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(Editor)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(Editor);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_dialog.AddChild(_margin)`；返回值紧邻使用处：`ExpressionStatementSyntax: _dialog.AddChild(_margin);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_dialog.AddChild(glass)`；返回值紧邻使用处：`ExpressionStatementSyntax: _dialog.AddChild(glass);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_favourHost.AddChild(_relationDetail)`；返回值紧邻使用处：`ExpressionStatementSyntax: _favourHost.AddChild(_relationDetail);`
@@ -405,27 +643,28 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_favourHost.AddChild(badge)`；返回值紧邻使用处：`ExpressionStatementSyntax: _favourHost.AddChild(badge);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_favourHost.AddChild(relationButton)`；返回值紧邻使用处：`ExpressionStatementSyntax: _favourHost.AddChild(relationButton);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_history.AddChild(historyBody)`；返回值紧邻使用处：`ExpressionStatementSyntax: _history.AddChild(historyBody);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(Status)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(Status);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_dialog)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_dialog);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_favourHost)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_favourHost);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_gameChoices)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_gameChoices);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_nameBox)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_nameBox);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_navigation)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_navigation);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_replyChoices)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_replyChoices);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_settings)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_settings);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_interface.AddChild(_waitAction)`；返回值紧邻使用处：`ExpressionStatementSyntax: _interface.AddChild(_waitAction);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_margin.AddChild(_body)`；返回值紧邻使用处：`ExpressionStatementSyntax: _margin.AddChild(_body);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_nameBox.AddChild(_name)`；返回值紧邻使用处：`ExpressionStatementSyntax: _nameBox.AddChild(_name);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_navigation.AddChild(ActionButton("历史记录  Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145))`；返回值紧邻使用处：`ExpressionStatementSyntax: _navigation.AddChild(ActionButton("历史记录  Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_navigation.AddChild(ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155))`；返回值紧邻使用处：`ExpressionStatementSyntax: _navigation.AddChild(ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_navigation.AddChild(ActionButton("历史记录 Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145))`；返回值紧邻使用处：`ExpressionStatementSyntax: _navigation.AddChild(ActionButton("历史记录 Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_navigation.AddChild(ExitButton)`；返回值紧邻使用处：`ExpressionStatementSyntax: _navigation.AddChild(ExitButton);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_settings.AddChild(ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140))`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddChild(ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_settings.AddChild(RegenerateButton)`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddChild(RegenerateButton);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill })`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_settings.AddChild(ActionButton("结束约会", () => Exit?.Invoke(), "DateEnd", 140))`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddChild(ActionButton("结束约会", () => Exit?.Invoke(), "DateEnd", 140));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_settings.AddChild(EditPreviousButton)`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddChild(EditPreviousButton);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(ResumeGame)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(ResumeGame);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(Send)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(Send);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill })`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(tools)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(tools);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_background)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_background);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_backgroundPrevious)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_backgroundPrevious);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_history)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_history);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_interface)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_interface);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_sprite)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_sprite);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(backdrop)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(backdrop);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`badge.AddChild(_favourBadge)`；返回值紧邻使用处：`ExpressionStatementSyntax: badge.AddChild(_favourBadge);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(_historyList)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(_historyList);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(_historyText)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(_historyText);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(historyHint)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(historyHint);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(historyTitle)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(historyTitle);`
@@ -434,18 +673,20 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { Name = "DateHistory", Visible = false, MouseFilter = MouseFilterEnum.Stop }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _history = new PanelContainer { Name = "DateHistory", Visible = false, MouseFilter = MouseFilterEnum.Stop }`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { Name = "DateSpeakerBox", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _nameBox = new PanelContainer { Name = "DateSpeakerBox", MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.RichTextLabel.RichTextLabel()`；输入表达式：`new RichTextLabel { Name = "DateHistoryText", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, SelectionEnabled = true, FocusMode = FocusModeEnum.All }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _historyText = new RichTextLabel { Name = "DateHistoryText", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, SelectionEnabled = true, FocusMode = FocusModeEnum.All }`
-- `Godot.RichTextLabel.RichTextLabel()`；输入表达式：`new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass,              VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _text = new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass,              VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`
+- `Godot.RichTextLabel.RichTextLabel()`；输入表达式：`new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass, VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _text = new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass, VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`
 - `Godot.ScrollContainer.ScrollContainer()`；输入表达式：`new ScrollContainer { Visible = false, CustomMinimumSize = new(0, 80), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _attachmentScroll = new ScrollContainer { Visible = false, CustomMinimumSize = new(0, 80), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
-- `Godot.Shader.Shader()`；输入表达式：`new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Shader = new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ }`
+- `Godot.Shader.Shader()`；输入表达式：`new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Shader = new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ }`
 - `Godot.ShaderMaterial.ShaderMaterial()`；输入表达式：`new ShaderMaterial { Shader = _backgroundMaterial.Shader }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _previousBackgroundMaterial = new ShaderMaterial { Shader = _backgroundMaterial.Shader }`
-- `Godot.ShaderMaterial.ShaderMaterial()`；输入表达式：`new ShaderMaterial { Shader = new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ } }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _backgroundMaterial = new ShaderMaterial { Shader = new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ } }`
+- `Godot.ShaderMaterial.ShaderMaterial()`；输入表达式：`new ShaderMaterial { Shader = new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ } }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _backgroundMaterial = new ShaderMaterial { Shader = new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ } }`
 - `Godot.StyleBoxEmpty.StyleBoxEmpty()`；输入表达式：`new StyleBoxEmpty()`；返回值紧邻使用处：`ArgumentSyntax: new StyleBoxEmpty()`
 - `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "DateInput", PlaceholderText = "输入回应…", SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 65), WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Editor = new TextEdit { Name = "DateInput", PlaceholderText = "输入回应…", SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 65), WrapMode = TextEdit.LineWrappingMode.Boundary }`
 - `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _background = new TextureRect { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
-- `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect { Name = "DateGlass", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1),              Gradient = _glass }, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextureRect { Name = "DateGlass", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1),              Gradient = _glass }, MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect { Name = "DateGlass", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextureRect { Name = "DateGlass", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect { Name = "DatePreviousBackground", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _backgroundPrevious = new TextureRect { Name = "DatePreviousBackground", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect { Name = "DateSprite", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite = new TextureRect { Name = "DateSprite", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { MouseFilter = MouseFilterEnum.Pass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _body = new VBoxContainer { MouseFilter = MouseFilterEnum.Pass }`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { Name = "DateGameChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _gameChoices = new VBoxContainer { Name = "DateGameChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { Name = "DateReplyChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _replyChoices = new VBoxContainer { Name = "DateReplyChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Attachments = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _composer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer()`
@@ -454,11 +695,11 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 65)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 65)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 80)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 80)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 84)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Position = new(0, 84)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(170, 30)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(170, 30)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(170, 76)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(170, 76)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(280, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(280, 0)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(8, 4)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Position = new(8, 4)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(80, 68)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(80, 68)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(96, 23)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Position = new(96, 23)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(96, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Position = new(96, 0)`
 - `NationalSpire.AffectionBadge.AffectionBadge()`；输入表达式：`new AffectionBadge()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _favourBadge = new AffectionBadge()`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("10202bf5", "547787", 0, 42)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("10202bf5", "547787", 0, 42)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("172b3dd9", "63869880", 5, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("172b3dd9", "63869880", 5, 12)`
@@ -466,87 +707,52 @@ private static readonly Color Ink = new("eff4f6");
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("302d42ec", "e5b8cf", 14, 0)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("302d42ec", "e5b8cf", 14, 0)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)`
 - `NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`；输入表达式：`CommunityReplyExpressions.Attach(Editor, _composer, tools, actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: CommunityReplyExpressions.Attach(Editor, _composer, tools, actions);`
+- `NationalSpire.DateHistoryList.DateHistoryList()`；输入表达式：`new DateHistoryList { Name = "DateHistoryList", Visible = false, SizeFlagsVertical = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _historyList = new DateHistoryList { Name = "DateHistoryList", Visible = false, SizeFlagsVertical = SizeFlags.ExpandFill }`
 - `NationalSpire.DateSceneAssetStore.ContinueHintDismissed()`；输入表达式：`DateSceneAssetStore.ContinueHintDismissed()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _hintDismissed = DateSceneAssetStore.ContinueHintDismissed()`
 - `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("+", () => AddAttachment?.Invoke(), "DateAttachments", 48)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("+", () => AddAttachment?.Invoke(), "DateAttachments", 48)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editFailure = ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Send = ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("历史记录  Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("历史记录  Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145)`
 - `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _waitAction = ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155)`
-- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("重新生成", () => Regenerate?.Invoke(), "DateRegenerate", 140)`；返回值紧邻使用处：`AssignmentExpressionSyntax: RegenerateButton = ActionButton("重新生成", () => Regenerate?.Invoke(), "DateRegenerate", 140)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("历史记录 Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("历史记录 Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Send = ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("结束约会", () => Exit?.Invoke(), "DateEnd", 140)`；返回值紧邻使用处：`ArgumentSyntax: ActionButton("结束约会", () => Exit?.Invoke(), "DateEnd", 140)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editFailure = ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("返回游戏", () => Resume?.Invoke(), "DateResumeGame", 150)`；返回值紧邻使用处：`AssignmentExpressionSyntax: ResumeGame = ActionButton("返回游戏", () => Resume?.Invoke(), "DateResumeGame", 150)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("退出约会 Esc", () => Exit?.Invoke(), "DateExit", 155)`；返回值紧邻使用处：`AssignmentExpressionSyntax: ExitButton = ActionButton("退出约会 Esc", () => Exit?.Invoke(), "DateExit", 155)`
+- `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`；输入表达式：`ActionButton("重新输入", () => EditPrevious?.Invoke(), "DateEditPrevious", 140)`；返回值紧邻使用处：`AssignmentExpressionSyntax: EditPreviousButton = ActionButton("重新输入", () => EditPrevious?.Invoke(), "DateEditPrevious", 140)`
 - `NationalSpire.DateSceneView.CloseHistory()`；输入表达式：`CloseHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: CloseHistory();`
 - `NationalSpire.DateSceneView.OpenHistory()`；输入表达式：`OpenHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenHistory();`
 - `NationalSpire.DateSceneView.Preferences(int, double, double)`；输入表达式：`Preferences(1, 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: Preferences(1, 0);`
 - `NationalSpire.DateSceneView.Presentation(double, double, double, bool)`；输入表达式：`Presentation(1, 0, 0, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Presentation(1, 0, 0, true);`
 - `NationalSpire.DateSceneView.ShowWaiting(string, bool)`；输入表达式：`ShowWaiting("正在准备场景…")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowWaiting("正在准备场景…");`
+- `SpacedFont(Godot.Control, string)`；输入表达式：`SpacedFont(Editor, "font")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editorFont = SpacedFont(Editor, "font")`
 - `SpacedFont(Godot.Control, string)`；输入表达式：`SpacedFont(_historyText, "normal_font")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _historyFont = SpacedFont(_historyText, "normal_font")`
 - `SpacedFont(Godot.Control, string)`；输入表达式：`SpacedFont(_name, "font")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _nameFont = SpacedFont(_name, "font")`
 - `SpacedFont(Godot.Control, string)`；输入表达式：`SpacedFont(_text, "normal_font")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _lineFont = SpacedFont(_text, "normal_font")`
-- `SpacedFont(Godot.Control, string)`；输入表达式：`SpacedFont(Editor, "font")`；返回值紧邻使用处：`AssignmentExpressionSyntax: _editorFont = SpacedFont(Editor, "font")`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Submit?.Invoke()`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: AddAttachment?.Invoke()`
-- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Exit?.Invoke()`
-- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Regenerate?.Invoke()`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Resume?.Invoke()`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: RetryStop?.Invoke()`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: ReturnToEdit?.Invoke()`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Settings?.Invoke()`
-- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Submit?.Invoke()`
-- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`_settings.GetChildren().OfType<Button>()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var button in _settings.GetChildren().OfType<Button>())          {              foreach (string state in new[] { "normal", "hover", "pressed", "focus", "disabled" }) button.AddThemeStyleboxOverride(state, new StyleBoxEmpty());              foreach (string state in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color" }) button.AddThemeColorOverride(state, Colors.White);          }`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Exit?.Invoke()`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: EditPrevious?.Invoke()`
+- `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`_settings.GetChildren().OfType<Button>()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var button in _settings.GetChildren().OfType<Button>()) { foreach (string state in new[] { "normal", "hover", "pressed", "focus", "disabled" }) button.AddThemeStyleboxOverride(state, new StyleBoxEmpty()); foreach (string state in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color" }) button.AddThemeColorOverride(state, Colors.White); }`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_attachmentScroll` = `new ScrollContainer { Visible = false, CustomMinimumSize = new(0, 80), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
-- `_background.Material` = `_backgroundMaterial`
-- `_background.TextureFilter` = `TextureFilterEnum.LinearWithMipmaps`
-- `_background` = `new TextureRect { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
-- `_backgroundMaterial` = `new ShaderMaterial { Shader = new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ } }`
-- `_backgroundPrevious.Material` = `_previousBackgroundMaterial`
-- `_backgroundPrevious.TextureFilter` = `TextureFilterEnum.LinearWithMipmaps`
-- `_backgroundPrevious` = `new TextureRect { Name = "DatePreviousBackground", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
-- `_body.MinimumSizeChanged` += `Layout`
-- `_body` = `new VBoxContainer { MouseFilter = MouseFilterEnum.Pass }`
-- `_composer` = `new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }`
-- `_dialog.GuiInput` += `Click`
-- `_dialog` = `new Control { Name = "DateDialogue", MouseFilter = MouseFilterEnum.Stop }`
-- `_editFailure.SizeFlagsHorizontal` = `SizeFlags.ShrinkEnd`
-- `_editFailure` = `ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`
-- `_editorFont` = `SpacedFont(Editor, "font")`
-- `_favourBadge` = `new AffectionBadge()`
-- `_favourHost` = `new Control { Name = "DateFavour", MouseFilter = MouseFilterEnum.Ignore }`
-- `_glass` = `new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`
-- `_hint` = `new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`
-- `_hintDismissed` = `DateSceneAssetStore.ContinueHintDismissed()`
-- `_history` = `new PanelContainer { Name = "DateHistory", Visible = false, MouseFilter = MouseFilterEnum.Stop }`
-- `_historyFont` = `SpacedFont(_historyText, "normal_font")`
-- `_historyText` = `new RichTextLabel { Name = "DateHistoryText", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, SelectionEnabled = true, FocusMode = FocusModeEnum.All }`
-- `_interface` = `new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`
-- `_lineFont` = `SpacedFont(_text, "normal_font")`
-- `_margin` = `new MarginContainer { MouseFilter = MouseFilterEnum.Pass }`
-- `_name.MinimumSizeChanged` += `Layout`
-- `_name` = `new Label { Name = "DateSpeaker", MouseFilter = MouseFilterEnum.Ignore }`
-- `_nameBox` = `new PanelContainer { Name = "DateSpeakerBox", MouseFilter = MouseFilterEnum.Ignore }`
-- `_nameFont` = `SpacedFont(_name, "font")`
-- `_navigation` = `new HBoxContainer { Name = "DateNavigation" }`
-- `_previousBackgroundMaterial` = `new ShaderMaterial { Shader = _backgroundMaterial.Shader }`
-- `_relationDetail.Visible` = `!_relationDetail.Visible`
-- `_relationDetail` = `new Label { Name = "DateImpression", Position = new(0, 84), Size = new(280, 0), AutowrapMode = TextServer.AutowrapMode.WordSmart, Visible = false, MouseFilter = MouseFilterEnum.Ignore }`
-- `_relationText` = `new Label { Name = "DateRelationship", Position = new(96, 23), Size = new(170, 30), TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseFilter = MouseFilterEnum.Ignore }`
-- `_settings` = `new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`
-- `_sprite` = `new TextureRect { Name = "DateSprite", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore }`
-- `_text` = `new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass,              VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`
-- `_waitAction.SizeFlagsHorizontal` = `SizeFlags.ShrinkEnd`
-- `_waitAction` = `ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150)`
 - `Alignment` = `BoxContainer.AlignmentMode.Center`
 - `Attachments` = `new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `AutowrapMode` = `TextServer.AutowrapMode.WordSmart`
 - `BbcodeEnabled` = `false`
-- `Code` = `"""              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """`
+- `Code` = `""" shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """`
 - `Color` = `new Color("0d1926")`
 - `Colors` = `[new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)]`
 - `CustomMinimumSize` = `new(0, 65)`
 - `CustomMinimumSize` = `new(0, 80)`
+- `EditPreviousButton` = `ActionButton("重新输入", () => EditPrevious?.Invoke(), "DateEditPrevious", 140)`
 - `Editor.GuiInput` += `input => { if (input is InputEventKey { Pressed: true, Echo: false, CtrlPressed: true, Keycode: Key.Enter }) { AcceptEvent(); Submit?.Invoke(); } }`
 - `Editor` = `new TextEdit { Name = "DateInput", PlaceholderText = "输入回应…", SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 65), WrapMode = TextEdit.LineWrappingMode.Boundary }`
+- `ExitButton` = `ActionButton("退出约会 Esc", () => Exit?.Invoke(), "DateExit", 155)`
 - `ExpandMode` = `TextureRect.ExpandModeEnum.IgnoreSize`
 - `FillFrom` = `new(.5f, 0)`
 - `FillTo` = `new(.5f, 1)`
@@ -557,7 +763,7 @@ private static readonly Color Ink = new("eff4f6");
 - `HorizontalAlignment` = `HorizontalAlignment.Center`
 - `HorizontalAlignment` = `HorizontalAlignment.Right`
 - `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
-- `MaxLinesVisible` = `2`
+- `MaxLinesVisible` = `1`
 - `Modulate` = `new(1,1,1,0)`
 - `MouseDefaultCursorShape` = `CursorShape.PointingHand`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
@@ -567,8 +773,10 @@ private static readonly Color Ink = new("eff4f6");
 - `Name` = `"DateBackdrop"`
 - `Name` = `"DateDialogue"`
 - `Name` = `"DateFavour"`
+- `Name` = `"DateGameChoices"`
 - `Name` = `"DateGlass"`
 - `Name` = `"DateHistory"`
+- `Name` = `"DateHistoryList"`
 - `Name` = `"DateHistoryText"`
 - `Name` = `"DateHoverBar"`
 - `Name` = `"DateImpression"`
@@ -579,6 +787,7 @@ private static readonly Color Ink = new("eff4f6");
 - `Name` = `"DatePreviousBackground"`
 - `Name` = `"DateRelationship"`
 - `Name` = `"DateRelationshipDetails"`
+- `Name` = `"DateReplyChoices"`
 - `Name` = `"DateScene"`
 - `Name` = `"DateSpeaker"`
 - `Name` = `"DateSpeakerBox"`
@@ -588,40 +797,86 @@ private static readonly Color Ink = new("eff4f6");
 - `PlaceholderText` = `"输入回应…"`
 - `Position` = `new(0, 84)`
 - `Position` = `new(8, 4)`
-- `Position` = `new(96, 23)`
-- `RegenerateButton` = `ActionButton("重新生成", () => Regenerate?.Invoke(), "DateRegenerate", 140)`
-- `relationButton.Pressed` += `() => _relationDetail.Visible = !_relationDetail.Visible`
+- `Position` = `new(96, 0)`
 - `Resized` += `Layout`
+- `ResumeGame` = `ActionButton("返回游戏", () => Resume?.Invoke(), "DateResumeGame", 150)`
 - `ScrollActive` = `true`
 - `SelectionEnabled` = `true`
 - `Send` = `ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150)`
 - `Shader` = `_backgroundMaterial.Shader`
-- `Shader` = `new Shader { Code = """              shader_type canvas_item;              uniform bool blur_on = true;              uniform float blur_radius = 3.0;              uniform float fade_alpha = 1.0;              void fragment() {                  // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions.                  vec4 original = textureLod(TEXTURE, UV, 0.0);                  vec4 color = original;                  if (blur_on && blur_radius > 0.0) {                      float level = log2(max(1.0, blur_radius));                      vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65;                      vec4 sum = vec4(0.0);                      for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) {                          float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0);                          sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight;                      }}                      color = mix(original, sum / 16.0, min(1.0, blur_radius));                  }                  COLOR=vec4(color.rgb,color.a*fade_alpha);              }              """ }`
-- `Size` = `new(170, 30)`
-- `Size` = `new(280, 0)`
-- `Size` = `new(80, 68)`
+- `Shader` = `new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ }`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `SizeFlagsVertical` = `SizeFlags.ExpandFill`
-- `Status` = `new Label { Name = "DateStatus", AutowrapMode = TextServer.AutowrapMode.WordSmart, MaxLinesVisible = 2, MouseFilter = MouseFilterEnum.Ignore }`
+- `Size` = `new(170, 76)`
+- `Size` = `new(280, 0)`
+- `Size` = `new(80, 68)`
+- `Status` = `new Label { Name = "DateStatus", MaxLinesVisible = 1, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Pass }`
 - `StretchMode` = `TextureRect.StretchModeEnum.KeepAspectCentered`
 - `StretchMode` = `TextureRect.StretchModeEnum.KeepAspectCovered`
-- `Text` = `"单击继续  ›"`
+- `TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `Text` = `"单击继续 ›"`
 - `Text` = `"对话记录"`
 - `Text` = `"滚轮 / PageUp / PageDown 浏览 · Q / 右键 / Esc 返回"`
-- `TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
-- `Texture` = `new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1),              Gradient = _glass }`
+- `Texture` = `new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }`
 - `TooltipText` = `"查看关系与印象"`
-- `Visible` = `false`
+- `VerticalAlignment` = `VerticalAlignment.Center`
 - `VisibleCharactersBehavior` = `TextServer.VisibleCharactersBehavior.GlyphsLtr`
+- `Visible` = `false`
 - `Width` = `4`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 - `ZIndex` = `30`
+- `_attachmentScroll` = `new ScrollContainer { Visible = false, CustomMinimumSize = new(0, 80), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
+- `_background.Material` = `_backgroundMaterial`
+- `_background.TextureFilter` = `TextureFilterEnum.LinearWithMipmaps`
+- `_backgroundMaterial` = `new ShaderMaterial { Shader = new Shader { Code = """ shader_type canvas_item; uniform bool blur_on = true; uniform float blur_radius = 3.0; uniform float fade_alpha = 1.0; void fragment() { // Pyramid levels prefilter every pixel; tent reconstruction smooths level transitions. vec4 original = textureLod(TEXTURE, UV, 0.0); vec4 color = original; if (blur_on && blur_radius > 0.0) { float level = log2(max(1.0, blur_radius)); vec2 step_uv = TEXTURE_PIXEL_SIZE * max(1.0, blur_radius) * 0.65; vec4 sum = vec4(0.0); for (int x=-1; x<=1; x++) { for (int y=-1; y<=1; y++) { float weight = (x==0 ? 2.0 : 1.0) * (y==0 ? 2.0 : 1.0); sum += textureLod(TEXTURE, clamp(UV+vec2(float(x),float(y))*step_uv,vec2(0.0),vec2(1.0)), level) * weight; }} color = mix(original, sum / 16.0, min(1.0, blur_radius)); } COLOR=vec4(color.rgb,color.a*fade_alpha); } """ } }`
+- `_backgroundPrevious.Material` = `_previousBackgroundMaterial`
+- `_backgroundPrevious.TextureFilter` = `TextureFilterEnum.LinearWithMipmaps`
+- `_backgroundPrevious` = `new TextureRect { Name = "DatePreviousBackground", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
+- `_background` = `new TextureRect { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore }`
+- `_body.MinimumSizeChanged` += `Layout`
+- `_body` = `new VBoxContainer { MouseFilter = MouseFilterEnum.Pass }`
+- `_composer` = `new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }`
+- `_dialog.GuiInput` += `Click`
+- `_dialog` = `new Control { Name = "DateDialogue", MouseFilter = MouseFilterEnum.Stop }`
+- `_editFailure.SizeFlagsHorizontal` = `SizeFlags.ShrinkEnd`
+- `_editFailure` = `ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150)`
+- `_editorFont` = `SpacedFont(Editor, "font")`
+- `_favourBadge` = `new AffectionBadge()`
+- `_favourHost` = `new Control { Name = "DateFavour", MouseFilter = MouseFilterEnum.Ignore }`
+- `_gameChoices` = `new VBoxContainer { Name = "DateGameChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`
+- `_glass` = `new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`
+- `_hintDismissed` = `DateSceneAssetStore.ContinueHintDismissed()`
+- `_hint` = `new Label { Name = "DateAdvanceHint", Text = "单击继续 ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }`
+- `_historyFont` = `SpacedFont(_historyText, "normal_font")`
+- `_historyList` = `new DateHistoryList { Name = "DateHistoryList", Visible = false, SizeFlagsVertical = SizeFlags.ExpandFill }`
+- `_historyText` = `new RichTextLabel { Name = "DateHistoryText", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, SelectionEnabled = true, FocusMode = FocusModeEnum.All }`
+- `_history` = `new PanelContainer { Name = "DateHistory", Visible = false, MouseFilter = MouseFilterEnum.Stop }`
+- `_inputTools` = `tools`
+- `_interface` = `new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`
+- `_lineFont` = `SpacedFont(_text, "normal_font")`
+- `_margin` = `new MarginContainer { MouseFilter = MouseFilterEnum.Pass }`
+- `_name.MinimumSizeChanged` += `Layout`
+- `_nameBox` = `new PanelContainer { Name = "DateSpeakerBox", MouseFilter = MouseFilterEnum.Ignore }`
+- `_nameFont` = `SpacedFont(_name, "font")`
+- `_name` = `new Label { Name = "DateSpeaker", MouseFilter = MouseFilterEnum.Ignore }`
+- `_navigation` = `new HBoxContainer { Name = "DateNavigation" }`
+- `_previousBackgroundMaterial` = `new ShaderMaterial { Shader = _backgroundMaterial.Shader }`
+- `_relationDetail.Visible` = `!_relationDetail.Visible`
+- `_relationDetail` = `new Label { Name = "DateImpression", Position = new(0, 84), Size = new(280, 0), AutowrapMode = TextServer.AutowrapMode.WordSmart, Visible = false, MouseFilter = MouseFilterEnum.Ignore }`
+- `_relationText.MinimumSizeChanged` += `Layout`
+- `_relationText` = `new Label { Name = "DateRelationship", Position = new(96, 0), Size = new(170, 76), AutowrapMode = TextServer.AutowrapMode.WordSmart, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore }`
+- `_replyChoices` = `new VBoxContainer { Name = "DateReplyChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false }`
+- `_settings` = `new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`
+- `_sprite` = `new TextureRect { Name = "DateSprite", ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore }`
+- `_text` = `new RichTextLabel { Name = "DateLine", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Pass, VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr }`
+- `_waitAction` = `ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150)`
+- `relationButton.Pressed` += `() => _relationDetail.Visible = !_relationDetail.Visible`
 
 <a id="symbol-e28b8217360a"></a>
 
 ## `SpacedFont(Godot.Control, string) — FontVariation SpacedFont(Control control, string key)`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
@@ -643,18 +898,37 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.Click(Godot.InputEvent) — private void Click(InputEvent e)`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateSceneAssetStore.DismissContinueHint()`](DateSceneAssets.cs.md#symbol-f98f286cc92d)；`Godot.CanvasItem.Hide()`；`Godot.Control.AcceptEvent()`；`Godot.RichTextLabel.GetTotalCharacterCount()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** `Godot.Control.AcceptEvent()`；[`NationalSpire.DateSceneView.AdvanceDialogue()`](DateSceneView.cs.md#symbol-b412d34b179e)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.DismissContinueHint()`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView.Advance`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.AdvanceDialogue()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AcceptEvent()`；输入表达式：`AcceptEvent()`；返回值紧邻使用处：`ExpressionStatementSyntax: AcceptEvent();`
+- `NationalSpire.DateSceneView.AdvanceDialogue()`；输入表达式：`AdvanceDialogue()`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } && AdvanceDialogue()`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-b412d34b179e"></a>
+
+## `NationalSpire.DateSceneView.AdvanceDialogue() — private bool AdvanceDialogue()`
+
+来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.Click(Godot.InputEvent)`](DateSceneView.cs.md#symbol-cb37d8aeee1d)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.RichTextLabel.GetTotalCharacterCount()`；[`NationalSpire.DateSceneAssetStore.DismissContinueHint()`](DateSceneAssets.cs.md#symbol-f98f286cc92d)；`System.Action.Invoke()`；`System.Func<TResult>.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.DismissContinueHint()`；`NationalSpire.DateSceneView.Advance`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._text`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_hint.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hint.Hide();`
-- `Godot.Control.AcceptEvent()`；输入表达式：`AcceptEvent()`；返回值紧邻使用处：`ExpressionStatementSyntax: AcceptEvent();`
 - `Godot.RichTextLabel.GetTotalCharacterCount()`；输入表达式：`_text.GetTotalCharacterCount()`；返回值紧邻使用处：`BinaryExpressionSyntax: _text.VisibleCharacters < _text.GetTotalCharacterCount()`
 - `NationalSpire.DateSceneAssetStore.DismissContinueHint()`；输入表达式：`DateSceneAssetStore.DismissContinueHint()`；返回值紧邻使用处：`ExpressionStatementSyntax: DateSceneAssetStore.DismissContinueHint();`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Advance?.Invoke()`
@@ -662,58 +936,59 @@ private static readonly Color Ink = new("eff4f6");
 
 **赋值（含属性/字段和局部值）：**
 
+- `Status.Text` = `error.Message`
 - `_hintDismissed` = `true`
 - `_text.VisibleCharacters` = `-1`
-- `Status.Text` = `error.Message`
 
 <a id="symbol-557ca90aab66"></a>
 
 ## `NationalSpire.DateSceneView._Input(Godot.InputEvent) — public override void _Input(InputEvent e)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)；[`NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`](DateSceneWaiting.cs.md#symbol-883b2e576cb3)；`Godot.CanvasItem.GetGlobalTransformWithCanvas()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.RichTextLabel.GetVScrollBar()`；`Godot.TextEdit.GetVScrollBar()`；`Godot.Transform2D.AffineInverse()`；`Godot.Viewport.GuiGetFocusOwner()`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(double, double, double)`；`System.Math.Max(double, double)`
+**调用：** `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.RichTextLabel.GetVScrollBar()`；`Godot.TextEdit.GetVScrollBar()`；`Godot.Transform2D.AffineInverse()`；`Godot.Viewport.GuiGetFocusOwner()`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`；[`NationalSpire.DateSceneView.AdvanceDialogue()`](DateSceneView.cs.md#symbol-b412d34b179e)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.HistoryScrollBar()`](DateSceneView.cs.md#symbol-fe210725a87c)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)；[`NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`](DateSceneWaiting.cs.md#symbol-883b2e576cb3)；`System.Func<TResult>.Invoke()`；`System.Math.Clamp(double, double, double)`；`System.Math.Max(double, double)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._attachmentScroll`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.OpenHistory()`；`NationalSpire.DateSceneView.SetDialogueVisible(bool)`；`NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.AdvanceDialogue()`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.HistoryScrollBar()`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.OpenHistory()`；`NationalSpire.DateSceneView.SetDialogueVisible(bool)`；`NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`；`NationalSpire.DateSceneView._attachmentScroll`；`NationalSpire.DateSceneView._fastForwardHeld`；`NationalSpire.DateSceneView._fastForwardPause`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._text`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`_text.GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _text.GetGlobalTransformWithCanvas().AffineInverse`
 - `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`Editor.GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Editor.GetGlobalTransformWithCanvas().AffineInverse`
 - `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse`
-- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`_text.IsVisibleInTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && _text.IsVisibleInTree()`
+- `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`_text.GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _text.GetGlobalTransformWithCanvas().AffineInverse`
 - `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`Editor.IsVisibleInTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && InputMode && Editor.IsVisibleInTree()`
 - `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`IsVisibleInTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsVisibleInTree()`
+- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`_text.IsVisibleInTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && _text.IsVisibleInTree()`
 - `Godot.Node.GetParent()`；输入表达式：`hovered.GetParent()`；返回值紧邻使用处：`AssignmentExpressionSyntax: hovered = hovered.GetParent()`
+- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().SetInputAsHandled`
 - `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().GuiGetFocusOwner`
 - `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().GuiGetHoveredControl`
-- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().SetInputAsHandled`
-- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, _text.Size).HasPoint(_text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && _text.IsVisibleInTree()                  && new Rect2(Vector2.Zero, _text.Size).HasPoint(_text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`
-- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Editor.Size).HasPoint(Editor.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && InputMode && Editor.IsVisibleInTree()                  && new Rect2(Vector2.Zero, Editor.Size).HasPoint(Editor.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`
+- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Editor.Size).HasPoint(Editor.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && InputMode && Editor.IsVisibleInTree() && new Rect2(Vector2.Zero, Editor.Size).HasPoint(Editor.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`
 - `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`
-- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * right.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right } right              && new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * right.Position)`
-- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, _text.Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero, _text.Size).HasPoint`
+- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * right.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right } right && new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * right.Position)`
+- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, _text.Size).HasPoint(_text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: !HistoryOpen && _text.IsVisibleInTree() && new Rect2(Vector2.Zero, _text.Size).HasPoint(_text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position)`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Editor.Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero, Editor.Size).HasPoint`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero, Size).HasPoint`
-- `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_historyText.GetVScrollBar()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = _historyText.GetVScrollBar()`
+- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, _text.Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero, _text.Size).HasPoint`
 - `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_text.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _text.GetVScrollBar().MaxValue`
 - `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_text.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _text.GetVScrollBar().Page`
 - `Godot.TextEdit.GetVScrollBar()`；输入表达式：`Editor.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Editor.GetVScrollBar().MaxValue`
 - `Godot.TextEdit.GetVScrollBar()`；输入表达式：`Editor.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Editor.GetVScrollBar().Page`
-- `Godot.Transform2D.AffineInverse()`；输入表达式：`_text.GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: _text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position`
 - `Godot.Transform2D.AffineInverse()`；输入表达式：`Editor.GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: Editor.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position`
 - `Godot.Transform2D.AffineInverse()`；输入表达式：`GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse() * click.Position`
-- `Godot.Transform2D.AffineInverse()`；输入表达式：`GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position`
 - `Godot.Transform2D.AffineInverse()`；输入表达式：`GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse() * right.Position`
+- `Godot.Transform2D.AffineInverse()`；输入表达式：`GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position`
+- `Godot.Transform2D.AffineInverse()`；输入表达式：`_text.GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: _text.GetGlobalTransformWithCanvas().AffineInverse() * mouse.Position`
 - `Godot.Viewport.GuiGetFocusOwner()`；输入表达式：`GetViewport().GuiGetFocusOwner()`；返回值紧邻使用处：`IsPatternExpressionSyntax: GetViewport().GuiGetFocusOwner() is not (TextEdit or LineEdit)`
 - `Godot.Viewport.GuiGetHoveredControl()`；输入表达式：`GetViewport().GuiGetHoveredControl()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetViewport().GuiGetHoveredControl()`
 - `Godot.Viewport.SetInputAsHandled()`；输入表达式：`GetViewport().SetInputAsHandled()`；返回值紧邻使用处：`ExpressionStatementSyntax: GetViewport().SetInputAsHandled();`
+- `NationalSpire.DateSceneView.AdvanceDialogue()`；输入表达式：`AdvanceDialogue()`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventKey { Pressed: true, Echo: false, CtrlPressed: false, AltPressed: false, MetaPressed: false, Keycode: Key.Space or Key.Enter or Key.KpEnter } && AdvanceDialogue()`
 - `NationalSpire.DateSceneView.CloseHistory()`；输入表达式：`CloseHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: CloseHistory();`
+- `NationalSpire.DateSceneView.HistoryScrollBar()`；输入表达式：`HistoryScrollBar()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = HistoryScrollBar()`
 - `NationalSpire.DateSceneView.OpenHistory()`；输入表达式：`OpenHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenHistory();`
 - `NationalSpire.DateSceneView.SetDialogueVisible(bool)`；输入表达式：`SetDialogueVisible(DialogueHidden)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetDialogueVisible(DialogueHidden);`
-- `NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`；输入表达式：`WaitingClick(GetGlobalTransformWithCanvas().AffineInverse() * click.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click              && WaitingClick(GetGlobalTransformWithCanvas().AffineInverse() * click.Position)`
+- `NationalSpire.DateSceneView.WaitingClick(Godot.Vector2)`；输入表达式：`WaitingClick(GetGlobalTransformWithCanvas().AffineInverse() * click.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click && WaitingClick(GetGlobalTransformWithCanvas().AffineInverse() * click.Position)`
 - `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Blocked?.Invoke()`
 - `System.Math.Clamp(double, double, double)`；输入表达式：`Math.Clamp(bar.Value + (up ? -distance : distance), bar.MinValue, bottom)`；返回值紧邻使用处：`AssignmentExpressionSyntax: bar.Value = Math.Clamp(bar.Value + (up ? -distance : distance), bar.MinValue, bottom)`
 - `System.Math.Max(double, double)`；输入表达式：`Math.Max(60, bar.Page * .85)`；返回值紧邻使用处：`ConditionalExpressionSyntax: e is InputEventKey ? Math.Max(60, bar.Page * .85) : 70`
@@ -721,37 +996,106 @@ private static readonly Color Ink = new("eff4f6");
 
 **赋值（含属性/字段和局部值）：**
 
+- `_fastForwardHeld` = `control.Pressed`
+- `_fastForwardPause` = `0`
 - `bar.Value` = `Math.Clamp(bar.Value + (up ? -distance : distance), bar.MinValue, bottom)`
 - `hovered` = `hovered.GetParent()`
+
+<a id="symbol-5a9dd4f48509"></a>
+
+## `NationalSpire.DateSceneView._Notification(int) — public override void _Notification(int what)`
+
+来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._fastForwardHeld`；`NationalSpire.DateSceneView._fastForwardPause`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+- `_fastForwardHeld` = `false`
+- `_fastForwardPause` = `0`
 
 <a id="symbol-a52c1f416ddc"></a>
 
 ## `NationalSpire.DateSceneView.OpenHistory() — private void OpenHistory()`
 
-来源：源码第 245 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** `Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** `Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._history`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView.HistoryText`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.RefreshHistory(bool)`；`NationalSpire.DateSceneView._history`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyText`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Show()`；输入表达式：`_history.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: _history.Show();`
+- `Godot.Control.GrabFocus()`；输入表达式：`_historyList.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyList.GrabFocus();`
 - `Godot.Control.GrabFocus()`；输入表达式：`_historyText.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyText.GrabFocus();`
-- `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: HistoryText?.Invoke()`
+- `NationalSpire.DateSceneView.RefreshHistory(bool)`；输入表达式：`RefreshHistory(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshHistory(true);`
 
 **赋值（含属性/字段和局部值）：**
 
+
+<a id="symbol-fe210725a87c"></a>
+
+## `NationalSpire.DateSceneView.HistoryScrollBar() — private VScrollBar HistoryScrollBar()`
+
+来源：源码第 343 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)
+
+**调用：** `Godot.RichTextLabel.GetVScrollBar()`；`Godot.ScrollContainer.GetVScrollBar()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyText`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_historyText.GetVScrollBar()`；返回值紧邻使用处：`ConditionalExpressionSyntax: HistoryEntries != null ? _historyList.GetVScrollBar() : _historyText.GetVScrollBar()`
+- `Godot.ScrollContainer.GetVScrollBar()`；输入表达式：`_historyList.GetVScrollBar()`；返回值紧邻使用处：`ConditionalExpressionSyntax: HistoryEntries != null ? _historyList.GetVScrollBar() : _historyText.GetVScrollBar()`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-0762d57cebb4"></a>
+
+## `NationalSpire.DateSceneView.RefreshHistory(bool) — public void RefreshHistory(bool toEnd = false)`
+
+来源：源码第 344 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)
+
+**调用：** `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；[`NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`](DateHistoryList.cs.md#symbol-49f0126dc7e3)；[`NationalSpire.DateSceneView.HistoryScrollBar()`](DateSceneView.cs.md#symbol-fe210725a87c)；`System.Func<TResult>.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`；`NationalSpire.DateSceneView.DeleteHistoryReply`；`NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.HistoryScrollBar()`；`NationalSpire.DateSceneView.HistoryText`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyRestoreScroll`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；输入表达式：`_historyText.GetThemeFontSize("normal_font_size")`；返回值紧邻使用处：`ArgumentSyntax: _historyText.GetThemeFontSize("normal_font_size")`
+- `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`；输入表达式：`_historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply)`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply);`
+- `NationalSpire.DateSceneView.HistoryScrollBar()`；输入表达式：`HistoryScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: HistoryScrollBar().Value`
+- `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: HistoryText?.Invoke()`
+- `System.Func<TResult>.Invoke()`；输入表达式：`HistoryEntries()`；返回值紧邻使用处：`ArgumentSyntax: HistoryEntries()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_historyList.Visible` = `HistoryEntries != null`
+- `_historyRestoreScroll` = `toEnd ? null : HistoryScrollBar().Value`
 - `_historyScrollPending` = `2`
 - `_historyText.Text` = `HistoryText?.Invoke() ?? "约会开始后的对话会显示在这里。"`
+- `_historyText.Visible` = `HistoryEntries == null`
 
 <a id="symbol-83672fb8ae11"></a>
 
 ## `NationalSpire.DateSceneView.CloseHistory() — private void CloseHistory()`
 
-来源：源码第 250 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.GoBack()`](DateSceneView.cs.md#symbol-c97afbe9881b)
 
@@ -772,13 +1116,13 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.SetDialogueVisible(bool) — private void SetDialogueVisible(bool visible)`
 
-来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 358 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)
+**调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView.ShowWaiting(string, bool)`](DateSceneView.cs.md#symbol-c6c25a66fde3)
 
 **调用：** `Godot.Control.GrabFocus()`；`Godot.Control.ReleaseFocus()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._interface`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.InputMode`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView._interface`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -793,9 +1137,9 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.GoBack() — public void GoBack()`
 
-来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+**调用者：** [`NationalSpire.DateMemoryPlayback.GoBack()`](DateSceneMemoryPlayback.cs.md#symbol-c036240ab245)
 
 **调用：** [`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；`System.Action.Invoke()`（委托实际目标见流程文档）
 
@@ -813,13 +1157,13 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.Layout() — private void Layout()`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView.AffectionVisibility(bool)`](DateSceneView.cs.md#symbol-7da14922fda4)；[`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；[`NationalSpire.DateSceneView.ShowInput(string, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D)`](DateSceneView.cs.md#symbol-1801b5d93aa1)
+**调用者：** [`NationalSpire.DateSceneView.AffectionVisibility(bool)`](DateSceneView.cs.md#symbol-7da14922fda4)；[`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.PortraitPlacements(System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DatePortraitPlacement>)`](DateSceneCast.cs.md#symbol-80abec64fd7f)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；[`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool)`](DateSceneView.cs.md#symbol-949c1add6c05)；[`NationalSpire.DateSceneView.SetCast(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneCast>)`](DateSceneCast.cs.md#symbol-913514fd78e1)；[`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)
 
-**调用：** [`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`](DateSceneWaiting.cs.md#symbol-9b17a8ece561)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.GetCombinedMinimumSize()`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.GodotObject.GetInstanceId()`；`Godot.Gradient.SetOffset(int, float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.GetCombinedMinimumSize()`；`Godot.Control.GetMinimumSize()`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Gradient.SetOffset(int, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.DateSceneView.LayoutCast()`](DateSceneCast.cs.md#symbol-0a6a432034a8)；[`NationalSpire.DateSceneView.LayoutWaiting()`](DateSceneWaiting.cs.md#symbol-cacdc3bf25d3)；[`NationalSpire.DateSceneView.PortraitPosition(string, int, Godot.Vector2, Godot.Texture2D?)`](DateSceneCast.cs.md#symbol-660b122db429)；[`NationalSpire.DateSceneView.PortraitSize(string)`](DateSceneCast.cs.md#symbol-09f2107801c6)；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.MathF.Floor(float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._body`；`NationalSpire.DateSceneView._dialog`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._glass`；`NationalSpire.DateSceneView._headRatios`；`NationalSpire.DateSceneView._layingOut`；`NationalSpire.DateSceneView._margin`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._navigation`；`NationalSpire.DateSceneView._positionAnchor`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._spriteBaseY`；`NationalSpire.DateSceneView._spriteScale`；`NationalSpire.DateSceneView._spriteX`；`NationalSpire.DateSceneView._spriteY`；`NationalSpire.DateSceneView._waitingAnchor`；`NationalSpire.DateSceneView._waitingShift`；`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`；`NationalSpire.DateSceneView.WaitingDefault`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.LayoutCast()`；`NationalSpire.DateSceneView.LayoutWaiting()`；`NationalSpire.DateSceneView.PortraitPosition(string, int, Godot.Vector2, Godot.Texture2D?)`；`NationalSpire.DateSceneView.PortraitSize(string)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.WaitingDefault`；`NationalSpire.DateSceneView._body`；`NationalSpire.DateSceneView._castConfigured`；`NationalSpire.DateSceneView._dialog`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._glass`；`NationalSpire.DateSceneView._layingOut`；`NationalSpire.DateSceneView._margin`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._navigation`；`NationalSpire.DateSceneView._positionAnchor`；`NationalSpire.DateSceneView._relationDetail`；`NationalSpire.DateSceneView._relationText`；`NationalSpire.DateSceneView._replyChoices`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._speaker`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._spriteBaseY`；`NationalSpire.DateSceneView._visibleCast`；`NationalSpire.DateSceneView._waitAction`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -827,33 +1171,55 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_body.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _body.GetCombinedMinimumSize().Y`
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_name.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _name.GetCombinedMinimumSize().Y`
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_nameBox.GetCombinedMinimumSize()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _nameBox.Size = _nameBox.GetCombinedMinimumSize()`
+- `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_settings.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _settings.GetCombinedMinimumSize().X`
+- `Godot.Control.GetMinimumSize()`；输入表达式：`_relationText.GetMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _relationText.GetMinimumSize().Y`
 - `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`_nameBox.GetThemeStylebox("panel")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _nameBox.GetThemeStylebox("panel").ContentMarginRight`
-- `Godot.GodotObject.GetInstanceId()`；输入表达式：`anchor.GetInstanceId()`；返回值紧邻使用处：`ArgumentSyntax: anchor.GetInstanceId()`
 - `Godot.Gradient.SetOffset(int, float)`；输入表达式：`_glass.SetOffset(1, Math.Min(.99f, 15 / panelHeight))`；返回值紧邻使用处：`ExpressionStatementSyntax: _glass.SetOffset(1, Math.Min(.99f, 15 / panelHeight));`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(height * .62f * 1.3f, height * .93f * 1.3f)`；返回值紧邻使用处：`BinaryExpressionSyntax: new Vector2(height * .62f * 1.3f, height * .93f * 1.3f) * _spriteScale`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new((width - _sprite.Size.X) * .5f + _spriteX + _waitingShift, _spriteBaseY)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Position = new((width - _sprite.Size.X) * .5f + _spriteX + _waitingShift, _spriteBaseY)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new((width - barWidth) * .5f, barY)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings.Position = new((width - barWidth) * .5f, barY)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new((width - choices.Size.X) / 2, Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)))`；返回值紧邻使用处：`AssignmentExpressionSyntax: choices.Position = new((width - choices.Size.X) / 2, Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)))`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, height - panelHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _dialog.Position = new(0, height - panelHeight)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(280, 76)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _favourHost.Size = new(280, 76)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, relationHeight + 8)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _relationDetail.Position = new(0, relationHeight + 8)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(150, barHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _waitAction.Size = new(150, barHeight)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(170, relationHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _relationText.Size = new(170, relationHeight)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(280, relationHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _favourHost.Size = new(280, relationHeight)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(320, 44)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _navigation.Size = new(320, 44)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Math.Max(0, _settings.Position.X - inset - 12), barHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Status.Size = new(Math.Max(0, _settings.Position.X - inset - 12), barHeight)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(MathF.Floor(choiceWidth), 120)`；返回值紧邻使用处：`AssignmentExpressionSyntax: choices.Size = new(MathF.Floor(choiceWidth), 120)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(barWidth, barHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings.Size = new(barWidth, barHeight)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(inset - 12, _dialog.Position.Y - _nameBox.Size.Y - 8)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _nameBox.Position = new(inset - 12, _dialog.Position.Y - _nameBox.Size.Y - 8)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(inset, barY)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Status.Position = new(inset, barY)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width - 310, 90)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _favourHost.Position = new(width - 310, 90)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width - 354, 22)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _navigation.Position = new(width - 354, 22)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width * .25f, height * .945f)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings.Position = new(width * .25f, height * .945f)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width * .5f, Math.Max(48, height * .05f))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings.Size = new(width * .5f, Math.Max(48, height * .05f))`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width - inset - 150, barY)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _waitAction.Position = new(width - inset - 150, barY)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width, panelHeight)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _dialog.Size = new(width, panelHeight)`
-- `NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`；输入表达式：`RememberSprite(anchor)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberSprite(anchor);`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`_headRatios.GetValueOrDefault(anchor.GetInstanceId())`；返回值紧邻使用处：`ConditionalExpressionSyntax: anchor == null ? 0 : _headRatios.GetValueOrDefault(anchor.GetInstanceId())`
+- `NationalSpire.DateSceneView.LayoutCast()`；输入表达式：`LayoutCast()`；返回值紧邻使用处：`ExpressionStatementSyntax: LayoutCast();`
+- `NationalSpire.DateSceneView.LayoutWaiting()`；输入表达式：`LayoutWaiting()`；返回值紧邻使用处：`ExpressionStatementSyntax: LayoutWaiting();`
+- `NationalSpire.DateSceneView.PortraitPosition(string, int, Godot.Vector2, Godot.Texture2D?)`；输入表达式：`PortraitPosition(_speaker, _visibleCast.IndexOf(_speaker), _sprite.Size, anchor)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Position = PortraitPosition(_speaker, _visibleCast.IndexOf(_speaker), _sprite.Size, anchor)`
+- `NationalSpire.DateSceneView.PortraitSize(string)`；输入表达式：`PortraitSize(_speaker)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Size = PortraitSize(_speaker)`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`_visibleCast.Contains(_speaker)`；返回值紧邻使用处：`BinaryExpressionSyntax: !_castConfigured || _visibleCast.Contains(_speaker)`
+- `System.Collections.Generic.List<T>.IndexOf(T)`；输入表达式：`_visibleCast.IndexOf(_speaker)`；返回值紧邻使用处：`ArgumentSyntax: _visibleCast.IndexOf(_speaker)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16))`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16))`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, Math.Min((width * .72f - 24) / 2, width - 2 * inset))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(0, Math.Min((width * .72f - 24) / 2, width - 2 * inset))`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, _settings.Position.X - inset - 12)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, _settings.Position.X - inset - 12)`
 - `System.Math.Max(float, float)`；输入表达式：`Math.Max(28, _name.GetCombinedMinimumSize().Y + 18)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(28, _name.GetCombinedMinimumSize().Y + 18)`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(48, height * .05f)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(48, height * .05f)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(48, height * .05f)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(48, height * .05f)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(76, _relationText.GetMinimumSize().Y + 16)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(76, _relationText.GetMinimumSize().Y + 16)`
 - `System.Math.Max(float, float)`；输入表达式：`Math.Max(height * .32f, _body.GetCombinedMinimumSize().Y + 104)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(height * .32f, _body.GetCombinedMinimumSize().Y + 104)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(width * .5f, _settings.GetCombinedMinimumSize().X)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(width * .5f, _settings.GetCombinedMinimumSize().X)`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)`；返回值紧邻使用处：`ArgumentSyntax: Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min((width * .72f - 24) / 2, width - 2 * inset)`；返回值紧邻使用处：`ArgumentSyntax: Math.Min((width * .72f - 24) / 2, width - 2 * inset)`
 - `System.Math.Min(float, float)`；输入表达式：`Math.Min(.99f, 15 / panelHeight)`；返回值紧邻使用处：`ArgumentSyntax: Math.Min(.99f, 15 / panelHeight)`
+- `System.Math.Min(float, float)`；输入表达式：`Math.Min(height * .945f, height - barHeight)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(height * .945f, height - barHeight)`
+- `System.MathF.Floor(float)`；输入表达式：`MathF.Floor(choiceWidth)`；返回值紧邻使用处：`ArgumentSyntax: MathF.Floor(choiceWidth)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `Status.Position` = `new(inset, barY)`
+- `Status.Size` = `new(Math.Max(0, _settings.Position.X - inset - 12), barHeight)`
 - `_dialog.Position` = `new(0, height - panelHeight)`
 - `_dialog.Size` = `new(width, panelHeight)`
 - `_favourHost.Position` = `new(width - 310, 90)`
-- `_favourHost.Size` = `new(280, 76)`
+- `_favourHost.Size` = `new(280, relationHeight)`
 - `_layingOut` = `false`
 - `_layingOut` = `true`
 - `_nameBox.GetThemeStylebox("panel").ContentMarginRight` = `12`
@@ -861,18 +1227,25 @@ private static readonly Color Ink = new("eff4f6");
 - `_nameBox.Size` = `_nameBox.GetCombinedMinimumSize()`
 - `_navigation.Position` = `new(width - 354, 22)`
 - `_navigation.Size` = `new(320, 44)`
-- `_positionAnchor` ??= `WaitingDefault ?? _waitingAnchor ?? _sprite.Texture`
-- `_settings.Position` = `new(width * .25f, height * .945f)`
-- `_settings.Size` = `new(width * .5f, Math.Max(48, height * .05f))`
-- `_sprite.Position` = `new((width - _sprite.Size.X) * .5f + _spriteX + _waitingShift, _spriteBaseY)`
-- `_sprite.Size` = `new Vector2(height * .62f * 1.3f, height * .93f * 1.3f) * _spriteScale`
-- `_spriteBaseY` = `height * .4f - top * _sprite.Size.Y - 160 + _spriteY`
+- `_positionAnchor` ??= `WaitingDefault ?? _sprite.Texture`
+- `_relationDetail.Position` = `new(0, relationHeight + 8)`
+- `_relationText.Size` = `new(170, relationHeight)`
+- `_settings.Position` = `new((width - barWidth) * .5f, barY)`
+- `_settings.Size` = `new(barWidth, barHeight)`
+- `_sprite.Position` = `PortraitPosition(_speaker, _visibleCast.IndexOf(_speaker), _sprite.Size, anchor)`
+- `_sprite.Size` = `PortraitSize(_speaker)`
+- `_sprite.Visible` = `!_castConfigured || _visibleCast.Contains(_speaker)`
+- `_spriteBaseY` = `_sprite.Position.Y`
+- `_waitAction.Position` = `new(width - inset - 150, barY)`
+- `_waitAction.Size` = `new(150, barHeight)`
+- `choices.Position` = `new((width - choices.Size.X) / 2, Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)))`
+- `choices.Size` = `new(MathF.Floor(choiceWidth), 120)`
 
 <a id="symbol-fecef0523d98"></a>
 
 ## `NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double) — private void SetTextSpacing(FontVariation font, int size, double extra)`
 
-来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 404 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)
 
@@ -909,9 +1282,9 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.Preferences(int, double, double) — public void Preferences(int fontSize, double fade, double spacing = 1)`
 
-来源：源码第 309 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 426 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double)`](DateSceneView.cs.md#symbol-fecef0523d98)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`
 
@@ -945,9 +1318,9 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.Presentation(double, double, double, bool) — public void Presentation(double scale, double x, double y, bool outline)`
 
-来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 437 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；`double.IsFinite(double)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`System.Math.Clamp(double, double, double)`
 
@@ -977,9 +1350,9 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.Background(string, bool, double) — public void Background(string background, bool blur, double amount = 3)`
 
-来源：源码第 329 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 446 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.SelectDateBackground(string)`](DateSceneScreen.cs.md#symbol-4d37da1a3f4b)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.SelectDateBackground(string)`](DateSceneScreen.cs.md#symbol-4d37da1a3f4b)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)
 
 **调用：** [`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`](DateSceneView.cs.md#symbol-99d35c646db1)；[`NationalSpire.DateSceneView.CreateBackground(string)`](DateSceneView.cs.md#symbol-30a197722f91)；`double.IsFinite(double)`；`Godot.GodotObject.Dispose()`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`System.Math.Clamp(double, double, double)`
 
@@ -1008,7 +1381,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.CreateBackground(string) — public static Texture2D CreateBackground(string background)`
 
-来源：源码第 342 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 459 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)；[`NationalSpire.RandomEventArt.Load(string)`](RandomEventArt.cs.md#symbol-5147b98e47ca)；[`Preview()`](DateSceneBackgroundScreen.cs.md#symbol-1531e6366b73)
 
@@ -1033,7 +1406,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string) — private void BeginBackground(Texture2D texture, string id)`
 
-来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 470 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)；[`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)
 
@@ -1058,7 +1431,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 359 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 476 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1086,63 +1459,85 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D) — public void ShowLine(DateSceneLine line, string speaker, Texture2D sprite)`
 
-来源：源码第 365 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 483 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`](DateSceneWaiting.cs.md#symbol-9b17a8ece561)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(float, float, float, float)`；`Godot.RichTextLabel.ScrollToLine(int)`
+**调用：** [`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneView._alpha`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._firstTypeFrame`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._jump`；`NationalSpire.DateSceneView._jumpDuration`；`NationalSpire.DateSceneView._jumpHeight`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._targetAlpha`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._typing`；`NationalSpire.DateSceneView._waitAction`；`NationalSpire.DateSceneView.EndWaiting()`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.InstantSpeed`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.TextSpeed`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`；输入表达式：`ShowLineCore(line, speaker, sprite, true)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => ShowLineCore(line, speaker, sprite, true)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-d19549d8d807"></a>
+
+## `NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool) — private void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)`
+
+来源：源码第 485 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D)`](DateSceneView.cs.md#symbol-1801b5d93aa1)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`](DateSceneCast.cs.md#symbol-35177f2945fc)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.RichTextLabel.ScrollToLine(int)`；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`](DateSceneWaiting.cs.md#symbol-9b17a8ece561)；[`NationalSpire.DateSceneView.SelectSpeaker(NationalSpire.DateSceneLine, Godot.Texture2D, bool)`](DateSceneCast.cs.md#symbol-52d06ed87b40)；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneView.EndWaiting()`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.InstantSpeed`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`；`NationalSpire.DateSceneView.SelectSpeaker(NationalSpire.DateSceneLine, Godot.Texture2D, bool)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.TextSpeed`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._fastForwardPause`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._firstTypeFrame`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._hintDismissed`；`NationalSpire.DateSceneView._jump`；`NationalSpire.DateSceneView._jumpDuration`；`NationalSpire.DateSceneView._jumpHeight`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._replyChoices`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._shownPresentation`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._targetAlpha`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._typing`；`NationalSpire.DateSceneView._waitAction`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_composer.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_editFailure.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _editFailure.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_gameChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_replyChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_waitAction.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _waitAction.Hide();`
 - `Godot.CanvasItem.Show()`；输入表达式：`_text.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: _text.Show();`
-- `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(1,1,1,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Modulate = new Color(1,1,1,0)`
 - `Godot.RichTextLabel.ScrollToLine(int)`；输入表达式：`_text.ScrollToLine(0)`；返回值紧邻使用处：`ExpressionStatementSyntax: _text.ScrollToLine(0);`
-- `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；输入表达式：`DateScenes.DisplayText(line)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _text.Text = DateScenes.DisplayText(line)`
 - `NationalSpire.DateSceneView.EndWaiting()`；输入表达式：`EndWaiting()`；返回值紧邻使用处：`ExpressionStatementSyntax: EndWaiting();`
 - `NationalSpire.DateSceneView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
 - `NationalSpire.DateSceneView.RememberSprite(Godot.Texture2D)`；输入表达式：`RememberSprite(sprite)`；返回值紧邻使用处：`ExpressionStatementSyntax: RememberSprite(sprite);`
+- `NationalSpire.DateSceneView.SelectSpeaker(NationalSpire.DateSceneLine, Godot.Texture2D, bool)`；输入表达式：`SelectSpeaker(line, sprite, advanceCast)`；返回值紧邻使用处：`ExpressionStatementSyntax: SelectSpeaker(line, sprite, advanceCast);`
+- `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；输入表达式：`DateScenes.DisplayText(line)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _text.Text = DateScenes.DisplayText(line)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_alpha` = `0`
+- `InputMode` = `false`
+- `Status.Text` = `""`
+- `_fastForwardPause` = `0`
 - `_favourHost.Visible` = `_showAffectionBadge`
 - `_firstTypeFrame` = `true`
 - `_hint.Visible` = `!_hintDismissed`
-- `_jump` = `line.Narration ? 0 : _jumpDuration`
 - `_jumpDuration` = `line.Emotion == "excited" ? .48f : .28f`
 - `_jumpHeight` = `line.Emotion == "excited" ? 23 : 9`
+- `_jump` = `line.Narration ? 0 : _jumpDuration`
 - `_name.Text` = `speaker`
 - `_name.Visible` = `_nameBox.Visible = !line.Narration`
 - `_nameBox.Visible` = `!line.Narration`
-- `_sprite.Modulate` = `new Color(1,1,1,0)`
+- `_shownPresentation` = `(line.Speaker, line.Emotion, line.Narration)`
 - `_sprite.Texture` = `sprite`
 - `_targetAlpha` = `line.Narration ? 0 : 1`
 - `_text.Text` = `DateScenes.DisplayText(line)`
 - `_text.VisibleCharacters` = `TextSpeed >= InstantSpeed ? -1 : 0`
 - `_typing` = `0`
-- `InputMode` = `false`
-- `Status.Text` = `""`
 
 <a id="symbol-4f0d075ed97b"></a>
 
-## `NationalSpire.DateSceneView.ShowInput(string, bool) — public void ShowInput(string name, bool keepWaiting = false)`
+## `NationalSpire.DateSceneView.ShowInput(string, bool, bool) — public void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)`
 
-来源：源码第 382 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 505 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.EditFailedDateScene()`](DateSceneScreen.cs.md#symbol-11eaa513a64e)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneTesting.EditPreviousInput()`](DateSceneTesting.cs.md#symbol-4e7bc34c63a1)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)
 
-**调用：** [`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.EndWaiting()`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.EndWaiting()`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.SetDialogueVisible(bool)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._replyChoices`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_editFailure.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _editFailure.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_gameChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_hint.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hint.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_text.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _text.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_waitAction.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _waitAction.Hide();`
@@ -1152,42 +1547,49 @@ private static readonly Color Ink = new("eff4f6");
 - `Godot.Control.GrabFocus()`；输入表达式：`Editor.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.GrabFocus();`
 - `NationalSpire.DateSceneView.EndWaiting()`；输入表达式：`EndWaiting()`；返回值紧邻使用处：`ExpressionStatementSyntax: EndWaiting();`
 - `NationalSpire.DateSceneView.Layout()`；输入表达式：`Layout()`；返回值紧邻使用处：`ExpressionStatementSyntax: Layout();`
+- `NationalSpire.DateSceneView.SetDialogueVisible(bool)`；输入表达式：`SetDialogueVisible(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetDialogueVisible(true);`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_favourHost.Visible` = `_showAffectionBadge`
-- `_name.Text` = `name`
 - `InputMode` = `true`
 - `Status.Text` = `""`
+- `_favourHost.Visible` = `_showAffectionBadge`
+- `_name.Text` = `name`
+- `_replyChoices.Visible` = `showChoices`
 
 <a id="symbol-eecb2292c03b"></a>
 
-## `NationalSpire.DateSceneView.AppendLine(NationalSpire.DateSceneLine) — public void AppendLine(DateSceneLine line)`
+## `NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?) — public void AppendLine(IReadOnlyList<DateSceneLine> round, int index, Func<(string Name, Texture2D Texture)>? portrait = null)`
 
-来源：源码第 387 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 512 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.AppendDateLine(NationalSpire.DateSceneLine)`](DateSceneScreen.cs.md#symbol-243385a70bb8)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)
 
-**调用：** [`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)
+**调用：** [`NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`](DateSceneCast.cs.md#symbol-35177f2945fc)；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；`System.Func<TResult>.Invoke()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneView._text`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`；`NationalSpire.DateSceneView._firstTypeFrame`；`NationalSpire.DateSceneView._shownPresentation`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._typing`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`；输入表达式：`ShowRoundLine(round, index, appearance.Name, appearance.Texture)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowRoundLine(round, index, appearance.Name, appearance.Texture);`
 - `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；输入表达式：`DateScenes.DisplayText(line)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateScenes.DisplayText(line)`
+- `System.Func<TResult>.Invoke()`；输入表达式：`portrait()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = portrait()`
 
 **赋值（含属性/字段和局部值）：**
 
+- `_firstTypeFrame` = `first`
 - `_text.Text` = `text`
+- `_text.VisibleCharacters` = `revealed`
 - `_text.VisibleCharacters` = `visible`
+- `_typing` = `typing`
 
 <a id="symbol-e7a96de3c199"></a>
 
 ## `NationalSpire.DateSceneView.Streaming(bool) — public void Streaming(bool active)`
 
-来源：源码第 395 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 528 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** 无已绑定显式调用。
 
@@ -1206,39 +1608,42 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView.ShowWaiting(string, bool) — public void ShowWaiting(string status, bool failed = false)`
 
-来源：源码第 400 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 533 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string)`](DateGameScreen.cs.md#symbol-8963173330c9)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting.Generate(string)`](DateSceneTesting.cs.md#symbol-970e66145f4d)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；[`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`；`NationalSpire.DateSceneView.BeginWaiting()`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.BeginWaiting()`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.SetDialogueVisible(bool)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView._composer`；`NationalSpire.DateSceneView._editFailure`；`NationalSpire.DateSceneView._favourHost`；`NationalSpire.DateSceneView._gameChoices`；`NationalSpire.DateSceneView._hint`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameBox`；`NationalSpire.DateSceneView._replyChoices`；`NationalSpire.DateSceneView._showAffectionBadge`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._waitAction`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_composer.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_gameChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _gameChoices.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_hint.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hint.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_name.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _name.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_nameBox.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _nameBox.Hide();`
+- `Godot.CanvasItem.Hide()`；输入表达式：`_replyChoices.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_text.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _text.Hide();`
 - `Godot.CanvasItem.Show()`；输入表达式：`_waitAction.Show()`；返回值紧邻使用处：`ExpressionStatementSyntax: _waitAction.Show();`
 - `NationalSpire.DateSceneView.BeginWaiting()`；输入表达式：`BeginWaiting()`；返回值紧邻使用处：`ExpressionStatementSyntax: BeginWaiting();`
+- `NationalSpire.DateSceneView.SetDialogueVisible(bool)`；输入表达式：`SetDialogueVisible(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetDialogueVisible(true);`
 
 **赋值（含属性/字段和局部值）：**
 
+- `InputMode` = `false`
+- `Status.Text` = `status`
 - `_editFailure.Visible` = `failed`
 - `_favourHost.Visible` = `_showAffectionBadge`
 - `_waitAction.Text` = `failed ? "重新生成" : "停止生成"`
-- `InputMode` = `false`
-- `Status.Text` = `status`
 
 <a id="symbol-f99d5e4e9b59"></a>
 
 ## `NationalSpire.DateSceneView.ShowAttachments() — public void ShowAttachments()`
 
-来源：源码第 402 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 535 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.EditFailedDateScene()`](DateSceneScreen.cs.md#symbol-11eaa513a64e)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.EditPreviousDateScene()`](DateSceneScreen.cs.md#symbol-68bbfe92ebcf)；[`NationalSpire.CareerScreen.RefreshDateSceneAttachments()`](DateSceneScreen.cs.md#symbol-4cd4fd18856d)
 
 **调用：** `Godot.Node.GetChildCount(bool)`
 
@@ -1256,48 +1661,53 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateSceneView._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 403 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 536 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`](DateSceneView.cs.md#symbol-99d35c646db1)；[`NationalSpire.DateSceneView.TickWaiting(double)`](DateSceneWaiting.cs.md#symbol-bb1239eb8331)；`Godot.CanvasItem.GetLocalMousePosition()`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.Dispose()`；`Godot.Mathf.MoveToward(float, float, float)`；`Godot.RichTextLabel.GetTotalCharacterCount()`；`Godot.RichTextLabel.GetVScrollBar()`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.Math.Min(int, int)`；`System.MathF.Abs(float)`；`System.MathF.Sin(float)`
+**调用：** `Godot.CanvasItem.GetLocalMousePosition()`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.Dispose()`；`Godot.Mathf.MoveToward(float, float, float)`；`Godot.RichTextLabel.GetTotalCharacterCount()`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.DateSceneView.AdvanceDialogue()`](DateSceneView.cs.md#symbol-b412d34b179e)；[`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`](DateSceneView.cs.md#symbol-99d35c646db1)；[`NationalSpire.DateSceneView.HistoryScrollBar()`](DateSceneView.cs.md#symbol-fe210725a87c)；[`NationalSpire.DateSceneView.TickCast(double)`](DateSceneCast.cs.md#symbol-9093d3132f05)；[`NationalSpire.DateSceneView.TickWaiting(double)`](DateSceneWaiting.cs.md#symbol-bb1239eb8331)；`System.Action.Invoke()`；`System.Func<TResult>.Invoke()`；`System.Math.Max(double, double)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`；`System.Math.Min(int, int)`；`System.MathF.Abs(float)`；`System.MathF.Sin(float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._alpha`；`NationalSpire.DateSceneView._backgroundBlend`；`NationalSpire.DateSceneView._backgroundMaterial`；`NationalSpire.DateSceneView._backgroundPrevious`；`NationalSpire.DateSceneView._firstTypeFrame`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView._jump`；`NationalSpire.DateSceneView._jumpDuration`；`NationalSpire.DateSceneView._jumpHeight`；`NationalSpire.DateSceneView._poll`；`NationalSpire.DateSceneView._previousBackgroundTexture`；`NationalSpire.DateSceneView._queuedBackgroundId`；`NationalSpire.DateSceneView._queuedBackgroundTexture`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._spriteBaseY`；`NationalSpire.DateSceneView._targetAlpha`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._typing`；`NationalSpire.DateSceneView._waiting`；`NationalSpire.DateSceneView._waitingDoubleBounce`；`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.InstantSpeed`；`NationalSpire.DateSceneView.TextSpeed`；`NationalSpire.DateSceneView.Tick`；`NationalSpire.DateSceneView.TickWaiting(double)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.AdvanceDialogue()`；`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.CanFastForward`；`NationalSpire.DateSceneView.DialogueHidden`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.HistoryScrollBar()`；`NationalSpire.DateSceneView.InstantSpeed`；`NationalSpire.DateSceneView.Status`；`NationalSpire.DateSceneView.TextSpeed`；`NationalSpire.DateSceneView.Tick`；`NationalSpire.DateSceneView.TickCast(double)`；`NationalSpire.DateSceneView.TickWaiting(double)`；`NationalSpire.DateSceneView._alpha`；`NationalSpire.DateSceneView._backgroundBlend`；`NationalSpire.DateSceneView._backgroundMaterial`；`NationalSpire.DateSceneView._backgroundPrevious`；`NationalSpire.DateSceneView._fastForwardPause`；`NationalSpire.DateSceneView._firstTypeFrame`；`NationalSpire.DateSceneView._historyRestoreScroll`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._jump`；`NationalSpire.DateSceneView._jumpDuration`；`NationalSpire.DateSceneView._jumpHeight`；`NationalSpire.DateSceneView._poll`；`NationalSpire.DateSceneView._previousBackgroundTexture`；`NationalSpire.DateSceneView._queuedBackgroundId`；`NationalSpire.DateSceneView._queuedBackgroundTexture`；`NationalSpire.DateSceneView._settings`；`NationalSpire.DateSceneView._sprite`；`NationalSpire.DateSceneView._spriteBaseY`；`NationalSpire.DateSceneView._targetAlpha`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView._typing`；`NationalSpire.DateSceneView._waiting`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.GetLocalMousePosition()`；输入表达式：`GetLocalMousePosition()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetLocalMousePosition().Y`
-- `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(1,1,1,_alpha)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Modulate = new Color(1,1,1,_alpha)`
 - `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(1,1,1,Mathf.MoveToward(_settings.Modulate.A, hover ? 1 : 0, (float)delta * 7))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings.Modulate = new Color(1,1,1,Mathf.MoveToward(_settings.Modulate.A, hover ? 1 : 0, (float)delta * 7))`
+- `Godot.Color.Color(float, float, float, float)`；输入表达式：`new Color(1,1,1,_alpha)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Modulate = new Color(1,1,1,_alpha)`
 - `Godot.GodotObject.Dispose()`；输入表达式：`.Dispose()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _previousBackgroundTexture?.Dispose()`
-- `Godot.Mathf.MoveToward(float, float, float)`；输入表达式：`Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _alpha = Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`
+- `Godot.Mathf.MoveToward(float, float, float)`；输入表达式：`Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`；返回值紧邻使用处：`ConditionalExpressionSyntax: fast ? _targetAlpha : Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`
 - `Godot.Mathf.MoveToward(float, float, float)`；输入表达式：`Mathf.MoveToward(_settings.Modulate.A, hover ? 1 : 0, (float)delta * 7)`；返回值紧邻使用处：`ArgumentSyntax: Mathf.MoveToward(_settings.Modulate.A, hover ? 1 : 0, (float)delta * 7)`
 - `Godot.RichTextLabel.GetTotalCharacterCount()`；输入表达式：`_text.GetTotalCharacterCount()`；返回值紧邻使用处：`ArgumentSyntax: _text.GetTotalCharacterCount()`
-- `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_historyText.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _historyText.GetVScrollBar().MaxValue`
-- `Godot.RichTextLabel.GetVScrollBar()`；输入表达式：`_historyText.GetVScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _historyText.GetVScrollBar().Value`
+- `Godot.RichTextLabel.GetTotalCharacterCount()`；输入表达式：`_text.GetTotalCharacterCount()`；返回值紧邻使用处：`BinaryExpressionSyntax: _text.VisibleCharacters >= _text.GetTotalCharacterCount()`
 - `Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；输入表达式：`_backgroundMaterial.SetShaderParameter("fade_alpha", _backgroundBlend)`；返回值紧邻使用处：`ExpressionStatementSyntax: _backgroundMaterial.SetShaderParameter("fade_alpha", _backgroundBlend);`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(_sprite.Position.X, _spriteBaseY - (_jump > 0 ? bounce * _jumpHeight : 0))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _sprite.Position = new(_sprite.Position.X, _spriteBaseY - (_jump > 0 ? bounce * _jumpHeight : 0))`
+- `NationalSpire.DateSceneView.AdvanceDialogue()`；输入表达式：`AdvanceDialogue()`；返回值紧邻使用处：`ExpressionStatementSyntax: AdvanceDialogue();`
 - `NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`；输入表达式：`BeginBackground(queued, id)`；返回值紧邻使用处：`ExpressionStatementSyntax: BeginBackground(queued, id);`
+- `NationalSpire.DateSceneView.HistoryScrollBar()`；输入表达式：`HistoryScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: HistoryScrollBar().Value`
+- `NationalSpire.DateSceneView.HistoryScrollBar()`；输入表达式：`HistoryScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: HistoryScrollBar().MaxValue`
+- `NationalSpire.DateSceneView.TickCast(double)`；输入表达式：`TickCast(fast ? 1 : delta)`；返回值紧邻使用处：`ExpressionStatementSyntax: TickCast(fast ? 1 : delta);`
 - `NationalSpire.DateSceneView.TickWaiting(double)`；输入表达式：`TickWaiting(delta)`；返回值紧邻使用处：`ExpressionStatementSyntax: TickWaiting(delta);`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Tick?.Invoke()`
 - `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Blocked?.Invoke()`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, _jump - (float)delta)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _jump = Math.Max(0, _jump - (float)delta)`
+- `System.Math.Max(double, double)`；输入表达式：`Math.Max(600, TextSpeed * 12)`；返回值紧邻使用处：`ConditionalExpressionSyntax: fast ? Math.Max(600, TextSpeed * 12) : TextSpeed`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, _jump - (float)delta)`；返回值紧邻使用处：`ConditionalExpressionSyntax: fast ? 0 : Math.Max(0, _jump - (float)delta)`
 - `System.Math.Min(float, float)`；输入表达式：`Math.Min(1, _backgroundBlend + (float)delta / .45f)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _backgroundBlend = Math.Min(1, _backgroundBlend + (float)delta / .45f)`
 - `System.Math.Min(int, int)`；输入表达式：`Math.Min(_text.GetTotalCharacterCount(), (int)_typing)`；返回值紧邻使用处：`ConditionalExpressionSyntax: TextSpeed >= InstantSpeed ? -1 : Math.Min(_text.GetTotalCharacterCount(), (int)_typing)`
-- `System.MathF.Abs(float)`；输入表达式：`MathF.Abs(MathF.Sin(phase * MathF.PI * (_waitingDoubleBounce ? 2 : 1)))`；返回值紧邻使用处：`ConditionalExpressionSyntax: _waiting ? MathF.Abs(MathF.Sin(phase * MathF.PI * (_waitingDoubleBounce ? 2 : 1)))              : _jumpHeight > 9 ? MathF.Abs(MathF.Sin(phase * MathF.PI * 2)) * (1 - phase * .55f) : MathF.Sin(phase * MathF.PI)`
 - `System.MathF.Abs(float)`；输入表达式：`MathF.Abs(MathF.Sin(phase * MathF.PI * 2))`；返回值紧邻使用处：`BinaryExpressionSyntax: MathF.Abs(MathF.Sin(phase * MathF.PI * 2)) * (1 - phase * .55f)`
-- `System.MathF.Sin(float)`；输入表达式：`MathF.Sin(phase * MathF.PI * (_waitingDoubleBounce ? 2 : 1))`；返回值紧邻使用处：`ArgumentSyntax: MathF.Sin(phase * MathF.PI * (_waitingDoubleBounce ? 2 : 1))`
 - `System.MathF.Sin(float)`；输入表达式：`MathF.Sin(phase * MathF.PI * 2)`；返回值紧邻使用处：`ArgumentSyntax: MathF.Sin(phase * MathF.PI * 2)`
 - `System.MathF.Sin(float)`；输入表达式：`MathF.Sin(phase * MathF.PI)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _jumpHeight > 9 ? MathF.Abs(MathF.Sin(phase * MathF.PI * 2)) * (1 - phase * .55f) : MathF.Sin(phase * MathF.PI)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_alpha` = `Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`
+- `HistoryScrollBar().Value` = `_historyRestoreScroll ?? HistoryScrollBar().MaxValue`
+- `Status.TooltipText` = `Status.Text`
+- `_alpha` = `fast ? _targetAlpha : Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4)`
 - `_backgroundBlend` = `Math.Min(1, _backgroundBlend + (float)delta / .45f)`
 - `_backgroundPrevious.Texture` = `null`
+- `_fastForwardPause` += `delta`
+- `_fastForwardPause` = `0`
 - `_firstTypeFrame` = `false`
-- `_historyText.GetVScrollBar().Value` = `_historyText.GetVScrollBar().MaxValue`
-- `_jump` = `Math.Max(0, _jump - (float)delta)`
+- `_jump` = `fast ? 0 : Math.Max(0, _jump - (float)delta)`
 - `_poll` += `delta`
 - `_poll` = `0`
 - `_previousBackgroundTexture` = `null`
@@ -1307,13 +1717,13 @@ private static readonly Color Ink = new("eff4f6");
 - `_sprite.Modulate` = `new Color(1,1,1,_alpha)`
 - `_sprite.Position` = `new(_sprite.Position.X, _spriteBaseY - (_jump > 0 ? bounce * _jumpHeight : 0))`
 - `_text.VisibleCharacters` = `TextSpeed >= InstantSpeed ? -1 : Math.Min(_text.GetTotalCharacterCount(), (int)_typing)`
-- `_typing` += `delta * TextSpeed`
+- `_typing` += `delta * (fast ? Math.Max(600, TextSpeed * 12) : TextSpeed)`
 
 <a id="symbol-6826c700a52c"></a>
 
 ## `NationalSpire.DateChoiceButton.Caption — public string Caption`
 
-来源：源码第 439 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 580 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1331,7 +1741,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateChoiceButton.Subtitle — public string Subtitle`
 
-来源：源码第 440 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 581 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1349,7 +1759,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateChoiceButton.Public — public bool Public`
 
-来源：源码第 441 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 582 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1367,7 +1777,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateChoiceButton._Ready() — public override void _Ready()`
 
-来源：源码第 442 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 583 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1393,7 +1803,7 @@ private static readonly Color Ink = new("eff4f6");
 
 ## `NationalSpire.DateChoiceButton._Draw() — public override void _Draw()`
 
-来源：源码第 448 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 589 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

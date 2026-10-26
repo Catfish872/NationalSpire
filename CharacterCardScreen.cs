@@ -20,6 +20,14 @@ public partial class CareerScreen
         if (draft.Handle.Length == 0) draft.Handle = draft.PublicName;
         var edit = new CharacterCardEdit { Create = create, Target = draft.Id, Person = draft };
         CharacterDesignPackage.Installation? installation = null;
+        PortraitDesign? pendingDesign = null;
+        DateSceneAssets? pendingAssets = null;
+        void InstallDraft()
+        {
+            if (installation != null) return;
+            if (pendingDesign != null && pendingAssets != null) installation = new(data, draft.Id, pendingDesign, pendingAssets);
+            else if (package != null) installation = new(data, package);
+        }
         var previousFocus = GetViewport().GuiGetFocusOwner();
         IEnumerable<Control> Controls(Node node) => node.GetChildren().SelectMany(child =>
             (child is Control c ? new[] { c } : Array.Empty<Control>()).Concat(Controls(child)));
@@ -117,8 +125,25 @@ public partial class CareerScreen
         Line(identityFields, "游戏 ID", draft.Handle, v => { draft.Handle = v; subtitle.Text = v; }, "CardHandle");
         Line(identityFields, "姓名 · 可留空", draft.Name, v => draft.Name = v, "CardRealName");
         var genders = draft.Id == "player" ? IdentityGender.Choices : new[] { "男", "女" };
-        var gender = Choice(identityFields, "性别", genders, Array.IndexOf(genders, draft.Gender), n => draft.Gender = genders[n], "CardGender");
+        var gender = Choice(identityFields, "性别", genders, Array.IndexOf(genders, draft.Gender), n =>
+        { draft.Gender = genders[n]; if (draft.Personality.Selection is { } selection && !PersonalityPools.AllowsGender(selection.Gender, draft.Gender)) draft.Personality.Selection = null; }, "CardGender");
         gender.Disabled = draft.CameoId.Length > 0;
+        if (draft.Id != "player" && !data.HumanIds.Contains(draft.Id))
+        {
+            var pool = PersonalityPools.Read(data.Ai);
+            var styleChoice = Choice(identityFields, "性格类别 / 具体性格", ["沿用原有性格"], 0, _ => { }, "CardPersonalityStyle");
+            var choices = new List<(PersonalityCategory Category, PersonalityStyle Style)>();
+            void RefreshStyles()
+            {
+                if (draft.Personality.Selection is { } selected && !PersonalityPools.AllowsGender(selected.Gender, draft.Gender)) draft.Personality.Selection = null;
+                choices = pool.Categories.Where(c => PersonalityPools.AllowsGender(c.Gender, draft.Gender)).SelectMany(c => c.Styles.Select(s => (c, s))).ToList();
+                styleChoice.Clear(); styleChoice.AddItem(draft.Personality.Selection is { } current ? "已保存：" + current.CategoryName + " / " + current.StyleName : "沿用原有性格");
+                foreach (var item in choices) styleChoice.AddItem(item.Category.Name + " / " + item.Style.Name);
+                styleChoice.AddItem("清除选定风格，沿用原有性格"); styleChoice.Select(0);
+            }
+            styleChoice.ItemSelected += n => { if (n == choices.Count + 1) draft.Personality.Selection = null; else if (n > 0) PersonalityPools.Select(draft.Personality, choices[(int)n - 1].Category, choices[(int)n - 1].Style); };
+            gender.ItemSelected += _ => RefreshStyles(); RefreshStyles();
+        }
         string? clubLock = CharacterCards.ClubLock(data, draft.Id);
         var country = Choice(identityFields, "国家 / 地区", EsportsWorld.Countries, Array.IndexOf(EsportsWorld.Countries, draft.Country), n => draft.Country = EsportsWorld.Countries[n], "CardCountry");
         country.Disabled = draft.Id == "player" && clubLock != null;
@@ -219,7 +244,7 @@ public partial class CareerScreen
         {
             foreach (var input in Controls(shade).OfType<SpinBox>()) input.Apply();
             GetViewport().GuiGetFocusOwner()?.ReleaseFocus();
-            try { if (package != null) installation ??= new(data, package); }
+            try { InstallDraft(); }
             catch (Exception e) { status.Text = "导入立绘失败：" + e.Message; status.Modulate = new Color("f08080"); return; }
             if (_multiplayer != null)
             {
@@ -241,7 +266,35 @@ public partial class CareerScreen
         {
             try
             {
-                var incomingPackage = Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? CharacterDesignPackage.Read(ViewData, path) : null;
+                if (!CareerStore.IsCurrent(data)) return;
+                PortraitPackageImport.Plan? plan = null;
+                if (Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    var design = pendingDesign ?? package?.Design ?? PortraitDesignStore.Read(PortraitDesignStore.FilePath(data, draft.Id), draft.Id) ?? PortraitDesigns.Create(data, draft.Id, draft);
+                    plan = PortraitPackageImport.Read(data, path, design);
+                    if (plan.Character == null)
+                    {
+                        PortraitImportDialog("导入立绘设计包", $"这个压缩包包含立绘PNG。是否导入到{(create ? "正在新建的" : "当前编辑的")}角色“{draft.PublicName}”？\n保存角色时一起保存这些立绘。", (box, finish) =>
+                        {
+                            var attach = Button("导入到当前角色", () => finish(() => ConfirmPortraitEmotions(data, plan, design, accepted =>
+                            {
+                                if (!IsInstanceValid(shade) || shade.IsQueuedForDeletion()) return;
+                                try
+                                {
+                                    var assets = pendingAssets ?? (package != null ? CharacterDesignPackage.Installation.PackageAssets(package) : DateSceneAssetStore.Read(data, draft.Id));
+                                    var merged = PortraitPackageImport.Merge(plan, design, assets, accepted);
+                                    if (merged.Count == 0) { status.Text = "已取消全部新差分的导入。"; return; }
+                                    installation?.Dispose(); installation = null;
+                                    pendingDesign = merged.Design; pendingAssets = merged.Assets;
+                                    status.Text = $"已添加{merged.Count}张立绘到角色草稿，保存角色后生效。"; status.Modulate = Colors.White;
+                                }
+                                catch (Exception e) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("f08080"); }
+                            })), 260); attach.Name = "CharacterImportPortraits"; box.AddChild(attach);
+                        });
+                        return;
+                    }
+                }
+                var incomingPackage = plan?.Character;
                 var incoming = incomingPackage?.Person ?? CharacterCardPng.ReadFile(ViewData, path, AvatarImages.FromCardPng);
                 if (AvatarImages.Read(incoming.Avatar) == null) throw new InvalidDataException("角色卡头像无法解码。");
                 if (incomingPackage != null) AppearanceLibrary.Import(ViewData, path, incomingPackage);
@@ -272,7 +325,7 @@ public partial class CareerScreen
                 var avatar = draft.Avatar.Source == "auto" ? await AvatarImages.FromCharacterCardArt(this, AutomaticPortrait()) : draft.Avatar;
                 if (!IsInstanceValid(status) || shade.IsQueuedForDeletion()) return;
                 // 待确认导入包再次导出时，先使用同一事务安装本地设计。
-                if (package != null) installation ??= new(data, package);
+                InstallDraft();
                 string path = CharacterDesignPackage.Write(data, draft, avatar, CharacterDesignPackage.ExportDirectory());
                 status.Text = "角色设计ZIP已导出，包含角色卡及全部套装立绘差分。"; status.Modulate = Colors.White; OS.ShellShowInFileManager(path);
             }

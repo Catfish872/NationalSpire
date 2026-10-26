@@ -123,7 +123,7 @@ public partial class CareerScreen
         deleteTemplate.Name = "DeletePromptTemplate";
         deleteTemplate.AddThemeColorOverride("font_color", new Color("eea3ab"));
         templateTabs.AddChild(deleteTemplate);
-        var eventPools = Button("事件池", () => OpenEventPoolSettings(data), 130);
+        var eventPools = Button("随机池编辑", () => OpenEventPoolSettings(data), 160);
         eventPools.Name = "OpenEventPools"; templateTabs.AddChild(eventPools);
         editor.TextChanged += () => { if (!loading) { drafts[selected] = editor.Text; count.Text = $"{editor.Text.Length} 字 · 修改尚未保存"; } };
         foreach (var section in PromptLibrary.Sections)
@@ -164,7 +164,7 @@ public partial class CareerScreen
             try
             {
                 string path = PromptTransfer.WriteDesktop(PromptTransfer.Export(data.Ai, drafts));
-                count.Text = "已导出当前模板、事件池及全部场景（包括未保存的提示词编辑）。";
+                count.Text = "已导出当前模板、事件池、完整性格池及全部场景（包括未保存的提示词编辑）。";
                 // 只打开文件所在位置，不执行导出的内容。
                 var result = OS.ShellShowInFileManager(path);
                 if (result != Error.Ok) count.Text = "导出成功，文件位于 " + path;
@@ -188,22 +188,26 @@ public partial class CareerScreen
         try { bundle = PromptTransfer.Read(File.ReadAllText(path)); }
         catch (Exception e)
         {
-            ShowCareerDialog("无法导入提示词", e is ArgumentException ? e.Message : "文件不是有效的提示词 JSON，请重新选择。", () => true, "知道了");
+            ShowCareerDialog("无法导入提示词", e is ArgumentException or InvalidDataException ? e.Message : "文件不是有效的提示词 JSON，请重新选择。", () => true, "知道了");
             return;
         }
         Label preview = null!;
         string? destination = PromptLibrary.TemplateId(data.Ai);
-        ShowCareerDialog("导入提示词", "导入将替换目标模板的全部场景及文件所含事件池，并保存；旧文件保留目标事件池。当前未保存的编辑会丢弃。", () =>
+        ShowCareerDialog("导入提示词", "导入将替换目标模板的全部场景，以及文件包含的事件池和性格池。文件省略的池保留现有配置；已生成角色保留各自的性格。当前未保存的编辑会丢弃。", () =>
         {
             string oldTemplate = data.Ai.PromptTemplate;
+            int oldPrivateVersion = data.Ai.PrivatePromptVersion;
             var old = new Dictionary<string, string>(data.Ai.PromptOverrides);
             var banks = data.Ai.PromptTemplateOverrides.ToDictionary(p => p.Key, p => new Dictionary<string, string>(p.Value));
             var custom = new Dictionary<string, CustomPromptTemplate>(data.Ai.CustomPromptTemplates ?? new());
             var pools = new Dictionary<string, Dictionary<string, List<EventPoolEntry>>>(data.Ai.EventPoolOverrides);
+            var personality = data.Ai.PersonalityPool;
             try { PromptTransfer.Apply(data.Ai, bundle, destination); SaveAiSettings(data); imported(); return true; }
             catch
             {
                 data.Ai.PromptTemplate = oldTemplate; data.Ai.PromptOverrides = old; data.Ai.PromptTemplateOverrides = banks; data.Ai.CustomPromptTemplates = custom; data.Ai.EventPoolOverrides = pools;
+                data.Ai.PersonalityPool = personality;
+                data.Ai.PrivatePromptVersion = oldPrivateVersion;
                 preview.Text = "导入未保存，请检查存档文件夹的写入权限。"; return false;
             }
         }, contents: box =>
@@ -216,6 +220,9 @@ public partial class CareerScreen
                 box.AddChild(Text($"事件池：随机事件 {effective.Random.Length} 条 · 选手日常 {effective.DailyCount} 条", 17, _muted));
             }
             else box.AddChild(Text("文件未包含事件池，保留目标模板已有配置。", 17, _muted));
+            box.AddChild(Text(bundle.PersonalityPool is { } personalities
+                ? $"性格池：{personalities.Categories.Count} 个类别 · {personalities.Categories.Sum(c => c.Styles.Count)} 种性格"
+                : "文件未包含性格池，保留现有性格池。", 17, _muted));
             box.AddChild(Text("导入到", 18, _ink));
             var targets = PromptLibrary.AvailableTemplates(data.Ai).ToList();
             var picker = new OptionButton { Name = "PromptImportTarget", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };

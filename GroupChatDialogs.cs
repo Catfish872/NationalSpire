@@ -9,12 +9,12 @@ public partial class CareerScreen
     private void GroupActions()
     {
         var g = CurrentGroup; if (g == null) return;
-        void Pick(string title, Action action, bool single = true) => GroupMemberPicker(g, people =>
+        void Pick(string title, Action action, bool single = true, bool showPortraits = false) => GroupMemberPicker(g, people =>
         {
             _groupSelection = people.Where(id => PrivateMessages.CanChat(ViewData, id)).ToList();
             if (_groupSelection.Count == 0) return;
             _privatePerson = _groupSelection[0]; action();
-        }, existing: true, title: title, single: single);
+        }, existing: true, title: title, single: single, showPortraits: showPortraits);
         ShowCareerDialog("添加到群聊消息", "", () => true, "关闭", box =>
         {
             var grid = new GridContainer { Columns = 2 }; grid.AddThemeConstantOverride("h_separation", 12); grid.AddThemeConstantOverride("v_separation", 12); box.AddChild(grid);
@@ -24,7 +24,7 @@ public partial class CareerScreen
             Choice("赠送礼物", "选择接收者与物品", () => Pick("选择接收礼物的人", PrivateGiftPicker));
             if (g.Members.Any(id => !GroupChats.IsHuman(ViewData, id) && PrivateMessages.Relation(ViewData, id).OathConfirmed))
                 Choice("解除誓约", "选择对象并提出解除请求", () => Pick("选择解除誓约的对象", PrivateOathAttachment));
-            Choice("约定活动", "选择参与者与日期", () => Pick("选择活动参与者", PrivateActivityPicker, false));
+            Choice("约定活动", "选择参与者与日期", () => Pick("选择活动参与者", PrivateActivityPicker, false, true));
             Choice("制定训练计划", "选择受训队员与教练", () => Pick("选择受训队员", GroupTrainingPicker, false));
             Choice("调整阵容", "选择本队教练", () => Pick("选择负责教练", PrivateLineupPicker));
             Choice("商谈合同", "选择报价对象", () => Pick("选择商谈对象", () => AttachPrivate(new() { Kind = "contract" }), false));

@@ -8,16 +8,76 @@ public partial class DateSceneView : Control
     public TextEdit Editor { get; private set; } = null!;
     public VBoxContainer Attachments { get; private set; } = null!;
     public Button Send { get; private set; } = null!;
+    public Button ResumeGame { get; private set; } = null!;
     public Label Status { get; private set; } = null!;
-    public Action? Advance, Submit, AddAttachment, Settings, Exit, Tick, RetryStop, ReturnToEdit, Regenerate;
-    public Button RegenerateButton { get; private set; } = null!;
+    public Action? Advance, Submit, AddAttachment, Settings, Exit, Tick, RetryStop, ReturnToEdit, EditPrevious, Resume;
+    public Button EditPreviousButton { get; private set; } = null!;
+    public Button ExitButton { get; private set; } = null!;
     public Func<bool>? Blocked;
     public Func<string>? HistoryText;
+    public Func<IReadOnlyList<DateHistoryEntry>>? HistoryEntries;
+    public Action<string>? DeleteHistoryReply;
     public bool HistoryOpen => _history?.Visible == true;
     public bool DialogueHidden => _interface?.Visible == false;
     public bool InputMode { get; private set; }
+    private HBoxContainer _inputTools = null!;
+    private VBoxContainer _gameChoices = null!, _replyChoices = null!;
+    public void SetReplyChoices(string first, Action chooseFirst, string second, Action chooseSecond)
+    {
+        CareerVisuals.ClearContent(_replyChoices);
+        foreach (var (caption, action, id) in new[] { (first, chooseFirst, "DateReplyFirst"), (second, chooseSecond, "DateReplySecond") })
+        {
+            var button = ActionButton(caption, action, id, 0);
+            button.CustomMinimumSize = new(0, 52); button.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            button.ClipText = true; button.TooltipText = caption; _replyChoices.AddChild(button);
+            AddChoiceCopy(button, caption);
+        }
+        Layout();
+    }
+    private void AddChoiceCopy(Button choice, string text)
+    {
+        // 两侧预留等宽空间，保持选项正文居中，右侧容纳独立复制点击区。
+        foreach (string state in new[] { "normal", "hover", "pressed", "disabled" })
+        {
+            var style = (StyleBox)choice.GetThemeStylebox(state).Duplicate();
+            style.ContentMarginLeft = style.ContentMarginRight = 52; choice.AddThemeStyleboxOverride(state, style);
+        }
+        var copy = ActionButton("", () =>
+        {
+            if (!InputMode || HistoryOpen || DialogueHidden || Blocked?.Invoke() == true || choice.Disabled) return;
+            Editor.BeginComplexOperation();
+            Editor.SelectAll(); Editor.InsertTextAtCaret(text); Editor.EndComplexOperation(); Editor.GrabFocus();
+            Editor.SetCaretLine(Editor.GetLineCount() - 1); Editor.SetCaretColumn(Editor.GetLine(Editor.GetCaretLine()).Length);
+        }, choice.Name + "Copy", 36);
+        copy.CustomMinimumSize = new(36, 36); copy.Icon = AffectionArt.Texture("date-choice-copy"); copy.ExpandIcon = true;
+        copy.AddThemeConstantOverride("icon_max_width", 20); copy.TooltipText = "复制到输入框";
+        copy.MouseFilter = MouseFilterEnum.Stop; copy.MouseDefaultCursorShape = CursorShape.PointingHand;
+        foreach (string state in new[] { "normal", "pressed", "focus", "disabled" }) copy.AddThemeStyleboxOverride(state, new StyleBoxEmpty());
+        copy.AddThemeStyleboxOverride("hover", CareerVisuals.Box("ffffff14", "00000000", 5, 0));
+        choice.AddChild(copy); copy.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight);
+        copy.OffsetLeft = -44; copy.OffsetRight = -8; copy.OffsetTop = -18; copy.OffsetBottom = 18;
+    }
+    public Button AddInputAction(string name, Texture2D icon, Action action, string tooltip)
+    {
+        var button = ActionButton("", action, name, 48); button.Icon = icon; button.ExpandIcon = true;
+        button.AddThemeConstantOverride("icon_max_width", 24); button.TooltipText = tooltip; _inputTools.AddChild(button); return button;
+    }
+    public void ShowGameChoices(Action start, Action cancel)
+    {
+        ShowInput(""); InputMode = false; _composer.Hide(); _replyChoices.Hide(); _nameBox.Hide(); _hint.Hide();
+        CareerVisuals.ClearContent(_gameChoices);
+        var begin = ActionButton("开始对局", start, "DateGameStart", 180);
+        begin.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)); begin.AddThemeColorOverride("font_color", new Color("172330"));
+        var cancelButton = ActionButton("取消对局", cancel, "DateGameCancel", 180);
+        foreach (var button in new[] { begin, cancelButton }) { button.SizeFlagsHorizontal = SizeFlags.ExpandFill; button.CustomMinimumSize = new(0, 52); _gameChoices.AddChild(button); }
+        _gameChoices.Show(); Layout();
+    }
     public const double InstantSpeed = 300;
     public double TextSpeed { get; set; } = 75;
+    private bool _fastForwardHeld;
+    private double _fastForwardPause;
+    private bool CanFastForward => _fastForwardHeld && IsVisibleInTree() && !InputMode && !HistoryOpen && !DialogueHidden
+        && _text.Visible && Blocked?.Invoke() != true;
     private TextureRect _background = null!, _backgroundPrevious = null!, _sprite = null!;
     private ShaderMaterial _backgroundMaterial = null!;
     private ShaderMaterial _previousBackgroundMaterial = null!;
@@ -33,9 +93,7 @@ public partial class DateSceneView : Control
     private Control _favourHost = null!;
     private AffectionBadge _favourBadge = null!;
     private Label _relationText = null!, _relationDetail = null!;
-    private int? _lastFavour;
-    private double _deltaUntil;
-    private string _favourDelta = "";
+    private readonly Dictionary<string, (int Value, string Delta, ulong Until)> _shownFavour = [];
     private bool _showAffectionBadge = true;
     public void AffectionVisibility(bool visible)
     {
@@ -43,20 +101,33 @@ public partial class DateSceneView : Control
         _favourHost.Visible = visible;
         Layout();
     }
-    public void Relationship(PrivateRelation relation)
+    public void Relationship(PrivateRelation relation, string person = "", bool animate = true)
     {
-        _favourBadge.Bind(relation);
-        if (_lastFavour is int previous && previous != relation.Favour)
-        { _favourDelta = $"  {relation.Favour - previous:+0;-0}"; _deltaUntil = Time.GetTicksMsec() + 3500; }
-        _lastFavour = relation.Favour;
-        _relationText.Text = (relation.OathConfirmed ? "誓约" : relation.SelectedBond >= 1 ? "恋人" : relation.Relationship)
-            + (Time.GetTicksMsec() < _deltaUntil ? _favourDelta : "");
+        _favourBadge.Bind(relation, animate);
+        if (!_shownFavour.TryGetValue(person, out var previous) || !animate) previous = (relation.Favour, "", 0);
+        if (previous.Value != relation.Favour)
+            previous = (relation.Favour, $"  {relation.Favour - previous.Value:+0;-0}", Time.GetTicksMsec() + 3500);
+        _shownFavour[person] = previous;
+        string label = (relation.OathConfirmed ? "誓约" : relation.SelectedBond >= 1 ? "恋人" : relation.Relationship)
+            + (Time.GetTicksMsec() < previous.Until ? previous.Delta : "");
+        string wrapped = WrapRelationship(label);
+        if (_relationText.Text != wrapped) { _relationText.Text = wrapped; Layout(); }
         _relationDetail.Text = relation.Impression;
+    }
+    private string WrapRelationship(string text)
+    {
+        if (text.Contains('\n') || _relationText.GetThemeFont("font").GetStringSize(text, fontSize: 18).X <= 170) return text;
+        int[] starts = System.Globalization.StringInfo.ParseCombiningCharacters(text);
+        if (starts.Length < 2) return text;
+        int middle = starts[(starts.Length + 1) / 2];
+        return text[..middle] + "\n" + text[middle..];
     }
     private MarginContainer _margin = null!;
     private Gradient _glass = null!;
     private PanelContainer _history = null!;
     private RichTextLabel _historyText = null!;
+    private DateHistoryList _historyList = null!;
+    private double? _historyRestoreScroll;
     private int _historyScrollPending;
     private VBoxContainer _body = null!, _composer = null!;
     private RichTextLabel _text = null!;
@@ -131,8 +202,8 @@ public partial class DateSceneView : Control
         _favourHost.AddChild(relationButton); relationButton.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         var badge = new Control { Position = new(8, 4), Size = new(80, 68), MouseFilter = MouseFilterEnum.Ignore }; _favourHost.AddChild(badge);
         _favourBadge = new AffectionBadge(); badge.AddChild(_favourBadge);
-        _relationText = new Label { Name = "DateRelationship", Position = new(96, 23), Size = new(170, 30), TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis, MouseFilter = MouseFilterEnum.Ignore };
-        _relationText.AddThemeColorOverride("font_color", new("f1ccdf")); _relationText.AddThemeFontSizeOverride("font_size", 19); _favourHost.AddChild(_relationText);
+        _relationText = new Label { Name = "DateRelationship", Position = new(96, 0), Size = new(170, 76), AutowrapMode = TextServer.AutowrapMode.WordSmart, VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Ignore };
+        _relationText.AddThemeColorOverride("font_color", new("f1ccdf")); _relationText.AddThemeFontSizeOverride("font_size", 18); _favourHost.AddChild(_relationText);
         _relationDetail = new Label { Name = "DateImpression", Position = new(0, 84), Size = new(280, 0), AutowrapMode = TextServer.AutowrapMode.WordSmart, Visible = false, MouseFilter = MouseFilterEnum.Ignore };
         _relationDetail.AddThemeColorOverride("font_color", new("eadce5")); _relationDetail.AddThemeConstantOverride("outline_size", 5); _favourHost.AddChild(_relationDetail);
         relationButton.Pressed += () => _relationDetail.Visible = !_relationDetail.Visible;
@@ -140,6 +211,8 @@ public partial class DateSceneView : Control
             VisibleCharactersBehavior = TextServer.VisibleCharactersBehavior.GlyphsLtr };
         _text.AddThemeFontSizeOverride("normal_font_size", 30); _text.AddThemeColorOverride("default_color", Ink); _body.AddChild(_text);
         _composer = new VBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }; _composer.AddThemeConstantOverride("separation", 8); _body.AddChild(_composer);
+        _replyChoices = new VBoxContainer { Name = "DateReplyChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false };
+        _replyChoices.AddThemeConstantOverride("separation", 16); _interface.AddChild(_replyChoices);
         _attachmentScroll = new ScrollContainer { Visible = false, CustomMinimumSize = new(0, 80), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; _composer.AddChild(_attachmentScroll);
         Attachments = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _attachmentScroll.AddChild(Attachments);
         Editor = new TextEdit { Name = "DateInput", PlaceholderText = "输入回应…", SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 65), WrapMode = TextEdit.LineWrappingMode.Boundary };
@@ -147,22 +220,29 @@ public partial class DateSceneView : Control
         Editor.GuiInput += input => { if (input is InputEventKey { Pressed: true, Echo: false, CtrlPressed: true, Keycode: Key.Enter }) { AcceptEvent(); Submit?.Invoke(); } };
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); _composer.AddChild(actions);
         var tools = new HBoxContainer(); tools.AddThemeConstantOverride("separation", 12); actions.AddChild(tools);
+        _inputTools = tools;
         tools.AddChild(ActionButton("+", () => AddAttachment?.Invoke(), "DateAttachments", 48));
         actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        ResumeGame = ActionButton("返回游戏", () => Resume?.Invoke(), "DateResumeGame", 150); ResumeGame.Hide(); actions.AddChild(ResumeGame);
         Send = ActionButton("发送", () => Submit?.Invoke(), "DateSend", 150); actions.AddChild(Send);
         Send.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 7, 10)); Send.AddThemeColorOverride("font_color", new Color("172330"));
         CommunityReplyExpressions.Attach(Editor, _composer, tools, actions);
+        _gameChoices = new VBoxContainer { Name = "DateGameChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false };
+        _gameChoices.AddThemeConstantOverride("separation", 16); _interface.AddChild(_gameChoices);
         _hint = new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }; _hint.AddThemeColorOverride("font_color", new("b3c7cf")); _body.AddChild(_hint);
         _hintDismissed = DateSceneAssetStore.ContinueHintDismissed();
-        Status = new Label { Name = "DateStatus", AutowrapMode = TextServer.AutowrapMode.WordSmart, MaxLinesVisible = 2, MouseFilter = MouseFilterEnum.Ignore }; Status.AddThemeFontSizeOverride("font_size", 15); Status.AddThemeColorOverride("font_color", new("c1d1d8")); _body.AddChild(Status);
-        _waitAction = ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150); _waitAction.SizeFlagsHorizontal = SizeFlags.ShrinkEnd; _body.AddChild(_waitAction);
+        Status = new Label { Name = "DateStatus", MaxLinesVisible = 1, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
+            VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Pass };
+        Status.AddThemeFontSizeOverride("font_size", 15); Status.AddThemeColorOverride("font_color", new("c1d1d8")); _interface.AddChild(Status);
+        _waitAction = ActionButton("停止生成", () => RetryStop?.Invoke(), "DateWaitAction", 150); _interface.AddChild(_waitAction);
         _editFailure = ActionButton("编辑文字", () => ReturnToEdit?.Invoke(), "DateFailureEdit", 150); _editFailure.SizeFlagsHorizontal = SizeFlags.ShrinkEnd; _body.AddChild(_editFailure);
         _settings = new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }; _settings.AddThemeConstantOverride("separation", 18); _interface.AddChild(_settings);
         _settings.AddChild(ActionButton("场景设置", () => Settings?.Invoke(), "DateSettings", 140));
+        _settings.AddChild(ActionButton("结束约会", () => Exit?.Invoke(), "DateEnd", 140));
         _navigation = new HBoxContainer { Name = "DateNavigation" }; _navigation.AddThemeConstantOverride("separation", 12); _interface.AddChild(_navigation);
         _navigation.AddChild(ActionButton("历史记录  Q", () => { if (HistoryOpen) CloseHistory(); else OpenHistory(); }, "DateHistoryButton", 145));
-        _navigation.AddChild(ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155));
-        RegenerateButton = ActionButton("重新生成", () => Regenerate?.Invoke(), "DateRegenerate", 140); _settings.AddChild(RegenerateButton);
+        ExitButton = ActionButton("退出约会  Esc", () => Exit?.Invoke(), "DateExit", 155); _navigation.AddChild(ExitButton);
+        EditPreviousButton = ActionButton("重新输入", () => EditPrevious?.Invoke(), "DateEditPrevious", 140); _settings.AddChild(EditPreviousButton);
         foreach (var button in _settings.GetChildren().OfType<Button>())
         {
             foreach (string state in new[] { "normal", "hover", "pressed", "focus", "disabled" }) button.AddThemeStyleboxOverride(state, new StyleBoxEmpty());
@@ -175,6 +255,7 @@ public partial class DateSceneView : Control
         _historyText = new RichTextLabel { Name = "DateHistoryText", BbcodeEnabled = false, ScrollActive = true, SizeFlagsVertical = SizeFlags.ExpandFill, SelectionEnabled = true, FocusMode = FocusModeEnum.All };
         _historyText.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
         _historyText.AddThemeFontSizeOverride("normal_font_size", 27); _historyText.AddThemeColorOverride("default_color", Ink); historyBody.AddChild(_historyText);
+        _historyList = new DateHistoryList { Name = "DateHistoryList", Visible = false, SizeFlagsVertical = SizeFlags.ExpandFill }; historyBody.AddChild(_historyList);
         var historyHint = new Label { Text = "滚轮 / PageUp / PageDown 浏览 · Q / 右键 / Esc 返回", HorizontalAlignment = HorizontalAlignment.Center };
         historyHint.AddThemeFontSizeOverride("font_size", 16); historyHint.AddThemeColorOverride("font_color", new("a8bcc8")); historyBody.AddChild(historyHint);
         GuiInput += Click; _dialog.GuiInput += Click;
@@ -184,21 +265,24 @@ public partial class DateSceneView : Control
         }
         _lineFont = SpacedFont(_text, "normal_font"); _editorFont = SpacedFont(Editor, "font");
         _nameFont = SpacedFont(_name, "font"); _historyFont = SpacedFont(_historyText, "normal_font");
-        Resized += Layout; _body.MinimumSizeChanged += Layout; _name.MinimumSizeChanged += Layout;
+        Resized += Layout; _body.MinimumSizeChanged += Layout; _name.MinimumSizeChanged += Layout; _relationText.MinimumSizeChanged += Layout;
         Preferences(1, 0); Presentation(1, 0, 0, true); ShowWaiting("正在准备场景…");
     }
     private void Click(InputEvent e)
     {
-        if (HistoryOpen || DialogueHidden || InputMode || !_text.Visible || Blocked?.Invoke() == true) return;
-        if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left })
-        {
-            AcceptEvent();
-            if (!_hintDismissed) { _hintDismissed = true; _hint.Hide(); try { DateSceneAssetStore.DismissContinueHint(); } catch (Exception error) { Status.Text = error.Message; } }
-            if (_text.VisibleCharacters >= 0 && _text.VisibleCharacters < _text.GetTotalCharacterCount()) _text.VisibleCharacters = -1; else Advance?.Invoke();
-        }
+        if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } && AdvanceDialogue()) AcceptEvent();
+    }
+    private bool AdvanceDialogue()
+    {
+        if (HistoryOpen || DialogueHidden || InputMode || !_text.Visible || Blocked?.Invoke() == true) return false;
+        if (!_hintDismissed) { _hintDismissed = true; _hint.Hide(); try { DateSceneAssetStore.DismissContinueHint(); } catch (Exception error) { Status.Text = error.Message; } }
+        if (_text.VisibleCharacters >= 0 && _text.VisibleCharacters < _text.GetTotalCharacterCount()) _text.VisibleCharacters = -1; else Advance?.Invoke();
+        return true;
     }
     public override void _Input(InputEvent e)
     {
+        if (e is InputEventKey { Keycode: Key.Ctrl } control)
+        { _fastForwardHeld = control.Pressed; if (!control.Pressed) _fastForwardPause = 0; }
         if (!IsVisibleInTree() || Blocked?.Invoke() == true) return;
         if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } click
             && WaitingClick(GetGlobalTransformWithCanvas().AffineInverse() * click.Position))
@@ -206,9 +290,14 @@ public partial class DateSceneView : Control
         if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right } right
             && new Rect2(Vector2.Zero, Size).HasPoint(GetGlobalTransformWithCanvas().AffineInverse() * right.Position))
         {
-            if (HistoryOpen) CloseHistory(); else SetDialogueVisible(DialogueHidden);
+            if (HistoryOpen) CloseHistory();
+            else if (!InputMode && _text.Visible) SetDialogueVisible(DialogueHidden);
+            else return;
             GetViewport().SetInputAsHandled(); return;
         }
+        if (e is InputEventKey { Pressed: true, Echo: false, CtrlPressed: false, AltPressed: false, MetaPressed: false,
+            Keycode: Key.Space or Key.Enter or Key.KpEnter } && AdvanceDialogue())
+        { GetViewport().SetInputAsHandled(); return; }
         if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Q, CtrlPressed: false, AltPressed: false, MetaPressed: false }
             && (HistoryOpen || GetViewport().GuiGetFocusOwner() is not (TextEdit or LineEdit)))
         {
@@ -237,15 +326,29 @@ public partial class DateSceneView : Control
         if (!HistoryOpen) { if (up) { OpenHistory(); GetViewport().SetInputAsHandled(); } return; }
         GetViewport().SetInputAsHandled();
         if (_historyScrollPending > 0) return;
-        var bar = _historyText.GetVScrollBar(); double bottom = Math.Max(bar.MinValue, bar.MaxValue - bar.Page);
+        var bar = HistoryScrollBar(); double bottom = Math.Max(bar.MinValue, bar.MaxValue - bar.Page);
         if (down && bar.Value >= bottom - 1) { CloseHistory(); return; }
         double distance = e is InputEventKey ? Math.Max(60, bar.Page * .85) : 70;
         bar.Value = Math.Clamp(bar.Value + (up ? -distance : distance), bar.MinValue, bottom);
     }
+    public override void _Notification(int what)
+    {
+        if (what == NotificationApplicationFocusOut) { _fastForwardHeld = false; _fastForwardPause = 0; }
+    }
     private void OpenHistory()
     {
-        _historyText.Text = HistoryText?.Invoke() ?? "约会开始后的对话会显示在这里。";
-        _history.Show(); _historyText.GrabFocus(); _historyScrollPending = 2;
+        _history.Show(); RefreshHistory(true);
+        if (HistoryEntries != null) _historyList.GrabFocus(); else _historyText.GrabFocus();
+    }
+    private VScrollBar HistoryScrollBar() => HistoryEntries != null ? _historyList.GetVScrollBar() : _historyText.GetVScrollBar();
+    public void RefreshHistory(bool toEnd = false)
+    {
+        if (!HistoryOpen) return;
+        _historyRestoreScroll = toEnd ? null : HistoryScrollBar().Value;
+        _historyText.Visible = HistoryEntries == null; _historyList.Visible = HistoryEntries != null;
+        if (HistoryEntries != null) _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply);
+        else _historyText.Text = HistoryText?.Invoke() ?? "约会开始后的对话会显示在这里。";
+        _historyScrollPending = 2;
     }
     private void CloseHistory()
     {
@@ -255,7 +358,7 @@ public partial class DateSceneView : Control
     private void SetDialogueVisible(bool visible)
     {
         _interface.Visible = visible;
-        if (!visible) Editor.ReleaseFocus(); else if (InputMode) Editor.GrabFocus();
+        if (!visible) Editor.ReleaseFocus(); else if (InputMode && !HistoryOpen) Editor.GrabFocus();
     }
     public void GoBack()
     {
@@ -270,18 +373,32 @@ public partial class DateSceneView : Control
         _dialog.Position = new(0, height - panelHeight); _dialog.Size = new(width, panelHeight);
         _glass.SetOffset(1, Math.Min(.99f, 15 / panelHeight));
         float badgeHeight = Math.Max(28, _name.GetCombinedMinimumSize().Y + 18);
-        _favourHost.Size = new(280, 76);
+        float relationHeight = Math.Max(76, _relationText.GetMinimumSize().Y + 16);
+        _favourHost.Size = new(280, relationHeight); _relationText.Size = new(170, relationHeight);
+        _relationDetail.Position = new(0, relationHeight + 8);
         _nameBox.GetThemeStylebox("panel").ContentMarginRight = 12;
         _nameBox.Size = _nameBox.GetCombinedMinimumSize(); _nameBox.Position = new(inset - 12, _dialog.Position.Y - _nameBox.Size.Y - 8);
+        foreach (var choices in new[] { _replyChoices, _gameChoices })
+        {
+            float choiceWidth = Math.Max(0, Math.Min((width * .72f - 24) / 2, width - 2 * inset));
+            choices.Size = new(MathF.Floor(choiceWidth), 120);
+            choices.Position = new((width - choices.Size.X) / 2, Math.Max(0, Math.Min((height - choices.Size.Y) / 2, _nameBox.Position.Y - choices.Size.Y - 16)));
+        }
         _navigation.Position = new(width - 354, 22); _navigation.Size = new(320, 44);
         _favourHost.Position = new(width - 310, 90);
-        _sprite.Size = new Vector2(height * .62f * 1.3f, height * .93f * 1.3f) * _spriteScale;
-        var anchor = _positionAnchor ??= WaitingDefault ?? _waitingAnchor ?? _sprite.Texture;
-        if (anchor != null) RememberSprite(anchor);
-        float top = anchor == null ? 0 : _headRatios.GetValueOrDefault(anchor.GetInstanceId());
-        _spriteBaseY = height * .4f - top * _sprite.Size.Y - 160 + _spriteY;
-        _sprite.Position = new((width - _sprite.Size.X) * .5f + _spriteX + _waitingShift, _spriteBaseY);
-        _settings.Position = new(width * .25f, height * .945f); _settings.Size = new(width * .5f, Math.Max(48, height * .05f));
+        _sprite.Size = PortraitSize(_speaker);
+        var anchor = _positionAnchor ??= WaitingDefault ?? _sprite.Texture;
+        _sprite.Position = PortraitPosition(_speaker, _visibleCast.IndexOf(_speaker), _sprite.Size, anchor);
+        _spriteBaseY = _sprite.Position.Y;
+        _sprite.Visible = !_castConfigured || _visibleCast.Contains(_speaker);
+        LayoutCast();
+        LayoutWaiting();
+        float barWidth = Math.Max(width * .5f, _settings.GetCombinedMinimumSize().X);
+        float barHeight = Math.Max(48, height * .05f), barY = Math.Min(height * .945f, height - barHeight);
+        _settings.Position = new((width - barWidth) * .5f, barY); _settings.Size = new(barWidth, barHeight);
+        // 状态与生成操作使用固定底栏，流式内容更新保持正文面板的位置。
+        Status.Position = new(inset, barY); Status.Size = new(Math.Max(0, _settings.Position.X - inset - 12), barHeight);
+        _waitAction.Position = new(width - inset - 150, barY); _waitAction.Size = new(150, barHeight);
         _layingOut = false;
     }
     private void SetTextSpacing(FontVariation font, int size, double extra)
@@ -362,30 +479,46 @@ public partial class DateSceneView : Control
         _backgroundTexture = _previousBackgroundTexture = _queuedBackgroundTexture = null;
         _lineFont?.Dispose(); _editorFont?.Dispose(); _nameFont?.Dispose(); _historyFont?.Dispose();
     }
+    private (string Speaker, string Emotion, bool Narration) _shownPresentation;
     public void ShowLine(DateSceneLine line, string speaker, Texture2D sprite)
+        => ShowLineCore(line, speaker, sprite, true);
+    private void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)
     {
+        _shownPresentation = (line.Speaker, line.Emotion, line.Narration);
+        _gameChoices.Hide(); _replyChoices.Hide();
         EndWaiting();
+        SelectSpeaker(line, sprite, advanceCast);
         InputMode = false; _composer.Hide(); _waitAction.Hide(); _editFailure.Hide(); _text.Show(); _hint.Visible = !_hintDismissed; _name.Visible = _nameBox.Visible = !line.Narration; _name.Text = speaker;
         _favourHost.Visible = _showAffectionBadge;
         if (!line.Narration)
         {
             RememberSprite(sprite);
-            // 从旁白返回时从透明开始；旁白期间保留上一张图完成淡出。
-            if (_targetAlpha == 0) { _alpha = 0; _sprite.Modulate = new Color(1,1,1,0); }
+            // 旁白期间保留上一张图完成淡出；恢复台词时从当前透明度继续淡入。
             _sprite.Texture = sprite;
         }
         _targetAlpha = line.Narration ? 0 : 1;
         _jumpDuration = line.Emotion == "excited" ? .48f : .28f; _jumpHeight = line.Emotion == "excited" ? 23 : 9;
         _jump = line.Narration ? 0 : _jumpDuration;
         _text.Text = DateScenes.DisplayText(line); _text.ScrollToLine(0); _text.VisibleCharacters = TextSpeed >= InstantSpeed ? -1 : 0; _typing = 0; _firstTypeFrame = true; Status.Text = ""; Layout();
+        _fastForwardPause = 0;
     }
-    public void ShowInput(string name, bool keepWaiting = false)
+    public void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)
     {
+        _gameChoices.Hide();
         if (!keepWaiting) EndWaiting();
-        InputMode = true; _composer.Show(); _waitAction.Hide(); _editFailure.Hide(); _text.Hide(); _hint.Hide(); _name.Show(); _nameBox.Show(); _favourHost.Visible = _showAffectionBadge; _name.Text = name; Status.Text = ""; if (!HistoryOpen && !DialogueHidden) Editor.GrabFocus(); Layout();
+        InputMode = true; _composer.Show(); _replyChoices.Visible = showChoices; _waitAction.Hide(); _editFailure.Hide(); _text.Hide(); _hint.Hide(); _name.Show(); _nameBox.Show(); _favourHost.Visible = _showAffectionBadge; _name.Text = name; Status.Text = "";
+        SetDialogueVisible(true); if (!HistoryOpen) Editor.GrabFocus(); Layout();
     }
-    public void AppendLine(DateSceneLine line)
+    public void AppendLine(IReadOnlyList<DateSceneLine> round, int index, Func<(string Name, Texture2D Texture)>? portrait = null)
     {
+        var line = round[index];
+        if (portrait != null && _shownPresentation != (line.Speaker, line.Emotion, line.Narration))
+        {
+            int revealed = _text.VisibleCharacters; double typing = _typing; bool first = _firstTypeFrame;
+            var appearance = portrait();
+            ShowRoundLine(round, index, appearance.Name, appearance.Texture);
+            _text.VisibleCharacters = revealed; _typing = typing; _firstTypeFrame = first; return;
+        }
         string text = DateScenes.DisplayText(line);
         if (_text.Text == text) return;
         int visible = _text.VisibleCharacters;
@@ -398,15 +531,16 @@ public partial class DateSceneView : Control
         Status.Text = active ? "正在续写…" : "";
     }
     public void ShowWaiting(string status, bool failed = false)
-    { InputMode = false; _composer.Hide(); _text.Hide(); _hint.Hide(); _name.Hide(); _nameBox.Hide(); _favourHost.Visible = _showAffectionBadge; Status.Text = status; _waitAction.Show(); _editFailure.Visible = failed; _waitAction.Text = failed ? "重新生成" : "停止生成"; BeginWaiting(); }
+    { _gameChoices.Hide(); _replyChoices.Hide(); InputMode = false; _composer.Hide(); _text.Hide(); _hint.Hide(); _name.Hide(); _nameBox.Hide(); _favourHost.Visible = _showAffectionBadge; Status.Text = status; _waitAction.Show(); _editFailure.Visible = failed; _waitAction.Text = failed ? "重新生成" : "停止生成"; SetDialogueVisible(true); BeginWaiting(); }
     public void ShowAttachments() => _attachmentScroll.Visible = Attachments.GetChildCount() > 0;
     public override void _Process(double delta)
     {
         _poll += delta;
         if (_poll >= .12) { _poll = 0; Tick?.Invoke(); }
+        if (Status.TooltipText != Status.Text) Status.TooltipText = Status.Text;
         if (_sprite == null) return;
         TickWaiting(delta);
-        if (_historyScrollPending > 0 && --_historyScrollPending == 0) _historyText.GetVScrollBar().Value = _historyText.GetVScrollBar().MaxValue;
+        if (_historyScrollPending > 0 && --_historyScrollPending == 0) HistoryScrollBar().Value = _historyRestoreScroll ?? HistoryScrollBar().MaxValue;
         if (HistoryOpen) return;
         if (_backgroundBlend < 1)
         {
@@ -417,17 +551,24 @@ public partial class DateSceneView : Control
                 if (_queuedBackgroundTexture is { } queued) { string id = _queuedBackgroundId; _queuedBackgroundTexture = null; _queuedBackgroundId = ""; BeginBackground(queued, id); }
             }
         }
-        _alpha = Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4); _sprite.Modulate = new Color(1,1,1,_alpha);
-        _jump = Math.Max(0, _jump - (float)delta);
+        bool fast = CanFastForward;
+        TickCast(fast ? 1 : delta);
+        _alpha = fast ? _targetAlpha : Mathf.MoveToward(_alpha, _targetAlpha, (float)delta * 4); _sprite.Modulate = new Color(1,1,1,_alpha);
+        _jump = fast ? 0 : Math.Max(0, _jump - (float)delta);
         float phase = _jumpDuration > 0 ? 1 - _jump / _jumpDuration : 1;
-        float bounce = _waiting ? MathF.Abs(MathF.Sin(phase * MathF.PI * (_waitingDoubleBounce ? 2 : 1)))
-            : _jumpHeight > 9 ? MathF.Abs(MathF.Sin(phase * MathF.PI * 2)) * (1 - phase * .55f) : MathF.Sin(phase * MathF.PI);
-        _sprite.Position = new(_sprite.Position.X, _spriteBaseY - (_jump > 0 ? bounce * _jumpHeight : 0));
+        float bounce = _jumpHeight > 9 ? MathF.Abs(MathF.Sin(phase * MathF.PI * 2)) * (1 - phase * .55f) : MathF.Sin(phase * MathF.PI);
+        if (!_waiting) _sprite.Position = new(_sprite.Position.X, _spriteBaseY - (_jump > 0 ? bounce * _jumpHeight : 0));
         if (_firstTypeFrame) _firstTypeFrame = false;
         else if (!DialogueHidden && Blocked?.Invoke() != true && _text.Visible && _text.VisibleCharacters >= 0)
         {
-            _typing += delta * TextSpeed; _text.VisibleCharacters = TextSpeed >= InstantSpeed ? -1 : Math.Min(_text.GetTotalCharacterCount(), (int)_typing);
+            _typing += delta * (fast ? Math.Max(600, TextSpeed * 12) : TextSpeed); _text.VisibleCharacters = TextSpeed >= InstantSpeed ? -1 : Math.Min(_text.GetTotalCharacterCount(), (int)_typing);
         }
+        if (fast && (_text.VisibleCharacters < 0 || _text.VisibleCharacters >= _text.GetTotalCharacterCount()))
+        {
+            _fastForwardPause += delta;
+            if (_fastForwardPause >= .10) { _fastForwardPause = 0; AdvanceDialogue(); }
+        }
+        else _fastForwardPause = 0;
         bool hover = GetLocalMousePosition().Y >= Size.Y * .93f;
         _settings.Modulate = new Color(1,1,1,Mathf.MoveToward(_settings.Modulate.A, hover ? 1 : 0, (float)delta * 7));
     }

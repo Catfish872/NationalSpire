@@ -36,9 +36,13 @@ public static class CareerEngine
         AvatarHonors.Capture(data);
         return changed;
     }
-    public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1)
+    public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1, PersonalityPool? personalityPool = null, string? worldId = null, string? playerName = null)
     {
+        if (personalityPool != null) PersonalityPools.Validate(personalityPool);
         var data = new CareerData { CalendarStartYear = DateTime.Now.Year, CooperativeMembers = cooperativeMembers, LongSeasonsFrom = expanded ? 1 : 0, ContentPoolVersion = ContentPoolMigration.Version };
+        data.PlayerAlias = playerName?.Trim() ?? "";
+        if (worldId != null) data.WorldId = worldId;
+        data.NpcPersonalityPool = personalityPool == null ? null : Coop.CoopJson.Copy(personalityPool);
         // 旧赛制用于存档兼容回归；正常新生涯启用完整生态。
         if (!expanded) data.Esports.EcosystemVersion = -1;
         string[] characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
@@ -249,7 +253,7 @@ public static class CareerEngine
             player = new RunPerformance(runClear, playerFloor, playerSeconds),
             opponent = new RunPerformance(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value),
             comparison, cards, deckSummary, evidence });
-        if (!confirmFailure && !forfeit && (comparison < 0 || !runClear && comparison > 0))
+        if (!confirmFailure && !forfeit && (comparison < 0 || !runClear && comparison > 0) && m.DateGame == null)
         {
             if (d.Failure != null) return;
             d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
@@ -276,6 +280,7 @@ public static class CareerEngine
                 PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards,
                 DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() };
             friendly.Simulated = simulated;
+            if (m.DateGame is { } dateGame && !simulated && !forfeit) dateGame.ReturnPending = true;
             d.Results.Add(friendly); d.PendingMatchId = null; d.PendingSince = 0;
             if (m.Kind == "private-challenge") Publish(d, "match" + m.Id, m.Event + " · " + friendly.Outcome, MatchRules.Report(m, friendly, d.CooperativeMembers > 1), "约战", true, [m.OpponentId], m);
 

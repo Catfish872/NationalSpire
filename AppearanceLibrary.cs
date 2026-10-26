@@ -62,11 +62,16 @@ public static class AppearanceLibrary
         }
         return JsonSerializer.Deserialize<Package>(File.ReadAllText(path), PortraitDesigns.Json)!;
     }
-    public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)
+    public static (PortraitDesign Design, DateSceneAssets Assets) Prepare(CareerData data, string person, Package package)
     {
         var design = Coop.CoopJson.Copy(package.Design); design.PersonId = person;
         var assets = DateSceneAssetStore.Read(data, person);
-        assets.Outfits = Coop.CoopJson.Copy(package.Outfits); assets.OutfitId = design.SelectedOutfit;
+        assets.Outfits = Coop.CoopJson.Copy(package.Outfits); assets.OutfitId = design.SelectedOutfit; assets.UseDefaultPortrait = false;
+        return (design, assets);
+    }
+    public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)
+    {
+        var (design, assets) = Prepare(data, person, package);
         using var installation = new CharacterDesignPackage.Installation(data, person, design, assets);
         installation.Commit();
         return (design, assets);

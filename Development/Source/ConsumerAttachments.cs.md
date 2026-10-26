@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F99CA340425F1241D77D050DD5072911481485EC50BEC43407A16E8BCFC6CE06`。来源：[源码](../../ConsumerAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`45D6C21BDD287148FD2DCB04F0A7B78AAB1309FF846C62DF0DD9A63523B17152`。来源：[源码](../../ConsumerAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
 
 <a id="symbol-ca3e736fb4f3"></a>
@@ -157,11 +158,29 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-a89a16987082"></a>
+
+## `NationalSpire.ConsumerAttachment.ReservedQuantity — public long ReservedQuantity`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-7ccf64265459"></a>
 
 ## `NationalSpire.ConsumerAttachment.Offer — public PrivateOffer Offer`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -180,7 +199,7 @@
 
 ## `NationalSpire.ConsumerAttachments.Available(NationalSpire.CareerData, NationalSpire.Good) — public static long Available(CareerData d, Good good)`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-4cac190b7ec0)；[`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerAttachments.cs.md#symbol-cdcb64898743)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-8376c45db5bc)
 
@@ -202,9 +221,9 @@
 
 ## `NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int) — public static int ToBuy(CareerData d, Good good, int quantity)`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)
 
 **调用：** [`NationalSpire.ConsumerAttachments.Available(NationalSpire.CareerData, NationalSpire.Good)`](ConsumerAttachments.cs.md#symbol-6c24344e1310)；`System.Math.Max(long, long)`
 
@@ -222,9 +241,9 @@
 
 ## `NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer) — public static ConsumerAttachment? Find(CareerData d, PrivateOffer a)`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.RestoreConsumerDrafts()`](ConsumerCommerceScreen.cs.md#symbol-4c75feed1e1b)；[`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-f88b230b016a)；[`NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>)`](ConsumerAttachments.cs.md#symbol-cefd490f72aa)
+**调用者：** [`NationalSpire.CareerScreen.RestoreConsumerDrafts()`](ConsumerCommerceScreen.cs.md#symbol-4c75feed1e1b)；[`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-f88b230b016a)；[`NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>)`](ConsumerAttachments.cs.md#symbol-cefd490f72aa)；[`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`](ConsumerAttachments.cs.md#symbol-6858c8b6300b)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -237,25 +256,66 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-6858c8b6300b"></a>
+
+## `NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string) — public static string? Validate(CareerData d, string person, string group, PrivateOffer a, string state)`
+
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.ValidateDrafts(NationalSpire.CareerData, string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](ConsumerAttachments.cs.md#symbol-a0501bb4af74)
+
+**调用：** [`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-eb0f1a1bbf73)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerAttachment.Group`；`NationalSpire.ConsumerAttachment.Offer`；`NationalSpire.ConsumerAttachment.Person`；`NationalSpire.ConsumerAttachment.State`；`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.PrivateOffer.ConsumerAttachmentId`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quantity`；`NationalSpire.PrivateOffer.RelationshipIntent`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`Find(d, a)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Find(d, a) is not { } saved`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-a0501bb4af74"></a>
+
+## `NationalSpire.ConsumerAttachments.ValidateDrafts(NationalSpire.CareerData, string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>) — public static string? ValidateDrafts(CareerData d, string person, string group, List<PrivateOffer> attachments)`
+
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
+
+**调用：** [`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`](ConsumerAttachments.cs.md#symbol-6858c8b6300b)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`；`NationalSpire.PrivateOffer.ActorId`；`NationalSpire.PrivateOffer.ConsumerAttachmentId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`；输入表达式：`Validate(d, group.Length > 0 ? a.ActorId : person, group, a, "draft")`；返回值紧邻使用处：`IsPatternExpressionSyntax: Validate(d, group.Length > 0 ? a.ActorId : person, group, a, "draft") is { } error`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`ids.Add(a.ConsumerAttachmentId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ids.Add(a.ConsumerAttachmentId)`
+- `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HashSet<string>()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`attachments.Where(a => a.ConsumerAttachmentId.Length > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var a in attachments.Where(a => a.ConsumerAttachmentId.Length > 0)) { if (!ids.Add(a.ConsumerAttachmentId)) return "每份库存附件只能发送一次。"; if (Validate(d, group.Length > 0 ? a.ActorId : person, group, a, "draft") is { } error) return error; }`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-bb17fc71b2da"></a>
 
-## `NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer) — public static string? Prepare(CareerData d, string person, string group, PrivateOffer a)`
+## `NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool) — public static string? Prepare(CareerData d, string person, string group, PrivateOffer a, bool buyMissing = true)`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.CareerScreen.ReserveConsumerDraft(NationalSpire.PrivateOffer)`](ConsumerCommerceScreen.cs.md#symbol-27b7a54df1f4)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
-**调用：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-eb0f1a1bbf73)；[`NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int)`](ConsumerAttachments.cs.md#symbol-edef8f27ac21)；[`NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerAttachments.cs.md#symbol-cdcb64898743)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`](ConsumerEngine.cs.md#symbol-1d085530bebc)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；`NationalSpire.ConsumerAttachment.ConsumerAttachment()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
+**调用：** [`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；`NationalSpire.ConsumerAttachment.ConsumerAttachment()`；[`NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int)`](ConsumerAttachments.cs.md#symbol-edef8f27ac21)；[`NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`](ConsumerAttachments.cs.md#symbol-cdcb64898743)；[`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`](ConsumerAttachments.cs.md#symbol-6858c8b6300b)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`](ConsumerEngine.cs.md#symbol-af8f54536df7)；[`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`](ConsumerEngine.cs.md#symbol-268b12fc6723)；[`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`](ConsumerEngine.cs.md#symbol-1d085530bebc)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-81f7f177c347)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Math.Min(long, long)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`；`NationalSpire.ConsumerAttachment.Day`；`NationalSpire.ConsumerAttachment.Group`；`NationalSpire.ConsumerAttachment.Id`；`NationalSpire.ConsumerAttachment.Offer`；`NationalSpire.ConsumerAttachment.Person`；`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int)`；`NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`；`NationalSpire.ConsumerCatalog.Get(string)`；`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`；`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`；`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`；`NationalSpire.ConsumerState.Attachments`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Good.Activities`；`NationalSpire.Good.Id`；`NationalSpire.Good.Instant`；`NationalSpire.GoodVerb.Id`；`NationalSpire.GoodVerb.Slots`；`NationalSpire.GroupChat.Id`；`NationalSpire.GroupChat.Members`；`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`；`NationalSpire.PrivateOffer.ConsumerAttachmentId`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.GoodVerb`；`NationalSpire.PrivateOffer.GroupId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.Quantity`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`；`NationalSpire.ConsumerAttachment.Day`；`NationalSpire.ConsumerAttachment.Group`；`NationalSpire.ConsumerAttachment.Id`；`NationalSpire.ConsumerAttachment.Offer`；`NationalSpire.ConsumerAttachment.Person`；`NationalSpire.ConsumerAttachment.ReservedQuantity`；`NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int)`；`NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`；`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`；`NationalSpire.ConsumerCatalog.Get(string)`；`NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`；`NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`；`NationalSpire.ConsumerEngine.Guests(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, int)`；`NationalSpire.ConsumerState.Attachments`；`NationalSpire.ConsumerState.Goods`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Good.Activities`；`NationalSpire.Good.Id`；`NationalSpire.Good.Instant`；`NationalSpire.GoodVerb.Id`；`NationalSpire.GoodVerb.Slots`；`NationalSpire.GroupChat.Id`；`NationalSpire.GroupChat.Members`；`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Visible(NationalSpire.CareerData)`；`NationalSpire.OwnedGood.Consumed`；`NationalSpire.OwnedGood.Id`；`NationalSpire.OwnedGood.Quantity`；`NationalSpire.PrivateOffer.ConsumerAttachmentId`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.GoodVerb`；`NationalSpire.PrivateOffer.GroupId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Participants`；`NationalSpire.PrivateOffer.Quantity`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`；输入表达式：`ChatAttachments.Prepare(d, person, a, shopping: true)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ChatAttachments.Prepare(d, person, a, shopping: true) is { } error`
-- `NationalSpire.ConsumerAttachment.ConsumerAttachment()`；输入表达式：`new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, Offer = Coop.CoopJson.Copy(a) }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, Offer = Coop.CoopJson.Copy(a) }`
-- `NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`Find(d, a)`；返回值紧邻使用处：`BinaryExpressionSyntax: Find(d, a) != null`
+- `NationalSpire.ConsumerAttachment.ConsumerAttachment()`；输入表达式：`new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, ReservedQuantity = reserved, Offer = Coop.CoopJson.Copy(a) }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, ReservedQuantity = reserved, Offer = Coop.CoopJson.Copy(a) }`
 - `NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int)`；输入表达式：`Take(d, good.Id, a.Quantity)`；返回值紧邻使用处：`ExpressionStatementSyntax: Take(d, good.Id, a.Quantity);`
 - `NationalSpire.ConsumerAttachments.ToBuy(NationalSpire.CareerData, NationalSpire.Good, int)`；输入表达式：`ToBuy(d, good, a.Kind == "activity" ? 1 : a.Quantity)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ToBuy(d, good, a.Kind == "activity" ? 1 : a.Quantity)`
+- `NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`；输入表达式：`Validate(d, person, group, a, "draft")`；返回值紧邻使用处：`ReturnStatementSyntax: return Validate(d, person, group, a, "draft");`
 - `NationalSpire.ConsumerCatalog.Get(string)`；输入表达式：`ConsumerCatalog.Get(a.GoodId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ConsumerCatalog.Get(a.GoodId)`
 - `NationalSpire.ConsumerEngine.Buy(NationalSpire.CareerData, string, System.Collections.Generic.IReadOnlyList<string>?, int)`；输入表达式：`ConsumerEngine.Buy(d, good.Id, quantity: buy)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ConsumerEngine.Buy(d, good.Id, quantity: buy) is { } paymentError`
 - `NationalSpire.ConsumerEngine.Ensure(NationalSpire.CareerData)`；输入表达式：`ConsumerEngine.Ensure(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: ConsumerEngine.Ensure(d);`
@@ -267,28 +327,34 @@
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`good.Activities.FirstOrDefault(v => v.Id == a.GoodVerb)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = good.Activities.FirstOrDefault(v => v.Id == a.GoodVerb)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`a.Participants.Where(id => !GroupChats.IsHuman(d, id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, Offer = Coop.CoopJson.Copy(a) })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, Offer = Coop.CoopJson.Copy(a) });`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Life.Consumer.Goods.Where(g => g.Id == good.Id && !g.Consumed)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var stack in d.Life.Consumer.Goods.Where(g => g.Id == good.Id && !g.Consumed)) { long taken = Math.Min(stack.Quantity, remaining); stack.Quantity -= taken; remaining -= taken; if (remaining == 0) break; }`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, ReservedQuantity = reserved, Offer = Coop.CoopJson.Copy(a) })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.Consumer.Attachments.Add(new() { Id = a.ConsumerAttachmentId, Person = person, Group = group, Day = d.Day, ReservedQuantity = reserved, Offer = Coop.CoopJson.Copy(a) });`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`g.Members.Contains(person)`；返回值紧邻使用处：`BinaryExpressionSyntax: g.Id == group && g.Members.Contains(person)`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`AssignmentExpressionSyntax: a.ConsumerAttachmentId = Guid.NewGuid().ToString("N")`
+- `System.Math.Min(long, long)`；输入表达式：`Math.Min(stack.Quantity, remaining)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(stack.Quantity, remaining)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `a.ConsumerAttachmentId` = `Guid.NewGuid().ToString("N")`
-- `a.GroupId` = `group`
 - `Day` = `d.Day`
 - `Group` = `group`
 - `Id` = `a.ConsumerAttachmentId`
 - `Offer` = `Coop.CoopJson.Copy(a)`
 - `Person` = `person`
+- `ReservedQuantity` = `reserved`
+- `a.ConsumerAttachmentId` = `Guid.NewGuid().ToString("N")`
+- `a.GroupId` = `group`
+- `remaining` -= `taken`
+- `reserved` = `a.Quantity`
+- `stack.Quantity` -= `taken`
 
 <a id="symbol-edef8f27ac21"></a>
 
 ## `NationalSpire.ConsumerAttachments.Take(NationalSpire.CareerData, string, int) — private static void Take(CareerData d, string id, int quantity)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)
+**调用者：** [`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Math.Min(long, long)`
 
@@ -309,7 +375,7 @@
 
 ## `NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>) — public static void Sent(CareerData d, IEnumerable<PrivateOffer> attachments)`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -331,18 +397,20 @@
 
 ## `NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool) — public static void Resolve(CareerData d, PrivateOffer a, bool accepted)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ConsumerAttachments.Remove(NationalSpire.CareerData, string)`](ConsumerAttachments.cs.md#symbol-54163762ce47)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)；[`NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-2f0b4ecea199)；[`NationalSpire.SocialAppointments.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](SocialAppointments.cs.md#symbol-33a4725630bd)
 
-**调用：** [`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-eb0f1a1bbf73)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；`NationalSpire.ConsumerTemporaryGood.ConsumerTemporaryGood()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-eb0f1a1bbf73)；[`NationalSpire.ConsumerCatalog.Get(string)`](ConsumerData.cs.md#symbol-46828b8901c1)；[`NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`](ConsumerEngine.cs.md#symbol-57cd1c96aca4)；`NationalSpire.ConsumerTemporaryGood.ConsumerTemporaryGood()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.ConsumerAttachment.State`；`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.ConsumerCatalog.Get(string)`；`NationalSpire.ConsumerState.TemporaryGoods`；`NationalSpire.ConsumerTemporaryGood.Day`；`NationalSpire.ConsumerTemporaryGood.Id`；`NationalSpire.ConsumerTemporaryGood.Quantity`；`NationalSpire.Good.Instant`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quantity`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.ConsumerAttachment.Offer`；`NationalSpire.ConsumerAttachment.ReservedQuantity`；`NationalSpire.ConsumerAttachment.State`；`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；`NationalSpire.ConsumerCatalog.Get(string)`；`NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`；`NationalSpire.ConsumerState.TemporaryGoods`；`NationalSpire.ConsumerTemporaryGood.Day`；`NationalSpire.ConsumerTemporaryGood.Id`；`NationalSpire.ConsumerTemporaryGood.Quantity`；`NationalSpire.Good.Instant`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quantity`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`Find(d, a)`；返回值紧邻使用处：`IsPatternExpressionSyntax: Find(d, a) is not { } saved`
+- `NationalSpire.ConsumerCatalog.Get(string)`；输入表达式：`ConsumerCatalog.Get(a.GoodId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ConsumerCatalog.Get(a.GoodId) is { } good`
 - `NationalSpire.ConsumerCatalog.Get(string)`；输入表达式：`ConsumerCatalog.Get(a.GoodId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: ConsumerCatalog.Get(a.GoodId)?.Instant`
+- `NationalSpire.ConsumerEngine.ChangeInventory(NationalSpire.CareerData, NationalSpire.Good, long)`；输入表达式：`ConsumerEngine.ChangeInventory(d, good, saved.ReservedQuantity)`；返回值紧邻使用处：`ExpressionStatementSyntax: ConsumerEngine.ChangeInventory(d, good, saved.ReservedQuantity);`
 - `NationalSpire.ConsumerTemporaryGood.ConsumerTemporaryGood()`；输入表达式：`new() { Id = a.GoodId, Day = d.Day, Quantity = a.Quantity }`；返回值紧邻使用处：`ArgumentSyntax: new() { Id = a.GoodId, Day = d.Day, Quantity = a.Quantity }`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Life.Consumer.TemporaryGoods.FirstOrDefault(x => x.Id == a.GoodId && x.Day == d.Day)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.Life.Consumer.TemporaryGoods.FirstOrDefault(x => x.Id == a.GoodId && x.Day == d.Day)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`d.Life.Consumer.TemporaryGoods.Add(new() { Id = a.GoodId, Day = d.Day, Quantity = a.Quantity })`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.Consumer.TemporaryGoods.Add(new() { Id = a.GoodId, Day = d.Day, Quantity = a.Quantity });`
@@ -352,6 +420,7 @@
 - `Day` = `d.Day`
 - `Id` = `a.GoodId`
 - `Quantity` = `a.Quantity`
+- `a` = `saved.Offer`
 - `saved.State` = `"returned"`
 - `saved.State` = `a.Kind == "activity" ? "accepted" : "used"`
 - `stack.Quantity` += `a.Quantity`
@@ -360,7 +429,7 @@
 
 ## `NationalSpire.ConsumerAttachments.Remove(NationalSpire.CareerData, string) — public static string? Remove(CareerData d, string id)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RemoveConsumerDraft(NationalSpire.PrivateOffer)`](ConsumerCommerceScreen.cs.md#symbol-635682b51731)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -380,7 +449,7 @@
 
 ## `NationalSpire.ConsumerAttachments.Advance(NationalSpire.CareerData) — public static void Advance(CareerData d)`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLife.Advance(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-62ec6434f115)
 
@@ -402,7 +471,7 @@
 
 ## `NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool) — public static string? Attend(CareerData d, PrivateOffer a, bool publicly)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)
 

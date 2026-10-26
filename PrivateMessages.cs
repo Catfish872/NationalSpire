@@ -74,16 +74,17 @@ public static class PrivateMessages
         }
         if (box.Version < 2)
         {
-            foreach (var c in box.Conversations.Values) RemoveDeletedOffers(c);
+            foreach (var c in box.Conversations.Values) RemoveDeletedOffers(c, box);
             box.Version = 2;
         }
         return box;
     }
-    public static void RemoveDeletedOffers(PrivateConversation c)
+    public static void RemoveDeletedOffers(PrivateConversation c, PrivateMailbox? mailbox = null)
     {
         // 已确认事项已进入赛程或合同，删除文字不能替代取消赛事、解约等操作。
         int removed = c.Offers.RemoveAll(o => o.State is not ("已确认" or "已赴约") &&
-            !c.Turns.Any(t => t.Id == o.TurnId && !t.UserDeleted && !t.ReplyDeleted));
+            (mailbox == null ? c.Turns.FirstOrDefault(t => t.Id == o.TurnId) : DateSceneEffects.SourceTurn(mailbox, c.PersonId, o.TurnId))
+                is not { UserDeleted: false, ReplyDeleted: false });
         if (removed > 0) c.MemoryRevision++;
     }
     public static PrivateRelation Relation(CareerData data, string id)
@@ -139,6 +140,7 @@ public static class PrivateMessages
     public static string? PrepareAttachments(CareerData data, string person, List<PrivateOffer> attachments)
     {
         if (attachments.Count > 8) return "每条消息最多附加 8 项。";
+        if (ConsumerAttachments.ValidateDrafts(data, person, "", attachments) is { } reservationError) return reservationError;
         var quotes = new List<(PrivateOffer Target, PrivateOffer Prepared)>();
         foreach (var a in attachments)
         {
@@ -167,6 +169,12 @@ public static class PrivateMessages
                 if (CommunitySharing.Prepare(data, prepared) is { } error) return error;
                 quotes.Add((a, prepared));
             }
+            else if (a.Kind == DateGames.AttachmentKind)
+            {
+                var c = Conversation(data, person);
+                if (!c.Offers.Any(o => o.Id == a.MatchId && DateScenes.Available(data, o, c)) || data.PendingMatchId != null || data.LocalHumanId.Length > 0) return "当前无法发起约会对局。";
+                a.Title = "一起开一局"; a.Detail = "邀请当前约会参加者游玩《杀戮尖塔2》切磋。";
+            }
             else if (a.Kind != "advice") return "附件类型无效。";
             if (a.Kind == "advice" && a.Detail.Length > 8000) return "附加文字过长。";
         }
@@ -179,6 +187,7 @@ public static class PrivateMessages
     }
     public static string AttachmentTitle(CareerData data, PrivateOffer a) => a.Kind switch
     {
+        DateGames.AttachmentKind => "对局邀请 · 一起开一局",
         OathAttachments.Kind => "解除誓约",
         "gift" => $"赠送 {a.Title} × {a.Quantity}", "activity" => $"{a.Title} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))}",
         "match" => $"{a.Mode} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))} · A{a.Ascension}",
@@ -222,10 +231,20 @@ public static class PrivateMessages
             bool user = command.Part == "user", delete = kind == "dm-delete";
             if (!delete && string.IsNullOrWhiteSpace(command.Text)) return "消息不能为空。";
             if (user) { t.User = delete ? "" : command.Text.Trim(); t.UserDeleted = delete; if (delete) { t.Attachments.Clear(); t.Request = null; } }
-            else { t.Reply = delete ? "" : command.Text.Trim(); t.ReplyDeleted = delete; t.Reasoning = ""; t.ToolCalls.Clear(); }
+            else
+            {
+                t.Reply = delete ? "" : command.Text.Trim(); t.ReplyDeleted = delete; t.Reasoning = ""; t.ToolCalls.Clear();
+                if (delete)
+                {
+                    t.SceneLines.Clear(); t.SceneChoices.Clear();
+                    var mailbox = Mailbox(data);
+                    foreach (string person in t.DatePartyEffects.Keys)
+                        if (mailbox.Conversations.TryGetValue(person, out var participant)) RemoveDeletedOffers(participant, mailbox);
+                }
+            }
             t.Context = "";
         }
-        RemoveDeletedOffers(c);
+        RemoveDeletedOffers(c, Mailbox(data));
         c.MemoryRevision++; c.SummaryError = "";
         return null;
     }
@@ -337,6 +356,7 @@ public static class PrivateMessages
     public static void ConfirmFavour(CareerData data, PrivateConversation c, PrivateOffer offer, bool apply)
     {
         if (offer.State != "待确认") return;
+        if (DateSceneEffects.SourceTurn(Mailbox(data), c.PersonId, offer.TurnId) is not { UserDeleted: false, ReplyDeleted: false }) return;
         var before = PrivateInteractionHistory.Capture(data, c.PersonId);
         offer.FavourBefore = Favour(data, c.PersonId);
         if (apply)
@@ -344,6 +364,16 @@ public static class PrivateMessages
         offer.State = apply ? "已确认" : "已取消";
         if (c.Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
             PrivateInteractionHistory.Record(data, c.PersonId, turn, before);
+        else
+        {
+            var parent = DateSceneEffects.SourceTurn(Mailbox(data), c.PersonId, offer.TurnId);
+            if (parent != null)
+            {
+                int start = parent.InteractionUndo.Count;
+                PrivateInteractionHistory.Record(data, c.PersonId, parent, before);
+                foreach (var undo in parent.InteractionUndo.Skip(start)) undo.PersonId = c.PersonId;
+            }
+        }
     }
     private static decimal Money(Dictionary<string, string> fields, string key) => decimal.TryParse(fields.GetValueOrDefault(key), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal n) ? n : 0;
     private static int Number(Dictionary<string, string> fields, string key) => int.TryParse(fields.GetValueOrDefault(key), NumberStyles.Integer, CultureInfo.InvariantCulture, out int n) ? n : -1;
@@ -362,7 +392,7 @@ public sealed class PrivateStreamParser
     public List<Dictionary<string, string>> Directives { get; } = [];
     public List<(int Offset, Dictionary<string, string> Fields)> SceneCues { get; } = [];
     public string Error { get; private set; } = "";
-    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Scene|Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup|DateDiary)\s*[:：]", RegexOptions.IgnoreCase);
+    private static bool Known(string text) => Regex.IsMatch(text, @"^\[\s*(Scene|DateChoice|DateGame|DateJoin|Favour|Attitude|Relationship|Match|Contract|Skill|Mood|Post|Profile|Activity|Gift|Oath|Training|Lineup|DateDiary)\s*[:：]", RegexOptions.IgnoreCase);
     public void Feed(string text)
     {
         foreach (char ch in text)
@@ -402,7 +432,7 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
+            string[] allowed = fields.ContainsKey("DateChoice") ? ["DateChoice"] : fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("DateGame") ? ["DateGame", "Actor"] : fields.ContainsKey("DateJoin") ? ["DateJoin"] : fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background", "Speaker"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
                 : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]
@@ -426,7 +456,7 @@ public sealed class PrivateStreamParser
             var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var p in json.RootElement.EnumerateObject())
             {
-                if (p.Value.ValueKind != JsonValueKind.String || !new[] { "Scene", "Emotion", "Background", "Reply" }.Contains(p.Name, StringComparer.OrdinalIgnoreCase)
+                if (p.Value.ValueKind != JsonValueKind.String || !new[] { "Scene", "Emotion", "Background", "Speaker", "Reply" }.Contains(p.Name, StringComparer.OrdinalIgnoreCase)
                     || !fields.TryAdd(p.Name, p.Value.GetString()!)) return false;
             }
             if (!fields.TryGetValue("Scene", out var kind) || kind is not ("dialogue" or "narration") || !fields.ContainsKey("Emotion") || !fields.ContainsKey("Background")) return false;

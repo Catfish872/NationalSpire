@@ -218,7 +218,7 @@ private CareerListCache? _listCache;
 
 来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen._ExitTree()`](CareerScreen.cs.md#symbol-5aaebf0ee0ab)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
+**调用者：** [`NationalSpire.CareerScreen._ExitTree()`](CareerScreen.cs.md#symbol-5aaebf0ee0ab)；[`NationalSpire.CareerScreen.Close(bool)`](CareerScreen.cs.md#symbol-9bfd6bc6f6d3)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
 **调用：** [`NationalSpire.MarketTerminal.Unbind()`](MarketTerminal.cs.md#symbol-76844d4631c4)；`Godot.CanvasItem.Hide()`；`Godot.Node.GetParent()`；`Godot.Node.Reparent(Godot.Node, bool)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 

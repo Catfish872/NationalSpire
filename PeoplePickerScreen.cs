@@ -5,9 +5,10 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     /// <summary>群成员和商城附件共用搜索、分类、头像与可见行复用。</summary>
-    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220)
+    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220, bool showPortraits = false)
     {
         var d = ViewData; string search = "", filter = "全部";
+        var portraits = new Dictionary<string, bool>();
         var opponents = d.Results.AsEnumerable().Reverse().SelectMany(r => r.OpponentParticipants.Append(r.OpponentId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
         var authors = CommunityThreads.All(d).OrderByDescending(p => p.Day).SelectMany(p => p.Replies.AsEnumerable().Reverse().Select(r => r.AuthorId).Prepend(p.AuthorId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
         var familiar = d.Life.Mailbox.Conversations.Where(c => c.Value.Turns.Any(t => t.Status == "complete")).Select(c => c.Key)
@@ -46,7 +47,9 @@ public partial class CareerScreen
                     foreach (var old in row.GetChildren().OfType<Control>().Where(c => c != check).ToArray()) { row.RemoveChild(old); old.QueueFree(); }
                     var avatar = Avatar(d, person.Id, 38, false); row.AddChild(avatar); row.MoveChild(avatar, 0);
                     check.Name = "Recipient_" + person.Id; check.SetMeta("person", person.Id); check.Text = person.PublicName + " · " + person.Role;
-                    check.TooltipText = person.PublicName + " · " + person.Role + " · 好感 " + PrivateMessages.Favour(d, person.Id); PickerRing(row, d, person.Id);
+                    check.TooltipText = person.PublicName + " · " + person.Role + " · 好感 " + PrivateMessages.Favour(d, person.Id);
+                    if (showPortraits && !portraits.ContainsKey(person.Id)) portraits[person.Id] = DateSceneAssetStore.HasImportedSprites(d, person.Id);
+                    PickerRing(row, d, person.Id, showPortraits, portraits.GetValueOrDefault(person.Id));
                 }
                 check.SetPressedNoSignal(selected.Contains(person.Id)); row.Position = new(0, (first + i) * rowHeight); row.Size = new(list.Size.X, rowHeight - 8);
             }

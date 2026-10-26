@@ -155,7 +155,7 @@ public partial class CareerScreen
         inner.AddChild(Text($"完成 {plan.PaidWeeks}/{plan.Weeks} 周 · 永久成长 +{plan.Gained * 100:0.##}%", 17, CareerVisuals.Teal));
         var details = PrivateText(plan.Content, 18, _ink); details.Name = "TrainingDetails_" + plan.Id;
         details.Visible = _privateExpandedTraining.Contains(plan.Id);
-        var toggle = new CoachTrainingDisclosureButton { Name = "TrainingToggle_" + plan.Id, Text = details.Visible ? "收起" : "展开", Flat = true,
+        var toggle = new CareerDisclosureButton { Name = "TrainingToggle_" + plan.Id, Text = details.Visible ? "收起" : "展开", Flat = true, ToggleMode = true, ButtonPressed = details.Visible,
             SizeFlagsHorizontal = SizeFlags.ShrinkBegin, MouseDefaultCursorShape = CursorShape.PointingHand };
         toggle.AddThemeFontSizeOverride("font_size", 14);
         foreach (string state in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color" })
@@ -166,22 +166,9 @@ public partial class CareerScreen
         {
             bool expanded = !_privateExpandedTraining.Remove(plan.Id);
             if (expanded) _privateExpandedTraining.Add(plan.Id);
-            details.Visible = expanded; toggle.Text = expanded ? "收起" : "展开"; toggle.QueueRedraw();
+            details.Visible = expanded; toggle.ButtonPressed = expanded; toggle.Text = expanded ? "收起" : "展开"; toggle.QueueRedraw();
         };
         inner.AddChild(toggle); inner.AddChild(details);
         if (plan.State == "进行中") inner.AddChild(PrivateButton("取消训练", () => { if (send != null) send("training-cancel", new()); else PrivateCommand("dm-training-cancel", new()); }, 130));
-    }
-}
-
-/// <summary>训练详情的无柄箭头与按钮文字共用字号及颜色。</summary>
-public partial class CoachTrainingDisclosureButton : Button
-{
-    public override void _Draw()
-    {
-        float side = GetThemeFontSize("font_size"), direction = Text == "收起" ? -1 : 1;
-        var center = new Vector2(Size.X - side / 2, Size.Y / 2);
-        DrawPolyline([center + new Vector2(-side * .4f, -direction * side * .2f),
-            center + new Vector2(0, direction * side * .2f),
-            center + new Vector2(side * .4f, -direction * side * .2f)], GetThemeColor("font_color"), 1.5f, true);
     }
 }

@@ -274,7 +274,7 @@ public partial class CareerScreen
         }
         else
         {
-            string kind = a.Kind switch { "post" => "帖子", "result" => "比赛记录", "match" => "比赛邀约", "lineup" => "阵容调整", "training" => "训练内容", "activity" => "活动邀约", "gift" => "赠送礼物", OathAttachments.Kind => "解除誓约", "contract" => "合同邀约", _ => "附加文字" };
+            string kind = a.Kind switch { DateGames.AttachmentKind => "约会对局", "post" => "帖子", "result" => "比赛记录", "match" => "比赛邀约", "lineup" => "阵容调整", "training" => "训练内容", "activity" => "活动邀约", "gift" => "赠送礼物", OathAttachments.Kind => "解除誓约", "contract" => "合同邀约", _ => "附加文字" };
             string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
             var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
         }
@@ -296,6 +296,9 @@ public partial class CareerScreen
     }
     private void AttachPrivate(PrivateOffer attachment)
     {
+        if (PrivateAttachments.Count >= 8) { if (_privateStatus != null) _privateStatus.Text = "每条消息最多附加 8 项。"; return; }
+        if (attachment.Kind == "gift" && attachment.ConsumerAttachmentId.Length == 0)
+        { ReserveConsumerDraft(attachment); return; }
         if (_privateGroup.Length > 0)
         {
             attachment.GroupId = _privateGroup;
@@ -304,7 +307,6 @@ public partial class CareerScreen
             if (attachment.Kind == "lineup") attachment.ActorId = _privatePerson;
             PrivateAttachments.Add(attachment); RefreshPrivateAttachments(); return;
         }
-        if (PrivateAttachments.Count >= 8) { _privateStatus!.Text = "每条消息最多附加 8 项。"; return; }
         PrivateAttachments.Add(attachment); RefreshPrivateAttachments();
         Callable.From(() => { if (IsInstanceValid(_privateInput) && _privateInput!.IsVisibleInTree()) _privateInput.GrabFocus(); }).CallDeferred();
     }

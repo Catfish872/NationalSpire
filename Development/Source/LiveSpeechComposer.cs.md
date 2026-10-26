@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`558BA36700531A7F1402714A926F5AABA1D432BAFAFFA66149BA7BD25EC45BF1`。来源：[源码](../../LiveSpeechComposer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`93A07778FD4E4C4DE1D0F26E604DB16AD128F7CC5A27383FCFABA75847F8562D`。来源：[源码](../../LiveSpeechComposer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -57,7 +57,7 @@ public static readonly Dictionary<string, string[]> Endings = Create();
 
 来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`](LiveSpeechComposer.cs.md#symbol-360bdc1037c5)
+**调用者：** [`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?)`](LiveSpeechComposer.cs.md#symbol-360bdc1037c5)
 
 **调用：** `string.Contains(string, System.StringComparison)`；`string.Substring(int, int)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Max(int, int)`
 
@@ -79,13 +79,13 @@ public static readonly Dictionary<string, string[]> Endings = Create();
 
 <a id="symbol-360bdc1037c5"></a>
 
-## `NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?) — public static string Compose(string main, string key, BroadcastMemory memory, string seed, int index,          IReadOnlyDictionary<string, string>? facts = null)`
+## `NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?) — public static string Compose(string main, string key, BroadcastMemory memory, string seed, int index, IReadOnlyDictionary<string, string>? facts = null, Action<string, string>? selected = null)`
 
 来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；[`NationalSpire.LiveVoices.Phrase(string, System.Collections.Generic.Dictionary<string, string>)`](LiveVoices.cs.md#symbol-f50a3454a330)
+**调用者：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；[`NationalSpire.LiveVoices.Phrase(string, System.Collections.Generic.Dictionary<string, string>, out System.Func<System.Func<string, string>, string>?)`](LiveVoices.cs.md#symbol-f50a3454a330)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LiveSpeechComposer.CanCombine(string, string)`](LiveSpeechComposer.cs.md#symbol-a4626b32f383)；`string.Contains(char)`；`string.EndsWith(char)`；`string.Replace(string, string?, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.RemoveAt(int)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LiveSpeechComposer.CanCombine(string, string)`](LiveSpeechComposer.cs.md#symbol-a4626b32f383)；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.RemoveAt(int)`；`string.Contains(char)`；`string.EndsWith(char)`；`string.Replace(string, string?, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BroadcastMemory.SharedPhrases`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.LiveSpeechComposer.CanCombine(string, string)`；`NationalSpire.LiveSpeechComposer.Endings`
 
@@ -94,17 +94,18 @@ public static readonly Dictionary<string, string[]> Endings = Create();
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(seed + ":compose:" + key + index)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(seed + ":compose:" + key + index) % 5`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(seed + ":ending:" + key + index)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(seed + ":ending:" + key + index) % bank.Length`
 - `NationalSpire.LiveSpeechComposer.CanCombine(string, string)`；输入表达式：`CanCombine(main, tail)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CanCombine(main, tail)`
-- `string.Contains(char)`；输入表达式：`rendered.Contains('{')`；返回值紧邻使用处：`IfStatementSyntax: if (rendered.Contains('{')) continue;`
-- `string.EndsWith(char)`；输入表达式：`main.EndsWith('！')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！')`
-- `string.EndsWith(char)`；输入表达式：`main.EndsWith('？')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？')`
-- `string.EndsWith(char)`；输入表达式：`main.EndsWith('…')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？') || main.EndsWith('…')`
-- `string.EndsWith(char)`；输入表达式：`main.EndsWith('。')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！')`
-- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`rendered.Replace("{" + k + "}", v, StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: rendered = rendered.Replace("{" + k + "}", v, StringComparison.Ordinal)`
+- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke(separator, tail)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: selected?.Invoke(separator, tail)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Endings.TryGetValue(key, out var bank)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Endings.TryGetValue(key, out var bank)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`memory.SharedPhrases.GetValueOrDefault(historyKey, [])`；返回值紧邻使用处：`EqualsValueClauseSyntax: = memory.SharedPhrases.GetValueOrDefault(historyKey, [])`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`recent.Add(tail)`；返回值紧邻使用处：`ExpressionStatementSyntax: recent.Add(tail);`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`recent.Contains(tail)`；返回值紧邻使用处：`BinaryExpressionSyntax: recent.Contains(tail) || !CanCombine(main, tail)`
 - `System.Collections.Generic.List<T>.RemoveAt(int)`；输入表达式：`recent.RemoveAt(0)`；返回值紧邻使用处：`ExpressionStatementSyntax: recent.RemoveAt(0);`
+- `string.Contains(char)`；输入表达式：`rendered.Contains('{')`；返回值紧邻使用处：`IfStatementSyntax: if (rendered.Contains('{')) continue;`
+- `string.EndsWith(char)`；输入表达式：`main.EndsWith('…')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？') || main.EndsWith('…')`
+- `string.EndsWith(char)`；输入表达式：`main.EndsWith('。')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！')`
+- `string.EndsWith(char)`；输入表达式：`main.EndsWith('！')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！')`
+- `string.EndsWith(char)`；输入表达式：`main.EndsWith('？')`；返回值紧邻使用处：`BinaryExpressionSyntax: main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？')`
+- `string.Replace(string, string?, System.StringComparison)`；输入表达式：`rendered.Replace("{" + k + "}", v, StringComparison.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: rendered = rendered.Replace("{" + k + "}", v, StringComparison.Ordinal)`
 
 **赋值（含属性/字段和局部值）：**
 

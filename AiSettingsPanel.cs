@@ -5,6 +5,16 @@ namespace NationalSpire;
 /// <summary>单人和多人主机共用配置表单，保存与生成由当前生涯入口提供。</summary>
 public static class AiSettingsPanel
 {
+    public static OptionButton RivalLevelPicker(int level, bool team = false)
+    {
+        var picker = new OptionButton { Name = "RivalLevel", CustomMinimumSize = new(0, 52), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        int[] levels = [100, 1000, 10000];
+        string[] times = team ? ["1 小时 7 分 30 秒", "1 小时 30 分钟", "2 小时 15 分钟"] : ["45 分钟", "1 小时", "1 小时 30 分钟"];
+        for (int i = 0; i < levels.Length; i++) picker.AddItem($"下降 {levels[i]} 倍 · 职业{(team ? "队伍" : "选手")}约 {times[i]}", levels[i]);
+        picker.Select(Array.IndexOf(levels, level) is var index && index >= 0 ? index : 1);
+        return picker;
+    }
+
     public static Label Build(VBoxContainer box, AiOptions options, Action save, Action generate, Action prompts,
         Action<string, bool> notice, Action? editing = null, string saveText = "保存设置", Action<Action>? confirmSwitch = null)
     {
@@ -148,7 +158,7 @@ public static class AiSettingsPanel
         Number("请求发送间隔 · 秒，0 表示无需间隔", "AiRequestInterval", options.MinimumIntervalSeconds, 0, 300, value => options.MinimumIntervalSeconds = value);
         Number("最长等待时间 · 分钟", "AiTimeout", options.RequestTimeoutMinutes, 2, 30, value => options.RequestTimeoutMinutes = value);
         var status = Text("当前状态：" + PlayerFacingText.AiStatus(AiService.Status));
-        var routeControls = new List<(string Task, OptionButton Picker, Label Model)>();
+        var routeControls = new List<AiTaskRoutePicker>();
         var applyAll = new BroadcastButton { Name = "AiApplyAll", Text = "将当前方案应用到所有", CustomMinimumSize = new(0, 46) };
         saveButton.Pressed += () =>
         {
@@ -187,24 +197,13 @@ public static class AiSettingsPanel
         routes.AddChild(applyAll);
         foreach (var task in AiRouting.Tasks)
         {
-            var panel = new PanelContainer(); panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("172f3c", "345363", 7, 12)); routes.AddChild(panel);
-            var row = new VBoxContainer(); row.AddThemeConstantOverride("separation", 5); panel.AddChild(row);
-            var title = new Label { Text = task.Name }; title.AddThemeFontSizeOverride("font_size", 18); row.AddChild(title);
-            var choice = new OptionButton { Name = "AiRoute_" + task.Id, FitToLongestItem = false, CustomMinimumSize = new(0, 40), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; row.AddChild(choice);
-            var detail = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart }; detail.AddThemeFontSizeOverride("font_size", 14); detail.AddThemeColorOverride("font_color", CareerVisuals.Muted); row.AddChild(detail);
-            routeControls.Add((task.Id, choice, detail));
-            choice.ItemSelected += index => { if (loading) return; options.TaskProfiles[task.Id] = choice.GetItemMetadata((int)index).AsString(); Save(); RefreshRoutes(); };
+            var panel = new AiTaskRoutePicker(); routes.AddChild(panel);
+            panel.Configure(options, task.Id, save, notice); routeControls.Add(panel);
         }
         void RefreshRoutes()
         {
             loading = true;
-            foreach (var route in routeControls)
-            {
-                route.Picker.Clear(); string assigned = AiRouting.ProfileId(options, route.Task); int i = 0;
-                foreach (var entry in options.ConnectionProfiles)
-                { route.Picker.AddItem(entry.Value.Name); route.Picker.SetItemMetadata(i, entry.Key); if (entry.Key == assigned) route.Picker.Select(i); i++; }
-                route.Model.Text = options.ConnectionProfiles[assigned].Model;
-            }
+            foreach (var route in routeControls) route.Refresh();
             applyAll.Disabled = creating; loading = false;
         }
         void RefreshProfiles()

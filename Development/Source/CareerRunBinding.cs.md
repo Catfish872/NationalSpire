@@ -43,7 +43,7 @@
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.MatchesPending(NationalSpire.CareerData, MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-87d1dc26f106)；[`NationalSpire.LiveRunBridge.Attach(MegaCrit.Sts2.Core.Nodes.NRun, MegaCrit.Sts2.Core.Runs.RunState)`](LiveRunBridge.cs.md#symbol-1af74b766122)
+**调用者：** [`NationalSpire.DateGameReturn.SavedMatch(NationalSpire.CareerData, string, string, MegaCrit.Sts2.Core.Saves.SerializableRun)`](DateGameReturn.cs.md#symbol-dcd87a3e58bb)；[`NationalSpire.GameBridge.MatchesPending(NationalSpire.CareerData, MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-87d1dc26f106)；[`NationalSpire.LiveRunBridge.Attach(MegaCrit.Sts2.Core.Nodes.NRun, MegaCrit.Sts2.Core.Runs.RunState)`](LiveRunBridge.cs.md#symbol-1af74b766122)
 
 **调用：** [`NationalSpire.CareerRunBinding.SameSeed(string, string)`](CareerRunBinding.cs.md#symbol-33566aec03ac)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

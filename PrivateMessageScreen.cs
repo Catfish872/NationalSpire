@@ -47,6 +47,8 @@ public partial class CareerScreen
         brand.AddChild(PrivateLine("通讯", 30, _gold));
         brand.AddChild(PrivateLine("国运尖塔 · 选手通讯", 14, _muted));
         header.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        _datePhoneReturn = PrivateButton("返回约会", ReturnFromDatePhone, 150); _datePhoneReturn.Name = "DatePhoneReturn";
+        _datePhoneReturn.Visible = _datePhoneOffer.Length > 0; header.AddChild(_datePhoneReturn);
         var settings = PrivateButton("", ChatSettingsMenu, 52); settings.Name = "ChatSettingsButton"; settings.TooltipText = "通讯设置"; settings.AddChild(new PrivateIcon { Gear = true, MouseFilter = MouseFilterEnum.Ignore }); header.AddChild(settings);
         header.AddChild(PrivateButton("关闭", ClosePrivateMessages, 100));
         _privateProposal = new VBoxContainer(); _privateProposal.AddThemeConstantOverride("separation", 10); layout.AddChild(_privateProposal);
@@ -127,6 +129,7 @@ public partial class CareerScreen
         _privateSend.AddThemeStyleboxOverride("normal", CareerVisuals.Box("d9bd7e", "f0dca7", 8, 12));
         _privateSend.AddThemeColorOverride("font_color", new Color("172330"));
         _privateExpressions = CommunityReplyExpressions.Attach(_privateInput!, composerBody, left, actions);
+        BuildChatModelButton(left);
         _privateExpressions(false);
         ChatComposerLayout.CompactButtons(actions);
     }
@@ -136,6 +139,7 @@ public partial class CareerScreen
     {
         if (_privateOverlay == null) return;
         CloseChatContextMenu(); CloseContactMenu(); CloseDateScene();
+        _datePhonePerson = _datePhoneOffer = ""; _datePhoneReturn = null;
         _privateScrollRevision++;
         if (ChatDraftKey.Length > 0 && _privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
         _privateStreamText = _privateStreamThought = _groupReasoningUpdate = null;
@@ -277,7 +281,14 @@ public partial class CareerScreen
         foreach (var request in data.Esports.LineupRequests.Where(r => r.Coach == _privatePerson && r.ClubId == data.Esports.ClubId
             && !visibleTurns.Any(t => t.Id == r.TurnId)))
             PrivateLineupCard(data, request, _privateBody);
-        if (ChatAtLatest) AddPausedDateScenes(data, c);
+        if (ChatAtLatest)
+        {
+            // 场景正文独立展示；好感确认继续复用私聊的原确认卡和命令。
+            foreach (var offer in c.Offers.Where(o => o.Kind == "favour" && o.State == "待确认"))
+                if (DateSceneEffects.SourceTurn(PrivateMessages.Mailbox(data), c.PersonId, offer.TurnId) is { Scene: not null, UserDeleted: false, ReplyDeleted: false }
+                    && !visibleTurns.Any(t => t.Id == offer.TurnId && PrivateMessages.VisibleInCommunications(t))) AddPrivateOffer(data, offer);
+            AddPausedDateScenes(data, c);
+        }
         if (_privatePages.Count == 0)
         {
             PrivateEmpty("开始聊天", "消息与邀约会保存在这里。");
@@ -332,16 +343,22 @@ public partial class CareerScreen
         string person = _privatePerson; var attachments = PrivateAttachments.ToList();
         PrivateCommand("dm-send", new() { Text = text, Attachments = attachments, Scene = _dateView == null ? null : SceneRequest() }, () =>
         {
+            if (_dateView != null) _dateManualGameInput = false;
             if (_privateAttachmentDrafts.TryGetValue(person, out var pending)) pending.RemoveAll(a => attachments.Contains(a));
             if (_dateView != null && _datePerson == person && _dateView.Editor.Text == text) _dateView.Editor.Text = "";
             if (_privateDrafts.GetValueOrDefault(person) == text) _privateDrafts.Remove(person);
             if (_privatePerson == person && _privateInput != null && IsInstanceValid(_privateInput)) { if (_privateInput.Text == text) _privateInput.Text = ""; RefreshPrivateAttachments(); LatestChatPage(); }
         });
     }
-    private void PrivateCommand(string kind, PrivateMessageCommand command, Action? accepted = null)
+    private void PrivateCommand(string kind, PrivateMessageCommand command, Action? accepted = null, string? target = null, Action<string>? failed = null)
     {
         command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
-        string person = _privatePerson;
+        string person = target ?? _privatePerson;
+        void Fail(string message)
+        {
+            if (failed != null) { failed(message); return; }
+            ShowPrivateCommandError(message);
+        }
         if (_multiplayer != null)
         { _multiplayer.Send(kind, person, JsonSerializer.Serialize(command), accepted: () => { accepted?.Invoke(); _multiplayer.Refresh(); _privateListSignature = _privateSignature = ""; }); return; }
         var data = ViewData;
@@ -350,7 +367,7 @@ public partial class CareerScreen
             if (PrivateMessageCommands.Apply(data, kind, person, command) is { } error)
             {
                 if (kind == "dm-confirm") { CareerStore.Save(data); _privateSignature = ""; }
-                ShowPrivateCommandError(error);
+                Fail(error);
                 return;
             }
             CareerStore.Save(data); accepted?.Invoke(); _privateListSignature = _privateSignature = "";
@@ -358,10 +375,10 @@ public partial class CareerScreen
                 _ = AiService.ProcessInteractionsAsync([published.MatchId], data);
             if (kind == "dm-arbitration-apology" && CareerEngine.Person(data, person)!.Arbitrations.FirstOrDefault(r => r.Id == command.Entry) is { PostId.Length: > 0 } ruling)
                 _ = AiService.ProcessInteractionsAsync([ruling.PostId], data);
-            if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-date-open" or "dm-date-end" or "dm-date-revise") _ = AiService.ProcessPrivateAsync(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
+            if (kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" or "dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-date-game-next") _ = AiService.ProcessPrivateAsync(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
             if (kind == "dm-summary") _ = AiService.SummarizePrivateManually(() => CareerStore.IsCurrent(data) ? data : null, CareerStore.Save, person);
         }
-        catch (Exception e) { ShowPrivateCommandError(AiService.FailureReason(e)); }
+        catch (Exception e) { Fail(AiService.FailureReason(e)); }
     }
     private void ShowPrivateCommandError(string error)
     {
@@ -511,6 +528,7 @@ public partial class CareerScreen
             inner.AddChild(Text(offer.Title, 23, _gold));
             inner.AddChild(Text(GameCalendar.Text(data, PrivateAppointments.Date(data, offer)) + " · " + SocialAppointments.StatusText(data, offer), 16, _muted));
             if (offer.Detail.Length > 0) inner.AddChild(PrivateText(offer.Detail, 18, _ink));
+            if (WeddingAppointments.IsWedding(offer)) inner.AddChild(PrivateText(WeddingAppointments.Description(ViewData, offer), 16, _muted));
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); inner.AddChild(row);
             if (offer.State == "待确认") row.AddChild(PrivateButton("确认约定", () => PrivateCommand("dm-confirm", new() { Offer = offer.Id }), 150));
             if (offer.State == "已确认" && PrivateAppointments.Date(data, offer) == data.Day)
@@ -594,9 +612,11 @@ public partial class CareerScreen
         if (person.Arbitrations.Count > 0) { var official = ProfileSection("官方仲裁档案"); foreach (var record in person.Arbitrations.OrderByDescending(r => r.Day)) official.AddChild(ArbitrationCard(data, record)); }
         var box = ProfileSection("与你的关系");
         box.AddChild(PrivateIdentity(data, person.Id, false));
-        box.AddChild(PrivateButton("发送私信", () => OpenPrivateMessages(person.Id), 160));
-        if (DateDiaries.Records(PrivateMessages.Conversation(data, person.Id)).Count > 0)
-            box.AddChild(PrivateButton("约会日记", () => DateDiaryDialog(data, person.Id), 160));
+        var actions = new HBoxContainer { Name = "ProfileRelationshipActions", SizeFlagsHorizontal = SizeFlags.ExpandFill }; box.AddChild(actions);
+        actions.AddChild(PrivateButton("发送私信", () => OpenPrivateMessages(person.Id), 160));
+        actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
+        if (DateDiaries.ForPerson(data, person.Id).Count > 0 || DateSceneMemories.ForPerson(data, person.Id, out _).Count > 0)
+            actions.AddChild(DateDiaryButton(() => DateDiaryDialog(data, person.Id), 160));
     }
 }
 

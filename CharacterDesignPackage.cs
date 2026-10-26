@@ -65,13 +65,13 @@ public static class CharacterDesignPackage
     }
     private const long MaxTotal = 512L * 1024 * 1024;
     private const int MaxMetadata = 4 * 1024 * 1024;
-    public static Imported Read(CareerData data, string path)
+    public static Imported Read(CareerData data, string path, bool portraitsOnly = false)
     {
         if (new FileInfo(path).Length > MaxTotal) throw new InvalidDataException("角色设计包超过512MB。");
         using var stream = File.OpenRead(path);
-        return Read(data, stream);
+        return Read(data, stream, portraitsOnly);
     }
-    public static Imported Read(CareerData data, Stream source)
+    public static Imported Read(CareerData data, Stream source, bool portraitsOnly = false)
     {
         using var archive = new ZipArchive(source, ZipArchiveMode.Read, leaveOpen: true);
         if (archive.Entries.Count > 512 || archive.Entries.Sum(e => e.Length) > MaxTotal) throw new InvalidDataException("角色设计包内容过大。");
@@ -104,7 +104,7 @@ public static class CharacterDesignPackage
             }
         }
         if (manifest.DefaultEmotionId == null || manifest.SelectedOutfit == null || !PortraitDesigns.SafeId(manifest.DefaultEmotionId) || !PortraitDesigns.SafeId(manifest.SelectedOutfit)) throw new InvalidDataException("默认立绘或套装编号无效。");
-        var person = CharacterCardPng.Import(data, Bytes("character.png", 16 * 1024 * 1024), AvatarImages.FromCardPng);
+        var person = portraitsOnly ? CharacterCards.New(data) : CharacterCardPng.Import(data, Bytes("character.png", 16 * 1024 * 1024), AvatarImages.FromCardPng);
         var design = manifest.Version == 3 && manifest.Design != null ? manifest.Design : PortraitDesigns.Create(data, person.Id, person);
         design.PersonId = person.Id;
         design.DefaultEmotionId = manifest.DefaultEmotionId; design.SelectedOutfit = manifest.SelectedOutfit;
@@ -136,7 +136,7 @@ public static class CharacterDesignPackage
         private readonly Dictionary<string, byte[]?> _before = [];
         private bool _committed;
         public Installation(CareerData data, Imported package) : this(data, package.Person.Id, package.Design, PackageAssets(package)) { }
-        private static DateSceneAssets PackageAssets(Imported package)
+        public static DateSceneAssets PackageAssets(Imported package)
         {
             var assets = new DateSceneAssets { OutfitId = package.Metadata.SelectedOutfit };
             foreach (var item in package.Metadata.Sprites)

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A1FE333DDD949912FDD9F5FCABEE524AEEFF2E69DF17861D6962029F5842F5A0`。来源：[源码](../../EsportsWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9AD2172E99736561505C8C355FFE69389116FBB0BEA737851FA4F416AF8ECAF2`。来源：[源码](../../EsportsWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -437,7 +437,7 @@ private static readonly string[] Styles = ["力量与高费攻击", "中毒与�
 
 来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
+**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`](CareerEngine.cs.md#symbol-cd8fd2c800e7)；[`NationalSpire.EsportsWorld.EndDay(NationalSpire.CareerData, int, bool)`](EsportsWorld.cs.md#symbol-ae784907b7fa)；[`NationalSpire.EsportsWorld.MakeOffers(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-6c986135b9e6)；[`NationalSpire.EsportsWorld.StartSeason(NationalSpire.CareerData, bool)`](EsportsWorld.cs.md#symbol-1e2b623aabf2)；[`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerResult)`](PrivateAppointments.cs.md#symbol-31b52db37f88)；[`NationalSpire.RegionalOrganizations.ClubName(NationalSpire.CareerData, string, string)`](RegionalOrganizations.cs.md#symbol-2dfd9499c981)；[`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`](WorldPeople.cs.md#symbol-731e781389c6)；`NationalSpire.CareerClub.CareerClub()`；`NationalSpire.CareerPerson.CareerPerson()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Math.Max(int, int)`
 

@@ -2,22 +2,66 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`221FBA04059B897FF6A611071896DFBB22D14667008260ACF09B1D78B783A823`。来源：[源码](../../DateSceneAssets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`030D524B66BADF13304CE54A002D1BF956B17C13CF0E1FE307AE435635449F8C`。来源：[源码](../../DateSceneAssets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.DateSceneAssets`、`NationalSpire.DateSceneBookmark`、`NationalSpire.DateSceneAssetStore`。
+类型：`NationalSpire.DatePortraitPlacement`、`NationalSpire.DateSceneAssets`、`NationalSpire.DateSceneBookmark`、`NationalSpire.DateSceneAssetStore`。
 
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
+
+<a id="symbol-67e9c0f8f2dc"></a>
+
+## `NationalSpire.DatePortraitPlacement.Normalized() — public DatePortraitPlacement Normalized()`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`NationalSpire.DateSceneView.PortraitPlacements(System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DatePortraitPlacement>)`](DateSceneCast.cs.md#symbol-80abec64fd7f)
+
+**调用：** `NationalSpire.DatePortraitPlacement.DatePortraitPlacement(double, double)`；`System.Math.Clamp(double, double, double)`；`double.IsFinite(double)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DatePortraitPlacement.Scale`；`NationalSpire.DatePortraitPlacement.Y`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DatePortraitPlacement.DatePortraitPlacement(double, double)`；输入表达式：`new(Math.Clamp(double.IsFinite(Scale) ? Scale : 1, .25, 2.5), Math.Clamp(double.IsFinite(Y) ? Y : 0, -200, 200))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(Math.Clamp(double.IsFinite(Scale) ? Scale : 1, .25, 2.5), Math.Clamp(double.IsFinite(Y) ? Y : 0, -200, 200))`
+- `System.Math.Clamp(double, double, double)`；输入表达式：`Math.Clamp(double.IsFinite(Scale) ? Scale : 1, .25, 2.5)`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(double.IsFinite(Scale) ? Scale : 1, .25, 2.5)`
+- `System.Math.Clamp(double, double, double)`；输入表达式：`Math.Clamp(double.IsFinite(Y) ? Y : 0, -200, 200)`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(double.IsFinite(Y) ? Y : 0, -200, 200)`
+- `double.IsFinite(double)`；输入表达式：`double.IsFinite(Scale)`；返回值紧邻使用处：`ConditionalExpressionSyntax: double.IsFinite(Scale) ? Scale : 1`
+- `double.IsFinite(double)`；输入表达式：`double.IsFinite(Y)`；返回值紧邻使用处：`ConditionalExpressionSyntax: double.IsFinite(Y) ? Y : 0`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-841784a6385f"></a>
+
+## `NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets) — public static DatePortraitPlacement FromAssets(DateSceneAssets assets)`
+
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-2a982aac4aea)；[`NationalSpire.CareerScreen.ApplyDatePortraitPlacements()`](DateScenePortraitSettings.cs.md#symbol-9e6a2d77a042)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-092acdac73f7)
+
+**调用：** `NationalSpire.DatePortraitPlacement.DatePortraitPlacement(double, double)`；[`NationalSpire.DatePortraitPlacement.Normalized()`](DateSceneAssets.cs.md#symbol-67e9c0f8f2dc)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DatePortraitPlacement.Normalized()`；`NationalSpire.DateSceneAssets.SpriteScale`；`NationalSpire.DateSceneAssets.SpriteY`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DatePortraitPlacement.DatePortraitPlacement(double, double)`；输入表达式：`new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY).Normalized`
+- `NationalSpire.DatePortraitPlacement.Normalized()`；输入表达式：`new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY).Normalized()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY).Normalized()`
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-6796164638a3"></a>
 
 ## `NationalSpire.DateSceneAssets.OutfitId — public string OutfitId`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -35,7 +79,7 @@
 
 ## `NationalSpire.DateSceneAssets.Outfits — public Dictionary<string, Dictionary<string, string>> Outfits`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -53,7 +97,7 @@
 
 ## `NationalSpire.DateSceneAssets.Sprites — public Dictionary<string, string> Sprites`
 
-来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -74,7 +118,7 @@
 
 ## `NationalSpire.DateSceneAssets.Background — public string Background`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -92,7 +136,7 @@
 
 ## `NationalSpire.DateSceneAssets.SpriteScale — public double SpriteScale`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -110,7 +154,7 @@
 
 ## `NationalSpire.DateSceneAssets.SpriteX — public double SpriteX`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -128,7 +172,7 @@
 
 ## `NationalSpire.DateSceneAssets.SpriteY — public double SpriteY`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -146,7 +190,7 @@
 
 ## `NationalSpire.DateSceneAssets.TextOutline — public bool TextOutline`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -164,7 +208,7 @@
 
 ## `NationalSpire.DateSceneAssets.ShowAffectionBadge — public bool ShowAffectionBadge`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -182,7 +226,7 @@
 
 ## `NationalSpire.DateSceneAssets.AutoBackground — public bool AutoBackground`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -200,7 +244,7 @@
 
 ## `NationalSpire.DateSceneAssets.Blur — public bool Blur`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -218,7 +262,7 @@
 
 ## `NationalSpire.DateSceneAssets.BlurAmount — public double BlurAmount`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -236,7 +280,7 @@
 
 ## `NationalSpire.DateSceneAssets.TextSpeed — public double TextSpeed`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -254,7 +298,7 @@
 
 ## `NationalSpire.DateSceneAssets.FontSize — public int FontSize`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +316,7 @@
 
 ## `NationalSpire.DateSceneAssets.LetterSpacing — public double LetterSpacing`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -290,7 +334,7 @@
 
 ## `NationalSpire.DateSceneAssets.PanelFade — public double PanelFade`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -308,7 +352,7 @@
 
 ## `NationalSpire.DateSceneAssets.Bookmarks — public Dictionary<string, DateSceneBookmark> Bookmarks`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -322,11 +366,65 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-5c5969d14e3e"></a>
+
+## `NationalSpire.DateSceneAssets.GameVoice — public string GameVoice`
+
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-1d62e350fc2b"></a>
+
+## `NationalSpire.DateSceneAssets.PresentationConfirmed — public bool PresentationConfirmed`
+
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-3cca0387131c"></a>
+
+## `NationalSpire.DateSceneAssets.UseDefaultPortrait — public bool UseDefaultPortrait`
+
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-c84043df96e9"></a>
 
 ## `NationalSpire.DateSceneBookmark.Turn — public string Turn`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -344,7 +442,7 @@
 
 ## `NationalSpire.DateSceneBookmark.ReplyHash — public string ReplyHash`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -362,7 +460,7 @@
 
 ## `NationalSpire.DateSceneBookmark.Index — public int Index`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -380,9 +478,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string) — public static string? EmotionForSprite(PortraitDesign design, string id)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`](DateSceneAssets.cs.md#symbol-c67565020030)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-3b48b221efd8)
+**调用者：** [`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-3b48b221efd8)
 
 **调用：** `string.LastIndexOf(char)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -402,9 +500,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string) — public static string[] SpriteKeys(DateSceneAssets assets, PortraitDesign design, string emotion)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)；[`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CareerScreen.SpriteVariants(string)`](DateSceneScreen.cs.md#symbol-e038e794d751)；[`NationalSpire.DateSceneAssetStore.Ready(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign?)`](DateSceneAssets.cs.md#symbol-79425fed4748)
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)；[`NationalSpire.CareerScreen.DateParticipants()`](DateScenePartyScreen.cs.md#symbol-658316b8bf70)；[`NationalSpire.CareerScreen.LoadDateParty(NationalSpire.CareerData, string, string)`](DateScenePartyScreen.cs.md#symbol-e7d1a77e170a)；[`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)；[`NationalSpire.CareerScreen.PartyWaitingTextures(string)`](DateScenePartyScreen.cs.md#symbol-44daf22689a3)；[`NationalSpire.CareerScreen.RefreshDateMemoryPeople()`](DateSceneMemoryScreen.cs.md#symbol-afd6840c2c58)；[`NationalSpire.DateSceneAssetStore.Ready(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign?)`](DateSceneAssets.cs.md#symbol-79425fed4748)；[`NationalSpire.DateSceneTesting.Initialize(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](DateSceneTesting.cs.md#symbol-91667df79532)；[`Select(int)`](DatePresentationScreen.cs.md#symbol-dbcf354665de)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-5b7cd1e95015)；`System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -424,7 +522,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.ContinueHintDismissed() — public static bool ContinueHintDismissed()`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
@@ -446,9 +544,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.DismissContinueHint() — public static void DismissContinueHint()`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView.Click(Godot.InputEvent)`](DateSceneView.cs.md#symbol-cb37d8aeee1d)
+**调用者：** [`NationalSpire.DateSceneView.AdvanceDialogue()`](DateSceneView.cs.md#symbol-b412d34b179e)
 
 **调用：** `Godot.ConfigFile.ConfigFile()`；`Godot.ConfigFile.Load(string)`；`Godot.ConfigFile.Save(string)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`System.IO.IOException.IOException(string?)`
 
@@ -469,7 +567,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.DirectoryPath — public static string DirectoryPath`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -488,9 +586,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.PathFor(NationalSpire.CareerData, string) — public static string PathFor(CareerData data, string person)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)
+**调用者：** [`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)
 
 **调用：** [`NationalSpire.PortraitDesignStore.Key(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-2ed1ee155b2d)；`System.IO.Path.Combine(string, string)`
 
@@ -508,9 +606,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string) — public static DateSceneAssets Read(CareerData data, string person)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-35fa453dd634)；[`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)
+**调用者：** [`NationalSpire.AppearanceLibrary.Prepare(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-bca14526873f)；[`NationalSpire.CareerScreen.AddDateVoiceSettings(Godot.VBoxContainer)`](DateGameScreen.cs.md#symbol-ad300bbb552d)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.LoadDateParty(NationalSpire.CareerData, string, string)`](DateScenePartyScreen.cs.md#symbol-e7d1a77e170a)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DatePresentation.Initial(NationalSpire.CareerData, string, bool)`](DatePresentation.cs.md#symbol-8371585517ce)；[`NationalSpire.DatePresentation.Pending(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<string>)`](DatePresentation.cs.md#symbol-9855f582740d)；[`NationalSpire.DatePresentation.Prepare(NationalSpire.CareerData, NationalSpire.DatePresentation.Selection)`](DatePresentation.cs.md#symbol-dba968a252db)；[`NationalSpire.DateSceneAssetStore.HasImportedSprites(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-364c6958d307)；[`NationalSpire.DateSceneTesting.Initialize(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](DateSceneTesting.cs.md#symbol-91667df79532)；[`Select()`](DateGameScreen.cs.md#symbol-c15130f82b97)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.PathFor(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-81bb8bd9a964)；`NationalSpire.DateSceneAssets.DateSceneAssets()`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
@@ -530,13 +628,37 @@
 - `assets.Blur` = `true`
 - `assets.BlurAmount` = `0`
 
+<a id="symbol-364c6958d307"></a>
+
+## `NationalSpire.DateSceneAssetStore.HasImportedSprites(NationalSpire.CareerData, string) — public static bool HasImportedSprites(CareerData data, string person)`
+
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`ShowRows()`](PeoplePickerScreen.cs.md#symbol-0dac44c0ee6b)
+
+**调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.IO.File.Exists(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.BlobPath(string)`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneAssets.Outfits`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneAssetStore.BlobPath(string)`；输入表达式：`BlobPath(hash)`；返回值紧邻使用处：`ArgumentSyntax: BlobPath(hash)`
+- `NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；输入表达式：`Read(data, person)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Read(data, person).Outfits`
+- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`hash.All(char.IsAsciiHexDigit)`；返回值紧邻使用处：`BinaryExpressionSyntax: hash.Length == 64 && hash.All(char.IsAsciiHexDigit)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values).Any(hash => hash.Length == 64 && hash.All(char.IsAsciiHexDigit) && File.Exists(BlobPath(hash)))`；返回值紧邻使用处：`ReturnStatementSyntax: return Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values).Any(hash => hash.Length == 64 && hash.All(char.IsAsciiHexDigit) && File.Exists(BlobPath(hash)));`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values).Any`
+- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(BlobPath(hash))`；返回值紧邻使用处：`BinaryExpressionSyntax: hash.Length == 64 && hash.All(char.IsAsciiHexDigit) && File.Exists(BlobPath(hash))`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-2bf1f40a912e"></a>
 
 ## `NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets) — public static void Save(CareerData data, string person, DateSceneAssets assets)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-5d9a90f3c871)；[`NationalSpire.CareerScreen.AdvanceDateScene()`](DateSceneScreen.cs.md#symbol-96e53c8a266f)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.LeaveDateScene(bool)`](DateSceneScreen.cs.md#symbol-942f3afae68b)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`Save()`](DateSceneScreen.cs.md#symbol-5e2413f0aa95)
+**调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-5d9a90f3c871)；[`NationalSpire.CareerScreen.AddDateVoiceSettings(Godot.VBoxContainer)`](DateGameScreen.cs.md#symbol-ad300bbb552d)；[`NationalSpire.CareerScreen.AdvanceDateScene()`](DateSceneScreen.cs.md#symbol-96e53c8a266f)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.LeaveDateScene(bool)`](DateSceneScreen.cs.md#symbol-942f3afae68b)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.SaveDateGameBookmark()`](DateGameScreen.cs.md#symbol-96b515b66a99)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`Save()`](DateSceneScreen.cs.md#symbol-5e2413f0aa95)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-66856ca56b04)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.PathFor(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-81bb8bd9a964)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -561,9 +683,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.Hash(byte[]) — public static string Hash(byte[] bytes)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`](CharacterDesignPackage.cs.md#symbol-b6e606c27a93)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；[`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`](DateSceneAssets.cs.md#symbol-c67565020030)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RememberDateImage(Godot.Texture2D)`](DateSceneMemoryScreen.cs.md#symbol-5fae395fe1f4)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`](CharacterDesignPackage.cs.md#symbol-abec8cae7c17)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.PortraitPackageImport.Merge(NationalSpire.PortraitPackageImport.Plan, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, System.Collections.Generic.ISet<string>)`](PortraitPackageImport.cs.md#symbol-63ab2a20968e)
 
 **调用：** `string.ToLowerInvariant()`；`System.Convert.ToHexString(byte[])`；`System.Security.Cryptography.SHA256.HashData(byte[])`
 
@@ -582,9 +704,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.BlobPath(string) — public static string BlobPath(string hash)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.HasDateArt(NationalSpire.CareerData, string)`](DateSceneScreen.cs.md#symbol-694ba8dec04c)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`](DateSceneBackgrounds.cs.md#symbol-05e1fa49f816)
+**调用者：** [`NationalSpire.CareerScreen.LoadDateParty(NationalSpire.CareerData, string, string)`](DateScenePartyScreen.cs.md#symbol-e7d1a77e170a)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.HasImportedSprites(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-364c6958d307)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`](DateSceneBackgrounds.cs.md#symbol-05e1fa49f816)
 
 **调用：** `char.IsAsciiHexDigit(char)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string, string)`
 
@@ -604,9 +726,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.Store(byte[], string) — internal static void Store(byte[] bytes, string hash)`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CharacterDesignPackage.Installation.PackageAssets(NationalSpire.CharacterDesignPackage.Imported)`](CharacterDesignPackage.cs.md#symbol-5f1bf4d63999)；[`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；[`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`](DateSceneAssets.cs.md#symbol-c67565020030)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)
+**调用者：** [`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CareerScreen.RememberDateImage(Godot.Texture2D)`](DateSceneMemoryScreen.cs.md#symbol-5fae395fe1f4)；[`NationalSpire.CharacterDesignPackage.Installation.PackageAssets(NationalSpire.CharacterDesignPackage.Imported)`](CharacterDesignPackage.cs.md#symbol-5f1bf4d63999)；[`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)；[`NationalSpire.PortraitPackageImport.Merge(NationalSpire.PortraitPackageImport.Plan, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, System.Collections.Generic.ISet<string>)`](PortraitPackageImport.cs.md#symbol-63ab2a20968e)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.Path.GetDirectoryName(string?)`
 
@@ -634,9 +756,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool) — public static Image ReadImage(byte[] bytes, bool sprite)`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`](CharacterDesignPackage.cs.md#symbol-b6e606c27a93)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`](DateSceneAssets.cs.md#symbol-c67565020030)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`](DateSceneAssets.cs.md#symbol-e78822490246)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)
+**调用者：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-df572b3fedc4)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`](CharacterDesignPackage.cs.md#symbol-abec8cae7c17)；[`NationalSpire.CharacterDesignPackage.Write(NationalSpire.CareerData, NationalSpire.CareerPerson, NationalSpire.PlayerAvatar, string, NationalSpire.PortraitDesign?, NationalSpire.DateSceneAssets?)`](CharacterDesignPackage.cs.md#symbol-a0889fe0f5f4)；[`NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool)`](DateSceneAssets.cs.md#symbol-d165300a808a)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`](DateSceneAssets.cs.md#symbol-e78822490246)；[`NationalSpire.DateSceneAssetStore.StoreSprite(byte[])`](DateSceneAssets.cs.md#symbol-d6c8bc9f985e)
 
 **调用：** `Godot.GodotObject.Dispose()`；`Godot.Image.Convert(Godot.Image.Format)`；`Godot.Image.DetectAlpha()`；`Godot.Image.GetData()`；`Godot.Image.Image()`；`Godot.Image.IsEmpty()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`System.Buffers.Binary.BinaryPrimitives.ReadUInt32BigEndian(System.ReadOnlySpan<byte>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；`T[]?.AsSpan<T>(int, int)`
 
@@ -672,13 +794,13 @@
 
 ## `NationalSpire.DateSceneAssetStore.ImportOne(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string, string, bool) — public static void ImportOne(DateSceneAssets assets, PortraitDesign design, string id, string file, bool append = false)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Draw()`](DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-5b7cd1e95015)；[`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；[`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`](DateSceneAssets.cs.md#symbol-5cd819ad6952)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Sprites`；`NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`；`NationalSpire.DateSceneAssetStore.Hash(byte[])`；`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；`NationalSpire.DateSceneAssetStore.Store(byte[], string)`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitEmotion.Enabled`；`NationalSpire.PortraitEmotion.Id`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`；`NationalSpire.DateSceneAssetStore.Hash(byte[])`；`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；`NationalSpire.DateSceneAssetStore.Store(byte[], string)`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Sprites`；`NationalSpire.DateSceneAssets.UseDefaultPortrait`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitEmotion.Enabled`；`NationalSpire.PortraitEmotion.Id`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -697,6 +819,7 @@
 
 - `assets.OutfitId` = `design.SelectedOutfit`
 - `assets.Sprites[id]` = `hash`
+- `assets.UseDefaultPortrait` = `false`
 - `id` = `emotion + "_" + index++`
 - `id` = `filename`
 
@@ -704,7 +827,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.StoreSprite(byte[]) — public static string StoreSprite(byte[] bytes)`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -725,7 +848,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string) — public static void SaveEmotionEdit(CareerData data, string person, PortraitDesign previous, PortraitDesign design, DateSceneAssets assets, string oldId, string newId)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)
 
@@ -761,155 +884,32 @@
 
 ## `NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string) — public static void ImportPack(DateSceneAssets assets, PortraitDesign design, string path)`
 
-来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；[`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`](DateSceneAssets.cs.md#symbol-c67565020030)；[`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`](DateSceneAssets.cs.md#symbol-5cd819ad6952)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`Read(string)`](DateSceneAssets.cs.md#symbol-2066b89030bb)；`string.EndsWith(string, System.StringComparison)`；`string.Equals(string?, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Compression.ZipFile.OpenRead(string)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetExtension(string?)`；`System.Text.Encoding.GetBytes(string)`；`System.Text.Json.JsonDocument.Parse(System.ReadOnlyMemory<byte>, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
+**调用：** [`NationalSpire.PortraitPackageImport.Merge(NationalSpire.PortraitPackageImport.Plan, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, System.Collections.Generic.ISet<string>)`](PortraitPackageImport.cs.md#symbol-63ab2a20968e)；[`NationalSpire.PortraitPackageImport.Plan.Unknown(NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-c60dfaaef123)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
-**字段、属性、事件及方法组引用：** `(string Hash, byte[] Bytes).Bytes`；`(string Hash, byte[] Bytes).Hash`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Sprites`；`NationalSpire.DateSceneAssetStore.Hash(byte[])`；`NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`；`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；`NationalSpire.DateSceneAssetStore.Store(byte[], string)`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.PersonId`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitEmotion.Enabled`；`NationalSpire.PortraitEmotion.Id`；`Read(string)`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `NationalSpire.DateSceneAssetStore.Hash(byte[])`；输入表达式：`Hash(bytes)`；返回值紧邻使用处：`ArgumentSyntax: Hash(bytes)`
-- `NationalSpire.DateSceneAssetStore.Hash(byte[])`；输入表达式：`Hash(System.Text.Encoding.UTF8.GetBytes(design.PersonId))`；返回值紧邻使用处：`ElementAccessExpressionSyntax: Hash(System.Text.Encoding.UTF8.GetBytes(design.PersonId))[..16]`
-- `NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive)`；输入表达式：`ImportNamedPack(assets, design, archive)`；返回值紧邻使用处：`ExpressionStatementSyntax: ImportNamedPack(assets, design, archive);`
-- `NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；输入表达式：`ReadImage(bytes, true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadImage(bytes, true)`
-- `NationalSpire.DateSceneAssetStore.Store(byte[], string)`；输入表达式：`Store(item.Bytes, item.Hash)`；返回值紧邻使用处：`ExpressionStatementSyntax: Store(item.Bytes, item.Hash);`
-- `Read(string)`；输入表达式：`Read("manifest.json")`；返回值紧邻使用处：`ConditionalExpressionSyntax: archive == null ? File.ReadAllBytes(path) : Read("manifest.json")`
-- `Read(string)`；输入表达式：`Read(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Read(file)`
-- `string.EndsWith(string, System.StringComparison)`；输入表达式：`file.EndsWith('/' + id + ".png", StringComparison.Ordinal)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !file.EndsWith('/' + id + ".png", StringComparison.Ordinal)`
-- `string.Equals(string?, System.StringComparison)`；输入表达式：`Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? ZipFile.OpenRead(path) : null`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；输入表达式：`accepted.Add(id, (Hash(bytes), bytes))`；返回值紧邻使用处：`ExpressionStatementSyntax: accepted.Add(id, (Hash(bytes), bytes));`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`accepted.ContainsKey(design.DefaultEmotionId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !accepted.ContainsKey(design.DefaultEmotionId)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`accepted.ContainsKey(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: !allowed.Contains(id) || accepted.ContainsKey(id)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, (string Hash, byte[] Bytes)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, (string Hash, byte[] Bytes)>()`
-- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`allowed.Contains(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !allowed.Contains(id)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`archive.Entries.Any(e => e.FullName == "manifest.json")`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !archive.Entries.Any(e => e.FullName == "manifest.json")`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`design.Emotions.Where(e => e.Enabled).Select(e => e.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: design.Emotions.Where(e => e.Enabled).Select(e => e.Id).ToHashSet`
-- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`accepted.ToDictionary(p => p.Key, p => p.Value.Hash)`；返回值紧邻使用处：`AssignmentExpressionSyntax: assets.Sprites = accepted.ToDictionary(p => p.Key, p => p.Value.Hash)`
-- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`design.Emotions.Where(e => e.Enabled).Select(e => e.Id).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = design.Emotions.Where(e => e.Enabled).Select(e => e.Id).ToHashSet()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`design.Emotions.Where(e => e.Enabled)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: design.Emotions.Where(e => e.Enabled).Select`
-- `System.IO.Compression.ZipFile.OpenRead(string)`；输入表达式：`ZipFile.OpenRead(path)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? ZipFile.OpenRead(path) : null`
-- `System.IO.File.ReadAllBytes(string)`；输入表达式：`File.ReadAllBytes(path)`；返回值紧邻使用处：`ConditionalExpressionSyntax: archive == null ? File.ReadAllBytes(path) : Read("manifest.json")`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("立绘包缺少默认差分：" + design.DefaultEmotionId)`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("立绘包缺少默认差分：" + design.DefaultEmotionId);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("清单与当前角色或套装不匹配，请使用该角色当前套装导出的清单。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("清单与当前角色或套装不匹配，请使用该角色当前套装导出的清单。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("情绪ID、文件名或启用状态与设计不匹配：" + id)`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("情绪ID、文件名或启用状态与设计不匹配：" + id);`
-- `System.IO.Path.GetExtension(string?)`；输入表达式：`Path.GetExtension(path)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Path.GetExtension(path).Equals`
-- `System.Text.Encoding.GetBytes(string)`；输入表达式：`System.Text.Encoding.UTF8.GetBytes(design.PersonId)`；返回值紧邻使用处：`ArgumentSyntax: System.Text.Encoding.UTF8.GetBytes(design.PersonId)`
-- `System.Text.Json.JsonDocument.Parse(System.ReadOnlyMemory<byte>, System.Text.Json.JsonDocumentOptions)`；输入表达式：`JsonDocument.Parse(archive == null ? File.ReadAllBytes(path) : Read("manifest.json"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonDocument.Parse(archive == null ? File.ReadAllBytes(path) : Read("manifest.json"))`
-- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`manifest.GetProperty("sprites").EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var entry in manifest.GetProperty("sprites").EnumerateArray())          {              string id = entry.GetProperty("emotionId").GetString() ?? "", file = entry.GetProperty("file").GetString() ?? "";              if (!allowed.Contains(id) || accepted.ContainsKey(id) || !file.EndsWith('/' + id + ".png", StringComparison.Ordinal)) throw new InvalidDataException("情绪ID、文件名或启用状态与设计不匹配：" + id);              byte[] bytes = Read(file); using var image = ReadImage(bytes, true); accepted.Add(id, (Hash(bytes), bytes));          }`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`entry.GetProperty("emotionId")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: entry.GetProperty("emotionId").GetString`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`entry.GetProperty("file")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: entry.GetProperty("file").GetString`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`manifest.GetProperty("characterId")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: manifest.GetProperty("characterId").GetString`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`manifest.GetProperty("outfitId")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: manifest.GetProperty("outfitId").GetString`
-- `System.Text.Json.JsonElement.GetProperty(string)`；输入表达式：`manifest.GetProperty("sprites")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: manifest.GetProperty("sprites").EnumerateArray`
-- `System.Text.Json.JsonElement.GetString()`；输入表达式：`entry.GetProperty("emotionId").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.GetProperty("emotionId").GetString() ?? ""`
-- `System.Text.Json.JsonElement.GetString()`；输入表达式：`entry.GetProperty("file").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.GetProperty("file").GetString() ?? ""`
-- `System.Text.Json.JsonElement.GetString()`；输入表达式：`manifest.GetProperty("characterId").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: manifest.GetProperty("characterId").GetString() != character`
-- `System.Text.Json.JsonElement.GetString()`；输入表达式：`manifest.GetProperty("outfitId").GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: manifest.GetProperty("outfitId").GetString() != design.SelectedOutfit`
-
-**赋值（含属性/字段和局部值）：**
-
-- `assets.OutfitId` = `design.SelectedOutfit`
-- `assets.Sprites` = `accepted.ToDictionary(p => p.Key, p => p.Value.Hash)`
-
-<a id="symbol-2066b89030bb"></a>
-
-## `Read(string) — byte[] Read(string name)`
-
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
-
-**调用：** `string.Contains(char)`；`string.Replace(char, char)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(char)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFullPath(string)`；`System.IO.Stream.CopyTo(System.IO.Stream)`
-
-**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Outfits`；`NationalSpire.PortraitPackageImport.Merge(NationalSpire.PortraitPackageImport.Plan, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, System.Collections.Generic.ISet<string>)`；`NationalSpire.PortraitPackageImport.Plan.Unknown(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `string.Contains(char)`；输入表达式：`name.Contains('\\')`；返回值紧邻使用处：`BinaryExpressionSyntax: name.Contains('\\') || name.StartsWith('/')`
-- `string.Contains(char)`；输入表达式：`p.Contains(':')`；返回值紧邻使用处：`BinaryExpressionSyntax: p is ".." or "." || p.Contains(':')`
-- `string.Replace(char, char)`；输入表达式：`name.Replace('/', Path.DirectorySeparatorChar)`；返回值紧邻使用处：`ArgumentSyntax: name.Replace('/', Path.DirectorySeparatorChar)`
-- `string.Split(char, System.StringSplitOptions)`；输入表达式：`name.Split('/')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: name.Split('/').Any`
-- `string.StartsWith(char)`；输入表达式：`name.StartsWith('/')`；返回值紧邻使用处：`BinaryExpressionSyntax: name.Contains('\\') || name.StartsWith('/')`
-- `string.StartsWith(string, System.StringComparison)`；输入表达式：`resolved.StartsWith(root, StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !resolved.StartsWith(root, StringComparison.OrdinalIgnoreCase)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`name.Split('/').Any(p => p is ".." or "." || p.Contains(':'))`；返回值紧邻使用处：`BinaryExpressionSyntax: name.Contains('\\') || name.StartsWith('/') || name.Split('/').Any(p => p is ".." or "." || p.Contains(':'))`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`archive.Entries.Where(e => e.FullName == name).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = archive.Entries.Where(e => e.FullName == name).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`archive.Entries.Where(e => e.FullName == name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: archive.Entries.Where(e => e.FullName == name).ToArray`
-- `System.IO.Compression.ZipArchiveEntry.Open()`；输入表达式：`found[0].Open()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = found[0].Open()`
-- `System.IO.File.ReadAllBytes(string)`；输入表达式：`File.ReadAllBytes(resolved)`；返回值紧邻使用处：`ReturnStatementSyntax: return File.ReadAllBytes(resolved);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("单张图片超过64MB，请缩小文件后重新导出。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("单张图片超过64MB，请缩小文件后重新导出。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("立绘包缺少或重复文件：" + name)`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("立绘包缺少或重复文件：" + name);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("清单中的图片路径无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("清单中的图片路径无效。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("图片路径超出清单目录。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("图片路径超出清单目录。");`
-- `System.IO.MemoryStream.MemoryStream()`；输入表达式：`new MemoryStream()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MemoryStream()`
-- `System.IO.MemoryStream.ToArray()`；输入表达式：`output.ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return output.ToArray();`
-- `System.IO.Path.Combine(string, string)`；输入表达式：`Path.Combine(root, name.Replace('/', Path.DirectorySeparatorChar))`；返回值紧邻使用处：`ArgumentSyntax: Path.Combine(root, name.Replace('/', Path.DirectorySeparatorChar))`
-- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`Path.GetDirectoryName(path)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Path.GetDirectoryName(path)!`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`Path.GetFullPath(Path.Combine(root, name.Replace('/', Path.DirectorySeparatorChar)))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Path.GetFullPath(Path.Combine(root, name.Replace('/', Path.DirectorySeparatorChar)))`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`Path.GetFullPath(Path.GetDirectoryName(path)!)`；返回值紧邻使用处：`BinaryExpressionSyntax: Path.GetFullPath(Path.GetDirectoryName(path)!) + Path.DirectorySeparatorChar`
-- `System.IO.Stream.CopyTo(System.IO.Stream)`；输入表达式：`input.CopyTo(output)`；返回值紧邻使用处：`ExpressionStatementSyntax: input.CopyTo(output);`
+- `NationalSpire.PortraitPackageImport.Merge(NationalSpire.PortraitPackageImport.Plan, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, System.Collections.Generic.ISet<string>)`；输入表达式：`PortraitPackageImport.Merge(plan, design, assets, new HashSet<string>())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitPackageImport.Merge(plan, design, assets, new HashSet<string>())`
+- `NationalSpire.PortraitPackageImport.Plan.Unknown(NationalSpire.PortraitDesign)`；输入表达式：`plan.Unknown(design)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: plan.Unknown(design).Length`
+- `NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitPackageImport.Read(null, path, design)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitPackageImport.Read(null, path, design)`
+- `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<string>()`；返回值紧邻使用处：`ArgumentSyntax: new HashSet<string>()`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("请在导入窗口确认新情绪差分后导入。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("请在导入窗口确认新情绪差分后导入。");`
 
 **赋值（含属性/字段和局部值）：**
 
-
-<a id="symbol-c67565020030"></a>
-
-## `NationalSpire.DateSceneAssetStore.ImportNamedPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, System.IO.Compression.ZipArchive) — private static void ImportNamedPack(DateSceneAssets assets, PortraitDesign design, ZipArchive archive)`
-
-来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
-
-**调用：** [`NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-5b7cd1e95015)；[`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；[`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`](DateSceneAssets.cs.md#symbol-5cd819ad6952)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；`string.Contains(char)`；`string.EndsWith(string, System.StringComparison)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(char)`；`string.StartsWith(string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`System.IO.Stream.CopyTo(System.IO.Stream)`
-
-**字段、属性、事件及方法组引用：** `(string Hash, byte[] Bytes).Bytes`；`(string Hash, byte[] Bytes).Hash`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Outfits`；`NationalSpire.DateSceneAssets.Sprites`；`NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`；`NationalSpire.DateSceneAssetStore.Hash(byte[])`；`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；`NationalSpire.DateSceneAssetStore.Store(byte[], string)`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.SelectedOutfit`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`；输入表达式：`EmotionForSprite(design, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: EmotionForSprite(design, id) == design.DefaultEmotionId`
-- `NationalSpire.DateSceneAssetStore.EmotionForSprite(NationalSpire.PortraitDesign, string)`；输入表达式：`EmotionForSprite(design, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: EmotionForSprite(design, id) == null`
-- `NationalSpire.DateSceneAssetStore.Hash(byte[])`；输入表达式：`Hash(bytes)`；返回值紧邻使用处：`ArgumentSyntax: Hash(bytes)`
-- `NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；输入表达式：`ReadImage(bytes, true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadImage(bytes, true)`
-- `NationalSpire.DateSceneAssetStore.Store(byte[], string)`；输入表达式：`Store(item.Bytes, item.Hash)`；返回值紧邻使用处：`ExpressionStatementSyntax: Store(item.Bytes, item.Hash);`
-- `string.Contains(char)`；输入表达式：`entry.FullName.Contains('\\')`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.FullName.Contains('\\') || entry.FullName.StartsWith('/')`
-- `string.Contains(char)`；输入表达式：`p.Contains(':')`；返回值紧邻使用处：`BinaryExpressionSyntax: p is ".." or "." || p.Contains(':')`
-- `string.EndsWith(string, System.StringComparison)`；输入表达式：`e.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: e.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) && !e.FullName.StartsWith("__MACOSX/")`
-- `string.Split(char, System.StringSplitOptions)`；输入表达式：`entry.FullName.Split('/')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: entry.FullName.Split('/').Any`
-- `string.StartsWith(char)`；输入表达式：`entry.FullName.StartsWith('/')`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.FullName.Contains('\\') || entry.FullName.StartsWith('/')`
-- `string.StartsWith(string)`；输入表达式：`e.FullName.StartsWith("__MACOSX/")`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !e.FullName.StartsWith("__MACOSX/")`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；输入表达式：`accepted.Add(id, (Hash(bytes), bytes))`；返回值紧邻使用处：`ExpressionStatementSyntax: accepted.Add(id, (Hash(bytes), bytes));`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`accepted.ContainsKey(id)`；返回值紧邻使用处：`BinaryExpressionSyntax: EmotionForSprite(design, id) == null || accepted.ContainsKey(id)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, (string Hash, byte[] Bytes)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, (string Hash, byte[] Bytes)>()`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；输入表达式：`new Dictionary<string, string>(assets.Outfits.GetValueOrDefault(design.SelectedOutfit) ?? [])`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, string>(assets.Outfits.GetValueOrDefault(design.SelectedOutfit) ?? [])`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`entry.FullName.Split('/').Any(p => p is ".." or "." || p.Contains(':'))`；返回值紧邻使用处：`BinaryExpressionSyntax: entry.FullName.Contains('\\') || entry.FullName.StartsWith('/') || entry.FullName.Split('/').Any(p => p is ".." or "." || p.Contains(':'))`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`merged.Keys.Any(id => EmotionForSprite(design, id) == design.DefaultEmotionId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !merged.Keys.Any(id => EmotionForSprite(design, id) == design.DefaultEmotionId)`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`archive.Entries.Where(e => e.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) && !e.FullName.StartsWith("__MACOSX/"))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var entry in archive.Entries.Where(e => e.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase) && !e.FullName.StartsWith("__MACOSX/")))          {              if (entry.FullName.Contains('\\') || entry.FullName.StartsWith('/') || entry.FullName.Split('/').Any(p => p is ".." or "." || p.Contains(':')))                  throw new InvalidDataException("立绘包中的图片路径无效。");              string id = Path.GetFileNameWithoutExtension(entry.Name);              if (EmotionForSprite(design, id) == null || accepted.ContainsKey(id)) throw new InvalidDataException("PNG文件名须为情绪ID或情绪ID_数字，且文件名唯一：" + id);              total += entry.Length;              if (entry.Length > 64 * 1024 * 1024 || total > 512L * 1024 * 1024) throw new InvalidDataException("立绘包过大，请分批导入。");              using var input = entry.Open(); using var output = new MemoryStream(); input.CopyTo(output); byte[] bytes = output.ToArray();              using var image = ReadImage(bytes, true); accepted.Add(id, (Hash(bytes), bytes));          }`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`assets.Outfits.GetValueOrDefault(design.SelectedOutfit)`；返回值紧邻使用处：`BinaryExpressionSyntax: assets.Outfits.GetValueOrDefault(design.SelectedOutfit) ?? []`
-- `System.IO.Compression.ZipArchiveEntry.Open()`；输入表达式：`entry.Open()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = entry.Open()`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("立绘包过大，请分批导入。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("立绘包过大，请分批导入。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("立绘包中的图片路径无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("立绘包中的图片路径无效。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("立绘包中没有PNG图片。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("立绘包中没有PNG图片。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("PNG文件名须为情绪ID或情绪ID_数字，且文件名唯一：" + id)`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("PNG文件名须为情绪ID或情绪ID_数字，且文件名唯一：" + id);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException($"请提供{design.DefaultEmotionId}.png或{design.DefaultEmotionId}_数字.png默认立绘。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException($"请提供{design.DefaultEmotionId}.png或{design.DefaultEmotionId}_数字.png默认立绘。");`
-- `System.IO.MemoryStream.MemoryStream()`；输入表达式：`new MemoryStream()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MemoryStream()`
-- `System.IO.MemoryStream.ToArray()`；输入表达式：`output.ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = output.ToArray()`
-- `System.IO.Path.GetFileNameWithoutExtension(string?)`；输入表达式：`Path.GetFileNameWithoutExtension(entry.Name)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Path.GetFileNameWithoutExtension(entry.Name)`
-- `System.IO.Stream.CopyTo(System.IO.Stream)`；输入表达式：`input.CopyTo(output)`；返回值紧邻使用处：`ExpressionStatementSyntax: input.CopyTo(output);`
-
-**赋值（含属性/字段和局部值）：**
-
-- `assets.OutfitId` = `design.SelectedOutfit`
-- `assets.Sprites` = `merged`
-- `merged[item.Key]` = `item.Value.Hash`
-- `total` += `entry.Length`
+- `assets.OutfitId` = `merged.Assets.OutfitId`
+- `assets.Outfits` = `merged.Assets.Outfits`
 
 <a id="symbol-255ccc15c761"></a>
 
 ## `NationalSpire.DateSceneAssetStore.ImportBackground(string) — public static string ImportBackground(string path)`
 
-来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)
 
@@ -932,7 +932,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string) — public static string ImportBackgroundBytes(byte[] bytes, string extension)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneAssetStore.ImportBackground(string)`](DateSceneAssets.cs.md#symbol-255ccc15c761)；[`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`](DateSceneBackgrounds.cs.md#symbol-05e1fa49f816)
 
@@ -957,7 +957,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string) — public static Image ReadBackgroundImage(byte[] bytes, string extension)`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；[`NationalSpire.DateSceneBackgrounds.Pixels(string)`](DateSceneBackgrounds.cs.md#symbol-3098b5a3a6eb)
 
@@ -989,7 +989,7 @@
 
 ## `NationalSpire.DateSceneAssetStore.Pixels(string, bool) — public static Image Pixels(string hash, bool sprite = true)`
 
-来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneAssetStore.Texture(string, bool)`](DateSceneAssets.cs.md#symbol-616d47ee9d6a)；[`NationalSpire.DateSceneBackgrounds.Pixels(string)`](DateSceneBackgrounds.cs.md#symbol-3098b5a3a6eb)
 
@@ -1012,9 +1012,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.Texture(string, bool) — public static Texture2D Texture(string hash, bool sprite = true)`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateTexture(string)`](DateSceneScreen.cs.md#symbol-f1499ce9d9b1)；[`NationalSpire.DateSceneAssetStore.Ready(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign?)`](DateSceneAssets.cs.md#symbol-79425fed4748)；[`NationalSpire.DateSceneBackgrounds.RegisterLegacy(string)`](DateSceneBackgrounds.cs.md#symbol-7feab11c4c5b)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)
+**调用者：** [`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)；[`NationalSpire.CareerScreen.PartyWaitingTextures(string)`](DateScenePartyScreen.cs.md#symbol-44daf22689a3)；[`NationalSpire.DateMemoryPlayback.Texture(string)`](DateSceneMemoryPlayback.cs.md#symbol-29553f3d3337)；[`NationalSpire.DateSceneAssetStore.Ready(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign?)`](DateSceneAssets.cs.md#symbol-79425fed4748)；[`NationalSpire.DateSceneBackgrounds.RegisterLegacy(string)`](DateSceneBackgrounds.cs.md#symbol-7feab11c4c5b)；[`NationalSpire.DateSceneTesting.Initialize(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](DateSceneTesting.cs.md#symbol-91667df79532)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)；[`Select(int)`](DatePresentationScreen.cs.md#symbol-dbcf354665de)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；`Godot.ImageTexture.CreateFromImage(Godot.Image)`
 
@@ -1032,9 +1032,9 @@
 
 ## `NationalSpire.DateSceneAssetStore.Ready(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign?) — public static string? Ready(DateSceneAssets assets, PortraitDesign? design)`
 
-来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DatePresentation.Initial(NationalSpire.CareerData, string, bool)`](DatePresentation.cs.md#symbol-8371585517ce)；[`NationalSpire.DatePresentation.Prepare(NationalSpire.CareerData, NationalSpire.DatePresentation.Selection)`](DatePresentation.cs.md#symbol-dba968a252db)；[`NationalSpire.DateSceneTesting.Initialize(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](DateSceneTesting.cs.md#symbol-91667df79532)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.SpriteKeys(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-3b48b221efd8)；[`NationalSpire.DateSceneAssetStore.Texture(string, bool)`](DateSceneAssets.cs.md#symbol-616d47ee9d6a)
 

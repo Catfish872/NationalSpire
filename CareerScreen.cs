@@ -21,6 +21,7 @@ public partial class CareerScreen : Control, IScreenContext
     private Label? _aiStatus;
     private bool _aiSettingsDirty;
     private string _profileFilter = "国内职业";
+    private string _profileOrigin = "全部来源";
     private int _profileLimit = 36;
     private string _profileQuery = "";
     private string _communityFilter = "全部";
@@ -54,6 +55,12 @@ public partial class CareerScreen : Control, IScreenContext
 
     public override void _Input(InputEvent e)
     {
+        if (ChatModelPickerOpen) return;
+        if (_testDateScene != null)
+        {
+            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); _testDateScene.Close(); }
+            return;
+        }
         if (_dialogOverlay != null)
         {
             if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape })
@@ -82,6 +89,11 @@ public partial class CareerScreen : Control, IScreenContext
             return;
         }
         if (_promptOverlay != null) return;
+        if (_dateMemoryPlayback != null)
+        {
+            if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); _dateMemoryPlayback.GoBack(); }
+            return;
+        }
         if (_dateView != null)
         {
             if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape }) { GetViewport().SetInputAsHandled(); DateSceneExitChoices(); }
@@ -158,10 +170,11 @@ public partial class CareerScreen : Control, IScreenContext
         screen.Build();
         ActiveScreenContext.Instance.Update();
     }
-    private void Close()
+    private void Close() => Close(false);
+    private void Close(bool force)
     {
-        if (_starting) return;
-        if (ViewData.Failure != null) return;
+        if (_starting && !force) return;
+        if (IsQueuedForDeletion() || !force && ViewData.Failure != null && _dateRunResume == null) return;
         if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); }
         _open = null;
         foreach (var (node, visible) in _hidden) if (GodotObject.IsInstanceValid(node)) node.Visible = visible;
@@ -265,11 +278,16 @@ public partial class CareerScreen : Control, IScreenContext
             button.AddThemeColorOverride("font_color", name == _tab ? _ink : _muted);
         }
         var data = ViewData;
+        if (data.NpcSetupPending && _multiplayer == null && !_npcSetupOpening)
+        {
+            _npcSetupOpening = true;
+            Callable.From(() => { if (IsInstanceValid(this) && !IsQueuedForDeletion()) BeginNpcSetup(true); }).CallDeferred();
+        }
         _backButton.Disabled |= data.Failure != null;
         if (data.Failure != null) { Settlement(data); AnimatePage(); return; }
         _seasonLabel.Text = "赛季  " + data.Season.ToString("00");
         string? latestEvent = data.Posts.FirstOrDefault()?.Id;
-        bool newEvent = _latestEvent != null && _latestEvent != latestEvent;
+        bool newEvent = _latestEvent != latestEvent;
         _latestEvent = latestEvent;
         _postSignature = Signature(data);
         _status.AddThemeColorOverride("font_color", _muted);
@@ -310,8 +328,8 @@ public partial class CareerScreen : Control, IScreenContext
         AnimatePage();
         UpdateCommunityBadge(); _postSignature = Signature(data);
         if (_multiplayer == null && data.Ai.Enabled) ProactiveChats.StartQueued(data);
-        if (_multiplayer == null && (newEvent || data.Journey.ResumePublications) && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.Posts.FirstOrDefault()?.AuthorId != "player") _ = AiService.ProcessPendingAsync();
-        if (_multiplayer == null && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.WeeklyEditions.Any(w => w.ProfilesWork.State == "idle" || w.NewsWork.State == "idle")) _ = AiService.ProcessWeeklyAsync();
+        if (_multiplayer == null && !data.NpcSetupPending && (newEvent || data.Journey.ResumePublications) && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.Posts.FirstOrDefault()?.AuthorId != "player") _ = AiService.ProcessPendingAsync(data);
+        if (_multiplayer == null && !data.NpcSetupPending && !EventJourney.PublicationsPaused(data) && data.Ai.Enabled && data.WeeklyEditions.Any(w => w.ProfilesWork.State == "idle" || w.NewsWork.State == "idle")) _ = AiService.ProcessWeeklyAsync();
         if (!EventJourney.PublicationsPaused(data)) data.Journey.ResumePublications = false;
         ShowJourneyEncounter();
     }
@@ -756,9 +774,14 @@ public partial class CareerScreen : Control, IScreenContext
         var search = new LineEdit { Text = _profileQuery, PlaceholderText = "搜索 ID、姓名、国家或俱乐部", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new Vector2(200, 46) }; searchRow.AddChild(search);
         void Search() { _profileQuery = search.Text.Trim(); _profileLimit = 36; Render(); }
         search.TextSubmitted += _ => Search(); searchRow.AddChild(Button("搜索", Search, 100));
+        var origin = new OptionButton { Name = "ProfileOriginFilter", CustomMinimumSize = new(150, 46) };
+        foreach (var label in new[] { "全部来源", "原生", "自定义" }) origin.AddItem(label);
+        origin.Select(Array.IndexOf(new[] { "全部来源", "原生", "自定义" }, _profileOrigin)); searchRow.AddChild(origin);
+        origin.ItemSelected += n => { _profileOrigin = origin.GetItemText((int)n); _profileLimit = 36; Render(); };
         var people = data.People.Where(p => _profileQuery.Length > 0 || (_profileFilter switch { "真人队员" => data.HumanIds.Contains(p.Id), "国内职业" => EsportsWorld.IsProfessional(p) && p.Country == data.Esports.Country,
             "国际职业" => EsportsWorld.IsProfessional(p) && p.Country != data.Esports.Country, "青训" => p.Role == "青训选手",
             "主播与媒体" => p.Role is "主播" or "解说员" or "赛事记者", "退役与教练" => p.Role is "退役选手" or "教练" || ClubCoaching.IsCoach(p), "自建角色" => p.CreatedCard, _ => p.Role == "普通玩家" }))
+            .Where(p => _profileOrigin == "全部来源" || !GroupChats.IsHuman(data, p.Id) && (p.CreatedCard || p.EditedCard) == (_profileOrigin == "自定义"))
             .Where(p => _profileQuery.Length == 0 || (p.Handle + string.Join(" ", p.HandleAliases) + p.Name + p.Country + EsportsWorld.ClubName(data, p.ClubId)).Contains(_profileQuery, StringComparison.OrdinalIgnoreCase)).OrderByDescending(p => p.Rating).ToList();
         _content.AddChild(Text($"当前：{(_profileQuery.Length > 0 ? "全名录搜索" : _profileFilter)} · 找到 {people.Count} 人 / 世界共 {data.People.Count} 人 · 当前显示 {Math.Min(_profileLimit, people.Count)} 人", 15, _muted));
         var grid = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 14); grid.AddThemeConstantOverride("v_separation", 14); _content.AddChild(grid);
@@ -773,10 +796,7 @@ public partial class CareerScreen : Control, IScreenContext
         var matchCard = Card(); _content.AddChild(matchCard); var matchBox = Inner(matchCard);
         matchBox.AddChild(Text("局内 AI 水平", 24, _gold));
         int[] levels = [100, 1000, 10000];
-        var levelPicker = new OptionButton { Name = "RivalLevel", CustomMinimumSize = new Vector2(0, 52), SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        foreach (string label in _multiplayer != null
-            ? new[] { "下降一百倍 · 职业队伍约 1 小时 7 分 30 秒", "下降一千倍 · 职业队伍约 1 小时 30 分钟", "下降一万倍 · 职业队伍约 2 小时 15 分钟" }
-            : new[] { "下降一百倍 · 职业选手约 45 分钟", "下降一千倍 · 职业选手约 1 小时", "下降一万倍 · 职业选手约 1 小时 30 分钟" }) levelPicker.AddItem(label);
+        var levelPicker = AiSettingsPanel.RivalLevelPicker(data.RivalLevel, _multiplayer != null);
         int LevelIndex() => Array.IndexOf(levels, data.RivalLevel) is var i && i >= 0 ? i : 1;
         levelPicker.Select(LevelIndex());
         levelPicker.Disabled = data.PendingMatchId != null || _multiplayer is { Host: false } || _multiplayer?.ProposalId.Length > 0;
@@ -804,6 +824,8 @@ public partial class CareerScreen : Control, IScreenContext
         var debug = Card(); _content.AddChild(debug); var db = Inner(debug);
         db.AddChild(Text("生涯管理", 24, _gold));
         db.AddChild(Button("切换、导入与导出生涯", OpenCareerLibrary, 310));
+        db.AddChild(Button("测试约会（开发者）", TestDateScenePicker, 310));
+        db.AddChild(Button("约会对局发言与触发", EditDateGameRules, 310));
         db.AddChild(Text("重新开始生涯会保留原版战绩、角色解锁和 AI 设置。", 16, _muted));
         var actions = new HBoxContainer(); db.AddChild(actions);
         actions.AddChild(Button("刷新游戏战绩", () => { PlayerArchive.Invalidate(); Notice("游戏战绩已刷新。", false); }, 190));
@@ -817,7 +839,7 @@ public partial class CareerScreen : Control, IScreenContext
             var confirm = new HBoxContainer(); db.AddChild(confirm);
             confirm.AddChild(Button("确认重置生涯", () =>
             {
-                try { _boundData = CareerStore.ResetCareer(); ResetNavigation(); _confirmReset = false; _latestEvent = null; _scroll.ScrollVertical = 0; Render(); Notice("生涯已重新开始，旧生涯已备份。", false); }
+                try { BeginNpcSetup(true); }
                 catch (Exception e) { GD.PushWarning(e.ToString()); Notice("生涯未能重置，请检查存档文件夹的写入权限。", true); }
             }, 210));
             confirm.AddChild(Button("取消", () => { _confirmReset = false; Render(); }, 120));

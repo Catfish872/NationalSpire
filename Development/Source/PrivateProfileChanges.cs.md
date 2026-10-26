@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4B9A84FF815E343C1DB9531693D6BD7A531E47B768AADEDB1DEB2316BAE9577B`。来源：[源码](../../PrivateProfileChanges.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`4521151962AAC0D8A04D808EACC6F2D49E6DC5FD3CEBE4629A807130EC6360AA`。来源：[源码](../../PrivateProfileChanges.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -215,14 +215,19 @@ public static readonly string[] Fields = ["性格类型", "性格概述", "判�
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.PrivateProfileChanges.Apply(NationalSpire.CareerPerson, NationalSpire.PrivateProfileChange)`](PrivateProfileChanges.cs.md#symbol-c409575d5f79)；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateProfileChanges.Apply(NationalSpire.CareerPerson, NationalSpire.PrivateProfileChange)`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.ProfileChanges`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateProfileChanges.Apply(NationalSpire.CareerPerson, NationalSpire.PrivateProfileChange)`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.DatePartyEffects`；`NationalSpire.PrivateTurn.ProfileChanges`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, c.PersonId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, c.PersonId) is { } p`
+- `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, effect.Key)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, effect.Key) is { } participant`
 - `NationalSpire.PrivateProfileChanges.Apply(NationalSpire.CareerPerson, NationalSpire.PrivateProfileChange)`；输入表达式：`Apply(p, change)`；返回值紧邻使用处：`ExpressionStatementSyntax: Apply(p, change);`
+- `NationalSpire.PrivateProfileChanges.Apply(NationalSpire.CareerPerson, NationalSpire.PrivateProfileChange)`；输入表达式：`Apply(participant, change)`；返回值紧邻使用处：`ExpressionStatementSyntax: Apply(participant, change);`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`c.Turns.Where(t => t.Applied).SelectMany(t => t.ProfileChanges)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var change in c.Turns.Where(t => t.Applied).SelectMany(t => t.ProfileChanges)) Apply(p, change);`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`mailbox.Conversations.Values.SelectMany(c => c.Turns)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: mailbox.Conversations.Values.SelectMany(c => c.Turns).Where`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`mailbox.Conversations.Values.SelectMany(c => c.Turns).Where(t => t.Applied).SelectMany(t => t.DatePartyEffects)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var effect in mailbox.Conversations.Values.SelectMany(c => c.Turns).Where(t => t.Applied).SelectMany(t => t.DatePartyEffects)) if (CareerEngine.Person(data, effect.Key) is { } participant) foreach (var change in effect.Value.ProfileChanges) Apply(participant, change);`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Turns.Where(t => t.Applied)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Turns.Where(t => t.Applied).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`mailbox.Conversations.Values.SelectMany(c => c.Turns).Where(t => t.Applied)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: mailbox.Conversations.Values.SelectMany(c => c.Turns).Where(t => t.Applied).SelectMany`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -231,7 +236,7 @@ public static readonly string[] Fields = ["性格类型", "性格概述", "判�
 
 ## `NationalSpire.PrivateProfileChanges.Publish(NationalSpire.CareerData, string, NationalSpire.PrivateOffer) — public static string? Publish(CareerData data, string person, PrivateOffer offer)`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 

@@ -6,6 +6,7 @@ namespace NationalSpire;
 /// <summary>仅保存一条回复实际改变的字段，重新生成时逆序撤回，保留期间发生的其他变化。</summary>
 public sealed class PrivateInteractionUndo
 {
+    public string PersonId { get; set; } = "";
     public JsonObject Before { get; set; } = new();
     public JsonObject After { get; set; } = new();
     public bool Contract { get; set; }
@@ -20,7 +21,8 @@ public static class PrivateInteractionHistory
         if (box.Conversations.TryGetValue(person, out var direct)) conversations.Add(direct);
         foreach (var group in chats.Groups)
             if (group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)) conversations.Add(lane);
-        foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo))
+        foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person)
+            .Concat(box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)).Distinct())
             foreach (var field in fields)
             {
                 (undo.Before["relation"] as JsonObject)?.Remove(field);
@@ -268,10 +270,27 @@ public static class PrivateInteractionHistory
             return "这条旧回复的合同没有保存回退记录，请先在俱乐部处理合同。";
         if (turn.InteractionUndo.Count == 0 && (turn.Learning != null || turn.Mood != null))
             return "这条旧回复未保存水平或状态变化前的数据，无法完整回退。新回复会保存回退记录。";
+        // 拒收退回的礼物可能已被后续附件占用；先完整预检，保证撤回保持原子性。
+        var quantities = d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id)
+            .ToDictionary(g => g.Key, g => (decimal)g.Sum(x => x.Quantity));
         foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())
         {
-            var state = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After);
-            Restore(d, c.PersonId, (JsonObject)state!, undo.Contract);
+            var before = undo.Before["goodQuantities"] as JsonObject;
+            var after = undo.After["goodQuantities"] as JsonObject;
+            foreach (string good in (before?.Select(p => p.Key) ?? []).Union(after?.Select(p => p.Key) ?? []))
+            {
+                decimal remaining = quantities.GetValueOrDefault(good)
+                    + (before?[good]?.Deserialize<long>() ?? 0) - (after?[good]?.Deserialize<long>() ?? 0);
+                if (remaining < 0) return "这条回复返还的礼物已被使用或预留，现有库存不足以重新处理；请先补足库存或取消后续礼物附件。";
+                quantities[good] = remaining;
+            }
+        }
+        var affected = turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append(c.PersonId).ToHashSet();
+        foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())
+        {
+            string person = undo.PersonId.Length > 0 ? undo.PersonId : c.PersonId;
+            var state = Revert(Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After);
+            Restore(d, person, (JsonObject)state!, undo.Contract);
         }
         if (turn.InteractionUndo.Count == 0)
         {
@@ -295,8 +314,8 @@ public static class PrivateInteractionHistory
         var summaries = c.SmallSummaries.Concat(c.BigSummaries).Where(s => s.Through > index).ToList();
         if (summaries.Count > 0) c.ContextStart = Math.Min(c.ContextStart, summaries.Min(s => s.From));
         c.SmallSummaries.RemoveAll(s => summaries.Contains(s)); c.BigSummaries.RemoveAll(s => summaries.Contains(s));
-        turn.InteractionUndo.Clear(); turn.ProfileChanges.Clear(); turn.Learning = null; turn.Mood = null; turn.Applied = false; turn.Context = "";
-        foreach (var match in d.Matches.Where(m => m.OpponentId == c.PersonId && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId))
+        turn.InteractionUndo.Clear(); turn.DatePartyEffects.Clear(); turn.ProfileChanges.Clear(); turn.Learning = null; turn.Mood = null; turn.Applied = false; turn.Context = "";
+        foreach (var match in d.Matches.Where(m => affected.Contains(m.OpponentId) && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId))
         { match.OpponentPrepared = false; match.OpponentSeconds = null; }
         return null;
     }

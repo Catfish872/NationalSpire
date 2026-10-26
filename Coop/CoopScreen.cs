@@ -27,7 +27,7 @@ public partial class CoopScreen : Control, IScreenContext
     public static void OpenSaved(Control menu, string id)
     {
         CoopRuntime.Current?.Disconnect(); Open(menu);
-        if (Current is { } screen) screen.Connect(true, CareerEngine.Name(CareerStore.Data), saved: id);
+        if (Current is { } screen) _ = screen.Connect(true, CareerEngine.Name(CareerStore.Data), saved: id);
     }
     public static void Open(Control menu, bool stayInRoom = false)
     {
@@ -123,16 +123,20 @@ public partial class CoopScreen : Control, IScreenContext
         Button(row, confirmText, () => { shade.QueueFree(); _dialog = null; try { action(); } catch (Exception e) { _message = e.Message; } });
         Button(row, "取消", () => { shade.QueueFree(); _dialog = null; });
     }
-    private async void Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "")
+    private async Task Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "", NpcGenerationSetup? npcSetup = null, bool reportToSetup = false)
     {
+        if (host && saved.Length == 0 && npcSetup == null)
+        {
+            CareerScreen.SelectNpcGeneration(this, AiSettingsStore.Load(new()), plan => Connect(host, name, capacity, country, code, saved, plan, true), Runtime.CancelConnection); return;
+        }
         if (_working) return; _working = true; _message = "正在连接 Steam 房间……";
         try
         {
-            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved);
+            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved, npcSetup);
             if (!IsInstanceValid(this) || IsQueuedForDeletion()) return;
             _entrySequence = Session?.World?.EntrySequence ?? -1; _message = "房间已创建，请先邀请队友。"; if (!host) _message = "已加入房间，正在等待队友。"; Render();
         }
-        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; }
+        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; if (reportToSetup) throw; }
         finally { _working = false; }
     }
     private void Submit(string kind, string target = "")
@@ -165,12 +169,12 @@ public partial class CoopScreen : Control, IScreenContext
         var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 16); host.AddChild(choices);
         var count = new OptionButton(); foreach (int n in new[] { 2, 3, 4 }) count.AddItem(n + " 人队伍", n); choices.AddChild(count);
         var country = new OptionButton(); foreach (string c in EsportsWorld.Countries) country.AddItem(c); choices.AddChild(country);
-        Button(host, "创建房间并邀请队友", () => Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)), 300);
+        Button(host, "创建房间并邀请队友", () => { _ = Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)); }, 300);
         var join = Card(columns, "加入朋友的房间"); Text(join, "让房主在等待房间中复制邀请码发给你，然后粘贴到这里。", 18, CareerVisuals.Muted);
         var code = Input(join, "在这里粘贴房间邀请码"); code.Name = "LobbyInviteInput";
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); join.AddChild(actions);
         Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190);
-        Button(actions, "加入房间", () => Connect(false, name.Text, code: code.Text), 180);
+        Button(actions, "加入房间", () => { _ = Connect(false, name.Text, code: code.Text); }, 180);
         var saves = Card(_body, "已有多人生涯"); Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted);
         List<CoopStorage.Checkpoint> checkpoints;
         try { checkpoints = await CoopSettings.Storage.ListAsync(); }
@@ -181,7 +185,7 @@ public partial class CoopScreen : Control, IScreenContext
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
             Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
-            Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
+            Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190);
             bool deleting = false;
             Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
             {

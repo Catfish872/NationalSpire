@@ -62,7 +62,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
                 if (turnId.Length == 0 && !active && !turns.Contains(o.TurnId)) continue;
                 string content = o.Kind switch
                 {
-                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，{o.Detail}，{SocialAppointments.StatusText(d, o)}",
+                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，{o.Detail}，{WeddingAppointments.Description(d, o)}{SocialAppointments.StatusText(d, o)}",
                     "match" => $"{actor}与{target}的{o.Mode}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，进阶{o.Ascension}，{match?.Status ?? o.State}。{o.Detail}",
                     "contract" => $"{actor}的合同报价，签字费{o.Signing}美元、周薪{o.Wage}美元、胜场奖金{o.WinBonus}美元，{o.Weeks}周，席位{o.Role}，{o.State}。{o.Detail}",
                     "publish" => $"{actor}的帖子《{o.Title}》，{(o.State == "已确认" ? "已发布" : o.State)}。{o.Detail}",

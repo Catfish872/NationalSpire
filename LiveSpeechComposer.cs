@@ -93,7 +93,7 @@ thought_hurt_behind_anxious=我不想这么早就结束啊。|先别看他了。
         && !Enumerable.Range(0, Math.Max(0, tail.Length - 5)).Any(n => main.Contains(tail.Substring(n, 6), StringComparison.Ordinal));
 
     public static string Compose(string main, string key, BroadcastMemory memory, string seed, int index,
-        IReadOnlyDictionary<string, string>? facts = null)
+        IReadOnlyDictionary<string, string>? facts = null, Action<string, string>? selected = null)
     {
         if (main.Length > 55 || !Endings.TryGetValue(key, out var bank)
             || CareerEngine.StableHash(seed + ":compose:" + key + index) % 5 >= 2) return main;
@@ -109,7 +109,9 @@ thought_hurt_behind_anxious=我不想这么早就结束啊。|先别看他了。
             if (rendered.Contains('{')) continue;
             recent.Add(tail); if (recent.Count >= bank.Length) recent.RemoveAt(0);
             memory.SharedPhrases[historyKey] = recent;
-            return main + (main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？') || main.EndsWith('…') ? "" : "。") + rendered;
+            string separator = main.EndsWith('。') || main.EndsWith('！') || main.EndsWith('？') || main.EndsWith('…') ? "" : "。";
+            selected?.Invoke(separator, tail);
+            return main + separator + rendered;
         }
         return main;
     }

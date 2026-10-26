@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`80602E1793B5AC3A6B5FC32BE22B3A78684397BB1E9BE8CD047A1FFCF2DCC39C`。来源：[源码](../../AffectionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`102A26A519FA6E894441F52A250F8F26F847E2C5B4E02129AFEE9530B98CE98D`。来源：[源码](../../AffectionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -16,6 +16,7 @@ public static readonly string[] Numbers = ["c27a89", "c2bddb", "e6c98e", "a1e5dd
 public static readonly string[] ProgressColors = ["74324a", "c2bddb", "e6c98e", "a1e5dd", "d0c3f5", "f3a6c7"];
 private int _display;
 private long _revision = -1;
+private bool _animate = true;
 ```
 
 <a id="symbol-966474984d6a"></a>
@@ -24,7 +25,7 @@ private long _revision = -1;
 
 来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AffectionBadge._Draw()`](AffectionVisuals.cs.md#symbol-dc75b39bdb21)；[`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)；[`NationalSpire.CareerScreen.CreatePrivateListRow()`](PrivateListRows.cs.md#symbol-ae3a09702cbd)；[`NationalSpire.ContactRowButton._Draw()`](ContactRowButton.cs.md#symbol-4e5488f37cc5)；[`NationalSpire.RelationshipIcon._Draw()`](AffectionVisuals.cs.md#symbol-3decdc09f2fd)
+**调用者：** [`NationalSpire.AffectionBadge._Draw()`](AffectionVisuals.cs.md#symbol-dc75b39bdb21)；[`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)；[`NationalSpire.CareerScreen.AddDateGameActions()`](DateGameScreen.cs.md#symbol-fdf5726e3b97)；[`NationalSpire.CareerScreen.BuildChatModelButton(Godot.HBoxContainer)`](ChatUtilitiesScreen.cs.md#symbol-f49b1a0725a3)；[`NationalSpire.CareerScreen.CreatePrivateListRow()`](PrivateListRows.cs.md#symbol-ae3a09702cbd)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.ContactRowButton._Draw()`](ContactRowButton.cs.md#symbol-4e5488f37cc5)；[`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.RelationshipIcon._Draw()`](AffectionVisuals.cs.md#symbol-3decdc09f2fd)
 
 **调用：** `Godot.Image.Image()`；`Godot.Image.LoadSvgFromString(string, float)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.StreamReader.ReadToEnd()`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 
@@ -85,68 +86,71 @@ private long _revision = -1;
 
 <a id="symbol-4ff387bfe107"></a>
 
-## `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation) — public void Bind(PrivateRelation relation)`
+## `NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation, bool) — public void Bind(PrivateRelation relation, bool animate = true)`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation)`](DateSceneView.cs.md#symbol-949c1add6c05)
+**调用者：** [`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool)`](DateSceneView.cs.md#symbol-949c1add6c05)
 
-**调用：** `Godot.CanvasItem.QueueRedraw()`；`Godot.Node.SetProcess(bool)`；`object.ReferenceEquals(object?, object?)`
+**调用：** `Godot.CanvasItem.QueueRedraw()`；`Godot.Node.SetProcess(bool)`；[`NationalSpire.PrivateRelation.DisplayFavour()`](PrivateMessageData.cs.md#symbol-f0a89e196dbe)；`object.ReferenceEquals(object?, object?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge._display`；`NationalSpire.AffectionBadge._revision`；`NationalSpire.AffectionBadge.Relation`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.Revision`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge.Relation`；`NationalSpire.AffectionBadge._animate`；`NationalSpire.AffectionBadge._display`；`NationalSpire.AffectionBadge._revision`；`NationalSpire.PrivateRelation.DisplayFavour()`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.Revision`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.QueueRedraw()`；输入表达式：`QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: QueueRedraw();`
-- `Godot.Node.SetProcess(bool)`；输入表达式：`SetProcess(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetProcess(true);`
+- `Godot.Node.SetProcess(bool)`；输入表达式：`SetProcess(_display != relation.Favour)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetProcess(_display != relation.Favour);`
+- `NationalSpire.PrivateRelation.DisplayFavour()`；输入表达式：`relation.DisplayFavour()`；返回值紧邻使用处：`ConditionalExpressionSyntax: animate ? relation.DisplayFavour() : relation.Favour`
 - `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(Relation, relation)`；返回值紧邻使用处：`BinaryExpressionSyntax: ReferenceEquals(Relation, relation) && _revision == relation.Revision`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_revision` = `relation.Revision`
 - `Relation` = `relation`
+- `_animate` = `animate`
+- `_display` = `animate ? relation.DisplayFavour() : relation.Favour`
+- `_revision` = `relation.Revision`
 
 <a id="symbol-a519379153a6"></a>
 
 ## `NationalSpire.AffectionBadge._Ready() — public override void _Ready()`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.PrivateRelation.DisplayFavour()`](PrivateMessageData.cs.md#symbol-f0a89e196dbe)；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.SetProcess(bool)`
+**调用：** `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.SetProcess(bool)`；[`NationalSpire.PrivateRelation.DisplayFavour()`](PrivateMessageData.cs.md#symbol-f0a89e196dbe)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge._display`；`NationalSpire.AffectionBadge.Relation`；`NationalSpire.PrivateRelation.DisplayFavour()`；`NationalSpire.PrivateRelation.Favour`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge.Relation`；`NationalSpire.AffectionBadge._animate`；`NationalSpire.AffectionBadge._display`；`NationalSpire.PrivateRelation.DisplayFavour()`；`NationalSpire.PrivateRelation.Favour`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Node.SetProcess(bool)`；输入表达式：`SetProcess(_display != Relation.Favour)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetProcess(_display != Relation.Favour);`
-- `NationalSpire.PrivateRelation.DisplayFavour()`；输入表达式：`Relation.DisplayFavour()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _display = Relation.DisplayFavour()`
+- `NationalSpire.PrivateRelation.DisplayFavour()`；输入表达式：`Relation.DisplayFavour()`；返回值紧邻使用处：`ConditionalExpressionSyntax: _animate ? Relation.DisplayFavour() : Relation.Favour`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_display` = `Relation.DisplayFavour()`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 - `Resized` += `QueueRedraw`
+- `_display` = `_animate ? Relation.DisplayFavour() : Relation.Favour`
 
 <a id="symbol-a2bdd075fae3"></a>
 
 ## `NationalSpire.AffectionBadge._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.PrivateRelation.DisplayFavour()`](PrivateMessageData.cs.md#symbol-f0a89e196dbe)；`Godot.CanvasItem.QueueRedraw()`；`Godot.Node.SetProcess(bool)`
+**调用：** `Godot.CanvasItem.QueueRedraw()`；`Godot.Node.SetProcess(bool)`；[`NationalSpire.PrivateRelation.DisplayFavour()`](PrivateMessageData.cs.md#symbol-f0a89e196dbe)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge._display`；`NationalSpire.AffectionBadge.Relation`；`NationalSpire.PrivateRelation.DisplayFavour()`；`NationalSpire.PrivateRelation.Favour`
+**字段、属性、事件及方法组引用：** `NationalSpire.AffectionBadge.Relation`；`NationalSpire.AffectionBadge._animate`；`NationalSpire.AffectionBadge._display`；`NationalSpire.PrivateRelation.DisplayFavour()`；`NationalSpire.PrivateRelation.Favour`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.QueueRedraw()`；输入表达式：`QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: QueueRedraw();`
 - `Godot.Node.SetProcess(bool)`；输入表达式：`SetProcess(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetProcess(false);`
-- `NationalSpire.PrivateRelation.DisplayFavour()`；输入表达式：`Relation.DisplayFavour()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Relation.DisplayFavour()`
+- `NationalSpire.PrivateRelation.DisplayFavour()`；输入表达式：`Relation.DisplayFavour()`；返回值紧邻使用处：`ConditionalExpressionSyntax: _animate ? Relation.DisplayFavour() : Relation.Favour`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -156,7 +160,7 @@ private long _revision = -1;
 
 ## `NationalSpire.AffectionBadge._Draw() — public override void _Draw()`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -215,7 +219,7 @@ private long _revision = -1;
 
 ## `NationalSpire.RelationshipIcon.Bond — public string Bond`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -233,7 +237,7 @@ private long _revision = -1;
 
 ## `NationalSpire.RelationshipIcon.Tight — public bool Tight`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -251,7 +255,7 @@ private long _revision = -1;
 
 ## `NationalSpire.RelationshipIcon._Ready() — public override void _Ready()`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,7 +276,7 @@ private long _revision = -1;
 
 ## `NationalSpire.RelationshipIcon._Draw() — public override void _Draw()`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

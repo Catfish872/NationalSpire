@@ -19,7 +19,7 @@
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
 **调用：** [`NationalSpire.Coop.NativeLobbyApi.Validate()`](NativeLobbyApi.cs.md#symbol-de1b7a4fe8ee)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameCompatibility.ActRng(string)`](../GameCompatibility.cs.md#symbol-68363869a9cf)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](../RuntimeApi.cs.md#symbol-8426661c18c8)；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`
 

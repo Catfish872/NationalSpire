@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`02D55EE97D62AF6872362C0E176ADCBECC879ED73336291DEAFBE5F152FB8856`。来源：[源码](../../LiveRaceHud.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`88CA21352F2C55D91786AF21FCB8207CA51C60C52147E020E2F7B79EA867E4A4`。来源：[源码](../../LiveRaceHud.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,6 +14,10 @@
 public event Action<BroadcastUiState>? LayoutChanged;
 private Label _status = null!, _title = null!;
 private VBoxContainer _details = null!, _speechStack = null!;
+private PanelContainer? _chatRequest;
+private LiveRequestButton? _chatRespond;
+private string _chatRequestKey = "";
+private Tween? _chatFade;
 public PanelContainer Panel = panel;
 public string Topic = topic;
 public double Remaining = remaining;
@@ -47,7 +51,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud._Ready() — public override void _Ready()`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -149,9 +153,9 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.Label(string, int, Godot.Color) — private static Label Label(string text, int size, Color color)`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)
+**调用者：** [`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)
 
 **调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Label.Label()`
 
@@ -174,7 +178,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.Restore(NationalSpire.BroadcastUiState) — public void Restore(BroadcastUiState layout)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRunBridge._Ready()`](LiveRunBridge.cs.md#symbol-26fa8bae2af0)
 
@@ -198,7 +202,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.Area — private Vector2 Area`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -217,7 +221,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.RestorePosition() — private void RestorePosition()`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Process(double)`](LiveRaceHud.cs.md#symbol-9fbc413ea758)；[`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.Restore(NationalSpire.BroadcastUiState)`](LiveRaceHud.cs.md#symbol-5f9621b5d769)
 
@@ -243,7 +247,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.ClampPosition() — private void ClampPosition()`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Input(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-498aab07aecc)；[`NationalSpire.LiveRaceHud.RestorePosition()`](LiveRaceHud.cs.md#symbol-f38a179bccac)；[`NationalSpire.LiveRaceHud.SetCollapsed(bool)`](LiveRaceHud.cs.md#symbol-6fc8e2be97ca)
 
@@ -264,7 +268,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.SetCollapsed(bool) — private void SetCollapsed(bool value)`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.Restore(NationalSpire.BroadcastUiState)`](LiveRaceHud.cs.md#symbol-5f9621b5d769)
 
@@ -291,11 +295,11 @@ private string _signature = "";
 
 <a id="symbol-e4440860b387"></a>
 
-## `NationalSpire.LiveRaceHud.AddAction(string, System.Action) — public void AddAction(string title, Action action)`
+## `NationalSpire.LiveRaceHud.AddAction(string, System.Action) — public Button AddAction(string title, Action action)`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double)`](LiveDateGame.cs.md#symbol-e4061f52dd90)
 
 **调用：** `Godot.Button.Button()`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -309,17 +313,114 @@ private string _signature = "";
 
 **赋值（含属性/字段和局部值）：**
 
-- `button.Pressed` += `action`
 - `FocusMode` = `FocusModeEnum.None`
 - `Text` = `title`
+- `button.Pressed` += `action`
+
+<a id="symbol-e42d7e040efa"></a>
+
+## `NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action) — public Button ShowChatRequest(string key, string speaker, string text, AvatarArt art, AvatarIdentity identity, double remaining, bool accepted, Button below, Action respond)`
+
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double)`](LiveDateGame.cs.md#symbol-e4061f52dd90)
+
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`Godot.VBoxContainer.VBoxContainer()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LiveRaceHud.ClearChatRequest()`](LiveRaceHud.cs.md#symbol-c0be666418f2)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)；[`NationalSpire.LiveRequestButton.Hold(bool)`](LiveRequestButton.cs.md#symbol-104cb7b7e93b)；[`NationalSpire.LiveRequestButton.LiveRequestButton()`](LiveRequestButton.cs.md#symbol-e8accbc7d310)；[`NationalSpire.LiveRequestButton.Sync(double, bool)`](LiveRequestButton.cs.md#symbol-c1257288a26f)；`System.Action.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.LiveRaceHud.ClearChatRequest()`；`NationalSpire.LiveRaceHud.ExpandedWidth`；`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；`NationalSpire.LiveRaceHud._chatFade`；`NationalSpire.LiveRaceHud._chatRequest`；`NationalSpire.LiveRaceHud._chatRequestKey`；`NationalSpire.LiveRaceHud._chatRespond`；`NationalSpire.LiveRaceHud._details`；`NationalSpire.LiveRaceHud._resizePending`；`NationalSpire.LiveRequestButton.Elapsed`；`NationalSpire.LiveRequestButton.Hold(bool)`；`NationalSpire.LiveRequestButton.Sync(double, bool)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.Hide()`；输入表达式：`.Hide()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatRequest?.Hide()`
+- `Godot.Color.Color(float, float, float, float)`；输入表达式：`new(1, 1, 1, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatRequest.Modulate = new(1, 1, 1, 0)`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`content.AddThemeConstantOverride("separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddThemeConstantOverride("separation", 8);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_chatRequest.AddThemeStyleboxOverride("panel", CareerVisuals.Box("302634e8", "c690ad", 8, 8))`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRequest.AddThemeStyleboxOverride("panel", CareerVisuals.Box("302634e8", "c690ad", 8, 8));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_chatRequest.AddChild(content)`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRequest.AddChild(content);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_details.AddChild(_chatRequest)`；返回值紧邻使用处：`ExpressionStatementSyntax: _details.AddChild(_chatRequest);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`content.AddChild(_chatRespond)`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddChild(_chatRespond);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`content.AddChild(speech)`；返回值紧邻使用处：`ExpressionStatementSyntax: content.AddChild(speech);`
+- `Godot.Node.CreateTween()`；输入表达式：`CreateTween()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatFade = CreateTween()`
+- `Godot.Node.GetIndex(bool)`；输入表达式：`below.GetIndex()`；返回值紧邻使用处：`ArgumentSyntax: below.GetIndex()`
+- `Godot.Node.MoveChild(Godot.Node, int)`；输入表达式：`_details.MoveChild(_chatRequest, below.GetIndex())`；返回值紧邻使用处：`ExpressionStatementSyntax: _details.MoveChild(_chatRequest, below.GetIndex());`
+- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { Name = "DateGameChatRequest", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatRequest = new PanelContainer { Name = "DateGameChatRequest", MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；输入表达式：`_chatFade.TweenProperty(_chatRequest, "modulate:a", 1f, .25)`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatFade.TweenProperty(_chatRequest, "modulate:a", 1f, .25);`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("302634e8", "c690ad", 8, 8)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("302634e8", "c690ad", 8, 8)`
+- `NationalSpire.LiveRaceHud.ClearChatRequest()`；输入表达式：`ClearChatRequest()`；返回值紧邻使用处：`ExpressionStatementSyntax: ClearChatRequest();`
+- `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；输入表达式：`SpeechPanel(speaker, text, "date/request", art, identity, false, ExpandedWidth - 16)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SpeechPanel(speaker, text, "date/request", art, identity, false, ExpandedWidth - 16)`
+- `NationalSpire.LiveRequestButton.Hold(bool)`；输入表达式：`_chatRespond!.Hold(accepted)`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRespond!.Hold(accepted);`
+- `NationalSpire.LiveRequestButton.Hold(bool)`；输入表达式：`_chatRespond.Hold(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRespond.Hold(true);`
+- `NationalSpire.LiveRequestButton.LiveRequestButton()`；输入表达式：`new LiveRequestButton()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatRespond = new LiveRequestButton()`
+- `NationalSpire.LiveRequestButton.Sync(double, bool)`；输入表达式：`_chatRespond.Sync(remaining, accepted)`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRespond.Sync(remaining, accepted);`
+- `System.Action.Invoke()`；输入表达式：`respond()`；返回值紧邻使用处：`ExpressionStatementSyntax: respond();`
+
+**赋值（含属性/字段和局部值）：**
+
+- `MouseFilter` = `MouseFilterEnum.Ignore`
+- `Name` = `"DateGameChatRequest"`
+- `_chatFade` = `CreateTween()`
+- `_chatRequest.Modulate` = `new(1, 1, 1, 0)`
+- `_chatRequestKey` = `key`
+- `_chatRequest` = `new PanelContainer { Name = "DateGameChatRequest", MouseFilter = MouseFilterEnum.Ignore }`
+- `_chatRespond.Elapsed` += `() => { _chatRequest?.Hide(); _resizePending = true; }`
+- `_chatRespond.Pressed` += `() => { _chatRespond.Hold(true); respond(); }`
+- `_chatRespond` = `new LiveRequestButton()`
+- `_resizePending` = `true`
+- `speech.Name` = `"DateGameRequestSpeech"`
+
+<a id="symbol-654af1fb17c1"></a>
+
+## `NationalSpire.LiveRaceHud.HoldChatRequest(bool) — public void HoldChatRequest(bool hold)`
+
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)；[`NationalSpire.LiveRunBridge.ResumeDateRun()`](LiveDateGame.cs.md#symbol-9d0f51bc5495)；[`NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double)`](LiveDateGame.cs.md#symbol-e4061f52dd90)
+
+**调用：** [`NationalSpire.LiveRequestButton.Hold(bool)`](LiveRequestButton.cs.md#symbol-104cb7b7e93b)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveRaceHud._chatRespond`；`NationalSpire.LiveRequestButton.Hold(bool)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LiveRequestButton.Hold(bool)`；输入表达式：`.Hold(hold)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatRespond?.Hold(hold)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-c0be666418f2"></a>
+
+## `NationalSpire.LiveRaceHud.ClearChatRequest() — public void ClearChatRequest()`
+
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`](LiveRaceHud.cs.md#symbol-e42d7e040efa)；[`NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double)`](LiveDateGame.cs.md#symbol-e4061f52dd90)
+
+**调用：** `Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Tween.Kill()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveRaceHud._chatFade`；`NationalSpire.LiveRaceHud._chatRequest`；`NationalSpire.LiveRaceHud._chatRequestKey`；`NationalSpire.LiveRaceHud._chatRespond`；`NationalSpire.LiveRaceHud._resizePending`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Node.GetParent()`；输入表达式：`_chatRequest.GetParent()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatRequest.GetParent()?.RemoveChild(_chatRequest)`
+- `Godot.Node.QueueFree()`；输入表达式：`_chatRequest.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatRequest.QueueFree();`
+- `Godot.Node.RemoveChild(Godot.Node)`；输入表达式：`.RemoveChild(_chatRequest)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatRequest.GetParent()?.RemoveChild(_chatRequest)`
+- `Godot.Tween.Kill()`；输入表达式：`.Kill()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatFade?.Kill()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_chatFade` = `null`
+- `_chatRequestKey` = `""`
+- `_chatRequest` = `null`
+- `_chatRespond` = `null`
+- `_resizePending` = `true`
 
 <a id="symbol-cfd9d62c7d32"></a>
 
 ## `NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double) — public void SetRace(string name, string status, int hp, int maxHp, bool otherAct, double seconds)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
 **调用：** 无已绑定显式调用。
 
@@ -336,13 +437,13 @@ private string _signature = "";
 
 <a id="symbol-53c07f0e6874"></a>
 
-## `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool) — private PanelContainer SpeechPanel(string speaker, string text, string topic, AvatarArt? art, AvatarIdentity? identity, bool floating)`
+## `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float) — private PanelContainer SpeechPanel(string speaker, string text, string topic, AvatarArt? art, AvatarIdentity? identity, bool floating, float width = ExpandedWidth)`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)；[`NationalSpire.LiveRaceHud.SetMode(bool)`](LiveRaceHud.cs.md#symbol-5b601a6d9f7f)
+**调用者：** [`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)；[`NationalSpire.LiveRaceHud.SetMode(bool)`](LiveRaceHud.cs.md#symbol-5b601a6d9f7f)；[`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`](LiveRaceHud.cs.md#symbol-e42d7e040efa)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LiveRaceHud.Label(string, int, Godot.Color)`](LiveRaceHud.cs.md#symbol-7c6c2c54a433)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`string.Replace(string, string?)`；`string.StartsWith(string)`
+**调用：** `Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LiveRaceHud.Label(string, int, Godot.Color)`](LiveRaceHud.cs.md#symbol-7c6c2c54a433)；`string.Replace(string, string?)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.LiveRaceHud.ExpandedWidth`；`NationalSpire.LiveRaceHud.Label(string, int, Godot.Color)`
 
@@ -365,14 +466,14 @@ private string _signature = "";
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`ConditionalExpressionSyntax: floating ? new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore } : new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(30, 30)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(30, 30)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(ExpandedWidth - 32, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: content.CustomMinimumSize = new Vector2(ExpandedWidth - 32, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(ExpandedWidth - 74, 0)`；返回值紧邻使用处：`ConditionalExpressionSyntax: floating ? Vector2.Zero : new Vector2(ExpandedWidth - 74, 0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(width - 32, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: content.CustomMinimumSize = new Vector2(width - 32, 0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(width - 74, 0)`；返回值紧邻使用处：`ConditionalExpressionSyntax: floating ? Vector2.Zero : new Vector2(width - 74, 0)`
 - `NationalSpire.CareerAvatar.CareerAvatar()`；输入表达式：`new CareerAvatar { Art = art, Identity = identity, CustomMinimumSize = new Vector2(30, 30), SizeFlagsVertical = SizeFlags.ShrinkCenter }`；返回值紧邻使用处：`ArgumentSyntax: new CareerAvatar { Art = art, Identity = identity, CustomMinimumSize = new Vector2(30, 30), SizeFlagsVertical = SizeFlags.ShrinkCenter }`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box(audience ? "18383df5" : thought ? "273149f5" : topic == "rival_dead" || topic == "player_danger" ? "493139f5" : "382d48f5", audience ? "5b9e99" : thought ? "8592b8" : "b99467", 5, 9)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box(audience ? "18383df5" : thought ? "273149f5" : topic == "rival_dead" || topic == "player_danger" ? "493139f5" : "382d48f5", audience ? "5b9e99" : thought ? "8592b8" : "b99467", 5, 9)`
 - `NationalSpire.LiveRaceHud.Label(string, int, Godot.Color)`；输入表达式：`Label(floating ? text.Replace("\r", "").Replace("\n", " ") : text, 16, thought ? new Color("ded3f4") : CareerVisuals.Ink)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Label(floating ? text.Replace("\r", "").Replace("\n", " ") : text, 16, thought ? new Color("ded3f4") : CareerVisuals.Ink)`
 - `NationalSpire.LiveRaceHud.Label(string, int, Godot.Color)`；输入表达式：`Label(speaker, 13, thought ? new Color("c4b1f0") : audience ? new Color("9ddbd0") : CareerVisuals.Gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Label(speaker, 13, thought ? new Color("c4b1f0") : audience ? new Color("9ddbd0") : CareerVisuals.Gold)`
-- `string.Replace(string, string?)`；输入表达式：`text.Replace("\r", "").Replace("\n", " ")`；返回值紧邻使用处：`ConditionalExpressionSyntax: floating ? text.Replace("\r", "").Replace("\n", " ") : text`
 - `string.Replace(string, string?)`；输入表达式：`text.Replace("\r", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: text.Replace("\r", "").Replace`
+- `string.Replace(string, string?)`；输入表达式：`text.Replace("\r", "").Replace("\n", " ")`；返回值紧邻使用处：`ConditionalExpressionSyntax: floating ? text.Replace("\r", "").Replace("\n", " ") : text`
 - `string.StartsWith(string)`；输入表达式：`topic.StartsWith("audience_")`；返回值紧邻使用处：`BinaryExpressionSyntax: topic.StartsWith("audience_") || topic.StartsWith("reply_")`
 - `string.StartsWith(string)`；输入表达式：`topic.StartsWith("reply_")`；返回值紧邻使用处：`BinaryExpressionSyntax: topic.StartsWith("audience_") || topic.StartsWith("reply_")`
 - `string.StartsWith(string)`；输入表达式：`topic.StartsWith("thought_")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = topic.StartsWith("thought_")`
@@ -380,31 +481,31 @@ private string _signature = "";
 **赋值（含属性/字段和局部值）：**
 
 - `Art` = `art`
-- `byline.AutowrapMode` = `content.AutowrapMode = TextServer.AutowrapMode.Off`
-- `byline.CustomMinimumSize` = `content.CustomMinimumSize = new Vector2(ExpandedWidth - 32, 0)`
-- `byline.CustomMinimumSize` = `content.CustomMinimumSize = Vector2.Zero`
-- `byline.CustomMinimumSize` = `floating ? Vector2.Zero : new Vector2(ExpandedWidth - 74, 0)`
-- `byline.SizeFlagsHorizontal` = `content.SizeFlagsHorizontal = SizeFlags.ShrinkBegin`
-- `content.AutowrapMode` = `TextServer.AutowrapMode.Off`
-- `content.CustomMinimumSize` = `new Vector2(ExpandedWidth - 32, 0)`
-- `content.CustomMinimumSize` = `Vector2.Zero`
-- `content.SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
 - `CustomMinimumSize` = `new Vector2(30, 30)`
 - `Identity` = `identity`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
+- `byline.AutowrapMode` = `content.AutowrapMode = TextServer.AutowrapMode.Off`
+- `byline.CustomMinimumSize` = `content.CustomMinimumSize = Vector2.Zero`
+- `byline.CustomMinimumSize` = `content.CustomMinimumSize = new Vector2(width - 32, 0)`
+- `byline.CustomMinimumSize` = `floating ? Vector2.Zero : new Vector2(width - 74, 0)`
+- `byline.SizeFlagsHorizontal` = `content.SizeFlagsHorizontal = SizeFlags.ShrinkBegin`
+- `content.AutowrapMode` = `TextServer.AutowrapMode.Off`
+- `content.CustomMinimumSize` = `Vector2.Zero`
+- `content.CustomMinimumSize` = `new Vector2(width - 32, 0)`
+- `content.SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
 
 <a id="symbol-1fd8ee1cca63"></a>
 
 ## `NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?) — public void Say(string speaker, string text, string topic = "", AvatarArt? art = null, AvatarIdentity? identity = null)`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
-**调用：** [`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-31deb6b2cdda)；[`NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-3f10f5cce44e)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)；`Godot.Color.Color(float, float, float, float)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`NationalSpire.LiveRaceHud.Speech.Speech(Godot.PanelContainer, string, double, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Clamp(double, double, double)`；`System.Random.Next(int)`
+**调用：** `Godot.Color.Color(float, float, float, float)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；[`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-31deb6b2cdda)；[`NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-3f10f5cce44e)；`NationalSpire.LiveRaceHud.Speech.Speech(Godot.PanelContainer, string, double, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Clamp(double, double, double)`；`System.Random.Next(int)`；`string.StartsWith(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastUiState.Floating`；`NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._layout`；`NationalSpire.LiveRaceHud._resizePending`；`NationalSpire.LiveRaceHud._speeches`；`NationalSpire.LiveRaceHud._speechStack`；`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.Speech.Fade`；`NationalSpire.LiveRaceHud.Speech.Lane`；`NationalSpire.LiveRaceHud.Speech.Topic`；`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastUiState.Floating`；`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.Speech.Fade`；`NationalSpire.LiveRaceHud.Speech.Lane`；`NationalSpire.LiveRaceHud.Speech.Topic`；`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；`NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._layout`；`NationalSpire.LiveRaceHud._resizePending`；`NationalSpire.LiveRaceHud._speechStack`；`NationalSpire.LiveRaceHud._speeches`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -416,21 +517,21 @@ private string _signature = "";
 - `NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`；输入表达式：`RemoveSpeech(_speeches.FirstOrDefault(s => s.Topic is not ("rival_dead" or "rival_clear" or "player_champion" or "player_finished")) ?? _speeches[0])`；返回值紧邻使用处：`ExpressionStatementSyntax: RemoveSpeech(_speeches.FirstOrDefault(s => s.Topic is not ("rival_dead" or "rival_clear" or "player_champion" or "player_finished")) ?? _speeches[0]);`
 - `NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech)`；输入表达式：`RemoveSpeech(old)`；返回值紧邻使用处：`ExpressionStatementSyntax: RemoveSpeech(old);`
 - `NationalSpire.LiveRaceHud.Speech.Speech(Godot.PanelContainer, string, double, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`；输入表达式：`new Speech(panel, topic, Math.Clamp(text.Length * .19 + 5, 14, 21), speaker, text, art, identity)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Speech(panel, topic, Math.Clamp(text.Length * .19 + 5, 14, 21), speaker, text, art, identity)`
-- `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`；输入表达式：`SpeechPanel(speaker, text, topic, art, identity, _layout.Floating)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SpeechPanel(speaker, text, topic, art, identity, _layout.Floating)`
-- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("gap_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_")`
-- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("rival_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_")`
-- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("thought_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")`
+- `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；输入表达式：`SpeechPanel(speaker, text, topic, art, identity, _layout.Floating)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SpeechPanel(speaker, text, topic, art, identity, _layout.Floating)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`_speeches.Any(s => s.Lane == i)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_speeches.Any(s => s.Lane == i)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`_speeches.FirstOrDefault(s => s.Topic is not ("rival_dead" or "rival_clear" or "player_champion" or "player_finished"))`；返回值紧邻使用处：`BinaryExpressionSyntax: _speeches.FirstOrDefault(s => s.Topic is not ("rival_dead" or "rival_clear" or "player_champion" or "player_finished")) ?? _speeches[0]`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Enumerable.Range(0, 3).Where(i => !_speeches.Any(s => s.Lane == i)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Enumerable.Range(0, 3).Where(i => !_speeches.Any(s => s.Lane == i)).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`_speeches.ToList()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var old in _speeches.ToList()) RemoveSpeech(old);`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`_speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")).ToList()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var old in _speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")).ToList()) RemoveSpeech(old);`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`_speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Enumerable.Range(0, 3).Where(i => !_speeches.Any(s => s.Lane == i))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, 3).Where(i => !_speeches.Any(s => s.Lane == i)).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`_speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _speeches.Where(s => s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")).ToList`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`_speeches.Add(item)`；返回值紧邻使用处：`ExpressionStatementSyntax: _speeches.Add(item);`
 - `System.Linq.Enumerable.Range(int, int)`；输入表达式：`Enumerable.Range(0, 3)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, 3).Where`
 - `System.Math.Clamp(double, double, double)`；输入表达式：`Math.Clamp(text.Length * .19 + 5, 14, 21)`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(text.Length * .19 + 5, 14, 21)`
 - `System.Random.Next(int)`；输入表达式：`Random.Shared.Next(lanes.Length)`；返回值紧邻使用处：`ArgumentSyntax: Random.Shared.Next(lanes.Length)`
+- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("gap_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_")`
+- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("rival_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_")`
+- `string.StartsWith(string)`；输入表达式：`s.Topic.StartsWith("thought_")`；返回值紧邻使用处：`BinaryExpressionSyntax: s.Topic.StartsWith("rival_") || s.Topic.StartsWith("gap_") || s.Topic.StartsWith("thought_")`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -444,13 +545,13 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.SetMode(bool) — private void SetMode(bool floating)`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.Restore(NationalSpire.BroadcastUiState)`](LiveRaceHud.cs.md#symbol-5f9621b5d769)
 
-**调用：** [`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-31deb6b2cdda)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Tween.Kill()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Tween.Kill()`；[`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`](LiveRaceHud.cs.md#symbol-31deb6b2cdda)；[`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`](LiveRaceHud.cs.md#symbol-53c07f0e6874)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastUiState.Floating`；`NationalSpire.LiveRaceHud._collapsed`；`NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._layout`；`NationalSpire.LiveRaceHud._mode`；`NationalSpire.LiveRaceHud._resizePending`；`NationalSpire.LiveRaceHud._speeches`；`NationalSpire.LiveRaceHud._speechStack`；`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.Speech.Art`；`NationalSpire.LiveRaceHud.Speech.Expiring`；`NationalSpire.LiveRaceHud.Speech.Fade`；`NationalSpire.LiveRaceHud.Speech.Identity`；`NationalSpire.LiveRaceHud.Speech.Panel`；`NationalSpire.LiveRaceHud.Speech.Speaker`；`NationalSpire.LiveRaceHud.Speech.Text`；`NationalSpire.LiveRaceHud.Speech.Topic`；`NationalSpire.LiveRaceHud.Speech.Travel`；`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastUiState.Floating`；`NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`；`NationalSpire.LiveRaceHud.Speech.Art`；`NationalSpire.LiveRaceHud.Speech.Expiring`；`NationalSpire.LiveRaceHud.Speech.Fade`；`NationalSpire.LiveRaceHud.Speech.Identity`；`NationalSpire.LiveRaceHud.Speech.Panel`；`NationalSpire.LiveRaceHud.Speech.Speaker`；`NationalSpire.LiveRaceHud.Speech.Text`；`NationalSpire.LiveRaceHud.Speech.Topic`；`NationalSpire.LiveRaceHud.Speech.Travel`；`NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；`NationalSpire.LiveRaceHud._collapsed`；`NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._layout`；`NationalSpire.LiveRaceHud._mode`；`NationalSpire.LiveRaceHud._resizePending`；`NationalSpire.LiveRaceHud._speechStack`；`NationalSpire.LiveRaceHud._speeches`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -461,7 +562,7 @@ private string _signature = "";
 - `Godot.Node.RemoveChild(Godot.Node)`；输入表达式：`item.Panel.GetParent().RemoveChild(item.Panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: item.Panel.GetParent().RemoveChild(item.Panel);`
 - `Godot.Tween.Kill()`；输入表达式：`.Kill()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: item.Fade?.Kill()`
 - `NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech)`；输入表达式：`PlaceFloating(item)`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaceFloating(item);`
-- `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool)`；输入表达式：`SpeechPanel(item.Speaker, item.Text, item.Topic, item.Art, item.Identity, floating)`；返回值紧邻使用处：`AssignmentExpressionSyntax: item.Panel = SpeechPanel(item.Speaker, item.Text, item.Topic, item.Art, item.Identity, floating)`
+- `NationalSpire.LiveRaceHud.SpeechPanel(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?, bool, float)`；输入表达式：`SpeechPanel(item.Speaker, item.Text, item.Topic, item.Art, item.Identity, floating)`；返回值紧邻使用处：`AssignmentExpressionSyntax: item.Panel = SpeechPanel(item.Speaker, item.Text, item.Topic, item.Art, item.Identity, floating)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`_speeches.Any(s => (s.Panel.GetParent() == _floating) != floating)`；返回值紧邻使用处：`BinaryExpressionSyntax: _layout.Floating != floating || _speeches.Any(s => (s.Panel.GetParent() == _floating) != floating)`
 
 **赋值（含属性/字段和局部值）：**
@@ -480,7 +581,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.PlaceFloating(NationalSpire.LiveRaceHud.Speech) — private void PlaceFloating(Speech item)`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Process(double)`](LiveRaceHud.cs.md#symbol-9fbc413ea758)；[`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)；[`NationalSpire.LiveRaceHud.SetMode(bool)`](LiveRaceHud.cs.md#symbol-5b601a6d9f7f)
 
@@ -505,7 +606,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.RemoveSpeech(NationalSpire.LiveRaceHud.Speech) — private void RemoveSpeech(Speech item)`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Process(double)`](LiveRaceHud.cs.md#symbol-9fbc413ea758)；[`NationalSpire.LiveRaceHud.Say(string, string, string, NationalSpire.AvatarArt?, NationalSpire.AvatarIdentity?)`](LiveRaceHud.cs.md#symbol-1fd8ee1cca63)
 
@@ -530,7 +631,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -563,7 +664,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.DragInput(Godot.InputEvent) — private void DragInput(InputEvent input)`
 
-来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -582,7 +683,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.DragInput(Godot.InputEvent, Godot.Control) — private void DragInput(InputEvent input, Control surface)`
 
-来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Ready()`](LiveRaceHud.cs.md#symbol-b5a8cd9a2617)；[`NationalSpire.LiveRaceHud.DragInput(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-5b9229f65deb)
 
@@ -603,7 +704,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.ParentPoint(Godot.Vector2) — private Vector2 ParentPoint(Vector2 viewportPoint)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Input(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-498aab07aecc)；[`NationalSpire.LiveRaceHud.BeginDrag(Godot.Vector2)`](LiveRaceHud.cs.md#symbol-c419965aa884)
 
@@ -624,7 +725,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.BeginDrag(Godot.Vector2) — private void BeginDrag(Vector2 point)`
 
-来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Input(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-498aab07aecc)；[`NationalSpire.LiveRaceHud.DragInput(Godot.InputEvent, Godot.Control)`](LiveRaceHud.cs.md#symbol-ae898db06879)
 
@@ -646,7 +747,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.Hit(Godot.Control, Godot.Vector2) — private static bool Hit(Control surface, Vector2 point)`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Input(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-498aab07aecc)
 
@@ -669,7 +770,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud._Input(Godot.InputEvent) — public override void _Input(InputEvent input)`
 
-来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -700,7 +801,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.PublishLayout() — private void PublishLayout()`
 
-来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud._Input(Godot.InputEvent)`](LiveRaceHud.cs.md#symbol-498aab07aecc)
 
@@ -729,7 +830,7 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud.FitHeight() — private void FitHeight()`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRaceHud.RestorePosition()`](LiveRaceHud.cs.md#symbol-f38a179bccac)；[`NationalSpire.LiveRaceHud.SetCollapsed(bool)`](LiveRaceHud.cs.md#symbol-6fc8e2be97ca)
 
@@ -750,19 +851,20 @@ private string _signature = "";
 
 ## `NationalSpire.LiveRaceHud._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`Godot.Tween.Kill()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._speeches`；`NationalSpire.LiveRaceHud.RestorePosition()`；`NationalSpire.LiveRaceHud.Speech.Fade`
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveRaceHud.RestorePosition()`；`NationalSpire.LiveRaceHud.Speech.Fade`；`NationalSpire.LiveRaceHud._chatFade`；`NationalSpire.LiveRaceHud._floating`；`NationalSpire.LiveRaceHud._speeches`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`GodotObject.IsInstanceValid(_floating)`；返回值紧邻使用处：`IfStatementSyntax: if (GodotObject.IsInstanceValid(_floating)) _floating.QueueFree();`
 - `Godot.Node.GetParent()`；输入表达式：`GetParent()`；返回值紧邻使用处：`IsPatternExpressionSyntax: GetParent() is Control parent`
 - `Godot.Node.QueueFree()`；输入表达式：`_floating.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _floating.QueueFree();`
+- `Godot.Tween.Kill()`；输入表达式：`.Kill()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _chatFade?.Kill()`
 - `Godot.Tween.Kill()`；输入表达式：`.Kill()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: item.Fade?.Kill()`
 
 **赋值（含属性/字段和局部值）：**
@@ -773,7 +875,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.BadgeOffset — public Vector2 BadgeOffset`
 
-来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -792,7 +894,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.Identity — public AvatarIdentity? Identity`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -810,7 +912,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.Art — public AvatarArt Art`
 
-来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -829,7 +931,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._Ready() — public override void _Ready()`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -872,7 +974,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt) — public void RefreshArt(AvatarArt art)`
 
-来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
@@ -892,7 +994,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool) — public void UpdateState(List<Vector2> path, Vector2? marker, string name, int hp, int max, bool dead)`
 
-来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
@@ -926,7 +1028,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._Draw() — public override void _Draw()`
 
-来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -948,7 +1050,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 267 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

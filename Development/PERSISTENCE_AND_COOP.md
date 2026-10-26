@@ -1,6 +1,15 @@
 # 保存、广播与恢复
 
+通讯模型快捷选择沿 SaveAiSettings 保存：单人使用现有 CareerStore/AiSettingsStore 路径，联机房主使用 CoopCareerSession.SaveAi，客机按钮沿原权限禁用。聊天导出只读取当前玩家视图和当前会话，将正文写入独立 Markdown 文件；存档、记忆、分页与广播保持原状。
+
 ## 自动保存诊断入口
+性格池编辑及总提示词合并导入沿现有 SaveAiSettings 保存设备模板；总提示词预览显示类别与具体性格数量，保存失败恢复原模板、覆盖、事件池、性格池及 PrivatePromptVersion，导入窗口保持可重试。新世界独立持有 NpcPersonalityPool，人物快照沿原 CareerPerson.Personality 与 CharacterCards 命令保存和广播。单人初始生成采用 ReplaceFreshCareer：先保存备份旧数据，再写入完整新世界，写入异常恢复原内存数据。存档创建窗口先安装导入设计，整份生涯保存后提交安装；切换失败时已保存的新档继续拥有完整设计资料。
+
+“配置新世界”将上一生涯 AiOptions 复制为窗口草稿，模板切换沿 SelectTemplate 保留各模板覆盖。NpcGeneration.ApplySettings 共用于单人与房主新世界：比赛水平沿 MatchRules.SetRivalLevel，AI 配置保持独立副本，并将新世界最终选定的 setup.Pool 深复制到 AiOptions.PersonalityPool，以便总提示词导出与实际开档设置一致。旧生涯人物快照保持原归属。ReplaceFreshCareer 保留传入新世界的配置，旧 ResetCareer 入口显式继承原配置；新建另一生涯在原 SwitchCareer 完成后应用并保存所选设置。联机首次保存共同世界后保存房主本机 AI 配置，公开广播沿 CoopJson 的既有过滤。密钥填入后仅交给 AiService.PersistKey；其他方案与任务路由保留，旧存档读取和恢复检查点路径保持原有行为。
+
+联机新建由房主展示 NpcGenerationScreen 并通过 CoopRuntime.Connect 传入临时配置；新世界的玩家姓名经 NpcGeneration.ResolvePlayerName 交给 CoopRules.Create 的 playerName 和 CoopCoordinator 的 name，队伍名称仍保存在共同世界 PlayerAlias。恢复检查点及加入房间继续使用原成员流程。CoopRules.Create 仅接收池与稳定世界 ID，保持规则层独立于本地文件读取。PNG/ZIP 批量导入在 Runtime 使用 NpcGeneration.ImportBatch，协调器首次 Commit 保存世界后提交 Installation，连接失败且尚未持久化时回滚设计绑定。恢复检查点沿旧入口跳过初始配置。共同世界广播所生成人物的性格快照；立绘图片延续本机资产库机制，客机需自行导入对应素材。联机窗口等待异步连接完成，失败时保留配置与文件清单，取消会调用 CancelConnection 并释放临时窗口。用户关闭配置窗口、取消或输入校验失败时当前生涯保持原记录。
+
+
 
 CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 ShouldSave、网络类型、尝试编号及当前阶段，使原版因 ShouldSave 跳过下层保存的情况也留下入口证据。该补丁只观察入口。原 CoopSavePatch 仍拦截 SerializableRun 的联机保存并调用 CoopNativeRun.Save。Save 对客机、对局不存在和暂停分别记录跳过原因；正式保存前记录旧检查点字节数、实际章节、运行秒数、访问地图坐标数和各玩家生命，ValidateRun 后编码一次、Commit 一次，成功后记录新字节数、哈希及 Revision。诊断失败由 Diagnostics 自身处理，比赛的保存和广播顺序沿用原实现。
 
@@ -30,7 +39,9 @@ PrivateSnapshot 与 SnapshotEncoder 同时清除共同 World.Life 和其他成�
 
 group-rename：单人 CareerScreen.GroupCommand → GroupChats.Command → CareerStore.Save → 成功回调更新管理窗口 → 列表/群聊签名失效；多人 ICareerSession.Send → CoopRules.GroupCommand 在成员视图执行同一入口 → CaptureGroup → 原提交、检查点、完整广播和回执。名称与通知共同提交。保存异常沿现有界面状态显示，单人内存沿原保存流程保留，重新启动读取成功保存的快照。生成中的 ProcessGroupAsync 在发送完成、流式顺序预留及失败收尾时通过 Current 取得最新群数据，再保存回复，保留期间的改名。离开界面后原生成任务继续；切换生涯/房间沿原世界及 epoch 检查，断线后的名称与通知由检查点恢复。改名自身创建一条通知及字符串，复用原单人保存或多人事务副本和完整快照；新增后台任务及模型请求次数均为0。
 
-consumer-attach/consumer-remove 沿原 ICareerSession.Send → CoopRules.Apply 在成员 View 调用 ConsumerAttachments.Prepare/Remove → Capture → Commit，保存后才回执、编码及广播。付款、库存、临时数量、购物事实与成员钱包在同一次世界提交中完成。原命令收据处理重发，消费附件付款编号处理同一业务附件重复准备；主客机断线恢复读取同一检查点。单人最终确认沿 EconomicActions.Save 复制一次生涯并保存一次，确定前只编辑界面草稿。移除已付款草稿保存返还数量，切换会话或重新打开时 RestoreConsumerDrafts 按人物/群聊和 draft 状态恢复。切换存档重新绑定对应 ConsumerState，未发送即时附件下一天过期，已发送或接受的附件保持自己的生命周期。
+consumer-attach/consumer-reserve/consumer-remove 沿原 ICareerSession.Send → CoopRules.Apply 在成员 View 调用 ConsumerAttachments.Prepare/Remove → Capture → Commit，保存后才回执、编码及广播。consumer-reserve 使用 buyMissing=false，只预留本人已有库存；它与 consumer-remove 作为通信操作允许部分队员离线及比赛进行中执行。consumer-attach 保留原购买条件：2—4位在线队员且当前比赛结束。付款、库存预留量、临时数量、购物事实与成员钱包在同一次世界提交中完成。原命令收据处理重发，附件编号校验归属、状态和内容；其他成员视图缺少原预留记录时拒绝赠礼结算，保持各自库存。
+
+单人添加与移除附件均沿 EconomicActions.Save 复制一次生涯并保存一次；Prepare 使用附件副本，保存失败恢复原 Life、钱包及库存，界面继续保留原草稿供重试。确认添加前只编辑弹窗草稿；成功后 ReservedQuantity 与 draft 一起保存，取消或拒绝归还，接受核销。切换会话或重新打开时 RestoreConsumerDrafts 按人物/群聊和 draft 状态恢复。主客机断线恢复读取同一检查点，切换存档重新绑定对应 ConsumerState；未发送即时附件下一天过期，非即时预留及已发送/接受附件沿各自生命周期保留。
 
 consumer-buy 由 CoopRules.Apply 在世界副本上创建成员视图，将 ConsumerOrder.Quantity 传入 ConsumerEngine.Buy，成功后 Capture 提交本人 Life.Consumer、余额与事件；库存随原快照序列化。私聊模型保存回调除 Mailbox/Relationships 外同步该成员 Consumer，使 Gift 的扣除和原回复一起提交。群聊使用 CaptureGroup 提交当前成员数据和共享 Chats，并合并 PrivateMemorySources 中其他真人信箱的实际修改。
 
@@ -71,6 +82,32 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 社区举报由ReportDiscussion先显示作者、原文和来源帖的确认弹窗；打开与取消产生0次保存、0次业务请求，社区编辑器正文及选区保留。确认时重读来源并核对作者、正文、NPC可聊状态与比赛失败锁；成功后关闭弹窗、打开作者私聊，调用PrivateCommand(dm-arbitrate)，Text携带确认框原因；非空白原因经Enqueue保存为PrivateTurn.User，空白输入由命令端填入默认举报说明；社区、私聊正文和附件草稿保留各自原存储。权威PrivateMessageCommands.Apply检查在途请求、比赛失败锁与来源，CommunityReporting.Create完成案件快照后建立一个queued轮次。命令沿既有保存入口提交，后台开始保存sending及Context，完成保存裁决/致歉/Reasoning；举报快照构建本身执行0次保存、0次HTTP。离开页面后队列继续遵守既有current与轮次校验，切换生涯时旧异步结果沿原检查失效。停止或关闭进程后的Recover将轮次标为failed并保留Request，重试继续使用原案件快照；删除申请后重试要求重新提交。
 
 在合作存档里仍只举报NPC内容；沿既有dm-arbitrate命令，房主从成员View的权威帖子重建案件，再Capture到申请成员Life.Mailbox。Request与Context随个人信箱过滤；公开ArbitrationRecord及其处罚继续按原Merge进入人物档案。合成房主/客机命令验证目标绑定、权威正文覆盖、回执去重与PrivateSnapshot仅保留收件人信箱。真实联机发送、接收、检查点写盘与断线恢复尚待游戏环境验证；计时及边界见[社区讨论树与回复入口](GAME_AND_UI.md#社区讨论树与回复入口)。
+
+## 多人约会与约会切磋的保存
+
+场景主轮次仍归主联系人信箱。DateSceneInvitations 在受邀者私信完成后写回同一玩家信箱的原活动 Participants；房主 StartPrivate 对 dm-date-invite 使用 Replacement 解析实际受邀者，并将私密分片仅发回发起玩家。DatePartyEffects 的学习及档案变更在原 MergePrivateLearning / PrivateProfileChanges.Merge 中按人物去重合并。SceneLines.Speaker 随现有 CoopPrivateChunk 传递。约会切磋的GameMatchId与GameChatRequest随原Scene保存；本局进度取LiveDateGame写入绑定对局的Snapshot。请求取得队列名额后刷新事实，修订沿原命令、交互撤回及存储顺序执行；额外保存和广播次数为0。游戏切磋仍限定单人生涯。活动选人衣服标记读取当前机器的立绘缓存，展示与窗口缓存均属于本机界面数据。PrivateMessageCommand.ToolMode随原命令发送；开场、重新输入、局内请求与结算续聊、结束和重试保存于排队轮次，加入邀请保存于Replacement指定的受邀者轮次。工具参数在完整返回后进入ToolCalls，格式转换继续在房主原请求处理器执行；新旧协议保持相同的保存与广播节点。旧单人轮次缺少参与列表及 Speaker 时继续用主联系人。
+
+约会沿用原 private 提示词、房主快照与本机设置读取入口。场景情绪字典的 emotionSets 引用与连续显示片段的历史标签合并只属于请求组织；人物素材、Scene/SceneLines、聊天原文、保存次数、检查点和广播次数均沿原流程。
+
+约会历史逐轮删除复用 dm-delete 的权威业务提交：单人先由 CareerStore.Save 保存一次；联机继续由主机执行个人信箱命令和现有回执去重，发起客户端在成功回执后 Refresh 取得新视图，再修改本机回忆。普通对话与约会共用 PrivateMessages.Manage，约会清除分句/选项缓存并追溯多人物派生轮次的未确认事项。回忆清理采用 DateSceneMemories.RemoveReply，仅移除同轮回复与画面；关闭录制时仍更新已存文件，追加范围保持原状。Read、Save 和 ForPerson 对现存源轮次的 ReplyDeleted 做删除对齐，保留原文已归档的独立回忆；这也防止一次本机文件写入失败后重新显示已删原文。业务命令与本机回忆文件分步提交，本机写入失败保留源删除结果并在确认框提示重试。世界切换后停止旧回调，迟到成功回执只关闭发起它的确认框。存档结构继续兼容旧版本。
+
+立绘布局继续保存于各人物既有 DateSceneAssets 本机文件。SpriteY 保留旧文件的屏幕坐标方向，DatePortraitPlacement.FromAssets 将其转换为界面中的向上正值；保存时反向转换。当前场景的个人X位移固定为自动站位，旧 SpriteX 字段保留用于历史数据兼容。DateScenePortraitSettings 默认选中所有对象，沿同一写入入口修改本次约会各人的指定数值；选择范围只属于当前设置窗口。单个人物仍按稳定编号独立设置。它追踪实际修改人物，滑动过程只改内存与显示，拖动结束、数字确认、换人及退出时通过 DateSceneAssetStore.Save 原子替换对应文件；失败保留待保存标记并显示提示。世界/本机玩家键变化后停止旧窗口的提交。关闭并重新进入从各自文件恢复。单人及联机各端均为本机显示偏好，业务存档与广播新增次数为0；素材、对话与模型路由沿原模块处理。回忆帧另外冻结个人布局和实际出场名单，播放时恢复当时设置。画面恢复按稳定人物编号复用立绘控件及当前透明度，仅新增或移除名单变化的人物；冻结的好感值直接显示。这些绘制修订沿用既有回忆格式和业务数据。DateCastRoster的最近四次完整发言队列与最近发言人只属于展示层，连续同人显示片段共享一次计数，旁白跳过且保持最近发言人；按本轮文本和已播放下标重建，Clear同时重置队列和最近发言人，AI输入、人物记忆、关系与联机快照保持原契约。
+
+可选约会回忆由DateSceneMemories单独保存于`user://national_spire_date_memories/<世界及本机玩家哈希>/<OfferId哈希>.json`；复用PortraitDesignStore.Key隔离世界和LocalHumanId，单人使用player。记录开关归`NationalSpire_date_scene.cfg`的scene.record_dates，缺省true，既有明确false保持关闭，写入保留其他设置。录制在本机展示层读取当前私信视图；房主与客机分别保存自己的回忆，业务保存、网络广播及检查点新增次数为0。记录以临时文件写完后替换，失败保留旧档并给出状态/日志；流式更新在内存完成，完成、推进、暂停、关闭与开关操作仅在有变化时写入。结束命令成功后标记Ended；重连/重新打开沿同一活动文件续接。切换世界/玩家时校验档案键，阻止旧场景内容写入新分区。关闭开关停止追加并保留已有文件，结束时仍可完成已保存条目的Ended标志。图片沿既有不可变哈希缓存复用，存储增加来自文字和实际用到的图像；用户手动清除该缓存会影响回忆素材。删除回忆只删除该OfferId的本机JSON并清除索引缓存，图片缓存继续供其他绑定与回忆复用。整篇日记删除经原PrivateMessageCommands/CoopRules个人信箱命令保存：单人保存一次，联机由房主Capture当前成员信箱后提交和回传；成功回执才删除发起客户端本机文件。其他成员日记保持原状。删除标记阻止回忆索引与迟到写入重建条目；本机文件清理失败会显示错误，日记删除状态继续有效。
+
+ForPerson按目录内文件名、长度及修改时间缓存读取结果，Save使当前分区缓存失效；旧条目和缺少文件正常显示总结，损坏记录给出读取提示。当前界面保留一个约会的内存缓冲以支持中途开启；重新进入时加载已保存记录。2026-10-22隔离渲染测试：两轮约会原子保存2.59毫秒/6.7KiB；50次重复检索累计7.09毫秒；502轮约1.08MiB档案保存8.69毫秒、分配约4.72MiB，载入8.64毫秒。这些为序列化与文件操作的整体耗时，图片首次编码和磁盘外设差异另计；真实Steam客户端磁盘、跨设备迁移与网络场景未实测。回看只调用本机读取和展示，API调用、业务提交和好感更新次数为0。
+
+约会切磋仅使用现有单人生涯原生入口；CareerMatch.DateGame 与 CareerData.DateGameRules、DateGameTiming、DateGameVoiceEdits 跟随生涯保存。台词导入在单人生涯的规则编辑器内暂存，保存时经DateGameContent.Validate/Apply统一应用并调用CareerStore.Save一次；取消释放草稿，验证失败保留原设置。导出读取当前编辑稿，向桌面写入七份性格JSON、独立触发条件JSON及说明的ZIP，临时文件完成后重命名；对局播报读内存配置，沿原事件保存节奏执行。完整默认库只在首次导出/校验时构建并缓存，生涯仅持久化改写差异；台词导入不改变已触发集合与既定赛果。联机生涯沿原约会切磋入口限制。CareerStore.Load调用DateGames.Upgrade移除start/ambient、补齐四项新条件并把快速推进起始楼层提升至至少20，保留已有启用状态与台词。额外 NPC 模拟首次建立及节奏改变、新触发事实、事件播报合并为同一次轮询内至多一次额外保存；战斗胜利事实随原FinishCombat保存；正常播放和立绘切换产生零次业务保存。NPC 请求聊天时通过RequestChat保存PendingChat、PendingSpeaker、PendingLine和PendingUntil，沿同轮changed合并至多一次CareerStore.Save；后续逐帧轮廓仅更新界面，到期轮询清空四项并保存一次。截止时间从原版RunTime起点校准，以有效游戏帧累计小数秒；重载按原版时间重建起点并恢复剩余时长，最多20秒，旧档缺少截止时间时首次恢复补20秒并沿原台词恢复人物。新请求同步写LastChat，按请求出现时间计算至少20秒间隔；已有更长的ChatSeconds配置继续生效。已接受请求等待安全帧期间冻结到期；进入约会后原生计时、战斗与动作队列一同暂停。开始与返回对局保存本机阅读书签。待赛与已进入原生对局共享原 Status 表示；开局界面另外核对 PendingMatchId 与局内恢复回调，避免局内聊天被误判为等待开局。生成等待、播放、输入或失败时均可经原 dm-date-pause 命令返回对局，保存原活动为 paused 并保留输入草稿。书签失败记录 date.game.bookmark；命令保存失败或活动失效也会进入界面清理的 finally，强制关闭局内覆盖层并释放原生暂停。恢复回调在清理前取走，重复关闭与节点退出复用同一释放入口。后台生成继续沿原队列完成。手动继续恢复编辑区；回应NPC请求保存新事件轮次并生成，流式回复和两条建议由同一请求完成。SceneChoices跟随原PrivateTurn快照保存并在多人个人信箱中同步；建议选项及开始/取消、返回/结束选项共用本机布局：中心X坐标相同，上下排列，文字框上方整体居中。该布局调整只更新控件位置与尺寸，保存和广播次数为0；本机输入模式、手机返回活动和原生暂停委托仅归当前页面。重启后缺少原生恢复委托时，DateGames.InProgress 仍从持久化 PendingMatchId 与 DateGame.Host/OfferId 识别当前约会对局，输入区的手动继续选项及退出确认弹窗保留恢复入口。DateGameReturn.PrepareSavedResume 校验主菜单缓存的原版存档与同一生涯绑定；验证通过后保存约会暂停状态、清理覆盖层并调用原版继续游戏入口，沿游戏已有流程载入原存档。检查失败保留场景与草稿、显示错误原因；恢复入口准备过程只读，不复制、替换或删除原版存档。原版存档恢复继续依赖 CareerRunBinding、MatchRecovery；恢复后的桥接读取已有模拟与已触发集合。未处理请求在重载后按保留的剩余时长等待玩家接受；已进入私信队列的轮次沿 Recover 变为可重试失败状态。真实对局结算保存 ReturnPending，DateGameReturn 等待原版分数与解锁写入，经DateGameMenuReturnPatch包装的原版ReturnToMainMenuAfterRun任务完成及下一帧再恢复原约会；转场中的MenuPatch延后处理。该任务异常原样传播，恢复阶段异常记录date.game.restore，保留待办供下次恢复；成功入队结算续聊后清除标记，ResultTurnId使重复通知复用已有轮次。结算续聊允许排在既有请求之后，旧请求finally释放锁后继续；普通回应请求仍要求当前队列空闲。补丁仅对当前绑定的约会对局生效，恢复失败保留下一次进入时的恢复机会。
+
+group-offer-date 继续经过原群聊权威命令与保存广播；DateGroupBridge 在群聊临时信箱替换之前创建主联系人场景副本。相同来源重复进入复用原副本；结束和加入人物同步群聊活动；CoopRules.Capture与StartPrivate.Save通过DateGroupBridge.Merge提交有更新版本的来源日程，仅合并State和Participants，保留群聊消息和其他字段。群成员身份、场景来源编号及版本共同限定合并范围，重复或旧版本合并保持原状态。DateGroupBridge.SourceActive统一检查共享来源仍为已确认或已赴约；场景可用性、发出加入邀请及接受邀请均调用该入口。Sync和Merge只更新仍开放的共享活动；群聊因其他消息产生较高Revision时，其携带的旧活动副本同样受到终态保护。来源已结束、已取消或已移除时，旧本地场景停止接收新轮次，迟到加入转为expired，原参与者名单与终态保留。原日程库存结算沿 SocialAppointments.Attend。群聊婚礼附件保存 WeddingServiceIds、兼容首项 ServiceId 与包含结婚对象和宾客的 Participants；接受或改期沿 GroupInteractions/SocialAppointments 复制全部服务编号并建立共同日程，取消及改期保留服务次数。赴约将原活动设为已赴约，逐份计用；带 DateSourceGroup 的副本用于展示和对话。场景结束由 WeddingAppointments.Complete 逐个调用原关系入口更新当前玩家与所选对象的婚约经历，其他玩家和宾客的关系保留。新列表沿原 JSON 快照、交互撤回、保存、命令回执和广播传递，旧档缺少列表时使用 ServiceId。参与者素材在各客户端本机读取，默认剪影嵌入程序集；跨人物和玩家素材保持隔离。验证使用隔离 Godot 项目、合成生涯及本地 SSE 响应替身，覆盖参与者接受/拒绝/过期、人物归属、交互撤回、学习、失败修订、约战附件与取消、群聊日程唯一性、序列化及本地测试隔离。真实模型响应时间、原版整局中的暂停/赛后自动恢复、Steam 联机检查点及断线恢复须进行游戏测试。
+
+首次约会设置由OpenDateSceneReady在创建场景/排队开场前检查参与者；每个未确认NPC显示一次。首次选择优先当前角色已导入且含有效默认PNG的套装，先检查当前套装再检查其余套装；此预检只读本地素材，确认前保持文件原样。全部缺失时选择性别剪影。DatePresentation.Save先准备全部角色，随后复用CharacterDesignPackage.Installation安装两份本地JSON；任一安装失败时逆序还原，全部成功后提交。取消不写确认标记。形象包复用AppearanceLibrary.Prepare的同一绑定规则。首次判断按世界/玩家/角色隔离，联机保留各端美术自主选择；世界关系和聊天保存继续走原权威入口。活动中新增成员在输入阶段触发同一流程；确认后刷新立绘名单。OpenRunDate和结算ReturnToDate把生成动作作为ready回调，确保首次弹窗关闭后再接续。取消局内首次弹窗走CloseDateScene归还原生暂停。手动输入模式以空轮次编号兼容尚无聊天记录的活动，后续Tick保留输入状态。场景设置可以重新选择，已开始对局沿既有Voices更新规则保存。开发者测试仅读取展示偏好。
+
+## 角色包与立绘包导入
+
+PortraitPackageImport.Read先读取并校验包，图片与导入选择暂存在本次窗口。Merge仅建立设计/素材草稿并写入可共享的图片内容缓存。DateSceneAssetScreen确认后由CharacterDesignPackage.Installation备份原设计和素材文件，保存两份JSON后Commit；任一写入失败恢复原文件。人物编辑器的纯立绘导入保留pendingDesign/pendingAssets，保存或导出时安装；保存角色成功后Commit，取消或关闭窗口时Dispose恢复原本地绑定。取消后共用内容缓存继续可复用。窗口草稿在关闭进程后自然释放，既有角色资料及已提交素材继续按原路径读取。
+
+素材按生涯及人物键保存在本机，导入图片及未知ID确认产生0次AI请求、0次生涯广播；人物创建/保存继续沿原CharacterCards和character-card权限及房主回执机制。CanEditCharacter限制角色创建，纯素材编辑沿本机权限。所有延迟确认检查CareerStore.IsCurrent，父窗口销毁时放弃后续回调。真实Steam跨机和进程中断时两份素材JSON的写盘恢复仍待实测；本轮覆盖内存草稿取消、安装事务回滚和Godot实际文件选择器调用链。
 
 ## 单人生涯保存的顺序
 
@@ -215,6 +252,8 @@ CoopRules.Apply 仍在完整副本上执行，失败返回原 World，成功沿�
 群聊开始时 sending 状态依靠 Save 合并进入房主当前数据。后面的 Current 从这份数据读取；仅删除开始 Save，完成时可能取得旧 queued，而无法走原完成提交条件。
 
 群聊流式新发言块预留 SpeechOrders 后也会 Save。它同时导致检查点、版本更新与完整广播。减去这一保存会影响客机重新打开聊天时的通知与发言顺序，不仅影响磁盘开销。
+
+私信和群聊前台请求在取得队列名额后启动请求超时，等待名额期间仍可通过同一取消对象停止。private.queue 与 private.prepared/group.prepared 将排队、准备分别记录，private.timing 继续记录传输首段和总耗时。流式收到 finish_reason=stop 后立即完成并释放响应；保留此前及该帧内的 usage，后续单独的 usage 尾帧跳过。完成后仍通过 Current 核对最新世界、轮次与状态，再沿原 Save 提交；失败与取消继续进入原恢复和重试路径。计时与终止帧处理沿用现有消息类型，检查点、版本递增及广播入口保持原规则。
 
 公共 AI 使用 ExternalCurrent / ExternalSave，CoopAi 完成时只合并该任务的新帖子、回复、周刊与资料；保留期间其他成员内容。业务规则执行前的 World 副本仍用于错误时不提交部分修改。
 

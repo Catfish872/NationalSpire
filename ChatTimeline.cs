@@ -32,8 +32,9 @@ public static class ChatTimeline
                         }
                         continue;
                     }
-                    if (!t.UserDeleted && t.ProactiveReason.Length == 0) yield return new(t.UserOrder, t.Day, "user", GroupChats.Name(d, human) + "：" + PrivateMessagePrompts.UserText(d, t, c), source);
-                    if (!t.ReplyDeleted) yield return new(t.ReplyOrder, t.Day, "user", GroupChats.Name(d, c.PersonId) + "：" + t.Reply, source);
+                    string historySource = source + (DateGames.HistorySource(t) is { Length: > 0 } gameSource ? "；" + gameSource : "");
+                    if (!t.UserDeleted && t.ProactiveReason.Length == 0 && string.IsNullOrEmpty(t.Scene?.GameEvent)) yield return new(t.UserOrder, t.Day, "user", GroupChats.Name(d, human) + "：" + PrivateMessagePrompts.UserText(d, t, c), historySource);
+                    if (!t.ReplyDeleted) yield return new(t.ReplyOrder, t.Day, "user", GroupChats.Name(d, c.PersonId) + "：" + t.Reply, historySource);
                 }
             }
         }
@@ -86,8 +87,9 @@ public static class ChatTimeline
         foreach (var t in c.Turns.Skip(c.ContextStart).Where(t => t.Status == "complete" && t != pending))
         {
             if (t.RequestKind == "event") { if (!t.UserDeleted) own.Add(new(t.UserOrder, t.Day, "user", Text(d, new(t.UserOrder, t.Day, "user", t.User, "共同经历")))); continue; }
-            if (!t.UserDeleted && t.ProactiveReason.Length == 0) own.Add(new(t.UserOrder, t.Day, "user", $"{GameCalendar.Text(d, t.Day)}，{CareerEngine.Name(d)}" + (t.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{GroupChats.Name(d, c.PersonId)}的消息\n") + PrivateMessagePrompts.UserText(d, t, c)));
-            if (!t.ReplyDeleted) own.Add(new(t.ReplyOrder, t.Day, "assistant", t.Reply));
+            string source = DateGames.HistorySource(t);
+            if (!t.UserDeleted && t.ProactiveReason.Length == 0 && string.IsNullOrEmpty(t.Scene?.GameEvent)) own.Add(new(t.UserOrder, t.Day, "user", $"{GameCalendar.Text(d, t.Day)}，{CareerEngine.Name(d)}" + (t.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : pending?.Scene != null && t.Scene != null ? "在约会中的消息\n" : $"发给{GroupChats.Name(d, c.PersonId)}的消息\n") + PrivateMessagePrompts.UserText(d, t, c), source));
+            if (!t.ReplyDeleted) own.Add(new(t.ReplyOrder, t.Day, "assistant", pending?.Scene != null && t.Scene != null ? DateScenes.PromptHistory(t, c.PersonId) : t.Reply, source));
         }
         var recent = c.Turns.Where(t => t.Status == "complete").ToArray();
         int retained = PrivateMessages.Mailbox(d).Settings.RecentRounds;

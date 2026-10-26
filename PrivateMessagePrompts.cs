@@ -153,7 +153,10 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         // 保存的上下文可能来自重新生成或并发更新；不能用当前资料替换其事实。
         var ordered = context == freshContext ? OrderContext(context, contextSpans) : (Public: "", Stable: "", Current: context);
         if (ordered.Public.Length > 0) Add("user", ordered.Public);
-        Add("user", $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n" + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
+        string identity = pending?.Scene is { Ending: false, Participants.Count: > 1 }
+            ? $"主联系人资料（参考内容）\n{PrivatePublicContext.IdentityText(p)}是本次约会参与者之一。你同时扮演本轮名单中的各位NPC，玩家是{CareerEngine.Name(data)}。\n"
+            : $"人物资料（参考内容）\n你扮演{PrivatePublicContext.IdentityText(p)}，私信另一方是玩家{CareerEngine.Name(data)}。\n";
+        Add("user", identity + Serialize(PrivatePublicContext.CharacterProfile(data, p)));
         if (ordered.Stable.Length > 0) Add("user", ordered.Stable);
         string SummaryHeader(PrivateSummary s, string kind)
         {
@@ -169,10 +172,12 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         foreach (var entry in ChatTimeline.PrivateHistory(data, c, pending)) Add(entry.Role, ChatTimeline.Text(data, entry));
         if (pending != null)
         {
+            if (pending.DateInvitation != null) Add("system", ChatTools.InPrompt ? "加入已有约会的决定在 Interactions 的 date_join 中提交，规则见该交互说明。" : DateSceneInvitations.Protocol);
             Add("user", ordered.Current);
             if (pending.Scene != null) Add("system", pending.Scene.Ending ? DateDiaries.Guidance(c, pending.Scene) : ChatTools.InPrompt ? "正在进行本次约会，场景与素材说明见 send_message 的 Replies。" : DateScenes.Guidance(pending.Scene));
+            if (pending.Scene is { Ending: false } gameScene && DateGames.PromptContext(gameScene) is { Length: > 0 } gameContext) Add("user", gameContext);
             if (pending.ProactiveReason.Length > 0) Add("user", ProactiveChats.Prompt(pending.ProactiveReason, pending.ProactiveLast));
-            else if (!pending.UserDeleted) Add("user", $"{GameCalendar.Text(data, pending.Day)}，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{p.PublicName}的消息\n") + UserText(data, pending, c));
+            else if (!pending.UserDeleted) Add("user", $"{GameCalendar.Text(data, pending.Day)}，{CareerEngine.Name(data)}" + (pending.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : pending.Scene != null ? "在本次约会中的消息\n" : $"发给{p.PublicName}的消息\n") + UserText(data, pending, c));
             if (!pending.UserDeleted && CardKnowledge.Find(pending.User) is { Length: > 0 } cards) Add("user", cards);
         }
         if (pending == null) Add("user", ordered.Current);
@@ -302,6 +307,8 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         spans?.Add(new(offersStart, text.Length - offersStart, "schedule"));
         text += training;
         if (lineups.Length > 0) text += "\n" + lineups;
+        if (turn.Scene is { Participants.Count: > 1 } party) text += "\n" + DateSceneParty.Context(data, party);
+        text += DateSceneParty.SharedMemory(data, c.PersonId, turn.Id);
         return text;
     }
     private static string OfferContext(CareerData data, PrivateConversation c, PrivateOffer o, bool fromPlayer = false)
@@ -310,7 +317,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         if (o.Kind is "gift" or OathAttachments.Kind) return o.Title + " · " + o.State + "\n" + o.Detail;
         if (o.Kind == "training" && o.State == "已拒绝") return $"{npc}已拒绝{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：已拒绝。";
         if (o.Kind == "training") return $"{npc}已接受{player}的{o.Weeks}周训练计划《{o.Detail}》；当前状态：{ClubCoaching.TrainingPlans(data).FirstOrDefault(p => p.Id == o.Id)?.State ?? o.State}。";
-        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}。{o.Detail}。{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
+        if (o.Kind == "activity") return $"活动{PrivateInteractionIds.Number(c, o)}《{o.Title}》，{player}与{npc}，{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}。{o.Detail}。{WeddingAppointments.Description(data, o)}{(o.State == "已确认" ? "已约定，尚未赴约" : SocialAppointments.StatusText(data, o))}。";
         string state = o.State switch
         {
             "待确认" => $"等待{player}通过界面确认" + (o.Detail.Length > 0 ? $"；最近一次执行未成功：{o.Detail}" : ""),

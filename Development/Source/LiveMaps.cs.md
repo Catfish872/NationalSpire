@@ -19,7 +19,7 @@
 
 来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.EnsurePlan()`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-0dd1ac28e6cd)；[`NationalSpire.LiveRunBridge.PlanningMap()`](LiveRunBridge.cs.md#symbol-733c41e89044)
 
 **调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.GameCompatibility.MapRng(object, int)`](GameCompatibility.cs.md#symbol-a2187753991c)；[`NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`](LiveMaps.cs.md#symbol-4f5b35fc24c7)；[`NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`](LiveMatch.cs.md#symbol-3b51df8cd703)；`MegaCrit.Sts2.Core.Map.StandardActMap.StandardActMap(MegaCrit.Sts2.Core.Random.Rng, MegaCrit.Sts2.Core.Models.ActModel, bool, bool, bool, MegaCrit.Sts2.Core.Map.MapPointTypeCounts?, bool)`；`MegaCrit.Sts2.Core.Models.ActModel.GetNumberOfRooms(bool)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`
 

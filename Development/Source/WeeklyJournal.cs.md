@@ -687,7 +687,7 @@
 
 来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
+**调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?)`](CareerEngine.cs.md#symbol-63d93017946a)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
 
 **调用：** [`NationalSpire.WeeklyJournal.Fingerprint(NationalSpire.CareerPerson)`](WeeklyJournal.cs.md#symbol-bd7125c6a247)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`
 

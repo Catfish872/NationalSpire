@@ -94,7 +94,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)
 
 **调用：** [`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.Schedule<T>(string, System.Func<T>, System.Threading.CancellationToken, bool)`](CoopStorage.cs.md#symbol-e7e3aa0f9a7c)
 

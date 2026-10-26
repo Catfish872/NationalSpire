@@ -44,7 +44,7 @@ private string _generation = Guid.NewGuid().ToString("N");
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCareerSession.Generate(bool)`](CoopCareerSession.cs.md#symbol-b759806eeebc)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)；[`NationalSpire.Coop.CoopRuntime.FinishTerminal()`](CoopRuntime.cs.md#symbol-9dbe454d0582)
+**调用者：** [`NationalSpire.Coop.CoopCareerSession.Generate(bool)`](CoopCareerSession.cs.md#symbol-b759806eeebc)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)；[`NationalSpire.Coop.CoopRuntime.FinishTerminal()`](CoopRuntime.cs.md#symbol-9dbe454d0582)
 
 **调用：** [`NationalSpire.CommunityThreads.PendingIds(NationalSpire.CareerData)`](../CommunityThreads.cs.md#symbol-1196d0b01b89)；[`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable<System.Threading.Tasks.Task>)`
 

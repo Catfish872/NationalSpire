@@ -24,10 +24,10 @@ public static class DateDiaries
     public const string ToolEnding = "本次约会已结束。本轮同时提交两项内容：Replies填写NPC发给玩家的自然私聊感想；Interactions填写一项Type为date_diary的日记记录，DateDiary用NPC第一人称记述本次经过、印象与感受，约150至350字，Location填写实际地点，地点未明确时写地点未明确。只经历开场时如实简述。已有日记时根据本次完整记录重新整理，返回内容用于更新同一篇日记。其他实际交互按各项说明另行填写。";
     public static IReadOnlyList<DateDiary> Records(PrivateConversation conversation)
     {
-        var records = conversation.DateDiaries.ToList();
+        var records = conversation.DateDiaries.Where(d => !conversation.DeletedDateDiaries.Contains(d.OfferId)).ToList();
         foreach (var group in conversation.Turns.Where(t => t.Scene is { Opening: true } or { Ending: true }).GroupBy(t => t.Scene!.OfferId))
         {
-            if (records.Any(d => d.OfferId == group.Key)) continue;
+            if (conversation.DeletedDateDiaries.Contains(group.Key) || records.Any(d => d.OfferId == group.Key)) continue;
             var first = group.First(); var offer = conversation.Offers.FirstOrDefault(o => o.Id == group.Key);
             var reflection = group.LastOrDefault(t => t.Scene!.Ending && t.Status == "complete" && !t.ReplyDeleted);
             records.Add(new() { OfferId = group.Key, Season = offer?.Season ?? first.Season, Day = offer?.Day ?? 0,
@@ -35,6 +35,33 @@ public static class DateDiaries
                 Location = "历史记录未标注地点", Summary = reflection?.Reply ?? "这次约会尚未生成日记。" });
         }
         return records;
+    }
+    public static string? Delete(CareerData data, string person, string offerId)
+    {
+        var conversations = PrivateMessages.Mailbox(data).Conversations.Values.ToList();
+        var source = conversations.FirstOrDefault(c => c.PersonId == person && (Records(c).Any(d => d.OfferId == offerId)
+            || c.DeletedDateDiaries.Contains(offerId) || c.DateSceneStates.GetValueOrDefault(offerId) == "ended"));
+        if (source == null) return "这篇约会日记已不存在，请刷新后重试。";
+        if (source.DateSceneStates.GetValueOrDefault(offerId) is "active" or "paused") return "请结束这场约会后再删除日记。";
+        foreach (var c in conversations.Where(c => c == source || c.DateDiaries.Any(d => d.OfferId == offerId)
+            || c.Turns.Any(t => t.Scene?.OfferId == offerId)))
+        { c.DateDiaries.RemoveAll(d => d.OfferId == offerId); c.DeletedDateDiaries.Add(offerId); }
+        return null;
+    }
+    public static List<(string Host, DateDiary Diary)> ForPerson(CareerData data, string person)
+    {
+        var conversations = PrivateMessages.Mailbox(data).Conversations.Values;
+        var deleted = conversations.SelectMany(c => c.DeletedDateDiaries).ToHashSet();
+        var result = new List<(string Host, DateDiary Diary)>();
+        foreach (var c in conversations)
+        {
+            var joined = c.Offers.Where(o => o.Participants.Contains(person)).Select(o => o.Id)
+                .Concat(c.Turns.Where(t => t.Scene?.Participants.Any(p => p.PersonId == person) == true).Select(t => t.Scene!.OfferId)).ToHashSet();
+            foreach (var diary in Records(c))
+                if (!deleted.Contains(diary.OfferId) && (c.PersonId == person || joined.Contains(diary.OfferId)) && result.All(e => e.Diary.OfferId != diary.OfferId))
+                    result.Add((c.PersonId, diary));
+        }
+        return result;
     }
     public static DateDiary Begin(PrivateConversation conversation, PrivateOffer offer)
     {
@@ -47,13 +74,13 @@ public static class DateDiaries
     {
         var turns = conversation.Turns.Where(t => t.Scene?.OfferId == scene.OfferId && !t.Scene.Ending && t.Status == "complete");
         if (ChatTools.InPrompt) return ToolEnding + "以下为本次约会的完整记录。\n"
-            + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) });
+            + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Scene!.Participants.Count > 1 ? DateScenes.PromptHistory(t, conversation.PersonId) : t.Reply }) });
         return Protocol
-            + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Reply }) });
+            + JsonSerializer.Serialize(new { scene.Title, scene.Detail, turns = turns.Select(t => new { player = t.UserDeleted || t.Scene!.Opening ? null : t.User, npc = t.ReplyDeleted ? null : t.Scene!.Participants.Count > 1 ? DateScenes.PromptHistory(t, conversation.PersonId) : t.Reply }) });
     }
     public static void Complete(PrivateConversation conversation, PrivateTurn turn, IEnumerable<Dictionary<string, string>> directives)
     {
-        if (turn.Scene is not { Ending: true } scene) return;
+        if (turn.Scene is not { Ending: true } scene || conversation.DeletedDateDiaries.Contains(scene.OfferId)) return;
         var offer = conversation.Offers.FirstOrDefault(o => o.Id == scene.OfferId); if (offer == null) return;
         var entry = Begin(conversation, offer);
         var fields = directives.LastOrDefault(f => f.ContainsKey("DateDiary"));

@@ -3,11 +3,11 @@ namespace NationalSpire.Coop;
 /// <summary>所有玩家命令在主机串行执行；在副本上计算成功后整体提交，不切换单人全局存档。</summary>
 public static partial class CoopRules
 {
-    public static CoopWorld Create(ulong owner, string name, string playerName, int capacity, string country)
+    public static CoopWorld Create(ulong owner, string name, string playerName, int capacity, string country, PersonalityPool? personalityPool = null)
     {
         if (capacity is < 2 or > 4 || !EsportsWorld.Countries.Contains(country)) throw new InvalidDataException("队伍设置无效。");
         var w = new CoopWorld { Owner = owner, Capacity = capacity, Name = string.IsNullOrWhiteSpace(name) ? "共同生涯" : name.Trim() };
-        w.World = CareerEngine.CreateNew(cooperativeMembers: capacity);
+        w.World = CareerEngine.CreateNew(cooperativeMembers: capacity, personalityPool: personalityPool, worldId: w.Id);
         CoopJson.Detached(w.World); w.World.WorldId = w.Id; w.World.PlayerAlias = w.Name;
         w.World.Esports.Country = country; OwnedClubs.EnsureMarket(w.World); w.World.Ai.Enabled = false;
         w.World.Esports.Competitions.Clear(); w.World.Matches.Clear(); CircuitWorld.StartSeason(w.World);
@@ -65,6 +65,7 @@ public static partial class CoopRules
         foreach (var post in CommunityThreads.All(d).Where(p => !oldPosts.Contains(p.Id)))
         { post.RelatedPeople = post.RelatedPeople.Select(id => id == "player" ? m.PersonId : id).ToList(); }
         w.World.Chats.Order = Math.Max(w.World.Chats.Order, d.Chats.Order);
+        DateGroupBridge.Merge(w.World, d);
         m.Name = d.PlayerAlias; m.Aliases = d.PlayerNameAliases; m.Credits = d.Credits; m.Fans = d.Fans; m.Rating = d.Rating;
         m.Wins = d.Wins; m.Losses = d.Losses; m.Draws = d.Draws; m.HighestClear = d.AvatarHighestClear;
         m.Life = d.Life; m.Sponsors = d.Esports.Sponsors; m.SponsorOffers = d.Esports.SponsorOffers; m.Results = d.Results;
@@ -128,8 +129,8 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("event-", StringComparison.Ordinal)) error = EventCommand(w, member, command);
@@ -152,6 +153,7 @@ public static partial class CoopRules
                     error = Trade(w, member, System.Text.Json.JsonSerializer.Deserialize<MarketOrder>(command.Text)!);
                     break;
                 case "consumer-attach":
+                case "consumer-reserve":
                 case "consumer-remove":
                     var attachmentView = View(w, member);
                     error = PrivateMessageCommands.Apply(attachmentView, command.Kind, command.Target, System.Text.Json.JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text)!);

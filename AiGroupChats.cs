@@ -20,7 +20,7 @@ public static partial class AiService
         if (turn == null) { await SummarizeGroupAsync(current, save, group); return; }
         string key = GroupKey(d, group), id = turn.Id;
         if (GroupRequests.ContainsKey(key)) return;
-        using var cancel = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(d.Ai.RequestTimeoutMinutes, 2, 30)));
+        using var cancel = new CancellationTokenSource();
         GroupRequests[key] = cancel;
         var raw = new StringBuilder(); var reasoning = new StringBuilder(); var parser = new GroupStreamParser();
         DateTime sent = DateTime.MinValue;
@@ -39,18 +39,24 @@ public static partial class AiService
             if (!d.Ai.Enabled) throw new InvalidOperationException("请先启用 AI。");
             PrivateForegroundQueue.Configure(d.Ai.MaxConcurrentRequests);
             using var lease = await EnterPrivateQueue(d, key, cancel.Token);
+            cancel.Token.ThrowIfCancellationRequested();
+            cancel.CancelAfter(TimeSpan.FromMinutes(Math.Clamp(d.Ai.RequestTimeoutMinutes, 2, 30)));
+            var preparation = System.Diagnostics.Stopwatch.StartNew();
             d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); turn = g?.Turns.FirstOrDefault(x => x.Id == id);
             if (d == null || g == null || turn?.Status != "queued") return;
             turn.Status = "sending"; save(d);
             if (turn.ArbitrationTargets.Count > 0)
             {
-                string verdict = await RequestPrivateAsync(d.Ai, GroupArbitration.Compose(d, g, turn), false, null, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "arbitration");
+                var arbitrationMessages = GroupArbitration.Compose(d, g, turn);
+                Diagnostics.Record("group.prepared", new { kind = "arbitration", elapsedMs = preparation.Elapsed.TotalMilliseconds, messages = arbitrationMessages.Count });
+                string verdict = await RequestPrivateAsync(d.Ai, arbitrationMessages, false, null, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "arbitration");
                 d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); turn = g?.Turns.FirstOrDefault(x => x.Id == id);
                 if (d == null || g == null || turn == null) return;
                 cancel.Token.ThrowIfCancellationRequested(); GroupArbitration.Apply(d, g, turn, verdict);
                 turn.Status = "complete"; turn.Reasoning = reasoning.ToString(); g.Revision++; save(d); return;
             }
             var messages = GroupChatPrompts.Compose(d, g, turn);
+            Diagnostics.Record("group.prepared", new { kind = "group", elapsedMs = preparation.Elapsed.TotalMilliseconds, messages = messages.Count, participants = g.Members.Count });
             var tools = ChatTools.Enabled(d.Ai, turn.ToolMode) ? ChatTools.Create(d, group: g) : null;
             await RequestPrivateAsync(d.Ai, messages, true, chunk =>
             {

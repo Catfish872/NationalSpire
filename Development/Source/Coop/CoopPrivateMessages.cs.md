@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`534A1EA76677888B15BD95D9A31B2C32A120F2AB8F8F6E829A544FCE2317A0E7`。来源：[源码](../../../Coop/CoopPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5F7B53EDDB0BE8C1D51511188ECE4976BFFA654BE264C49DD4130E22DBF8A265`。来源：[源码](../../../Coop/CoopPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -82,32 +82,33 @@ private readonly Value _root;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.StartProactiveChats()`](CoopProactiveChats.cs.md#symbol-119c1a541077)
 
-**调用：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](../AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](../AiPrivateMessages.cs.md#symbol-88f72cb1c19e)；[`NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`](CoopWire.cs.md#symbol-d89dceccb833)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopJson.Bytes<T>(T)`](CoopData.cs.md#symbol-faeb54cab7ee)；`NationalSpire.Coop.CoopPrivateChunk.CoopPrivateChunk(string, string, string, string, string, int, string, System.Collections.Generic.List<NationalSpire.DateSceneLine>?)`；`NationalSpire.Coop.CoopPrivatePart.CoopPrivatePart(string, NationalSpire.Coop.CoopPart)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](../AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`](../AiPrivateMessages.cs.md#symbol-88f72cb1c19e)；[`NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`](CoopWire.cs.md#symbol-d89dceccb833)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopJson.Bytes<T>(T)`](CoopData.cs.md#symbol-faeb54cab7ee)；`NationalSpire.Coop.CoopPrivateChunk.CoopPrivateChunk(string, string, string, string, string, int, string, System.Collections.Generic.List<NationalSpire.DateSceneLine>?)`；`NationalSpire.Coop.CoopPrivatePart.CoopPrivatePart(string, NationalSpire.Coop.CoopPart)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `(string Turn, string Text).Text`；`(string Turn, System.Collections.Generic.List<NationalSpire.DateSceneLine> Lines).Lines`；`Current()`；`NationalSpire.AiService.PrivateReasoningLive`；`NationalSpire.AiService.PrivateSceneLive`；`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`；`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；`NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._privateSendSequence`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Bytes<T>(T)`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`Save(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `Current()`；`NationalSpire.AiService.PrivateReasoningLive`；`NationalSpire.AiService.PrivateSceneLive`；`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`；`NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；`NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCommand.Text`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._privateSendSequence`；`NationalSpire.Coop.CoopJson.Bytes<T>(T)`；`NationalSpire.Coop.CoopJson.Options`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.PrivateMessageCommand.Replacement`；`Save(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`；输入表达式：`AiService.ProcessPrivateAsync(Current, Save, command.Target, (turn, text) =>          {              if (!_closed && World?.Epoch == epoch && sender != Self)                  // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。                  foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))                      Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));          })`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.ProcessPrivateAsync(Current, Save, command.Target, (turn, text) =>          {              if (!_closed && World?.Epoch == epoch && sender != Self)                  // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。                  foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))                      Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));          })`
-- `NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；输入表达式：`AiService.SummarizePrivateManually(Current, Save, command.Target)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.SummarizePrivateManually(Current, Save, command.Target)`
-- `NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`；输入表达式：`CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines)))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))                      Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));`
-- `NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；输入表达式：`Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));`
-- `NationalSpire.Coop.CoopJson.Bytes<T>(T)`；输入表达式：`CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))`；返回值紧邻使用处：`ArgumentSyntax: CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))`
-- `NationalSpire.Coop.CoopPrivateChunk.CoopPrivateChunk(string, string, string, string, string, int, string, System.Collections.Generic.List<NationalSpire.DateSceneLine>?)`；输入表达式：`new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines)`；返回值紧邻使用处：`ArgumentSyntax: new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines)`
-- `NationalSpire.Coop.CoopPrivatePart.CoopPrivatePart(string, NationalSpire.Coop.CoopPart)`；输入表达式：`new CoopPrivatePart(command.Target, part)`；返回值紧邻使用处：`ArgumentSyntax: new CoopPrivatePart(command.Target, part)`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines`
+- `NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`；输入表达式：`AiService.ProcessPrivateAsync(Current, Save, recipient, (turn, text) => { if (!_closed && World?.Epoch == epoch && sender != Self) // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。 foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)))) Send(sender, "private-chunk", new CoopPrivatePart(recipient, part)); })`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.ProcessPrivateAsync(Current, Save, recipient, (turn, text) => { if (!_closed && World?.Epoch == epoch && sender != Self) // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。 foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)))) Send(sender, "private-chunk", new CoopPrivatePart(recipient, part)); })`
+- `NationalSpire.AiService.SummarizePrivateManually(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string)`；输入表达式：`AiService.SummarizePrivateManually(Current, Save, recipient)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = AiService.SummarizePrivateManually(Current, Save, recipient)`
+- `NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`；输入表达式：`CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)))) Send(sender, "private-chunk", new CoopPrivatePart(recipient, part));`
+- `NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；输入表达式：`Send(sender, "private-chunk", new CoopPrivatePart(recipient, part))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(sender, "private-chunk", new CoopPrivatePart(recipient, part));`
+- `NationalSpire.Coop.CoopJson.Bytes<T>(T)`；输入表达式：`CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines))`；返回值紧邻使用处：`ArgumentSyntax: CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines))`
+- `NationalSpire.Coop.CoopPrivateChunk.CoopPrivateChunk(string, string, string, string, string, int, string, System.Collections.Generic.List<NationalSpire.DateSceneLine>?)`；输入表达式：`new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)`；返回值紧邻使用处：`ArgumentSyntax: new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)`
+- `NationalSpire.Coop.CoopPrivatePart.CoopPrivatePart(string, NationalSpire.Coop.CoopPart)`；输入表达式：`new CoopPrivatePart(recipient, part)`；返回值紧邻使用处：`ArgumentSyntax: new CoopPrivatePart(recipient, part)`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines`
+- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text, CoopJson.Options)!`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_` = `AiService.ProcessPrivateAsync(Current, Save, command.Target, (turn, text) =>          {              if (!_closed && World?.Epoch == epoch && sender != Self)                  // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。                  foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, command.Target, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + command.Target).Lines))))                      Send(sender, "private-chunk", new CoopPrivatePart(command.Target, part));          })`
-- `_` = `AiService.SummarizePrivateManually(Current, Save, command.Target)`
+- `_` = `AiService.ProcessPrivateAsync(Current, Save, recipient, (turn, text) => { if (!_closed && World?.Epoch == epoch && sender != Self) // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。 foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence, AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "", AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines)))) Send(sender, "private-chunk", new CoopPrivatePart(recipient, part)); })`
+- `_` = `AiService.SummarizePrivateManually(Current, Save, recipient)`
 
 <a id="symbol-46aad87553d9"></a>
 
 ## `Current() — CareerData? Current()`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -131,28 +132,29 @@ private readonly Value _root;
 
 ## `Save(NationalSpire.CareerData) — void Save(CareerData data)`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerTraining.MergePrivateLearning(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../CareerTraining.cs.md#symbol-caf4108315c3)；[`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`](../CoachLineups.cs.md#symbol-99b1a0a2f49c)；[`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-8025e01818d7)；[`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`](../PrivateAppointments.cs.md#symbol-32f6566791d2)；[`NationalSpire.PrivateProfileChanges.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../PrivateProfileChanges.cs.md#symbol-2bbdc0f01046)；[`NationalSpire.SpireArbitration.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../SpireArbitration.cs.md#symbol-1e9be12b9d1a)；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(long, long)`
+**调用：** [`NationalSpire.CareerTraining.MergePrivateLearning(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../CareerTraining.cs.md#symbol-caf4108315c3)；[`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`](../CoachLineups.cs.md#symbol-99b1a0a2f49c)；[`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-8025e01818d7)；[`NationalSpire.DateGroupBridge.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`](../DateGroupBridge.cs.md#symbol-53762b6ace7e)；[`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`](../PrivateAppointments.cs.md#symbol-32f6566791d2)；[`NationalSpire.PrivateProfileChanges.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../PrivateProfileChanges.cs.md#symbol-2bbdc0f01046)；[`NationalSpire.SpireArbitration.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`](../SpireArbitration.cs.md#symbol-1e9be12b9d1a)；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(long, long)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Chats`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.CareerLifeState.Mailbox`；`NationalSpire.CareerLifeState.Relationships`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerTraining.MergePrivateLearning(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；`NationalSpire.ChatWorld.Order`；`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；`NationalSpire.PrivateProfileChanges.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；`NationalSpire.SpireArbitration.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Chats`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.CareerLifeState.Mailbox`；`NationalSpire.CareerLifeState.Relationships`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerTraining.MergePrivateLearning(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；`NationalSpire.ChatWorld.Order`；`NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.DateGroupBridge.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`；`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；`NationalSpire.PrivateProfileChanges.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；`NationalSpire.SpireArbitration.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerTraining.MergePrivateLearning(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；输入表达式：`CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerTraining.MergePrivateLearning(copy.World, member.Life.Mailbox);`
 - `NationalSpire.CoachLineups.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`；输入表达式：`CoachLineups.Merge(copy.World, data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CoachLineups.Merge(copy.World, data);`
 - `NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；输入表达式：`Commit(copy, NativeSave)`；返回值紧邻使用处：`ExpressionStatementSyntax: Commit(copy, NativeSave);`
-- `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(match)`；返回值紧邻使用处：`AssignmentExpressionSyntax: copy.World.Matches[index] = CoopJson.Copy(match)`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(World)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CoopJson.Copy(World)`
+- `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`CoopJson.Copy(match)`；返回值紧邻使用处：`AssignmentExpressionSyntax: copy.World.Matches[index] = CoopJson.Copy(match)`
 - `NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；输入表达式：`CoopJson.Detached(copy.World)`；返回值紧邻使用处：`ExpressionStatementSyntax: CoopJson.Detached(copy.World);`
 - `NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`；输入表达式：`CoopRules.RefreshPeople(copy)`；返回值紧邻使用处：`ExpressionStatementSyntax: CoopRules.RefreshPeople(copy);`
-- `NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；输入表达式：`PrivateAppointments.IsPrivate(m)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.IsPrivate(m) && m.OpponentId == command.Target`
+- `NationalSpire.DateGroupBridge.Merge(NationalSpire.CareerData, NationalSpire.CareerData)`；输入表达式：`DateGroupBridge.Merge(copy.World, data)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateGroupBridge.Merge(copy.World, data);`
+- `NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；输入表达式：`PrivateAppointments.IsPrivate(m)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.IsPrivate(m) && m.OpponentId == recipient`
 - `NationalSpire.PrivateProfileChanges.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；输入表达式：`PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateProfileChanges.Merge(copy.World, member.Life.Mailbox);`
 - `NationalSpire.SpireArbitration.Merge(NationalSpire.CareerData, NationalSpire.PrivateMailbox)`；输入表达式：`SpireArbitration.Merge(copy.World, member.Life.Mailbox)`；返回值紧邻使用处：`ExpressionStatementSyntax: SpireArbitration.Merge(copy.World, member.Life.Mailbox);`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`copy.Members.Single(m => m.SteamId == sender)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = copy.Members.Single(m => m.SteamId == sender)`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == command.Target)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == command.Target))              {                  int index = copy.World.Matches.FindIndex(m => m.Id == match.Id);                  if (index >= 0) copy.World.Matches[index] = CoopJson.Copy(match);              }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == recipient)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in data.Matches.Where(m => PrivateAppointments.IsPrivate(m) && m.OpponentId == recipient)) { int index = copy.World.Matches.FindIndex(m => m.Id == match.Id); if (index >= 0) copy.World.Matches[index] = CoopJson.Copy(match); }`
 - `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`copy.World.Matches.FindIndex(m => m.Id == match.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = copy.World.Matches.FindIndex(m => m.Id == match.Id)`
 - `System.Math.Max(long, long)`；输入表达式：`Math.Max(copy.World.Chats.Order, data.Chats.Order)`；返回值紧邻使用处：`AssignmentExpressionSyntax: copy.World.Chats.Order = Math.Max(copy.World.Chats.Order, data.Chats.Order)`
 
@@ -168,7 +170,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.PrivateSnapshot(NationalSpire.Coop.CoopWorld, ulong) — public static CoopWorld PrivateSnapshot(CoopWorld source, ulong recipient)`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -206,7 +208,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotBytes(byte[], ulong, System.Collections.Generic.Dictionary<string, string>) — internal static byte[] SnapshotBytes(byte[] snapshot, ulong recipient, Dictionary<string, string> templates)`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -226,7 +228,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.SnapshotEncoder(byte[]) — internal SnapshotEncoder(byte[] source)`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.SnapshotBytes(byte[], ulong, System.Collections.Generic.Dictionary<string, string>)`](CoopPrivateMessages.cs.md#symbol-a91c619526df)
 
@@ -249,7 +251,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Read(ref System.Text.Json.Utf8JsonReader, string) — private Value Read(ref Utf8JsonReader reader, string path)`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Read(ref System.Text.Json.Utf8JsonReader, string)`](CoopPrivateMessages.cs.md#symbol-9520339625bf)；[`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.SnapshotEncoder(byte[])`](CoopPrivateMessages.cs.md#symbol-ee70e3f1cbb7)
 
@@ -291,7 +293,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Encode(ulong, System.Collections.Generic.Dictionary<string, string>) — internal byte[] Encode(ulong recipient, Dictionary<string, string> templates)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.SnapshotBytes(byte[], ulong, System.Collections.Generic.Dictionary<string, string>)`](CoopPrivateMessages.cs.md#symbol-a91c619526df)
 
@@ -317,7 +319,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Raw(NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Value, System.Text.Json.Utf8JsonWriter) — private void Raw(Value value, Utf8JsonWriter writer)`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Write(NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Value, System.Text.Json.Utf8JsonWriter, ulong, byte[])`](CoopPrivateMessages.cs.md#symbol-fa9ee6fab973)
 
@@ -337,7 +339,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Write(NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Value, System.Text.Json.Utf8JsonWriter, ulong, byte[]) — private void Write(Value value, Utf8JsonWriter writer, ulong recipient, byte[] templates)`
 
-来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Encode(ulong, System.Collections.Generic.Dictionary<string, string>)`](CoopPrivateMessages.cs.md#symbol-f433d36af14b)；[`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Write(NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Value, System.Text.Json.Utf8JsonWriter, ulong, byte[])`](CoopPrivateMessages.cs.md#symbol-fa9ee6fab973)
 
@@ -367,7 +369,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopRules.SavePrivateFailure(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, string) — private static CoopWorld SavePrivateFailure(CoopWorld original, ulong sender, CoopCommand command, string error)`
 
-来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -400,7 +402,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopRules.PrivateCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand) — private static string? PrivateCommand(CoopWorld w, CoopMember member, CoopCommand command)`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -442,7 +444,7 @@ private readonly Value _root;
 
 ## `NationalSpire.Coop.CoopRules.ConfirmPrivateMatch(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal) — private static string? ConfirmPrivateMatch(CoopWorld w, CoopProposal proposal)`
 
-来源：源码第 251 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.PrivateCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopPrivateMessages.cs.md#symbol-d33f4b1ffce8)
 

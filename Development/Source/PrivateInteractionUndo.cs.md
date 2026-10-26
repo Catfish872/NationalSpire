@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`DDC91948650EDE126D8C2ABD6ABB09F2921D8ED10619C1298ACA7DE7E0FCC436`。来源：[源码](../../PrivateInteractionUndo.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`12CC2D931CBD6F303066CF625463831F08727F87DA45DD9BCADCA5675E3BBC7A`。来源：[源码](../../PrivateInteractionUndo.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,13 +11,32 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
+
+<a id="symbol-b1a67e2b7d41"></a>
+
+## `NationalSpire.PrivateInteractionUndo.PersonId — public string PersonId`
+
+来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-5bbd37d8c4bb"></a>
 
 ## `NationalSpire.PrivateInteractionUndo.Before — public JsonObject Before`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -36,7 +55,7 @@
 
 ## `NationalSpire.PrivateInteractionUndo.After — public JsonObject After`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -55,7 +74,7 @@
 
 ## `NationalSpire.PrivateInteractionUndo.Contract — public bool Contract`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -73,25 +92,32 @@
 
 ## `NationalSpire.PrivateInteractionHistory.PreserveRelation(NationalSpire.PrivateMailbox, NationalSpire.ChatWorld, string, string, System.Collections.Generic.IReadOnlyList<string>) — public static void PreserveRelation(PrivateMailbox box, ChatWorld chats, string human, string person, IReadOnlyList<string> fields)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessages.EditRelation(NationalSpire.CareerData, NationalSpire.CareerLifeState, string, string, NationalSpire.CharacterRelationEdit)`](PrivateMessages.cs.md#symbol-721322de5dd7)；[`NationalSpire.RelationshipPresentation.CompleteWedding(NationalSpire.CareerData, string)`](RelationshipPresentation.cs.md#symbol-49a406ddaa23)
 
-**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatWorld.Groups`；`NationalSpire.GroupChat.Interactions`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionUndo.After`；`NationalSpire.PrivateInteractionUndo.Before`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateTurn.InteractionUndo`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatWorld.Groups`；`NationalSpire.GroupChat.Interactions`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionUndo.After`；`NationalSpire.PrivateInteractionUndo.Before`；`NationalSpire.PrivateInteractionUndo.PersonId`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateTurn.InteractionUndo`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`box.Conversations.TryGetValue(person, out var direct)`；返回值紧邻使用处：`IfStatementSyntax: if (box.Conversations.TryGetValue(person, out var direct)) conversations.Add(direct);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)`；返回值紧邻使用处：`IfStatementSyntax: if (group.Interactions.TryGetValue(human + "/" + person + "/", out var lane)) conversations.Add(lane);`
-- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo))              foreach (var field in fields)              {                  (undo.Before["relation"] as JsonObject)?.Remove(field);                  (undo.After["relation"] as JsonObject)?.Remove(field);              }`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person) .Concat(box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person) .Concat(box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)).Distinct`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person) .Concat(box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)).Distinct()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person) .Concat(box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)).Distinct()) foreach (var field in fields) { (undo.Before["relation"] as JsonObject)?.Remove(field); (undo.After["relation"] as JsonObject)?.Remove(field); }`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.SelectMany(c => c.Turns)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.SelectMany(c => c.Turns).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`box.Conversations.Values.Where(c => c.PersonId != person)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: box.Conversations.Values.Where(c => c.PersonId != person).SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)`；返回值紧邻使用处：`ArgumentSyntax: box.Conversations.Values.Where(c => c.PersonId != person).SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId == person)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.SelectMany(c => c.Turns).SelectMany(t => t.InteractionUndo).Where(u => u.PersonId.Length == 0 || u.PersonId == person) .Concat`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`conversations.Add(direct)`；返回值紧邻使用处：`ExpressionStatementSyntax: conversations.Add(direct);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`conversations.Add(lane)`；返回值紧邻使用处：`ExpressionStatementSyntax: conversations.Add(lane);`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<PrivateConversation>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<PrivateConversation>()`
-- `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`.Remove(field)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: (undo.After["relation"] as JsonObject)?.Remove(field)`
 - `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`.Remove(field)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: (undo.Before["relation"] as JsonObject)?.Remove(field)`
+- `System.Text.Json.Nodes.JsonObject.Remove(string)`；输入表达式：`.Remove(field)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: (undo.After["relation"] as JsonObject)?.Remove(field)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -100,7 +126,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Node<T>(T) — private static JsonNode? Node<T>(T value)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-0a73a9db2a55)
 
@@ -119,7 +145,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool) — public static JsonObject Capture(CareerData d, string id, bool contract = false, bool gifts = false)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.OwnedClubs.ArriveTransfers(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-2429e4910b3f)；[`NationalSpire.PrivateAppointments.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-3089895d205a)；[`NationalSpire.PrivateContracts.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, string)`](PrivateAppointments.cs.md#symbol-1c0ddcc69a05)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)；[`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-2f0b4ecea199)
 
@@ -226,7 +252,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool) — public static void Record(CareerData d, string id, PrivateTurn turn, JsonObject before, bool contract = false)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupInteractions.Apply(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](GroupInteractions.cs.md#symbol-2b413a511485)；[`NationalSpire.OwnedClubs.ArriveTransfers(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-2429e4910b3f)；[`NationalSpire.PrivateAppointments.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-3089895d205a)；[`NationalSpire.PrivateContracts.Confirm(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, string)`](PrivateAppointments.cs.md#symbol-1c0ddcc69a05)；[`NationalSpire.PrivateMessages.Apply(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>, int?)`](PrivateMessages.cs.md#symbol-7bf623828ccc)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.SocialAppointments.Confirm(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer)`](SocialAppointments.cs.md#symbol-2f0b4ecea199)
 
@@ -260,7 +286,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Identity(System.Text.Json.Nodes.JsonNode?) — private static string Identity(JsonNode? n)`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)
 
@@ -282,7 +308,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string) — private static (JsonNode? Before, JsonNode? After)? Difference(JsonNode? before, JsonNode? after, string path = "")`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Difference(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-0a73a9db2a55)；[`NationalSpire.PrivateInteractionHistory.Record(NationalSpire.CareerData, string, NationalSpire.PrivateTurn, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-9eda496612ca)
 
@@ -327,7 +353,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string) — private static JsonNode? Revert(JsonNode? current, JsonNode? before, JsonNode? after, string path = "")`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)；[`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)
 
@@ -417,7 +443,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool) — private static void Restore(CareerData d, string id, JsonObject state, bool contract)`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](PrivateInteractionUndo.cs.md#symbol-f2cc1906a6b6)
 
@@ -536,7 +562,7 @@
 
 ## `NationalSpire.PrivateInteractionHistory.RestoreRefills<T>(System.Collections.Generic.List<T>, System.Text.Json.Nodes.JsonNode?, System.Func<T, string>, System.Func<T, bool>) — private static void RestoreRefills<T>(List<T> items, JsonNode? state, Func<T, string> id, Func<T, bool> refill)`
 
-来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 250 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)
 
@@ -563,40 +589,54 @@
 
 ## `NationalSpire.PrivateInteractionHistory.Rewind(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn) — public static string? Rewind(CareerData d, PrivateConversation c, PrivateTurn turn)`
 
-来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GroupChats.Rewind(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChats.cs.md#symbol-d45d31e160a9)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
-**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`](PrivateAppointments.cs.md#symbol-32f6566791d2)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)；[`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)；[`NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`](PrivateProfileChanges.cs.md#symbol-ad07c3469174)；[`NationalSpire.PrivateProfileChanges.Value(NationalSpire.CareerPerson, string)`](PrivateProfileChanges.cs.md#symbol-2ca919f5172e)；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Min<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Math.Min(int, int)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`](PrivateAppointments.cs.md#symbol-32f6566791d2)；[`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`](PrivateInteractionUndo.cs.md#symbol-25f3da26ec8f)；[`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`](PrivateInteractionUndo.cs.md#symbol-dd91210e87c0)；[`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`](PrivateInteractionUndo.cs.md#symbol-35a5c57d58cd)；[`NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`](PrivateProfileChanges.cs.md#symbol-ad07c3469174)；[`NationalSpire.PrivateProfileChanges.Value(NationalSpire.CareerPerson, string)`](PrivateProfileChanges.cs.md#symbol-2ca919f5172e)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Min<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Union<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Math.Min(int, int)`；`System.Text.Json.Nodes.JsonNode?.Deserialize<TValue>(System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.CommunityMemories`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerPerson.PrivateProfileReceipts`；`NationalSpire.CommunityMemory.PostId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；`NationalSpire.PrivateConversation.BigSummaries`；`NationalSpire.PrivateConversation.ContextStart`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.SmallSummaries`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`；`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`；`NationalSpire.PrivateInteractionUndo.After`；`NationalSpire.PrivateInteractionUndo.Before`；`NationalSpire.PrivateInteractionUndo.Contract`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.MatchId`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateProfileChange.After`；`NationalSpire.PrivateProfileChange.Before`；`NationalSpire.PrivateProfileChange.Field`；`NationalSpire.PrivateProfileChange.Id`；`NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`；`NationalSpire.PrivateProfileChanges.Value(NationalSpire.CareerPerson, string)`；`NationalSpire.PrivateSummary.From`；`NationalSpire.PrivateSummary.Through`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.Context`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.InteractionUndo`；`NationalSpire.PrivateTurn.Learning`；`NationalSpire.PrivateTurn.Mood`；`NationalSpire.PrivateTurn.ProfileChanges`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.CommunityMemories`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.SavedThreads`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerLifeState.Consumer`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentPrepared`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerPerson.PrivateProfileReceipts`；`NationalSpire.CommunityMemory.PostId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.ConsumerState.Goods`；`NationalSpire.OwnedGood.Consumed`；`NationalSpire.OwnedGood.Id`；`NationalSpire.OwnedGood.Quantity`；`NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；`NationalSpire.PrivateConversation.BigSummaries`；`NationalSpire.PrivateConversation.ContextStart`；`NationalSpire.PrivateConversation.Offers`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateConversation.SmallSummaries`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；`NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`；`NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`；`NationalSpire.PrivateInteractionUndo.After`；`NationalSpire.PrivateInteractionUndo.Before`；`NationalSpire.PrivateInteractionUndo.Contract`；`NationalSpire.PrivateInteractionUndo.PersonId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.MatchId`；`NationalSpire.PrivateOffer.State`；`NationalSpire.PrivateOffer.TurnId`；`NationalSpire.PrivateProfileChange.After`；`NationalSpire.PrivateProfileChange.Before`；`NationalSpire.PrivateProfileChange.Field`；`NationalSpire.PrivateProfileChange.Id`；`NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`；`NationalSpire.PrivateProfileChanges.Value(NationalSpire.CareerPerson, string)`；`NationalSpire.PrivateSummary.From`；`NationalSpire.PrivateSummary.Through`；`NationalSpire.PrivateTurn.Applied`；`NationalSpire.PrivateTurn.Context`；`NationalSpire.PrivateTurn.DatePartyEffects`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.InteractionUndo`；`NationalSpire.PrivateTurn.Learning`；`NationalSpire.PrivateTurn.Mood`；`NationalSpire.PrivateTurn.ProfileChanges`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(d, c.PersonId)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: CareerEngine.Person(d, c.PersonId)!`
 - `NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；输入表达式：`PrivateAppointments.IsPrivate(m)`；返回值紧邻使用处：`BinaryExpressionSyntax: m.Id == offer.MatchId && PrivateAppointments.IsPrivate(m)`
-- `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；输入表达式：`Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods"))`；返回值紧邻使用处：`ArgumentSyntax: Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods"))`
-- `NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`；输入表达式：`Restore(d, c.PersonId, (JsonObject)state!, undo.Contract)`；返回值紧邻使用处：`ExpressionStatementSyntax: Restore(d, c.PersonId, (JsonObject)state!, undo.Contract);`
-- `NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`；输入表达式：`Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After)`
+- `NationalSpire.PrivateInteractionHistory.Capture(NationalSpire.CareerData, string, bool, bool)`；输入表达式：`Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods"))`；返回值紧邻使用处：`ArgumentSyntax: Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods"))`
+- `NationalSpire.PrivateInteractionHistory.Restore(NationalSpire.CareerData, string, System.Text.Json.Nodes.JsonObject, bool)`；输入表达式：`Restore(d, person, (JsonObject)state!, undo.Contract)`；返回值紧邻使用处：`ExpressionStatementSyntax: Restore(d, person, (JsonObject)state!, undo.Contract);`
+- `NationalSpire.PrivateInteractionHistory.Revert(System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, System.Text.Json.Nodes.JsonNode?, string)`；输入表达式：`Revert(Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Revert(Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After)`
 - `NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`；输入表达式：`PrivateProfileChanges.SetValue(p, change.Field, change.Before)`；返回值紧邻使用处：`ExpressionStatementSyntax: PrivateProfileChanges.SetValue(p, change.Field, change.Before);`
 - `NationalSpire.PrivateProfileChanges.Value(NationalSpire.CareerPerson, string)`；输入表达式：`PrivateProfileChanges.Value(p, change.Field)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateProfileChanges.Value(p, change.Field) == change.After`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`turn.DatePartyEffects.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: turn.DatePartyEffects.Clear();`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`affected.Contains(m.OpponentId)`；返回值紧邻使用处：`BinaryExpressionSyntax: affected.Contains(m.OpponentId) && m.Status == "待赛"`
 - `System.Collections.Generic.HashSet<T>.Remove(T)`；输入表达式：`p.PrivateProfileReceipts.Remove(change.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: p.PrivateProfileReceipts.Remove(change.Id);`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消")))`；返回值紧邻使用处：`BinaryExpressionSyntax: o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消")))`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`offers.Any(o => o.Kind == "activity" && o.State == "已赴约")`；返回值紧邻使用处：`IfStatementSyntax: if (offers.Any(o => o.Kind == "activity" && o.State == "已赴约"))              return "这条回复的活动已经赴约，无法通过重新生成撤回。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`offers.Any(o => o.Kind == "activity" && o.State == "已赴约")`；返回值紧邻使用处：`IfStatementSyntax: if (offers.Any(o => o.Kind == "activity" && o.State == "已赴约")) return "这条回复的活动已经赴约，无法通过重新生成撤回。";`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`offers.Any(o => o.Kind == "contract" && o.State == "已确认")`；返回值紧邻使用处：`BinaryExpressionSyntax: offers.Any(o => o.Kind == "contract" && o.State == "已确认") && !turn.InteractionUndo.Any(u => u.Contract)`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消"))))`；返回值紧邻使用处：`IfStatementSyntax: if (offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消")))))              return "这条回复的约战已经开始或结算，无法通过重新生成撤回赛果。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消"))))`；返回值紧邻使用处：`IfStatementSyntax: if (offers.Any(o => o.Kind == "match" && o.MatchId.Length > 0 && d.Matches.Any(m => m.Id == o.MatchId && (d.PendingMatchId == m.Id || m.Status is not ("待赛" or "已取消"))))) return "这条回复的约战已经开始或结算，无法通过重新生成撤回赛果。";`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`turn.InteractionUndo.Any(u => u.Contract)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !turn.InteractionUndo.Any(u => u.Contract)`
+- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append(c.PersonId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append(c.PersonId).ToHashSet`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`turn.InteractionUndo.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: turn.InteractionUndo.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`turn.ProfileChanges.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: turn.ProfileChanges.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`c.SmallSummaries.Concat(c.BigSummaries)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.SmallSummaries.Concat(c.BigSummaries).Where`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id) .ToDictionary`
 - `System.Collections.Generic.IEnumerable<TSource>.Min<TSource>(System.Func<TSource, int>)`；输入表达式：`summaries.Min(s => s.From)`；返回值紧邻使用处：`ArgumentSyntax: summaries.Min(s => s.From)`
-- `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`turn.InteractionUndo.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())          {              var state = Revert(Capture(d, c.PersonId, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After);              Restore(d, c.PersonId, (JsonObject)state!, undo.Contract);          }`
-- `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`turn.ProfileChanges.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var change in turn.ProfileChanges.AsEnumerable().Reverse())                  if (PrivateProfileChanges.Value(p, change.Field) == change.After) PrivateProfileChanges.SetValue(p, change.Field, change.Before);`
+- `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`turn.InteractionUndo.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse()) { var before = undo.Before["goodQuantities"] as JsonObject; var after = undo.After["goodQuantities"] as JsonObject; foreach (string good in (before?.Select(p => p.Key) ?? []).Union(after?.Select(p => p.Key) ?? [])) { decimal remaining = quantities.GetValueOrDefault(good) + (before?[good]?.Deserialize<long>() ?? 0) - (after?[good]?.Deserialize<long>() ?? 0); if (remaining < 0) return "这条回复返还的礼物已被使用或预留，现有库存不足以重新处理；请先补足库存或取消后续礼物附件。"; quantities[good] = remaining; } }`
+- `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`turn.InteractionUndo.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse()) { string person = undo.PersonId.Length > 0 ? undo.PersonId : c.PersonId; var state = Revert(Capture(d, person, undo.Contract, undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments") || undo.Before.ContainsKey("temporaryGoods")), undo.Before, undo.After); Restore(d, person, (JsonObject)state!, undo.Contract); }`
+- `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`turn.ProfileChanges.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var change in turn.ProfileChanges.AsEnumerable().Reverse()) if (PrivateProfileChanges.Value(p, change.Field) == change.After) PrivateProfileChanges.SetValue(p, change.Field, change.Before);`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`.Select(p => p.Key)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: before?.Select(p => p.Key)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`.Select(p => p.Key)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: after?.Select(p => p.Key)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append`
+- `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；输入表达式：`g.Sum(x => x.Quantity)`；返回值紧邻使用处：`CastExpressionSyntax: (decimal)g.Sum(x => x.Quantity)`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id) .ToDictionary(g => g.Key, g => (decimal)g.Sum(x => x.Quantity))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy(g => g.Id) .ToDictionary(g => g.Key, g => (decimal)g.Sum(x => x.Quantity))`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append(c.PersonId).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = turn.InteractionUndo.Select(u => u.PersonId.Length > 0 ? u.PersonId : c.PersonId).Append(c.PersonId).ToHashSet()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`c.Offers.Where(o => o.TurnId == turn.Id).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Offers.Where(o => o.TurnId == turn.Id).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`c.SmallSummaries.Concat(c.BigSummaries).Where(s => s.Through > index).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.SmallSummaries.Concat(c.BigSummaries).Where(s => s.Through > index).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Union<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`(before?.Select(p => p.Key) ?? []).Union(after?.Select(p => p.Key) ?? [])`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string good in (before?.Select(p => p.Key) ?? []).Union(after?.Select(p => p.Key) ?? [])) { decimal remaining = quantities.GetValueOrDefault(good) + (before?[good]?.Deserialize<long>() ?? 0) - (after?[good]?.Deserialize<long>() ?? 0); if (remaining < 0) return "这条回复返还的礼物已被使用或预留，现有库存不足以重新处理；请先补足库存或取消后续礼物附件。"; quantities[good] = remaining; }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.Offers.Where(o => o.TurnId == turn.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.Offers.Where(o => o.TurnId == turn.Id).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`c.SmallSummaries.Concat(c.BigSummaries).Where(s => s.Through > index)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: c.SmallSummaries.Concat(c.BigSummaries).Where(s => s.Through > index).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Matches.Where(m => m.OpponentId == c.PersonId && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in d.Matches.Where(m => m.OpponentId == c.PersonId && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId))          { match.OpponentPrepared = false; match.OpponentSeconds = null; }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Life.Consumer.Goods.Where(g => !g.Consumed)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: d.Life.Consumer.Goods.Where(g => !g.Consumed).GroupBy`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Matches.Where(m => affected.Contains(m.OpponentId) && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in d.Matches.Where(m => affected.Contains(m.OpponentId) && m.Status == "待赛" && m.Live == null && m.Id != d.PendingMatchId)) { match.OpponentPrepared = false; match.OpponentSeconds = null; }`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`quantities.GetValueOrDefault(good)`；返回值紧邻使用处：`BinaryExpressionSyntax: quantities.GetValueOrDefault(good) + (before?[good]?.Deserialize<long>() ?? 0)`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`turn.InteractionUndo.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: turn.InteractionUndo.Clear();`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`turn.ProfileChanges.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: turn.ProfileChanges.Clear();`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`summaries.Contains(s)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: s => summaries.Contains(s)`
@@ -609,6 +649,7 @@
 - `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`d.Posts.RemoveAll(p => p.Id == offer.MatchId)`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Posts.RemoveAll(p => p.Id == offer.MatchId);`
 - `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`d.SavedThreads.RemoveAll(p => p.Id == offer.MatchId)`；返回值紧邻使用处：`ExpressionStatementSyntax: d.SavedThreads.RemoveAll(p => p.Id == offer.MatchId);`
 - `System.Math.Min(int, int)`；输入表达式：`Math.Min(c.ContextStart, summaries.Min(s => s.From))`；返回值紧邻使用处：`AssignmentExpressionSyntax: c.ContextStart = Math.Min(c.ContextStart, summaries.Min(s => s.From))`
+- `System.Text.Json.Nodes.JsonNode?.Deserialize<TValue>(System.Text.Json.JsonSerializerOptions?)`；输入表达式：`.Deserialize<long>()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: [good]?.Deserialize<long>()`
 - `System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；输入表达式：`undo.Before.ContainsKey("consumerAttachments")`；返回值紧邻使用处：`BinaryExpressionSyntax: undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts") || undo.Before.ContainsKey("consumerAttachments")`
 - `System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；输入表达式：`undo.Before.ContainsKey("giftReceipts")`；返回值紧邻使用处：`BinaryExpressionSyntax: undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts")`
 - `System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；输入表达式：`undo.Before.ContainsKey("goodQuantities")`；返回值紧邻使用处：`BinaryExpressionSyntax: undo.Before.ContainsKey("goodQuantities") || undo.Before.ContainsKey("giftReceipts")`
@@ -619,6 +660,7 @@
 - `c.ContextStart` = `Math.Min(c.ContextStart, summaries.Min(s => s.From))`
 - `match.OpponentPrepared` = `false`
 - `match.OpponentSeconds` = `null`
+- `quantities[good]` = `remaining`
 - `turn.Applied` = `false`
 - `turn.Context` = `""`
 - `turn.Learning` = `null`

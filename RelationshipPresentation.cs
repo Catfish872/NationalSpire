@@ -22,6 +22,7 @@ public static class RelationshipPresentation
         relation.WeddingCompleted = true; relation.OathConfirmed = true;
         relation.SelectedBond = 2;
         relation.RefreshAppearance(); relation.Revision++;
+        PrivateMessages.Mailbox(data).NpcAvatarFrames[person] = "oath";
         PrivateInteractionHistory.PreserveRelation(PrivateMessages.Mailbox(data), data.Chats, GroupChats.Human(data), person,
             [nameof(PrivateRelation.WeddingCompleted), nameof(PrivateRelation.OathConfirmed), nameof(PrivateRelation.SelectedBond)]);
     }

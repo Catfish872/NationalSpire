@@ -25,6 +25,7 @@ public sealed partial class LiveVoices
     public LiveVoices(CareerData data, CareerMatch match, BroadcastMemory memory, IEnumerable<string> opponents)
     {
         _data = data; _match = match; _memory = memory; _opponents = opponents.ToArray();
+        if (match.DateGame != null) { _audience = []; return; }
         var excluded = CommentatorSelection.Participants(data, match, _opponents);
         excluded.UnionWith(CommentatorSelection.ForMatch(data, match, _opponents).Select(p => p.Id));
         // 一场固定一批观众，避免每次刷新扫描人物库。
@@ -40,8 +41,9 @@ public sealed partial class LiveVoices
     { "audience" => name + " · 观众", "thought" => name + " · 内心", _ => name + " · 解说" };
 
     private int Hash(string key) => CareerEngine.StableHash(_match.Seed + ":voices:" + key);
-    private string Phrase(string bank, Dictionary<string, string> facts)
+    private string Phrase(string bank, Dictionary<string, string> facts, out Func<Func<string, string>, string>? rewrite)
     {
+        rewrite = null;
         if (!LiveVoiceCatalog.Banks.TryGetValue(bank, out var lines)) return "";
         var state = _memory.Voices;
         if (!state.Recent.TryGetValue(bank, out var recent)) state.Recent[bank] = recent = [];
@@ -55,7 +57,11 @@ public sealed partial class LiveVoices
         if (recent.Count > Math.Min(10, lines.Length - 1)) recent.RemoveAt(0);
         history.Remove(lines[index]); history.Add(lines[index]);
         if (history.Count > Math.Min(10, lines.Length - 1)) history.RemoveAt(0);
-        string text = LiveSpeechComposer.Compose(lines[index], bank, _memory, _match.Seed, state.Sequence, facts);
+        string main = lines[index], tail = "", separator = "";
+        string text = LiveSpeechComposer.Compose(main, bank, _memory, _match.Seed, state.Sequence, facts,
+            (join, source) => { separator = join; tail = source; });
+        var capturedFacts = new Dictionary<string, string>(facts);
+        rewrite = replace => LiveCommentary.RewriteParts(replace, main, separator, tail, capturedFacts);
         foreach (var (key, value) in facts) text = text.Replace("{" + key + "}", value, StringComparison.Ordinal);
         return text.Contains('{') ? "" : text;
     }
@@ -78,8 +84,8 @@ public sealed partial class LiveVoices
     }
     private BroadcastLine? Line(string bank, string role, CareerPerson? person, Dictionary<string, string> facts)
     {
-        string text = Phrase(bank, facts);
-        return text.Length == 0 ? null : new BroadcastLine(bank, text, _memory.Voices.Sequence % 2 == 0) { SpeakerId = person?.Id ?? "", Role = role };
+        string text = Phrase(bank, facts, out var rewrite);
+        return text.Length == 0 ? null : new BroadcastLine(bank, text, _memory.Voices.Sequence % 2 == 0) { SpeakerId = person?.Id ?? "", Role = role, Rewrite = rewrite };
     }
     private void Add(BroadcastLine? line, double now, string? replyBank = null, bool priority = false, double lifetime = 35)
     {
