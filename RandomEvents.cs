@@ -48,13 +48,102 @@ public static class RandomEvents
         {
             var random = new Random(CareerEngine.StableHash(d.WorldId + ":event:" + e.Id));
             var used = d.Life.RandomEvents.Where(x => x.Seed.Length > 0).TakeLast(24).Select(x => x.Seed).ToHashSet();
-            var selected = EventPools.SelectRandom(d.Ai, used, random);
-            e.Seed = selected.Detail; e.Category = selected.Category;
-            e.People = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id)).OrderBy(_ => random.Next()).Take(random.Next(4)).Select(p => p.Id).ToList();
+            var selected = SelectMaterial(d, random, used);
+            e.Seed = selected.Seed; e.Category = selected.Selected.Category; e.People = selected.People;
             e.Materials = RandomEventPrompts.Materials(d, e);
         }
         e.CustomOption = null; e.CustomAction = ""; e.CustomState = "idle"; e.CustomReasoning = "";
         e.State = "generating"; e.Error = ""; return null;
+    }
+    // 抽取本条事件的素材与参与者：带前缀且条件池为空时换一条重抽一次，仍为空则用该条生成单人事件。
+    internal static (RandomEventSeed Selected, string Seed, List<string> People) SelectMaterial(CareerData d, Random random, ISet<string> used)
+    {
+        var selected = EventPools.SelectRandom(d.Ai, used, random);
+        var filters = new HashSet<string>();
+        string seed = EventPools.StripParticipantPrefixes(selected.Detail, filters);
+        var people = SelectPeople(d, random, filters.Count == 0 ? null : filters);
+        if (filters.Count > 0 && people.Count == 0)
+        {
+            filters.Clear();
+            if (EventPools.SelectAnother(d.Ai, used, random, selected.Detail) is { } retry)
+            {
+                selected = retry;
+                seed = EventPools.StripParticipantPrefixes(selected.Detail, filters);
+                people = SelectPeople(d, random, filters.Count == 0 ? null : filters);
+            }
+        }
+        return (selected, seed, people);
+    }
+    // 按前缀条件筛选本次参与者；filters=null 时保持上游的 0–3 人完全随机。
+    internal static List<string> SelectPeople(CareerData d, Random random, ISet<string>? filters)
+    {
+        string me = GroupChats.Human(d);
+        var people = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id))
+            .ToDictionary(p => p.Id);
+        if (people.Count == 0) return [];
+        if (filters == null || filters.Count == 0)
+            return people.Keys.OrderBy(_ => random.Next()).Take(random.Next(4)).ToList();
+        var score = filters.Contains("acquaint") ? AcquaintanceScores(d, me, people) : null;
+        IEnumerable<string> pool = people.Keys;
+        if (score != null) pool = pool.Where(id => score.GetValueOrDefault(id) > 0);
+        if (filters.Contains("team")) pool = pool.Where(id => SameTeam(d, people[id]));
+        if (filters.Contains("lover")) pool = pool.Where(id => IsLover(d, id));
+        if (filters.Contains("country")) pool = pool.Where(id => SameCountry(d, people[id]));
+        if (filters.Contains("opposite")) pool = pool.Where(id => IsOppositeSex(d, id));
+        var list = pool.ToList();
+        if (list.Count == 0) return [];
+        return list.OrderBy(_ => random.Next()).Take(Math.Min(random.Next(1, 4), list.Count)).ToList();
+    }
+    // 仅在使用【相识】时扫描：14 天内论坛互动（含旧帖上的新回复）、私聊、人际关联、同俱乐部、好感。
+    private static Dictionary<string, int> AcquaintanceScores(CareerData d, string me, IReadOnlyDictionary<string, CareerPerson> people)
+    {
+        var score = new Dictionary<string, int>();
+        void Bump(string id, int value)
+        {
+            if (id.Length == 0 || !people.ContainsKey(id)) return;
+            score[id] = score.GetValueOrDefault(id) + value;
+        }
+        bool Mine(string id) => id == me || id == d.LocalHumanId || (me == "player" && id == "player");
+        var conversations = PrivateMessages.Mailbox(d).Conversations;
+        foreach (var (id, person) in people)
+        {
+            if (conversations.TryGetValue(id, out var conversation) && conversation.Turns.Count > 0) Bump(id, 5);
+            if (person.Connections.Contains(me)) Bump(id, 4);
+            if (d.Esports.ClubId.Length > 0 && (person.ClubId == d.Esports.ClubId || person.SupportedClubId == d.Esports.ClubId)) Bump(id, 3);
+            if (PrivateMessages.Favour(d, id) > 0) Bump(id, 1);
+        }
+        int since = d.Day - 14;
+        foreach (var post in CommunityThreads.All(d))
+        {
+            var recent = post.Replies.Where(r => r.Day >= since).ToList();
+            if (recent.Count == 0) continue;
+            bool minePost = Mine(post.AuthorId) || post.RelatedPeople.Any(Mine);
+            if (!Mine(post.AuthorId) && post.Replies.Any(r => r.Day >= since && Mine(r.AuthorId))) Bump(post.AuthorId, 6);
+            var byId = post.Replies.ToDictionary(r => r.Id);
+            foreach (var reply in recent)
+            {
+                if (GroupChats.IsHuman(d, reply.AuthorId)) continue;
+                if (minePost) Bump(reply.AuthorId, 6);
+                if (reply.ParentId.Length > 0 && byId.TryGetValue(reply.ParentId, out var parent) && Mine(parent.AuthorId)) Bump(reply.AuthorId, 4);
+            }
+        }
+        return score;
+    }
+    private static bool SameTeam(CareerData d, CareerPerson person)
+        => d.Esports.ClubId.Length > 0 && person.ClubId == d.Esports.ClubId;
+    private static bool SameCountry(CareerData d, CareerPerson person)
+        => d.Esports.Country.Length > 0 && person.Country == d.Esports.Country;
+    private static bool IsLover(CareerData d, string id)
+    {
+        var relation = PrivateMessages.Mailbox(d).Relations.GetValueOrDefault(id);
+        return relation is { } value && (value.SelectedBond is >= 1 || value.OathConfirmed);
+    }
+    private static bool IsOppositeSex(CareerData d, string id)
+    {
+        string player = IdentityGender.Of(d, "player");
+        if (player is not ("男" or "女")) return false;
+        string gender = IdentityGender.Of(d, id);
+        return gender is "男" or "女" && gender != player;
     }
     public static string? Custom(CareerData d, string id, string action)
     {
