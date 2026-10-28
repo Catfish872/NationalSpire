@@ -176,7 +176,7 @@ public static class GroupChats
                 string? error = DateGroupBridge.Begin(d, g, source); if (error == null) g.Revision++; return error;
             }
             bool humanActivity = IsHuman(d, effect.Person);
-            if (!humanActivity && !PrivateMessages.CanChat(d, effect.Person)) return "该人物已经删除，这项交互不再执行。";
+            if (kind != "group-offer-attend" && !humanActivity && !PrivateMessages.CanChat(d, effect.Person)) return "该人物已经删除，这项交互不再执行。";
             string? result = InLane(d, g, effect.Human, effect.Person, effect.Target, c =>
             {
                 if (!humanActivity) return PrivateMessageCommands.Apply(d, "dm-" + kind[12..], effect.Person, command.Interaction);

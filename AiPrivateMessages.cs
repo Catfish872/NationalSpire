@@ -35,6 +35,7 @@ public static partial class AiService
         using var cancel = new CancellationTokenSource();
         PrivateRequests[key] = cancel;
         string turnId = turn.Id;
+        using var logScope = Diagnostics.BeginLog(LogArea.Private, "private/" + key + "/" + turnId);
         void Notify(string text)
         {
             try { progress?.Invoke(turnId, text); }
@@ -180,6 +181,7 @@ public static partial class AiService
     internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
         Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null)
     {
+        using var logScope = Diagnostics.RequestLog(task, context);
         var connection = Connection(options, task);
         var timing = System.Diagnostics.Stopwatch.StartNew(); double? firstContentMs = null, firstThinkingMs = null;
         if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
@@ -300,6 +302,7 @@ public static partial class AiService
     {
         var data = current(); if (data == null || !PrivateMessages.CanChat(data, person)) return;
         string key = PrivateKey(data, person); if (!PrivateSummaries.Add(key)) return;
+        using var logScope = Diagnostics.BeginLog(LogArea.Private, "private/" + key + "/summary");
         var resolve = current;
         current = () => resolve() is { } latest && PrivateMessages.CanChat(latest, person) && PrivateKey(latest, person) == key ? latest : null;
         long revision = PrivateMessages.Conversation(data, person).MemoryRevision;

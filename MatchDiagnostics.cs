@@ -60,7 +60,7 @@ public static partial class Diagnostics
                 try
                 {
                     using var record = JsonDocument.Parse(line);
-                    if (record.RootElement.GetProperty("world").GetString() == worldId) content.AppendLine(line);
+                    if (record.RootElement.TryGetProperty("world", out var world) && world.GetString() == worldId) content.AppendLine(line);
                 }
                 catch (Exception error) { Error("match.diagnostics.read", error); }
             if (content.Length > 0) yield return new(file.Key, Redact(content.ToString()));

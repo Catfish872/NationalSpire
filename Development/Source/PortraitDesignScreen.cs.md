@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CBCDC1B113BD5A4EAAEABAA3F22CD27ED798DD7612C5D4FB052E6EE6E5D8A331`。来源：[源码](../../PortraitDesignScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B97AADD68A24EAE4BB116854B045C153F1CCD350B93DC579995A5D1204349A52`。来源：[源码](../../PortraitDesignScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
 
 <a id="symbol-3bb5119a73ca"></a>
@@ -21,9 +22,9 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
-**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-eb4712515abb)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`](PrivateMemoryScreen.cs.md#symbol-67f8f263b4a9)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`](ClubCoaching.cs.md#symbol-8b4ec414486e)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-bb8047a026c0)；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProjectSettings.GlobalizePath(string)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`NationalSpire.PrivateIdentityLayout.PrivateIdentityLayout()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.Threading.CancellationTokenSource.Cancel()`
+**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-eb4712515abb)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProjectSettings.GlobalizePath(string)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；`NationalSpire.BroadcastScroll.BroadcastScroll()`；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`](PrivateMemoryScreen.cs.md#symbol-67f8f263b4a9)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`](ClubCoaching.cs.md#symbol-8b4ec414486e)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；[`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-bb8047a026c0)；`NationalSpire.PrivateIdentityLayout.PrivateIdentityLayout()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.Threading.CancellationTokenSource.Cancel()`；`string.IsNullOrWhiteSpace(string?)`
 
-**字段、属性、事件及方法组引用：** `(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Control`；`(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Mode`；`Close()`；`CommitIds()`；`Controls(Godot.Node)`；`DrawPage()`；`Infer()`；`Message(string, bool)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesignStore.Read(string, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`
+**字段、属性、事件及方法组引用：** `Close()`；`CommitIds()`；`Controls(Godot.Node)`；`DrawPage()`；`Infer()`；`Message(string, bool)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesignStore.Read(string, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -60,13 +61,13 @@
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`identity.AddChild(title)`；返回值紧邻使用处：`ExpressionStatementSyntax: identity.AddChild(title);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`margin.AddChild(panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: margin.AddChild(panel);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`panel.AddChild(root)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddChild(root);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(Text("设计立绘", 26, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(Text("设计立绘", 26, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(actions);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(header)`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(header);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(new HSeparator { Modulate = new Color("688498") })`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(new HSeparator { Modulate = new Color("688498") });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(scroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(scroll);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(status)`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(status);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(tabs)`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(tabs);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`root.AddChild(Text("设计立绘", 26, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: root.AddChild(Text("设计立绘", 26, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(page)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(page);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`shade.AddChild(margin)`；返回值紧邻使用处：`ExpressionStatementSyntax: shade.AddChild(margin);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tabs.AddChild(tab)`；返回值紧邻使用处：`ExpressionStatementSyntax: tabs.AddChild(tab);`
@@ -84,24 +85,23 @@
 - `NationalSpire.BroadcastScroll.BroadcastScroll()`；输入表达式：`new BroadcastScroll { Name = "PortraitScroll", SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastScroll { Name = "PortraitScroll", SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
 - `NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；输入表达式：`Avatar(data, id, 72, false)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Avatar(data, id, 72, false)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("保存并关闭", Close, 165)`；返回值紧邻使用处：`ArgumentSyntax: Button("保存并关闭", Close, 165)`
-- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("导出该套装提示词", () =>          {              if (!CommitIds()) return;              try              {                  PortraitDesignStore.Save(path, design);                  string destination = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);                  if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports");                  string zip = PortraitPromptExport.Write(destination, design, person.PublicName); Message("已导出：" + zip); OS.ShellShowInFileManager(zip);              }              catch (Exception e) { Message("导出失败，编辑内容已保留：" + e.Message, true); }          }, 240)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("导出该套装提示词", () =>          {              if (!CommitIds()) return;              try              {                  PortraitDesignStore.Save(path, design);                  string destination = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);                  if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports");                  string zip = PortraitPromptExport.Write(destination, design, person.PublicName); Message("已导出：" + zip); OS.ShellShowInFileManager(zip);              }              catch (Exception e) { Message("导出失败，编辑内容已保留：" + e.Message, true); }          }, 240)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("导出该套装提示词", () => { if (!CommitIds()) return; try { PortraitDesignStore.Save(path, design); string destination = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory); if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports"); string zip = PortraitPromptExport.Write(destination, design, person.PublicName); Message("已导出：" + zip); OS.ShellShowInFileManager(zip); } catch (Exception e) { Message("导出失败，编辑内容已保留：" + e.Message, true); } }, 240)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("导出该套装提示词", () => { if (!CommitIds()) return; try { PortraitDesignStore.Save(path, design); string destination = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory); if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports"); string zip = PortraitPromptExport.Write(destination, design, person.PublicName); Message("已导出：" + zip); OS.ShellShowInFileManager(zip); } catch (Exception e) { Message("导出失败，编辑内容已保留：" + e.Message, true); } }, 240)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("根据资料推测", () => { _ = Infer(); }, 180)`；返回值紧邻使用处：`AssignmentExpressionSyntax: infer = Button("根据资料推测", () => { _ = Infer(); }, 180)`
-- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button(text, () =>              {                  if (!CommitIds()) return;                  selectedTab = index; for (int i = 0; i < tabButtons.Count; i++) tabButtons[i].Modulate = i == index ? CareerVisuals.Teal : Colors.White;                  scroll.ScrollVertical = 0; DrawPage();              }, 165)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button(text, () =>              {                  if (!CommitIds()) return;                  selectedTab = index; for (int i = 0; i < tabButtons.Count; i++) tabButtons[i].Modulate = i == index ? CareerVisuals.Teal : Colors.White;                  scroll.ScrollVertical = 0; DrawPage();              }, 165)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button(text, () => { if (!CommitIds()) return; selectedTab = index; for (int i = 0; i < tabButtons.Count; i++) tabButtons[i].Modulate = i == index ? CareerVisuals.Teal : Colors.White; scroll.ScrollVertical = 0; DrawPage(); }, 165)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button(text, () => { if (!CommitIds()) return; selectedTab = index; for (int i = 0; i < tabButtons.Count; i++) tabButtons[i].Modulate = i == index ? CareerVisuals.Teal : Colors.White; scroll.ScrollVertical = 0; DrawPage(); }, 165)`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice("读取立绘设计失败：" + e.Message, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice("读取立绘设计失败：" + e.Message, true);`
 - `NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`；输入表达式：`PrivateIdentityButton("PortraitName", () => { })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateIdentityButton("PortraitName", () => { })`
-- `NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；输入表达式：`PrivateLine(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + "  /  " + person.Country, 14, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateLine(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + "  /  " + person.Country, 14, _muted)`
+- `NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；输入表达式：`PrivateLine(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + " / " + person.Country, 14, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateLine(person.Role + (ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : "") + " / " + person.Country, 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("设计立绘", 26, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("设计立绘", 26, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(design.Notes, 15, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(design.Notes, 15, _muted)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("192c3e", "6b879b", 12, 24)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("192c3e", "6b879b", 12, 24)`
 - `NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；输入表达式：`CharacterCards.Read(data, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CharacterCards.Read(data, id)`
 - `NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`；输入表达式：`ClubCoaching.IsCoach(person)`；返回值紧邻使用处：`ConditionalExpressionSyntax: ClubCoaching.IsCoach(person) ? " · 俱乐部教练" : ""`
-- `NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；输入表达式：`PortraitDesigns.Create(data, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(path, id) ?? PortraitDesigns.Create(data, id)`
 - `NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；输入表达式：`PortraitDesignStore.FilePath(data, id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitDesignStore.FilePath(data, id)`
 - `NationalSpire.PortraitDesignStore.Read(string, string)`；输入表达式：`PortraitDesignStore.Read(path, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(path, id) ?? PortraitDesigns.Create(data, id)`
 - `NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesignStore.Save(path, design)`；返回值紧邻使用处：`ExpressionStatementSyntax: PortraitDesignStore.Save(path, design);`
+- `NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；输入表达式：`PortraitDesigns.Create(data, id)`；返回值紧邻使用处：`BinaryExpressionSyntax: PortraitDesignStore.Read(path, id) ?? PortraitDesigns.Create(data, id)`
 - `NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`；输入表达式：`PortraitPromptExport.Write(destination, design, person.PublicName)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitPromptExport.Write(destination, design, person.PublicName)`
 - `NationalSpire.PrivateIdentityLayout.PrivateIdentityLayout()`；输入表达式：`new PrivateIdentityLayout { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PrivateIdentityLayout { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter }`
-- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(destination)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports");`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode)).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode)).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select`
@@ -110,36 +110,38 @@
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Func<bool>>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Func<bool>>()`
 - `System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；输入表达式：`System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory)`
 - `System.Threading.CancellationTokenSource.Cancel()`；输入表达式：`.Cancel()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: pending?.Cancel()`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(destination)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(destination)) destination = ProjectSettings.GlobalizePath("user://portrait_exports");`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_` = `Infer()`
-- `_cancelDialog` = `Close`
-- `_dialogOverlay` = `shade`
-- `avatar.SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
-- `closed` = `true`
 - `Color` = `new(0, 0, 0, .78f)`
 - `CustomMinimumSize` = `new(0, 89)`
-- `design` = `PortraitDesignStore.Read(path, id) ?? PortraitDesigns.Create(data, id)`
-- `destination` = `ProjectSettings.GlobalizePath("user://portrait_exports")`
-- `export.Name` = `"PortraitExport"`
-- `f.Control.FocusMode` = `FocusModeEnum.None`
 - `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
-- `infer.Name` = `"PortraitInfer"`
-- `infer` = `Button("根据资料推测", () => { _ = Infer(); }, 180)`
 - `Modulate` = `new Color("688498")`
 - `MouseFilter` = `MouseFilterEnum.Stop`
 - `Name` = `"PortraitDesigner"`
 - `Name` = `"PortraitDesignerPanel"`
 - `Name` = `"PortraitIdentity"`
 - `Name` = `"PortraitScroll"`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `SizeFlagsVertical` = `SizeFlags.ExpandFill`
+- `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
+- `ZIndex` = `40`
+- `_` = `Infer()`
+- `_cancelDialog` = `Close`
+- `_dialogOverlay` = `shade`
+- `avatar.SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
+- `closed` = `true`
+- `design` = `PortraitDesignStore.Read(path, id) ?? PortraitDesigns.Create(data, id)`
+- `destination` = `ProjectSettings.GlobalizePath("user://portrait_exports")`
+- `export.Name` = `"PortraitExport"`
+- `f.Control.FocusMode` = `FocusModeEnum.None`
+- `infer.Name` = `"PortraitInfer"`
+- `infer` = `Button("根据资料推测", () => { _ = Infer(); }, 180)`
 - `role.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `scroll.ScrollVertical` = `0`
 - `selectedTab` = `index`
 - `shade.TreeExiting` += `() => { closed = true; pending?.Cancel(); }`
-- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
-- `SizeFlagsVertical` = `SizeFlags.ExpandFill`
-- `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
 - `status.MaxLinesVisible` = `2`
 - `status.Name` = `"PortraitStatus"`
 - `status.TooltipText` = `design.Notes`
@@ -147,10 +149,9 @@
 - `tabButtons[0].Modulate` = `CareerVisuals.Teal`
 - `tabButtons[i].Modulate` = `i == index ? CareerVisuals.Teal : Colors.White`
 - `title.Alignment` = `HorizontalAlignment.Left`
-- `title.Text` = `person.PublicName`
 - `title.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
+- `title.Text` = `person.PublicName`
 - `title.TooltipText` = `person.PublicName`
-- `ZIndex` = `40`
 
 <a id="symbol-eb4712515abb"></a>
 
@@ -480,26 +481,27 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-b5e3595bf2d6)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
+**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-b5e3595bf2d6)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
 
-**字段、属性、事件及方法组引用：** `Alive()`；`CommitIds()`；`DrawPage()`；`Message(string, bool)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`
+**字段、属性、事件及方法组引用：** `Alive()`；`CommitIds()`；`DrawPage()`；`Message(string, bool)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；`NationalSpire.PlayerFacingText.LongError(string)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) infer!.Text = "根据资料推测";`
-- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true);`
-- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("已停止推测，当前编辑已保留。");`
 - `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Alive()`
+- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("已停止推测，当前编辑已保留。");`
+- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true);`
+- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) infer!.Text = "根据资料推测";`
 - `CommitIds()`；输入表达式：`CommitIds()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CommitIds()`
 - `DrawPage()`；输入表达式：`DrawPage()`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPage();`
-- `Message(string, bool)`；输入表达式：`Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true);`
 - `Message(string, bool)`；输入表达式：`Message("已停止推测，当前编辑已保留。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("已停止推测，当前编辑已保留。");`
+- `Message(string, bool)`；输入表达式：`Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true);`
 - `Message(string, bool)`；输入表达式：`Message("正在结合人物资料和互动记忆推测；可继续编辑。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("正在结合人物资料和互动记忆推测；可继续编辑。");`
 - `Message(string, bool)`；输入表达式：`Message($"已补全 {changes} 项设定；手动编辑的字段已保留。" + design.Notes)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message($"已补全 {changes} 项设定；手动编辑的字段已保留。" + design.Notes);`
-- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`AiService.FailureReason(e)`；返回值紧邻使用处：`BinaryExpressionSyntax: "推测未完成，可重试或直接编辑：" + AiService.FailureReason(e)`
+- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`AiService.FailureReason(e)`；返回值紧邻使用处：`ArgumentSyntax: AiService.FailureReason(e)`
 - `NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；输入表达式：`AiService.InferPortraitAsync(data, id, baseline, cancel.Token)`；返回值紧邻使用处：`AwaitExpressionSyntax: await AiService.InferPortraitAsync(data, id, baseline, cancel.Token)`
-- `NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；输入表达式：`PortraitDesigns.MergeInference(design, baseline, response)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitDesigns.MergeInference(design, baseline, response)`
+- `NationalSpire.PlayerFacingText.LongError(string)`；输入表达式：`PlayerFacingText.LongError(AiService.FailureReason(e))`；返回值紧邻使用处：`BinaryExpressionSyntax: "推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e))`
 - `NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesignStore.Save(path, design)`；返回值紧邻使用处：`ExpressionStatementSyntax: PortraitDesignStore.Save(path, design);`
+- `NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；输入表达式：`PortraitDesigns.MergeInference(design, baseline, response)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitDesigns.MergeInference(design, baseline, response)`
 - `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<PortraitDesign>(JsonSerializer.Serialize(design, PortraitDesigns.Json), PortraitDesigns.Json)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: JsonSerializer.Deserialize<PortraitDesign>(JsonSerializer.Serialize(design, PortraitDesigns.Json), PortraitDesigns.Json)!`
 - `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(design, PortraitDesigns.Json)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(design, PortraitDesigns.Json)`
 - `System.Threading.CancellationToken.ThrowIfCancellationRequested()`；输入表达式：`cancel.Token.ThrowIfCancellationRequested()`；返回值紧邻使用处：`ExpressionStatementSyntax: cancel.Token.ThrowIfCancellationRequested();`
@@ -509,8 +511,8 @@
 
 **赋值（含属性/字段和局部值）：**
 
-- `infer!.Text` = `"根据资料推测"`
 - `infer!.Text` = `"停止推测"`
+- `infer!.Text` = `"根据资料推测"`
 - `pending` = `cancel`
 - `pending` = `null`
 - `scroll.ScrollVertical` = `position`

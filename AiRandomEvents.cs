@@ -12,6 +12,7 @@ public static partial class AiService
         var d = current(); if (d == null || RandomEvents.Find(d, id) is not { } e || e.State != "generating" && e.CustomState != "generating") return;
         bool custom = e.CustomState == "generating";
         string key = EventKey(d, id); if (EventRequests.ContainsKey(key)) return;
+        using var logScope = Diagnostics.BeginLog(LogArea.Event, key);
         using var cancel = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(d.Ai.RequestTimeoutMinutes, 2, 30)));
         EventRequests[key] = cancel;
         EventLive.Remove(key);

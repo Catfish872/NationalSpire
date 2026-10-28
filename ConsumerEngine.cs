@@ -102,21 +102,20 @@ public static class ConsumerEngine
         }
         return (int)result;
     }
-    public static string? Use(CareerData d, string goodId, string verbId, IReadOnlyList<string> guests, bool publicly = true)
+    public static string? Use(CareerData d, string goodId, string verbId, IReadOnlyList<string> guests, bool publicly = true, bool appointment = false)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.ConsumerOperation);
         var s = d.Life.Consumer;
-        var owned = s.Goods.FirstOrDefault(g => g.Id == goodId && g.Durable && g.Quantity > 0);
         var good = ConsumerCatalog.Get(goodId);
         var verb = good?.Verbs.FirstOrDefault(v => v.Id == verbId);
-        if (owned == null || good == null || verb == null) return "没有这项可使用的物品。";
-        if (owned.UsedSeason == d.Season && owned.UsedVerbs.Contains(verbId)) return "本赛季已经举办过这项活动。";
-        if (Guests(d, guests, verb.Slots) is { } error) return error;
+        if (good == null || verb == null || !appointment && !s.Goods.Any(g => g.Id == goodId && g.Durable && g.Quantity > 0)) return "没有这项可使用的物品。";
+        // 已确认的活动沿用原安排，由玩家点击赴约后执行费用和效果。
+        if (!appointment && Guests(d, guests, verb.Slots) is { } error) return error;
         decimal cost = HospitalityFee(good) / 10m;
-        if (CareerMoney.Balance(d) < cost) return "招待费用不足。";
+        if (!appointment && CareerMoney.Balance(d) < cost) return "招待费用不足。";
         Season(d);
         CareerMoney.Add(d, -cost); CareerMoney.Record(d, verb.Name + "招待费", -cost);
-        owned.UsedVerbs.Add(verbId); owned.UsedSeason = d.Season; s.PartyCount++;
+        s.PartyCount++;
         foreach (string id in guests)
         {
             int count = s.InvitedThisSeason.GetValueOrDefault(id);

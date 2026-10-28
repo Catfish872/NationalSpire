@@ -10,6 +10,25 @@ public static partial class Diagnostics
     private static readonly Dictionary<string, long> PendingBytes = [];
     private static Task? _retryLogs;
     private static long _expiredPendingRecords;
+    private sealed class LogWriter(string path, FileStream stream)
+    {
+        internal readonly string Path = path;
+        internal readonly FileStream Stream = stream;
+        internal bool NeedsTrim = true;
+    }
+    private static readonly Dictionary<string, LogWriter> LogWriters = [];
+
+    private static void CloseLogWriter(string name)
+    {
+        if (!LogWriters.Remove(name, out var writer)) return;
+        try { writer.Stream.Dispose(); }
+        catch (Exception error) { _writeError = Redact(error.ToString()); }
+    }
+
+    private static void CloseLogWriters()
+    {
+        foreach (string name in LogWriters.Keys.ToArray()) CloseLogWriter(name);
+    }
 
     private static FileInfo[] LogFiles(string directory, string name) => new DirectoryInfo(directory).EnumerateFiles(name + "*")
         .Where(f => f.Name == name || f.Name.StartsWith(name + ".previous", StringComparison.Ordinal))
@@ -57,31 +76,44 @@ public static partial class Diagnostics
         }
     }
 
-    // 三类日志共用完整记录写入和五份轮换；轮换点控制历史长度，单条记录始终完整。
+    // 各功能共用完整记录写入和五份轮换；轮换点控制历史长度，单条记录始终完整。
     private static bool AppendLog(string path, string line)
     {
+        string name = Path.GetFileName(path);
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            using (var probe = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read | FileShare.Delete))
+            if (LogWriters.TryGetValue(name, out var writer) && writer.Path != path)
             {
-                if (probe.Length < LogLimit) { Append(probe, line); Trim(); return true; }
+                CloseLogWriter(name); writer = null;
             }
-            string archive = path + ".previous";
-            if (File.Exists(archive)) archive += "." + DateTime.UtcNow.Ticks + "-" + Guid.NewGuid().ToString("N");
-            File.Move(path, archive);
-            using var output = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read | FileShare.Delete);
-            Append(output, line);
-            Trim();
+            writer ??= Open();
+            if (writer.Stream.Length >= LogLimit)
+            {
+                CloseLogWriter(name);
+                string archive = path + ".previous";
+                if (File.Exists(archive)) archive += "." + DateTime.UtcNow.Ticks + "-" + Guid.NewGuid().ToString("N");
+                File.Move(path, archive);
+                writer = Open();
+            }
+            Append(writer.Stream, line);
+            if (writer.NeedsTrim)
+            {
+                writer.NeedsTrim = false;
+                foreach (var file in LogFiles(Path.GetDirectoryName(path)!, name).Skip(RetainedLogFiles))
+                    try { file.Delete(); }
+                    catch (Exception error) { writer.NeedsTrim = true; _writeError = Redact(error.ToString()); }
+            }
             return true;
 
-            void Trim()
+            LogWriter Open()
             {
-                foreach (var file in LogFiles(Path.GetDirectoryName(path)!, Path.GetFileName(path)).Skip(RetainedLogFiles))
-                    try { file.Delete(); } catch (Exception error) { _writeError = Redact(error.ToString()); }
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                var opened = new LogWriter(path, new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read | FileShare.Delete));
+                LogWriters[name] = opened;
+                return opened;
             }
         }
-        catch (Exception error) { _writeError = Redact(error.ToString()); return false; }
+        catch (Exception error) { _writeError = Redact(error.ToString()); CloseLogWriter(name); return false; }
 
         static void Append(FileStream output, string value)
         {

@@ -191,6 +191,7 @@ public sealed class CoopStorage(string root)
                 if (w.Id != id || w.Schema != 1) continue;
                 if (run != null && CoopJson.Hash(run) != m.RunHash) continue;
                 if (w.Run?.Phase == "running" && run == null) continue;
+                Diagnostics.RetainErrors(w);
                 CoopJson.Detached(w.World); return new(w, run);
             }
             catch (Exception e) when (e is IOException or JsonException or InvalidDataException) { }

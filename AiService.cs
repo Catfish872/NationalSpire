@@ -175,6 +175,7 @@ public static partial class AiService
     private static async Task ProcessNewsBatchAsync(CareerData data, List<CommunityPost> pending)
     {
         string trace = Guid.NewGuid().ToString("N");
+        using var logScope = Diagnostics.BeginLog(LogArea.Community, data.WorldId + "/news/" + trace);
         string failure = "请求中断或配置已改变，可重试";
         void Fail(string message) { failure = message; Status = message; }
         IDisposable? lease = null;

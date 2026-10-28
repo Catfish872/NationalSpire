@@ -1,10 +1,67 @@
+using System.Net;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+
 namespace NationalSpire;
 
-/// <summary>错误保留服务商原文，显示前隐藏凭据。</summary>
+/// <summary>为超长错误生成界面摘要，完整原文由诊断日志保留。</summary>
 public static class PlayerFacingText
 {
     public static string AiError(string detail) => string.IsNullOrWhiteSpace(detail)
-        ? "未记录错误详情，请重试后查看。" : Diagnostics.Redact(detail);
+        ? "未记录错误详情，请重试后查看。" : Diagnostics.Redact(LongError(detail));
+
+    /// <summary>短错误原样返回；长错误提取接口实际说明，最终显示最多1000字符。</summary>
+    public static string LongError(string detail)
+    {
+        detail = Diagnostics.ErrorExplanation(detail);
+        if (detail.Length <= Diagnostics.ErrorTextLimit) return detail;
+        string reason = detail, metadata = "";
+        var status = Regex.Match(detail, @"HTTP \d{3}[^\r\n{<]*").Value;
+        int start = detail.IndexOf('{'), end = detail.LastIndexOf('}');
+        if (start >= 0 && end > start)
+        {
+            try
+            {
+                using var json = JsonDocument.Parse(detail.AsMemory(start, end - start + 1));
+                var root = json.RootElement;
+                if (root.ValueKind == JsonValueKind.Object)
+                {
+                    var error = root.TryGetProperty("error", out var value) ? value : default;
+                    reason = Field(error, "message") ?? Field(root, "message")
+                        ?? (error.ValueKind == JsonValueKind.String ? error.GetString() : null)
+                        ?? Field(root, "detail") ?? detail;
+                    foreach (string key in new[] { "code", "type", "param", "request_id" })
+                        if ((Field(error, key) ?? Field(root, key)) is { Length: > 0 } field)
+                            metadata += $"\n{key}: {Head(field, 120)}";
+                }
+            }
+            catch (JsonException) { /* 非JSON错误沿原文字处理。 */ }
+        }
+        if (reason.Contains("<html", StringComparison.OrdinalIgnoreCase) || reason.Contains("<!DOCTYPE html", StringComparison.OrdinalIgnoreCase))
+        {
+            var headings = new List<string>();
+            foreach (string tag in new[] { "title", "h1", "h2", "p" })
+            {
+                var match = Regex.Match(reason, $@"<{tag}\b[^>]*>([^<]*)</{tag}\s*>", RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    string heading = WebUtility.HtmlDecode(Head(match.Groups[1].Value, 240)).Trim();
+                    if (heading.Length > 0 && !headings.Any(h => h.Contains(heading))) headings.Add(heading);
+                }
+            }
+            reason = "接口返回了错误网页。" + (headings.Count > 0 ? " " + string.Join(" · ", headings) : "");
+        }
+        const string suffix = "\n完整报错已保留在诊断记录中。";
+        string prefix = status.Length > 0 && !reason.StartsWith(status) ? Head(status, 120).Trim() + "\n" : "";
+        string text = Diagnostics.Redact(prefix + Head(reason, Diagnostics.ErrorTextLimit) + metadata);
+        return Head(text, Diagnostics.ErrorTextLimit - suffix.Length) + suffix;
+    }
+
+    private static string? Field(JsonElement element, string name) => element.ValueKind == JsonValueKind.Object
+        && element.TryGetProperty(name, out var value) && value.ValueKind is JsonValueKind.String or JsonValueKind.Number
+        ? value.ToString() : null;
+
+    private static string Head(string text, int length) => text.Length <= length ? text : text[..(length - 1)] + "…";
 
     public static string AiErrorPreview(string detail)
     {

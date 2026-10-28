@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C965E4E704C15D415504CFB9265E117872FF2E8429B40A2B70C221619A55DF98`。来源：[源码](../../GameBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D1D64DD8C75B3E8CD278B415802D96C949AA9937B6A6F90D2EF98A459608B026`。来源：[源码](../../GameBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -136,15 +136,18 @@
 
 **调用者：** [`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)
 
-**调用：** `Godot.GD.Print(string)`；`Godot.GD.PushError(string)`；`MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`MegaCrit.Sts2.Core.Nodes.Audio.NAudioManager.StopMusic()`；`MegaCrit.Sts2.Core.Nodes.NGame.ReturnToMainMenuWithInternalError(System.Exception)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Random.Rng.NextItem<T>(System.Collections.Generic.IEnumerable<T>)`；`MegaCrit.Sts2.Core.Saves.SaveManager.GenerateUnlockStateFromProgress()`；`MegaCrit.Sts2.Core.Saves.SaveManager.GetAllRunHistoryNames()`；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordStartFailure(string, System.Exception, System.Collections.Generic.IReadOnlyDictionary<string, System.Func<object?>>, string)`](Diagnostics.cs.md#symbol-a50687dc715c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.GameBridge.CreateActSelectionRng(string)`](GameBridge.cs.md#symbol-e22050f58fa0)；[`NationalSpire.GameCompatibility.Version()`](GameCompatibility.cs.md#symbol-f20a223e98d6)；[`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-7f4fa41ad4c0)；[`NationalSpire.MatchFailure.Record(NationalSpire.CareerData, string)`](FailureDecision.cs.md#symbol-00e4a5993844)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-27c230d3a150)；[`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`](MatchStartWatch.cs.md#symbol-a39a7334ee0a)；[`NationalSpire.MatchStartWatch.Finish()`](MatchStartWatch.cs.md#symbol-2b2800aa6a80)；[`NationalSpire.MatchStartWatch.Stage(string)`](MatchStartWatch.cs.md#symbol-ad0a1e036443)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](RuntimeApi.cs.md#symbol-8426661c18c8)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；`System.Array.Empty<T>()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Contains(T)`；`System.DateTimeOffset.ToUnixTimeSeconds()`；`System.Diagnostics.Stopwatch.StartNew()`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.NotSupportedException.NotSupportedException(string?)`；`System.Type.IsAssignableFrom(System.Type?)`；`object.GetType()`；`object.ToString()`
+**调用：** `Godot.GD.Print(string)`；`Godot.GD.PushError(string)`；`MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`MegaCrit.Sts2.Core.Nodes.Audio.NAudioManager.StopMusic()`；`MegaCrit.Sts2.Core.Nodes.NGame.ReturnToMainMenuWithInternalError(System.Exception)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Random.Rng.NextItem<T>(System.Collections.Generic.IEnumerable<T>)`；`MegaCrit.Sts2.Core.Saves.SaveManager.GenerateUnlockStateFromProgress()`；`MegaCrit.Sts2.Core.Saves.SaveManager.GetAllRunHistoryNames()`；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordStartFailure(string, System.Exception, System.Collections.Generic.IReadOnlyDictionary<string, System.Func<object?>>, string)`](Diagnostics.cs.md#symbol-a50687dc715c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.GameBridge.CreateActSelectionRng(string)`](GameBridge.cs.md#symbol-e22050f58fa0)；[`NationalSpire.GameCompatibility.Version()`](GameCompatibility.cs.md#symbol-f20a223e98d6)；[`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-7f4fa41ad4c0)；[`NationalSpire.MatchFailure.Record(NationalSpire.CareerData, string)`](FailureDecision.cs.md#symbol-00e4a5993844)；[`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-cc58cecfce28)；[`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-27c230d3a150)；[`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`](MatchStartWatch.cs.md#symbol-a39a7334ee0a)；[`NationalSpire.MatchStartWatch.Finish()`](MatchStartWatch.cs.md#symbol-2b2800aa6a80)；[`NationalSpire.MatchStartWatch.Stage(string)`](MatchStartWatch.cs.md#symbol-ad0a1e036443)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](RuntimeApi.cs.md#symbol-8426661c18c8)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；[`NationalSpire.StartDiagnostics.Finish(string?)`](StartDiagnostics.cs.md#symbol-a9ee66195dc4)；[`NationalSpire.StartDiagnostics.Method(System.Reflection.MethodBase, string, System.Exception?)`](StartDiagnostics.cs.md#symbol-1a5c177ce877)；[`NationalSpire.StartDiagnostics.Stage(string)`](StartDiagnostics.cs.md#symbol-6350d395f8c5)；[`NationalSpire.StartDiagnostics.StartDiagnostics(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`](StartDiagnostics.cs.md#symbol-2a19f756d610)；[`NationalSpire.StartDiagnostics.Write(string, object?)`](StartDiagnostics.cs.md#symbol-7005259dbbc6)；`System.Array.Empty<T>()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Contains(T)`；`System.DateTimeOffset.ToUnixTimeSeconds()`；`System.Diagnostics.Stopwatch.StartNew()`；`System.Exception.ToString()`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.NotSupportedException.NotSupportedException(string?)`；`System.Type.IsAssignableFrom(System.Type?)`；`object.GetType()`；`object.ToString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingHistoryExcluded`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.PendingSince`；`NationalSpire.CareerData.SelectedAscension`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerMatch.ChosenAscension`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerStore.Data`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordStartFailure(string, System.Exception, System.Collections.Generic.IReadOnlyDictionary<string, System.Func<object?>>, string)`；`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.FailureDecision.Result`；`NationalSpire.FailureDecision.RetryRequested`；`NationalSpire.GameBridge.CreateActSelectionRng(string)`；`NationalSpire.GameCompatibility.SeedMode`；`NationalSpire.GameCompatibility.Version()`；`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；`NationalSpire.MatchFailure.Record(NationalSpire.CareerData, string)`；`NationalSpire.MatchRecovery.SingleplayerInUse`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`；`NationalSpire.MatchStartWatch.Finish()`；`NationalSpire.MatchStartWatch.IsActive`；`NationalSpire.MatchStartWatch.Stage(string)`；`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`；`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Failure`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingHistoryExcluded`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.PendingSince`；`NationalSpire.CareerData.SelectedAscension`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerMatch.ChosenAscension`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerStore.Data`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordStartFailure(string, System.Exception, System.Collections.Generic.IReadOnlyDictionary<string, System.Func<object?>>, string)`；`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.FailureDecision.Result`；`NationalSpire.FailureDecision.RetryRequested`；`NationalSpire.GameBridge.CreateActSelectionRng(string)`；`NationalSpire.GameCompatibility.SeedMode`；`NationalSpire.GameCompatibility.Version()`；`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；`NationalSpire.MatchFailure.Record(NationalSpire.CareerData, string)`；`NationalSpire.MatchRecovery.SingleplayerInUse`；`NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`；`NationalSpire.MatchStartWatch.Finish()`；`NationalSpire.MatchStartWatch.IsActive`；`NationalSpire.MatchStartWatch.Stage(string)`；`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`；`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；`NationalSpire.StartDiagnostics.Finish(string?)`；`NationalSpire.StartDiagnostics.Method(System.Reflection.MethodBase, string, System.Exception?)`；`NationalSpire.StartDiagnostics.Stage(string)`；`NationalSpire.StartDiagnostics.Write(string, object?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.GD.Print(string)`；输入表达式：`GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms")`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");`
 - `Godot.GD.PushError(string)`；输入表达式：`GD.PushError("[NationalSpire] 开局失败：" + e)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushError("[NationalSpire] 开局失败：" + e);`
 - `MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`；输入表达式：`SfxCmd.Play(character.CharacterTransitionSfx)`；返回值紧邻使用处：`ExpressionStatementSyntax: SfxCmd.Play(character.CharacterTransitionSfx);`
+- `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`a.Id.ToString()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: a => a.Id.ToString()`
+- `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`character.Id.ToString()`；返回值紧邻使用处：`ArgumentSyntax: character.Id.ToString()`
+- `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`character.Id.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: character = character.Id.ToString()`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`character.Id.ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: data.SelectedCharacter = character.Id.ToString()`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`character.Id.ToString()`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => character.Id.ToString()`
 - `MegaCrit.Sts2.Core.Nodes.Audio.NAudioManager.StopMusic()`；输入表达式：`.StopMusic()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: NAudioManager.Instance?.StopMusic()`
@@ -164,7 +167,7 @@
 - `NationalSpire.GameBridge.CreateActSelectionRng(string)`；输入表达式：`CreateActSelectionRng(match.Seed)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CreateActSelectionRng(match.Seed)`
 - `NationalSpire.GameCompatibility.Version()`；输入表达式：`GameCompatibility.Version()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: game = GameCompatibility.Version()`
 - `NationalSpire.GameCompatibility.Version()`；输入表达式：`GameCompatibility.Version()`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => GameCompatibility.Version()`
-- `NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；输入表达式：`MatchFailure.Locked(data)`；返回值紧邻使用处：`ReturnStatementSyntax: return MatchFailure.Locked(data);`
+- `NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`；输入表达式：`MatchFailure.Locked(data)`；返回值紧邻使用处：`ArgumentSyntax: MatchFailure.Locked(data)`
 - `NationalSpire.MatchFailure.Record(NationalSpire.CareerData, string)`；输入表达式：`MatchFailure.Record(data, "retry-started")`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchFailure.Record(data, "retry-started");`
 - `NationalSpire.MatchRules.PrepareOpponent(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PrepareOpponent(data, match)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchRules.PrepareOpponent(data, match);`
 - `NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PrepareSeed(data, match)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchRules.PrepareSeed(data, match);`
@@ -176,13 +179,30 @@
 - `NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`；输入表达式：`RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool), acts.GetType(), typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool), acts.GetType(), typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int))`
 - `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(select, null, rng, unlock, false)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: RuntimeApi.Invoke(select, null, rng, unlock, false)!`
 - `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish("已有一场生涯比赛进行中。")`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish("已有一场生涯比赛进行中。");`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish("请先报名并前往比赛日。")`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish("请先报名并前往比赛日。");`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish($"本场进阶范围为 {match.RequiredAscension}—10。")`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish($"本场进阶范围为 {match.RequiredAscension}—10。");`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish(MatchFailure.Locked(data))`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish(MatchFailure.Locked(data));`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish(MatchRecovery.SingleplayerInUse)`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish(MatchRecovery.SingleplayerInUse);`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish(locked)`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish(locked);`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish(message)`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish(message);`
+- `NationalSpire.StartDiagnostics.Finish(string?)`；输入表达式：`trace.Finish(null)`；返回值紧邻使用处：`ReturnStatementSyntax: return trace.Finish(null);`
+- `NationalSpire.StartDiagnostics.Method(System.Reflection.MethodBase, string, System.Exception?)`；输入表达式：`trace.Method(start, "begin")`；返回值紧邻使用处：`ExpressionStatementSyntax: trace.Method(start, "begin");`
+- `NationalSpire.StartDiagnostics.Method(System.Reflection.MethodBase, string, System.Exception?)`；输入表达式：`trace.Method(start, "complete")`；返回值紧邻使用处：`ExpressionStatementSyntax: trace.Method(start, "complete");`
+- `NationalSpire.StartDiagnostics.Stage(string)`；输入表达式：`trace.Stage(stage)`；返回值紧邻使用处：`ExpressionStatementSyntax: trace.Stage(stage);`
+- `NationalSpire.StartDiagnostics.StartDiagnostics(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`；输入表达式：`new StartDiagnostics(data, match, character.Id.ToString(), ascension)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new StartDiagnostics(data, match, character.Id.ToString(), ascension)`
+- `NationalSpire.StartDiagnostics.Write(string, object?)`；输入表达式：`trace.Write("exception", new { stage, exception = e.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: trace.Write("exception", new { stage, exception = e.ToString() });`
+- `NationalSpire.StartDiagnostics.Write(string, object?)`；输入表达式：`trace.Write("parameters", new { match.Seed, character = character.Id.ToString(), ascension, acts = acts.Select(a => a.Id.ToString()).ToArray() })`；返回值紧邻使用处：`ExpressionStatementSyntax: trace.Write("parameters", new { match.Seed, character = character.Id.ToString(), ascension, acts = acts.Select(a => a.Id.ToString()).ToArray() });`
 - `System.Array.Empty<T>()`；输入表达式：`Array.Empty<ModifierModel>()`；返回值紧邻使用处：`ArgumentSyntax: Array.Empty<ModifierModel>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, Func<object?>> { ["gameVersion"] = () => GameCompatibility.Version(), ["profile"] = () => SaveManager.Instance.CurrentProfileId, ["matchId"] = () => match.Id, ["seed"] = () => match.Seed, ["character"] = () => character.Id.ToString(), ["ascension"] = () => ascension, ["hasRunSave"] = () => SaveManager.Instance.HasRunSave, ["runInProgress"] = () => RunManager.Instance.IsInProgress, ["pendingMatchId"] = () => data.PendingMatchId }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, Func<object?>> { ["gameVersion"] = () => GameCompatibility.Version(), ["profile"] = () => SaveManager.Instance.CurrentProfileId, ["matchId"] = () => match.Id, ["seed"] = () => match.Seed, ["character"] = () => character.Id.ToString(), ["ascension"] = () => ascension, ["hasRunSave"] = () => SaveManager.Instance.HasRunSave, ["runInProgress"] = () => RunManager.Instance.IsInProgress, ["pendingMatchId"] = () => data.PendingMatchId }`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`acts.Select(a => a.Id.ToString())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: acts.Select(a => a.Id.ToString()).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`acts.Select(a => a.Id.ToString()).ToArray()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: acts = acts.Select(a => a.Id.ToString()).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`SaveManager.Instance.GetAllRunHistoryNames().ToHashSet()`；返回值紧邻使用处：`AssignmentExpressionSyntax: data.PendingHistoryExcluded = SaveManager.Instance.GetAllRunHistoryNames().ToHashSet()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`((IEnumerable<ActModel>)RuntimeApi.Invoke(select, null, rng, unlock, false)!).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ((IEnumerable<ActModel>)RuntimeApi.Invoke(select, null, rng, unlock, false)!).ToList()`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.Matches.Contains(match)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !data.Matches.Contains(match)`
 - `System.DateTimeOffset.ToUnixTimeSeconds()`；输入表达式：`DateTimeOffset.UtcNow.ToUnixTimeSeconds()`；返回值紧邻使用处：`AssignmentExpressionSyntax: data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds()`
 - `System.Diagnostics.Stopwatch.StartNew()`；输入表达式：`System.Diagnostics.Stopwatch.StartNew()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.Diagnostics.Stopwatch.StartNew()`
+- `System.Exception.ToString()`；输入表达式：`e.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: exception = e.ToString()`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("没有可用角色。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidOperationException("没有可用角色。")`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("游戏场景尚未初始化。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidOperationException("游戏场景尚未初始化。")`
 - `System.NotSupportedException.NotSupportedException(string?)`；输入表达式：`new NotSupportedException("开局接口的返回类型发生变化。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new NotSupportedException("开局接口的返回类型发生变化。");`
@@ -213,6 +233,7 @@
 - `data.SelectedCharacter` = `character.Id.ToString()`
 - `loading` = `MatchStartWatch.Begin(game, match.Id, () => SaveManager.Instance.HasRunSave, game.Quit)`
 - `match.ChosenAscension` = `ascension`
+- `stage` = `"保存开局成功后的生涯数据"`
 - `stage` = `"保存开赛前的生涯数据"`
 - `stage` = `"保存比赛与生涯的关联"`
 - `stage` = `"准备比赛对手"`
@@ -231,7 +252,7 @@
 
 ## `NationalSpire.GameBridge.MatchesPending(NationalSpire.CareerData, MegaCrit.Sts2.Core.Runs.RunHistory) — public static bool MatchesPending(CareerData data, RunHistory history)`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-4495455c88ce)；[`NationalSpire.GameBridge.RecoverPending()`](GameBridge.cs.md#symbol-7e7d899f5086)
 
@@ -252,7 +273,7 @@
 
 ## `NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory) — public static void CompleteHistory(RunHistory history)`
 
-来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GameBridge.RecoverPending()`](GameBridge.cs.md#symbol-7e7d899f5086)；[`NationalSpire.HistoryPatch.Postfix(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-6216c9815a00)
 
@@ -278,7 +299,7 @@
 
 ## `NationalSpire.GameBridge.ReadPlayerHistory(MegaCrit.Sts2.Core.Runs.RunHistory, MegaCrit.Sts2.Core.Runs.RunHistoryPlayer) — public static CareerResult ReadPlayerHistory(RunHistory history, RunHistoryPlayer player)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory)`](Coop/CoopRuntime.cs.md#symbol-732476d12d29)；[`NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-4495455c88ce)
 
@@ -366,7 +387,7 @@
 
 ## `NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory) — private static List<RunEncounter> ReadDefeatedEncounters(RunHistory history)`
 
-来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GameBridge.ReadPlayerHistory(MegaCrit.Sts2.Core.Runs.RunHistory, MegaCrit.Sts2.Core.Runs.RunHistoryPlayer)`](GameBridge.cs.md#symbol-2ddde8df91f3)
 
@@ -398,7 +419,7 @@
 
 ## `NationalSpire.GameBridge.RecoverPending() — public static void RecoverPending()`
 
-来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 258 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.GameBridge.ReleaseMissingRun()`](GameBridge.cs.md#symbol-0d1c45a81336)；[`NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](GameBridge.cs.md#symbol-6939e359db40)
 
@@ -425,7 +446,7 @@
 
 ## `NationalSpire.GameBridge.ReleaseMissingRun() — public static void ReleaseMissingRun()`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
@@ -447,7 +468,7 @@
 
 ## `NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu) — public static void Postfix(NMainMenu __instance)`
 
-来源：源码第 279 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 296 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -490,7 +511,7 @@
 
 ## `NationalSpire.HistoryPatch.Postfix(MegaCrit.Sts2.Core.Runs.RunHistory) — public static void Postfix(RunHistory history)`
 
-来源：源码第 305 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -511,7 +532,7 @@
 
 ## `NationalSpire.CareerContextPatch.Postfix(ref MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext.IScreenContext?) — public static void Postfix(ref IScreenContext? __result)`
 
-来源：源码第 315 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 332 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

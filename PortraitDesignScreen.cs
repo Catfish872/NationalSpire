@@ -158,7 +158,7 @@ public partial class CareerScreen
                 Message($"已补全 {changes} 项设定；手动编辑的字段已保留。" + design.Notes);
             }
             catch (OperationCanceledException) { if (Alive()) Message("已停止推测，当前编辑已保留。"); }
-            catch (Exception e) { if (Alive()) Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true); }
+            catch (Exception e) { if (Alive()) Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true); }
             finally { pending = null; cancel.Dispose(); if (Alive()) infer!.Text = "根据资料推测"; }
         }
         infer = Button("根据资料推测", () => { _ = Infer(); }, 180); infer.Name = "PortraitInfer"; actions.AddChild(infer);

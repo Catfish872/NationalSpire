@@ -19,6 +19,7 @@ public static partial class AiService
         if (d == null || g == null) return;
         if (turn == null) { await SummarizeGroupAsync(current, save, group); return; }
         string key = GroupKey(d, group), id = turn.Id;
+        using var logScope = Diagnostics.BeginLog(LogArea.Group, key + "/" + id);
         if (GroupRequests.ContainsKey(key)) return;
         using var cancel = new CancellationTokenSource();
         GroupRequests[key] = cancel;
@@ -111,6 +112,7 @@ public static partial class AiService
         var d = current(); var g = d?.Chats.Groups.FirstOrDefault(g => g.Id == group);
         if (d == null || g == null) return;
         string key = GroupKey(d, group); if (!GroupSummaries.Add(key)) return;
+        using var logScope = Diagnostics.BeginLog(LogArea.Group, key + "/summary");
         long revision = g.Revision;
         try
         {
