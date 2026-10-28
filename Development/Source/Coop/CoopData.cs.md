@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`92C01E6AAE785F4056FE0C55467FDD2F05C1D9C44ED363CABFD9D1FDB6EDAB11`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`600C10130049C564693711B037F17B00BCFDD25E2303D1446D54804D6937BC61`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -50,13 +50,16 @@ public const int Protocol = 1;
 
 **调用者：** [`NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`](../CareerLibrary.cs.md#symbol-bb2b0ce2be9d)；[`NationalSpire.CareerLibrary.Export(NationalSpire.CareerData, byte[]?, byte[]?)`](../CareerLibrary.cs.md#symbol-6f1ccfef974f)；[`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopStorage.BackupBeforeDevelopment(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-955953e36f17)；[`NationalSpire.Coop.CoopStorage.ExportArchive(string)`](CoopStorage.cs.md#symbol-2c9c2a0b54fe)；[`NationalSpire.Coop.CoopStorage.PublicCopy(NationalSpire.Coop.CoopWorld)`](CoopStorage.cs.md#symbol-9dfe7ef480f7)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 
-**调用：** `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`](../ErrorDiagnostics.cs.md#symbol-83a342d01ea6)；[`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`](../ErrorDiagnostics.cs.md#symbol-fd99f468e9e7)；`System.Text.Json.JsonSerializer.SerializeToUtf8Bytes<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.PublicOptions`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.PublicOptions`；`NationalSpire.Coop.CoopSnapshot.World`；`NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`；`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions)`
+- `NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`；输入表达式：`Diagnostics.RetainErrors(career)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RetainErrors(career);`
+- `NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`；输入表达式：`Diagnostics.RetainErrors(snapshot.World)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RetainErrors(snapshot.World);`
+- `NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`；输入表达式：`Diagnostics.RetainErrors(world)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RetainErrors(world);`
+- `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions)`；返回值紧邻使用处：`ReturnStatementSyntax: return JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions);`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -65,7 +68,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopJson.Bytes<T>(T) — public static byte[] Bytes<T>(T value)`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.Coop.CoopCoordinator.PublishLive()`](CoopCoordinator.cs.md#symbol-1e3cadd9f597)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.SnapshotEncoder.Encode(ulong, System.Collections.Generic.Dictionary<string, string>)`](CoopPrivateMessages.cs.md#symbol-f433d36af14b)；[`NationalSpire.Coop.CoopCoordinator.StartEvent(ulong, NationalSpire.Coop.CoopCommand)`](CoopRandomEvents.cs.md#symbol-b51ea4166eab)；[`NationalSpire.Coop.CoopCoordinator.StartGroup(ulong, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-83d332761336)；[`NationalSpire.Coop.CoopCoordinator.StartPrivate(ulong, NationalSpire.Coop.CoopCommand)`](CoopPrivateMessages.cs.md#symbol-ebc3f29b5eb6)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopPacketAssembly.Pack(NationalSpire.Coop.CoopWire)`](CoopWire.cs.md#symbol-1ffd868804d7)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopSettings.SaveLayout(NationalSpire.BroadcastUiState)`](CoopRuntime.cs.md#symbol-3613d13461fc)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 
@@ -84,7 +87,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopJson.Read<T>(byte[]) — public static T Read<T>(byte[] bytes)`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLibrary.List(string)`](../CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.Coop.CoopCoordinator.ReceiveDiagnostic(ulong, NationalSpire.Coop.CoopWire)`](CoopDiagnostics.cs.md#symbol-fefabf8d6a26)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.ReceivePrivate(NationalSpire.Coop.CoopWire, System.DateTime)`](CoopPrivateMessages.cs.md#symbol-eca8b0236539)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopPacketAssembly.Read(ulong, byte[])`](CoopWire.cs.md#symbol-4b11b493c720)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopSettings.ReadLayout()`](CoopRuntime.cs.md#symbol-7bdef2452208)；[`NationalSpire.Coop.CoopStorage.ImportArchive(byte[])`](CoopStorage.cs.md#symbol-73147f08e733)；[`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.PublicCopy(NationalSpire.Coop.CoopWorld)`](CoopStorage.cs.md#symbol-9dfe7ef480f7)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)；[`Step()`](CoopReception.cs.md#symbol-41b14a0db411)
 
@@ -104,7 +107,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopJson.Copy<T>(T) — public static T Copy<T>(T value)`
 
-来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Current()`](CoopGroupChats.cs.md#symbol-2c4dd6def46d)；[`Draw()`](../DateSceneAssetScreen.cs.md#symbol-44fc11efbaa6)；[`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](../DateSceneAssetScreen.cs.md#symbol-5d9a90f3c871)；[`NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](../AppearanceLibrary.cs.md#symbol-35fa453dd634)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](../DateSceneAssetScreen.cs.md#symbol-29862ab95d64)；[`NationalSpire.CareerScreen.RestoreConsumerDrafts()`](../ConsumerCommerceScreen.cs.md#symbol-4c75feed1e1b)；[`NationalSpire.CharacterCards.Apply(NationalSpire.CareerData, NationalSpire.CharacterCardEdit, NationalSpire.CareerLifeState?, string?)`](../CharacterCards.cs.md#symbol-a50771d297a5)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](../CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.CharacterCards.Save(NationalSpire.CareerData, NationalSpire.CharacterCardEdit)`](../CharacterCards.cs.md#symbol-4bce7f6af16c)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer)`](../ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>)`](../ConsumerAttachments.cs.md#symbol-cefd490f72aa)；[`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.Coop.CoopCareerSession.SaveAi(NationalSpire.CareerData)`](CoopCareerSession.cs.md#symbol-6fb4f052a4e3)；[`NationalSpire.Coop.CoopCoordinator.PrivateSnapshot(NationalSpire.Coop.CoopWorld, ulong)`](CoopPrivateMessages.cs.md#symbol-cdaa536242f4)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.GroupCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-65a87ad49e08)；[`NationalSpire.Coop.CoopRules.InterfaceView(NationalSpire.Coop.CoopWorld, ulong)`](CoopRules.cs.md#symbol-c23013f591a9)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-8025e01818d7)；[`NationalSpire.Coop.CoopRules.SavePrivateFailure(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, string)`](CoopPrivateMessages.cs.md#symbol-3dd770b5bab3)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory)`](CoopRuntime.cs.md#symbol-732476d12d29)；[`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)；[`NationalSpire.DateSceneAssetStore.SaveEmotionEdit(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets, string, string)`](../DateSceneAssets.cs.md#symbol-e6562f4576e9)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](../EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.EconomicActions.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](../EconomicActions.cs.md#symbol-f0516c3ecf95)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](../PrivateMessageCommands.cs.md#symbol-1472969f513b)；[`Save(NationalSpire.CareerData)`](CoopGroupChats.cs.md#symbol-500092220c28)；[`Save(NationalSpire.CareerData)`](CoopPrivateMessages.cs.md#symbol-08dfeba4e37a)；[`Save(NationalSpire.CareerData)`](CoopRandomEvents.cs.md#symbol-e8b36b263cbf)
 
@@ -125,7 +128,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopJson.Hash(byte[]) — public static string Hash(byte[] bytes)`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.Coop.CoopAssembler.Complete.Decode(bool)`](CoopWire.cs.md#symbol-8c8a54666033)；[`NationalSpire.Coop.CoopAssembler.Split(byte[], bool)`](CoopWire.cs.md#symbol-d89dceccb833)；[`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)；[`NationalSpire.Coop.CoopPacketAssembly.Pack(NationalSpire.Coop.CoopWire)`](CoopWire.cs.md#symbol-1ffd868804d7)；[`NationalSpire.Coop.CoopPacketAssembly.Read(ulong, byte[])`](CoopWire.cs.md#symbol-4b11b493c720)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 
@@ -145,7 +148,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData) — public static void Detached(CareerData d)`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopAi.ProcessDiscussion(NationalSpire.Coop.CoopWorld, (string Generation, string World, string Epoch, string Message))`](CoopAi.cs.md#symbol-b31e3ccef31a)；[`NationalSpire.Coop.CoopAi.ProcessPublications(bool)`](CoopAi.cs.md#symbol-b4b98ce85f62)；[`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.PrivateSnapshot(NationalSpire.Coop.CoopWorld, ulong)`](CoopPrivateMessages.cs.md#symbol-cdaa536242f4)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.Create(ulong, string, string, int, string)`](CoopRules.cs.md#symbol-768ae6d9f0c2)；[`NationalSpire.Coop.CoopRules.SavePrivateFailure(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, string)`](CoopPrivateMessages.cs.md#symbol-3dd770b5bab3)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](../EconomicActions.cs.md#symbol-6ec38e492fe6)；[`Save(NationalSpire.CareerData)`](CoopGroupChats.cs.md#symbol-500092220c28)；[`Save(NationalSpire.CareerData)`](CoopPrivateMessages.cs.md#symbol-08dfeba4e37a)；[`Save(NationalSpire.CareerData)`](CoopRandomEvents.cs.md#symbol-e8b36b263cbf)；[`Step()`](CoopReception.cs.md#symbol-41b14a0db411)
 
@@ -165,7 +168,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Schema — public int Schema`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -183,7 +186,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Id — public string Id`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -203,7 +206,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Name — public string Name`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -221,7 +224,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Owner — public ulong Owner`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -239,7 +242,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Capacity — public int Capacity`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -257,7 +260,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Epoch — public string Epoch`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -277,7 +280,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Revision — public long Revision`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -295,7 +298,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.World — public CareerData World`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -314,7 +317,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Members — public List<CoopMember> Members`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -332,7 +335,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.RosterLocked — public bool RosterLocked`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -350,7 +353,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.CareerStarted — public bool CareerStarted`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -368,7 +371,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.EntrySequence — public int EntrySequence`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -386,7 +389,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Proposal — public CoopProposal? Proposal`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -404,7 +407,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Run — public CoopRun? Run`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -422,7 +425,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Settlements — public List<CoopSettlement> Settlements`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -440,7 +443,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.NativeHistoryReceipts — public HashSet<string> NativeHistoryReceipts`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -458,7 +461,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.Receipts — public Dictionary<string, CoopReceipt> Receipts`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -476,7 +479,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.LatestCheckpoint — public string LatestCheckpoint`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -494,7 +497,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.CheckpointHeader(string) — public CoopWorld CheckpointHeader(string id)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 
@@ -514,7 +517,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopWorld.RunCheckpoint() — public CoopWorld RunCheckpoint()`
 
-来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)
 
@@ -535,7 +538,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Card — public CareerPerson? Card`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -553,7 +556,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.SeenCeremonySeason — public int SeenCeremonySeason`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -571,7 +574,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.CeremonyReceipts — public HashSet<string> CeremonyReceipts`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -589,7 +592,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.CeremonyHonors — public List<CareerHonor> CeremonyHonors`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -607,7 +610,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.SteamId — public ulong SteamId`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -625,7 +628,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.PersonId — public string PersonId`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -643,7 +646,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Name — public string Name`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -661,7 +664,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Gender — public string Gender`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -679,7 +682,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Character — public string Character`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -697,7 +700,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.RandomCharacter — public bool RandomCharacter`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -715,7 +718,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Credits — public decimal Credits`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -733,7 +736,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Fans — public int Fans`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -751,7 +754,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Rating — public int Rating`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -769,7 +772,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Wins — public int Wins`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -787,7 +790,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Losses — public int Losses`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -805,7 +808,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Draws — public int Draws`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -823,7 +826,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.HighestClear — public int HighestClear`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -841,7 +844,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.AvatarFrame — public string AvatarFrame`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -859,7 +862,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Avatar — public PlayerAvatar Avatar`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -878,7 +881,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.PaidSeason — public int PaidSeason`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -896,7 +899,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Life — public CareerLifeState Life`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -915,7 +918,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Sponsors — public List<SponsorContract> Sponsors`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -933,7 +936,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.SponsorOffers — public List<SponsorContract> SponsorOffers`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -951,7 +954,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Results — public List<CareerResult> Results`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -969,7 +972,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.Aliases — public List<string> Aliases`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -987,7 +990,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.ReadPosts — public Dictionary<string, long> ReadPosts`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1005,7 +1008,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.ReadWeeks — public Dictionary<int, long> ReadWeeks`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1023,7 +1026,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopMember.SeenSettlement — public string SeenSettlement`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1041,7 +1044,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Id — public string Id`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1061,7 +1064,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Kind — public string Kind`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1079,7 +1082,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Target — public string Target`
 
-来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1097,7 +1100,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Number — public int Number`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1115,7 +1118,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Label — public string Label`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1133,7 +1136,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Votes — public HashSet<ulong> Votes`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1151,7 +1154,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopProposal.Participants — public HashSet<ulong> Participants`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1169,7 +1172,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Attempt — public string Attempt`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1189,7 +1192,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.MatchId — public string MatchId`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1207,7 +1210,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Phase — public string Phase`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1225,7 +1228,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.ResumeCount — public int ResumeCount`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1243,7 +1246,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.FailureReason — public string FailureReason`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1261,7 +1264,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Ascension — public int Ascension`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1279,7 +1282,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Seed — public string Seed`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1297,7 +1300,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Characters — public Dictionary<ulong, string> Characters`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1315,7 +1318,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Opponents — public List<string> Opponents`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1333,7 +1336,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Rival — public LiveMatchState? Rival`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1351,7 +1354,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.RivalMembers — public Dictionary<string, LiveMatchState> RivalMembers`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1369,7 +1372,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Clock — public double Clock`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1387,7 +1390,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Floor — public int Floor`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1405,7 +1408,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Act — public int Act`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1423,7 +1426,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Players — public List<CoopLivePlayer> Players`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1441,7 +1444,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Commentary — public List<string> Commentary`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1459,7 +1462,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Broadcasts — public Dictionary<ulong, BroadcastMemory> Broadcasts`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1477,7 +1480,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Speeches — public List<CoopSpeech> Speeches`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1495,7 +1498,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.Terminal — public CoopTerminalResult? Terminal`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1513,7 +1516,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopRun.CheckpointCopy() — public CoopRun CheckpointCopy()`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopWorld.RunCheckpoint()`](CoopData.cs.md#symbol-37c5b2e81f81)
 
@@ -1532,7 +1535,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopTerminalResult.Details — public Dictionary<ulong, CareerResult> Details`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1550,7 +1553,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSpeech.Role — public string Role`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1568,7 +1571,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Attempt — public string Attempt`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1586,7 +1589,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.MatchId — public string MatchId`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1604,7 +1607,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Title — public string Title`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1622,7 +1625,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Outcome — public string Outcome`
 
-来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1640,7 +1643,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Cleared — public bool Cleared`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1658,7 +1661,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Floor — public int Floor`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1676,7 +1679,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Seconds — public double Seconds`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1694,7 +1697,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Day — public int Day`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1712,7 +1715,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Payouts — public Dictionary<ulong, long> Payouts`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1730,7 +1733,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Players — public List<CoopLivePlayer> Players`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1748,7 +1751,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopSettlement.Rankings — public SettlementRecord? Rankings`
 
-来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1766,7 +1769,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopReading.Posts — public Dictionary<string,long> Posts`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1784,7 +1787,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopReading.Weeks — public Dictionary<int,long> Weeks`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1802,7 +1805,7 @@ public const int Protocol = 1;
 
 ## `NationalSpire.Coop.CoopReading.Settlement — public string Settlement`
 
-来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 156 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

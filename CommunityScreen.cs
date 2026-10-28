@@ -397,7 +397,12 @@ public partial class CareerScreen
                 {
                     var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };
                     editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);
-                    contents.AddChild(Button("复制错误", () => DisplayServer.ClipboardSet(detail), 150));
+                    contents.AddChild(Button("复制错误", async () =>
+                    {
+                        string error = work.Error;
+                        string original = await Task.Run(() => Diagnostics.ErrorDetail(error));
+                        DisplayServer.ClipboardSet(original);
+                    }, 150));
                 });
             }, 120));
             string scope = id.StartsWith("WeeklyProfiles_") ? "档案" : id.StartsWith("WeeklyNews_") ? "周刊" : id.StartsWith("News_") ? "此帖" : "回应";

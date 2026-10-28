@@ -8,7 +8,7 @@ namespace NationalSpire;
 /// <summary>保留有界的运行记录；导出时合并生涯、请求和游戏日志，统一隐藏凭据。</summary>
 public static partial class Diagnostics
 {
-    public const string ModVersion = "0.27.11";
+    public const string ModVersion = "0.27.12";
 
     // 开赛失败逐次记录；读取诊断资料失败时仍保留最初的异常及其余资料。
     public static string RecordStartFailure(string stage, Exception error,
@@ -37,11 +37,15 @@ public static partial class Diagnostics
     private static string _writeError = "";
     public static Func<object>? RuntimeSnapshot { get; set; }
 
-    static Diagnostics() => AppDomain.CurrentDomain.ProcessExit += (_, _) => SaveLoggingPerformance();
+    static Diagnostics() => AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+    {
+        SaveLoggingPerformance();
+        lock (Gate) CloseLogWriters();
+    };
 
     public static void Configure(string directory)
     {
-        lock (Gate) _directory = directory;
+        lock (Gate) { CloseLogWriters(); _directory = directory; }
         MigrateLogs();
     }
 
@@ -89,7 +93,7 @@ public static partial class Diagnostics
             using (new LogMeasure(LogWork.Serialize, category)) body = detail is string s ? s : JsonSerializer.Serialize(detail, Json);
             body = Redact(body);
             string line;
-            using (new LogMeasure(LogWork.Serialize, category)) line = JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, category, detail = body, clipped = false }, Json);
+            using (new LogMeasure(LogWork.Serialize, category)) line = JsonSerializer.Serialize(new { utc = DateTimeOffset.UtcNow, category, context = CurrentLog.Value?.Context, detail = body, clipped = false }, Json);
             var waiting = new LogMeasure(LogWork.WaitForWrite, category);
             lock (Gate)
             {
@@ -99,7 +103,7 @@ public static partial class Diagnostics
                 _peakEvents = Math.Max(_peakEvents, Events.Count); _peakEventChars = Math.Max(_peakEventChars, _eventChars);
                 if (_directory == null) return;
                 using var writing = new LogMeasure(LogWork.Write, category);
-                WriteLog("national-spire.log", line);
+                WriteLog(LogNames[(int)AreaFor(category)], line);
             }
         }
         catch (Exception e) { lock (Gate) _writeError = e.GetType().Name + ": " + e.Message; }
@@ -143,7 +147,7 @@ public static partial class Diagnostics
             }
             catch (Exception e) { notes.Add(entry + "：" + e.Message); }
         }
-        foreach (var log in ReadLogs("national-spire.log")) files["mod-logs/" + log.Key] = log.Value;
+        foreach (var log in ReadAutomaticLogs()) files["mod-logs/" + log.Key] = log.Value;
         try
         {
             int index = 0;
@@ -193,6 +197,8 @@ public static partial class Diagnostics
                 data.Day, data.Season, data.Version, data.PendingMatchId, data.SelectedCharacter, data.SelectedAscension, aiStatus,
                 matches = data.Matches.Count, results = data.Results.Count, posts = data.Posts.Count });
             // 完整模组状态用于核对赛程、种子、路线、楼层引用和生成任务；不读取原版存档或密钥文件。
+            RetainErrors(data);
+            if (cooperative is NationalSpire.Coop.CoopWorld world) RetainErrors(world);
             Section("career.json", () => data);
             Section("logging-performance.json", LoggingPerformance);
             Section("ui-performance.json", UiPerformance.Snapshot);
@@ -217,7 +223,7 @@ public static partial class Diagnostics
                 if (_writeError.Length > 0) notes.Add("运行日志写入失败：" + Redact(_writeError));
             }
             Write("session-events.jsonl", string.Join('\n', events));
-            foreach (var log in ReadLogs("national-spire.log")) Write("mod-logs/" + log.Key, log.Value);
+            foreach (var log in ReadAutomaticLogs()) Write("mod-logs/" + log.Key, log.Value);
             try
             {
                 var logs = Directory.Exists(gameLogDirectory) ? new DirectoryInfo(gameLogDirectory).EnumerateFiles("*.log")
@@ -229,7 +235,7 @@ public static partial class Diagnostics
             Write("说明.txt", "问题报告 v" + ModVersion + "\n\n包含当前模组生涯、比赛种子及路线、社区和生成状态、运行环境、最近请求与错误记录。\n"
                 + "AI 请求记录含发送的提示词和收到的内容，便于排查上下文与格式问题。凭据已自动隐藏。\n"
                 + "请同时说明操作步骤、发生时间以及预期结果。截图可另附。\n"
-                + "普通运行、随机事件和比赛日志各保留最近五份文件，达到约2 MiB后在下一条写入前轮换；超过轮换点的完整记录仍然保留。较早文件随轮换清除。\n"
+                + "私聊、群聊、社区、周刊、随机事件、比赛、保存与多人同步、其他运行记录分别保留最近五份文件，达到约2 MiB后在下一条写入前轮换；超过轮换点的完整记录仍然保留。较早文件随轮换清除。\n"
                 + "随机事件包含完整请求、原始回复和效果检查现场；比赛日志按本生涯编号导出。队友报告包含其保留范围内的完整记录。\n"
                 + "日志读取到导出开始时的完整记录边界；凭据自动隐藏，文件全文随报告导出。\n"
                 + "导出缺失项：\n" + (notes.Count == 0 ? "所有项目读取完成。" : string.Join("\n", notes)));

@@ -2,6 +2,8 @@
 
 ## 自动保存诊断入口
 
+单人 GameBridge.StartMatch 的每阶段记录与资源观察沿 Diagnostics.Record 写入既有 matches.jsonl，每条完整写入后刷新，新增生涯保存和广播次数为0。转场或原版资源任务始终等待时，已经写入的阶段和路径保留在设备日志；强制退出后由原 Export/CapturePeerLogs 读取保留文件。StartDiagnostics 的记录范围、资源补丁与实测条件见 GAME_AND_UI 的开局阶段与资源诊断。当前五份比赛日志同时保留比赛、模拟、重赛选择及开局阶段，较早完整记录按同一轮换范围到期。
+
 CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 ShouldSave、网络类型、尝试编号及当前阶段，使原版因 ShouldSave 跳过下层保存的情况也留下入口证据。该补丁只观察入口。原 CoopSavePatch 仍拦截 SerializableRun 的联机保存并调用 CoopNativeRun.Save。Save 对客机、对局不存在和暂停分别记录跳过原因；正式保存前记录旧检查点字节数、实际章节、运行秒数、访问地图坐标数和各玩家生命，ValidateRun 后编码一次、Commit 一次，成功后记录新字节数、哈希及 Revision。诊断失败由 Diagnostics 自身处理，比赛的保存和广播顺序沿用原实现。
 
 2026-10-21 本机两个独立 Godot 进程使用真实原版对局、Harmony 保存入口和 ENet，房主25项、客机7项通过。两次地图推进为130.2374和260.1274毫秒，均包含原版操作、同步和保存等待，Revision 各增加1；此次未单独测量内部步骤及分配量。入口、实际保存前和提交后记录均存在。测试没有加载报告者第三方角色模组，也没有验证 Steam 跨机重连；报告者返回首层的原始原因仍待对应现场。原始记录保留在本地 .artifacts/log-stress-20261021-c/native-save。
@@ -10,7 +12,11 @@ CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 Shou
 
 ## 随机事件的个人资料与共同效果
 
-随机事件详细诊断由执行模型请求的设备在本机保存，房主代成员执行时保存在房主。RequestPrivateAsync 在 task:event 请求前和请求结束各写入一次完整诊断，原生成、保存和广播次数沿用现有流程。CapturePeerLogs 收集普通五份日志、随机事件、当前世界的比赛记录、会话记录及最近五份原版游戏日志全文；现场字段及轮换见 DATA_CONTRACTS 的随机事件诊断记录。
+随机事件详细诊断由执行模型请求的设备在本机保存，房主代成员执行时保存在房主。RequestPrivateAsync 在 task:event 请求前和请求结束各写入一次完整诊断，原生成、保存和广播次数沿用现有流程。CapturePeerLogs 收集八个固定功能各自最近五份日志、当前世界的比赛兼容条目、随机事件汇总、会话记录及最近五份原版游戏日志全文；现场字段及轮换见 DATA_CONTRACTS 的随机事件诊断记录。
+
+CareerStore.Data 在旧生涯读取及恢复之后调用 Diagnostics.RetainErrors，发生转换时沿已有 Save 保存一次。CareerStore.Save 在 ExternalSave 回调或本地序列化前调用同一入口；主文件和既有备份替换顺序保持原样。旧主文件首次迁移后可能仍在原 .bak 中保留完整错误，下一次正常保存按既有规则覆盖这份备份。Diagnostics.Export 也先调用同一入口，再导出当前生涯与全部日志。
+
+CoopJson.PublicBytes 在序列化 CareerData、CoopWorld 或 CoopSnapshot 前调用同一入口；CoopWorld 同时覆盖共同世界及每名成员的 Life.Mailbox 和 Life.RandomEvents。完整广播、检查点、共同生涯导出和 PublicCopy 因而使用相同处理。CoopStorage.Load 先校验原检查点哈希，再转换恢复资料中的长错误，下一次正常保存写入摘要，原检查点保留顺序不变。生涯的 PrivateMemorySources 及群内交互会话也参与检查。长错误归档使用本机文件及已有后台重试，不新增多人消息、保存次数或业务重试；错误原文由所在设备的诊断收集进入队友报告。
 
 CoopCoordinator.CollectDiagnostics 重复点击复用正在进行的同一任务。房主向在线成员发送 diagnostics-request；成员在游戏线程调用 CaptureDiagnostics 一次，后台序列化、脱敏、压缩并缓存该次分片。Tick/PumpDiagnostics 每次发送一个24000字节分片。房主每三秒请求尚缺分片，成员复用缓存重发；完整收到后后台校验、解压、读取与脱敏，主线程 Tick 发布报告。诊断专用 CoopAssembler 使用既有分片格式，完整报告按实际大小组装，普通业务同步的原有容量条件继续由其独立分支处理。缺片和损坏片在诊断通道内重试，日志记录真实错误；游戏同步状态继续按原流程运行。
 

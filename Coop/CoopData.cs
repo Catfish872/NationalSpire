@@ -18,7 +18,13 @@ public static class CoopJson
         return new(Options) { TypeInfoResolver = resolver };
     }
     // 直接序列化公开字段，避免为删除本地AI配置而复制整份世界。
-    public static byte[] PublicBytes<T>(T value) => JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions);
+    public static byte[] PublicBytes<T>(T value)
+    {
+        if (value is CoopWorld world) Diagnostics.RetainErrors(world);
+        else if (value is CoopSnapshot snapshot) Diagnostics.RetainErrors(snapshot.World);
+        else if (value is CareerData career) Diagnostics.RetainErrors(career);
+        return JsonSerializer.SerializeToUtf8Bytes(value, PublicOptions);
+    }
     public static byte[] Bytes<T>(T value) => JsonSerializer.SerializeToUtf8Bytes(value, Options);
     public static T Read<T>(byte[] bytes) => JsonSerializer.Deserialize<T>(bytes, Options) ?? throw new InvalidDataException("数据为空");
     public static T Copy<T>(T value) { using var timing = UiPerformance.Measure(UiPerformance.Work.CoopCopy); return Read<T>(Bytes(value)); }

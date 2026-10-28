@@ -834,7 +834,7 @@ public partial class CareerScreen : Control, IScreenContext
     private void Notice(string message, bool error)
     {
         if (error && _privateOverlay != null) ShowPrivateCommandError(message);
-        _notice.Text = message; _notice.Show(); _noticeRemaining = error ? 0 : 4;
+        _notice.Text = error ? PlayerFacingText.LongError(message) : message; _notice.Show(); _noticeRemaining = error ? 0 : 4;
         _notice.AddThemeColorOverride("font_color", error ? new Color("f29b9b") : _gold);
     }
 

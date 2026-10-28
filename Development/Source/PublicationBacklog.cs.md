@@ -19,7 +19,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Current()`](AiWeekly.cs.md#symbol-aa1dd49fa9ef)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.PublicationBacklog.Compact(NationalSpire.CareerData, bool)`](PublicationBacklog.cs.md#symbol-37eb1c83d725)
+**调用者：** [`Current()`](AiWeekly.cs.md#symbol-b417b2a764a0)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.PublicationBacklog.Compact(NationalSpire.CareerData, bool)`](PublicationBacklog.cs.md#symbol-37eb1c83d725)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 

@@ -224,7 +224,7 @@ private static readonly Color Ink = new("eff4f6");
 
 来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-c87d3c4db5f5)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)
 
@@ -911,7 +911,7 @@ private static readonly Color Ink = new("eff4f6");
 
 来源：源码第 309 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-c87d3c4db5f5)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double)`](DateSceneView.cs.md#symbol-fecef0523d98)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`
 
@@ -947,7 +947,7 @@ private static readonly Color Ink = new("eff4f6");
 
 来源：源码第 320 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-c87d3c4db5f5)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；`double.IsFinite(double)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`System.Math.Clamp(double, double, double)`
 

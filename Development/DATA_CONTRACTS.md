@@ -4,11 +4,25 @@
 
 Diagnostics.RecordEvent 的 context 关联实际请求来源，正式事件为 WorldId/event/事件编号；attempt 采用每轮传输的独立 trace。请求、回复、生成失败和效果检查分别作为完整 JSON 行追加到 random-events.jsonl，请求与回复通过 context/attempt 对应。回复包含实际 messages、原始 content、reasoning、连接方案编号及异常；重新生成使用新 trace。ProcessEventAsync 另记 generation-failed 的事件现场。记录属于设备本机诊断目录，房主代成员执行时保存在房主；生涯、实时快照和操作版本沿用原数据归属。
 
-普通 national-spire.log、随机事件 random-events.jsonl、比赛 matches.jsonl 共用 LogStorage.WriteLog → AppendLog。每类保留当前及最近四份历史文件；当前文件达到2097152字节后，在下一条写入前轮换。每条全文写入，超大记录可以使单份超过轮换点。每类通常约10MiB；实际字节数由完整记录的边界决定，并非硬性总量上限。旧 random-events/*.json、matches/**/*.jsonl 在 Configure 时依时间完整迁入，成功后删除原文件；读取或写入失败的旧文件继续随报告导出。切换生涯沿用设备日志目录，关闭进程保留磁盘文件。
+日志按固定功能独立保留：私聊与约会 private.jsonl、群聊 group.jsonl、社区 community.jsonl、周刊 weekly.jsonl、随机事件 random-events.jsonl、比赛 matches.jsonl、保存与多人同步 storage.jsonl、其他运行 national-spire.log。各组共用 LogStorage.WriteLog → AppendLog，每组保留当前及最近四份历史文件；当前文件达到2097152字节后，在下一条写入前轮换。每条全文写入，超大记录可以使单份超过轮换点。每组通常约10MiB，八组都写满时通常约80MiB；实际字节数由完整记录边界决定，并非硬性总量上限。文件按需创建，人物和会话数量只增加记录正文，不增加文件组。旧 national-spire.log 沿原文件保留；旧 random-events/*.json、matches/**/*.jsonl 在 Configure 时依时间完整迁入，成功后删除原文件；读取或写入失败的旧文件继续随报告导出。切换生涯沿用设备日志目录，关闭进程保留磁盘文件。
+
+Diagnostics.BeginLog 使用 AsyncLocal 保存发起功能及操作上下文。私聊、群聊及两种总结、社区新闻与回复、周刊、随机事件在业务入口设置作用域；RequestPrivateAsync 继承实际发起功能，独立调用按 task 选择。共用 private.request、private.transport、private.response、chat.tools 等记录因此进入实际功能组。作用域在异步调用结束后恢复，并行操作各自继承；分类明确的比赛、保存和多人同步记录按其类别归属。Record 的 context 字段保存作用域上下文，detail 沿用完整原文。ReadAutomaticLogs 同时供 Export 和 CapturePeerLogs 导出八组全部保留文件；原比赛按世界筛选和随机事件汇总入口继续提供兼容条目。matches.jsonl 中的普通记录没有 world 顶层字段时，按世界筛选跳过该行，完整行仍进入 mod-logs。
+
+LogStorage 的 LogWriters 按上述八个固定文件名复用 FileStream，每个文件最多一个写入句柄，全部访问沿现有 Gate 串行执行。每条完整记录调用 Write 和 Flush；常规追加复用句柄，首次打开和轮换后检查五份保留范围，删除失败时保留 NeedsTrim，下一次写入继续尝试。轮换先关闭当前句柄，再移动原文件并打开新文件；写入失败关闭对应句柄，原 WriteLog 待写队列按既有规则重试。Configure 关闭所有句柄后设置目录并迁移旧记录，进程正常退出在保存性能统计后关闭句柄。导出仍使用 OpenTraceSnapshot 的共享读取和固定长度，读取期间追加、轮换由原文件共享规则处理。缓存数量随八个功能文件固定，FileStream 使用默认4096字节缓冲；每条刷新后数据交给操作系统，强制结束进程后的保留测试见 GAME_AND_UI，断电及磁盘损坏属于另一种故障。
+
+GameBridge.StartMatch 为每次普通开局、同种子重赛和新种子重赛建立 StartDiagnostics。match.start.progress 记录含独立 attempt、累计毫秒、WorldId/Season/Day、比赛编号、初始种子/角色/进阶、Failure 尝试与 PendingMatchId；parameters 另记录最终随机角色、种子和章节。阶段开始即写入，切换阶段时写入上一阶段完成；原版异步方法记录开始、完成、取消及完整异常。资源会话记录完整待加载清单和串行特效清单，每个资源请求、读取及同步加载记录路径与结果，状态仅在变化时写入。首次观察方法时附带程序集、Harmony 补丁所有者、方法、优先级和先后约束，异步方法同时读取状态机 MoveNext 的补丁来源。方法补丁存在只作为排查依据，不能直接认定其引起故障。
+
+StartDiagnostics.Current 只指向当前单人开局观察对象；资源、已检查方法和资源会话容器随本次任务使用，Dispose 清空容器并恢复或清除当前引用，任务续接完成后释放对应引用。资源总数决定本次清单和待加载路径规模；等待状态不变时复用同一字典项，持续等待不重复追加记录。开局之外各补丁只检查当前引用，实例处理对象仅在有效观察期间创建。新增记录继续写入 matches.jsonl 的既有五份轮换，沿 Export/CapturePeerLogs 的 mod-logs 全文导出；生涯数据结构、保存次数及多人消息类型沿原流程。
+
+Diagnostics.RetainErrors 为保存和导出的长错误处理入口。超过1000字符的 PrivateTurn.Error、私聊与群聊 SummaryError、GroupTurn.Error/Notices、群内交互会话错误、RandomEventRecord.Error、帖子及收藏帖的新闻/回复/评论 AiWorkState.Error、周刊两类 AiWorkState.Error，分别将完整原文写成对应功能的 error.full 记录。记录包含独立32位编号、世界/成员/人物或群/轮次/阶段上下文和原错误；原字段替换为总长不超过1000字符的摘要及诊断引用。引用格式为换行诊断编号后接固定功能序号/32位编号，功能序号按 LogArea 既有顺序保留。短错误原字符串直接沿用，已转换错误再次保存只扫描而不重新归档。人物输入、正文、交互和已有聊天总结内容沿原机制保存。
+
+ErrorDetail 在复制时按诊断引用读取该组五份文件及待写记录；未配置磁盘或文件暂不可读时也查询有界会话记录。找到编号后返回脱敏全文；已超出保留范围时返回摘要、编号和明确的轮换说明。编号不建立长期缓存或独立文件。界面通过 ErrorExplanation 隐藏程序诊断引用，正常短错误中供应商自行提供的编号文字保持原样。归档失败沿现有待写队列后台重试，存档继续使用摘要；进程结束时仍未成功落盘的内容受下段所述内存保留边界约束。
 
 临时文件写入失败时，WriteLog 将完整行加入按类别管理的内存队列，后台每秒重试；内存按每类五份轮换点保留最近完整记录，至少保留最新一条超大记录。过期整条记录计入 expiredPendingRecords，导出包含仍待写入的完整行和写入错误。进程关闭会结束内存重试，尚未落盘内容无法保证在重启后恢复。普通会话内存保留最多512条、约2Mi字符且至少保留最新完整记录；错误计数保留64种，全部错误仍逐次写入磁盘。性能统计为固定阶段累计，覆盖固定文件。玩家主动导出的 ZIP 由玩家管理。
 
 效果检查按事件来源、原选项及错误摘要去重，内存只保留最近512个摘要。现场包含 Day/Season、玩家编号和昵称、参与人物、完整 RandomEventRecord、原选项及位置、自定义标记、人物目标匹配结果、钱包美元、关注、经营身份及库存。Export 与 CapturePeerLogs 读取同一套保留文件：持锁打开文件并固定读取长度，释放锁后读取全文；轮换期间打开的文件仍可读取。凭据统一经过 Redact。版本修改前已经删除或截断的历史内容无法恢复。
+
+2026-10-26 分组归档使用001711诊断包副本实测，完整错误451166字符转换为134字符，采用相同序列化选项的存档由13086075降为12634371字节，减少451704字节。首次归档15.30毫秒、线程分配4962152字节；五次重复扫描0.25/0.13/0.11/0.11/0.11毫秒，分配235296/235296/235296/235448/235296字节。每次扫描只遍历已有错误字段，完整归档仅在新长错误或旧档转换时发生；主保存、广播和模型请求次数沿原流程。完整群聊和私聊处理含隔离文件保存与模拟HTTP502分别280.34和175.64毫秒，这两项含内部调用，不与内部扫描耗时相加。本机八组全部轮换后各有五份，人物和会话编号没有增加文件组。LogStressChecks 29项、LogDiagnosticChecks 413项、多人诊断压力39项及多人报告收集23项通过，覆盖完整大记录、连续写入、重复错误、占用后补写、并发导出、旧记录迁移、超大分片、缺片重传及重连。实测使用本机文件与测试传输组件，未运行Steam跨机；详细逐次数据在本地.artifacts/grouped-errors-20261026。
 
 ## 结算对阵详情
 
@@ -40,7 +54,9 @@ ClubOffer.IncomeVersion 标记本人合同已完成工资×2、胜场和目标�
 
 ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为持有数量，GiftReceipts 保存已接受礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件；Gift 接受才扣除数量。交互回退恢复对应数量差额，并保留其后购买结果。
 
-ConsumerState.TemporaryGoods 保存商品编号、累计日期和数量；仅当天可用于即时赠礼或活动附件。Attachments 保存付款编号、收件人物或群聊、日期、原 PrivateOffer 与状态。PrivateOffer.ConsumerAttachmentId 跨草稿、发送轮次、改期及回退共用付款身份，附件业务编号仍用于 AI 接受/拒绝。Prepare 补购不足数量并保存 draft；Sent 更新为 pending 并保存最终附件编号；Resolve 将礼物接受设为 used、活动接受设为 accepted，拒绝或取消设为 returned，并将即时商品累计到处理当天 TemporaryGoods。Attend 将已付款即时活动设为 used，沿原规则更新邀请次数和好感；耐用品赴约继续调用 ConsumerEngine.Use。重复命令和已处理收据沿原去重入口，Prepare 读取同一付款编号直接复用。
+ConsumerState.TemporaryGoods 保存商品编号、累计日期和数量；仅当天可用于即时赠礼或活动附件。Attachments 保存付款编号、收件人物或群聊、日期、原 PrivateOffer 与状态。PrivateOffer.ConsumerAttachmentId 跨草稿、发送轮次、改期及回退共用付款身份，附件业务编号仍用于 AI 接受/拒绝。Prepare 补购不足数量并保存 draft；Sent 更新为 pending 并保存最终附件编号；Resolve 将礼物接受设为 used、活动接受设为 accepted，拒绝或取消设为 returned，并将即时商品累计到处理当天 TemporaryGoods。ConsumerAttachments.Attend 沿用已确认即时活动的付款安排，存在付款记录时将其设为 used，按原规则更新邀请次数和好感；旧档付款记录缺失时照常完成已确认活动。耐用品赴约调用 ConsumerEngine.Use，appointment 参数为 true。活动从已确认改为已赴约后，同一张卡片的后续点击由 SocialAppointments.Attend 的状态判断维持一次结算。Prepare 读取同一付款编号直接复用。
+
+ConsumerEngine.Use 的 appointment 默认为 false，商城直接使用及联机 consumer-use 命令继续检查商品持有、参与者与招待费；SocialAppointments.Attend 传入 true，沿已确认名单执行，库存变化、参与者联系资格、人数和余额变化均继续赴约。招待费按原金额扣除并记账，余额允许扣成负数。所有使用入口取消每赛季同一活动一次的限制。OwnedGood.UsedVerbs 和 UsedSeason 继续兼容旧档，Use 停止追加记录，Season 沿原流程清空旧标记；PartyCount 记录累计活动次数，InvitedThisSeason 继续决定首次邀请好感及后续每次加1。
 
 Advance 清除早于当前日期的临时数量，将跨日未发送的即时附件设为 expired；pending 可跨日等待答复，accepted 保留至活动赴约。取消已接受即时活动返还到取消当天。正常购买即时使用并记录消费事实；附件补购复用同一 Buy 记账与购物事实，付款预留由 Attachments 负责。耐用品补购加入库存，赠礼接受时扣除，活动保留物品并沿用招待费。旧档缺少这两个列表及付款字段时使用空集合、空编号，原活动和礼物继续原流程。PrivateInteractionUndo 同时记录付款状态、临时数量、礼物收据与库存差额，重新生成从对应交互前状态继续。
 

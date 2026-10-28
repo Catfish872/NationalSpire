@@ -160,7 +160,7 @@ public partial class CareerScreen
                 return;
             }
             string state = turn.Id + turn.Status + turn.Error;
-            if (_dateState != state) { _dateState = state; _dateView.ShowWaiting(turn.Status == "failed" ? turn.Error : "正在生成完整回复与情绪差分…", turn.Status == "failed"); }
+            if (_dateState != state) { _dateState = state; _dateView.ShowWaiting(turn.Status == "failed" ? PlayerFacingText.LongError(turn.Error) : "正在生成完整回复与情绪差分…", turn.Status == "failed"); }
             return;
         }
         if (_dateTurn != turn.Id || _dateSource != turn.Reply || _dateState != "complete")
@@ -173,7 +173,7 @@ public partial class CareerScreen
             if (!streamed) _dateIndex = bookmark?.Turn == turn.Id && bookmark.ReplyHash == hash ? Math.Clamp(bookmark.Index, 0, _dateLines.Count) : 0;
             if (streamed && _dateIndex < _dateLines.Count) { _dateView.AppendLine(_dateLines[_dateIndex]); _dateView.Streaming(false); }
             else ShowDateLine();
-            if (turn.Error.Length > 0) _dateView.Status.Text = turn.Error;
+            if (turn.Error.Length > 0) _dateView.Status.Text = PlayerFacingText.LongError(turn.Error);
         }
         string attachments = string.Join('|', PrivateAttachments.Select(a => a.Id));
         if (_dateAttachments != attachments)

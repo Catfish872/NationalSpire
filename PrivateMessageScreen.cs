@@ -267,10 +267,10 @@ public partial class CareerScreen
             if (turn.Mood is { } mood && !turn.ReplyDeleted) AddPrivateMood(mood);
             if (turn.Status == "failed")
             {
-                _privateBody.AddChild(PrivateText(turn.Error, 15, new Color("ee929d")));
+                _privateBody.AddChild(PrivateText(PlayerFacingText.LongError(turn.Error), 15, new Color("ee929d")));
                 if (turn == c.Turns.Last()) _privateBody.AddChild(PrivateButton("重试这条回复", () => PrivateCommand("dm-retry", new()), 180));
             }
-            else if (turn.Error.Length > 0) _privateBody.AddChild(PrivateText(turn.Error, 14, _muted));
+            else if (turn.Error.Length > 0) _privateBody.AddChild(PrivateText(PlayerFacingText.LongError(turn.Error), 14, _muted));
             foreach (var offer in c.Offers.Where(o => o.TurnId == turn.Id)) AddPrivateOffer(data, offer);
         }
         TrainingCompletionsThrough(completions, long.MaxValue);
@@ -284,7 +284,7 @@ public partial class CareerScreen
         }
         bool busy = c.Turns.Any(t => t.Status is "queued" or "sending");
         _privateSend!.Text = busy ? "停止生成" : "发送";
-        _privateStatus!.Text = c.SummaryError.Length > 0 ? c.SummaryError : busy ? "正在回复…" : c.SummaryStatus;
+        _privateStatus!.Text = PlayerFacingText.LongError(c.SummaryError.Length > 0 ? c.SummaryError : busy ? "正在回复…" : c.SummaryStatus);
         _privateStatus.Visible = _privateStatus.Text.Length > 0;
         int completed = c.Turns.Count(t => t.Status == "complete");
         if (ChatAtLatest && c.SeenCount < completed) PrivateCommand("dm-read", new());
@@ -365,6 +365,7 @@ public partial class CareerScreen
     }
     private void ShowPrivateCommandError(string error)
     {
+        error = PlayerFacingText.LongError(error);
         if (_privateStatus != null) { _privateStatus.Text = error; _privateStatus.Show(); }
         if (_dateView != null) _dateView.Status.Text = error;
         if (_dialogOverlay?.FindChild("DateAttendanceError", true, false) is Label reason)

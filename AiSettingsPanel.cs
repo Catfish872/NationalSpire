@@ -134,7 +134,7 @@ public static class AiSettingsPanel
             {
                 if (!Current()) return;
                 modelStatus.Text = "获取失败，详情如下。也可手动填写模型名称。";
-                details.Text = AiService.FailureReason(e); details.Visible = true;
+                details.Text = PlayerFacingText.LongError(AiService.FailureReason(e)); details.Visible = true;
             }
             finally
             {

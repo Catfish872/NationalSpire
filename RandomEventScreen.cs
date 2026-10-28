@@ -244,7 +244,7 @@ public partial class EventStoryView : Control
         _retry.Visible &= !customBusy; _retry.Disabled = busy; _retry.Text = e.State == "failed" || generating ? "重试生成" : "重新生成";
         _skip.Visible = !complete && !skipped;
         Public.Visible = !complete && !skipped;
-        Status.Text = e.Error; Status.Visible = e.Error.Length > 0;
+        Status.Text = PlayerFacingText.LongError(e.Error); Status.Visible = e.Error.Length > 0;
         _phase.Text = complete ? (e.Public ? "已完成 · 公开经历" : "已完成 · 私密经历") : skipped ? "已跳过" : generating ? (live?.Phase ?? "正在恢复请求") + (live?.Options > 0 ? " · 已收到" + live.Options + "个选项" : "") : e.State == "ready" ? "选择一个行动，让这段故事落下句点" : "";
         _phase.Visible = _phase.Text.Length > 0;
         string thought = customBusy ? live?.Reasoning ?? e.CustomReasoning : _customExpanded ? e.CustomReasoning : e.Reasoning; _thinking.Visible = thought.Length > 0;

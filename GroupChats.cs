@@ -170,7 +170,7 @@ public static class GroupChats
             if (effect == null) return "这项交互已不存在。";
             if (effect.Human != Human(d)) return "这项交互由发起人处理。";
             bool humanActivity = IsHuman(d, effect.Person);
-            if (!humanActivity && !PrivateMessages.CanChat(d, effect.Person)) return "该人物已经删除，这项交互不再执行。";
+            if (kind != "group-offer-attend" && !humanActivity && !PrivateMessages.CanChat(d, effect.Person)) return "该人物已经删除，这项交互不再执行。";
             string? result = InLane(d, g, effect.Human, effect.Person, effect.Target, c =>
             {
                 if (!humanActivity) return PrivateMessageCommands.Apply(d, "dm-" + kind[12..], effect.Person, command.Interaction);

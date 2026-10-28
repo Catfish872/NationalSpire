@@ -33,6 +33,7 @@ public static partial class AiService
     }
     private static async Task GenerateWeekly(CareerData data, WeeklyEdition issue, bool profiles, bool retry)
     {
+        using var logScope = Diagnostics.BeginLog(LogArea.Weekly, data.WorldId + "/weekly/" + issue.Week + (profiles ? "/profiles" : "/news"));
         var work = profiles ? issue.ProfilesWork : issue.NewsWork;
         if (!data.Ai.Enabled || !PublicationBacklog.Latest(data, issue) || work.State != (retry ? "failed" : "idle")) return;
         // 入队前同步标记，重复进入界面不会再调度同一项。

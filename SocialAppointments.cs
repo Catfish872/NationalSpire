@@ -83,10 +83,9 @@ Activity 填邀请、接受、改期或取消；Id 填对应活动编号，新�
     {
         if (o.Kind != "activity" || o.State != "已确认" || PrivateAppointments.Date(d, o) != d.Day) return "这项活动当前不能赴约。";
         var people = o.Participants.Where(id => !GroupChats.IsHuman(d, id)).Distinct().ToArray();
-        if (WeddingAppointments.Error(d, o) is { } weddingError) return weddingError;
         if (ConsumerCatalog.Get(o.GoodId)?.InstantActivity == true)
         { if (ConsumerAttachments.Attend(d, o, publicly) is { } paidError) return paidError; }
-        else if (o.GoodId.Length > 0 && !WeddingAppointments.IsWedding(o) && ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly) is { } error) return error;
+        else if (o.GoodId.Length > 0 && !WeddingAppointments.IsWedding(o) && ConsumerEngine.Use(d, o.GoodId, o.GoodVerb, people, publicly, appointment: true) is { } error) return error;
         o.PublicAttendance = publicly; o.State = "已赴约";
         if (!scene) WeddingAppointments.Complete(d, o);
         if (publicly && o.GoodId.Length == 0) PublishAttendance(d, o);

@@ -81,11 +81,9 @@ public static class ConsumerAttachments
     }
     public static string? Attend(CareerData d, PrivateOffer a, bool publicly)
     {
-        if (Find(d, a) is not { State: "accepted" } saved) return "这项活动的付款记录已不可使用。";
         var good = ConsumerCatalog.Get(a.GoodId)!; var verb = good.Activities.Single(v => v.Id == a.GoodVerb);
         var guests = a.Participants.Where(id => !GroupChats.IsHuman(d, id)).ToArray();
-        if (ConsumerEngine.Guests(d, guests, verb.Slots) is { } error) return error;
-        saved.State = "used";
+        if (Find(d, a) is { } saved) saved.State = "used";
         ConsumerEngine.Season(d);
         var s = d.Life.Consumer; s.PartyCount++;
         foreach (string id in guests)

@@ -74,7 +74,7 @@ public partial class CareerScreen
                 material.Text = System.Text.Json.JsonSerializer.Serialize(parsed.RootElement, new System.Text.Json.JsonSerializerOptions
                     { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
             }
-            catch (Exception e) { material.Text = e.Message; localError = e.Message; }
+            catch (Exception e) { material.Text = PlayerFacingText.LongError(e.Message); localError = e.Message; }
         }
         Button send = null!;
         send = Button("开始测试", () =>
@@ -95,7 +95,7 @@ public partial class CareerScreen
                     return true;
                 }, "发送并测试");
             }
-            catch (Exception e) { localError = e.Message; status.Text = e.Message; }
+            catch (Exception e) { localError = e.Message; status.Text = PlayerFacingText.LongError(e.Message); }
         }, 180);
         actions.AddChild(send);
         var inspect = Button("查看本次材料", () => { showingMaterial = !showingMaterial; material.Visible = showingMaterial; compare.Visible = !showingMaterial; if (showingMaterial) ShowMaterial(); }, 210);
@@ -122,10 +122,10 @@ public partial class CareerScreen
                 "queued" => test.Work.WaitReason.Length > 0 ? test.Work.WaitReason : "正在等候空闲位置……",
                 "sending" => "正在试写，可以返回继续编辑。",
                 "completed" => "试写完成。同一材料可重新测试，或返回编辑后再比较。",
-                "failed" => test.Work.Error,
+                "failed" => PlayerFacingText.LongError(test.Work.Error),
                 _ => "材料已经选好，点击开始测试。" };
             else status.Text = sources.Count == 0 ? "当前场景还没有可用材料，请选择其他场景。" : "选择材料后开始测试。";
-            if (localError.Length > 0) status.Text = localError;
+            if (localError.Length > 0) status.Text = PlayerFacingText.LongError(localError);
         }
         ChooseSources(); Refresh();
         var timer = new Godot.Timer { WaitTime = .25, Autostart = true }; shade.AddChild(timer); timer.Timeout += Refresh;

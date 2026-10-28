@@ -36,7 +36,8 @@ public static class PrivateMessageCommands
         if (kind == "dm-avatar-frame") return NpcAvatarFrames.Select(data, person, command.Text);
         if (kind == "dm-settings") { command.Settings!.Validate(); PrivateMessages.Mailbox(data).Settings = command.Settings; return null; }
         if (kind is "dm-date-open" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
-        var c = PrivateMessages.Conversation(data, person);
+        var c = kind == "dm-attend" && PrivateMessages.Mailbox(data).Conversations.TryGetValue(person, out var existing)
+            ? existing : PrivateMessages.Conversation(data, person);
         if (MatchFailure.Locked(data) is { } failure) return failure;
         if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary")
             return PrivateMessages.Manage(data, c, kind, command);

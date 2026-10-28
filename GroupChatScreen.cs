@@ -71,7 +71,7 @@ public partial class CareerScreen
         string signature = g.Id + ":" + g.Revision + ":" + g.Turns.LastOrDefault()?.Status + ":" + _groupPages.Page + ":" + _groupPages.Size + ":" + g.SummaryStatus + g.SummaryError + ":" + ViewData.Day;
         signature += ":" + string.Join(",", g.Members.Select(id => GroupChats.CanSpeak(ViewData, id)));
         _privateSend!.Text = busy ? "正在回复…" : "发送"; _privateSend.Disabled = busy;
-        _privateStatus!.Text = _groupError.Length > 0 ? _groupError : g.SummaryError.Length > 0 ? g.SummaryError : g.SummaryStatus; _privateStatus.Visible = _privateStatus.Text.Length > 0;
+        _privateStatus!.Text = PlayerFacingText.LongError(_groupError.Length > 0 ? _groupError : g.SummaryError.Length > 0 ? g.SummaryError : g.SummaryStatus); _privateStatus.Visible = _privateStatus.Text.Length > 0;
         if (signature == _groupSignature) { UpdateGroupStream(g, live, thought.Text ?? ""); return; } _groupSignature = signature;
         _groupStreamParser = null; _groupStreamLabels.Clear(); _groupReasoningUpdate = null;
         _groupStreamRaw = ""; _groupStreamThought = thought.Text ?? "";
@@ -138,14 +138,15 @@ public partial class CareerScreen
             }
             foreach (string notice in t.Notices)
             {
+                string display = PlayerFacingText.LongError(notice);
                 if (notice.Contains("当前版本暂不支持 NPC 间约战"))
                 {
                     var card = new PanelContainer(); card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("203448", "668d9b", 10, 16));
-                    _privateBody.AddChild(card); Inner(card).AddChild(PrivateText(notice, 16, _ink));
+                    _privateBody.AddChild(card); Inner(card).AddChild(PrivateText(display, 16, _ink));
                 }
-                else _privateBody.AddChild(PrivateText(notice, 14, _muted));
+                else _privateBody.AddChild(PrivateText(display, 14, _muted));
             }
-            if (t.Error.Length > 0) _privateBody.AddChild(PrivateText(t.Error, 14, new Color("ee929d")));
+            if (t.Error.Length > 0) _privateBody.AddChild(PrivateText(PlayerFacingText.LongError(t.Error), 14, new Color("ee929d")));
             if (t == g.Turns.LastOrDefault() && !busy)
             {
                 if (t.Status == "failed") _privateBody.AddChild(PrivateButton("重试这轮回复", () => GroupCommand("group-retry", new()), 180));
@@ -231,14 +232,14 @@ public partial class CareerScreen
         var d = ViewData;
         try
         {
-            if (GroupChats.Command(d, kind, id, command) is { } error) { CareerStore.Save(d); _groupSignature = ""; _privateStatus!.Text = _groupError = error; _privateStatus.Visible = true; return; }
+            if (GroupChats.Command(d, kind, id, command) is { } error) { CareerStore.Save(d); _groupSignature = ""; _groupError = error; _privateStatus!.Text = PlayerFacingText.LongError(error); _privateStatus.Visible = true; return; }
             CareerStore.Save(d); accepted?.Invoke(); _groupSignature = _privateListSignature = ""; if (kind != "group-read") _groupError = "";
             if (kind == "group-create") { SelectGroup(GroupChats.Visible(d).Last().Id); return; }
             if (kind is "group-send" or "group-retry" or "group-regenerate" or "group-arbitrate") _ = AiService.ProcessGroupAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, id);
             if (kind == "group-summary") _ = AiService.SummarizeGroupAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, id, command.Text);
             if (kind == "group-offer-confirm") _ = AiService.ProcessInteractionsAsync(CommunityThreads.PendingIds(d).ToArray(), d);
         }
-        catch (Exception ex) { _privateStatus!.Text = _groupError = AiService.FailureReason(ex); _privateStatus.Visible = true; }
+        catch (Exception ex) { _groupError = AiService.FailureReason(ex); _privateStatus!.Text = PlayerFacingText.LongError(_groupError); _privateStatus.Visible = true; }
     }
     private void GroupMemberPicker(GroupChat? group, Action<List<string>> accept, bool existing = false, string title = "", bool single = false)
     {

@@ -463,7 +463,7 @@ public const int MaxLineCharacters = 48;
 
 来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-a004e611929b)
+**调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-fc4f1928098b)
 
 **调用：** [`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`Segment(int)`](DateSceneData.cs.md#symbol-d9b852a716e1)；`string.TrimEnd()`；`string.TrimStart()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`
 

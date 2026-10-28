@@ -16,6 +16,8 @@ ConsumerPickerScreen.ConsumerEditor 是聊天赠礼、活动与商城附件的�
 
 Diagnostics.Record、RecordEvent 和 RecordMatch 负责各自记录的字段与脱敏，统一调用 LogStorage.WriteLog → AppendLog 完整写入与五份轮换。Configure 调用 MigrateLogs 处理旧独立事件及对局文件。ReadLogs 为 Export、CapturePeerLogs、ReadEventRecords 与 ReadMatchTraces 提供打开时固定长度的完整文件快照，TraceSnapshot 约束读取边界；普通会话、待写队列、效果错误摘要和错误计数的归属及范围见 DATA_CONTRACTS。LogPerformance 只累计固定阶段并覆盖固定统计文件。CoopDiagnostics 管理一次收集的缓存、缺片重发和释放；CoopWire 的诊断分支共用原压缩、分片和完整性校验入口。自动保存补丁及实际提交证据见 PERSISTENCE_AND_COOP。
 
+StartDiagnostics 由 GameBridge.StartMatch 持有，统一把阶段、原版任务、资源路径和方法补丁来源交给 Diagnostics.Record；Harmony 观察补丁通过 Current 使用同一个开局对象。其任务续接仅记录原任务结果，结束时清理本次路径、方法和会话引用。LogStorage 在八个固定文件名下复用写入句柄，每条刷新，轮换、Configure 和进程正常退出时关闭。开局调用关系及性能实测见 GAME_AND_UI，文件与内存范围见 DATA_CONTRACTS。
+
 专属约会使用 DateScenes、DateSceneScreen、DateSceneView。场景请求经过 PrivateMessageCommands → AiService.ProcessPrivateAsync，场景标记由 PrivateStreamParser 与 DateScenes.TaggedLines 解析，正文留在原 PrivateTurn。DateScenes.Guidance 从同一叙述规则生成普通括号说明或Replies中的场景字段说明；ChatReplyStream实时传入场景资料，ChatToolRequest在完整返回后复核SceneCues。当前约会的正文场景 JSON 仍由 PrivateStreamParser.SceneJson 转为同一 SceneCues，流式显示和最终保存共用此入口。PortraitDesignStore、DateSceneAssetStore 和 DateSceneBackgrounds 管理本机设计与图片，CharacterDesignPackage 负责独立素材 ZIP 往返。普通私聊与约会共用 ChatTimeline、AiService.SummarizePrivateAsync 与记忆管理。DateDiaries 管理单次约会日记，DateDiaryScreen 复用 PR 作者的列表与卡片界面。结束约会通过原私聊队列生成一次普通感想及隐藏日记；日记集合仅供查看，普通请求沿原聊天与总结机制组织上下文。
 
 联系人行、日历、徽章、商品图标与数量控件采用 PR 原控件：ContactRowButton、CalendarDayButton、AffectionVisuals、ConsumerProductArt、ConsumerGiftControls。通讯分类、置顶、右键和管理继续调用现有入口；ChatContacts 只组织显示资料。

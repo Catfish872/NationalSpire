@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CBCDC1B113BD5A4EAAEABAA3F22CD27ED798DD7612C5D4FB052E6EE6E5D8A331`。来源：[源码](../../PortraitDesignScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B97AADD68A24EAE4BB116854B045C153F1CCD350B93DC579995A5D1204349A52`。来源：[源码](../../PortraitDesignScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -480,24 +480,25 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-b5e3595bf2d6)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
+**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-b5e3595bf2d6)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
 
-**字段、属性、事件及方法组引用：** `Alive()`；`CommitIds()`；`DrawPage()`；`Message(string, bool)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`
+**字段、属性、事件及方法组引用：** `Alive()`；`CommitIds()`；`DrawPage()`；`Message(string, bool)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；`NationalSpire.PlayerFacingText.LongError(string)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) infer!.Text = "根据资料推测";`
-- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true);`
+- `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true);`
 - `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`IfStatementSyntax: if (Alive()) Message("已停止推测，当前编辑已保留。");`
 - `Alive()`；输入表达式：`Alive()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Alive()`
 - `CommitIds()`；输入表达式：`CommitIds()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CommitIds()`
 - `DrawPage()`；输入表达式：`DrawPage()`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPage();`
-- `Message(string, bool)`；输入表达式：`Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("推测未完成，可重试或直接编辑：" + AiService.FailureReason(e), true);`
+- `Message(string, bool)`；输入表达式：`Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e)), true);`
 - `Message(string, bool)`；输入表达式：`Message("已停止推测，当前编辑已保留。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("已停止推测，当前编辑已保留。");`
 - `Message(string, bool)`；输入表达式：`Message("正在结合人物资料和互动记忆推测；可继续编辑。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Message("正在结合人物资料和互动记忆推测；可继续编辑。");`
 - `Message(string, bool)`；输入表达式：`Message($"已补全 {changes} 项设定；手动编辑的字段已保留。" + design.Notes)`；返回值紧邻使用处：`ExpressionStatementSyntax: Message($"已补全 {changes} 项设定；手动编辑的字段已保留。" + design.Notes);`
-- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`AiService.FailureReason(e)`；返回值紧邻使用处：`BinaryExpressionSyntax: "推测未完成，可重试或直接编辑：" + AiService.FailureReason(e)`
+- `NationalSpire.AiService.FailureReason(System.Exception)`；输入表达式：`AiService.FailureReason(e)`；返回值紧邻使用处：`ArgumentSyntax: AiService.FailureReason(e)`
 - `NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；输入表达式：`AiService.InferPortraitAsync(data, id, baseline, cancel.Token)`；返回值紧邻使用处：`AwaitExpressionSyntax: await AiService.InferPortraitAsync(data, id, baseline, cancel.Token)`
+- `NationalSpire.PlayerFacingText.LongError(string)`；输入表达式：`PlayerFacingText.LongError(AiService.FailureReason(e))`；返回值紧邻使用处：`BinaryExpressionSyntax: "推测未完成，可重试或直接编辑：" + PlayerFacingText.LongError(AiService.FailureReason(e))`
 - `NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；输入表达式：`PortraitDesigns.MergeInference(design, baseline, response)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PortraitDesigns.MergeInference(design, baseline, response)`
 - `NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；输入表达式：`PortraitDesignStore.Save(path, design)`；返回值紧邻使用处：`ExpressionStatementSyntax: PortraitDesignStore.Save(path, design);`
 - `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<PortraitDesign>(JsonSerializer.Serialize(design, PortraitDesigns.Json), PortraitDesigns.Json)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: JsonSerializer.Deserialize<PortraitDesign>(JsonSerializer.Serialize(design, PortraitDesigns.Json), PortraitDesigns.Json)!`

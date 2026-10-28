@@ -67,6 +67,7 @@ public static class CareerStore
                 _data ??= CareerEngine.CreateNew();
                 PrivateMessageCommands.Recover(_data.Life);
                 GroupChats.Recover(_data);
+                bool retainedErrors = Diagnostics.RetainErrors(_data);
                 bool clubMarket = _data.Esports.EcosystemVersion >= 1 && (_data.Esports.OwnedClub is { EconomyVersion: < 1 } || _data.Esports.FreeAgentVersion < 2 || _data.People.Any(p => p.Id.StartsWith("free-agent-") && p.RecruitVersion < 1));
                 bool cameos = _data.Cameos.Version < CameoContent.Version && _data.Esports.EcosystemVersion >= 0;
                 string cameoBackup = path + ".pre-cameos" + CameoContent.Version;
@@ -114,7 +115,7 @@ public static class CareerStore
                 Paths[_data] = path;
                 if (lifeUpgrade) LoadNotice = "活动与培养已更新，旧项目已核验，漏发收益会在活动记录中注明。升级前存档已备份。";
                 else if (commerce) LoadNotice = "俱乐部与商业合作已更新。此前奖励已保留，个人赞助可重新选择。";
-                if (repairedContracts || clubMarket || recordsUpgrade || personalityUpgrade || cameos || lifeUpgrade || avatarUpgrade || commerce || calendarUpgrade || identities || upgrading || expanding || enriching || editedNews || upgradedCommunity || !File.Exists(path)) Save(_data);
+                if (retainedErrors || repairedContracts || clubMarket || recordsUpgrade || personalityUpgrade || cameos || lifeUpgrade || avatarUpgrade || commerce || calendarUpgrade || identities || upgrading || expanding || enriching || editedNews || upgradedCommunity || !File.Exists(path)) Save(_data);
                 return _data;
             }
         }
@@ -134,12 +135,13 @@ public static class CareerStore
 
     public static void Save(CareerData? data = null)
     {
-        if (data?.ExternalSave is { } external) { external(data); return; }
+        if (data?.ExternalSave is { } external) { Diagnostics.RetainErrors(data); external(data); return; }
         try
         {
             lock (Gate)
             {
                 data ??= Data;
+                Diagnostics.RetainErrors(data);
                 // 删除与保存共用锁；请求在删除前进入 Save 时，也不能重建已删除生涯。
                 if (data.ExternalSave is { } detached) { detached(data); return; }
                 if (!Paths.TryGetValue(data, out var path)) throw new InvalidOperationException("生涯未绑定存档路径。");

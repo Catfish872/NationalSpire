@@ -16,6 +16,7 @@ public static partial class AiService
         if (requested.Count == 0) return;
         var scheduled = requested.ToArray(); Status = "社区回应已排队";
         string trace = Guid.NewGuid().ToString("N");
+        using var logScope = Diagnostics.BeginLog(LogArea.Community, data.WorldId + "/reaction/" + trace);
         string failure = "请求中断或配置已改变，可重试";
         void Fail(string message) { failure = message; Status = message; }
         CommunityThreads.SetInteractionState(data, requested, "queued"); CareerStore.Save(data);

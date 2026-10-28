@@ -34,7 +34,7 @@ public sealed class OwnedGood
     public bool Durable { get; set; }
     /// <summary>一次性消费品。</summary>
     public bool Consumed { get; set; }
-    /// <summary>本季已用过的动词 id；换季清空，所以每件道具每种活动每季各 1 次。</summary>
+    /// <summary>旧存档的赛季活动记录；读取时兼容，赴约和使用次数由 PartyCount 记录。</summary>
     public List<string> UsedVerbs { get; set; } = [];
     public int UsedSeason { get; set; }
 }

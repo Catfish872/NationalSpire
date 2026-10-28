@@ -31,47 +31,61 @@ public static class GameBridge
     public static async Task<string?> StartMatch(CareerMatch match, CharacterModel character, int ascension)
     {
         var data = CareerStore.Data;
-        if (data.Failure is { } pending && (!pending.RetryRequested || pending.Result.MatchId != match.Id)) return MatchFailure.Locked(data);
-        if (SaveManager.Instance.HasRunSave || RunManager.Instance.IsInProgress) return MatchRecovery.SingleplayerInUse;
-        if (data.PendingMatchId != null) return "已有一场生涯比赛进行中。";
-        if (!data.Matches.Contains(match) || match.Status != "待赛" || !match.Registered || match.Day != data.Day) return "请先报名并前往比赛日。";
-        if (EsportsWorld.EntryReason(data, match) is { } locked) return locked;
-        if (ascension < match.RequiredAscension || ascension > 10) return $"本场进阶范围为 {match.RequiredAscension}—10。";
+        using var trace = new StartDiagnostics(data, match, character.Id.ToString(), ascension);
+        if (data.Failure is { } pending && (!pending.RetryRequested || pending.Result.MatchId != match.Id)) return trace.Finish(MatchFailure.Locked(data));
+        if (SaveManager.Instance.HasRunSave || RunManager.Instance.IsInProgress) return trace.Finish(MatchRecovery.SingleplayerInUse);
+        if (data.PendingMatchId != null) return trace.Finish("已有一场生涯比赛进行中。");
+        if (!data.Matches.Contains(match) || match.Status != "待赛" || !match.Registered || match.Day != data.Day) return trace.Finish("请先报名并前往比赛日。");
+        if (EsportsWorld.EntryReason(data, match) is { } locked) return trace.Finish(locked);
+        if (ascension < match.RequiredAscension || ascension > 10) return trace.Finish($"本场进阶范围为 {match.RequiredAscension}—10。");
         var clock = System.Diagnostics.Stopwatch.StartNew();
         bool transitionStarted = false;
         string stage = "初始化游戏场景";
+        trace.Stage(stage);
         try
         {
             var game = NGame.Instance ?? throw new InvalidOperationException("游戏场景尚未初始化。");
             stage = "准备比赛种子";
+            trace.Stage(stage);
             MatchRules.PrepareSeed(data, match);
             stage = "保存开赛前的生涯数据";
+            trace.Stage(stage);
             CareerStore.Save(data);
             stage = "读取游戏解锁资料";
+            trace.Stage(stage);
             var unlock = SaveManager.Instance.GenerateUnlockStateFromProgress();
             stage = "查找章节选择接口";
+            trace.Stage(stage);
             var select = RuntimeApi.Bind(typeof(ActModel), "GetRandomList", true, typeof(Rng), unlock.GetType(), typeof(bool));
             stage = "创建章节随机源";
+            trace.Stage(stage);
             var rng = CreateActSelectionRng(match.Seed);
             stage = "生成比赛章节";
+            trace.Stage(stage);
             var acts = ((IEnumerable<ActModel>)RuntimeApi.Invoke(select, null, rng, unlock, false)!).ToList();
             // 与原版大厅一致：章节选定后，从同一随机源确定随机角色。
             stage = "确定出场角色";
+            trace.Stage(stage);
             if (character is RandomCharacter) character = rng.NextItem(ModelDb.AllCharacters) ?? throw new InvalidOperationException("没有可用角色。");
+            trace.Write("parameters", new { match.Seed, character = character.Id.ToString(), ascension, acts = acts.Select(a => a.Id.ToString()).ToArray() });
             stage = "检查原生开局接口";
+            trace.Stage(stage);
             var start = RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool),
                 acts.GetType(), typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int));
             if (!typeof(Task).IsAssignableFrom(start.ReturnType)) throw new NotSupportedException("开局接口的返回类型发生变化。");
             long preparedAt = clock.ElapsedMilliseconds;
             Diagnostics.Record("match.preflight", new { game = GameCompatibility.Version(), rng = GameCompatibility.SeedMode, start = start.ToString() });
             stage = "播放开赛转场";
+            trace.Stage(stage);
             transitionStarted = true;
             NAudioManager.Instance?.StopMusic();
             SfxCmd.Play(character.CharacterTransitionSfx);
             await game.Transition.FadeOut(0.4f, character.CharacterSelectTransitionPath);
             stage = "准备比赛对手";
+            trace.Stage(stage);
             MatchRules.PrepareOpponent(data, match);
             stage = "保存比赛与生涯的关联";
+            trace.Stage(stage);
             match.ChosenAscension = ascension;
             data.PendingMatchId = match.Id;
             data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -81,12 +95,17 @@ public static class GameBridge
             CareerStore.Save(data);
             long savedAt = clock.ElapsedMilliseconds;
             stage = "执行原生开局";
+            trace.Stage(stage);
+            trace.Method(start, "begin");
             await (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!;
+            trace.Method(start, "complete");
+            stage = "保存开局成功后的生涯数据";
+            trace.Stage(stage);
             if (data.Failure != null) MatchFailure.Record(data, "retry-started");
             data.Failure = null; CareerStore.Save(data);
             GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");
             Diagnostics.Record("match.started", new { match.Id, match.Seed, ascension, saveMs = savedAt - preparedAt, prepareMs = preparedAt, startMs = clock.ElapsedMilliseconds - savedAt });
-            return null;
+            return trace.Finish(null);
         }
         catch (Exception e)
         {
@@ -103,6 +122,7 @@ public static class GameBridge
                 ["pendingMatchId"] = () => data.PendingMatchId
             };
             string message = Diagnostics.RecordStartFailure(stage, e, context);
+            trace.Write("exception", new { stage, exception = e.ToString() });
             // 对局若已成功写入，保留绑定，允许继续；失败前不产生赛事输赢。
             try
             {
@@ -120,7 +140,7 @@ public static class GameBridge
                 }
                 catch (Exception recovery) { Diagnostics.RecordStartFailure("恢复主菜单与画面", recovery, context, "match.start.recovery"); }
             }
-            return message;
+            return trace.Finish(message);
         }
     }
 

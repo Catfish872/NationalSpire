@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`0583EF546101A87D27C971FE8D3D4762826E574655828155ABE9C9BA661CBA71`。来源：[源码](../../../Coop/CoopStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`14B4E07C4DC50295C49309C19ADF0627D2EA3CB8F9B382C0066C3AC87FAE8D02`。来源：[源码](../../../Coop/CoopStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -501,9 +501,9 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.ExportArchive(string)`](CoopStorage.cs.md#symbol-2c9c2a0b54fe)；[`NationalSpire.Coop.CoopStorage.List()`](CoopStorage.cs.md#symbol-987dca599488)；[`NationalSpire.Coop.CoopStorage.LoadAsync(string)`](CoopStorage.cs.md#symbol-98401b01dd9e)
 
-**调用：** [`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`](CoopStorage.cs.md#symbol-9914499d45a1)；[`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)；`NationalSpire.Coop.CoopStorage.Checkpoint.Checkpoint(NationalSpire.Coop.CoopWorld, byte[]?)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`
+**调用：** [`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`](CoopStorage.cs.md#symbol-9914499d45a1)；[`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)；[`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`](../ErrorDiagnostics.cs.md#symbol-fd99f468e9e7)；`NationalSpire.Coop.CoopStorage.Checkpoint.Checkpoint(NationalSpire.Coop.CoopWorld, byte[]?)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`；`NationalSpire.Coop.CoopStorage.DirectoryWork.Gate`；`NationalSpire.Coop.CoopStorage.Manifest.Directory`；`NationalSpire.Coop.CoopStorage.Manifest.RunHash`；`NationalSpire.Coop.CoopStorage.Manifest.WorldHash`；`NationalSpire.Coop.CoopStorage.Work(string)`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.Schema`；`NationalSpire.Coop.CoopWorld.World`
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`；`NationalSpire.Coop.CoopStorage.DirectoryWork.Gate`；`NationalSpire.Coop.CoopStorage.Manifest.Directory`；`NationalSpire.Coop.CoopStorage.Manifest.RunHash`；`NationalSpire.Coop.CoopStorage.Manifest.WorldHash`；`NationalSpire.Coop.CoopStorage.Work(string)`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.Schema`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -515,6 +515,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 - `NationalSpire.Coop.CoopStorage.Checkpoint.Checkpoint(NationalSpire.Coop.CoopWorld, byte[]?)`；输入表达式：`new(w, run)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(w, run);`
 - `NationalSpire.Coop.CoopStorage.DirectoryFor(string)`；输入表达式：`DirectoryFor(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DirectoryFor(id)`
 - `NationalSpire.Coop.CoopStorage.Work(string)`；输入表达式：`Work(id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Work(id).Gate`
+- `NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`；输入表达式：`Diagnostics.RetainErrors(w)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RetainErrors(w);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`candidates.Add((m, bytes, run))`；返回值紧邻使用处：`ExpressionStatementSyntax: candidates.Add((m, bytes, run));`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<(Manifest Manifest, byte[] World, byte[]? Run)>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<(Manifest Manifest, byte[] World, byte[]? Run)>()`
 - `System.Guid.TryParseExact(string?, string?, out System.Guid)`；输入表达式：`Guid.TryParseExact(m.Directory, "N", out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Guid.TryParseExact(m.Directory, "N", out _)`
@@ -534,7 +535,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Durable(string, byte[]) — private static void Durable(string file, byte[] bytes)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.BackupBeforeDevelopment(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-955953e36f17)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 

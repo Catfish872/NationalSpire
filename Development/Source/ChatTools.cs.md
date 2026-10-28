@@ -530,7 +530,7 @@ private Frame? _owner;
 
 来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-da40c9a970a1)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
 **调用：** [`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)；[`NationalSpire.ChatToolCall.AppendArguments(string?)`](ChatTools.cs.md#symbol-506dc7ff027a)；`NationalSpire.ChatReplyStream.ChatReplyStream(bool)`；`NationalSpire.ChatToolCall.ChatToolCall()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetInt32()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -694,7 +694,7 @@ private Frame? _owner;
 
 来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-105a40137cba)
+**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-02b55fda3bc7)
 
 **调用：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 

@@ -121,7 +121,7 @@ public static readonly (string Id, string Name)[] Tasks =
 
 来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiRouting.Profile(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-d1386c5a387e)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-7d731dbc5403)
+**调用者：** [`NationalSpire.AiRouting.Profile(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-d1386c5a387e)；[`NationalSpire.AiService.Connection(NationalSpire.AiOptions, string)`](AiService.cs.md#symbol-8c02bb75b41a)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-238741b258f2)
 
 **调用：** [`NationalSpire.AiRouting.Category(string)`](AiRouting.cs.md#symbol-a9d92e7d36e8)；[`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
 
@@ -161,7 +161,7 @@ public static readonly (string Id, string Name)[] Tasks =
 
 来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)
+**调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-a749d939ada8)
 
 **调用：** [`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
