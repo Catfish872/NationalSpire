@@ -59,6 +59,57 @@ public static partial class CoopRules
         data.PendingSettlementId = member.SeenSettlement == data.Results.LastOrDefault()?.MatchId ? "" : data.Results.LastOrDefault()?.MatchId ?? "";
         return data;
     }
+    internal static bool ApplyReading(CoopWorld w, ulong sender, CoopReading reading)
+    {
+        if (w.Members.FirstOrDefault(m => m.SteamId == sender) is not { } member) return false;
+        bool changed = false;
+        var posts = CommunityThreads.All(w.World).ToDictionary(p => p.Id, p => p.Revision);
+        foreach (var pair in reading.Posts)
+            if (posts.TryGetValue(pair.Key, out long revision))
+            {
+                long next = Math.Max(member.ReadPosts.GetValueOrDefault(pair.Key), Math.Min(pair.Value, revision));
+                if (member.ReadPosts.GetValueOrDefault(pair.Key) != next) { member.ReadPosts[pair.Key] = next; changed = true; }
+            }
+        foreach (var pair in reading.Weeks)
+            if (w.World.WeeklyEditions.FirstOrDefault(p => p.Week == pair.Key) is { } rw)
+            {
+                long next = Math.Max(member.ReadWeeks.GetValueOrDefault(pair.Key), Math.Min(pair.Value, rw.Revision));
+                if (member.ReadWeeks.GetValueOrDefault(pair.Key) != next) { member.ReadWeeks[pair.Key] = next; changed = true; }
+            }
+        if (reading.Settlement.Length > 0 && member.SeenSettlement != reading.Settlement && member.Results.Any(r => r.MatchId == reading.Settlement))
+        { member.SeenSettlement = reading.Settlement; changed = true; }
+        if (reading.CeremonySeason > member.SeenCeremonySeason && w.World.Ceremonies.Any(c => c.Season == reading.CeremonySeason))
+        { member.SeenCeremonySeason = reading.CeremonySeason; changed = true; }
+        return changed;
+    }
+    internal static void PreserveLocalReading(CoopWorld? previous, CoopWorld incoming, ulong self, CareerData? preparedView = null)
+    {
+        if (previous == null || previous.Id != incoming.Id) return;
+        var posts = CommunityThreads.All(incoming.World).ToDictionary(p => p.Id, p => p.Revision);
+        foreach (var prev in previous.Members)
+        {
+            if (incoming.Members.FirstOrDefault(m => m.SteamId == prev.SteamId) is not { } next) continue;
+            foreach (var (id, seen) in prev.ReadPosts)
+                if (posts.TryGetValue(id, out long rev))
+                    next.ReadPosts[id] = Math.Max(next.ReadPosts.GetValueOrDefault(id), Math.Min(seen, rev));
+            foreach (var (week, seen) in prev.ReadWeeks)
+                if (incoming.World.WeeklyEditions.FirstOrDefault(w => w.Week == week) is { } rw)
+                    next.ReadWeeks[week] = Math.Max(next.ReadWeeks.GetValueOrDefault(week), Math.Min(seen, rw.Revision));
+            if (prev.SeenSettlement.Length > 0 && next.Results.Any(r => r.MatchId == prev.SeenSettlement))
+                next.SeenSettlement = prev.SeenSettlement;
+            if (prev.SeenCeremonySeason > next.SeenCeremonySeason && incoming.World.Ceremonies.Any(c => c.Season == prev.SeenCeremonySeason))
+                next.SeenCeremonySeason = prev.SeenCeremonySeason;
+        }
+        if (preparedView == null || incoming.Members.FirstOrDefault(m => m.SteamId == self) is not { } selfMember) return;
+        foreach (var thread in CommunityThreads.All(preparedView))
+            thread.SeenRevision = Math.Max(thread.SeenRevision, selfMember.ReadPosts.GetValueOrDefault(thread.Id));
+        foreach (var issue in preparedView.WeeklyEditions)
+            issue.SeenRevision = Math.Max(issue.SeenRevision, selfMember.ReadWeeks.GetValueOrDefault(issue.Week));
+        if (selfMember.SeenSettlement.Length > 0 && preparedView.PendingSettlementId == selfMember.SeenSettlement)
+            preparedView.PendingSettlementId = "";
+        if (preparedView.PendingCeremonySeason > 0 && preparedView.PendingCeremonySeason <= selfMember.SeenCeremonySeason)
+            preparedView.PendingCeremonySeason = 0;
+    }
     private static void Capture(CoopWorld w, CoopMember m, CareerData d)
     {
         var oldPosts = CommunityThreads.All(w.World).Select(p => p.Id).ToHashSet();
@@ -299,13 +350,7 @@ public static partial class CoopRules
                     break;
                 case "reading":
                     var reading = CoopJson.Read<CoopReading>(System.Text.Encoding.UTF8.GetBytes(command.Text));
-                    foreach (var pair in reading.Posts)
-                        if (CommunityThreads.All(w.World).FirstOrDefault(p => p.Id == pair.Key) is { } rp)
-                            member.ReadPosts[pair.Key] = Math.Max(member.ReadPosts.GetValueOrDefault(pair.Key), Math.Min(pair.Value, rp.Revision));
-                    foreach (var pair in reading.Weeks)
-                        if (w.World.WeeklyEditions.FirstOrDefault(p => p.Week == pair.Key) is { } rw)
-                            member.ReadWeeks[pair.Key] = Math.Max(member.ReadWeeks.GetValueOrDefault(pair.Key), Math.Min(pair.Value, rw.Revision));
-                    if (member.Results.Any(r => r.MatchId == reading.Settlement)) member.SeenSettlement = reading.Settlement;
+                    ApplyReading(w, sender, reading);
                     break;
                 case "read":
                     if (CommunityThreads.All(w.World).FirstOrDefault(p => p.Id == command.Target) is { } read) member.ReadPosts[read.Id] = read.Revision;

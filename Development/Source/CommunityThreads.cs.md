@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1F23C42CD428AEE6BA8F22F385D40173A2D93A157C47391638367C09A80D7897`。来源：[源码](../../CommunityThreads.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`90D957AFD7A4A3463EF6F0CC176AA5F5481D3A3CFF2CB2993EC5248A93E2FBBF`。来源：[源码](../../CommunityThreads.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -388,6 +388,28 @@
 - `NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`CommunityThreads.IsHuman(data, r.AuthorId)`；返回值紧邻使用处：`BinaryExpressionSyntax: CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`All(data).Where(p => !CommunityThreads.IsHuman(data, p.AuthorId) && p.NewsGeneration.State != "completed"              && !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated) && p.Revision > p.SeenRevision)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var post in All(data).Where(p => !CommunityThreads.IsHuman(data, p.AuthorId) && p.NewsGeneration.State != "completed"              && !p.Replies.Any(r => CommunityThreads.IsHuman(data, r.AuthorId) || r.AiGenerated) && p.Revision > p.SeenRevision))          { post.SeenRevision = post.Revision; count++; }`
+
+**赋值（含属性/字段和局部值）：**
+
+- `post.SeenRevision` = `post.Revision`
+
+<a id="symbol-2b9f0e81a412"></a>
+
+## `NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData) — public static int MarkAllRead(CareerData data)`
+
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
+
+**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityPost.Revision`；`NationalSpire.CommunityPost.SeenRevision`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(data);`
+- `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`All(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: All(data).Where`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`All(data).Where(p => p.Revision > p.SeenRevision)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var post in All(data).Where(p => p.Revision > p.SeenRevision))          { post.SeenRevision = post.Revision; count++; }`
 
 **赋值（含属性/字段和局部值）：**
 

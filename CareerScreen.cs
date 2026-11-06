@@ -712,6 +712,9 @@ public partial class CareerScreen : Control, IScreenContext
         var readBriefs = Button("将简讯标为已读", () => { int count = CommunityThreads.MarkProgramRead(data); Render(); Notice($"已将 {count} 篇简讯标为已读。", false); }, 250);
         readBriefs.TooltipText = "将未由 AI 撰写、也没有玩家参与的内容标为已读。";
         communityActions.AddChild(readBriefs);
+        var readAll = Button("全部标为已读", () => { int count = CommunityThreads.MarkAllRead(data); Render(); Notice($"已将 {count} 篇帖子全部标为已读。", false); }, 220);
+        readAll.TooltipText = "将所有未读帖子（含 AI 报道与讨论）一键标为已读。";
+        communityActions.AddChild(readAll);
         var filters = new HBoxContainer(); _content.AddChild(filters);
         foreach (string filter in new[] { "全部", "比赛战报", "国际赛事", "俱乐部动态", "人物日常", "我的讨论", "未读更新" })
             filters.AddChild(FilterButton(filter, _communityFilter == filter, () => { _communityFilter = filter; _postLimit = 30; _scroll.ScrollVertical = 0; Render(); }, 110));

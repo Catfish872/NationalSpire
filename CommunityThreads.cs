@@ -101,6 +101,14 @@ public static class CommunityThreads
         if (count > 0) CareerStore.Save(data);
         return count;
     }
+    public static int MarkAllRead(CareerData data)
+    {
+        int count = 0;
+        foreach (var post in All(data).Where(p => p.Revision > p.SeenRevision))
+        { post.SeenRevision = post.Revision; count++; }
+        if (count > 0) CareerStore.Save(data);
+        return count;
+    }
     public static CommunityReply Submit(CareerData data, CommunityPost post, string parentId, string body)
     {
         if (!All(data).Contains(post)) throw new InvalidOperationException("帖子已不存在。");

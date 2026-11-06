@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`83ACECE36F586B6A518128895B2CDF0B24F3E9EF973AB9184912E29E217EA111`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5A4BBA6AE8DA8D08137ACB4635337DDC3045DC8B2B03BAB4B7FB78898A455658`。来源：[源码](../../../Coop/CoopWire.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -226,6 +226,42 @@ private DateTime _started;
 来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-a49e10c5531a"></a>
+
+## `NationalSpire.Coop.ICoopTransport.CancelPending(ulong, string) — void CancelPending(ulong peer, string kind) { }`
+
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Broadcast()`](CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.Coop.CoopCoordinator.PublishLive()`](CoopCoordinator.cs.md#symbol-1e3cadd9f597)；[`NationalSpire.Coop.CoopCoordinator.SendSnapshot(ulong)`](CoopCoordinator.cs.md#symbol-74f21c89d103)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-b58f21d6642b"></a>
+
+## `NationalSpire.Coop.ICoopTransport.HasPending(ulong, string) — bool HasPending(ulong peer, string kind) => false;`
+
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
 **调用：** 无已绑定显式调用。
 

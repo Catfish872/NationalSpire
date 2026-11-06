@@ -67,6 +67,8 @@ public interface ICoopTransport : IDisposable
     IReadOnlySet<ulong> Peers { get; }
     event Action<ulong, CoopWire>? Received;
     void Send(ulong peer, CoopWire wire);
+    void CancelPending(ulong peer, string kind) { }
+    bool HasPending(ulong peer, string kind) => false;
     void Update();
 }
 public sealed record CoopPart(string Id, int Index, int Count, int Total, string Hash, byte[] Bytes);

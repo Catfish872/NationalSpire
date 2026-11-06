@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`B859686007CA4A7D74A20898F463FF8F1AFACA1E19FFA94B59CB2E0E677B1C8B`。来源：[源码](../../../Coop/CoopSteam.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C5403C8A3DC19455886EFB36F20A9F92D17ACD44E0FF10419D75E0B5E423E7A5`。来源：[源码](../../../Coop/CoopSteam.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -249,6 +249,30 @@ public event Action<ulong, CoopWire>? Received;
 - `Owner` = `owner`
 - `Token` = `parts[1]`
 
+<a id="symbol-3c8109d42ef1"></a>
+
+## `NationalSpire.Coop.CoopSteam.CancelPending(ulong, string) — public void CancelPending(ulong peer, string kind)`
+
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 通过接口 [`NationalSpire.Coop.ICoopTransport.CancelPending(ulong, string)`](CoopWire.cs.md#symbol-a49e10c5531a) 调用。
+
+**调用：** `System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.Queue<T>.Dequeue()`；`System.Collections.Generic.Queue<T>.Enqueue(T)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopSteam._currentBatch`；`NationalSpire.Coop.CoopSteam._nextBatch`；`NationalSpire.Coop.CoopSteam._outgoing`；`NationalSpire.Coop.CoopSteam._startedBatches`
+
+<a id="symbol-4d921ae53fa2"></a>
+
+## `NationalSpire.Coop.CoopSteam.HasPending(ulong, string) — public bool HasPending(ulong peer, string kind)`
+
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 通过接口 [`NationalSpire.Coop.ICoopTransport.HasPending(ulong, string)`](CoopWire.cs.md#symbol-b58f21d6642b) 调用。
+
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopSteam._outgoing`
+
 <a id="symbol-8374c51d760a"></a>
 
 ## `NationalSpire.Coop.CoopSteam.Send(ulong, NationalSpire.Coop.CoopWire) — public void Send(ulong peer, CoopWire wire)`
@@ -312,6 +336,22 @@ public event Action<ulong, CoopWire>? Received;
 **赋值（含属性/字段和局部值）：**
 
 - `result` = `SteamNetworkingMessages.SendMessageToUser(ref identity, pin.AddrOfPinnedObject(), (uint)send.Bytes.Length, Constants.k_nSteamNetworkingSend_Reliable, Channel)`
+
+<a id="symbol-5e032bf640b3"></a>
+
+## `NationalSpire.Coop.CoopSteam.SendPacket(ulong, byte[]) — private static EResult SendPacket(ulong peer, byte[] bytes)`
+
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopSteam.TrySendUnblocked(System.Collections.Generic.Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)>, System.Collections.Generic.HashSet<ulong>)`](CoopSteam.cs.md#symbol-6f143c0751c4)；[`NationalSpire.Coop.CoopSteam.Update()`](CoopSteam.cs.md#symbol-fa8dda1e0359)
+
+<a id="symbol-6f143c0751c4"></a>
+
+## `NationalSpire.Coop.CoopSteam.TrySendUnblocked(System.Collections.Generic.Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)>, System.Collections.Generic.HashSet<ulong>) — private bool TrySendUnblocked(Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)> queue, HashSet<ulong> blocked)`
+
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopSteam.Update()`](CoopSteam.cs.md#symbol-fa8dda1e0359)
 
 <a id="symbol-e6ebd27b8764"></a>
 

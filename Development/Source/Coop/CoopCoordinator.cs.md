@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`B94A3C841E05741C2F351B015D99B66B14BB7208CE9AFD09B1D881983507F027`。来源：[源码](../../../Coop/CoopCoordinator.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6D174925EB6F591371283F4795F2108B6B04D2C4E1ACB54671861EDA52193892`。来源：[源码](../../../Coop/CoopCoordinator.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -536,6 +536,40 @@ public event Action<CoopReply>? Replied;
 
 **赋值（含属性/字段和局部值）：**
 
+
+<a id="symbol-93e12f48a01b"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading) — public void SyncReading(CoopReading reading)`
+
+来源：源码第 249 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData)`](CoopCareerSession.cs.md#symbol-b247f161efbd)；[`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`](CoopCareerSession.cs.md#symbol-9be951d5b6cd)
+
+**调用：** [`NationalSpire.Coop.CoopCoordinator.MarkReadingDirty()`](CoopCoordinator.cs.md#symbol-82d01e37900a)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopRules.ApplyReading(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopReading)`](CoopRules.cs.md#symbol-5a1983f20bc1)
+
+<a id="symbol-82d01e37900a"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.MarkReadingDirty() — private void MarkReadingDirty()`
+
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading)`](CoopCoordinator.cs.md#symbol-93e12f48a01b)
+
+<a id="symbol-63e10b78c002"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.FlushReadingSave() — private void FlushReadingSave()`
+
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Dispose()`](CoopCoordinator.cs.md#symbol-a57b33d7004f)；[`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)
+
+<a id="symbol-74f21c89d103"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.SendSnapshot(ulong) — private void SendSnapshot(ulong peer)`
+
+来源：源码第 317 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
 <a id="symbol-ec0c662c6de0"></a>
 

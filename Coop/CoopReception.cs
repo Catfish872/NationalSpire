@@ -8,6 +8,7 @@ public sealed partial class CoopCoordinator
     private readonly Queue<ReceivedWork> _received = [];
     private readonly CancellationTokenSource _receiveLifetime = new();
     private int _viewReaders;
+    private long _snapshotSequence;
     private (CoopWorld Source, CareerData Data)? _preparedView;
     public bool Receiving => !Host && _received.Count != 0;
 
@@ -76,12 +77,14 @@ public sealed partial class CoopCoordinator
 
     private void QueueSnapshot(ulong sender, CoopAssembler.Complete complete)
     {
+        long sequence = ++_snapshotSequence;
         Task<CoopSnapshot>? decoding = null;
         Task<CareerData?>? saving = null;
         CoopSnapshot? snapshot = null;
         bool prepare = false, published = false;
         bool Step()
         {
+            if (sequence < _snapshotSequence && saving == null) return true;
             if (decoding == null)
             {
                 decoding = Task.Run(() =>
@@ -92,9 +95,11 @@ public sealed partial class CoopCoordinator
             if (snapshot == null)
             {
                 snapshot = decoding.GetAwaiter().GetResult();
+                if (sequence < _snapshotSequence) return true;
                 if (snapshot.World.Owner != sender || snapshot.World.Schema != 1 || !snapshot.World.Members.Any(m => m.SteamId == Self))
                     throw new InvalidDataException("存档成员不匹配。");
                 if (World != null && (World.Id != snapshot.World.Id || World.Epoch == snapshot.World.Epoch && World.Revision > snapshot.World.Revision)) return true;
+                CoopRules.PreserveLocalReading(World, snapshot.World, Self);
                 prepare = _viewReaders > 0;
                 saving = SaveReceived(snapshot, prepare, Self);
                 return false;
@@ -102,6 +107,8 @@ public sealed partial class CoopCoordinator
             if (!saving!.IsCompleted) return false;
             using var publishing = UiPerformance.Measure(UiPerformance.Work.CoopPublish);
             var view = saving.GetAwaiter().GetResult();
+            CoopRules.PreserveLocalReading(World, snapshot.World, Self, view);
+            _readingDirty = false;
             World = snapshot.World; NativeSave = snapshot.Run;
             CoopJson.Detached(World.World);
             _preparedView = prepare && view != null ? (World, view) : null;

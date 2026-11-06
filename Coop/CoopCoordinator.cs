@@ -15,11 +15,12 @@ public sealed partial class CoopCoordinator : IDisposable
     private readonly string _compatibility, _token, _name;
     private readonly IReadOnlySet<string> _characters;
     private readonly Dictionary<ulong, DateTime> _seen = [];
+    private readonly Dictionary<ulong, DateTime> _lastSnapshotSent = [];
     private readonly Dictionary<ulong, (DateTime At, int Count)> _rates = [];
     private readonly CoopAssembler _assembler = new();
     private readonly CoopAssembler _liveAssembler = new();
-    private DateTime _lastHello, _lastHeartbeat;
-    private bool _closed;
+    private DateTime _lastHello, _lastHeartbeat, _readingChangedAt;
+    private bool _closed, _readingDirty;
     private string _lastJoinError = "";
     private readonly Dictionary<string, (CoopCommand Command, DateTime Sent, CoopReply? Reply)> _pendingCommands = [];
     public CoopWorld? World { get; private set; }
@@ -71,7 +72,7 @@ public sealed partial class CoopCoordinator : IDisposable
         if (!Host)
             foreach (var pending in _pendingCommands.Values.ToArray())
                 if (pending.Reply == null && DateTime.UtcNow - pending.Sent >= TimeSpan.FromSeconds(3)) Retry(pending.Command);
-        if (!Host && World == null && DateTime.UtcNow - _lastHello > TimeSpan.FromSeconds(3))
+        if (!Host && World == null && !Receiving && DateTime.UtcNow - _lastHello > TimeSpan.FromSeconds(5))
         { _lastHello = DateTime.UtcNow; Send(_transport.Owner, "hello", new CoopHello(CoopWorld.Protocol, _compatibility, _token, _name)); }
         if (DateTime.UtcNow - _lastHeartbeat > TimeSpan.FromSeconds(3))
         {
@@ -85,8 +86,16 @@ public sealed partial class CoopCoordinator : IDisposable
             }
             if (Host && World != null) foreach (var m in World.Members.Where(m => m.SteamId != Self)) Send(m.SteamId, "ping", new CoopHeartbeat(World.Epoch, Online.ToArray()));
             else if (World != null) Send(_transport.Owner, "pong", World.Epoch);
+            if (_readingDirty && DateTime.UtcNow - _readingChangedAt >= TimeSpan.FromSeconds(2)) FlushReadingSave();
             Changed?.Invoke();
         }
+    }
+    private void MarkReadingDirty() { _readingDirty = true; _readingChangedAt = DateTime.UtcNow; }
+    private void FlushReadingSave()
+    {
+        if (!_readingDirty) return;
+        _readingDirty = false;
+        if (World != null) try { _storage.Save(World, NativeSave); } catch (Exception e) { Diagnostics.Error("coop.reading.save", e); }
     }
     private void Send<T>(ulong peer, string kind, T value)
     { if (_transport.Peers.Contains(peer)) _transport.Send(peer, new(kind, JsonSerializer.Serialize(value, CoopJson.Options))); }
@@ -107,6 +116,7 @@ public sealed partial class CoopCoordinator : IDisposable
         {
             if (wire.Kind == "snapshot")
             {
+                _lastHello = received;
                 if (_assembler.Collect(Read<CoopPart>(wire), received) is { } complete) QueueSnapshot(sender, complete);
                 return;
             }
@@ -136,9 +146,23 @@ public sealed partial class CoopCoordinator : IDisposable
                     RecordJoinError(error);
                     Send(sender, "error", error); return;
                 }
-                var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
-                CoopRules.AddMember(copy, sender, hello.Name); copy.Proposal = null; _seen[sender] = DateTime.UtcNow;
-                Commit(copy, NativeSave); return;
+                _seen[sender] = DateTime.UtcNow;
+                var online = Online;
+                var member = World.Members.FirstOrDefault(m => m.SteamId == sender);
+                bool needsCommit = member == null
+                    || !string.IsNullOrWhiteSpace(hello.Name) && member.Name != hello.Name.Trim()
+                    || World.Proposal != null
+                    || World.Run == null && !World.World.MatchHumanIds.ToHashSet().SetEquals(World.Members.Where(m => online.Contains(m.SteamId)).Select(m => m.PersonId).Append("human-" + sender));
+                if (needsCommit)
+                {
+                    var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
+                    CoopRules.AddMember(copy, sender, hello.Name); copy.Proposal = null;
+                    if (copy.Run == null) CoopRules.SetParticipants(copy, online);
+                    Commit(copy, NativeSave); return;
+                }
+                if (!_transport.HasPending(sender, "snapshot") && DateTime.UtcNow - _lastSnapshotSent.GetValueOrDefault(sender) >= TimeSpan.FromSeconds(8))
+                    SendSnapshot(sender);
+                return;
             }
             if (!Host && sender != _transport.Owner) return;
             if (Host && (World == null || !World.Members.Any(m => m.SteamId == sender) || !_seen.ContainsKey(sender))) return;
@@ -153,6 +177,9 @@ public sealed partial class CoopCoordinator : IDisposable
                     break;
                 case "pong" when Host:
                     if (Read<string>(wire) == World!.Epoch) _seen[sender] = DateTime.UtcNow; break;
+                case "reading" when Host:
+                    if (CoopRules.ApplyReading(World!, sender, Read<CoopReading>(wire))) MarkReadingDirty();
+                    break;
                 case "command" when Host:
                     var command = Read<CoopCommand>(wire);
                     if (!Rate(sender)) { Send(sender, "reply", new CoopReply(command.Id, new(false, "操作过于频繁，请稍后再试。"))); break; }
@@ -221,9 +248,32 @@ public sealed partial class CoopCoordinator : IDisposable
             Replied?.Invoke(reply);
         }
     }
+    public void SyncReading(CoopReading reading)
+    {
+        if (_closed || World == null) return;
+        if (!CoopRules.ApplyReading(World, Self, reading)) return;
+        _preparedView = null;
+        MarkReadingDirty();
+        if (!Host) Send(_transport.Owner, "reading", reading);
+    }
     private void Execute(ulong sender, CoopCommand command)
     {
         if (World == null) return;
+        if (command.Kind is "reading" or "read" or "ceremony-read")
+        {
+            var reading = command.Kind switch
+            {
+                "reading" => CoopJson.Read<CoopReading>(System.Text.Encoding.UTF8.GetBytes(command.Text)),
+                "read" when CommunityThreads.All(World.World).FirstOrDefault(p => p.Id == command.Target) is { } p => new CoopReading { Posts = { [p.Id] = p.Revision } },
+                "ceremony-read" when int.TryParse(command.Target, out int s) => new CoopReading { CeremonySeason = s },
+                _ => new CoopReading()
+            };
+            if (CoopRules.ApplyReading(World, sender, reading)) MarkReadingDirty();
+            if (sender == Self) _preparedView = null;
+            var quickReply = new CoopReply(command.Id, new(true, "已完成"), World.Revision);
+            if (sender != Self) Send(sender, "reply", quickReply); else Replied?.Invoke(quickReply);
+            return;
+        }
         var result = CoopRules.Apply(World, sender, command, Online, _characters);
         Diagnostics.Record("coop.command", new { world = World.Id, sender, command.Id, command.Kind, command.Revision, result.Outcome.Accepted, result.Outcome.Duplicate, result.Outcome.Message });
         bool changed = !result.Outcome.Duplicate && (result.Outcome.Accepted || result.World.Revision > World.Revision);
@@ -241,6 +291,8 @@ public sealed partial class CoopCoordinator : IDisposable
     public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)
     {
         if (!Host || _closed || world.Owner != Self || World != null && World.Id != world.Id) throw new InvalidOperationException("无权提交这个世界。");
+        CoopRules.PreserveLocalReading(World, world, Self);
+        _readingDirty = false;
         _storage.Save(world, nativeSave); World = world; NativeSave = nativeSave; CoopJson.Detached(World.World);
         if (broadcast) Broadcast(); Changed?.Invoke();
     }
@@ -251,20 +303,38 @@ public sealed partial class CoopCoordinator : IDisposable
         var peers = World.Members.Select(m => m.SteamId).Where(p => p != Self && _seen.ContainsKey(p)).ToArray();
         if (peers.Length == 0) return;
         var encoded = new SnapshotEncoder(CoopJson.PublicBytes(new CoopSnapshot(World, NativeSave)));
+        var settings = AiSettingsStore.Load(new());
+        var templates = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
+        var now = DateTime.UtcNow;
         foreach (ulong peer in peers)
         {
-            var settings = AiSettingsStore.Load(new());
-            var templates = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
+            _transport.CancelPending(peer, "snapshot");
             var parts = CoopAssembler.Split(encoded.Encode(peer, templates)).ToArray();
             foreach (var part in parts) Send(peer, "snapshot", part);
+            _lastSnapshotSent[peer] = now;
         }
+    }
+    private void SendSnapshot(ulong peer)
+    {
+        using var timing = UiPerformance.Measure(UiPerformance.Work.CoopBroadcast);
+        if (!Host || World == null || peer == Self) return;
+        var encoded = new SnapshotEncoder(CoopJson.PublicBytes(new CoopSnapshot(World, NativeSave)));
+        var settings = AiSettingsStore.Load(new());
+        var templates = PrivateMessagePrompts.SectionIds.Concat(GroupChatPrompts.SectionIds).Append("world").ToDictionary(id => id, id => PromptLibrary.Get(settings, id));
+        _transport.CancelPending(peer, "snapshot");
+        var parts = CoopAssembler.Split(encoded.Encode(peer, templates)).ToArray();
+        foreach (var part in parts) Send(peer, "snapshot", part);
+        _lastSnapshotSent[peer] = DateTime.UtcNow;
     }
     public void PublishLive()
     {
         if (!Host || World?.Run == null) return;
         var parts = CoopAssembler.Split(CoopJson.Bytes(World.Run)).ToArray();
         foreach (var member in World.Members.Where(m => m.SteamId != Self))
+        {
+            _transport.CancelPending(member.SteamId, "live");
             foreach (var part in parts) Send(member.SteamId, "live", part);
+        }
     }
-    public void Dispose() { _closed = true; CloseDiagnostics(); CloseReceived(); _transport.Received -= Receive; _transport.Dispose(); }
+    public void Dispose() { _closed = true; FlushReadingSave(); CloseDiagnostics(); CloseReceived(); _transport.Received -= Receive; _transport.Dispose(); }
 }

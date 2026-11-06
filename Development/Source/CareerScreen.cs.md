@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`07C17094D6B2CD675CFAA286C9F52CC8C71B6D497DB1345ED034E2B0253EA0CC`。来源：[源码](../../CareerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5C9F930A6DDF216AE855D53D6D088A6C5FCEE308FCCB17BDE31BD92DE0CC057A`。来源：[源码](../../CareerScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -1395,6 +1395,7 @@ private long _frameTime;
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(data)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _communityFilter is "我的讨论" or "未读更新" ? CommunityThreads.All(data) : data.Posts`
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(data).Count`
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(data).FirstOrDefault`
+- `NationalSpire.CommunityThreads.MarkAllRead(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.MarkAllRead(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.MarkAllRead(data)`
 - `NationalSpire.CommunityThreads.MarkProgramRead(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.MarkProgramRead(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.MarkProgramRead(data)`
 - `NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；输入表达式：`UiPerformance.Measure(UiPerformance.Work.Community)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UiPerformance.Measure(UiPerformance.Work.Community)`
 - `string.Contains(string)`；输入表达式：`p.Category.Contains("世界杯")`；返回值紧邻使用处：`BinaryExpressionSyntax: p.Category == "国际赛事" || p.Category.Contains("洲际") || p.Category.Contains("世界杯")`

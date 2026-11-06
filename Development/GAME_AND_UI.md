@@ -428,7 +428,7 @@ Godot4.5.1、Windows、RTX4060的隔离界面分别以1600×1000和1280×800完�
 | --- | --- | --- |
 | 打开生涯/切换页面 | CareerScreen.Open、Render、ViewData、各页面构造 | 单人数据或多人 Refresh 个人视图；构造控件和主题 |
 | 人物名录 | ProfileScreen 的筛选与已加载范围 | 原筛选、排序、批次数量；CareerListCache 复用空卡片，重新绑定人物、头像、评分及点击回调 |
-| 社区列表 | CommunityScreen 条目范围、搜索、未读 | 帖子卡片、头像、排版；阅读状态与生成状态分别保存 |
+| 社区列表 | CommunityScreen 条目范围、搜索、未读、MarkProgramRead / MarkAllRead | 帖子卡片、头像、排版；支持将简讯标为已读或全部标为已读；阅读状态与生成状态分别保存 |
 | 通讯与成员选择 | PrivateMemoryScreen、GroupChatDialogs、GroupChatScreen、PrivateListRows | 完整候选筛选；侧栏按视口复用按钮；搜索私信人物仍最多40项；成员弹窗与侧栏分别组织 |
 | 流式正文变化 | PrivateMessageScreen / GroupChatScreen 的增量文本更新 | 复用发言控件、头像、查看与思考按钮；完成后显示实际卡片与变化 |
 | 结构状态变化 | 群 Revision、轮次状态、日期、成员状态等签名 | 重建需要改变的记录布局；和每个字的刷新分开 |

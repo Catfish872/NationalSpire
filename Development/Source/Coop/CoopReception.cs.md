@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`C4224F987239169B3CA1BA5754B118C2BD89DB3ECD63CEDF15961698AFB1A69F`。来源：[源码](../../../Coop/CoopReception.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6EFC616BDABF4A314964BC64A4BDDA5B4D959F60090D3674B9A8404344FA03D6`。来源：[源码](../../../Coop/CoopReception.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,6 +14,7 @@
 private readonly Queue<ReceivedWork> _received = [];
 private readonly CancellationTokenSource _receiveLifetime = new();
 private int _viewReaders;
+private long _snapshotSequence;
 private (CoopWorld Source, CareerData Data)? _preparedView;
 ```
 

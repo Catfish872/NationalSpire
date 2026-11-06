@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`28B966E7C88C96ACB4C3DF176E426277131EE050E94FA913A49FF602C00A142E`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`82DF634ED7F618182EDF35C265F5A5F56BCEC1C88F58E1852CD4F435DE0C1D4D`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -16,7 +16,7 @@ private readonly Control _menu;
 private long _revision = -1;
 private string _presence = "";
 private CoopCommand? _pending;
-private int _queuedCeremony;
+
 private Action? _accepted;
 private bool _disposed;
 public event Action<string, bool>? Message;

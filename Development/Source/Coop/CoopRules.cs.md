@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`B13BF664723DB3B91328ECD21BA92D15FCA6E018113F10BBC66B624BB1034F0D`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DA210E6BD69BDD908401AAF4C1F2033C3014161D184600A95E6BC497B4CE4E4E`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -180,6 +180,30 @@
 - `reply.AuthorId` = `"player"`
 - `thread.AuthorId` = `"player"`
 - `thread.SeenRevision` = `member.ReadPosts.GetValueOrDefault(thread.Id)`
+
+<a id="symbol-5a1983f20bc1"></a>
+
+## `NationalSpire.Coop.CoopRules.ApplyReading(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopReading) — internal static bool ApplyReading(CoopWorld w, ulong sender, CoopReading reading)`
+
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)；[`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)；[`NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading)`](CoopCoordinator.cs.md#symbol-93e12f48a01b)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
+
+**调用：** [`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](../CommunityThreads.cs.md#symbol-35173ffbb055)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopMember.ReadPosts`；`NationalSpire.Coop.CoopMember.ReadWeeks`；`NationalSpire.Coop.CoopMember.SeenCeremonySeason`；`NationalSpire.Coop.CoopMember.SeenSettlement`；`NationalSpire.Coop.CoopReading.CeremonySeason`；`NationalSpire.Coop.CoopReading.Posts`；`NationalSpire.Coop.CoopReading.Settlement`；`NationalSpire.Coop.CoopReading.Weeks`
+
+<a id="symbol-6b2094e31cd2"></a>
+
+## `NationalSpire.Coop.CoopRules.PreserveLocalReading(NationalSpire.Coop.CoopWorld?, NationalSpire.Coop.CoopWorld, ulong, NationalSpire.CareerData?) — internal static void PreserveLocalReading(CoopWorld? previous, CoopWorld incoming, ulong self, CareerData? preparedView = null)`
+
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`Step()`](CoopReception.cs.md#symbol-7d89f2bc80fc)
+
+**调用：** [`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](../CommunityThreads.cs.md#symbol-35173ffbb055)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingCeremonySeason`；`NationalSpire.CareerData.PendingSettlementId`；`NationalSpire.Coop.CoopMember.ReadPosts`；`NationalSpire.Coop.CoopMember.ReadWeeks`；`NationalSpire.Coop.CoopMember.SeenCeremonySeason`；`NationalSpire.Coop.CoopMember.SeenSettlement`
 
 <a id="symbol-99be42ec0491"></a>
 
