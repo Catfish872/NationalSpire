@@ -20,7 +20,8 @@ public static partial class CoopRules
         if (id == 0) throw new InvalidOperationException("玩家身份无效。");
         if (CareerNames.Validate(w.World, name) is { } error) throw new InvalidOperationException(error);
         var member = new CoopMember { SteamId = id, Name = name.Trim(), Life = new() { Version = CareerLife.Version, NextOfferDay = w.World.Day + 2, NextProjectDay = w.World.Day + 21 } };
-        w.Members.Add(member); var view = View(w, member); CareerRelics.Shop(view); member.Life = view.Life; RefreshPeople(w); w.Revision++;
+        w.Members.Add(member); SynchronizeEventSchedule(w);
+        var view = View(w, member); CareerRelics.Shop(view); member.Life = view.Life; RefreshPeople(w); w.Revision++;
     }
     public static CareerData View(CoopWorld w, CoopMember m)
     {
@@ -39,6 +40,7 @@ public static partial class CoopRules
         d.Esports.PlayerContract = null; d.Esports.CommercialPaidMatches = [];
         d = CoopJson.Copy(d); CoopJson.Detached(d);
         d.AvatarWorldId = w.Id; d.LocalHumanId = m.PersonId;
+        d.SharedRandomEventSchedule = true;
         d.TradingAccounts = () => w.Members.Select(member => member.SteamId == m.SteamId ? d.Life.Trading : member.Life.Trading).ToArray();
         return d;
     }
@@ -393,7 +395,8 @@ public static partial class CoopRules
                     Distribute(w, CareerMoney.Balance(d) - before, clubBefore); AdvanceMembers(w);
                     bool ordinary = w.Members.Any(m => SocialAppointments.Due(View(w, m)).Any())
                         || CareerEngine.NextMatch(d) is { } upcoming && upcoming.Day <= d.Day || d.Failure != null || d.PendingMatchId != null;
-                    bool encounter = w.Members.Any(m => m.Life.RandomEvents.Any(e => e.Day == d.Day && e.State is not ("complete" or "skipped")));
+                    bool encounter = w.Members.Single(m => m.SteamId == w.Owner).Life.RandomEvents.Any(e => e.Day == d.Day)
+                        && w.Members.Any(m => m.Life.RandomEvents.Any(e => e.Day == d.Day && e.State is not ("complete" or "skipped")));
                     if (EventJourney.Stop(d, p.Number, ordinary, encounter)) break;
                 }
                 return null;
@@ -476,6 +479,7 @@ public static partial class CoopRules
     }
     public static void AdvanceMembers(CoopWorld w)
     {
+        SynchronizeEventSchedule(w);
         PayClubMembers(w);
         PayCeremonies(w);
         foreach (var m in w.Members)

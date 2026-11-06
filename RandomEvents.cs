@@ -18,24 +18,37 @@ public static class RandomEvents
     public static void Ensure(CareerData d, int? fromDay = null)
     {
         foreach (var e in d.Life.RandomEvents.Where(e => e.Day < d.Day && e.State is not ("complete" or "skipped"))) e.State = "skipped";
-        long day = fromDay ?? Math.Max(d.Day, d.Life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(d.Day).Max());
-        bool first = fromDay == null && d.Life.RandomEvents.Count == 0 && d.Life.RandomEventMinDays == 7 && d.Life.RandomEventMaxDays == 11;
-        var dates = d.Life.RandomEvents.Select(e => e.Day).ToHashSet();
-        var random = new Random(CareerEngine.StableHash(d.WorldId + ":questions:" + day));
-        while (d.Life.RandomEventsEnabled && day <= (long)d.Day + 28)
-        {
-            day += random.NextInt64(first ? 6 : d.Life.RandomEventMinDays, (long)(first ? 10 : d.Life.RandomEventMaxDays) + 1);
-            if (day > int.MaxValue) break;
-            if (dates.Add((int)day)) d.Life.RandomEvents.Add(new() { Day = (int)day });
-            first = false;
-        }
+        if (!d.SharedRandomEventSchedule || fromDay.HasValue) Schedule(d.Life, d.Day, d.WorldId, fromDay);
         RememberMatches(d);
     }
-    public static void SetFrequency(CareerData d, bool enabled, int minimum, int maximum)
+    public static void Schedule(CareerLifeState life, int today, string worldId, int? fromDay = null)
     {
-        d.Life.RandomEventsEnabled = enabled;
+        long day = fromDay ?? Math.Max(today, life.RandomEvents.Select(e => (long)e.Day).DefaultIfEmpty(today).Max());
+        bool first = fromDay == null && life.RandomEvents.Count == 0 && life.RandomEventMinDays == 7 && life.RandomEventMaxDays == 11;
+        var dates = life.RandomEvents.Select(e => e.Day).ToHashSet();
+        var random = new Random(CareerEngine.StableHash(worldId + ":questions:" + day));
+        while (day <= (long)today + 28)
+        {
+            day += random.NextInt64(first ? 6 : life.RandomEventMinDays, (long)(first ? 10 : life.RandomEventMaxDays) + 1);
+            if (day > int.MaxValue) break;
+            if (dates.Add((int)day)) life.RandomEvents.Add(new() { Day = (int)day });
+            first = false;
+        }
+    }
+    public static void SynchronizeSchedule(CareerLifeState life, CareerLifeState source, int today)
+    {
+        life.RandomEventMinDays = source.RandomEventMinDays; life.RandomEventMaxDays = source.RandomEventMaxDays;
+        var days = source.RandomEvents.Where(e => e.Day >= today).Select(e => e.Day).ToHashSet();
+        life.RandomEvents.RemoveAll(e => e.Day > today && Unopened(e) && !days.Contains(e.Day));
+        var existing = life.RandomEvents.Select(e => e.Day).ToHashSet();
+        foreach (int day in days.Order())
+            if (existing.Add(day)) life.RandomEvents.Add(new() { Day = day });
+    }
+    private static bool Unopened(RandomEventRecord e) => e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0;
+    public static void SetFrequency(CareerData d, int minimum, int maximum)
+    {
         d.Life.RandomEventMinDays = minimum; d.Life.RandomEventMaxDays = maximum;
-        d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && e.State == "waiting" && e.Materials.Length == 0 && e.Story.Length == 0 && e.Options.Count == 0);
+        d.Life.RandomEvents.RemoveAll(e => e.Day > d.Day && Unopened(e));
         Ensure(d, d.Day);
     }
     public static RandomEventRecord? Find(CareerData d, string id) => d.Life.RandomEvents.FirstOrDefault(e => e.Id == id);

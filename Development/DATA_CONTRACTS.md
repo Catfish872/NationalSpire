@@ -98,7 +98,9 @@ FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。Pr
 
 ## 随机事件频率和公开帖快照
 
-CareerLifeState.RandomEventsEnabled 默认true，RandomEventMinDays/RandomEventMaxDays 默认7/11，均按当前生涯保存；多人归各成员Life，View/Capture及既有快照负责保存恢复。界面整数输入最小为1，最大输入框下界随最小输入框变化，存储类型为Int32。旧JSON缺少字段时采用上述默认值。SetFrequency 写入三项设置，删除今天以后 State=waiting 且 Materials、Story、Options 均为空的日期记录，然后从当天按新区间重新安排。当天、已经生成材料或故事、完成和跳过的记录原样保留。关闭保留设置值及当前可处理事件，后续Ensure仍处理比赛记忆，日期循环停止新增。再次启用从当天重排。日期计算使用Int64，超出游戏Int32日期范围时结束安排。
+CareerLifeState.RandomEventMinDays/RandomEventMaxDays默认7/11，按当前生涯保存；界面整数输入最小为1，最大输入框下界随最小输入框变化，存储类型为Int32。旧JSON缺少字段时采用默认值；旧RandomEventsEnabled字段读取时忽略，下一次保存移除，原先关闭的生涯沿用已存间隔恢复排期。SetFrequency写入两个间隔，删除今天以后State=waiting且Materials、Story、Options均为空的日期记录，从当天按新区间重新安排。当天、已经生成材料或故事、完成和跳过的记录原样保留。日期计算使用Int64，超出游戏Int32日期范围时结束安排。
+
+联机的日期和间隔以Owner成员Life为准，故事及选项仍归各成员Life.RandomEvents。CoopRules.SynchronizeEventSchedule先调用RandomEvents.Schedule补充房主日期，再对每名队员调用RandomEvents.SynchronizeSchedule：复制两个间隔，移除未来未展开且不属于房主日程的空记录，为缺少的房主日期建立新编号的独立事件。队员既有故事、完成及跳过记录保留；这些旧日期自身不再造成全队停留。SharedRandomEventSchedule是CareerData中仅运行期间存在的JsonIgnore标记，由View在深复制后设置；成员Ensure继续处理过期状态和比赛记忆，日期由共同日程入口维护。公开快照仍隐藏其他成员事件正文，日期同步使用原成员Life和既有保存、广播、检查点；重新连接沿AdvanceMembers恢复同一日程。
 
 RandomEventRecord.PublicPosts 保存首次材料整理时的完整近期玩家公开原帖正文，Materials 保存其他社区正文与选中评论，两者按帖子编号合并后仅提供一次正文。字段随原事件生成保存、成员快照和重试恢复；旧记录缺少字段时为空。普通私聊与群聊的同类材料按每次请求生成，仍使用原Context快照和消息格式。
 
@@ -115,6 +117,8 @@ AiSettingsStore.Load 每个进程首次读取 user://national_spire_ai_settings.
 AiConnection 保存本次请求的方案编号、名称、地址、模型、密钥。密钥在独立文件和本机缓存中管理；普通配置JSON存储方案资料。CoopJson.PublicOptions 将 AiOptions 转为仅含 Enabled 的公开配置，客机收到房主公开启用状态；房主生成重新读取本机配置。启动恢复直接复用已保存的编号与映射，加载早期配置时建立一次 default；请求重试查询最新映射。UI草稿随控件释放，保存的配置跨生涯共享。
 
 ## 国运、模拟与经济数据
+
+- 实际比赛结算进阶归开赛记录管理：单人 CareerMatch.ChosenAscension（旧记录缺省时使用 CareerData.SelectedAscension），多人 CoopRun.Ascension。CareerResult.Ascension 保留赛事要求，PlayedAscension 保存本场结算进阶，原版 RunHistory.Ascension 保留原始文件含义。接收、恢复、模拟及重赛的使用入口见 GAME_AND_UI 的原版战绩接收与结算进阶。
 
 - FailureDecision.Result 保存失利或未通关获胜的待选择原成绩，Outcome 保存真实胜负，Win 表示通关，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。FailureDecision 类型、Failure 字段与命令编号沿用旧档格式。原始成绩及选择另写入现有轮换诊断，清除待选择对象继续保留已写入日志。已正式结算的历史继续沿用原记录。
 

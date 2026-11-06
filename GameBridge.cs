@@ -147,7 +147,7 @@ public static class GameBridge
     public static bool MatchesPending(CareerData data, RunHistory history)
     {
         return CareerRunBinding.Find(data, history.Seed, history.Players.FirstOrDefault()?.Character.ToString() ?? "",
-            history.Ascension, history.Players.Count, history.GameMode == GameMode.Standard, history.StartTime) != null;
+            data.SelectedAscension, history.Players.Count, history.GameMode == GameMode.Standard, history.StartTime) != null;
     }
 
     public static void CompleteHistory(RunHistory history)
@@ -157,7 +157,7 @@ public static class GameBridge
         var match = data.Matches.First(m => m.Id == data.PendingMatchId);
         var detail = ReadPlayerHistory(history, history.Players[0]);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
-            history.MapPointHistory.Sum(a => a.Count), detail.Character, history.Ascension, detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
+            history.MapPointHistory.Sum(a => a.Count), detail.Character, MatchRules.PreferredAscension(data, match), detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
         PlayerArchive.Invalidate();
         _ = AiService.ProcessPendingAsync();
     }

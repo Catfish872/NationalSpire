@@ -3,7 +3,6 @@ namespace NationalSpire;
 public sealed class CareerLifeState
 {
     public List<RandomEventRecord> RandomEvents { get; set; } = [];
-    public bool RandomEventsEnabled { get; set; } = true;
     public int RandomEventMinDays { get; set; } = 7;
     public int RandomEventMaxDays { get; set; } = 11;
     public ConsumerState Consumer { get; set; } = new();

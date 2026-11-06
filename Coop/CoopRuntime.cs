@@ -203,7 +203,7 @@ public partial class CoopRuntime : Node
     }
     public void Complete(RunHistory history)
     {
-        if (Session?.World?.Run is not { } run || history.Seed != run.Seed || history.Ascension != run.Ascension) return;
+        if (Session?.World?.Run is not { } run || history.Seed != run.Seed) return;
         if (!history.Players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) return;
         string historyKey = history.StartTime + "/" + history.Seed + "/" + history.Ascension + "/" + string.Join(',', history.Players.Select(p => p.Id).Order());
         if (Session.World.NativeHistoryReceipts.Contains(historyKey)) return;
