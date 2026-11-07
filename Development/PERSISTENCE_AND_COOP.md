@@ -11,6 +11,8 @@
 
 
 
+实际比赛的开赛进阶在调用原版开局前随生涯或共同世界保存；接收原版战绩、补结算、确认结果及重赛所读取的字段见 GAME_AND_UI 的原版战绩接收与结算进阶。该读取调整沿用现有保存顺序和文件结构。
+
 单人 GameBridge.StartMatch 的每阶段记录与资源观察沿 Diagnostics.Record 写入既有 matches.jsonl，每条完整写入后刷新，新增生涯保存和广播次数为0。转场或原版资源任务始终等待时，已经写入的阶段和路径保留在设备日志；强制退出后由原 Export/CapturePeerLogs 读取保留文件。StartDiagnostics 的记录范围、资源补丁与实测条件见 GAME_AND_UI 的开局阶段与资源诊断。当前五份比赛日志同时保留比赛、模拟、重赛选择及开局阶段，较早完整记录按同一轮换范围到期。
 
 CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 ShouldSave、网络类型、尝试编号及当前阶段，使原版因 ShouldSave 跳过下层保存的情况也留下入口证据。该补丁只观察入口。原 CoopSavePatch 仍拦截 SerializableRun 的联机保存并调用 CoopNativeRun.Save。Save 对客机、对局不存在和暂停分别记录跳过原因；正式保存前记录旧检查点字节数、实际章节、运行秒数、访问地图坐标数和各玩家生命，ValidateRun 后编码一次、Commit 一次，成功后记录新字节数、哈希及 Revision。诊断失败由 Diagnostics 自身处理，比赛的保存和广播顺序沿用原实现。
@@ -31,9 +33,9 @@ CoopCoordinator.CollectDiagnostics 重复点击复用正在进行的同一任务
 
 默认收集在成员保持在线时继续等待；调用者可显式提供 timeout。离线、关闭会话或切换 Epoch 后，已收集报告及未收集成员状态一并输出。完成后 diagnostics-done 清理成员缓存，协调器 Dispose 调用 CloseDiagnostics；房主 finally 等待解码任务后清理组装、报告和后台任务引用。一次报告会暂存完整字节数组和分片，内存随本次报告大小增加，收集结束释放引用；这不是常量内存的流式 ZIP。导出只读当前保留范围，实际磁盘或网络故障写入报告状态。
 
-共同 World.Journey 保存原目的日期及随机事件暂停日，通过原世界快照同步；成员 View 从 World 复制该字段，事件故事仍属于各成员。ExecuteProposal 每推进一天按比赛和活动优先、途中事件其次的顺序停止；继续行程复用 propose-advance，沿原权限执行。CoopAi 在建立新自动发布任务及下一轮处理前检查暂停日，已开始的任务继续完成。关闭或重启后暂停规则随保存恢复；成员进入事件、留在当日与继续原行程均使用共同日期。
+共同World.Journey保存原目的日期及随机事件暂停日，通过原世界快照同步；成员View从World复制该字段，事件故事仍属于各成员。AddMember及AdvanceMembers先执行SynchronizeEventSchedule，日期和间隔统一来自房主；旧档恢复构造CoopCoordinator时沿现有AdvanceMembers完成同步。ExecuteProposal每推进一天按比赛和活动优先、途中事件其次的顺序停止；随机事件停留同时要求当天属于房主日程且至少一名成员还有待处理事件。房主只跳过自己的事件仍保留其他队员的同日停留，全员都已跳过时继续。旧版队员独立日期保留已有故事，但自身不再造成额外停留。继续行程复用propose-advance，沿原房主权限执行，同一天各人独立操作，继续推进沿原规则处理过期事件。CoopAi在建立新自动发布任务及下一轮处理前检查暂停日，已开始的任务继续完成。关闭或重启后暂停规则随保存恢复；成员进入事件、留在当日与继续原行程均使用共同日期。
 
-RandomEventRecord 归成员 Life.RandomEvents，保存日期、状态、素材、人物、Materials及PublicPosts材料快照、故事、思维文字、选项、选择编号、公开选择及约战结果凭证，也保存 CustomAction/CustomState/CustomOption/CustomReasoning。CoopRules.EventCommand 在现有权威副本上建立个人 View，执行 Start/Stop/Skip/Choose/Custom/ChooseCustom，再 Capture。event-settings复用原命令：Target为enabled/disabled，Number为最小间隔，Text为最大间隔的十进制整数。房主从已核实发送者建立个人View，调用SetFrequency再Capture，只更新该成员Life；沿原Apply/Commit保存和广播。StartEvent只接收event-start/event-custom，设置命令产生零次AI请求。设置由成员快照及检查点恢复，重新连接后各自保留。event-custom 的 Text 为玩家行动，event-custom-choose 的 Text 为 public/private。Stop 取消同一成员事件请求并恢复旧选项，后续响应按 generating 状态检查放弃。两种选择命令都将新比赛、市场及国家建设同步回 World；钱包、库存、关系及经历归成员 Life。保存沿 Apply → Commit 递增操作版本并广播。
+RandomEventRecord归成员Life.RandomEvents，保存日期、状态、素材、人物、Materials及PublicPosts材料快照、故事、思维文字、选项、选择编号、公开选择及约战结果凭证，也保存CustomAction/CustomState/CustomOption/CustomReasoning。CoopRules.EventCommand在现有权威副本上建立个人View，执行Start/Stop/Skip/Choose/Custom/ChooseCustom，再Capture。event-settings沿用原命令：Number为最小间隔，Text为最大间隔的十进制整数，Target停止表示启用状态。由房主设置时调用SetFrequency、Capture及SynchronizeEventSchedule，同一次Apply/Commit保存并广播全员更新；队员窗口只读，直接提交设置命令返回房主设置说明。StartEvent只接收event-start/event-custom，设置和恢复排期产生零次AI请求。event-custom的Text为玩家行动，event-custom-choose的Text为public/private。Stop取消同一成员事件请求并恢复旧选项，后续响应按generating状态检查放弃。两种选择命令都将新比赛、市场及国家建设同步回World；钱包、库存、关系及经历归成员Life。保存沿Apply → Commit递增操作版本并广播。
 
 CoopCoordinator.StartEvent 接受 event-start 与 event-custom；Current 读取发起人的最新视图，Save 核对世界、epoch及首次或自定义 generating 状态，只将同一事件的结果合入当前成员。每次完成或失败复制一次世界、递增一次 Revision，调用原 Commit。SceneLines 与随机事件 EventLive 使用 private-chunk；随机事件用 event:编号区分，仅发送发起人，包含正文、选项、Reasoning 和 Phase。客机在 State=generating 或 CustomState=generating 时接收事件分片。分片属于内存显示，完整结果通过原快照保存与接收流程落盘。旧版分片缺省空 Reasoning 与排队阶段。public 偏好属于本机 ChatPreferences，按生涯键保存；最终选择的 Public 随事件进入成员快照。CustomEventCoopChecks 的真实双协调器、内存网络与磁盘检查点11项通过：续写流式、一次请求、个人隔离、确认前余额、进程重建后恢复及重发去重；Steam网络未实测。
 

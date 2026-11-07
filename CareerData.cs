@@ -29,6 +29,7 @@ public sealed class CareerData
     [System.Text.Json.Serialization.JsonIgnore] public string AvatarWorldId { get; set; } = "";
     [System.Text.Json.Serialization.JsonIgnore] public string LocalHumanId { get; set; } = "";
     public int CooperativeMembers { get; set; } = 1;
+    [System.Text.Json.Serialization.JsonIgnore] public bool SharedRandomEventSchedule { get; set; }
     public int RivalLevel { get; set; } = 1000;
     public bool RandomCharacter { get; set; }
     public List<string> HumanIds { get; set; } = [];

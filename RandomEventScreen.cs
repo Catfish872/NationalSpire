@@ -47,22 +47,22 @@ public partial class CareerScreen
     private void RandomEventSettings()
     {
         var current = ViewData.Life;
-        CheckButton? enabled = null; SpinBox? minimum = null, maximum = null;
-        ShowCareerDialog("随机事件设置", "在设定的天数范围内随机安排下一次际遇。", () =>
+        bool editable = _multiplayer is not { Host: false };
+        SpinBox? minimum = null, maximum = null;
+        ShowCareerDialog("随机事件设置", editable ? "在设定的天数范围内随机安排下一次际遇。" : "联机随机事件日程与间隔统一由房主设置。", () =>
         {
+            if (!editable) return true;
             minimum!.Apply(); maximum!.Apply();
             int min = (int)minimum.Value, max = (int)maximum.Value;
-            bool on = enabled!.ButtonPressed;
-            if (!MultiplayerCommand("event-settings", on ? "enabled" : "disabled", max.ToString(System.Globalization.CultureInfo.InvariantCulture), min,
+            if (!MultiplayerCommand("event-settings", text: max.ToString(System.Globalization.CultureInfo.InvariantCulture), number: min,
                 accepted: () => { _eventSignature = ""; RefreshRandomEvent(); }))
             {
-                RandomEvents.SetFrequency(ViewData, on, min, max); CareerStore.Save(ViewData);
+                RandomEvents.SetFrequency(ViewData, min, max); CareerStore.Save(ViewData);
                 _eventSignature = ""; RefreshRandomEvent();
             }
             return true;
-        }, "保存设置", box =>
+        }, editable ? "保存设置" : "关闭", box =>
         {
-            enabled = new CheckButton { Name = "RandomEventsEnabled", Text = "启用随机事件", ButtonPressed = current.RandomEventsEnabled, CustomMinimumSize = new(0, 44) }; box.AddChild(enabled);
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); box.AddChild(row);
             SpinBox Field(string caption, int value, string name)
             {
@@ -71,14 +71,13 @@ public partial class CareerScreen
                 var fields = new VBoxContainer(); fields.AddThemeConstantOverride("separation", 12); panel.AddChild(fields);
                 fields.AddChild(Text(caption, 17, _muted));
                 var input = new SpinBox { Name = name, MinValue = 1, MaxValue = int.MaxValue, Step = 1, Value = value,
-                    Suffix = "天", UpdateOnTextChanged = true, Editable = current.RandomEventsEnabled, CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                    Suffix = "天", UpdateOnTextChanged = true, Editable = editable, CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = SizeFlags.ExpandFill };
                 fields.AddChild(input); return input;
             }
             minimum = Field("最小间隔", current.RandomEventMinDays, "RandomEventMinimum");
             maximum = Field("最大间隔", current.RandomEventMaxDays, "RandomEventMaximum");
             maximum.MinValue = minimum.Value;
             minimum.ValueChanged += value => maximum.MinValue = value;
-            enabled.Toggled += value => { minimum.Editable = value; maximum.Editable = value; };
             box.AddChild(Text("保存后重新安排未来尚未展开的事件。当天事件和已经生成的故事继续保留。", 16, _muted));
         });
     }

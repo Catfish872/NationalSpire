@@ -2,13 +2,21 @@ namespace NationalSpire.Coop;
 
 public static partial class CoopRules
 {
+    public static void SynchronizeEventSchedule(CoopWorld w)
+    {
+        var owner = w.Members.Single(m => m.SteamId == w.Owner);
+        RandomEvents.Schedule(owner.Life, w.World.Day, w.Id + "-" + owner.SteamId);
+        foreach (var member in w.Members.Where(m => m.SteamId != w.Owner))
+            RandomEvents.SynchronizeSchedule(member.Life, owner.Life, w.World.Day);
+    }
     private static string? EventCommand(CoopWorld w, CoopMember member, CoopCommand command)
     {
         var d = View(w, member); d.Ai = AiSettingsStore.Load(new());
         if (command.Kind == "event-settings")
         {
-            RandomEvents.SetFrequency(d, command.Target == "enabled", command.Number, int.Parse(command.Text, System.Globalization.CultureInfo.InvariantCulture));
-            Capture(w, member, d); return null;
+            if (member.SteamId != w.Owner) return "随机事件间隔由房主设置。";
+            RandomEvents.SetFrequency(d, command.Number, int.Parse(command.Text, System.Globalization.CultureInfo.InvariantCulture));
+            Capture(w, member, d); SynchronizeEventSchedule(w); return null;
         }
         string? error = command.Kind switch
         {
