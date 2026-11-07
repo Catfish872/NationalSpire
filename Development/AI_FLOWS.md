@@ -74,6 +74,10 @@ RequestPrivateAsync 的 task 缺省 private；群聊调用者传 group，两种�
 
 提示词试写按 Source.Scene 选择同一任务方案。PromptTestScreen 的确认窗口展示实际接收地址和材料；确认时及排队结束后校验该次连接，地址、模型或密钥变化时提示重新确认。重新测试展示当前方案，响应返回后的配置编辑保持本次结果有效；生涯归属与启用状态仍由 Current 校验。模型列表查询使用编辑框地址和密钥草稿，留空时读取当前方案保存的密钥；返回结果仍由原 queryRevision 和控件有效性决定是否显示。
 
+OpenCode Go 的官方地址以 `https://opencode.ai/inference/go/` 开头。AiService.ApplyProviderHeaders 只在请求主机精确为 `opencode.ai` 且路径位于 `/inference/go/` 时添加供应商要求的请求头；其他官方地址、转发地址和自定义 OpenAI 兼容服务保持原请求。新闻、回帖、周刊及普通试写通过 SendAsync，在实际发送前以当前生涯 WorldId 的 SHA-256 摘要生成稳定的 `x-opencode-session`；私信、群聊、总结、仲裁、随机事件和形象生成通过 RequestPrivateAsync 使用同一生涯编号生成请求头。请求头只包含 `ses_nationalspire_` 与摘要前24个十六进制字符，不传输原 WorldId；同一生涯跨任务保持稳定，不同生涯不会复用。User-Agent 为 `NationalSpire/<当前模组版本>`。该处理不增加模型请求、保存、广播或跨请求内存状态，失败、取消和重试继续沿各调用者原流程。
+
+模型列表查询识别同一 OpenCode Go 地址后固定请求 `/inference/go/v1/models`，并以 `model-discovery` 作为稳定会话种子添加相同供应商请求头；返回解析、诊断脱敏和界面修订号检查保持原行为。该兼容性修复在 v0.27.13、Windows、Slay the Spire 2 当前公开分支上完成 Release 编译，0警告、0错误；部署 DLL 与构建输出 SHA-256 一致。真实游戏内 OpenCode Go 生成、服务端耗时、Token 用量、Steam 多人及其他平台尚未验证。
+
 单人 CareerStore.Load 与多人房主 View/CoopAi 使用 AiSettingsStore.Load 的本机对象。任务编号和方案编号属于本机配置；多人公开序列化继续通过 PublicOptions 仅保留 Enabled。离开设置页面会释放编辑控件及未保存草稿，已经发送的模型请求沿原后台处理完成。切换生涯、日期推进、关闭进程和断线继续使用原 current、恢复及检查点入口；之后重试根据本机当前配置重新选择方案。
 
 验证：--ai-routing-checks 通过22项，使用模拟HTTP传输检查九类任务的实际地址、模型、密钥、旧配置转换、别名分类、重命名、失败后重新分配、发送后修改及公开快照过滤。--response-workflow-checks 通过社区182项、周刊50项、独立试写19项；--model-list-checks 通过29项。2026-10-20 首次旧配置转换0.1663毫秒/2304字节，预热一万次后的十万次 Connection 查询累计7.9069毫秒/0字节。这里计量本地查询，真实服务生成和Steam网络耗时另行测量。界面及独立密钥文件验证见 GAME_AND_UI 的模型方案设置章节。

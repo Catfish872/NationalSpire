@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -48,8 +49,20 @@ public static partial class AiService
     private static readonly System.Net.Http.HttpClient Client = new() { Timeout = System.Threading.Timeout.InfiniteTimeSpan };
     private static readonly JsonSerializerOptions Json = new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
     internal static readonly HttpRequestOptionsKey<TimeSpan> TimeoutOption = new("NationalSpire.Timeout");
+    private static bool IsOpenCodeGo(Uri? endpoint) => endpoint is not null
+        && endpoint.Host.Equals("opencode.ai", StringComparison.OrdinalIgnoreCase)
+        && endpoint.AbsolutePath.StartsWith("/inference/go/", StringComparison.OrdinalIgnoreCase);
+    internal static void ApplyProviderHeaders(HttpRequestMessage request, string sessionSeed)
+    {
+        if (!IsOpenCodeGo(request.RequestUri)) return;
+        var digest = SHA256.HashData(Encoding.UTF8.GetBytes(sessionSeed));
+        string session = "ses_nationalspire_" + Convert.ToHexString(digest)[..24].ToLowerInvariant();
+        request.Headers.TryAddWithoutValidation("x-opencode-session", session);
+        if (request.Headers.UserAgent.Count == 0) request.Headers.UserAgent.ParseAdd("NationalSpire/" + Diagnostics.ModVersion);
+    }
     private static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CareerData data, string trace, string kind, IEnumerable<string> targets)
     {
+        ApplyProviderHeaders(request, data.WorldId);
         request.Options.Set(TimeoutOption, TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
         Diagnostics.RegisterSecret(request.Headers.Authorization?.Parameter);
         Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,

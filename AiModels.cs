@@ -11,7 +11,9 @@ public static partial class AiService
             throw new ArgumentException("请填写完整的 http:// 或 https:// 服务地址。");
         var builder = new UriBuilder(address) { Fragment = "" };
         string path = builder.Path.TrimEnd('/');
-        if (path.EndsWith("/chat/completions", StringComparison.OrdinalIgnoreCase)) path = path[..^"/chat/completions".Length] + "/models";
+        if (address.Host.Equals("opencode.ai", StringComparison.OrdinalIgnoreCase)
+            && path.StartsWith("/inference/go/", StringComparison.OrdinalIgnoreCase)) path = "/inference/go/v1/models";
+        else if (path.EndsWith("/chat/completions", StringComparison.OrdinalIgnoreCase)) path = path[..^"/chat/completions".Length] + "/models";
         else if (!path.EndsWith("/models", StringComparison.OrdinalIgnoreCase)) path = path.Length == 0 ? "/v1/models" : path + "/models";
         builder.Path = path; return builder.Uri;
     }
@@ -23,6 +25,7 @@ public static partial class AiService
         var uri = ModelsEndpoint(endpoint);
         using var request = new HttpRequestMessage(HttpMethod.Get, uri);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", key);
+        ApplyProviderHeaders(request, "model-discovery");
         request.Options.Set(TimeoutOption, TimeSpan.FromSeconds(30));
         Diagnostics.Record("ai.models.request", new { endpoint = uri.ToString(), credential = string.IsNullOrWhiteSpace(enteredKey) ? "saved" : "input" });
         string rawBody = "";

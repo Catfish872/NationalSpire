@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A1571C68AC31088E229E666F2F7DAD90CD03FBB0E08C194C191CEE4A536E0807`。来源：[源码](../../AiModels.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D28667816B960AF1D11937075ED5E5AC4662921360591D6BEC246D6C73573BC2`。来源：[源码](../../AiModels.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -18,6 +18,8 @@
 ## `NationalSpire.AiService.ModelsEndpoint(string) — internal static Uri ModelsEndpoint(string endpoint)`
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**本次新增的已绑定调用与分支：** `string.Equals(string?, string?, System.StringComparison)` 读取 `address.Host`，`string.StartsWith(string, System.StringComparison)` 读取 `path`；主机为 `opencode.ai` 且路径以 `/inference/go/` 开头时，将 `path` 赋值为 `/inference/go/v1/models`。其他地址继续沿原 `/chat/completions` 替换或追加 `/models` 的分支。
 
 **调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)
 
@@ -46,7 +48,9 @@
 
 ## `NationalSpire.AiService.FetchModelsAsync(string, string?, string) — public static async Task<IReadOnlyList<string>> FetchModelsAsync(string endpoint, string? enteredKey, string profile = AiRouting.Default)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**本次新增的已绑定调用：** [`NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`](AiService.cs.md#symbol-f43d34d7a141)。输入表达式：`ApplyProviderHeaders(request, "model-discovery")`；在模型列表 GET 请求发送前设置供应商请求头，无存档副作用。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 

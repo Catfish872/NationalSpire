@@ -161,6 +161,7 @@ public static partial class AiService
         if (!TryGetEndpoint(connection.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", connection.Key);
+        ApplyProviderHeaders(request, CareerStore.Data.WorldId);
         var payload = new Dictionary<string, object> { ["model"] = connection.Model, ["messages"] = messages, ["stream"] = stream };
         if (tools != null)
         {

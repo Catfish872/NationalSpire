@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`13442D7FE946C990F8721BD27BD61B96EEDB7C87ABCE7F7BE520BFCCBBA3F43C`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`624568A2DCAB8C7728500122CC8866F00F68AE9F10B32757413055F475C4FCBB`。来源：[源码](../../AiPrivateMessages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -338,6 +338,8 @@ public static readonly Dictionary<string, (string Turn, List<DateSceneLine> Line
 ## `NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?) — internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,          Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null)`
 
 来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**本次新增的已绑定调用：** [`NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`](AiService.cs.md#symbol-f43d34d7a141)。输入表达式：`ApplyProviderHeaders(request, CareerStore.Data.WorldId)`；读取 `NationalSpire.CareerStore.Data` 与 `NationalSpire.CareerData.WorldId`，在请求序列化与发送前设置供应商请求头；无存档副作用。
 
 **调用者：** [`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.AiService.ProcessEventAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<NationalSpire.EventLive>?)`](AiRandomEvents.cs.md#symbol-5705d03a72b3)；[`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.AiService.SummaryRequest(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, string)`](AiPrivateMessages.cs.md#symbol-1b3123f418a5)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 

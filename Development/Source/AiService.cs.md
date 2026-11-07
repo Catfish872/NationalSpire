@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`62FB29BBF72DF0E2F359F25E6B49FE37B24F9ADD82868F48BD1099FF680058FA`。来源：[源码](../../AiService.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`AC11D61DFB1EA4A4C4BD8F90115698C4D30477F0A276341FAE381D008815629B`。来源：[源码](../../AiService.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -115,20 +115,66 @@ private static readonly Dictionary<string, string> ProfileKeys = new();
 - `_lastRequest` = `DateTimeOffset.UtcNow`
 - `Status` = `"等待请求间隔"`
 
+<a id="symbol-46e7a5c4b2de"></a>
+
+## `NationalSpire.AiService.IsOpenCodeGo(System.Uri?) — private static bool IsOpenCodeGo(Uri? endpoint)`
+
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`](AiService.cs.md#symbol-f43d34d7a141)
+
+**调用：** `string.Equals(string?, string?, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`endpoint.Host.Equals("opencode.ai", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: endpoint is not null && endpoint.Host.Equals("opencode.ai", StringComparison.OrdinalIgnoreCase)`
+- `string.StartsWith(string, System.StringComparison)`；输入表达式：`endpoint.AbsolutePath.StartsWith("/inference/go/", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => endpoint is not null && endpoint.Host.Equals("opencode.ai", StringComparison.OrdinalIgnoreCase) && endpoint.AbsolutePath.StartsWith("/inference/go/", StringComparison.OrdinalIgnoreCase)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-f43d34d7a141"></a>
+
+## `NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string) — internal static void ApplyProviderHeaders(HttpRequestMessage request, string sessionSeed)`
+
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)；[`NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>)`](AiService.cs.md#symbol-aad664840095)
+
+**调用：** [`NationalSpire.AiService.IsOpenCodeGo(System.Uri?)`](AiService.cs.md#symbol-46e7a5c4b2de)；`string.ToLowerInvariant()`；`System.Convert.ToHexString(byte[])`；`System.Security.Cryptography.SHA256.HashData(byte[])`；`System.Text.Encoding.GetBytes(string)`；`System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.ProductInfoHeaderValue>.ParseAdd(string)`；`System.Net.Http.Headers.HttpHeaders.TryAddWithoutValidation(string, string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.ModVersion`；`NationalSpire.AiService.IsOpenCodeGo(System.Uri?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiService.IsOpenCodeGo(System.Uri?)`；输入表达式：`IsOpenCodeGo(request.RequestUri)`；返回值紧邻使用处：`IfStatementSyntax: if (!IsOpenCodeGo(request.RequestUri)) return;`
+- `System.Security.Cryptography.SHA256.HashData(byte[])`；输入表达式：`SHA256.HashData(Encoding.UTF8.GetBytes(sessionSeed))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SHA256.HashData(Encoding.UTF8.GetBytes(sessionSeed))`
+- `System.Convert.ToHexString(byte[])`；输入表达式：`Convert.ToHexString(digest)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = "ses_nationalspire_" + Convert.ToHexString(digest)[..24].ToLowerInvariant()`
+- `System.Net.Http.Headers.HttpHeaders.TryAddWithoutValidation(string, string?)`；输入表达式：`request.Headers.TryAddWithoutValidation("x-opencode-session", session)`；返回值紧邻使用处：`ExpressionStatementSyntax: request.Headers.TryAddWithoutValidation("x-opencode-session", session);`
+- `System.Net.Http.Headers.HttpHeaderValueCollection<System.Net.Http.Headers.ProductInfoHeaderValue>.ParseAdd(string)`；输入表达式：`request.Headers.UserAgent.ParseAdd("NationalSpire/" + Diagnostics.ModVersion)`；返回值紧邻使用处：`ExpressionStatementSyntax: request.Headers.UserAgent.ParseAdd("NationalSpire/" + Diagnostics.ModVersion);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `digest` = `SHA256.HashData(Encoding.UTF8.GetBytes(sessionSeed))`
+- `session` = `"ses_nationalspire_" + Convert.ToHexString(digest)[..24].ToLowerInvariant()`
+
 <a id="symbol-aad664840095"></a>
 
 ## `NationalSpire.AiService.SendAsync(System.Net.Http.HttpRequestMessage, NationalSpire.CareerData, string, string, System.Collections.Generic.IEnumerable<string>) — private static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CareerData data, string trace, string kind, IEnumerable<string> targets)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.ProcessNewsBatchAsync(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>)`](AiService.cs.md#symbol-483c895c168a)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Diagnostics.Stopwatch.StartNew()`；`System.Exception.ToString()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Clamp(int, int, int)`；`System.Net.Http.HttpContent.ReadAsStringAsync()`；`System.Net.Http.HttpRequestOptions.Set<TValue>(System.Net.Http.HttpRequestOptionsKey<TValue>, TValue)`；`System.Net.Http.HttpResponseMessage.Dispose()`；`System.TimeSpan.FromMinutes(long)`；`System.Uri.ToString()`
+**调用：** [`NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`](AiService.cs.md#symbol-f43d34d7a141)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RegisterSecret(string?)`](Diagnostics.cs.md#symbol-4f621c46a4ca)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Diagnostics.Stopwatch.StartNew()`；`System.Exception.ToString()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Clamp(int, int, int)`；`System.Net.Http.HttpContent.ReadAsStringAsync()`；`System.Net.Http.HttpRequestOptions.Set<TValue>(System.Net.Http.HttpRequestOptionsKey<TValue>, TValue)`；`System.Net.Http.HttpResponseMessage.Dispose()`；`System.TimeSpan.FromMinutes(long)`；`System.Uri.ToString()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.characters`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.status`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.exception`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.endpoint`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.payload`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.targets`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiService.TimeoutOption`；`NationalSpire.AiService.Transport`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
+**字段、属性、事件及方法组引用：** `<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.characters`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, int status, long elapsedMilliseconds, int characters, string body>.status`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.elapsedMilliseconds`；`<anonymous type: string trace, string kind, long elapsedMilliseconds, string exception>.exception`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.endpoint`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.payload`；`<anonymous type: string trace, string kind, string[] targets, int Day, int Season, string endpoint, int RequestTimeoutMinutes, int MaxConcurrentRequests, string payload>.targets`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`；`NationalSpire.AiService.TimeoutOption`；`NationalSpire.AiService.Transport`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.WorldId`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RegisterSecret(string?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AiService.ApplyProviderHeaders(System.Net.Http.HttpRequestMessage, string)`；输入表达式：`ApplyProviderHeaders(request, data.WorldId)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplyProviderHeaders(request, data.WorldId);`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,             endpoint = request.RequestUri?.ToString(), data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,             payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.request", new { trace, kind, targets = targets.ToArray(), data.Day, data.Season,             endpoint = request.RequestUri?.ToString(), data.Ai.RequestTimeoutMinutes, data.Ai.MaxConcurrentRequests,             payload = request.Content == null ? "" : await request.Content.ReadAsStringAsync() });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.response", new { trace, kind, status = (int)response.StatusCode,                 elapsedMilliseconds = timer.ElapsedMilliseconds, characters = body.Length, body })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.response", new { trace, kind, status = (int)response.StatusCode,                 elapsedMilliseconds = timer.ElapsedMilliseconds, characters = body.Length, body });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.transport-failed", new { trace, kind, elapsedMilliseconds = timer.ElapsedMilliseconds, exception = e.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.transport-failed", new { trace, kind, elapsedMilliseconds = timer.ElapsedMilliseconds, exception = e.ToString() });`
