@@ -17,6 +17,44 @@ public partial class CareerScreen
         catch (Exception e) { Notice("读取立绘失败：" + e.Message, true); return; }
         VBoxContainer list = null!; Label status = null!; OptionButton selector = null!;
         var selections = new Dictionary<string, string>();
+        void ImportPackage(string file, Action? rememberPackage = null)
+        {
+            if (!CareerStore.IsCurrent(data)) return;
+            try
+            {
+                var plan = PortraitPackageImport.Read(data, file, design);
+                void ImportSprites() => ConfirmPortraitEmotions(data, plan, design, accepted =>
+                {
+                    try
+                    {
+                        var merged = PortraitPackageImport.Merge(plan, design, assets, accepted);
+                        if (merged.Count == 0) { status.Text = "已取消全部新差分的导入。"; return; }
+                        using var installation = new CharacterDesignPackage.Installation(data, person, merged.Design, merged.Assets);
+                        installation.Commit(); design = merged.Design; assets = merged.Assets;
+                        selector.Clear(); foreach (var outfit in design.Outfits) selector.AddItem(outfit.Name);
+                        selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit));
+                        status.Text = $"已导入{merged.Count}张立绘。"; status.Modulate = Colors.White; Draw();
+                        if (plan.Character != null) rememberPackage?.Invoke();
+                    }
+                    catch (Exception e) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("ee929d"); }
+                });
+                if (plan.Character is { } package)
+                    PortraitImportDialog("导入角色设计包", "这个压缩包包含角色卡和立绘差分。请选择导入方式。", (box, finish) =>
+                    {
+                        var create = Button("根据角色包创建新角色", () => finish(() =>
+                        {
+                            if (!CareerStore.IsCurrent(data)) return;
+                            rememberPackage?.Invoke();
+                            _cancelDialog?.Invoke(); OpenCharacterCardCore(data, null, package.Person, package);
+                        }), 350);
+                        create.Name = "PortraitCreateCharacter"; create.Disabled = !CanEditCharacter(data, "") || data.PendingMatchId != null; box.AddChild(create);
+                        var sprites = Button("仅导入立绘到当前角色", () => finish(ImportSprites), 350);
+                        sprites.Name = "PortraitImportSpritesOnly"; box.AddChild(sprites);
+                    });
+                else ImportSprites();
+            }
+            catch (Exception e) { status.Text = "导入失败：" + e.Message; status.Modulate = new Color("ee929d"); }
+        }
         void Import(Action<DateSceneAssets, string> action, string[] extensions)
         {
             PickNestedFile("导入立绘", extensions, file =>
@@ -102,7 +140,7 @@ public partial class CareerScreen
                 selector.Clear(); foreach (var outfit in design.Outfits) selector.AddItem(outfit.Name);
                 selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit));
                 status.Text = "形象包已应用，当前角色的立绘已更新。"; status.Modulate = Colors.White; Draw();
-            });
+            }, ImportPackage);
             selector = new OptionButton { Name = "DateAssetOutfit", CustomMinimumSize = new(0, 46), FitToLongestItem = false };
             foreach (var outfit in design.Outfits) selector.AddItem(outfit.Name);
             selector.Select(design.Outfits.FindIndex(o => o.Id == design.SelectedOutfit)); box.AddChild(selector);
@@ -116,7 +154,8 @@ public partial class CareerScreen
         }, showCancel: false);
         if (_dialogOverlay?.FindChild("CareerDialogConfirm", true, false)?.GetParent() is HBoxContainer footer)
         {
-            var import = Button("追加差分 ZIP / JSON", () => Import((copy, file) => DateSceneAssetStore.ImportPack(copy, design, file), [".zip", ".json"]), 220);
+            var import = Button("追加差分 ZIP / JSON", () => PickNestedFile("导入立绘或角色设计包", [".zip", ".json"], file =>
+                Callable.From(() => { if (IsInstanceValid(status)) ImportPackage(file); }).CallDeferred()), 220);
             import.Name = "DateImportPack"; footer.AddChild(import); footer.MoveChild(import, 0);
             var export = Button("导出角色设计", async () =>
             {

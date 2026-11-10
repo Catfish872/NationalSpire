@@ -18,7 +18,7 @@ public partial class CareerScreen
         var identityInset = new MarginContainer(); content.AddChild(identityInset);
         var identity = new HBoxContainer(); identity.AddThemeConstantOverride("separation", 20); identityInset.AddChild(identity);
         if (showProfile) identity.CustomMinimumSize = new(0, 89);
-        void OpenProfile() => OpenPrivatePerson(id);
+        void OpenProfile() => OpenPerson(id);
         var avatar = Avatar(data, id, 72, showProfile, showProfile ? OpenProfile : null);
         if (showProfile) avatar.SizeFlagsVertical = SizeFlags.ShrinkCenter;
         avatar.Name = "PrivateIdentityAvatar"; identity.AddChild(avatar);
@@ -274,7 +274,7 @@ public partial class CareerScreen
         }
         else
         {
-            string kind = a.Kind switch { "post" => "帖子", "result" => "比赛记录", "match" => "比赛邀约", "lineup" => "阵容调整", "training" => "训练内容", "activity" => "活动邀约", "gift" => "赠送礼物", OathAttachments.Kind => "解除誓约", "contract" => "合同邀约", _ => "附加文字" };
+            string kind = a.Kind switch { DateGames.AttachmentKind => "约会对局", "post" => "帖子", "result" => "比赛记录", "match" => "比赛邀约", "lineup" => "阵容调整", "training" => "训练内容", "activity" => "活动邀约", "gift" => "赠送礼物", OathAttachments.Kind => "解除誓约", "contract" => "合同邀约", _ => "附加文字" };
             string excerpt = a.Detail.Contains('\n') ? a.Detail[(a.Detail.IndexOf('\n') + 1)..].Replace('\n', ' ') : a.Detail;
             var description = PrivateLine(kind + (excerpt.Length > 0 ? "  ·  " + excerpt : ""), 15, _muted); description.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; copy.AddChild(description);
         }
@@ -296,6 +296,9 @@ public partial class CareerScreen
     }
     private void AttachPrivate(PrivateOffer attachment)
     {
+        if (PrivateAttachments.Count >= 8) { if (_privateStatus != null) _privateStatus.Text = "每条消息最多附加 8 项。"; return; }
+        if (attachment.Kind == "gift" && attachment.ConsumerAttachmentId.Length == 0)
+        { ReserveConsumerDraft(attachment); return; }
         if (_privateGroup.Length > 0)
         {
             attachment.GroupId = _privateGroup;
@@ -304,7 +307,6 @@ public partial class CareerScreen
             if (attachment.Kind == "lineup") attachment.ActorId = _privatePerson;
             PrivateAttachments.Add(attachment); RefreshPrivateAttachments(); return;
         }
-        if (PrivateAttachments.Count >= 8) { _privateStatus!.Text = "每条消息最多附加 8 项。"; return; }
         PrivateAttachments.Add(attachment); RefreshPrivateAttachments();
         Callable.From(() => { if (IsInstanceValid(_privateInput) && _privateInput!.IsVisibleInTree()) _privateInput.GrabFocus(); }).CallDeferred();
     }
@@ -394,27 +396,37 @@ public partial class CareerScreen
             emblem.AddChild(new PrivateOrnament { Kind = "archive", MouseFilter = MouseFilterEnum.Ignore });
             var title = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; title.AddThemeConstantOverride("separation", 10); heading.AddChild(title);
             title.AddChild(PrivateText(CareerEngine.DisplayName(data, _privatePerson), 23, _ink));
-            title.AddChild(PrivateText("两类摘要都会保留，用于后续聊天。", 16, _muted));
+            title.AddChild(PrivateText("摘要与手动记忆会保留，用于后续聊天。", 16, _muted));
             heading.AddChild(Avatar(data, _privatePerson, 56, false));
             var tabs = new HBoxContainer(); tabs.AddThemeConstantOverride("separation", 20); box.AddChild(tabs);
             var toolbar = new HBoxContainer(); toolbar.AddThemeConstantOverride("separation", 18); box.AddChild(toolbar);
             var explanation = PrivateText("", 16, _muted); explanation.SizeFlagsHorizontal = SizeFlags.ExpandFill; toolbar.AddChild(explanation);
             string selectedKind = "small";
+            var create = PrivateButton("新建记忆总结", () => OpenChatDialog(() => EditManualMemory()), 155); create.Name = "CreateManualMemory"; toolbar.AddChild(create);
             var action = PrivateButton("整理聊天", () => { _cancelDialog?.Invoke(); PrivateCommand("dm-summary", new() { Part = selectedKind }); }, 155); toolbar.AddChild(action);
             var scroll = new ScrollContainer { CustomMinimumSize = new(800, 180), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var list = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; list.AddThemeConstantOverride("separation", 18); scroll.AddChild(list);
-            Button? shortTab = null, longTab = null;
+            Button? shortTab = null, longTab = null, manualTab = null;
             void Section(string kind)
             {
                 selectedKind = kind; CareerVisuals.ClearContent(list);
+                action.Visible = kind != "manual";
                 var summaries = kind == "big" ? c.BigSummaries : c.SmallSummaries;
                 explanation.Text = kind == "big" ? "将多条较早的聊天摘要整理成一条。" : "提取聊天中的经历、约定与重要细节。";
                 action.Text = kind == "big" ? "合并旧摘要" : "整理聊天";
                 action.Disabled = c.SummaryStatus.Length > 0 || (kind == "big" ? c.SmallSummaries.Count < 2 : PrivateMessages.Completed(c) == 0);
-                foreach (var (tab, selected) in new[] { (shortTab!, kind == "small"), (longTab!, kind == "big") })
+                foreach (var (tab, selected) in new[] { (shortTab!, kind == "small"), (longTab!, kind == "big"), (manualTab!, kind == "manual") })
                 {
                     var style = CareerVisuals.Box(selected ? "263d50" : "122330", selected ? "d9bd7e" : "395064", 2, 16);
                     style.BorderWidthBottom = selected ? 3 : 1; tab.AddThemeStyleboxOverride("normal", style);
+                }
+                if (kind == "manual")
+                {
+                    explanation.Text = "自己编写或粘贴，随时编辑与删除。";
+                    scroll.CustomMinimumSize = new(800, c.ManualMemories.Count == 0 ? 165 : 360);
+                    foreach (var memory in c.ManualMemories.AsEnumerable().Reverse()) ManualMemoryCard(list, memory);
+                    if (c.ManualMemories.Count == 0) list.AddChild(PrivateText("点击“新建记忆总结”添加第一条手动记忆。", 18, _muted));
+                    return;
                 }
                 scroll.CustomMinimumSize = new(800, summaries.Count == 0 ? 165 : Math.Min(360, 210 * summaries.Count));
                 foreach (var s in summaries.AsEnumerable().Reverse())
@@ -445,17 +457,18 @@ public partial class CareerScreen
             }
             Button MemoryTab(string name, int count, string detail, string kind)
             {
-                var button = PrivateButton("", () => Section(kind), 390); button.CustomMinimumSize = new(390, 108); tabs.AddChild(button);
+                var button = PrivateButton("", () => Section(kind), 253); button.Name = "MemoryTab_" + kind; button.CustomMinimumSize = new(253, 108); tabs.AddChild(button);
                 var inset = new MarginContainer(); button.AddChild(inset); inset.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-                foreach (string edge in new[] { "left", "right", "top", "bottom" }) inset.AddThemeConstantOverride("margin_" + edge, 18);
-                var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 15); inset.AddChild(row);
-                var icon = new Control { CustomMinimumSize = new(42, 50) }; row.AddChild(icon); icon.AddChild(new PrivateOrnament { Kind = kind == "big" ? "archive" : "summary" });
+                foreach (string edge in new[] { "left", "right", "top", "bottom" }) inset.AddThemeConstantOverride("margin_" + edge, 12);
+                var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 10); inset.AddChild(row);
+                var icon = new Control { CustomMinimumSize = new(30, 42) }; row.AddChild(icon); icon.AddChild(new PrivateOrnament { Kind = kind == "big" ? "archive" : "summary" });
                 var text = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; text.AddThemeConstantOverride("separation", 9); row.AddChild(text);
-                text.AddChild(PrivateLine(name, 21, _ink)); text.AddChild(PrivateLine(detail, 14, _muted));
-                row.AddChild(PrivateLine(count.ToString("00"), 30, _gold)); PrivateIgnoreMouse(inset); return button;
+                text.AddChild(PrivateLine(name, 19, _ink)); text.AddChild(PrivateLine(detail, 13, _muted));
+                row.AddChild(PrivateLine(count.ToString("00"), 24, _gold)); PrivateIgnoreMouse(inset); return button;
             }
-            shortTab = MemoryTab("聊天摘要", c.SmallSummaries.Count, "来自双方的聊天记录", "small");
-            longTab = MemoryTab("合并摘要", c.BigSummaries.Count, "来自多条较早的摘要", "big"); Section("small");
+            shortTab = MemoryTab("聊天摘要", c.SmallSummaries.Count, "双方聊天记录", "small");
+            longTab = MemoryTab("合并摘要", c.BigSummaries.Count, "多条较早摘要", "big");
+            manualTab = MemoryTab("手动记忆", c.ManualMemories.Count, "编写或粘贴", "manual"); Section(c.ManualMemories.Count > 0 ? "manual" : "small");
             box.AddChild(new HSeparator { Modulate = new Color("526a7c") });
             var clear = PrivateButton("清空聊天记录", () =>
             {

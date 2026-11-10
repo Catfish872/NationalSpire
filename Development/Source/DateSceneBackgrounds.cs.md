@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F1CB3A9D03AB238E41195962C9AD66D1ED2F79555E4C4A4A5EAA8593062DB1BE`。来源：[源码](../../DateSceneBackgrounds.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6368AB7BE3260D0E773462C8D88EF37B810BF0D9DBD1391E206D6CC51BAE0BB1`。来源：[源码](../../DateSceneBackgrounds.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+private string _image = "";
 private const string ResourcePrefix = "NationalSpire.DateBackgrounds.";
 private static readonly Dictionary<string, string> EmbeddedImages = [];
 private static readonly Dictionary<string, string> Descriptions = new()
@@ -89,11 +90,11 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-84252b82267e"></a>
+<a id="symbol-69e7ff459f04"></a>
 
-## `NationalSpire.DateSceneBackground.Image — public string Image`
+## `NationalSpire.DateSceneBackground.PackageFile — internal string? PackageFile`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -107,11 +108,111 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-bf81dfe85fa3"></a>
+
+## `NationalSpire.DateSceneBackground.Fallback — internal DateSceneBackground? Fallback`
+
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-84252b82267e"></a>
+
+## `NationalSpire.DateSceneBackground.Image — public string Image`
+
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`](DateSceneBackgrounds.cs.md#symbol-1a96a425accd)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground._image`；`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`；`NationalSpire.DateSceneBackgrounds.PackageImage(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`；输入表达式：`ReadSource(DateSceneBackgrounds.PackageImage, static image => image)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => ReadSource(DateSceneBackgrounds.PackageImage, static image => image)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_image` = `value ?? ""`
+
+<a id="symbol-5049a16187d8"></a>
+
+## `NationalSpire.DateSceneBackground.HasImage — internal bool HasImage`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateSceneBackgrounds.IsImageReference(string)`](DateSceneBackgrounds.cs.md#symbol-4957268edcf7)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground._image`；`NationalSpire.DateSceneBackground.PackageFile`；`NationalSpire.DateSceneBackgrounds.IsImageReference(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackgrounds.IsImageReference(string)`；输入表达式：`DateSceneBackgrounds.IsImageReference(_image)`；返回值紧邻使用处：`BinaryExpressionSyntax: PackageFile != null || DateSceneBackgrounds.IsImageReference(_image)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-53d208267ec2"></a>
+
+## `NationalSpire.DateSceneBackground.ReadPixels() — internal Image? ReadPixels()`
+
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.PreviewBackground(NationalSpire.DateSceneBackground)`](DateSceneView.cs.md#symbol-30dd91686bcd)；[`NationalSpire.RandomEventArt.ReadPixels(string, System.Threading.CancellationToken)`](RandomEventArt.cs.md#symbol-2cb75271e6ef)
+
+**调用：** [`NationalSpire.DateSceneAssetStore.ReadBackgroundFile(string)`](DateSceneAssets.cs.md#symbol-5d6c1645def4)；[`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`](DateSceneAssets.cs.md#symbol-e78822490246)；[`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`](DateSceneBackgrounds.cs.md#symbol-1a96a425accd)；`System.IO.Path.GetExtension(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.ReadBackgroundFile(string)`；`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`；`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`；`NationalSpire.DateSceneBackgrounds.Pixels(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneAssetStore.ReadBackgroundFile(string)`；输入表达式：`DateSceneAssetStore.ReadBackgroundFile(file)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneAssetStore.ReadBackgroundFile(file)`
+- `NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`；输入表达式：`DateSceneAssetStore.ReadBackgroundImage(DateSceneAssetStore.ReadBackgroundFile(file), Path.GetExtension(file))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: static file => DateSceneAssetStore.ReadBackgroundImage(DateSceneAssetStore.ReadBackgroundFile(file), Path.GetExtension(file))`
+- `NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`；输入表达式：`ReadSource(          static file => DateSceneAssetStore.ReadBackgroundImage(DateSceneAssetStore.ReadBackgroundFile(file), Path.GetExtension(file)),          DateSceneBackgrounds.Pixels)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => ReadSource(          static file => DateSceneAssetStore.ReadBackgroundImage(DateSceneAssetStore.ReadBackgroundFile(file), Path.GetExtension(file)),          DateSceneBackgrounds.Pixels)`
+- `System.IO.Path.GetExtension(string?)`；输入表达式：`Path.GetExtension(file)`；返回值紧邻使用处：`ArgumentSyntax: Path.GetExtension(file)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-1a96a425accd"></a>
+
+## `NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>) — private T ReadSource<T>(Func<string, T> fromFile, Func<string, T> fromReference)`
+
+来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneBackground.Image`](DateSceneBackgrounds.cs.md#symbol-84252b82267e)；[`NationalSpire.DateSceneBackground.ReadPixels()`](DateSceneBackgrounds.cs.md#symbol-53d208267ec2)；[`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`](DateSceneBackgrounds.cs.md#symbol-1a96a425accd)
+
+**调用：** [`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`](DateSceneBackgrounds.cs.md#symbol-1a96a425accd)；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground._image`；`NationalSpire.DateSceneBackground.Fallback`；`NationalSpire.DateSceneBackground.PackageFile`；`NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackground.ReadSource<T>(System.Func<string, T>, System.Func<string, T>)`；输入表达式：`Fallback.ReadSource(fromFile, fromReference)`；返回值紧邻使用处：`ReturnStatementSyntax: return Fallback.ReadSource(fromFile, fromReference);`
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`fromFile(PackageFile)`；返回值紧邻使用处：`ReturnStatementSyntax: return fromFile(PackageFile);`
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`fromReference(_image)`；返回值紧邻使用处：`ReturnStatementSyntax: return fromReference(_image);`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-8ebd0e36bb12"></a>
 
 ## `NationalSpire.DateBackgroundLibrary.Images — public List<DateSceneBackground> Images`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -129,7 +230,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateBackgroundLibrary.Descriptions — public Dictionary<string, string> Descriptions`
 
-来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -147,7 +248,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateBackgroundLibrary.Removed — public HashSet<string> Removed`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -161,13 +262,33 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-4957268edcf7"></a>
+
+## `NationalSpire.DateSceneBackgrounds.IsImageReference(string) — internal static bool IsImageReference(string image)`
+
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneBackground.HasImage`](DateSceneBackgrounds.cs.md#symbol-5049a16187d8)
+
+**调用：** [`NationalSpire.DateSceneAssetStore.IsImageHash(string?)`](DateSceneAssets.cs.md#symbol-6a531e6017f4)；`string.StartsWith(string, System.StringComparison)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；输入表达式：`DateSceneAssetStore.IsImageHash(image)`；返回值紧邻使用处：`BinaryExpressionSyntax: DateSceneAssetStore.IsImageHash(image) || image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`
+- `string.StartsWith(string, System.StringComparison)`；输入表达式：`image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: DateSceneAssetStore.IsImageHash(image) || image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-05e1fa49f816"></a>
 
 ## `NationalSpire.DateSceneBackgrounds.ResolveImage(string) — public static string ResolveImage(string image)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+**调用者：** [`NationalSpire.CareerScreen.CaptureDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-7b36ced91124)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.ImportBackgroundBytes(byte[], string)`](DateSceneAssets.cs.md#symbol-d04a3543dc27)；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.File.Exists(string?)`；`System.IO.FileNotFoundException.FileNotFoundException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Path.GetExtension(string?)`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 
@@ -195,16 +316,17 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.Pixels(string) — public static Image? Pixels(string image)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.CreateBackground(string)`](DateSceneView.cs.md#symbol-30a197722f91)
 
-**调用：** [`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`](DateSceneAssets.cs.md#symbol-e78822490246)；`string.StartsWith(string, System.StringComparison)`；`System.IO.FileNotFoundException.FileNotFoundException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Path.GetExtension(string?)`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
+**调用：** [`NationalSpire.DateSceneAssetStore.IsImageHash(string?)`](DateSceneAssets.cs.md#symbol-6a531e6017f4)；[`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`](DateSceneAssets.cs.md#symbol-b176dfac69ce)；[`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`](DateSceneAssets.cs.md#symbol-e78822490246)；`string.StartsWith(string, System.StringComparison)`；`System.IO.FileNotFoundException.FileNotFoundException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Path.GetExtension(string?)`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.Pixels(string, bool)`；`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；`NationalSpire.DateSceneAssetStore.Pixels(string, bool)`；`NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；输入表达式：`DateSceneAssetStore.IsImageHash(image)`；返回值紧邻使用处：`IfStatementSyntax: if (DateSceneAssetStore.IsImageHash(image)) return DateSceneAssetStore.Pixels(image, false);`
 - `NationalSpire.DateSceneAssetStore.Pixels(string, bool)`；输入表达式：`DateSceneAssetStore.Pixels(image, false)`；返回值紧邻使用处：`ReturnStatementSyntax: return DateSceneAssetStore.Pixels(image, false);`
 - `NationalSpire.DateSceneAssetStore.ReadBackgroundImage(byte[], string)`；输入表达式：`DateSceneAssetStore.ReadBackgroundImage(bytes.ToArray(), Path.GetExtension(image))`；返回值紧邻使用处：`ReturnStatementSyntax: return DateSceneAssetStore.ReadBackgroundImage(bytes.ToArray(), Path.GetExtension(image));`
 - `string.StartsWith(string, System.StringComparison)`；输入表达式：`image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`
@@ -222,20 +344,45 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>) — public static List<DateSceneBackground> AutomaticChoices(IEnumerable<DateSceneBackground> library)`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)；[`NationalSpire.CareerScreen.SceneRequest(bool)`](DateSceneScreen.cs.md#symbol-277baf4e7cb8)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)
+**调用者：** [`NationalSpire.CareerScreen.SceneRequest(bool)`](DateSceneScreen.cs.md#symbol-277baf4e7cb8)；[`NationalSpire.DateSceneBackgrounds.At(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, string)`](DateSceneBackgrounds.cs.md#symbol-0f51af8c0e19)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)
 
-**调用：** `string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.Image`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.HasImage`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `string.StartsWith(string, System.StringComparison)`；输入表达式：`b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)).ToList()`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`library.ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = library.ToList()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`library.Where(b => b.HasImage).ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return library.Where(b => b.HasImage).ToList();`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`library.Where(b => b.HasImage)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: library.Where(b => b.HasImage).ToList`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-0f51af8c0e19"></a>
+
+## `NationalSpire.DateSceneBackgrounds.At(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, string) — public static string At(IEnumerable<DateSceneBackground> library, IReadOnlyList<DateSceneLine> lines, int index, string initial, string openingContext)`
+
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)；[`NationalSpire.CareerScreen.ApplyDateHistoryBackground()`](DateHistoryReplayScreen.cs.md#symbol-7fde49dd3258)
+
+**调用：** [`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)；[`NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string, System.Collections.Generic.ISet<string>?)`](DateSceneData.cs.md#symbol-4fd8ecc5aec1)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`；`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string, System.Collections.Generic.ISet<string>?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`；输入表达式：`AutomaticChoices(library)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = AutomaticChoices(library)`
+- `NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`；输入表达式：`Closest(choices, context)`；返回值紧邻使用处：`ReturnStatementSyntax: return Closest(choices, context);`
+- `NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string, System.Collections.Generic.ISet<string>?)`；输入表达式：`DateScenes.BackgroundAt(lines, index, initial, available)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateScenes.BackgroundAt(lines, index, initial, available)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(l.Text)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(l.Text)`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`available.Contains(id)`；返回值紧邻使用处：`IfStatementSyntax: if (available.Contains(id)) return id;`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`lines.Take(index + 1).FirstOrDefault(l => l.Narration && !string.IsNullOrWhiteSpace(l.Text))`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: lines.Take(index + 1).FirstOrDefault(l => l.Narration && !string.IsNullOrWhiteSpace(l.Text))?.Text`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`choices.Select(b => b.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: choices.Select(b => b.Id).ToHashSet`
+- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`lines.Take(index + 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: lines.Take(index + 1).FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`choices.Select(b => b.Id).ToHashSet(StringComparer.Ordinal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = choices.Select(b => b.Id).ToHashSet(StringComparer.Ordinal)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -244,11 +391,11 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string) — public static string Closest(IEnumerable<DateSceneBackground> library, string context, string current = "")`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ApplyDateBackground()`](DateSceneScreen.cs.md#symbol-4c2055af1c70)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
+**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.DateSceneBackgrounds.At(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, string)`](DateSceneBackgrounds.cs.md#symbol-0f51af8c0e19)
 
-**调用：** [`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`Terms(string)`](DateSceneBackgrounds.cs.md#symbol-c8039b3e6ab4)；`string.StartsWith(string)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`Terms(string)`](DateSceneBackgrounds.cs.md#symbol-da366870c830)；`string.StartsWith(string)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.Description`；`NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`；`Terms(string)`
 
@@ -268,11 +415,11 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c8039b3e6ab4"></a>
+<a id="symbol-da366870c830"></a>
 
 ## `Terms(string) — static HashSet<string> Terms(string text)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Closest(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, string, string)`](DateSceneBackgrounds.cs.md#symbol-fe6e9e9ebd7b)
 
@@ -294,11 +441,35 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-dfc16ee7dc0b"></a>
+
+## `NationalSpire.DateSceneBackgrounds.PackageImage(string) — internal static string PackageImage(string file)`
+
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.ImportBackground(string)`](DateSceneAssets.cs.md#symbol-255ccc15c761)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.File.Exists(string?)`；`System.IO.FileInfo.FileInfo(string)`
+
+**字段、属性、事件及方法组引用：** `(long Length, System.DateTime Time, string Image).Image`；`(long Length, System.DateTime Time, string Image).Length`；`(long Length, System.DateTime Time, string Image).Time`；`NationalSpire.DateSceneAssetStore.BlobPath(string)`；`NationalSpire.DateSceneAssetStore.ImportBackground(string)`；`NationalSpire.DateSceneBackgrounds.PackCache`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneAssetStore.BlobPath(string)`；输入表达式：`DateSceneAssetStore.BlobPath(cached.Image)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneAssetStore.BlobPath(cached.Image)`
+- `NationalSpire.DateSceneAssetStore.ImportBackground(string)`；输入表达式：`DateSceneAssetStore.ImportBackground(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneAssetStore.ImportBackground(file)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`PackCache.TryGetValue(file, out var cached)`；返回值紧邻使用处：`BinaryExpressionSyntax: PackCache.TryGetValue(file, out var cached) && cached.Length == info.Length`
+- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(DateSceneAssetStore.BlobPath(cached.Image))`；返回值紧邻使用处：`BinaryExpressionSyntax: PackCache.TryGetValue(file, out var cached) && cached.Length == info.Length && cached.Time == info.LastWriteTimeUtc && File.Exists(DateSceneAssetStore.BlobPath(cached.Image))`
+- `System.IO.FileInfo.FileInfo(string)`；输入表达式：`new FileInfo(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new FileInfo(file)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `PackCache[file]` = `(info.Length, info.LastWriteTimeUtc, image)`
+
 <a id="symbol-d0eca57dcb77"></a>
 
 ## `NationalSpire.DateSceneBackgrounds.FilePath — public static string FilePath`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -317,7 +488,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.SafeId(string) — public static bool SafeId(string id)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Describe(string, string)`](DateSceneBackgrounds.cs.md#symbol-c96b7de63f9b)；[`NationalSpire.DateSceneBackgrounds.ImageId(string)`](DateSceneBackgrounds.cs.md#symbol-2aeddbe7d881)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.Remove(string)`](DateSceneBackgrounds.cs.md#symbol-b7d6d0097052)
 
@@ -336,7 +507,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.ImageId(string) — public static string ImageId(string path)`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)
 
@@ -358,7 +529,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.PackageDirectory — public static string PackageDirectory`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -382,30 +553,34 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.ReadUser() — private static DateBackgroundLibrary ReadUser()`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Describe(string, string)`](DateSceneBackgrounds.cs.md#symbol-c96b7de63f9b)；[`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.Read(out string, string?)`](DateSceneBackgrounds.cs.md#symbol-b6c3bc7d87d9)；[`NationalSpire.DateSceneBackgrounds.RegisterLegacy(string)`](DateSceneBackgrounds.cs.md#symbol-7feab11c4c5b)；[`NationalSpire.DateSceneBackgrounds.Remove(string)`](DateSceneBackgrounds.cs.md#symbol-b7d6d0097052)
 
-**调用：** `NationalSpire.DateBackgroundLibrary.DateBackgroundLibrary()`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
+**调用：** `NationalSpire.DateBackgroundLibrary.DateBackgroundLibrary()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackgrounds.FilePath`；`NationalSpire.PortraitDesigns.Json`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateBackgroundLibrary.Descriptions`；`NationalSpire.DateBackgroundLibrary.Images`；`NationalSpire.DateBackgroundLibrary.Removed`；`NationalSpire.DateSceneBackgrounds.FilePath`；`NationalSpire.PortraitDesigns.Json`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateBackgroundLibrary.DateBackgroundLibrary()`；输入表达式：`new()`；返回值紧邻使用处：`BinaryExpressionSyntax: JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new()`
-- `NationalSpire.DateBackgroundLibrary.DateBackgroundLibrary()`；输入表达式：`new()`；返回值紧邻使用处：`ConditionalExpressionSyntax: File.Exists(FilePath)          ? JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new() : new()`
-- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(FilePath)`；返回值紧邻使用处：`ConditionalExpressionSyntax: File.Exists(FilePath)          ? JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new() : new()`
+- `NationalSpire.DateBackgroundLibrary.DateBackgroundLibrary()`；输入表达式：`new()`；返回值紧邻使用处：`ReturnStatementSyntax: return new();`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`library.Images.RemoveAll(image => image is null)`；返回值紧邻使用处：`ExpressionStatementSyntax: library.Images.RemoveAll(image => image is null);`
+- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(FilePath)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !File.Exists(FilePath)`
 - `System.IO.File.ReadAllText(string)`；输入表达式：`File.ReadAllText(FilePath)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllText(FilePath)`
 - `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json)`；返回值紧邻使用处：`BinaryExpressionSyntax: JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new()`
 
 **赋值（含属性/字段和局部值）：**
 
+- `library.Descriptions` ??= `[]`
+- `library.Images` ??= `[]`
+- `library.Removed` ??= `[]`
 
 <a id="symbol-449c9ebefeb1"></a>
 
 ## `NationalSpire.DateSceneBackgrounds.Save(NationalSpire.DateBackgroundLibrary) — private static void Save(DateBackgroundLibrary library)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.Describe(string, string)`](DateSceneBackgrounds.cs.md#symbol-c96b7de63f9b)；[`NationalSpire.DateSceneBackgrounds.Import(string)`](DateSceneBackgrounds.cs.md#symbol-2c3c4974b94b)；[`NationalSpire.DateSceneBackgrounds.RegisterLegacy(string)`](DateSceneBackgrounds.cs.md#symbol-7feab11c4c5b)；[`NationalSpire.DateSceneBackgrounds.Remove(string)`](DateSceneBackgrounds.cs.md#symbol-b7d6d0097052)
 
@@ -431,24 +606,23 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.Read(out string, string?) — public static List<DateSceneBackground> Read(out string warning, string? packageDirectory = null)`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.RandomEventArt.Load(string)`](RandomEventArt.cs.md#symbol-5147b98e47ca)
+**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.RandomEventArt.ReadPixels(string, System.Threading.CancellationToken)`](RandomEventArt.cs.md#symbol-2cb75271e6ef)
 
-**调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.ImportBackground(string)`](DateSceneAssets.cs.md#symbol-255ccc15c761)；[`NationalSpire.DateSceneBackgrounds.ImageId(string)`](DateSceneBackgrounds.cs.md#symbol-2aeddbe7d881)；[`NationalSpire.DateSceneBackgrounds.ReadUser()`](DateSceneBackgrounds.cs.md#symbol-83be75e40148)；[`NationalSpire.DateSceneBackgrounds.SafeId(string)`](DateSceneBackgrounds.cs.md#symbol-19bb6c988fd7)；`NationalSpire.DateSceneBackground.DateSceneBackground()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(char, char)`；`string.StartsWith(string, System.StringComparison)`；`string.ToLowerInvariant()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.Directory.EnumerateFiles(string)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.Exists(string?)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`System.Reflection.Assembly.GetManifestResourceNames()`
+**调用：** [`NationalSpire.DateSceneAssetStore.BlobPath(string)`](DateSceneAssets.cs.md#symbol-1b33c2ffb1f6)；[`NationalSpire.DateSceneAssetStore.IsImageHash(string?)`](DateSceneAssets.cs.md#symbol-6a531e6017f4)；[`NationalSpire.DateSceneBackgrounds.ImageId(string)`](DateSceneBackgrounds.cs.md#symbol-2aeddbe7d881)；[`NationalSpire.DateSceneBackgrounds.ReadUser()`](DateSceneBackgrounds.cs.md#symbol-83be75e40148)；[`NationalSpire.DateSceneBackgrounds.SafeId(string)`](DateSceneBackgrounds.cs.md#symbol-19bb6c988fd7)；`NationalSpire.DateSceneBackground.DateSceneBackground()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(char, char)`；`string.StartsWith(string, System.StringComparison)`；`string.ToLowerInvariant()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.Directory.EnumerateFiles(string)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.Exists(string?)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`System.Reflection.Assembly.GetManifestResourceNames()`
 
-**字段、属性、事件及方法组引用：** `(long Length, System.DateTime Time, string Image).Image`；`(long Length, System.DateTime Time, string Image).Length`；`(long Length, System.DateTime Time, string Image).Time`；`NationalSpire.DateBackgroundLibrary.Descriptions`；`NationalSpire.DateBackgroundLibrary.Images`；`NationalSpire.DateBackgroundLibrary.Removed`；`NationalSpire.DateSceneAssetStore.BlobPath(string)`；`NationalSpire.DateSceneAssetStore.ImportBackground(string)`；`NationalSpire.DateSceneBackground.Description`；`NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackground.Image`；`NationalSpire.DateSceneBackgrounds.Descriptions`；`NationalSpire.DateSceneBackgrounds.Extensions`；`NationalSpire.DateSceneBackgrounds.ImageId(string)`；`NationalSpire.DateSceneBackgrounds.PackageDirectory`；`NationalSpire.DateSceneBackgrounds.PackCache`；`NationalSpire.DateSceneBackgrounds.ReadUser()`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`；`NationalSpire.DateSceneBackgrounds.SafeId(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateBackgroundLibrary.Descriptions`；`NationalSpire.DateBackgroundLibrary.Images`；`NationalSpire.DateBackgroundLibrary.Removed`；`NationalSpire.DateSceneAssetStore.BlobPath(string)`；`NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；`NationalSpire.DateSceneBackground.Description`；`NationalSpire.DateSceneBackground.Fallback`；`NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackground.Image`；`NationalSpire.DateSceneBackground.PackageFile`；`NationalSpire.DateSceneBackgrounds.Descriptions`；`NationalSpire.DateSceneBackgrounds.Extensions`；`NationalSpire.DateSceneBackgrounds.ImageId(string)`；`NationalSpire.DateSceneBackgrounds.PackageDirectory`；`NationalSpire.DateSceneBackgrounds.ReadUser()`；`NationalSpire.DateSceneBackgrounds.ResourcePrefix`；`NationalSpire.DateSceneBackgrounds.SafeId(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.DateSceneAssetStore.BlobPath(string)`；输入表达式：`DateSceneAssetStore.BlobPath(cached.Image)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneAssetStore.BlobPath(cached.Image)`
 - `NationalSpire.DateSceneAssetStore.BlobPath(string)`；输入表达式：`DateSceneAssetStore.BlobPath(item.Image)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneAssetStore.BlobPath(item.Image)`
-- `NationalSpire.DateSceneAssetStore.ImportBackground(string)`；输入表达式：`DateSceneAssetStore.ImportBackground(file)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneAssetStore.ImportBackground(file)`
-- `NationalSpire.DateSceneBackground.DateSceneBackground()`；输入表达式：`new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: items[id] = new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`
+- `NationalSpire.DateSceneAssetStore.IsImageHash(string?)`；输入表达式：`DateSceneAssetStore.IsImageHash(item.Image)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !DateSceneAssetStore.IsImageHash(item.Image)`
 - `NationalSpire.DateSceneBackground.DateSceneBackground()`；输入表达式：`new() { Id = id, Image = resource, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ')) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: items[id] = new() { Id = id, Image = resource, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ')) }`
+- `NationalSpire.DateSceneBackground.DateSceneBackground()`；输入表达式：`new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),                          Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: items[id] = new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),                          Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`
 - `NationalSpire.DateSceneBackgrounds.ImageId(string)`；输入表达式：`ImageId(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ImageId(file)`
 - `NationalSpire.DateSceneBackgrounds.ReadUser()`；输入表达式：`ReadUser()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadUser()`
-- `NationalSpire.DateSceneBackgrounds.SafeId(string)`；输入表达式：`SafeId(item.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !SafeId(item.Id)`
+- `NationalSpire.DateSceneBackgrounds.SafeId(string)`；输入表达式：`SafeId(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !SafeId(id)`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", errors)`；返回值紧邻使用处：`AssignmentExpressionSyntax: warning = string.Join("\n", errors)`
 - `string.Replace(char, char)`；输入表达式：`id.Replace('_', ' ').Replace('-', ' ')`；返回值紧邻使用处：`ArgumentSyntax: id.Replace('_', ' ').Replace('-', ' ')`
 - `string.Replace(char, char)`；输入表达式：`id.Replace('_', ' ')`；返回值紧邻使用处：`ArgumentSyntax: id.Replace('_', ' ')`
@@ -459,8 +633,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, DateSceneBackground>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, DateSceneBackground>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`items.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: items.Remove(id);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`library.Descriptions.TryGetValue(item.Id, out string? description)`；返回值紧邻使用处：`IfStatementSyntax: if (library.Descriptions.TryGetValue(item.Id, out string? description)) item.Description = description;`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`PackCache.TryGetValue(file, out var cached)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PackCache.TryGetValue(file, out var cached)`
-- `System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；输入表达式：`Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal))              {                  try                  {                      string id = ImageId(file); var info = new FileInfo(file);                      if (!PackCache.TryGetValue(file, out var cached) || cached.Length != info.Length || cached.Time != info.LastWriteTimeUtc || !File.Exists(DateSceneAssetStore.BlobPath(cached.Image)))                      {                          cached = (info.Length, info.LastWriteTimeUtc, DateSceneAssetStore.ImportBackground(file)); PackCache[file] = cached;                      }                      items[id] = new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };                  }                  catch (Exception e) { errors.Add(Path.GetFileName(file) + "：" + e.Message); }              }`
+- `System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；输入表达式：`Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal))              {                  try                  {                      string id = ImageId(file);                      items[id] = new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),                          Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };                  }                  catch (Exception e) { errors.Add(Path.GetFileName(file) + "：" + e.Message); }              }`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`Extensions.Contains(Path.GetExtension(n).ToLowerInvariant())`；返回值紧邻使用处：`BinaryExpressionSyntax: n.StartsWith(ResourcePrefix, StringComparison.Ordinal) && Extensions.Contains(Path.GetExtension(n).ToLowerInvariant())`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`items.Values.ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return items.Values.ToList();`
@@ -468,15 +641,14 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`typeof(DateSceneBackgrounds).Assembly.GetManifestResourceNames().Where(n => n.StartsWith(ResourcePrefix, StringComparison.Ordinal) && Extensions.Contains(Path.GetExtension(n).ToLowerInvariant()))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string resource in typeof(DateSceneBackgrounds).Assembly.GetManifestResourceNames().Where(n => n.StartsWith(ResourcePrefix, StringComparison.Ordinal) && Extensions.Contains(Path.GetExtension(n).ToLowerInvariant())))              {                  string id = Path.GetFileNameWithoutExtension(resource[ResourcePrefix.Length..]);                  items[id] = new() { Id = id, Image = resource, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ')) };              }`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' '))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' '))`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`Descriptions.GetValueOrDefault(id, id.Replace('_', ' '))`；返回值紧邻使用处：`AssignmentExpressionSyntax: Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' '))`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`errors.Add("背景缺失或编号无效：" + item.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: errors.Add("背景缺失或编号无效：" + item.Id);`
+- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`items.GetValueOrDefault(id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Fallback = items.GetValueOrDefault(id)`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`errors.Add("背景缺失或编号无效：" + item?.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: errors.Add("背景缺失或编号无效：" + item?.Id);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`errors.Add("本地背景库：" + e.Message)`；返回值紧邻使用处：`ExpressionStatementSyntax: errors.Add("本地背景库：" + e.Message);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`errors.Add(Path.GetFileName(file) + "：" + e.Message)`；返回值紧邻使用处：`ExpressionStatementSyntax: errors.Add(Path.GetFileName(file) + "：" + e.Message);`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
 - `System.IO.Directory.EnumerateFiles(string)`；输入表达式：`Directory.EnumerateFiles(directory)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.EnumerateFiles(directory).Where`
-- `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(directory)`；返回值紧邻使用处：`IfStatementSyntax: if (Directory.Exists(directory))          {              foreach (string file in Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal))              {                  try                  {                      string id = ImageId(file); var info = new FileInfo(file);                      if (!PackCache.TryGetValue(file, out var cached) || cached.Length != info.Length || cached.Time != info.LastWriteTimeUtc || !File.Exists(DateSceneAssetStore.BlobPath(cached.Image)))                      {                          cached = (info.Length, info.LastWriteTimeUtc, DateSceneAssetStore.ImportBackground(file)); PackCache[file] = cached;                      }                      items[id] = new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };                  }                  catch (Exception e) { errors.Add(Path.GetFileName(file) + "：" + e.Message); }              }          }`
-- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(DateSceneAssetStore.BlobPath(cached.Image))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !File.Exists(DateSceneAssetStore.BlobPath(cached.Image))`
+- `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(directory)`；返回值紧邻使用处：`IfStatementSyntax: if (Directory.Exists(directory))          {              foreach (string file in Directory.EnumerateFiles(directory).Where(p => Extensions.Contains(Path.GetExtension(p).ToLowerInvariant())).Order(StringComparer.Ordinal))              {                  try                  {                      string id = ImageId(file);                      items[id] = new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),                          Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };                  }                  catch (Exception e) { errors.Add(Path.GetFileName(file) + "：" + e.Message); }              }          }`
 - `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(DateSceneAssetStore.BlobPath(item.Image))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !File.Exists(DateSceneAssetStore.BlobPath(item.Image))`
-- `System.IO.FileInfo.FileInfo(string)`；输入表达式：`new FileInfo(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new FileInfo(file)`
 - `System.IO.Path.GetExtension(string?)`；输入表达式：`Path.GetExtension(n)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Path.GetExtension(n).ToLowerInvariant`
 - `System.IO.Path.GetExtension(string?)`；输入表达式：`Path.GetExtension(p)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Path.GetExtension(p).ToLowerInvariant`
 - `System.IO.Path.GetFileName(string?)`；输入表达式：`Path.GetFileName(file)`；返回值紧邻使用处：`BinaryExpressionSyntax: Path.GetFileName(file) + "："`
@@ -485,26 +657,25 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 **赋值（含属性/字段和局部值）：**
 
-- `cached` = `(info.Length, info.LastWriteTimeUtc, DateSceneAssetStore.ImportBackground(file))`
 - `Description` = `Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' '))`
 - `Description` = `Descriptions.GetValueOrDefault(id, id.Replace('_', ' '))`
+- `Fallback` = `items.GetValueOrDefault(id)`
 - `Id` = `id`
-- `Image` = `cached.Image`
 - `Image` = `resource`
 - `item.Description` = `description`
-- `items[id]` = `new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`
 - `items[id]` = `new() { Id = id, Image = resource, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ')) }`
+- `items[id]` = `new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),                          Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) }`
 - `items[item.Id]` = `item`
-- `PackCache[file]` = `cached`
+- `PackageFile` = `file`
 - `warning` = `string.Join("\n", errors)`
 
 <a id="symbol-c96b7de63f9b"></a>
 
 ## `NationalSpire.DateSceneBackgrounds.Describe(string, string) — public static void Describe(string id, string description)`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit()`](DateSceneBackgroundScreen.cs.md#symbol-b8afde8353d5)
+**调用者：** [`Commit()`](DateSceneBackgroundScreen.cs.md#symbol-940910a208a0)
 
 **调用：** [`NationalSpire.DateSceneBackgrounds.ReadUser()`](DateSceneBackgrounds.cs.md#symbol-83be75e40148)；[`NationalSpire.DateSceneBackgrounds.SafeId(string)`](DateSceneBackgrounds.cs.md#symbol-19bb6c988fd7)；[`NationalSpire.DateSceneBackgrounds.Save(NationalSpire.DateBackgroundLibrary)`](DateSceneBackgrounds.cs.md#symbol-449c9ebefeb1)；`string.Trim()`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
@@ -526,7 +697,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.Remove(string) — public static void Remove(string id)`
 
-来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 229 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)
 
@@ -551,9 +722,9 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.RegisterLegacy(string) — public static string RegisterLegacy(string image)`
 
-来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.Texture(string, bool)`](DateSceneAssets.cs.md#symbol-616d47ee9d6a)；[`NationalSpire.DateSceneBackgrounds.ReadUser()`](DateSceneBackgrounds.cs.md#symbol-83be75e40148)；[`NationalSpire.DateSceneBackgrounds.Save(NationalSpire.DateBackgroundLibrary)`](DateSceneBackgrounds.cs.md#symbol-449c9ebefeb1)；`NationalSpire.DateSceneBackground.DateSceneBackground()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
@@ -578,7 +749,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 ## `NationalSpire.DateSceneBackgrounds.Import(string) — public static string Import(string path)`
 
-来源：源码第 190 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)
 

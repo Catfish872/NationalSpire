@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)；[`NationalSpire.CareerScreen.RenderPostComposer(NationalSpire.CareerData)`](CommunityScreen.cs.md#symbol-02ed3035beb3)
 
-**调用：** [`Choose(int)`](MentionComposer.cs.md#symbol-321e08719a8c)；[`Highlight()`](MentionComposer.cs.md#symbol-3e7861204903)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.Hide()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`
+**调用：** [`Choose(int)`](MentionComposer.cs.md#symbol-e9699a1558ad)；[`Highlight()`](MentionComposer.cs.md#symbol-25f19e60de89)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.Hide()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`
 
 **字段、属性、事件及方法组引用：** `Choose(int)`；`Highlight()`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`Refresh()`
 
@@ -49,13 +49,13 @@
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Visible` = `false`
 
-<a id="symbol-321e08719a8c"></a>
+<a id="symbol-e9699a1558ad"></a>
 
 ## `Choose(int) — void Choose(int index)`
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`Refresh()`](MentionComposer.cs.md#symbol-13231b1d37b1)
+**调用者：** [`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`Refresh()`](MentionComposer.cs.md#symbol-17fa282c918b)
 
 **调用：** [`NationalSpire.CommunityMentions.Token(NationalSpire.CareerData, NationalSpire.CareerPerson)`](CommunityMentions.cs.md#symbol-ca8974eb53ca)；`Godot.CanvasItem.Hide()`；`Godot.Control.GrabFocus()`；`Godot.TextEdit.GetCaretColumn(int)`；`Godot.TextEdit.InsertTextAtCaret(string, int)`；`Godot.TextEdit.Select(int, int, int, int, int)`
 
@@ -75,13 +75,13 @@
 - `choosing` = `false`
 - `choosing` = `true`
 
-<a id="symbol-3e7861204903"></a>
+<a id="symbol-25f19e60de89"></a>
 
 ## `Highlight() — void Highlight()`
 
 来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`Refresh()`](MentionComposer.cs.md#symbol-13231b1d37b1)
+**调用者：** [`NationalSpire.CareerScreen.AddMentionPicker(Godot.TextEdit, Godot.VBoxContainer)`](MentionComposer.cs.md#symbol-8702f28d36a7)；[`Refresh()`](MentionComposer.cs.md#symbol-17fa282c918b)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
@@ -95,7 +95,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-13231b1d37b1"></a>
+<a id="symbol-17fa282c918b"></a>
 
 ## `Refresh() — void Refresh()`
 
@@ -103,7 +103,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Choose(int)`](MentionComposer.cs.md#symbol-321e08719a8c)；[`Highlight()`](MentionComposer.cs.md#symbol-3e7861204903)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`Godot.CanvasItem.Hide()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.GetCaretColumn(int)`；`Godot.TextEdit.GetCaretLine(int)`；`Godot.TextEdit.GetLine(int)`；`string.Contains(char)`；`string.Contains(string, System.StringComparison)`；`string.EnumerateRunes()`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`Choose(int)`](MentionComposer.cs.md#symbol-e9699a1558ad)；[`Highlight()`](MentionComposer.cs.md#symbol-25f19e60de89)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；`Godot.CanvasItem.Hide()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.GetCaretColumn(int)`；`Godot.TextEdit.GetCaretLine(int)`；`Godot.TextEdit.GetLine(int)`；`string.Contains(char)`；`string.Contains(string, System.StringComparison)`；`string.EnumerateRunes()`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `Choose(int)`；`Highlight()`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`
 

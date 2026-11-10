@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`79172676822C9EC44A0E00C0A3F484B84FCC68ABC7148C856AF7E2587DA9DB04`。来源：[源码](../../EventPoolScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D688299EED5C4E3BF3B0D6F2E03016F7872CE05ADA5AABB8AE67E0836707F4D2`。来源：[源码](../../EventPoolScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,9 +21,9 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
-**调用：** [`Changed()`](EventPoolScreen.cs.md#symbol-119f7a697df0)；[`Commit()`](EventPoolScreen.cs.md#symbol-15a258d19400)；[`Daily()`](EventPoolScreen.cs.md#symbol-fcefc2b20b8b)；[`Edit()`](EventPoolScreen.cs.md#symbol-bbf42e580d6a)；[`FillList()`](EventPoolScreen.cs.md#symbol-2e2243be29fa)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`](CareerSession.cs.md#symbol-485b9c9c8acb)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`](EventPools.cs.md#symbol-2eb5f48b0ab7)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；[`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-facad1ba9cab)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-96639ae36d66)；[`ShowCategories(bool)`](EventPoolScreen.cs.md#symbol-2d86237cc2e7)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-e27bbf8a9d14)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.CodeEdit.CodeEdit()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.ItemList.GetItemMetadata(int)`；`Godot.ItemList.ItemList()`；`Godot.ItemList.Select(int, bool)`；`Godot.LineEdit.InsertTextAtCaret(string)`；`Godot.LineEdit.LineEdit()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetNodeOrNull(Godot.NodePath)`；`Godot.Node.QueueFree()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.TextEdit.InsertTextAtCaret(string, int)`；`Godot.TextEdit.TextEdit()`；`Godot.Variant.AsString()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAt(int)`
+**调用：** [`Changed()`](EventPoolScreen.cs.md#symbol-69e9e13eca5c)；[`Commit()`](EventPoolScreen.cs.md#symbol-88cc05540b83)；[`Daily()`](EventPoolScreen.cs.md#symbol-e1127fa9d7a9)；[`Edit()`](EventPoolScreen.cs.md#symbol-6d32df7c5954)；[`FillList()`](EventPoolScreen.cs.md#symbol-d9547ceae913)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.OpenPersonalityPool(NationalSpire.CareerData, NationalSpire.PersonalityPool?, System.Action<NationalSpire.PersonalityPool>?)`](PersonalityPoolScreen.cs.md#symbol-13f6866c9d3b)；[`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`](CareerSession.cs.md#symbol-485b9c9c8acb)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`](EventPools.cs.md#symbol-2eb5f48b0ab7)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；[`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-facad1ba9cab)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-92a9f67dc0c2)；[`ShowCategories(bool)`](EventPoolScreen.cs.md#symbol-abc6e2fe98ac)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.CodeEdit.CodeEdit()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.ItemList.GetItemMetadata(int)`；`Godot.ItemList.ItemList()`；`Godot.ItemList.Select(int, bool)`；`Godot.LineEdit.InsertTextAtCaret(string)`；`Godot.LineEdit.LineEdit()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetNodeOrNull(Godot.NodePath)`；`Godot.Node.QueueFree()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.TextEdit.InsertTextAtCaret(string, int)`；`Godot.TextEdit.TextEdit()`；`Godot.Variant.AsString()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAt(int)`
 
-**字段、属性、事件及方法组引用：** `Changed()`；`Commit()`；`Daily()`；`Edit()`；`FillList()`；`NationalSpire.AiOptions.EventPoolOverrides`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`；`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`；`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`；`NationalSpire.EventPools.Snapshot.DailyCount`；`NationalSpire.EventPools.Snapshot.Random`；`NationalSpire.EventPools.Snapshot.RandomUsesDefault`；`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptTemplate.Name`；`SelectEntry(int)`；`ShowCategories(bool)`；`ShowCategory()`
+**字段、属性、事件及方法组引用：** `Changed()`；`Commit()`；`Daily()`；`Edit()`；`FillList()`；`NationalSpire.AiOptions.EventPoolOverrides`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.OpenPersonalityPool(NationalSpire.CareerData, NationalSpire.PersonalityPool?, System.Action<NationalSpire.PersonalityPool>?)`；`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`；`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`；`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`；`NationalSpire.EventPools.Snapshot.DailyCount`；`NationalSpire.EventPools.Snapshot.Random`；`NationalSpire.EventPools.Snapshot.RandomUsesDefault`；`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptTemplate.Name`；`SelectEntry(int)`；`ShowCategories(bool)`；`ShowCategory()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -97,12 +97,13 @@
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`form.AddChild(title)`；返回值紧邻使用处：`ExpressionStatementSyntax: form.AddChild(title);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`form.AddChild(tokens)`；返回值紧邻使用处：`ExpressionStatementSyntax: form.AddChild(tokens);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(templateName)`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(templateName);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(Text("事件池", 28, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(Text("事件池", 28, _gold));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(Text("随机池编辑", 28, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(Text("随机池编辑", 28, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`margin.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: margin.AddChild(card);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`shade.AddChild(margin)`；返回值紧邻使用处：`ExpressionStatementSyntax: shade.AddChild(margin);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`single.AddChild(form)`；返回值紧邻使用处：`ExpressionStatementSyntax: single.AddChild(form);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`single.AddChild(list)`；返回值紧邻使用处：`ExpressionStatementSyntax: single.AddChild(list);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tabs.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: tabs.AddChild(button);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tabs.AddChild(personalityTab)`；返回值紧邻使用处：`ExpressionStatementSyntax: tabs.AddChild(personalityTab);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`tokens.AddChild(Button("插入" + token, () =>          { if (titleFocused) { title.InsertTextAtCaret(token); Edit(); } else detail.InsertTextAtCaret(token); }, 110))`；返回值紧邻使用处：`ExpressionStatementSyntax: tokens.AddChild(Button("插入" + token, () =>          { if (titleFocused) { title.InsertTextAtCaret(token); Edit(); } else detail.InsertTextAtCaret(token); }, 110));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(Button("删除", () => { if (!Commit() || selected < 0) return; entries.RemoveAt(selected); Changed(); FillList(); loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }, 90))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(Button("删除", () => { if (!Commit() || selected < 0) return; entries.RemoveAt(selected); Changed(); FillList(); loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }, 90));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(Button("新增", () => { if (!Commit()) return; bulkMode = false; single.Show(); bulkBox.Hide(); toggle.Text = "批量编辑"; entries.Add(new("", "")); Changed(); selected = entries.Count - 1; FillList(); detail.GrabFocus(); }, 90))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(Button("新增", () => { if (!Commit()) return; bulkMode = false; single.Show(); bulkBox.Hide(); toggle.Text = "批量编辑"; entries.Add(new("", "")); Changed(); selected = entries.Count - 1; FillList(); detail.GrabFocus(); }, 90));`
@@ -126,17 +127,19 @@
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("批量编辑", () =>          {              if (!Commit()) return; bulkMode = !bulkMode; single.Visible = !bulkMode; bulkBox.Visible = bulkMode;              toggle.Text = bulkMode ? "单条编辑" : "批量编辑";              if (bulkMode) { loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }              else FillList();          }, 145)`；返回值紧邻使用处：`AssignmentExpressionSyntax: toggle = Button("批量编辑", () =>          {              if (!Commit()) return; bulkMode = !bulkMode; single.Visible = !bulkMode; bulkBox.Visible = bulkMode;              toggle.Text = bulkMode ? "单条编辑" : "批量编辑";              if (bulkMode) { loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }              else FillList();          }, 145)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("删除", () => { if (!Commit() || selected < 0) return; entries.RemoveAt(selected); Changed(); FillList(); loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }, 90)`；返回值紧邻使用处：`ArgumentSyntax: Button("删除", () => { if (!Commit() || selected < 0) return; entries.RemoveAt(selected); Changed(); FillList(); loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false; }, 90)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("新增", () => { if (!Commit()) return; bulkMode = false; single.Show(); bulkBox.Hide(); toggle.Text = "批量编辑"; entries.Add(new("", "")); Changed(); selected = entries.Count - 1; FillList(); detail.GrabFocus(); }, 90)`；返回值紧邻使用处：`ArgumentSyntax: Button("新增", () => { if (!Commit()) return; bulkMode = false; single.Show(); bulkBox.Hide(); toggle.Text = "批量编辑"; entries.Add(new("", "")); Changed(); selected = entries.Count - 1; FillList(); detail.GrabFocus(); }, 90)`
+- `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("性格池", () => OpenPersonalityPool(data), 150)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("性格池", () => OpenPersonalityPool(data), 150)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button(daily ? "选手日常" : "随机事件", () =>              { if (!Commit()) { foreach (var pair in typeButtons) pair.Value.SetPressedNoSignal(pair.Key == Daily()); return; } category = daily ? "daily:观众" : "event:日常"; ShowCategories(daily); ShowCategory(); }, 150)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button(daily ? "选手日常" : "随机事件", () =>              { if (!Commit()) { foreach (var pair in typeButtons) pair.Value.SetPressedNoSignal(pair.Key == Daily()); return; } category = daily ? "daily:观众" : "event:日常"; ShowCategories(daily); ShowCategory(); }, 150)`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(card)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(card)`
+- `NationalSpire.CareerScreen.OpenPersonalityPool(NationalSpire.CareerData, NationalSpire.PersonalityPool?, System.Action<NationalSpire.PersonalityPool>?)`；输入表达式：`OpenPersonalityPool(data)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => OpenPersonalityPool(data)`
 - `NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；输入表达式：`SaveAiSettings(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: SaveAiSettings(data);`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("返回提示词配置", "事件池还有未保存的编辑，放弃这些编辑并返回？", () => { shade.QueueFree(); return true; }, "放弃并返回")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("返回提示词配置", "事件池还有未保存的编辑，放弃这些编辑并返回？", () => { shade.QueueFree(); return true; }, "放弃并返回");`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("恢复分类默认", "恢复后，该分类将跟随内置内容更新。", () =>          { drafts.Remove(category); dirty = true; ShowCategory(); status.Text = "已恢复默认，保存后生效。"; return true; })`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ShowCareerDialog("恢复分类默认", "恢复后，该分类将跟随内置内容更新。", () =>          { drafts.Remove(category); dirty = true; ShowCategory(); status.Text = "已恢复默认，保存后生效。"; return true; })`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("返回提示词配置", "事件池还有未保存的编辑，放弃这些编辑并返回？", () => { shade.QueueFree(); return true; }, "放弃并返回")`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("返回提示词配置", "事件池还有未保存的编辑，放弃这些编辑并返回？", () => { shade.QueueFree(); return true; }, "放弃并返回");`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("恢复分类默认", "恢复后，该分类将跟随内置内容更新。", () =>          { drafts.Remove(category); dirty = true; ShowCategory(); status.Text = "已恢复默认，保存后生效。"; return true; })`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ShowCareerDialog("恢复分类默认", "恢复后，该分类将跟随内置内容更新。", () =>          { drafts.Remove(category); dirty = true; ShowCategory(); status.Text = "已恢复默认，保存后生效。"; return true; })`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 15, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 15, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 16, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 16, CareerVisuals.Teal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 16, CareerVisuals.Teal)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("", 21, _gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("", 21, _gold)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("事件池", 28, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("事件池", 28, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("随机池编辑", 28, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("随机池编辑", 28, _gold)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(PromptLibrary.Template(data.Ai).Name, 17, _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(PromptLibrary.Template(data.Ai).Name, 17, _muted)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("0c1c29", "355568", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("0c1c29", "355568", 6, 12)`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("0c1c29", "70c8bd", 6, 12)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("0c1c29", "70c8bd", 6, 12)`
@@ -194,6 +197,7 @@
 - `Name` = `"PoolEntries"`
 - `Name` = `"PoolEntryDetail"`
 - `Name` = `"PoolEntryTitle"`
+- `personalityTab.Name` = `"PersonalityPoolTab"`
 - `PlaceholderText` = `"标题"`
 - `preview.AutowrapMode` = `TextServer.AutowrapMode.WordSmart`
 - `preview.CustomMinimumSize` = `new(0, 48)`
@@ -222,13 +226,13 @@
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 - `ZIndex` = `22`
 
-<a id="symbol-fcefc2b20b8b"></a>
+<a id="symbol-e1127fa9d7a9"></a>
 
 ## `Daily() — bool Daily()`
 
 来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-cf86154a4135)；[`Edit()`](EventPoolScreen.cs.md#symbol-bbf42e580d6a)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`Preview()`](EventPoolScreen.cs.md#symbol-b782199d79a0)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-e27bbf8a9d14)
+**调用者：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-274c3aeec825)；[`Edit()`](EventPoolScreen.cs.md#symbol-6d32df7c5954)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`Preview()`](EventPoolScreen.cs.md#symbol-f6342cbab617)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)
 
 **调用：** `string.StartsWith(string)`
 
@@ -241,13 +245,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e5eb0aeda11a"></a>
+<a id="symbol-dac7d1451929"></a>
 
 ## `Heading() — void Heading()`
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Changed()`](EventPoolScreen.cs.md#symbol-119f7a697df0)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-e27bbf8a9d14)
+**调用者：** [`Changed()`](EventPoolScreen.cs.md#symbol-69e9e13eca5c)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`
 
@@ -261,15 +265,15 @@
 
 - `section.Text` = `definition.Group + " / " + definition.Name + $" · {entries.Count} 条"`
 
-<a id="symbol-119f7a697df0"></a>
+<a id="symbol-69e9e13eca5c"></a>
 
 ## `Changed() — void Changed()`
 
 来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit()`](EventPoolScreen.cs.md#symbol-15a258d19400)；[`Edit()`](EventPoolScreen.cs.md#symbol-bbf42e580d6a)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
+**调用者：** [`Commit()`](EventPoolScreen.cs.md#symbol-88cc05540b83)；[`Edit()`](EventPoolScreen.cs.md#symbol-6d32df7c5954)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
 
-**调用：** [`Heading()`](EventPoolScreen.cs.md#symbol-e5eb0aeda11a)
+**调用：** [`Heading()`](EventPoolScreen.cs.md#symbol-dac7d1451929)
 
 **字段、属性、事件及方法组引用：** `Heading()`
 
@@ -283,7 +287,7 @@
 - `drafts[category]` = `entries`
 - `status.Text` = `"修改尚未保存"`
 
-<a id="symbol-15a258d19400"></a>
+<a id="symbol-88cc05540b83"></a>
 
 ## `Commit() — bool Commit()`
 
@@ -291,7 +295,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
 
-**调用：** [`Changed()`](EventPoolScreen.cs.md#symbol-119f7a697df0)；[`NationalSpire.EventPools.ParseBulk(string, string)`](EventPools.cs.md#symbol-4888d28a4905)；`System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Math.Clamp(int, int, int)`
+**调用：** [`Changed()`](EventPoolScreen.cs.md#symbol-69e9e13eca5c)；[`NationalSpire.EventPools.ParseBulk(string, string)`](EventPools.cs.md#symbol-4888d28a4905)；`System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Math.Clamp(int, int, int)`
 
 **字段、属性、事件及方法组引用：** `Changed()`；`NationalSpire.EventPools.ParseBulk(string, string)`
 
@@ -308,15 +312,15 @@
 - `selected` = `entries.Count == 0 ? -1 : Math.Clamp(selected, 0, entries.Count - 1)`
 - `status.Text` = `error.Message`
 
-<a id="symbol-b782199d79a0"></a>
+<a id="symbol-f6342cbab617"></a>
 
 ## `Preview() — void Preview()`
 
 来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Edit()`](EventPoolScreen.cs.md#symbol-bbf42e580d6a)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-96639ae36d66)
+**调用者：** [`Edit()`](EventPoolScreen.cs.md#symbol-6d32df7c5954)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-92a9f67dc0c2)
 
-**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-fcefc2b20b8b)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；`string.Replace(string, string?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-e1127fa9d7a9)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；`string.Replace(string, string?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Daily()`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`
 
@@ -334,15 +338,15 @@
 
 - `preview.Text` = `Daily() && selected >= 0 ? "替换预览：" + (rendered.Length > 90 ? rendered[..90] + "…" : rendered) : ""`
 
-<a id="symbol-cf86154a4135"></a>
+<a id="symbol-274c3aeec825"></a>
 
 ## `Caption(NationalSpire.EventPoolEntry) — string Caption(EventPoolEntry e)`
 
 来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Edit()`](EventPoolScreen.cs.md#symbol-bbf42e580d6a)；[`FillList()`](EventPoolScreen.cs.md#symbol-2e2243be29fa)
+**调用者：** [`Edit()`](EventPoolScreen.cs.md#symbol-6d32df7c5954)；[`FillList()`](EventPoolScreen.cs.md#symbol-d9547ceae913)
 
-**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-fcefc2b20b8b)；`string.Replace(char, char)`
+**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-e1127fa9d7a9)；`string.Replace(char, char)`
 
 **字段、属性、事件及方法组引用：** `Daily()`；`NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`
 
@@ -355,15 +359,15 @@
 
 - `s` = `s.Replace('\n', ' ')`
 
-<a id="symbol-96639ae36d66"></a>
+<a id="symbol-92a9f67dc0c2"></a>
 
 ## `SelectEntry(int) — void SelectEntry(int index)`
 
 来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`FillList()`](EventPoolScreen.cs.md#symbol-2e2243be29fa)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
+**调用者：** [`FillList()`](EventPoolScreen.cs.md#symbol-d9547ceae913)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
 
-**调用：** [`Preview()`](EventPoolScreen.cs.md#symbol-b782199d79a0)
+**调用：** [`Preview()`](EventPoolScreen.cs.md#symbol-f6342cbab617)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`；`Preview()`
 
@@ -382,15 +386,15 @@
 - `title.Editable` = `detail.Editable = index >= 0`
 - `title.Text` = `index >= 0 ? entries[index].Title : ""`
 
-<a id="symbol-2e2243be29fa"></a>
+<a id="symbol-d9547ceae913"></a>
 
 ## `FillList() — void FillList()`
 
 来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-e27bbf8a9d14)
+**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)
 
-**调用：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-cf86154a4135)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-96639ae36d66)；`Godot.ItemList.AddItem(string, Godot.Texture2D, bool)`；`Godot.ItemList.Clear()`；`Godot.ItemList.Select(int, bool)`；`Godot.ItemList.SetItemTooltip(int, string)`；`System.Math.Clamp(int, int, int)`
+**调用：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-274c3aeec825)；[`SelectEntry(int)`](EventPoolScreen.cs.md#symbol-92a9f67dc0c2)；`Godot.ItemList.AddItem(string, Godot.Texture2D, bool)`；`Godot.ItemList.Clear()`；`Godot.ItemList.Select(int, bool)`；`Godot.ItemList.SetItemTooltip(int, string)`；`System.Math.Clamp(int, int, int)`
 
 **字段、属性、事件及方法组引用：** `Caption(NationalSpire.EventPoolEntry)`；`NationalSpire.EventPoolEntry.Detail`；`SelectEntry(int)`
 
@@ -408,7 +412,7 @@
 
 - `selected` = `entries.Count == 0 ? -1 : Math.Clamp(selected, 0, entries.Count - 1)`
 
-<a id="symbol-e27bbf8a9d14"></a>
+<a id="symbol-1be601c844a2"></a>
 
 ## `ShowCategory() — void ShowCategory()`
 
@@ -416,7 +420,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
 
-**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-fcefc2b20b8b)；[`FillList()`](EventPoolScreen.cs.md#symbol-2e2243be29fa)；[`Heading()`](EventPoolScreen.cs.md#symbol-e5eb0aeda11a)；[`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`](EventPools.cs.md#symbol-2eb5f48b0ab7)；[`NationalSpire.EventPools.Entries(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string)`](EventPools.cs.md#symbol-fd48371b9a06)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Daily()`](EventPoolScreen.cs.md#symbol-e1127fa9d7a9)；[`FillList()`](EventPoolScreen.cs.md#symbol-d9547ceae913)；[`Heading()`](EventPoolScreen.cs.md#symbol-dac7d1451929)；[`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`](EventPools.cs.md#symbol-2eb5f48b0ab7)；[`NationalSpire.EventPools.Entries(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string)`](EventPools.cs.md#symbol-fd48371b9a06)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Daily()`；`FillList()`；`Heading()`；`NationalSpire.EventPoolCategory.Group`；`NationalSpire.EventPoolCategory.Id`；`NationalSpire.EventPools.BulkText(string, System.Collections.Generic.IEnumerable<NationalSpire.EventPoolEntry>)`；`NationalSpire.EventPools.Categories`；`NationalSpire.EventPools.Entries(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string)`
 
@@ -449,7 +453,7 @@
 - `title.Visible` = `tokens.Visible = preview.Visible = Daily()`
 - `tokens.Visible` = `preview.Visible = Daily()`
 
-<a id="symbol-2d86237cc2e7"></a>
+<a id="symbol-abc6e2fe98ac"></a>
 
 ## `ShowCategories(bool) — void ShowCategories(bool daily)`
 
@@ -477,15 +481,15 @@
 
 - `group` = `c.Group`
 
-<a id="symbol-bbf42e580d6a"></a>
+<a id="symbol-6d32df7c5954"></a>
 
 ## `Edit() — void Edit()`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)
 
-**调用：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-cf86154a4135)；[`Changed()`](EventPoolScreen.cs.md#symbol-119f7a697df0)；[`Daily()`](EventPoolScreen.cs.md#symbol-fcefc2b20b8b)；[`Preview()`](EventPoolScreen.cs.md#symbol-b782199d79a0)；`Godot.ItemList.SetItemText(int, string)`；`NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`
+**调用：** [`Caption(NationalSpire.EventPoolEntry)`](EventPoolScreen.cs.md#symbol-274c3aeec825)；[`Changed()`](EventPoolScreen.cs.md#symbol-69e9e13eca5c)；[`Daily()`](EventPoolScreen.cs.md#symbol-e1127fa9d7a9)；[`Preview()`](EventPoolScreen.cs.md#symbol-f6342cbab617)；`Godot.ItemList.SetItemText(int, string)`；`NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`
 
 **字段、属性、事件及方法组引用：** `Caption(NationalSpire.EventPoolEntry)`；`Changed()`；`Daily()`；`Preview()`
 

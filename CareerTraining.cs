@@ -88,6 +88,11 @@ public static class CareerTraining
             {
                 if (turn.Learning != null) RecordLesson(world, c.PersonId, turn.Learning);
                 if (turn.Mood != null) RecordMood(world, c.PersonId, turn.Mood);
+                foreach (var (person, effect) in turn.DatePartyEffects)
+                {
+                    if (effect.Learning != null) RecordLesson(world, person, effect.Learning);
+                    if (effect.Mood != null) RecordMood(world, person, effect.Mood);
+                }
             }
     }
     public static bool Multiplayer(CareerData d) => d.CooperativeMembers > 1 || d.LocalHumanId.Length > 0;

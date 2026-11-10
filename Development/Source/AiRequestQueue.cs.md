@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8BF0043DB9645390868ED214B5BBD4E94DF1A4AF8141A16C541E5C9A44D670F1`。来源：[源码](../../AiRequestQueue.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`58B960ADC3DF17DC3D3BA02DDC445BC5EB9FBA60EDD80D1277604CD10FEEEC79`。来源：[源码](../../AiRequestQueue.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -88,7 +88,7 @@ private int _released;
 - `System.Collections.Generic.HashSet<T>.UnionWith(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`_occupied.UnionWith(request.Keys)`；返回值紧邻使用处：`ExpressionStatementSyntax: _occupied.UnionWith(request.Keys);`
 - `System.Collections.Generic.HashSet<T>.UnionWith(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`earlier.UnionWith(request.Keys)`；返回值紧邻使用处：`ExpressionStatementSyntax: earlier.UnionWith(request.Keys);`
 - `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`_waiting.Remove(request)`；返回值紧邻使用处：`ExpressionStatementSyntax: _waiting.Remove(request);`
-- `System.Collections.Generic.List<T>.ToArray()`；输入表达式：`_waiting.ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var request in _waiting.ToArray())         {             if (_active >= _limit) { request.Waiting?.Invoke("已达到最大并发数，正在等待空位……"); continue; }             if (request.Keys.Overlaps(_occupied) || request.Keys.Overlaps(earlier))             { request.Waiting?.Invoke("这份内容正在更新，完成后继续……"); earlier.UnionWith(request.Keys); continue; }             _waiting.Remove(request); _active++; _occupied.UnionWith(request.Keys);             request.Waiting?.Invoke("");             request.Completion.SetResult(new Lease(this, request.Keys));         }`
+- `System.Collections.Generic.List<T>.ToArray()`；输入表达式：`_waiting.ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var request in _waiting.ToArray())          {              if (_active >= _limit) { request.Waiting?.Invoke("已达到最大并发数，正在等待空位……"); continue; }              if (request.Keys.Overlaps(_occupied) || request.Keys.Overlaps(earlier))              { request.Waiting?.Invoke("这份内容正在更新，完成后继续……"); earlier.UnionWith(request.Keys); continue; }              _waiting.Remove(request); _active++; _occupied.UnionWith(request.Keys);              request.Waiting?.Invoke("");              request.Completion.SetResult(new Lease(this, request.Keys));          }`
 - `System.Threading.Tasks.TaskCompletionSource<TResult>.SetResult(TResult)`；输入表达式：`request.Completion.SetResult(new Lease(this, request.Keys))`；返回值紧邻使用处：`ExpressionStatementSyntax: request.Completion.SetResult(new Lease(this, request.Keys));`
 
 **赋值（含属性/字段和局部值）：**

@@ -37,16 +37,29 @@ public partial class CareerScreen
         }
     }
 
-    private void ProfileStats(params (string Label, string Value)[] fields)
+    private void ProfileStats(CareerData data,string clubId,bool player,params (string Label,string Value)[] fields)
     {
-        var row = new HBoxContainer { Name = "ProfileStats", SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        row.AddThemeConstantOverride("separation", 18); _content.AddChild(row);
-        foreach (var field in fields)
+        var row=new HBoxContainer {Name="ProfileStats",SizeFlagsHorizontal=SizeFlags.ExpandFill};
+        row.AddThemeConstantOverride("separation",18); _content.AddChild(row);
+        VBoxContainer Stat(string label)
         {
-            var panel = Card(); row.AddChild(panel); var box = Inner(panel);
-            box.AddThemeConstantOverride("separation", 12);
-            box.AddChild(Text(field.Label, 14, _muted)); box.AddChild(Text(field.Value, 24, _ink));
+            var card=Card(); row.AddChild(card); var body=Inner(card);
+            body.AddThemeConstantOverride("separation",9); body.AddChild(DashboardLabel(label,14,_muted)); return body;
         }
+        foreach(var (label,value) in fields) Stat(label).AddChild(DashboardLabel(value,23,_ink,true));
+        var club=EsportsWorld.Club(data,clubId);
+        var line=new HBoxContainer(); line.AddThemeConstantOverride("separation",10); Stat("所属俱乐部").AddChild(line);
+        line.AddChild(DashboardLabel(club?.Name??"自由选手",23,_ink,true));
+        if (player || club != null) line.AddChild(ClubAffiliationLink(data, club, player));
+    }
+
+    private Button ClubAffiliationLink(CareerData data, CareerClub? club, bool player)
+    {
+        return TextLink(club == null ? "加入俱乐部" : "查看俱乐部", () =>
+        {
+            if (player || club == null || club.Id == data.Esports.ClubId) OpenWorldSection("俱乐部");
+            else Visit(() => { _tab = "赛事与俱乐部"; _worldSection = "所属俱乐部"; _profileClubId = club.Id; _competitionId = null; });
+        }, 14, underline: true);
     }
 
     private void PlayerProfile(CareerData data)
@@ -54,13 +67,16 @@ public partial class CareerScreen
         _content.AddChild(PlayerBanner(data, "player"));
         if (ClubCoaching.PlayerFeatures(data))
             _content.AddChild(Text((ClubCoaching.PlayerReserve(data) ? "俱乐部轮换" : "俱乐部首发") + (ClubCoaching.PlayerCoach(data) ? " · 兼任教练" : ""), 18, CareerVisuals.Teal));
-        var toolbar = ProfileActions(); toolbar.Name = "ProfileToolbar"; _content.AddChild(toolbar);
+        var toolbar = new HBoxContainer { Name = "ProfileToolbar" }; toolbar.AddThemeConstantOverride("separation",16); _content.AddChild(toolbar);
         toolbar.AddChild(Button("编辑角色", () => OpenCharacterCard(data, "player"), 165));
-        toolbar.AddChild(Button("设计立绘", () => OpenPortraitDesigner(data, "player"), 165));
         toolbar.AddChild(Button("更换头像", () => OpenAvatarSettings(data), 165));
         toolbar.AddChild(Button(_choosingFrame ? "收起头像框" : "更换头像框", () => { _choosingFrame = !_choosingFrame; Render(); }, 165));
+        toolbar.AddChild(new Control { SizeFlagsHorizontal=SizeFlags.ExpandFill, MouseFilter=MouseFilterEnum.Ignore });
+        toolbar.AddChild(Button("我的收藏", () => OpenShopShelf(null), 165));
+        toolbar.AddChild(Button("我的资产", () => GoHub("我的资产"), 165));
+        toolbar.AddChild(Button("荣誉室", () => OpenWorldSection("荣誉室"), 165));
         if (_choosingFrame) AvatarWardrobe(data, ProfileSection("头像框"));
-        ProfileStats(("生涯战绩", $"{data.Wins} 胜  {data.Draws} 平  {data.Losses} 负"),
+        ProfileStats(data,data.Esports.ClubId,true,("生涯战绩", $"{data.Wins} 胜  {data.Draws} 平  {data.Losses} 负"),
             ("关注", data.Fans.ToString("N0")), ("世界积分", CircuitLedger.Points(data, "player").ToString()));
         var info = ProfileSection("人物资料");
         var card = data.PlayerCard;
@@ -70,6 +86,8 @@ public partial class CareerScreen
             ("擅长角色", character), ("姓名", card?.Name ?? ""),
             ("参赛资格", card != null && card.Role != EsportsWorld.LicenseName(data) ? EsportsWorld.LicenseName(data) : ""),
             ("当前连胜", data.Esports.WinStreak > 0 ? $"{data.Esports.WinStreak} 场" : ""));
+        ProfileFields(info, ("本季国家队", data.Esports.NationalTeam ? "国家队代表" : "尚未入选"),
+            ("当前目标", EsportsWorld.NextGoal(data)), ("生涯评价", CareerNarrative.PlayerEvaluation(data)));
         if (card?.Style.Length > 0) ProfileFields(info, ("构筑偏好", card.Style));
         if (card?.Biography.Length > 0) ProfileSection("人物介绍").AddChild(Text(card.Biography, 18, _ink));
         var honors = ProfileSection("荣誉与排名");
@@ -100,7 +118,6 @@ public partial class CareerScreen
     private void PersonProfile(CareerData data, CareerPerson person)
     {
         _content.AddChild(PlayerBanner(data, person.Id));
-        PrivateProfile(data, person);
         {
             var toolbar = ProfileActions(); _content.AddChild(toolbar);
             toolbar.AddChild(Button("设计立绘", () => OpenPortraitDesigner(data, person.Id), 165));
@@ -109,9 +126,10 @@ public partial class CareerScreen
             if (!GroupChats.IsHuman(data, person.Id)) toolbar.AddChild(Button("选择头像框", () => NpcAvatarFramePicker(data, person.Id), 165));
         }
         int total = person.Wins + person.Losses;
-        ProfileStats(("累计战绩", $"{person.Wins} 胜  {person.Losses} 负"),
+        ProfileStats(data,person.ClubId,false,("累计战绩", $"{person.Wins} 胜  {person.Losses} 负"),
             ("历史胜率", total == 0 ? "暂无战绩" : $"{100.0 * person.Wins / total:0.#}%"),
             ("世界积分", CircuitLedger.Points(data, person.Id).ToString()));
+        PrivateProfile(data,person);
         var info = ProfileSection("人物资料");
         ProfileFields(info, ("性别", IdentityGender.Of(data, person.Id)), ("擅长角色", person.Character),
             ("身份", string.Join(" / ", person.Identities)), ("构筑偏好", person.Style),

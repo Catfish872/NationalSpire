@@ -88,13 +88,13 @@ public static class MarketDynamics
         var recent = NewsCandidates(d);
         if (recent.Length == 0) return false;
         var assets = recent.Select(e => e.Asset).Distinct().Where(MarketCatalog.ById.ContainsKey).Select(id => MarketCatalog.ById[id]).ToArray();
-        string facts = string.Join("\n", recent.Select(e => $"{GameCalendar.Text(d, e.Day)}：{e.Text}")) + "\n最新行情：" + string.Join("；", assets.Select(a => a.Name + " " + (a.Forex ? d.Market.Quotes[a.Id].Price.ToString("0.0000") : CareerMoney.Format(d.Market.Quotes[a.Id].Price))));
+        string facts = string.Join("\n", recent.Select(e => $"{GameCalendar.Text(d, e.Day)}：{e.Text}")) + "\n最新行情：" + string.Join("；", assets.Select(a => { var currency = new MarketCurrency(d,a); return currency.Display.Name + " " + (a.Forex ? currency.Price(d.Market.Quotes[a.Id].Price).ToString("0.0000") : CareerMoney.Format(d.Market.Quotes[a.Id].Price)); }));
         foreach (var group in recent.Where(e => e.Competition.Length > 0).GroupBy(e => e.Competition))
         {
             var c = d.Esports.Competitions.FirstOrDefault(c => c.Id == group.Key);
             if (c != null) facts += "\n" + WorldEvents.FixtureFacts(d, c, c.Fixtures.Where(f => group.Any(e => e.Day == f.Day)));
         }
-        if (assets.Any(a => a.Forex)) facts += "\n外汇报价表示1人民币兑换的外币数量；上涨表示人民币升值，下降表示人民币贬值。";
+        if (assets.Any(a => a.Forex)) facts += $"\n外汇报价表示1{MarketCurrency.BaseName(d)}兑换的外币数量，报价上涨表示{MarketCurrency.BaseName(d)}相对该外币升值，下降表示贬值。";
         facts += "\n围绕具体选手、俱乐部、品牌和赛事组织报道与讨论；经营消息没有对应赛事时，按经营消息报道。";
         CareerEngine.Publish(d, "market-news-" + d.Day, "赛场之外 · 品牌与汇市动态", facts, "市场动态", true, recent.Select(e => e.Person).Where(id => id.Length > 0).Distinct().ToList());
         d.Market.NewsDay = d.Day; return true;

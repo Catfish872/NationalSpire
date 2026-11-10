@@ -1,6 +1,6 @@
 namespace NationalSpire;
 
-/// <summary>失利或未通关获胜的成绩先保存为待选择记录，确认后执行正式结算。</summary>
+/// <summary>保存平局、失利或未通关获胜的原始成绩，供玩家选择重赛或按赛制确认结果。</summary>
 public sealed class FailureDecision
 {
     public string Attempt { get; set; } = Guid.NewGuid().ToString("N");

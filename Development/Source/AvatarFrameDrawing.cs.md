@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8CA77617734948E1E44C225A73C11969845C8DF158980BA3EA13D163937361E9`。来源：[源码](../../AvatarFrameDrawing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`91ABDB511778DB3B3201370A56A921F667D81E4A2E5BE2D6127BC6486BEF249B`。来源：[源码](../../AvatarFrameDrawing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)
 
-**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-02a7b3d8e0ed)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-7b66cc740838)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-70e0c20a0ac2)；[`Shape(Godot.Color, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-806f5f5a7a65)；[`Stroke(Godot.Color, float, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-218332effc6c)；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
+**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-4542c62ff705)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-344ab1628c1e)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-f95156c6e340)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-3f69129afd49)；[`Shape(Godot.Color, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-f214c846230a)；[`Stroke(Godot.Color, float, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-450ac494fd3b)；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`Octagon(float, float)`；`P(float, float)`；`Ring(float, float, Godot.Color)`；`Shape(Godot.Color, params Godot.Vector2[])`；`Stroke(Godot.Color, float, params Godot.Vector2[])`
 
@@ -185,13 +185,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d02a65dd0a6f"></a>
+<a id="symbol-4e61cc041117"></a>
 
 ## `Point(float, float) — Vector2 Point(float x, float y)`
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)
+**调用者：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-4542c62ff705)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`
 
@@ -204,7 +204,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-806f5f5a7a65"></a>
+<a id="symbol-f214c846230a"></a>
 
 ## `Shape(Godot.Color, params Godot.Vector2[]) — void Shape(Color tint, params Vector2[] points)`
 
@@ -225,7 +225,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-218332effc6c"></a>
+<a id="symbol-450ac494fd3b"></a>
 
 ## `Stroke(Godot.Color, float, params Godot.Vector2[]) — void Stroke(Color tint, float width, params Vector2[] points)`
 
@@ -247,15 +247,15 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-aa56b78dde46"></a>
+<a id="symbol-4542c62ff705"></a>
 
 ## `Octagon(float, float) — Vector2[] Octagon(float inset, float cut)`
 
 来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-70e0c20a0ac2)
+**调用者：** [`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-3f69129afd49)
 
-**调用：** [`Point(float, float)`](AvatarFrameDrawing.cs.md#symbol-d02a65dd0a6f)
+**调用：** [`Point(float, float)`](AvatarFrameDrawing.cs.md#symbol-4e61cc041117)
 
 **字段、属性、事件及方法组引用：** `Point(float, float)`
 
@@ -273,7 +273,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-70e0c20a0ac2"></a>
+<a id="symbol-3f69129afd49"></a>
 
 ## `Ring(float, float, Godot.Color) — void Ring(float inset, float thickness, Color tint)`
 
@@ -281,7 +281,7 @@
 
 **调用者：** [`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)
 
-**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)；`Godot.CanvasItem.DrawPolygon(Godot.Vector2[], Godot.Color[], Godot.Vector2[], Godot.Texture2D)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`
+**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-4542c62ff705)；`Godot.CanvasItem.DrawPolygon(Godot.Vector2[], Godot.Color[], Godot.Vector2[], Godot.Texture2D)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`
 
 **字段、属性、事件及方法组引用：** `Octagon(float, float)`
 
@@ -298,7 +298,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-02a7b3d8e0ed"></a>
+<a id="symbol-344ab1628c1e"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
@@ -317,7 +317,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-7b66cc740838"></a>
+<a id="symbol-f95156c6e340"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 

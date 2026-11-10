@@ -12,7 +12,7 @@ public static class EsportsWorld
     public static CareerClub? Club(CareerData d, string id) => d.Esports.Clubs.FirstOrDefault(c => c.Id == id);
     public static string ClubName(CareerData d, string id) => Club(d, id)?.Name ?? "自由选手";
     public static string ClubOf(CareerData d, string id) => id == "player" ? d.Esports.ClubId : CareerEngine.Person(d, id)?.ClubId ?? "";
-    public static string CountryOf(CareerData d, string id) => id == "player" ? d.Esports.Country : CareerEngine.Person(d, id)?.Country ?? "";
+    public static string CountryOf(CareerData d, string id) => id == "player" || d.HumanIds.Contains(id) ? d.Esports.Country : CareerEngine.Person(d, id)?.Country ?? "";
     public static string HistoricClub(CareerData d, WorldCompetition c, string id) => c.EntrantClubs.GetValueOrDefault(id, ClubOf(d, id));
     public static string HistoricCountry(CareerData d, WorldCompetition c, string id) => c.EntrantCountries.GetValueOrDefault(id, CountryOf(d, id));
     public static int RatingOf(CareerData d, string id) => id == "player" ? d.Rating : CareerEngine.Person(d, id)?.Rating ?? 0;

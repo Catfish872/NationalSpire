@@ -101,7 +101,7 @@ public static class CareerMarket
             var exit = MarketExecution.Close(p, market.Quotes[p.Asset]);
             MarketExecution.Apply(market, p.Asset, exit.Fill, day);
             account.Cash += exit.Proceeds; account.Positions.Remove(p);
-            Record(account, day, MarketCatalog.ById[p.Asset].Name + (liquidated ? "强制平仓" : "止损平仓") + " · 成交价" + exit.Fill.Average.ToString("0.00000"), exit.Proceeds);
+            Record(account, day, new MarketCurrency(market, MarketCatalog.ById[p.Asset]).FillText(liquidated ? "强制平仓" : "止损平仓", exit.Fill.Average), exit.Proceeds);
         }
     }
     private static void Accounts(CareerData d, int day)
@@ -308,7 +308,7 @@ public static class CareerMarket
                 MarketExecution.Apply(d.Market, position.Asset, exit.Fill, d.Day); break;
             default: return "交易操作无效。";
         }
-        Record(account, d.Day, order.Action switch { "deposit" => "转入", "withdraw" => "转出", "borrow" => "借款", "repay" or "repay-all" => "还款", "open" => MarketCatalog.ById[order.Asset].Name + "建仓", "margin" => "追加保证金", "stop" => order.StopPrice == null ? "取消止损" : "设置止损", _ => "平仓" }, amount);
+        Record(account, d.Day, order.Action switch { "deposit" => "转入", "withdraw" => "转出", "borrow" => "借款", "repay" or "repay-all" => "还款", "open" => new MarketCurrency(d, MarketCatalog.ById[order.Asset]).Display.Name + "建仓", "margin" => "追加保证金", "stop" => order.StopPrice == null ? "取消止损" : "设置止损", _ => "平仓" }, amount);
         if (order.Action is "open" or "close") Accounts(d, d.Day);
         return null;
     }

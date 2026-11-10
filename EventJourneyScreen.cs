@@ -4,7 +4,31 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private string _journeyNotice = "";
+    private string _journeyNotice = "", _appointmentNotice = "";
+    private void ShowDueAppointments()
+    {
+        var data=ViewData;
+        if (EventJourney.PublicationsPaused(data) || data.Failure!=null || data.PendingMatchId!=null || _privateOverlay!=null || _dialogOverlay!=null || _eventView!=null) return;
+        var visits=SocialAppointments.Due(data).ToList();
+        if (visits.Count==0) return;
+        string key=string.Join("|",visits.Select(v=>v.Offer.GroupId+"/"+v.Conversation.PersonId+"/"+v.Offer.Id).Order())+"@"+data.Day;
+        if (_appointmentNotice==key) return;
+        Callable.From(()=>
+        {
+            if(!IsInstanceValid(this) || IsQueuedForDeletion() || !ReferenceEquals(data,ViewData) || _appointmentNotice==key || _tab is not ("首页" or "日程")
+                || _privateOverlay!=null || _dialogOverlay!=null || _eventView!=null || !SocialAppointments.Due(data).Any())return;
+            _appointmentNotice=key;
+            ShowCareerDialog("今日赴约","",()=>true,"留在当天",box=>
+            {
+                foreach(var (conversation,offer) in SocialAppointments.Due(data))
+                    box.AddChild(Button(offer.Title+" · "+CareerEngine.DisplayName(data,conversation.PersonId),()=>
+                    {
+                        _cancelDialog?.Invoke();
+                        if(offer.GroupId.Length>0) SelectGroup(offer.GroupId); else OpenPrivateMessages(conversation.PersonId);
+                    },0));
+            },showCancel:false);
+        }).CallDeferred();
+    }
     private void JourneyResumeButton(CareerData data, VBoxContainer parent)
     {
         if (data.Journey.Destination <= data.Day) return;
@@ -37,10 +61,9 @@ public partial class CareerScreen
             {
                 var banner = new PanelContainer { CustomMinimumSize = new(0, 120) }; box.AddChild(banner);
                 banner.AddThemeStyleboxOverride("panel", CareerVisuals.Box("132835", "496776", 8, 0));
-                var background = RandomEventArt.Load("");
-                var picture = new TextureRect { Texture = background, ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                    Modulate = new(0.42f, 0.42f, 0.42f, 1), MouseFilter = MouseFilterEnum.Ignore }; banner.AddChild(picture);
-                banner.TreeExiting += () => { picture.Texture = null; background?.Dispose(); };
+                var picture = new EventArtPicture { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
+                    Modulate = new(0.42f, 0.42f, 0.42f, 1), MouseFilter = MouseFilterEnum.Ignore };
+                banner.AddChild(picture); picture.ShowArt("");
                 var inset = new MarginContainer(); foreach (string side in new[] { "left", "right", "top", "bottom" }) inset.AddThemeConstantOverride("margin_" + side, 18); banner.AddChild(inset);
                 var heading = new HBoxContainer(); heading.AddThemeConstantOverride("separation", 16); inset.AddChild(heading);
                 heading.AddChild(new EventEmblem { CustomMinimumSize = new(58, 58), SizeFlagsVertical = SizeFlags.ShrinkCenter });

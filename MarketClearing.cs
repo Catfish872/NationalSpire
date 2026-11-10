@@ -282,7 +282,7 @@ public static class MarketClearing
         foreach (var closed in result.Closed)
         {
             closed.Owner.Cash += closed.Exit.Proceeds; closed.Owner.Positions.Remove(closed.Position);
-            CareerMarket.Record(closed.Owner, day, MarketCatalog.ById[asset].Name + closed.Reason + " · 成交价" + closed.Exit.Fill.Average.ToString("0.00000"), closed.Exit.Proceeds);
+            CareerMarket.Record(closed.Owner, day, new MarketCurrency(market, MarketCatalog.ById[asset]).FillText(closed.Reason, closed.Exit.Fill.Average), closed.Exit.Proceeds);
         }
         History(market, asset, day);
     }

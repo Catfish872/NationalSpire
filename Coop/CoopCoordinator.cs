@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace NationalSpire.Coop;
 
 public sealed record CoopSnapshot(CoopWorld World, byte[]? Run);
-public sealed record CoopHello(int Protocol, string Compatibility, string Token, string Name);
+public sealed record CoopHello(int Protocol, string Compatibility, string Token, string Name, bool AskForOpening = false, CareerOpeningPlayer? Opening = null);
 public sealed record CoopReply(string Id, CoopOutcome Outcome, long Revision = -1);
 public sealed record CoopHeartbeat(string Epoch, ulong[] Online);
 
@@ -26,6 +26,14 @@ public sealed partial class CoopCoordinator : IDisposable
     public CoopWorld? World { get; private set; }
     public byte[]? NativeSave { get; private set; }
     public ulong Self => _transport.Self;
+    internal bool OfferFirstJoinSetup { get; set; }
+    internal string? OpeningCountry { get; private set; }
+    internal string JoinName => _name;
+    private CareerOpeningPlayer? _opening;
+    internal void SubmitOpening(CareerOpeningPlayer profile)
+    {
+        _opening = profile; OpeningCountry = null; _lastHello = DateTime.MinValue;
+    }
     public bool Host => Self == _transport.Owner;
     public HashSet<ulong> Online => _seen.Where(p => DateTime.UtcNow - p.Value < TimeSpan.FromSeconds(15) && _transport.Peers.Contains(p.Key)).Select(p => p.Key).Append(Self).ToHashSet();
     public bool Full => World is { } w && (w.Run != null ? w.Run.Characters.Keys.All(Online.Contains) : Online.Count is >= 2 and <= 4);
@@ -72,8 +80,8 @@ public sealed partial class CoopCoordinator : IDisposable
         if (!Host)
             foreach (var pending in _pendingCommands.Values.ToArray())
                 if (pending.Reply == null && DateTime.UtcNow - pending.Sent >= TimeSpan.FromSeconds(3)) Retry(pending.Command);
-        if (!Host && World == null && !Receiving && DateTime.UtcNow - _lastHello > TimeSpan.FromSeconds(5))
-        { _lastHello = DateTime.UtcNow; Send(_transport.Owner, "hello", new CoopHello(CoopWorld.Protocol, _compatibility, _token, _name)); }
+        if (!Host && World == null && !Receiving && OpeningCountry == null && DateTime.UtcNow - _lastHello > TimeSpan.FromSeconds(5))
+        { _lastHello = DateTime.UtcNow; Send(_transport.Owner, "hello", new CoopHello(CoopWorld.Protocol, _compatibility, _token, _name, OfferFirstJoinSetup, _opening)); }
         if (DateTime.UtcNow - _lastHeartbeat > TimeSpan.FromSeconds(3))
         {
             _lastHeartbeat = DateTime.UtcNow;
@@ -146,17 +154,21 @@ public sealed partial class CoopCoordinator : IDisposable
                     RecordJoinError(error);
                     Send(sender, "error", error); return;
                 }
+                if (hello.AskForOpening && hello.Opening == null && World.Members.All(m => m.SteamId != sender))
+                { Send(sender, "opening-profile", World.World.Esports.Country); return; }
+                if (memberNameError() is { } nameError) { Send(sender, "opening-revise", new[] { World.World.Esports.Country, nameError }); return; }
+                string? memberNameError() => hello.AskForOpening && World.Members.All(m => m.SteamId != sender)
+                    ? CareerNames.Validate(World.World, hello.Opening?.Name.Trim() is { Length: > 0 } chosen ? chosen : hello.Name) : null;
                 _seen[sender] = DateTime.UtcNow;
                 var online = Online;
                 var member = World.Members.FirstOrDefault(m => m.SteamId == sender);
                 bool needsCommit = member == null
-                    || !string.IsNullOrWhiteSpace(hello.Name) && member.Name != hello.Name.Trim()
                     || World.Proposal != null
                     || World.Run == null && !World.World.MatchHumanIds.ToHashSet().SetEquals(World.Members.Where(m => online.Contains(m.SteamId)).Select(m => m.PersonId).Append("human-" + sender));
                 if (needsCommit)
                 {
                     var copy = CoopJson.Copy(World); CoopJson.Detached(copy.World);
-                    CoopRules.AddMember(copy, sender, hello.Name); copy.Proposal = null;
+                    CoopRules.AddMember(copy, sender, hello.Name, hello.Opening); copy.Proposal = null;
                     if (copy.Run == null) CoopRules.SetParticipants(copy, online);
                     Commit(copy, NativeSave); return;
                 }
@@ -171,6 +183,10 @@ public sealed partial class CoopCoordinator : IDisposable
             if (wire.Kind is "market-query" or "market-answer") { ReceiveMarket(sender, wire); return; }
             switch (wire.Kind)
             {
+                case "opening-revise" when !Host && World == null:
+                    var correction = Read<string[]>(wire); _opening = null; OpeningCountry = correction[0]; Status = correction[1]; break;
+                case "opening-profile" when !Host && World == null && _opening == null:
+                    OpeningCountry = Read<string>(wire); break;
                 case "ping" when !Host:
                     var heartbeat = Read<CoopHeartbeat>(wire);
                     if (World != null && heartbeat.Epoch != World.Epoch) { World = null; NativeSave = null; break; }
@@ -288,6 +304,22 @@ public sealed partial class CoopCoordinator : IDisposable
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartEvent(sender, command);
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartGroup(sender, command);
     }
+    internal async Task RenameSaveAsync(string id, string name)
+    {
+        if (!Host || World?.Id != id) throw new InvalidOperationException("请由当前房主修改生涯名称。");
+        var command = new CoopCommand(id, World.Epoch, Guid.NewGuid().ToString("N"), World.Revision, "rename-save", Text: name);
+        var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        void Reply(CoopReply reply)
+        {
+            if (reply.Id != command.Id) return;
+            if (reply.Outcome.Accepted) completion.TrySetResult(true);
+            else completion.TrySetException(new InvalidOperationException(reply.Outcome.Message));
+        }
+        Replied += Reply;
+        try { SubmitReady(command, _ => { }, error => completion.TrySetException(error)); await completion.Task; }
+        finally { Replied -= Reply; }
+    }
+
     public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)
     {
         if (!Host || _closed || world.Owner != Self || World != null && World.Id != world.Id) throw new InvalidOperationException("无权提交这个世界。");

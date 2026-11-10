@@ -26,20 +26,23 @@ public partial class AffectionBadge : Control
     public bool Compact { get; init; }
     private int _display;
     private long _revision = -1;
-    public void Bind(PrivateRelation relation)
+    private bool _animate = true;
+    public void Bind(PrivateRelation relation, bool animate = true)
     {
-        if (ReferenceEquals(Relation, relation) && _revision == relation.Revision && _display == relation.Favour) return;
-        Relation = relation; _revision = relation.Revision; SetProcess(true); QueueRedraw();
+        if (ReferenceEquals(Relation, relation) && _revision == relation.Revision && _display == relation.Favour && _animate == animate) return;
+        Relation = relation; _revision = relation.Revision; _animate = animate;
+        _display = animate ? relation.DisplayFavour() : relation.Favour;
+        SetProcess(_display != relation.Favour); QueueRedraw();
     }
     public override void _Ready()
     {
         MouseFilter = MouseFilterEnum.Ignore; SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        Resized += QueueRedraw; _display = Relation.DisplayFavour();
+        Resized += QueueRedraw; _display = _animate ? Relation.DisplayFavour() : Relation.Favour;
         SetProcess(_display != Relation.Favour);
     }
     public override void _Process(double delta)
     {
-        int next = Relation.DisplayFavour();
+        int next = _animate ? Relation.DisplayFavour() : Relation.Favour;
         if (_display != next) { _display = next; QueueRedraw(); }
         if (next == Relation.Favour) SetProcess(false);
     }

@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Commands;
 using HarmonyLib;
@@ -30,6 +30,7 @@ public static class GameBridge
 
     public static async Task<string?> StartMatch(CareerMatch match, CharacterModel character, int ascension)
     {
+        if (MatchStartWatch.IsActive) return "已有一场对局正在加载，请等待加载完成。";
         var data = CareerStore.Data;
         using var trace = new StartDiagnostics(data, match, character.Id.ToString(), ascension);
         if (data.Failure is { } pending && (!pending.RetryRequested || pending.Result.MatchId != match.Id)) return trace.Finish(MatchFailure.Locked(data));
@@ -40,11 +41,14 @@ public static class GameBridge
         if (ascension < match.RequiredAscension || ascension > 10) return trace.Finish($"本场进阶范围为 {match.RequiredAscension}—10。");
         var clock = System.Diagnostics.Stopwatch.StartNew();
         bool transitionStarted = false;
+        MatchStartWatch? loading = null;
         string stage = "初始化游戏场景";
         trace.Stage(stage);
         try
         {
             var game = NGame.Instance ?? throw new InvalidOperationException("游戏场景尚未初始化。");
+            // 挂在持久游戏节点上，主菜单与约会页面销毁后仍可显示加载状态。
+            loading = MatchStartWatch.Begin(game, match.Id, () => SaveManager.Instance.HasRunSave, game.Quit);
             stage = "准备比赛种子";
             trace.Stage(stage);
             MatchRules.PrepareSeed(data, match);
@@ -74,8 +78,10 @@ public static class GameBridge
                 acts.GetType(), typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int));
             if (!typeof(Task).IsAssignableFrom(start.ReturnType)) throw new NotSupportedException("开局接口的返回类型发生变化。");
             long preparedAt = clock.ElapsedMilliseconds;
-            Diagnostics.Record("match.preflight", new { game = GameCompatibility.Version(), rng = GameCompatibility.SeedMode, start = start.ToString() });
+            Diagnostics.Record("match.preflight", new { game = GameCompatibility.Version(), rng = GameCompatibility.SeedMode, start = start.ToString(),
+                build = typeof(GameBridge).Assembly.ManifestModule.ModuleVersionId });
             stage = "播放开赛转场";
+            loading.Stage(stage);
             trace.Stage(stage);
             transitionStarted = true;
             NAudioManager.Instance?.StopMusic();
@@ -95,6 +101,7 @@ public static class GameBridge
             CareerStore.Save(data);
             long savedAt = clock.ElapsedMilliseconds;
             stage = "执行原生开局";
+            loading.Stage(stage);
             trace.Stage(stage);
             trace.Method(start, "begin");
             await (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!;
@@ -135,6 +142,7 @@ public static class GameBridge
             {
                 try
                 {
+                    loading?.Stage("恢复主菜单与画面");
                     if (failedGame.MainMenu == null) await failedGame.ReturnToMainMenuWithInternalError(e);
                     await failedGame.Transition.FadeIn(0.2f);
                 }
@@ -142,6 +150,7 @@ public static class GameBridge
             }
             return trace.Finish(message);
         }
+        finally { loading?.Finish(); }
     }
 
     public static bool MatchesPending(CareerData data, RunHistory history)
@@ -158,6 +167,7 @@ public static class GameBridge
         var detail = ReadPlayerHistory(history, history.Players[0]);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
             history.MapPointHistory.Sum(a => a.Count), detail.Character, MatchRules.PreferredAscension(data, match), detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
+        DateGameReturn.RecordBoundHistory(data,match);
         PlayerArchive.Invalidate();
         _ = AiService.ProcessPendingAsync();
     }
@@ -298,6 +308,15 @@ public static class MenuPatch
             button.OffsetTop = -106; button.OffsetBottom = -42;
             button.Pressed += () => CareerScreen.Open(__instance);
             MainMenuEntries.Bind(__instance, button);
+            if (!Coop.CoopRuntime.Bound)
+            {
+                if (DateGameReturn.Transitioning) CareerScreen.ReturnToDate(__instance);
+                else Callable.From(() =>
+                {
+                    if (GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree() && !DateGameReturn.Transitioning)
+                        CareerScreen.ReturnToDate(__instance);
+                }).CallDeferred();
+            }
             // 主菜单底部独立入口，避开左上方档案选择和原生菜单列表。
             if (!Coop.CoopRuntime.Bound) _ = AiService.ProcessPendingAsync();
         }

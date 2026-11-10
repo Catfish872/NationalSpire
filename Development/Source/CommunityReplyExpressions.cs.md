@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`92B7AF50E3FBA5A72D7D35A6FAB1C1CA7D38A64236CBD324F585A7B472747B59`。来源：[源码](../../CommunityReplyExpressions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2061369F64299221C785A323CBDF62C352E4A3394FDA6416D21391E3355372BA`。来源：[源码](../../CommunityReplyExpressions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -48,9 +48,9 @@ private static readonly string[] Kaomoji =
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)；[`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)；[`NationalSpire.CareerScreen.RenderPostComposer(NationalSpire.CareerData)`](CommunityScreen.cs.md#symbol-02ed3035beb3)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.CommunityReplyExpressions.CategoryButton(string, string, int)`](CommunityReplyExpressions.cs.md#symbol-8fcfa40b1631)；[`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)；[`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-e1005af78c7c)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
+**调用：** [`NationalSpire.CommunityReplyExpressions.CategoryButton(string, string, int)`](CommunityReplyExpressions.cs.md#symbol-8fcfa40b1631)；[`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)；[`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-175ce10c7dd3)；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CommunityReplyExpressions.CategoryButton(string, string, int)`；`Show(bool)`；`UpdateTabs()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.EmojiFont`；`NationalSpire.CommunityReplyExpressions.CategoryButton(string, string, int)`；`Show(bool)`；`UpdateTabs()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -60,6 +60,7 @@ private static readonly string[] Kaomoji =
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`choices.AddThemeConstantOverride("h_separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: choices.AddThemeConstantOverride("h_separation", 8);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`choices.AddThemeConstantOverride("v_separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: choices.AddThemeConstantOverride("v_separation", 8);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`controls.AddThemeConstantOverride("separation", 8)`；返回值紧邻使用处：`ExpressionStatementSyntax: controls.AddThemeConstantOverride("separation", 8);`
+- `Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；输入表达式：`emojiButton.AddThemeFontOverride("font", CareerVisuals.EmojiFont)`；返回值紧邻使用处：`ExpressionStatementSyntax: emojiButton.AddThemeFontOverride("font", CareerVisuals.EmojiFont);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel", new StyleBoxFlat          {              BgColor = new Color("1d3040"), CornerRadiusTopLeft = 8, CornerRadiusTopRight = 8,              CornerRadiusBottomLeft = 8, CornerRadiusBottomRight = 8,              ContentMarginLeft = 20, ContentMarginRight = 12, ContentMarginTop = 16, ContentMarginBottom = 16          })`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel", new StyleBoxFlat          {              BgColor = new Color("1d3040"), CornerRadiusTopLeft = 8, CornerRadiusTopRight = 8,              CornerRadiusBottomLeft = 8, CornerRadiusBottomRight = 8,              ContentMarginLeft = 20, ContentMarginRight = 12, ContentMarginTop = 16, ContentMarginBottom = 16          });`
 - `Godot.HFlowContainer.HFlowContainer()`；输入表达式：`new HFlowContainer { Name = "ExpressionChoices", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HFlowContainer { Name = "ExpressionChoices", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(emojiButton)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(emojiButton);`
@@ -119,13 +120,13 @@ private static readonly string[] Kaomoji =
 - `VerticalScrollMode` = `ScrollContainer.ScrollMode.ShowAlways`
 - `Visible` = `false`
 
-<a id="symbol-e1005af78c7c"></a>
+<a id="symbol-175ce10c7dd3"></a>
 
 ## `UpdateTabs() — void UpdateTabs()`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Hide()`](CommunityReplyExpressions.cs.md#symbol-6f59269314da)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)
+**调用者：** [`Hide()`](CommunityReplyExpressions.cs.md#symbol-686f383501b8)；[`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)；[`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)
 
 **调用：** `Godot.BaseButton.SetPressedNoSignal(bool)`
 
@@ -141,15 +142,15 @@ private static readonly string[] Kaomoji =
 - `emojiButton.Visible` = `enabled`
 - `kaomojiButton.Visible` = `enabled && panel.Visible`
 
-<a id="symbol-6f59269314da"></a>
+<a id="symbol-686f383501b8"></a>
 
 ## `Hide() — void Hide()`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)
+**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)
 
-**调用：** [`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-e1005af78c7c)；`Godot.CanvasItem.Hide()`；`Godot.Control.GrabFocus()`
+**调用：** [`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-175ce10c7dd3)；`Godot.CanvasItem.Hide()`；`Godot.Control.GrabFocus()`
 
 **字段、属性、事件及方法组引用：** `UpdateTabs()`
 
@@ -162,13 +163,13 @@ private static readonly string[] Kaomoji =
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d55dc57a17c6"></a>
+<a id="symbol-54da85d99604"></a>
 
 ## `Insert(string) — void Insert(string value)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)
+**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)
 
 **调用：** `Godot.Control.GrabFocus()`；`Godot.TextEdit.InsertTextAtCaret(string, int)`
 
@@ -182,13 +183,13 @@ private static readonly string[] Kaomoji =
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-489af2991a0b"></a>
+<a id="symbol-b2ed3d974788"></a>
 
 ## `RevealAsync(Godot.Button, int) — async Task RevealAsync(Button first, int version)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)
+**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)
 
 **调用：** `Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GrabFocus()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.GetParent()`；`Godot.Node.GetTree()`；`Godot.ScrollContainer.EnsureControlVisible(Godot.Control)`
 
@@ -210,15 +211,15 @@ private static readonly string[] Kaomoji =
 
 - `ancestor` = `ancestor.GetParent()`
 
-<a id="symbol-5bada39e1ed4"></a>
+<a id="symbol-0508efa18e40"></a>
 
 ## `Show(bool) — void Show(bool showEmoji)`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)
 
-**调用：** [`Hide()`](CommunityReplyExpressions.cs.md#symbol-6f59269314da)；[`Insert(string)`](CommunityReplyExpressions.cs.md#symbol-d55dc57a17c6)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CommunityReplyExpressions.ExpressionButton(string, string, bool)`](CommunityReplyExpressions.cs.md#symbol-720c69a41581)；[`RevealAsync(Godot.Button, int)`](CommunityReplyExpressions.cs.md#symbol-489af2991a0b)；[`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-e1005af78c7c)；`Godot.CanvasItem.Show()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`Hide()`](CommunityReplyExpressions.cs.md#symbol-686f383501b8)；[`Insert(string)`](CommunityReplyExpressions.cs.md#symbol-54da85d99604)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CommunityReplyExpressions.ExpressionButton(string, string, bool)`](CommunityReplyExpressions.cs.md#symbol-720c69a41581)；[`RevealAsync(Godot.Button, int)`](CommunityReplyExpressions.cs.md#symbol-b2ed3d974788)；[`UpdateTabs()`](CommunityReplyExpressions.cs.md#symbol-175ce10c7dd3)；`Godot.CanvasItem.Show()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
 **字段、属性、事件及方法组引用：** `(string Text, string Label).Label`；`(string Text, string Label).Text`；`Hide()`；`Insert(string)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CommunityReplyExpressions.Emoji`；`NationalSpire.CommunityReplyExpressions.ExpressionButton(string, string, bool)`；`NationalSpire.CommunityReplyExpressions.Kaomoji`；`RevealAsync(Godot.Button, int)`；`UpdateTabs()`
 
@@ -246,7 +247,7 @@ private static readonly string[] Kaomoji =
 
 ## `NationalSpire.CommunityReplyExpressions.CategoryButton(string, string, int) — private static Button CategoryButton(string text, string name, int fontSize)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityReplyExpressions.Attach(Godot.TextEdit, Godot.VBoxContainer, Godot.HBoxContainer, Godot.Control?)`](CommunityReplyExpressions.cs.md#symbol-c53b052266e4)
 
@@ -280,13 +281,13 @@ private static readonly string[] Kaomoji =
 
 ## `NationalSpire.CommunityReplyExpressions.ExpressionButton(string, string, bool) — private static Button ExpressionButton(string text, string name, bool emoji)`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-5bada39e1ed4)
+**调用者：** [`Show(bool)`](CommunityReplyExpressions.cs.md#symbol-0508efa18e40)
 
-**调用：** `Godot.Button.Button()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Button.Button()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.Vector2.Vector2(float, float)`
 
-**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.EmojiFont`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -294,6 +295,7 @@ private static readonly string[] Kaomoji =
 - `Godot.Color.Color(string)`；输入表达式：`new Color("142332")`；返回值紧邻使用处：`ArgumentSyntax: new Color("142332")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color(emoji ? emojiFill : kaomojiFill)`；返回值紧邻使用处：`AssignmentExpressionSyntax: BgColor = new Color(emoji ? emojiFill : kaomojiFill)`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`button.AddThemeColorOverride(state, new Color("142332"))`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeColorOverride(state, new Color("142332"));`
+- `Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；输入表达式：`button.AddThemeFontOverride("font", CareerVisuals.EmojiFont)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeFontOverride("font", CareerVisuals.EmojiFont);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`button.AddThemeFontSizeOverride("font_size", emoji ? 24 : 17)`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeFontSizeOverride("font_size", emoji ? 24 : 17);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`button.AddThemeStyleboxOverride(state, new StyleBoxFlat              {                  BgColor = new Color(emoji ? emojiFill : kaomojiFill),                  CornerRadiusTopLeft = 6, CornerRadiusTopRight = 6, CornerRadiusBottomLeft = 6, CornerRadiusBottomRight = 6,                  ContentMarginLeft = 6, ContentMarginRight = 6, ContentMarginTop = 2, ContentMarginBottom = 2              })`；返回值紧邻使用处：`ExpressionStatementSyntax: button.AddThemeStyleboxOverride(state, new StyleBoxFlat              {                  BgColor = new Color(emoji ? emojiFill : kaomojiFill),                  CornerRadiusTopLeft = 6, CornerRadiusTopRight = 6, CornerRadiusBottomLeft = 6, CornerRadiusBottomRight = 6,                  ContentMarginLeft = 6, ContentMarginRight = 6, ContentMarginTop = 2, ContentMarginBottom = 2              });`
 - `Godot.StyleBoxFlat.StyleBoxFlat()`；输入表达式：`new StyleBoxFlat              {                  BgColor = new Color(emoji ? emojiFill : kaomojiFill),                  CornerRadiusTopLeft = 6, CornerRadiusTopRight = 6, CornerRadiusBottomLeft = 6, CornerRadiusBottomRight = 6,                  ContentMarginLeft = 6, ContentMarginRight = 6, ContentMarginTop = 2, ContentMarginBottom = 2              }`；返回值紧邻使用处：`ArgumentSyntax: new StyleBoxFlat              {                  BgColor = new Color(emoji ? emojiFill : kaomojiFill),                  CornerRadiusTopLeft = 6, CornerRadiusTopRight = 6, CornerRadiusBottomLeft = 6, CornerRadiusBottomRight = 6,                  ContentMarginLeft = 6, ContentMarginRight = 6, ContentMarginTop = 2, ContentMarginBottom = 2              }`

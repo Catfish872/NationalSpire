@@ -4,16 +4,18 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private sealed record ConsumerChoice(Good? Good, GoodVerb? Verb = null, string Service = "")
+    private sealed record ConsumerChoice(Good? Good, GoodVerb? Verb = null, string Service = "", string ServicePerson = "")
     {
         public string Caption => Verb?.Name ?? Good?.Name ?? "自行约定活动";
         public string Category => Good?.Category ?? "自行约定";
         public string Key => (Good?.Id ?? "custom") + "/" + Verb?.Id + "/" + Service;
+        public string ActivityDetail(CareerData data) => Good == null ? "" : "使用" + Good.Name + "开展" + Verb?.Name;
     }
     private sealed class ConsumerEdit
     {
         public ConsumerChoice? Choice;
         public HashSet<string> People = [];
+        public HashSet<string> WeddingServices = [];
         public string Group = "", Title = "", Detail = "";
         public int Quantity = 1, Season, Day, Relationship;
     }
@@ -48,7 +50,7 @@ public partial class CareerScreen
                 if (choice.Good is { } good) content.AddChild(new LifestyleArt { ProductId = good.Id, Category = good.Category + " " + good.Name, CustomMinimumSize = new(0, 61), MouseFilter = MouseFilterEnum.Ignore });
                 else content.AddChild(new TextureRect { Texture = LifestyleArt.Icon("活动与计划"), CustomMinimumSize = new(0, 61), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore });
                 var name = Text(choice.Caption, 16, _ink); name.MouseFilter = MouseFilterEnum.Ignore; name.MaxLinesVisible = 2; content.AddChild(name);
-                var detail = Text(choice.Good == null ? "填写自己的安排" : choice.Verb != null ? choice.Good.Name : "持有 " + ConsumerAttachments.Available(ViewData, choice.Good), 13, CareerVisuals.Teal); detail.MouseFilter = MouseFilterEnum.Ignore; content.AddChild(detail);
+                var detail = Text(choice.Good == null ? "填写自己的安排" : choice.ServicePerson.Length > 0 ? GroupChats.Name(ViewData, choice.ServicePerson) + " · " + choice.Good.Name : choice.Verb != null ? choice.Good.Name : "持有 " + ConsumerAttachments.Available(ViewData, choice.Good), 13, CareerVisuals.Teal); detail.MouseFilter = MouseFilterEnum.Ignore; detail.MaxLinesVisible = 2; content.AddChild(detail);
                 card.Pressed += () => { edit.Choice = choice; changed(); Refresh(); };
             }
         }
@@ -72,17 +74,68 @@ public partial class CareerScreen
         var initialPeople = shop?.People ?? (group.Length > 0 ? _groupSelection : new List<string> { person });
         var choices = activity
             ? ConsumerCatalog.All.Where(g => shopping ? g.Id == shop!.Good : ConsumerAttachments.Available(d, g) > 0).SelectMany(g => g.Activities.Select(v => new ConsumerChoice(g, v)))
-                .Concat(WeddingAppointments.Services(d).Where(s => !shopping && initialPeople.Count == 1 && initialPeople[0] == s.Person).Select(s => new ConsumerChoice(ConsumerCatalog.Get(s.GoodId), WeddingAppointments.Verb, s.Id))).ToArray()
+                .Concat(shopping ? [] : WeddingAppointments.ForParticipants(d, initialPeople).Select(s => new ConsumerChoice(ConsumerCatalog.Get(s.GoodId), WeddingAppointments.Verb, s.Id, s.Person))).ToArray()
             : ConsumerCatalog.All.Where(g => g.Giftable && (shopping ? g.Id == shop!.Good : ConsumerAttachments.Available(d, g) > 0)).Select(g => new ConsumerChoice(g)).ToArray();
         if (activity && !shopping) choices = new[] { new ConsumerChoice(null) }.Concat(choices).ToArray();
         var edit = retained ?? new ConsumerEdit { People = initialPeople.Where(id => id.Length > 0 && !GroupChats.IsHuman(d, id)).ToHashSet(), Group = group, Season = previous?.Season ?? d.Season, Day = previous?.Day ?? SeasonCalendar.Day(d, d.Day), Quantity = previous?.Quantity ?? 1, Relationship = previous?.RelationshipIntent ?? 0 };
         if (retained == null)
         {
-            edit.Choice = choices.FirstOrDefault(c => c.Good?.Id == (previous?.GoodId ?? (shopping ? shop!.Good : goodId)) && (!activity || c.Verb?.Id == (previous?.GoodVerb ?? (shopping ? choices.FirstOrDefault()?.Verb?.Id : verbId)))) ?? choices.FirstOrDefault();
-            edit.Title = previous?.Title ?? edit.Choice?.Verb?.Name ?? ""; edit.Detail = previous?.Detail ?? (edit.Choice?.Good is { } g && activity ? "使用" + g.Name + "开展" + edit.Title : "");
+            edit.Choice = choices.FirstOrDefault(c => c.Good?.Id == (previous?.GoodId ?? (shopping ? shop!.Good : goodId)) && (!activity || c.Verb?.Id == (previous?.GoodVerb ?? (shopping ? choices.FirstOrDefault()?.Verb?.Id : verbId)))
+                && (previous?.ServiceId is not { Length: > 0 } || c.Service == previous.ServiceId)) ?? choices.FirstOrDefault();
+            edit.Title = previous?.Title ?? edit.Choice?.Verb?.Name ?? ""; edit.Detail = previous?.Detail ?? (activity ? edit.Choice?.ActivityDetail(d) ?? "" : "");
+            edit.WeddingServices = previous != null ? WeddingAppointments.ServiceIds(previous).ToHashSet()
+                : edit.Choice?.Service is { Length: > 0 } service ? [service] : [];
         }
-        Label? error = null, selection = null, hint = null; ConsumerQuantity? quantity = null; CheckButton? relationship = null; LineEdit? title = null; TextEdit? detail = null; VBoxContainer? calendar = null; SpinBox? season = null; Label? date = null;
+        Label? error = null, selection = null, hint = null, weddingCost = null; ConsumerQuantity? quantity = null; CheckButton? relationship = null; LineEdit? title = null; TextEdit? detail = null; VBoxContainer? calendar = null, wedding = null; SpinBox? season = null; Label? date = null;
         void Error(string text) { error!.Text = text; error.Visible = text.Length > 0; }
+        void WeddingCost()
+        {
+            if (weddingCost == null) return;
+            var selected = WeddingAppointments.ForParticipants(d, edit.People).Where(s => edit.WeddingServices.Contains(s.Id)).ToArray();
+            weddingCost.Text = $"结婚对象 {selected.Length} 人 · 本场使用 " + (selected.Length == 0 ? "请选择结婚对象"
+                : string.Join("、", selected.GroupBy(s => s.GoodId).Select(g => $"{ConsumerCatalog.Get(g.Key)?.Name} ×{g.Count()}")));
+        }
+        void WeddingChoices()
+        {
+            if (wedding == null) return;
+            CareerVisuals.ClearContent(wedding); weddingCost = null; wedding.Visible = edit.Choice?.Service.Length > 0;
+            if (!wedding.Visible) return;
+            wedding.AddChild(Text("结婚对象 · 可同时选择多位，其余同行者作为宾客", 15, CareerVisuals.Teal));
+            foreach (var personServices in WeddingAppointments.ForParticipants(d, edit.People).GroupBy(s => s.Person))
+            {
+                var service = personServices.FirstOrDefault(s => edit.WeddingServices.Contains(s.Id));
+                if (service.Id == null) service = personServices.First();
+                var available = personServices.ToArray(); string selectedId = service.Id;
+                var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); wedding.AddChild(row);
+                var toggle = new CheckButton { Name = "WeddingPartner_" + service.Person,
+                    Text = GroupChats.Name(d, service.Person) + " · " + ConsumerCatalog.Get(service.GoodId)?.Name,
+                    ButtonPressed = edit.WeddingServices.Contains(service.Id), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+                row.AddChild(toggle);
+                toggle.Toggled += value =>
+                {
+                    foreach (var other in available) edit.WeddingServices.Remove(other.Id);
+                    if (value) edit.WeddingServices.Add(selectedId);
+                    if (error != null) Error("");
+                    WeddingCost();
+                };
+                if (available.Length > 1)
+                {
+                    var use = new OptionButton { Name = "WeddingService_" + service.Person, CustomMinimumSize = new(210, 40) };
+                    foreach (var item in available) use.AddItem($"{ConsumerCatalog.Get(item.GoodId)?.Name} · 可用 {item.Remaining} 份");
+                    use.Select(Array.FindIndex(available, item => item.Id == selectedId)); row.AddChild(use);
+                    use.ItemSelected += index =>
+                    {
+                        foreach (var other in available) edit.WeddingServices.Remove(other.Id);
+                        var chosen = available[(int)index]; selectedId = chosen.Id;
+                        toggle.Text = GroupChats.Name(d, chosen.Person) + " · " + ConsumerCatalog.Get(chosen.GoodId)?.Name;
+                        if (toggle.ButtonPressed) edit.WeddingServices.Add(selectedId);
+                        if (error != null) Error("");
+                        WeddingCost();
+                    };
+                }
+            }
+            weddingCost = Text("", 15, _muted); weddingCost.Name = "WeddingConsumption"; wedding.AddChild(weddingCost); WeddingCost();
+        }
         void Calendar()
         {
             if (!activity || calendar == null) return;
@@ -101,9 +154,17 @@ public partial class CareerScreen
             }
             if (activity && product)
             {
-                edit.Title = edit.Choice?.Verb?.Name ?? ""; edit.Detail = edit.Choice?.Good is { } g ? "使用" + g.Name + "开展" + edit.Title : "";
+                if (edit.Choice?.Service is { Length: > 0 } service)
+                {
+                    // 切换婚礼卡片只替换该对象的道具，保留其他结婚对象的选择。
+                    foreach (var other in WeddingAppointments.ForParticipants(d, [edit.Choice.ServicePerson])) edit.WeddingServices.Remove(other.Id);
+                    edit.WeddingServices.Add(service);
+                }
+                else edit.WeddingServices.Clear();
+                edit.Title = edit.Choice?.Verb?.Name ?? ""; edit.Detail = edit.Choice?.ActivityDetail(d) ?? "";
                 title!.Text = edit.Title; detail!.Text = edit.Detail;
             }
+            WeddingChoices();
             if (relationship != null)
             {
                 string id = edit.People.FirstOrDefault() ?? ""; var relation = id.Length > 0 ? PrivateMessages.Relation(d, id) : null; bool special = RelationshipGifts.Special(edit.Choice?.Good?.Id ?? "");
@@ -118,9 +179,15 @@ public partial class CareerScreen
             if (edit.People.Count == 0) { Error(activity ? "请选择同行者。" : "请选择接收礼物的人。"); return false; }
             if (!activity && quantity?.Valid != true) { Error("请输入有效的赠礼数量。"); return false; }
             string target = edit.People.First();
+            string[] weddingIds = activity && edit.Choice.Service.Length > 0
+                ? new[] { edit.Choice.Service }.Concat(edit.WeddingServices).Where(edit.WeddingServices.Contains).Distinct().ToArray() : [];
+            if (activity && edit.Choice.Service.Length > 0 && weddingIds.Length == 0) { Error("请选择至少一位结婚对象。"); return false; }
+            string weddingGood = weddingIds.Length > 0 ? WeddingAppointments.Services(d).FirstOrDefault(s => s.Id == weddingIds[0]).GoodId : "";
             var attachment = new PrivateOffer { Kind = activity ? "activity" : "gift", Quantity = activity ? 1 : edit.Quantity, GoodId = edit.Choice.Good?.Id ?? "", GoodVerb = edit.Choice.Verb?.Id ?? "", ServiceId = edit.Choice.Service,
+                WeddingServiceIds = weddingIds.ToList(),
                 Title = edit.Title.Trim(), Detail = edit.Detail.Trim(), Season = edit.Season, Day = edit.Day, RelationshipIntent = relationship?.Visible == true && relationship.ButtonPressed ? 1 : 0,
                 ActorId = target, Participants = activity ? new[] { GroupChats.Human(d) }.Concat(edit.People).ToList() : [target] };
+            if (weddingIds.Length > 0) { attachment.ServiceId = weddingIds[0]; attachment.GoodId = weddingGood ?? ""; }
             if (ChatAttachments.Prepare(d, target, attachment, shopping: shopping) is { } message) { Error(message); return false; }
             var composer = new ConsumerComposer(attachment.GoodId, target, edit.Group, edit.People.ToList());
             if (shopping || edit.Choice.Good?.Instant == true)
@@ -162,6 +229,7 @@ public partial class CareerScreen
             {
                 title = new LineEdit { Name = "ActivityTitle", Text = edit.Title, PlaceholderText = "活动名称", CustomMinimumSize = new(0, 42) }; title.TextChanged += value => edit.Title = value; settings.AddChild(title);
                 detail = new TextEdit { Name = "ActivityDetail", Text = edit.Detail, PlaceholderText = "补充活动内容", CustomMinimumSize = new(0, 72), WrapMode = TextEdit.LineWrappingMode.Boundary }; detail.TextChanged += () => edit.Detail = detail.Text; settings.AddChild(detail);
+                wedding = new VBoxContainer { Name = "WeddingPartners" }; settings.AddChild(wedding);
                 var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 12); settings.AddChild(row);
                 season = new SpinBox { MinValue = d.Season, MaxValue = int.MaxValue, Value = edit.Season, Prefix = "赛季 ", CustomMinimumSize = new(150, 40), UpdateOnTextChanged = true }; row.AddChild(season);
                 date = Text(GameCalendar.Text(d, SeasonCalendar.Start(d, edit.Season) + edit.Day), 16, CareerVisuals.Teal); row.AddChild(date);
@@ -197,7 +265,7 @@ public partial class CareerScreen
                     CareerVisuals.ClearContent(members);
                     if (GroupChats.Visible(d).FirstOrDefault(g => g.Id == edit.Group) is not { } group) return;
                     members.AddChild(Text(group.Name + (activity ? " · 选择同行成员" : " · 选择一位接收者"), 16, _gold));
-                    PeoplePicker(members, d.People.Where(p => group.Members.Contains(p.Id) && PrivateMessages.CanChat(d, p.Id)).ToArray(), edit.People, !activity, changed, 164);
+                    PeoplePicker(members, d.People.Where(p => group.Members.Contains(p.Id) && PrivateMessages.CanChat(d, p.Id)).ToArray(), edit.People, !activity, changed, 164, showPortraits: activity);
                 }
                 void Groups()
                 {

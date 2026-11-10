@@ -21,6 +21,20 @@ public partial class CareerScreen
             }
         }
     }
+    private void CalendarEncounters(CareerData data,VBoxContainer box,int day,IEnumerable<RandomEventRecord> events)
+    {
+        foreach (var e in events)
+        {
+            bool complete=e.State=="complete";
+            var entry=DayEntry(box,"calendar-days",e.Title,complete ? "随机事件 · 已完成" : "随机事件");
+            var actions=new HBoxContainer(); actions.AddThemeConstantOverride("separation",14); entry.AddChild(actions);
+            if(day==data.Day || complete)
+                actions.AddChild(TextLink(complete?"查看经历":"查看际遇",()=>OpenRandomEvent(e.Id)));
+            if(!complete)
+                actions.AddChild(TextLink("跳过事件",()=>EventCommand("event-skip",id:e.Id)));
+        }
+    }
+
     private void OpenRandomEvent(string id)
     {
         if (_eventView != null)
@@ -118,17 +132,16 @@ public partial class EventStoryView : Control
     private Label _title = null!, _date = null!, _chapter = null!, _artTitle = null!, _phase = null!;
     private RichTextLabel _story = null!, _result = null!, _people = null!, _thought = null!, _decision = null!;
     private VBoxContainer _effects = null!;
-    private Button _continue = null!, _stay = null!;
+    protected Button _continue = null!, _stay = null!;
     private VBoxContainer _options = null!, _resultBox = null!, _reading = null!;
     private HBoxContainer _columns = null!;
     private Control _artSpace = null!;
     private PanelContainer _paper = null!;
     private ScrollContainer _scroll = null!, _thinkingScroll = null!;
     private EventStoryButton _start = null!;
-    private Button _skip = null!, _retry = null!, _stop = null!, _history = null!, _thinking = null!;
-    private TextureRect _image = null!;
+    protected Button _skip = null!, _retry = null!, _stop = null!, _history = null!, _thinking = null!;
+    private EventArtPicture _image = null!;
     private ShaderMaterial _imageMaterial = null!;
-    private Texture2D? _ownedImage;
     private string _artId = "\0", _storyText = "", _resultText = "", _choiceSignature = "", _lastState = "";
     private double _poll;
     private bool _showHistory;
@@ -137,7 +150,7 @@ public partial class EventStoryView : Control
     {
         Name = "RandomEventView"; ZIndex = 35; MouseFilter = MouseFilterEnum.Stop;
         var shade = new ColorRect { Color = new("0c1722"), MouseFilter = MouseFilterEnum.Ignore }; AddChild(shade); shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        _image = new TextureRect { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore };
+        _image = new EventArtPicture { ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = MouseFilterEnum.Ignore };
         AddChild(_image); _image.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         _imageMaterial = new ShaderMaterial { Shader = new Shader { Code = "shader_type canvas_item; uniform float original = 0.0; void fragment(){ vec4 t=texture(TEXTURE, UV); float cover=mix(smoothstep(0.12,0.72,UV.x)*0.82+0.12,smoothstep(0.35,0.74,UV.x)*0.35,original); cover=max(cover,smoothstep(0.55,0.92,UV.y)*0.88); cover=max(cover,(1.0-smoothstep(0.0,0.17,UV.y))*0.8); COLOR=vec4(mix(t.rgb,vec3(0.047,0.09,0.13),cover),t.a); }" } };
         _image.Material = _imageMaterial;
@@ -208,7 +221,7 @@ public partial class EventStoryView : Control
         text.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
         text.MetaClicked += meta => OpenPerson?.Invoke(meta); return text;
     }
-    private static Button ActionButton(string text, Action action)
+    protected static Button ActionButton(string text, Action action)
     {
         var button = new Button { Text = text, CustomMinimumSize = new(112, 42), MouseDefaultCursorShape = CursorShape.PointingHand };
         foreach (string state in new[] { "normal", "hover", "pressed" }) button.AddThemeStyleboxOverride(state, CareerVisuals.Box(state == "normal" ? "172c3c" : "2c4c5b", state == "normal" ? "476373" : "8abfb8", 7, 12));
@@ -222,9 +235,8 @@ public partial class EventStoryView : Control
         string art = RandomEventArt.Select(e);
         if (_artId != art)
         {
-            _image.Texture = null; _ownedImage?.Dispose(); _ownedImage = null;
-            var texture = RandomEventArt.Load(art); _image.Texture = texture; if (!art.StartsWith("game:")) _ownedImage = texture;
-            _imageMaterial.SetShaderParameter("original", art.StartsWith("game:") ? 1f : 0f); _artId = art;
+            _artId = art;
+            _image.ShowArt(art);
         }
         _chapter.Text = e.Seed.Length == 0 ? "一段尚未展开的故事" : RandomEventArt.Category(e) + " · " + (complete ? "已经留下的回忆" : "此刻的生活");
         _artTitle.Text = complete ? "故事告一段落" : generating ? "故事正在发生" : "生活的另一面";
@@ -296,7 +308,7 @@ public partial class EventStoryView : Control
         }
     }
     public override void _Process(double delta) { _poll += delta; if (_poll >= .12) { _poll = 0; Tick?.Invoke(); } }
-    public override void _ExitTree() { _image.Texture = null; _ownedImage?.Dispose(); _imageMaterial.Shader.Dispose(); _imageMaterial.Dispose(); }
+    public override void _ExitTree() { _imageMaterial.Shader.Dispose(); _imageMaterial.Dispose(); }
 }
 
 public partial class EventStoryButton : Button

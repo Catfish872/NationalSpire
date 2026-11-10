@@ -3,25 +3,39 @@ namespace NationalSpire.Coop;
 /// <summary>所有玩家命令在主机串行执行；在副本上计算成功后整体提交，不切换单人全局存档。</summary>
 public static partial class CoopRules
 {
-    public static CoopWorld Create(ulong owner, string name, string playerName, int capacity, string country)
+    public static CoopWorld Create(ulong owner, string name, string playerName, int capacity, string country, PersonalityPool? personalityPool = null)
+    {
+        var w = CreateWorld(owner, name, capacity, country, personalityPool);
+        AddMember(w, owner, playerName);
+        return w;
+    }
+    internal static CoopWorld CreateWorld(ulong owner, string name, int capacity, string country, PersonalityPool? personalityPool)
     {
         if (capacity is < 2 or > 4 || !EsportsWorld.Countries.Contains(country)) throw new InvalidDataException("队伍设置无效。");
         var w = new CoopWorld { Owner = owner, Capacity = capacity, Name = string.IsNullOrWhiteSpace(name) ? "共同生涯" : name.Trim() };
-        w.World = CareerEngine.CreateNew(cooperativeMembers: capacity);
+        w.World = CareerEngine.CreateNew(cooperativeMembers: capacity, personalityPool: personalityPool, worldId: w.Id, country: country);
         CoopJson.Detached(w.World); w.World.WorldId = w.Id; w.World.PlayerAlias = w.Name;
-        w.World.Esports.Country = country; OwnedClubs.EnsureMarket(w.World); w.World.Ai.Enabled = false;
+        w.World.Esports.Country = country; w.World.Market.QuoteCountry = country; OwnedClubs.EnsureMarket(w.World); w.World.Ai.Enabled = false;
         w.World.Esports.Competitions.Clear(); w.World.Matches.Clear(); CircuitWorld.StartSeason(w.World);
         w.World.Life.Activities.Clear(); w.World.Life.Figurines.Clear();
-        AddMember(w, owner, playerName); return w;
+        return w;
     }
-    public static void AddMember(CoopWorld w, ulong id, string name)
+    public static void AddMember(CoopWorld w, ulong id, string name, CareerOpeningPlayer? opening = null)
     {
         if (w.Members.Any(m => m.SteamId == id)) return;
+        if (opening?.Name.Trim() is { Length: > 0 } chosen) name = chosen;
         if (id == 0) throw new InvalidOperationException("玩家身份无效。");
         if (CareerNames.Validate(w.World, name) is { } error) throw new InvalidOperationException(error);
         var member = new CoopMember { SteamId = id, Name = name.Trim(), Life = new() { Version = CareerLife.Version, NextOfferDay = w.World.Day + 2, NextProjectDay = w.World.Day + 21 } };
         w.Members.Add(member); SynchronizeEventSchedule(w);
-        var view = View(w, member); CareerRelics.Shop(view); member.Life = view.Life; RefreshPeople(w); w.Revision++;
+        var view = View(w, member); CareerRelics.Shop(view); member.Life = view.Life;
+        if (opening != null) ApplyOpening(member, view, opening); RefreshPeople(w); w.Revision++;
+    }
+    internal static void ApplyOpening(CoopMember member, CareerData view, CareerOpeningPlayer opening)
+    {
+        opening.Apply(view);
+        member.Name = view.PlayerAlias; member.Gender = view.PlayerGender; member.Card = view.PlayerCard; member.Avatar = view.SelectedAvatar;
+        member.Life = view.Life; member.Credits = view.Credits; member.Wins = view.Wins; member.Losses = view.Losses; member.Draws = view.Draws; member.Sponsors = view.Esports.Sponsors;
     }
     public static CareerData View(CoopWorld w, CoopMember m)
     {
@@ -51,7 +65,7 @@ public static partial class CoopRules
         var data = View(w, member);
         data.Esports.PlayerContract = w.World.Esports.PlayerContract == null ? null : CoopJson.Copy(w.World.Esports.PlayerContract);
         data.PendingMatchId = w.World.Failure == null ? w.Run?.MatchId : null;
-        foreach (var thread in CommunityThreads.All(data))
+        foreach (var thread in data.Posts.Concat(data.SavedThreads))
         {
             if (thread.AuthorId == member.PersonId) thread.AuthorId = "player";
             foreach (var reply in thread.Replies) if (reply.AuthorId == member.PersonId) reply.AuthorId = "player";
@@ -118,6 +132,7 @@ public static partial class CoopRules
         foreach (var post in CommunityThreads.All(d).Where(p => !oldPosts.Contains(p.Id)))
         { post.RelatedPeople = post.RelatedPeople.Select(id => id == "player" ? m.PersonId : id).ToList(); }
         w.World.Chats.Order = Math.Max(w.World.Chats.Order, d.Chats.Order);
+        DateGroupBridge.Merge(w.World, d);
         m.Name = d.PlayerAlias; m.Aliases = d.PlayerNameAliases; m.Credits = d.Credits; m.Fans = d.Fans; m.Rating = d.Rating;
         m.Wins = d.Wins; m.Losses = d.Losses; m.Draws = d.Draws; m.HighestClear = d.AvatarHighestClear;
         m.Life = d.Life; m.Sponsors = d.Esports.Sponsors; m.SponsorOffers = d.Esports.SponsorOffers; m.Results = d.Results;
@@ -151,7 +166,7 @@ public static partial class CoopRules
                 p = CoopJson.Copy(m.Card); p.Id = m.PersonId;
                 w.World.People.RemoveAll(x => x.Id == m.PersonId); w.World.People.Add(p);
             }
-            p.Name = m.Card?.Name ?? m.Name; p.Handle = m.Name; p.Gender = m.Gender; p.HandleAliases = m.Aliases.ToList(); p.Country = w.World.Esports.Country;
+            p.Name = string.IsNullOrWhiteSpace(m.Card?.Name) ? m.Name : m.Card.Name; p.Handle = m.Name; p.Gender = m.Gender; p.HandleAliases = m.Aliases.ToList(); p.Country = m.Card?.Country ?? w.World.Esports.Country;
             p.ClubId = w.World.Esports.ClubId; p.Rating = m.Rating; p.Wins = m.Wins; p.Losses = m.Losses;
             p.Fans = m.Fans;
             if (w.World.Esports.OwnedClub is { } owned) p.ClubPosition = owned.Starters.Contains(m.PersonId) ? "首发" : "轮换";
@@ -181,8 +196,8 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "propose-enter" or "ceremony-read" or "read" or "read-all" or "rename-save" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "ceremony-read" or "read" or "read-all" or "rename-save" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("event-", StringComparison.Ordinal)) error = EventCommand(w, member, command);
@@ -205,6 +220,7 @@ public static partial class CoopRules
                     error = Trade(w, member, System.Text.Json.JsonSerializer.Deserialize<MarketOrder>(command.Text)!);
                     break;
                 case "consumer-attach":
+                case "consumer-reserve":
                 case "consumer-remove":
                     var attachmentView = View(w, member);
                     error = PrivateMessageCommands.Apply(attachmentView, command.Kind, command.Target, System.Text.Json.JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text)!);
@@ -324,7 +340,7 @@ public static partial class CoopRules
                 case "relic": case "activity": case "skip": case "sponsor":
                     var view = View(w, member);
                     if (command.Kind == "relic") error = CareerRelics.Buy(view, command.Target);
-                    if (command.Kind == "activity") error = CareerLife.Accept(view, command.Target);
+                    if (command.Kind == "activity") error = CareerLife.Accept(view, command.Target, command.Text);
                     if (command.Kind == "skip") CareerLife.SkipRound(view);
                     if (command.Kind == "sponsor")
                     {
@@ -353,6 +369,15 @@ public static partial class CoopRules
                 case "reading":
                     var reading = CoopJson.Read<CoopReading>(System.Text.Encoding.UTF8.GetBytes(command.Text));
                     ApplyReading(w, sender, reading);
+                    break;
+                case "read-all":
+                    foreach (var thread in w.World.Posts.Concat(w.World.SavedThreads))
+                        member.ReadPosts[thread.Id] = Math.Max(thread.Revision, member.ReadPosts.GetValueOrDefault(thread.Id));
+                    foreach (var week in w.World.WeeklyEditions) member.ReadWeeks[week.Week] = week.Revision;
+                    break;
+                case "rename-save":
+                    if (sender != w.Owner) { error = "生涯名称由房主管理。"; break; }
+                    w.World.SaveName = CareerLibrary.CheckedName(command.Text);
                     break;
                 case "read":
                     if (CommunityThreads.All(w.World).FirstOrDefault(p => p.Id == command.Target) is { } read) member.ReadPosts[read.Id] = read.Revision;

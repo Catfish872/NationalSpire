@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F98C486E15DE346CA6AF17FFE349797B5F6572CB57BDA9B574C305C5A04A3699`。来源：[源码](../../WeeklyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D1675ED28CE2439CFDEA5AA73BD60D762901F8644EED46585708C7CA90F2C83F`。来源：[源码](../../WeeklyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -46,6 +46,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text($"第 {edition.Week} 周 · 周刊精选", 14, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text($"第 {edition.Week} 周 · 周刊精选", 14, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text(latest.NewsWork.State == "disabled" ? "开启 AI 后，这里会刊登双周精选。" : "本期精选正在整理，稍后就能阅读。", 17, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text(latest.NewsWork.State == "disabled" ? "开启 AI 后，这里会刊登双周精选。" : "本期精选正在整理，稍后就能阅读。", 17, _muted));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(viewport)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(viewport);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(empty)`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(empty);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(headingText)`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(headingText);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`heading.AddChild(select)`；返回值紧邻使用处：`ExpressionStatementSyntax: heading.AddChild(select);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`viewport.AddChild(_weeklyContent)`；返回值紧邻使用处：`ExpressionStatementSyntax: viewport.AddChild(_weeklyContent);`
@@ -69,6 +70,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 - `NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string)`；输入表达式：`RenderWorkStatus(box, edition.NewsWork, () => GenerateContent(() => { _ = AiService.RetryWeeklyAsync(edition.Week, false); }, true), "WeeklyNews_" + edition.Week)`；返回值紧邻使用处：`ExpressionStatementSyntax: RenderWorkStatus(box, edition.NewsWork, () => GenerateContent(() => { _ = AiService.RetryWeeklyAsync(edition.Week, false); }, true), "WeeklyNews_" + edition.Week);`
 - `NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string)`；输入表达式：`RenderWorkStatus(box, edition.ProfilesWork, () => GenerateContent(() => { _ = AiService.RetryWeeklyAsync(edition.Week, true); }, true), "WeeklyProfiles_" + edition.Week)`；返回值紧邻使用处：`ExpressionStatementSyntax: RenderWorkStatus(box, edition.ProfilesWork, () => GenerateContent(() => { _ = AiService.RetryWeeklyAsync(edition.Week, true); }, true), "WeeklyProfiles_" + edition.Week);`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("尖塔双周刊", 25, _gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("尖塔双周刊", 25, _gold)`
+- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("尚无已发行期刊",16,_muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text("尚无已发行期刊",16,_muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第 {edition.Week} 周 · 选手介绍", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第 {edition.Week} 周 · 选手介绍", 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"第 {edition.Week} 周 · 周刊精选", 14, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"第 {edition.Week} 周 · 周刊精选", 14, _muted)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(latest.NewsWork.State == "disabled" ? "开启 AI 后，这里会刊登双周精选。" : "本期精选正在整理，稍后就能阅读。", 17, _muted)`；返回值紧邻使用处：`ArgumentSyntax: Text(latest.NewsWork.State == "disabled" ? "开启 AI 后，这里会刊登双周精选。" : "本期精选正在整理，稍后就能阅读。", 17, _muted)`
@@ -96,6 +98,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 - `_weeklyWeek` = `select.GetItemId((int)index)`
 - `ClipContents` = `true`
 - `CustomMinimumSize` = `new Vector2(210, 44)`
+- `empty.HorizontalAlignment` = `HorizontalAlignment.Right`
 - `headingText.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Name` = `"WeeklyCarousel"`
 - `Name` = `"WeeklyEditionSelector"`
@@ -107,11 +110,11 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 
 ## `NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool) — private void RenderWeeklySlide(CareerData data, bool animate)`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Change(int)`](WeeklyScreen.cs.md#symbol-d2fcc3517615)；[`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)；[`NationalSpire.CareerScreen.TickWeekly(double)`](WeeklyScreen.cs.md#symbol-90f7d7772fea)；[`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)
+**调用者：** [`Change(int)`](WeeklyScreen.cs.md#symbol-59ef23cc0073)；[`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)；[`NationalSpire.CareerScreen.TickWeekly(double)`](WeeklyScreen.cs.md#symbol-90f7d7772fea)；[`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)
 
-**调用：** [`Change(int)`](WeeklyScreen.cs.md#symbol-d2fcc3517615)；[`NationalSpire.CameoContent.VisibleSlides(NationalSpire.WeeklyEdition)`](CameoContent.cs.md#symbol-29d9526009c4)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.OpenWeekly(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide)`](WeeklyScreen.cs.md#symbol-d2f4067bf23e)；[`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.WeeklyArt(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide, bool)`](WeeklyScreen.cs.md#symbol-d6f13958bba4)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`](CareerVisuals.cs.md#symbol-347d38705528)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.GetViewport()`；`Godot.Node.IsAncestorOf(Godot.Node)`；`Godot.Node.IsInsideTree()`；`Godot.ProgressBar.ProgressBar()`；`Godot.PropertyTweener.From(Godot.Variant)`；`Godot.StringName.ToString()`；`Godot.Tween.Kill()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Change(int)`](WeeklyScreen.cs.md#symbol-59ef23cc0073)；[`NationalSpire.CameoContent.VisibleSlides(NationalSpire.WeeklyEdition)`](CameoContent.cs.md#symbol-29d9526009c4)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.OpenWeekly(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide)`](WeeklyScreen.cs.md#symbol-d2f4067bf23e)；[`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.WeeklyArt(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide, bool)`](WeeklyScreen.cs.md#symbol-d6f13958bba4)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`](CareerVisuals.cs.md#symbol-347d38705528)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.GetViewport()`；`Godot.Node.IsAncestorOf(Godot.Node)`；`Godot.Node.IsInsideTree()`；`Godot.ProgressBar.ProgressBar()`；`Godot.PropertyTweener.From(Godot.Variant)`；`Godot.StringName.ToString()`；`Godot.Tween.Kill()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Change(int)`；`NationalSpire.CameoContent.VisibleSlides(NationalSpire.WeeklyEdition)`；`NationalSpire.CareerData.WeeklyEditions`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._weeklyAuto`；`NationalSpire.CareerScreen._weeklyClock`；`NationalSpire.CareerScreen._weeklyContent`；`NationalSpire.CareerScreen._weeklyIndex`；`NationalSpire.CareerScreen._weeklyProgress`；`NationalSpire.CareerScreen._weeklyTween`；`NationalSpire.CareerScreen._weeklyWeek`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.OpenWeekly(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide)`；`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.WeeklyArt(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide, bool)`；`NationalSpire.CareerScreen.WeeklyInterval`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CareerVisuals.FindContent(Godot.Node, string)`；`NationalSpire.WeeklyEdition.Revision`；`NationalSpire.WeeklyEdition.SeenRevision`；`NationalSpire.WeeklyEdition.Week`；`NationalSpire.WeeklySlide.Advertisement`；`NationalSpire.WeeklySlide.CeremonySeason`；`NationalSpire.WeeklySlide.Importance`；`NationalSpire.WeeklySlide.Title`；`NationalSpire.WeeklySlide.Topic`
 
@@ -221,11 +224,11 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 - `title.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Value` = `_weeklyClock`
 
-<a id="symbol-d2fcc3517615"></a>
+<a id="symbol-59ef23cc0073"></a>
 
 ## `Change(int) — void Change(int index)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)
 
@@ -246,7 +249,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 
 ## `NationalSpire.CareerScreen.WeeklyArt(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide, bool) — private Control WeeklyArt(WeeklyEdition issue, WeeklySlide slide, bool large)`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)；[`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)
 
@@ -284,7 +287,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 
 ## `NationalSpire.CareerScreen.TickWeekly(double) — private void TickWeekly(double delta)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)
 
@@ -316,7 +319,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 
 ## `NationalSpire.CareerScreen.OpenWeekly(NationalSpire.WeeklyEdition, NationalSpire.WeeklySlide) — private void OpenWeekly(WeeklyEdition issue, WeeklySlide slide)`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderWeeklySlide(NationalSpire.CareerData, bool)`](WeeklyScreen.cs.md#symbol-184e7ff58940)
 
@@ -337,7 +340,7 @@ private readonly HashSet<int> _weeklyCeremonyShown = [];
 
 ## `NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData) — private bool RenderWeeklyDetail(CareerData data)`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 

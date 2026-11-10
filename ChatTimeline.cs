@@ -32,8 +32,9 @@ public static class ChatTimeline
                         }
                         continue;
                     }
-                    if (!t.UserDeleted && t.ProactiveReason.Length == 0) yield return new(t.UserOrder, t.Day, "user", GroupChats.Name(d, human) + "：" + PrivateMessagePrompts.UserText(d, t, c), source);
-                    if (!t.ReplyDeleted) yield return new(t.ReplyOrder, t.Day, "user", GroupChats.Name(d, c.PersonId) + "：" + t.Reply, source);
+                    string historySource = source + (DateGames.HistorySource(t) is { Length: > 0 } gameSource ? "；" + gameSource : "");
+                    if (!t.UserDeleted && t.ProactiveReason.Length == 0 && string.IsNullOrEmpty(t.Scene?.GameEvent)) yield return new(t.UserOrder, t.Day, "user", GroupChats.Name(d, human) + "：" + PrivateMessagePrompts.UserText(d, t, c), historySource);
+                    if (!t.ReplyDeleted) yield return new(t.ReplyOrder, t.Day, "user", GroupChats.Name(d, c.PersonId) + "：" + t.Reply, historySource);
                 }
             }
         }
@@ -52,18 +53,19 @@ public static class ChatTimeline
     public static string Summaries(CareerData d, IEnumerable<string> people, string excludeGroup = "", string excludePrivate = "")
     {
         var members = people.ToHashSet(); var b = new StringBuilder();
-        void Add(string source, IEnumerable<PrivateSummary> big, IEnumerable<PrivateSummary> small)
+        void Add(string source, IEnumerable<PrivateSummary> big, IEnumerable<PrivateSummary> small, IReadOnlyCollection<ManualChatMemory> manual)
         {
             var large = big.LastOrDefault(); var recent = small.LastOrDefault(s => s.Through > (large?.Through ?? 0));
-            if (large == null && recent == null) return;
+            if (large == null && recent == null && manual.Count == 0) return;
             b.AppendLine("<private_memory>").AppendLine(source);
             if (large != null) b.AppendLine($"长期总结（第{large.From + 1}至{large.Through}轮）：" + large.Text);
             if (recent != null) b.AppendLine($"近期总结（第{recent.From + 1}至{recent.Through}轮）：" + recent.Text);
+            foreach (var memory in manual) b.AppendLine(ManualChatMemories.Heading(d, memory) + "：" + memory.Text);
             b.AppendLine("</private_memory>");
         }
         foreach (var (human, box) in Mailboxes(d).OrderBy(x => x.Key, StringComparer.Ordinal))
             foreach (var c in box.Conversations.Values.Where(c => members.Contains(c.PersonId) && (c.PersonId != excludePrivate || human != GroupChats.Human(d))).OrderBy(c => c.PersonId, StringComparer.Ordinal))
-                Add($"私信知情人：{GroupChats.Name(d, human)}、{GroupChats.Name(d, c.PersonId)}。第一人称总结作者：{GroupChats.Name(d, c.PersonId)}，对象：{GroupChats.Name(d, human)}。", c.BigSummaries, c.SmallSummaries);
+                Add($"私信知情人：{GroupChats.Name(d, human)}、{GroupChats.Name(d, c.PersonId)}。第一人称总结作者：{GroupChats.Name(d, c.PersonId)}，对象：{GroupChats.Name(d, human)}。", c.BigSummaries, c.SmallSummaries, c.ManualMemories);
         foreach (var g in RelatedGroups(d, members, excludeGroup).OrderBy(g => g.Id, StringComparer.Ordinal))
         {
             var summaries = members.Where(p => ChatMembership.Knows(g, p)).SelectMany(p => new[] { true, false }
@@ -73,8 +75,13 @@ public static class ChatTimeline
             {
                 var first = group.First();
                 Add($"群聊《{g.Name}》；知情人：{string.Join("、", group.Select(x => GroupChats.Name(d, x.Person)))}。",
-                    first.Big ? [first.Summary] : [], first.Big ? [] : [first.Summary]);
+                    first.Big ? [first.Summary] : [], first.Big ? [] : [first.Summary], []);
             }
+            var manual = members.Where(p => ChatMembership.Knows(g, p))
+                .SelectMany(p => ManualChatMemories.Known(g, p).Select(m => (Person: p, Memory: m)))
+                .GroupBy(x => (x.Memory.Id, x.Memory.Text));
+            foreach (var group in manual)
+                Add($"群聊《{g.Name}》；知情人：{string.Join("、", group.Select(x => GroupChats.Name(d, x.Person)))}。", [], [], [group.First().Memory]);
         }
         return b.ToString();
     }
@@ -86,8 +93,9 @@ public static class ChatTimeline
         foreach (var t in c.Turns.Skip(c.ContextStart).Where(t => t.Status == "complete" && t != pending))
         {
             if (t.RequestKind == "event") { if (!t.UserDeleted) own.Add(new(t.UserOrder, t.Day, "user", Text(d, new(t.UserOrder, t.Day, "user", t.User, "共同经历")))); continue; }
-            if (!t.UserDeleted && t.ProactiveReason.Length == 0) own.Add(new(t.UserOrder, t.Day, "user", $"{GameCalendar.Text(d, t.Day)}，{CareerEngine.Name(d)}" + (t.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : $"发给{GroupChats.Name(d, c.PersonId)}的消息\n") + PrivateMessagePrompts.UserText(d, t, c)));
-            if (!t.ReplyDeleted) own.Add(new(t.ReplyOrder, t.Day, "assistant", t.Reply));
+            string source = DateGames.HistorySource(t);
+            if (!t.UserDeleted && t.ProactiveReason.Length == 0 && string.IsNullOrEmpty(t.Scene?.GameEvent)) own.Add(new(t.UserOrder, t.Day, "user", $"{GameCalendar.Text(d, t.Day)}，{CareerEngine.Name(d)}" + (t.RequestKind == "arbitration" ? "提交给官方的仲裁申请\n" : pending?.Scene != null && t.Scene != null ? "在约会中的消息\n" : $"发给{GroupChats.Name(d, c.PersonId)}的消息\n") + PrivateMessagePrompts.UserText(d, t, c), source));
+            if (!t.ReplyDeleted) own.Add(new(t.ReplyOrder, t.Day, "assistant", pending?.Scene != null && t.Scene != null ? DateScenes.PromptHistory(t, c.PersonId) : t.Reply, source));
         }
         var recent = c.Turns.Where(t => t.Status == "complete").ToArray();
         int retained = PrivateMessages.Mailbox(d).Settings.RecentRounds;
@@ -102,6 +110,7 @@ public static class ChatTimeline
         群聊 = g.Name, 说明 = "这是该人物参加的群聊记忆，不是帖子里已经公开的发言。其他人只知道公开说出的部分。", 知情人 = g.Members.Select(id => GroupChats.Name(d, id)).ToArray(),
         大总结 = ChatMembership.Summaries(g, person, true).LastOrDefault(s => g.Turns[s.Through - 1].Day <= day)?.Text,
         小总结 = ChatMembership.Summaries(g, person, false).LastOrDefault(s => g.Turns[s.Through - 1].Day <= day)?.Text,
+        手动记忆 = ManualChatMemories.Known(g, person).Where(m => m.Day <= day).Select(m => new { 日期 = GameCalendar.Text(d, m.Day), 内容 = m.Text }).ToArray(),
         最近记录 = g.Turns.Where(t => t.Status == "complete" && t.Day <= day && ChatMembership.Knows(g, person, t.Order)).TakeLast(5).Select(t => new { 日期 = PrivateAppointments.DateText(d, t.Day), 知情人 = ChatMembership.Readers(g, t.Order).Select(p => GroupChats.Name(d, p)).ToArray(), 发言 = t.Replies.Select(r => new { 人物 = GroupChats.Name(d, r.Author), 内容 = r.Text }), 玩家姓名 = GroupChats.Name(d, t.Sender), 玩家消息 = t.Text }).ToArray()
     };
 

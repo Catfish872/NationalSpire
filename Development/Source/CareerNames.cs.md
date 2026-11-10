@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9D06BFC58BDC23D12129409D7186AA553FB205E42612617F4CC9CFFA2C7C5F84`。来源：[源码](../../CareerNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8E6A6BF91439BB05C23AD4E097480A6937695D7B483D3E6CDC75FD7BFFD165C8`。来源：[源码](../../CareerNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -19,7 +19,7 @@
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerNames.Rename(NationalSpire.CareerData, string)`](CareerNames.cs.md#symbol-68b4cb4672cb)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](Coop/CoopRules.cs.md#symbol-fedd425e9ea0)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
+**调用者：** [`memberNameError()`](Coop/CoopCoordinator.cs.md#symbol-070c47689672)；[`NationalSpire.CareerNames.Rename(NationalSpire.CareerData, string)`](CareerNames.cs.md#symbol-68b4cb4672cb)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string, NationalSpire.CareerOpeningPlayer?)`](Coop/CoopRules.cs.md#symbol-8d3bfcd3efe2)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)
 
 **调用：** `char.GetUnicodeCategory(char)`；`char.IsControl(char)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`
 
@@ -30,8 +30,8 @@
 - `char.GetUnicodeCategory(char)`；输入表达式：`char.GetUnicodeCategory(c)`；返回值紧邻使用处：`BinaryExpressionSyntax: char.GetUnicodeCategory(c) == UnicodeCategory.Format`
 - `char.IsControl(char)`；输入表达式：`char.IsControl(c)`；返回值紧邻使用处：`BinaryExpressionSyntax: char.IsControl(c) || c is '[' or ']' or '<' or '>'`
 - `string.Trim()`；输入表达式：`value.Trim()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = value.Trim()`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Any(p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase))`；返回值紧邻使用处：`IfStatementSyntax: if (data.People.Any(p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)))             return "这个名字已有其他人物使用，请换一个名字。";`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`name.Any(c => char.IsControl(c) || c is '[' or ']' or '<' or '>' || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`；返回值紧邻使用处：`IfStatementSyntax: if (name.Any(c => char.IsControl(c) || c is '[' or ']' or '<' or '>' || char.GetUnicodeCategory(c) == UnicodeCategory.Format))             return "游戏名不能包含换行、隐藏字符或标记符号。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Any(p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase))`；返回值紧邻使用处：`IfStatementSyntax: if (data.People.Any(p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)))              return "这个名字已有其他人物使用，请换一个名字。";`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`name.Any(c => char.IsControl(c) || c is '[' or ']' or '<' or '>' || char.GetUnicodeCategory(c) == UnicodeCategory.Format)`；返回值紧邻使用处：`IfStatementSyntax: if (name.Any(c => char.IsControl(c) || c is '[' or ']' or '<' or '>' || char.GetUnicodeCategory(c) == UnicodeCategory.Format))              return "游戏名不能包含换行、隐藏字符或标记符号。";`
 - `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`p.HandleAliases.Append(p.PublicName).Append(p.Name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains`
 - `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`p.HandleAliases.Append(p.PublicName)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.HandleAliases.Append(p.PublicName).Append`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => p.HandleAliases.Append(p.PublicName).Append(p.Name).Contains(name, StringComparer.OrdinalIgnoreCase)`

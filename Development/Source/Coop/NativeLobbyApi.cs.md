@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`8958D7C4328406E8F6C3B0EA889505AA5C460D9F274056F1D0314B67C0D2068F`。来源：[源码](../../../Coop/NativeLobbyApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D0342649F63EB613033E751CCAB503E21D324CDE2F7C5C0AB1FBF2340841BF98`。来源：[源码](../../../Coop/NativeLobbyApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -30,12 +30,12 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Members.TryGetValue((type, name), out var found)`；返回值紧邻使用处：`IfStatementSyntax: if (Members.TryGetValue((type, name), out var found)) return found;`
 - `System.MissingMemberException.MissingMemberException(string?, string?)`；输入表达式：`new MissingMemberException(type.FullName, name)`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new MissingMemberException(type.FullName, name)`
-- `System.Type.GetField(string)`；输入表达式：`type.GetField(name)`；返回值紧邻使用处：`BinaryExpressionSyntax: type.GetField(name)             ?? throw new MissingMemberException(type.FullName, name)`
+- `System.Type.GetField(string)`；输入表达式：`type.GetField(name)`；返回值紧邻使用处：`BinaryExpressionSyntax: type.GetField(name)              ?? throw new MissingMemberException(type.FullName, name)`
 - `System.Type.GetProperty(string)`；输入表达式：`type.GetProperty(name)`；返回值紧邻使用处：`CastExpressionSyntax: (MemberInfo?)type.GetProperty(name)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Members[(type, name)]` = `(MemberInfo?)type.GetProperty(name) ?? type.GetField(name)             ?? throw new MissingMemberException(type.FullName, name)`
+- `Members[(type, name)]` = `(MemberInfo?)type.GetProperty(name) ?? type.GetField(name)              ?? throw new MissingMemberException(type.FullName, name)`
 
 <a id="symbol-01ff70538942"></a>
 
@@ -51,7 +51,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Coop.NativeLobbyApi.Find(System.Type, string)`；输入表达式：`Find(value.GetType(), name)`；返回值紧邻使用处：`SwitchExpressionSyntax: Find(value.GetType(), name) switch     { PropertyInfo p => p.GetValue(value), FieldInfo f => f.GetValue(value), _ => throw new NotSupportedException() }`
+- `NationalSpire.Coop.NativeLobbyApi.Find(System.Type, string)`；输入表达式：`Find(value.GetType(), name)`；返回值紧邻使用处：`SwitchExpressionSyntax: Find(value.GetType(), name) switch      { PropertyInfo p => p.GetValue(value), FieldInfo f => f.GetValue(value), _ => throw new NotSupportedException() }`
 - `object.GetType()`；输入表达式：`value.GetType()`；返回值紧邻使用处：`ArgumentSyntax: value.GetType()`
 - `System.NotSupportedException.NotSupportedException()`；输入表达式：`new NotSupportedException()`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new NotSupportedException()`
 - `System.Reflection.FieldInfo.GetValue(object?)`；输入表达式：`f.GetValue(value)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: FieldInfo f => f.GetValue(value)`
@@ -74,7 +74,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`；输入表达式：`new((ulong)Read(player, "id")!, (bool)Read(player, "isReady")!,         full ? (CharacterModel)Read(player, "character")! : null, full ? (SerializableUnlockState)Read(player, "unlockState")! : null)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new((ulong)Read(player, "id")!, (bool)Read(player, "isReady")!,         full ? (CharacterModel)Read(player, "character")! : null, full ? (SerializableUnlockState)Read(player, "unlockState")! : null)`
+- `NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`；输入表达式：`new((ulong)Read(player, "id")!, (bool)Read(player, "isReady")!,          full ? (CharacterModel)Read(player, "character")! : null, full ? (SerializableUnlockState)Read(player, "unlockState")! : null)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new((ulong)Read(player, "id")!, (bool)Read(player, "isReady")!,          full ? (CharacterModel)Read(player, "character")! : null, full ? (SerializableUnlockState)Read(player, "unlockState")! : null)`
 - `NationalSpire.Coop.NativeLobbyApi.Read(object, string)`；输入表达式：`Read(player, "character")`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Read(player, "character")!`
 - `NationalSpire.Coop.NativeLobbyApi.Read(object, string)`；输入表达式：`Read(player, "id")`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Read(player, "id")!`
 - `NationalSpire.Coop.NativeLobbyApi.Read(object, string)`；输入表达式：`Read(player, "isReady")`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Read(player, "isReady")!`
@@ -172,7 +172,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`；输入表达式：`RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int))`；返回值紧邻使用处：`ArgumentSyntax: RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int))`
-- `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int)), lobby, unlocks, ascension)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>         RuntimeApi.Invoke(RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int)), lobby, unlocks, ascension)`
+- `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int)), lobby, unlocks, ascension)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>          RuntimeApi.Invoke(RuntimeApi.Bind(typeof(StartRunLobby), "AddLocalHostPlayer", false, typeof(UnlockState), typeof(int)), lobby, unlocks, ascension)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -319,7 +319,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 - `System.Reflection.MethodBase.GetParameters()`；输入表达式：`method.GetParameters()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: method.GetParameters().Length`
 - `System.Reflection.MethodBase.GetParameters()`；输入表达式：`method.GetParameters()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: method.GetParameters().Select`
 - `System.Type.GetGenericArguments()`；输入表达式：`players.PropertyType.GetGenericArguments()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: players.PropertyType.GetGenericArguments().Single`
-- `System.Type.GetMethods()`；输入表达式：`listener.GetMethods()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var method in listener.GetMethods())             {                 int count = method.GetParameters().Length;                 bool valid = method.Name switch                 {                     "BeginRun" => method.ReturnType == typeof(void) && (count == 0 || method.GetParameters().Select(p => p.ParameterType).SequenceEqual(new[] { typeof(string), typeof(List<ActModel>), typeof(IReadOnlyList<ModifierModel>) })),                     "ShouldAllowRunToBegin" => count == 0 && method.ReturnType == typeof(Task<bool>),                     "PlayerChanged" => count == 2 && method.GetParameters()[1].ParameterType == typeof(bool),                     "PlayerConnected" or "RemotePlayerDisconnected" or "LocalPlayerDisconnected" or "PlayerReadyChanged" => count == 1,                     "AscensionChanged" or "SeedChanged" or "ModifiersChanged" or "MaxAscensionChanged" => count == 0,                     _ => false                 };                 if (!valid) throw new MissingMethodException("尚未适配的大厅回调：" + listener.Name + "." + method.Name);             }`
+- `System.Type.GetMethods()`；输入表达式：`listener.GetMethods()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var method in listener.GetMethods())              {                  int count = method.GetParameters().Length;                  bool valid = method.Name switch                  {                      "BeginRun" => method.ReturnType == typeof(void) && (count == 0 || method.GetParameters().Select(p => p.ParameterType).SequenceEqual(new[] { typeof(string), typeof(List<ActModel>), typeof(IReadOnlyList<ModifierModel>) })),                      "ShouldAllowRunToBegin" => count == 0 && method.ReturnType == typeof(Task<bool>),                      "PlayerChanged" => count == 2 && method.GetParameters()[1].ParameterType == typeof(bool),                      "PlayerConnected" or "RemotePlayerDisconnected" or "LocalPlayerDisconnected" or "PlayerReadyChanged" => count == 1,                      "AscensionChanged" or "SeedChanged" or "ModifiersChanged" or "MaxAscensionChanged" => count == 0,                      _ => false                  };                  if (!valid) throw new MissingMethodException("尚未适配的大厅回调：" + listener.Name + "." + method.Name);              }`
 - `System.Type.GetProperty(string)`；输入表达式：`typeof(LoadRunLobby).GetProperty("Players")`；返回值紧邻使用处：`IsPatternExpressionSyntax: typeof(LoadRunLobby).GetProperty("Players") is { } players`
 - `System.Type.GetProperty(string)`；输入表达式：`typeof(StartRunLobby).GetProperty("LocalPlayer")`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: typeof(StartRunLobby).GetProperty("LocalPlayer")?.PropertyType`
 

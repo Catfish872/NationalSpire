@@ -21,7 +21,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)
+**调用者：** [`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
 
 **调用：** `string.IsNullOrEmpty(string?)`
 
@@ -40,7 +40,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)
+**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
 
 **调用：** [`NationalSpire.CommunityVotes.Choice(System.Collections.Generic.Dictionary<string, int>?, string)`](CommunityVotes.cs.md#symbol-64add1fe8f21)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)
 
@@ -60,7 +60,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)
+**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
 
 **调用：** [`NationalSpire.CommunityVotes.Choice(System.Collections.Generic.Dictionary<string, int>?, string)`](CommunityVotes.cs.md#symbol-64add1fe8f21)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)
 
@@ -80,7 +80,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)
+**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)
 
 **调用：** [`NationalSpire.CommunityVotes.AudienceScore(int?)`](CommunityVotes.cs.md#symbol-9f70e52b989b)；[`NationalSpire.CommunityVotes.Score(long, System.Collections.Generic.Dictionary<string, int>?)`](CommunityVotes.cs.md#symbol-597f1c902b0a)
 
@@ -100,7 +100,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)
+**调用者：** [`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)
 
 **调用：** [`NationalSpire.CommunityVotes.AudienceScore(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-64a35a4c39c2)；[`NationalSpire.CommunityVotes.Score(long, System.Collections.Generic.Dictionary<string, int>?)`](CommunityVotes.cs.md#symbol-597f1c902b0a)
 
@@ -120,7 +120,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityVotes.Score(NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-90f30ba43b83)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)
+**调用者：** [`NationalSpire.CommunityVotes.Score(NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-90f30ba43b83)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)
 
 **调用：** 无已绑定显式调用。
 
@@ -138,7 +138,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CommunityVotes.Score(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-c51f3ec0b04f)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)
+**调用者：** [`NationalSpire.CommunityVotes.Score(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-c51f3ec0b04f)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)
 
 **调用：** [`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)
 
@@ -159,7 +159,7 @@ private const int PlayerReplyMultiplier = 16;
 
 **调用者：** [`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)
 
-**调用：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-95158a15f438)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-92b3f5b3701d)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `Calculate(string, string, string, bool, int)`；`Fans(string)`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CommunityPost.AudienceScore`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Body`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.MatchKind`；`NationalSpire.CommunityPost.RelatedPeople`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityPost.Title`；`NationalSpire.CommunityPost.VoteRevision`；`NationalSpire.CommunityReply.AudienceScore`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Body`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`
 
@@ -182,13 +182,13 @@ private const int PlayerReplyMultiplier = 16;
 - `post.AudienceScore` = `root`
 - `reply.AudienceScore` = `next`
 
-<a id="symbol-781408ef809e"></a>
+<a id="symbol-f4b09357d17e"></a>
 
 ## `Fans(string) — int Fans(string id)`
 
 来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-95158a15f438)
+**调用者：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-92b3f5b3701d)
 
 **调用：** [`NationalSpire.CareerAudience.Followers(NationalSpire.CareerPerson)`](CareerAudience.cs.md#symbol-c169fde4fb8f)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Math.Max(int, int)`
 
@@ -206,7 +206,7 @@ private const int PlayerReplyMultiplier = 16;
 - `count` = `id == "player" || id == data.LocalHumanId ? data.Fans                  : people.TryGetValue(id, out var person) ? CareerAudience.Followers(person) : 0`
 - `followers[id]` = `Math.Max(0, count)`
 
-<a id="symbol-95158a15f438"></a>
+<a id="symbol-92b3f5b3701d"></a>
 
 ## `Calculate(string, string, string, bool, int) — int Calculate(string id, string author, string body, bool main, int responses)`
 
@@ -214,7 +214,7 @@ private const int PlayerReplyMultiplier = 16;
 
 **调用者：** [`NationalSpire.CommunityVotes.Update(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-324728201fc4)
 
-**调用：** [`Fans(string)`](CommunityVotes.cs.md#symbol-781408ef809e)；[`NationalSpire.CommunityVotes.Variation(string, string)`](CommunityVotes.cs.md#symbol-92501d24e9b4)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Abs(double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Log(double)`；`System.Math.Log10(double)`；`System.Math.Min(double, double)`；`System.Math.Pow(double, double)`；`System.Math.Round(double)`；`System.Math.Sqrt(double)`
+**调用：** [`Fans(string)`](CommunityVotes.cs.md#symbol-f4b09357d17e)；[`NationalSpire.CommunityVotes.Variation(string, string)`](CommunityVotes.cs.md#symbol-92501d24e9b4)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Abs(double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Log(double)`；`System.Math.Log10(double)`；`System.Math.Min(double, double)`；`System.Math.Pow(double, double)`；`System.Math.Round(double)`；`System.Math.Sqrt(double)`
 
 **字段、属性、事件及方法组引用：** `Fans(string)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Connections`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Titles`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityVotes.Variation(string, string)`
 
@@ -253,7 +253,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-95158a15f438)
+**调用者：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-92b3f5b3701d)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)
 
@@ -311,7 +311,7 @@ private const int PlayerReplyMultiplier = 16;
 
 来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)
+**调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
 
 **调用：** [`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityThreads.IsHuman(NationalSpire.CareerData, string)`](CommunityThreads.cs.md#symbol-1d3cb55b1636)；[`NationalSpire.CommunityVotes.Choice(System.Collections.Generic.Dictionary<string, int>?, string)`](CommunityVotes.cs.md#symbol-64add1fe8f21)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 

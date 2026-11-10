@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8037B60BF68EE2537DDFB752952F465A6DB799F70CA64F11B3DD68BECE6C7C45`。来源：[源码](../../AppearanceLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1544085EF243D653D3C3D5DB8B80A102251AA1633391C0CE3E58E731AF9E5F78`。来源：[源码](../../AppearanceLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -107,25 +107,27 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-1f96a80ecca2"></a>
+<a id="symbol-a74de5ed53a9"></a>
 
-## `NationalSpire.AppearanceLibrary.List() — public static Entry[] List()`
+## `NationalSpire.AppearanceLibrary.List(NationalSpire.CareerData?) — public static Entry[] List(CareerData? data = null)`
 
 来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Refresh(string)`](AppearanceLibraryScreen.cs.md#symbol-6a433a7b81b7)
+**调用者：** [`NationalSpire.CareerScreen.ConfigureDatePresentation(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>, System.Action, System.Action, bool)`](DatePresentationScreen.cs.md#symbol-ae7a16c86641)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`Refresh(string)`](AppearanceLibraryScreen.cs.md#symbol-5fd607e1361c)
 
-**调用：** `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.ToArray()`；`System.IO.Directory.EnumerateFiles(string, string)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
+**调用：** `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List(System.Collections.Generic.IEnumerable<T>)`；`System.IO.Directory.EnumerateFiles(string, string)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.BuiltIns`；`NationalSpire.AppearanceLibrary.DirectoryPath`；`NationalSpire.AppearanceLibrary.Entry.Id`
+**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.BuiltIns`；`NationalSpire.AppearanceLibrary.DirectoryPath`；`NationalSpire.AppearanceLibrary.Entry.BuiltIn`；`NationalSpire.AppearanceLibrary.Entry.Id`；`NationalSpire.CareerData.ExcludedAppearancePacks`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；输入表达式：`new(id, json.RootElement.GetProperty("Name").GetString()!, false)`；返回值紧邻使用处：`ArgumentSyntax: new(id, json.RootElement.GetProperty("Name").GetString()!, false)`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`BuiltIns.Any(e => e.Id == id)`；返回值紧邻使用处：`IfStatementSyntax: if (BuiltIns.Any(e => e.Id == id)) continue;`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`entries.Where(e => e.BuiltIn || data?.ExcludedAppearancePacks.Contains(e.Id) != true).ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return entries.Where(e => e.BuiltIn || data?.ExcludedAppearancePacks.Contains(e.Id) != true).ToArray();`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`entries.Where(e => e.BuiltIn || data?.ExcludedAppearancePacks.Contains(e.Id) != true)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: entries.Where(e => e.BuiltIn || data?.ExcludedAppearancePacks.Contains(e.Id) != true).ToArray`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`entries.Add(new(id, json.RootElement.GetProperty("Name").GetString()!, false))`；返回值紧邻使用处：`ExpressionStatementSyntax: entries.Add(new(id, json.RootElement.GetProperty("Name").GetString()!, false));`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`.ExcludedAppearancePacks.Contains(e.Id)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: data?.ExcludedAppearancePacks.Contains(e.Id)`
 - `System.Collections.Generic.List<T>.List(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`new List<Entry>(BuiltIns)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Entry>(BuiltIns)`
-- `System.Collections.Generic.List<T>.ToArray()`；输入表达式：`entries.ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return entries.ToArray();`
 - `System.IO.Directory.EnumerateFiles(string, string)`；输入表达式：`Directory.EnumerateFiles(DirectoryPath, "*.json")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string path in Directory.EnumerateFiles(DirectoryPath, "*.json"))             {                 string id = Path.GetFileNameWithoutExtension(path);                 if (BuiltIns.Any(e => e.Id == id)) continue;                 using var json = JsonDocument.Parse(File.ReadAllText(path));                 entries.Add(new(id, json.RootElement.GetProperty("Name").GetString()!, false));             }`
 - `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(DirectoryPath)`；返回值紧邻使用处：`IfStatementSyntax: if (Directory.Exists(DirectoryPath))             foreach (string path in Directory.EnumerateFiles(DirectoryPath, "*.json"))             {                 string id = Path.GetFileNameWithoutExtension(path);                 if (BuiltIns.Any(e => e.Id == id)) continue;                 using var json = JsonDocument.Parse(File.ReadAllText(path));                 entries.Add(new(id, json.RootElement.GetProperty("Name").GetString()!, false));             }`
 - `System.IO.File.ReadAllText(string)`；输入表达式：`File.ReadAllText(path)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllText(path)`
@@ -143,23 +145,24 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>)`](AppearanceLibraryScreen.cs.md#symbol-6c40b8e1641a)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)
+**调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-c3f5843ac40d)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)
 
-**调用：** [`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)；[`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`](CharacterDesignPackage.cs.md#symbol-b6e606c27a93)；`NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`string.ToLowerInvariant()`；`System.Convert.ToHexString(byte[])`；`System.IO.File.Exists(string?)`；`System.IO.File.OpenRead(string)`；`System.Security.Cryptography.SHA256.HashData(System.IO.Stream)`
+**调用：** [`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)；[`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`](CharacterDesignPackage.cs.md#symbol-abec8cae7c17)；`NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`string.ToLowerInvariant()`；`System.Collections.Generic.List<T>.Remove(T)`；`System.Convert.ToHexString(byte[])`；`System.IO.File.Exists(string?)`；`System.IO.File.OpenRead(string)`；`System.Security.Cryptography.SHA256.HashData(System.IO.Stream)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`；`NationalSpire.AppearanceLibrary.Package.Name`；`NationalSpire.AppearanceLibrary.PathFor(string)`；`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`；`NationalSpire.AppearanceLibrary.Package.Name`；`NationalSpire.AppearanceLibrary.PathFor(string)`；`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；`NationalSpire.CareerData.ExcludedAppearancePacks`；`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；输入表达式：`new Entry(id, Load(data, new(id, "", false)).Name, false)`；返回值紧邻使用处：`ConditionalExpressionSyntax: File.Exists(PathFor(id)) ? new Entry(id, Load(data, new(id, "", false)).Name, false)             : Save(id, imported ?? CharacterDesignPackage.Read(data, file))`
 - `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；输入表达式：`new(id, "", false)`；返回值紧邻使用处：`ArgumentSyntax: new(id, "", false)`
-- `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；输入表达式：`new(id, Load(data, new(id, "", false)).Name, false)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(id, Load(data, new(id, "", false)).Name, false);`
 - `NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`；输入表达式：`Load(data, new(id, "", false))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Load(data, new(id, "", false)).Name`
 - `NationalSpire.AppearanceLibrary.PathFor(string)`；输入表达式：`PathFor(id)`；返回值紧邻使用处：`ArgumentSyntax: PathFor(id)`
-- `NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；输入表达式：`Save(id, imported ?? CharacterDesignPackage.Read(data, file))`；返回值紧邻使用处：`ReturnStatementSyntax: return Save(id, imported ?? CharacterDesignPackage.Read(data, file));`
-- `NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`；输入表达式：`CharacterDesignPackage.Read(data, file)`；返回值紧邻使用处：`BinaryExpressionSyntax: imported ?? CharacterDesignPackage.Read(data, file)`
+- `NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；输入表达式：`Save(id, imported ?? CharacterDesignPackage.Read(data, file))`；返回值紧邻使用处：`ConditionalExpressionSyntax: File.Exists(PathFor(id)) ? new Entry(id, Load(data, new(id, "", false)).Name, false)             : Save(id, imported ?? CharacterDesignPackage.Read(data, file))`
+- `NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`；输入表达式：`CharacterDesignPackage.Read(data, file)`；返回值紧邻使用处：`BinaryExpressionSyntax: imported ?? CharacterDesignPackage.Read(data, file)`
 - `string.ToLowerInvariant()`；输入表达式：`Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(file)).ToLowerInvariant()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(file)).ToLowerInvariant()`
+- `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`data.ExcludedAppearancePacks.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: data.ExcludedAppearancePacks.Remove(id);`
 - `System.Convert.ToHexString(byte[])`；输入表达式：`Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(file))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(file)).ToLowerInvariant`
-- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(PathFor(id))`；返回值紧邻使用处：`IfStatementSyntax: if (File.Exists(PathFor(id))) return new(id, Load(data, new(id, "", false)).Name, false);`
+- `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(PathFor(id))`；返回值紧邻使用处：`ConditionalExpressionSyntax: File.Exists(PathFor(id)) ? new Entry(id, Load(data, new(id, "", false)).Name, false)             : Save(id, imported ?? CharacterDesignPackage.Read(data, file))`
 - `System.IO.File.OpenRead(string)`；输入表达式：`File.OpenRead(path)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = File.OpenRead(path)`
 - `System.Security.Cryptography.SHA256.HashData(System.IO.Stream)`；输入表达式：`System.Security.Cryptography.SHA256.HashData(file)`；返回值紧邻使用处：`ArgumentSyntax: System.Security.Cryptography.SHA256.HashData(file)`
 
@@ -171,7 +174,7 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 ## `NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?) — private static Entry Save(string id, CharacterDesignPackage.Imported imported, string? name = null)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AppearanceLibrary.Import(NationalSpire.CareerData, string, NationalSpire.CharacterDesignPackage.Imported?)`](AppearanceLibrary.cs.md#symbol-e5bd2a2cd1b7)；[`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)
 
@@ -205,19 +208,19 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 ## `NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry) — public static Package Load(CareerData data, Entry entry)`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AppearanceLibrary.Import(NationalSpire.CareerData, string, NationalSpire.CharacterDesignPackage.Imported?)`](AppearanceLibrary.cs.md#symbol-e5bd2a2cd1b7)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)
+**调用者：** [`NationalSpire.AppearanceLibrary.Import(NationalSpire.CareerData, string, NationalSpire.CharacterDesignPackage.Imported?)`](AppearanceLibrary.cs.md#symbol-e5bd2a2cd1b7)；[`NationalSpire.DatePresentation.Prepare(NationalSpire.CareerData, NationalSpire.DatePresentation.Selection)`](DatePresentation.cs.md#symbol-dba968a252db)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-bd06ea329e61)
 
-**调用：** [`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`](CharacterDesignPackage.cs.md#symbol-b6e606c27a93)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`](AppearanceLibrary.cs.md#symbol-c4c0756e8854)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`](CharacterDesignPackage.cs.md#symbol-abec8cae7c17)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Entry.BuiltIn`；`NationalSpire.AppearanceLibrary.Entry.Id`；`NationalSpire.AppearanceLibrary.Entry.Name`；`NationalSpire.AppearanceLibrary.PathFor(string)`；`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`；`NationalSpire.PortraitDesigns.Json`
+**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Entry.BuiltIn`；`NationalSpire.AppearanceLibrary.Entry.Id`；`NationalSpire.AppearanceLibrary.Entry.Name`；`NationalSpire.AppearanceLibrary.PathFor(string)`；`NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`；`NationalSpire.PortraitDesigns.Json`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AppearanceLibrary.PathFor(string)`；输入表达式：`PathFor(entry.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PathFor(entry.Id)`
 - `NationalSpire.AppearanceLibrary.Save(string, NationalSpire.CharacterDesignPackage.Imported, string?)`；输入表达式：`Save(entry.Id, CharacterDesignPackage.Read(data, stream), entry.Name)`；返回值紧邻使用处：`ExpressionStatementSyntax: Save(entry.Id, CharacterDesignPackage.Read(data, stream), entry.Name);`
-- `NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream)`；输入表达式：`CharacterDesignPackage.Read(data, stream)`；返回值紧邻使用处：`ArgumentSyntax: CharacterDesignPackage.Read(data, stream)`
+- `NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, System.IO.Stream, bool)`；输入表达式：`CharacterDesignPackage.Read(data, stream)`；返回值紧邻使用处：`ArgumentSyntax: CharacterDesignPackage.Read(data, stream)`
 - `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(path)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !File.Exists(path)`
 - `System.IO.File.ReadAllText(string)`；输入表达式：`File.ReadAllText(path)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllText(path)`
 - `System.Reflection.Assembly.GetManifestResourceStream(string)`；输入表达式：`typeof(AppearanceLibrary).Assembly.GetManifestResourceStream("NationalSpire.Appearance." + entry.Id + ".zip")`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: typeof(AppearanceLibrary).Assembly.GetManifestResourceStream("NationalSpire.Appearance." + entry.Id + ".zip")!`
@@ -226,22 +229,20 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-35fa453dd634"></a>
+<a id="symbol-bca14526873f"></a>
 
-## `NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package) — public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)`
+## `NationalSpire.AppearanceLibrary.Prepare(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package) — public static (PortraitDesign Design, DateSceneAssets Assets) Prepare(CareerData data, string person, Package package)`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>)`](AppearanceLibraryScreen.cs.md#symbol-6c40b8e1641a)
+**调用者：** [`NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-35fa453dd634)；[`NationalSpire.DatePresentation.Prepare(NationalSpire.CareerData, NationalSpire.DatePresentation.Selection)`](DatePresentation.cs.md#symbol-dba968a252db)
 
-**调用：** [`NationalSpire.CharacterDesignPackage.Installation.Commit()`](CharacterDesignPackage.cs.md#symbol-6147750def14)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)
+**调用：** [`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Package.Design`；`NationalSpire.AppearanceLibrary.Package.Outfits`；`NationalSpire.CharacterDesignPackage.Installation.Commit()`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Outfits`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesign.PersonId`；`NationalSpire.PortraitDesign.SelectedOutfit`
+**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Package.Design`；`NationalSpire.AppearanceLibrary.Package.Outfits`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateSceneAssets.OutfitId`；`NationalSpire.DateSceneAssets.Outfits`；`NationalSpire.DateSceneAssets.UseDefaultPortrait`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesign.PersonId`；`NationalSpire.PortraitDesign.SelectedOutfit`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CharacterDesignPackage.Installation.Commit()`；输入表达式：`installation.Commit()`；返回值紧邻使用处：`ExpressionStatementSyntax: installation.Commit();`
-- `NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`；输入表达式：`new CharacterDesignPackage.Installation(data, person, design, assets)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CharacterDesignPackage.Installation(data, person, design, assets)`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`Coop.CoopJson.Copy(package.Design)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Coop.CoopJson.Copy(package.Design)`
 - `NationalSpire.Coop.CoopJson.Copy<T>(T)`；输入表达式：`Coop.CoopJson.Copy(package.Outfits)`；返回值紧邻使用处：`AssignmentExpressionSyntax: assets.Outfits = Coop.CoopJson.Copy(package.Outfits)`
 - `NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；输入表达式：`DateSceneAssetStore.Read(data, person)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneAssetStore.Read(data, person)`
@@ -250,15 +251,38 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 - `assets.OutfitId` = `design.SelectedOutfit`
 - `assets.Outfits` = `Coop.CoopJson.Copy(package.Outfits)`
+- `assets.UseDefaultPortrait` = `false`
 - `design.PersonId` = `person`
+
+<a id="symbol-35fa453dd634"></a>
+
+## `NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package) — public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)`
+
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-c3f5843ac40d)
+
+**调用：** [`NationalSpire.AppearanceLibrary.Prepare(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-bca14526873f)；[`NationalSpire.CharacterDesignPackage.Installation.Commit()`](CharacterDesignPackage.cs.md#symbol-6147750def14)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Prepare(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`；`NationalSpire.CharacterDesignPackage.Installation.Commit()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AppearanceLibrary.Prepare(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`；输入表达式：`Prepare(data, person, package)`；返回值紧邻使用处：`AssignmentExpressionSyntax: var (design, assets) = Prepare(data, person, package)`
+- `NationalSpire.CharacterDesignPackage.Installation.Commit()`；输入表达式：`installation.Commit()`；返回值紧邻使用处：`ExpressionStatementSyntax: installation.Commit();`
+- `NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`；输入表达式：`new CharacterDesignPackage.Installation(data, person, design, assets)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CharacterDesignPackage.Installation(data, person, design, assets)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `var (design, assets)` = `Prepare(data, person, package)`
 
 <a id="symbol-2cbd15385625"></a>
 
 ## `NationalSpire.AppearanceLibrary.Preview(NationalSpire.AppearanceLibrary.Package) — public static string? Preview(Package package)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)
+**调用者：** [`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-bd06ea329e61)
 
 **调用：** `string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`31261F8ABF82DE381209D01A4DD771E31559290AEBE33B4D2AEDE88303CE0312`。来源：[源码](../../ChatContactScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`279DA43556E5FE879B59EEECABB2271A00C1F0905EE744486D32FE8050995766`。来源：[源码](../../ChatContactScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@ private Control? _contactMenu;
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LoadChatPreferences()`](ChatHistoryScreen.cs.md#symbol-d1d5bc5023c7)
+**调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.LoadChatPreferences()`](ChatHistoryScreen.cs.md#symbol-d1d5bc5023c7)
 
 **调用：** `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；`Godot.Variant.AsString()`；`NationalSpire.ChatContactPreferences.ChatContactPreferences()`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
@@ -177,17 +177,20 @@ private Control? _contactMenu;
 
 **调用者：** [`NationalSpire.CareerScreen.BuildContactSearch(Godot.VBoxContainer)`](ChatContactScreen.cs.md#symbol-3c7d41806831)
 
-**调用：** [`Highlight()`](ChatContactScreen.cs.md#symbol-a1734e817870)；[`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`](ChatContactScreen.cs.md#symbol-20cc99232e33)；[`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`](ChatContactScreen.cs.md#symbol-264ab6f4d753)；[`NationalSpire.CareerScreen.SaveContactPreferences()`](ChatContactScreen.cs.md#symbol-ecb1bd4e6ac2)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** [`Highlight()`](ChatContactScreen.cs.md#symbol-0c0e56190ac9)；[`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`](ChatContactScreen.cs.md#symbol-20cc99232e33)；[`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`](ChatContactScreen.cs.md#symbol-264ab6f4d753)；[`NationalSpire.CareerScreen.SaveContactPreferences()`](ChatContactScreen.cs.md#symbol-ecb1bd4e6ac2)；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
 
 **字段、属性、事件及方法组引用：** `Highlight()`；`NationalSpire.CareerScreen._contactPreferences`；`NationalSpire.CareerScreen._privateOverlay`；`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`；`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`；`NationalSpire.CareerScreen.SaveContactPreferences()`；`NationalSpire.ChatContactPreferences.Reverse`；`NationalSpire.ChatContactPreferences.ShowRelationships`；`NationalSpire.ChatContactPreferences.Sort`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.CanvasItem.GetGlobalTransform()`；输入表达式：`_privateOverlay!.GetGlobalTransform()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _privateOverlay!.GetGlobalTransform().AffineInverse`
+- `Godot.CanvasItem.GetGlobalTransform()`；输入表达式：`anchor.GetGlobalTransform()`；返回值紧邻使用处：`BinaryExpressionSyntax: anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6)`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(button)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(button);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(relationships)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(relationships);`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, anchor.Size.Y + 6)`；返回值紧邻使用处：`BinaryExpressionSyntax: anchor.GlobalPosition + new Vector2(0, anchor.Size.Y + 6)`
+- `Godot.Transform2D.AffineInverse()`；输入表达式：`_privateOverlay!.GetGlobalTransform().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: _privateOverlay!.GetGlobalTransform().AffineInverse() * (anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6))`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(0, anchor.Size.Y + 6)`；返回值紧邻使用处：`BinaryExpressionSyntax: anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6)`
 - `Highlight()`；输入表达式：`Highlight()`；返回值紧邻使用处：`ExpressionStatementSyntax: Highlight();`
-- `NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`；输入表达式：`ContactMenu(anchor.GlobalPosition + new Vector2(0, anchor.Size.Y + 6) - _privateOverlay!.GlobalPosition, box =>          {              var buttons = new Dictionary<string, Button>();              void Highlight()              {                  foreach (var (id, button) in buttons)                      ((StyleBoxFlat)button.GetThemeStylebox("normal")).BgColor = _contactPreferences.Sort == id ? new Color("2b4355") : Colors.Transparent;              }              foreach (var (id, label) in new[] { ("favour", "按好感度"), ("time", "按时间"), ("name", "按首字母"), ("type", "按类别") })              {                  bool nextReverse = _contactPreferences.Sort == id ? !_contactPreferences.Reverse : false;                  var button = ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  });                  button.Name = "ContactSort_" + id; buttons[id] = button; box.AddChild(button);              }              Highlight();              var relationships = ContactMenuItem("展示人物关系图标", () => { }, true); relationships.Name = "ShowContactRelationships"; relationships.ButtonPressed = _contactPreferences.ShowRelationships; box.AddChild(relationships);              relationships.Toggled += value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); };          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ContactMenu(anchor.GlobalPosition + new Vector2(0, anchor.Size.Y + 6) - _privateOverlay!.GlobalPosition, box =>          {              var buttons = new Dictionary<string, Button>();              void Highlight()              {                  foreach (var (id, button) in buttons)                      ((StyleBoxFlat)button.GetThemeStylebox("normal")).BgColor = _contactPreferences.Sort == id ? new Color("2b4355") : Colors.Transparent;              }              foreach (var (id, label) in new[] { ("favour", "按好感度"), ("time", "按时间"), ("name", "按首字母"), ("type", "按类别") })              {                  bool nextReverse = _contactPreferences.Sort == id ? !_contactPreferences.Reverse : false;                  var button = ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  });                  button.Name = "ContactSort_" + id; buttons[id] = button; box.AddChild(button);              }              Highlight();              var relationships = ContactMenuItem("展示人物关系图标", () => { }, true); relationships.Name = "ShowContactRelationships"; relationships.ButtonPressed = _contactPreferences.ShowRelationships; box.AddChild(relationships);              relationships.Toggled += value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); };          });`
+- `NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`；输入表达式：`ContactMenu(_privateOverlay!.GetGlobalTransform().AffineInverse() * (anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6)), box =>          {              var buttons = new Dictionary<string, Button>();              void Highlight()              {                  foreach (var (id, button) in buttons)                      ((StyleBoxFlat)button.GetThemeStylebox("normal")).BgColor = _contactPreferences.Sort == id ? new Color("2b4355") : Colors.Transparent;              }              foreach (var (id, label) in new[] { ("favour", "按好感度"), ("time", "按时间"), ("name", "按首字母"), ("type", "按类别") })              {                  bool nextReverse = _contactPreferences.Sort == id ? !_contactPreferences.Reverse : false;                  var button = ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  });                  button.Name = "ContactSort_" + id; buttons[id] = button; box.AddChild(button);              }              Highlight();              var relationships = ContactMenuItem("展示人物关系图标", () => { }, true); relationships.Name = "ShowContactRelationships"; relationships.ButtonPressed = _contactPreferences.ShowRelationships; box.AddChild(relationships);              relationships.Toggled += value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); };          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ContactMenu(_privateOverlay!.GetGlobalTransform().AffineInverse() * (anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6)), box =>          {              var buttons = new Dictionary<string, Button>();              void Highlight()              {                  foreach (var (id, button) in buttons)                      ((StyleBoxFlat)button.GetThemeStylebox("normal")).BgColor = _contactPreferences.Sort == id ? new Color("2b4355") : Colors.Transparent;              }              foreach (var (id, label) in new[] { ("favour", "按好感度"), ("time", "按时间"), ("name", "按首字母"), ("type", "按类别") })              {                  bool nextReverse = _contactPreferences.Sort == id ? !_contactPreferences.Reverse : false;                  var button = ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  });                  button.Name = "ContactSort_" + id; buttons[id] = button; box.AddChild(button);              }              Highlight();              var relationships = ContactMenuItem("展示人物关系图标", () => { }, true); relationships.Name = "ShowContactRelationships"; relationships.ButtonPressed = _contactPreferences.ShowRelationships; box.AddChild(relationships);              relationships.Toggled += value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); };          });`
 - `NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`；输入表达式：`ContactMenuItem("展示人物关系图标", () => { }, true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ContactMenuItem("展示人物关系图标", () => { }, true)`
 - `NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`；输入表达式：`ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ContactMenuItem(label + (_contactPreferences.Sort == id && _contactPreferences.Reverse ? "倒序" : "正序"), () =>                  {                      _contactPreferences.Sort = id; _contactPreferences.Reverse = nextReverse; nextReverse = !nextReverse;                      foreach (var pair in buttons) pair.Value.Text = pair.Value.Text[..^2] + (pair.Key == id && _contactPreferences.Reverse ? "倒序" : "正序"); SaveContactPreferences(); Highlight();                  })`
 - `NationalSpire.CareerScreen.SaveContactPreferences()`；输入表达式：`SaveContactPreferences()`；返回值紧邻使用处：`ExpressionStatementSyntax: SaveContactPreferences();`
@@ -206,7 +209,7 @@ private Control? _contactMenu;
 - `relationships.Name` = `"ShowContactRelationships"`
 - `relationships.Toggled` += `value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); }`
 
-<a id="symbol-a1734e817870"></a>
+<a id="symbol-0c0e56190ac9"></a>
 
 ## `Highlight() — void Highlight()`
 
@@ -246,13 +249,13 @@ private Control? _contactMenu;
 - `Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；输入表达式：`search.GetThemeStylebox(state)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: search.GetThemeStylebox(state).Duplicate`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`icon.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: icon.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
-- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(216, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(216, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(174, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(174, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(search)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(search);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(sort)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(sort);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`sidebar.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: sidebar.AddChild(row);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`sort.AddChild(icon)`；返回值紧邻使用处：`ExpressionStatementSyntax: sort.AddChild(icon);`
 - `Godot.Resource.Duplicate(bool)`；输入表达式：`search.GetThemeStylebox(state).Duplicate()`；返回值紧邻使用处：`CastExpressionSyntax: (StyleBox)search.GetThemeStylebox(state).Duplicate()`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(216, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(216, 42)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(174, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(174, 42)`
 - `NationalSpire.CareerScreen.ContactSort(Godot.Control)`；输入表达式：`ContactSort(sort)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => ContactSort(sort)`
 - `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；输入表达式：`PrivateButton("", () => { }, 42)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateButton("", () => { }, 42)`
 - `NationalSpire.CareerScreen.RefreshPrivateList()`；输入表达式：`RefreshPrivateList()`；返回值紧邻使用处：`ExpressionStatementSyntax: RefreshPrivateList();`
@@ -262,7 +265,7 @@ private Control? _contactMenu;
 
 - `_privateListSignature` = `""`
 - `_privateQuery` = `value`
-- `CustomMinimumSize` = `new(216, 42)`
+- `CustomMinimumSize` = `new(174, 42)`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 - `Name` = `"ContactSearch"`
 - `PlaceholderText` = `"搜索选手或群聊"`
@@ -331,7 +334,7 @@ private Control? _contactMenu;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Line(float, float, float, float)`](ChatContactScreen.cs.md#symbol-13c184e70dea)；`Godot.Color.Color(string)`
+**调用：** [`Line(float, float, float, float)`](ChatContactScreen.cs.md#symbol-f8844965cf7d)；`Godot.Color.Color(string)`
 
 **字段、属性、事件及方法组引用：** `Line(float, float, float, float)`
 
@@ -348,7 +351,7 @@ private Control? _contactMenu;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-13c184e70dea"></a>
+<a id="symbol-f8844965cf7d"></a>
 
 ## `Line(float, float, float, float) — void Line(float x, float y, float a, float b)`
 

@@ -11,6 +11,7 @@ public sealed class TeamPreparation
 public static class TeamPreparations
 {
     public const int Cost = 1200;
+    internal static string PlayerTeam(WorldCompetition cup) => cup.Rosters.First(r => r.Value.Contains("player")).Key;
     public static IEnumerable<WorldCompetition> Available(CareerData d) => d.Esports.Competitions.Where(c => c.Season == d.Season
         && c.TeamEvent && !c.Cooperative && !c.Finished && c.Rosters.Values.Any(r => r.Contains("player"))
         && c.Fixtures.Any(f => !f.Finished && (f.HomeId == "player" || f.AwayId == "player" || c.Rosters.GetValueOrDefault(f.HomeTeam)?.Contains("player") == true || c.Rosters.GetValueOrDefault(f.AwayTeam)?.Contains("player") == true)));
@@ -21,7 +22,7 @@ public static class TeamPreparations
         if (c == null) return "当前没有可安排集体备赛的团体赛事。";
         if (d.PendingMatchId != null) return "请在当前比赛结束后安排备赛。";
         if (CareerMoney.Balance(d) < Cost) return "备赛资金不足。";
-        string team = c.Rosters.First(r => r.Value.Contains("player")).Key;
+        string team = PlayerTeam(c);
         var preparation = d.TeamPreparations.FirstOrDefault(p => p.CompetitionId == c.Id && p.Team == team);
         if (preparation?.Remaining > 0) return "本届赛事的集体备赛仍在生效。";
         d.TeamPreparations.RemoveAll(p => p.CompetitionId == c.Id && p.Team == team);

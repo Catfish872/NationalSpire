@@ -113,16 +113,20 @@ public static class CareerCommerce
             int seed = CareerEngine.StableHash(d.WorldId + ":brand:" + plan + ":" + d.Season);
             var regional = RegionalOrganizations.Sponsors(w.Country, plan);
             string brand = previous != null && (regional.Contains(previous.Brand) || Brands[plan].Contains(previous.Brand)) ? previous.Brand : regional[seed % regional.Length];
-            string name = plan switch { 0 => "稳定支持", 1 => "成绩奖励", _ => "品牌推广" };
-            var basis = SponsorIncome.PersonalBase(name, tier);
-            w.SponsorOffers.Add(new() { Id = $"player-{startSeason}-{d.Day}-{plan}", TargetId = "player", Brand = brand,
-                Plan = name, StartSeason = startSeason, EndSeason = startSeason + 1,
-                ExpiresDay = d.Day + 28, BaseRetainer = basis.Retainer, BaseWinBonus = basis.Win,
-                Retainer = CareerAudience.Quote(basis.Retainer, d.Fans), WinBonus = CareerAudience.Quote(basis.Win, d.Fans), FanBonus = plan == 2 ? 35 * tier : 0,
-                Description = RegionalOrganizations.SponsorDescription(brand), Slogan = RegionalOrganizations.SponsorSlogan(brand) });
+            w.SponsorOffers.Add(BuildPersonalOffer(d, plan, brand, startSeason, tier));
         }
         if (active == null) CircuitLedger.Remember(d, $"sponsor-invitations-{d.Season}-{d.Day}", $"{CareerEngine.Name(d)}收到三份个人赞助邀请，等待本人选择确认。", ["player"]);
         Capture(d);
+    }
+    internal static SponsorContract BuildPersonalOffer(CareerData d, int plan, string brand, int startSeason, int tier)
+    {
+        string name = plan switch { 0 => "稳定支持", 1 => "成绩奖励", _ => "品牌推广" };
+        var basis = SponsorIncome.PersonalBase(name, tier);
+        return new() { Id = $"player-{startSeason}-{d.Day}-{plan}", TargetId = "player", Brand = brand,
+            Plan = name, StartSeason = startSeason, EndSeason = startSeason + 1,
+            ExpiresDay = d.Day + 28, BaseRetainer = basis.Retainer, BaseWinBonus = basis.Win,
+            Retainer = CareerAudience.Quote(basis.Retainer, d.Fans), WinBonus = CareerAudience.Quote(basis.Win, d.Fans), FanBonus = plan == 2 ? 35 * tier : 0,
+            Description = RegionalOrganizations.SponsorDescription(brand), Slogan = RegionalOrganizations.SponsorSlogan(brand) };
     }
     public static string SponsorTerms(CareerData d, SponsorContract c) => $"按当前关注：每赛季支持 {CareerMoney.Format(SponsorIncome.Retainer(d, c))} · 每场获胜奖金 {CareerMoney.Format(SponsorIncome.WinBonus(d, c))}"
         + (c.FanBonus > 0 ? $"、关注 +{c.FanBonus}" : "") + $"\n金额随关注数变化 · 本期至第 {c.EndSeason} 赛季，届满自动续约";

@@ -39,6 +39,19 @@ public sealed class CareerLifeState
 
 public sealed class LifeActivity
 {
+    internal LifeActivity PreviewFor(CareerData data, string target)
+    {
+        var quote = (LifeActivity)MemberwiseClone();
+        if (target != PersonId && CareerTraining.IsTraining(this) && LifeCatalog.Resolve(this) is { } plan && plan.Purpose.Contains("{人}"))
+        {
+            string Purpose(string id) => plan.Purpose.Replace("{人}",CareerEngine.DisplayName(data,id))
+                .Replace("{队}",EsportsWorld.ClubName(data,ClubId)).Replace("{地}",Setting);
+            string original=Purpose(PersonId);
+            if (Detail.StartsWith(original,StringComparison.Ordinal)) quote.Detail=Purpose(target)+Detail[original.Length..];
+        }
+        quote.PersonId = target;
+        return quote;
+    }
     public int TermsVersion { get; set; }
     public string TrainingKind { get; set; } = "";
     public List<string> TrainingTargets { get; set; } = [];
@@ -87,8 +100,15 @@ public sealed class LifeEvent
 
 public sealed class FinanceEntry
 {
+    private const string LegacyTeamBonus = "球队冠军奖金";
+    private string _title = "";
     public int Day { get; set; }
-    public string Title { get; set; } = "";
+    public string Title
+    {
+        get => _title;
+        set => _title = value?.EndsWith(LegacyTeamBonus, StringComparison.Ordinal) == true
+            ? value[..^LegacyTeamBonus.Length] + "战队冠军奖金" : value ?? "";
+    }
     public decimal Amount { get; set; }
     public decimal Balance { get; set; }
 }

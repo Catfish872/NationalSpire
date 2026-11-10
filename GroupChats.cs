@@ -102,10 +102,17 @@ public static class GroupChats
         if (kind == "group-add") { AddMembers(d, g, command.People); return null; }
         if (kind == "group-stop") { AiService.CancelGroup(d, g.Id); return null; }
         if (Busy(g)) return "正在回复，请等待本轮结束。";
+        if (kind.StartsWith("group-memory-", StringComparison.Ordinal))
+        {
+            var error = ManualChatMemories.Manage(d, g.ManualMemories, kind[13..], command.Interaction.Entry, command.Text);
+            if (error == null) { g.Revision++; g.SummaryError = ""; }
+            return error;
+        }
         if (kind is "group-send" or "group-arbitrate")
         {
             if (kind == "group-arbitrate" && string.IsNullOrWhiteSpace(command.Text)) command.Text = "申请尖塔仲裁，请审理本群往来及此前裁决的履行情况。";
             if (string.IsNullOrWhiteSpace(command.Text) && command.Attachments.Count == 0) return null;
+            if (ConsumerAttachments.ValidateDrafts(d, "", g.Id, command.Attachments) is { } reservationError) return reservationError;
             if (g.Proactive.TryGetValue(Human(d), out var proactive)) proactive.Unanswered = 0;
             foreach (var a in command.Attachments.Where(a => a.Kind is "gift" or "activity" or OathAttachments.Kind))
             {
@@ -169,6 +176,11 @@ public static class GroupChats
             var effect = g.Turns.SelectMany(t => t.Effects).LastOrDefault(e => e.Lane == command.Lane && (command.Interaction.Offer.Length == 0 || g.Interactions[e.Lane].Offers.Any(o => o.Id == command.Interaction.Offer && o.TurnId == e.Turn)));
             if (effect == null) return "这项交互已不存在。";
             if (effect.Human != Human(d)) return "这项交互由发起人处理。";
+            if (kind == "group-offer-date")
+            {
+                var source = g.Interactions[effect.Lane].Offers.First(o => o.Id == command.Interaction.Offer);
+                string? error = DateGroupBridge.Begin(d, g, source, command.Interaction.Part == "public"); if (error == null) g.Revision++; return error;
+            }
             bool humanActivity = IsHuman(d, effect.Person);
             if (kind != "group-offer-attend" && !humanActivity && !PrivateMessages.CanChat(d, effect.Person)) return "该人物已经删除，这项交互不再执行。";
             string? result = InLane(d, g, effect.Human, effect.Person, effect.Target, c =>

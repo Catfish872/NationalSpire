@@ -1,3 +1,5 @@
+using Godot;
+
 namespace NationalSpire;
 
 /// <summary>共用生涯界面的多人上下文；显示个人视图，操作交给主机，绝不替换单人全局存档。</summary>
@@ -47,8 +49,46 @@ public partial class CareerScreen
         }, 280);
         box.AddChild(button);
     }
-    private ICareerSession? _multiplayer;
-    private CareerData ViewData => _multiplayer?.Data ?? _boundData ?? CareerStore.Data;
+    protected ICareerSession? _multiplayer;
+    protected CareerData ViewData => _multiplayer?.Data ?? _boundData ?? CareerStore.Data;
+    private void AddSessionStatus(ICareerSession session)
+    {
+        var status = Text(session.Status, 16, CareerVisuals.Teal);
+        if (session.ProposalId.Length == 0) { _content.AddChild(status); return; }
+
+        bool shopping = _tab == "生涯生活" && _lifeSection == "消费商城";
+        Container actions;
+        if (shopping)
+        {
+            var row = new HBoxContainer();
+            _content.AddChild(row);
+            status.Text = $"{session.Status} · 等待全员确认 · {session.ProposalText}";
+            status.TooltipText = status.Text;
+            status.MouseFilter = MouseFilterEnum.Pass;
+            status.MaxLinesVisible = 2;
+            status.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+            row.AddChild(status);
+            actions = row;
+        }
+        else
+        {
+            _content.AddChild(status);
+            var card = Card(); _content.AddChild(card);
+            var body = Inner(card);
+            body.AddChild(Text("等待全员确认", 22, _gold));
+            body.AddChild(Text(session.ProposalText, 17, _ink));
+            actions = body;
+        }
+        Button Vote(string title, string command, int width)
+        {
+            void Send() => MultiplayerCommand(command, session.ProposalId);
+            return shopping ? FramedAction(title, Send, width: width, height: 40) : Button(title, Send, width);
+        }
+        var approve = Vote(session.HasVoted ? "你已同意，等待队友" : "同意本次安排", "confirm", 250);
+        approve.Disabled = session.HasVoted; actions.AddChild(approve);
+        actions.AddChild(Vote("取消这项安排", "cancel", 180));
+    }
+
     private bool MultiplayerCommand(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)
     {
         if (_multiplayer == null) return false;

@@ -62,7 +62,7 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
                 if (turnId.Length == 0 && !active && !turns.Contains(o.TurnId)) continue;
                 string content = o.Kind switch
                 {
-                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，{o.Detail}，{SocialAppointments.StatusText(d, o)}",
+                    "activity" => $"活动《{o.Title}》，参与者{string.Join("、", o.Participants.Select(id => GroupChats.Name(d, id)))}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，{o.Detail}，{WeddingAppointments.Description(d, o)}{SocialAppointments.StatusText(d, o)}",
                     "match" => $"{actor}与{target}的{o.Mode}，{GameCalendar.Text(d, PrivateAppointments.Date(d, o))}，进阶{o.Ascension}，{match?.Status ?? o.State}。{o.Detail}",
                     "contract" => $"{actor}的合同报价，签字费{o.Signing}美元、周薪{o.Wage}美元、胜场奖金{o.WinBonus}美元，{o.Weeks}周，席位{o.Role}，{o.State}。{o.Detail}",
                     "publish" => $"{actor}的帖子《{o.Title}》，{(o.State == "已确认" ? "已发布" : o.State)}。{o.Detail}",
@@ -140,6 +140,11 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
             if (readers.Length > 0) Add("user", $"本群第{s.From + 1}至{s.Through}轮总结；知情人：{string.Join("、", readers.Select(p => GroupChats.Name(d, p)))}\n" + s.Text);
         }
         var completed = g.Turns.Select((t, i) => (t, i)).Where(x => x.t.Status == "complete").ToArray();
+        foreach (var memory in g.ManualMemories)
+        {
+            var readers = g.Members.Where(p => ChatMembership.Knows(g, p, memory.Order)).ToArray();
+            if (readers.Length > 0) Add("user", $"本群{ManualChatMemories.Heading(d, memory)}；知情人：{string.Join("、", readers.Select(p => GroupChats.Name(d, p)))}\n" + memory.Text);
+        }
         int recentStart = completed.Length > g.Settings.RecentRounds ? completed[completed.Length - g.Settings.RecentRounds - 1].i + 1 : 0;
         int start = Math.Min(g.SummarizedThrough, recentStart);
         long externalStart = recentStart > 0 ? g.Turns.Skip(recentStart).Select(t => t.Order).DefaultIfEmpty(d.Chats.Order + 1).Min() : 0;

@@ -8,7 +8,29 @@ public sealed class DateSceneBackground
 {
     public string Id { get; set; } = "";
     public string Description { get; set; } = "";
-    public string Image { get; set; } = "";
+    private string _image = "";
+    // Browsing only needs the metadata. Materialize the portable hash when a scene or its diary asks for it.
+    internal string? PackageFile { get; init; }
+    internal DateSceneBackground? Fallback { get; init; }
+    public string Image
+    {
+        get => ReadSource(DateSceneBackgrounds.PackageImage, static image => image);
+        set => _image = value ?? "";
+    }
+    internal bool HasImage => PackageFile != null || DateSceneBackgrounds.IsImageReference(_image);
+    internal Image? ReadPixels() => ReadSource(
+        static file => DateSceneAssetStore.ReadBackgroundImage(DateSceneAssetStore.ReadBackgroundFile(file), Path.GetExtension(file)),
+        DateSceneBackgrounds.Pixels);
+
+    private T ReadSource<T>(Func<string, T> fromFile, Func<string, T> fromReference)
+    {
+        if (PackageFile == null) return fromReference(_image);
+        try { return fromFile(PackageFile); }
+        catch (Exception e) when (Fallback != null && e is IOException or InvalidDataException or UnauthorizedAccessException)
+        {
+            return Fallback.ReadSource(fromFile, fromReference);
+        }
+    }
 }
 public sealed class DateBackgroundLibrary
 {
@@ -20,6 +42,7 @@ public sealed class DateBackgroundLibrary
 public static class DateSceneBackgrounds
 {
     private const string ResourcePrefix = "NationalSpire.DateBackgrounds.";
+    internal static bool IsImageReference(string image) => DateSceneAssetStore.IsImageHash(image) || image.StartsWith(ResourcePrefix, StringComparison.Ordinal);
     private static readonly Dictionary<string, string> EmbeddedImages = [];
     private static readonly Dictionary<string, string> Descriptions = new()
     {
@@ -68,7 +91,7 @@ public static class DateSceneBackgrounds
     }
     public static Image? Pixels(string image)
     {
-        if (image.Length == 64) return DateSceneAssetStore.Pixels(image, false);
+        if (DateSceneAssetStore.IsImageHash(image)) return DateSceneAssetStore.Pixels(image, false);
         if (!image.StartsWith(ResourcePrefix, StringComparison.Ordinal)) return null;
         using var input = typeof(DateSceneBackgrounds).Assembly.GetManifestResourceStream(image)
             ?? throw new FileNotFoundException("默认背景资源缺失：" + image);
@@ -77,8 +100,19 @@ public static class DateSceneBackgrounds
     }
     public static List<DateSceneBackground> AutomaticChoices(IEnumerable<DateSceneBackground> library)
     {
-        var items = library.ToList(); var pictures = items.Where(b => b.Image.Length == 64 || b.Image.StartsWith(ResourcePrefix, StringComparison.Ordinal)).ToList();
-        return pictures;
+        return library.Where(b => b.HasImage).ToList();
+    }
+    public static string At(IEnumerable<DateSceneBackground> library, IReadOnlyList<DateSceneLine> lines, int index, string initial, string openingContext)
+    {
+        var choices = AutomaticChoices(library);
+        var available = choices.Select(b => b.Id).ToHashSet(StringComparer.Ordinal);
+        string id = DateScenes.BackgroundAt(lines, index, initial, available);
+        if (available.Contains(id)) return id;
+        if (index < 0 || lines.Count == 0) return "";
+        // 首个已显示的旁白用于无有效背景时的保底；后续回忆/计划不参与重新评分。
+        // 从请求起点与已播放前缀重建，流式、完成和书签恢复使用同一结果。
+        string context = lines.Take(index + 1).FirstOrDefault(l => l.Narration && !string.IsNullOrWhiteSpace(l.Text))?.Text ?? openingContext;
+        return Closest(choices, context);
     }
     public static string Closest(IEnumerable<DateSceneBackground> library, string context, string current = "")
     {
@@ -103,6 +137,15 @@ public static class DateSceneBackgrounds
     }
     public static readonly string[] Extensions = [".png", ".jpg", ".jpeg", ".webp"];
     private static readonly Dictionary<string, (long Length, DateTime Time, string Image)> PackCache = [];
+    internal static string PackageImage(string file)
+    {
+        var info = new FileInfo(file);
+        if (PackCache.TryGetValue(file, out var cached) && cached.Length == info.Length && cached.Time == info.LastWriteTimeUtc && File.Exists(DateSceneAssetStore.BlobPath(cached.Image)))
+            return cached.Image;
+        string image = DateSceneAssetStore.ImportBackground(file);
+        PackCache[file] = (info.Length, info.LastWriteTimeUtc, image);
+        return image;
+    }
     public static string FilePath => Path.Combine(DateSceneAssetStore.DirectoryPath, "background-library.json");
     public static bool SafeId(string id) => DateScenes.SafeBackgroundId(id);
     public static string ImageId(string path)
@@ -121,8 +164,16 @@ public static class DateSceneBackgrounds
             return candidates.FirstOrDefault(Directory.Exists) ?? candidates[1];
         }
     }
-    private static DateBackgroundLibrary ReadUser() => File.Exists(FilePath)
-        ? JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new() : new();
+    private static DateBackgroundLibrary ReadUser()
+    {
+        if (!File.Exists(FilePath)) return new();
+        var library = JsonSerializer.Deserialize<DateBackgroundLibrary>(File.ReadAllText(FilePath), PortraitDesigns.Json) ?? new();
+        library.Images ??= [];
+        library.Images.RemoveAll(image => image is null);
+        library.Descriptions ??= [];
+        library.Removed ??= [];
+        return library;
+    }
     private static void Save(DateBackgroundLibrary library)
     {
         Directory.CreateDirectory(DateSceneAssetStore.DirectoryPath); string temporary = FilePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
@@ -145,12 +196,9 @@ public static class DateSceneBackgrounds
             {
                 try
                 {
-                    string id = ImageId(file); var info = new FileInfo(file);
-                    if (!PackCache.TryGetValue(file, out var cached) || cached.Length != info.Length || cached.Time != info.LastWriteTimeUtc || !File.Exists(DateSceneAssetStore.BlobPath(cached.Image)))
-                    {
-                        cached = (info.Length, info.LastWriteTimeUtc, DateSceneAssetStore.ImportBackground(file)); PackCache[file] = cached;
-                    }
-                    items[id] = new() { Id = id, Image = cached.Image, Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };
+                    string id = ImageId(file);
+                    items[id] = new() { Id = id, PackageFile = file, Fallback = items.GetValueOrDefault(id),
+                        Description = Descriptions.GetValueOrDefault(id, id.Replace('_', ' ').Replace('-', ' ')) };
                 }
                 catch (Exception e) { errors.Add(Path.GetFileName(file) + "：" + e.Message); }
             }
@@ -160,7 +208,11 @@ public static class DateSceneBackgrounds
             var library = ReadUser();
             foreach (var item in library.Images)
             {
-                if (!SafeId(item.Id) || !File.Exists(DateSceneAssetStore.BlobPath(item.Image))) { errors.Add("背景缺失或编号无效：" + item.Id); continue; }
+                if (item?.Id is not { } id || !SafeId(id) || !DateSceneAssetStore.IsImageHash(item.Image) || !File.Exists(DateSceneAssetStore.BlobPath(item.Image)))
+                {
+                    errors.Add("背景缺失或编号无效：" + item?.Id);
+                    continue;
+                }
                 items[item.Id] = item;
             }
             foreach (var item in items.Values) if (library.Descriptions.TryGetValue(item.Id, out string? description)) item.Description = description;

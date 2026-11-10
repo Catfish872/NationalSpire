@@ -12,19 +12,19 @@ public partial class CareerScreen
         string folder = config.GetValue("browser", "directory", "").AsString();
         return Directory.Exists(folder) ? folder : "";
     }
-    private void PickNestedFile(string title, string[] extensions, Action<string> selected)
+    private void PickNestedFile(string title, string[] extensions, Action<string> selected, Action<string[]>? multiple = null)
     {
-        var parent = _dialogOverlay; var cancel = _cancelDialog;
-        if (parent == null) { OpenFilePicker(title, extensions, selected); return; }
+        var parent = _dialogOverlay; var cancel = _cancelDialog; var returnDialog = _returnDialog;
+        if (parent == null) { OpenFilePicker(title, extensions, selected, multiple); return; }
         parent.Hide(); _dialogOverlay = null; _cancelDialog = null;
         bool Alive() => IsInstanceValid(parent) && !parent.IsQueuedForDeletion();
-        OpenFilePicker(title, extensions, file => { if (Alive()) selected(file); });
+        OpenFilePicker(title, extensions, file => { if (Alive()) selected(file); }, multiple == null ? null : paths => { if (Alive()) multiple(paths); });
         var picker = _dialogOverlay;
-        void Restore() { if (Alive() && (_dialogOverlay == null || _dialogOverlay == picker)) { _dialogOverlay = parent; _cancelDialog = cancel; parent.Show(); } }
+        void Restore() { if (Alive() && (_dialogOverlay == null || _dialogOverlay == picker)) { _dialogOverlay = parent; _cancelDialog = cancel; _returnDialog = returnDialog; parent.Show(); } }
         if (picker != null) picker.TreeExiting += () => Callable.From(Restore).CallDeferred(); else Restore();
     }
     // 使用游戏内文件浏览器，支持磁盘和目录导航，避免独立系统窗口触发失焦静音。
-    private void OpenFilePicker(string title, string[] extensions, Action<string> selected)
+    private void OpenFilePicker(string title, string[] extensions, Action<string> selected, Action<string[]>? multiple = null)
     {
         string saved = SavedFilePickerDirectory();
         string folder = saved.Length > 0 ? saved : Directory.Exists(_filePickerDirectory) ? _filePickerDirectory : PromptTransfer.Desktop, chosen = "";
@@ -56,11 +56,13 @@ public partial class CareerScreen
         {
             _filePickerDirectory = folder;
             string path = chosen;
-            Callable.From(() => { if (IsInstanceValid(this) && !IsQueuedForDeletion()) selected(path); }).CallDeferred();
+            var paths = list.GetSelectedItems().Where(i => !entries[i].Directory).Select(i => entries[i].Path).ToArray();
+            Callable.From(() => { if (IsInstanceValid(this) && !IsQueuedForDeletion()) { if (multiple != null) multiple(paths); else selected(path); } }).CallDeferred();
         }
         ShowCareerDialog(title, "浏览文件夹并选择文件。支持 " + string.Join("、", extensions), () =>
         {
-            if (chosen.Length == 0 || !File.Exists(chosen)) { status.Text = "请先选中一个文件。"; return false; }
+            if (multiple == null ? chosen.Length == 0 || !File.Exists(chosen) : !list.GetSelectedItems().Any(i => !entries[i].Directory && File.Exists(entries[i].Path)))
+            { status.Text = "请先选中文件。"; return false; }
             Complete(); return true;
         }, "选择文件", box =>
         {
@@ -86,14 +88,16 @@ public partial class CareerScreen
             location = new LineEdit { Name = "FilePickerLocation", Editable = false, CustomMinimumSize = new(0, 42) }; box.AddChild(location);
             search = new LineEdit { Name = "FilePickerSearch", PlaceholderText = "搜索当前文件夹中的名称", CustomMinimumSize = new(0, 42) }; box.AddChild(search);
             list = new ItemList { Name = "FilePickerList", CustomMinimumSize = new(0, 340), SizeFlagsHorizontal = SizeFlags.ExpandFill };
+            if (multiple != null) list.SelectMode = ItemList.SelectModeEnum.Multi;
             list.AddThemeFontSizeOverride("font_size", 18); list.AddThemeColorOverride("font_color", _ink); box.AddChild(list);
             status = Text("", 16, _muted); box.AddChild(status);
             list.ItemSelected += index => { chosen = entries[(int)index].Directory ? "" : entries[(int)index].Path; status.Text = chosen.Length == 0 ? "双击进入文件夹。" : "已选择 " + Path.GetFileName(chosen); };
+            list.MultiSelected += (_, _) => status.Text = "已选择 " + list.GetSelectedItems().Count(i => !entries[i].Directory) + " 个文件（Ctrl / Shift 可多选）";
             list.ItemActivated += index =>
             {
                 var entry = entries[(int)index];
                 if (entry.Directory) Navigate(entry.Path);
-                else { chosen = entry.Path; _cancelDialog?.Invoke(); Complete(); }
+                else { chosen = entry.Path; Complete(); _cancelDialog?.Invoke(); }
             };
             search.TextChanged += _ => Refresh(); Refresh();
         });

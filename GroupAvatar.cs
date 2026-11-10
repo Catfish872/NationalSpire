@@ -9,7 +9,7 @@ public partial class GroupAvatar : Control
     public static string[] Members(CareerData data, GroupChat group) => group.Members.Distinct(StringComparer.Ordinal)
         .Where(id => !GroupChats.IsHuman(data, id) && CareerEngine.Person(data, id) != null)
         .OrderBy(id => id, StringComparer.OrdinalIgnoreCase).ThenBy(id => id, StringComparer.Ordinal).Take(4).ToArray();
-    public override void _Ready() { MouseFilter = MouseFilterEnum.Ignore; Resized += Arrange; }
+    public override void _Ready() { MouseFilter = MouseFilterEnum.Ignore; Resized += Arrange; Arrange(); }
     public void Update(CareerData data, GroupChat group)
     {
         var ids = Members(data, group);

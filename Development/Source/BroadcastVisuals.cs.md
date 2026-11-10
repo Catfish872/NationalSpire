@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`76721612842400EDC752179C8E9B99BF97D871AD379666452A4527DEE5ADA0FB`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C7748DADA81A7A127727C233A5A76670A9C59C3E7D7225E76167E4B47412255C`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -180,39 +180,29 @@ private BroadcastTransition? _pageEffect;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Lime`；`NationalSpire.CareerVisuals.Teal`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；输入表达式：`DrawColoredPolygon([new(w * .42f, 0), new(w, 0), new(w, h * .65f), new(w * .12f, h)], new Color("0e1b29"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawColoredPolygon([new(w * .42f, 0), new(w, 0), new(w, h * .65f), new(w * .12f, h)], new Color("0e1b29"));`
-- `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；输入表达式：`DrawColoredPolygon([new(w * .72f, 0), new(w * .88f, 0), new(w * .47f, h), new(w * .31f, h)], new Color("112531"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawColoredPolygon([new(w * .72f, 0), new(w * .88f, 0), new(w * .47f, h), new(w * .31f, h)], new Color("112531"));`
-- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`DrawLine(new Vector2(w * .55f + i * 46, 0), new Vector2(w * .15f + i * 46, h), new Color("69dcd008"), 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawLine(new Vector2(w * .55f + i * 46, 0), new Vector2(w * .15f + i * 46, h), new Color("69dcd008"), 1);`
-- `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`DrawLine(new Vector2(w * .88f, 0), new Vector2(w * .47f, h), new Color("86bca521"), 1, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawLine(new Vector2(w * .88f, 0), new Vector2(w * .47f, h), new Color("86bca521"), 1, true);`
+- `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；输入表达式：`DrawColoredPolygon([new(w*.58f,0),new(w*.79f,0),new(w*.44f,h),new(w*.23f,h)],new Color("0e1c27"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawColoredPolygon([new(w*.58f,0),new(w*.79f,0),new(w*.44f,h),new(w*.23f,h)],new Color("0e1c27"));`
+- `Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；输入表达式：`DrawColoredPolygon([new(w*.79f,0),new(w*1.09f,0),new(w*.74f,h),new(w*.44f,h)],new Color("0c1622"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawColoredPolygon([new(w*.79f,0),new(w*1.09f,0),new(w*.74f,h),new(w*.44f,h)],new Color("0c1622"));`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(new Rect2(0, 0, w * .28f, 3), CareerVisuals.Lime)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(0, 0, w * .28f, 3), CareerVisuals.Lime);`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(new Rect2(Vector2.Zero, Size), new Color("090e18"))`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(Vector2.Zero, Size), new Color("090e18"));`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`DrawRect(new Rect2(w * .28f + 6, 0, w * .11f, 3), CareerVisuals.Teal)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawRect(new Rect2(w * .28f + 6, 0, w * .11f, 3), CareerVisuals.Teal);`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("090e18")`；返回值紧邻使用处：`ArgumentSyntax: new Color("090e18")`
-- `Godot.Color.Color(string)`；输入表达式：`new Color("0e1b29")`；返回值紧邻使用处：`ArgumentSyntax: new Color("0e1b29")`
-- `Godot.Color.Color(string)`；输入表达式：`new Color("112531")`；返回值紧邻使用处：`ArgumentSyntax: new Color("112531")`
-- `Godot.Color.Color(string)`；输入表达式：`new Color("69dcd008")`；返回值紧邻使用处：`ArgumentSyntax: new Color("69dcd008")`
-- `Godot.Color.Color(string)`；输入表达式：`new Color("86bca521")`；返回值紧邻使用处：`ArgumentSyntax: new Color("86bca521")`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("0c1622")`；返回值紧邻使用处：`ArgumentSyntax: new Color("0c1622")`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("0e1c27")`；返回值紧邻使用处：`ArgumentSyntax: new Color("0e1c27")`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(0, 0, w * .28f, 3)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(0, 0, w * .28f, 3)`
 - `Godot.Rect2.Rect2(float, float, float, float)`；输入表达式：`new Rect2(w * .28f + 6, 0, w * .11f, 3)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(w * .28f + 6, 0, w * .11f, 3)`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero, Size)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(Vector2.Zero, Size)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(w * .15f + i * 46, h)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(w * .15f + i * 46, h)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(w * .47f, h)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(w * .47f, h)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(w * .55f + i * 46, 0)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(w * .55f + i * 46, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(w * .88f, 0)`；返回值紧邻使用处：`ArgumentSyntax: new Vector2(w * .88f, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .12f, h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .12f, h)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .31f, h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .31f, h)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .42f, 0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .42f, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .47f, h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .47f, h)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .72f, 0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .72f, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w * .88f, 0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w * .88f, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w, 0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w, 0)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w, h * .65f)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w, h * .65f)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*.23f,h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*.23f,h)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*.44f,h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*.44f,h)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*.58f,0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*.58f,0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*.74f,h)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*.74f,h)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*.79f,0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*.79f,0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(w*1.09f,0)`；返回值紧邻使用处：`ExpressionElementSyntax: new(w*1.09f,0)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -221,9 +211,9 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll.StopMotion() — public void StopMotion()`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.BroadcastScroll._ExitTree()`](BroadcastVisuals.cs.md#symbol-311cb40e4c47)；[`NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-1a48859941e6)；[`NationalSpire.BroadcastScroll._Ready()`](BroadcastVisuals.cs.md#symbol-94caf301d158)；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；[`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
+**调用者：** [`NationalSpire.BroadcastScroll._ExitTree()`](BroadcastVisuals.cs.md#symbol-311cb40e4c47)；[`NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-1a48859941e6)；[`NationalSpire.BroadcastScroll._Ready()`](BroadcastVisuals.cs.md#symbol-94caf301d158)；[`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；[`NationalSpire.CareerScreen.AddLedgerTable(Godot.VBoxContainer, NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.FinanceEntry>, int)`](CareerBoardsScreen.cs.md#symbol-efdf49030123)；[`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
 **调用：** `Godot.Tween.Kill()`
 
@@ -242,7 +232,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll._Ready() — public override void _Ready()`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -259,41 +249,13 @@ private BroadcastTransition? _pageEffect;
 
 - `GetVScrollBar().GuiInput` += `input => { if (input is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left }) StopMotion(); }`
 
-<a id="symbol-e5e90f272190"></a>
-
-## `NationalSpire.BroadcastScroll._Input(Godot.InputEvent) — public override void _Input(InputEvent input)`
-
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
-
-**调用：** [`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetGlobalRect()`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`
-
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`IsVisibleInTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsVisibleInTree()`
-- `Godot.Control.GetGlobalRect()`；输入表达式：`GetGlobalRect()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetGlobalRect().HasPoint`
-- `Godot.Node.GetParent()`；输入表达式：`current.GetParent()`；返回值紧邻使用处：`AssignmentExpressionSyntax: current = current.GetParent()`
-- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().GuiGetHoveredControl`
-- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().SetInputAsHandled`
-- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`GetGlobalRect().HasPoint(wheel.Position)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GetGlobalRect().HasPoint(wheel.Position)`
-- `Godot.Viewport.GuiGetHoveredControl()`；输入表达式：`GetViewport().GuiGetHoveredControl()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetViewport().GuiGetHoveredControl()`
-- `Godot.Viewport.SetInputAsHandled()`；输入表达式：`GetViewport().SetInputAsHandled()`；返回值紧邻使用处：`ExpressionStatementSyntax: GetViewport().SetInputAsHandled();`
-- `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`；输入表达式：`ScrollWheel(wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1, wheel.Factor)`；返回值紧邻使用处：`ExpressionStatementSyntax: ScrollWheel(wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1, wheel.Factor);`
-
-**赋值（含属性/字段和局部值）：**
-
-- `current` = `current.GetParent()`
-
 <a id="symbol-482eddf2d675"></a>
 
 ## `NationalSpire.BroadcastScroll.ScrollWheel(int, double) — internal void ScrollWheel(int direction, double factor)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.BroadcastScroll._Input(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-e5e90f272190)
+**调用者：** [`NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent)`](BroadcastVisuals.cs.md#symbol-1a48859941e6)；[`NationalSpire.CareerScreen.AddLedgerTable(Godot.VBoxContainer, NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.FinanceEntry>, int)`](CareerBoardsScreen.cs.md#symbol-efdf49030123)
 
 **调用：** [`NationalSpire.BroadcastScroll.StopMotion()`](BroadcastVisuals.cs.md#symbol-b858c7de4b8d)；`Godot.Callable.From<T0>(System.Action<T0>)`；`Godot.Node.CreateTween()`；`Godot.ScrollContainer.GetVScrollBar()`；`Godot.Tween.IsRunning()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenMethod(Godot.Callable, Godot.Variant, Godot.Variant, double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 
@@ -330,16 +292,19 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll._GuiInput(Godot.InputEvent) — public override void _GuiInput(InputEvent input)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.BroadcastScroll.StopMotion()`](BroadcastVisuals.cs.md#symbol-b858c7de4b8d)
+**调用：** [`NationalSpire.BroadcastScroll.ScrollWheel(int, double)`](BroadcastVisuals.cs.md#symbol-482eddf2d675)；[`NationalSpire.BroadcastScroll.StopMotion()`](BroadcastVisuals.cs.md#symbol-b858c7de4b8d)；`Godot.Control.AcceptEvent()`；`Godot.ScrollContainer.GetVScrollBar()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastScroll.StopMotion()`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`；`NationalSpire.BroadcastScroll.StopMotion()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.Control.AcceptEvent()`；输入表达式：`AcceptEvent()`；返回值紧邻使用处：`ExpressionStatementSyntax: AcceptEvent();`
+- `Godot.ScrollContainer.GetVScrollBar()`；输入表达式：`GetVScrollBar()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GetVScrollBar()`
+- `NationalSpire.BroadcastScroll.ScrollWheel(int, double)`；输入表达式：`ScrollWheel(direction, wheel.Factor)`；返回值紧邻使用处：`ExpressionStatementSyntax: ScrollWheel(direction, wheel.Factor);`
 - `NationalSpire.BroadcastScroll.StopMotion()`；输入表达式：`StopMotion()`；返回值紧邻使用处：`ExpressionStatementSyntax: StopMotion();`
 
 **赋值（含属性/字段和局部值）：**
@@ -349,7 +314,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastScroll._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -368,7 +333,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastTransition.Progress — public float Progress`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -388,7 +353,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastTransition._Draw() — public override void _Draw()`
 
-来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -418,7 +383,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel.Accent — public Color Accent`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -437,7 +402,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel._Ready() — public override void _Ready()`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -456,7 +421,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPanel._Draw() — public override void _Draw()`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -482,7 +447,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait.Art — public AvatarArt Art`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -501,7 +466,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait._Ready() — public override void _Ready()`
 
-来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -521,7 +486,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.BroadcastPortrait._Draw() — public override void _Draw()`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -567,13 +532,13 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.AnimatePage() — private void AnimatePage()`
 
-来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
 **调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Callable.From<T0>(System.Action<T0>)`；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.IsInsideTree()`；`Godot.Transform2D.AffineInverse()`；`Godot.Tween.Chain()`；`Godot.Tween.Kill()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenCallback(Godot.Callable)`；`Godot.Tween.TweenMethod(Godot.Callable, Godot.Variant, Godot.Variant, double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`NationalSpire.BroadcastTransition.BroadcastTransition()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastTransition.Progress`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._pageEffect`；`NationalSpire.CareerScreen._pageTween`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._profileFilter`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._visualLocation`；`NationalSpire.CareerScreen._worldSection`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastTransition.Progress`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._pageEffect`；`NationalSpire.CareerScreen._pageTween`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._profileFilter`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._visualLocation`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.EventHub`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -619,9 +584,9 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float) — private static Button FilterButton(string title, bool selected, Action action, float width)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-0aa3d7203ee8)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int)`](PeoplePickerScreen.cs.md#symbol-80a307ead785)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
+**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-5cf43cbe1562)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int, bool, string)`](PeoplePickerScreen.cs.md#symbol-bb0e3159d994)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
 
 **调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
@@ -644,9 +609,9 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Emphasize(Godot.Button) — private static void Emphasize(Button button)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
+**调用者：** [`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
@@ -670,7 +635,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string) — private Control PlayerBanner(CareerData data, string id)`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
@@ -734,11 +699,11 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch) — private Control Matchup(CareerData data, CareerMatch match)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-f3d2df3d6c54)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-3486a5440699)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Lime`；`Side(bool)`
 
@@ -759,11 +724,11 @@ private BroadcastTransition? _pageEffect;
 - `center.VerticalAlignment` = `VerticalAlignment.Center`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-f3d2df3d6c54"></a>
+<a id="symbol-3486a5440699"></a>
 
 ## `Side(bool) — void Side(bool ours)`
 
-来源：源码第 239 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch)`](BroadcastVisuals.cs.md#symbol-dc5a27245e42)
 

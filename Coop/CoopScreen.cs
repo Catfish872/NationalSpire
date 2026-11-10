@@ -21,13 +21,15 @@ public partial class CoopScreen : Control, IScreenContext
     private int _entrySequence = -1;
     private double _tick;
     private bool _working;
+    private bool _openingDisplayed;
+    private CareerOpeningPlayer _personal = new();
     private Control? _dialog;
     private CoopCommand? _pending;
     private CoopCoordinator? _replySession;
     public static void OpenSaved(Control menu, string id)
     {
         CoopRuntime.Current?.Disconnect(); Open(menu);
-        if (Current is { } screen) screen.Connect(true, CareerEngine.Name(CareerStore.Data), saved: id);
+        if (Current is { } screen) _ = screen.Connect(true, CareerEngine.Name(CareerStore.Data), saved: id);
     }
     public static void Open(Control menu, bool stayInRoom = false)
     {
@@ -59,7 +61,7 @@ public partial class CoopScreen : Control, IScreenContext
     {
         SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); MouseFilter = MouseFilterEnum.Stop;
         var background = new BroadcastBackdrop(); AddChild(background); background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        _stage = new Control(); AddChild(_stage); Resized += Fit; Fit();
+        _stage = LandscapeViewport.Mount(this);
         var margin = new MarginContainer(); _stage.AddChild(margin); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         foreach (string edge in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 38);
         var frame = new VBoxContainer(); frame.AddThemeConstantOverride("separation", 24); margin.AddChild(frame);
@@ -75,8 +77,6 @@ public partial class CoopScreen : Control, IScreenContext
         _footer = new VBoxContainer(); frame.AddChild(_footer);
         _entrySequence = Session?.World?.EntrySequence ?? -1; Render();
     }
-    private void Fit()
-    { float scale = Math.Min(Size.X / 1600f, Size.Y / 1000f); _stage.Size = new(1600, 1000); _stage.Scale = Vector2.One * scale; _stage.Position = (Size - _stage.Size * scale) / 2; }
     public override void _Process(double delta)
     {
         _tick += delta; if (_tick < .3) return; _tick = 0;
@@ -87,6 +87,7 @@ public partial class CoopScreen : Control, IScreenContext
             else if (world.EntrySequence > _entrySequence) { EnterCareer(); return; }
         }
         if (Session is { World: null }) _status.Text = Session.Status;
+        if (!_openingDisplayed && Session?.OpeningCountry != null) Render();
         string presence = string.Join(',', Session?.Online.Order() ?? Enumerable.Empty<ulong>());
         if (_dialog == null && ((Session?.World?.Revision ?? -1) != _revision || presence != _presence)) Render();
     }
@@ -123,16 +124,20 @@ public partial class CoopScreen : Control, IScreenContext
         Button(row, confirmText, () => { shade.QueueFree(); _dialog = null; try { action(); } catch (Exception e) { _message = e.Message; } });
         Button(row, "取消", () => { shade.QueueFree(); _dialog = null; });
     }
-    private async void Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "")
+    private async Task Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "", NpcGenerationSetup? npcSetup = null, bool reportToSetup = false)
     {
-        if (_working) return; _working = true; _message = "正在连接 Steam 房间……";
+        if (host && saved.Length == 0 && npcSetup == null)
+        {
+            CareerScreen.SelectNpcGeneration(this, AiSettingsStore.Load(new()), plan => Connect(host, name, capacity, country, code, saved, plan, true), Runtime.CancelConnection, country); return;
+        }
+        if (_working) return; _personal = new(); _openingDisplayed = false; _working = true; _message = "正在连接 Steam 房间……";
         try
         {
-            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved);
+            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved, npcSetup, (world,plan)=>OpeningClubEditor.Choose(this,world,plan));
             if (!IsInstanceValid(this) || IsQueuedForDeletion()) return;
             _entrySequence = Session?.World?.EntrySequence ?? -1; _message = "房间已创建，请先邀请队友。"; if (!host) _message = "已加入房间，正在等待队友。"; Render();
         }
-        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; }
+        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; if (reportToSetup) throw; }
         finally { _working = false; }
     }
     private void Submit(string kind, string target = "")
@@ -154,6 +159,17 @@ public partial class CoopScreen : Control, IScreenContext
         CareerVisuals.ClearContent(_footer);
         _revision = Session?.World?.Revision ?? -1; _presence = string.Join(',', Session?.Online.Order() ?? Enumerable.Empty<ulong>());
         if (Session == null) { Entrance(); return; }
+        if (Session.World == null && Session.OpeningCountry is { } country)
+        {
+            _openingDisplayed = true;
+            var welcome = Card(_body,"首次加入 · 个人开局");
+            Text(welcome,"世界由房主创建。可以填写自己的资料，也可以沿用默认值直接加入。",17);
+            OpeningPlayerEditor.Draw(welcome,_personal,Session.JoinName,country,country);
+            var actions = new HBoxContainer(); welcome.AddChild(actions);
+            void Join(CareerOpeningPlayer profile) { Session.SubmitOpening(profile); _openingDisplayed = false; Render(); }
+            Button(actions,"保存并加入",()=>Join(_personal)); Button(actions,"使用默认值加入",()=>Join(new()));
+            return;
+        }
         if (Session.World == null) { var sync = Card(_body, "正在同步房间"); Text(sync, "等待房主发送队伍和存档信息。首次加入可能需要一点时间。"); Button(sync, "取消加入", () => { Runtime.Disconnect(); Render(); }); return; }
         WaitingRoom(Session.World);
     }
@@ -165,12 +181,12 @@ public partial class CoopScreen : Control, IScreenContext
         var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 16); host.AddChild(choices);
         var count = new OptionButton(); foreach (int n in new[] { 2, 3, 4 }) count.AddItem(n + " 人队伍", n); choices.AddChild(count);
         var country = new OptionButton(); foreach (string c in EsportsWorld.Countries) country.AddItem(c); choices.AddChild(country);
-        Button(host, "创建房间并邀请队友", () => Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)), 300);
+        Button(host, "创建房间并邀请队友", () => { _ = Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)); }, 300);
         var join = Card(columns, "加入朋友的房间"); Text(join, "让房主在等待房间中复制邀请码发给你，然后粘贴到这里。", 18, CareerVisuals.Muted);
         var code = Input(join, "在这里粘贴房间邀请码"); code.Name = "LobbyInviteInput";
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); join.AddChild(actions);
         Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190);
-        Button(actions, "加入房间", () => Connect(false, name.Text, code: code.Text), 180);
+        Button(actions, "加入房间", () => { _ = Connect(false, name.Text, code: code.Text); }, 180);
         var saves = Card(_body, "已有多人生涯"); Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted);
         List<CoopStorage.Checkpoint> checkpoints;
         try { checkpoints = await CoopSettings.Storage.ListAsync(); }
@@ -180,10 +196,11 @@ public partial class CoopScreen : Control, IScreenContext
         foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day))
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
-            Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
-            Button(row, "继续并邀请", () => Connect(true, name.Text, saved: cp.World.Id), 190);
+            string displayName=CareerLibrary.DisplayName(cp.World.World,cp.World.Name);
+            Text(row, $"{displayName} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
+            Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190);
             bool deleting = false;
-            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
+            Button(row, "删除", () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
             {
                 if (deleting) return; deleting = true;
                 try

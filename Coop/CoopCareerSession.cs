@@ -10,6 +10,7 @@ public sealed class CoopCareerSession : ICareerSession
     private long _revision = -1;
     private string _presence = "";
     private CoopCommand? _pending;
+    private Action? _queuedReadAll;
     private Action? _accepted;
     private bool _disposed;
     public CareerData Data { get; private set; } = null!;
@@ -41,6 +42,11 @@ public sealed class CoopCareerSession : ICareerSession
     public bool Refresh()
     {
         if (!Alive) return false;
+        if (_pending == null && _queuedReadAll is { } afterRead)
+        {
+            _queuedReadAll = null;
+            Send("read-all", accepted: afterRead);
+        }
         var w = _session.World!; string presence = string.Join(',', _session.Online.Order()) + "|" + RunStatus + "|" + _pending?.Id;
         if (Data != null && _revision == w.Revision && _presence == presence) return false;
         _revision = w.Revision; _presence = presence;
@@ -84,6 +90,11 @@ public sealed class CoopCareerSession : ICareerSession
             if (_session.World is { } world && CommunityThreads.All(world.World).FirstOrDefault(p => p.Id == target) is { } post)
                 _session.SyncReading(new CoopReading { Posts = { [post.Id] = post.Revision } });
             accepted?.Invoke();
+            return;
+        }
+        if (kind == "read-all" && _pending != null)
+        {
+            if (_pending.Kind != kind) _queuedReadAll = accepted ?? (() => { });
             return;
         }
         if (_pending != null) { Message?.Invoke("正在同步上一项操作。", false); return; }

@@ -61,7 +61,13 @@ public static class PlayerFacingText
         && element.TryGetProperty(name, out var value) && value.ValueKind is JsonValueKind.String or JsonValueKind.Number
         ? value.ToString() : null;
 
-    private static string Head(string text, int length) => text.Length <= length ? text : text[..(length - 1)] + "…";
+    internal static string Head(string text, int length)
+    {
+        if (text.Length <= length) return text;
+        int end = length - 1;
+        if (end > 0 && char.IsHighSurrogate(text[end - 1]) && char.IsLowSurrogate(text[end])) end--;
+        return text[..end] + "…";
+    }
 
     public static string AiErrorPreview(string detail)
     {

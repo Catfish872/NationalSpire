@@ -125,13 +125,13 @@ private Label? _privateListEmpty;
 - `words.Resized` += `PositionWords`
 - `Words` = `words`
 
-<a id="symbol-c1f8019caa83"></a>
+<a id="symbol-3bb3c8903b50"></a>
 
 ## `PositionDetails() — void PositionDetails()`
 
 来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`PositionWords()`](PrivateListRows.cs.md#symbol-7022cda0857c)
+**调用者：** [`PositionWords()`](PrivateListRows.cs.md#symbol-c0e8d0fb062e)
 
 **调用：** `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；`Godot.Node.IsInsideTree()`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
 
@@ -154,7 +154,7 @@ private Label? _privateListEmpty;
 - `lastChat.Size` = `new(Math.Max(0, button.Size.X - 78), 18)`
 - `symbol.Position` = `new(Math.Max(0, button.Size.X - 24), at.Y + (title.Size.Y - 18) / 2)`
 
-<a id="symbol-7022cda0857c"></a>
+<a id="symbol-c0e8d0fb062e"></a>
 
 ## `PositionWords() — void PositionWords()`
 
@@ -162,7 +162,7 @@ private Label? _privateListEmpty;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`PositionDetails()`](PrivateListRows.cs.md#symbol-c1f8019caa83)；`Godot.Control.GetMinimumSize()`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
+**调用：** [`PositionDetails()`](PrivateListRows.cs.md#symbol-3bb3c8903b50)；`Godot.Control.GetMinimumSize()`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.PrivateListRow.Group`；`PositionDetails()`
 

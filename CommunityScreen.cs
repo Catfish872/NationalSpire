@@ -53,12 +53,17 @@ public partial class CareerScreen
         CommunityThreads.MarkRead(data, post);
         UpdateCommunityBadge(); _postSignature = Signature(data);
     }
+    private int _shownUnread = -1;
     private void UpdateCommunityBadge()
     {
         if (_updatesButton == null) return;
         int count = CommunityThreads.Unread(_boundData);
-        _updatesButton.Text = count > 0 ? $"●  {count} 个帖子有更新" : "社区暂无未读更新";
-        _updatesButton.AddThemeColorOverride("font_color", count > 0 ? new Color("f07878") : _muted);
+        if (_shownUnread == count) return;
+        _shownUnread = count;
+        SetRailCount(_railPostCount,count);
+        _communityCaption.Visible=count>0;
+        _communityCaption.Text=count>0?$"{count} 条更新":"";
+        _updatesButton.TooltipText = count > 0 ? $"{count} 个帖子有更新" : "社区";
     }
     private void OpenUpdates() => Visit(() => { _tab = "社区"; _postId = null; _communityFilter = "未读更新"; });
     private void RenderThread(CareerData data, CommunityPost post)
@@ -313,7 +318,7 @@ public partial class CareerScreen
                 int next = choice == direction ? 0 : direction;
                 if (MultiplayerCommand("community-vote", post.Id, number: next, parent: replyId))
                 { Update(current, currentPost, currentReply); return; }
-                string before = Signature(current);
+                var before = Signature(current);
                 long voteRevision = currentPost.VoteRevision;
                 string voter = CommunityVotes.VoterId(current);
                 if (CommunityVotes.SetVote(current, post.Id, replyId, next, voter))

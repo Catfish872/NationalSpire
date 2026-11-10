@@ -58,6 +58,7 @@ internal static class CommunityReplyExpressions
             MouseFilter = Control.MouseFilterEnum.Stop, MouseForcePassScrollEvents = false };
         panel.AddChild(choiceScroll); choiceScroll.AddChild(choices);
         var emojiButton = CategoryButton("😊", "ReplyEmojiButton", 26);
+        emojiButton.AddThemeFontOverride("font", CareerVisuals.EmojiFont);
         var kaomojiButton = CategoryButton("OwO", "ReplyKaomojiButton", 16);
         kaomojiButton.Hide();
         // 跟随同一操作行的实际高度，保持正方形入口和发布、收起按钮上下对齐。
@@ -150,6 +151,7 @@ internal static class CommunityReplyExpressions
         var button = new Button { Name = name, Text = text, CustomMinimumSize = new Vector2(emoji ? 42 : 0, 40),
             SizeFlagsVertical = Control.SizeFlags.ShrinkCenter, MouseDefaultCursorShape = Control.CursorShape.PointingHand };
         button.AddThemeFontSizeOverride("font_size", emoji ? 24 : 17);
+        if (emoji) button.AddThemeFontOverride("font", CareerVisuals.EmojiFont);
         foreach (var (state, emojiFill, kaomojiFill) in new[]
         {
             ("normal", "00000000", "b8cfdf"), ("hover", "ffffff14", "c9dfeb"),

@@ -23,6 +23,7 @@ public static partial class PromptLibrary
         if (TemplateId(options) == id) SelectTemplate(options, DeletionFallback(options, id));
         options.CustomPromptTemplates.Remove(id);
         options.EventPoolOverrides.Remove(id);
+        options.PersonalityPoolsByTemplate.Remove(id);
         options.PromptTemplateOverrides?.Remove(id);
     }
 
@@ -51,6 +52,7 @@ public static partial class PromptLibrary
         string id = "custom-" + Guid.NewGuid().ToString("N");
         options.CustomPromptTemplates ??= new(); options.CustomPromptTemplates.Add(id, created);
         EventPools.Save(options, EventPools.Overrides(options, baseId), id);
+        if (options.PersonalityPoolsByTemplate.TryGetValue(baseId, out var pool)) options.PersonalityPoolsByTemplate[id] = Coop.CoopJson.Copy(pool);
         SelectTemplate(options, id);
         return id;
     }

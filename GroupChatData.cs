@@ -23,6 +23,7 @@ public sealed class GroupChat
     public List<GroupTurn> Turns { get; set; } = [];
     public List<PrivateSummary> SmallSummaries { get; set; } = [];
     public List<PrivateSummary> BigSummaries { get; set; } = [];
+    public List<ManualChatMemory> ManualMemories { get; set; } = [];
     public Dictionary<string, PrivateConversation> Interactions { get; set; } = [];
     public Dictionary<string, int> Seen { get; set; } = [];
     public GroupHistorySettings Settings { get; set; } = new();

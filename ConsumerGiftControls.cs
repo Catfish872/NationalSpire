@@ -75,22 +75,41 @@ public partial class GiftRingMark : Control
     }
 }
 
+public partial class PickerPortraitMark : Control
+{
+    public PickerPortraitMark() { CustomMinimumSize = new(20, 20); MouseFilter = MouseFilterEnum.Ignore; }
+    public override void _Draw()
+    {
+        float scale = Math.Min(Size.X, Size.Y) / 20;
+        var center = Size / 2;
+        Vector2[] outline = [new(-3, -7), new(-7, -5), new(-9, -1), new(-5, 1), new(-5, 7),
+            new(5, 7), new(5, 1), new(9, -1), new(7, -5), new(3, -7), new(1, -4), new(-1, -4), new(-3, -7)];
+        DrawPolyline(outline.Select(p => center + p * scale).ToArray(), Colors.White, 1.5f * scale, true);
+    }
+}
+
 public partial class CareerScreen
 {
-    private static void PickerRing(HBoxContainer row, CareerData data, string person)
+    private static void PickerRing(HBoxContainer row, CareerData data, string person, bool portraitSlot = false, bool hasPortrait = false)
     {
         var button = row.GetChildren().OfType<Button>().FirstOrDefault(); if (button == null) return;
-        foreach (var previous in button.GetChildren().OfType<GiftRingMark>().ToArray()) { button.RemoveChild(previous); previous.QueueFree(); }
+        foreach (var previous in button.GetChildren().Where(c => c is GiftRingMark or PickerPortraitMark).ToArray()) { button.RemoveChild(previous); previous.QueueFree(); }
         var relation = PrivateMessages.Mailbox(data).Relations.GetValueOrDefault(person);
         foreach (string state in new[] { "normal", "hover", "pressed", "hover_pressed", "disabled", "focus" })
         {
             string key = "gift_ring_padding_" + state;
-            if (relation?.RingReceived != true && !button.HasMeta(key)) continue;
+            if (!portraitSlot && relation?.RingReceived != true && !button.HasMeta(key)) continue;
             if (button.GetThemeStylebox(state) is not StyleBoxFlat original) continue;
             if (!button.HasMeta(key)) button.SetMeta(key, original.ContentMarginRight);
             var style = (StyleBoxFlat)original.Duplicate();
-            style.ContentMarginRight = button.GetMeta(key).AsSingle() + (relation?.RingReceived == true ? 28 : 0);
+            style.ContentMarginRight = button.GetMeta(key).AsSingle() + (portraitSlot ? 56 : relation?.RingReceived == true ? 28 : 0);
             button.AddThemeStyleboxOverride(state, style);
+        }
+        if (portraitSlot && hasPortrait)
+        {
+            var portrait = new PickerPortraitMark { Name = "PickerPortraitMark" };
+            button.AddChild(portrait); portrait.SetAnchorsAndOffsetsPreset(LayoutPreset.CenterRight);
+            portrait.OffsetLeft = -60; portrait.OffsetRight = -40; portrait.OffsetTop = -10; portrait.OffsetBottom = 10;
         }
         if (relation?.RingReceived != true) return;
         var mark = new GiftRingMark { Name = "PickerOathMark", Completed = relation.WeddingCompleted };

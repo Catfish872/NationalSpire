@@ -1,6 +1,6 @@
 namespace NationalSpire;
 
-/// <summary>球队自身关注和现役选手带来的关注分别计算，转会不重复发放球队关注。</summary>
+/// <summary>战队自身关注和现役选手带来的关注分别计算，转会不重复发放战队关注。</summary>
 public static class ClubAudience
 {
     public static int Total(CareerData d, string club)

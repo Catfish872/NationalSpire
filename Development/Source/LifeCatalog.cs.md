@@ -28,7 +28,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Group(string, int, int, bool, bool, string[])`](LifeCatalog.cs.md#symbol-4db2d714dc9e)；[`NationalSpire.CareerTraining.Kind(string)`](CareerTraining.cs.md#symbol-f1d9371f3455)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`Group(string, int, int, bool, bool, string[])`](LifeCatalog.cs.md#symbol-8307be9c5c63)；[`NationalSpire.CareerTraining.Kind(string)`](CareerTraining.cs.md#symbol-f1d9371f3455)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.List()`
 
 **字段、属性、事件及方法组引用：** `Group(string, int, int, bool, bool, string[])`；`NationalSpire.CareerTraining.Kind(string)`；`NationalSpire.LifeCatalog.Plan.Cost`；`NationalSpire.LifeCatalog.Plan.Kind`；`NationalSpire.LifeCatalog.Plan.Title`
 
@@ -65,7 +65,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 - `Cost` = `6400`
 - `Cost` = `CareerTraining.Kind(p.Title) == "team-growth" ? 1080 : CareerTraining.Kind(p.Title) == "mixed" ? 540 : 720`
 
-<a id="symbol-4db2d714dc9e"></a>
+<a id="symbol-8307be9c5c63"></a>
 
 ## `Group(string, int, int, bool, bool, string[]) — void Group(string kind, int cost, int days, bool visible, bool project, string[] rows)`
 
@@ -92,7 +92,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 
 来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerLife.UpgradeOffers(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e7f329375f86)
+**调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerLife.UpgradeOffers(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e7f329375f86)；[`NationalSpire.LifeActivity.PreviewFor(NationalSpire.CareerData, string)`](LifeData.cs.md#symbol-f86a52faa0da)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

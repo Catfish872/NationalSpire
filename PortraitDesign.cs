@@ -168,7 +168,7 @@ public static class PortraitDesigns
         string source = JsonSerializer.Serialize(new
         {
             world = PromptLibrary.Get(data.Ai, "world"), person = new { p.PublicName, p.Gender, p.Role, p.Country, p.Biography, p.AiIntroduction, p.Temperament, p.Voice, p.Personality },
-            memories = c?.BigSummaries.Concat(c.SmallSummaries).Select(s => s.Text).ToArray(), history,
+            memories = c?.BigSummaries.Concat(c.SmallSummaries).Select(s => s.Text).Concat(c.ManualMemories.Select(m => m.Text)).ToArray(), history,
             basicFields = BasicFields.ToDictionary(f => f.Id, f => f.Label), outfitFields = OutfitFields.ToDictionary(f => f.Id, f => f.Label),
             defaults = new { design.Style, design.Basics, emotions = design.Emotions, outfit = design.Outfits.Single(o => o.Id == design.SelectedOutfit) }
         }, Json);

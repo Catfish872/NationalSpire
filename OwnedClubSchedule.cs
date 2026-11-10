@@ -1,16 +1,16 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>开赛前重排受影响赛区的联赛；开赛后的参赛地区变更留到下赛季执行。</summary>
 public static class OwnedClubSchedule
 {
-    public static void Join(CareerData d, string? previousRegion = null)
+    public static void Join(CareerData d, string? previousRegion = null, string[]? transferredRegions = null)
     {
         if (!OwnedClubs.CanJoinThisSeason(d)) throw new InvalidOperationException("联赛已经开始，不能创建俱乐部。");
         var own = d.Esports.OwnedClub!;
         var old = EsportsWorld.PlayerLeague(d) ?? throw new InvalidOperationException("本季联赛不存在。");
         own.PreviousLeague = old;
         own.PreviousMatches = System.Text.Json.JsonSerializer.Deserialize<List<CareerMatch>>(System.Text.Json.JsonSerializer.Serialize(d.Matches.Where(m => m.CompetitionId == old.Id).ToList()))!;
-        Rebuild(d, new[] { old.Country, previousRegion ?? old.Country });
+        Rebuild(d, new[] { old.Country, previousRegion ?? old.Country }.Concat(transferredRegions ?? []));
     }
     private static void Rebuild(CareerData d, IEnumerable<string> regions)
     {

@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public sealed class PrivateProfileChange
 {
@@ -60,6 +60,9 @@ public static class PrivateProfileChanges
         foreach (var c in mailbox.Conversations.Values)
             if (CareerEngine.Person(data, c.PersonId) is { } p)
                 foreach (var change in c.Turns.Where(t => t.Applied).SelectMany(t => t.ProfileChanges)) Apply(p, change);
+        foreach (var effect in mailbox.Conversations.Values.SelectMany(c => c.Turns).Where(t => t.Applied).SelectMany(t => t.DatePartyEffects))
+            if (CareerEngine.Person(data, effect.Key) is { } participant)
+                foreach (var change in effect.Value.ProfileChanges) Apply(participant, change);
     }
     public static string? Publish(CareerData data, string person, PrivateOffer offer)
     {

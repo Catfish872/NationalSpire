@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`42BEF84BFA7ECCBC89EF982109EB3D105CF0900DE79F78483635DF3A0977856D`。来源：[源码](../../MarketClearing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F041B7B39DC913472E9C3ACCDD4551F1C10341F971E73EBF96D62FF874B013D3`。来源：[源码](../../MarketClearing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -450,7 +450,7 @@ private readonly MarketAccount previewOwner;
 
 来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketClearing.Close(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, NationalSpire.MarketPosition)`](MarketClearing.cs.md#symbol-d7527455bb75)；[`NationalSpire.MarketClearing.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>)`](MarketClearing.cs.md#symbol-883f332c6946)；[`NationalSpire.MarketClearing.Reprice(NationalSpire.MarketState, string, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int, decimal)`](MarketClearing.cs.md#symbol-fbef13444d2b)；[`NationalSpire.MarketClearing.Settle(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](MarketClearing.cs.md#symbol-25fcc46bf36d)；[`Run(decimal)`](MarketClearing.cs.md#symbol-0c1a50114fda)
+**调用者：** [`NationalSpire.MarketClearing.Close(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, NationalSpire.MarketPosition)`](MarketClearing.cs.md#symbol-d7527455bb75)；[`NationalSpire.MarketClearing.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>)`](MarketClearing.cs.md#symbol-883f332c6946)；[`NationalSpire.MarketClearing.Reprice(NationalSpire.MarketState, string, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int, decimal)`](MarketClearing.cs.md#symbol-fbef13444d2b)；[`NationalSpire.MarketClearing.Settle(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](MarketClearing.cs.md#symbol-25fcc46bf36d)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)
 
 **调用：** [`NationalSpire.MarketClearing.Capacity(NationalSpire.MarketAsset, NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-64464988b285)；[`NationalSpire.MarketClearing.Slot.Slot(NationalSpire.MarketAccount, NationalSpire.MarketPosition, decimal)`](MarketClearing.cs.md#symbol-ce8c2e166c19)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketQuote.ExecutionCopy()`](CareerMarketData.cs.md#symbol-0dd7cd2eabdc)；`NationalSpire.MarketClearing.Result.Result()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -640,7 +640,7 @@ private readonly MarketAccount previewOwner;
 
 来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Run(decimal)`](MarketClearing.cs.md#symbol-0c1a50114fda)
+**调用者：** [`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)
 
 **调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Average(NationalSpire.MarketQuote, decimal, int)`](MarketClearing.cs.md#symbol-5f9bf3d5e43b)；[`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-01242bd01825)；[`NationalSpire.MarketClearing.Quantity(NationalSpire.MarketQuote, decimal, int)`](MarketClearing.cs.md#symbol-aa62127e5a9c)；[`NationalSpire.MarketClearing.Session.Close(NationalSpire.MarketClearing.Slot, string)`](MarketClearing.cs.md#symbol-7702fb075cde)；[`NationalSpire.MarketClearing.Session.Move(decimal, int, bool)`](MarketClearing.cs.md#symbol-010c7c45a36f)；[`NationalSpire.MarketClearing.Session.Next(decimal, int, bool)`](MarketClearing.cs.md#symbol-c4416168b119)；[`NationalSpire.MarketClearing.Slot.Remaining(decimal, decimal, decimal)`](MarketClearing.cs.md#symbol-aecae3901965)；[`NationalSpire.MarketClearing.Slot.Slot(NationalSpire.MarketAccount, NationalSpire.MarketPosition, decimal)`](MarketClearing.cs.md#symbol-ce8c2e166c19)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketNumber.Max(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-0cf4c87609b0)；`NationalSpire.MarketPosition.MarketPosition()`；`System.Math.Min(decimal, decimal)`
 
@@ -690,7 +690,7 @@ private readonly MarketAccount previewOwner;
 
 **调用者：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerScreen.MarketSubmit(NationalSpire.CareerData, NationalSpire.MarketOrder)`](MarketScreen.cs.md#symbol-fbc36ef790b1)；[`NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`](MarketClearing.cs.md#symbol-d078c0ca2b29)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
 
-**调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`](MarketClearing.cs.md#symbol-2192e2bdcb1e)；[`Run(decimal)`](MarketClearing.cs.md#symbol-0c1a50114fda)；`decimal.Floor(decimal)`；`System.Math.Min(decimal, decimal)`
+**调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`](MarketClearing.cs.md#symbol-2192e2bdcb1e)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)；`decimal.Floor(decimal)`；`System.Math.Min(decimal, decimal)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`；`NationalSpire.MarketClearing.Result.Accepted`；`NationalSpire.MarketClearing.Result.Fee`；`NationalSpire.MarketClearing.Result.Margin`；`NationalSpire.MarketClearing.Result.Reason`；`NationalSpire.MarketOrder.Amount`；`NationalSpire.MarketOrder.Asset`；`NationalSpire.MarketOrder.Leverage`；`Run(decimal)`
 
@@ -721,7 +721,7 @@ private readonly MarketAccount previewOwner;
 - `result.Reason` = `reason`
 - `result` = `Run(suggested)`
 
-<a id="symbol-0c1a50114fda"></a>
+<a id="symbol-9a044ff21e1c"></a>
 
 ## `Run(decimal) — Result Run(decimal margin)`
 
@@ -824,16 +824,17 @@ private readonly MarketAccount previewOwner;
 
 **调用者：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.MarketClearing.Reprice(NationalSpire.MarketState, string, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int, decimal)`](MarketClearing.cs.md#symbol-fbef13444d2b)；[`NationalSpire.MarketClearing.Settle(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](MarketClearing.cs.md#symbol-25fcc46bf36d)
 
-**调用：** [`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`](CareerMarket.cs.md#symbol-a7af74d3e50b)；[`NationalSpire.MarketClearing.History(NationalSpire.MarketState, string, int)`](MarketClearing.cs.md#symbol-b311dd0df093)；[`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-01242bd01825)；`decimal.ToString(string?)`；`System.Collections.Generic.List<T>.Remove(T)`
+**调用：** [`NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`](CareerMarket.cs.md#symbol-a7af74d3e50b)；[`NationalSpire.MarketClearing.History(NationalSpire.MarketState, string, int)`](MarketClearing.cs.md#symbol-b311dd0df093)；[`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-01242bd01825)；[`NationalSpire.MarketCurrency.FillText(string, decimal)`](MarketCurrency.cs.md#symbol-4cf3d1b2cfed)；`NationalSpire.MarketCurrency.MarketCurrency(NationalSpire.MarketState, NationalSpire.MarketAsset)`；`System.Collections.Generic.List<T>.Remove(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketClearing.Closed.Exit`；`NationalSpire.MarketClearing.Closed.Owner`；`NationalSpire.MarketClearing.Closed.Position`；`NationalSpire.MarketClearing.Closed.Reason`；`NationalSpire.MarketClearing.History(NationalSpire.MarketState, string, int)`；`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`；`NationalSpire.MarketClearing.Result.Closed`；`NationalSpire.MarketClearing.Result.Quote`；`NationalSpire.MarketExecution.Exit.Fill`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketQuote.ClearingDepthUnits`；`NationalSpire.MarketQuote.ExecutionBase`；`NationalSpire.MarketQuote.LongUnits`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketQuote.ShortUnits`；`NationalSpire.MarketState.Quotes`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；`NationalSpire.MarketAccount.Cash`；`NationalSpire.MarketAccount.Positions`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketClearing.Closed.Exit`；`NationalSpire.MarketClearing.Closed.Owner`；`NationalSpire.MarketClearing.Closed.Position`；`NationalSpire.MarketClearing.Closed.Reason`；`NationalSpire.MarketClearing.History(NationalSpire.MarketState, string, int)`；`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`；`NationalSpire.MarketClearing.Result.Closed`；`NationalSpire.MarketClearing.Result.Quote`；`NationalSpire.MarketCurrency.FillText(string, decimal)`；`NationalSpire.MarketExecution.Exit.Fill`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketQuote.ClearingDepthUnits`；`NationalSpire.MarketQuote.ExecutionBase`；`NationalSpire.MarketQuote.LongUnits`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketQuote.ShortUnits`；`NationalSpire.MarketState.Quotes`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `decimal.ToString(string?)`；输入表达式：`closed.Exit.Fill.Average.ToString("0.00000")`；返回值紧邻使用处：`BinaryExpressionSyntax: MarketCatalog.ById[asset].Name + closed.Reason + " · 成交价" + closed.Exit.Fill.Average.ToString("0.00000")`
-- `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；输入表达式：`CareerMarket.Record(closed.Owner, day, MarketCatalog.ById[asset].Name + closed.Reason + " · 成交价" + closed.Exit.Fill.Average.ToString("0.00000"), closed.Exit.Proceeds)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerMarket.Record(closed.Owner, day, MarketCatalog.ById[asset].Name + closed.Reason + " · 成交价" + closed.Exit.Fill.Average.ToString("0.00000"), closed.Exit.Proceeds);`
+- `NationalSpire.CareerMarket.Record(NationalSpire.MarketAccount, int, string, decimal)`；输入表达式：`CareerMarket.Record(closed.Owner, day, new MarketCurrency(market, MarketCatalog.ById[asset]).FillText(closed.Reason, closed.Exit.Fill.Average), closed.Exit.Proceeds)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerMarket.Record(closed.Owner, day, new MarketCurrency(market, MarketCatalog.ById[asset]).FillText(closed.Reason, closed.Exit.Fill.Average), closed.Exit.Proceeds);`
 - `NationalSpire.MarketClearing.History(NationalSpire.MarketState, string, int)`；输入表达式：`History(market, asset, day)`；返回值紧邻使用处：`ExpressionStatementSyntax: History(market, asset, day);`
 - `NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`；输入表达式：`Price(q)`；返回值紧邻使用处：`AssignmentExpressionSyntax: q.Price = Price(q)`
+- `NationalSpire.MarketCurrency.FillText(string, decimal)`；输入表达式：`new MarketCurrency(market, MarketCatalog.ById[asset]).FillText(closed.Reason, closed.Exit.Fill.Average)`；返回值紧邻使用处：`ArgumentSyntax: new MarketCurrency(market, MarketCatalog.ById[asset]).FillText(closed.Reason, closed.Exit.Fill.Average)`
+- `NationalSpire.MarketCurrency.MarketCurrency(NationalSpire.MarketState, NationalSpire.MarketAsset)`；输入表达式：`new MarketCurrency(market, MarketCatalog.ById[asset])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new MarketCurrency(market, MarketCatalog.ById[asset]).FillText`
 - `System.Collections.Generic.List<T>.Remove(T)`；输入表达式：`closed.Owner.Positions.Remove(closed.Position)`；返回值紧邻使用处：`ExpressionStatementSyntax: closed.Owner.Positions.Remove(closed.Position);`
 
 **赋值（含属性/字段和局部值）：**

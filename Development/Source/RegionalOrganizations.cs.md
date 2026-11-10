@@ -204,7 +204,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)
+**调用者：** [`NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData)`](CareerOpening.cs.md#symbol-520de3927565)；[`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)；[`NationalSpire.OpeningPlayerEditor.Draw(Godot.VBoxContainer, NationalSpire.CareerOpeningPlayer, string, string, string?)`](OpeningPlayerEditor.cs.md#symbol-1e898e8feeab)
 
 **调用：** [`NationalSpire.CareerCommerce.LegacySponsors(int)`](CareerCommerce.cs.md#symbol-0d09d372bf3d)；[`NationalSpire.RegionalOrganizations.Sponsors(string, int)`](RegionalOrganizations.cs.md#symbol-f76b5db64641)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`
 
@@ -247,7 +247,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
+**调用者：** [`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`](CareerCommerce.cs.md#symbol-a571f0d2f6a3)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)；[`NationalSpire.CareerScreen.ClubReview(NationalSpire.CareerData, NationalSpire.ClubDraft)`](OwnedClubScreen.cs.md#symbol-ae7b54f0270a)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
 **调用：** [`NationalSpire.CareerCommerce.LegacySponsors(int)`](CareerCommerce.cs.md#symbol-0d09d372bf3d)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.RegionalOrganizations.ProductDescription(string, int)`](RegionalOrganizations.cs.md#symbol-deed5b72ffc2)；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`
 
@@ -271,7 +271,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)
+**调用者：** [`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`](CareerCommerce.cs.md#symbol-a571f0d2f6a3)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`
 

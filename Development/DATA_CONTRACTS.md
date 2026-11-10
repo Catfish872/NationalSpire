@@ -32,19 +32,38 @@ CompetitionScore.Duels 保存该张总比分卡包含的 CompetitionDuel 列表�
 
 ## 单人与多人数据
 
+单人生涯路径绑定以对象弱引用关联文件，绑定本身保持存档内容只由实际使用者持有。重置成功后旧对象的保存回调变为已解除状态，失败则继续保留原对象。独立回忆列表 DateSceneMemories.Cache 只缓存最近读取的目录及其文件时间戳；切换目录释放前一目录的缓存引用，已打开回放仍持有自己的数据。回忆文件、历史正文与磁盘归档继续完整保留，读取和写入使用 JSON 流。
+### 性格池与人物风格
+
+AiOptions.PersonalityPool 是本机可编辑模板；CareerData.NpcPersonalityPool 是新世界生成时冻结的独立副本。总提示词 national-spire-prompts 的 version=4 包含可选 personalityPool，内容为完整 PersonalityPool 对象；导出始终写入，缺省配置导出内置默认池。导入支持旧 version=1/2/3；personalityPool 缺省或 null 时保留现有模板，提供时先按独立池合同校验，再深复制到 AiOptions。两级提示词原样保存，包括换行、强调标记及完整长文本。PersonalityPool 的交换格式为 `national-spire-personalities`、version=1；Categories 含 id/name/gender/weight/prompt/styles，styles 含 id/name/weight/prompt。ID 为 1—64 位小写字母、数字或下划线并以字母开始；类别 ID 全局唯一，具体性格 ID 在其类别内唯一。类别 Gender 接受男、女、中性；中性表示同时适用于两种性别，实际 NPC 身份仍为男/女。PersonalityPools.AllowsGender 共用适用范围判定；IdentityGender.Assigned 在抽中中性类别后沿原稳定性别随机种子生成身份。权重为有限的 0—1000000，启用池和每个活跃类别均需至少一项正权重。上限为 256 类、每类 512 项、单提示词 16000 字符、交换 JSON 8 MiB，校验集中于 PersonalityPools。小性格归属以其所在 styles 数组表示，移动完整对象即可改变大类；提示词字符串按原文序列化。
+
+PersonalityProfile.Selection 可空，保存 CategoryId/CategoryName/Gender/StyleId/StyleName/CategoryPrompt/StylePrompt，其中 Gender 保存类别适用范围。Assign 只为启用池的普通生成 NPC 建立快照；人物性别须落在类别适用范围内，CreatedCard、EditedCard、真人、彩蛋和已有快照沿用原资料。Select 由人物编辑器显式替换快照；CharacterCards.Validate 检查性别与两级字段，中性快照兼容男女身份。原 Kind、态度范围和其他性格维度继续参与原玩法；PNG、ZIP、命令及世界复制沿 PersonalityProfile 原序列化路径保留 Selection。性格模板和具体人物快照后续独立修改。中性类别扩展保持 version=1 及旧男/女池导入兼容；使用中性类别的新文件需要接收端包含本扩展，旧版导入器会拒绝该性别值。
+
+NpcSetupPending 缺省 false，仅自动建立第一份生涯时置 true；确认生成后保存新世界并清除。NpcGenerationSetup 是本次窗口的 Pool、本地待导入路径、RivalLevel（缺省 1000）、PlayerName 和可选 AiOptions 草稿；PlayerName 默认沿 CareerEngine.PlayerName 读取 Steam 名称，确认时清理首尾空格，空白沿原名称来源回退。单人 CreateNew 在生成人物、参赛 ID 与首帖快照前写入 PlayerAlias；联机房主在全新世界的 Connect 分支将姓名交给既有成员创建与协调器入口，队伍名和其他成员独立保存。密钥由窗口临时输入并交给既有本机加密凭据模块。文件路径随窗口释放，比赛水平和 AI 设置经 NpcGeneration.ApplySettings 交给对应的原模块。百分比调整写回原 Weight 字段，沿用 version=1 的 JSON 合同。比例锁定属于 NpcGenerationScreen 的窗口临时状态，大类与各小类组分别持有 bool 数组，打开和导入时默认 false；收起展开保持，关闭释放。最终提交、存档和联机继续仅使用调整后的 Weight。生成随机种子按 WorldId、人物 Id 和类别/具体性格阶段区分，联机 Create 在生成前传入稳定 WorldId。
+
 ### 公历、关系与场景资料
 
 CareerData.CalendarStartYear 是本生涯第1天对应的公历年份，第1天固定为该年1月1日。新建生涯时记录当前年份；旧档缺省0，在 NormalizeRoster 或多人主持者加载时由 GameCalendar.Initialize 写入升级年份，之后随原保存及完整快照固定。文件复制与再次启动读取已保存年份。内部 Day、Season、LongSeasonsFrom 和所有原赛事编号继续用于排序及计算；系统展示经 GameCalendar 换算。原文里的旧日期属于历史文字。
 
-PrivateRelation.SelectedBond 表示主动确认的关系阶段，1为恋人、2为誓约；OathConfirmed 表示当前誓约，RingReceived 和 WeddingCompleted 记录经历。普通好感数值继续使用 Favour。RelationshipGifts 在发送和接受时共用60/85门槛；普通礼物支持恋人请求；接受誓约之戒或盛大婚礼后将 SelectedBond 至少设为1，戒指另记 RingReceived，两者均解锁择期婚礼。完成婚礼才将 OathConfirmed、WeddingCompleted 设为true并将 SelectedBond 设为2。OathAttachments 接受解除时取消当前誓约，保留婚礼及收礼历史，并回到恋人关系。现有交互快照与 PreserveRelation 负责重新生成的恢复和后续独立关系操作的保留。
+PrivateRelation.SelectedBond 表示主动确认的关系阶段，1为恋人、2为誓约；OathConfirmed 表示当前誓约，RingReceived 和 WeddingCompleted 记录经历。普通好感数值继续使用 Favour。RelationshipGifts 在发送和接受时共用60/85门槛；普通礼物支持恋人请求；接受誓约之戒或盛大婚礼后将 SelectedBond 至少设为1，戒指另记 RingReceived，两者均解锁择期婚礼。完成婚礼才将 OathConfirmed、WeddingCompleted 设为true并将 SelectedBond 设为2；RelationshipPresentation.CompleteWedding 同时将当前玩家信箱中该NPC的 NpcAvatarFrames 设为 oath，确保本次结婚后实际佩戴誓约框。OathAttachments 接受解除时取消当前誓约，保留婚礼及收礼历史，并回到恋人关系。现有交互快照与 PreserveRelation 负责重新生成的恢复和后续独立关系操作的保留。
 
-PrivateOffer.RelationshipIntent 属于本次礼物请求；ServiceId 将婚礼活动关联到已接受的誓约之戒或盛大婚礼礼物。服务编号为 GroupId/礼物Id，私聊的 GroupId 为空。Services 汇总当前玩家私聊及群聊交互会话，同时返回原 GoodId，按礼物 Quantity 减去已赴约或已结束活动次数；购买、收礼扣库存、赴约使用服务分别沿原入口执行。
+PrivateOffer.RelationshipIntent 属于本次礼物请求；WeddingServiceIds 保存本场婚礼每位结婚对象各一份已接受的誓约之戒或盛大婚礼服务编号，ServiceId 保留首项兼容引用，GoodId 对应首项商品。ServiceIds 在旧记录缺少列表时读取原 ServiceId。编号为 GroupId/礼物Id，私聊 GroupId 为空。Services 汇总当前玩家私聊及群聊交互会话，同一会话在临时信箱和群聊中的引用合并一次；按每份礼物 Quantity 减去已赴约或已结束原活动中的使用次数，同一活动内相同编号计一次，DateSourceGroup 场景副本由原活动计数。ForParticipants 筛选可用服务；Error 在附件准备、确认及赴约检查编号、剩余数量、人物存在、参与者名单及每人一份服务。Partners 从原已接受礼物取得结婚对象，其他参加者作为宾客；Complete 逐个调用 RelationshipPresentation.CompleteWedding。每位NPC的婚约独立保存，后续结婚保留已有其他婚约，解除誓约只处理指定对象。
 
-PrivateMailbox.NpcAvatarFrames 保存当前玩家为各NPC选择的头像框。缺省使用原荣誉；婚礼完成且当前誓约有效时自动显示钻戒框。CharacterDeletion 删除自建角色时一并删除该信箱的选择记录。其他玩家信箱继续由既有多人个人资料处理。
+PrivateMailbox.NpcAvatarFrames 保存当前玩家为各NPC选择的头像框。缺省使用原荣誉；婚礼完成时统一选择钻戒框，后续由玩家在头像框设置中调整；当前誓约有效时该框可用。CharacterDeletion 删除自建角色时一并删除该信箱的选择记录。其他玩家信箱继续由既有多人个人资料处理。
 
-PrivateTurn.Scene 保存活动编号、套装、可用表情和背景、开场信息；SceneLines 保存台词/旁白及对应表情、背景，拼接文字等于 Reply。PrivateConversation.DateSceneStates 按活动编号记录 active、paused、ended。普通通讯过滤 Scene 轮次的显示和未读，原 Turns、ChatTimeline、自动总结及上下文继续读取这些轮次。旧档缺少 Scene 时为普通私聊，缺少正式关系状态时按原关系文字展示。
+PrivateTurn.Scene 保存活动编号、套装、可用表情和背景、开场信息，以及 Participants（PersonId、显示名、套装、默认表情和该人物可用差分）、GameInvitation、GameContext、GameMatchId、GameChatRequest和GameEvent（空字符串/request/result）。名单以原活动 Participants 为权威，旧单人轮次允许缺少列表。新局内轮次按PendingMatchId绑定同主联系人、同活动的对局，已保存轮次保持GameMatchId；回应与结算事件分别检查进行中或已结算状态。GameChatRequest保存触发聊天的预制台词与缘由；GameContext在入队、取得请求名额及重试时由绑定对局的最新Snapshot重建，结算附最终成绩。旧存档缺少GameChatRequest时从原GameContext的聊天缘由恢复。修订先复制Scene并以retained参数保留对局归属，再统一校验和撤回；校验或撤回失败保持原轮次数据。SceneChoices为最多两项回应字符串，缺省空列表，独立于Reply/SceneLines；旧存档或缺项由界面补两项本地兜底。SceneLines 增加 Speaker，沿完整人物编号归属台词；旁白 Speaker 为空，拼接文字等于 Reply。完成时 Reply 使用 SceneLines.Text 的拼接结果，使兼容的行内表情标记清理后仍保持这个约束；情绪按句独立赋值。用于下一轮约会请求的历史标记由现有 SceneLines 重建，存档结构保持兼容。PrivateConversation.DateSceneStates 按活动编号记录 active、paused、ended。普通通讯过滤 Scene 轮次的显示和未读，原 Turns、ChatTimeline、自动总结及上下文继续读取这些轮次。旧档缺少 Scene 时为普通私聊，缺少正式关系状态时按原关系文字展示。约会“重新输入”的编辑标记归当前 CareerScreen；点击时保存数据保持原值。发送修订复用 dm-date-revise，保留 PrivateTurn.Id、Scene 和 Attachments，完整轮次先统一回退，再以完整编辑文本替换 User 并清理旧输出、缓存上下文及选项；Regenerating/PreviousReply/PreviousReasoning 复位，避免中断后将旧回复配给新输入。原保存与联机私信收件人路由继续负责入队及结果同步，存档结构保持兼容。独立回忆同步同一轮次，替换后的手动输入清除原回应选项标记。
 
-素材与播放书签保存于本机 PortraitDesignStore/DateSceneAssetStore 路径，归属键包含生涯及人物；场景正文和进度状态归生涯。ZIP版本3保存 PortraitDesign 元数据、人物和图片，兼容版本1/2；PNG继续使用原角色卡格式。图片尺寸采用原比例，通用图片读取的文件大小与像素保护继续适用。
+DateScenes.PromptMaterials 的 emotionSets/emotions 引用仅属于当次提示词序列化：按情绪编号及完整描述比较，相同字典发送一份，各人物引用对应编号；参与者白名单、默认表情及描述仍来自原 Scene/Participants。原保存对象继续携带各自完整 Emotions。PromptHistory 仅合并发送给模型的连续同旁白类型、同说话人、同情绪且无新背景标记的界面片段；切换边界继续独立，Reply、SceneLines、播放器分页与存档字段保持原值。
+
+DateSceneRequest.CurrentBackground 为该轮请求开始时实际显示的背景ID，Backgrounds 提供可用ID及场景/时间说明。DateSceneLine.Background 表示该片段发生的转场；解析器将 current、缺失或本轮白名单外的编号留空。显示端 BackgroundAt 可接收本机可用ID集合，旧记录中的失效编号亦继承此前有效值。请求起点与已播放前缀共同决定当前背景，流式完成保留原起点，恢复书签时使用同一规则；缺省起点的旧记录通过首段旁白保底。此修复沿用原字段与保存格式，玩家存档和共享信箱无需迁移；本机图片、书签及独立回忆档案继续各自保存。
+
+工具模式约会沿PrivateTurn.ToolMode/ToolCalls保存请求模式与原始工具参数；SceneChoices继续保存两项玩家建议。Replies逐项使用Scene/Emotion/Background/Reply，多人在场增加完整PersonId的Speaker；个人关系、学习、状态、档案交互增加Actor。date_choice使用DateChoice，date_join使用DateJoin，date_game使用DateGame和Actor；它们转换到同名旧字段并共用既有校验。工具模式新增字段只在当前约会或邀请适用时加入工具定义，旧括号回复继续兼容。
+
+PrivateTurn.DateInvitation 保存加入活动的 Host、OfferId 及 pending/accepted/declined/unresolved/expired 状态；接受只扩展主联系人的原活动，拒绝与过期保持原名单。接受前可重新生成决定，接受后的回复通过原日程管理后续安排。DatePartyEffects 按人物编号保存同轮其他人物的交互结果；PrivateInteractionUndo.PersonId 指定回退对象，空值兼容旧轮次的主联系人。重生成按逆序撤回；后续手动关系覆盖沿 PreserveRelation 保留。大幅好感变化沿原确认规则；DateSceneEffects.SourceTurn统一解析直接轮次和DatePartyEffects子轮次的归属。读档恢复与聊天编辑根据归属判断确认事项是否有效，私聊最新页展示约会中的待确认卡片，确认后的回退数据记回主轮次。共同经历按原轮次读取，删除及遗忘过滤生效。
+
+CareerMatch.DateGame 可为空；非空时保存 Host/OfferId/TurnId、参与人物、额外 NPC 的同种子模拟 Companions、已触发事件 Fired、观测事实 Facts、PendingChat、PendingSpeaker、PendingLine、PendingUntil、Snapshot、Voices、ReturnPending、ResultTurnId和台词/聊天冷却计时。PendingSpeaker是实际发言者编号，PendingLine是已应用该NPC口吻的台词，PendingChat组合人物名、台词与触发事实供请求使用；PendingUntil为以原版RunTime起点校准、按有效帧推进的小数秒时钟加20的截止时间；该时钟归当前LiveRunBridge，原版对局计时与模拟仍沿原RunTime。LastChat在RequestChat实际出现时赋值；再次请求间隔至少20秒，ChatSeconds可指定更长间隔。消费或到期由ClearChatRequest一并清空这四项。旧存档缺少截止时间时首次轮询补完整20秒，并从原请求首行恢复发言者和台词；已有旧截止时间的剩余时长最多保留20秒。Voices 按 NPC 编号保存开赛时的口吻选择，局内设置可以更新；ReturnPending 在真实切磋结算后置为 true，主菜单恢复原约会且结算续聊入队后清除；ResultTurnId保存该续聊轮次编号，用于重入和重复回调去重。Companions 只归属该约会对局，原正式比赛集合仅有主切磋。CareerData.DateGameRules 保存各触发条件、阈值、是否请求聊天、启用状态和候选台词；旧存档通过属性初始化取得默认规则。DateGameTiming保存发言/请求冷却和快速判定起始楼层（缺省7秒、20秒、20层）；AmbientMinimumSeconds仅用于读取旧格式，新文件省略。DateGameFact包含Trigger/Act/Floor/Value/Person，单层消费、NPC受伤、进度差按幕与人物保留已观察最大值及其楼层，战斗胜利按楼层保留首次完整耗时。Fired使用trigger/act/幕号限制每幕一次，floor-gap整局一次，npc-death仍按人物一次。DateGameVoiceEdits按七种版本保存Lines/Remarks及Triggers差异，Triggers以稳定事件编号映射完整候选句列表，旧档缺省为空。新交换格式national-spire-date-game-voice/version=2保存一个personality、profile与catalog，profile.triggers中每个事件包含condition说明与可增删的lines；普通正文继续用profile.lines，补句用profile.remarks，catalog仅保留普通发言对照。national-spire-date-game-rules/version=2保存timing/rules/conditions，RuleSetting只写trigger/enabled/chat/threshold，Lines可空字段仅兼容version=1公共文件。旧独立性格文件version=1沿原句哈希读取，再导出时归入各事件；原national-spire-date-game-content版本1可读取并补齐新规则，内部完整快照版本为2。catalog以原句SHA-256前24位为稳定编号，列出场合、原文与占位符。单份性格导入只替换对应DateVoiceEdits，公共规则导入保留所有性格；旧综合导入更新全体。校验编号、重复字段、完整台词、有限阈值、文件大小与占位符，验证成功才修改草稿。仅差异入档，默认项继续跟随内置库更新。事件完整台词与当前公共候选句经原改写及补句组合后的结果比较，仅有改动时保存Triggers；LiveDateGame在确定发言者后调用DateGameVoices.Event按该NPC口吻与事件编号取词，显式候选句直接呈现，随后同一正文进入PendingChat。修改公共阈值和优先级保留这些按编号保存的台词。BroadcastLine.Rewrite携带本次选中的原句、可选补句与事实快照，仅为内存委托并标记JsonIgnore；游戏播报先确定约会NPC，再套用该版本改写并填入事实，普通赛事继续使用Text。已开始对局的既定赛果沿原学习机制保留，学习收益应用于人物长期通关率和后续预估。
+
+PrivateOffer.DateSourceGroup/DateSourceOffer 标记群聊活动对应的唯一场景副本。群聊原活动继续承载日程；DateGroupBridge 将场景副本放入主联系人信箱，活动状态及参与者回写原记录。共享来源的已结束、已取消状态保持终态；较新的群聊版本号也不能使旧副本重新开放活动。SourceActive是场景、加入邀请及AI提交使用的统一来源存续校验，无新增存档字段。SocialAppointments.All 排除场景副本，避免日历重复显示。DateSceneAssets.GameVoice、PresentationConfirmed和UseDefaultPortrait是按世界、当前玩家及人物保存的本机展示偏好；单人与多人约会共用该键。旧文件缺省PresentationConfirmed=false，下一次进入实际约会时统一提示一次，默认优先选择角色已有且可用的立绘套装，缺图时选择对应性别剪影；播报默认按性别选择。确认后保存true。UseDefaultPortrait只决定呈现方式，已有PNG绑定继续保留，显式导入图片或应用形象包会清除此开关。角色包导出只携带原设计/图片元数据，首次设置和口吻继续归本机。缺少有效默认图时 DateDefaultPortraits 只提供内存中的 neutral 设计与内嵌透明剪影，玩家素材文件保持原内容。素材与播放书签保存于本机 PortraitDesignStore/DateSceneAssetStore 路径，归属键包含生涯及人物；场景正文和进度状态归生涯。ZIP版本3保存 PortraitDesign 元数据、人物和图片，兼容版本1/2；PNG继续使用原角色卡格式。CharacterDesignPackage.Read 在PNG验证通过后按实际文件内容计算 Binding.Hash，供形象库、安装和后续导出共用；清单中的旧值、缺省值及图片重保存后的值均由实际摘要更新。原ZIP保持原内容，源清单Hash仅为导出时的内容记录。图片尺寸采用原比例，通用图片读取的文件大小与像素保护继续适用。独立的立绘提示词ZIP由PortraitPromptExport.Files/Write负责，固定根目录三项：基准立绘提示词.md、表情差分提示词.md、使用说明.md；基准包含当前角色/套装非空字段、模型约束与画布要求，表情仅包含已启用的非默认差分，连续编号且保存名与ID一致。该提示词包使用简单PNG文件名，移除额外JSON、manifest和模型示例目录；角色设计素材包继续使用版本3及原PNG角色卡格式。PortraitPackageImport.Plan/ Sprite 只在本次导入内存中保留角色卡（可选）、源设计（可选）、File/Id/Emotion/Outfit及PNG字节；含character-design.json和character.png时识别为角色包，仅保留前者及图片时识别为纯素材包。命名PNG包与旧manifest清单同样支持。Unknown以目标设计中已启用ID为准，逐文件选择以包内完整路径为键；Merge复制目标设计与素材，接受的新ID以ID为显示名称，现有停用ID重新启用，同情绪变体保留数字后缀。角色当前套装映射到目标所选套装，其余套装沿原编号合并；与目标当前套装撞名的另一源套装使用独立导入编号，防止两套PNG互相覆盖。目标背景、书签、文字设置和人物身份保持原值。PNG每张上限64MB、包总量512MB、路径与透明像素检查沿用原边界；无角色卡文件名包额外检查全包路径去重、最多1024条目。CharacterDesignPackage.Read的portraitsOnly用于读取移除了角色卡的素材包；输出占位人物仅供现有解析器构建设计，界面不会据此创建人物。
 
 AppearanceLibrary 共用库位于 `user://national_spire_portraits/library`。每份JSON包含Name、Design和Outfits图片摘要映射；导入包文件名取整包SHA-256，内置包使用haruka、charlotte、alili固定资源编号。这些编号只定位本机素材，不是人物、生涯或网络版本。三个默认ZIP嵌入程序集，首次选择后才写入库；图片共用scenes/images缓存。Apply深复制Design与Outfits，人物配置保留自己的播放设置和背景；库不包含聊天记录、关系或生涯数据。旧存档打开同一素材入口即可使用，原人物配置继续按原路径读取。
 
@@ -52,13 +71,13 @@ AppearanceLibrary 共用库位于 `user://national_spire_portraits/library`。�
 
 ClubOffer.IncomeVersion 标记本人合同已完成工资×2、胜场和目标奖金×3的转换；Esports.IncomeVersion 标记待赛联赛奖金迁移。CareerIncome.Upgrade 对原数值转换一次，新报价调用同一入口。已到账金额继续由原账目保存。
 
-ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为持有数量，GiftReceipts 保存已接受礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件；Gift 接受才扣除数量。交互回退恢复对应数量差额，并保留其后购买结果。
+ConsumerState.InventoryVersion 标记实物恢复完成；Goods.Quantity 为当前可用实物数量，GiftReceipts 保存已处理礼物的交互收据，LifetimeSpent 使用 decimal，PurchaseCount 与 PromoUsed 使用 long。ConsumerEngine.Ensure 首次读取时恢复目录中可收藏实物的状态，并为 BoughtDay 中仍缺少的实物建立一件记录。后续调用按版本直接返回。重复购买累加同种实物；即时消费品记录账目和事件。新增赠礼附件在 Prepare 中预留物品，非即时礼物从 Goods.Quantity 扣除并将实际数量写入 ConsumerAttachment.ReservedQuantity，零数量库存记录保留购买元数据。交互回退恢复对应数量差额，并保留其后购买结果。
 
-ConsumerState.TemporaryGoods 保存商品编号、累计日期和数量；仅当天可用于即时赠礼或活动附件。Attachments 保存付款编号、收件人物或群聊、日期、原 PrivateOffer 与状态。PrivateOffer.ConsumerAttachmentId 跨草稿、发送轮次、改期及回退共用付款身份，附件业务编号仍用于 AI 接受/拒绝。Prepare 补购不足数量并保存 draft；Sent 更新为 pending 并保存最终附件编号；Resolve 将礼物接受设为 used、活动接受设为 accepted，拒绝或取消设为 returned，并将即时商品累计到处理当天 TemporaryGoods。ConsumerAttachments.Attend 沿用已确认即时活动的付款安排，存在付款记录时将其设为 used，按原规则更新邀请次数和好感；旧档付款记录缺失时照常完成已确认活动。耐用品赴约调用 ConsumerEngine.Use，appointment 参数为 true。活动从已确认改为已赴约后，同一张卡片的后续点击由 SocialAppointments.Attend 的状态判断维持一次结算。Prepare 读取同一付款编号直接复用。
+ConsumerState.TemporaryGoods 保存商品编号、累计日期和数量；仅当天可用于即时赠礼或活动附件。Attachments 保存库存/付款编号、收件人物或群聊、日期、原 PrivateOffer、ReservedQuantity 与状态。PrivateOffer.ConsumerAttachmentId 跨草稿、发送轮次、改期及回退共用身份，附件业务编号仍用于 AI 接受/拒绝。Prepare 默认补购不足数量，buyMissing=false 时只使用现有库存，成功后预留并保存 draft；Sent 更新为 pending 并保存最终附件编号。Validate/ValidateDrafts 校验当前玩家的原记录、生命周期、接收者、群聊、商品、数量和关系请求，同一条消息内预留编号唯一。接受礼物将记录设为 used，已有预留直接核销；活动接受设为 accepted。拒绝或取消设为 returned，非即时礼物按保存的 ReservedQuantity 归还实物，即时商品累计到处理当天 TemporaryGoods；重复处理沿状态与礼物收据去重。ConsumerAttachments.Attend 沿用已确认即时活动的付款安排，存在付款记录时将其设为 used，按原规则更新邀请次数和好感；旧档付款记录缺失时照常完成已确认活动。耐用品赴约调用 ConsumerEngine.Use，appointment 参数为 true。活动从已确认改为已赴约后，同一张卡片的后续点击由 SocialAppointments.Attend 的状态判断维持一次结算。Prepare 读取同一付款编号直接复用。
 
-ConsumerEngine.Use 的 appointment 默认为 false，商城直接使用及联机 consumer-use 命令继续检查商品持有、参与者与招待费；SocialAppointments.Attend 传入 true，沿已确认名单执行，库存变化、参与者联系资格、人数和余额变化均继续赴约。招待费按原金额扣除并记账，余额允许扣成负数。所有使用入口取消每赛季同一活动一次的限制。OwnedGood.UsedVerbs 和 UsedSeason 继续兼容旧档，Use 停止追加记录，Season 沿原流程清空旧标记；PartyCount 记录累计活动次数，InvitedThisSeason 继续决定首次邀请好感及后续每次加1。
+ConsumerEngine.Use 的 appointment 默认为 false，商城直接使用及联机 consumer-use 命令继续检查商品持有、参与者与招待费；SocialAppointments.Attend 传入 true，沿已确认名单执行，库存变化、参与者联系资格、人数和余额变化均继续赴约。招待费按原金额扣除并记账，余额允许扣成负数。婚礼通过 WeddingAppointments.Error 校验服务额度及完整对象名单后赴约，按活动已赴约／已结束状态统计各份服务的消耗；普通活动按上游规则执行。所有使用入口取消每赛季同一活动一次的限制。OwnedGood.UsedVerbs 和 UsedSeason 继续兼容旧档，Use 停止追加记录，Season 沿原流程清空旧标记；PartyCount 记录累计活动次数，InvitedThisSeason 继续决定首次邀请好感及后续每次加1。
 
-Advance 清除早于当前日期的临时数量，将跨日未发送的即时附件设为 expired；pending 可跨日等待答复，accepted 保留至活动赴约。取消已接受即时活动返还到取消当天。正常购买即时使用并记录消费事实；附件补购复用同一 Buy 记账与购物事实，付款预留由 Attachments 负责。耐用品补购加入库存，赠礼接受时扣除，活动保留物品并沿用招待费。旧档缺少这两个列表及付款字段时使用空集合、空编号，原活动和礼物继续原流程。PrivateInteractionUndo 同时记录付款状态、临时数量、礼物收据与库存差额，重新生成从对应交互前状态继续。
+Advance 清除早于当前日期的临时数量，将跨日未发送的即时附件设为 expired；非即时礼物草稿保留预留，pending 可跨日等待答复，accepted 保留至活动赴约。取消已接受即时活动返还到取消当天。正常购买即时使用并记录消费事实；附件补购复用同一 Buy 记账与购物事实。耐用品活动保留物品并沿用招待费。旧档缺少列表及附件字段时使用空集合、空编号；旧非即时附件 ReservedQuantity 缺省0，接受时继续按原规则扣库存，取消时保持原可用数量。PrivateInteractionUndo 同时记录附件状态及预留量、临时数量、礼物收据与库存差额，重新生成从对应交互前状态继续。保存与失败回滚见 PERSISTENCE_AND_COOP 的消费附件流程。
 
 ConsumerState.PromoUsed 以商品编号记录各运营商品本季累计购买数量，Season 标识所属赛季。ConsumerEngine.RemainingPurchases 将本季记录与 ConsumerCatalog.PromoPerSeason=3 比较，为 BuyError 和商城详情提供同一剩余额度。历史超过3次的记录完整保留，余额和收益沿原记录；新赛季恢复每项3次。没有新增存档字段。单人及多人各玩家沿原 Consumer 数据保存次数。
 
@@ -90,13 +109,15 @@ FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。Pr
 | PrivateMemorySources | 多人聊天 Current 填入其他真人信箱；JsonIgnore | 当前各成员信箱副本 | ChatTimeline；群聊交互通过 CaptureGroup 合并实际变更 |
 | AiOptions、密钥 | AiSettingsStore、本机设置与请求入口 | ConnectionProfiles、TaskProfiles、设置界面、按方案加密的密钥或默认方案环境变量 | AiService.Connection 取得发送快照；公开序列化仅保留 Enabled |
 | AiOptions.EventPoolOverrides | EventPools.Save、PromptTransfer.Apply、模板创建与删除 | 模板编号 → 固定分类编号 → EventPoolEntry 列表，保存于原本机 AI 配置及单人生涯副本 | EventPools.Get 缓存解析后的随机事件及日常；公开同步继续过滤 AiOptions |
-| PrivatePromptSnapshot | Broadcast 填入各聊天场景与 world 模板 | 房主本机模板库 | 客机相关界面/上下文读取；房主生成重新读取本机设置 |
+| PrivatePromptSnapshot | Broadcast 填入 private、date、群聊、总结及 world 模板 | 房主本机模板库的有效文本 | 活跃约会优先 date；旧快照缺 date 时读取其中的 private；房主生成重新读取本机设置 |
 
 多人个人视图不是独立共享生涯，也不能代替房主最新数据。复制有不同用途：规则执行前的副本用于失败时保留原数据；个人视图用于兼容共用规则；网络副本用于剔除接收者不应看到的数据。三者不能仅因都调用 Copy 就视作重复。
 
 事件池配置以分类是否存在区分跟随默认和自定义：缺少键使用内置，存在空列表表示该分类为空。记录中的 Title 用于日常标题，Detail 用于日常内容或随机事件素材；日常继续替换 {人}、{队}。随机事件新 Category 字段保存抽取时分类，旧记录缺省为空时按原 Seed 查 RandomEventSeeds 的内置映射；已生成自定义事件修改模板后仍保留原画面分类。提示词文件版本3及旧文件缺字段行为见 AI_FLOWS。
 
 ## 随机事件频率和公开帖快照
+
+读取旧事件时，显式为 `null` 的 `Seed` 与尚未抽取素材的空字符串共用相同语义。事件页面和抽取素材时的近期去重均可使用该值。
 
 CareerLifeState.RandomEventMinDays/RandomEventMaxDays默认7/11，按当前生涯保存；界面整数输入最小为1，最大输入框下界随最小输入框变化，存储类型为Int32。旧JSON缺少字段时采用默认值；旧RandomEventsEnabled字段读取时忽略，下一次保存移除，原先关闭的生涯沿用已存间隔恢复排期。SetFrequency写入两个间隔，删除今天以后State=waiting且Materials、Story、Options均为空的日期记录，从当天按新区间重新安排。当天、已经生成材料或故事、完成和跳过的记录原样保留。日期计算使用Int64，超出游戏Int32日期范围时结束安排。
 
@@ -112,6 +133,8 @@ AiOptions.ConnectionProfiles 以稳定编号保存 AiConnectionProfile{Name, End
 
 AiSettingsStore.Load 每个进程首次读取 user://national_spire_ai_settings.json，转换旧配置后保留 _options；后续调用复用对象。Save 通过原临时文件替换入口写入，内容与路径均和 _saved 相同时复用已有文件。界面连接字段属于当前控件草稿，保存时才替换该方案；任务分配及一键应用直接修改 TaskProfiles 后调用原保存回调。单人回调为 CareerStore.Save，先保存生涯，再保存本机设置；多人回调为 CoopCareerSession.SaveAi，先保存本机设置，再沿原 Commit 更新 Enabled、Revision、检查点和公开快照。
 
+约会继续读取当前 private 提示词及对应联机快照，旧配置中的 date 附加字段按原存储规则保留，生成入口保持使用 private。API任务继续为 private，沿用其连接方案。private.queue、private.prepared/group.prepared 与 private.timing 属于本机诊断，分别记录排队、准备和网络阶段的耗时/数量；这些条目沿原日志存储，生涯与联机数据结构保持原样。
+
 默认方案沿用 user://national_spire_ai_key.bin；其他方案使用 user://national_spire_ai_key_{稳定编号}.bin。SaveKey 用当前Windows账户的DPAPI加密，并通过临时文件替换；ReadKey 按编号首次读取和解密，Keys 字典缓存明文或空结果，保存时更新缓存。AiService.ProfileKeys 保存本次启动覆盖值，默认方案保留原 _sessionKey 和 NATIONAL_SPIRE_API_KEY 环境变量入口。持久保存失败时原 PersistKey 返回提示并保留当前进程可用值。
 
 AiConnection 保存本次请求的方案编号、名称、地址、模型、密钥。密钥在独立文件和本机缓存中管理；普通配置JSON存储方案资料。CoopJson.PublicOptions 将 AiOptions 转为仅含 Enabled 的公开配置，客机收到房主公开启用状态；房主生成重新读取本机配置。启动恢复直接复用已保存的编号与映射，加载早期配置时建立一次 default；请求重试查询最新映射。UI草稿随控件释放，保存的配置跨生涯共享。
@@ -120,7 +143,7 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 
 - 实际比赛结算进阶归开赛记录管理：单人 CareerMatch.ChosenAscension（旧记录缺省时使用 CareerData.SelectedAscension），多人 CoopRun.Ascension。CareerResult.Ascension 保留赛事要求，PlayedAscension 保存本场结算进阶，原版 RunHistory.Ascension 保留原始文件含义。接收、恢复、模拟及重赛的使用入口见 GAME_AND_UI 的原版战绩接收与结算进阶。
 
-- FailureDecision.Result 保存失利或未通关获胜的待选择原成绩，Outcome 保存真实胜负，Win 表示通关，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。FailureDecision 类型、Failure 字段与命令编号沿用旧档格式。原始成绩及选择另写入现有轮换诊断，清除待选择对象继续保留已写入日志。已正式结算的历史继续沿用原记录。
+- FailureDecision.Result 保存平局、失利或未通关获胜的待选择原成绩，Outcome 保存实际赛果，Win 表示通关，Simulated 区分模拟；Opponent 保存原对手通关、楼层与秒数。正式 Results 由确认或实际重赛完成后写入。MatchFailure.RestoreMatch 统一恢复原种子、对手和实际进阶，供 Confirm、Retry 及多人 failure-confirm 调用；新种子准备中断仍可使用原成绩确认。旧 Opponent 缺省 null：原种子且已准备时读取原比赛，否则按原种子调用 MatchRules.Simulate 重建一次。FailureDecision 类型、Failure 字段与命令编号沿用旧档格式。原始成绩及选择另写入现有轮换诊断，清除待选择对象继续保留已写入日志。已正式结算的历史继续沿用原记录。
 
 - WorldCompetition.FortuneVersion：0 为旧赛事，整届结束发放；1 为新建国际赛事，逐场发放。旧档已生成赛事保持 0，防止重复发放历史赛果。
 - WorldFixture.FortuneSettled 防止重复确认赛果；PromotionSettled 防止重复结算团体胜负贡献；Fortune 保存各人的有符号本场贡献，DevelopmentChanges 保存实际等级及临时增强变化。团体整轮完成后统一结算，建设变化写入最后完成的对局。预生成成绩不设置收据。
@@ -178,6 +201,10 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 
 ## 聊天、总结与交互
 
+PrivateConversation.ManualMemories 与 GroupChat.ManualMemories 保存玩家手动录入的 ManualChatMemory 列表。Id 标识条目，Text 原样保留换行、空格和 Unicode，Day 为录入时游戏日期，Order 通过 GroupChats.NextOrder 分配。旧档缺少列表时默认空列表。ManualChatMemories.Manage 统一处理新增、编辑、删除及空白/16000 字符校验；新增请求携带稳定 Id，保存重试复用同一条目。手动条目独立于 SmallSummaries、BigSummaries、ContextStart 和 SummarizedThrough，自动合并继续只处理原摘要列表。
+
+GroupDeparture.ManualMemories 是离群时的正文副本；ManualChatMemories.Known 结合 ChatMembership.Knows 按成员及 Order 选择。离群后的群内编辑保留离群者原正文。清空聊天保留手动记忆，删除会话及全部记忆清除该列表和离群快照。跨会话缓存失效继续处理自动摘要，玩家录入内容由对应手动记忆操作管理。
+
 群聊模型输出中的 Actor 在活动中保存完整参与者编号，在训练中保存本次作出相同决定的全部受训者编号，多人以竖线分隔。其他交互沿各自原人物方向处理。模型说明及示例统一使用 Actor；GroupInteractions.Expand 在执行时转换为原内部 GroupParticipants，最终仍写入 PrivateOffer.Participants。旧存档及旧返回中的 Participants 保留读取兼容，构造模型请求时只转换材料副本，存档原文保持原值。
 
 训练附件保留 CoachId、Participants、Weeks、Detail 和原附件 Id。CoachAccepted 已从数据类移除，旧 JSON 中的同名属性由现有反序列化忽略；教练采用附件安排。ClubCoaching.AcceptTraining 在当前会话的附件历史中按编号查找，接受记录和计划仍归对应受训者。接受记录中的内部编号以冒号加原附件编号结尾，重复接受同一附件据此复用原计划；各会话和群人物记录分别查找，不形成全局附件编号。训练拒绝保存为已拒绝的 training offer，不建立新计划。重新生成仍沿现有交互历史恢复计划及卡片。
@@ -185,6 +212,18 @@ AiConnection 保存本次请求的方案编号、名称、地址、模型、密�
 PrivateConversation.DateDiaries 保存本人物与当前玩家的约会条目：OfferId、赛季及日期、标题、活动内容、地点和第一人称日记。OfferId 标识一次约会，Begin 幂等建立条目。Complete 从同一次结束感想回复提取 DateDiary 与 Location，正文仍归 PrivateTurn.Reply，日记集合供 DateDiaryDialog 查看。未返回日记标记时保留已成功生成的感想并记录提示；原重生成可重试该轮。旧条目为空时 Records 从已有约会开场/结束记录组织可查看的历史资料，实际保存仍沿原会话。
 
 约会各轮正文继续进入原聊天时间线、总结和跨会话检索；日记集合没有接入普通上下文注入。结束请求额外读取当前 OfferId 下全部已完成约会轮次，按原删除标记选择正文，不读取其他日期的日记。大量日记增加存档体积，普通聊天请求内容不会因此逐次追加这些日记。
+
+PrivateConversation.DeletedDateDiaries保存已删除日记的OfferId；DateDiaries.Records过滤并阻止从旧Scene轮次回补，Complete忽略被删条目的迟到总结。删除整篇日记只改变日记集合与删除标记，原Turns、记忆、互动效果及日程保持原状。同场相关会话使用同一删除标记。ForPerson按活动和Scene参与者收集日记及所属主联系人，次联系人查看、删除与主联系人使用同一条目。
+
+DateHistoryEntry(TurnId, Text, Reply) 是现场历史与日记回放共用的临时展示模型；Reply=true 对应一次 AI 请求的整个输出，包含多人物台词与旁白。删除入口以源 PrivateTurn.Id 与 OfferId 校验，沿原 dm-delete 的 Part=reply 设置 ReplyDeleted 并清除 Reply、Reasoning、ToolCalls、SceneLines、SceneChoices、Context。用户消息、总结、已结算关系和确认事项沿原通讯规则保留。DateSceneMemories.RemoveReply 清除同 Id 的 DateMemoryTurn.Lines/Frames 并复位 Complete；保留 User/Choice/UserFrame。ReconcileDeletedReplies 仅对当前信箱内仍可找到且已删除的来源做对齐，回放归档轮次继续独立保存。历史分组与回忆副本均保持在展示/本机持久化层。
+
+DateSceneMemory(version=1)为玩家独立回忆：OfferId、主联系人、玩家名、标题/日期、Ended、参与者名称及冻结情绪素材映射、背景映射、轮次列表和初始画面。DateMemoryTurn按PrivateTurn.Id去重，保存展示用User、Choice、Complete、UserFrame、Lines及按片段序号索引的Frames。每次重试以queued状态或重新进入sending状态清理当前轮次的Lines/Frames，覆盖完整回复与失败的半截回复；已完成的其他轮次保持原记录。回放与实时场景共用DateSceneParty.VisibleMaximum控制同屏人数。隐藏开场指令、对局系统输入、结束感想/日记请求和Reasoning/Context均排除。DateMemoryFrame保存图片哈希、发言人、可见人物顺序、实际差分与默认定位锚点、字体/透明度/描边/模糊/缩放位移和当时关系显示值。Cast为实际已出场的有序人物编号，允许空列表；已录制帧继续直接恢复当时名单。缺少画面帧的未播放尾句由DateCastRoster按所属回复重建人数；连续同人物的显示片段共享一次发言计数，旁白跳过计数、保留最近发言人及同轮名单并淡出。分组依据既有Speaker/Narration字段，旧记录沿同一规则读取。新增Placements字典以人物编号保存DatePortraitPlacement(Scale,Y)，其中Y为向上正值；回放优先按个人布局还原。旧记录缺省空字典，继续使用原Scale/X/Y布局，version保持1。DatePortraitPlacement归一化范围为Scale 0.25—2.5、Y −200—200，非有限值恢复1/0。回看仅创建临时PrivateRelation供原徽章绘制，以AffectionBadge.Bind(relation, animate: false)直接显示冻结好感值，关系说明同时省略历史差值浮字。Bind的可选animate参数默认true，既有实时调用保持原动画。世界关系保持原值。照片与立绘使用DateSceneAssetStore的内容哈希缓存，内嵌背景在冻结时解析为同类缓存；替换或删除当前素材绑定保留已记录图片。回忆类型及文件路径只由场景/日记界面读取，CareerData、角色包、私信提示词、人物记忆、联机公开快照和总结路径均无回忆字段。
+
+PrivateConversation.RewoundDateTurns 保存历史重新输入移除的轮次编号，旧档缺省空集合。DateHistoryRewind 逆序调用 PrivateInteractionHistory.Rewind，处理所选轮次及之后的回复效果与覆盖摘要，再以新编号保留一条待编辑输入；MemoryRevision 使后台旧总结失效。来源回忆的 Sync、Read、ForPerson 和 Save 均依据撤回编号清理旧轮次，录制关闭或其他设备留有旧文件时也保持一致。回忆缓冲撤回后重算 LastFrame。手动记忆继续由其独立编辑入口管理。
+
+`DateSceneRequest`、`DateSceneLine`、`DateSceneAssets` 和 `DateMemoryTurn` 通过 `ExtensibleData.Extra` 保留拓展 JSON 字段。键名及扁平结构沿用旧文件，标量在反序列化后压缩为 CLR 值，复杂对象在首次拓展访问时按需转换。复制原始 JSON 与不可变标量时复用其值，已经解析的可变对象通过 JSON 副本隔离；比较先使用标量相等，再比较结构。未识别的字段可随编辑和存档往返。
+
+同一个 Scene 标签中的立绘 Emotion 持续至下一个标签，拆句保持其值。本体 `DateScenes.RestoreSentenceEmotions` 依据 `SceneContinuation` 和相邻说话人，在显示副本上修复旧版拆句丢失的表情；明确的新句边界继续独立处理。`SceneContinuation` 的 JSON 名称保留旧 `SpeechContinuation` 以兼容历史文件，职责为画面分段。回忆展示对已确认修复的片段复制原画面帧，并从该回忆冻结的表情素材中取图；原回忆文件和原台词数据保持原记录。
 
 Life.RandomEvents 保存随机事件。State 使用 waiting/generating/ready/failed/complete/skipped；Selected=-1 表示尚未选择。重新生成保留原 Story/Options/Reasoning，成功后整体替换；停止或失败时存在旧选项则回到 ready，首次生成则进入 failed。CustomAction 保存玩家提交的行动，CustomState 使用 idle/generating/ready，CustomOption 保存生成后的结局及效果，CustomReasoning 保存本次思维文字；旧存档分别缺省为空、idle、null和空。续写保留原 Story/Options，确认后才追加 CustomOption 并写 Selected/complete。换行动清除旧预览，同一行动重试保留上一份成功预览直至替换；停止或失败恢复 idle 或 ready。进程关闭时保留已保存的行动、预览或 generating 状态，重进可重新生成。Reasoning 缺省空字符串，Phase 仅存在于内存 EventLive。Effects 每项包含一个语义作用键及该类型所需字段；故事、行动、结局分开保存。钱包协议使用美元，执行时按原货币规则换算；百分比执行时除以100。InitialFormat/Effects/Continuation 归程序，可编辑 event 模板保存创作要求；正式生成、试写与续写共用 Compose；检查、预览与执行统一在 RandomEventEffects。
 

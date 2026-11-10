@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 /// <summary>赛事积分、国家贡献和商业合同统一由已确认的比赛结果结算。</summary>
 public static class CircuitLedger
@@ -84,8 +84,8 @@ public static class CircuitLedger
             foreach (var country in (c.TeamEvent ? c.Rosters[c.ChampionTeam] : [c.ChampionId]).Select(id => c.EntrantCountries[id]).Distinct())
             { var nation = d.Esports.Nations.FirstOrDefault(n => n.Country == country); if (nation != null) nation.Titles++; }
         AvatarHonors.InvalidateRankings(d);
-        if (c.ChampionTeam.Length > 0 && EsportsWorld.Club(d, c.ChampionTeam) is { } club) { club.Titles++; int teamPrize = c.Modern ? 8000 : 800; if (club.Id == d.Esports.OwnedClub?.ClubId) OwnedClubs.Pay(d, c.Name + "球队冠军奖金", teamPrize);
-            else { club.Fans += c.Kind == "continental" ? 500000 : 300000; club.Budget += teamPrize; ClubOperations.Entry(club, d.Day, c.Name + "球队冠军奖金", teamPrize); } }
+        if (c.ChampionTeam.Length > 0 && EsportsWorld.Club(d, c.ChampionTeam) is { } club) { club.Titles++; int teamPrize = c.Modern ? 8000 : 800; if (club.Id == d.Esports.OwnedClub?.ClubId) OwnedClubs.Pay(d, c.Name + "战队冠军奖金", teamPrize);
+            else { club.Fans += c.Kind == "continental" ? 500000 : 300000; club.Budget += teamPrize; ClubOperations.Entry(club, d.Day, c.Name + "战队冠军奖金", teamPrize); } }
         string winner = c.TeamEvent ? CircuitWorld.TeamName(d, c, c.ChampionTeam) : CareerEngine.DisplayName(d, c.ChampionId);
         string report = $"第{c.Season}赛季{c.Name}落幕，{winner}夺冠。";
         if (c.Kind != "league")

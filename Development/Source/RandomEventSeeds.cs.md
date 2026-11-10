@@ -134,7 +134,7 @@ private static readonly Dictionary<string, string> Categories = BuildCategories(
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Set(string, params int[])`](RandomEventSeeds.cs.md#symbol-1b5c9d942476)；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
+**调用：** [`Set(string, params int[])`](RandomEventSeeds.cs.md#symbol-04e4153d6f81)；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.RandomEventSeeds.All`；`Set(string, params int[])`
 
@@ -154,7 +154,7 @@ private static readonly Dictionary<string, string> Categories = BuildCategories(
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-1b5c9d942476"></a>
+<a id="symbol-04e4153d6f81"></a>
 
 ## `Set(string, params int[]) — void Set(string category, params int[] entries)`
 

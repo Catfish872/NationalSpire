@@ -21,6 +21,7 @@ public partial class CareerScreen
                 if (_dialogOverlay != null) OpenChatDialog(ChatSettingsMenu, false);
             });
             yield return ("聊天记录设置", () => Open(PrivateSettings));
+            yield return ("导出聊天记录", () => Open(ExportChatTranscript));
             yield return ("主动联系", () => Open(ProactiveChatDialog));
             yield return (group ? "群聊管理" : "私聊管理", () => Open(ChatManageDialog));
             yield return ("记忆管理", () => Open(PrivateMemory));

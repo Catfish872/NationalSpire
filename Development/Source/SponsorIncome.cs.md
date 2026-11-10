@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0C0C6A2806A6B44EE9869B5F1C3567D1E60FEF3DBB958FA23FD6C5746F1EE444`。来源：[源码](../../SponsorIncome.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6813FCDBF26F372B22A7672A3B2BA793CB6EE9EF63CB1694780118B3877B6D75`。来源：[源码](../../SponsorIncome.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -19,7 +19,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)
+**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData)`](CareerOpening.cs.md#symbol-520de3927565)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)
 
 **调用：** [`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
 
@@ -28,8 +28,8 @@
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；输入表达式：`GroupChats.Human(d)`；返回值紧邻使用处：`BinaryExpressionSyntax: a.PersonId == GroupChats.Human(d)`
-- `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.CircuitAwards.Count(a =>         (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league")`；返回值紧邻使用处：`ArgumentSyntax: d.Esports.CircuitAwards.Count(a =>         (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league")`
-- `System.Math.Min(int, int)`；输入表达式：`Math.Min(7, d.Esports.CircuitAwards.Count(a =>         (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league"))`；返回值紧邻使用处：`BinaryExpressionSyntax: 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a =>         (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league"))`
+- `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.CircuitAwards.Count(a =>          (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league")`；返回值紧邻使用处：`ArgumentSyntax: d.Esports.CircuitAwards.Count(a =>          (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league")`
+- `System.Math.Min(int, int)`；输入表达式：`Math.Min(7, d.Esports.CircuitAwards.Count(a =>          (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league"))`；返回值紧邻使用处：`BinaryExpressionSyntax: 1 + Math.Min(7, d.Esports.CircuitAwards.Count(a =>          (a.PersonId == "player" || a.PersonId == GroupChats.Human(d)) && a.Place == "冠军" && a.Kind != "league"))`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -40,7 +40,7 @@
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)
+**调用者：** [`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`](CareerCommerce.cs.md#symbol-a571f0d2f6a3)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)
 
 **调用：** 无已绑定显式调用。
 
@@ -83,7 +83,7 @@
 
 来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)；[`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-d66156cc1ea9)；[`NationalSpire.SponsorIncome.Upgrade(NationalSpire.CareerData)`](SponsorIncome.cs.md#symbol-efb9102304ba)
+**调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData)`](CareerOpening.cs.md#symbol-520de3927565)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)；[`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-d66156cc1ea9)；[`NationalSpire.SponsorIncome.Upgrade(NationalSpire.CareerData)`](SponsorIncome.cs.md#symbol-efb9102304ba)
 
 **调用：** [`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)；[`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-d66156cc1ea9)
 
@@ -126,7 +126,7 @@
 
 来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CareerCommerce.Capture(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-02ba08b48a24)；[`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerCommerce.SponsorTerms(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-3ed7cf5a8f49)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)
+**调用者：** [`NationalSpire.CareerCommerce.AcceptSponsor(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-dde63e77bf01)；[`NationalSpire.CareerCommerce.Capture(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-02ba08b48a24)；[`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerCommerce.SponsorTerms(NationalSpire.CareerData, NationalSpire.SponsorContract)`](CareerCommerce.cs.md#symbol-3ed7cf5a8f49)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)；[`NationalSpire.CircuitLedger.SeasonStart(NationalSpire.CareerData)`](CircuitLedger.cs.md#symbol-b971fd6392cb)
 
 **调用：** [`NationalSpire.CareerIncome.PersonalAttention(int)`](CareerIncome.cs.md#symbol-689cee25e770)；[`NationalSpire.CareerIncome.WithDevelopment(NationalSpire.CareerData, int, string)`](CareerIncome.cs.md#symbol-550f85c3235c)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-3f281401ee8b)；[`NationalSpire.SponsorIncome.Multiplier(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-89b9ce8a4b62)；`System.Math.Round(double)`
 
@@ -135,7 +135,7 @@
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerIncome.PersonalAttention(int)`；输入表达式：`CareerIncome.PersonalAttention(d.Fans)`；返回值紧邻使用处：`ConditionalExpressionSyntax: contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0`
-- `NationalSpire.CareerIncome.WithDevelopment(NationalSpire.CareerData, int, string)`；输入表达式：`CareerIncome.WithDevelopment(d,         (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract)) + (contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0),         contract.TargetId == "player" ? d.Esports.Country : EsportsWorld.Club(d, contract.TargetId)?.Country ?? "")`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => CareerIncome.WithDevelopment(d,         (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract)) + (contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0),         contract.TargetId == "player" ? d.Esports.Country : EsportsWorld.Club(d, contract.TargetId)?.Country ?? "")`
+- `NationalSpire.CareerIncome.WithDevelopment(NationalSpire.CareerData, int, string)`；输入表达式：`CareerIncome.WithDevelopment(d,          (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract)) + (contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0),          contract.TargetId == "player" ? d.Esports.Country : EsportsWorld.Club(d, contract.TargetId)?.Country ?? "")`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => CareerIncome.WithDevelopment(d,          (int)Math.Round(Basis(d, contract).Retainer * Multiplier(d, contract)) + (contract.TargetId == "player" ? CareerIncome.PersonalAttention(d.Fans) : 0),          contract.TargetId == "player" ? d.Esports.Country : EsportsWorld.Club(d, contract.TargetId)?.Country ?? "")`
 - `NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.Club(d, contract.TargetId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: EsportsWorld.Club(d, contract.TargetId)?.Country`
 - `NationalSpire.SponsorIncome.Basis(NationalSpire.CareerData, NationalSpire.SponsorContract)`；输入表达式：`Basis(d, contract)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Basis(d, contract).Retainer`
 - `NationalSpire.SponsorIncome.Multiplier(NationalSpire.CareerData, NationalSpire.SponsorContract)`；输入表达式：`Multiplier(d, contract)`；返回值紧邻使用处：`BinaryExpressionSyntax: Basis(d, contract).Retainer * Multiplier(d, contract)`
@@ -179,8 +179,8 @@
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerAudience.ClubMultiplier(int)`；输入表达式：`CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`；返回值紧邻使用处：`ConditionalExpressionSyntax: contract.TargetId == "player"         ? CareerAudience.QuoteMultiplier(d.Fans) : CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`
-- `NationalSpire.CareerAudience.QuoteMultiplier(int)`；输入表达式：`CareerAudience.QuoteMultiplier(d.Fans)`；返回值紧邻使用处：`ConditionalExpressionSyntax: contract.TargetId == "player"         ? CareerAudience.QuoteMultiplier(d.Fans) : CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`
+- `NationalSpire.CareerAudience.ClubMultiplier(int)`；输入表达式：`CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`；返回值紧邻使用处：`ConditionalExpressionSyntax: contract.TargetId == "player"          ? CareerAudience.QuoteMultiplier(d.Fans) : CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`
+- `NationalSpire.CareerAudience.QuoteMultiplier(int)`；输入表达式：`CareerAudience.QuoteMultiplier(d.Fans)`；返回值紧邻使用处：`ConditionalExpressionSyntax: contract.TargetId == "player"          ? CareerAudience.QuoteMultiplier(d.Fans) : CareerAudience.ClubMultiplier(ClubAudience.Total(d, contract.TargetId))`
 - `NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`；输入表达式：`ClubAudience.Total(d, contract.TargetId)`；返回值紧邻使用处：`ArgumentSyntax: ClubAudience.Total(d, contract.TargetId)`
 
 **赋值（含属性/字段和局部值）：**

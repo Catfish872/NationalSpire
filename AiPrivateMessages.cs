@@ -32,7 +32,7 @@ public static partial class AiService
         PrivateSceneLive.Remove(key);
         var conversation = PrivateMessages.Conversation(data, person);
         var turn = conversation.Turns.FirstOrDefault(t => t.Status == "queued"); if (turn == null) return;
-        using var cancel = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
+        using var cancel = new CancellationTokenSource();
         PrivateRequests[key] = cancel;
         string turnId = turn.Id;
         using var logScope = Diagnostics.BeginLog(LogArea.Private, "private/" + key + "/" + turnId);
@@ -42,16 +42,27 @@ public static partial class AiService
             catch (Exception e) { Diagnostics.Record("private.delivery.failed", new { person, error = FailureReason(e) }); }
         }
         int originalFavour = PrivateMessages.Favour(data, person);
+        void CheckSceneSource()
+        {
+            if (turn.Scene is { Ending: false } scene && conversation.Offers.FirstOrDefault(o => o.Id == scene.OfferId) is { } offer
+                && !DateGroupBridge.SourceActive(data, offer))
+                throw new InvalidOperationException("原群聊活动已经结束或取消，本轮约会回复已停止。");
+        }
         try
         {
             if (!data.Ai.Enabled) throw new InvalidOperationException("请先启用 AI。");
             PrivateForegroundQueue.Configure(data.Ai.MaxConcurrentRequests);
             using var lease = await EnterPrivateQueue(data, key, cancel.Token);
             cancel.Token.ThrowIfCancellationRequested();
+            cancel.CancelAfter(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
+            var preparation = System.Diagnostics.Stopwatch.StartNew();
             data = current(); if (data == null) return;
             conversation = PrivateMessages.Conversation(data, person);
             turn = conversation.Turns.First(t => t.Id == turnId);
             if (turn.Status != "queued") return;
+            CheckSceneSource();
+            if (turn.Scene is { Ending: false } scene && DateGames.ValidateContext(data, conversation, scene) is { } gameError)
+                throw new InvalidOperationException(gameError);
             if (turn.RequestKind != "arbitration" && SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             originalFavour = PrivateMessages.Favour(data, person);
             var contextSpans = new List<PrivateMessagePrompts.ContextSpan>();
@@ -61,7 +72,9 @@ public static partial class AiService
             if (turn.RequestKind == "arbitration")
             {
                 var record = new StringBuilder();
-                string response = await RequestPrivateAsync(data, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration");
+                var arbitrationMessages = SpireArbitration.Compose(data, conversation, turn);
+                Diagnostics.Record("private.prepared", new { kind = "arbitration", elapsedMs = preparation.Elapsed.TotalMilliseconds, messages = arbitrationMessages.Count });
+                string response = await RequestPrivateAsync(data, arbitrationMessages, false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration");
                 var decision = SpireArbitration.Parse(response);
                 cancel.Token.ThrowIfCancellationRequested();
                 data = current(); if (data == null) return;
@@ -72,8 +85,10 @@ public static partial class AiService
                 turn.Reasoning = record.ToString(); save(data); Notify(turn.Reply); return;
             }
             var messages = PrivateMessagePrompts.Compose(data, conversation, turn, turn.Context, contextSpans);
+            Diagnostics.Record("private.prepared", new { kind = turn.Scene == null ? "private" : "date", elapsedMs = preparation.Elapsed.TotalMilliseconds,
+                messages = messages.Count, participants = turn.Scene?.Participants.Count ?? 1 });
+            var parser = new PrivateStreamParser(turn.Scene is { Participants.Count: > 1 } ? ["Actor"] : []) { SceneJson = turn.Scene is { Ending: false } };
             var tools = ChatTools.Enabled(data.Ai, turn.ToolMode) ? ChatTools.Create(data, conversation, turn) : null;
-            var parser = new PrivateStreamParser { SceneJson = turn.Scene is { Ending: false } };
             var reasoning = new StringBuilder();
             var lastProgress = DateTime.MinValue;
             void Progress(string chunk)
@@ -97,14 +112,22 @@ public static partial class AiService
             conversation = PrivateMessages.Conversation(data, person);
             turn = conversation.Turns.First(t => t.Id == turnId);
             if (turn.Status != "sending") return;
+            CheckSceneSource();
             if (SpireArbitration.Muted(CareerEngine.Person(data, person)!)) throw new InvalidOperationException("该角色账号已封禁，普通私信已停止。");
             if (string.IsNullOrWhiteSpace(parser.Text)) throw new InvalidDataException("私信回复为空。");
             if (turn.Scene is { Ending: false } && DateScenes.ReplyFailure(parser.Text) is { } rejection) throw new InvalidDataException(rejection);
             if (turn.ReplyOrder == 0) turn.ReplyOrder = GroupChats.NextOrder(data);
-            turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Status = "complete"; turn.Error = parser.Error + tools?.Error;
+            turn.Reply = parser.Text.Trim(); turn.Reasoning = reasoning.ToString(); turn.Error = parser.Error + tools?.Error;
             turn.ToolCalls = tools?.Calls.ToList() ?? [];
-            if (turn.Scene != null) turn.SceneLines = DateScenes.TaggedLines(parser, turn.Scene);
-            PrivateMessages.Apply(data, conversation, turn, parser.Directives, originalFavour);
+            if (turn.Scene != null)
+            {
+                turn.SceneLines = DateScenes.TaggedLines(parser, turn.Scene);
+                turn.SceneChoices = DateScenes.Choices(parser);
+                turn.Reply = string.Concat(turn.SceneLines.Select(line => line.Text));
+            }
+            if (string.IsNullOrWhiteSpace(turn.Reply)) throw new InvalidDataException("回复只有显示标记，请重新生成。");
+            turn.Status = "complete";
+            DateSceneEffects.Apply(data, conversation, turn, parser.Directives, originalFavour);
             DateDiaries.Complete(conversation, turn, parser.Directives);
             if (tools != null) Diagnostics.Record("chat.tools.applied", new { kind = "private", person, turnId, parser.Directives, turn.Error });
             ProactiveChats.CountReplies(conversation);
@@ -135,20 +158,23 @@ public static partial class AiService
         finally
         {
             PrivateLive.Remove(key); PrivateReasoningLive.Remove(key); PrivateSceneLive.Remove(key); PrivateRequests.Remove(key);
-            if (current() is { } latest && PrivateMessages.Conversation(latest, person).Turns.FirstOrDefault(t => t.Status == "queued")?.Scene?.Ending == true)
+            if (current() is { } latest && PrivateMessages.Conversation(latest, person).Turns.FirstOrDefault(t => t.Status == "queued")?.Scene is { } next
+                && (next.Ending || next.GameEvent == "result"))
                 _ = ProcessPrivateAsync(current, save, person, progress);
         }
     }
 
     private static async Task<IDisposable> EnterPrivateQueue(CareerData data, string key, CancellationToken token)
     {
+        var timing = System.Diagnostics.Stopwatch.StartNew(); bool entered = false;
         var pending = PrivateForegroundQueue.EnterAsync(data, [key]);
-        try { return await pending.WaitAsync(token); }
+        try { var lease = await pending.WaitAsync(token); entered = true; return lease; }
         catch (OperationCanceledException)
         {
             // 队列获得名额后归还，已经取消的请求不会访问服务。
             _ = ReleasePending(); throw;
         }
+        finally { Diagnostics.Record("private.queue", new { kind = key.Contains("/group/", StringComparison.Ordinal) ? "group" : "private", elapsedMs = timing.Elapsed.TotalMilliseconds, entered }); }
         async Task ReleasePending() { using var lease = await pending; }
     }
 

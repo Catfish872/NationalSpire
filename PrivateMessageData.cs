@@ -27,6 +27,13 @@ public sealed class PrivateRelation : System.Text.Json.Serialization.IJsonOnDese
     private int _favour;
     private string _relationship = "初识";
     private bool _deserializing;
+    public int? LastFavourChange { get; set; }
+    internal void SetFavour(int value)
+    {
+        int before = Favour;
+        Favour = value;
+        if (Favour != before) LastFavourChange = Favour - before;
+    }
     public int Favour
     {
         get => _favour;
@@ -76,6 +83,8 @@ public sealed class PrivateRelation : System.Text.Json.Serialization.IJsonOnDese
 public sealed class PrivateConversation
 {
     public List<DateDiary> DateDiaries { get; set; } = [];
+    public HashSet<string> DeletedDateDiaries { get; set; } = [];
+    public HashSet<string> RewoundDateTurns { get; set; } = [];
     public bool EventOnly { get; set; }
     public Dictionary<string, string> DateSceneStates { get; set; } = [];
     public bool Hidden { get; set; }
@@ -93,16 +102,20 @@ public sealed class PrivateConversation
     public int ContextStart { get; set; }
     public List<PrivateSummary> SmallSummaries { get; set; } = [];
     public List<PrivateSummary> BigSummaries { get; set; } = [];
+    public List<ManualChatMemory> ManualMemories { get; set; } = [];
     public string SummaryError { get; set; } = "";
     public int SeenCount { get; set; }
     public List<PrivateOffer> Offers { get; set; } = [];
 }
 public sealed class PrivateTurn
 {
+    public Dictionary<string, PrivateTurn> DatePartyEffects { get; set; } = [];
+    public DateSceneInvitation? DateInvitation { get; set; }
     public bool? ToolMode { get; set; }
     public List<ChatToolCall> ToolCalls { get; set; } = [];
     public DateSceneRequest? Scene { get; set; }
     public List<DateSceneLine> SceneLines { get; set; } = [];
+    public List<string> SceneChoices { get; set; } = [];
     public string ProactiveReason { get; set; } = "";
     public bool ProactiveLast { get; set; }
     public long UserOrder { get; set; }
@@ -165,6 +178,8 @@ public sealed class PrivateSummary
 public sealed class PrivateOffer
 {
     public string ConsumerAttachmentId { get; set; } = "";
+    public string DateSourceGroup { get; set; } = "";
+    public string DateSourceOffer { get; set; } = "";
     public int RelationshipIntent { get; set; }
     public bool MemoryDeleted { get; set; }
     public string GoodId { get; set; } = "";
@@ -172,6 +187,7 @@ public sealed class PrivateOffer
     public int Quantity { get; set; } = 1;
     public bool PublicAttendance { get; set; }
     public string ServiceId { get; set; } = "";
+    public List<string> WeddingServiceIds { get; set; } = [];
     public string GroupId { get; set; } = "";
     public string CoachId { get; set; } = "";
     public string ActorId { get; set; } = "";

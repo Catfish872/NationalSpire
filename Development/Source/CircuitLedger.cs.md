@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`17BA361DB79EB1732D2394A1C7D4743435F9292651D2BCB24D5ECD93F42DC4CF`。来源：[源码](../../CircuitLedger.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`FCED35AE93B62585F428F4025AD4DD59C1F5B85DD6F024ED027D0B547C4C7EED`。来源：[源码](../../CircuitLedger.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -77,7 +77,7 @@
 
 来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.CircuitRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b3ab649f5b65)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)
+**调用者：** [`NationalSpire.CareerScreen.CircuitRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b3ab649f5b65)；[`NationalSpire.CareerScreen.HomeIdentity(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerDashboard.cs.md#symbol-69636991bb5e)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CircuitWorld.CreateFinals(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-cb2c18d20a39)
 
 **调用：** [`NationalSpire.CircuitLedger.Counted(NationalSpire.CareerData, string)`](CircuitLedger.cs.md#symbol-43f817507bfc)；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`
 
@@ -207,7 +207,7 @@
 - `NationalSpire.CircuitLedger.Remember(NationalSpire.CareerData, string, string, System.Collections.Generic.List<string>)`；输入表达式：`Remember(d, "champion-" + c.Id, report, c.TeamEvent ? c.Rosters[c.ChampionTeam] : [c.ChampionId])`；返回值紧邻使用处：`ExpressionStatementSyntax: Remember(d, "champion-" + c.Id, report, c.TeamEvent ? c.Rosters[c.ChampionTeam] : [c.ChampionId]);`
 - `NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`；输入表达式：`CircuitWorld.RoundCount(c)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CircuitWorld.RoundCount(c)`
 - `NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；输入表达式：`CircuitWorld.TeamName(d, c, c.ChampionTeam)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? CircuitWorld.TeamName(d, c, c.ChampionTeam) : CareerEngine.DisplayName(d, c.ChampionId)`
-- `NationalSpire.ClubOperations.Entry(NationalSpire.CareerClub, int, string, int)`；输入表达式：`ClubOperations.Entry(club, d.Day, c.Name + "球队冠军奖金", teamPrize)`；返回值紧邻使用处：`ExpressionStatementSyntax: ClubOperations.Entry(club, d.Day, c.Name + "球队冠军奖金", teamPrize);`
+- `NationalSpire.ClubOperations.Entry(NationalSpire.CareerClub, int, string, int)`；输入表达式：`ClubOperations.Entry(club, d.Day, c.Name + "战队冠军奖金", teamPrize)`；返回值紧邻使用处：`ExpressionStatementSyntax: ClubOperations.Entry(club, d.Day, c.Name + "战队冠军奖金", teamPrize);`
 - `NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.Club(d, c.ChampionTeam)`；返回值紧邻使用处：`IsPatternExpressionSyntax: EsportsWorld.Club(d, c.ChampionTeam) is { } club`
 - `NationalSpire.EsportsWorld.Milestone(NationalSpire.CareerData, string, string, string, int, int)`；输入表达式：`EsportsWorld.Milestone(d, c.Id, c.Name + "冠军", detail, CareerAudience.ChampionGain(c.Kind), c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? 0 : 1000)`；返回值紧邻使用处：`ExpressionStatementSyntax: EsportsWorld.Milestone(d, c.Id, c.Name + "冠军", detail, CareerAudience.ChampionGain(c.Kind), c.PrizeVersion >= 1 && c.Kind == "worldfinal" ? 0 : 1000);`
 - `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Rankings(c)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EsportsWorld.Rankings(c).ToDictionary`
@@ -215,7 +215,7 @@
 - `NationalSpire.NationalFortune.Applies(NationalSpire.WorldCompetition)`；输入表达式：`NationalFortune.Applies(c)`；返回值紧邻使用处：`ConditionalExpressionSyntax: NationalFortune.Applies(c) ? 0 : fortune * 20`
 - `NationalSpire.NationalFortune.Applies(NationalSpire.WorldCompetition)`；输入表达式：`NationalFortune.Applies(c)`；返回值紧邻使用处：`IfStatementSyntax: if (NationalFortune.Applies(c)) fortune = award.Fortune;`
 - `NationalSpire.NationalFortune.Applies(NationalSpire.WorldCompetition)`；输入表达式：`NationalFortune.Applies(c)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !NationalFortune.Applies(c)`
-- `NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；输入表达式：`OwnedClubs.Pay(d, c.Name + "球队冠军奖金", teamPrize)`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubs.Pay(d, c.Name + "球队冠军奖金", teamPrize);`
+- `NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`；输入表达式：`OwnedClubs.Pay(d, c.Name + "战队冠军奖金", teamPrize)`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubs.Pay(d, c.Name + "战队冠军奖金", teamPrize);`
 - `NationalSpire.OwnedClubs.SettleAchievements(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.SettleAchievements(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: OwnedClubs.SettleAchievements(d);`
 - `System.Collections.Generic.IEnumerable<int>.Max()`；输入表达式：`c.Fixtures.Where(f => f.HomeId == id || f.AwayId == id).Select(f => f.Round).DefaultIfEmpty(1).Max()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = c.Fixtures.Where(f => f.HomeId == id || f.AwayId == id).Select(f => f.Round).DefaultIfEmpty(1).Max()`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Esports.CircuitAwards.Any(a => a.CompetitionId == c.Id && a.Completed)`；返回值紧邻使用处：`BinaryExpressionSyntax: !c.Finished || d.Esports.CircuitAwards.Any(a => a.CompetitionId == c.Id && a.Completed)`
@@ -293,7 +293,7 @@
 
 来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData)`](CircuitWorld.cs.md#symbol-8e4cfe18b2fe)
+**调用者：** [`NationalSpire.CircuitWorld.StartSeason(NationalSpire.CareerData, bool)`](CircuitWorld.cs.md#symbol-845fab333acd)
 
 **调用：** [`NationalSpire.CareerCommerce.SeasonStart(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-f162ea564744)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerLife.Grow(NationalSpire.CareerData, NationalSpire.CareerPerson, int, string)`](CareerLife.cs.md#symbol-1479dc400873)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CircuitLedger.CreateContract(NationalSpire.CareerData, string, int)`](CircuitLedger.cs.md#symbol-fe0f4a1b42d8)；[`NationalSpire.CircuitLedger.Fortune(NationalSpire.CareerData, string, int?)`](CircuitLedger.cs.md#symbol-7d3715dcef4e)；[`NationalSpire.CircuitLedger.Remember(NationalSpire.CareerData, string, string, System.Collections.Generic.List<string>)`](CircuitLedger.cs.md#symbol-0791637c974d)；[`NationalSpire.CircuitLedger.Year(int)`](CircuitLedger.cs.md#symbol-bd9f405cdea7)；[`NationalSpire.ClubOperations.Entry(NationalSpire.CareerClub, int, string, int)`](ClubOperations.cs.md#symbol-a68dccdac5af)；[`NationalSpire.NationalDevelopment.SeasonStart(NationalSpire.CareerData)`](NationalDevelopment.cs.md#symbol-e74fea2f7dca)；[`NationalSpire.OwnedClubs.Pay(NationalSpire.CareerData, string, decimal)`](OwnedClubs.cs.md#symbol-3b85db324fce)；[`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-d66156cc1ea9)；[`NationalSpire.SponsorIncome.Retainer(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-0442434a4986)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 

@@ -19,7 +19,7 @@
 
 来源：源码第 5 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)
+**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)
 
 **调用：** [`NationalSpire.AiRequestQueue.Configure(int)`](AiRequestQueue.cs.md#symbol-7bf81d36c27d)；[`NationalSpire.AiService.EnterPrivateQueue(NationalSpire.CareerData, string, System.Threading.CancellationToken)`](AiPrivateMessages.cs.md#symbol-d73b189170eb)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?)`](AiPrivateMessages.cs.md#symbol-2a90f4583071)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.PortraitDesigns.Messages(NationalSpire.CareerData, string, NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-3f8b0db3fc3f)；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Math.Clamp(int, int, int)`；`System.OperationCanceledException.OperationCanceledException(string?, System.Threading.CancellationToken)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)`；`System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken)`；`System.TimeSpan.FromMinutes(long)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`59E6188A7C61E75CBB96AD351ACAA7D63E74996BC765B766E1B576AF2D61DE2F`。来源：[源码](../../LiveShopObserver.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5AC722CDA6C78DEB29775777230655DDC6AABB07E49E1A29019B0F77B0F469F2`。来源：[源码](../../LiveShopObserver.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -42,9 +42,9 @@ private bool _disabled;
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)；[`NationalSpire.LiveShopObserver.LiveShopObserver(MegaCrit.Sts2.Core.Runs.RunState)`](LiveShopObserver.cs.md#symbol-9c0734afb2ba)
+**调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)；[`NationalSpire.LiveShopObserver.LiveShopObserver(MegaCrit.Sts2.Core.Runs.RunState)`](LiveShopObserver.cs.md#symbol-9c0734afb2ba)
 
-**调用：** [`Add(string, string, string)`](LiveShopObserver.cs.md#symbol-3cb46534a05e)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelDb.GetByIdOrNull<T>(MegaCrit.Sts2.Core.Models.ModelId)`；`MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry.GetEntry(ulong)`；`NationalSpire.LiveShopObserver.Cursor.Cursor(int, int, int, int, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`
+**调用：** [`Add(string, string, string)`](LiveShopObserver.cs.md#symbol-3b6bb553f5a2)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelDb.GetByIdOrNull<T>(MegaCrit.Sts2.Core.Models.ModelId)`；`MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry.GetEntry(ulong)`；`NationalSpire.LiveShopObserver.Cursor.Cursor(int, int, int, int, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`
 
 **字段、属性、事件及方法组引用：** `Add(string, string, string)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LiveShopObserver._disabled`；`NationalSpire.LiveShopObserver._floor`；`NationalSpire.LiveShopObserver._seen`；`NationalSpire.LiveShopObserver.Cursor.Cards`；`NationalSpire.LiveShopObserver.Cursor.Potions`；`NationalSpire.LiveShopObserver.Cursor.Relics`；`NationalSpire.LiveShopObserver.Cursor.Removed`；`NationalSpire.LiveShopObserver.Cursor.Spent`
 
@@ -63,10 +63,10 @@ private bool _disabled;
 - `NationalSpire.LiveShopObserver.Cursor.Cursor(int, int, int, int, int)`；输入表达式：`new(0, 0, 0, 0, 0)`；返回值紧邻使用处：`ArgumentSyntax: new(0, 0, 0, 0, 0)`
 - `NationalSpire.LiveShopObserver.Cursor.Cursor(int, int, int, int, int)`；输入表达式：`new(h.CardsRemoved.Count, h.CardsGained.Count, h.BoughtRelics.Count, h.BoughtPotions.Count, h.GoldSpent)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _seen[p.NetId] = new(h.CardsRemoved.Count, h.CardsGained.Count, h.BoughtRelics.Count, h.BoughtPotions.Count, h.GoldSpent)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`_seen.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _seen.Clear();`
-- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.BoughtPotions.Skip(before.Potions)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var id in h.BoughtPotions.Skip(before.Potions))                     if (ModelDb.GetByIdOrNull<PotionModel>(id) is { } model) Add("buy_potion", model.Title.GetFormattedText());`
-- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.BoughtRelics.Skip(before.Relics)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var id in h.BoughtRelics.Skip(before.Relics))                     if (ModelDb.GetByIdOrNull<RelicModel>(id) is { } model) Add("buy_relic", model.Title.GetFormattedText());`
-- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.CardsGained.Skip(before.Cards)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in h.CardsGained.Skip(before.Cards))                     if (card.Id is { } id && ModelDb.GetByIdOrNull<CardModel>(id) is { } model)                         Add(shop ? h.GoldSpent > before.Spent ? "buy_card" : "gain_card" : "reward_card", model.Title, model.Type.ToString());`
-- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.CardsRemoved.Skip(before.Removed)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in h.CardsRemoved.Skip(before.Removed))                     if (card.Id is { } id && ModelDb.GetByIdOrNull<CardModel>(id) is { } model)                         Add(model.Type.ToString() switch { "Attack" => "remove_attack", "Curse" => "remove_curse", _ => "remove_defend" }, model.Title);`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.BoughtPotions.Skip(before.Potions)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var id in h.BoughtPotions.Skip(before.Potions))                      if (ModelDb.GetByIdOrNull<PotionModel>(id) is { } model) Add("buy_potion", model.Title.GetFormattedText());`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.BoughtRelics.Skip(before.Relics)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var id in h.BoughtRelics.Skip(before.Relics))                      if (ModelDb.GetByIdOrNull<RelicModel>(id) is { } model) Add("buy_relic", model.Title.GetFormattedText());`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.CardsGained.Skip(before.Cards)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in h.CardsGained.Skip(before.Cards))                      if (card.Id is { } id && ModelDb.GetByIdOrNull<CardModel>(id) is { } model)                          Add(shop ? h.GoldSpent > before.Spent ? "buy_card" : "gain_card" : "reward_card", model.Title, model.Type.ToString());`
+- `System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；输入表达式：`h.CardsRemoved.Skip(before.Removed)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in h.CardsRemoved.Skip(before.Removed))                      if (card.Id is { } id && ModelDb.GetByIdOrNull<CardModel>(id) is { } model)                          Add(model.Type.ToString() switch { "Attack" => "remove_attack", "Curse" => "remove_curse", _ => "remove_defend" }, model.Title);`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`_seen.GetValueOrDefault(p.NetId, new(0, 0, 0, 0, 0))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = _seen.GetValueOrDefault(p.NetId, new(0, 0, 0, 0, 0))`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<LiveShopChange>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<LiveShopChange>()`
 - `System.Enum.ToString()`；输入表达式：`.RoomType.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: run.CurrentRoom?.RoomType.ToString()`
@@ -79,7 +79,7 @@ private bool _disabled;
 - `_floor` = `run.TotalFloor`
 - `_seen[p.NetId]` = `new(h.CardsRemoved.Count, h.CardsGained.Count, h.BoughtRelics.Count, h.BoughtPotions.Count, h.GoldSpent)`
 
-<a id="symbol-3cb46534a05e"></a>
+<a id="symbol-3b6bb553f5a2"></a>
 
 ## `Add(string, string, string) — void Add(string kind, string name, string cardType = "")`
 

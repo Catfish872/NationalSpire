@@ -119,13 +119,13 @@ public static class WeeklyJournal
             data.WeeklyPersonBaselines[person.Id] = fingerprint;
             if (!changed || !(EsportsWorld.IsProfessional(person) || person.Role == "青训选手" || performances.Any(p => p.Id == person.Id))) continue;
             issue.Profiles.Add(new() { Id = person.Id, Name = person.PublicName, Gender = IdentityGender.Of(data, person.Id),
-                Background = $"姓名{person.Name}，{person.Country}，{person.Role}，{EsportsWorld.ClubName(data, person.ClubId)}，{CharacterIdentity.Name(data, person.Character)}，{person.Style}" + (person.CameoId.Length > 0 ? "；" + person.Biography : ""),
+                Background = $"姓名{person.Name}，{person.Country}，{person.Role}，{EsportsWorld.ClubName(data, person.ClubId)}，{CharacterIdentity.Name(data, person.Character)}，{person.Style}" + (person.Biography.Length > 0 && (person.CameoId.Length > 0 || data.HumanIds.Contains(person.Id)) ? "；" + person.Biography : ""),
                 History = $"累计通关{person.Wins}次/失败{person.Losses}次（含训练），最高进阶{person.MaxAscension}，评分{person.Rating}，冠军{person.Titles}次" + (person.RecordedWinStreak > 0 ? "；" + CameoContent.StreakText(person) : ""),
                 ThisWeek = WeekStats(person.Id) + $" 本期累计新增通关{person.Wins - oldWins}次/失败{person.Losses - oldLosses}次（含训练）。", Previous = person.AiIntroduction });
         }
         if (performances.Any(p => p.Id == "player") || data.Esports.Honors.Any(h => h.Day >= start && h.Day <= data.Day))
             issue.Profiles.Insert(0, new() { Id = "player", Name = CareerEngine.Name(data), Gender = data.PlayerGender,
-                Background = $"{data.Esports.Country}，{EsportsWorld.LicenseName(data)}；{CareerCommerce.PublicState(data, data.Day)}",
+                Background = $"{data.Esports.Country}，{EsportsWorld.LicenseName(data)}；{CareerCommerce.PublicState(data, data.Day)}" + (data.PlayerCard?.Biography is { Length: > 0 } bio ? "；" + bio : ""),
                 History = $"正式比赛累计{data.Wins}胜/{data.Draws}平/{data.Losses}负，评分{data.Rating}；赛事最高通关进阶{data.Esports.BestClear}。"
                     + string.Join("；", data.Esports.Honors.TakeLast(3).Select(h => $"{GameCalendar.Text(data, h.Day)} {h.Title}")),
                 ThisWeek = WeekStats("player") + " " + string.Join("；", results.Select(r => $"{GameCalendar.Text(data, r.Day)}：{r.Evidence.Summary()}")), Previous = data.PlayerIntroduction });

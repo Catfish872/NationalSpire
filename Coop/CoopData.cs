@@ -45,6 +45,7 @@ public sealed class CoopWorld
     public CareerData World { get; set; } = new();
     public List<CoopMember> Members { get; set; } = [];
     public bool RosterLocked { get; set; }
+    public int OpeningDay { get; set; } = 1;
     public bool CareerStarted { get; set; }
     public int EntrySequence { get; set; }
     public CoopProposal? Proposal { get; set; }

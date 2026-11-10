@@ -20,7 +20,7 @@ public partial class CareerScreen
             preview.Texture = null; texture?.Dispose(); texture = null;
             var item = items.FirstOrDefault(i => i.Id == selected); description.Editable = item != null; description.Text = item?.Description ?? "";
             if (item == null) return;
-            try { texture = DateSceneView.CreateBackground(item.Image); preview.Texture = texture; }
+            try { texture = DateSceneView.PreviewBackground(item); preview.Texture = texture; }
             catch (Exception e) { status.Text = e.Message; }
         }
         void Choices()

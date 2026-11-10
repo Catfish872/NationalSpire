@@ -13,18 +13,11 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 6); sidebar.AddChild(row);
         foreach (string filter in new[] { "全部", "私信", "群聊" })
         {
-            var b = PrivateButton(filter, () => { _chatFilter = filter; _privateListSignature = ""; RefreshPrivateList(); }, 68); b.Name = "ChatFilter" + filter; row.AddChild(b);
+            var b = PrivateButton(filter, () => { _chatFilter = filter; _privateListSignature = ""; RefreshPrivateList(); }, 54); b.Name = "ChatFilter" + filter; row.AddChild(b);
         }
         row.AddChild(PrivateButton("＋", () => GroupMemberPicker(null, people => GroupCommand("group-create", new() { People = people, Text = _groupCreateName })), 42));
     }
     private string _groupCreateName = "新群聊";
-    private void OpenGroupPerson(string person)
-    {
-        var previous = CaptureLocation() with { Group = _privateGroup, ChatScroll = _privateScroll!.ScrollVertical, ChatPage = ChatPage };
-        ClosePrivateMessagesCore(false);
-        Visit(() => { _tab = "选手档案"; _personId = person; });
-        _backHistory.Pop(); _backHistory.Push(previous); UpdateNavigation();
-    }
     private Task RestoreGroupScroll(string group, int position) => _privateGroup == group ? ScrollChatTo(position) : Task.CompletedTask;
     private void SelectGroup(string id, int page = -1)
     {
@@ -83,6 +76,7 @@ public partial class CareerScreen
         if (busy) _privateHeading.AddChild(PrivateButton("停止生成", () => GroupCommand("group-stop", new()), 110));
         CareerVisuals.ClearContent(_privateBody);
         var visibleTurns = _groupPages.Visible.ToArray();
+        var visibleOffers = new HashSet<(string Lane,string Offer)>();
         long first = _groupPages.Page == 0 ? 0 : visibleTurns.FirstOrDefault()?.Order ?? 0;
         long end = _groupPages.Next?.Order ?? long.MaxValue;
         var completions = TrainingCompletions(g.Forgotten ? [] : g.Interactions.Values.SelectMany(c => c.Offers), first, end);
@@ -134,7 +128,9 @@ public partial class CareerScreen
                     var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 8); _privateBody.AddChild(row);
                     row.AddChild(Avatar(ViewData, e.Person, 24, false)); row.AddChild(PrivateText(GroupChats.Name(ViewData, e.Person) + " · " + e.Text, 14, CareerVisuals.Teal));
                 }
-                if (g.Interactions.TryGetValue(e.Lane, out var lane)) foreach (var offer in lane.Offers.Where(o => o.TurnId == e.Turn)) GroupOffer(g, e, offer);
+                if (g.Interactions.TryGetValue(e.Lane, out var lane))
+                    foreach (var offer in lane.Offers.Where(o=>o.TurnId==e.Turn))
+                        if(visibleOffers.Add((e.Lane,offer.Id))) GroupOffer(g,e,offer);
             }
             foreach (string notice in t.Notices)
             {
@@ -154,6 +150,18 @@ public partial class CareerScreen
             }
         }
         TrainingCompletionsThrough(completions, long.MaxValue);
+        if (ChatAtLatest && !g.Forgotten)
+        {
+            string human=GroupChats.Human(ViewData);
+            var due=g.Interactions.Where(l=>l.Key.StartsWith(human+"/",StringComparison.Ordinal))
+                .SelectMany(l=>l.Value.Offers.Where(o=>o.Kind=="activity" && o.State=="已确认" && PrivateAppointments.Date(ViewData,o)==ViewData.Day &&
+                    !visibleOffers.Contains((l.Key,o.Id))).Select(o=>(Lane:l.Key,Offer:o)))
+                .GroupBy(entry=>(entry.Lane,entry.Offer.TurnId)).ToDictionary(g=>g.Key,g=>g.Select(entry=>entry.Offer).ToList());
+            if(due.Count>0)
+                foreach(var effect in g.Turns.SelectMany(t=>t.Effects).Where(e=>e.Human==human))
+                    if(due.Remove((effect.Lane,effect.Turn),out var offers))
+                        foreach(var offer in offers) GroupOffer(g,effect,offer);
+        }
         if (_groupPages.Count == 0 && entries.Length == 0) _privateBody.AddChild(PrivateText("开始群聊", 20, _muted));
         if (ChatAtLatest && g.Seen.GetValueOrDefault(GroupChats.Human(ViewData)) < g.Turns.Count(t => t.Status == "complete")) GroupCommand("group-read", new());
         FinishChatPage(bottom);
@@ -167,7 +175,7 @@ public partial class CareerScreen
         {
             var portrait = new VBoxContainer { Name = "GroupSpeaker_" + person, SizeFlagsVertical = SizeFlags.ShrinkBegin };
             portrait.AddThemeConstantOverride("separation", 3); row.AddChild(portrait);
-            portrait.AddChild(Avatar(ViewData, person, 38, open: () => OpenGroupPerson(person)));
+            portrait.AddChild(Avatar(ViewData, person, 38, open: () => OpenPerson(person)));
             if (!GroupChats.IsHuman(ViewData, person))
             {
                 var badge = new Control { Name = "GroupFavour_" + person, CustomMinimumSize = new(38, 42), TooltipText = "对你的好感：" + PrivateMessages.Relation(ViewData, person).Favour };
@@ -197,6 +205,7 @@ public partial class CareerScreen
         if (o.Kind == "publish") box.AddChild(PrivateText(o.Title, 19, _ink));
         if (o.Kind == "favour") box.AddChild(PrivateText($"对{GroupChats.Name(ViewData, e.Target.Length > 0 ? e.Target : e.Human)}的好感 {o.FavourBefore} → {o.FavourTargets.LastOrDefault()}", 17, _ink));
         if (o.Detail.Length > 0) box.AddChild(PrivateSelectableText(o.Detail, 16, _ink));
+        if (o.Kind == "activity" && WeddingAppointments.IsWedding(o)) box.AddChild(PrivateSelectableText(WeddingAppointments.Description(ViewData, o), 15, _muted));
         string replacement = "";
         if (o.Kind == "contract" && o.Role == "首发" && o.State == "待确认")
         {
@@ -211,10 +220,29 @@ public partial class CareerScreen
             if (o.State == "待确认") { Action(o.Kind == "favour" ? "应用" : o.Kind == "publish" ? "确认发布" : "确认", "confirm"); Action(o.Kind == "favour" ? "保留原值" : "拒绝", "decline"); }
             if (o.Kind == "activity" && o.State == "已确认" && PrivateAppointments.Date(ViewData, o) == ViewData.Day)
             {
-                Action("私密赴约", "attend");
-                actions.AddChild(PrivateButton("公开赴约", () => Send("attend", new() { Offer = o.Id, Part = "public" }), 120));
+                string group=_privateGroup;
+                actions.AddChild(PrivateButton("直接赴约",()=>ShowAttendanceChoices(false,visible=>
+                    GroupCommand("group-offer-attend",new(){Lane=e.Lane,Interaction=new(){Offer=o.Id,Part=visible?"public":""}},
+                        ()=>_cancelDialog?.Invoke(),group,ShowPrivateCommandError)),140));
             }
             if (o.Kind == "activity" && o.State == "已确认") Action("取消", "decline");
+            if (o.Kind == "activity" && o.Participants.Contains(GroupChats.Human(ViewData))
+                && (o.State == "已赴约" || o.State == "已确认" && PrivateAppointments.Date(ViewData, o) == ViewData.Day))
+            {
+                string group = _privateGroup;
+                var date = new DateChoiceButton { Name = "GroupDate", Caption = "进入多人约会", CustomMinimumSize = new(180, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter };
+                void Enter(bool visible) => GroupCommand("group-offer-date",new(){Lane=e.Lane,Interaction=new(){Offer=o.Id,Part=visible?"public":""}},()=>
+                {
+                    _cancelDialog?.Invoke();
+                    Callable.From(() =>
+                    {
+                        if(IsInstanceValid(this) && !IsQueuedForDeletion() && _privateGroup==group && DateGroupBridge.Find(ViewData,group,o.Id) is { } scene)
+                        { OpenPrivateMessages(scene.Conversation.PersonId);OpenDateScene(scene.Offer.Id); }
+                    }).CallDeferred();
+                },group,ShowPrivateCommandError);
+                date.Pressed+=()=>{if(o.State=="已确认")ShowAttendanceChoices(true,Enter);else Enter(false);};
+                actions.AddChild(date);
+            }
         }
     }
     private void SendGroup()
@@ -224,24 +252,29 @@ public partial class CareerScreen
         GroupCommand("group-send", new() { Text = text, Attachments = attachments }, () =>
         { if (ChatDraftKey == key) { _privateInput.Text = ""; PrivateAttachments.Clear(); RefreshPrivateAttachments(); LatestChatPage(); } });
     }
-    private void GroupCommand(string kind, GroupCommand command, Action? accepted = null)
+    private void GroupCommand(string kind, GroupCommand command, Action? accepted = null, string? target = null, Action<string>? failed = null)
     {
         command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
-        string id = _privateGroup;
+        string id = target ?? _privateGroup;
+        void Fail(string message)
+        {
+            if (failed != null) { failed(message); return; }
+            _groupError = message; _privateStatus!.Text = PlayerFacingText.LongError(message); _privateStatus.Visible = true;
+        }
         if (_multiplayer != null) { _multiplayer.Send(kind, id, JsonSerializer.Serialize(command), accepted: () => { accepted?.Invoke(); _multiplayer.Refresh(); _groupSignature = _privateListSignature = ""; if (kind == "group-create") SelectGroup(GroupChats.Visible(ViewData).Last().Id); }); return; }
         var d = ViewData;
         try
         {
-            if (GroupChats.Command(d, kind, id, command) is { } error) { CareerStore.Save(d); _groupSignature = ""; _groupError = error; _privateStatus!.Text = PlayerFacingText.LongError(error); _privateStatus.Visible = true; return; }
+            if (GroupChats.Command(d, kind, id, command) is { } error) { CareerStore.Save(d); _groupSignature = ""; Fail(error); return; }
             CareerStore.Save(d); accepted?.Invoke(); _groupSignature = _privateListSignature = ""; if (kind != "group-read") _groupError = "";
             if (kind == "group-create") { SelectGroup(GroupChats.Visible(d).Last().Id); return; }
             if (kind is "group-send" or "group-retry" or "group-regenerate" or "group-arbitrate") _ = AiService.ProcessGroupAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, id);
             if (kind == "group-summary") _ = AiService.SummarizeGroupAsync(() => CareerStore.IsCurrent(d) ? d : null, CareerStore.Save, id, command.Text);
             if (kind == "group-offer-confirm") _ = AiService.ProcessInteractionsAsync(CommunityThreads.PendingIds(d).ToArray(), d);
         }
-        catch (Exception ex) { _groupError = AiService.FailureReason(ex); _privateStatus!.Text = PlayerFacingText.LongError(_groupError); _privateStatus.Visible = true; }
+        catch (Exception ex) { Fail(AiService.FailureReason(ex)); }
     }
-    private void GroupMemberPicker(GroupChat? group, Action<List<string>> accept, bool existing = false, string title = "", bool single = false)
+    private void GroupMemberPicker(GroupChat? group, Action<List<string>> accept, bool existing = false, string title = "", bool single = false, bool showPortraits = false)
     {
         var selected = new HashSet<string>(); var d = ViewData;
         var candidates = d.People.Where(p => p.Id != GroupChats.Human(d) && (group == null || existing == group.Members.Contains(p.Id))).ToArray();
@@ -250,7 +283,7 @@ public partial class CareerScreen
         {
             if (group == null) { var name = new LineEdit { Text = _groupCreateName, PlaceholderText = "群聊名称" }; name.TextChanged += value => _groupCreateName = value; box.AddChild(name); }
             if (group != null && !existing) box.AddChild(PrivateText("当前成员：" + string.Join("、", group.Members.Select(id => GroupChats.Name(d, id))), 15, _muted));
-            PeoplePicker(box, candidates, selected, single, () => { }, 300);
+            PeoplePicker(box, candidates, selected, single, () => { }, 300, showPortraits);
         });
     }
 }

@@ -8,6 +8,10 @@ public partial class LiveRaceHud : PanelContainer
     public event Action<BroadcastUiState>? LayoutChanged;
     private Label _status = null!, _title = null!;
     private VBoxContainer _details = null!, _speechStack = null!;
+    private PanelContainer? _chatRequest;
+    private LiveRequestButton? _chatRespond;
+    private string _chatRequestKey = "";
+    private Tween? _chatFade;
     private sealed class Speech(PanelContainer panel, string topic, double remaining, string speaker, string text, AvatarArt? art, AvatarIdentity? identity)
     { public PanelContainer Panel = panel; public string Topic = topic; public double Remaining = remaining; public Tween? Fade; public bool Expiring;
       public string Speaker = speaker, Text = text; public AvatarArt? Art = art; public AvatarIdentity? Identity = identity; public float Travel;
@@ -82,17 +86,45 @@ public partial class LiveRaceHud : PanelContainer
         Callable.From(() => { FitHeight(); ClampPosition(); }).CallDeferred();
     }
     private string _raceName = "赛事转播";
-    public void AddAction(string title, Action action)
+    public Button AddAction(string title, Action action)
     {
         var button = new Button { Text = title, FocusMode = FocusModeEnum.None };
         button.AddThemeFontSizeOverride("font_size", 13); button.Pressed += action; _details.AddChild(button);
+        return button;
+    }
+    public Button ShowChatRequest(string key, string speaker, string text, AvatarArt art, AvatarIdentity identity, double remaining, bool accepted, Button below, Action respond)
+    {
+        if (_chatRequestKey != key || _chatRequest == null)
+        {
+            ClearChatRequest(); _chatRequestKey = key;
+            _chatRequest = new PanelContainer { Name = "DateGameChatRequest", MouseFilter = MouseFilterEnum.Ignore };
+            _chatRequest.AddThemeStyleboxOverride("panel", CareerVisuals.Box("302634e8", "c690ad", 8, 8));
+            var content = new VBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; content.AddThemeConstantOverride("separation", 8); _chatRequest.AddChild(content);
+            var speech = SpeechPanel(speaker, text, "date/request", art, identity, false, ExpandedWidth - 16); speech.Name = "DateGameRequestSpeech"; content.AddChild(speech);
+            _chatRespond = new LiveRequestButton(); content.AddChild(_chatRespond);
+            _chatRespond.Sync(remaining, accepted);
+            _chatRespond.Pressed += () => { _chatRespond.Hold(true); respond(); };
+            _chatRespond.Elapsed += () => { _chatRequest?.Hide(); _resizePending = true; };
+            _details.AddChild(_chatRequest); _details.MoveChild(_chatRequest, below.GetIndex());
+            _chatRequest.Modulate = new(1, 1, 1, 0); _chatFade = CreateTween(); _chatFade.TweenProperty(_chatRequest, "modulate:a", 1f, .25);
+            _resizePending = true;
+        }
+        _chatRespond!.Hold(accepted); return _chatRespond;
+    }
+    public void HoldChatRequest(bool hold) => _chatRespond?.Hold(hold);
+    public void ClearChatRequest()
+    {
+        if (_chatRequest == null) return;
+        _chatFade?.Kill(); _chatFade = null;
+        if (_chatRequest != null) { _chatRequest.GetParent()?.RemoveChild(_chatRequest); _chatRequest.QueueFree(); }
+        _chatRequest = null; _chatRespond = null; _chatRequestKey = ""; _resizePending = true;
     }
     public void SetRace(string name, string status, int hp, int maxHp, bool otherAct, double seconds)
     {
         _raceName = name; if (!_collapsed) _title.Text = "⠿ " + name;
         _status.Text = status + $" · 生命 {hp}/{maxHp}" + (otherAct ? " · 不同幕" : "");
     }
-    private PanelContainer SpeechPanel(string speaker, string text, string topic, AvatarArt? art, AvatarIdentity? identity, bool floating)
+    private PanelContainer SpeechPanel(string speaker, string text, string topic, AvatarArt? art, AvatarIdentity? identity, bool floating, float width = ExpandedWidth)
     {
         var panel = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore };
         bool audience = topic.StartsWith("audience_") || topic.StartsWith("reply_");
@@ -103,11 +135,11 @@ public partial class LiveRaceHud : PanelContainer
         var byline = Label(speaker, 13, thought ? new Color("c4b1f0") : audience ? new Color("9ddbd0") : CareerVisuals.Gold);
         var content = Label(floating ? text.Replace("\r", "").Replace("\n", " ") : text, 16, thought ? new Color("ded3f4") : CareerVisuals.Ink);
         if (floating) { byline.AutowrapMode = content.AutowrapMode = TextServer.AutowrapMode.Off; byline.SizeFlagsHorizontal = content.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; }
-        byline.CustomMinimumSize = content.CustomMinimumSize = new Vector2(ExpandedWidth - 32, 0);
+        byline.CustomMinimumSize = content.CustomMinimumSize = new Vector2(width - 32, 0);
         if (floating) byline.CustomMinimumSize = content.CustomMinimumSize = Vector2.Zero;
         if (art != null)
         {
-            byline.CustomMinimumSize = floating ? Vector2.Zero : new Vector2(ExpandedWidth - 74, 0);
+            byline.CustomMinimumSize = floating ? Vector2.Zero : new Vector2(width - 74, 0);
             var heading = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
             heading.AddThemeConstantOverride("separation", 6);
             heading.AddChild(new CareerAvatar { Art = art, Identity = identity, CustomMinimumSize = new Vector2(30, 30), SizeFlagsVertical = SizeFlags.ShrinkCenter });
@@ -213,7 +245,7 @@ public partial class LiveRaceHud : PanelContainer
         LayoutChanged?.Invoke(_layout);
     }
     private void FitHeight() => Size = new Vector2(_collapsed ? 90 : ExpandedWidth, GetCombinedMinimumSize().Y);
-    public override void _ExitTree() { foreach (var item in _speeches) item.Fade?.Kill(); if (GetParent() is Control parent) parent.Resized -= RestorePosition; if (GodotObject.IsInstanceValid(_floating)) _floating.QueueFree(); }
+    public override void _ExitTree() { _chatFade?.Kill(); foreach (var item in _speeches) item.Fade?.Kill(); if (GetParent() is Control parent) parent.Resized -= RestorePosition; if (GodotObject.IsInstanceValid(_floating)) _floating.QueueFree(); }
 }
 
 /// <summary>仅绘制已走路线，地图缩放和拖动由原生父控件处理。</summary>

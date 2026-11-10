@@ -19,14 +19,13 @@ public static partial class AiService
         using var logScope = Diagnostics.BeginLog(LogArea.Community, data.WorldId + "/reaction/" + trace);
         string failure = "请求中断或配置已改变，可重试";
         void Fail(string message) { failure = message; Status = message; }
-        CommunityThreads.SetInteractionState(data, requested, "queued"); CareerStore.Save(data);
-        // 每条留言独立排队，发送前读取帖子内容；不同留言按配置并发。
-        var targets = ReactionTargets(data, requested);
-        var works = targets.Where(p => requested.Contains(p.Id)).Select(p => p.ReactionGeneration)
-            .Concat(targets.SelectMany(p => p.Replies).Where(r => requested.Contains(r.Id)).Select(r => r.ReactionGeneration)).ToArray();
         IDisposable? lease = null;
         try
         {
+            CommunityThreads.SetInteractionState(data, requested, "queued"); CareerStore.Save(data);
+            var targets = ReactionTargets(data, requested);
+            var works = targets.Where(p => requested.Contains(p.Id)).Select(p => p.ReactionGeneration)
+                .Concat(targets.SelectMany(p => p.Replies).Where(r => requested.Contains(r.Id)).Select(r => r.ReactionGeneration)).ToArray();
             lease = await EnterQueueAsync(data, requested.Select(id => "reply:" + id), works);
             if (!CareerStore.IsCurrent(data)) return;
             requested.IntersectWith(CommunityThreads.PendingIds(data));

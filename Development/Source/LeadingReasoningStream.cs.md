@@ -22,7 +22,7 @@ private int state;
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?)`](AiPrivateMessages.cs.md#symbol-2a90f4583071)；[`ToolText(string)`](AiPrivateMessages.cs.md#symbol-6734b539cd6d)
+**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?)`](AiPrivateMessages.cs.md#symbol-2a90f4583071)；[`ToolText(string)`](AiPrivateMessages.cs.md#symbol-05df00c7dd89)
 
 **调用：** `string.IndexOf(string, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Min(int, int)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 
@@ -60,7 +60,7 @@ private int state;
 
 来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-5e6a0ca815aa)
+**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-ee5f5afc0dac)
 
 **调用：** `System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 

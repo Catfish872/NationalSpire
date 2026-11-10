@@ -19,7 +19,7 @@
 
 来源：源码第 5 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](CoopRules.cs.md#symbol-fedd425e9ea0)；[`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-bc24477e89ba)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopRandomEvents.cs.md#symbol-dde49f27790c)
+**调用者：** [`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string, NationalSpire.CareerOpeningPlayer?)`](CoopRules.cs.md#symbol-8d3bfcd3efe2)；[`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-bc24477e89ba)；[`NationalSpire.Coop.CoopRules.EventCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopRandomEvents.cs.md#symbol-dde49f27790c)
 
 **调用：** [`NationalSpire.RandomEvents.Schedule(NationalSpire.CareerLifeState, int, string, int?)`](../RandomEvents.cs.md#symbol-f546dd3643ba)；[`NationalSpire.RandomEvents.SynchronizeSchedule(NationalSpire.CareerLifeState, NationalSpire.CareerLifeState, int)`](../RandomEvents.cs.md#symbol-bec384082476)；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -100,7 +100,7 @@
 
 - `_` = `AiService.ProcessEventAsync(Current, Save, command.Target, live =>          {              if (_closed || World?.Epoch != epoch || sender == Self) return;              string person = "event:" + command.Target;              foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, person, command.Target,                  System.Text.Json.JsonSerializer.Serialize(live), ++_privateSendSequence))))                  Send(sender, "private-chunk", new CoopPrivatePart(person, part));          })`
 
-<a id="symbol-2ce60ae95462"></a>
+<a id="symbol-1ff696196810"></a>
 
 ## `Current() — CareerData? Current()`
 
@@ -123,7 +123,7 @@
 
 - `data.Ai` = `AiSettingsStore.Load(new())`
 
-<a id="symbol-358fd2dd5754"></a>
+<a id="symbol-6577a7129cdd"></a>
 
 ## `Save(NationalSpire.CareerData) — void Save(CareerData data)`
 

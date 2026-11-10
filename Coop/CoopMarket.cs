@@ -1,4 +1,4 @@
-﻿namespace NationalSpire.Coop;
+namespace NationalSpire.Coop;
 
 public static partial class CoopRules
 {
@@ -11,6 +11,7 @@ public static partial class CoopRules
     }
     public static void InitializeMarket(CoopWorld world)
     {
+        world.World.Market.QuoteCountry = world.World.Esports.Country;
         BindMarket(world);
         CareerMarket.Initialize(world.World);
     }

@@ -178,21 +178,23 @@ public static class CareerLife
         if (item == null || item.Status != "可安排" || item.ExpiresDay < d.Day) return "这项活动已经结束。";
         if (item.Kind == "经营" && !OwnedClubs.CanOperate(d)) return "这项经营安排由俱乐部房主管理。";
         if (item.Kind == "俱乐部" && item.ClubId != d.Esports.ClubId) return "这项安排属于此前的俱乐部。";
+        var selected = item;
         if (CareerTraining.IsTraining(item))
         {
             if (CareerTraining.Multiplayer(d)) return "合作比赛由真人共同完成，这项NPC训练不适用。";
             if (item.ClubId != d.Esports.ClubId) return "这项训练属于此前的俱乐部。";
             var targets = CareerTraining.Targets(d);
             if (targetId.Length > 0 && !targets.Any(p => p.Id == targetId)) return "培养对象已不属于本队职业阵容。";
-            if (targetId.Length > 0) item.PersonId = targetId;
-            if (!targets.Any(p => p.Id == item.PersonId)) return "培养对象已不在本队。";
-            if (!CareerTraining.GrowthAvailable(d, item)) return "当前没有可培养的队友。";
+            if (targetId.Length > 0) selected = item.PreviewFor(d,targetId);
+            if (!targets.Any(p => p.Id == selected.PersonId)) return "培养对象已不在本队。";
+            if (!CareerTraining.GrowthAvailable(d, selected)) return "当前没有可培养的队友。";
             if (CareerTraining.Kind(item.Title) is "team" or "team-growth" && !targets.Any(p => CareerTraining.ActiveRoster(d, p.Id))) return "本队尚无已确认的参赛阵容。";
         }
         if (ClubPrograms.IsTraining(item) && ClubPrograms.Error(d, item) is { } programError) return programError;
         int cost = CareerRelics.Cost(d, item);
         if (d.Credits < cost) return "当前资金不足，可以稍后再安排。";
         if (item.LongProject && d.Life.Activities.Any(a => a.LongProject && a.Status == "进行中")) return "当前长期项目完成后，可以开始下一项。";
+        item.PersonId = selected.PersonId; item.Detail = selected.Detail;
         int duration = CareerRelics.Duration(d, item);
         if (cost > 0) CareerRelics.Spend(d);
         CareerRelics.Accept(d, item);

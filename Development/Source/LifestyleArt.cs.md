@@ -21,7 +21,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-183827086673)；[`NationalSpire.CareerListCache._Process(double)`](CareerListCache.cs.md#symbol-e8085c360313)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`](MarketVisuals.cs.md#symbol-5703b8242580)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-8376c45db5bc)
+**调用者：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-d11533df543e)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool, NationalSpire.CareerData?)`](MarketVisuals.cs.md#symbol-d96b884027a0)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)；[`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)；[`NationalSpire.MarketVisuals.ActionStyle(Godot.Button, string)`](MarketVisuals.cs.md#symbol-5703b8242580)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-2b902f13645d)
 
 **调用：** [`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`Godot.Color.ToHtml(bool)`；`Godot.Image.Image()`；`Godot.Image.LoadSvgFromString(string, float)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -104,7 +104,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-c3cb30fce98c)；[`NationalSpire.ConsumerProductArt.Texture(string)`](ConsumerProductArt.cs.md#symbol-888e0fff64ed)；[`P(float, float)`](LifestyleArt.cs.md#symbol-e50dcf6d6a45)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`string.Contains(string)`；`System.Math.Min(float, float)`
+**调用：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-d6b6fc927440)；[`NationalSpire.ConsumerProductArt.Texture(string)`](ConsumerProductArt.cs.md#symbol-888e0fff64ed)；[`P(float, float)`](LifestyleArt.cs.md#symbol-e61ead9a4aae)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`string.Contains(string)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `Line(float, float, float, float, Godot.Color?)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.ConsumerProductArt.Texture(string)`；`NationalSpire.LifestyleArt.Category`；`NationalSpire.LifestyleArt.ProductId`；`P(float, float)`
 
@@ -234,13 +234,13 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e50dcf6d6a45"></a>
+<a id="symbol-e61ead9a4aae"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
 来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-c3cb30fce98c)；[`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
+**调用者：** [`Line(float, float, float, float, Godot.Color?)`](LifestyleArt.cs.md#symbol-d6b6fc927440)；[`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`
 
@@ -253,7 +253,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c3cb30fce98c"></a>
+<a id="symbol-d6b6fc927440"></a>
 
 ## `Line(float, float, float, float, Godot.Color?) — void Line(float x, float y, float xx, float yy, Color? c = null)`
 
@@ -261,7 +261,7 @@ private static readonly Dictionary<string, Texture2D> Icons = [];
 
 **调用者：** [`NationalSpire.LifestyleArt._Draw()`](LifestyleArt.cs.md#symbol-8b1cbb5282e0)
 
-**调用：** [`P(float, float)`](LifestyleArt.cs.md#symbol-e50dcf6d6a45)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`
+**调用：** [`P(float, float)`](LifestyleArt.cs.md#symbol-e61ead9a4aae)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`
 
 **字段、属性、事件及方法组引用：** `P(float, float)`
 

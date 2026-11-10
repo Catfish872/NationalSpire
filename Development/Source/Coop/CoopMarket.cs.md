@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`5E36F834986FC04DB7B37FBEBE9DAB533F285CEE30F895A0A125761C74B18720`。来源：[源码](../../../Coop/CoopMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0C00DEB7ED6BB0F6F561DE114AC1A672A0A47B75B98EECBC423AF65A0EA95377`。来源：[源码](../../../Coop/CoopMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -28,7 +28,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerData.CareerData()`；输入表达式：`new CareerData { Market = world.World.Market, Life = member.Life,              TradingAccounts = () => world.Members.Select(m => m.Life.Trading).ToArray() }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CareerData { Market = world.World.Market, Life = member.Life,              TradingAccounts = () => world.Members.Select(m => m.Life.Trading).ToArray() }`
+- `NationalSpire.CareerData.CareerData()`；输入表达式：`new CareerData { Market = world.World.Market, Life = member.Life,             TradingAccounts = () => world.Members.Select(m => m.Life.Trading).ToArray() }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CareerData { Market = world.World.Market, Life = member.Life,             TradingAccounts = () => world.Members.Select(m => m.Life.Trading).ToArray() }`
 - `NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`；输入表达式：`MarketClearing.Inspect(data, request)`；返回值紧邻使用处：`ReturnStatementSyntax: return MarketClearing.Inspect(data, request);`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`world.Members.Select(m => m.Life.Trading)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: world.Members.Select(m => m.Life.Trading).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`world.Members.Single(m => m.SteamId == memberId)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = world.Members.Single(m => m.SteamId == memberId)`
@@ -50,7 +50,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用：** [`NationalSpire.CareerMarket.Initialize(NationalSpire.CareerData)`](../CareerMarket.cs.md#symbol-b3244730c7ae)；[`NationalSpire.Coop.CoopRules.BindMarket(NationalSpire.Coop.CoopWorld)`](CoopMarket.cs.md#symbol-b6088377cb72)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.Initialize(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopRules.BindMarket(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopWorld.World`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerMarket.Initialize(NationalSpire.CareerData)`；`NationalSpire.Coop.CoopRules.BindMarket(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.MarketState.QuoteCountry`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -59,12 +59,13 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **赋值（含属性/字段和局部值）：**
 
+- `world.World.Market.QuoteCountry` = `world.World.Esports.Country`
 
 <a id="symbol-a60daf1be116"></a>
 
 ## `NationalSpire.Coop.CoopRules.Trade(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.MarketOrder) — private static string? Trade(CoopWorld transaction, CoopMember member, MarketOrder order)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -74,7 +75,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerData.CareerData()`；输入表达式：`new CareerData { Day = transaction.World.Day, Market = transaction.World.Market, Credits = member.Credits, Life = member.Life,              MarketAccounts = transaction.World.MarketAccounts, TradingAccounts = transaction.World.TradingAccounts }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CareerData { Day = transaction.World.Day, Market = transaction.World.Market, Credits = member.Credits, Life = member.Life,              MarketAccounts = transaction.World.MarketAccounts, TradingAccounts = transaction.World.TradingAccounts }`
+- `NationalSpire.CareerData.CareerData()`；输入表达式：`new CareerData { Day = transaction.World.Day, Market = transaction.World.Market, Credits = member.Credits, Life = member.Life,             MarketAccounts = transaction.World.MarketAccounts, TradingAccounts = transaction.World.TradingAccounts }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CareerData { Day = transaction.World.Day, Market = transaction.World.Market, Credits = member.Credits, Life = member.Life,             MarketAccounts = transaction.World.MarketAccounts, TradingAccounts = transaction.World.TradingAccounts }`
 - `NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`；输入表达式：`CareerMarket.Trade(data, order)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerMarket.Trade(data, order)`
 
 **赋值（含属性/字段和局部值）：**
@@ -91,7 +92,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 ## `NationalSpire.Coop.CoopRules.BindMarket(NationalSpire.Coop.CoopWorld) — private static void BindMarket(CoopWorld world)`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.InitializeMarket(NationalSpire.Coop.CoopWorld)`](CoopMarket.cs.md#symbol-0d9508e5083b)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)
 
@@ -105,23 +106,23 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`world.Run.Characters.ContainsKey(m.SteamId)`；返回值紧邻使用处：`BinaryExpressionSyntax: world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`world.Members.Select(m => m.Life.Trading)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: world.Members.Select(m => m.Life.Trading).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`world.Members.Select(member => member.Life.Trading)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: world.Members.Select(member => member.Life.Trading).ToArray`
-- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`world.Members              .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))              .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => world.Members              .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))              .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`world.Members             .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))             .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => world.Members             .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))             .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`world.Members.Select(m => m.Life.Trading).ToArray()`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => world.Members.Select(m => m.Life.Trading).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`world.Members.Select(member => member.Life.Trading).ToArray()`；返回值紧邻使用处：`ArgumentSyntax: world.Members.Select(member => member.Life.Trading).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`m.Sponsors.Where(s => s.TargetId == "player")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: m => m.Sponsors.Where(s => s.TargetId == "player")`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`world.Members              .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: world.Members              .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))              .SelectMany`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`world.Members             .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: world.Members             .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))             .SelectMany`
 
 **赋值（含属性/字段和局部值）：**
 
-- `world.World.MarketAccounts` = `(data, day) =>          {              CareerMarket.Accounts(data.Market, world.Members.Select(member => member.Life.Trading).ToArray(), day);          }`
-- `world.World.MarketSponsors` = `id => world.Members              .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))              .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`
+- `world.World.MarketAccounts` = `(data, day) =>         {             CareerMarket.Accounts(data.Market, world.Members.Select(member => member.Life.Trading).ToArray(), day);         }`
+- `world.World.MarketSponsors` = `id => world.Members             .Where(m => id == m.PersonId || id == "player" && (world.Run == null || world.Run.Characters.ContainsKey(m.SteamId)))             .SelectMany(m => m.Sponsors.Where(s => s.TargetId == "player"))`
 - `world.World.TradingAccounts` = `() => world.Members.Select(m => m.Life.Trading).ToArray()`
 
 <a id="symbol-fa87d36508d0"></a>
 
 ## `NationalSpire.Coop.CoopCoordinator.InspectMarket(NationalSpire.MarketInspection) — public async Task<MarketInspectionResult> InspectMarket(MarketInspection request)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -152,7 +153,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 ## `NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire) — private void ReceiveMarket(ulong sender, CoopWire wire)`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 

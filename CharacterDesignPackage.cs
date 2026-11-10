@@ -65,13 +65,13 @@ public static class CharacterDesignPackage
     }
     private const long MaxTotal = 512L * 1024 * 1024;
     private const int MaxMetadata = 4 * 1024 * 1024;
-    public static Imported Read(CareerData data, string path)
+    public static Imported Read(CareerData data, string path, bool portraitsOnly = false)
     {
         if (new FileInfo(path).Length > MaxTotal) throw new InvalidDataException("角色设计包超过512MB。");
         using var stream = File.OpenRead(path);
-        return Read(data, stream);
+        return Read(data, stream, portraitsOnly);
     }
-    public static Imported Read(CareerData data, Stream source)
+    public static Imported Read(CareerData data, Stream source, bool portraitsOnly = false)
     {
         using var archive = new ZipArchive(source, ZipArchiveMode.Read, leaveOpen: true);
         if (archive.Entries.Count > 512 || archive.Entries.Sum(e => e.Length) > MaxTotal) throw new InvalidDataException("角色设计包内容过大。");
@@ -83,7 +83,9 @@ public static class CharacterDesignPackage
         }
         byte[] Bytes(string file, int limit)
         {
-            if (!entries.TryGetValue(file, out var entry) || entry.Length <= 0 || entry.Length > limit) throw new InvalidDataException("角色设计包缺少或超出大小限制：" + file);
+            if (!entries.TryGetValue(file, out var entry)) throw new InvalidDataException("角色设计包缺少文件：" + file);
+            if (entry.Length <= 0) throw new InvalidDataException("角色设计包中的文件为空：" + file);
+            if (entry.Length > limit) throw new InvalidDataException($"角色设计包中的文件超过{limit / (1024 * 1024)}MB限制：" + file);
             using var stream = entry.Open(); byte[] bytes = new byte[(int)entry.Length]; stream.ReadExactly(bytes); if (stream.ReadByte() != -1) throw new InvalidDataException("文件长度校验失败。"); return bytes;
         }
         byte[] metadata = Bytes("character-design.json", MaxMetadata);
@@ -104,7 +106,7 @@ public static class CharacterDesignPackage
             }
         }
         if (manifest.DefaultEmotionId == null || manifest.SelectedOutfit == null || !PortraitDesigns.SafeId(manifest.DefaultEmotionId) || !PortraitDesigns.SafeId(manifest.SelectedOutfit)) throw new InvalidDataException("默认立绘或套装编号无效。");
-        var person = CharacterCardPng.Import(data, Bytes("character.png", 16 * 1024 * 1024), AvatarImages.FromCardPng);
+        var person = portraitsOnly ? CharacterCards.New(data) : CharacterCardPng.Import(data, Bytes("character.png", 16 * 1024 * 1024), AvatarImages.FromCardPng);
         var design = manifest.Version == 3 && manifest.Design != null ? manifest.Design : PortraitDesigns.Create(data, person.Id, person);
         design.PersonId = person.Id;
         design.DefaultEmotionId = manifest.DefaultEmotionId; design.SelectedOutfit = manifest.SelectedOutfit;
@@ -117,8 +119,9 @@ public static class CharacterDesignPackage
             if (manifest.Version == 1) item.Emotion = legacyIds.OrderByDescending(id => id.Length).FirstOrDefault(id => MatchesEmotion(item.Id, id)) ?? item.Id;
             if (item.Emotion == null || !PortraitDesigns.SafeId(item.Emotion) || !MatchesEmotion(item.Id, item.Emotion)) throw new InvalidDataException("情绪差分映射无效。");
             byte[] bytes = Bytes(item.File, 64 * 1024 * 1024);
-            if (DateSceneAssetStore.Hash(bytes) != item.Hash) throw new InvalidDataException("立绘摘要与清单不一致：" + item.Id);
-            using var image = DateSceneAssetStore.ReadImage(bytes, true); images.Add(item.File, bytes);
+            using var image = DateSceneAssetStore.ReadImage(bytes, true);
+            // 玩家可重新保存或替换包内PNG；以实际内容重建缓存引用。
+            item.Hash = DateSceneAssetStore.Hash(bytes); images.Add(item.File, bytes);
         }
         foreach (string id in manifest.Sprites.Select(s => s.Emotion).Append(manifest.DefaultEmotionId).Distinct())
             if (!design.Emotions.Any(e => e.Id == id)) design.Emotions.Add(new() { Id = id, Name = id });
@@ -136,7 +139,7 @@ public static class CharacterDesignPackage
         private readonly Dictionary<string, byte[]?> _before = [];
         private bool _committed;
         public Installation(CareerData data, Imported package) : this(data, package.Person.Id, package.Design, PackageAssets(package)) { }
-        private static DateSceneAssets PackageAssets(Imported package)
+        public static DateSceneAssets PackageAssets(Imported package)
         {
             var assets = new DateSceneAssets { OutfitId = package.Metadata.SelectedOutfit };
             foreach (var item in package.Metadata.Sprites)

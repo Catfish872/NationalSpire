@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
@@ -67,30 +67,53 @@ public partial class CoopRuntime : Node
     }
     public static string Compatibility => CoopContentIdentity.Create(Diagnostics.ModVersion, ModelIdSerializationCache.Hash,
         MegaCrit.Sts2.Core.Modding.ModManager.GetNonGameplayRelevantModNameList());
-    public async Task Connect(bool host, string name, string worldName = "共同生涯", int capacity = 2, string country = "中国", string code = "", string savedId = "")
+    public async Task Connect(bool host, string name, string worldName = "共同生涯", int capacity = 2, string country = "中国", string code = "", string savedId = "", NpcGenerationSetup? npcSetup = null, Func<CareerData,CareerOpeningWorld,Task>? chooseClub = null)
     {
         if (_busy || _pausing || Session != null || RunManager.Instance.IsInProgress) throw new InvalidOperationException("请先退出当前房间或对局。");
         if (CoopCompatibility.Check() is { } compatibilityError) throw new InvalidOperationException(compatibilityError);
+        if (host && savedId.Length == 0 && npcSetup != null) name = NpcGeneration.ResolvePlayerName(npcSetup);
         _busy = true;
         int generation = ++_connectionGeneration;
+        NpcGeneration.ImportBatch? imports = null;
         try
         {
             _connecting = new CoopSteam();
             CoopStorage.Checkpoint? checkpoint = null;
             if (host)
             {
-                checkpoint = savedId.Length > 0 ? await CoopSettings.Storage.LoadAsync(savedId) : new(CoopRules.Create(_connecting.Self, worldName, name, capacity, country), null);
+                checkpoint = savedId.Length > 0 ? await CoopSettings.Storage.LoadAsync(savedId) : new(npcSetup == null
+                    ? CoopRules.Create(_connecting.Self, worldName, name, capacity, country)
+                    : CoopRules.CreateWorld(_connecting.Self, worldName, capacity, npcSetup.TeamCountry ?? country, npcSetup.Pool), null);
+                if (savedId.Length == 0 && npcSetup != null)
+                {
+                    await npcSetup.World.Prepare(checkpoint.World.World, async () => { await ToSignal(GetTree(),Godot.SceneTree.SignalName.ProcessFrame); });
+                    checkpoint.World.OpeningDay = checkpoint.World.World.Day;
+                    NpcGeneration.ApplySettings(checkpoint.World.World, npcSetup, AiSettingsStore.Load(new()));
+                    CoopRules.AddMember(checkpoint.World, _connecting.Self, name, npcSetup.Personal);
+                    var owner = checkpoint.World.Members.Single(m => m.SteamId == checkpoint.World.Owner);
+                    imports = new(checkpoint.World.World, npcSetup, new CareerData { WorldId = checkpoint.World.Id + "-" + owner.SteamId, LocalHumanId = owner.PersonId });
+                    if (chooseClub != null && npcSetup.World.ClubMode is "自建" or "加盟")
+                    {
+                        var shared = checkpoint.World.World; var oldCredits=shared.Credits; var oldHuman=shared.LocalHumanId; shared.Credits = owner.Credits; shared.LocalHumanId = owner.PersonId;
+                        try { await chooseClub(shared,npcSetup.World); owner.Credits=shared.Credits; }
+                        finally { shared.LocalHumanId=oldHuman; shared.Credits=oldCredits; }
+                        CoopRules.RefreshPeople(checkpoint.World);
+                    }
+                }
                 if (generation != _connectionGeneration) throw new OperationCanceledException("已取消连接。");
                 if (checkpoint.World.Owner != _connecting.Self) throw new InvalidOperationException("这个检查点属于另一名主机。");
                 if (checkpoint.World.Run is { Terminal: null } savedRun) savedRun.Phase = "paused";
-                checkpoint.World.CareerStarted |= checkpoint.World.RosterLocked || checkpoint.World.World.Day > 1;
-                checkpoint.World.World.Ai.Enabled = AiSettingsStore.Load(new()).Enabled;
+                if (savedId.Length > 0) checkpoint.World.CareerStarted |= checkpoint.World.RosterLocked || checkpoint.World.World.Day > checkpoint.World.OpeningDay;
+                if (savedId.Length > 0 || npcSetup == null) checkpoint.World.World.Ai.Enabled = AiSettingsStore.Load(new()).Enabled;
                 await _connecting.Host(4);
             }
             else await _connecting.Join(code);
             if (generation != _connectionGeneration) throw new OperationCanceledException("已取消连接。");
             InviteCode = _connecting.Code;
             Session = new(_connecting, CoopSettings.Storage, Compatibility, _connecting.Token, name, GameBridge.Characters().Select(c => c.Id.ToString()).ToHashSet(), checkpoint);
+            Session.OfferFirstJoinSetup = !host;
+            imports?.Commit(); // 协调器构造完成时共同世界已保存，保留与该存档对应的本地设计文件。
+            if (host && savedId.Length == 0 && npcSetup != null) AiSettingsStore.Save(checkpoint!.World.World.Ai);
             _connecting = null; Native = new(Session); Ai = new(Session);
             Session.CaptureDiagnostics = () => Diagnostics.CapturePeerLogs(ProjectSettings.GlobalizePath("user://logs"), Native?.Status ?? Status, Session.World?.World.WorldId);
             _resumeRequired = Session.World?.Run != null; _pausedCount = Session.World?.Run?.ResumeCount ?? 0;
@@ -101,7 +124,7 @@ public partial class CoopRuntime : Node
             if (host && checkpoint?.World.CareerStarted == true) _ = Ai.Process();
         }
         catch { _connecting?.Dispose(); _connecting = null; throw; }
-        finally { _busy = false; }
+        finally { imports?.Dispose(); _busy = false; }
     }
     public void CancelConnection()
     {
@@ -254,7 +277,13 @@ public static class CoopMenuPatch
         button.OffsetLeft = 40; button.OffsetRight = 350; button.OffsetTop = -178; button.OffsetBottom = -114;
         button.Pressed += () => CoopScreen.Open(__instance);
         MainMenuEntries.Bind(__instance, button);
-        if (CoopRuntime.Bound) Callable.From(() => CoopScreen.OpenCareerOrRoom(__instance)).CallDeferred();
+        if (!CoopRuntime.Bound) return;
+        if (DateGameReturn.Transitioning) CoopScreen.OpenCareerOrRoom(__instance);
+        else Callable.From(() =>
+        {
+            if (CoopRuntime.Bound && GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree())
+                CoopScreen.OpenCareerOrRoom(__instance);
+        }).CallDeferred();
     }
 }
 [HarmonyPatch(typeof(ActiveScreenContext), nameof(ActiveScreenContext.GetCurrentScreen))]

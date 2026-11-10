@@ -13,6 +13,7 @@ public static class ChatAttachments
             OathAttachments.Kind => group == null ? OathAttachments.Protocol : OathAttachments.GroupProtocol,
             "activity" => group == null ? SocialAppointments.Protocol : SocialAppointments.GroupProtocol,
             "match" => PrivateMessagePrompts.MatchProtocol,
+            DateGames.AttachmentKind => DateGames.InvitationProtocol,
             "training" => group == null ? ClubCoaching.Protocol : ClubCoaching.GroupProtocol,
             "lineup" => CoachLineups.Protocol,
             "contract" => PrivateMessagePrompts.ContractProtocol,
@@ -55,6 +56,7 @@ public static class ChatAttachments
         if (ChatTools.InPrompt) return ChatTools.AttachmentGuide + "\n交互示例：\n" + ChatTools.Describe(string.Join("\n", formats));
         return ResponseGuide + "\n交互格式：\n" + (group == null ? "" : "[Actions]\n") + string.Join("\n", formats)
             + (a.Kind == "gift" ? "\n" + RelationshipGifts.Description(a) : "")
+            + (WeddingAppointments.IsWedding(a) && a.Kind == "activity" ? "\n" + WeddingAppointments.Description(data, a) : "")
             + (a.Kind == "activity" ? "\n接受时按玩家附件填写活动资料；改期时填写商谈后的日期和内容；取消时填写对应活动的资料。" : "");
     }
     public const string GiftProtocol = """
@@ -98,6 +100,7 @@ public static class ChatAttachments
         }
         var good = ConsumerCatalog.Get(a.GoodId);
         if (good == null || !good.Giftable || a.Quantity < 1) return "请选择礼物和数量。";
+        if (!shopping && ConsumerAttachments.Validate(d, person, a.GroupId, a, "draft") is { } reservationError) return reservationError;
         if (!shopping && ConsumerAttachments.Find(d, a) == null && ConsumerAttachments.Available(d, good) < a.Quantity) return "现有物品数量不足。";
         if (RelationshipGifts.Error(d, person, a) is { } relationshipError) return relationshipError;
         a.RelationshipIntent = RelationshipGifts.Intent(a);
@@ -119,11 +122,14 @@ public static class ChatAttachments
         if (a == null) { turn.Error += "\n请在礼物附件中明确本次处理的礼物编号。"; return; }
         string receipt = a.GroupId + "/" + a.Id;
         if (a.ActorId != c.PersonId || d.Life.Consumer.GiftReceipts.Contains(receipt)) return;
+        if (ConsumerAttachments.Validate(d, c.PersonId, a.GroupId, a, "pending") is { } reservationError)
+        { turn.Error += "\n" + reservationError; return; }
         if (action == "接受")
         {
             if (RelationshipGifts.Error(d, c.PersonId, a) is { } relationshipError) { turn.Error += "\n" + relationshipError; return; }
             var goods = d.Life.Consumer.Goods.Where(g => g.Id == a.GoodId && !g.Consumed).ToArray();
-            bool prepaid = ConsumerCatalog.Get(a.GoodId)?.Instant == true && ConsumerAttachments.Find(d, a) != null;
+            var reserved = ConsumerAttachments.Find(d, a);
+            bool prepaid = reserved != null && (ConsumerCatalog.Get(a.GoodId)?.Instant == true || reserved.ReservedQuantity == a.Quantity);
             if (!prepaid && goods.Sum(g => g.Quantity) < a.Quantity) { turn.Error += "\n礼物库存已变化，请调整赠送数量。"; return; }
             long remaining = prepaid ? 0 : a.Quantity;
             foreach (var good in goods) { long count = Math.Min(remaining, good.Quantity); good.Quantity -= count; remaining -= count; }

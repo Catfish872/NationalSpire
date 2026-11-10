@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`36B3E73CD5FE0CF375555697DBB7FC2D7DE77CB6B36C738E2FBC4EAA79D82F2D`。来源：[源码](../../MarketNumber.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`7CD8BD108B77620610229757E2034CF90FF5A6865052972E4BA0CCCD119458A7`。来源：[源码](../../MarketNumber.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -347,7 +347,7 @@ private readonly BigInteger value;
 
 来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-160df92af6e9)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.MarketNumber.ToString()`](MarketNumber.cs.md#symbol-b93eea41cb69)
+**调用者：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-102e4147bf0d)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.MarketNumber.ToString()`](MarketNumber.cs.md#symbol-b93eea41cb69)
 
 **调用：** [`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)；`string.Contains(char)`；`string.Contains(string)`；`string.TrimEnd(char)`；`System.Numerics.BigInteger.Abs(System.Numerics.BigInteger)`；`System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger, System.Numerics.BigInteger, out System.Numerics.BigInteger)`；`System.Numerics.BigInteger.ToString(string?, System.IFormatProvider?)`
 

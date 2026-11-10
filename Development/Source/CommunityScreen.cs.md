@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`33D6CAAEC596BDFA609CD886B4D9FB4CF9FAD66AA6F9B1B5485259653496F1D1`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C304A9829AEE26FE063788C086A83855E9A9EBB92E0ECA0C8EDEAFB6D83B39F3`。来源：[源码](../../CommunityScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -18,6 +18,7 @@ private readonly HashSet<string> _expandedPostBackgrounds = [];
 private Button? _updatesButton;
 private string _newPostTitle = "", _newPostBody = "";
 private const string ComposePostId = "compose-new-post";
+private int _shownUnread = -1;
 private double _elapsed;
 ```
 
@@ -117,29 +118,31 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.UpdateCommunityBadge() — private void UpdateCommunityBadge()`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)；[`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
-**调用：** [`NationalSpire.CommunityThreads.Unread(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-a39689737c6f)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`
+**调用：** [`NationalSpire.CareerScreen.SetRailCount(Godot.Label, int)`](CareerDashboard.cs.md#symbol-3aa4baebd6f7)；[`NationalSpire.CommunityThreads.Unread(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-a39689737c6f)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._boundData`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._updatesButton`；`NationalSpire.CommunityThreads.Unread(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._boundData`；`NationalSpire.CareerScreen._communityCaption`；`NationalSpire.CareerScreen._railPostCount`；`NationalSpire.CareerScreen._shownUnread`；`NationalSpire.CareerScreen._updatesButton`；`NationalSpire.CareerScreen.SetRailCount(Godot.Label, int)`；`NationalSpire.CommunityThreads.Unread(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Color.Color(string)`；输入表达式：`new Color("f07878")`；返回值紧邻使用处：`ConditionalExpressionSyntax: count > 0 ? new Color("f07878") : _muted`
-- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_updatesButton.AddThemeColorOverride("font_color", count > 0 ? new Color("f07878") : _muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: _updatesButton.AddThemeColorOverride("font_color", count > 0 ? new Color("f07878") : _muted);`
+- `NationalSpire.CareerScreen.SetRailCount(Godot.Label, int)`；输入表达式：`SetRailCount(_railPostCount,count)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetRailCount(_railPostCount,count);`
 - `NationalSpire.CommunityThreads.Unread(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.Unread(_boundData)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CommunityThreads.Unread(_boundData)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_updatesButton.Text` = `count > 0 ? $"●  {count} 个帖子有更新" : "社区暂无未读更新"`
+- `_communityCaption.Text` = `count>0?$"{count} 条更新":""`
+- `_communityCaption.Visible` = `count>0`
+- `_shownUnread` = `count`
+- `_updatesButton.TooltipText` = `count > 0 ? $"{count} 个帖子有更新" : "社区"`
 
 <a id="symbol-8c3d08bdf705"></a>
 
 ## `NationalSpire.CareerScreen.OpenUpdates() — private void OpenUpdates()`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -161,7 +164,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost) — private void RenderThread(CareerData data, CommunityPost post)`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Community(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-75337b99e622)
 
@@ -195,7 +198,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderRootReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost) — private void RenderRootReplyComposer(CareerData data, CommunityPost post)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action)`](CommunityScreen.cs.md#symbol-283b456d2a7a)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -218,7 +221,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.PanelContainer?) — private void RenderReplyComposer(CareerData data, CommunityPost post, PanelContainer? retained = null)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action)`](CommunityScreen.cs.md#symbol-283b456d2a7a)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -243,7 +246,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string) — private PanelContainer CreateReplyComposer(CareerData data, CommunityPost post, string parentId)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.PanelContainer?)`](CommunityScreen.cs.md#symbol-85990747d510)；[`NationalSpire.CareerScreen.RenderRootReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-f92fad8b113e)
 
@@ -313,7 +316,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RebuildThreadReplies(NationalSpire.CareerData, NationalSpire.CommunityPost, System.Action) — private void RebuildThreadReplies(CareerData data, CommunityPost post, Action rebuild)`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
@@ -354,7 +357,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CompleteThreadReply(string, string, string) — private void CompleteThreadReply(string postId, string parentId, string submitted)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)
 
@@ -383,7 +386,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.CloseThreadReply(string, string) — private void CloseThreadReply(string postId, string parentId)`
 
-来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CreateReplyComposer(NationalSpire.CareerData, NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-592b8f5f225f)
 
@@ -407,7 +410,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RetireReplyComposer() — private void RetireReplyComposer()`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)；[`NationalSpire.CareerScreen.CloseThreadReply(string, string)`](CommunityScreen.cs.md#symbol-65baf7e888c9)
 
@@ -431,7 +434,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderPostHeader(CareerData data, CommunityPost post, VBoxContainer header)`
 
-来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)
 
@@ -489,7 +492,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderPostBackground(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderPostBackground(CareerData data, CommunityPost post, VBoxContainer header)`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
@@ -542,7 +545,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer) — private void RenderDiscussion(CareerData data, CommunityPost post, VBoxContainer discussion)`
 
-来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RefreshDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-ad7fb59cd134)；[`NationalSpire.CareerScreen.RenderThread(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityScreen.cs.md#symbol-054ede707cf5)；[`NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-10637dfc37f0)
 
@@ -625,11 +628,11 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — private HBoxContainer DiscussionVotes(CareerData data, CommunityPost post, CommunityReply? reply = null)`
 
-来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 279 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CommunityVoteButton.CommunityVoteButton()`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CommunityVoteButton.CommunityVoteButton()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityVoteButton.Direction`；`NationalSpire.CommunityVoteButton.MainPost`；`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`；`Vote(int)`
 
@@ -666,13 +669,13 @@ private double _elapsed;
 - `ToggleMode` = `true`
 - `up.Pressed` += `() => Vote(1)`
 
-<a id="symbol-9e2d9445fdf4"></a>
+<a id="symbol-59164d186a43"></a>
 
 ## `Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — void Update(CareerData current, CommunityPost currentPost, CommunityReply? currentReply)`
 
-来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)；[`Vote(int)`](CommunityScreen.cs.md#symbol-8f211a670431)
+**调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
 
 **调用：** [`NationalSpire.CommunityVotes.AudienceScore(int?)`](CommunityVotes.cs.md#symbol-9f70e52b989b)；[`NationalSpire.CommunityVotes.AudienceScore(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-64a35a4c39c2)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.Score(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-c51f3ec0b04f)；[`NationalSpire.CommunityVotes.Score(NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-90f30ba43b83)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.QueueRedraw()`；`long.ToString()`
 
@@ -699,15 +702,15 @@ private double _elapsed;
 - `score.TooltipText` = `$"受众净赞数：{audience}"                  + (choice == 1 ? "\n你已点赞（+1）" : choice == -1 ? "\n你已点踩（-1）" : "\n点击赞踩表达态度")`
 - `up.TooltipText` = `choice == 1 ? "取消点赞" : "点赞"`
 
-<a id="symbol-8f211a670431"></a>
+<a id="symbol-68cbc9d7d6e5"></a>
 
 ## `Vote(int) — void Vote(int direction)`
 
-来源：源码第 303 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)
 
-**调用：** [`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-cfc51eea9b9f)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`](CommunityVotes.cs.md#symbol-99e71e3dfed8)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-9e2d9445fdf4)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`
+**调用：** [`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-cfc51eea9b9f)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`](CommunityVotes.cs.md#symbol-99e71e3dfed8)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._postSignature`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityPost.VoteRevision`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`；`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`；`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`；`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`
 
@@ -740,7 +743,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool) — private Button DiscussionReplyButton(CommunityPost post, string parent, bool mainPost = false)`
 
-来源：源码第 339 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 344 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionActions(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityShareScreen.cs.md#symbol-411381a49420)
 
@@ -764,7 +767,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.ToggleDiscussion(NationalSpire.CommunityPost, string) — private void ToggleDiscussion(CommunityPost post, string replyId)`
 
-来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 354 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)
 
@@ -796,7 +799,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string) — private void BeginReply(CommunityPost post, string parent)`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 368 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionReplyButton(NationalSpire.CommunityPost, string, bool)`](CommunityScreen.cs.md#symbol-8aac83a49357)
 
@@ -828,13 +831,13 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string) — private void RenderWorkStatus(VBoxContainer box, AiWorkState work, Action retry, string id)`
 
-来源：源码第 384 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 389 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, bool)`](CareerScreen.cs.md#symbol-d5523b24e9f1)；[`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)；[`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)
+**调用者：** [`NationalSpire.CareerScreen.AddPostCard(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.Container)`](CareerScreen.cs.md#symbol-ce65b4128fee)；[`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)；[`NationalSpire.CareerScreen.WeeklyCarousel(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-86166c5fd833)
 
-**调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`](CareerDialog.cs.md#symbol-a5c0e10d12c8)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.Diagnostics.ErrorDetail(string)`](ErrorDiagnostics.cs.md#symbol-1825d5559456)；[`NationalSpire.PlayerFacingText.AiError(string)`](PlayerFacingText.cs.md#symbol-be617f3bd292)；[`NationalSpire.PlayerFacingText.AiErrorPreview(string)`](PlayerFacingText.cs.md#symbol-fc1bb7a47c87)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.DisplayServer.ClipboardSet(string)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；`string.StartsWith(string)`；`System.Threading.Tasks.Task.Run<TResult>(System.Func<TResult>)`
+**调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.Diagnostics.ErrorDetail(string)`](ErrorDiagnostics.cs.md#symbol-1825d5559456)；[`NationalSpire.PlayerFacingText.AiError(string)`](PlayerFacingText.cs.md#symbol-be617f3bd292)；[`NationalSpire.PlayerFacingText.AiErrorPreview(string)`](PlayerFacingText.cs.md#symbol-fc1bb7a47c87)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.DisplayServer.ClipboardSet(string)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；`string.StartsWith(string)`；`System.Threading.Tasks.Task.Run<TResult>(System.Func<TResult>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiWorkState.Error`；`NationalSpire.AiWorkState.State`；`NationalSpire.AiWorkState.WaitReason`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.Diagnostics.ErrorDetail(string)`；`NationalSpire.PlayerFacingText.AiError(string)`；`NationalSpire.PlayerFacingText.AiErrorPreview(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiWorkState.Error`；`NationalSpire.AiWorkState.State`；`NationalSpire.AiWorkState.WaitReason`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.Diagnostics.ErrorDetail(string)`；`NationalSpire.PlayerFacingText.AiError(string)`；`NationalSpire.PlayerFacingText.AiErrorPreview(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -853,7 +856,7 @@ private double _elapsed;
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("错误详情", () =>              {                  string detail = PlayerFacingText.AiError(work.Error);                  ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  });              }, 120)`；返回值紧邻使用处：`ArgumentSyntax: Button("错误详情", () =>              {                  string detail = PlayerFacingText.AiError(work.Error);                  ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  });              }, 120)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150)`；返回值紧邻使用处：`ArgumentSyntax: Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button("重试" + scope, retry, 120)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button("重试" + scope, retry, 120)`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool)`；输入表达式：`ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  });`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("生成错误详情", "服务商响应或本地异常，凭据已隐藏。", () => true, "关闭", contents =>                  {                      var editor = new TextEdit { Text = detail, Editable = false, CustomMinimumSize = new Vector2(600, 280), WrapMode = TextEdit.LineWrappingMode.Boundary };                      editor.AddThemeFontSizeOverride("font_size", 17); contents.AddChild(editor);                      contents.AddChild(Button("复制错误", async () =>                      {                          string error = work.Error;                          string original = await Task.Run(() => Diagnostics.ErrorDetail(error));                          DisplayServer.ClipboardSet(original);                      }, 150));                  });`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text(caption, 14, work.State == "failed" ? new Color("f07878") : _muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Text(caption, 14, work.State == "failed" ? new Color("f07878") : _muted)`
 - `NationalSpire.Diagnostics.ErrorDetail(string)`；输入表达式：`Diagnostics.ErrorDetail(error)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Diagnostics.ErrorDetail(error)`
 - `NationalSpire.PlayerFacingText.AiError(string)`；输入表达式：`PlayerFacingText.AiError(work.Error)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PlayerFacingText.AiError(work.Error)`
@@ -876,7 +879,7 @@ private double _elapsed;
 
 ## `NationalSpire.CareerScreen.FocusComposerAsync(string) — private async Task FocusComposerAsync(string editorName = "CommunityReplyEditor")`
 
-来源：源码第 412 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginReply(NationalSpire.CommunityPost, string)`](CommunityScreen.cs.md#symbol-6bc7befbb991)
 
@@ -906,7 +909,7 @@ private double _elapsed;
 
 ## `NationalSpire.CommunityUpdateButton._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 432 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 437 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

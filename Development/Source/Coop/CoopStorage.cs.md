@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`14B4E07C4DC50295C49309C19ADF0627D2EA3CB8F9B382C0066C3AC87FAE8D02`。来源：[源码](../../../Coop/CoopStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B279FB368CECAC3FF09B047E3B8C94AD147BB4B673DD71FB809C997082602DAE`。来源：[源码](../../../Coop/CoopStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -48,7 +48,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](CoopStorage.cs.md#symbol-896c6be28762)；[`NationalSpire.Coop.CoopStorage.ExportArchiveAsync(string)`](CoopStorage.cs.md#symbol-fc7f730c7e18)；[`NationalSpire.Coop.CoopStorage.LoadAsync(string)`](CoopStorage.cs.md#symbol-98401b01dd9e)；[`NationalSpire.Coop.CoopStorage.SaveAsync(NationalSpire.Coop.CoopWorld, byte[]?, System.Threading.CancellationToken)`](CoopStorage.cs.md#symbol-26bf729f0b72)
+**调用者：** [`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](CoopStorage.cs.md#symbol-896c6be28762)；[`NationalSpire.Coop.CoopStorage.ExportArchiveAsync(string)`](CoopStorage.cs.md#symbol-fc7f730c7e18)；[`NationalSpire.Coop.CoopStorage.LoadAsync(string)`](CoopStorage.cs.md#symbol-98401b01dd9e)；[`NationalSpire.Coop.CoopStorage.RenameAsync(string, string)`](CoopStorage.cs.md#symbol-f57c0209907e)；[`NationalSpire.Coop.CoopStorage.SaveAsync(NationalSpire.Coop.CoopWorld, byte[]?, System.Threading.CancellationToken)`](CoopStorage.cs.md#symbol-26bf729f0b72)
 
 **调用：** [`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.Tasks.Task.ConfigureAwait(bool)`；`System.Threading.Tasks.Task.Run<TResult>(System.Func<System.Threading.Tasks.Task<TResult>?>)`；`System.Threading.Tasks.Task<TResult>.ContinueWith(System.Action<System.Threading.Tasks.Task<TResult>>, System.Threading.CancellationToken, System.Threading.Tasks.TaskContinuationOptions, System.Threading.Tasks.TaskScheduler)`
 
@@ -94,7 +94,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string)`](CoopRuntime.cs.md#symbol-5c58a004498a)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)
+**调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](CoopRuntime.cs.md#symbol-c279dbe53a7e)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)
 
 **调用：** [`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.Schedule<T>(string, System.Func<T>, System.Threading.CancellationToken, bool)`](CoopStorage.cs.md#symbol-e7e3aa0f9a7c)
 
@@ -128,11 +128,34 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-f57c0209907e"></a>
+
+## `NationalSpire.Coop.CoopStorage.RenameAsync(string, string) — public Task RenameAsync(string id, string name)`
+
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
+
+**调用：** [`NationalSpire.CareerLibrary.CheckedName(string)`](../CareerLibrary.cs.md#symbol-a3506a652e84)；[`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)；[`NationalSpire.Coop.CoopStorage.Schedule<T>(string, System.Func<T>, System.Threading.CancellationToken, bool)`](CoopStorage.cs.md#symbol-e7e3aa0f9a7c)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.SaveName`；`NationalSpire.CareerLibrary.CheckedName(string)`；`NationalSpire.Coop.CoopStorage.Checkpoint.Run`；`NationalSpire.Coop.CoopStorage.Checkpoint.World`；`NationalSpire.Coop.CoopStorage.Load(string)`；`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`；`NationalSpire.Coop.CoopStorage.Schedule<T>(string, System.Func<T>, System.Threading.CancellationToken, bool)`；`NationalSpire.Coop.CoopWorld.World`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerLibrary.CheckedName(string)`；输入表达式：`CareerLibrary.CheckedName(name)`；返回值紧邻使用处：`AssignmentExpressionSyntax: checkpoint.World.World.SaveName = CareerLibrary.CheckedName(name)`
+- `NationalSpire.Coop.CoopStorage.Load(string)`；输入表达式：`Load(id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Load(id)`
+- `NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`；输入表达式：`Save(checkpoint.World, checkpoint.Run)`；返回值紧邻使用处：`ExpressionStatementSyntax: Save(checkpoint.World, checkpoint.Run);`
+- `NationalSpire.Coop.CoopStorage.Schedule<T>(string, System.Func<T>, System.Threading.CancellationToken, bool)`；输入表达式：`Schedule(id, () =>      {          var checkpoint = Load(id);          checkpoint.World.World.SaveName = CareerLibrary.CheckedName(name);          Save(checkpoint.World, checkpoint.Run);          return true;      }, write: true)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Schedule(id, () =>      {          var checkpoint = Load(id);          checkpoint.World.World.SaveName = CareerLibrary.CheckedName(name);          Save(checkpoint.World, checkpoint.Run);          return true;      }, write: true)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `checkpoint.World.World.SaveName` = `CareerLibrary.CheckedName(name)`
+
 <a id="symbol-896c6be28762"></a>
 
 ## `NationalSpire.Coop.CoopStorage.DeleteAsync(string) — public Task DeleteAsync(string id)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)
 
@@ -152,7 +175,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.ImportArchiveAsync(byte[]) — public Task<string> ImportArchiveAsync(byte[] bytes)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
@@ -172,7 +195,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.ListAsync() — public async Task<List<Checkpoint>> ListAsync()`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)
 
@@ -197,7 +220,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Root — public string Root`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -215,7 +238,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.DirectoryFor(string) — private string DirectoryFor(string id)`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.BackupBeforeDevelopment(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-955953e36f17)；[`NationalSpire.Coop.CoopStorage.Delete(string)`](CoopStorage.cs.md#symbol-cf3c1fbdf7f4)；[`NationalSpire.Coop.CoopStorage.ImportArchive(byte[])`](CoopStorage.cs.md#symbol-73147f08e733)；[`NationalSpire.Coop.CoopStorage.Load(string)`](CoopStorage.cs.md#symbol-efe4d419a020)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)；[`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)
 
@@ -236,7 +259,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.List() — public IEnumerable<Checkpoint> List()`
 
-来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -259,7 +282,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.PublicCopy(NationalSpire.Coop.CoopWorld) — public static CoopWorld PublicCopy(CoopWorld world)`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Export()`](CoopCareerSession.cs.md#symbol-24a80da4bec4)
 
@@ -279,7 +302,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.IsArchive(byte[]) — public static bool IsArchive(byte[] bytes)`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](../CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
@@ -300,7 +323,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.ExportArchive(string) — public byte[] ExportArchive(string id)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.ExportArchiveAsync(string)`](CoopStorage.cs.md#symbol-fc7f730c7e18)
 
@@ -329,7 +352,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.ImportArchive(byte[]) — public string ImportArchive(byte[] bytes)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.ImportArchiveAsync(byte[])`](CoopStorage.cs.md#symbol-f6efb73a242b)
 
@@ -377,7 +400,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.BackupBeforeDevelopment(NationalSpire.Coop.CoopWorld, byte[]?) — public void BackupBeforeDevelopment(CoopWorld world, byte[]? run)`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](CoopCoordinator.cs.md#symbol-778097f34ec3)
 
@@ -405,7 +428,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Delete(string) — public void Delete(string id)`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](CoopStorage.cs.md#symbol-896c6be28762)
 
@@ -439,9 +462,9 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?) — public void Save(CoopWorld world, byte[]? run)`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.FlushReadingSave()`](CoopCoordinator.cs.md#symbol-0ceff74fe6f2)；[`NationalSpire.Coop.CoopStorage.ImportArchive(byte[])`](CoopStorage.cs.md#symbol-73147f08e733)；[`NationalSpire.Coop.CoopStorage.SaveAsync(NationalSpire.Coop.CoopWorld, byte[]?, System.Threading.CancellationToken)`](CoopStorage.cs.md#symbol-26bf729f0b72)
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.FlushReadingSave()`](CoopCoordinator.cs.md#symbol-0ceff74fe6f2)；[`NationalSpire.Coop.CoopStorage.ImportArchive(byte[])`](CoopStorage.cs.md#symbol-73147f08e733)；[`NationalSpire.Coop.CoopStorage.RenameAsync(string, string)`](CoopStorage.cs.md#symbol-f57c0209907e)；[`NationalSpire.Coop.CoopStorage.SaveAsync(NationalSpire.Coop.CoopWorld, byte[]?, System.Threading.CancellationToken)`](CoopStorage.cs.md#symbol-26bf729f0b72)
 
 **调用：** [`NationalSpire.Coop.CoopJson.Bytes<T>(T)`](CoopData.cs.md#symbol-faeb54cab7ee)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`](CoopData.cs.md#symbol-3f5e7638f9e9)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`](CoopStorage.cs.md#symbol-9914499d45a1)；[`NationalSpire.Coop.CoopStorage.Durable(string, byte[])`](CoopStorage.cs.md#symbol-db05a63d4feb)；[`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)；[`NationalSpire.Coop.CoopWorld.CheckpointHeader(string)`](CoopData.cs.md#symbol-c00698332c46)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.Coop.CoopStorage.Manifest.Manifest(string, string, string)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.Directory.Delete(string, bool)`；`System.IO.Directory.GetDirectories(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.File.Replace(string, string, string?)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetFileName(string?)`
 
@@ -497,9 +520,9 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Load(string) — public Checkpoint Load(string id)`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopStorage.ExportArchive(string)`](CoopStorage.cs.md#symbol-2c9c2a0b54fe)；[`NationalSpire.Coop.CoopStorage.List()`](CoopStorage.cs.md#symbol-987dca599488)；[`NationalSpire.Coop.CoopStorage.LoadAsync(string)`](CoopStorage.cs.md#symbol-98401b01dd9e)
+**调用者：** [`NationalSpire.Coop.CoopStorage.ExportArchive(string)`](CoopStorage.cs.md#symbol-2c9c2a0b54fe)；[`NationalSpire.Coop.CoopStorage.List()`](CoopStorage.cs.md#symbol-987dca599488)；[`NationalSpire.Coop.CoopStorage.LoadAsync(string)`](CoopStorage.cs.md#symbol-98401b01dd9e)；[`NationalSpire.Coop.CoopStorage.RenameAsync(string, string)`](CoopStorage.cs.md#symbol-f57c0209907e)
 
 **调用：** [`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopStorage.DirectoryFor(string)`](CoopStorage.cs.md#symbol-9914499d45a1)；[`NationalSpire.Coop.CoopStorage.Work(string)`](CoopStorage.cs.md#symbol-664485faad0d)；[`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`](../ErrorDiagnostics.cs.md#symbol-fd99f468e9e7)；`NationalSpire.Coop.CoopStorage.Checkpoint.Checkpoint(NationalSpire.Coop.CoopWorld, byte[]?)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`
 
@@ -535,7 +558,7 @@ private static readonly Dictionary<string, DirectoryWork> Directories = new(Stri
 
 ## `NationalSpire.Coop.CoopStorage.Durable(string, byte[]) — private static void Durable(string file, byte[] bytes)`
 
-来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 208 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopStorage.BackupBeforeDevelopment(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-955953e36f17)；[`NationalSpire.Coop.CoopStorage.Save(NationalSpire.Coop.CoopWorld, byte[]?)`](CoopStorage.cs.md#symbol-a4c240447248)
 

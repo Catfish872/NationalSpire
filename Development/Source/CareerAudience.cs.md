@@ -59,7 +59,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Fans(string)`](CommunityVotes.cs.md#symbol-781408ef809e)；[`NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`](CareerAudience.cs.md#symbol-7ca5980a38d5)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
+**调用者：** [`Fans(string)`](CommunityVotes.cs.md#symbol-f4b09357d17e)；[`NationalSpire.CareerAudience.Followers(NationalSpire.CareerData, string)`](CareerAudience.cs.md#symbol-7ca5980a38d5)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.ClubAudience.Total(NationalSpire.CareerData, string)`](ClubAudience.cs.md#symbol-6a78e48d0de3)；[`NationalSpire.SeasonCeremony.Close(NationalSpire.CareerData)`](SeasonCeremony.cs.md#symbol-245a6f827582)
 
 **调用：** `System.Math.Clamp(int, int, int)`；`System.Math.Exp(double)`；`System.Math.Min(int, int)`；`System.Math.Round(double)`
 
@@ -179,7 +179,7 @@ public static readonly (int Floor, string Name)[] Titles = [(0, "社区小有名
 
 来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.RefreshOffers(NationalSpire.CareerData)`](CareerCommerce.cs.md#symbol-3523341b8f0b)
+**调用者：** [`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`](CareerCommerce.cs.md#symbol-a571f0d2f6a3)
 
 **调用：** [`NationalSpire.CareerAudience.QuoteMultiplier(int)`](CareerAudience.cs.md#symbol-f8e484fe597e)；`System.Math.Round(double)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B7FFD3E9C50103DC4F3DC659123AD037CA3645AE81BC5663F89DEA767AD9D8EC`。来源：[源码](../../CareerRelics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2C3E170813C262CA2796C76745B21FE4FA0FF5ABCE5051BA33BC1EB7DA4D0277`。来源：[源码](../../CareerRelics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -209,7 +209,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-58346e5f927e)；[`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-3174e127c801)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerRelics.Match(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.CareerResult, bool, int)`](CareerRelics.cs.md#symbol-6e6e3fa2b1d4)
+**调用者：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-1ff2c3f4869c)；[`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-a39a2e2ca82d)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerRelics.Match(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.CareerResult, bool, int)`](CareerRelics.cs.md#symbol-6e6e3fa2b1d4)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)
 
@@ -247,7 +247,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-3174e127c801)；[`NationalSpire.CareerRelics.Accept(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c4d68b813d74)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerRelics.Discounts(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c0eb9f3fff83)；[`NationalSpire.CareerRelics.Duration(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-5a1db0b8215e)；[`NationalSpire.CareerRelics.Match(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.CareerResult, bool, int)`](CareerRelics.cs.md#symbol-6e6e3fa2b1d4)
+**调用者：** [`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-a39a2e2ca82d)；[`NationalSpire.CareerRelics.Accept(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c4d68b813d74)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-f756311e9342)；[`NationalSpire.CareerRelics.Discounts(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c0eb9f3fff83)；[`NationalSpire.CareerRelics.Duration(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-5a1db0b8215e)；[`NationalSpire.CareerRelics.Match(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.CareerResult, bool, int)`](CareerRelics.cs.md#symbol-6e6e3fa2b1d4)
 
 **调用：** [`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)
 
@@ -327,7 +327,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Buy(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b350b30a8d9)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string)`](Coop/CoopRules.cs.md#symbol-fedd425e9ea0)
+**调用者：** [`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`NationalSpire.CareerRelics.Advance(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-2d82195832e2)；[`NationalSpire.CareerRelics.Buy(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b350b30a8d9)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.Coop.CoopRules.AddMember(NationalSpire.Coop.CoopWorld, ulong, string, NationalSpire.CareerOpeningPlayer?)`](Coop/CoopRules.cs.md#symbol-8d3bfcd3efe2)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerRelics.CanBuy(NationalSpire.CareerData, NationalSpire.CareerRelics.Item)`](CareerRelics.cs.md#symbol-0475739162e2)；[`NationalSpire.CareerRelics.StockCount(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-108387b6c9d0)；[`NationalSpire.CareerRelics.Upgrade(NationalSpire.CareerData)`](CareerRelics.cs.md#symbol-9730fe8072ba)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`
 
@@ -560,7 +560,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)
 
 **调用：** [`NationalSpire.CareerRelics.Discounts(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c0eb9f3fff83)；[`NationalSpire.CareerRelics.Media(NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-9d3d212bb912)；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 
@@ -587,7 +587,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)；[`NationalSpire.CareerScreen.PlanDetails(NationalSpire.CareerData, NationalSpire.CareerScreen.CalendarPlan, System.Action<string>)`](CalendarPlansScreen.cs.md#symbol-0f7a307ccb1c)
 
 **调用：** [`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`NationalSpire.CareerTraining.IsTraining(NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-98adbc7a75dc)；[`NationalSpire.ClubPrograms.IsTraining(NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-f251644672be)；`System.Math.Max(int, int)`
 
@@ -676,7 +676,7 @@ public static readonly Item[] Catalog = [
 
 **调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)
 
-**调用：** [`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-3174e127c801)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`](CareerRelics.cs.md#symbol-c1cf7133742f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`NationalSpire.PrivateMessages.ChangeFavour(NationalSpire.CareerData, string, int)`](PrivateMessages.cs.md#symbol-c703192e56c0)；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Fans(string, int, int, int)`](CareerRelics.cs.md#symbol-a39a2e2ca82d)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`](LifeData.cs.md#symbol-54a09649188b)；[`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`](CareerRelics.cs.md#symbol-c1cf7133742f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`NationalSpire.PrivateMessages.ChangeFavour(NationalSpire.CareerData, string, int)`](PrivateMessages.cs.md#symbol-c703192e56c0)；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Fans(string, int, int, int)`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerMoney.Record(NationalSpire.CareerData, string, decimal)`；`NationalSpire.CareerRelics.Catalog`；`NationalSpire.CareerRelics.Item.Id`；`NationalSpire.CareerRelics.Item.Name`；`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`；`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`；`NationalSpire.FigurineState.Charge`；`NationalSpire.FigurineState.Count`；`NationalSpire.LifeActivity.Id`；`NationalSpire.LifeActivity.Kind`；`NationalSpire.LifeActivity.PersonId`；`NationalSpire.LifeActivity.Result`；`NationalSpire.PrivateMessages.ChangeFavour(NationalSpire.CareerData, string, int)`
 
@@ -702,7 +702,7 @@ public static readonly Item[] Catalog = [
 - `d.Credits` += `amount`
 - `s.Charge` += `id == "REGAL_PILLOW" ? 4 : 1`
 
-<a id="symbol-3174e127c801"></a>
+<a id="symbol-a39a2e2ca82d"></a>
 
 ## `Fans(string, int, int, int) — void Fans(string id, int interval, int min, int max)`
 
@@ -733,7 +733,7 @@ public static readonly Item[] Catalog = [
 
 **调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](Coop/CoopRules.cs.md#symbol-926ebe8770ca)
 
-**调用：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-58346e5f927e)；[`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`](CareerRelics.cs.md#symbol-c1cf7133742f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`Protect(string, int)`](CareerRelics.cs.md#symbol-a6aec0304734)；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`Cash(string, int, int)`](CareerRelics.cs.md#symbol-1ff2c3f4869c)；[`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`](CareerRelics.cs.md#symbol-c1cf7133742f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`Protect(string, int)`](CareerRelics.cs.md#symbol-5e67d1ce4f27)；`System.Collections.Generic.List<T>.Add(T)`
 
 **字段、属性、事件及方法组引用：** `Cash(string, int, int)`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerMatch.Draw`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.PlayerWon`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`；`NationalSpire.CareerRelics.Roll(NationalSpire.CareerData, string, int, int)`；`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`；`NationalSpire.CareerResult.Evidence`；`NationalSpire.CareerResult.LifeEffects`；`NationalSpire.FigurineState.Charge`；`NationalSpire.FigurineState.Season`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.RemainingPotions`；`Protect(string, int)`
 
@@ -762,7 +762,7 @@ public static readonly Item[] Catalog = [
 - `d.Fans` += `n`
 - `star.Season` = `d.Season`
 
-<a id="symbol-a6aec0304734"></a>
+<a id="symbol-5e67d1ce4f27"></a>
 
 ## `Protect(string, int) — void Protect(string id, int amount)`
 
@@ -786,7 +786,7 @@ public static readonly Item[] Catalog = [
 - `d.Rating` += `n`
 - `protection` += `n`
 
-<a id="symbol-58346e5f927e"></a>
+<a id="symbol-1ff2c3f4869c"></a>
 
 ## `Cash(string, int, int) — void Cash(string id, int min, int max)`
 

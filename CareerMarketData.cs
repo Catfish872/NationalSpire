@@ -5,6 +5,8 @@ public sealed class MarketState
 {
     public MarketState RevisionCopy() => (MarketState)MemberwiseClone();
     internal int CheckedQuoteCount { get; set; } = -1;
+    // 同一个世界只保存一份报价基准。旧档沿用原先的人民币报价。
+    public string QuoteCountry { get; set; } = "中国";
     public int PricingVersion { get; set; }
     public int CatalogVersion { get; set; }
     public int LastDay { get; set; }

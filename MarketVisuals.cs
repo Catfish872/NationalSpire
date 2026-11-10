@@ -184,7 +184,8 @@ internal partial class MarketPositionCard : PanelContainer
         }
         _terms.AddThemeColorOverride("font_color", CareerVisuals.Muted);
     }
-    internal void Bind(MarketPosition? p, MarketQuote? quote, long revision = 0, MarketExecution.Exit? projected = null, bool pending = false)
+    private MarketCurrency? _currency;
+    internal void Bind(MarketPosition? p, MarketQuote? quote, long revision = 0, MarketExecution.Exit? projected = null, bool pending = false, CareerData? data = null)
     {
         _position = p; _quote = quote; _revision = revision; _editor.Hide();
         if (p?.ExecutionVersion == 0 && quote != null) { _quote = quote.ExecutionCopy(); _quote.Price = MarketExecution.ReferencePrice(quote); }
@@ -192,8 +193,9 @@ internal partial class MarketPositionCard : PanelContainer
         _close.Visible = _icon.Visible = _terms.Visible = _profit.Visible = _proceeds.Visible = p != null;
         if (p == null) { _title.Text = "暂无持仓"; return; }
         var asset = MarketCatalog.ById[p.Asset];
+        _currency = data == null ? null : new MarketCurrency(data,asset);
         AddThemeStyleboxOverride("panel", MarketVisuals.Card(asset.Sector, false)); _icon.Texture = LifestyleArt.Icon(asset.Sector);
-        _title.Text = asset.Name + $"  ·  {(p.Direction > 0 ? "做多 ↑" : "做空 ↓")}  开仓 {p.Leverage}×";
+        _title.Text = (_currency?.Display.Name ?? asset.Name) + $"  ·  {((p.Direction > 0) != (_currency?.Inverse == true) ? "做多 ↑" : "做空 ↓")}  开仓 {p.Leverage}×";
         _title.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));
         _terms.Text = $"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "
             + Price(p.Entry) + " · 止损 " + (p.StopPrice is { } stop ? Price(stop) : "未设置");
@@ -205,17 +207,17 @@ internal partial class MarketPositionCard : PanelContainer
         _proceeds.TooltipText = "平仓手续费 " + CareerMoney.Format(exit.Fee) + " · 预计到账 " + CareerMoney.Format(exit.Proceeds);
         _profit.Text = "平仓预计净盈亏 " + (profit > 0 ? "+" : "") + CareerMoney.Compact(profit);
         _profit.AddThemeColorOverride("font_color", profit >= 0 ? CareerVisuals.Teal : new Color("f095a3"));
-        _proceeds.Text = "预计成交均价 " + (asset.Forex ? exit.Fill.Average.ToString("0.00000") : CareerMoney.Compact(exit.Fill.Average))
+        _proceeds.Text = "预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))
             + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds);
     }
-    private string Price(decimal value) => MarketCatalog.ById[_position!.Asset].Forex ? value.ToString("0.00000") : CareerMoney.Compact(value);
+    private string Price(decimal value) => MarketCatalog.ById[_position!.Asset].Forex ? (_currency?.Price(value) ?? value).ToString("0.00000") : CareerMoney.Compact(value);
     private decimal DisplayScale => MarketCatalog.ById[_position!.Asset].Forex ? 1 : 10;
     private void Edit(bool margin)
     {
         if (_position == null) return;
         _margin = margin; _input.Prefix = margin || DisplayScale == 10 ? "$" : "";
         _input.Step = margin || DisplayScale == 10 ? .01 : .00001;
-        _input.SetAmount(margin ? 0 : (_position.StopPrice ?? _quote!.Price) * DisplayScale);
+        _input.SetAmount(margin ? 0 : (_currency?.Price(_position.StopPrice ?? _quote!.Price) ?? (_position.StopPrice ?? _quote!.Price)) * DisplayScale);
         _apply.Text = margin ? "确认追加" : "保存止损";
         _clear.Visible = !margin && _position.StopPrice != null;
         _editor.Show(); Preview(); _input.GetLineEdit().GrabFocus();
@@ -223,7 +225,7 @@ internal partial class MarketPositionCard : PanelContainer
     private void Preview()
     {
         if (_position == null) return;
-        if (!_margin) { _preview.Text = "当前报价 " + Price(_quote!.Price) + (_position.Direction > 0 ? "；低于此价设置止损。" : "；高于此价设置止损。") + "\n触发后按实际成交均价平仓。"; return; }
+        if (!_margin) { _preview.Text = "当前报价 " + Price(_quote!.Price) + ((_position.Direction > 0) != (_currency?.Inverse == true) ? "；低于此价设置止损。" : "；高于此价设置止损。") + "\n触发后按实际成交均价平仓。"; return; }
         decimal addition = _input.Amount / 10;
         var equity = CareerMarket.Equity(_position, _quote!.Price);
         string Leverage(MarketNumber funds) => funds > 0 ? (_quote.Price * _position.Units / funds).ToString("0.##") + "×" : "权益已耗尽";
@@ -235,7 +237,7 @@ internal partial class MarketPositionCard : PanelContainer
         if (_position == null || !_editor.Visible) return;
         _input.Apply();
         Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)
-            : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _input.Amount / DisplayScale));
+            : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale));
     }
     private void Send(MarketOrder order) { _editor.Hide(); _submit(order); }
 }

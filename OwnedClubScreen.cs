@@ -33,13 +33,16 @@ public partial class CareerScreen
     {
         var select = new OptionButton { SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(180, 46), Disabled = !CanManageClub };
         foreach (string label in labels) select.AddItem(label);
-        select.Select(Math.Clamp(index, 0, labels.Length - 1)); select.ItemSelected += n => changed((int)n); return select;
+        if (labels.Length == 0) select.Disabled = true;
+        else select.Select(Math.Clamp(index, 0, labels.Length - 1));
+        select.ItemSelected += n => { if (n >= 0 && n < labels.Length) changed((int)n); };
+        return select;
     }
     private void ClubAction(CareerData data, string kind, string text = "", string target = "", Action? success = null)
     {
         if (MultiplayerCommand("owned-" + kind, target, text, accepted: success)) return;
         var error = OwnedClubs.Command(data, kind, target, text);
-        if (error == null) success?.Invoke(); Render(); Notice(error ?? "已完成", error != null);
+        if (error == null) success?.Invoke(); RefreshClub(); Notice(error ?? "已完成", error != null);
     }
     private void ClubInvitation(CareerData d)
     {
@@ -291,7 +294,6 @@ public partial class CareerScreen
     }
     private void OwnedClubPanel(CareerData d)
     {
-        _content.AddChild(Button("← 返回赛事与俱乐部", () => OpenWorldSection("国运榜"), 230));
         var o = d.Esports.OwnedClub!;
         var box = ClubCard(EsportsWorld.ClubName(d, o.ClubId), $"{GameCalendar.Text(d, o.FoundedDay)}成立  ·  关注 {ClubAudience.Total(d, o.ClubId):N0}  ·  下次周结 {GameCalendar.Text(d, o.NextPayDay)}", true);
         string currentRegion = EsportsWorld.Club(d, o.ClubId)!.Country;
@@ -313,9 +315,14 @@ public partial class CareerScreen
             box.AddChild(Text("待付 " + CareerMoney.Format(o.Debt + o.HumanPayDue.Values.Sum()) + (o.Debt > 0 ? " · 陪练和青训暂停" : ""), 19, new Color("ee929d")));
             box.AddChild(ClubButton("补发欠款", () => ShowCareerDialog("补发欠款", "从钱包支付当前可承担的欠款？", () => { ClubAction(d, "debt"); return true; }), 180));
         }
-        var tabs = new HFlowContainer(); _content.AddChild(tabs);
+        var band = new HBoxContainer(); SecondaryTabInset(_content).AddChild(band);
+        var tabs = new HFlowContainer {SizeFlagsHorizontal=SizeFlags.ExpandFill}; band.AddChild(tabs);
+        var leave = TeamButton("退出俱乐部", ClubLeaveDialog, 154); band.AddChild(leave);
+        leave.SizeFlagsVertical=SizeFlags.ShrinkCenter;
+        foreach (var state in new[]{"font_color","font_hover_color","font_focus_color","font_pressed_color"})
+            leave.AddThemeColorOverride(state,new Color("f39da1"));
         foreach (string section in new[] { "阵容", "招募", "赞助", "账目", "其他俱乐部" })
-            tabs.AddChild(Button((_ownerSection == section ? "● " : "") + section, () => { _ownerSection = section; Render(); }, 150));
+            tabs.AddChild(Button((_ownerSection == section ? "● " : "") + section, () => { if (_ownerSection != section) { _ownerSection = section; RefreshClub(); } }, 150));
         if (_ownerSection == "其他俱乐部") { ClubDirectory(d); return; }
         if (_ownerSection == "招募") { ClubMarket(d, false); return; }
         if (_ownerSection == "赞助")
@@ -339,60 +346,14 @@ public partial class CareerScreen
         }
         if (_ownerSection == "账目")
         {
-            var lb = ClubCard("经营流水", "俱乐部收支计入钱包，以下单独列出经营记录。");
-            foreach (var e in o.Ledger.TakeLast(32).Reverse()) lb.AddChild(Text($"{GameCalendar.Text(d, e.Day)}  ·  {e.Title}  ·  {(e.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs(e.Amount))}", 18, e.Amount >= 0 ? CareerVisuals.Teal : _ink));
+            var statement = ClubCard("经营流水", "俱乐部收支计入钱包，以下单独列出经营记录。");
+            AddLedgerTable(statement, d, o.Ledger, visibleRows: 6);
             return;
         }
-        CoachManagement(d);
         _content.AddChild(Text("轮换与青训各组前三人全额陪练，第4人起大幅递减。青训每周成长并测评进阶。", 17, _muted));
         _content.AddChild(Text(_multiplayer != null ? "全体真人固定出战。" : "首发固定 3 人，可与轮换交换；调整从尚未开打的对阵生效。", 17, _muted));
         foreach (var t in o.Transfers.Where(t => !t.Arrived))
             _content.AddChild(PersonLink(d, t.Contract.PersonId, $"第 {t.ArrivalSeason} 赛季加盟 · {CareerEngine.DisplayName(d, t.Contract.PersonId)} · {t.Position}", 48));
-        foreach (string role in new[] { "首发", "轮换", "青训", "教练" })
-        {
-            var rb = ClubCard(role + "  /  " + OwnedClubs.PositionList(o, role).Count + " 人");
-            foreach (string id in OwnedClubs.PositionList(o, role))
-            {
-                bool human = OwnedClubs.Humans(d).Contains(id);
-                rb.AddChild(PersonLink(d, id, CareerEngine.DisplayName(d, id) + (human ? " · " + role + (ClubCoaching.PlayerCoach(d) && id == "player" ? " · 兼任教练" : "") : role == "教练" ? $" · 陪练系数 ×{ClubCoaching.Factor(CareerEngine.Person(d, id)!):0.#}" : " · " + OwnedClubs.Tier(CareerEngine.Person(d, id)!)), 54));
-                if (human)
-                {
-                    if (OwnedClubs.PaidHumans(d).Contains(id))
-                        rb.AddChild(Text($"周薪 {CareerMoney.Format(o.HumanWeeklyWage)} · 获胜 {CareerMoney.Format(o.HumanWinBonus)} · 待付 {CareerMoney.Format(o.HumanPayDue.GetValueOrDefault(id))}", 17, _muted));
-                    continue;
-                }
-                var c = o.Contracts.Single(c => c.PersonId == id); var p = CareerEngine.Person(d, id)!;
-                rb.AddChild(Text((role == "教练" ? "" : $"进阶 {p.MaxAscension} · A8 预计通关率 {MatchRules.ClearChance(d, p, 8) * 100:0.#}%\n") + $"{OwnedClubs.PlanName(c.Plan)} · 周薪 {CareerMoney.Format(c.Wage)} · 获胜 {CareerMoney.Format(c.WinBonus)} · {GameCalendar.Text(d, c.EndDay)}续约", 17, _muted));
-                var partners = o.Contracts.Where(other => role != "教练" && other.Position != "教练" && other.PersonId != id && OwnedClubs.Position(o, other.PersonId) != role).Select(other => other.PersonId).ToList();
-                var actions = new HFlowContainer(); rb.AddChild(actions);
-                if (partners.Count > 0)
-                {
-                    string other = partners[0];
-                    actions.AddChild(ClubSelect(partners.Select(i => "交换 · " + CareerEngine.DisplayName(d, i) + "（" + OwnedClubs.Position(o, i) + "）").ToArray(), 0, i => other = partners[i]));
-                    actions.AddChild(ClubButton("确认交换", () => ShowCareerDialog("调整阵容", $"交换 {p.PublicName} 与 {CareerEngine.DisplayName(d, other)} 的位置？", () => { ClubAction(d, "swap", other, id); return true; }), 150));
-                }
-                if (role == "教练")
-                {
-                    foreach (string destination in new[] { "轮换", "青训" })
-                        actions.AddChild(ClubButton("转回" + destination, () => ShowCareerDialog("转回" + destination,
-                            $"{p.PublicName} · 立即转回{destination}\n保留合同待遇与期限。停止其负责的未完成训练，已获得成长保留。",
-                            () => { ClubAction(d, "position", destination, id); return true; }), 150));
-                }
-                else if (role is "轮换" or "青训")
-                {
-                    string destination = role == "青训" ? "轮换" : "青训";
-                    actions.AddChild(ClubButton("调入" + destination, () => ShowCareerDialog("调整阵容", $"将 {p.PublicName} 调入{destination}？", () => { ClubAction(d, "position", destination, id); return true; }), 150));
-                }
-                else if (role == "首发" && o.Reserves.Count > 3)
-                {
-                    string replacement = o.Reserves[0];
-                    actions.AddChild(ClubSelect(o.Reserves.Select(i => "解约后首发 · " + CareerEngine.DisplayName(d, i)).ToArray(), 0, i => replacement = o.Reserves[i]));
-                    actions.AddChild(ClubButton("解约并更换首发", () => ShowCareerDialog("解除首发合同", $"向 {p.PublicName} 支付 {CareerMoney.Format(OwnedClubs.ExitFee(d, c))}，由 {CareerEngine.DisplayName(d, replacement)} 接替首发。", () => { ClubAction(d, "release", replacement, id); return true; }), 220));
-                }
-                if (role != "教练") actions.AddChild(ClubButton("转任教练", () => CoachAppointmentDialog(d, id), 150));
-                if (role != "首发") actions.AddChild(ClubButton("解除合同", () => ShowCareerDialog("解除合同", $"{p.PublicName} 的解约补偿为 {CareerMoney.Format(OwnedClubs.ExitFee(d, c))}。", () => { ClubAction(d, "release", target: id); return true; }), 150));
-            }
-            if (OwnedClubs.PositionList(o, role).Count == 0) rb.AddChild(Text("前往招募选择选手。", 17, _muted));
-        }
+        RosterMembers(d,o);
     }
 }

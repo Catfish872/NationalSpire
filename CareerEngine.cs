@@ -36,9 +36,14 @@ public static class CareerEngine
         AvatarHonors.Capture(data);
         return changed;
     }
-    public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1)
+    public static CareerData CreateNew(bool expanded = true, int cooperativeMembers = 1, PersonalityPool? personalityPool = null, string? worldId = null, string? playerName = null, string country = "中国")
     {
+        if (personalityPool != null) PersonalityPools.Validate(personalityPool);
         var data = new CareerData { CalendarStartYear = DateTime.Now.Year, CooperativeMembers = cooperativeMembers, LongSeasonsFrom = expanded ? 1 : 0, ContentPoolVersion = ContentPoolMigration.Version };
+        data.Esports.Country = country; data.Market.QuoteCountry = country;
+        data.PlayerAlias = playerName?.Trim() ?? "";
+        if (worldId != null) data.WorldId = worldId;
+        data.NpcPersonalityPool = personalityPool == null ? null : Coop.CoopJson.Copy(personalityPool);
         // 旧赛制用于存档兼容回归；正常新生涯启用完整生态。
         if (!expanded) data.Esports.EcosystemVersion = -1;
         string[] characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
@@ -170,9 +175,8 @@ public static class CareerEngine
         if (error == null) CareerStore.Save(d);
         return error;
     }
-    private static void SimulateWorld(CareerData d)
+    internal static void SimulateNpcTraining(CareerData d, Random rng)
     {
-        var rng = new Random(StableHash($"{d.WorldId}:world:{d.Day}"));
         for (int i = 0; i < 2; i++)
         {
             var eligiblePeople = d.People.Where(p => !d.HumanIds.Contains(p.Id)).ToList();
@@ -188,6 +192,11 @@ public static class CareerEngine
                 Publish(d, "practice-" + d.Day, $"{person.Country}社区：{person.PublicName}的训练日", $"{person.PublicName}{result}。这是一场日常训练，不计入正式比赛积分。", "训练日常", true, [person.Id]);
             }
         }
+    }
+    private static void SimulateWorld(CareerData d)
+    {
+        var rng = new Random(StableHash($"{d.WorldId}:world:{d.Day}"));
+        SimulateNpcTraining(d, rng);
         if (d.Esports.EcosystemVersion >= 1) { WorldEvents.Advance(d); return; }
         if (d.Day % 7 == 2)
         {
@@ -249,12 +258,12 @@ public static class CareerEngine
             player = new RunPerformance(runClear, playerFloor, playerSeconds),
             opponent = new RunPerformance(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value),
             comparison, cards, deckSummary, evidence });
-        if (!confirmFailure && !forfeit && (comparison < 0 || !runClear && comparison > 0))
+        if (!confirmFailure && !forfeit && m.DateGame == null && (comparison <= 0 || !runClear))
         {
             if (d.Failure != null) return;
             d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
                 CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
-                Day = d.Day, Event = m.Event, Outcome = comparison > 0 ? "获胜" : "失利", Character = character, CharacterId = characterId,
+                Day = d.Day, Event = m.Event, Outcome = comparison switch { < 0 => "失利", 0 => "平局", _ => "获胜" }, Character = character, CharacterId = characterId,
                 Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
                 Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, Simulated = simulated, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
             d.PendingMatchId = null; d.PendingSince = 0;
@@ -276,6 +285,7 @@ public static class CareerEngine
                 PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards,
                 DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() };
             friendly.Simulated = simulated;
+            if (m.DateGame is { } dateGame && !simulated && !forfeit) dateGame.ReturnPending = true;
             d.Results.Add(friendly); d.PendingMatchId = null; d.PendingSince = 0;
             if (m.Kind == "private-challenge") Publish(d, "match" + m.Id, m.Event + " · " + friendly.Outcome, MatchRules.Report(m, friendly, d.CooperativeMembers > 1), "约战", true, [m.OpponentId], m);
 
@@ -394,7 +404,7 @@ public static class CareerEngine
         post.PeopleAtEvent = d.People.Where(p => participants.Contains(p.Id)).Select(p => new CareerPerson
         {
             Id = p.Id, Name = p.Name, Handle = p.Handle, EditedCard = p.EditedCard, Gender = IdentityGender.Of(d, p.Id), Role = p.Role, Country = p.Country, ClubId = p.ClubId, Character = p.Character, Style = p.Style,
-            CameoId = p.CameoId, Biography = p.CameoId.Length > 0 ? p.Biography : "", RecordedWinStreak = p.RecordedWinStreak, RecordedStreakAscension = p.RecordedStreakAscension,
+            CameoId = p.CameoId, Biography = p.CameoId.Length > 0 || p.Id.StartsWith("human-", StringComparison.Ordinal) ? p.Biography : "", RecordedWinStreak = p.RecordedWinStreak, RecordedStreakAscension = p.RecordedStreakAscension,
             MaxAscension = p.MaxAscension, Wins = p.Wins, Losses = p.Losses, Rating = p.Rating, Form = p.Form,
             Personality = p.Personality, SupportedClubId = p.SupportedClubId, AiIntroduction = p.AiIntroduction, IntroductionDay = p.IntroductionDay,
             Identities = p.Identities.ToList(), Connections = p.Connections.ToList()

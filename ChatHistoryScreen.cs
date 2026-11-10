@@ -19,9 +19,13 @@ public partial class CareerScreen
     private int ChatPageCount => _privateGroup.Length > 0 ? _groupPages.Pages : _privatePages.Pages;
     private bool ChatAtLatest => ChatPage == ChatPageCount - 1;
     private bool ChatAtBottom => _privateScroll!.ScrollVertical >= _privateScroll.GetVScrollBar().MaxValue - _privateScroll.Size.Y - 90;
-    private void LoadChatPreferences()
+    private static void EnsureChatPreferencesLoaded()
     {
         if (!_chatPreferencesLoaded) { ChatPreferences.Load("user://NationalSpire_chat.cfg"); _chatPreferencesLoaded = true; }
+    }
+    private void LoadChatPreferences()
+    {
+        EnsureChatPreferencesLoaded();
         _chatPageSize = ChatPreferences.GetValue(ChatPreferenceKey, "size", 10).AsInt32();
         LoadChatPins(); LoadContactPreferences();
     }

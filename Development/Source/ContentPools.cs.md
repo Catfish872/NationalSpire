@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E486208F6C0D1D306F15573B71B164397E560D5B67E3FC22B1FB2297BFEC99BF`。来源：[源码](../../ContentPools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`FCC0D66294F78E5127E4BF1611AF0DDC9EAD00D9005390CAB6D40CD733D9E102`。来源：[源码](../../ContentPools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -48,7 +48,7 @@
 
 - `string.IndexOf(char)`；输入表达式：`row.IndexOf('=')`；返回值紧邻使用处：`EqualsValueClauseSyntax: = row.IndexOf('=')`
 - `string.Split(char, System.StringSplitOptions)`；输入表达式：`row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)`；返回值紧邻使用处：`ArgumentSyntax: row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)`
-- `string.Split(char, System.StringSplitOptions)`；输入表达式：`text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string row in text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))         {             int split = row.IndexOf('=');             string key = row[..split];             target[key] = target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct().ToArray();         }`
+- `string.Split(char, System.StringSplitOptions)`；输入表达式：`text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string row in text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))          {              int split = row.IndexOf('=');              string key = row[..split];              target[key] = target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct().ToArray();          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct().ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct().ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: target[key] = target.GetValueOrDefault(key, []).Concat(row[(split + 1)..].Split('|', StringSplitOptions.TrimEntries)).Distinct().ToArray()`

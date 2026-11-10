@@ -16,7 +16,7 @@ public static class AppearanceLibrary
     private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true), new("charlotte", "夏洛特·赖特", true), new("alili", "阿莉莉", true)];
     public static string DirectoryPath => ProjectSettings.GlobalizePath("user://national_spire_portraits/library");
     private static string PathFor(string id) => Path.Combine(DirectoryPath, id + ".json");
-    public static Entry[] List()
+    public static Entry[] List(CareerData? data = null)
     {
         var entries = new List<Entry>(BuiltIns);
         if (Directory.Exists(DirectoryPath))
@@ -27,15 +27,17 @@ public static class AppearanceLibrary
                 using var json = JsonDocument.Parse(File.ReadAllText(path));
                 entries.Add(new(id, json.RootElement.GetProperty("Name").GetString()!, false));
             }
-        return entries.ToArray();
+        return entries.Where(e => e.BuiltIn || data?.ExcludedAppearancePacks.Contains(e.Id) != true).ToArray();
     }
     public static Entry Import(CareerData data, string path, CharacterDesignPackage.Imported? imported = null)
     {
         using var file = File.OpenRead(path);
         string id = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(file)).ToLowerInvariant();
-        if (File.Exists(PathFor(id))) return new(id, Load(data, new(id, "", false)).Name, false);
         file.Position = 0;
-        return Save(id, imported ?? CharacterDesignPackage.Read(data, file));
+        var entry = File.Exists(PathFor(id)) ? new Entry(id, Load(data, new(id, "", false)).Name, false)
+            : Save(id, imported ?? CharacterDesignPackage.Read(data, file));
+        data.ExcludedAppearancePacks.Remove(id);
+        return entry;
     }
     private static Entry Save(string id, CharacterDesignPackage.Imported imported, string? name = null)
     {
@@ -62,11 +64,16 @@ public static class AppearanceLibrary
         }
         return JsonSerializer.Deserialize<Package>(File.ReadAllText(path), PortraitDesigns.Json)!;
     }
-    public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)
+    public static (PortraitDesign Design, DateSceneAssets Assets) Prepare(CareerData data, string person, Package package)
     {
         var design = Coop.CoopJson.Copy(package.Design); design.PersonId = person;
         var assets = DateSceneAssetStore.Read(data, person);
-        assets.Outfits = Coop.CoopJson.Copy(package.Outfits); assets.OutfitId = design.SelectedOutfit;
+        assets.Outfits = Coop.CoopJson.Copy(package.Outfits); assets.OutfitId = design.SelectedOutfit; assets.UseDefaultPortrait = false;
+        return (design, assets);
+    }
+    public static (PortraitDesign Design, DateSceneAssets Assets) Apply(CareerData data, string person, Package package)
+    {
+        var (design, assets) = Prepare(data, person, package);
         using var installation = new CharacterDesignPackage.Installation(data, person, design, assets);
         installation.Commit();
         return (design, assets);
