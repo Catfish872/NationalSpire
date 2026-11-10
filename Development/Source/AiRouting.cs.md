@@ -80,7 +80,7 @@ public static readonly (string Id, string Name)[] Tasks =
 
 来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`](AiRouting.cs.md#symbol-dcdbadb40401)；[`NationalSpire.AiRouting.NextName(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-761de1a86dc4)；[`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.ShowChatModelPicker(Godot.Button, string)`](ChatUtilitiesScreen.cs.md#symbol-cc67f52fc948)
+**调用者：** [`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`](AiRouting.cs.md#symbol-dcdbadb40401)；[`NationalSpire.AiRouting.NextName(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-761de1a86dc4)；[`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；[`NationalSpire.AiSettingsPanel.BuildConnections(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action?, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?, System.Action<System.Func<bool>>?, string, System.Action<string>?)`](AiSettingsPanel.cs.md#symbol-b76dbe11f063)；[`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.ShowChatModelPicker(Godot.Button, string)`](ChatUtilitiesScreen.cs.md#symbol-cc67f52fc948)
 
 **调用：** `NationalSpire.AiConnectionProfile.AiConnectionProfile()`
 
@@ -191,7 +191,7 @@ public static readonly (string Id, string Name)[] Tasks =
 
 来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-c9414aa7bd2d)
+**调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-f044eec7c485)
 
 **调用：** [`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 

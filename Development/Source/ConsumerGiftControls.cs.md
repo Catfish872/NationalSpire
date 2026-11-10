@@ -134,7 +134,7 @@ private LineEdit _number = null!;
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)
 
-**调用：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-9b8606036c8a)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.RestoreText(string)`](ConsumerGiftControls.cs.md#symbol-7a371acfafe4)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.RestoreText(string)`](ConsumerGiftControls.cs.md#symbol-7a371acfafe4)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `Action(string, int)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ConsumerQuantity._number`；`NationalSpire.ConsumerQuantity.Changed`；`NationalSpire.ConsumerQuantity.RestoreText(string)`；`NationalSpire.ConsumerQuantity.SetValue(int)`
 
@@ -166,7 +166,7 @@ private LineEdit _number = null!;
 - `MaxLength` = `10`
 - `SelectAllOnFocus` = `true`
 
-<a id="symbol-9b8606036c8a"></a>
+<a id="symbol-53199fb9fdba"></a>
 
 ## `Action(string, int) — Button Action(string text, int delta)`
 
@@ -234,7 +234,7 @@ private LineEdit _number = null!;
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-9b8606036c8a)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-ac557aac2b66)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
+**调用者：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-53a95c0ed02d)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
 
 **调用：** `int.ToString(System.IFormatProvider?)`；`System.Math.Clamp(int, int, int)`
 
@@ -400,7 +400,7 @@ private LineEdit _number = null!;
 
 来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ShowRows()`](CommunityShareScreen.cs.md#symbol-e568a61a4681)；[`ShowRows()`](PeoplePickerScreen.cs.md#symbol-c7868315b1ad)
+**调用者：** [`ShowRows()`](CommunityShareScreen.cs.md#symbol-2e7b710b7d77)；[`ShowRows()`](PeoplePickerScreen.cs.md#symbol-2c92b42fbd16)
 
 **调用：** [`NationalSpire.GiftRingMark.GiftRingMark()`](ConsumerGiftControls.cs.md#symbol-6a60dc1ee43f)；[`NationalSpire.PickerPortraitMark.PickerPortraitMark()`](ConsumerGiftControls.cs.md#symbol-4fc0876be7c6)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GetThemeStylebox(Godot.StringName, Godot.StringName)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.GetMeta(Godot.StringName, Godot.Variant)`；`Godot.GodotObject.HasMeta(Godot.StringName)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.Resource.Duplicate(bool)`；`Godot.Variant.AsSingle()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.IEnumerable.OfType<TResult>()`
 

@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)
 
-**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`](PrivateMemoryScreen.cs.md#symbol-780ecbf2f8bf)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)；[`NationalSpire.NpcAvatarFrames.Requirement(string)`](NpcAvatarFrames.cs.md#symbol-810d8a8cbd67)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-424e296f1f92)；`Godot.CanvasItem.GetViewportRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.FindChild(string, bool, bool)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AvatarFrame.AvatarFrame(string, string, string, int, string)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.NpcFrameLock.NpcFrameLock()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Math.Clamp(float, float, float)`
+**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`](PrivateMemoryScreen.cs.md#symbol-780ecbf2f8bf)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)；[`NationalSpire.NpcAvatarFrames.Requirement(string)`](NpcAvatarFrames.cs.md#symbol-810d8a8cbd67)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-e09ed14299e2)；`Godot.CanvasItem.GetViewportRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.FindChild(string, bool, bool)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.Shader.Shader()`；`Godot.ShaderMaterial.ShaderMaterial()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AvatarFrame.AvatarFrame(string, string, string, int, string)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.NpcFrameLock.NpcFrameLock()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Math.Clamp(float, float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Id`；`NationalSpire.AvatarFrame.Name`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.AvatarIdentity.SelectedFrame`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.PrivateIgnoreMouse(Godot.Node)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.NpcAvatarFrames.Choices`；`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`；`NationalSpire.NpcAvatarFrames.Requirement(string)`；`NationalSpire.PrivateMailbox.NpcAvatarFrames`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`Preview()`；`Save()`
 
@@ -131,15 +131,15 @@
 - `status` = `Text("", 15, _muted)`
 - `title.Name` = `"NpcFrameTitle"`
 
-<a id="symbol-5b51b5aa4fbf"></a>
+<a id="symbol-313a3fb39ecc"></a>
 
 ## `Applied() — void Applied()`
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Save()`](NpcAvatarFrameScreen.cs.md#symbol-4fd117934d7e)
+**调用者：** [`Save()`](NpcAvatarFrameScreen.cs.md#symbol-a1802dcac073)
 
-**调用：** [`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-ceda5c50bd1e)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.IsInsideTree()`
+**调用：** [`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-3dcd574e340b)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.IsInsideTree()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerScreen._groupSignature`；`NationalSpire.CareerScreen._privateListSignature`；`NationalSpire.CareerScreen._privateSignature`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.ViewData`；`RefreshPictures(Godot.Node)`
 
@@ -155,15 +155,15 @@
 - `_privateListSignature` = `_privateSignature = _groupSignature = ""`
 - `_privateSignature` = `_groupSignature = ""`
 
-<a id="symbol-ceda5c50bd1e"></a>
+<a id="symbol-3dcd574e340b"></a>
 
 ## `RefreshPictures(Godot.Node) — void RefreshPictures(Node node)`
 
 来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](NpcAvatarFrameScreen.cs.md#symbol-5b51b5aa4fbf)；[`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-ceda5c50bd1e)
+**调用者：** [`Applied()`](NpcAvatarFrameScreen.cs.md#symbol-313a3fb39ecc)；[`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-3dcd574e340b)
 
-**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-ceda5c50bd1e)；`Godot.Node.GetChildren(bool)`
+**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`RefreshPictures(Godot.Node)`](NpcAvatarFrameScreen.cs.md#symbol-3dcd574e340b)；`Godot.Node.GetChildren(bool)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerAvatar.PersonId`；`NationalSpire.CareerAvatar.Simplified`；`NationalSpire.CareerScreen.ViewData`；`RefreshPictures(Godot.Node)`
 
@@ -177,7 +177,7 @@
 
 - `picture.Identity` = `AvatarHonors.ForPerson(ViewData, person)`
 
-<a id="symbol-4fd117934d7e"></a>
+<a id="symbol-a1802dcac073"></a>
 
 ## `Save() — bool Save()`
 
@@ -185,7 +185,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Applied()`](NpcAvatarFrameScreen.cs.md#symbol-5b51b5aa4fbf)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)；[`NationalSpire.NpcAvatarFrames.Select(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-8c2dcfe0344a)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Color.Color(string)`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`Applied()`](NpcAvatarFrameScreen.cs.md#symbol-313a3fb39ecc)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)；[`NationalSpire.NpcAvatarFrames.Select(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-8c2dcfe0344a)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Color.Color(string)`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `Applied()`；`NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`；`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`；`NationalSpire.NpcAvatarFrames.Select(NationalSpire.CareerData, string, string)`；`NationalSpire.PrivateMailbox.NpcAvatarFrames`；`NationalSpire.PrivateMessageCommand.Text`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`
 
@@ -212,7 +212,7 @@
 - `status.Modulate` = `new Color("ee929d")`
 - `Text` = `selected`
 
-<a id="symbol-424e296f1f92"></a>
+<a id="symbol-e09ed14299e2"></a>
 
 ## `Preview() — void Preview()`
 

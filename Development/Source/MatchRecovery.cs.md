@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8EC5D3FE02F6846367E576C59C987819962D18E6597B98BA3A98B2980AE33A53`。来源：[源码](../../MatchRecovery.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A7E6AF0C29E50ED2EAFCE05EE1FDF3D2A01BE8150D09B51AAFA710D49121159E`。来源：[源码](../../MatchRecovery.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -29,8 +29,8 @@ public const string SingleplayerInUse = "请在主菜单手动放弃当前对局
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `long.TryParse(string?, out long)`；输入表达式：`long.TryParse(Path.GetFileNameWithoutExtension(file), out long time)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time)`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`files          .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)          .OrderByDescending(file => file, StringComparer.Ordinal)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => files          .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)          .OrderByDescending(file => file, StringComparer.Ordinal)`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`files          .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: files          .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)          .OrderByDescending`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`files         .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)         .OrderByDescending(file => file, StringComparer.Ordinal)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => files         .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)         .OrderByDescending(file => file, StringComparer.Ordinal)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`files         .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: files         .Where(file => pendingSince <= 0 || !long.TryParse(Path.GetFileNameWithoutExtension(file), out long time) || time >= pendingSince - 5)         .OrderByDescending`
 - `System.IO.Path.GetFileNameWithoutExtension(string?)`；输入表达式：`Path.GetFileNameWithoutExtension(file)`；返回值紧邻使用处：`ArgumentSyntax: Path.GetFileNameWithoutExtension(file)`
 
 **赋值（含属性/字段和局部值）：**

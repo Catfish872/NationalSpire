@@ -21,9 +21,9 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-2b902f13645d)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-928c754fb9a7)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Refresh()`](ConsumerPickerScreen.cs.md#symbol-5ea2a34a3129)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-c75e2ac1b167)
 
-**调用：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-5710830b5dcd)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
+**调用：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-0db6dc7411c3)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
 **字段、属性、事件及方法组引用：** `Get(bool, bool)`
 
@@ -39,7 +39,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-5710830b5dcd"></a>
+<a id="symbol-0db6dc7411c3"></a>
 
 ## `Get(bool, bool) — StyleBoxFlat Get(bool active, bool hover)`
 
@@ -74,7 +74,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-5710830b5dcd)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerSeal._Draw()`](ConsumerVisuals.cs.md#symbol-7339db409b51)；[`NationalSpire.ConsumerVisuals.Style(bool, bool)`](ConsumerVisuals.cs.md#symbol-340545590823)
+**调用者：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-0db6dc7411c3)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.ConsumerSeal._Draw()`](ConsumerVisuals.cs.md#symbol-7339db409b51)；[`NationalSpire.ConsumerVisuals.Style(bool, bool)`](ConsumerVisuals.cs.md#symbol-340545590823)
 
 **调用：** `Godot.Color.Color(string)`
 
@@ -93,7 +93,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-5710830b5dcd)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
+**调用者：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-0db6dc7411c3)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 

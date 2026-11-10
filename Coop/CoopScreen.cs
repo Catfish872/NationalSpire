@@ -40,7 +40,9 @@ public partial class CoopScreen : Control, IScreenContext
     }
     public static void OpenCareerOrRoom(Control menu)
     {
-        var session = CoopRuntime.Current?.Session;
+        var room = CoopRuntime.Current;
+        if (room != null) room.StayAtResultMenu = false;
+        var session = room?.Session;
         if (session?.World is { CareerStarted: true } )
             CareerScreen.OpenView(menu, new CoopCareerSession(session, menu));
         else Open(menu);

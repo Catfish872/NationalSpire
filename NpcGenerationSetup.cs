@@ -12,6 +12,7 @@ public sealed class NpcGenerationSetup
     public CareerOpeningPlayer Personal { get; set; } = new();
     public CareerOpeningWorld World { get; set; } = new();
     public string? TeamCountry { get; set; }
+    public string? WorldId { get; set; }
     public string PlayerName { get; set; } = CareerEngine.PlayerName;
 }
 
@@ -22,7 +23,7 @@ public static class NpcGeneration
 
     public static CareerData Create(AiOptions ai, NpcGenerationSetup setup)
     {
-        var data = CareerEngine.CreateNew(personalityPool: setup.Pool, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国"); ApplySettings(data, setup, ai); return data;
+        var data = CareerEngine.CreateNew(personalityPool: setup.Pool, worldId: setup.WorldId, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国"); ApplySettings(data, setup, ai); return data;
     }
 
     public static void ApplySettings(CareerData data, NpcGenerationSetup setup, AiOptions inherited)

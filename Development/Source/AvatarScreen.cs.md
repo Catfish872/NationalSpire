@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`659D3BB1075C5CC707016D0DFE48DF899AF51CA5CABB17D1A15147448FD55A97`。来源：[源码](../../AvatarScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`62C6FE1228418AA0DEBC0350D837B1E58C3E309CC1FCD1FB9FDA1FB542F5A745`。来源：[源码](../../AvatarScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -15,15 +15,46 @@ private Control? _avatarOverlay;
 private Action? _closeAvatar;
 ```
 
+<a id="symbol-8bcfc3ae05f4"></a>
+
+## `NationalSpire.CareerScreen.ChooseOpeningAvatar(Godot.Control, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>) — internal static void ChooseOpeningAvatar(Control owner, PlayerAvatar? draft, Action<PlayerAvatar> selected)`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.OpeningPlayerEditor.Draw(Godot.VBoxContainer, NationalSpire.CareerOpeningPlayer, string, string, string?, System.Action<string>?)`](OpeningPlayerEditor.cs.md#symbol-8ef16a8054cb)
+
+**调用：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.LandscapeViewport.StageOf(Godot.Control)`](DashboardViewport.cs.md#symbol-736b054e3fef)；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.SetProcess(bool)`；`NationalSpire.CareerData.CareerData()`；`NationalSpire.CareerScreen.CareerScreen()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._avatarOverlay`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`；`NationalSpire.LandscapeViewport.StageOf(Godot.Control)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`picker.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: picker.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`host.AddChild(picker)`；返回值紧邻使用处：`ExpressionStatementSyntax: host.AddChild(picker);`
+- `Godot.Node.SetProcess(bool)`；输入表达式：`picker.SetProcess(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: picker.SetProcess(false);`
+- `NationalSpire.CareerData.CareerData()`；输入表达式：`new CareerData()`；返回值紧邻使用处：`ArgumentSyntax: new CareerData()`
+- `NationalSpire.CareerScreen.CareerScreen()`；输入表达式：`new CareerScreen { Theme=owner.Theme, MouseFilter=MouseFilterEnum.Ignore,FocusBehaviorRecursive=FocusBehaviorRecursiveEnum.Enabled,ZIndex=160 }`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new CareerScreen { Theme=owner.Theme, MouseFilter=MouseFilterEnum.Ignore,FocusBehaviorRecursive=FocusBehaviorRecursiveEnum.Enabled,ZIndex=160 }`
+- `NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`；输入表达式：`picker.OpenAvatarSettings(new CareerData(),draft,selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: picker.OpenAvatarSettings(new CareerData(),draft,selected);`
+- `NationalSpire.LandscapeViewport.StageOf(Godot.Control)`；输入表达式：`LandscapeViewport.StageOf(owner)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =LandscapeViewport.StageOf(owner)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `FocusBehaviorRecursive` = `FocusBehaviorRecursiveEnum.Enabled`
+- `MouseFilter` = `MouseFilterEnum.Ignore`
+- `picker._avatarOverlay!.TreeExiting` += `picker.QueueFree`
+- `picker._stage` = `picker`
+- `Theme` = `owner.Theme`
+- `ZIndex` = `160`
+
 <a id="symbol-368e97fdd27f"></a>
 
 ## `NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?) — private void OpenAvatarSettings(CareerData data, PlayerAvatar? initial = null, Action<PlayerAvatar>? choose = null, string personId = "player", AvatarArt? automatic = null)`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
+**调用者：** [`NationalSpire.CareerScreen.ChooseOpeningAvatar(Godot.Control, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>)`](AvatarScreen.cs.md#symbol-8bcfc3ae05f4)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
-**调用：** [`CloseAvatar()`](AvatarScreen.cs.md#symbol-381599e6375a)；[`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-863a623a8bb2)；[`Gallery()`](AvatarScreen.cs.md#symbol-a7914f0d59d9)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.AvatarImages.FromFile(string)`](AvatarImages.cs.md#symbol-2455dc6874f9)；[`NationalSpire.AvatarSources.Characters()`](AvatarSources.cs.md#symbol-6c772247bc69)；[`NationalSpire.AvatarSources.Steam()`](AvatarSources.cs.md#symbol-bc266fec0f45)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-c15914524c15)；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.PlayerAvatar.PlayerAvatar()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
+**调用：** [`CloseAvatar()`](AvatarScreen.cs.md#symbol-961b3161903d)；[`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-ea23862cdaf8)；[`Gallery()`](AvatarScreen.cs.md#symbol-c2473d06e9db)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.AvatarImages.FromFile(string)`](AvatarImages.cs.md#symbol-2455dc6874f9)；[`NationalSpire.AvatarSources.Characters()`](AvatarSources.cs.md#symbol-6c772247bc69)；[`NationalSpire.AvatarSources.Steam()`](AvatarSources.cs.md#symbol-bc266fec0f45)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-223ba7b715b1)；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.PlayerAvatar.PlayerAvatar()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`
 
 **字段、属性、事件及方法组引用：** `(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Control`；`(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Mode`；`CloseAvatar()`；`Controls(Godot.Node)`；`Gallery()`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.AvatarImages.FromFile(string)`；`NationalSpire.AvatarSources.Characters()`；`NationalSpire.AvatarSources.Steam()`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerScreen._avatarOverlay`；`NationalSpire.CareerScreen._closeAvatar`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.PlayerAvatar.Validate()`；`Select(NationalSpire.PlayerAvatar)`
 
@@ -168,15 +199,15 @@ private Action? _closeAvatar;
 - `steam.Pressed` += `async () =>          {              int requestedRevision = selectionRevision;              steam.Disabled = true; status.Text = "正在读取你的 Steam 头像……";              try              {                  var avatar = await AvatarSources.Steam();                  if (!IsInstanceValid(shade) || shade.IsQueuedForDeletion() || requestedRevision != selectionRevision) return;                  Select(avatar); status.Text = "已读取当前 Steam 头像，确认保存后生效。";              }              catch (Exception e) { if (IsInstanceValid(status) && requestedRevision == selectionRevision) status.Text = e is ArgumentException ? e.Message : "暂时无法读取 Steam 头像，请确认 Steam 已登录后重试。"; }              finally { if (IsInstanceValid(steam)) steam.Disabled = false; }          }`
 - `ZIndex` = `20`
 
-<a id="symbol-863a623a8bb2"></a>
+<a id="symbol-ea23862cdaf8"></a>
 
 ## `Controls(Godot.Node) — IEnumerable<Control> Controls(Node node)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-863a623a8bb2)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
+**调用者：** [`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-ea23862cdaf8)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
-**调用：** [`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-863a623a8bb2)；`Godot.Node.GetChildren(bool)`；`System.Array.Empty<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`
+**调用：** [`Controls(Godot.Node)`](AvatarScreen.cs.md#symbol-ea23862cdaf8)；`Godot.Node.GetChildren(bool)`；`System.Array.Empty<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`
 
 **字段、属性、事件及方法组引用：** `Controls(Godot.Node)`
 
@@ -191,13 +222,13 @@ private Action? _closeAvatar;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c15914524c15"></a>
+<a id="symbol-223ba7b715b1"></a>
 
 ## `Select(NationalSpire.PlayerAvatar) — void Select(PlayerAvatar avatar)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-a7914f0d59d9)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
+**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-c2473d06e9db)；[`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
 **调用：** [`NationalSpire.AvatarImages.Read(NationalSpire.PlayerAvatar?)`](AvatarImages.cs.md#symbol-1edd50772202)；[`NationalSpire.CareerAvatars.Automatic(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-2bfa078d007b)
 
@@ -214,15 +245,15 @@ private Action? _closeAvatar;
 - `preview.Art` = `AvatarImages.Read(avatar) ?? automatic ?? CareerAvatars.Automatic(data, personId)`
 - `selected` = `avatar`
 
-<a id="symbol-a7914f0d59d9"></a>
+<a id="symbol-c2473d06e9db"></a>
 
 ## `Gallery() — void Gallery()`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
-**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarSources.Cards()`](AvatarSources.cs.md#symbol-3bc6741f18ea)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-c15914524c15)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarSources.Cards()`](AvatarSources.cs.md#symbol-3bc6741f18ea)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-223ba7b715b1)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；`NationalSpire.AvatarChoice.Name`；`NationalSpire.AvatarChoice.Read`；`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`；`NationalSpire.AvatarSources.Cards()`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.CareerVisuals.Teal`；`Select(NationalSpire.PlayerAvatar)`
 
@@ -273,11 +304,11 @@ private Action? _closeAvatar;
 - `status.Text` = `"已预览，点击保存头像后生效。"`
 - `status.Text` = `e.Message`
 
-<a id="symbol-381599e6375a"></a>
+<a id="symbol-961b3161903d"></a>
 
 ## `CloseAvatar() — void CloseAvatar()`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 

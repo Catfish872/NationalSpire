@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1F7D0A73ECD3F548B88E0973129CDEE3AE370731E0C6CB2D91D61353BFD60F2D`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8D2E1928FD05F8DA34DA9934DDD0D769E0A77E3BA9C5D1686B60F858692CB056`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -13,8 +13,11 @@
 ```csharp
 public const string DefaultTemplate = "world-life";
 private static readonly Lazy<IReadOnlyList<PromptSection>> CurrentSections = new(BuildCurrent);
-private static readonly Lazy<Dictionary<string, string>> ReducedAggression = new(() => ReadPreset("reduced-aggression"));
-private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new(() => ReadPreset("tieba-aggressive"));
+private static readonly Dictionary<string, (string Parent, Lazy<Dictionary<string, string>> Text)> Presets =
+        new Dictionary<string, string> {
+            ["reduced-aggression"] = DefaultTemplate, ["tieba-aggressive"] = DefaultTemplate,
+            ["spire-flavor"] = "reduced-aggression", ["galgame-spire"] = "tieba-aggressive"
+        }.ToDictionary(p => p.Key, p => (p.Value, new Lazy<Dictionary<string, string>>(() => ReadPreset(p.Key))));
 ```
 
 <a id="symbol-35d237dd78a0"></a>
@@ -31,8 +34,10 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new("galgame-spire", "旮旯尖塔（高token开销）", "侧重人物对话与相处，私聊和群聊使用较长的提示词。")`；返回值紧邻使用处：`ExpressionElementSyntax: new("galgame-spire", "旮旯尖塔（高token开销）", "侧重人物对话与相处，私聊和群聊使用较长的提示词。")`
 - `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new("legacy", "赛事叙述 · 旧版", "保留此前的写法，叙述较克制，主要围绕比赛与职业经历。")`；返回值紧邻使用处：`ExpressionElementSyntax: new("legacy", "赛事叙述 · 旧版", "保留此前的写法，叙述较克制，主要围绕比赛与职业经历。")`
 - `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new("reduced-aggression", "攻击性弱化版", "包含千恋万花具体示例，保留作者当前使用的社区文风与私信提示词。")`；返回值紧邻使用处：`ExpressionElementSyntax: new("reduced-aggression", "攻击性弱化版", "包含千恋万花具体示例，保留作者当前使用的社区文风与私信提示词。")`
+- `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new("spire-flavor", "国运风味特化尖塔（高token开销）", "侧重国运世界设定与尖塔社区交流。")`；返回值紧邻使用处：`ExpressionElementSyntax: new("spire-flavor", "国运风味特化尖塔（高token开销）", "侧重国运世界设定与尖塔社区交流。")`
 - `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new("tieba-aggressive", "贴吧社区（攻击性加强）", "贴吧老哥社区 2.0，侧重贴吧式争论、起哄与强烈情绪。")`；返回值紧邻使用处：`ExpressionElementSyntax: new("tieba-aggressive", "贴吧社区（攻击性加强）", "贴吧老哥社区 2.0，侧重贴吧式争论、起哄与强烈情绪。")`
 - `NationalSpire.PromptTemplate.PromptTemplate(string, string, string)`；输入表达式：`new(DefaultTemplate, "国运日常 · 新版", "尖塔牵动生活，社区有热闹、偏心和针锋相对，也有人认真交流。")`；返回值紧邻使用处：`ExpressionElementSyntax: new(DefaultTemplate, "国运日常 · 新版", "尖塔牵动生活，社区有热闹、偏心和针锋相对，也有人认真交流。")`
 
@@ -43,7 +48,7 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.ReadPreset(string) — private static Dictionary<string, string> ReadPreset(string id)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -69,7 +74,7 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.Sections — public static IReadOnlyList<PromptSection> Sections`
 
-来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -87,7 +92,7 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.BuildCurrent() — private static IReadOnlyList<PromptSection> BuildCurrent()`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -108,9 +113,9 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions) — public static string TemplateId(AiOptions options)`
 
-来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiOptions.PersonalityPool`](CareerData.cs.md#symbol-4c9707e1239d)；[`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；[`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-50231e85e9e7)；[`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-facad1ba9cab)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`RefreshWorlds()`](NpcGenerationScreen.cs.md#symbol-1074e74943ab)
+**调用者：** [`NationalSpire.AiOptions.PersonalityPool`](CareerData.cs.md#symbol-4c9707e1239d)；[`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；[`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-50231e85e9e7)；[`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-facad1ba9cab)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`RefreshWorlds()`](NpcGenerationScreen.cs.md#symbol-d70d044589cc)
 
 **调用：** [`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`](CustomPromptTemplates.cs.md#symbol-034310e38b45)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -128,9 +133,9 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions) — public static PromptTemplate Template(AiOptions options)`
 
-来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`Show()`](PromptScreen.cs.md#symbol-b1d8c7bb3638)
+**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`Show()`](PromptScreen.cs.md#symbol-26218fc52477)
 
 **调用：** [`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`](CustomPromptTemplates.cs.md#symbol-034310e38b45)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
 
@@ -149,13 +154,13 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 ## `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string) — public static string Default(AiOptions options, string id)`
 
-来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string)`](PromptLibrary.cs.md#symbol-101a181e9f40)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
 **调用：** [`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.LegacySections`；`NationalSpire.PromptLibrary.ReducedAggression`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.TiebaAggressive`；`NationalSpire.PromptSection.DefaultText`；`NationalSpire.PromptSection.Id`
+**字段、属性、事件及方法组引用：** `(string Parent, System.Lazy<System.Collections.Generic.Dictionary<string, string>> Text).Parent`；`(string Parent, System.Lazy<System.Collections.Generic.Dictionary<string, string>> Text).Text`；`NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.CustomPromptTemplate.BaseTemplate`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.LegacySections`；`NationalSpire.PromptLibrary.Presets`；`NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；`NationalSpire.PromptSection.DefaultText`；`NationalSpire.PromptSection.Id`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -163,23 +168,25 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 - `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, presetText)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, presetText);`
 - `NationalSpire.PromptLibrary.EditableText(string, string)`；输入表达式：`EditableText(id, text)`；返回值紧邻使用处：`ReturnStatementSyntax: return EditableText(id, text);`
 - `NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`；输入表达式：`TemplateId(options)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = TemplateId(options)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue(id, out var presetText)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: preset?.TryGetValue(id, out var presetText)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`.TryGetValue(template, out var custom)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: options.CustomPromptTemplates?.TryGetValue(template, out var custom)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`custom.Sections.TryGetValue("events", out var legacyEvent)`；返回值紧邻使用处：`BinaryExpressionSyntax: id == "event" && custom.Sections.TryGetValue("events", out var legacyEvent)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`custom.Sections.TryGetValue(id, out var text)`；返回值紧邻使用处：`IfStatementSyntax: if (custom.Sections.TryGetValue(id, out var text)) return EditableText(id, text);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`preset.Text.Value.TryGetValue(id, out var presetText)`；返回值紧邻使用处：`IfStatementSyntax: if (preset.Text.Value.TryGetValue(id, out var presetText)) return EditableText(id, presetText);`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Presets.TryGetValue(template, out var preset)`；返回值紧邻使用处：`WhileStatementSyntax: while (Presets.TryGetValue(template, out var preset))          {              if (preset.Text.Value.TryGetValue(id, out var presetText)) return EditableText(id, presetText);              template = preset.Parent;          }`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`(template == "legacy" ? LegacySections : Sections).First(s => s.Id == id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: (template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText`
 
 **赋值（含属性/字段和局部值）：**
 
 - `template` = `custom.BaseTemplate`
+- `template` = `preset.Parent`
 
 <a id="symbol-50231e85e9e7"></a>
 
 ## `NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string) — public static void SelectTemplate(AiOptions options, string id)`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)
+**调用者：** [`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)
 
 **调用：** [`NationalSpire.PromptLibrary.AvailableTemplates(NationalSpire.AiOptions)`](CustomPromptTemplates.cs.md#symbol-034310e38b45)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IDictionary<TKey, TValue>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 

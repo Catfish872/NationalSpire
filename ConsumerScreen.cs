@@ -229,8 +229,7 @@ public partial class CareerScreen
         _content.AddChild(Text("世界人气榜", 24, _gold));
         foreach (int index in Enumerable.Range(0, Math.Min(20, rows.Count)).Concat(Enumerable.Range(Math.Max(0, rank - 3), Math.Min(5, rows.Count - Math.Max(0, rank - 3)))).Distinct())
         {
-            var row = rows[index]; var card = Card(); _content.AddChild(card);
-            Inner(card).AddChild(PersonLink(d, row.Id, $"{index + 1:00}   {CareerEngine.DisplayName(d, row.Id)}   {row.Fans:N0}关注", 42));
+            var row=rows[index];BoardLine(_content,d,index+1,CareerEngine.DisplayName(d,row.Id),CareerAudience.Title(row.Fans),$"{row.Fans:N0} 关注",row.Id,row.Id=="player");
         }
     }
 }

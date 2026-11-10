@@ -70,7 +70,7 @@
 
 来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Merge(System.Collections.Generic.Dictionary<string, string>, string)`](PromptLibrary.cs.md#symbol-5dd01eecb10e)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
+**调用者：** [`Merge(System.Collections.Generic.Dictionary<string, string>, string)`](PromptLibrary.cs.md#symbol-92376ebef44d)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
 **调用：** [`NationalSpire.PromptLibrary.Normalize(string)`](PromptLibrary.cs.md#symbol-d988613378c8)；`string.Contains(string, System.StringComparison)`；`string.Replace(string, string?)`
 
@@ -98,7 +98,7 @@
 
 **调用者：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string)`](PromptLibrary.cs.md#symbol-101a181e9f40)
 
-**调用：** [`Merge(System.Collections.Generic.Dictionary<string, string>, string)`](PromptLibrary.cs.md#symbol-5dd01eecb10e)；[`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
+**调用：** [`Merge(System.Collections.Generic.Dictionary<string, string>, string)`](PromptLibrary.cs.md#symbol-92376ebef44d)；[`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
 
 **字段、属性、事件及方法组引用：** `Merge(System.Collections.Generic.Dictionary<string, string>, string)`；`NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.AiOptions.PrivatePromptVersion`；`NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.AiOptions.PromptTemplate`；`NationalSpire.AiOptions.PromptTemplateOverrides`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PrivateMessagePrompts.Guide`；`NationalSpire.PromptLibrary.MergePrivateText(string, string)`
 
@@ -115,7 +115,7 @@
 - `custom.Sections["private"]` = `MergePrivateText(custom.Sections.GetValueOrDefault("private", PrivateMessagePrompts.Guide), style)`
 - `options.PrivatePromptVersion` = `1`
 
-<a id="symbol-5dd01eecb10e"></a>
+<a id="symbol-92376ebef44d"></a>
 
 ## `Merge(System.Collections.Generic.Dictionary<string, string>, string) — void Merge(Dictionary<string, string> values, string template)`
 
@@ -169,7 +169,7 @@
 
 来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Show()`](PromptScreen.cs.md#symbol-b1d8c7bb3638)
+**调用者：** [`Show()`](PromptScreen.cs.md#symbol-26218fc52477)
 
 **调用：** `string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -189,7 +189,7 @@
 
 来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ChangeTemplate(System.Action, string, bool)`](PromptScreen.cs.md#symbol-dcb0b77c4756)；[`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.Coop.CoopCoordinator.SendSnapshots(ulong[])`](Coop/CoopCoordinator.cs.md#symbol-c4bb170f5d80)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.PortraitDesigns.Messages(NationalSpire.CareerData, string, NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-3f8b0db3fc3f)；[`NationalSpire.PrivateMessagePrompts.Section(NationalSpire.CareerData, string)`](PrivateMessagePrompts.cs.md#symbol-9529e63edd53)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Editorial(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-cdd41a28416a)；[`NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool)`](RandomEventPrompts.cs.md#symbol-81999ba65eb3)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-a3234b3f0768)
+**调用者：** [`ChangeTemplate(System.Action, string, bool)`](PromptScreen.cs.md#symbol-32c868c23420)；[`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.Coop.CoopCoordinator.SendSnapshots(ulong[])`](Coop/CoopCoordinator.cs.md#symbol-c4bb170f5d80)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.PortraitDesigns.Messages(NationalSpire.CareerData, string, NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-3f8b0db3fc3f)；[`NationalSpire.PrivateMessagePrompts.Section(NationalSpire.CareerData, string)`](PrivateMessagePrompts.cs.md#symbol-9529e63edd53)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Editorial(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-cdd41a28416a)；[`NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool)`](RandomEventPrompts.cs.md#symbol-81999ba65eb3)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
 **调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -216,7 +216,7 @@
 
 来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-a3234b3f0768)
+**调用者：** [`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
 **调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；[`NationalSpire.PromptLibrary.Normalize(string)`](PromptLibrary.cs.md#symbol-d988613378c8)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`
 

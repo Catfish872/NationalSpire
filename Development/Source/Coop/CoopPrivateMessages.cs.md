@@ -104,7 +104,7 @@ private readonly Value _root;
 - `_` = `AiService.ProcessPrivateAsync(Current, Save, recipient, (turn, text) =>          {              if (!_closed && World?.Epoch == epoch && sender != Self)                  // 只回传这次私信的发起者，沿用正文的收件人隔离，禁止广播给其他队友。                  foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, recipient, turn, text, ++_privateSendSequence,                      AiService.PrivateReasoningLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Text ?? "",                      AiService.PrivateSceneLive.GetValueOrDefault(worldId + "-" + sender + "/" + recipient).Lines))))                      Send(sender, "private-chunk", new CoopPrivatePart(recipient, part));          })`
 - `_` = `AiService.SummarizePrivateManually(Current, Save, recipient)`
 
-<a id="symbol-0f2bd8bb2a0e"></a>
+<a id="symbol-0f4fcef99ac5"></a>
 
 ## `Current() — CareerData? Current()`
 
@@ -128,7 +128,7 @@ private readonly Value _root;
 
 - `data.Ai` = `AiSettingsStore.Load(new())`
 
-<a id="symbol-3322b9d02150"></a>
+<a id="symbol-160be4ae58b5"></a>
 
 ## `Save(NationalSpire.CareerData) — void Save(CareerData data)`
 

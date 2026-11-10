@@ -167,7 +167,6 @@ public static class GameBridge
         var detail = ReadPlayerHistory(history, history.Players[0]);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
             history.MapPointHistory.Sum(a => a.Count), detail.Character, MatchRules.PreferredAscension(data, match), detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
-        DateGameReturn.RecordBoundHistory(data,match);
         PlayerArchive.Invalidate();
         _ = AiService.ProcessPendingAsync();
     }
@@ -308,15 +307,6 @@ public static class MenuPatch
             button.OffsetTop = -106; button.OffsetBottom = -42;
             button.Pressed += () => CareerScreen.Open(__instance);
             MainMenuEntries.Bind(__instance, button);
-            if (!Coop.CoopRuntime.Bound)
-            {
-                if (DateGameReturn.Transitioning) CareerScreen.ReturnToDate(__instance);
-                else Callable.From(() =>
-                {
-                    if (GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree() && !DateGameReturn.Transitioning)
-                        CareerScreen.ReturnToDate(__instance);
-                }).CallDeferred();
-            }
             // 主菜单底部独立入口，避开左上方档案选择和原生菜单列表。
             if (!Coop.CoopRuntime.Bound) _ = AiService.ProcessPendingAsync();
         }

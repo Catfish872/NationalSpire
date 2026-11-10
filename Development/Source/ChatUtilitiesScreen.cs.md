@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C0BC29115C174BF69EC3D0AA9AD01F5BE22D190BB2D8D0F926F08523705E5439`。来源：[源码](../../ChatUtilitiesScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1928AD434A4B03BB7CA38FC57A4E2D1B4D35EE8EDD45D1FA4F72F7A545033DD6`。来源：[源码](../../ChatUtilitiesScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,13 +22,16 @@ private PopupMenu? _chatModelPopup;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** [`NationalSpire.CareerDropdownLayer.At(Godot.Control)`](CareerDropdownLayer.cs.md#symbol-4de44cb328a0)；[`NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`](CareerDropdownLayer.cs.md#symbol-9296f1acb0ef)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.GetParent()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._chatModelPopup`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerDropdownLayer.At(Godot.Control)`；`NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`；`NationalSpire.CareerScreen._chatModelPopup`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_chatModelPopup)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(_chatModelPopup) && _chatModelPopup!.Visible`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_chatModelPopup)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(_chatModelPopup) && _chatModelPopup!.GetParent() is Button anchor`
+- `Godot.Node.GetParent()`；输入表达式：`_chatModelPopup!.GetParent()`；返回值紧邻使用处：`IsPatternExpressionSyntax: _chatModelPopup!.GetParent() is Button anchor`
+- `NationalSpire.CareerDropdownLayer.At(Godot.Control)`；输入表达式：`CareerDropdownLayer.At(anchor)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CareerDropdownLayer.At(anchor).Showing`
+- `NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`；输入表达式：`CareerDropdownLayer.At(anchor).Showing(anchor)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(_chatModelPopup) && _chatModelPopup!.GetParent() is Button anchor && CareerDropdownLayer.At(anchor).Showing(anchor)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -99,7 +102,7 @@ private PopupMenu? _chatModelPopup;
 
 来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildChatModelButton(Godot.HBoxContainer)`](ChatUtilitiesScreen.cs.md#symbol-f49b1a0725a3)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RetireChatModelPopup(Godot.PopupMenu, Godot.Button)`](ChatUtilitiesScreen.cs.md#symbol-b1fdb06178f9)
+**调用者：** [`NationalSpire.CareerScreen.BuildChatModelButton(Godot.HBoxContainer)`](ChatUtilitiesScreen.cs.md#symbol-f49b1a0725a3)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
 **调用：** 无已绑定显式调用。
 
@@ -121,96 +124,40 @@ private PopupMenu? _chatModelPopup;
 
 **调用者：** [`NationalSpire.CareerScreen.BuildChatModelButton(Godot.HBoxContainer)`](ChatUtilitiesScreen.cs.md#symbol-f49b1a0725a3)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
-**调用：** [`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`](AiRouting.cs.md#symbol-dcdbadb40401)；[`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；[`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；[`NationalSpire.CareerScreen.RetireChatModelPopup(Godot.PopupMenu, Godot.Button)`](ChatUtilitiesScreen.cs.md#symbol-b1fdb06178f9)；[`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`](CareerSession.cs.md#symbol-485b9c9c8acb)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.GetGlobalTransformWithCanvas()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.Node.GetWindow()`；`Godot.PopupMenu.AddRadioCheckItem(string, int, Godot.Key)`；`Godot.PopupMenu.GetItemIndex(int)`；`Godot.PopupMenu.GetItemMetadata(int)`；`Godot.PopupMenu.PopupMenu()`；`Godot.PopupMenu.SetItemChecked(int, bool)`；`Godot.PopupMenu.SetItemMetadata(int, Godot.Variant)`；`Godot.PopupMenu.SetItemTooltip(int, string)`；`Godot.Rect2I.Rect2I(Godot.Vector2I, Godot.Vector2I)`；`Godot.Variant.AsString()`；`Godot.Vector2.Ceil()`；`Godot.Vector2.Min(Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`Godot.Vector2I.Vector2I(int, int)`；`Godot.Viewport.GetVisibleRect()`；`Godot.Window.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Window.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Window.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Window.GetContentsMinimumSize()`；`Godot.Window.Hide()`；`Godot.Window.IsEmbedded()`；`Godot.Window.PopupOnParent(Godot.Rect2I)`；`object.ReferenceEquals(object?, object?)`；`System.Globalization.StringInfo.StringInfo(string)`；`System.Globalization.StringInfo.SubstringByTextElements(int, int)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Math.Clamp(float, float, float)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
+**调用：** [`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`](AiRouting.cs.md#symbol-dcdbadb40401)；[`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；[`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；[`NationalSpire.CareerDropdownLayer.At(Godot.Control)`](CareerDropdownLayer.cs.md#symbol-4de44cb328a0)；[`NationalSpire.CareerDropdownLayer.Close()`](CareerDropdownLayer.cs.md#symbol-52d15bb810b8)；[`NationalSpire.CareerDropdownLayer.Open(Godot.Button, Godot.PopupMenu, System.Action?)`](CareerDropdownLayer.cs.md#symbol-bf23af955811)；[`NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`](CareerDropdownLayer.cs.md#symbol-9296f1acb0ef)；[`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`](CareerSession.cs.md#symbol-485b9c9c8acb)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.PopupMenu.AddRadioCheckItem(string, int, Godot.Key)`；`Godot.PopupMenu.GetItemIndex(int)`；`Godot.PopupMenu.GetItemMetadata(int)`；`Godot.PopupMenu.PopupMenu()`；`Godot.PopupMenu.SetItemChecked(int, bool)`；`Godot.PopupMenu.SetItemMetadata(int, Godot.Variant)`；`Godot.PopupMenu.SetItemTooltip(int, string)`；`Godot.Variant.AsString()`；`object.ReferenceEquals(object?, object?)`；`System.Globalization.StringInfo.StringInfo(string)`；`System.Globalization.StringInfo.SubstringByTextElements(int, int)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`；`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`；`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen._chatModelPopup`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.ChatModelPickerOpen`；`NationalSpire.CareerScreen.RetireChatModelPopup(Godot.PopupMenu, Godot.Button)`；`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ICareerSession.Host`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`；`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`；`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerDropdownLayer.At(Godot.Control)`；`NationalSpire.CareerDropdownLayer.Close()`；`NationalSpire.CareerDropdownLayer.Open(Godot.Button, Godot.PopupMenu, System.Action?)`；`NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`；`NationalSpire.CareerScreen._chatModelPopup`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ICareerSession.Host`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`anchor.GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = anchor.GetGlobalTransformWithCanvas()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`anchor.AddChild(popup)`；返回值紧邻使用处：`ExpressionStatementSyntax: anchor.AddChild(popup);`
-- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().GetVisibleRect`
-- `Godot.Node.GetWindow()`；输入表达式：`GetWindow()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetWindow().Position`
+- `Godot.Node.QueueFree()`；输入表达式：`popup.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.QueueFree();`
 - `Godot.PopupMenu.AddRadioCheckItem(string, int, Godot.Key)`；输入表达式：`popup.AddRadioCheckItem(name.LengthInTextElements > 24 ? name.SubstringByTextElements(0, 24) + "…" : profile.Name)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.AddRadioCheckItem(name.LengthInTextElements > 24 ? name.SubstringByTextElements(0, 24) + "…" : profile.Name);`
 - `Godot.PopupMenu.GetItemIndex(int)`；输入表达式：`popup.GetItemIndex((int)id)`；返回值紧邻使用处：`ArgumentSyntax: popup.GetItemIndex((int)id)`
 - `Godot.PopupMenu.GetItemMetadata(int)`；输入表达式：`popup.GetItemMetadata(popup.GetItemIndex((int)id))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString`
-- `Godot.PopupMenu.PopupMenu()`；输入表达式：`new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true, WrapControls = false,              MaxSize = new((int)(viewport.X - 16), (int)(viewport.Y * .6f)) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true, WrapControls = false,              MaxSize = new((int)(viewport.X - 16), (int)(viewport.Y * .6f)) }`
+- `Godot.PopupMenu.PopupMenu()`；输入表达式：`new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true }`
 - `Godot.PopupMenu.SetItemChecked(int, bool)`；输入表达式：`popup.SetItemChecked(index, id == selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.SetItemChecked(index, id == selected);`
 - `Godot.PopupMenu.SetItemMetadata(int, Godot.Variant)`；输入表达式：`popup.SetItemMetadata(index, id)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.SetItemMetadata(index, id);`
 - `Godot.PopupMenu.SetItemTooltip(int, string)`；输入表达式：`popup.SetItemTooltip(index, profile.Name + "\n" + profile.Model)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.SetItemTooltip(index, profile.Name + "\n" + profile.Model);`
-- `Godot.Rect2I.Rect2I(Godot.Vector2I, Godot.Vector2I)`；输入表达式：`new Rect2I((Vector2I)position, (Vector2I)size)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2I((Vector2I)position, (Vector2I)size)`
 - `Godot.Variant.AsString()`；输入表达式：`popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString()`；返回值紧邻使用处：`ArgumentSyntax: popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString()`
-- `Godot.Vector2.Ceil()`；输入表达式：`size.Ceil()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: size.Ceil().Min`
-- `Godot.Vector2.Min(Godot.Vector2)`；输入表达式：`size.Ceil().Min(popup.MaxSize)`；返回值紧邻使用处：`AssignmentExpressionSyntax: size = size.Ceil().Min(popup.MaxSize)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(Math.Clamp(origin.X, 8, Math.Max(8, viewport.X - size.X - 8)), Math.Max(8, origin.Y - size.Y - 8))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Vector2(Math.Clamp(origin.X, 8, Math.Max(8, viewport.X - size.X - 8)), Math.Max(8, origin.Y - size.Y - 8))`
-- `Godot.Vector2I.Vector2I(int, int)`；输入表达式：`new((int)(viewport.X - 16), (int)(viewport.Y * .6f))`；返回值紧邻使用处：`AssignmentExpressionSyntax: MaxSize = new((int)(viewport.X - 16), (int)(viewport.Y * .6f))`
-- `Godot.Viewport.GetVisibleRect()`；输入表达式：`GetViewport().GetVisibleRect()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetViewport().GetVisibleRect().Size`
-- `Godot.Window.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`popup.AddThemeConstantOverride("v_separation", 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.AddThemeConstantOverride("v_separation", 14);`
-- `Godot.Window.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`popup.AddThemeFontSizeOverride("font_size", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.AddThemeFontSizeOverride("font_size", 16);`
-- `Godot.Window.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`popup.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 8, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 8, 10));`
-- `Godot.Window.GetContentsMinimumSize()`；输入表达式：`popup.GetContentsMinimumSize()`；返回值紧邻使用处：`BinaryExpressionSyntax: popup.GetContentsMinimumSize() * Math.Min(transform.Scale.X, transform.Scale.Y)`
-- `Godot.Window.Hide()`；输入表达式：`_chatModelPopup!.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _chatModelPopup!.Hide();`
-- `Godot.Window.Hide()`；输入表达式：`popup.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.Hide();`
-- `Godot.Window.IsEmbedded()`；输入表达式：`popup.IsEmbedded()`；返回值紧邻使用处：`ConditionalExpressionSyntax: popup.IsEmbedded() ? Vector2I.Zero : GetWindow().Position`
-- `Godot.Window.PopupOnParent(Godot.Rect2I)`；输入表达式：`popup.PopupOnParent(new Rect2I((Vector2I)position, (Vector2I)size))`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.PopupOnParent(new Rect2I((Vector2I)position, (Vector2I)size));`
 - `NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`；输入表达式：`AiRouting.Assign(data.Ai, task, popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString(), () => SaveAiSettings(ViewData))`；返回值紧邻使用处：`ExpressionStatementSyntax: AiRouting.Assign(data.Ai, task, popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString(), () => SaveAiSettings(ViewData));`
 - `NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`；输入表达式：`AiRouting.Ensure(data.Ai)`；返回值紧邻使用处：`ExpressionStatementSyntax: AiRouting.Ensure(data.Ai);`
 - `NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`；输入表达式：`AiRouting.ProfileId(data.Ai, task)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = AiRouting.ProfileId(data.Ai, task)`
-- `NationalSpire.CareerScreen.RetireChatModelPopup(Godot.PopupMenu, Godot.Button)`；输入表达式：`RetireChatModelPopup(popup, anchor)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => RetireChatModelPopup(popup, anchor)`
+- `NationalSpire.CareerDropdownLayer.At(Godot.Control)`；输入表达式：`CareerDropdownLayer.At(anchor)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerDropdownLayer.At(anchor)`
+- `NationalSpire.CareerDropdownLayer.Close()`；输入表达式：`dropdown.Close()`；返回值紧邻使用处：`ExpressionStatementSyntax: dropdown.Close();`
+- `NationalSpire.CareerDropdownLayer.Open(Godot.Button, Godot.PopupMenu, System.Action?)`；输入表达式：`dropdown.Open(anchor,popup,() => {             if (_chatModelPopup == popup) _chatModelPopup = null;             popup.QueueFree();         })`；返回值紧邻使用处：`ExpressionStatementSyntax: dropdown.Open(anchor,popup,() => {             if (_chatModelPopup == popup) _chatModelPopup = null;             popup.QueueFree();         });`
+- `NationalSpire.CareerDropdownLayer.Showing(Godot.Button)`；输入表达式：`dropdown.Showing(anchor)`；返回值紧邻使用处：`IfStatementSyntax: if (dropdown.Showing(anchor)) { dropdown.Close(); return; }`
 - `NationalSpire.CareerScreen.SaveAiSettings(NationalSpire.CareerData)`；输入表达式：`SaveAiSettings(ViewData)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => SaveAiSettings(ViewData)`
 - `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("方案未保存", e.Message, () => true, "关闭", showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("方案未保存", e.Message, () => true, "关闭", showCancel: false);`
-- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("122735", "426575", 8, 10)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("122735", "426575", 8, 10)`
 - `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(ViewData.Ai, data.Ai)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ReferenceEquals(ViewData.Ai, data.Ai)`
 - `System.Globalization.StringInfo.StringInfo(string)`；输入表达式：`new System.Globalization.StringInfo(profile.Name)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new System.Globalization.StringInfo(profile.Name)`
 - `System.Globalization.StringInfo.SubstringByTextElements(int, int)`；输入表达式：`name.SubstringByTextElements(0, 24)`；返回值紧邻使用处：`BinaryExpressionSyntax: name.SubstringByTextElements(0, 24) + "…"`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("生涯已切换，请重新选择方案。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("生涯已切换，请重新选择方案。");`
-- `System.Math.Clamp(float, float, float)`；输入表达式：`Math.Clamp(origin.X, 8, Math.Max(8, viewport.X - size.X - 8))`；返回值紧邻使用处：`ArgumentSyntax: Math.Clamp(origin.X, 8, Math.Max(8, viewport.X - size.X - 8))`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(8, origin.Y - size.Y - 8)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(8, origin.Y - size.Y - 8)`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(8, viewport.X - size.X - 8)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(8, viewport.X - size.X - 8)`
-- `System.Math.Min(float, float)`；输入表达式：`Math.Min(transform.Scale.X, transform.Scale.Y)`；返回值紧邻使用处：`BinaryExpressionSyntax: popup.GetContentsMinimumSize() * Math.Min(transform.Scale.X, transform.Scale.Y)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_chatModelPopup` = `null`
 - `_chatModelPopup` = `popup`
 - `HideOnCheckableItemSelection` = `true`
-- `MaxSize` = `new((int)(viewport.X - 16), (int)(viewport.Y * .6f))`
 - `Name` = `"ChatModelPicker"`
-- `popup.IdPressed` += `id =>          {              try              {                  if (!ReferenceEquals(ViewData.Ai, data.Ai)) throw new InvalidOperationException("生涯已切换，请重新选择方案。");                  AiRouting.Assign(data.Ai, task, popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString(), () => SaveAiSettings(ViewData));                  popup.Hide();              }              catch (Exception e)              {                  popup.Hide();                  ShowCareerDialog("方案未保存", e.Message, () => true, "关闭", showCancel: false);              }          }`
-- `popup.MinSize` = `(Vector2I)size`
-- `popup.PopupHide` += `() => RetireChatModelPopup(popup, anchor)`
-- `popup.Position` = `(Vector2I)position + (popup.IsEmbedded() ? Vector2I.Zero : GetWindow().Position)`
-- `popup.Size` = `(Vector2I)size`
-- `popup.TreeExiting` += `() => { if (_chatModelPopup == popup) _chatModelPopup = null; }`
-- `size` = `size.Ceil().Min(popup.MaxSize)`
-- `WrapControls` = `false`
-
-<a id="symbol-b1fdb06178f9"></a>
-
-## `NationalSpire.CareerScreen.RetireChatModelPopup(Godot.PopupMenu, Godot.Button) — private async void RetireChatModelPopup(PopupMenu popup, Button anchor)`
-
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.CareerScreen.ShowChatModelPicker(Godot.Button, string)`](ChatUtilitiesScreen.cs.md#symbol-cc67f52fc948)
-
-**调用：** [`NationalSpire.CareerScreen.ConfigureModelPermission(Godot.Button)`](ChatUtilitiesScreen.cs.md#symbol-c65a765f7f74)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Input.IsMouseButtonPressed(Godot.MouseButton)`；`Godot.Node.GetTree()`；`Godot.Node.IsInsideTree()`；`Godot.Node.QueueFree()`
-
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.ConfigureModelPermission(Godot.Button)`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(anchor)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(anchor) && !anchor.Disabled`
-- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(anchor)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(anchor)) ConfigureModelPermission(anchor);`
-- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(popup)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(popup)) popup.QueueFree();`
-- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(this)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(this) && IsInsideTree()`
-- `Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；输入表达式：`ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame)`；返回值紧邻使用处：`AwaitExpressionSyntax: await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame)`
-- `Godot.Input.IsMouseButtonPressed(Godot.MouseButton)`；输入表达式：`Input.IsMouseButtonPressed(MouseButton.Left)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(anchor) && !anchor.Disabled && Input.IsMouseButtonPressed(MouseButton.Left)`
-- `Godot.Input.IsMouseButtonPressed(Godot.MouseButton)`；输入表达式：`Input.IsMouseButtonPressed(MouseButton.Left)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(this) && IsInsideTree() && Input.IsMouseButtonPressed(MouseButton.Left)`
-- `Godot.Node.GetTree()`；输入表达式：`GetTree()`；返回值紧邻使用处：`ArgumentSyntax: GetTree()`
-- `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(this) && IsInsideTree()`
-- `Godot.Node.QueueFree()`；输入表达式：`popup.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: popup.QueueFree();`
-- `NationalSpire.CareerScreen.ConfigureModelPermission(Godot.Button)`；输入表达式：`ConfigureModelPermission(anchor)`；返回值紧邻使用处：`ExpressionStatementSyntax: ConfigureModelPermission(anchor);`
-
-**赋值（含属性/字段和局部值）：**
-
-- `anchor.Disabled` = `true`
+- `popup.IdPressed` += `id =>          {              try              {                  if (!ReferenceEquals(ViewData.Ai, data.Ai)) throw new InvalidOperationException("生涯已切换，请重新选择方案。");                  AiRouting.Assign(data.Ai, task, popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString(), () => SaveAiSettings(ViewData));              }              catch (Exception e)              {                  ShowCareerDialog("方案未保存", e.Message, () => true, "关闭", showCancel: false);              }          }`

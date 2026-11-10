@@ -108,7 +108,7 @@
 
 **调用者：** [`NationalSpire.ChatTranscript.Write(NationalSpire.CareerData, NationalSpire.ChatTranscript.Document, string)`](ChatTranscript.cs.md#symbol-a117ad117085)
 
-**调用：** [`Inline(string)`](ChatTranscript.cs.md#symbol-6b910fafe37b)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；`long.ToString()`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.AppendLine()`；`System.Text.StringBuilder.AppendLine(ref System.Text.StringBuilder.AppendInterpolatedStringHandler)`；`System.Text.StringBuilder.AppendLine(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`Inline(string)`](ChatTranscript.cs.md#symbol-a074a394b626)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；`long.ToString()`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.AppendLine()`；`System.Text.StringBuilder.AppendLine(ref System.Text.StringBuilder.AppendInterpolatedStringHandler)`；`System.Text.StringBuilder.AppendLine(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
 **字段、属性、事件及方法组引用：** `Inline(string)`；`NationalSpire.ChatTranscript.Document.ConversationId`；`NationalSpire.ChatTranscript.Document.Kind`；`NationalSpire.ChatTranscript.Document.Messages`；`NationalSpire.ChatTranscript.Document.Title`；`NationalSpire.ChatTranscript.Message.AuthorId`；`NationalSpire.ChatTranscript.Message.Day`；`NationalSpire.ChatTranscript.Message.Order`；`NationalSpire.ChatTranscript.Message.Text`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`
 
@@ -147,7 +147,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-6b910fafe37b"></a>
+<a id="symbol-a074a394b626"></a>
 
 ## `Inline(string) — static string Inline(string value)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4ABEE07A59AF63DB685D5E5D6581D647D3E0FA4FFC0835EE37A3AD3953527CB8`。来源：[源码](../../ChatContextMenuScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9AFFBD6B985E38C36A0C4BAABAE78D5AEFC2FCB38A7997A18E22698B0F23BF59`。来源：[源码](../../ChatContextMenuScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`Removed()`](ChatManagementScreen.cs.md#symbol-76bac854f95b)
+**调用者：** [`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)；[`Removed()`](ChatManagementScreen.cs.md#symbol-f13bdb3233f1)
 
 **调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`
 
@@ -49,15 +49,15 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.ConfigFile.GetValue(string, string, Godot.Variant)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray`
-- `Godot.Variant.AsStringArray()`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct`
+- `Godot.Variant.AsStringArray()`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct`
 - `System.Array.Empty<T>()`；输入表达式：`Array.Empty<string>()`；返回值紧邻使用处：`ArgumentSyntax: Array.Empty<string>()`
-- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary`
-- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatPinRanks = ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _chatPinRanks = ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_chatPinRanks` = `ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()              .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`
+- `_chatPinRanks` = `ChatPreferences.GetValue(ChatPreferenceKey, "pins", Array.Empty<string>()).AsStringArray()             .Distinct(StringComparer.Ordinal).Select((key, rank) => (key, rank)).ToDictionary(x => x.key, x => x.rank, StringComparer.Ordinal)`
 
 <a id="symbol-8689933c2c76"></a>
 
@@ -65,7 +65,7 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`Removed()`](ChatManagementScreen.cs.md#symbol-76bac854f95b)
+**调用者：** [`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`Removed()`](ChatManagementScreen.cs.md#symbol-f13bdb3233f1)
 
 **调用：** [`NationalSpire.CareerScreen.LoadChatPins()`](ChatContextMenuScreen.cs.md#symbol-925212811342)；[`NationalSpire.CareerScreen.RefreshPrivateList()`](PrivateMessageScreen.cs.md#symbol-fca825e025fa)；[`NationalSpire.CareerScreen.WriteChatPreferences()`](ChatHistoryScreen.cs.md#symbol-15e26075b1d4)；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Insert(int, T)`；`System.Collections.Generic.List<T>.ToArray()`
 
@@ -94,7 +94,7 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 
 来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)；[`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ClosePrivateMessagesCore(bool)`](PrivateMessageScreen.cs.md#symbol-db8b0a9ff8de)；[`NationalSpire.CareerScreen.ShowChatContextMenu(string, bool, Godot.Vector2)`](ChatContextMenuScreen.cs.md#symbol-0f3f090eb3e9)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-6c19a8743aa3)
+**调用者：** [`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)；[`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ClosePrivateMessagesCore(bool)`](PrivateMessageScreen.cs.md#symbol-db8b0a9ff8de)；[`NationalSpire.CareerScreen.ShowChatContextMenu(string, bool, Godot.Vector2)`](ChatContextMenuScreen.cs.md#symbol-0f3f090eb3e9)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-ae8089bc8f1c)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.Node.QueueFree()`
 
@@ -141,8 +141,8 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer()`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(210, 0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: title.CustomMinimumSize = new(210, 0)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(210, 38)`；返回值紧邻使用处：`AssignmentExpressionSyntax: button.CustomMinimumSize = new(210, 38)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),              Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`；返回值紧邻使用处：`AssignmentExpressionSyntax: panel.Position = new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),              Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`
-- `NationalSpire.CareerScreen.ChatMenuItems(string, bool)`；输入表达式：`ChatMenuItems(id, group)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in ChatMenuItems(id, group))          {              var button = PrivateButton(item.Title, item.Run, 210); button.CustomMinimumSize = new(210, 38);              button.AddThemeFontSizeOverride("font_size", 16); box.AddChild(button);          }`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),             Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`；返回值紧邻使用处：`AssignmentExpressionSyntax: panel.Position = new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),             Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`
+- `NationalSpire.CareerScreen.ChatMenuItems(string, bool)`；输入表达式：`ChatMenuItems(id, group)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in ChatMenuItems(id, group))         {             var button = PrivateButton(item.Title, item.Run, 210); button.CustomMinimumSize = new(210, 38);             button.AddThemeFontSizeOverride("font_size", 16); box.AddChild(button);         }`
 - `NationalSpire.CareerScreen.CloseChatContextMenu()`；输入表达式：`CloseChatContextMenu()`；返回值紧邻使用处：`ExpressionStatementSyntax: CloseChatContextMenu();`
 - `NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；输入表达式：`PrivateButton(item.Title, item.Run, 210)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateButton(item.Title, item.Run, 210)`
 - `NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；输入表达式：`PrivateLine(group ? ViewData.Chats.Groups.Single(g => g.Id == id).Name : GroupChats.Name(ViewData, id), 16, _gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateLine(group ? ViewData.Chats.Groups.Single(g => g.Id == id).Name : GroupChats.Name(ViewData, id), 16, _gold)`
@@ -160,8 +160,8 @@ private Dictionary<string, int> _chatPinRanks = new(StringComparer.Ordinal);
 - `button.CustomMinimumSize` = `new(210, 38)`
 - `MouseFilter` = `MouseFilterEnum.Stop`
 - `Name` = `"ChatContextMenu"`
-- `panel.Position` = `new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),              Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`
-- `shade.GuiInput` += `input =>          {              if (input is InputEventMouseButton { Pressed: true }) { CloseChatContextMenu(); shade.AcceptEvent(); }          }`
+- `panel.Position` = `new(Math.Clamp(position.X, 8, Math.Max(8, shade.Size.X - panel.Size.X - 8)),             Math.Clamp(position.Y, 8, Math.Max(8, shade.Size.Y - panel.Size.Y - 8)))`
+- `shade.GuiInput` += `input =>         {             if (input is InputEventMouseButton { Pressed: true }) { CloseChatContextMenu(); shade.AcceptEvent(); }         }`
 - `title.CustomMinimumSize` = `new(210, 0)`
 - `title.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `ZIndex` = `45`

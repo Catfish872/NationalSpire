@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`ED6CB4CDCB4F61382EC167400A778C06727521E893D1B6B64D49CAE215581CEE`。来源：[源码](../../CameoAssets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`03CCD8EEA99A622D10CFA5933B698D2AD0E47477F8C1BA92A1375B3A6B77A7A5`。来源：[源码](../../CameoAssets.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -20,7 +20,7 @@ private static readonly Dictionary<string, Texture2D> Cache = new();
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`AutomaticPortrait()`](CharacterCardScreen.cs.md#symbol-d4c6f78977a6)；[`NationalSpire.CareerAvatars.Automatic(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-2bfa078d007b)
+**调用者：** [`AutomaticPortrait()`](CharacterCardScreen.cs.md#symbol-a0fb6073a170)；[`NationalSpire.CareerAvatars.Automatic(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-2bfa078d007b)
 
 **调用：** [`NationalSpire.AvatarAssets.LoadCard(string, string)`](AvatarAssets.cs.md#symbol-5b05259c8c83)；[`NationalSpire.CameoAssets.Load(string, string)`](CameoAssets.cs.md#symbol-2f79106cbc73)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

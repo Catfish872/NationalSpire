@@ -164,7 +164,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-5c496829d199"></a>
+<a id="symbol-d1c12888ea52"></a>
 
 ## `NewsPerson(NationalSpire.CareerPerson) — object NewsPerson(CareerPerson person)`
 

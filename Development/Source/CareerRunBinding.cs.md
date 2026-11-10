@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6393238DEDC437ACA6D49E6855896B21CE86AF2A36907AC217927C646FD16428`。来源：[源码](../../CareerRunBinding.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D622B6D27E02DCAFF6E5B8E6C0BF9BE40B5E38AB405718D0B04CDE8788E1069B`。来源：[源码](../../CareerRunBinding.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -28,7 +28,7 @@
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(expected, actual, StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (string.Equals(expected, actual, StringComparison.OrdinalIgnoreCase)) return true;`
-- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(expected, actual[3..], StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: expected.StartsWith("NS", StringComparison.Ordinal) && actual.StartsWith("old", StringComparison.Ordinal)              && string.Equals(expected, actual[3..], StringComparison.OrdinalIgnoreCase)`
+- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(expected, actual[3..], StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`BinaryExpressionSyntax: expected.StartsWith("NS", StringComparison.Ordinal) && actual.StartsWith("old", StringComparison.Ordinal)             && string.Equals(expected, actual[3..], StringComparison.OrdinalIgnoreCase)`
 - `string.IsNullOrEmpty(string?)`；输入表达式：`string.IsNullOrEmpty(actual)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrEmpty(expected) || string.IsNullOrEmpty(actual)`
 - `string.IsNullOrEmpty(string?)`；输入表达式：`string.IsNullOrEmpty(expected)`；返回值紧邻使用处：`BinaryExpressionSyntax: string.IsNullOrEmpty(expected) || string.IsNullOrEmpty(actual)`
 - `string.StartsWith(string, System.StringComparison)`；输入表达式：`actual.StartsWith("old", StringComparison.Ordinal)`；返回值紧邻使用处：`BinaryExpressionSyntax: expected.StartsWith("NS", StringComparison.Ordinal) && actual.StartsWith("old", StringComparison.Ordinal)`
@@ -39,7 +39,7 @@
 
 <a id="symbol-814ae5a03226"></a>
 
-## `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?) — public static CareerMatch? Find(CareerData data, string seed, string character, int ascension,          int playerCount, bool standard, long? startTime = null)`
+## `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?) — public static CareerMatch? Find(CareerData data, string seed, string character, int ascension,         int playerCount, bool standard, long? startTime = null)`
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 

@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9445D960B466F6422EDA73063B327899AF24DA97F1365E07EED723F3DCA297A1`。来源：[源码](../../FixtureScheduleScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D4184B6F5291AD1DA1DC413C86EA1EC9141C2B288DE942B5DA768C46D009C1EA`。来源：[源码](../../FixtureScheduleScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.BracketColumns`、`NationalSpire.FixtureTimelineRow`、`NationalSpire.CareerScreen`、`NationalSpire.CareerScreen.FixtureEntry`。
+类型：`NationalSpire.BracketColumns`、`NationalSpire.FixtureTimelineRow`、`NationalSpire.CareerScreen`、`NationalSpire.CareerScreen.FixtureEntry`、`NationalSpire.ZoomableBracketScroll`。
 
 字段、事件及初始值（源码原样）：
 
@@ -20,6 +20,11 @@ private const int FixtureActionWidth = 120, FixtureRowGap = 16, FixtureEndInset 
 private int _fixtureLimit = 75;
 private int _fixtureSeason;
 private Predicate<FixtureEntry>? _fixtureFocus;
+private float _bracketZoom=1;
+internal Action<float,Vector2>? ZoomStep;
+private bool _held, _dragged;
+private Vector2 _origin, _offset;
+private Button? _card;
 ```
 
 <a id="symbol-0b92c59df100"></a>
@@ -321,7 +326,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
-**调用：** [`AddScheduled(string)`](FixtureScheduleScreen.cs.md#symbol-221e61a88086)；[`InScope(string, NationalSpire.CareerMatch?)`](FixtureScheduleScreen.cs.md#symbol-729ca74b0cb1)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.Baseline(Godot.Control)`](DashboardControls.cs.md#symbol-d7fcbfd7f416)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`](DashboardControls.cs.md#symbol-f6780ccb3f84)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.Inset(int, int)`](DashboardControls.cs.md#symbol-ebb2fedbb4fc)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.IsInternationalCup(NationalSpire.WorldCompetition)`](FixtureScheduleScreen.cs.md#symbol-74a2aaad7ff4)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`](CareerDashboard.cs.md#symbol-5eacabf68317)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.TextLink(string, System.Action, int, bool, string?)`](DashboardControls.cs.md#symbol-d545a37403bd)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CircuitWorld.HasWorldFinal(int)`](CircuitWorld.cs.md#symbol-cfb6478eecde)；[`NationalSpire.CircuitWorld.InternationalTeamCup(int)`](CircuitWorld.cs.md#symbol-52fde6b9045a)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.EsportsWorld.StageName(string)`](EsportsWorld.cs.md#symbol-c0445cae874d)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；[`Picker(string, int)`](FixtureScheduleScreen.cs.md#symbol-2539b9b56cc0)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.Control.GetCombinedMinimumSize()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.SetDeferred(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Mathf.RoundToInt(float)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChild<T>(int, bool)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.IsInsideTree()`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Select(int)`；`Godot.ScrollContainer.EnsureControlVisible(Godot.Control)`；`Godot.ScrollContainer.GetVScrollBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerScreen.FixtureEntry.FixtureEntry(int, string, string, string, NationalSpire.CareerMatch?, NationalSpire.WorldCompetition?, NationalSpire.WorldFixture?)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Prepend<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Max(int, int)`；`System.Predicate<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`AddScheduled(string)`](FixtureScheduleScreen.cs.md#symbol-e74cd7a835f7)；[`InScope(string, NationalSpire.CareerMatch?)`](FixtureScheduleScreen.cs.md#symbol-9a5659850a62)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.Baseline(Godot.Control)`](DashboardControls.cs.md#symbol-d7fcbfd7f416)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`](DashboardControls.cs.md#symbol-f6780ccb3f84)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.Inset(int, int)`](DashboardControls.cs.md#symbol-ebb2fedbb4fc)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.IsInternationalCup(NationalSpire.WorldCompetition)`](FixtureScheduleScreen.cs.md#symbol-74a2aaad7ff4)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`](CareerDashboard.cs.md#symbol-5eacabf68317)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.TextLink(string, System.Action, int, bool, string?)`](DashboardControls.cs.md#symbol-d545a37403bd)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CircuitWorld.HasWorldFinal(int)`](CircuitWorld.cs.md#symbol-cfb6478eecde)；[`NationalSpire.CircuitWorld.InternationalTeamCup(int)`](CircuitWorld.cs.md#symbol-52fde6b9045a)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.EsportsWorld.StageName(string)`](EsportsWorld.cs.md#symbol-c0445cae874d)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；[`Picker(string, int)`](FixtureScheduleScreen.cs.md#symbol-1ce84475b6f2)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.Control.GetCombinedMinimumSize()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.SetDeferred(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Mathf.RoundToInt(float)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChild<T>(int, bool)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.IsInsideTree()`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Select(int)`；`Godot.ScrollContainer.EnsureControlVisible(Godot.Control)`；`Godot.ScrollContainer.GetVScrollBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerScreen.FixtureEntry.FixtureEntry(int, string, string, string, NationalSpire.CareerMatch?, NationalSpire.WorldCompetition?, NationalSpire.WorldFixture?)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Prepend<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Collections.Generic.List<T>.IndexOf(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Max(int, int)`；`System.Predicate<T>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `AddScheduled(string)`；`InScope(string, NationalSpire.CareerMatch?)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerMatch.CompetitionId`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.FixtureId`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._fixtureFocus`；`NationalSpire.CareerScreen._fixtureInternational`；`NationalSpire.CareerScreen._fixtureKind`；`NationalSpire.CareerScreen._fixtureLimit`；`NationalSpire.CareerScreen._fixtureRegion`；`NationalSpire.CareerScreen._fixtureScope`；`NationalSpire.CareerScreen._fixtureSeason`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`；`NationalSpire.CareerScreen.Baseline(Godot.Control)`；`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；`NationalSpire.CareerScreen.DashboardSwitch(string, bool, System.Action<bool>, int, int)`；`NationalSpire.CareerScreen.FixtureActionWidth`；`NationalSpire.CareerScreen.FixtureEndInset`；`NationalSpire.CareerScreen.FixtureEntry.Country`；`NationalSpire.CareerScreen.FixtureEntry.Day`；`NationalSpire.CareerScreen.FixtureEntry.Kind`；`NationalSpire.CareerScreen.FixtureEntry.Match`；`NationalSpire.CareerScreen.FixtureEntry.Title`；`NationalSpire.CareerScreen.FixtureRowGap`；`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Inset(int, int)`；`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`；`NationalSpire.CareerScreen.IsInternationalCup(NationalSpire.WorldCompetition)`；`NationalSpire.CareerScreen.MyFixtures`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.TextLink(string, System.Action, int, bool, string?)`；`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CircuitWorld.HasWorldFinal(int)`；`NationalSpire.CircuitWorld.InternationalTeamCup(int)`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`；`NationalSpire.EsportsWorld.StageName(string)`；`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；`NationalSpire.WorldCompetition.Country`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Modern`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Id`；`Picker(string, int)`
 
@@ -494,7 +499,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `VerticalScrollMode` = `ScrollContainer.ScrollMode.Reserve`
 
-<a id="symbol-221e61a88086"></a>
+<a id="symbol-e74cd7a835f7"></a>
 
 ## `AddScheduled(string) — void AddScheduled(string kind)`
 
@@ -527,7 +532,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Season` = `d.Season`
 - `TeamEvent` = `kind != "worldfinal"`
 
-<a id="symbol-729ca74b0cb1"></a>
+<a id="symbol-9a5659850a62"></a>
 
 ## `InScope(string, NationalSpire.CareerMatch?) — bool InScope(string country, CareerMatch? match)`
 
@@ -545,7 +550,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2539b9b56cc0"></a>
+<a id="symbol-1ce84475b6f2"></a>
 
 ## `Picker(string, int) — OptionButton Picker(string name,int width)`
 
@@ -728,7 +733,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 来源：源码第 301 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-19c3cdd7678b)
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
 
 **调用：** 无已绑定显式调用。
 
@@ -765,7 +770,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 来源：源码第 303 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-19c3cdd7678b)
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
 
 **调用：** 无已绑定显式调用。
 
@@ -783,7 +788,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 来源：源码第 304 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-19c3cdd7678b)
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
 
 **调用：** [`NationalSpire.SeasonCeremony.Participants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`](SeasonCeremony.cs.md#symbol-c038c48114b1)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -805,7 +810,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 **调用者：** [`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-0e5325fbcfe1)；[`NationalSpire.CircuitWorld.KnockoutAscension(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-6e5ebd93ec3b)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-19c3cdd7678b)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.CompetitionDuel.CompetitionDuel()`；`NationalSpire.WorldFixture.WorldFixture()`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-0e5325fbcfe1)；[`NationalSpire.CircuitWorld.KnockoutAscension(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-6e5ebd93ec3b)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`](SettlementRecord.cs.md#symbol-b938ede0e9a5)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.CompetitionDuel.CompetitionDuel()`；`NationalSpire.WorldFixture.WorldFixture()`；`System.Collections.Generic.List<T>.List()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`；`NationalSpire.CircuitWorld.KnockoutAscension(NationalSpire.WorldCompetition, int)`；`NationalSpire.CompetitionDuel.AwayPerformance`；`NationalSpire.CompetitionDuel.HomePerformance`；`NationalSpire.CompetitionDuel.Status`；`NationalSpire.CompetitionDuel.WinnerId`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SettlementRecords.CaptureDuel(NationalSpire.CareerData, NationalSpire.WorldFixture, bool?)`；`NationalSpire.WorldCompetition.Modern`；`NationalSpire.WorldCompetition.Name`；`NationalSpire.WorldFixture.Ascension`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`Side(bool, string, bool)`
 
@@ -842,7 +847,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Text` = `"VS"`
 - `VerticalAlignment` = `VerticalAlignment.Center`
 
-<a id="symbol-19c3cdd7678b"></a>
+<a id="symbol-766128f05c3d"></a>
 
 ## `Side(bool, string, bool) — void Side(bool home, string performance, bool won)`
 
@@ -922,13 +927,13 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 
 ## `NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer) — private void InternationalBracket(CareerData d, WorldCompetition c,HBoxContainer toolbar)`
 
-来源：源码第 378 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 379 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)
 
-**调用：** [`AddHeading(Godot.Control, string, string, bool, bool)`](FixtureScheduleScreen.cs.md#symbol-c2de97a57d37)；[`AlignHeadings()`](FixtureScheduleScreen.cs.md#symbol-1be9db1d40d6)；[`Locate()`](FixtureScheduleScreen.cs.md#symbol-e7350d9422e3)；[`LocateAfterLayout()`](FixtureScheduleScreen.cs.md#symbol-f3c2126ea96c)；[`NationalSpire.BracketColumns.AddSlot(int, Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-de909d9445cb)；[`NationalSpire.BracketColumns.ConnectInvitation(Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-0b92c59df100)；[`NationalSpire.BracketColumns.MarkAdvanced(Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-fd2e6d82e689)；[`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`](BracketInspector.cs.md#symbol-ddfed770fc0f)；[`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`](BracketInspector.cs.md#symbol-955dfacc5bbe)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.ActionRow(Godot.Container, string, string, System.Action, Godot.Control, int, int, int, string, string, string)`](DashboardControls.cs.md#symbol-5fcff8206cb6)；[`NationalSpire.CareerScreen.BracketDetails(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<NationalSpire.WorldFixture>, int)`](FixtureScheduleScreen.cs.md#symbol-1daead3fab8e)；[`NationalSpire.CareerScreen.BracketEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`](FixtureScheduleScreen.cs.md#symbol-2ab54bd28e64)；[`NationalSpire.CareerScreen.BracketRoundName(int)`](FixtureScheduleScreen.cs.md#symbol-9df8f68cfc8f)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.FlagCode(string)`](FixtureScheduleScreen.cs.md#symbol-f47717b15d24)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Inset(int, int)`](DashboardControls.cs.md#symbol-ebb2fedbb4fc)；[`NationalSpire.CareerScreen.LocalEntrant(NationalSpire.CareerData, string)`](FixtureScheduleScreen.cs.md#symbol-a475f3313082)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerScreen.OpenCompetition(string)`](CareerNavigation.cs.md#symbol-d88417a19f38)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.TieKey(NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](FixtureScheduleScreen.cs.md#symbol-6da2999ef4ae)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-0e5325fbcfe1)；[`NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-95620df3f1f6)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.EsportsWorld.HistoricCountry(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-9f5901f85a89)；[`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-8a08be365f83)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；`Godot.Button.Button()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.ScrollContainer.GetHScrollBar()`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.StyleBoxFlat.SetBorderWidthAll(int)`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`int.ToString()`；`NationalSpire.BracketColumns.BracketColumns()`；`NationalSpire.BracketInspector.BracketInspector()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<int>.Min()`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.DateOnly.ToString(string?)`；`System.Math.Max(int, int)`
+**调用：** [`AddHeading(Godot.Control, string, string, bool, bool)`](FixtureScheduleScreen.cs.md#symbol-c9c5e134a317)；[`AlignHeadings()`](FixtureScheduleScreen.cs.md#symbol-4d9584ac0b60)；[`Locate()`](FixtureScheduleScreen.cs.md#symbol-f09c19694fee)；[`LocateAfterLayout()`](FixtureScheduleScreen.cs.md#symbol-230d9e58c65c)；[`NationalSpire.BracketColumns.AddSlot(int, Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-de909d9445cb)；[`NationalSpire.BracketColumns.ConnectInvitation(Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-0b92c59df100)；[`NationalSpire.BracketColumns.MarkAdvanced(Godot.Control)`](FixtureScheduleScreen.cs.md#symbol-fd2e6d82e689)；[`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`](BracketInspector.cs.md#symbol-ddfed770fc0f)；[`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`](BracketInspector.cs.md#symbol-955dfacc5bbe)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.ActionRow(Godot.Container, string, string, System.Action, Godot.Control, int, int, int, string, string, string)`](DashboardControls.cs.md#symbol-5fcff8206cb6)；[`NationalSpire.CareerScreen.BracketDetails(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<NationalSpire.WorldFixture>, int)`](FixtureScheduleScreen.cs.md#symbol-1daead3fab8e)；[`NationalSpire.CareerScreen.BracketEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`](FixtureScheduleScreen.cs.md#symbol-2ab54bd28e64)；[`NationalSpire.CareerScreen.BracketRoundName(int)`](FixtureScheduleScreen.cs.md#symbol-9df8f68cfc8f)；[`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`](DashboardControls.cs.md#symbol-0374e90f1c3f)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.FlagCode(string)`](FixtureScheduleScreen.cs.md#symbol-f47717b15d24)；[`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`](DashboardControls.cs.md#symbol-d6b849a02619)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.Inset(int, int)`](DashboardControls.cs.md#symbol-ebb2fedbb4fc)；[`NationalSpire.CareerScreen.LocalEntrant(NationalSpire.CareerData, string)`](FixtureScheduleScreen.cs.md#symbol-a475f3313082)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerScreen.OpenCompetition(string)`](CareerNavigation.cs.md#symbol-d88417a19f38)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerScreen.TieKey(NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`](FixtureScheduleScreen.cs.md#symbol-6da2999ef4ae)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`](CircuitWorld.cs.md#symbol-0e5325fbcfe1)；[`NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`](CircuitWorld.cs.md#symbol-95620df3f1f6)；[`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](CircuitWorld.cs.md#symbol-74904a83d22a)；[`NationalSpire.EsportsWorld.HistoricCountry(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-9f5901f85a89)；[`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-8a08be365f83)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-12bdfe5d4265)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；[`ResizeBracket()`](FixtureScheduleScreen.cs.md#symbol-d5cfa78289ac)；[`Zoom(float, Godot.Vector2)`](FixtureScheduleScreen.cs.md#symbol-e47c780a6abf)；`Godot.Button.Button()`；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.ScrollContainer.GetHScrollBar()`；`Godot.StyleBoxFlat.SetBorderWidthAll(int)`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.TextureRect.TextureRect()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`int.ToString()`；`NationalSpire.BracketColumns.BracketColumns()`；`NationalSpire.BracketInspector.BracketInspector()`；`NationalSpire.ZoomableBracketScroll.ZoomableBracketScroll()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<int>.Min()`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.DateOnly.ToString(string?)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `AddHeading(Godot.Control, string, string, bool, bool)`；`AlignHeadings()`；`Locate()`；`LocateAfterLayout()`；`NationalSpire.BracketColumns.AddSlot(int, Godot.Control)`；`NationalSpire.BracketColumns.ConnectInvitation(Godot.Control)`；`NationalSpire.BracketColumns.MarkAdvanced(Godot.Control)`；`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`；`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Kind`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Opponent`；`NationalSpire.CareerResult.Settlement`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.ActionRow(Godot.Container, string, string, System.Action, Godot.Control, int, int, int, string, string, string)`；`NationalSpire.CareerScreen.BracketDetails(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<NationalSpire.WorldFixture>, int)`；`NationalSpire.CareerScreen.BracketEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`；`NationalSpire.CareerScreen.BracketRoundName(int)`；`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；`NationalSpire.CareerScreen.FlagCode(string)`；`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Inset(int, int)`；`NationalSpire.CareerScreen.LocalEntrant(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.NavigationIcon(string)`；`NationalSpire.CareerScreen.OpenCompetition(string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.TieKey(NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`；`NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.HistoricCountry(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；`NationalSpire.SettlementRecord.Season`；`NationalSpire.WorldCompetition.Finished`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Modern`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.WinnerId`
+**字段、属性、事件及方法组引用：** `AddHeading(Godot.Control, string, string, bool, bool)`；`AlignHeadings()`；`Locate()`；`LocateAfterLayout()`；`NationalSpire.BracketColumns.AddSlot(int, Godot.Control)`；`NationalSpire.BracketColumns.ConnectInvitation(Godot.Control)`；`NationalSpire.BracketColumns.MarkAdvanced(Godot.Control)`；`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`；`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Day`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerResult.Ascension`；`NationalSpire.CareerResult.Day`；`NationalSpire.CareerResult.Kind`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Opponent`；`NationalSpire.CareerResult.Settlement`；`NationalSpire.CareerScreen._bracketZoom`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.ActionRow(Godot.Container, string, string, System.Action, Godot.Control, int, int, int, string, string, string)`；`NationalSpire.CareerScreen.BracketDetails(NationalSpire.CareerData, NationalSpire.WorldCompetition, string, System.Collections.Generic.List<NationalSpire.WorldFixture>, int)`；`NationalSpire.CareerScreen.BracketEntrants(NationalSpire.CareerData, NationalSpire.WorldCompetition, NationalSpire.WorldFixture, bool)`；`NationalSpire.CareerScreen.BracketRoundName(int)`；`NationalSpire.CareerScreen.ButtonSurface(Godot.Button, string, string, string, string, int, int)`；`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；`NationalSpire.CareerScreen.FlagCode(string)`；`NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.Inset(int, int)`；`NationalSpire.CareerScreen.LocalEntrant(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen.NavigationIcon(string)`；`NationalSpire.CareerScreen.OpenCompetition(string)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.TieKey(NationalSpire.WorldCompetition, NationalSpire.WorldFixture)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CircuitWorld.DayOf(NationalSpire.WorldCompetition, int)`；`NationalSpire.CircuitWorld.RoundCount(NationalSpire.WorldCompetition)`；`NationalSpire.CircuitWorld.TeamName(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsWorld.HistoricCountry(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；`NationalSpire.SettlementRecord.Season`；`NationalSpire.WorldCompetition.Finished`；`NationalSpire.WorldCompetition.Fixtures`；`NationalSpire.WorldCompetition.Id`；`NationalSpire.WorldCompetition.Kind`；`NationalSpire.WorldCompetition.Modern`；`NationalSpire.WorldCompetition.Season`；`NationalSpire.WorldCompetition.TeamEvent`；`NationalSpire.WorldFixture.AwayId`；`NationalSpire.WorldFixture.AwayTeam`；`NationalSpire.WorldFixture.Day`；`NationalSpire.WorldFixture.Finished`；`NationalSpire.WorldFixture.HomeId`；`NationalSpire.WorldFixture.HomeTeam`；`NationalSpire.WorldFixture.Round`；`NationalSpire.WorldFixture.WinnerId`；`NationalSpire.ZoomableBracketScroll.ZoomStep`；`ResizeBracket()`；`Zoom(float, Godot.Vector2)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -936,6 +941,8 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `AddHeading(Godot.Control, string, string, bool, bool)`；输入表达式：`AddHeading(panel, roundName, day > 0 ? GameCalendar.Date(d, day).ToString("M月d日") : "", currentRound)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddHeading(panel, roundName, day > 0 ? GameCalendar.Date(d, day).ToString("M月d日") : "", currentRound);`
 - `AlignHeadings()`；输入表达式：`AlignHeadings()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: _=>AlignHeadings()`
 - `Godot.Button.Button()`；输入表达式：`new Button { Name = $"BracketMatch_{round}_{i}", Flat = true,                      CustomMinimumSize = new(0, cardHeight), MouseDefaultCursorShape = CursorShape.PointingHand }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Button { Name = $"BracketMatch_{round}_{i}", Flat = true,                      CustomMinimumSize = new(0, cardHeight), MouseDefaultCursorShape = CursorShape.PointingHand }`
+- `Godot.Callable.CallDeferred(params Godot.Variant[])`；输入表达式：`Callable.From(()=>{if(IsInstanceValid(inset))ResizeBracket();}).CallDeferred()`；返回值紧邻使用处：`ExpressionStatementSyntax: Callable.From(()=>{if(IsInstanceValid(inset))ResizeBracket();}).CallDeferred();`
+- `Godot.Callable.From(System.Action)`；输入表达式：`Callable.From(()=>{if(IsInstanceValid(inset))ResizeBracket();})`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Callable.From(()=>{if(IsInstanceValid(inset))ResizeBracket();}).CallDeferred`
 - `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；输入表达式：`head.DrawLine(new(0,head.Size.Y-1),new(head.Size.X,head.Size.Y-1),new Color("344954"))`；返回值紧邻使用处：`ExpressionStatementSyntax: head.DrawLine(new(0,head.Size.Y-1),new(head.Size.X,head.Size.Y-1),new Color("344954"));`
 - `Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；输入表达式：`head.DrawRect(new Rect2(Vector2.Zero,head.Size),new Color("162a36"))`；返回值紧邻使用处：`ExpressionStatementSyntax: head.DrawRect(new Rect2(Vector2.Zero,head.Size),new Color("162a36"));`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("162a36")`；返回值紧邻使用处：`ArgumentSyntax: new Color("162a36")`
@@ -959,10 +966,13 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel",style)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel",style);`
 - `Godot.Control.Control()`；输入表达式：`new Control {Name="BracketHeadings",ClipContents=true,CustomMinimumSize=new(0,56),MouseFilter=MouseFilterEnum.Ignore}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new Control {Name="BracketHeadings",ClipContents=true,CustomMinimumSize=new(0,56),MouseFilter=MouseFilterEnum.Ignore}`
 - `Godot.Control.Control()`；输入表达式：`new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill}`；返回值紧邻使用处：`ArgumentSyntax: new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill}`
+- `Godot.Control.Control()`；输入表达式：`new Control{MouseFilter=MouseFilterEnum.Pass}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new Control{MouseFilter=MouseFilterEnum.Pass}`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`pair.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: pair.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(inset)`；返回值紧邻使用处：`IfStatementSyntax: if(IsInstanceValid(inset))ResizeBracket();`
 - `Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；输入表达式：`frame.SetMeta("competition_id",c.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.SetMeta("competition_id",c.Id);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Label.Label()`；输入表达式：`new Label { Text = c.TeamEvent ? (left ? home : away).ToString() : "胜", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Label { Text = c.TeamEvent ? (left ? home : away).ToString() : "胜", MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Label.Label()`；输入表达式：`new Label{Text=$"{_bracketZoom:P0}",CustomMinimumSize=new(54,0),HorizontalAlignment=HorizontalAlignment.Center}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new Label{Text=$"{_bracketZoom:P0}",CustomMinimumSize=new(54,0),HorizontalAlignment=HorizontalAlignment.Center}`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(frame)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(frame);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`band.AddChild(content)`；返回值紧邻使用处：`ExpressionStatementSyntax: band.AddChild(content);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`band.AddChild(Text(round == 1 ? "▫   待抽签" : "▫   待晋级", 15, _muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: band.AddChild(Text(round == 1 ? "▫   待抽签" : "▫   待晋级", 15, _muted));`
@@ -978,6 +988,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`entrant.AddChild(label)`；返回值紧邻使用处：`ExpressionStatementSyntax: entrant.AddChild(label);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`entrant.AddChild(new TextureRect{Texture=NavigationIcon("flag-"+flag),CustomMinimumSize=new(20,15),                          ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,MouseFilter=MouseFilterEnum.Ignore})`；返回值紧邻使用处：`ExpressionStatementSyntax: entrant.AddChild(new TextureRect{Texture=NavigationIcon("flag-"+flag),CustomMinimumSize=new(20,15),                          ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,MouseFilter=MouseFilterEnum.Ignore});`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`entrant.AddChild(winner)`；返回值紧邻使用处：`ExpressionStatementSyntax: entrant.AddChild(winner);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`extent.AddChild(inset)`；返回值紧邻使用处：`ExpressionStatementSyntax: extent.AddChild(inset);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`info.AddChild(criteria)`；返回值紧邻使用处：`ExpressionStatementSyntax: info.AddChild(criteria);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`info.AddChild(title)`；返回值紧邻使用处：`ExpressionStatementSyntax: info.AddChild(title);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`info.AddChild(trophy)`；返回值紧邻使用处：`ExpressionStatementSyntax: info.AddChild(trophy);`
@@ -989,20 +1000,23 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`pair.AddChild(band)`；返回值紧邻使用处：`ExpressionStatementSyntax: pair.AddChild(band);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`panel.AddChild(col)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddChild(col);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`roster.AddChild(name)`；返回值紧邻使用处：`ExpressionStatementSyntax: roster.AddChild(name);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(inset)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(inset);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(extent)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(extent);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`slot.AddChild(matchCard)`；返回值紧邻使用处：`ExpressionStatementSyntax: slot.AddChild(matchCard);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`stack.AddChild(invitationSlot)`；返回值紧邻使用处：`ExpressionStatementSyntax: stack.AddChild(invitationSlot);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(CaptionButton("赛事详情", () => OpenCompetition(c.Id)))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(CaptionButton("赛事详情", () => OpenCompetition(c.Id)));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(FramedAction("+",()=>Zoom(_bracketZoom+.1f,scroll.Size/2),width:42,height:36,quiet:true))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(FramedAction("+",()=>Zoom(_bracketZoom+.1f,scroll.Size/2),width:42,height:36,quiet:true));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(FramedAction("−",()=>Zoom(_bracketZoom-.1f,scroll.Size/2),width:42,height:36,quiet:true))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(FramedAction("−",()=>Zoom(_bracketZoom-.1f,scroll.Size/2),width:42,height:36,quiet:true));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(FramedAction("定位轮次",()=>{scroll.ScrollVertical=0;Locate();},"locate-fixed",width:118,height:38,quiet:true))`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(FramedAction("定位轮次",()=>{scroll.ScrollVertical=0;Locate();},"locate-fixed",width:118,height:38,quiet:true));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill})`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill});`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(progress)`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(progress);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(reset)`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(reset);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`toolbar.AddChild(zoomText)`；返回值紧邻使用处：`ExpressionStatementSyntax: toolbar.AddChild(zoomText);`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, SizeFlagsVertical = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, SizeFlagsVertical = SizeFlags.ExpandFill }`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer {CustomMinimumSize=new(274,0)}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new PanelContainer {CustomMinimumSize=new(274,0)}`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer {MouseFilter=MouseFilterEnum.Ignore}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new PanelContainer {MouseFilter=MouseFilterEnum.Ignore}`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer {Name="BracketFrame",CustomMinimumSize=new(0,712)}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new PanelContainer {Name="BracketFrame",CustomMinimumSize=new(0,712)}`
 - `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero,head.Size)`；返回值紧邻使用处：`ArgumentSyntax: new Rect2(Vector2.Zero,head.Size)`
 - `Godot.ScrollContainer.GetHScrollBar()`；输入表达式：`scroll.GetHScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: scroll.GetHScrollBar().ValueChanged`
-- `Godot.ScrollContainer.ScrollContainer()`；输入表达式：`new ScrollContainer {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new ScrollContainer {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill}`
 - `Godot.StyleBoxFlat.SetBorderWidthAll(int)`；输入表达式：`style.SetBorderWidthAll(currentRound ? 1 : 0)`；返回值紧邻使用处：`ExpressionStatementSyntax: style.SetBorderWidthAll(currentRound ? 1 : 0);`
 - `Godot.StyleBoxFlat.StyleBoxFlat()`；输入表达式：`new StyleBoxFlat {BgColor=new Color(currentRound ? "80e7db0a" : "00000000"),BorderColor=new Color("80e7db70"),ContentMarginLeft=9,ContentMarginRight=9,ContentMarginTop=9,ContentMarginBottom=9}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new StyleBoxFlat {BgColor=new Color(currentRound ? "80e7db0a" : "00000000"),BorderColor=new Color("80e7db70"),ContentMarginLeft=9,ContentMarginRight=9,ContentMarginTop=9,ContentMarginBottom=9}`
 - `Godot.TextureRect.TextureRect()`；输入表达式：`new TextureRect{Texture=NavigationIcon("flag-"+flag),CustomMinimumSize=new(20,15),                          ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,MouseFilter=MouseFilterEnum.Ignore}`；返回值紧邻使用处：`ArgumentSyntax: new TextureRect{Texture=NavigationIcon("flag-"+flag),CustomMinimumSize=new(20,15),                          ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,MouseFilter=MouseFilterEnum.Ignore}`
@@ -1022,6 +1036,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(20,15)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize=new(20,15)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(274,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize=new(274,0)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(274,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: invitationColumn.CustomMinimumSize=new(274,0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(54,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize=new(54,0)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(head.Size.X,head.Size.Y-1)`；返回值紧邻使用处：`ArgumentSyntax: new(head.Size.X,head.Size.Y-1)`
 - `int.ToString()`；输入表达式：`(left ? home : away).ToString()`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.TeamEvent ? (left ? home : away).ToString() : "胜"`
 - `Locate()`；输入表达式：`Locate()`；返回值紧邻使用处：`ExpressionStatementSyntax: Locate();`
@@ -1052,7 +1067,10 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；输入表达式：`DashboardLabel("国际赛事冠军 · 生涯进阶 9 通关",14,_muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =DashboardLabel("国际赛事冠军 · 生涯进阶 9 通关",14,_muted)`
 - `NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；输入表达式：`DashboardLabel("世界纪录邀请赛",18,_gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =DashboardLabel("世界纪录邀请赛",18,_gold)`
 - `NationalSpire.CareerScreen.FlagCode(string)`；输入表达式：`FlagCode(c.TeamEvent && c.Kind=="worldcup" ? team : EsportsWorld.HistoricCountry(d,c,id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =FlagCode(c.TeamEvent && c.Kind=="worldcup" ? team : EsportsWorld.HistoricCountry(d,c,id))`
+- `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("+",()=>Zoom(_bracketZoom+.1f,scroll.Size/2),width:42,height:36,quiet:true)`；返回值紧邻使用处：`ArgumentSyntax: FramedAction("+",()=>Zoom(_bracketZoom+.1f,scroll.Size/2),width:42,height:36,quiet:true)`
+- `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("−",()=>Zoom(_bracketZoom-.1f,scroll.Size/2),width:42,height:36,quiet:true)`；返回值紧邻使用处：`ArgumentSyntax: FramedAction("−",()=>Zoom(_bracketZoom-.1f,scroll.Size/2),width:42,height:36,quiet:true)`
 - `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("定位轮次",()=>{scroll.ScrollVertical=0;Locate();},"locate-fixed",width:118,height:38,quiet:true)`；返回值紧邻使用处：`ArgumentSyntax: FramedAction("定位轮次",()=>{scroll.ScrollVertical=0;Locate();},"locate-fixed",width:118,height:38,quiet:true)`
+- `NationalSpire.CareerScreen.FramedAction(string, System.Action, string?, bool, int, int, bool, Godot.Color?, Godot.Color?)`；输入表达式：`FramedAction("原大",()=>Zoom(1,scroll.Size/2),width:62,height:36,quiet:true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =FramedAction("原大",()=>Zoom(1,scroll.Size/2),width:62,height:36,quiet:true)`
 - `NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`；输入表达式：`Glyph("trophy",24,_gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Glyph("trophy",24,_gold)`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(frame)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Inner(frame)`
 - `NationalSpire.CareerScreen.Inset(int, int)`；输入表达式：`Inset(9,0)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Inset(9,0)`
@@ -1083,6 +1101,8 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(d,invitationDay)`；返回值紧邻使用处：`BinaryExpressionSyntax: GameCalendar.Text(d,invitationDay)+" · 进阶 "`
 - `NationalSpire.SeasonCalendar.Length(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Length(d,c.Season)`；返回值紧邻使用处：`BinaryExpressionSyntax: seasonStart + SeasonCalendar.Length(d,c.Season)`
 - `NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Start(d,c.Season)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SeasonCalendar.Start(d,c.Season)`
+- `NationalSpire.ZoomableBracketScroll.ZoomableBracketScroll()`；输入表达式：`new ZoomableBracketScroll {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new ZoomableBracketScroll {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill}`
+- `ResizeBracket()`；输入表达式：`ResizeBracket()`；返回值紧邻使用处：`ExpressionStatementSyntax: ResizeBracket();`
 - `System.Collections.Generic.IEnumerable<int>.Max()`；输入表达式：`c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max()`；返回值紧邻使用处：`ArgumentSyntax: c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max()`
 - `System.Collections.Generic.IEnumerable<int>.Min()`；输入表达式：`c.Fixtures.Where(f=>!f.Finished).Select(f=>f.Round).DefaultIfEmpty(c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max()).Min()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =c.Fixtures.Where(f=>!f.Finished).Select(f=>f.Round).DefaultIfEmpty(c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max()).Min()`
 - `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`tie.All(x=>x.Finished)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =tie.All(x=>x.Finished)`
@@ -1120,6 +1140,10 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(60,firstTies*pitch/slots)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(60,firstTies*pitch/slots)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(active,c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max())`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.Modern?CircuitWorld.RoundCount(c):Math.Max(active,c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max())`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(ties.Count,Math.Max(1,firstTies >> (round-1)))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Math.Max(ties.Count,Math.Max(1,firstTies >> (round-1)))`
+- `Zoom(float, Godot.Vector2)`；输入表达式：`Zoom(_bracketZoom-.1f,scroll.Size/2)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: ()=>Zoom(_bracketZoom-.1f,scroll.Size/2)`
+- `Zoom(float, Godot.Vector2)`；输入表达式：`Zoom(_bracketZoom+.1f,scroll.Size/2)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: ()=>Zoom(_bracketZoom+.1f,scroll.Size/2)`
+- `Zoom(float, Godot.Vector2)`；输入表达式：`Zoom(_bracketZoom+delta,point)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: (delta,point)=>Zoom(_bracketZoom+delta,point)`
+- `Zoom(float, Godot.Vector2)`；输入表达式：`Zoom(1,scroll.Size/2)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: ()=>Zoom(1,scroll.Size/2)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -1145,11 +1169,15 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `CustomMinimumSize` = `new(0,Math.Max(60,firstTies*pitch/slots))`
 - `CustomMinimumSize` = `new(20,15)`
 - `CustomMinimumSize` = `new(274,0)`
+- `CustomMinimumSize` = `new(54,0)`
 - `ExpandMode` = `TextureRect.ExpandModeEnum.IgnoreSize`
 - `firstTies` = `1 << (count - 1)`
 - `Flat` = `true`
 - `head.Draw` += `()=>{              head.DrawRect(new Rect2(Vector2.Zero,head.Size),new Color("162a36"));              head.DrawLine(new(0,head.Size.Y-1),new(head.Size.X,head.Size.Y-1),new Color("344954"));          }`
 - `head.Resized` += `head.QueueRedraw`
+- `HorizontalAlignment` = `HorizontalAlignment.Center`
+- `inset.MinimumSizeChanged` += `ResizeBracket`
+- `inset.Scale` = `Vector2.One*_bracketZoom`
 - `invitationColumn.CustomMinimumSize` = `new(274,0)`
 - `invitationColumn.SizeFlagsHorizontal` = `SizeFlags.Fill`
 - `label.AutowrapMode` = `TextServer.AutowrapMode.Off`
@@ -1158,6 +1186,7 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `matchCard.Flat` = `false`
 - `MouseDefaultCursorShape` = `CursorShape.PointingHand`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
+- `MouseFilter` = `MouseFilterEnum.Pass`
 - `name.AutowrapMode` = `TextServer.AutowrapMode.Off`
 - `name.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `Name` = `"BracketFrame"`
@@ -1171,43 +1200,47 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `pair.OffsetTop` = `2`
 - `progress.AutowrapMode` = `TextServer.AutowrapMode.Off`
 - `progress.SizeFlagsHorizontal` = `SizeFlags.ShrinkBegin`
+- `reset.TooltipText` = `"按住左键拖动签表，Ctrl + 滚轮缩放"`
 - `scroll.GetHScrollBar().ValueChanged` += `_=>AlignHeadings()`
 - `scroll.ScrollVertical` = `0`
+- `scroll.ZoomStep` = `(delta,point)=>Zoom(_bracketZoom+delta,point)`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `SizeFlagsVertical` = `SizeFlags.ExpandFill`
 - `StretchMode` = `TextureRect.StretchModeEnum.KeepAspectCentered`
+- `Text` = `$"{_bracketZoom:P0}"`
 - `Text` = `c.TeamEvent ? (left ? home : away).ToString() : "胜"`
 - `Texture` = `NavigationIcon("flag-"+flag)`
 - `title.HorizontalAlignment` = `HorizontalAlignment.Center`
 - `trophy.SizeFlagsHorizontal` = `SizeFlags.ShrinkCenter`
 
-<a id="symbol-1be9db1d40d6"></a>
+<a id="symbol-4d9584ac0b60"></a>
 
 ## `AlignHeadings() — void AlignHeadings()`
 
-来源：源码第 393 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 394 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`ResizeBracket()`](FixtureScheduleScreen.cs.md#symbol-d5cfa78289ac)；[`Zoom(float, Godot.Vector2)`](FixtureScheduleScreen.cs.md#symbol-e47c780a6abf)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`
 
-**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._bracketZoom`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(column.Position.X+18-scroll.ScrollHorizontal,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: heading.Position=new(column.Position.X+18-scroll.ScrollHorizontal,0)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new((column.Position.X+18)*_bracketZoom-scroll.ScrollHorizontal,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: heading.Position=new((column.Position.X+18)*_bracketZoom-scroll.ScrollHorizontal,0)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(column.Size.X-18,56)`；返回值紧邻使用处：`AssignmentExpressionSyntax: heading.Size=new(column.Size.X-18,56)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `heading.Position` = `new(column.Position.X+18-scroll.ScrollHorizontal,0)`
+- `heading.Position` = `new((column.Position.X+18)*_bracketZoom-scroll.ScrollHorizontal,0)`
+- `heading.Scale` = `Vector2.One*_bracketZoom`
 - `heading.Size` = `new(column.Size.X-18,56)`
 
-<a id="symbol-c2de97a57d37"></a>
+<a id="symbol-c9c5e134a317"></a>
 
 ## `AddHeading(Godot.Control, string, string, bool, bool) — void AddHeading(Control column,string title,string date,bool current,bool invitation=false)`
 
-来源：源码第 401 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 402 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
 
@@ -1239,17 +1272,73 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `style.ContentMarginLeft` = `style.ContentMarginRight=11`
 - `style.ContentMarginRight` = `11`
 
-<a id="symbol-e7350d9422e3"></a>
+<a id="symbol-d5cfa78289ac"></a>
+
+## `ResizeBracket() — void ResizeBracket()`
+
+来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`Zoom(float, Godot.Vector2)`](FixtureScheduleScreen.cs.md#symbol-e47c780a6abf)
+
+**调用：** [`AlignHeadings()`](FixtureScheduleScreen.cs.md#symbol-4d9584ac0b60)；`Godot.Control.GetCombinedMinimumSize()`；`Godot.Vector2.Vector2(float, float)`
+
+**字段、属性、事件及方法组引用：** `AlignHeadings()`；`NationalSpire.CareerScreen._bracketZoom`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `AlignHeadings()`；输入表达式：`AlignHeadings()`；返回值紧邻使用处：`ExpressionStatementSyntax: AlignHeadings();`
+- `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`inset.GetCombinedMinimumSize()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =inset.GetCombinedMinimumSize()`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0,56*_bracketZoom)`；返回值紧邻使用处：`AssignmentExpressionSyntax: head.CustomMinimumSize=new(0,56*_bracketZoom)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `extent.CustomMinimumSize` = `size*_bracketZoom`
+- `head.CustomMinimumSize` = `new(0,56*_bracketZoom)`
+- `inset.Size` = `size`
+
+<a id="symbol-e47c780a6abf"></a>
+
+## `Zoom(float, Godot.Vector2) — void Zoom(float factor,Vector2 anchor)`
+
+来源：源码第 421 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
+
+**调用：** [`AlignHeadings()`](FixtureScheduleScreen.cs.md#symbol-4d9584ac0b60)；[`ResizeBracket()`](FixtureScheduleScreen.cs.md#symbol-d5cfa78289ac)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Clamp(float, float, float)`；`System.MathF.Round(float)`
+
+**字段、属性、事件及方法组引用：** `AlignHeadings()`；`NationalSpire.CareerScreen._bracketZoom`；`ResizeBracket()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `AlignHeadings()`；输入表达式：`AlignHeadings()`；返回值紧邻使用处：`ExpressionStatementSyntax: AlignHeadings();`
+- `Godot.Callable.CallDeferred(params Godot.Variant[])`；输入表达式：`Callable.From(()=>{if(version==revision && IsInstanceValid(scroll) && !scroll.IsQueuedForDeletion()){scroll.ScrollHorizontal=(int)origin.X;scroll.ScrollVertical=(int)origin.Y;AlignHeadings();}}).CallDeferred()`；返回值紧邻使用处：`ExpressionStatementSyntax: Callable.From(()=>{if(version==revision && IsInstanceValid(scroll) && !scroll.IsQueuedForDeletion()){scroll.ScrollHorizontal=(int)origin.X;scroll.ScrollVertical=(int)origin.Y;AlignHeadings();}}).CallDeferred();`
+- `Godot.Callable.From(System.Action)`；输入表达式：`Callable.From(()=>{if(version==revision && IsInstanceValid(scroll) && !scroll.IsQueuedForDeletion()){scroll.ScrollHorizontal=(int)origin.X;scroll.ScrollVertical=(int)origin.Y;AlignHeadings();}})`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Callable.From(()=>{if(version==revision && IsInstanceValid(scroll) && !scroll.IsQueuedForDeletion()){scroll.ScrollHorizontal=(int)origin.X;scroll.ScrollVertical=(int)origin.Y;AlignHeadings();}}).CallDeferred`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(scroll)`；返回值紧邻使用处：`BinaryExpressionSyntax: version==revision && IsInstanceValid(scroll)`
+- `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`scroll.IsQueuedForDeletion()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !scroll.IsQueuedForDeletion()`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(scroll.ScrollHorizontal,scroll.ScrollVertical)`；返回值紧邻使用处：`BinaryExpressionSyntax: new Vector2(scroll.ScrollHorizontal,scroll.ScrollVertical)+anchor`
+- `ResizeBracket()`；输入表达式：`ResizeBracket()`；返回值紧邻使用处：`ExpressionStatementSyntax: ResizeBracket();`
+- `System.Math.Clamp(float, float, float)`；输入表达式：`Math.Clamp(MathF.Round(factor*100)/100,.5f,1.5f)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _bracketZoom=Math.Clamp(MathF.Round(factor*100)/100,.5f,1.5f)`
+- `System.MathF.Round(float)`；输入表达式：`MathF.Round(factor*100)`；返回值紧邻使用处：`BinaryExpressionSyntax: MathF.Round(factor*100)/100`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_bracketZoom` = `Math.Clamp(MathF.Round(factor*100)/100,.5f,1.5f)`
+- `inset.Scale` = `Vector2.One*_bracketZoom`
+- `scroll.ScrollHorizontal` = `(int)origin.X`
+- `scroll.ScrollVertical` = `(int)origin.Y`
+- `zoomText.Text` = `$"{_bracketZoom:P0}"`
+
+<a id="symbol-f09c19694fee"></a>
 
 ## `Locate() — void Locate()`
 
-来源：源码第 558 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 576 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`LocateAfterLayout()`](FixtureScheduleScreen.cs.md#symbol-f3c2126ea96c)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
+**调用者：** [`LocateAfterLayout()`](FixtureScheduleScreen.cs.md#symbol-230d9e58c65c)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
 
 **调用：** `Godot.CanvasItem.GetGlobalTransform()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.IsInsideTree()`；`Godot.ScrollContainer.GetHScrollBar()`；`Godot.Transform2D.AffineInverse()`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.WorldCompetition.Finished`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._bracketZoom`；`NationalSpire.WorldCompetition.Finished`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -1259,23 +1348,23 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Godot.Node.IsInsideTree()`；输入表达式：`scroll.IsInsideTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !scroll.IsInsideTree()`
 - `Godot.ScrollContainer.GetHScrollBar()`；输入表达式：`scroll.GetHScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: scroll.GetHScrollBar().MaxValue`
 - `Godot.Transform2D.AffineInverse()`；输入表达式：`columns.GetGlobalTransform().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: columns.GetGlobalTransform().AffineInverse() * nextMatch.GlobalPosition`
-- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, (int)(localY - scroll.Size.Y * .30f))`；返回值紧邻使用处：`AssignmentExpressionSyntax: scroll.ScrollVertical = Math.Max(0, (int)(localY - scroll.Size.Y * .30f))`
+- `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, (int)(localY*_bracketZoom - scroll.Size.Y * .30f))`；返回值紧邻使用处：`AssignmentExpressionSyntax: scroll.ScrollVertical = Math.Max(0, (int)(localY*_bracketZoom - scroll.Size.Y * .30f))`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, precedingColumn)`；返回值紧邻使用处：`ConditionalExpressionSyntax: c.Finished ? (int)scroll.GetHScrollBar().MaxValue : Math.Max(0, precedingColumn)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `scroll.ScrollHorizontal` = `c.Finished ? (int)scroll.GetHScrollBar().MaxValue : Math.Max(0, precedingColumn)`
-- `scroll.ScrollVertical` = `Math.Max(0, (int)(localY - scroll.Size.Y * .30f))`
+- `scroll.ScrollVertical` = `Math.Max(0, (int)(localY*_bracketZoom - scroll.Size.Y * .30f))`
 
-<a id="symbol-f3c2126ea96c"></a>
+<a id="symbol-230d9e58c65c"></a>
 
 ## `LocateAfterLayout() — async void LocateAfterLayout()`
 
-来源：源码第 575 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 593 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
 
-**调用：** [`Locate()`](FixtureScheduleScreen.cs.md#symbol-e7350d9422e3)；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.GetTree()`
+**调用：** [`Locate()`](FixtureScheduleScreen.cs.md#symbol-f09c19694fee)；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.GetTree()`
 
 **字段、属性、事件及方法组引用：** `Locate()`
 
@@ -1286,3 +1375,56 @@ private Predicate<FixtureEntry>? _fixtureFocus;
 - `Locate()`；输入表达式：`Locate()`；返回值紧邻使用处：`ExpressionStatementSyntax: Locate();`
 
 **赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-c2b93d2a2d7f"></a>
+
+## `NationalSpire.ZoomableBracketScroll._Input(Godot.InputEvent) — public override void _Input(InputEvent e)`
+
+来源：源码第 612 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GrabFocus()`；`Godot.GodotObject.EmitSignal(Godot.StringName, params Godot.Variant[])`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.GetParent()`；`Godot.Node.GetViewport()`；`Godot.Node.IsAncestorOf(Godot.Node)`；`Godot.Rect2.HasPoint(Godot.Vector2)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.LengthSquared()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetHoveredControl()`；`Godot.Viewport.SetInputAsHandled()`；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Enum.HasFlag(System.Enum)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.ZoomableBracketScroll._card`；`NationalSpire.ZoomableBracketScroll._dragged`；`NationalSpire.ZoomableBracketScroll._held`；`NationalSpire.ZoomableBracketScroll._offset`；`NationalSpire.ZoomableBracketScroll._origin`；`NationalSpire.ZoomableBracketScroll.ZoomStep`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`card.GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: card.GetGlobalTransformWithCanvas().AffineInverse`
+- `Godot.CanvasItem.GetGlobalTransformWithCanvas()`；输入表达式：`GetGlobalTransformWithCanvas()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse`
+- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`card!.IsVisibleInTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: !_dragged && IsInstanceValid(card) && card!.IsVisibleInTree()`
+- `Godot.CanvasItem.IsVisibleInTree()`；输入表达式：`IsVisibleInTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsVisibleInTree()`
+- `Godot.Control.GrabFocus()`；输入表达式：`card.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: card.GrabFocus();`
+- `Godot.GodotObject.EmitSignal(Godot.StringName, params Godot.Variant[])`；输入表达式：`card.EmitSignal(BaseButton.SignalName.Pressed)`；返回值紧邻使用处：`ExpressionStatementSyntax: card.EmitSignal(BaseButton.SignalName.Pressed);`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(card)`；返回值紧邻使用处：`BinaryExpressionSyntax: !_dragged && IsInstanceValid(card)`
+- `Godot.Node.GetParent()`；输入表达式：`n.GetParent()`；返回值紧邻使用处：`AssignmentExpressionSyntax: n=n.GetParent()`
+- `Godot.Node.GetViewport()`；输入表达式：`GetViewport()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =GetViewport()`
+- `Godot.Node.IsAncestorOf(Godot.Node)`；输入表达式：`IsAncestorOf(hovered)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsAncestorOf(hovered)`
+- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero,card.Size).HasPoint(card.GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position)`；返回值紧邻使用处：`BinaryExpressionSyntax: !_dragged && IsInstanceValid(card) && card!.IsVisibleInTree() && new Rect2(Vector2.Zero,card.Size).HasPoint(card.GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position)`
+- `Godot.Rect2.HasPoint(Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero,Size).HasPoint(point)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !new Rect2(Vector2.Zero,Size).HasPoint(point)`
+- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero,card.Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero,card.Size).HasPoint`
+- `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；输入表达式：`new Rect2(Vector2.Zero,Size)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new Rect2(Vector2.Zero,Size).HasPoint`
+- `Godot.Transform2D.AffineInverse()`；输入表达式：`card.GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: card.GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position`
+- `Godot.Transform2D.AffineInverse()`；输入表达式：`GetGlobalTransformWithCanvas().AffineInverse()`；返回值紧邻使用处：`BinaryExpressionSyntax: GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position`
+- `Godot.Vector2.LengthSquared()`；输入表达式：`distance.LengthSquared()`；返回值紧邻使用处：`BinaryExpressionSyntax: distance.LengthSquared()<36`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(ScrollHorizontal,ScrollVertical)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _offset=new(ScrollHorizontal,ScrollVertical)`
+- `Godot.Viewport.GuiGetHoveredControl()`；输入表达式：`viewport.GuiGetHoveredControl()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =viewport.GuiGetHoveredControl()`
+- `Godot.Viewport.SetInputAsHandled()`；输入表达式：`viewport.SetInputAsHandled()`；返回值紧邻使用处：`ExpressionStatementSyntax: viewport.SetInputAsHandled();`
+- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke(button.ButtonIndex==MouseButton.WheelUp?.1f:-.1f,point)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: ZoomStep?.Invoke(button.ButtonIndex==MouseButton.WheelUp?.1f:-.1f,point)`
+- `System.Enum.HasFlag(System.Enum)`；输入表达式：`motion.ButtonMask.HasFlag(MouseButtonMask.Left)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !motion.ButtonMask.HasFlag(MouseButtonMask.Left)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_card` = `null`
+- `_card` = `target`
+- `_dragged` = `false`
+- `_dragged` = `true`
+- `_held` = `false`
+- `_held` = `true`
+- `_offset` = `new(ScrollHorizontal,ScrollVertical)`
+- `_origin` = `point`
+- `n` = `n.GetParent()`
+- `ScrollHorizontal` = `(int)(_offset.X-distance.X)`
+- `ScrollVertical` = `(int)(_offset.Y-distance.Y)`
+- `target` = `b`

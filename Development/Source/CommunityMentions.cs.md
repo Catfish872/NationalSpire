@@ -19,7 +19,7 @@
 
 来源：源码第 5 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Choose(int)`](MentionComposer.cs.md#symbol-e9699a1558ad)；[`NationalSpire.CommunityMentions.Resolve(NationalSpire.CareerData, string)`](CommunityMentions.cs.md#symbol-a915a754512b)
+**调用者：** [`Choose(int)`](MentionComposer.cs.md#symbol-321e08719a8c)；[`NationalSpire.CommunityMentions.Resolve(NationalSpire.CareerData, string)`](CommunityMentions.cs.md#symbol-a915a754512b)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`
 

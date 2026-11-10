@@ -19,7 +19,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PercentageAllocation.Adjust(System.Collections.Generic.IReadOnlyList<double>, int, double, System.Collections.Generic.IReadOnlyList<bool>?)`](PercentageAllocation.cs.md#symbol-1fb1ed9d9944)；[`Weights()`](NpcGenerationScreen.cs.md#symbol-d040f96cd18c)
+**调用者：** [`NationalSpire.PercentageAllocation.Adjust(System.Collections.Generic.IReadOnlyList<double>, int, double, System.Collections.Generic.IReadOnlyList<bool>?)`](PercentageAllocation.cs.md#symbol-1fb1ed9d9944)；[`Weights()`](NpcGenerationScreen.cs.md#symbol-293317477bcb)
 
 **调用：** `double.IsFinite(double)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<double>.Sum()`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Floor(double)`
 
@@ -53,7 +53,7 @@
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Weights()`](NpcGenerationScreen.cs.md#symbol-d040f96cd18c)
+**调用者：** [`Weights()`](NpcGenerationScreen.cs.md#symbol-293317477bcb)
 
 **调用：** [`NationalSpire.PercentageAllocation.Normalize(System.Collections.Generic.IEnumerable<double>)`](PercentageAllocation.cs.md#symbol-deabc46c0872)；`double.IsFinite(double)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Abs(int)`；`System.Math.Clamp(double, double, double)`；`System.Math.Min(int, int)`；`System.Math.Round(double)`；`System.Math.Sign(int)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C7748DADA81A7A127727C233A5A76670A9C59C3E7D7225E76167E4B47412255C`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`741EF741EB407E700A520CD23BE08BA2098CA9EF5508FB0411827FCF2E6F93D3`。来源：[源码](../../BroadcastVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -538,7 +538,7 @@ private BroadcastTransition? _pageEffect;
 
 **调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.Callable.From<T0>(System.Action<T0>)`；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.IsInsideTree()`；`Godot.Transform2D.AffineInverse()`；`Godot.Tween.Chain()`；`Godot.Tween.Kill()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenCallback(Godot.Callable)`；`Godot.Tween.TweenMethod(Godot.Callable, Godot.Variant, Godot.Variant, double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`NationalSpire.BroadcastTransition.BroadcastTransition()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastTransition.Progress`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._pageEffect`；`NationalSpire.CareerScreen._pageTween`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._profileFilter`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._visualLocation`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.EventHub`
+**字段、属性、事件及方法组引用：** `NationalSpire.BroadcastTransition.Progress`；`NationalSpire.CareerScreen._board`；`NationalSpire.CareerScreen._calendarMode`；`NationalSpire.CareerScreen._calendarMonth`；`NationalSpire.CareerScreen._communityFilter`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._fixtureInternational`；`NationalSpire.CareerScreen._fixtureScope`；`NationalSpire.CareerScreen._pageEffect`；`NationalSpire.CareerScreen._pageTween`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._postId`；`NationalSpire.CareerScreen._profileFilter`；`NationalSpire.CareerScreen._rankRegion`；`NationalSpire.CareerScreen._rankSeason`；`NationalSpire.CareerScreen._renderVersion`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._shopPage`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._visualLocation`；`NationalSpire.CareerScreen._worldSection`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -584,9 +584,9 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float) — private static Button FilterButton(string title, bool selected, Action action, float width)`
 
-来源：源码第 189 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 188 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-5cf43cbe1562)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int, bool, string)`](PeoplePickerScreen.cs.md#symbol-bb0e3159d994)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
+**调用者：** [`Groups()`](ConsumerPickerScreen.cs.md#symbol-68722fb2c22a)；[`NationalSpire.CareerScreen.AvatarWardrobe(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerAvatars.cs.md#symbol-a00951e0b13d)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`NationalSpire.CareerScreen.ConsumerProducts(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerChoice[], NationalSpire.CareerScreen.ConsumerEdit, System.Action)`](ConsumerPickerScreen.cs.md#symbol-e5ebf63e6d3e)；[`NationalSpire.CareerScreen.ConsumerRecipients(Godot.VBoxContainer, NationalSpire.CareerScreen.ConsumerEdit, bool, System.Action)`](ConsumerPickerScreen.cs.md#symbol-d76de74a5483)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.PeoplePicker(Godot.VBoxContainer, System.Collections.Generic.IReadOnlyList<NationalSpire.CareerPerson>, System.Collections.Generic.HashSet<string>, bool, System.Action, int, bool, string)`](PeoplePickerScreen.cs.md#symbol-bb0e3159d994)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)
 
 **调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
@@ -609,9 +609,9 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Emphasize(Godot.Button) — private static void Emphasize(Button button)`
 
-来源：源码第 198 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 197 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
+**调用者：** [`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`](CeremonyScreen.cs.md#symbol-071fb0b79ec4)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
 
@@ -635,7 +635,7 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.PlayerBanner(NationalSpire.CareerData, string) — private Control PlayerBanner(CareerData data, string id)`
 
-来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
@@ -699,11 +699,11 @@ private BroadcastTransition? _pageEffect;
 
 ## `NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch) — private Control Matchup(CareerData data, CareerMatch match)`
 
-来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-3486a5440699)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Side(bool)`](BroadcastVisuals.cs.md#symbol-c3c634913058)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Lime`；`Side(bool)`
 
@@ -724,11 +724,11 @@ private BroadcastTransition? _pageEffect;
 - `center.VerticalAlignment` = `VerticalAlignment.Center`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-3486a5440699"></a>
+<a id="symbol-c3c634913058"></a>
 
 ## `Side(bool) — void Side(bool ours)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matchup(NationalSpire.CareerData, NationalSpire.CareerMatch)`](BroadcastVisuals.cs.md#symbol-dc5a27245e42)
 

@@ -64,18 +64,34 @@ public static class EsportsWorld
         return Rank(c, "player");
     }
 
+    internal static CareerClub AddRegionalClub(CareerData d,int country,int slot,bool founding)
+    {
+        string id=$"c{country}{slot}", region=Countries[country];
+        var club=new CareerClub { Id=id, Country=region,
+            Name=founding && country==0 ? ClubNames[country][slot] : RegionalOrganizations.ClubName(d,region,id),
+            Color=new[]{"dfb66f","75c9bc","8babd8","cd92ac"}[(founding?country+slot:slot)%4],
+            Motto=founding ? (slot==0?"传统强队，重视稳定的赛季成绩":"新锐阵容，愿意给有成绩的新选手机会")
+                : new[]{"重视青训，也愿意等待新人成长","凭稳定成绩争取国际赛场","喜欢进攻，期待关键比赛的突破","老将与新人共同争取下一座奖杯"}[slot%4] };
+        d.Esports.Clubs.Add(club);return club;
+    }
+
+    internal static List<CareerClub> OpeningClubs(string worldId)
+    {
+        var d=new CareerData{WorldId=worldId};
+        // 与正式建档相同，先建立各国最初两队，再扩充联赛；重名顺延时也得到相同队名。
+        foreach(bool founding in new[]{true,false})
+            for(int country=0;country<Countries.Length;country++)
+                for(int slot=founding?0:2;slot<(founding?2:6);slot++)AddRegionalClub(d,country,slot,founding);
+        return d.Esports.Clubs;
+    }
+
     public static void Initialize(CareerData d)
     {
         if (d.Esports.Initialized) return;
         d.Esports.Initialized = true;
         for (int country = 0; country < Countries.Length; country++)
         {
-            for (int club = 0; club < 2; club++) d.Esports.Clubs.Add(new CareerClub
-            {
-                Id = $"c{country}{club}", Name = country == 0 ? ClubNames[country][club] : RegionalOrganizations.ClubName(d, Countries[country], $"c{country}{club}"), Country = Countries[country],
-                Color = new[] { "dfb66f", "75c9bc", "8babd8", "cd92ac" }[(country + club) % 4],
-                Motto = club == 0 ? "传统强队，重视稳定的赛季成绩" : "新锐阵容，愿意给有成绩的新选手机会"
-            });
+            for (int club = 0; club < 2; club++) AddRegionalClub(d,country,club,true);
             for (int i = 0; i < 8; i++)
             {
                 string id = country == 0 && i < 6 ? "p" + (i + 16) : $"pro{country}_{i}";

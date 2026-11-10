@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A40ECFE170F480550719B895D28B62FCB443413827283E53E93A05A7907BCB38`。来源：[源码](../../LeadingReasoningStream.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F7C28D6FB04FCBDA227D84CE51B23E701CF39B62C05E3531DF5C3BCBDE82DB7C`。来源：[源码](../../LeadingReasoningStream.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,7 +22,7 @@ private int state;
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?)`](AiPrivateMessages.cs.md#symbol-2a90f4583071)；[`ToolText(string)`](AiPrivateMessages.cs.md#symbol-05df00c7dd89)
+**调用者：** [`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?, string?)`](AiPrivateMessages.cs.md#symbol-d2a53e1444c6)；[`ToolText(string)`](AiPrivateMessages.cs.md#symbol-8ecae3b6aca6)
 
 **调用：** `string.IndexOf(string, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Math.Min(int, int)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 
@@ -60,7 +60,7 @@ private int state;
 
 来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-ee5f5afc0dac)
+**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-330b3d5326ab)
 
 **调用：** `System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
 

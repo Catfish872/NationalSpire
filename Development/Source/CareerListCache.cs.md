@@ -77,7 +77,7 @@ private CareerListCache? _listCache;
 
 **调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)
 
-**调用：** [`Label(int, Godot.Color)`](CareerListCache.cs.md#symbol-b2da8e884ec3)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.CareerListCache.ProfileRow.ProfileRow()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** [`Label(int, Godot.Color)`](CareerListCache.cs.md#symbol-f18d5eb865c7)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`NationalSpire.CareerListCache.ProfileRow.ProfileRow()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.List<T>.Add(T)`
 
 **字段、属性、事件及方法组引用：** `Label(int, Godot.Color)`；`NationalSpire.CareerListCache.ProfileRow.Avatar`；`NationalSpire.CareerListCache.ProfileRow.Card`；`NationalSpire.CareerListCache.ProfileRow.Character`；`NationalSpire.CareerListCache.ProfileRow.Name`；`NationalSpire.CareerListCache.ProfileRow.Open`；`NationalSpire.CareerListCache.ProfileRow.Rating`；`NationalSpire.CareerListCache.ProfileRow.RealName`；`NationalSpire.CareerListCache.ProfileRow.Role`；`NationalSpire.CareerListCache.Profiles`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`
 
@@ -144,7 +144,7 @@ private CareerListCache? _listCache;
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
 - `Theme` = `Theme`
 
-<a id="symbol-b2da8e884ec3"></a>
+<a id="symbol-f18d5eb865c7"></a>
 
 ## `Label(int, Godot.Color) — Label Label(int size, Color color)`
 

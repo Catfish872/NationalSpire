@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`40EE44D089F43707D2DA5FC9B9A7B8F09CF9CC2314A8900FFAF3E3221F2552E9`。来源：[源码](../../CardKnowledge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`083D4787AB867B3A2FD2AC0923C43452BD58E68DFC1A2056631B8D81D0E94DF4`。来源：[源码](../../CardKnowledge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -74,11 +74,11 @@ private static Dictionary<char, CardReference[]> _index = [];
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, CardReference>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, CardReference>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；输入表达式：`found.TryAdd(card.Id, card)`；返回值紧邻使用处：`ExpressionStatementSyntax: found.TryAdd(card.Id, card);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`index.TryGetValue(char.ToUpperInvariant(text[i]), out var candidates)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !index.TryGetValue(char.ToUpperInvariant(text[i]), out var candidates)`
-- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                      .ToDictionary`
+- `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                     .ToDictionary`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`g.OrderByDescending(c => c.Name.Length)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: g.OrderByDescending(c => c.Name.Length).ThenBy`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`found.Values.Select(c => c.Description)`；返回值紧邻使用处：`ArgumentSyntax: found.Values.Select(c => c.Description)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray()`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                      .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`；返回值紧邻使用处：`AssignmentExpressionSyntax: _index = Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                      .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`
+- `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；输入表达式：`Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                     .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`；返回值紧邻使用处：`AssignmentExpressionSyntax: _index = Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                     .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Source().Where(c => c.Name.Length > 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Source().Where(c => c.Name.Length > 0).GroupBy`
 - `System.Func<TResult>.Invoke()`；输入表达式：`Source()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Source().Where`
 - `System.Func<TResult>.Invoke()`；输入表达式：`SourceVersion()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SourceVersion()`
@@ -87,7 +87,7 @@ private static Dictionary<char, CardReference[]> _index = [];
 
 **赋值（含属性/字段和局部值）：**
 
-- `_index` = `Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                      .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`
+- `_index` = `Source().Where(c => c.Name.Length > 0).GroupBy(c => char.ToUpperInvariant(c.Name[0]))                     .ToDictionary(g => g.Key, g => g.OrderByDescending(c => c.Name.Length).ThenBy(c => c.Id, StringComparer.Ordinal).ToArray())`
 - `_version` = `version`
 - `i` += `longest - 1`
 - `index` = `_index`

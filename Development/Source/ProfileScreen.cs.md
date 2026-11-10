@@ -103,7 +103,7 @@ private bool _showGameArchive;
 
 **调用者：** [`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
-**调用：** [`NationalSpire.CareerScreen.ClubAffiliationLink(NationalSpire.CareerData, NationalSpire.CareerClub?, bool)`](ProfileScreen.cs.md#symbol-144ebef36b30)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`Stat(string)`](ProfileScreen.cs.md#symbol-5fa6aca0fafa)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`NationalSpire.CareerScreen.ClubAffiliationLink(NationalSpire.CareerData, NationalSpire.CareerClub?, bool)`](ProfileScreen.cs.md#symbol-144ebef36b30)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-3ba0e806ba5c)；[`Stat(string)`](ProfileScreen.cs.md#symbol-1c920dfaebbd)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Name`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.ClubAffiliationLink(NationalSpire.CareerData, NationalSpire.CareerClub?, bool)`；`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；`NationalSpire.EsportsWorld.Club(NationalSpire.CareerData, string)`；`Stat(string)`
 
@@ -130,7 +130,7 @@ private bool _showGameArchive;
 - `Name` = `"ProfileStats"`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-5fa6aca0fafa"></a>
+<a id="symbol-1c920dfaebbd"></a>
 
 ## `Stat(string) — VBoxContainer Stat(string label)`
 

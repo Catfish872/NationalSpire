@@ -395,7 +395,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.DateSceneBackgrounds.At(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, string)`](DateSceneBackgrounds.cs.md#symbol-0f51af8c0e19)
 
-**调用：** [`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`Terms(string)`](DateSceneBackgrounds.cs.md#symbol-da366870c830)；`string.StartsWith(string)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`](DateSceneBackgrounds.cs.md#symbol-7e409d1b4e9f)；[`Terms(string)`](DateSceneBackgrounds.cs.md#symbol-cda442da5034)；`string.StartsWith(string)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.Description`；`NationalSpire.DateSceneBackground.Id`；`NationalSpire.DateSceneBackgrounds.AutomaticChoices(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>)`；`Terms(string)`
 
@@ -415,7 +415,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-da366870c830"></a>
+<a id="symbol-cda442da5034"></a>
 
 ## `Terms(string) — static HashSet<string> Terms(string text)`
 
@@ -675,7 +675,7 @@ private static readonly Dictionary<string, (long Length, DateTime Time, string I
 
 来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit()`](DateSceneBackgroundScreen.cs.md#symbol-940910a208a0)
+**调用者：** [`Commit()`](DateSceneBackgroundScreen.cs.md#symbol-b8afde8353d5)
 
 **调用：** [`NationalSpire.DateSceneBackgrounds.ReadUser()`](DateSceneBackgrounds.cs.md#symbol-83be75e40148)；[`NationalSpire.DateSceneBackgrounds.SafeId(string)`](DateSceneBackgrounds.cs.md#symbol-19bb6c988fd7)；[`NationalSpire.DateSceneBackgrounds.Save(NationalSpire.DateBackgroundLibrary)`](DateSceneBackgrounds.cs.md#symbol-449c9ebefeb1)；`string.Trim()`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 

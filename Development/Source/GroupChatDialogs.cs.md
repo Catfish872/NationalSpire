@@ -22,7 +22,7 @@ private List<string> _groupSelection = [];
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateActions()`](PrivateMessageScreen.cs.md#symbol-6e8c11ead905)
 
-**调用：** [`Choice(string, string, System.Action)`](GroupChatDialogs.cs.md#symbol-c1b3e5379dbf)；[`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.PrivateSharePicker(string)`](PrivateMemoryScreen.cs.md#symbol-b8d901a6cb80)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；[`Pick(string, System.Action, bool, bool)`](GroupChatDialogs.cs.md#symbol-710f51e6183a)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Clear()`
+**调用：** [`Choice(string, string, System.Action)`](GroupChatDialogs.cs.md#symbol-68a1405203d8)；[`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)；[`NationalSpire.CareerScreen.PrivateSharePicker(string)`](PrivateMemoryScreen.cs.md#symbol-b8d901a6cb80)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-25194feb6779)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；[`Pick(string, System.Action, bool, bool)`](GroupChatDialogs.cs.md#symbol-67f6d58a6ab1)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateOffer.PrivateOffer()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Clear()`
 
 **字段、属性、事件及方法组引用：** `Choice(string, string, System.Action)`；`NationalSpire.CareerScreen._groupSelection`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.GroupArbitrationDialog()`；`NationalSpire.CareerScreen.GroupTrainingPicker()`；`NationalSpire.CareerScreen.PrivateActivityPicker()`；`NationalSpire.CareerScreen.PrivateGiftPicker()`；`NationalSpire.CareerScreen.PrivateLineupPicker()`；`NationalSpire.CareerScreen.PrivateMatchPicker()`；`NationalSpire.CareerScreen.PrivateOathAttachment()`；`NationalSpire.CareerScreen.PrivateSharePicker(string)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.GroupChat.Members`；`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.CanChat(NationalSpire.CareerData, string)`；`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateRelation.OathConfirmed`；`Pick(string, System.Action, bool, bool)`
 
@@ -68,7 +68,7 @@ private List<string> _groupSelection = [];
 - `Columns` = `2`
 - `Kind` = `"contract"`
 
-<a id="symbol-710f51e6183a"></a>
+<a id="symbol-67f6d58a6ab1"></a>
 
 ## `Pick(string, System.Action, bool, bool) — void Pick(string title, Action action, bool single = true, bool showPortraits = false)`
 
@@ -93,7 +93,7 @@ private List<string> _groupSelection = [];
 - `_groupSelection` = `people.Where(id => PrivateMessages.CanChat(ViewData, id)).ToList()`
 - `_privatePerson` = `_groupSelection[0]`
 
-<a id="symbol-c1b3e5379dbf"></a>
+<a id="symbol-68a1405203d8"></a>
 
 ## `Choice(string, string, System.Action) — void Choice(string title, string detail, Action action)`
 
@@ -237,7 +237,7 @@ private List<string> _groupSelection = [];
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateSettings()`](PrivateMessageScreen.cs.md#symbol-e86e401f7314)
 
-**调用：** [`Field(string, int)`](GroupChatDialogs.cs.md#symbol-de0d4bef3a73)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；`NationalSpire.GroupCommand.GroupCommand()`；`NationalSpire.GroupHistorySettings.GroupHistorySettings()`
+**调用：** [`Field(string, int)`](GroupChatDialogs.cs.md#symbol-7a7b11f50ec6)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；`NationalSpire.GroupCommand.GroupCommand()`；`NationalSpire.GroupHistorySettings.GroupHistorySettings()`
 
 **字段、属性、事件及方法组引用：** `Field(string, int)`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.GroupChat.Settings`；`NationalSpire.GroupCommand.Settings`；`NationalSpire.GroupHistorySettings.MergeOldest`；`NationalSpire.GroupHistorySettings.RecentRounds`；`NationalSpire.GroupHistorySettings.SmallSummaryLimit`；`NationalSpire.GroupHistorySettings.SummaryEvery`
 
@@ -264,7 +264,7 @@ private List<string> _groupSelection = [];
 - `SmallSummaryLimit` = `(int)limit!.Value`
 - `SummaryEvery` = `(int)every!.Value`
 
-<a id="symbol-de0d4bef3a73"></a>
+<a id="symbol-7a7b11f50ec6"></a>
 
 ## `Field(string, int) — SpinBox Field(string name, int value)`
 

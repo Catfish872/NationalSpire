@@ -24,7 +24,7 @@ private bool _refreshing;
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
+**调用者：** [`NationalSpire.AiSettingsPanel.BuildConnections(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action?, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?, System.Action<System.Func<bool>>?, string, System.Action<string>?)`](AiSettingsPanel.cs.md#symbol-b76dbe11f063)
 
 **调用：** [`NationalSpire.AiRouting.Assign(NationalSpire.AiOptions, string, string, System.Action)`](AiRouting.cs.md#symbol-dcdbadb40401)；[`NationalSpire.AiRouting.Category(string)`](AiRouting.cs.md#symbol-a9d92e7d36e8)；[`NationalSpire.AiTaskRoutePicker.Refresh()`](AiTaskRoutePicker.cs.md#symbol-8a208d29fd78)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.GetItemMetadata(int)`；`Godot.OptionButton.OptionButton()`；`Godot.Variant.AsString()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`
 
@@ -80,7 +80,7 @@ private bool _refreshing;
 
 来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`](AiTaskRoutePicker.cs.md#symbol-7a35c2ddf3d1)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-76fbea2b0ce9)
+**调用者：** [`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`](AiTaskRoutePicker.cs.md#symbol-7a35c2ddf3d1)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-8253e29fb1a6)
 
 **调用：** [`NationalSpire.AiRouting.ProfileId(NationalSpire.AiOptions, string)`](AiRouting.cs.md#symbol-ccbfd0b083bc)；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.Select(int)`；`Godot.OptionButton.SetItemMetadata(int, Godot.Variant)`
 

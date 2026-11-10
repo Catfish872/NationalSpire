@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D791B01B1E2BFE58F4D7EF2E3CF13508BB02012F337B4CBA69B8C4581443594B`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`26376642ADEBBA4466160ED50F04D0278F465344C5E5847AA078A712CB61F3A8`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -47,7 +47,7 @@ private MarketCurrency? _currency;
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Color.Color(string)`；输入表达式：`new(sector switch {         "训练装备" => "e4b367", "电竞设备" => "a99aef", "日常消费" or "做多" => "70d4bc", "做空" => "f095a3", _ => "81b8ec" })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(sector switch {         "训练装备" => "e4b367", "电竞设备" => "a99aef", "日常消费" or "做多" => "70d4bc", "做空" => "f095a3", _ => "81b8ec" })`
+- `Godot.Color.Color(string)`；输入表达式：`new(sector switch {          "训练装备" => "e4b367", "电竞设备" => "a99aef", "日常消费" or "做多" => "70d4bc", "做空" => "f095a3", _ => "81b8ec" })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(sector switch {          "训练装备" => "e4b367", "电竞设备" => "a99aef", "日常消费" or "做多" => "70d4bc", "做空" => "f095a3", _ => "81b8ec" })`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -154,7 +154,7 @@ private MarketCurrency? _currency;
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Color.Color(string)`；输入表达式：`new(level switch {         <= 2 => "b96c7c", <= 4 => "e4ab65", <= 6 => "70d4bc", <= 8 => "ad9ded", _ => "f0cf85" })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(level switch {         <= 2 => "b96c7c", <= 4 => "e4ab65", <= 6 => "70d4bc", <= 8 => "ad9ded", _ => "f0cf85" })`
+- `Godot.Color.Color(string)`；输入表达式：`new(level switch {          <= 2 => "b96c7c", <= 4 => "e4ab65", <= 6 => "70d4bc", <= 8 => "ad9ded", _ => "f0cf85" })`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new(level switch {          <= 2 => "b96c7c", <= 4 => "e4ab65", <= 6 => "70d4bc", <= 8 => "ad9ded", _ => "f0cf85" })`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -402,7 +402,7 @@ private MarketCurrency? _currency;
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)
 
-**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-d11533df543e)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
+**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-183827086673)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
 
 **字段、属性、事件及方法组引用：** `ActionButton(string, string, System.Action)`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketPositionCard._actions`；`NationalSpire.MarketPositionCard._apply`；`NationalSpire.MarketPositionCard._clear`；`NationalSpire.MarketPositionCard._close`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._icon`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._preview`；`NationalSpire.MarketPositionCard._proceeds`；`NationalSpire.MarketPositionCard._profit`；`NationalSpire.MarketPositionCard._revision`；`NationalSpire.MarketPositionCard._submit`；`NationalSpire.MarketPositionCard._terms`；`NationalSpire.MarketPositionCard._title`；`NationalSpire.MarketPositionCard.Apply()`；`NationalSpire.MarketPositionCard.Edit(bool)`；`NationalSpire.MarketPositionCard.Preview()`；`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`
 
@@ -461,7 +461,7 @@ private MarketCurrency? _currency;
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Text` = `"平仓"`
 
-<a id="symbol-d11533df543e"></a>
+<a id="symbol-183827086673"></a>
 
 ## `ActionButton(string, string, System.Action) — Button ActionButton(string title, string icon, Action action)`
 
@@ -506,9 +506,9 @@ private MarketCurrency? _currency;
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_profit.AddThemeColorOverride("font_color", profit >= 0 ? CareerVisuals.Teal : new Color("f095a3"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _profit.AddThemeColorOverride("font_color", profit >= 0 ? CareerVisuals.Teal : new Color("f095a3"));`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_title.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector))`；返回值紧邻使用处：`ExpressionStatementSyntax: _title.AddThemeColorOverride("font_color", MarketVisuals.Accent(asset.Sector));`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`AddThemeStyleboxOverride("panel", MarketVisuals.Card(asset.Sector, false))`；返回值紧邻使用处：`ExpressionStatementSyntax: AddThemeStyleboxOverride("panel", MarketVisuals.Card(asset.Sector, false));`
-- `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(exit.Fee)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))             + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee)`
+- `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(exit.Fee)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))              + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee)`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(exit.Fill.Average)`；返回值紧邻使用处：`ConditionalExpressionSyntax: asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average)`
-- `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(exit.Proceeds)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))             + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds)`
+- `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(exit.Proceeds)`；返回值紧邻使用处：`BinaryExpressionSyntax: "预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))              + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds)`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(p.Entry * p.Units)`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Compact(p.Entry * p.Units)}`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(p.Margin)`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Compact(p.Margin)}`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(profit)`；返回值紧邻使用处：`BinaryExpressionSyntax: "平仓预计净盈亏 " + (profit > 0 ? "+" : "") + CareerMoney.Compact(profit)`
@@ -522,7 +522,7 @@ private MarketCurrency? _currency;
 - `NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.Close(p, quote!)`；返回值紧邻使用处：`BinaryExpressionSyntax: projected ?? MarketExecution.Close(p, quote!)`
 - `NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.ReferencePrice(quote)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _quote.Price = MarketExecution.ReferencePrice(quote)`
 - `NationalSpire.MarketPositionCard.Price(decimal)`；输入表达式：`Price(exit.Fill.Average)`；返回值紧邻使用处：`ConditionalExpressionSyntax: asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average)`
-- `NationalSpire.MarketPositionCard.Price(decimal)`；输入表达式：`Price(p.Entry)`；返回值紧邻使用处：`BinaryExpressionSyntax: $"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "             + Price(p.Entry)`
+- `NationalSpire.MarketPositionCard.Price(decimal)`；输入表达式：`Price(p.Entry)`；返回值紧邻使用处：`BinaryExpressionSyntax: $"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "              + Price(p.Entry)`
 - `NationalSpire.MarketPositionCard.Price(decimal)`；输入表达式：`Price(stop)`；返回值紧邻使用处：`ConditionalExpressionSyntax: p.StopPrice is { } stop ? Price(stop) : "未设置"`
 - `NationalSpire.MarketQuote.ExecutionCopy()`；输入表达式：`quote.ExecutionCopy()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _quote = quote.ExecutionCopy()`
 - `NationalSpire.MarketVisuals.Accent(string)`；输入表达式：`MarketVisuals.Accent(asset.Sector)`；返回值紧邻使用处：`ArgumentSyntax: MarketVisuals.Accent(asset.Sector)`
@@ -538,7 +538,7 @@ private MarketCurrency? _currency;
 - `_position` = `p`
 - `_proceeds.MouseFilter` = `MouseFilterEnum.Pass`
 - `_proceeds.Text` = `""`
-- `_proceeds.Text` = `"预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))             + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds)`
+- `_proceeds.Text` = `"预计成交均价 " + (asset.Forex ? Price(exit.Fill.Average) : CareerMoney.Compact(exit.Fill.Average))              + "\n平仓手续费 " + CareerMoney.Compact(exit.Fee) + " · 预计到账 " + CareerMoney.Compact(exit.Proceeds)`
 - `_proceeds.TooltipText` = `"平仓手续费 " + CareerMoney.Format(exit.Fee) + " · 预计到账 " + CareerMoney.Format(exit.Proceeds)`
 - `_proceeds.Visible` = `p != null`
 - `_profit.MouseFilter` = `_proceeds.MouseFilter = MouseFilterEnum.Pass`
@@ -551,7 +551,7 @@ private MarketCurrency? _currency;
 - `_quote` = `quote`
 - `_revision` = `revision`
 - `_terms.MouseFilter` = `_profit.MouseFilter = _proceeds.MouseFilter = MouseFilterEnum.Pass`
-- `_terms.Text` = `$"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "             + Price(p.Entry) + " · 止损 " + (p.StopPrice is { } stop ? Price(stop) : "未设置")`
+- `_terms.Text` = `$"保证金 {CareerMoney.Compact(p.Margin)}  ·  初始仓位 {CareerMoney.Compact(p.Entry * p.Units)}\n建仓价 "              + Price(p.Entry) + " · 止损 " + (p.StopPrice is { } stop ? Price(stop) : "未设置")`
 - `_terms.TooltipText` = `"保证金 " + CareerMoney.Format(p.Margin) + " · 初始仓位 " + CareerMoney.Format(p.Entry * p.Units)`
 - `_terms.Visible` = `_profit.Visible = _proceeds.Visible = p != null`
 - `_title.Text` = `"暂无持仓"`
@@ -633,14 +633,14 @@ private MarketCurrency? _currency;
 
 **调用者：** [`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
-**调用：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-102e4147bf0d)；[`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-3e50cb7c29a1)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)
+**调用：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-d99822e598a3)；[`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`](CareerMarket.cs.md#symbol-3e50cb7c29a1)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)
 
 **字段、属性、事件及方法组引用：** `Leverage(NationalSpire.MarketNumber)`；`NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`；`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.MarketAmountInput.Amount`；`NationalSpire.MarketCurrency.Inverse`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.Margin`；`NationalSpire.MarketPositionCard._currency`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._margin`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._preview`；`NationalSpire.MarketPositionCard._quote`；`NationalSpire.MarketPositionCard.Price(decimal)`；`NationalSpire.MarketQuote.Price`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Leverage(NationalSpire.MarketNumber)`；输入表达式：`Leverage(equity + addition)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)             + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition)`
-- `Leverage(NationalSpire.MarketNumber)`；输入表达式：`Leverage(equity)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)             + "\n实际杠杆 " + Leverage(equity)`
+- `Leverage(NationalSpire.MarketNumber)`；输入表达式：`Leverage(equity + addition)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)              + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition)`
+- `Leverage(NationalSpire.MarketNumber)`；输入表达式：`Leverage(equity)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)              + "\n实际杠杆 " + Leverage(equity)`
 - `NationalSpire.CareerMarket.Equity(NationalSpire.MarketPosition, decimal)`；输入表达式：`CareerMarket.Equity(_position, _quote!.Price)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerMarket.Equity(_position, _quote!.Price)`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(_position.Margin + addition)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)`
 - `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；输入表达式：`CareerMoney.Compact(_position.Margin)`；返回值紧邻使用处：`BinaryExpressionSyntax: "保证金 " + CareerMoney.Compact(_position.Margin)`
@@ -648,10 +648,10 @@ private MarketCurrency? _currency;
 
 **赋值（含属性/字段和局部值）：**
 
-- `_preview.Text` = `"保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)             + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition) + " · 追加免手续费"`
+- `_preview.Text` = `"保证金 " + CareerMoney.Compact(_position.Margin) + " → " + CareerMoney.Compact(_position.Margin + addition)              + "\n实际杠杆 " + Leverage(equity) + " → " + Leverage(equity + addition) + " · 追加免手续费"`
 - `_preview.Text` = `"当前报价 " + Price(_quote!.Price) + ((_position.Direction > 0) != (_currency?.Inverse == true) ? "；低于此价设置止损。" : "；高于此价设置止损。") + "\n触发后按实际成交均价平仓。"`
 
-<a id="symbol-102e4147bf0d"></a>
+<a id="symbol-d99822e598a3"></a>
 
 ## `Leverage(NationalSpire.MarketNumber) — string Leverage(MarketNumber funds)`
 
@@ -686,9 +686,9 @@ private MarketCurrency? _currency;
 
 - `Godot.SpinBox.Apply()`；输入表达式：`_input.Apply()`；返回值紧邻使用处：`ExpressionStatementSyntax: _input.Apply();`
 - `NationalSpire.MarketCurrency.Settlement(decimal)`；输入表达式：`.Settlement(_input.Amount / DisplayScale)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _currency?.Settlement(_input.Amount / DisplayScale)`
-- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)             : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`
-- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)             : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`
-- `NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`；输入表达式：`Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)             : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)             : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale));`
+- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)              : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`
+- `NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；输入表达式：`new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)              : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale)`
+- `NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`；输入表达式：`Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)              : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(_margin ? new("margin", Amount: _input.Amount / 10, Position: _position.Id, QuoteRevision: _revision)              : new("stop", Position: _position.Id, QuoteRevision: _revision, StopPrice: _currency?.Settlement(_input.Amount / DisplayScale) ?? _input.Amount / DisplayScale));`
 
 **赋值（含属性/字段和局部值）：**
 

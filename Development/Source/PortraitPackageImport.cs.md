@@ -95,7 +95,7 @@ private const long MaxTotal = 512L * 1024 * 1024;
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-0ea5cd959b0b)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
+**调用者：** [`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-e252d93b6486)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
 
 **调用：** `string.Contains(char)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(char)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
@@ -119,7 +119,7 @@ private const long MaxTotal = 512L * 1024 * 1024;
 
 来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-c36bfb3bf5f4)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
+**调用者：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-8a9158cacdd6)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
 
 **调用：** [`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；`string.LastIndexOf(char)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
@@ -142,9 +142,9 @@ private const long MaxTotal = 512L * 1024 * 1024;
 
 来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ImportPackage(string, System.Action?)`](DateSceneAssetScreen.cs.md#symbol-245b3ac8e80b)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
+**调用者：** [`ImportPackage(string, System.Action?)`](DateSceneAssetScreen.cs.md#symbol-b036d6d393e7)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
 
-**调用：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-c36bfb3bf5f4)；[`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-0ea5cd959b0b)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, string, bool)`](CharacterDesignPackage.cs.md#symbol-fbaf14871e47)；[`NationalSpire.PortraitPackageImport.CheckPath(string)`](PortraitPackageImport.cs.md#symbol-162da4e9ac7a)；[`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`](PortraitPackageImport.cs.md#symbol-f33e3556719a)；`NationalSpire.PortraitPackageImport.Plan.Plan()`；`NationalSpire.PortraitPackageImport.Sprite.Sprite(string, string, string, string, byte[])`；`string.EndsWith(string, System.StringComparison)`；`string.Equals(string?, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Compression.ZipFile.OpenRead(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.Text.Json.JsonDocument.Parse(System.ReadOnlyMemory<byte>, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
+**调用：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-8a9158cacdd6)；[`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-e252d93b6486)；[`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, string, bool)`](CharacterDesignPackage.cs.md#symbol-fbaf14871e47)；[`NationalSpire.PortraitPackageImport.CheckPath(string)`](PortraitPackageImport.cs.md#symbol-162da4e9ac7a)；[`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`](PortraitPackageImport.cs.md#symbol-f33e3556719a)；`NationalSpire.PortraitPackageImport.Plan.Plan()`；`NationalSpire.PortraitPackageImport.Sprite.Sprite(string, string, string, string, byte[])`；`string.EndsWith(string, System.StringComparison)`；`string.Equals(string?, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, long>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Compression.ZipFile.OpenRead(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.Text.Json.JsonDocument.Parse(System.ReadOnlyMemory<byte>, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`
 
 **字段、属性、事件及方法组引用：** `Add(string)`；`Bytes(string, int)`；`NationalSpire.CharacterDesignPackage.Binding.File`；`NationalSpire.CharacterDesignPackage.Binding.Id`；`NationalSpire.CharacterDesignPackage.Binding.Outfit`；`NationalSpire.CharacterDesignPackage.Imported.Design`；`NationalSpire.CharacterDesignPackage.Imported.Images`；`NationalSpire.CharacterDesignPackage.Imported.Metadata`；`NationalSpire.CharacterDesignPackage.Manifest.Sprites`；`NationalSpire.CharacterDesignPackage.Read(NationalSpire.CareerData, string, bool)`；`NationalSpire.PortraitPackageImport.CheckPath(string)`；`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitPackageImport.MaxTotal`；`NationalSpire.PortraitPackageImport.Plan.Character`；`NationalSpire.PortraitPackageImport.Plan.SourceDesign`；`NationalSpire.PortraitPackageImport.Plan.Sprites`
 
@@ -193,13 +193,13 @@ private const long MaxTotal = 512L * 1024 * 1024;
 - `SourceDesign` = `character.Design`
 - `Sprites` = `character.Metadata.Sprites.Select(s =>                      new Sprite(s.File, s.Id, EmotionId(design, s.Id), s.Outfit, character.Images[s.File])).ToList()`
 
-<a id="symbol-0ea5cd959b0b"></a>
+<a id="symbol-e252d93b6486"></a>
 
 ## `Bytes(string, int) — byte[] Bytes(string name, int limit)`
 
 来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-c36bfb3bf5f4)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
+**调用者：** [`Add(string)`](PortraitPackageImport.cs.md#symbol-8a9158cacdd6)；[`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
 
 **调用：** [`NationalSpire.PortraitPackageImport.CheckPath(string)`](PortraitPackageImport.cs.md#symbol-162da4e9ac7a)；`string.Replace(char, char)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.File.OpenRead(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFullPath(string)`；`System.IO.Stream.ReadByte()`；`System.IO.Stream.ReadExactly(System.Span<byte>)`
 
@@ -233,7 +233,7 @@ private const long MaxTotal = 512L * 1024 * 1024;
 - `stream` = `File.OpenRead(file)`
 - `total` += `length`
 
-<a id="symbol-c36bfb3bf5f4"></a>
+<a id="symbol-8a9158cacdd6"></a>
 
 ## `Add(string) — void Add(string file)`
 
@@ -241,7 +241,7 @@ private const long MaxTotal = 512L * 1024 * 1024;
 
 **调用者：** [`NationalSpire.PortraitPackageImport.Read(NationalSpire.CareerData?, string, NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-f3684b8edd44)
 
-**调用：** [`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-0ea5cd959b0b)；[`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`](DateSceneAssets.cs.md#symbol-5cd819ad6952)；[`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`](PortraitPackageImport.cs.md#symbol-f33e3556719a)；`NationalSpire.PortraitPackageImport.Sprite.Sprite(string, string, string, string, byte[])`；`string.EndsWith(string, System.StringComparison)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`
+**调用：** [`Bytes(string, int)`](PortraitPackageImport.cs.md#symbol-e252d93b6486)；[`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`](DateSceneAssets.cs.md#symbol-5cd819ad6952)；[`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`](PortraitPackageImport.cs.md#symbol-f33e3556719a)；`NationalSpire.PortraitPackageImport.Sprite.Sprite(string, string, string, string, byte[])`；`string.EndsWith(string, System.StringComparison)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`
 
 **字段、属性、事件及方法组引用：** `Bytes(string, int)`；`NationalSpire.DateSceneAssetStore.ReadImage(byte[], bool)`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitPackageImport.EmotionId(NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitPackageImport.Plan.Sprites`
 
@@ -267,7 +267,7 @@ private const long MaxTotal = 512L * 1024 * 1024;
 
 来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ImportSprites()`](DateSceneAssetScreen.cs.md#symbol-dd462f2c4406)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
+**调用者：** [`ImportSprites()`](DateSceneAssetScreen.cs.md#symbol-9567cf21af7e)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.DateSceneAssetStore.ImportPack(NationalSpire.DateSceneAssets, NationalSpire.PortraitDesign, string)`](DateSceneAssets.cs.md#symbol-57176c13d299)
 
 **调用：** [`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；[`NationalSpire.PortraitDesigns.Error(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-4591e55fbd90)；[`NationalSpire.PortraitPackageImport.Plan.Unknown(NationalSpire.PortraitDesign)`](PortraitPackageImport.cs.md#symbol-c60dfaaef123)；`NationalSpire.PortraitEmotion.PortraitEmotion()`；`NationalSpire.PortraitOutfit.PortraitOutfit()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.ICollection<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Math.Min(int, int)`
 

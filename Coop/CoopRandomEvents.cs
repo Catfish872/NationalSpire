@@ -22,7 +22,8 @@ public static partial class CoopRules
         {
             "event-custom" => RandomEvents.Custom(d, command.Target, command.Text),
             "event-custom-choose" => RandomEvents.ChooseCustom(d, command.Target, command.Text == "public"),
-            "event-start" => RandomEvents.Start(d, command.Target),
+            "event-start" => RandomEvents.Start(d, command.Target, command.Text.StartsWith('{')
+                ? System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options) : null),
             "event-skip" => RandomEvents.Skip(d, command.Target),
             "event-stop" => RandomEvents.Stop(d, command.Target),
             "event-choose" => RandomEvents.Choose(d, command.Target, command.Number, command.Text == "public"),
@@ -40,6 +41,36 @@ public static partial class CoopRules
 }
 public sealed partial class CoopCoordinator
 {
+    private sealed record PoolQuery(string Id, string World, string Epoch);
+    private sealed record PoolAnswer(PoolQuery Query, RandomEventSeed[] Entries);
+    private event Action<PoolAnswer>? PoolReceived;
+    internal async Task<RandomEventSeed[]> ReadEventPool(CancellationToken cancel)
+    {
+        if (Host) return EventPools.Get(AiSettingsStore.Load(new())).Random;
+        var query = new PoolQuery(Guid.NewGuid().ToString("N"), World!.Id, World.Epoch);
+        var ready = new TaskCompletionSource<RandomEventSeed[]>();
+        void ReceiveAnswer(PoolAnswer answer)
+        {
+            if (answer.Query == query && World?.Id == query.World && World.Epoch == query.Epoch)
+                ready.TrySetResult(answer.Entries);
+        }
+        PoolReceived += ReceiveAnswer;
+        try
+        {
+            Send(_transport.Owner, "event-pool-query", query);
+            return await ready.Task.WaitAsync(TimeSpan.FromSeconds(10), cancel);
+        }
+        finally { PoolReceived -= ReceiveAnswer; }
+    }
+    private void ReceiveEventPool(ulong sender, CoopWire wire)
+    {
+        if (!Host && wire.Kind == "event-pool-answer") { PoolReceived?.Invoke(Read<PoolAnswer>(wire)); return; }
+        if (!Host || wire.Kind != "event-pool-query") return;
+        var query = Read<PoolQuery>(wire);
+        if (World?.Id != query.World || World.Epoch != query.Epoch) return;
+        var entries = EventPools.Get(AiSettingsStore.Load(new())).Random;
+        Send(sender, "event-pool-answer", new PoolAnswer(query,entries));
+    }
     private void StartEvent(ulong sender, CoopCommand command)
     {
         if (!Host || World == null || command.Kind is not ("event-start" or "event-custom")) return;

@@ -20,25 +20,13 @@ public partial class CareerScreen
         var setup = new NpcGenerationSetup { TeamCountry = team ? country : null, Pool = PersonalityPools.Read(ai), Ai = Coop.CoopJson.Copy(ai), RivalLevel = rivalLevel };
         AiRouting.Ensure(setup.Ai);
         if (!setup.Ai.ConnectionProfiles.ContainsKey(AiRouting.Default)) setup.Ai.ConnectionProfiles[AiRouting.Default] = new() { Endpoint = setup.Ai.Endpoint, Model = setup.Ai.Model };
-        var connection = setup.Ai.ConnectionProfiles[AiRouting.Default];
         Label status = null!; GridContainer weights = null!; VBoxContainer files = null!;
-        LineEdit endpoint = null!, model = null!, key = null!;
+        Func<bool> commitConnection=()=>true;
+        string openingProfile=AiRouting.Default;
         var sliders = new List<PercentageSlider>(); bool busy = false;
         string original = CareerStore.DefaultPath;
         var savedRoles = Task.Run(() => OpeningLibrary.SavedRoles(original));
         Task? fillRoles = null;
-        void PrepareConnection(bool generate = false)
-        {
-                string address = endpoint.Text.Trim(), modelId = model.Text.Trim();
-                bool changed = address != connection.Endpoint || modelId != connection.Model || !string.IsNullOrWhiteSpace(key.Text);
-                connection.Endpoint = setup.Ai.Endpoint = address; connection.Model = setup.Ai.Model = modelId;
-                if (!string.IsNullOrWhiteSpace(key.Text))
-                {
-                    if (AiService.PersistKey(key.Text.Trim()) is { } error) throw new IOException(error);
-                    key.Text = ""; key.PlaceholderText = "已保存 · 留空保留";
-                }
-                if ((changed || generate) && AiService.HasProfileKey(AiRouting.Default)) setup.Ai.Enabled = true;
-        }
         async Task SubmitAsync()
         {
             busy = true; status.Text = team ? "正在建立共同生涯……" : "正在建立生涯……";
@@ -124,7 +112,7 @@ public partial class CareerScreen
             {
                 foreach (var slider in sliders) slider.Commit();
                 PersonalityPools.Validate(setup.Pool);
-                PrepareConnection();
+                if(!commitConnection()) return false;
                 if (selectedAsync != null) { _ = SubmitAsync(); return false; }
                 selected(setup); return true;
             }
@@ -132,32 +120,22 @@ public partial class CareerScreen
         }, "生成并开始", box =>
         {
             box.CustomMinimumSize = new(1040, 0); box.AddThemeConstantOverride("separation", 16);
-            var scroll = new BroadcastScroll { Name = "NewWorldScroll", CustomMinimumSize = new(0, 550), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
+            var scroll = new BroadcastScroll { Name = "NewWorldScroll", CustomMinimumSize = new(0, 634), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var content = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; content.AddThemeConstantOverride("separation", 12); scroll.AddChild(content);
-            HBoxContainer SettingRow(string title)
-            {
-                var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); content.AddChild(row);
-                var label = Text(title, 20, _gold); label.CustomMinimumSize = new(190, 0); row.AddChild(label); return row;
+            var aiSection=OpeningControls.Section(content,"AI 连接方案","settings-2","保存连接 · 按任务选择模型");
+            var aiEditor=new VBoxContainer();aiSection.AddChild(aiEditor);
+            var confirmRow=new HBoxContainer{Visible=false};aiSection.AddChild(confirmRow);confirmRow.AddChild(Text("当前连接尚未保存，是否切换？",16,_gold));
+            Action? switchTo=null;confirmRow.AddChild(Button("继续编辑",()=>confirmRow.Hide(),118));confirmRow.AddChild(Button("确认切换",()=>{confirmRow.Hide();switchTo?.Invoke();},118));
+            void Connections(){
+                CareerVisuals.ClearContent(aiEditor);
+                AiSettingsPanel.BuildConnections(aiEditor,setup.Ai!,()=>AiSettingsStore.Save(Coop.CoopJson.Copy(setup.Ai!)),()=>{},null,
+                    (message,error)=>{if(IsInstanceValid(status)){status.Text=message;status.Modulate=error?new Color("efa9a4"):Colors.White;}},null,"保存方案",
+                    action=>{switchTo=action;confirmRow.Show();},commit=>commitConnection=commit,openingProfile,id=>openingProfile=id);
             }
-            content.AddChild(Text("API 配置", 20, _gold));
-            content.AddChild(Text("接入 AI 后能获得更好的社区和讯息互动体验。", 16, _muted));
-            LineEdit Input(VBoxContainer parent, string title, string value, string name)
-            {
-                parent.AddChild(Text(title, 16, _muted));
-                var input = new LineEdit { Name = name, Text = value, CustomMinimumSize = new(0, 40), SizeFlagsHorizontal = SizeFlags.ExpandFill };
-                parent.AddChild(input); return input;
-            }
-            var credentials = new HBoxContainer(); credentials.AddThemeConstantOverride("separation", 16); content.AddChild(credentials);
-            var addressColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1.5f }; credentials.AddChild(addressColumn);
-            endpoint = Input(addressColumn, "服务地址", connection.Endpoint, "WorldApiEndpoint");
-            var secretColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; credentials.AddChild(secretColumn);
-            var modelColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; credentials.AddChild(modelColumn);
-            key = Input(secretColumn, "密钥 · 加密保存在本机", "", "WorldApiKey"); key.Secret = true;
-            key.PlaceholderText = AiService.HasProfileKey(AiRouting.Default) ? "已保存 · 留空保留" : "填写 API 密钥";
-            model = Input(modelColumn, "模型", connection.Model, "WorldApiModel");
-            content.AddChild(new HSeparator());
+            Connections();
+            var styleSection=OpeningControls.Section(content,"世界设定","flag","提示词模板 · 对手水平",accent:CareerVisuals.Teal);
             var level = AiSettingsPanel.RivalLevelPicker(setup.RivalLevel, team); level.CustomMinimumSize = new(0, 44);
-            level.ItemSelected += i => setup.RivalLevel = level.GetItemId((int)i); SettingRow("NPC 游戏下降水平").AddChild(level);
+            level.ItemSelected += i => setup.RivalLevel = level.GetItemId((int)i); OpeningControls.Field(styleSection,"对手比赛水平").AddChild(level);
             var templates = PromptLibrary.AvailableTemplates(setup.Ai).ToArray();
             var worlds = new OptionButton { Name = "WorldPromptTemplate", FitToLongestItem = false, CustomMinimumSize = new(0, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill };
             void RefreshWorlds()
@@ -180,7 +158,7 @@ public partial class CareerScreen
                         var imported = Coop.CoopJson.Copy(setup.Ai);
                         var bundle = PromptTransfer.Read(File.ReadAllText(path));
                         PromptTransfer.Apply(imported, bundle);
-                        setup.Ai = imported; connection = setup.Ai.ConnectionProfiles[AiRouting.Default];
+                        setup.Ai = imported; Connections();
                         setup.Pool = PersonalityPools.Read(imported); Weights();
                         RefreshWorlds(); status.Text = "提示词已载入：" + worlds.GetItemText(worlds.Selected)
                             + (bundle.PersonalityPool != null ? "，性格池与人物比例已同步。" : "。") + "生成新世界时应用。";
@@ -188,51 +166,51 @@ public partial class CareerScreen
                     catch (Exception e) { status.Text = "提示词导入失败：" + e.Message; }
                 });
             };
-            SettingRow("世界设定").AddChild(worlds);
-            content.AddChild(new HSeparator());
-            var presetRow=SettingRow("开局模板");
+            OpeningControls.Field(styleSection,"世界观与提示词模板").AddChild(worlds);
+            var presets=OpeningControls.Section(content,"开局模板","shuffle","选择起点后仍可编辑",true);
+            var presetRow=new HBoxContainer();presetRow.AddThemeConstantOverride("separation",10);presets.AddChild(presetRow);var presetGroup=new ButtonGroup();
             var draftPanel=new VBoxContainer(); content.AddChild(draftPanel);
             void DrawDraft()
             {
                 CareerVisuals.ClearContent(draftPanel);
-                OpeningPlayerEditor.Draw(draftPanel,setup.Personal,setup.PlayerName,setup.TeamCountry??country,setup.TeamCountry);
-                OpeningWorldEditor.Draw(draftPanel,setup.World);
+                Action<string>? updateRegion=null;
+                OpeningPlayerEditor.Draw(draftPanel,setup.Personal,setup.PlayerName,setup.TeamCountry??country,setup.TeamCountry,n=>{if(setup.TeamCountry==null)updateRegion?.Invoke(n);});
+                updateRegion=OpeningWorldEditor.Draw(draftPanel,setup.World,setup.TeamCountry??(setup.Personal.Country.Length>0?setup.Personal.Country:country));
             }
-            foreach(var title in new[]{"新秀起步","职业选手","俱乐部创办人"})
+            foreach(var (title,detail,icon) in new[]{("新秀起步","自由选手 · 从零开始","flag"),("职业选手","12 胜 4 负 · $50,000","swords"),("俱乐部创办人","自建俱乐部 · $500,000","landmark")})
             {
-                presetRow.AddChild(Button(title,()=>{
+                OpeningControls.Card(presetRow,title,detail,icon,title=="新秀起步",()=>{
                     if(busy)return;
                     setup.Personal=new();setup.World=new();
                     if(title=="职业选手"){setup.Personal.Wins=12;setup.Personal.Losses=4;setup.Personal.Credits=50000;setup.World.ClubMode="加盟";}
                     if(title=="俱乐部创办人"){setup.Personal.Credits=500000;setup.World.ClubMode="自建";}
                     DrawDraft();
-                },130));
+                },presetGroup);
             }
             DrawDraft();
             var guide=new TextEdit{PlaceholderText="描述想加入的世界、所在赛季和选手经历……",CustomMinimumSize=new(0,74),WrapMode=TextEdit.LineWrappingMode.Boundary};
-            var generation=SettingRow("用 AI 填写开局"); content.AddChild(guide);
+            var generation=OpeningControls.Section(content,"用 AI 填写开局","pencil","描述你的故事，可重复生成",accent:CareerVisuals.Teal); content.MoveChild(generation.GetParent().GetParent(),1); generation.AddChild(guide);
             var lifetime=new CancellationTokenSource(); guide.TreeExiting+=()=>lifetime.Cancel();
             generation.AddChild(Button("根据描述填写",async ()=>{
                 if(busy || string.IsNullOrWhiteSpace(guide.Text))return;
                 busy=true;
                 try
                 {
-                    PrepareConnection(true);status.Text="正在生成开局草案……";
+                    if(!commitConnection())return;status.Text="正在生成开局草案……";
                     var result=Coop.CoopJson.Copy(setup);
-                    await OpeningGeneration.Generate(result,guide.Text,lifetime.Token);
+                    await OpeningGeneration.Generate(result,guide.Text,lifetime.Token,openingProfile);
                     if(!IsInstanceValid(guide)||lifetime.IsCancellationRequested)return;
-                    setup.TeamCountry=result.TeamCountry;setup.Personal=result.Personal;setup.World=result.World;setup.Pool=result.Pool;setup.RivalLevel=result.RivalLevel;
+                    setup.WorldId=result.WorldId;setup.TeamCountry=result.TeamCountry;setup.Personal=result.Personal;setup.World=result.World;setup.Pool=result.Pool;setup.RivalLevel=result.RivalLevel;
                     PromptLibrary.SelectTemplate(setup.Ai,PromptLibrary.TemplateId(result.Ai!));
-                    DrawDraft();Weights();RefreshWorlds();level.Select(level.GetItemIndex(setup.RivalLevel));
+                    presetGroup.GetPressedButton()?.SetPressedNoSignal(false);DrawDraft();Weights();RefreshWorlds();level.Select(level.GetItemIndex(setup.RivalLevel));
                     status.Text="开局草案已填入，可以编辑或修改描述再次生成。";
                 }
                 catch(Exception e){if(IsInstanceValid(status)&&!lifetime.IsCancellationRequested)status.Text=e.Message;}
                 finally{busy=false;}
             },160));
-            content.AddChild(new HSeparator());
-            var peopleRow = new HBoxContainer(); peopleRow.AddThemeConstantOverride("separation", 24); content.AddChild(peopleRow);
+            var peopleRow = new HBoxContainer(); peopleRow.AddThemeConstantOverride("separation", 24); var rolesSection=OpeningControls.Section(content,"人物与素材","users-round","角色卡 · 形象包");rolesSection.AddChild(peopleRow);
             var peopleColumn = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; peopleColumn.AddThemeConstantOverride("separation", 12); peopleRow.AddChild(peopleColumn);
-            peopleColumn.AddChild(Text("NPC 性格与角色配置", 20, _gold));
+
             var toolbar = new HBoxContainer(); toolbar.AddThemeConstantOverride("separation", 12); peopleColumn.AddChild(toolbar);
             toolbar.AddChild(Button("批量导入角色", () => { if (busy) return; PickNestedFile("选择角色卡或角色设计包", [".png", ".zip"], _ => { }, paths =>
             {
@@ -240,7 +218,7 @@ public partial class CareerScreen
                 Files(); status.Text = "已选 " + setup.Files.Count + " 个角色文件；确认后统一校验并导入。";
             }); }, 180));
 
-            var reuse=new VBoxContainer{Visible=false}; var selectSaved=new CareerDisclosureButton{Text="沿用已导入的角色与形象包",ArrowOnLeft=true,ToggleMode=true};content.AddChild(selectSaved);content.AddChild(reuse);
+            var reuse=new VBoxContainer{Visible=false}; var selectSaved=new CareerDisclosureButton{Text="沿用已导入的角色与形象包",ArrowOnLeft=true,ToggleMode=true};rolesSection.AddChild(selectSaved);rolesSection.AddChild(reuse);
             selectSaved.Toggled+=show=>reuse.Visible=show;
             foreach(var entry in AppearanceLibrary.List().Where(e=>!e.BuiltIn))
             {
@@ -265,24 +243,9 @@ public partial class CareerScreen
                 catch(Exception e){if(IsInstanceValid(selectSaved))selectSaved.Text="读取已有角色卡失败  ·  "+e.Message;}
             }
             fillRoles=FillRoles();
-            files = new VBoxContainer(); content.AddChild(files); Files();
-            var proportions = new VBoxContainer { Name = "WorldProportions", Visible = false }; proportions.AddThemeConstantOverride("separation", 10);
-            var toggle = new CareerDisclosureButton { Name = "WorldProportionsToggle", Text = "配置人物比例", ArrowOnLeft = true,
-                Flat = true, ToggleMode = true, SizeFlagsHorizontal = SizeFlags.ShrinkBegin, MouseDefaultCursorShape = CursorShape.PointingHand };
-            toggle.AddThemeFontSizeOverride("font_size", 18);
-            toggle.AddThemeColorOverride("font_color", _muted);
-            toggle.AddThemeColorOverride("font_hover_color", _ink);
-            toggle.AddThemeColorOverride("font_pressed_color", _ink);
-            toggle.AddThemeColorOverride("font_hover_pressed_color", _ink);
-            foreach (string state in new[] { "normal", "hover", "pressed", "focus" })
-                toggle.AddThemeStyleboxOverride(state, new StyleBoxEmpty { ContentMarginLeft = 26, ContentMarginTop = 4, ContentMarginBottom = 4 });
-            toggle.Pressed += () =>
-            {
-                if (busy) { toggle.ButtonPressed = proportions.Visible; return; }
-                proportions.Visible = !proportions.Visible;
-                toggle.ButtonPressed = proportions.Visible; toggle.QueueRedraw();
-                scroll.CustomMinimumSize = new(0, proportions.Visible ? 770 : 550);
-            }; content.AddChild(toggle); content.AddChild(proportions);
+            files = new VBoxContainer(); rolesSection.AddChild(files); Files();
+            var proportions=OpeningControls.Section(content,"人物比例","users-round","类别 · 说话风格");
+            proportions.Name="WorldProportions";
             var allocationHint = Text("各大类、每类内部各合计 100%。点击锁固定比例；其余未锁定项均摊差额，调整上限为剩余额度。", 16, _muted);
             allocationHint.AutowrapMode = TextServer.AutowrapMode.WordSmart; proportions.AddChild(allocationHint);
             weights = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; weights.AddThemeConstantOverride("h_separation", 16); weights.AddThemeConstantOverride("v_separation", 16);

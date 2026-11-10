@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`686D030CCACA714391FFB8A0A138B08339FA7F71D9D1CC8C92A59CF7819F3FE9`。来源：[源码](../../ConsumerPurchases.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5CD470C7FDADA8135782043C33D8A141FCCE2916B74828DA4DC0F95B068A038D`。来源：[源码](../../ConsumerPurchases.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -110,7 +110,7 @@ private readonly Dictionary<string, long> _quantities;
 
 来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-928c754fb9a7)
+**调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`Select(NationalSpire.Good)`](ConsumerScreen.cs.md#symbol-c75e2ac1b167)
 
 **调用：** `System.Collections.Generic.HashSet<T>.Contains(T)`
 

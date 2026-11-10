@@ -53,7 +53,7 @@ private int _size;
 
 **调用者：** [`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)
 
-**调用：** [`Highlight(bool)`](DateHistoryList.cs.md#symbol-74f25dc76aee)；[`HighlightReplay(bool)`](DateHistoryList.cs.md#symbol-9f2748670ffb)；[`NationalSpire.DateHistoryList.SetActionsBusy(bool)`](DateHistoryList.cs.md#symbol-0f5007a527d5)；[`UpdateSeek(Godot.HBoxContainer, NationalSpire.DateHistoryEntry)`](DateHistoryList.cs.md#symbol-4d9f14d4c122)；`Godot.BaseButton.IsHovered()`；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.HasFocus()`；`Godot.GodotObject.GetInstanceId()`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.QueueFree()`；`Godot.PanelContainer.PanelContainer()`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.DateHistoryEntry.DateHistoryEntry(string, string, bool)`；`NationalSpire.DateHistoryGuide.DateHistoryGuide()`；`NationalSpire.DateMemoryEraser.DateMemoryEraser()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Action<T1, T2, T3>.Invoke(T1, T2, T3)`（委托实际目标见流程文档）；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Highlight(bool)`](DateHistoryList.cs.md#symbol-6402be395fca)；[`HighlightReplay(bool)`](DateHistoryList.cs.md#symbol-ae9923d3f816)；[`NationalSpire.DateHistoryList.SetActionsBusy(bool)`](DateHistoryList.cs.md#symbol-0f5007a527d5)；[`UpdateSeek(Godot.HBoxContainer, NationalSpire.DateHistoryEntry)`](DateHistoryList.cs.md#symbol-484c2e81156c)；`Godot.BaseButton.IsHovered()`；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.HasFocus()`；`Godot.GodotObject.GetInstanceId()`；`Godot.GodotObject.SetMeta(Godot.StringName, Godot.Variant)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.QueueFree()`；`Godot.PanelContainer.PanelContainer()`；`Godot.RichTextLabel.RichTextLabel()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.DateHistoryEntry.DateHistoryEntry(string, string, bool)`；`NationalSpire.DateHistoryGuide.DateHistoryGuide()`；`NationalSpire.DateMemoryEraser.DateMemoryEraser()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Action<T1, T2, T3>.Invoke(T1, T2, T3)`（委托实际目标见流程文档）；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `(Godot.HBoxContainer Row, Godot.RichTextLabel Text).Row`；`(Godot.HBoxContainer Row, Godot.RichTextLabel Text).Text`；`Highlight(bool)`；`HighlightReplay(bool)`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.DateHistoryEntry.Reply`；`NationalSpire.DateHistoryEntry.Text`；`NationalSpire.DateHistoryEntry.TurnId`；`NationalSpire.DateHistoryList._actionsBusy`；`NationalSpire.DateHistoryList._cache`；`NationalSpire.DateHistoryList._delete`；`NationalSpire.DateHistoryList._font`；`NationalSpire.DateHistoryList._jump`；`NationalSpire.DateHistoryList._normal`；`NationalSpire.DateHistoryList._rows`；`NationalSpire.DateHistoryList._size`；`NationalSpire.DateHistoryList.RowActions`；`NationalSpire.DateHistoryList.SetActionsBusy(bool)`；`UpdateSeek(Godot.HBoxContainer, NationalSpire.DateHistoryEntry)`
 
@@ -175,7 +175,7 @@ private int _size;
 - `Visible` = `entry.Reply || seek.Visible`
 - `Visible` = `entry.TurnId.Length > 0 && jump != null && (!entry.Reply || !playerTurns.Contains(entry.TurnId))`
 
-<a id="symbol-9f2748670ffb"></a>
+<a id="symbol-ae9923d3f816"></a>
 
 ## `HighlightReplay(bool) — void HighlightReplay(bool active)`
 
@@ -202,7 +202,7 @@ private int _size;
 - `seek.Modulate` = `new Color(1, 1, 1, active ? 1 : .55f)`
 - `targetGuide.Highlighted` = `active`
 
-<a id="symbol-74f25dc76aee"></a>
+<a id="symbol-6402be395fca"></a>
 
 ## `Highlight(bool) — void Highlight(bool active)`
 
@@ -225,7 +225,7 @@ private int _size;
 - `guide.Highlighted` = `active`
 - `icon.Modulate` = `new Color(1, 1, 1, active ? 1 : .55f)`
 
-<a id="symbol-4d9f14d4c122"></a>
+<a id="symbol-484c2e81156c"></a>
 
 ## `UpdateSeek(Godot.HBoxContainer, NationalSpire.DateHistoryEntry) — void UpdateSeek(HBoxContainer row, DateHistoryEntry entry)`
 

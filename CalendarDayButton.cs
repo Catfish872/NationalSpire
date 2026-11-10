@@ -5,7 +5,7 @@ namespace NationalSpire;
 /// <summary>日历日期的选中底色与悬停线条独立；日期、赛事、关系共用一行。</summary>
 public partial class CalendarDayButton : Button
 {
-    private const int CopyBottom=13;
+    private const int CopyBottom=16;
     public string Number { get; init; } = "";
     public string Description { get; init; } = "";
     public List<(string Icon,string Title)> Markers { get; init; } = [];
@@ -56,8 +56,8 @@ public partial class CalendarDayButton : Button
             _heading.AddChild(new EventEmblem { CustomMinimumSize = new(24, 24), SizeFlagsVertical = SizeFlags.ShrinkCenter });
         }
         var number = new Label { Name = "CalendarNumber", Text = Number, MouseFilter = MouseFilterEnum.Ignore };
-        number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 21 : 18); _heading.AddChild(number);
-        if (CalendarLayout && Today) { var today=new Label {Text="今天"};today.AddThemeFontSizeOverride("font_size",12);today.AddThemeColorOverride("font_color",CareerVisuals.Teal);_heading.AddChild(today); }
+        number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 23 : 18); _heading.AddChild(number);
+        if (CalendarLayout && Today) { var today=new Label {Text="今天"};today.AddThemeFontSizeOverride("font_size",14);today.AddThemeColorOverride("font_color",CareerVisuals.Teal);_heading.AddChild(today); }
         if (Today) number.AddThemeFontOverride("font", CareerVisuals.InterfaceText(700));
         if (HasMatch && !CalendarLayout)
         {
@@ -82,7 +82,7 @@ public partial class CalendarDayButton : Button
         _description = new Label { Name = "CalendarDescription", Text = Description, HorizontalAlignment = HorizontalAlignment.Center,
             AutowrapMode = TextServer.AutowrapMode.WordSmart,
             MaxLinesVisible = 2, MouseFilter = MouseFilterEnum.Ignore };
-        _description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 12 : 14 : 16);
+        _description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 14 : 16 : 16);
         if (!CalendarLayout) AddChild(_description);
         if (CalendarLayout)
         {
@@ -96,7 +96,7 @@ public partial class CalendarDayButton : Button
             }
             _copy=new VBoxContainer { Name="CalendarCopy",GrowVertical=GrowDirection.Begin,Alignment=BoxContainer.AlignmentMode.End,MouseFilter=MouseFilterEnum.Ignore };
             AddChild(_copy); _copy.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-            _copy.OffsetLeft=7; _copy.OffsetRight=-7; _copy.OffsetTop=39; _copy.OffsetBottom=-CopyBottom;
+            _copy.OffsetLeft=14; _copy.OffsetRight=-14; _copy.OffsetTop=39; _copy.OffsetBottom=-CopyBottom;
             _copy.AddThemeConstantOverride("separation",4);
             _description.AddThemeConstantOverride("line_spacing",1);
             _description.AddThemeColorOverride("font_color",Description=="训练 / 新闻" ? CareerVisuals.Muted : CareerVisuals.Ink);
@@ -104,7 +104,7 @@ public partial class CalendarDayButton : Button
             _copy.AddChild(_description);
             _secondary=new Label {Name="CalendarDetail",Text=SecondLine,Visible=SecondLine.Length>0,
                 AutowrapMode=TextServer.AutowrapMode.WordSmart,MouseFilter=MouseFilterEnum.Ignore};
-            _secondary.AddThemeFontSizeOverride("font_size",12); _secondary.AddThemeConstantOverride("line_spacing",1);
+            _secondary.AddThemeFontSizeOverride("font_size",14); _secondary.AddThemeConstantOverride("line_spacing",1);
             _secondary.AddThemeColorOverride("font_color",CareerVisuals.Muted); _copy.AddChild(_secondary);
             _copy.MinimumSizeChanged+=FitCalendarCopy;
             TooltipText = string.Join("\n", new[] { Description, SecondLine }.Concat(Markers.Select(m=>m.Title)).Where(s=>s.Length>0).Distinct()); ClipContents = true;
@@ -118,17 +118,17 @@ public partial class CalendarDayButton : Button
         if (_heading == null) return;
         if (_markers != null)
         {
-            float x = Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+14);
-            float width = Math.Max(18,Size.X-x-7);
+            float x = Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+22);
+            float width = Math.Max(18,Size.X-x-14);
             int perRow = Math.Max(1,(int)((width+2)/18));
             int rows = (Markers.Count+perRow-1)/perRow;
-            _heading.Position=new(8,6); _heading.Size=new(x,33);
+            _heading.Position=new(14,9); _heading.Size=new(x,33);
             _markers.Position=new(x,13); _markers.Size=new(width,Math.Max(16,rows*18));
-            float copyWidth=Math.Max(1,Size.X-14);
+            float copyWidth=Math.Max(1,Size.X-28);
             if (copyWidth<50) return;
             string detail=SecondLine;
             int split=detail.IndexOf(" · 对手：",StringComparison.Ordinal);
-            if(split>=0 && _secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:12).X>copyWidth)
+            if(split>=0 && _secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:14).X>copyWidth)
                 detail=detail[..split]+"\n"+detail[(split+3)..];
             if(_secondary!.Text!=detail) _secondary.Text=detail;
             _copy!.OffsetTop=Math.Max(39,16+rows*18);

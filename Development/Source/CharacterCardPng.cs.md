@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`7D799E3EAD9178D61767A250AE56DFE969AF1E93C124944CD0477127D89F8885`。来源：[源码](../../CharacterCardPng.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`977E44F1C07081E39F934A2CD97E9CD129ABAA3ED1DD10F7333CB93308C55BBC`。来源：[源码](../../CharacterCardPng.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -506,7 +506,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CharacterCardPng.Bundle.Bundle()`；输入表达式：`new Bundle          {              Character = JsonSerializer.Deserialize<Fields>(JsonSerializer.Serialize(source, Json), Json)!,              Club = Reference(d, source.ClubId), SupportedClub = Reference(d, source.SupportedClubId)          }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Bundle          {              Character = JsonSerializer.Deserialize<Fields>(JsonSerializer.Serialize(source, Json), Json)!,              Club = Reference(d, source.ClubId), SupportedClub = Reference(d, source.SupportedClubId)          }`
+- `NationalSpire.CharacterCardPng.Bundle.Bundle()`；输入表达式：`new Bundle         {             Character = JsonSerializer.Deserialize<Fields>(JsonSerializer.Serialize(source, Json), Json)!,             Club = Reference(d, source.ClubId), SupportedClub = Reference(d, source.SupportedClubId)         }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Bundle         {             Character = JsonSerializer.Deserialize<Fields>(JsonSerializer.Serialize(source, Json), Json)!,             Club = Reference(d, source.ClubId), SupportedClub = Reference(d, source.SupportedClubId)         }`
 - `NationalSpire.CharacterCardPng.IsCard(byte[], int, int)`；输入表达式：`IsCard(image, chunk.Offset, chunk.Length)`；返回值紧邻使用处：`IfStatementSyntax: if (IsCard(image, chunk.Offset, chunk.Length)) continue;`
 - `NationalSpire.CharacterCardPng.ReadChunks(byte[])`；输入表达式：`ReadChunks(image)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadChunks(image)`
 - `NationalSpire.CharacterCardPng.Reference(NationalSpire.CareerData, string)`；输入表达式：`Reference(d, source.ClubId)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Club = Reference(d, source.ClubId)`
@@ -553,16 +553,16 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CharacterCardPng.IsCard(byte[], int, int)`；输入表达式：`IsCard(file, chunk.Offset, chunk.Length)`；返回值紧邻使用处：`IfStatementSyntax: if (IsCard(file, chunk.Offset, chunk.Length))              {                  if (bundle != null) throw new InvalidDataException("图片包含重复的角色资料。");                  int start = chunk.Offset + 8 + Keyword.Length + 1;                  byte[] json;                  try { json = Convert.FromBase64String(Encoding.ASCII.GetString(file, start, chunk.Length - Keyword.Length - 1)); }                  catch (FormatException) { throw new InvalidDataException("图片内的角色资料已损坏。"); }                  try { bundle = JsonSerializer.Deserialize<Bundle>(json, Json); }                  catch (JsonException) { throw new InvalidDataException("图片内的角色资料格式无效。"); }                  if (bundle == null || bundle.Format != Keyword || bundle.Version != 1 || bundle.Character == null)                      throw new InvalidDataException("不支持这张角色卡的格式或版本。");              }              else picture.Write(file, chunk.Offset, chunk.Length + 12);`
+- `NationalSpire.CharacterCardPng.IsCard(byte[], int, int)`；输入表达式：`IsCard(file, chunk.Offset, chunk.Length)`；返回值紧邻使用处：`IfStatementSyntax: if (IsCard(file, chunk.Offset, chunk.Length))             {                 if (bundle != null) throw new InvalidDataException("图片包含重复的角色资料。");                 int start = chunk.Offset + 8 + Keyword.Length + 1;                 byte[] json;                 try { json = Convert.FromBase64String(Encoding.ASCII.GetString(file, start, chunk.Length - Keyword.Length - 1)); }                 catch (FormatException) { throw new InvalidDataException("图片内的角色资料已损坏。"); }                 try { bundle = JsonSerializer.Deserialize<Bundle>(json, Json); }                 catch (JsonException) { throw new InvalidDataException("图片内的角色资料格式无效。"); }                 if (bundle == null || bundle.Format != Keyword || bundle.Version != 1 || bundle.Character == null)                     throw new InvalidDataException("不支持这张角色卡的格式或版本。");             }             else picture.Write(file, chunk.Offset, chunk.Length + 12);`
 - `NationalSpire.CharacterCardPng.MatchClub(NationalSpire.CareerData, NationalSpire.CharacterCardPng.ClubReference?, bool)`；输入表达式：`MatchClub(d, bundle.Club, true)`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.ClubId = MatchClub(d, bundle.Club, true)`
 - `NationalSpire.CharacterCardPng.MatchClub(NationalSpire.CareerData, NationalSpire.CharacterCardPng.ClubReference?, bool)`；输入表达式：`MatchClub(d, bundle.SupportedClub, false)`；返回值紧邻使用处：`AssignmentExpressionSyntax: p.SupportedClubId = MatchClub(d, bundle.SupportedClub, false)`
 - `NationalSpire.CharacterCardPng.ReadChunks(byte[])`；输入表达式：`ReadChunks(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = ReadChunks(file)`
 - `NationalSpire.CharacterCards.CheckImportedFields(NationalSpire.CareerData, NationalSpire.CareerPerson)`；输入表达式：`CharacterCards.CheckImportedFields(d, p)`；返回值紧邻使用处：`ExpressionStatementSyntax: CharacterCards.CheckImportedFields(d, p);`
-- `NationalSpire.PlayerAvatar.PlayerAvatar()`；输入表达式：`new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`；返回值紧邻使用处：`ConditionalExpressionSyntax: normalizeAvatar != null ? normalizeAvatar(pixels)              : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
+- `NationalSpire.PlayerAvatar.PlayerAvatar()`；输入表达式：`new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`；返回值紧邻使用处：`ConditionalExpressionSyntax: normalizeAvatar != null ? normalizeAvatar(pixels)             : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
 - `NationalSpire.PlayerAvatar.Validate()`；输入表达式：`p.Avatar.Validate()`；返回值紧邻使用处：`ExpressionStatementSyntax: p.Avatar.Validate();`
 - `System.Convert.FromBase64String(string)`；输入表达式：`Convert.FromBase64String(Encoding.ASCII.GetString(file, start, chunk.Length - Keyword.Length - 1))`；返回值紧邻使用处：`AssignmentExpressionSyntax: json = Convert.FromBase64String(Encoding.ASCII.GetString(file, start, chunk.Length - Keyword.Length - 1))`
 - `System.Convert.ToBase64String(byte[])`；输入表达式：`Convert.ToBase64String(pixels)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Png = Convert.ToBase64String(pixels)`
-- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`normalizeAvatar(pixels)`；返回值紧邻使用处：`ConditionalExpressionSyntax: normalizeAvatar != null ? normalizeAvatar(pixels)              : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`normalizeAvatar(pixels)`；返回值紧邻使用处：`ConditionalExpressionSyntax: normalizeAvatar != null ? normalizeAvatar(pixels)             : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`BinaryExpressionSyntax: "custom-" + Guid.NewGuid().ToString("N")`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("不支持这张角色卡的格式或版本。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("不支持这张角色卡的格式或版本。");`
@@ -584,7 +584,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 - `bundle` = `JsonSerializer.Deserialize<Bundle>(json, Json)`
 - `json` = `Convert.FromBase64String(Encoding.ASCII.GetString(file, start, chunk.Length - Keyword.Length - 1))`
 - `Label` = `"角色卡头像"`
-- `p.Avatar` = `normalizeAvatar != null ? normalizeAvatar(pixels)              : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
+- `p.Avatar` = `normalizeAvatar != null ? normalizeAvatar(pixels)             : new() { Source = "image", Label = "角色卡头像", Png = Convert.ToBase64String(pixels) }`
 - `p.ClubId` = `MatchClub(d, bundle.Club, true)`
 - `p.Id` = `"custom-" + Guid.NewGuid().ToString("N")`
 - `p.SupportedClubId` = `MatchClub(d, bundle.SupportedClub, false)`
@@ -650,7 +650,7 @@ private static readonly JsonSerializerOptions Json = new() { Encoder = System.Te
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；输入表达式：`file.AsSpan(offset + 4, 4).SequenceEqual("tEXt"u8)`；返回值紧邻使用处：`BinaryExpressionSyntax: file.AsSpan(offset + 4, 4).SequenceEqual("tEXt"u8) && length > Keyword.Length`
-- `System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；输入表达式：`file.AsSpan(offset + 8, Keyword.Length + 1).SequenceEqual(Encoding.ASCII.GetBytes(Keyword + "\0"))`；返回值紧邻使用处：`BinaryExpressionSyntax: file.AsSpan(offset + 4, 4).SequenceEqual("tEXt"u8) && length > Keyword.Length              && file.AsSpan(offset + 8, Keyword.Length + 1).SequenceEqual(Encoding.ASCII.GetBytes(Keyword + "\0"))`
+- `System.Span<T>.SequenceEqual<T>(System.ReadOnlySpan<T>)`；输入表达式：`file.AsSpan(offset + 8, Keyword.Length + 1).SequenceEqual(Encoding.ASCII.GetBytes(Keyword + "\0"))`；返回值紧邻使用处：`BinaryExpressionSyntax: file.AsSpan(offset + 4, 4).SequenceEqual("tEXt"u8) && length > Keyword.Length             && file.AsSpan(offset + 8, Keyword.Length + 1).SequenceEqual(Encoding.ASCII.GetBytes(Keyword + "\0"))`
 - `System.Text.Encoding.GetBytes(string)`；输入表达式：`Encoding.ASCII.GetBytes(Keyword + "\0")`；返回值紧邻使用处：`ArgumentSyntax: Encoding.ASCII.GetBytes(Keyword + "\0")`
 - `T[]?.AsSpan<T>(int, int)`；输入表达式：`file.AsSpan(offset + 4, 4)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: file.AsSpan(offset + 4, 4).SequenceEqual`
 - `T[]?.AsSpan<T>(int, int)`；输入表达式：`file.AsSpan(offset + 8, Keyword.Length + 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: file.AsSpan(offset + 8, Keyword.Length + 1).SequenceEqual`

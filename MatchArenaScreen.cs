@@ -134,14 +134,18 @@ public partial class CareerScreen
         if(d.Failure==null && _tab=="结算" && d.PendingSettlementId.Length>0 && ReviewRecord(d)?.MatchId==d.PendingSettlementId)
         { d.PendingSettlementId=""; CareerStore.Save(d); }
     }
-    private void ReviewPager(CareerData d,CareerResult result)
+    private void ReviewPager(CareerData d,CareerResult result,HBoxContainer actions)
     {
-        var bar=TabStrip(_content,14); int i=d.Results.IndexOf(result);
+        int i=d.Results.IndexOf(result);
         void Page(int index) { AcknowledgeReview(d); _reviewId=d.Results[index].MatchId; _scroll.ScrollVertical=0;Render(); }
-        if(i>0) bar.AddChild(FramedAction("上一场",()=>Page(i-1),"chevron-left",width:140,height:40));
-        else bar.AddChild(new Control {CustomMinimumSize=new(140,40),MouseFilter=MouseFilterEnum.Ignore});
-        if(i>=0 && i<d.Results.Count-1) bar.AddChild(FramedAction("下一场",()=>Page(i+1),"chevron-right",trailing:true,width:140,height:40));
-        else bar.AddChild(FramedAction("返回赛场",()=>
+        bool hasNext=i>=0 && i<d.Results.Count-1;
+        if(i>0 || hasNext)
+        {
+            var bar=TabStrip(_content,14);
+            if(i>0)bar.AddChild(FramedAction("上一场",()=>Page(i-1),"chevron-left",width:140,height:40));
+            if(hasNext)bar.AddChild(FramedAction("下一场",()=>Page(i+1),"chevron-right",trailing:true,width:140,height:40));
+        }
+        if(!hasNext)actions.AddChild(FramedAction("返回赛场",()=>
         {
             AcknowledgeReview(d);
             if(d.Matches.FirstOrDefault(m=>m.Id==result.MatchId && m.DateGame?.ReturnPending==true) is { } date && ResumeSettledDate(d,date)) return;
@@ -220,7 +224,7 @@ public partial class CareerScreen
         }
         actions=new HBoxContainer {Alignment=BoxContainer.AlignmentMode.Center}; actions.AddThemeConstantOverride("separation",20);
         actions.MouseFilter=MouseFilterEnum.Ignore;
-        Center(actions,.5f,340,360,40);
+        Center(actions,.5f,launch==null?375:340,360,40);
         Participant(opponent,opponentName,CareerEngine.Person(d,opponent)?.Character??"",false,rivalPerformance);
     }
 }

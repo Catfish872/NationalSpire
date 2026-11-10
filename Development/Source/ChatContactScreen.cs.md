@@ -177,7 +177,7 @@ private Control? _contactMenu;
 
 **调用者：** [`NationalSpire.CareerScreen.BuildContactSearch(Godot.VBoxContainer)`](ChatContactScreen.cs.md#symbol-3c7d41806831)
 
-**调用：** [`Highlight()`](ChatContactScreen.cs.md#symbol-0c0e56190ac9)；[`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`](ChatContactScreen.cs.md#symbol-20cc99232e33)；[`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`](ChatContactScreen.cs.md#symbol-264ab6f4d753)；[`NationalSpire.CareerScreen.SaveContactPreferences()`](ChatContactScreen.cs.md#symbol-ecb1bd4e6ac2)；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** [`Highlight()`](ChatContactScreen.cs.md#symbol-e044f99fe978)；[`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`](ChatContactScreen.cs.md#symbol-20cc99232e33)；[`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`](ChatContactScreen.cs.md#symbol-264ab6f4d753)；[`NationalSpire.CareerScreen.SaveContactPreferences()`](ChatContactScreen.cs.md#symbol-ecb1bd4e6ac2)；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
 
 **字段、属性、事件及方法组引用：** `Highlight()`；`NationalSpire.CareerScreen._contactPreferences`；`NationalSpire.CareerScreen._privateOverlay`；`NationalSpire.CareerScreen.ContactMenu(Godot.Vector2, System.Action<Godot.VBoxContainer>, int)`；`NationalSpire.CareerScreen.ContactMenuItem(string, System.Action, bool)`；`NationalSpire.CareerScreen.SaveContactPreferences()`；`NationalSpire.ChatContactPreferences.Reverse`；`NationalSpire.ChatContactPreferences.ShowRelationships`；`NationalSpire.ChatContactPreferences.Sort`
 
@@ -209,7 +209,7 @@ private Control? _contactMenu;
 - `relationships.Name` = `"ShowContactRelationships"`
 - `relationships.Toggled` += `value => { _contactPreferences.ShowRelationships = value; SaveContactPreferences(); }`
 
-<a id="symbol-0c0e56190ac9"></a>
+<a id="symbol-e044f99fe978"></a>
 
 ## `Highlight() — void Highlight()`
 
@@ -334,7 +334,7 @@ private Control? _contactMenu;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Line(float, float, float, float)`](ChatContactScreen.cs.md#symbol-f8844965cf7d)；`Godot.Color.Color(string)`
+**调用：** [`Line(float, float, float, float)`](ChatContactScreen.cs.md#symbol-c214e8d8c903)；`Godot.Color.Color(string)`
 
 **字段、属性、事件及方法组引用：** `Line(float, float, float, float)`
 
@@ -351,7 +351,7 @@ private Control? _contactMenu;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-f8844965cf7d"></a>
+<a id="symbol-c214e8d8c903"></a>
 
 ## `Line(float, float, float, float) — void Line(float x, float y, float a, float b)`
 

@@ -375,6 +375,7 @@ public partial class CareerScreen
         1=>"总决赛", 2=>"半决赛", _=>$"{1 << remaining} 强"
     };
 
+    private float _bracketZoom=1;
     private void InternationalBracket(CareerData d, WorldCompetition c,HBoxContainer toolbar)
     {
         var frame=new PanelContainer {Name="BracketFrame",CustomMinimumSize=new(0,712)};
@@ -387,14 +388,14 @@ public partial class CareerScreen
             head.DrawRect(new Rect2(Vector2.Zero,head.Size),new Color("162a36"));
             head.DrawLine(new(0,head.Size.Y-1),new(head.Size.X,head.Size.Y-1),new Color("344954"));
         };
-        var scroll=new ScrollContainer {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill};
+        var scroll=new ZoomableBracketScroll {Name="InternationalBracket",SizeFlagsVertical=SizeFlags.ExpandFill,SizeFlagsHorizontal=SizeFlags.ExpandFill};
         layout.AddChild(scroll);
         var headers=new List<(Control Column,Control Heading)>();
         void AlignHeadings()
         {
             foreach(var (column,heading) in headers)
             {
-                heading.Position=new(column.Position.X+18-scroll.ScrollHorizontal,0);
+                heading.Scale=Vector2.One*_bracketZoom;heading.Position=new((column.Position.X+18)*_bracketZoom-scroll.ScrollHorizontal,0);
                 heading.Size=new(column.Size.X-18,56);
             }
         }
@@ -411,7 +412,24 @@ public partial class CareerScreen
         }
         scroll.GetHScrollBar().ValueChanged+=_=>AlignHeadings();
         var inspector = new BracketInspector(); inspector.Attach(_stage,scroll);
-        var inset=Inset(9,0); scroll.AddChild(inset);
+        var extent=new Control{MouseFilter=MouseFilterEnum.Pass};scroll.AddChild(extent);
+        var inset=Inset(9,0);extent.AddChild(inset);inset.Scale=Vector2.One*_bracketZoom;
+        void ResizeBracket(){var size=inset.GetCombinedMinimumSize();inset.Size=size;extent.CustomMinimumSize=size*_bracketZoom;head.CustomMinimumSize=new(0,56*_bracketZoom);AlignHeadings();}
+        inset.MinimumSizeChanged+=ResizeBracket;
+        var zoomText=new Label{Text=$"{_bracketZoom:P0}",CustomMinimumSize=new(54,0),HorizontalAlignment=HorizontalAlignment.Center};
+        int revision=0;
+        void Zoom(float factor,Vector2 anchor){
+            float previous=_bracketZoom;_bracketZoom=Math.Clamp(MathF.Round(factor*100)/100,.5f,1.5f);
+            if(previous==_bracketZoom)return;
+            var origin=(new Vector2(scroll.ScrollHorizontal,scroll.ScrollVertical)+anchor)*(_bracketZoom/previous)-anchor;
+            int version=++revision;inset.Scale=Vector2.One*_bracketZoom;ResizeBracket();zoomText.Text=$"{_bracketZoom:P0}";
+            Callable.From(()=>{if(version==revision && IsInstanceValid(scroll) && !scroll.IsQueuedForDeletion()){scroll.ScrollHorizontal=(int)origin.X;scroll.ScrollVertical=(int)origin.Y;AlignHeadings();}}).CallDeferred();
+        }
+        scroll.ZoomStep=(delta,point)=>Zoom(_bracketZoom+delta,point);
+        toolbar.AddChild(FramedAction("−",()=>Zoom(_bracketZoom-.1f,scroll.Size/2),width:42,height:36,quiet:true));toolbar.AddChild(zoomText);
+        toolbar.AddChild(FramedAction("+",()=>Zoom(_bracketZoom+.1f,scroll.Size/2),width:42,height:36,quiet:true));
+        var reset=FramedAction("原大",()=>Zoom(1,scroll.Size/2),width:62,height:36,quiet:true);reset.TooltipText="按住左键拖动签表，Ctrl + 滚轮缩放";toolbar.AddChild(reset);
+        Callable.From(()=>{if(IsInstanceValid(inset))ResizeBracket();}).CallDeferred();
         var columns=new BracketColumns(); columns.AddThemeConstantOverride("separation",38); inset.AddChild(columns);
         columns.SortChildren+=AlignHeadings; head.Resized+=head.QueueRedraw;
         int active=c.Fixtures.Where(f=>!f.Finished).Select(f=>f.Round).DefaultIfEmpty(c.Fixtures.Select(f=>f.Round).DefaultIfEmpty(1).Max()).Min();
@@ -558,12 +576,12 @@ public partial class CareerScreen
             void Locate()
             {
                 if (!IsInstanceValid(scroll) || !IsInstanceValid(current) || !scroll.IsInsideTree()) return;
-                int precedingColumn = (int)current.Position.X - 312;
+                int precedingColumn = (int)((current.Position.X - 312)*_bracketZoom);
                 scroll.ScrollHorizontal = c.Finished ? (int)scroll.GetHScrollBar().MaxValue : Math.Max(0, precedingColumn);
                 if (nextMatch != null)
                 {
                     float localY = (columns.GetGlobalTransform().AffineInverse() * nextMatch.GlobalPosition).Y;
-                    scroll.ScrollVertical = Math.Max(0, (int)(localY - scroll.Size.Y * .30f));
+                    scroll.ScrollVertical = Math.Max(0, (int)(localY*_bracketZoom - scroll.Size.Y * .30f));
                 }
             }
             toolbar.AddChild(new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill});
@@ -582,5 +600,47 @@ public partial class CareerScreen
             LocateAfterLayout();
         }
         if (d.Esports.Competitions.Contains(c)) toolbar.AddChild(CaptionButton("赛事详情", () => OpenCompetition(c.Id)));
+    }
+}
+
+public partial class ZoomableBracketScroll : ScrollContainer
+{
+    internal Action<float,Vector2>? ZoomStep;
+    private bool _held, _dragged;
+    private Vector2 _origin, _offset;
+    private Button? _card;
+    public override void _Input(InputEvent e)
+    {
+        if (!IsVisibleInTree() || e is not InputEventMouse mouse) return;
+        var point=GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position;
+        var viewport=GetViewport();
+        if (_held && e is InputEventMouseMotion motion)
+        {
+            if (!motion.ButtonMask.HasFlag(MouseButtonMask.Left)) { _held=false; _card=null; return; }
+            var distance=point-_origin;
+            if (!_dragged && distance.LengthSquared()<36) return;
+            _dragged=true;
+            ScrollHorizontal=(int)(_offset.X-distance.X); ScrollVertical=(int)(_offset.Y-distance.Y);
+            viewport.SetInputAsHandled(); return;
+        }
+        if (e is not InputEventMouseButton button) return;
+        if (_held && button is {ButtonIndex:MouseButton.Left, Pressed:false})
+        {
+            _held=false; viewport.SetInputAsHandled();
+            var card=_card; _card=null;
+            if (!_dragged && IsInstanceValid(card) && card!.IsVisibleInTree() && new Rect2(Vector2.Zero,card.Size).HasPoint(card.GetGlobalTransformWithCanvas().AffineInverse()*mouse.Position))
+            { card.GrabFocus(); card.EmitSignal(BaseButton.SignalName.Pressed); }
+            return;
+        }
+        if (!button.Pressed || !new Rect2(Vector2.Zero,Size).HasPoint(point)) return;
+        var hovered=viewport.GuiGetHoveredControl(); if (hovered==null || hovered!=this && !IsAncestorOf(hovered)) return;
+        if (button.CtrlPressed && button.ButtonIndex is MouseButton.WheelUp or MouseButton.WheelDown)
+        { viewport.SetInputAsHandled(); ZoomStep?.Invoke(button.ButtonIndex==MouseButton.WheelUp?.1f:-.1f,point); return; }
+        if (button.ButtonIndex!=MouseButton.Left) return;
+        Button? target=null;
+        for(Node? n=hovered;n!=null && n!=this;n=n.GetParent())
+        { if(n is ScrollBar)return; if(n is Button b && !b.Disabled)target=b; }
+        _card=target; _held=true; _dragged=false; _origin=point; _offset=new(ScrollHorizontal,ScrollVertical);
+        viewport.SetInputAsHandled();
     }
 }

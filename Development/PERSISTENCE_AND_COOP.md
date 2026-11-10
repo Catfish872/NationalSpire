@@ -25,6 +25,8 @@ CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 Shou
 
 ## 随机事件的个人资料与共同效果
 
+成员首次打开事件池时，ReadEventPool 读取房主当前模板的分类与素材原文。房主直接读取本机有效池；队员仅在打开素材库时发送 event-pool-query，房主回复 event-pool-answer。沿用 CoopPacketAssembly 的大消息分片与重组，使用查询编号、世界编号和 Epoch 对应本次窗口。关闭窗口取消等待，超时可在原窗口重新读取。查询只返回素材，既不修改房间版本也不广播世界。展开故事才将 EventOpeningChoice 随原 event-start 命令上交；全部随机沿用旧命令的默认值。房主从请求成员的视图生成并保存该成员的故事。
+
 随机事件详细诊断由执行模型请求的设备在本机保存，房主代成员执行时保存在房主。RequestPrivateAsync 在 task:event 请求前和请求结束各写入一次完整诊断，原生成、保存和广播次数沿用现有流程。CapturePeerLogs 收集八个固定功能各自最近五份日志、当前世界的比赛兼容条目、随机事件汇总、会话记录及最近五份原版游戏日志全文；现场字段及轮换见 DATA_CONTRACTS 的随机事件诊断记录。
 
 CareerStore.Data 在旧生涯读取及恢复之后调用 Diagnostics.RetainErrors，发生转换时沿已有 Save 保存一次。CareerStore.Save 在 ExternalSave 回调或本地序列化前调用同一入口；本地保存通过 JsonSerializer.Serialize(Stream, data, Json) 将 UTF-8 JSON 直接写入 .tmp，流关闭后校验现有主文件、保留有效 .bak，再沿 File.Move 覆盖主文件。现有序列化选项、保存锁、ExternalSave 回调、备份和替换顺序保持原样。流式写入减少整份 JSON 字符串及其转换缓冲的临时分配；临时文件创建或最终替换失败时沿原异常路径返回。旧主文件首次迁移后可能仍在原 .bak 中保留完整错误，下一次正常保存按既有规则覆盖这份备份。Diagnostics.Export 也先调用同一入口，再导出当前生涯与全部日志。
@@ -123,7 +125,7 @@ ForPerson按目录内文件名、长度及修改时间缓存读取结果，Save�
 
 group-offer-date 继续经过原群聊权威命令与保存广播；DateGroupBridge 在群聊临时信箱替换之前创建主联系人场景副本。相同来源重复进入复用原副本；结束和加入人物同步群聊活动；CoopRules.Capture与StartPrivate.Save通过DateGroupBridge.Merge提交有更新版本的来源日程，仅合并State和Participants，保留群聊消息和其他字段。群成员身份、场景来源编号及版本共同限定合并范围，重复或旧版本合并保持原状态。DateGroupBridge.SourceActive统一检查共享来源仍为已确认或已赴约；场景可用性、发出加入邀请及接受邀请均调用该入口。Sync和Merge只更新仍开放的共享活动；群聊因其他消息产生较高Revision时，其携带的旧活动副本同样受到终态保护。来源已结束、已取消或已移除时，旧本地场景停止接收新轮次，迟到加入转为expired，原参与者名单与终态保留。原日程库存结算沿 SocialAppointments.Attend。群聊婚礼附件保存 WeddingServiceIds、兼容首项 ServiceId 与包含结婚对象和宾客的 Participants；接受或改期沿 GroupInteractions/SocialAppointments 复制全部服务编号并建立共同日程，取消及改期保留服务次数。赴约将原活动设为已赴约，逐份计用；带 DateSourceGroup 的副本用于展示和对话。场景结束由 WeddingAppointments.Complete 逐个调用原关系入口更新当前玩家与所选对象的婚约经历，其他玩家和宾客的关系保留。新列表沿原 JSON 快照、交互撤回、保存、命令回执和广播传递，旧档缺少列表时使用 ServiceId。参与者素材在各客户端本机读取，默认剪影嵌入程序集；跨人物和玩家素材保持隔离。验证使用隔离 Godot 项目、合成生涯及本地 SSE 响应替身，覆盖参与者接受/拒绝/过期、人物归属、交互撤回、学习、失败修订、约战附件与取消、群聊日程唯一性、序列化及本地测试隔离。真实模型响应时间、原版整局中的暂停/赛后自动恢复、Steam 联机检查点及断线恢复须进行游戏测试。
 
-首次约会设置由OpenDateSceneReady在创建场景/排队开场前检查参与者；每个未确认NPC显示一次。首次选择优先当前角色已导入且含有效默认PNG的套装，先检查当前套装再检查其余套装；此预检只读本地素材，确认前保持文件原样。全部缺失时选择性别剪影。DatePresentation.Save先准备全部角色，随后复用CharacterDesignPackage.Installation安装两份本地JSON；任一安装失败时逆序还原，全部成功后提交。取消不写确认标记。形象包复用AppearanceLibrary.Prepare的同一绑定规则。首次判断按世界/玩家/角色隔离，联机保留各端美术自主选择；世界关系和聊天保存继续走原权威入口。活动中新增成员在输入阶段触发同一流程；确认后刷新立绘名单。OpenRunDate和结算ReturnToDate把生成动作作为ready回调，确保首次弹窗关闭后再接续。取消局内首次弹窗走CloseDateScene归还原生暂停。手动输入模式以空轮次编号兼容尚无聊天记录的活动，后续Tick保留输入状态。场景设置可以重新选择，已开始对局沿既有Voices更新规则保存。开发者测试仅读取展示偏好。
+首次约会设置由OpenDateSceneReady在创建场景/排队开场前检查参与者；每个未确认NPC显示一次。首次选择优先当前角色已导入且含有效默认PNG的套装，先检查当前套装再检查其余套装；此预检只读本地素材，确认前保持文件原样。全部缺失时选择性别剪影。DatePresentation.Save先准备全部角色，随后复用CharacterDesignPackage.Installation安装两份本地JSON；任一安装失败时逆序还原，全部成功后提交。取消不写确认标记。形象包复用AppearanceLibrary.Prepare的同一绑定规则。首次判断按世界/玩家/角色隔离，联机保留各端美术自主选择；世界关系和聊天保存继续走原权威入口。活动中新增成员在输入阶段触发同一流程；确认后刷新立绘名单。OpenRunDate 和退出手动打开的结算时执行的 ResumeSettledDate把生成动作作为ready回调，确保首次弹窗关闭后再接续。取消局内首次弹窗走CloseDateScene归还原生暂停。手动输入模式以空轮次编号兼容尚无聊天记录的活动，后续Tick保留输入状态。场景设置可以重新选择，已开始对局沿既有Voices更新规则保存。开发者测试仅读取展示偏好。
 
 ## 角色包与立绘包导入
 
@@ -356,6 +358,8 @@ ListAsync 后台列出目录，逐项使用 LoadAsync；损坏目录沿原列表
 客机收到完整快照也调用这套保存。房主的完整资料与客机的脱敏资料不是同一范围；客机不是新的房主，恢复仍由原房主主持。
 
 ## 中断和恢复的现有职责
+
+房主恢复共同生涯时，CoopCoordinator 在原名单初始化之后、原 Commit 之前调用 CircuitWorld.EnsureOpenEvents，修复现代赛制中仍未开赛且对手为真人的公开赛事。场次编号和报名继续沿用，待确认和进行中的原比赛保持原值。修复结果通过原检查点保存及首次完整快照同步给队员；客机读取房主已经确定的对手，新增保存和广播次数为0。NPC个人赛事的 HomeParticipants/AwayParticipants 同样随原快照和检查点保留，首次组队和读取关系见 GAME_AND_UI 的对手成绩与通关用时。
 
 | 情况 | 当前负责入口 | 当前处理及验证边界 |
 | --- | --- | --- |

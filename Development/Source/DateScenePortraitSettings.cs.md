@@ -19,7 +19,7 @@
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-69f1bce719ca)；[`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RefreshDateParty()`](DateScenePartyScreen.cs.md#symbol-3918c1aaf95a)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-cfc3a3712e7e)；[`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RefreshDateParty()`](DateScenePartyScreen.cs.md#symbol-3918c1aaf95a)
 
 **调用：** [`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`NationalSpire.DateSceneView.PortraitPlacements(System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DatePortraitPlacement>)`](DateSceneCast.cs.md#symbol-80abec64fd7f)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
 
@@ -43,7 +43,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
 
-**调用：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-c672feec698a)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.PortraitDesignStore.Key(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-2ed1ee155b2d)；[`Number(Godot.HBoxContainer, string, string)`](DateScenePortraitSettings.cs.md#symbol-e6d97506259d)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-ee3def93be33)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-56148733f02a)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSlider.HSlider()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
+**调用：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-62c01c9d4f95)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.PortraitDesignStore.Key(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-2ed1ee155b2d)；[`Number(Godot.HBoxContainer, string, string)`](DateScenePortraitSettings.cs.md#symbol-86a9f11c1f70)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-32b8805a9f1e)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-edd05f6e449a)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSlider.HSlider()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
 
 **字段、属性、事件及方法组引用：** `(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets).Assets`；`Change(bool, double)`；`Commit(Godot.LineEdit, bool)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._datePartyArt`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.PortraitDesignStore.Key(NationalSpire.CareerData, string)`；`Number(Godot.HBoxContainer, string, string)`；`SaveDirty()`；`ShowValues()`
 
@@ -119,13 +119,13 @@
 - `yNumber.FocusExited` += `() => Commit(yNumber, false)`
 - `yNumber.TextSubmitted` += `_ => Commit(yNumber, false)`
 
-<a id="symbol-ee5212daefec"></a>
+<a id="symbol-66c1742a7a08"></a>
 
 ## `CurrentWorld() — bool CurrentWorld()`
 
 来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-ee3def93be33)
+**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-32b8805a9f1e)
 
 **调用：** [`NationalSpire.PortraitDesignStore.Key(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-2ed1ee155b2d)
 
@@ -138,13 +138,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-722f9a11e476"></a>
+<a id="symbol-7e3c6724ae02"></a>
 
 ## `Targets() — IEnumerable<string> Targets()`
 
 来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-c672feec698a)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-56148733f02a)
+**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-62c01c9d4f95)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-edd05f6e449a)
 
 **调用：** 无已绑定显式调用。
 
@@ -156,7 +156,7 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e6d97506259d"></a>
+<a id="symbol-86a9f11c1f70"></a>
 
 ## `Number(Godot.HBoxContainer, string, string) — LineEdit Number(HBoxContainer row, string name, string suffix)`
 
@@ -184,15 +184,15 @@
 - `Name` = `name`
 - `SelectAllOnFocus` = `true`
 
-<a id="symbol-ee3def93be33"></a>
+<a id="symbol-32b8805a9f1e"></a>
 
 ## `SaveDirty() — void SaveDirty()`
 
 来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-c672feec698a)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
+**调用者：** [`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-62c01c9d4f95)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
 
-**调用：** [`CurrentWorld()`](DateScenePortraitSettings.cs.md#symbol-ee5212daefec)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`CurrentWorld()`](DateScenePortraitSettings.cs.md#symbol-66c1742a7a08)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
 **字段、属性、事件及方法组引用：** `CurrentWorld()`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`
 
@@ -207,15 +207,15 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-56148733f02a"></a>
+<a id="symbol-edd05f6e449a"></a>
 
 ## `ShowValues() — void ShowValues()`
 
 来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-c672feec698a)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
+**调用者：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-62c01c9d4f95)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
 
-**调用：** [`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-722f9a11e476)；`double.ToString(string?, System.IFormatProvider?)`；`Godot.Range.SetValueNoSignal(double)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-7e3c6724ae02)；`double.ToString(string?, System.IFormatProvider?)`；`Godot.Range.SetValueNoSignal(double)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`；`NationalSpire.DatePortraitPlacement.Scale`；`NationalSpire.DatePortraitPlacement.Y`；`Targets()`
 
@@ -239,15 +239,15 @@
 - `yNumber.PlaceholderText` = `"多值"`
 - `yNumber.Text` = `values.All(v => v.Y == value.Y) ? value.Y.ToString("0", CultureInfo.InvariantCulture) : ""`
 
-<a id="symbol-95c75d3c0f22"></a>
+<a id="symbol-30f3638c13f0"></a>
 
 ## `Change(bool, double) — void Change(bool scaling, double value)`
 
 来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-c672feec698a)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
+**调用者：** [`Commit(Godot.LineEdit, bool)`](DateScenePortraitSettings.cs.md#symbol-62c01c9d4f95)；[`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
 
-**调用：** [`CurrentWorld()`](DateScenePortraitSettings.cs.md#symbol-ee5212daefec)；[`NationalSpire.CareerScreen.ApplyDatePortraitPlacements()`](DateScenePortraitSettings.cs.md#symbol-9e6a2d77a042)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-56148733f02a)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-722f9a11e476)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Math.Round(double)`
+**调用：** [`CurrentWorld()`](DateScenePortraitSettings.cs.md#symbol-66c1742a7a08)；[`NationalSpire.CareerScreen.ApplyDatePortraitPlacements()`](DateScenePortraitSettings.cs.md#symbol-9e6a2d77a042)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-edd05f6e449a)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-7e3c6724ae02)；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Math.Round(double)`
 
 **字段、属性、事件及方法组引用：** `CurrentWorld()`；`NationalSpire.CareerScreen.ApplyDatePortraitPlacements()`；`NationalSpire.DateSceneAssets.SpriteScale`；`NationalSpire.DateSceneAssets.SpriteY`；`ShowValues()`；`Targets()`
 
@@ -266,7 +266,7 @@
 - `assets.SpriteScale` = `Math.Round(value * 100) / 100`
 - `assets.SpriteY` = `-Math.Round(value)`
 
-<a id="symbol-c672feec698a"></a>
+<a id="symbol-62c01c9d4f95"></a>
 
 ## `Commit(Godot.LineEdit, bool) — void Commit(LineEdit input, bool scaling)`
 
@@ -274,7 +274,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.AddDatePortraitSettings(Godot.VBoxContainer, NationalSpire.CareerData)`](DateScenePortraitSettings.cs.md#symbol-354a9a454cf2)
 
-**调用：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-95c75d3c0f22)；[`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-ee3def93be33)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-56148733f02a)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-722f9a11e476)；`double.IsFinite(double)`；`double.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out double)`；`string.Trim()`；`string.TrimEnd(params char[]?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Math.Clamp(double, double, double)`；`System.Math.Round(double)`
+**调用：** [`Change(bool, double)`](DateScenePortraitSettings.cs.md#symbol-30f3638c13f0)；[`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-841784a6385f)；[`SaveDirty()`](DateScenePortraitSettings.cs.md#symbol-32b8805a9f1e)；[`ShowValues()`](DateScenePortraitSettings.cs.md#symbol-edd05f6e449a)；[`Targets()`](DateScenePortraitSettings.cs.md#symbol-7e3c6724ae02)；`double.IsFinite(double)`；`double.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out double)`；`string.Trim()`；`string.TrimEnd(params char[]?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Math.Clamp(double, double, double)`；`System.Math.Round(double)`
 
 **字段、属性、事件及方法组引用：** `Change(bool, double)`；`NationalSpire.DatePortraitPlacement.FromAssets(NationalSpire.DateSceneAssets)`；`NationalSpire.DatePortraitPlacement.Scale`；`NationalSpire.DatePortraitPlacement.Y`；`SaveDirty()`；`ShowValues()`；`Targets()`
 

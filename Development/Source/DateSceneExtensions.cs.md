@@ -202,7 +202,7 @@
 
 来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-614e81d8e681)
+**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-58fa9ff0ce57)
 
 **调用：** 无已绑定显式调用。
 

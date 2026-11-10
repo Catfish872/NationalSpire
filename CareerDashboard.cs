@@ -322,7 +322,7 @@ public partial class CareerScreen
     {
         _backButton.Visible = CanGoBack && (_tab != "结算" || !IsLatestReview(d));
         UpdateHeaderAccount(d);
-        _planDot.Visible = PendingPlans(d);
+        _planDot.Visible = AvailablePlans(d);
         _pageTitle.Text = _tab switch { "首页"=>"生涯大厅","日程"=>"日程安排","赛事"=>"赛事赛程","赛程"=>"赛程","生涯生活" => _lifeSection == "公开消息" ? "公开消息" : "消费投资",
             "赛事与俱乐部" when _competitionId==null && _worldSection is "赛事总览" or "晋级规则" => "赛事信息",
             "赛事与俱乐部" => _worldSection, "选手档案" or "创建角色" => "档案馆", "社区" => "尖塔社区", _=>_tab };

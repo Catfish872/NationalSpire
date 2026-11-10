@@ -19,7 +19,7 @@
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
 **调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.PortraitModelPrompts.Default(string)`](PortraitModelPrompts.cs.md#symbol-e2cc08446a70)；[`NationalSpire.PortraitModelPrompts.Get(NationalSpire.PortraitDesign)`](PortraitModelPrompts.cs.md#symbol-78c7c2214dc7)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.FindIndex<T>(T[], System.Predicate<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Math.Max(int, int)`
 

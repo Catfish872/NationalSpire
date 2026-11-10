@@ -168,7 +168,7 @@ private readonly StyleBoxFlat _body = new() { BgColor = Colors.Transparent,
 
 来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Weights()`](NpcGenerationScreen.cs.md#symbol-d040f96cd18c)
+**调用者：** [`Weights()`](NpcGenerationScreen.cs.md#symbol-293317477bcb)
 
 **调用：** [`NationalSpire.PercentageSlider.LayoutThumb()`](PercentageSlider.cs.md#symbol-e9bc0f02baad)
 
@@ -187,7 +187,7 @@ private readonly StyleBoxFlat _body = new() { BgColor = Colors.Transparent,
 
 来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`AddSlider(Godot.HBoxContainer, NationalSpire.PercentageSlider, bool[], int)`](NpcGenerationScreen.cs.md#symbol-894cf8a99ac9)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.PercentageSlider._Ready()`](PercentageSlider.cs.md#symbol-5afc59be40b9)
+**调用者：** [`AddSlider(Godot.HBoxContainer, NationalSpire.PercentageSlider, bool[], int)`](NpcGenerationScreen.cs.md#symbol-4638a30479a6)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.PercentageSlider._Ready()`](PercentageSlider.cs.md#symbol-5afc59be40b9)
 
 **调用：** [`NationalSpire.PercentageSlider.LayoutThumb()`](PercentageSlider.cs.md#symbol-e9bc0f02baad)；`double.IsFinite(double)`；`double.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out double)`；`Godot.CanvasItem.Hide()`；`string.Trim()`；`string.TrimEnd(params char[]?)`；`System.Math.Clamp(double, double, double)`
 

@@ -86,16 +86,28 @@ public static class CircuitWorld
         }
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
     }
-    public static void EnsureOpenEvents(CareerData d)
+    public static bool EnsureOpenEvents(CareerData d)
     {
         int start = SeasonCalendar.Start(d), length = SeasonCalendar.Length(d);
+        bool changed = false;
         void Add(int day, string kind, string name, int asc, int prize, Func<CareerPerson, bool> eligible)
         {
             int absolute = start + day;
-            if (absolute < d.Day || d.Matches.Any(m => m.Kind == kind && m.Day == absolute)) return;
-            var people = d.People.Where(p => p.Country == d.Esports.Country && eligible(p)).OrderBy(p => p.Id, StringComparer.Ordinal).ToList();
+            if (absolute < d.Day) return;
+            var scheduled = d.Matches.Where(m => m.Kind == kind && m.Day == absolute).ToList();
+            var repair = scheduled.Where(m => m.Status == "待赛" && m.Id != d.PendingMatchId && m.Id != d.Failure?.Result.MatchId
+                && (m.OpponentId == "player" || d.HumanIds.Contains(m.OpponentId))).ToList();
+            if (scheduled.Count > 0 && repair.Count == 0) return;
+            var people = PrivateMessages.ChatCandidates(d).Where(p => p.Country == d.Esports.Country && eligible(p)).OrderBy(p => p.Id, StringComparer.Ordinal).ToList();
             if (people.Count == 0) return;
             var opponent = people[CareerEngine.StableHash(d.WorldId + kind + absolute) % people.Count];
+            foreach (var match in repair)
+            {
+                match.OpponentId = opponent.Id; match.OpponentPrepared = false; match.OpponentWon = false;
+                match.OpponentFloor = 0; match.OpponentSeconds = null; match.Live = null; match.CommentatorIds.Clear();
+            }
+            changed = true;
+            if (scheduled.Count > 0) return;
             d.Matches.Add(new() { Day = absolute, Kind = kind, Event = name, RequiredAscension = asc, Prize = prize,
                 OpponentId = opponent.Id, Seed = $"NS{d.Season}-{kind}-{day}-{d.WorldId}" });
         }
@@ -109,6 +121,7 @@ public static class CircuitWorld
         }
         Add(length, "masters", "世界纪录邀请赛", 10, 1200, p => p.MaxAscension >= 9 && !ClubCoaching.IsCoach(p));
         d.Matches = d.Matches.OrderBy(m => m.Day).ToList();
+        return changed;
     }
     public static void EnrollLeague(CareerData d, WorldCompetition c)
     {
@@ -300,18 +313,46 @@ public static class CircuitWorld
     }
     public static List<CareerPerson> CooperativeRoster(CareerData d, WorldCompetition? c, string leaderId, string seed)
     {
-        var leader = CareerEngine.Person(d, leaderId) ?? throw new InvalidOperationException("对手不存在。");
-        var official = c?.Rosters.Values.FirstOrDefault(r => r.Contains(leaderId));
-        if (official != null)
+        // 个人赛事的双方共用一次组队结果，模拟、预览及结算读取同一份出场名单。
+        if (c is { TeamEvent: false } && d.CooperativeMembers > 1)
         {
-            var members = new[] { leaderId }.Concat(official).Distinct().Where(id => !d.DeletedPeople.ContainsKey(id) && !d.HumanIds.Contains(id) && id != "player")
-                .Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().Take(d.CooperativeMembers).ToList();
-            if (members.Count == d.CooperativeMembers) return members;
+            string fixtureId = d.Matches.FirstOrDefault(m => m.CompetitionId == c.Id && m.Seed == seed)?.FixtureId ?? seed;
+            var fixture = c.Fixtures.FirstOrDefault(f => f.Id == fixtureId);
+            if (fixture != null)
+            {
+                var saved = fixture.HomeId == leaderId ? fixture.HomeParticipants : fixture.AwayParticipants;
+                if (saved.Count > 0) return saved.Select(id => CareerEngine.Person(d, id)).OfType<CareerPerson>().ToList();
+                if (!fixture.Finished && PrivateMessages.CanChat(d, fixture.HomeId) && PrivateMessages.CanChat(d, fixture.AwayId))
+                {
+                    var used = new HashSet<string> { fixture.HomeId, fixture.AwayId };
+                    var home = Members(fixture.HomeId, used);
+                    var away = Members(fixture.AwayId, used);
+                    fixture.HomeParticipants = home.Select(p => p.Id).ToList(); fixture.AwayParticipants = away.Select(p => p.Id).ToList();
+                    return fixture.HomeId == leaderId ? home : away;
+                }
+            }
         }
-        var pool = d.People.Where(p => p.Id != leaderId && !d.HumanIds.Contains(p.Id) && p.Country == leader.Country && !ClubCoaching.IsCoach(p));
-        if (c?.Kind is "league" or "continental" or "worldfinal") pool = pool.Where(p => p.ClubId == leader.ClubId && EsportsWorld.IsProfessional(p));
-        if (c?.Kind == "worldcup") pool = pool.Where(EsportsWorld.IsProfessional);
-        return new[] { leader }.Concat(pool.OrderBy(p => Math.Abs(p.MaxAscension - leader.MaxAscension)).ThenBy(p => CareerEngine.StableHash(seed + p.Id)).Take(d.CooperativeMembers - 1)).ToList();
+        return Members(leaderId, new HashSet<string> { leaderId });
+
+        List<CareerPerson> Members(string id, HashSet<string> used)
+        {
+            var leader = CareerEngine.Person(d, id) ?? throw new InvalidOperationException("对手不存在。");
+            var members = new List<CareerPerson> { leader };
+            var official = c?.Rosters.Values.FirstOrDefault(r => r.Contains(id));
+            if (official != null)
+                foreach (string member in official.Where(member => !d.DeletedPeople.ContainsKey(member) && PrivateMessages.CanChat(d, member)))
+                    if (members.Count < d.CooperativeMembers && used.Add(member)) members.Add(CareerEngine.Person(d, member)!);
+            if (members.Count == d.CooperativeMembers) return members;
+            var pool = PrivateMessages.ChatCandidates(d).Where(p => !used.Contains(p.Id) && !ClubCoaching.IsCoach(p));
+            bool professional = c?.Kind is "league" or "continental" or "worldfinal" or "worldcup";
+            pool = professional ? pool.Where(EsportsWorld.IsProfessional) : pool.Where(p => p.Country == leader.Country);
+            int Priority(CareerPerson p) => c?.Kind is "league" or "continental" or "worldfinal"
+                && p.ClubId == leader.ClubId ? 0 : p.Country == leader.Country ? 1 : 2;
+            foreach (var person in pool.OrderBy(Priority).ThenBy(p => Math.Abs(p.MaxAscension - leader.MaxAscension))
+                .ThenBy(p => CareerEngine.StableHash(seed + p.Id)).Take(Math.Max(0, d.CooperativeMembers - members.Count)))
+            { members.Add(person); used.Add(person.Id); }
+            return members;
+        }
     }
     public static void EnsureHumanRosters(CareerData d)
     {

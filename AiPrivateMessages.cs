@@ -179,11 +179,11 @@ public static partial class AiService
     }
 
     internal static async Task<string> RequestPrivateAsync(CareerData data, List<Dictionary<string, string>> messages, bool stream,
-        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null, AiOptions? requestOptions = null)
+        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null, AiOptions? requestOptions = null, string? profileId = null)
     {
         using var logScope = Diagnostics.RequestLog(task, context);
         var options = requestOptions ?? data.Ai;
-        var connection = Connection(options, task);
+        var connection = profileId == null ? Connection(options, task) : ConnectionForProfile(options, profileId);
         if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
         if (!TryGetEndpoint(connection.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);

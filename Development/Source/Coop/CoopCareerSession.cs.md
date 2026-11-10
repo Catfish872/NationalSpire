@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`F3908DD5D928BC395AE4B41D5FBC5C9CCE7A3D1769728C4EFD5525D892910BD5`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`4AE46AEDBEC9719F5EA2FDB18DFE1C7D4066B6E61242EE2A99BEBA554C4444DF`。来源：[源码](../../../Coop/CoopCareerSession.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -58,11 +58,30 @@ public event Action<string, bool>? Message;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-ddd5192fa0da"></a>
+
+## `NationalSpire.Coop.CoopCareerSession.ReadEventPool(System.Threading.CancellationToken) — internal Task<RandomEventSeed[]> ReadEventPool(CancellationToken cancel)`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.LoadEventLibrary(Godot.VBoxContainer, NationalSpire.RandomEventSeed?, System.Action<NationalSpire.RandomEventSeed>)`](../EventOpeningScreen.cs.md#symbol-6b8a94f5911f)
+
+**调用：** [`NationalSpire.Coop.CoopCoordinator.ReadEventPool(System.Threading.CancellationToken)`](CoopRandomEvents.cs.md#symbol-191944b9b478)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCareerSession._session`；`NationalSpire.Coop.CoopCoordinator.ReadEventPool(System.Threading.CancellationToken)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Coop.CoopCoordinator.ReadEventPool(System.Threading.CancellationToken)`；输入表达式：`_session.ReadEventPool(cancel)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => _session.ReadEventPool(cancel)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-ec8ff85d1683"></a>
 
 ## `NationalSpire.Coop.CoopCareerSession.Alive — public bool Alive`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -80,7 +99,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Status — public string Status`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -98,7 +117,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.CanResume — public bool CanResume`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -116,7 +135,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.RunStatus — public string RunStatus`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -134,7 +153,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.ProposalId — public string ProposalId`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -152,7 +171,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Team — public IReadOnlyList<CareerTeamMember> Team`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -165,14 +184,14 @@ public event Action<string, bool>? Message;
 - `MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；输入表达式：`.Title.GetFormattedText()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText()`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`c.Id.ToString()`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Id.ToString() == character`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(last.Prize)`；返回值紧邻使用处：`BinaryExpressionSyntax: last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize)`
-- `NationalSpire.CareerTeamMember.CareerTeamMember(string, string, string, string)`；输入表达式：`new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail)`；返回值紧邻使用处：`ReturnStatementSyntax: return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);`
+- `NationalSpire.CareerTeamMember.CareerTeamMember(string, string, string, string)`；输入表达式：`new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail)`；返回值紧邻使用处：`ReturnStatementSyntax: return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);`
 - `NationalSpire.GameBridge.Characters()`；输入表达式：`GameBridge.Characters()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GameBridge.Characters().FirstOrDefault`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`run.Characters.ContainsKey(m.SteamId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)`
 - `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`_session.Online.Contains(m.SteamId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText()`
 - `System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；输入表达式：`m.Results.LastOrDefault()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = m.Results.LastOrDefault()`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`_session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>     {         var last = m.Results.LastOrDefault();         string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;         string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);         return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);     })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>     {         var last = m.Results.LastOrDefault();         string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;         string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);         return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);     }).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`_session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>     {         var last = m.Results.LastOrDefault();         string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;         string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);         return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);     }).ToList()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>     {         var last = m.Results.LastOrDefault();         string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;         string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);         return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,             character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);     }).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`_session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>      {          var last = m.Results.LastOrDefault();          string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;          string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);          return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);      })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>      {          var last = m.Results.LastOrDefault();          string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;          string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);          return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);      }).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`_session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>      {          var last = m.Results.LastOrDefault();          string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;          string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);          return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);      }).ToList()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select(m =>      {          var last = m.Results.LastOrDefault();          string character = _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId) ?? m.Character;          string detail = last == null ? "尚无本生涯战绩" : last.Event + " · " + last.Outcome + " · 收入 " + CareerMoney.Format(last.Prize);          return new CareerTeamMember(m.SteamId == _session.Self ? "player" : m.PersonId, m.Name,              character == CareerEngine.RandomCharacterChoice || m.RandomCharacter && _session.World.Run == null ? "随机角色 · 开赛时确定" : GameBridge.Characters().FirstOrDefault(c => c.Id.ToString() == character)?.Title.GetFormattedText() ?? character, detail);      }).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`_session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _session.World!.Members.Where(m => _session.World.Run is { } run ? run.Characters.ContainsKey(m.SteamId) : _session.Online.Contains(m.SteamId)).Select`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.Characters.GetValueOrDefault(m.SteamId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _session.World!.Run?.Characters.GetValueOrDefault(m.SteamId)`
 
@@ -183,7 +202,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Opponents(NationalSpire.CareerMatch) — public IReadOnlyList<string> Opponents(CareerMatch match)`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -195,7 +214,7 @@ public event Action<string, bool>? Message;
 
 - `NationalSpire.Coop.CoopRules.Opponents(NationalSpire.Coop.CoopWorld, NationalSpire.CareerMatch)`；输入表达式：`CoopRules.Opponents(_session.World, match)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CoopRules.Opponents(_session.World, match).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`CoopRules.Opponents(_session.World, match).Select(p => p.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList()`；返回值紧邻使用处：`ConditionalExpressionSyntax: _session.World!.Run is { } run && run.MatchId == match.Id ? run.Opponents :         CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList()`；返回值紧邻使用处：`ConditionalExpressionSyntax: _session.World!.Run is { } run && run.MatchId == match.Id ? run.Opponents :          CoopRules.Opponents(_session.World, match).Select(p => p.Id).ToList()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -204,7 +223,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.HasVoted — public bool HasVoted`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -223,7 +242,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.ProposalText — public string ProposalText`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -246,7 +265,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.CoopCareerSession(NationalSpire.Coop.CoopCoordinator, Godot.Control) — public CoopCareerSession(CoopCoordinator session, Control menu)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.EnterCareer()`](CoopScreen.cs.md#symbol-88e296cd2158)；[`NationalSpire.Coop.CoopScreen.OpenCareerOrRoom(Godot.Control)`](CoopScreen.cs.md#symbol-eee7991d404e)
 
@@ -269,7 +288,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Refresh() — public bool Refresh()`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.CoopCareerSession(NationalSpire.Coop.CoopCoordinator, Godot.Control)`](CoopCareerSession.cs.md#symbol-be42258ccf13)
 
@@ -302,7 +321,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.SaveReading(NationalSpire.CareerData) — private void SaveReading(CareerData data)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -333,7 +352,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?) — public void Send(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Refresh()`](CoopCareerSession.cs.md#symbol-d972d69103cb)
 
@@ -346,7 +365,7 @@ public event Action<string, bool>? Message;
 - `int.TryParse(string?, out int)`；输入表达式：`int.TryParse(target, out int season)`；返回值紧邻使用处：`IfStatementSyntax: if (int.TryParse(target, out int season)) _session.SyncReading(new CoopReading { CeremonySeason = season });`
 - `NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；输入表达式：`CommunityThreads.All(world.World)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: CommunityThreads.All(world.World).FirstOrDefault`
 - `NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；输入表达式：`new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent)`
-- `NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；输入表达式：`_session.SubmitReady(_pending, command => _pending = command, error =>         { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SubmitReady(_pending, command => _pending = command, error =>         { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });`
+- `NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；输入表达式：`_session.SubmitReady(_pending, command => _pending = command, error =>          { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SubmitReady(_pending, command => _pending = command, error =>          { _pending = null; _accepted = null; if (!_disposed) Message?.Invoke(error.Message, true); });`
 - `NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading)`；输入表达式：`_session.SyncReading(new CoopReading { CeremonySeason = season })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SyncReading(new CoopReading { CeremonySeason = season });`
 - `NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading)`；输入表达式：`_session.SyncReading(new CoopReading { Posts = { [post.Id] = post.Revision } })`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SyncReading(new CoopReading { Posts = { [post.Id] = post.Revision } });`
 - `NationalSpire.Coop.CoopCoordinator.SyncReading(NationalSpire.Coop.CoopReading)`；输入表达式：`_session.SyncReading(reading)`；返回值紧邻使用处：`ExpressionStatementSyntax: _session.SyncReading(reading);`
@@ -378,7 +397,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Replied(NationalSpire.Coop.CoopReply) — private void Replied(CoopReply reply)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -401,7 +420,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.SaveAi(NationalSpire.CareerData) — public void SaveAi(CareerData data)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -427,7 +446,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Generate(bool) — public void Generate(bool retry = false)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -448,7 +467,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.OpenRoom() — public void OpenRoom()`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -467,7 +486,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Export() — public async Task<string> Export()`
 
-来源：源码第 127 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -481,7 +500,7 @@ public event Action<string, bool>? Message;
 - `NationalSpire.Coop.CoopCoordinator.CollectDiagnostics(System.TimeSpan?)`；输入表达式：`_session.CollectDiagnostics()`；返回值紧邻使用处：`AwaitExpressionSyntax: await _session.CollectDiagnostics()`
 - `NationalSpire.Coop.CoopCoordinator.WaitForReceived()`；输入表达式：`_session.WaitForReceived()`；返回值紧邻使用处：`AwaitExpressionSyntax: await _session.WaitForReceived()`
 - `NationalSpire.Coop.CoopStorage.PublicCopy(NationalSpire.Coop.CoopWorld)`；输入表达式：`CoopStorage.PublicCopy(_session.World)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: world = CoopStorage.PublicCopy(_session.World)`
-- `NationalSpire.Diagnostics.Export(NationalSpire.CareerData, string, string, string, object?, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`；输入表达式：`Diagnostics.Export(_session.World.World, System.IO.Path.Combine(CoopSettings.Root, _session.World.Id),             ProjectSettings.GlobalizePath("user://logs"), CoopRuntime.Current?.Status ?? "房间已关闭",             new { world = CoopStorage.PublicCopy(_session.World), originalRun = _session.NativeSave, online = _session.Online.ToArray(), self = _session.Self }, reports)`；返回值紧邻使用处：`ReturnStatementSyntax: return Diagnostics.Export(_session.World.World, System.IO.Path.Combine(CoopSettings.Root, _session.World.Id),             ProjectSettings.GlobalizePath("user://logs"), CoopRuntime.Current?.Status ?? "房间已关闭",             new { world = CoopStorage.PublicCopy(_session.World), originalRun = _session.NativeSave, online = _session.Online.ToArray(), self = _session.Self }, reports);`
+- `NationalSpire.Diagnostics.Export(NationalSpire.CareerData, string, string, string, object?, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`；输入表达式：`Diagnostics.Export(_session.World.World, System.IO.Path.Combine(CoopSettings.Root, _session.World.Id),              ProjectSettings.GlobalizePath("user://logs"), CoopRuntime.Current?.Status ?? "房间已关闭",              new { world = CoopStorage.PublicCopy(_session.World), originalRun = _session.NativeSave, online = _session.Online.ToArray(), self = _session.Self }, reports)`；返回值紧邻使用处：`ReturnStatementSyntax: return Diagnostics.Export(_session.World.World, System.IO.Path.Combine(CoopSettings.Root, _session.World.Id),              ProjectSettings.GlobalizePath("user://logs"), CoopRuntime.Current?.Status ?? "房间已关闭",              new { world = CoopStorage.PublicCopy(_session.World), originalRun = _session.NativeSave, online = _session.Online.ToArray(), self = _session.Self }, reports);`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`_session.Online.ToArray()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: online = _session.Online.ToArray()`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("房间已关闭，请重新连接后导出。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("房间已关闭，请重新连接后导出。");`
 - `System.IO.Path.Combine(string, string)`；输入表达式：`System.IO.Path.Combine(CoopSettings.Root, _session.World.Id)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.Combine(CoopSettings.Root, _session.World.Id)`
@@ -493,7 +512,7 @@ public event Action<string, bool>? Message;
 
 ## `NationalSpire.Coop.CoopCareerSession.Dispose() — public void Dispose()`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -9,6 +9,7 @@ public sealed class CareerOpeningPlayer
     public string Gender { get; set; } = "";
     public PlayerAvatar? Avatar { get; set; }
     public decimal? Credits { get; set; }
+    public int? Fans { get; set; }
     public int? Wins { get; set; }
     public int? Draws { get; set; }
     public int? Losses { get; set; }
@@ -19,6 +20,7 @@ public sealed class CareerOpeningPlayer
         if (Name.Trim().Length > 0) data.PlayerAlias = Name.Trim();
         if (IdentityGender.Choices.Contains(Gender)) data.PlayerGender = Gender;
         if (Credits is >= 0) data.Credits = Credits.Value / 10m;
+        if (Fans is >= 0) data.Fans = Fans.Value;
         if (Wins is >= 0) data.Wins = Wins.Value;
         if (Draws is >= 0) data.Draws = Draws.Value;
         if (Losses is >= 0) data.Losses = Losses.Value;

@@ -235,7 +235,7 @@ private Frame? _owner;
 
 来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Format(string)`](DateSceneData.cs.md#symbol-bd4a9b30d5bd)；[`NationalSpire.ChatTools.Create(NationalSpire.CareerData, NationalSpire.PrivateConversation?, NationalSpire.PrivateTurn?, NationalSpire.GroupChat?)`](ChatTools.cs.md#symbol-da501aed0ab9)
+**调用者：** [`Format(string)`](DateSceneData.cs.md#symbol-cf8fc3afc5c7)；[`NationalSpire.ChatTools.Create(NationalSpire.CareerData, NationalSpire.PrivateConversation?, NationalSpire.PrivateTurn?, NationalSpire.GroupChat?)`](ChatTools.cs.md#symbol-da501aed0ab9)
 
 **调用：** [`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；[`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)；[`NationalSpire.PrivateStreamParser.Finish()`](PrivateMessages.cs.md#symbol-90306db26d5a)；[`NationalSpire.PrivateStreamParser.PrivateStreamParser(params string[])`](PrivateMessages.cs.md#symbol-af0a0ba2ac6c)；`string.Replace(string, string?)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.RegularExpressions.Regex.Replace(string, string, System.Text.RegularExpressions.MatchEvaluator)`
 
@@ -583,7 +583,7 @@ private Frame? _owner;
 
 来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-de0f23629610)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?)`](AiPrivateMessages.cs.md#symbol-2a90f4583071)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-f42d1172f9bd)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.CareerData, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, NationalSpire.AiOptions?, string?)`](AiPrivateMessages.cs.md#symbol-d2a53e1444c6)
 
 **调用：** [`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)；[`NationalSpire.ChatToolCall.AppendArguments(string?)`](ChatTools.cs.md#symbol-506dc7ff027a)；`NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool, string[]?)`；`NationalSpire.ChatToolCall.ChatToolCall()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetInt32()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
@@ -748,7 +748,7 @@ private Frame? _owner;
 
 来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-ee5f5afc0dac)
+**调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-330b3d5326ab)
 
 **调用：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 
@@ -825,7 +825,7 @@ private Frame? _owner;
 
 **调用者：** [`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)
 
-**调用：** [`Character(char)`](ChatTools.cs.md#symbol-56842bf674ae)；[`Flush(NationalSpire.ChatReplyStream.Frame, bool)`](ChatTools.cs.md#symbol-3f49d636b491)；`NationalSpire.ChatReplyStream.Frame.Frame(char, bool, bool)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.Stack<T>.Push(T)`；`System.Collections.Generic.Stack<T>.TryPeek(out T)`；`System.Collections.Generic.Stack<T>.TryPop(out T)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`Character(char)`](ChatTools.cs.md#symbol-1223bdad4525)；[`Flush(NationalSpire.ChatReplyStream.Frame, bool)`](ChatTools.cs.md#symbol-222640994256)；`NationalSpire.ChatReplyStream.Frame.Frame(char, bool, bool)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.Stack<T>.Push(T)`；`System.Collections.Generic.Stack<T>.TryPeek(out T)`；`System.Collections.Generic.Stack<T>.TryPop(out T)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
 **字段、属性、事件及方法组引用：** `Character(char)`；`Flush(NationalSpire.ChatReplyStream.Frame, bool)`；`NationalSpire.ChatReplyStream._escape`；`NationalSpire.ChatReplyStream._field`；`NationalSpire.ChatReplyStream._frames`；`NationalSpire.ChatReplyStream._key`；`NationalSpire.ChatReplyStream._owner`；`NationalSpire.ChatReplyStream._quoted`；`NationalSpire.ChatReplyStream._token`；`NationalSpire.ChatReplyStream._unicode`；`NationalSpire.ChatReplyStream._unicodeLeft`；`NationalSpire.ChatReplyStream.Frame.Key`；`NationalSpire.ChatReplyStream.Frame.KeyExpected`；`NationalSpire.ChatReplyStream.Frame.Kind`；`NationalSpire.ChatReplyStream.Frame.Metadata`；`NationalSpire.ChatReplyStream.Frame.Opened`；`NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Replies`；`NationalSpire.DateSceneExtensions.MetadataFields`
 
@@ -869,7 +869,7 @@ private Frame? _owner;
 - `parent.Key` = `""`
 - `parent.KeyExpected` = `true`
 
-<a id="symbol-3f49d636b491"></a>
+<a id="symbol-222640994256"></a>
 
 ## `Flush(NationalSpire.ChatReplyStream.Frame, bool) — void Flush(Frame frame, bool complete = false)`
 
@@ -903,7 +903,7 @@ private Frame? _owner;
 
 - `frame.Opened` = `true`
 
-<a id="symbol-56842bf674ae"></a>
+<a id="symbol-1223bdad4525"></a>
 
 ## `Character(char) — void Character(char c)`
 

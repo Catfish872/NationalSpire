@@ -52,12 +52,12 @@ public partial class CareerScreen
     private string CeremonyWinner(CareerData data, CeremonyAward award) => award.WinnerName.Length > 0 ? award.WinnerName : award.ClubId.Length > 0
         ? EsportsWorld.ClubName(data, award.ClubId) : award.WinnerId == "player" && data.LocalHumanId.Length > 0 ? "共同参赛阵容" : CareerEngine.DisplayName(data, award.WinnerId);
 
-    private void CeremonyInvitation(CareerData data)
+    private void CeremonyInvitation(CareerData data,Container parent)
     {
         var latest = data.Ceremonies.OrderByDescending(c => c.Season).FirstOrDefault();
         var card = Card(); card.Name = "CeremonyInvitation";
         card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("202f37", "8d794f", 10, 20));
-        _content.AddChild(card);
+        card.CustomMinimumSize=new(530,0); card.SizeFlagsHorizontal=SizeFlags.ExpandFill; parent.AddChild(card);
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 20); card.AddChild(row);
         row.AddChild(new CeremonyMedallion { CustomMinimumSize = new Vector2(72, 72), SizeFlagsVertical = SizeFlags.ShrinkCenter });
         var caption = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(caption);

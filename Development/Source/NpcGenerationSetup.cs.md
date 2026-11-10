@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`03A1EF80F546EADEBAD346184F023BC77EFCA72E3F284D187456B7F8676A30B9`。来源：[源码](../../NpcGenerationSetup.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8C66B8EA23311759C1402230C8EEF0B577988B48E166472908358B97083D8CFB`。来源：[源码](../../NpcGenerationSetup.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -179,11 +179,29 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-add3cf4c81f8"></a>
+
+## `NationalSpire.NpcGenerationSetup.WorldId — public string? WorldId`
+
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-11e663521a5c"></a>
 
 ## `NationalSpire.NpcGenerationSetup.PlayerName — public string PlayerName`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -201,7 +219,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.ResolvePlayerName(NationalSpire.NpcGenerationSetup) — public static string ResolvePlayerName(NpcGenerationSetup setup)`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)；[`NationalSpire.NpcGeneration.Create(NationalSpire.AiOptions, NationalSpire.NpcGenerationSetup)`](NpcGenerationSetup.cs.md#symbol-c3f59c3c9460)
 
@@ -222,17 +240,17 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.Create(NationalSpire.AiOptions, NationalSpire.NpcGenerationSetup) — public static CareerData Create(AiOptions ai, NpcGenerationSetup setup)`
 
-来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)
 
 **调用：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`](CareerEngine.cs.md#symbol-d3b571ec95e8)；[`NationalSpire.NpcGeneration.ApplySettings(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.AiOptions)`](NpcGenerationSetup.cs.md#symbol-1e7661675ad1)；[`NationalSpire.NpcGeneration.ResolvePlayerName(NationalSpire.NpcGenerationSetup)`](NpcGenerationSetup.cs.md#symbol-8f4ea5d136e7)；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`；`NationalSpire.CareerOpeningPlayer.Country`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.NpcGeneration.ApplySettings(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.AiOptions)`；`NationalSpire.NpcGeneration.ResolvePlayerName(NationalSpire.NpcGenerationSetup)`；`NationalSpire.NpcGenerationSetup.Personal`；`NationalSpire.NpcGenerationSetup.Pool`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`；`NationalSpire.CareerOpeningPlayer.Country`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.NpcGeneration.ApplySettings(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.AiOptions)`；`NationalSpire.NpcGeneration.ResolvePlayerName(NationalSpire.NpcGenerationSetup)`；`NationalSpire.NpcGenerationSetup.Personal`；`NationalSpire.NpcGenerationSetup.Pool`；`NationalSpire.NpcGenerationSetup.WorldId`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`；输入表达式：`CareerEngine.CreateNew(personalityPool: setup.Pool, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerEngine.CreateNew(personalityPool: setup.Pool, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国")`
+- `NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`；输入表达式：`CareerEngine.CreateNew(personalityPool: setup.Pool, worldId: setup.WorldId, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerEngine.CreateNew(personalityPool: setup.Pool, worldId: setup.WorldId, playerName: ResolvePlayerName(setup), country: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国")`
 - `NationalSpire.NpcGeneration.ApplySettings(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.AiOptions)`；输入表达式：`ApplySettings(data, setup, ai)`；返回值紧邻使用处：`ExpressionStatementSyntax: ApplySettings(data, setup, ai);`
 - `NationalSpire.NpcGeneration.ResolvePlayerName(NationalSpire.NpcGenerationSetup)`；输入表达式：`ResolvePlayerName(setup)`；返回值紧邻使用处：`ArgumentSyntax: playerName: ResolvePlayerName(setup)`
 - `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`EsportsWorld.Countries.Contains(setup.Personal.Country)`；返回值紧邻使用处：`ConditionalExpressionSyntax: EsportsWorld.Countries.Contains(setup.Personal.Country) ? setup.Personal.Country : "中国"`
@@ -244,7 +262,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.ApplySettings(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.AiOptions) — public static void ApplySettings(CareerData data, NpcGenerationSetup setup, AiOptions inherited)`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)；[`NationalSpire.NpcGeneration.Create(NationalSpire.AiOptions, NationalSpire.NpcGenerationSetup)`](NpcGenerationSetup.cs.md#symbol-c3f59c3c9460)
 
@@ -271,7 +289,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.ImportBatch.ImportBatch(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.CareerData?) — public ImportBatch(CareerData fresh, NpcGenerationSetup setup, CareerData? artOwner = null)`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)
 
@@ -289,7 +307,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 - `NationalSpire.NpcGeneration.ImportBatch.Dispose()`；输入表达式：`Dispose()`；返回值紧邻使用处：`ExpressionStatementSyntax: Dispose();`
 - `NationalSpire.OpeningLibrary.Apply(NationalSpire.CareerData, NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.OpeningRole>, System.Collections.Generic.List<NationalSpire.CharacterDesignPackage.Installation>)`；输入表达式：`OpeningLibrary.Apply(fresh, artOwner, setup.SavedRoles, _assets)`；返回值紧邻使用处：`ExpressionStatementSyntax: OpeningLibrary.Apply(fresh, artOwner, setup.SavedRoles, _assets);`
 - `string.Equals(string?, System.StringComparison)`；输入表达式：`Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? CharacterDesignPackage.Read(fresh, path) : null`
-- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`setup.Files.Distinct(StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string path in setup.Files.Distinct(StringComparer.OrdinalIgnoreCase))                 {                     try                     {                         var info = new FileInfo(path);                         if (info.Length > 512L * 1024 * 1024) throw new InvalidDataException("文件超过 512 MiB。");                         CharacterDesignPackage.Imported? package = Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? CharacterDesignPackage.Read(fresh, path) : null;                         var person = package?.Person ?? CharacterCardPng.Import(fresh, File.ReadAllBytes(path));                         if (CharacterCards.Apply(fresh, new() { Create = true, Target = person.Id, Person = person }) is { } error) throw new InvalidDataException(error);                         if (package != null) _assets.Add(new(artOwner, package));                     }                     catch (Exception e) { throw new InvalidDataException(Path.GetFileName(path) + "：" + e.Message, e); }                 }`
+- `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；输入表达式：`setup.Files.Distinct(StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string path in setup.Files.Distinct(StringComparer.OrdinalIgnoreCase))                  {                      try                      {                          var info = new FileInfo(path);                          if (info.Length > 512L * 1024 * 1024) throw new InvalidDataException("文件超过 512 MiB。");                          CharacterDesignPackage.Imported? package = Path.GetExtension(path).Equals(".zip", StringComparison.OrdinalIgnoreCase) ? CharacterDesignPackage.Read(fresh, path) : null;                          var person = package?.Person ?? CharacterCardPng.Import(fresh, File.ReadAllBytes(path));                          if (CharacterCards.Apply(fresh, new() { Create = true, Target = person.Id, Person = person }) is { } error) throw new InvalidDataException(error);                          if (package != null) _assets.Add(new(artOwner, package));                      }                      catch (Exception e) { throw new InvalidDataException(Path.GetFileName(path) + "：" + e.Message, e); }                  }`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`setup.ExcludedPacks.ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: fresh.ExcludedAppearancePacks = setup.ExcludedPacks.ToList()`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`_assets.Add(new(artOwner, package))`；返回值紧邻使用处：`ExpressionStatementSyntax: _assets.Add(new(artOwner, package));`
 - `System.IO.File.ReadAllBytes(string)`；输入表达式：`File.ReadAllBytes(path)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllBytes(path)`
@@ -312,7 +330,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.ImportBatch.Commit() — public void Commit()`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)
 
@@ -331,7 +349,7 @@ private readonly List<CharacterDesignPackage.Installation> _assets = [];
 
 ## `NationalSpire.NpcGeneration.ImportBatch.Dispose() — public void Dispose()`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)；[`NationalSpire.NpcGeneration.ImportBatch.ImportBatch(NationalSpire.CareerData, NationalSpire.NpcGenerationSetup, NationalSpire.CareerData?)`](NpcGenerationSetup.cs.md#symbol-5a833e369893)
 

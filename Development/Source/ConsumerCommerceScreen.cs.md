@@ -138,7 +138,7 @@
 - `Request` = `attachment`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-82de753e3df9"></a>
+<a id="symbol-f8d8e5437fbb"></a>
 
 ## `Accepted() — void Accepted()`
 
@@ -167,7 +167,7 @@
 
 来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-7b315377f8b1)；[`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-82de753e3df9)；[`NationalSpire.CareerScreen.RefreshPrivateAttachments()`](PrivateMemoryScreen.cs.md#symbol-b9d6c2084031)
+**调用者：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-4d816a911cb7)；[`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-f8d8e5437fbb)；[`NationalSpire.CareerScreen.RefreshPrivateAttachments()`](PrivateMemoryScreen.cs.md#symbol-b9d6c2084031)
 
 **调用：** [`NationalSpire.ConsumerAttachments.Find(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](ConsumerAttachments.cs.md#symbol-eb0f1a1bbf73)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Remove(T)`
 
@@ -195,7 +195,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.PrivateAttachmentCard(NationalSpire.PrivateOffer, bool)`](PrivateMemoryScreen.cs.md#symbol-eb2b2a37c5d1)
 
-**调用：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-01fb7d1b1e28)；[`NationalSpire.ConsumerAttachments.Remove(NationalSpire.CareerData, string)`](ConsumerAttachments.cs.md#symbol-54163762ce47)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-495f07c41fd9)；[`NationalSpire.ConsumerAttachments.Remove(NationalSpire.CareerData, string)`](ConsumerAttachments.cs.md#symbol-54163762ce47)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `Accepted()`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen._privateStatus`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ConsumerAttachments.Remove(NationalSpire.CareerData, string)`；`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`；`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`；`NationalSpire.PrivateMessageCommand.Entry`；`NationalSpire.PrivateOffer.ConsumerAttachmentId`
 
@@ -213,7 +213,7 @@
 - `_privateStatus.Text` = `error`
 - `Entry` = `a.ConsumerAttachmentId`
 
-<a id="symbol-01fb7d1b1e28"></a>
+<a id="symbol-495f07c41fd9"></a>
 
 ## `Accepted() — void Accepted()`
 
@@ -242,7 +242,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.AttachPrivate(NationalSpire.PrivateOffer)`](PrivateMemoryScreen.cs.md#symbol-053a2c0af91b)
 
-**调用：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-7b315377f8b1)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-a32775871136)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`Accepted()`](ConsumerCommerceScreen.cs.md#symbol-4d816a911cb7)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-a32775871136)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-e21b0ff1d18b)；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `Accepted()`；`NationalSpire.CareerScreen._groupSelection`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._privateGroup`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen._privateStatus`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`；`NationalSpire.ICareerSession.Send(string, string, string, int, string, System.Action?)`；`NationalSpire.PrivateMessageCommand.Part`；`NationalSpire.PrivateMessageCommand.Request`；`NationalSpire.PrivateOffer.ActorId`；`NationalSpire.PrivateOffer.GroupId`；`NationalSpire.PrivateOffer.Participants`
 
@@ -265,7 +265,7 @@
 - `prepared.Participants` = `_groupSelection.ToList()`
 - `Request` = `prepared`
 
-<a id="symbol-7b315377f8b1"></a>
+<a id="symbol-4d816a911cb7"></a>
 
 ## `Accepted() — void Accepted()`
 

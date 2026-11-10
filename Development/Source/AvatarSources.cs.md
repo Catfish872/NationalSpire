@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D3310749D4AABC456A40762C2677C458E85B7ECB97DDAC53C737B07EBAA6F9FF`。来源：[源码](../../AvatarSources.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D27E4E838DD057F8060AA787F4117A91EB2E8C8CD769071EB94004BF4B12FF3A`。来源：[源码](../../AvatarSources.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -19,7 +19,7 @@
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)
+**调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)
 
 **调用：** [`NationalSpire.AvatarAssets.Load(string, int, bool, int)`](AvatarAssets.cs.md#symbol-00e6fbec5eac)；[`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
 
@@ -30,11 +30,11 @@
 - `MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；输入表达式：`c.Title.GetFormattedText()`；返回值紧邻使用处：`ArgumentSyntax: c.Title.GetFormattedText()`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`c.Id.ToString()`；返回值紧邻使用处：`ArgumentSyntax: c.Id.ToString()`
 - `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；输入表达式：`AvatarAssets.Load(c.Id.ToString(), 0, false)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => AvatarAssets.Load(c.Id.ToString(), 0, false)`
-- `NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；输入表达式：`new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c =>          new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))`
+- `NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；输入表达式：`new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c =>         new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))`
 - `NationalSpire.GameBridge.Characters()`；输入表达式：`GameBridge.Characters()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GameBridge.Characters().Select`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(c.Title.GetFormattedText())`；返回值紧邻使用处：`ArgumentSyntax: GameText.Plain(c.Title.GetFormattedText())`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`GameBridge.Characters().Select(c =>          new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GameBridge.Characters().Select(c =>          new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`GameBridge.Characters().Select(c =>          new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => GameBridge.Characters().Select(c =>          new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`GameBridge.Characters().Select(c =>         new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GameBridge.Characters().Select(c =>         new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`GameBridge.Characters().Select(c =>         new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => GameBridge.Characters().Select(c =>         new AvatarChoice(c.Id.ToString(), GameText.Plain(c.Title.GetFormattedText()), "游戏头像", () => AvatarAssets.Load(c.Id.ToString(), 0, false))).ToList()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -45,7 +45,7 @@
 
 来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-a7914f0d59d9)
+**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-c2473d06e9db)
 
 **调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`Godot.ResourceLoader.Exists(string, string)`；`Godot.ResourceLoader.Load<T>(string, string, Godot.ResourceLoader.CacheMode)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 
@@ -57,12 +57,12 @@
 - `Godot.ResourceLoader.Load<T>(string, string, Godot.ResourceLoader.CacheMode)`；输入表达式：`ResourceLoader.Load<Texture2D>(path)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ResourceLoader.Load<Texture2D>(path) is { } texture`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`card.Id.ToString()`；返回值紧邻使用处：`ArgumentSyntax: card.Id.ToString()`
 - `NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；输入表达式：`new(texture, CareerVisuals.Teal, name)`；返回值紧邻使用处：`ConditionalExpressionSyntax: ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null`
-- `NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；输入表达式：`new(card.Id.ToString(), name, "卡图", () =>                      ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null)`；返回值紧邻使用处：`ArgumentSyntax: new(card.Id.ToString(), name, "卡图", () =>                      ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null)`
+- `NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；输入表达式：`new(card.Id.ToString(), name, "卡图", () =>                     ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null)`；返回值紧邻使用处：`ArgumentSyntax: new(card.Id.ToString(), name, "卡图", () =>                     ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null)`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(card.Title)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GameText.Plain(card.Title)`
-- `System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`ModelDb.AllCards.DistinctBy(c => c.Id)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in ModelDb.AllCards.DistinctBy(c => c.Id))          {              try              {                  string path = card.PortraitPath, name = GameText.Plain(card.Title);                  if (!ResourceLoader.Exists(path)) continue;                  result.Add(new(card.Id.ToString(), name, "卡图", () =>                      ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null));              }              catch { /* 个别模组资源无效时，其余卡图仍可选择。 */ }          }`
+- `System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`ModelDb.AllCards.DistinctBy(c => c.Id)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var card in ModelDb.AllCards.DistinctBy(c => c.Id))         {             try             {                 string path = card.PortraitPath, name = GameText.Plain(card.Title);                 if (!ResourceLoader.Exists(path)) continue;                 result.Add(new(card.Id.ToString(), name, "卡图", () =>                     ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null));             }             catch { /* 个别模组资源无效时，其余卡图仍可选择。 */ }         }`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；输入表达式：`result.OrderBy(c => c.Name, StringComparer.CurrentCulture)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.OrderBy(c => c.Name, StringComparer.CurrentCulture).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`result.OrderBy(c => c.Name, StringComparer.CurrentCulture).ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return result.OrderBy(c => c.Name, StringComparer.CurrentCulture).ToList();`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`result.Add(new(card.Id.ToString(), name, "卡图", () =>                      ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null))`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Add(new(card.Id.ToString(), name, "卡图", () =>                      ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null));`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`result.Add(new(card.Id.ToString(), name, "卡图", () =>                     ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null))`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Add(new(card.Id.ToString(), name, "卡图", () =>                     ResourceLoader.Load<Texture2D>(path) is { } texture ? new(texture, CareerVisuals.Teal, name) : null));`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<AvatarChoice>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<AvatarChoice>()`
 
 **赋值（含属性/字段和局部值）：**

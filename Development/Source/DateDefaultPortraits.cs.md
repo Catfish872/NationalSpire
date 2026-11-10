@@ -45,7 +45,7 @@
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Default(string)`](DatePresentationScreen.cs.md#symbol-cf99685eed2c)；[`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)
+**调用者：** [`Default(string)`](DatePresentationScreen.cs.md#symbol-ce3efe177535)；[`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)
 
 **调用：** [`NationalSpire.IdentityGender.Of(NationalSpire.CareerData, string)`](IdentityGender.cs.md#symbol-961507352d98)；`Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 

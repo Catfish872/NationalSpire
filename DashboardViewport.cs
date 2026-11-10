@@ -9,11 +9,24 @@ internal static class LandscapeViewport
     private static int _mobileScreens;
     private static DisplayServer.ScreenOrientation _previousOrientation;
 
+    // 同一游戏窗口中的多个生涯界面共享菜单窗口。最后一层退出时恢复原版设置。
+    private static readonly Dictionary<Viewport,(int Count,bool Previous)> MenuOwners = new();
+    internal static Control StageOf(Control owner)
+    {
+        for(Node? n=owner;n!=null;n=n.GetParent()) if(n is Control stage && stage.Name=="CareerStage") return stage;
+        return owner.GetNodeOrNull<Control>("CareerStage") ?? owner;
+    }
     internal static Control Mount(Control owner)
     {
         var stage = new Control { Name = "CareerStage", Size = DesignSize };
         owner.AddChild(stage);
+        var dropdowns = new CareerDropdownLayer { Name = "CareerDropdowns", ZIndex = 500,
+            MouseFilter = Control.MouseFilterEnum.Ignore, FocusBehaviorRecursive = Control.FocusBehaviorRecursiveEnum.Enabled };
+        stage.AddChild(dropdowns); dropdowns.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         var viewport = owner.GetViewport();
+        var lease=MenuOwners.GetValueOrDefault(viewport,(0,viewport.GuiEmbedSubwindows));
+        MenuOwners[viewport]=(lease.Item1+1,lease.Item2);
+        if (!viewport.GuiEmbedSubwindows) viewport.GuiEmbedSubwindows=true;
         Label? hint = null;
         bool mobile = OS.HasFeature("android") || OS.HasFeature("ios");
         if (mobile && _mobileScreens++ == 0)
@@ -51,6 +64,9 @@ internal static class LandscapeViewport
         viewport.SizeChanged += Fit;
         owner.TreeExiting += () =>
         {
+            var current=MenuOwners[viewport];
+            if(current.Count==1) { MenuOwners.Remove(viewport); viewport.GuiEmbedSubwindows=current.Previous; }
+            else MenuOwners[viewport]=(current.Count-1,current.Previous);
             owner.Resized -= Fit;
             viewport.SizeChanged -= Fit;
             if (mobile && --_mobileScreens == 0) DisplayServer.ScreenSetOrientation(_previousOrientation);

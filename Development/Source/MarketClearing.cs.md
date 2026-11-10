@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F041B7B39DC913472E9C3ACCDD4551F1C10341F971E73EBF96D62FF874B013D3`。来源：[源码](../../MarketClearing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`7177E914CD28A77D4CFC70F0DF3E4C626EC89C45F8598CF50A6F7A405B59094D`。来源：[源码](../../MarketClearing.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -374,7 +374,7 @@ private readonly MarketAccount previewOwner;
 - `decimal.Round(decimal, int)`；输入表达式：`decimal.Round(p.Margin + (decimal)p.Units * p.Direction * (average - p.Entry) - fee, 4)`；返回值紧邻使用处：`ArgumentSyntax: decimal.Round(p.Margin + (decimal)p.Units * p.Direction * (average - p.Entry) - fee, 4)`
 - `NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`；输入表达式：`CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)`；返回值紧邻使用处：`BinaryExpressionSyntax: p.OpeningFee ?? CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)`
 - `NationalSpire.MarketClearing.ExitRate(NationalSpire.MarketAsset)`；输入表达式：`ExitRate(MarketCatalog.ById[p.Asset])`；返回值紧邻使用处：`BinaryExpressionSyntax: (decimal)p.Units * average * ExitRate(MarketCatalog.ById[p.Asset])`
-- `NationalSpire.MarketExecution.Exit.Exit(NationalSpire.MarketExecution.Fill, NationalSpire.MarketNumber, decimal, decimal)`；输入表达式：`new(new(p.Units, average, 0, 0, -p.Direction), fee, proceeds,             proceeds - p.Margin - (p.OpeningFee ?? CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)))`；返回值紧邻使用处：`ReturnStatementSyntax: return new(new(p.Units, average, 0, 0, -p.Direction), fee, proceeds,             proceeds - p.Margin - (p.OpeningFee ?? CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)));`
+- `NationalSpire.MarketExecution.Exit.Exit(NationalSpire.MarketExecution.Fill, NationalSpire.MarketNumber, decimal, decimal)`；输入表达式：`new(new(p.Units, average, 0, 0, -p.Direction), fee, proceeds,              proceeds - p.Margin - (p.OpeningFee ?? CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)))`；返回值紧邻使用处：`ReturnStatementSyntax: return new(new(p.Units, average, 0, 0, -p.Direction), fee, proceeds,              proceeds - p.Margin - (p.OpeningFee ?? CareerMarket.OpenFee(MarketCatalog.ById[p.Asset], p.Margin, p.Leverage)));`
 - `NationalSpire.MarketExecution.Fill.Fill(NationalSpire.MarketNumber, decimal, NationalSpire.MarketNumber, decimal, int)`；输入表达式：`new(p.Units, average, 0, 0, -p.Direction)`；返回值紧邻使用处：`ArgumentSyntax: new(p.Units, average, 0, 0, -p.Direction)`
 - `System.Math.Max(decimal, decimal)`；输入表达式：`Math.Max(0, decimal.Round(p.Margin + (decimal)p.Units * p.Direction * (average - p.Entry) - fee, 4))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(0, decimal.Round(p.Margin + (decimal)p.Units * p.Direction * (average - p.Entry) - fee, 4))`
 
@@ -450,7 +450,7 @@ private readonly MarketAccount previewOwner;
 
 来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketClearing.Close(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, NationalSpire.MarketPosition)`](MarketClearing.cs.md#symbol-d7527455bb75)；[`NationalSpire.MarketClearing.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>)`](MarketClearing.cs.md#symbol-883f332c6946)；[`NationalSpire.MarketClearing.Reprice(NationalSpire.MarketState, string, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int, decimal)`](MarketClearing.cs.md#symbol-fbef13444d2b)；[`NationalSpire.MarketClearing.Settle(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](MarketClearing.cs.md#symbol-25fcc46bf36d)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)
+**调用者：** [`NationalSpire.MarketClearing.Close(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, NationalSpire.MarketPosition)`](MarketClearing.cs.md#symbol-d7527455bb75)；[`NationalSpire.MarketClearing.LiquidationValue(NationalSpire.MarketState, NationalSpire.MarketAccount, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>)`](MarketClearing.cs.md#symbol-883f332c6946)；[`NationalSpire.MarketClearing.Reprice(NationalSpire.MarketState, string, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int, decimal)`](MarketClearing.cs.md#symbol-fbef13444d2b)；[`NationalSpire.MarketClearing.Settle(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, int)`](MarketClearing.cs.md#symbol-25fcc46bf36d)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9ae865310364)
 
 **调用：** [`NationalSpire.MarketClearing.Capacity(NationalSpire.MarketAsset, NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-64464988b285)；[`NationalSpire.MarketClearing.Slot.Slot(NationalSpire.MarketAccount, NationalSpire.MarketPosition, decimal)`](MarketClearing.cs.md#symbol-ce8c2e166c19)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketQuote.ExecutionCopy()`](CareerMarketData.cs.md#symbol-0dd7cd2eabdc)；`NationalSpire.MarketClearing.Result.Result()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -572,7 +572,7 @@ private readonly MarketAccount previewOwner;
 - `System.Collections.Generic.Stack<T>.Push(T)`；输入表达式：`stack.Push(new(first, reason))`；返回值紧邻使用处：`ExpressionStatementSyntax: stack.Push(new(first, reason));`
 - `System.Collections.Generic.Stack<T>.Push(T)`；输入表达式：`stack.Push(new(next.Slot, next.Reason))`；返回值紧邻使用处：`ExpressionStatementSyntax: stack.Push(new(next.Slot, next.Reason));`
 - `System.Collections.Generic.Stack<T>.Stack()`；输入表达式：`new Stack<Work>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Stack<Work>()`
-- `System.Collections.Generic.Stack<T>.TryPeek(out T)`；输入表达式：`stack.TryPeek(out var work)`；返回值紧邻使用处：`WhileStatementSyntax: while (stack.TryPeek(out var work))             {                 int direction = -work.Slot.Position.Direction;                 var next = Next(work.Remaining, direction, false);                 work.Notional += Move(next.Units, direction, false); work.Remaining -= next.Units;                 if (next.Slot != null)                 {                     next.Slot.Active = false; stack.Push(new(next.Slot, next.Reason)); continue;                 }                 stack.Pop();                 var p = work.Slot.Position;                 Result.Closed.Add(new(work.Slot.Owner, p, Exit(p, work.Notional / (decimal)p.Units), work.Reason));             }`
+- `System.Collections.Generic.Stack<T>.TryPeek(out T)`；输入表达式：`stack.TryPeek(out var work)`；返回值紧邻使用处：`WhileStatementSyntax: while (stack.TryPeek(out var work))              {                  int direction = -work.Slot.Position.Direction;                  var next = Next(work.Remaining, direction, false);                  work.Notional += Move(next.Units, direction, false); work.Remaining -= next.Units;                  if (next.Slot != null)                  {                      next.Slot.Active = false; stack.Push(new(next.Slot, next.Reason)); continue;                  }                  stack.Pop();                  var p = work.Slot.Position;                  Result.Closed.Add(new(work.Slot.Owner, p, Exit(p, work.Notional / (decimal)p.Units), work.Reason));              }`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -640,7 +640,7 @@ private readonly MarketAccount previewOwner;
 
 来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)
+**调用者：** [`Run(decimal)`](MarketClearing.cs.md#symbol-9ae865310364)
 
 **调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Average(NationalSpire.MarketQuote, decimal, int)`](MarketClearing.cs.md#symbol-5f9bf3d5e43b)；[`NationalSpire.MarketClearing.Price(NationalSpire.MarketQuote)`](MarketClearing.cs.md#symbol-01242bd01825)；[`NationalSpire.MarketClearing.Quantity(NationalSpire.MarketQuote, decimal, int)`](MarketClearing.cs.md#symbol-aa62127e5a9c)；[`NationalSpire.MarketClearing.Session.Close(NationalSpire.MarketClearing.Slot, string)`](MarketClearing.cs.md#symbol-7702fb075cde)；[`NationalSpire.MarketClearing.Session.Move(decimal, int, bool)`](MarketClearing.cs.md#symbol-010c7c45a36f)；[`NationalSpire.MarketClearing.Session.Next(decimal, int, bool)`](MarketClearing.cs.md#symbol-c4416168b119)；[`NationalSpire.MarketClearing.Slot.Remaining(decimal, decimal, decimal)`](MarketClearing.cs.md#symbol-aecae3901965)；[`NationalSpire.MarketClearing.Slot.Slot(NationalSpire.MarketAccount, NationalSpire.MarketPosition, decimal)`](MarketClearing.cs.md#symbol-ce8c2e166c19)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketNumber.Max(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-0cf4c87609b0)；`NationalSpire.MarketPosition.MarketPosition()`；`System.Math.Min(decimal, decimal)`
 
@@ -655,7 +655,7 @@ private readonly MarketAccount previewOwner;
 - `NationalSpire.MarketClearing.Session.Close(NationalSpire.MarketClearing.Slot, string)`；输入表达式：`Close(next.Slot, next.Reason)`；返回值紧邻使用处：`ExpressionStatementSyntax: Close(next.Slot, next.Reason);`
 - `NationalSpire.MarketClearing.Session.Move(decimal, int, bool)`；输入表达式：`Move(next.Units, direction, true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Move(next.Units, direction, true)`
 - `NationalSpire.MarketClearing.Session.Next(decimal, int, bool)`；输入表达式：`Next(quantity, direction, true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Next(quantity, direction, true)`
-- `NationalSpire.MarketClearing.Slot.Remaining(decimal, decimal, decimal)`；输入表达式：`risk.Remaining(MarketExecution.ReferencePrice(Q),                 1 - Q.ShortUnits / (2 * Q.ClearingDepthUnits), 1 + Q.LongUnits / (2 * Q.ClearingDepthUnits))`；返回值紧邻使用处：`BinaryExpressionSyntax: risk.Remaining(MarketExecution.ReferencePrice(Q),                 1 - Q.ShortUnits / (2 * Q.ClearingDepthUnits), 1 + Q.LongUnits / (2 * Q.ClearingDepthUnits)) > .000000001m`
+- `NationalSpire.MarketClearing.Slot.Remaining(decimal, decimal, decimal)`；输入表达式：`risk.Remaining(MarketExecution.ReferencePrice(Q),                  1 - Q.ShortUnits / (2 * Q.ClearingDepthUnits), 1 + Q.LongUnits / (2 * Q.ClearingDepthUnits))`；返回值紧邻使用处：`BinaryExpressionSyntax: risk.Remaining(MarketExecution.ReferencePrice(Q),                  1 - Q.ShortUnits / (2 * Q.ClearingDepthUnits), 1 + Q.LongUnits / (2 * Q.ClearingDepthUnits)) > .000000001m`
 - `NationalSpire.MarketClearing.Slot.Slot(NationalSpire.MarketAccount, NationalSpire.MarketPosition, decimal)`；输入表达式：`new Slot(previewOwner, p, Q.ClearingDepthUnits)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Slot(previewOwner, p, Q.ClearingDepthUnits)`
 - `NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.ReferencePrice(Q)`；返回值紧邻使用处：`ArgumentSyntax: MarketExecution.ReferencePrice(Q)`
 - `NationalSpire.MarketNumber.Max(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`；输入表达式：`MarketNumber.Max(wanted - spent, spent - wanted)`；返回值紧邻使用处：`BinaryExpressionSyntax: MarketNumber.Max(wanted - spent, spent - wanted) <= .00000001m`
@@ -690,7 +690,7 @@ private readonly MarketAccount previewOwner;
 
 **调用者：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.CareerScreen.MarketSubmit(NationalSpire.CareerData, NationalSpire.MarketOrder)`](MarketScreen.cs.md#symbol-fbc36ef790b1)；[`NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`](MarketClearing.cs.md#symbol-d078c0ca2b29)；[`NationalSpire.MarketTerminal.RefreshFee()`](MarketTerminal.cs.md#symbol-1c08f523080f)
 
-**调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`](MarketClearing.cs.md#symbol-2192e2bdcb1e)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9a044ff21e1c)；`decimal.Floor(decimal)`；`System.Math.Min(decimal, decimal)`
+**调用：** [`NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`](CareerMarket.cs.md#symbol-8f53c28594f3)；[`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`](MarketClearing.cs.md#symbol-2192e2bdcb1e)；[`Run(decimal)`](MarketClearing.cs.md#symbol-9ae865310364)；`decimal.Floor(decimal)`；`System.Math.Min(decimal, decimal)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerMarket.OpenFee(NationalSpire.MarketAsset, decimal, int)`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`；`NationalSpire.MarketClearing.Result.Accepted`；`NationalSpire.MarketClearing.Result.Fee`；`NationalSpire.MarketClearing.Result.Margin`；`NationalSpire.MarketClearing.Result.Reason`；`NationalSpire.MarketOrder.Amount`；`NationalSpire.MarketOrder.Asset`；`NationalSpire.MarketOrder.Leverage`；`Run(decimal)`
 
@@ -721,7 +721,7 @@ private readonly MarketAccount previewOwner;
 - `result.Reason` = `reason`
 - `result` = `Run(suggested)`
 
-<a id="symbol-9a044ff21e1c"></a>
+<a id="symbol-9ae865310364"></a>
 
 ## `Run(decimal) — Result Run(decimal margin)`
 
@@ -778,7 +778,7 @@ private readonly MarketAccount previewOwner;
 
 - `NationalSpire.MarketClearing.Accounts(NationalSpire.CareerData)`；输入表达式：`Accounts(d)`；返回值紧邻使用处：`ArgumentSyntax: Accounts(d)`
 - `NationalSpire.MarketClearing.Close(NationalSpire.MarketState, System.Collections.Generic.IReadOnlyList<NationalSpire.MarketAccount>, NationalSpire.MarketPosition)`；输入表达式：`Close(d.Market, Accounts(d), p)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Close(d.Market, Accounts(d), p).Closed`
-- `NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.Close(p, d.Market.Quotes[p.Asset])`；返回值紧邻使用处：`ConditionalExpressionSyntax: p.ExecutionVersion == 0 ? MarketExecution.Close(p, d.Market.Quotes[p.Asset])             : Close(d.Market, Accounts(d), p).Closed.Single(c => ReferenceEquals(c.Position, p)).Exit`
+- `NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；输入表达式：`MarketExecution.Close(p, d.Market.Quotes[p.Asset])`；返回值紧邻使用处：`ConditionalExpressionSyntax: p.ExecutionVersion == 0 ? MarketExecution.Close(p, d.Market.Quotes[p.Asset])              : Close(d.Market, Accounts(d), p).Closed.Single(c => ReferenceEquals(c.Position, p)).Exit`
 - `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(c.Position, p)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: c => ReferenceEquals(c.Position, p)`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`Close(d.Market, Accounts(d), p).Closed.Single(c => ReferenceEquals(c.Position, p))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Close(d.Market, Accounts(d), p).Closed.Single(c => ReferenceEquals(c.Position, p)).Exit`
 
@@ -911,7 +911,7 @@ private readonly MarketAccount previewOwner;
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct().ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`accounts.SelectMany(a => a.Positions)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: accounts.SelectMany(a => a.Positions).Where`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct().ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var asset in accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct().ToArray())         {             var s = new Session(MarketCatalog.ById[asset], market.Quotes[asset], accounts); s.Settle();             if (s.Result.Closed.Count > 0) Commit(market, asset, s.Result, day);         }`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct().ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var asset in accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select(p => p.Asset).Distinct().ToArray())          {              var s = new Session(MarketCatalog.ById[asset], market.Quotes[asset], accounts); s.Settle();              if (s.Result.Closed.Count > 0) Commit(market, asset, s.Result, day);          }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: accounts.SelectMany(a => a.Positions).Where(p => p.ExecutionVersion == 1).Select`
 
 **赋值（含属性/字段和局部值）：**

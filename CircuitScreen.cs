@@ -68,7 +68,7 @@ public partial class CareerScreen
         var latest = data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Completed).Select(a => a.Season).DefaultIfEmpty(0).Max();
         var current = data.Esports.Competitions.FirstOrDefault(c => c.Season == data.Season && c.Kind == "worldfinal");
         if (current != null) _content.AddChild(Button("本届签表与比赛结果   →", () => Visit(()=>{_tab="赛程";_fixtureScope="国际赛事";_fixtureInternational=current.Id;}), 400));
-        if (latest == 0) { _content.AddChild(Text("首届世界总决赛席位将在联赛结束后公布。联赛个人前二自动入围，其余席位按世界积分和本季表现补齐。", 20, _ink)); return; }
+        if (latest == 0) { BoardNotice("trophy","等待首届世界总决赛成绩","联赛个人前二自动入围，其余席位按世界积分和本季表现补齐。完赛后，这里展示选手名次与晋级之路。"); return; }
         foreach (var award in data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Season == latest && a.Completed).OrderBy(a => a.Stage).ThenBy(a => a.PersonId))
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
@@ -88,7 +88,14 @@ public partial class CareerScreen
     {
         _content.AddChild(Text("世界积分榜", 30, _gold));
         _content.AddChild(Text("最近四赛季，取最高六项赛事成绩相加。新赛季开始时，四赛季以前的成绩到期。", 18, _ink));
-        _content.AddChild(Text("国内联赛个人：第1名300分，第2名180分，第3—4名105分，第5—8名54分，其余20分。\n世界总决赛：冠军1500分，亚军900分，四强525分，八强270分，十六强120分，三十二强50分。", 16, _muted));
+        var rules = new HBoxContainer(); rules.AddThemeConstantOverride("separation", 12); _content.AddChild(rules);
+        void PointsRule(string name, string amounts)
+        {
+            var panel = Card(); panel.SizeFlagsHorizontal = SizeFlags.ExpandFill; rules.AddChild(panel);
+            var copy = Inner(panel); copy.AddChild(Text(name, 20, CareerVisuals.Teal)); copy.AddChild(Text(amounts, 16, _muted));
+        }
+        PointsRule("国内联赛个人积分", "第1名 300分　·　第2名 180分　·　第3—4名 105分\n第5—8名 54分　·　其余 20分");
+        PointsRule("世界总决赛积分", "冠军 1500分　·　亚军 900分　·　四强 525分\n八强 270分　·　十六强 120分　·　三十二强 50分");
         var own = CircuitLedger.Counted(data, "player").ToList();
         var summary = Card(); _content.AddChild(summary); var sb = Inner(summary);
         sb.AddChild(Text($"我的积分：{own.Sum(a => a.Points)}    /    已计入 {own.Count} 项成绩", 24, _gold));
@@ -102,9 +109,9 @@ public partial class CareerScreen
         foreach (var row in ranking.Take(64))
         {
             rank = ranking.Count(x => x.Points > row.Points) + 1;
-            _content.AddChild(PersonLink(data, row.Id, $"{rank:00}   {CareerEngine.DisplayName(data, row.Id)}    {row.Points} 分   ↗", 40));
+            BoardLine(_content,data,rank,CareerEngine.DisplayName(data,row.Id),EsportsWorld.CountryOf(data,row.Id),$"{row.Points} 分",row.Id,row.Id=="player");
         }
-        if (ranking.Count == 0) _content.AddChild(Text("首项赛事结束后公布积分。", 18, _muted));
+        if (ranking.Count == 0) BoardNotice("flag","等待首项赛事成绩","计入积分的赛事结束后，这里按积分排列选手。");
     }
     private void ModernCompetition(CareerData data, WorldCompetition c)
     {

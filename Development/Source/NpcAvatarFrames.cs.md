@@ -46,7 +46,7 @@ public static readonly AvatarFrame[] Special =
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-424e296f1f92)
+**调用者：** [`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-e09ed14299e2)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -66,7 +66,7 @@ public static readonly AvatarFrame[] Special =
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-424e296f1f92)
+**调用者：** [`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-e09ed14299e2)
 
 **调用：** 无已绑定显式调用。
 
@@ -122,7 +122,7 @@ public static readonly AvatarFrame[] Special =
 
 来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)；[`Save()`](NpcAvatarFrameScreen.cs.md#symbol-4fd117934d7e)
+**调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)；[`Save()`](NpcAvatarFrameScreen.cs.md#symbol-a1802dcac073)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-312d47fec9fa)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`
 
@@ -146,7 +146,7 @@ public static readonly AvatarFrame[] Special =
 
 来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`NationalSpire.NpcAvatarFrames.Select(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-8c2dcfe0344a)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-424e296f1f92)；[`Save()`](NpcAvatarFrameScreen.cs.md#symbol-4fd117934d7e)
+**调用者：** [`NationalSpire.CareerScreen.NpcAvatarFramePicker(NationalSpire.CareerData, string)`](NpcAvatarFrameScreen.cs.md#symbol-ca2807c0402f)；[`NationalSpire.NpcAvatarFrames.Select(NationalSpire.CareerData, string, string)`](NpcAvatarFrames.cs.md#symbol-8c2dcfe0344a)；[`Preview()`](NpcAvatarFrameScreen.cs.md#symbol-e09ed14299e2)；[`Save()`](NpcAvatarFrameScreen.cs.md#symbol-a1802dcac073)
 
 **调用：** [`NationalSpire.AvatarHonors.Earned(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-c5235b150918)；[`NationalSpire.NpcAvatarFrames.Locked(NationalSpire.PrivateRelation, string)`](NpcAvatarFrames.cs.md#symbol-fd1fec9d14c5)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

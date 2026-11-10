@@ -36,7 +36,7 @@ internal static readonly Dictionary<string, string[]> Remarks = new()
 
 来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.DateGameVoices.Version(NationalSpire.CareerData, NationalSpire.DateGameState, string)`](DateGameVoices.cs.md#symbol-94f34d9c9805)；[`NationalSpire.DatePresentation.Initial(NationalSpire.CareerData, string, bool)`](DatePresentation.cs.md#symbol-8371585517ce)；[`Select()`](DateGameScreen.cs.md#symbol-ffc0c2c11f34)
+**调用者：** [`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.DateGameVoices.Version(NationalSpire.CareerData, NationalSpire.DateGameState, string)`](DateGameVoices.cs.md#symbol-94f34d9c9805)；[`NationalSpire.DatePresentation.Initial(NationalSpire.CareerData, string, bool)`](DatePresentation.cs.md#symbol-8371585517ce)；[`Select()`](DateGameScreen.cs.md#symbol-b12ee547dd53)
 
 **调用：** [`NationalSpire.IdentityGender.Of(NationalSpire.CareerData, string)`](IdentityGender.cs.md#symbol-961507352d98)
 
@@ -141,7 +141,7 @@ internal static readonly Dictionary<string, string[]> Remarks = new()
 
 来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Fill()`](DateGameScreen.cs.md#symbol-2c82c9507257)；[`NationalSpire.DateGameContent.Edits(string, NationalSpire.DateGameContent.Profile, System.Collections.Generic.Dictionary<string, NationalSpire.DateGameContent.Phrase>, System.Collections.Generic.List<NationalSpire.DateGameRule>)`](DateGameContent.cs.md#symbol-608ae4848093)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)
+**调用者：** [`Fill()`](DateGameScreen.cs.md#symbol-2d04f2a5c851)；[`NationalSpire.DateGameContent.Edits(string, NationalSpire.DateGameContent.Profile, System.Collections.Generic.Dictionary<string, NationalSpire.DateGameContent.Phrase>, System.Collections.Generic.List<NationalSpire.DateGameRule>)`](DateGameContent.cs.md#symbol-608ae4848093)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)
 
 **调用：** [`NationalSpire.DateGameContent.RewritePhrase(NationalSpire.CareerData, string, string)`](DateGameContent.cs.md#symbol-28305905e4be)；[`NationalSpire.DateGameVoices.Finish(NationalSpire.CareerData, string, string, string)`](DateGameVoices.cs.md#symbol-0d8429ae95a9)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 

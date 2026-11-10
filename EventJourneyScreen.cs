@@ -41,8 +41,7 @@ public partial class CareerScreen
         if (destination <= ViewData.Day) return;
         if (_eventView != null) { _eventView.QueueFree(); _eventView = null; }
         _cancelDialog?.Invoke();
-        if (MultiplayerCommand("propose-advance", number: destination, accepted: Render)) return;
-        CareerEngine.AdvanceToDay(ViewData, destination); Render();
+        TravelTo(destination);
     }
     private void ShowJourneyEncounter()
     {

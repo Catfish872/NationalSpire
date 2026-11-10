@@ -7,6 +7,14 @@ public partial class CareerScreen
 {
     private Control? _avatarOverlay;
     private Action? _closeAvatar;
+    internal static void ChooseOpeningAvatar(Control owner, PlayerAvatar? draft, Action<PlayerAvatar> selected)
+    {
+        var host=LandscapeViewport.StageOf(owner);
+        var picker=new CareerScreen { Theme=owner.Theme, MouseFilter=MouseFilterEnum.Ignore,FocusBehaviorRecursive=FocusBehaviorRecursiveEnum.Enabled,ZIndex=160 };
+        host.AddChild(picker); picker.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); picker.SetProcess(false);
+        picker._stage=picker; picker.OpenAvatarSettings(new CareerData(),draft,selected);
+        picker._avatarOverlay!.TreeExiting+=picker.QueueFree;
+    }
     private void OpenAvatarSettings(CareerData data, PlayerAvatar? initial = null, Action<PlayerAvatar>? choose = null, string personId = "player", AvatarArt? automatic = null)
     {
         if (_avatarOverlay != null) return;

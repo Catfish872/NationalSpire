@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.Coop.CoopMenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](Coop/CoopRuntime.cs.md#symbol-898c6637244f)；[`NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](GameBridge.cs.md#symbol-6939e359db40)
 
-**调用：** [`UpdateVisibility()`](MainMenuEntries.cs.md#symbol-d556f0c8c1a2)；`Godot.Callable.From(System.Action)`；`Godot.GodotObject.Connect(Godot.StringName, Godot.Callable, uint)`
+**调用：** [`UpdateVisibility()`](MainMenuEntries.cs.md#symbol-1f9ca99b9fd3)；`Godot.Callable.From(System.Action)`；`Godot.GodotObject.Connect(Godot.StringName, Godot.Callable, uint)`
 
 **字段、属性、事件及方法组引用：** `UpdateVisibility()`
 
@@ -35,7 +35,7 @@
 
 - `menu.PatchNotesScreen.VisibilityChanged` += `UpdateVisibility`
 
-<a id="symbol-d556f0c8c1a2"></a>
+<a id="symbol-1f9ca99b9fd3"></a>
 
 ## `UpdateVisibility() — void UpdateVisibility()`
 

@@ -43,9 +43,9 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-31d1c4a51713)；[`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-c3f5843ac40d)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.EditDateGameRules()`](DateGameScreen.cs.md#symbol-0a1b70a243b1)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)
+**调用者：** [`Import(System.Action<NationalSpire.DateSceneAssets, string>, string[])`](DateSceneAssetScreen.cs.md#symbol-e2afc0972b5d)；[`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-c3f5843ac40d)；[`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.EditDateGameRules()`](DateGameScreen.cs.md#symbol-0a1b70a243b1)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.OpenDateBackgroundLibrary(NationalSpire.CareerData, string)`](DateSceneBackgroundScreen.cs.md#symbol-887a25fb10fa)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)
 
-**调用：** [`Alive()`](CareerFilePicker.cs.md#symbol-038aad3bea2e)；[`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`Restore()`](CareerFilePicker.cs.md#symbol-a421e77333d9)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`Alive()`](CareerFilePicker.cs.md#symbol-1e6e4b6b34e9)；[`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`Restore()`](CareerFilePicker.cs.md#symbol-c519bbfc4516)；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `Alive()`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._returnDialog`；`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`；`Restore()`
 
@@ -68,13 +68,13 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 - `_dialogOverlay` = `null`
 - `picker.TreeExiting` += `() => Callable.From(Restore).CallDeferred()`
 
-<a id="symbol-038aad3bea2e"></a>
+<a id="symbol-1e6e4b6b34e9"></a>
 
 ## `Alive() — bool Alive()`
 
 来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)；[`Restore()`](CareerFilePicker.cs.md#symbol-a421e77333d9)
+**调用者：** [`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)；[`Restore()`](CareerFilePicker.cs.md#symbol-c519bbfc4516)
 
 **调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`
 
@@ -88,7 +88,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a421e77333d9"></a>
+<a id="symbol-c519bbfc4516"></a>
 
 ## `Restore() — void Restore()`
 
@@ -96,7 +96,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 
 **调用者：** [`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)
 
-**调用：** [`Alive()`](CareerFilePicker.cs.md#symbol-038aad3bea2e)；`Godot.CanvasItem.Show()`
+**调用：** [`Alive()`](CareerFilePicker.cs.md#symbol-1e6e4b6b34e9)；`Godot.CanvasItem.Show()`
 
 **字段、属性、事件及方法组引用：** `Alive()`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._returnDialog`
 
@@ -119,7 +119,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.OpenPromptImport(NationalSpire.CareerData, System.Action)`](PromptScreen.cs.md#symbol-f1958720b9f6)；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)
 
-**调用：** [`Complete()`](CareerFilePicker.cs.md#symbol-7fae12a7469e)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.SavedFilePickerDirectory()`](CareerFilePicker.cs.md#symbol-908e30a73ce7)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Navigate(string, bool)`](CareerFilePicker.cs.md#symbol-ad323785a6d4)；[`Refresh()`](CareerFilePicker.cs.md#symbol-81b5c48c936f)；`Godot.ConfigFile.ConfigFile()`；`Godot.ConfigFile.Load(string)`；`Godot.ConfigFile.Save(string)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.ItemList.GetSelectedItems()`；`Godot.ItemList.ItemList()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.Vector2.Vector2(float, float)`；`string.Join(string?, params string?[])`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.Stack<T>.Pop()`；`System.Collections.Generic.Stack<T>.Stack()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetParent(string)`；`System.IO.DriveInfo.GetDrives()`；`System.IO.File.Exists(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`
+**调用：** [`Complete()`](CareerFilePicker.cs.md#symbol-ecadcaabb68b)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.SavedFilePickerDirectory()`](CareerFilePicker.cs.md#symbol-908e30a73ce7)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Navigate(string, bool)`](CareerFilePicker.cs.md#symbol-b5f2a261ac1d)；[`Refresh()`](CareerFilePicker.cs.md#symbol-45d512942ee5)；`Godot.ConfigFile.ConfigFile()`；`Godot.ConfigFile.Load(string)`；`Godot.ConfigFile.Save(string)`；`Godot.ConfigFile.SetValue(string, string, Godot.Variant)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.ItemList.GetSelectedItems()`；`Godot.ItemList.ItemList()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.Vector2.Vector2(float, float)`；`string.Join(string?, params string?[])`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.Stack<T>.Pop()`；`System.Collections.Generic.Stack<T>.Stack()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetParent(string)`；`System.IO.DriveInfo.GetDrives()`；`System.IO.File.Exists(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`
 
 **字段、属性、事件及方法组引用：** `(string Path, bool Directory).Directory`；`(string Path, bool Directory).Path`；`Complete()`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._filePickerDirectory`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.SavedFilePickerDirectory()`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.PromptTransfer.Desktop`；`Navigate(string, bool)`；`Refresh()`
 
@@ -233,13 +233,13 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 - `status.Text` = `chosen.Length == 0 ? "双击进入文件夹。" : "已选择 " + Path.GetFileName(chosen)`
 - `status` = `Text("", 16, _muted)`
 
-<a id="symbol-81b5c48c936f"></a>
+<a id="symbol-45d512942ee5"></a>
 
 ## `Refresh() — void Refresh()`
 
 来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`Navigate(string, bool)`](CareerFilePicker.cs.md#symbol-ad323785a6d4)
+**调用者：** [`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`Navigate(string, bool)`](CareerFilePicker.cs.md#symbol-b5f2a261ac1d)
 
 **调用：** `Godot.ItemList.AddItem(string, Godot.Texture2D, bool)`；`Godot.ItemList.Clear()`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource, System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Clear()`；`System.IO.Directory.EnumerateDirectories(string)`；`System.IO.Directory.EnumerateFiles(string)`；`System.IO.File.GetAttributes(string)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`
 
@@ -279,7 +279,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 - `status.Text` = `"无法访问此文件夹，请选择其他位置。"`
 - `status.Text` = `entries.Count == 0 ? "此文件夹没有匹配的文件。" : "双击文件夹进入，选中文件后点击“选择文件”。"`
 
-<a id="symbol-ad323785a6d4"></a>
+<a id="symbol-b5f2a261ac1d"></a>
 
 ## `Navigate(string, bool) — void Navigate(string path, bool remember = true)`
 
@@ -287,7 +287,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)
 
-**调用：** [`Refresh()`](CareerFilePicker.cs.md#symbol-81b5c48c936f)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Stack<T>.Push(T)`
+**调用：** [`Refresh()`](CareerFilePicker.cs.md#symbol-45d512942ee5)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Stack<T>.Push(T)`
 
 **字段、属性、事件及方法组引用：** `Refresh()`
 
@@ -302,7 +302,7 @@ private string _filePickerDirectory = PromptTransfer.Desktop;
 - `folder` = `path`
 - `search.Text` = `""`
 
-<a id="symbol-7fae12a7469e"></a>
+<a id="symbol-ecadcaabb68b"></a>
 
 ## `Complete() — void Complete()`
 

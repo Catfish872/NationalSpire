@@ -52,7 +52,8 @@ public static class RandomEvents
         Ensure(d, d.Day);
     }
     public static RandomEventRecord? Find(CareerData d, string id) => d.Life.RandomEvents.FirstOrDefault(e => e.Id == id);
-    public static string? Start(CareerData d, string id)
+    public static string? Start(CareerData d, string id) => Start(d, id, null);
+    public static string? Start(CareerData d, string id, EventOpeningChoice? opening)
     {
         var e = Find(d, id); if (e == null || e.Day != d.Day) return "请在事件当天参与。";
         if (e.State is "complete" or "skipped" || AiService.EventBusy(d, id)) return null;
@@ -60,10 +61,13 @@ public static class RandomEvents
         if (e.Materials.Length == 0)
         {
             var random = new Random(CareerEngine.StableHash(d.WorldId + ":event:" + e.Id));
-            var used = d.Life.RandomEvents.Where(x => x.Seed.Length > 0).TakeLast(24).Select(x => x.Seed).ToHashSet();
-            var selected = EventPools.SelectRandom(d.Ai, used, random);
+            var selected = opening?.Material ?? EventPools.SelectRandom(d.Ai,
+                d.Life.RandomEvents.Where(x => x.Seed.Length > 0).TakeLast(24).Select(x => x.Seed).ToHashSet(), random);
             e.Seed = selected.Detail; e.Category = selected.Category;
-            e.People = d.People.Where(p => !GroupChats.IsHuman(d, p.Id) && PrivateMessages.CanChat(d, p.Id)).OrderBy(_ => random.Next()).Take(random.Next(4)).Select(p => p.Id).ToList();
+            var candidates = PrivateMessages.ChatCandidates(d);
+            e.People = opening?.People is { } ids
+                ? ids.Intersect(candidates.Select(p => p.Id), StringComparer.Ordinal).ToList()
+                : candidates.OrderBy(_ => random.Next()).Take(random.Next(4)).Select(p => p.Id).ToList();
             e.Materials = RandomEventPrompts.Materials(d, e);
         }
         e.CustomOption = null; e.CustomAction = ""; e.CustomState = "idle"; e.CustomReasoning = "";

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`707466A3A9AFA65DB8D1B775FB32854CFC57B0290EF13A7C6375689A23DBB326`。来源：[源码](../../CareerOpening.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`976874BF9028C43F251B168732C6824FFA0C3311E2F26EADFD8B179E583E2A82`。来源：[源码](../../CareerOpening.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -121,11 +121,29 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-b7ec062609b6"></a>
+
+## `NationalSpire.CareerOpeningPlayer.Fans — public int? Fans`
+
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-f002907cf38d"></a>
 
 ## `NationalSpire.CareerOpeningPlayer.Wins — public int? Wins`
 
-来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -143,7 +161,7 @@
 
 ## `NationalSpire.CareerOpeningPlayer.Draws — public int? Draws`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -161,7 +179,7 @@
 
 ## `NationalSpire.CareerOpeningPlayer.Losses — public int? Losses`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -179,7 +197,7 @@
 
 ## `NationalSpire.CareerOpeningPlayer.Sponsor — public string Sponsor`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -197,13 +215,13 @@
 
 ## `NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData) — public void Apply(CareerData data)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)；[`NationalSpire.Coop.CoopRules.ApplyOpening(NationalSpire.Coop.CoopMember, NationalSpire.CareerData, NationalSpire.CareerOpeningPlayer)`](Coop/CoopRules.cs.md#symbol-618978b02968)
 
 **调用：** [`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`](CareerCommerce.cs.md#symbol-a571f0d2f6a3)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；[`NationalSpire.RegionalOrganizations.SponsorCatalog()`](RegionalOrganizations.cs.md#symbol-c12ea64ac22f)；[`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`](SponsorIncome.cs.md#symbol-d66156cc1ea9)；[`NationalSpire.SponsorIncome.PersonalTier(NationalSpire.CareerData)`](SponsorIncome.cs.md#symbol-9f0fa3e89b54)；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `(string Country, int Sector, string Brand).Brand`；`(string Country, int Sector, string Brand).Sector`；`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Draws`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerOpeningPlayer.Avatar`；`NationalSpire.CareerOpeningPlayer.Biography`；`NationalSpire.CareerOpeningPlayer.Country`；`NationalSpire.CareerOpeningPlayer.Credits`；`NationalSpire.CareerOpeningPlayer.Draws`；`NationalSpire.CareerOpeningPlayer.Gender`；`NationalSpire.CareerOpeningPlayer.Losses`；`NationalSpire.CareerOpeningPlayer.Name`；`NationalSpire.CareerOpeningPlayer.Sponsor`；`NationalSpire.CareerOpeningPlayer.Wins`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.EsportsCareer.Sponsors`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.IdentityGender.Choices`；`NationalSpire.PlayerAvatar.Validate()`；`NationalSpire.RegionalOrganizations.SponsorCatalog()`；`NationalSpire.SponsorContract.Accepted`；`NationalSpire.SponsorContract.PaidSeason`；`NationalSpire.SponsorContract.SignedDay`；`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`；`NationalSpire.SponsorIncome.PersonalTier(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `(string Country, int Sector, string Brand).Brand`；`(string Country, int Sector, string Brand).Sector`；`NationalSpire.CareerCommerce.BuildPersonalOffer(NationalSpire.CareerData, int, string, int, int)`；`NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Draws`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Fans`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.PlayerAlias`；`NationalSpire.CareerData.PlayerCard`；`NationalSpire.CareerData.PlayerGender`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.SelectedAvatar`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerOpeningPlayer.Avatar`；`NationalSpire.CareerOpeningPlayer.Biography`；`NationalSpire.CareerOpeningPlayer.Country`；`NationalSpire.CareerOpeningPlayer.Credits`；`NationalSpire.CareerOpeningPlayer.Draws`；`NationalSpire.CareerOpeningPlayer.Fans`；`NationalSpire.CareerOpeningPlayer.Gender`；`NationalSpire.CareerOpeningPlayer.Losses`；`NationalSpire.CareerOpeningPlayer.Name`；`NationalSpire.CareerOpeningPlayer.Sponsor`；`NationalSpire.CareerOpeningPlayer.Wins`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.EsportsCareer.Sponsors`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.IdentityGender.Choices`；`NationalSpire.PlayerAvatar.Validate()`；`NationalSpire.RegionalOrganizations.SponsorCatalog()`；`NationalSpire.SponsorContract.Accepted`；`NationalSpire.SponsorContract.PaidSeason`；`NationalSpire.SponsorContract.SignedDay`；`NationalSpire.SponsorIncome.Initialize(NationalSpire.CareerData, NationalSpire.SponsorContract)`；`NationalSpire.SponsorIncome.PersonalTier(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -230,6 +248,7 @@
 - `card.Country` = `Country`
 - `data.Credits` = `Credits.Value / 10m`
 - `data.Draws` = `Draws.Value`
+- `data.Fans` = `Fans.Value`
 - `data.Losses` = `Losses.Value`
 - `data.PlayerAlias` = `Name.Trim()`
 - `data.PlayerCard` = `card`

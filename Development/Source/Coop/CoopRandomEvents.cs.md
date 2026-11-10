@@ -2,15 +2,16 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`3C66A165EB1A1CC986C38E81170D96C64A5D6F848CBC959762DF6B526FEA348B`。来源：[源码](../../../Coop/CoopRandomEvents.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EE136A6BB6EE0EC63F77A228F3DE4A12A2941B65306C23F6924D87DE3B1C7C54`。来源：[源码](../../../Coop/CoopRandomEvents.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.Coop.CoopRules`、`NationalSpire.Coop.CoopCoordinator`。
+类型：`NationalSpire.Coop.CoopRules`、`NationalSpire.Coop.CoopCoordinator`、`NationalSpire.Coop.CoopCoordinator.PoolQuery`、`NationalSpire.Coop.CoopCoordinator.PoolAnswer`。
 
 字段、事件及初始值（源码原样）：
 
 ```csharp
+private event Action<PoolAnswer>? PoolReceived;
 ```
 
 <a id="symbol-f66a72d13c3e"></a>
@@ -43,9 +44,9 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](../AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](CoopRules.cs.md#symbol-99be42ec0491)；[`NationalSpire.Coop.CoopRules.SynchronizeEventSchedule(NationalSpire.Coop.CoopWorld)`](CoopRandomEvents.cs.md#symbol-f66a72d13c3e)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](../RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](../RandomEvents.cs.md#symbol-c949f4a092a3)；[`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`](../RandomEvents.cs.md#symbol-b7d9c2f158f5)；[`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-20d7a260dcab)；[`NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, int, int)`](../RandomEvents.cs.md#symbol-f57e4579867f)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-605db3348248)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-3b62c8ad1ca6)；`int.Parse(string, System.IFormatProvider?)`；`NationalSpire.AiOptions.AiOptions()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](../AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](CoopRules.cs.md#symbol-99be42ec0491)；[`NationalSpire.Coop.CoopRules.SynchronizeEventSchedule(NationalSpire.Coop.CoopWorld)`](CoopRandomEvents.cs.md#symbol-f66a72d13c3e)；[`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`](CoopRules.cs.md#symbol-d8e501560a84)；[`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`](../RandomEvents.cs.md#symbol-c0266703d306)；[`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`](../RandomEvents.cs.md#symbol-c949f4a092a3)；[`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`](../RandomEvents.cs.md#symbol-b7d9c2f158f5)；[`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-20d7a260dcab)；[`NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, int, int)`](../RandomEvents.cs.md#symbol-f57e4579867f)；[`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-9b570a0265e9)；[`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string, NationalSpire.EventOpeningChoice?)`](../RandomEvents.cs.md#symbol-913aeeb9683c)；[`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`](../RandomEvents.cs.md#symbol-3b62c8ad1ca6)；`int.Parse(string, System.IFormatProvider?)`；`NationalSpire.AiOptions.AiOptions()`；`string.StartsWith(char)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Number`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCommand.Text`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopRules.SynchronizeEventSchedule(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`；`NationalSpire.Coop.CoopWorld.Owner`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.RandomEventRecord.MatchIds`；`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`；`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`；`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, int, int)`；`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Registered`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Number`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCommand.Text`；`NationalSpire.Coop.CoopJson.Options`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopRules.SynchronizeEventSchedule(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopRules.View(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember)`；`NationalSpire.Coop.CoopWorld.Owner`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsCareer.Nations`；`NationalSpire.RandomEventRecord.MatchIds`；`NationalSpire.RandomEvents.Choose(NationalSpire.CareerData, string, int, bool)`；`NationalSpire.RandomEvents.ChooseCustom(NationalSpire.CareerData, string, bool)`；`NationalSpire.RandomEvents.Custom(NationalSpire.CareerData, string, string)`；`NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, int, int)`；`NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string, NationalSpire.EventOpeningChoice?)`；`NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -61,10 +62,12 @@
 - `NationalSpire.RandomEvents.Find(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Find(d, command.Target)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: RandomEvents.Find(d, command.Target)?.MatchIds.Contains(m.Id)`
 - `NationalSpire.RandomEvents.SetFrequency(NationalSpire.CareerData, int, int)`；输入表达式：`RandomEvents.SetFrequency(d, command.Number, int.Parse(command.Text, System.Globalization.CultureInfo.InvariantCulture))`；返回值紧邻使用处：`ExpressionStatementSyntax: RandomEvents.SetFrequency(d, command.Number, int.Parse(command.Text, System.Globalization.CultureInfo.InvariantCulture));`
 - `NationalSpire.RandomEvents.Skip(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Skip(d, command.Target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-skip" => RandomEvents.Skip(d, command.Target)`
-- `NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Start(d, command.Target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-start" => RandomEvents.Start(d, command.Target)`
+- `NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string, NationalSpire.EventOpeningChoice?)`；输入表达式：`RandomEvents.Start(d, command.Target, command.Text.StartsWith('{')                  ? System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options) : null)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-start" => RandomEvents.Start(d, command.Target, command.Text.StartsWith('{')                  ? System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options) : null)`
 - `NationalSpire.RandomEvents.Stop(NationalSpire.CareerData, string)`；输入表达式：`RandomEvents.Stop(d, command.Target)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "event-stop" => RandomEvents.Stop(d, command.Target)`
+- `string.StartsWith(char)`；输入表达式：`command.Text.StartsWith('{')`；返回值紧邻使用处：`ConditionalExpressionSyntax: command.Text.StartsWith('{')                  ? System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options) : null`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Matches.Where(m => RandomEvents.Find(d, command.Target)?.MatchIds.Contains(m.Id) == true)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in d.Matches.Where(m => RandomEvents.Find(d, command.Target)?.MatchIds.Contains(m.Id) == true)) match.Registered = true;`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`.MatchIds.Contains(m.Id)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: RandomEvents.Find(d, command.Target)?.MatchIds.Contains(m.Id)`
+- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options)`；返回值紧邻使用处：`ConditionalExpressionSyntax: command.Text.StartsWith('{')                  ? System.Text.Json.JsonSerializer.Deserialize<EventOpeningChoice>(command.Text, CoopJson.Options) : null`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -74,11 +77,86 @@
 - `w.World.Market` = `d.Market`
 - `w.World.Matches` = `d.Matches`
 
+<a id="symbol-191944b9b478"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.ReadEventPool(System.Threading.CancellationToken) — internal async Task<RandomEventSeed[]> ReadEventPool(CancellationToken cancel)`
+
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCareerSession.ReadEventPool(System.Threading.CancellationToken)`](CoopCareerSession.cs.md#symbol-ddd5192fa0da)
+
+**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](../AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](../EventPools.cs.md#symbol-5c94170cef9e)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.Coop.CoopCoordinator.PoolQuery.PoolQuery(string, string, string)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.Threading.Tasks.Task<TResult>.WaitAsync(System.TimeSpan, System.Threading.CancellationToken)`；`System.Threading.Tasks.TaskCompletionSource<TResult>.TaskCompletionSource()`；`System.TimeSpan.FromSeconds(long)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.Coop.CoopCoordinator._transport`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.PoolReceived`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.ICoopTransport.Owner`；`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；`NationalSpire.EventPools.Snapshot.Random`；`ReceiveAnswer(NationalSpire.Coop.CoopCoordinator.PoolAnswer)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiOptions.AiOptions()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
+- `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；输入表达式：`AiSettingsStore.Load(new())`；返回值紧邻使用处：`ArgumentSyntax: AiSettingsStore.Load(new())`
+- `NationalSpire.Coop.CoopCoordinator.PoolQuery.PoolQuery(string, string, string)`；输入表达式：`new PoolQuery(Guid.NewGuid().ToString("N"), World!.Id, World.Epoch)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PoolQuery(Guid.NewGuid().ToString("N"), World!.Id, World.Epoch)`
+- `NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；输入表达式：`Send(_transport.Owner, "event-pool-query", query)`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(_transport.Owner, "event-pool-query", query);`
+- `NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；输入表达式：`EventPools.Get(AiSettingsStore.Load(new()))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EventPools.Get(AiSettingsStore.Load(new())).Random`
+- `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
+- `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`ArgumentSyntax: Guid.NewGuid().ToString("N")`
+- `System.Threading.Tasks.Task<TResult>.WaitAsync(System.TimeSpan, System.Threading.CancellationToken)`；输入表达式：`ready.Task.WaitAsync(TimeSpan.FromSeconds(10), cancel)`；返回值紧邻使用处：`AwaitExpressionSyntax: await ready.Task.WaitAsync(TimeSpan.FromSeconds(10), cancel)`
+- `System.Threading.Tasks.TaskCompletionSource<TResult>.TaskCompletionSource()`；输入表达式：`new TaskCompletionSource<RandomEventSeed[]>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TaskCompletionSource<RandomEventSeed[]>()`
+- `System.TimeSpan.FromSeconds(long)`；输入表达式：`TimeSpan.FromSeconds(10)`；返回值紧邻使用处：`ArgumentSyntax: TimeSpan.FromSeconds(10)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `PoolReceived` -= `ReceiveAnswer`
+- `PoolReceived` += `ReceiveAnswer`
+
+<a id="symbol-966194d547c5"></a>
+
+## `ReceiveAnswer(NationalSpire.Coop.CoopCoordinator.PoolAnswer) — void ReceiveAnswer(PoolAnswer answer)`
+
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `System.Threading.Tasks.TaskCompletionSource<TResult>.TrySetResult(TResult)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.PoolAnswer.Entries`；`NationalSpire.Coop.CoopCoordinator.PoolAnswer.Query`；`NationalSpire.Coop.CoopCoordinator.PoolQuery.Epoch`；`NationalSpire.Coop.CoopCoordinator.PoolQuery.World`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Threading.Tasks.TaskCompletionSource<TResult>.TrySetResult(TResult)`；输入表达式：`ready.TrySetResult(answer.Entries)`；返回值紧邻使用处：`ExpressionStatementSyntax: ready.TrySetResult(answer.Entries);`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-7d2949d41b65"></a>
+
+## `NationalSpire.Coop.CoopCoordinator.ReceiveEventPool(ulong, NationalSpire.Coop.CoopWire) — private void ReceiveEventPool(ulong sender, CoopWire wire)`
+
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
+
+**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](../AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](../EventPools.cs.md#symbol-5c94170cef9e)；`NationalSpire.AiOptions.AiOptions()`；`NationalSpire.Coop.CoopCoordinator.PoolAnswer.PoolAnswer(NationalSpire.Coop.CoopCoordinator.PoolQuery, NationalSpire.RandomEventSeed[])`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+
+**字段、属性、事件及方法组引用：** `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.PoolQuery.Epoch`；`NationalSpire.Coop.CoopCoordinator.PoolQuery.World`；`NationalSpire.Coop.CoopCoordinator.PoolReceived`；`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWire.Kind`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；`NationalSpire.EventPools.Snapshot.Random`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.AiOptions.AiOptions()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
+- `NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；输入表达式：`AiSettingsStore.Load(new())`；返回值紧邻使用处：`ArgumentSyntax: AiSettingsStore.Load(new())`
+- `NationalSpire.Coop.CoopCoordinator.PoolAnswer.PoolAnswer(NationalSpire.Coop.CoopCoordinator.PoolQuery, NationalSpire.RandomEventSeed[])`；输入表达式：`new PoolAnswer(query,entries)`；返回值紧邻使用处：`ArgumentSyntax: new PoolAnswer(query,entries)`
+- `NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；输入表达式：`Read<PoolAnswer>(wire)`；返回值紧邻使用处：`ArgumentSyntax: Read<PoolAnswer>(wire)`
+- `NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；输入表达式：`Read<PoolQuery>(wire)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Read<PoolQuery>(wire)`
+- `NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；输入表达式：`Send(sender, "event-pool-answer", new PoolAnswer(query,entries))`；返回值紧邻使用处：`ExpressionStatementSyntax: Send(sender, "event-pool-answer", new PoolAnswer(query,entries));`
+- `NationalSpire.EventPools.Get(NationalSpire.AiOptions)`；输入表达式：`EventPools.Get(AiSettingsStore.Load(new()))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: EventPools.Get(AiSettingsStore.Load(new())).Random`
+- `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(Read<PoolAnswer>(wire))`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: PoolReceived?.Invoke(Read<PoolAnswer>(wire))`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-b51ea4166eab"></a>
 
 ## `NationalSpire.Coop.CoopCoordinator.StartEvent(ulong, NationalSpire.Coop.CoopCommand) — private void StartEvent(ulong sender, CoopCommand command)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Execute(ulong, NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-ec0c662c6de0)
 
@@ -100,11 +178,11 @@
 
 - `_` = `AiService.ProcessEventAsync(Current, Save, command.Target, live =>          {              if (_closed || World?.Epoch != epoch || sender == Self) return;              string person = "event:" + command.Target;              foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(worldId, epoch, person, command.Target,                  System.Text.Json.JsonSerializer.Serialize(live), ++_privateSendSequence))))                  Send(sender, "private-chunk", new CoopPrivatePart(person, part));          })`
 
-<a id="symbol-1ff696196810"></a>
+<a id="symbol-bcc9a6b982c3"></a>
 
 ## `Current() — CareerData? Current()`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -123,11 +201,11 @@
 
 - `data.Ai` = `AiSettingsStore.Load(new())`
 
-<a id="symbol-6577a7129cdd"></a>
+<a id="symbol-93dcc724ca8f"></a>
 
 ## `Save(NationalSpire.CareerData) — void Save(CareerData data)`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

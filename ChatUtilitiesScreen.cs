@@ -5,7 +5,7 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private PopupMenu? _chatModelPopup;
-    private bool ChatModelPickerOpen => IsInstanceValid(_chatModelPopup) && _chatModelPopup!.Visible;
+    private bool ChatModelPickerOpen => IsInstanceValid(_chatModelPopup) && _chatModelPopup!.GetParent() is Button anchor && CareerDropdownLayer.At(anchor).Showing(anchor);
 
     private void ExportChatTranscript()
     {
@@ -45,16 +45,12 @@ public partial class CareerScreen
     private void ShowChatModelPicker(Button anchor, string task)
     {
         if (_dialogOverlay != null || _multiplayer is { Host: false }) return;
-        if (ChatModelPickerOpen) { _chatModelPopup!.Hide(); return; }
+        var dropdown = CareerDropdownLayer.At(anchor);
+        if (dropdown.Showing(anchor)) { dropdown.Close(); return; }
         var data = ViewData;
         AiRouting.Ensure(data.Ai);
-        var viewport = GetViewport().GetVisibleRect().Size;
-        var popup = new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true, WrapControls = false,
-            MaxSize = new((int)(viewport.X - 16), (int)(viewport.Y * .6f)) };
+        var popup = new PopupMenu { Name = "ChatModelPicker", HideOnCheckableItemSelection = true };
         _chatModelPopup = popup; anchor.AddChild(popup);
-        popup.AddThemeFontSizeOverride("font_size", 16);
-        popup.AddThemeConstantOverride("v_separation", 14);
-        popup.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 8, 10));
         string selected = AiRouting.ProfileId(data.Ai, task);
         foreach (var (id, profile) in data.Ai.ConnectionProfiles)
         {
@@ -70,38 +66,15 @@ public partial class CareerScreen
             {
                 if (!ReferenceEquals(ViewData.Ai, data.Ai)) throw new InvalidOperationException("生涯已切换，请重新选择方案。");
                 AiRouting.Assign(data.Ai, task, popup.GetItemMetadata(popup.GetItemIndex((int)id)).AsString(), () => SaveAiSettings(ViewData));
-                popup.Hide();
             }
             catch (Exception e)
             {
-                popup.Hide();
                 ShowCareerDialog("方案未保存", e.Message, () => true, "关闭", showCancel: false);
             }
         };
-        popup.PopupHide += () => RetireChatModelPopup(popup, anchor);
-        popup.TreeExiting += () => { if (_chatModelPopup == popup) _chatModelPopup = null; };
-        var transform = anchor.GetGlobalTransformWithCanvas();
-        var size = popup.GetContentsMinimumSize() * Math.Min(transform.Scale.X, transform.Scale.Y);
-        size = size.Ceil().Min(popup.MaxSize);
-        var origin = transform.Origin;
-        var position = new Vector2(Math.Clamp(origin.X, 8, Math.Max(8, viewport.X - size.X - 8)), Math.Max(8, origin.Y - size.Y - 8));
-        popup.PopupOnParent(new Rect2I((Vector2I)position, (Vector2I)size));
-        // Godot 4.5 的 PopupMenu 在弹出前按全文高度重设 MinSize；同帧恢复限制以启用原生滚动。
-        popup.MinSize = (Vector2I)size; popup.Size = (Vector2I)size;
-        popup.Position = (Vector2I)position + (popup.IsEmbedded() ? Vector2I.Zero : GetWindow().Position);
-    }
-    private async void RetireChatModelPopup(PopupMenu popup, Button anchor)
-    {
-        // An outside press dismisses PopupMenu before Button emits Pressed on release.
-        // Consume that same click on its opener so the release cannot immediately reopen it.
-        bool closingClick = IsInstanceValid(anchor) && !anchor.Disabled && Input.IsMouseButtonPressed(MouseButton.Left);
-        if (closingClick)
-        {
-            anchor.Disabled = true;
-            while (IsInstanceValid(this) && IsInsideTree() && Input.IsMouseButtonPressed(MouseButton.Left))
-                await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-            if (IsInstanceValid(anchor)) ConfigureModelPermission(anchor);
-        }
-        if (IsInstanceValid(popup)) popup.QueueFree();
+        dropdown.Open(anchor,popup,() => {
+            if (_chatModelPopup == popup) _chatModelPopup = null;
+            popup.QueueFree();
+        });
     }
 }

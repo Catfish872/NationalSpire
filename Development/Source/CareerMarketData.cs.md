@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`299630652309600BE124776B44F4692DC41D587D03F28100CD76E0A449CF98DE`。来源：[源码](../../CareerMarketData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6A48E4E5EBCA707CA47446F39CFFCD27A42D81354F07486027EE7A244C54CEDD`。来源：[源码](../../CareerMarketData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -825,10 +825,10 @@ public static readonly int Version = CareerEngine.StableHash("market-catalog:60:
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(country + brand)`；返回值紧邻使用处：`BinaryExpressionSyntax: CareerEngine.StableHash(country + brand) % 90`
-- `NationalSpire.MarketAsset.MarketAsset(string, string, string, string, bool, decimal)`；输入表达式：`new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                 10 + CareerEngine.StableHash(country + brand) % 90)`；返回值紧邻使用处：`ArgumentSyntax: new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                 10 + CareerEngine.StableHash(country + brand) % 90)`
+- `NationalSpire.MarketAsset.MarketAsset(string, string, string, string, bool, decimal)`；输入表达式：`new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                  10 + CareerEngine.StableHash(country + brand) % 90)`；返回值紧邻使用处：`ArgumentSyntax: new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                  10 + CareerEngine.StableHash(country + brand) % 90)`
 - `NationalSpire.MarketAsset.MarketAsset(string, string, string, string, bool, decimal)`；输入表达式：`new("forex:" + country, "人民币 / " + name, country, "外汇", true, initial)`；返回值紧邻使用处：`ArgumentSyntax: new("forex:" + country, "人民币 / " + name, country, "外汇", true, initial)`
-- `NationalSpire.RegionalOrganizations.SponsorCatalog()`；输入表达式：`RegionalOrganizations.SponsorCatalog()`；返回值紧邻使用处：`ForEachVariableStatementSyntax: foreach (var (country, sector, brand) in RegionalOrganizations.SponsorCatalog())             all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                 10 + CareerEngine.StableHash(country + brand) % 90));`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                 10 + CareerEngine.StableHash(country + brand) % 90))`；返回值紧邻使用处：`ExpressionStatementSyntax: all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                 10 + CareerEngine.StableHash(country + brand) % 90));`
+- `NationalSpire.RegionalOrganizations.SponsorCatalog()`；输入表达式：`RegionalOrganizations.SponsorCatalog()`；返回值紧邻使用处：`ForEachVariableStatementSyntax: foreach (var (country, sector, brand) in RegionalOrganizations.SponsorCatalog())              all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                  10 + CareerEngine.StableHash(country + brand) % 90));`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                  10 + CareerEngine.StableHash(country + brand) % 90))`；返回值紧邻使用处：`ExpressionStatementSyntax: all.Add(new("brand:" + country + ":" + brand, brand, country, new[] { "训练装备", "电竞设备", "日常消费" }[sector], false,                  10 + CareerEngine.StableHash(country + brand) % 90));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`all.Add(new("forex:" + country, "人民币 / " + name, country, "外汇", true, initial))`；返回值紧邻使用处：`ExpressionStatementSyntax: all.Add(new("forex:" + country, "人民币 / " + name, country, "外汇", true, initial));`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<MarketAsset>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<MarketAsset>()`
 

@@ -154,7 +154,7 @@ private Vector2 _pathSize;
 
 **调用者：** [`NationalSpire.LiveRequestButton._Draw()`](LiveRequestButton.cs.md#symbol-c15d43ebdf55)
 
-**调用：** [`Arc(Godot.Vector2, float)`](LiveRequestButton.cs.md#symbol-68fc6d7b56e9)；`Godot.Vector2.DistanceTo(Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`；`System.Math.Max(float, float)`
+**调用：** [`Arc(Godot.Vector2, float)`](LiveRequestButton.cs.md#symbol-202ebc97a3ca)；`Godot.Vector2.DistanceTo(Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`；`System.Math.Max(float, float)`
 
 **字段、属性、事件及方法组引用：** `Arc(Godot.Vector2, float)`；`NationalSpire.LiveRequestButton._lengths`；`NationalSpire.LiveRequestButton._path`；`NationalSpire.LiveRequestButton._pathSize`
 
@@ -182,7 +182,7 @@ private Vector2 _pathSize;
 - `_path` = `points.ToArray()`
 - `_pathSize` = `Size`
 
-<a id="symbol-68fc6d7b56e9"></a>
+<a id="symbol-202ebc97a3ca"></a>
 
 ## `Arc(Godot.Vector2, float) — void Arc(Vector2 center, float from)`
 

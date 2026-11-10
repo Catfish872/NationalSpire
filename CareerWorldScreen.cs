@@ -109,13 +109,9 @@ public partial class CareerScreen
     private void LegacyLeagueTable(CareerData data,WorldCompetition c)
     {
         _content.AddChild(Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。",16,_muted));
-        var table=Card();_content.AddChild(table);var rows=Inner(table);
         foreach(var (entry,rank) in EsportsWorld.Rankings(c))
-        {
-            var line=new HBoxContainer();rows.AddChild(line);
-            line.AddChild(PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36));
-            line.AddChild(Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted));
-        }
+            BoardLine(_content,data,rank,CareerEngine.DisplayName(data,entry.PersonId),
+                $"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}  ·  {entry.Wins} 胜  {entry.Draws} 平  {entry.Losses} 负  ·  {entry.Clears} 次通关",$"{entry.Points} 分",entry.PersonId,entry.PersonId=="player");
     }
     private int _clubLimit = 8;
     private void Clubs(CareerData data)
@@ -186,7 +182,7 @@ public partial class CareerScreen
     {
         _content.AddChild(Text("荣誉陈列室", 29, _gold));
         _content.AddChild(Text("一路赢得的冠军和荣誉，都留在这里。", 16, _muted));
-        CeremonyInvitation(data);
+        CeremonyInvitation(data,_content);
         if (data.Esports.Honors.Count == 0) _content.AddChild(Text("这里的第一件纪念，将来自你的第一场晋级。", 20, _ink));
         var grid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill }; grid.AddThemeConstantOverride("h_separation", 16); grid.AddThemeConstantOverride("v_separation", 16); _content.AddChild(grid);
         foreach (var h in data.Esports.Honors.AsEnumerable().Reverse())

@@ -58,7 +58,7 @@
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`CheckSceneSource()`](AiPrivateMessages.cs.md#symbol-2cbd76dcfab8)；[`NationalSpire.DateSceneInvitations.Invite(NationalSpire.CareerData, string, string, string)`](DateSceneInvitations.cs.md#symbol-fbd645f524af)；[`NationalSpire.DateSceneInvitations.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>)`](DateSceneInvitations.cs.md#symbol-b18700ea221f)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)
+**调用者：** [`CheckSceneSource()`](AiPrivateMessages.cs.md#symbol-16162145abf8)；[`NationalSpire.DateSceneInvitations.Invite(NationalSpire.CareerData, string, string, string)`](DateSceneInvitations.cs.md#symbol-fbd645f524af)；[`NationalSpire.DateSceneInvitations.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>)`](DateSceneInvitations.cs.md#symbol-b18700ea221f)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)
 
 **调用：** [`NationalSpire.DateGroupBridge.IsOpen(NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-bb04f839731a)；[`NationalSpire.DateGroupBridge.Source(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-370947347770)
 
@@ -78,7 +78,7 @@
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Enter(bool)`](GroupChatScreen.cs.md#symbol-1e3233bfaf11)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
+**调用者：** [`Enter(bool)`](GroupChatScreen.cs.md#symbol-1a1dfee88b1f)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
 
 **调用：** [`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -180,7 +180,7 @@
 
 来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](Coop/CoopRules.cs.md#symbol-99be42ec0491)；[`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-3322b9d02150)
+**调用者：** [`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](Coop/CoopRules.cs.md#symbol-99be42ec0491)；[`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-160be4ae58b5)
 
 **调用：** [`NationalSpire.DateGroupBridge.IsOpen(NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-bb04f839731a)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 

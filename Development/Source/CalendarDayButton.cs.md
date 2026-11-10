@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F441C23EBD978091CDE3A201A9B9B53BCB2072CE9C7B51321E28C56238B5D350`。来源：[源码](../../CalendarDayButton.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EABDBC2F94BD92E4DD4E131DC60C0A0F85641D89A80B8DE7438138345399D43C`。来源：[源码](../../CalendarDayButton.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,7 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-private const int CopyBottom=13;
+private const int CopyBottom=16;
 private HBoxContainer _heading = null!;
 private Label _description = null!;
 private Label? _secondary;
@@ -171,7 +171,7 @@ private float _hover, _press;
 
 来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Choose(string, string)`](CalendarPlansScreen.cs.md#symbol-9a1d5ca75d7a)
+**调用者：** [`Choose(string, string)`](CalendarPlansScreen.cs.md#symbol-e149c41061ce)
 
 **调用：** [`NationalSpire.CalendarDayButton.SelectDate(bool)`](CalendarDayButton.cs.md#symbol-c7e15f459308)
 
@@ -377,11 +377,11 @@ private float _hover, _press;
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_markers.AddThemeConstantOverride("v_separation",1)`；返回值紧邻使用处：`ExpressionStatementSyntax: _markers.AddThemeConstantOverride("v_separation",1);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_secondary.AddThemeConstantOverride("line_spacing",1)`；返回值紧邻使用处：`ExpressionStatementSyntax: _secondary.AddThemeConstantOverride("line_spacing",1);`
 - `Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；输入表达式：`number.AddThemeFontOverride("font", CareerVisuals.InterfaceText(700))`；返回值紧邻使用处：`ExpressionStatementSyntax: number.AddThemeFontOverride("font", CareerVisuals.InterfaceText(700));`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 12 : 14 : 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: _description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 12 : 14 : 16);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_secondary.AddThemeFontSizeOverride("font_size",12)`；返回值紧邻使用处：`ExpressionStatementSyntax: _secondary.AddThemeFontSizeOverride("font_size",12);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 14 : 16 : 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: _description.AddThemeFontSizeOverride("font_size", CalendarLayout ? Description=="训练 / 新闻" ? 14 : 16 : 16);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_secondary.AddThemeFontSizeOverride("font_size",14)`；返回值紧邻使用处：`ExpressionStatementSyntax: _secondary.AddThemeFontSizeOverride("font_size",14);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`dot.AddThemeFontSizeOverride("font_size", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: dot.AddThemeFontSizeOverride("font_size", 18);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 21 : 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 21 : 18);`
-- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`today.AddThemeFontSizeOverride("font_size",12)`；返回值紧邻使用处：`ExpressionStatementSyntax: today.AddThemeFontSizeOverride("font_size",12);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 23 : 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: number.AddThemeFontSizeOverride("font_size", CalendarLayout ? 23 : 18);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`today.AddThemeFontSizeOverride("font_size",14)`；返回值紧邻使用处：`ExpressionStatementSyntax: today.AddThemeFontSizeOverride("font_size",14);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`AddThemeStyleboxOverride("focus", new StyleBoxEmpty())`；返回值紧邻使用处：`ExpressionStatementSyntax: AddThemeStyleboxOverride("focus", new StyleBoxEmpty());`
 - `Godot.Control.Control()`；输入表达式：`new Control { Name = "CalendarRelationship", CustomMinimumSize = new(22, 22), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Control { Name = "CalendarRelationship", CustomMinimumSize = new(22, 22), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_copy.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _copy.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
@@ -442,8 +442,8 @@ private float _hover, _press;
 
 - `_copy.MinimumSizeChanged` += `FitCalendarCopy`
 - `_copy.OffsetBottom` = `-CopyBottom`
-- `_copy.OffsetLeft` = `7`
-- `_copy.OffsetRight` = `-7`
+- `_copy.OffsetLeft` = `14`
+- `_copy.OffsetRight` = `-14`
 - `_copy.OffsetTop` = `39`
 - `_copy` = `new VBoxContainer { Name="CalendarCopy",GrowVertical=GrowDirection.Begin,Alignment=BoxContainer.AlignmentMode.End,MouseFilter=MouseFilterEnum.Ignore }`
 - `_description.HorizontalAlignment` = `HorizontalAlignment.Left`
@@ -512,10 +512,10 @@ private float _hover, _press;
 - `Godot.CanvasItem.QueueRedraw()`；输入表达式：`QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: QueueRedraw();`
 - `Godot.Control.GetCombinedMinimumSize()`；输入表达式：`_heading.GetCombinedMinimumSize()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _heading.GetCombinedMinimumSize().X`
 - `Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；输入表达式：`_secondary!.GetThemeFont("font")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _secondary!.GetThemeFont("font").GetStringSize`
-- `Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；输入表达式：`_secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:12)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:12).X`
+- `Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；输入表达式：`_secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:14)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _secondary!.GetThemeFont("font").GetStringSize(detail.Split('\n')[0],fontSize:14).X`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(14,9)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _heading.Position=new(14,9)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(4, CalendarLayout ? CustomMinimumSize.Y-55 : 47)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _description.Position = new(4, CalendarLayout ? CustomMinimumSize.Y-55 : 47)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(8, CalendarLayout ? 0 : 17)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _heading.Position = new(8, CalendarLayout ? 0 : 17)`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(8,6)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _heading.Position=new(8,6)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Math.Max(0, Size.X - 16), 26)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _heading.Size = new(Math.Max(0, Size.X - 16), 26)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(Math.Max(0, Size.X - 16), 36)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _description.Size = new(Math.Max(0, Size.X - 16), 36)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(width,Math.Max(16,rows*18))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _markers.Size=new(width,Math.Max(16,rows*18))`
@@ -525,9 +525,9 @@ private float _hover, _press;
 - `string.IndexOf(string, System.StringComparison)`；输入表达式：`detail.IndexOf(" · 对手：",StringComparison.Ordinal)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =detail.IndexOf(" · 对手：",StringComparison.Ordinal)`
 - `string.Split(char, System.StringSplitOptions)`；输入表达式：`detail.Split('\n')`；返回值紧邻使用处：`ElementAccessExpressionSyntax: detail.Split('\n')[0]`
 - `System.Math.Max(float, float)`；输入表达式：`Math.Max(0, Size.X - 16)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(0, Size.X - 16)`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(1,Size.X-14)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Math.Max(1,Size.X-14)`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(18,Size.X-x-7)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(18,Size.X-x-7)`
-- `System.Math.Max(float, float)`；输入表达式：`Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+14)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+14)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(1,Size.X-28)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Math.Max(1,Size.X-28)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(18,Size.X-x-14)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(18,Size.X-x-14)`
+- `System.Math.Max(float, float)`；输入表达式：`Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+22)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(Today ? 65 : 39, _heading.GetCombinedMinimumSize().X+22)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(1,(int)((width+2)/18))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(1,(int)((width+2)/18))`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(16,rows*18)`；返回值紧邻使用处：`ArgumentSyntax: Math.Max(16,rows*18)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(39,16+rows*18)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _copy!.OffsetTop=Math.Max(39,16+rows*18)`
@@ -537,8 +537,8 @@ private float _hover, _press;
 - `_copy!.OffsetTop` = `Math.Max(39,16+rows*18)`
 - `_description.Position` = `new(4, CalendarLayout ? CustomMinimumSize.Y-55 : 47)`
 - `_description.Size` = `new(Math.Max(0, Size.X - 16), 36)`
+- `_heading.Position` = `new(14,9)`
 - `_heading.Position` = `new(8, CalendarLayout ? 0 : 17)`
-- `_heading.Position` = `new(8,6)`
 - `_heading.Size` = `new(Math.Max(0, Size.X - 16), 26)`
 - `_heading.Size` = `new(x,33)`
 - `_markers.Position` = `new(x,13)`

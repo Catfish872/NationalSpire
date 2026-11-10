@@ -103,8 +103,10 @@ public static partial class AiService
         : ProfileKeys.TryGetValue(profile, out var key) ? key : AiSettingsStore.ReadKey(profile);
     public static bool HasProfileKey(string profile) => !string.IsNullOrWhiteSpace(ProfileKey(profile));
     public static AiConnection Connection(AiOptions options, string task)
+        => ConnectionForProfile(options, AiRouting.ProfileId(options, task));
+    private static AiConnection ConnectionForProfile(AiOptions options,string id)
     {
-        string id = AiRouting.ProfileId(options, task); var profile = options.ConnectionProfiles[id];
+        var profile = options.ConnectionProfiles[id];
         return new(id, profile.Name, profile.Endpoint, profile.Model, ProfileKey(id));
     }
     public static string? PersistKey(string value, string profile = AiRouting.Default)

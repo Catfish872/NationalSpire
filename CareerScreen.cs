@@ -358,7 +358,13 @@ public partial class CareerScreen : Control, IScreenContext
         _arenaCharacter=null;
         var agendaItems=Upcoming(data).ToList();
         // 本周日程也列出自动结算的计划。主栏只选有对应玩家操作的事项。
-        var next=agendaItems.FirstOrDefault(item => item.Match != null || item.Visit != null || item.Encounter != null);
+        var next=agendaItems.FirstOrDefault(item => item.Match != null || item.Visit != null);
+        var due = new HFlowContainer {Name="HomeToday"}; due.AddThemeConstantOverride("h_separation",12);
+        var eventColumn=new VBoxContainer {CustomMinimumSize=new(490,0),SizeFlagsHorizontal=SizeFlags.ExpandFill};
+        EventCards(data,eventColumn,data.Day);
+        if(eventColumn.GetChildCount()>0) due.AddChild(eventColumn); else eventColumn.Free();
+        if(SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data,due);
+        if(due.GetChildCount()>0) _content.AddChild(due); else due.Free();
         string person=string.IsNullOrEmpty(next?.Person) ? "player" : next.Person;
         int day=next?.Day??data.Day;
         var grid = new HBoxContainer(); grid.CustomMinimumSize=new(0,833); grid.AddThemeConstantOverride("separation", HomeColumnGap); _content.AddChild(grid);
@@ -388,14 +394,22 @@ public partial class CareerScreen : Control, IScreenContext
             meta.AddChild(DashboardLabel(next.Match is { } m ? $"已报名    进阶 {m.RequiredAscension}" :
                 next.Visit!=null ? "已确认" : next.Detail,16,_muted,true));
         }
-        var actions=new HBoxContainer();actions.AddThemeConstantOverride("separation",12);words.AddChild(actions);
-        if(next!=null)
+        var actions=new HFlowContainer();actions.AddThemeConstantOverride("h_separation",10);actions.AddThemeConstantOverride("v_separation",5);words.AddChild(actions);
+        void Primary(string title, Action open)
         {
-            string action=next.Match!=null ? day==data.Day?"进入赛场":"前往赛场" : next.Visit!=null?"前往约定":
-                next.Encounter!=null && day==data.Day?"查看际遇":"查看安排";
-            var enter=FramedAction(action,()=>OpenAgendaItem(data,next),"arrow-right",trailing:true,width:218,height:51,ink:_gold);
+            var enter=FramedAction(title,open,"arrow-right",trailing:true,width:180,height:51,ink:_gold);
             ButtonSurface(enter,"2b4b51","7b9487","385d61","eed39b",6); actions.AddChild(enter);
         }
+        if(data.PendingMatchId != null) Primary("查看进行中的比赛",()=>GoHub("赛事"));
+        else if(next!=null)
+        {
+            foreach(var item in agendaItems.Where(i=>i.Day==day && (i.Match!=null || i.Visit!=null)).DistinctBy(i=>i.Match!=null))
+            {
+                var title=item.Match!=null ? day==data.Day?"进入赛场":"前往比赛日" : day==data.Day?"查看今日约定":"前往活动日";
+                Primary(title,()=>{if(day==data.Day) OpenAgendaItem(data,item); else TravelTo(day);});
+            }
+        }
+        else if(CareerEngine.NextAvailable(data)!=null) Primary("选择参赛赛事",()=>GoHub("赛事"));
         actions.AddChild(FramedAction("日程安排",()=>OpenCalendarDay(day),width:112,height:46,quiet:true));
         if (next?.Match is { } nextMatch)
             actions.AddChild(FramedAction("查看赛程", () => OpenMatchFixture(data, nextMatch), width: 112, height: 46, quiet: true));
@@ -560,8 +574,6 @@ public partial class CareerScreen : Control, IScreenContext
         int contactCount=strip.GetChildCount();
         if(contactCount==0) HomeInvitation(strip,"还没有最近联系人。","找熟悉的人聊聊",ChoosePrivateContact);
         else for(int i=contactCount;i<3;i++) strip.AddChild(new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill,MouseFilter=MouseFilterEnum.Ignore});
-        EventCards(data,_content,data.Day);
-        if (SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data);
         ClubInvitation(data);
     }
 
@@ -716,7 +728,7 @@ public partial class CareerScreen : Control, IScreenContext
         foreach (var mode in new[] { "日程", "计划" })
         {
             var tab = UnderlineTab(mode, () => { _calendarMode = mode; ClearPlan(); Render(); }, mode == "计划" ? _calendarMode == mode : _calendarMode != "计划",90);
-            tabs.AddChild(tab); if (mode == "计划" && PendingPlans(data)) Dot(tab);
+            tabs.AddChild(tab); if (mode == "计划" && AvailablePlans(data)) Dot(tab);
         }
         var innerScroll = new ScrollContainer { Name = "CalendarSideScroll", CustomMinimumSize = new(0, 555),
             SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled };
@@ -767,8 +779,7 @@ public partial class CareerScreen : Control, IScreenContext
         if(shown>data.Day)
         {
             var jump=FramedAction("跳转到此日",()=>{
-                if(MultiplayerCommand("propose-advance",number:shown)) return;
-                CareerEngine.AdvanceToDay(data,shown); _selectedDay=data.Day; _calendarMonth=0; Render();
+                TravelTo(shown);
             },"arrow-right",trailing:true,height:43,quiet:true);
             jump.Name="CalendarDayJump"; jump.Disabled=_multiplayer is {Host:false}; box.AddChild(jump);
         }

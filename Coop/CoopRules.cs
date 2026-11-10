@@ -9,10 +9,11 @@ public static partial class CoopRules
         AddMember(w, owner, playerName);
         return w;
     }
-    internal static CoopWorld CreateWorld(ulong owner, string name, int capacity, string country, PersonalityPool? personalityPool)
+    internal static CoopWorld CreateWorld(ulong owner, string name, int capacity, string country, PersonalityPool? personalityPool, string? worldId=null)
     {
         if (capacity is < 2 or > 4 || !EsportsWorld.Countries.Contains(country)) throw new InvalidDataException("队伍设置无效。");
         var w = new CoopWorld { Owner = owner, Capacity = capacity, Name = string.IsNullOrWhiteSpace(name) ? "共同生涯" : name.Trim() };
+        if(worldId!=null)w.Id=worldId;
         w.World = CareerEngine.CreateNew(cooperativeMembers: capacity, personalityPool: personalityPool, worldId: w.Id, country: country);
         CoopJson.Detached(w.World); w.World.WorldId = w.Id; w.World.PlayerAlias = w.Name;
         w.World.Esports.Country = country; w.World.Market.QuoteCountry = country; OwnedClubs.EnsureMarket(w.World); w.World.Ai.Enabled = false;
@@ -35,7 +36,7 @@ public static partial class CoopRules
     {
         opening.Apply(view);
         member.Name = view.PlayerAlias; member.Gender = view.PlayerGender; member.Card = view.PlayerCard; member.Avatar = view.SelectedAvatar;
-        member.Life = view.Life; member.Credits = view.Credits; member.Wins = view.Wins; member.Losses = view.Losses; member.Draws = view.Draws; member.Sponsors = view.Esports.Sponsors;
+        member.Life = view.Life; member.Credits = view.Credits; member.Fans = view.Fans; member.Wins = view.Wins; member.Losses = view.Losses; member.Draws = view.Draws; member.Sponsors = view.Esports.Sponsors;
     }
     public static CareerData View(CoopWorld w, CoopMember m)
     {

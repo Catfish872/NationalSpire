@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2BFF1FFA31D03C643C604B282540879831A5298770A64B8AC0DB179F67D38961`。来源：[源码](../../CeremonyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DE4E58DFECD6D7FA9CB1E81D751B48A8047F0919B782236A300DAEA32755FE65`。来源：[源码](../../CeremonyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,7 +23,7 @@ private float _time;
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
+**调用者：** [`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`](CeremonyScreen.cs.md#symbol-071fb0b79ec4)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)
 
 **调用：** [`NationalSpire.CareerScreen.OpenWorldSection(string)`](CareerNavigation.cs.md#symbol-e41ea7b0d93d)
 
@@ -133,7 +133,7 @@ private float _time;
 
 来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.CareerScreen.CeremonyHero(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-7344f4112178)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)
+**调用者：** [`NationalSpire.CareerScreen.CeremonyAwards(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-554512484279)；[`NationalSpire.CareerScreen.CeremonyHero(NationalSpire.CareerData, NationalSpire.CeremonyRecord)`](CeremonyScreen.cs.md#symbol-7344f4112178)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`](CeremonyScreen.cs.md#symbol-071fb0b79ec4)
 
 **调用：** [`NationalSpire.CareerScreen.CeremonySelf(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-bffce7c9ff06)；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -168,9 +168,9 @@ private float _time;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-fe94e59081ff"></a>
+<a id="symbol-071fb0b79ec4"></a>
 
-## `NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData) — private void CeremonyInvitation(CareerData data)`
+## `NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container) — private void CeremonyInvitation(CareerData data,Container parent)`
 
 来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
@@ -178,22 +178,23 @@ private float _time;
 
 **调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.CeremonyOwn(NationalSpire.CareerData, NationalSpire.CeremonyAward)`](CeremonyScreen.cs.md#symbol-1ef726bb1397)；[`NationalSpire.CareerScreen.Emphasize(Godot.Button)`](BroadcastVisuals.cs.md#symbol-ddd68d13b687)；[`NationalSpire.CareerScreen.OpenCeremony()`](CeremonyScreen.cs.md#symbol-f5db35fa605b)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CeremonyMedallion.CeremonyMedallion()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ceremonies`；`NationalSpire.CareerScreen._ceremonySeason`；`NationalSpire.CareerScreen._ceremonySection`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CeremonyOwn(NationalSpire.CareerData, NationalSpire.CeremonyAward)`；`NationalSpire.CareerScreen.Emphasize(Godot.Button)`；`NationalSpire.CareerScreen.OpenCeremony()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ceremonies`；`NationalSpire.CareerScreen._ceremonySeason`；`NationalSpire.CareerScreen._ceremonySection`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CeremonyOwn(NationalSpire.CareerData, NationalSpire.CeremonyAward)`；`NationalSpire.CareerScreen.Emphasize(Godot.Button)`；`NationalSpire.CareerScreen.OpenCeremony()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CeremonyAward.Title`；`NationalSpire.CeremonyRecord.Awards`；`NationalSpire.CeremonyRecord.Season`；`NationalSpire.CeremonyRecord.Year`；`NationalSpire.CeremonyRecord.YearTop`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 20)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 20);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("202f37", "8d794f", 10, 20))`；返回值紧邻使用处：`ExpressionStatementSyntax: card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("202f37", "8d794f", 10, 20));`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(card);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`caption.AddChild(Text(latest == null ? "赛季颁奖盛典" : latest.YearTop.Count > 0              ? $"第 {latest.Year} 年度荣誉之夜" : $"第 {latest.Season} 赛季 · 荣誉揭晓", 23, _gold))`；返回值紧邻使用处：`ExpressionStatementSyntax: caption.AddChild(Text(latest == null ? "赛季颁奖盛典" : latest.YearTop.Count > 0              ? $"第 {latest.Year} 年度荣誉之夜" : $"第 {latest.Season} 赛季 · 荣誉揭晓", 23, _gold));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`caption.AddChild(Text(latest == null ? "赛季结束后揭晓奖项，历届荣誉在这里保存。"              : honors.Length > 0 ? "你的本届荣誉  ·  " + honors : "本届获奖名单与选手排名已经公布。", 16, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: caption.AddChild(Text(latest == null ? "赛季结束后揭晓奖项，历届荣誉在这里保存。"              : honors.Length > 0 ? "你的本届荣誉  ·  " + honors : "本届获奖名单与选手排名已经公布。", 16, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`card.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: card.AddChild(row);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`parent.AddChild(card)`；返回值紧邻使用处：`ExpressionStatementSyntax: parent.AddChild(card);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(caption)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(caption);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(enter)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(enter);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(new CeremonyMedallion { CustomMinimumSize = new Vector2(72, 72), SizeFlagsVertical = SizeFlags.ShrinkCenter })`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(new CeremonyMedallion { CustomMinimumSize = new Vector2(72, 72), SizeFlagsVertical = SizeFlags.ShrinkCenter });`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(72, 72)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(72, 72)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(530,0)`；返回值紧邻使用处：`AssignmentExpressionSyntax: card.CustomMinimumSize=new(530,0)`
 - `NationalSpire.CareerScreen.Button(string, System.Action, float)`；输入表达式：`Button(latest == null ? "查看盛典   →" : "查看本届盛典   →", () =>          { _ceremonySeason = latest?.Season ?? 0; _ceremonySection = "获奖名单"; OpenCeremony(); }, 210)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Button(latest == null ? "查看盛典   →" : "查看本届盛典   →", () =>          { _ceremonySeason = latest?.Season ?? 0; _ceremonySection = "获奖名单"; OpenCeremony(); }, 210)`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
 - `NationalSpire.CareerScreen.CeremonyOwn(NationalSpire.CareerData, NationalSpire.CeremonyAward)`；输入表达式：`CeremonyOwn(data, a)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: a => CeremonyOwn(data, a)`
@@ -213,7 +214,9 @@ private float _time;
 
 - `_ceremonySeason` = `latest?.Season ?? 0`
 - `_ceremonySection` = `"获奖名单"`
+- `card.CustomMinimumSize` = `new(530,0)`
 - `card.Name` = `"CeremonyInvitation"`
+- `card.SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `CustomMinimumSize` = `new Vector2(72, 72)`
 - `enter.SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
@@ -569,7 +572,7 @@ private float _time;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CeremonyScreen.cs.md#symbol-1c2bf344e1ef)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Mathf.Cos(float)`；`Godot.Mathf.Sin(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
+**调用：** [`P(float, float)`](CeremonyScreen.cs.md#symbol-a1b6f9b5221b)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Mathf.Cos(float)`；`Godot.Mathf.Sin(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CeremonyMedallion._time`；`NationalSpire.CeremonyMedallion.ShowCrown`；`P(float, float)`
 
@@ -607,7 +610,7 @@ private float _time;
 
 - `A` = `i % 3 == 0 ? .62f : .28f`
 
-<a id="symbol-1c2bf344e1ef"></a>
+<a id="symbol-a1b6f9b5221b"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 

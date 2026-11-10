@@ -129,7 +129,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.PlayerChanged(NationalSpire.Coop.NativeLobbyApi.Member, bool)`](CoopNativeRun.cs.md#symbol-9053b1c2c84a)
 
-**调用：** [`Apply()`](CoopReception.cs.md#symbol-0cbc1a234022)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Collections.Generic.Queue<T>.Enqueue(T)`
+**调用：** [`Apply()`](CoopReception.cs.md#symbol-bac161d8b72f)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Collections.Generic.Queue<T>.Enqueue(T)`
 
 **字段、属性、事件及方法组引用：** `Apply()`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator.Receiving`
 
@@ -142,7 +142,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0cbc1a234022"></a>
+<a id="symbol-bac161d8b72f"></a>
 
 ## `Apply() — void Apply()`
 
@@ -170,7 +170,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`](CoopCareerSession.cs.md#symbol-b761b96e0df4)；[`NationalSpire.Coop.CoopCoordinator.RenameSaveAsync(string, string)`](CoopCoordinator.cs.md#symbol-8fb73d8fab79)；[`NationalSpire.Coop.CoopCoordinator.Submit(string, string, string, int, string)`](CoopCoordinator.cs.md#symbol-d7ec39d842f3)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)
 
-**调用：** [`Submit()`](CoopReception.cs.md#symbol-9ef8b10021f1)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.OperationCanceledException.OperationCanceledException(string?)`
+**调用：** [`Submit()`](CoopReception.cs.md#symbol-6a2a634609d7)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.OperationCanceledException.OperationCanceledException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator._replacementCommands`；`NationalSpire.Coop.CoopCoordinator._replacingSnapshot`；`NationalSpire.Coop.CoopCoordinator.Receiving`；`Submit()`
 
@@ -186,7 +186,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-9ef8b10021f1"></a>
+<a id="symbol-6a2a634609d7"></a>
 
 ## `Submit() — void Submit()`
 
@@ -215,7 +215,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCoordinator.CloseReceived()`](CoopReception.cs.md#symbol-5e40e274e59c)；[`NationalSpire.Coop.CoopCoordinator.PumpReceived()`](CoopReception.cs.md#symbol-a09fec904cc1)；[`NationalSpire.Coop.CoopCoordinator.QueueSnapshot(ulong, NationalSpire.Coop.CoopAssembler.Complete)`](CoopReception.cs.md#symbol-15289643ead0)；[`Step()`](CoopReception.cs.md#symbol-a5040fac887f)
+**调用者：** [`NationalSpire.Coop.CoopCoordinator.CloseReceived()`](CoopReception.cs.md#symbol-5e40e274e59c)；[`NationalSpire.Coop.CoopCoordinator.PumpReceived()`](CoopReception.cs.md#symbol-a09fec904cc1)；[`NationalSpire.Coop.CoopCoordinator.QueueSnapshot(ulong, NationalSpire.Coop.CoopAssembler.Complete)`](CoopReception.cs.md#symbol-15289643ead0)；[`Step()`](CoopReception.cs.md#symbol-e4314ad7a039)
 
 **调用：** `System.Action.Invoke()`（委托实际目标见流程文档）；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.TryDequeue(out T)`
 
@@ -304,7 +304,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a5040fac887f"></a>
+<a id="symbol-e4314ad7a039"></a>
 
 ## `Step() — bool Step()`
 
@@ -362,7 +362,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Step()`](CoopReception.cs.md#symbol-a5040fac887f)
+**调用者：** [`Step()`](CoopReception.cs.md#symbol-e4314ad7a039)
 
 **调用：** [`NationalSpire.Coop.CoopRules.InterfaceView(NationalSpire.Coop.CoopWorld, ulong)`](CoopRules.cs.md#symbol-c23013f591a9)；[`NationalSpire.Coop.CoopStorage.SaveAsync(NationalSpire.Coop.CoopWorld, byte[]?, System.Threading.CancellationToken)`](CoopStorage.cs.md#symbol-26bf729f0b72)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Threading.Tasks.Task.ConfigureAwait(System.Threading.Tasks.ConfigureAwaitOptions)`
 

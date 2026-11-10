@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BFB7576C98978C91681C14846CEAE9FC3C9B6041AB0BD4E05A653CF1E7F54AEC`。来源：[源码](../../NpcRecords.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`18C3628541416A12BDE1D5DC1C28EDC9691DCCE775D4AE53DA2D4F8739F97E3E`。来源：[源码](../../NpcRecords.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -32,7 +32,7 @@ public const int Version = 1;
 - `NationalSpire.NpcRecords.Initialize(NationalSpire.CareerPerson, int)`；输入表达式：`Initialize(person, CareerEngine.StableHash(data.WorldId + ":records:" + person.Id))`；返回值紧邻使用处：`ExpressionStatementSyntax: Initialize(person, CareerEngine.StableHash(data.WorldId + ":records:" + person.Id));`
 - `NationalSpire.NpcRecords.RestorePrivateClears(NationalSpire.CareerData)`；输入表达式：`RestorePrivateClears(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RestorePrivateClears(data)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`data.WeeklyPersonBaselines.Remove(person.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: data.WeeklyPersonBaselines.Remove(person.Id);`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Where(p => !data.HumanIds.Contains(p.Id) && p.Id != "player" && p.Role != "联机选手")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var person in data.People.Where(p => !data.HumanIds.Contains(p.Id) && p.Id != "player" && p.Role != "联机选手"))          {              if (person.EditedCard || person.RecordVersion >= Version) continue;              Initialize(person, CareerEngine.StableHash(data.WorldId + ":records:" + person.Id));              // 迁移补齐的是开档前履历，不计为本期新增通关。              data.WeeklyPersonBaselines.Remove(person.Id);              changed = true;          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Where(p => !data.HumanIds.Contains(p.Id) && p.Id != "player" && p.Role != "联机选手")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var person in data.People.Where(p => !data.HumanIds.Contains(p.Id) && p.Id != "player" && p.Role != "联机选手"))         {             if (person.EditedCard || person.RecordVersion >= Version) continue;             Initialize(person, CareerEngine.StableHash(data.WorldId + ":records:" + person.Id));             // 迁移补齐的是开档前履历，不计为本期新增通关。             data.WeeklyPersonBaselines.Remove(person.Id);             changed = true;         }`
 - `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.HumanIds.Contains(p.Id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !data.HumanIds.Contains(p.Id)`
 
 **赋值（含属性/字段和局部值）：**
@@ -55,7 +55,7 @@ public const int Version = 1;
 
 - `NationalSpire.NpcRecords.RecordPrivateClear(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`RecordPrivateClear(data, match)`；返回值紧邻使用处：`AssignmentExpressionSyntax: changed |= RecordPrivateClear(data, match)`
 - `NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；输入表达式：`PrivateAppointments.IsPrivate(m)`；返回值紧邻使用处：`BinaryExpressionSyntax: m.Day <= data.Day && m.Status == "已结算" && PrivateAppointments.IsPrivate(m)`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Matches.Where(m => m.Day <= data.Day && m.Status == "已结算" && PrivateAppointments.IsPrivate(m))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in data.Matches.Where(m => m.Day <= data.Day && m.Status == "已结算" && PrivateAppointments.IsPrivate(m)))              changed |= RecordPrivateClear(data, match);`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Matches.Where(m => m.Day <= data.Day && m.Status == "已结算" && PrivateAppointments.IsPrivate(m))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var match in data.Matches.Where(m => m.Day <= data.Day && m.Status == "已结算" && PrivateAppointments.IsPrivate(m)))             changed |= RecordPrivateClear(data, match);`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -78,7 +78,7 @@ public const int Version = 1;
 - `double.IsFinite(double)`；输入表达式：`double.IsFinite(match.OpponentSeconds.Value)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !double.IsFinite(match.OpponentSeconds.Value)`
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, match.OpponentId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, match.OpponentId) is not { } person`
 - `NationalSpire.PrivateAppointments.IsPrivate(NationalSpire.CareerMatch)`；输入表达式：`PrivateAppointments.IsPrivate(match)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !PrivateAppointments.IsPrivate(match)`
-- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.HumanIds.Contains(match.OpponentId)`；返回值紧邻使用处：`BinaryExpressionSyntax: !PrivateAppointments.IsPrivate(match) || match.Status != "已结算" || !match.OpponentPrepared || !match.OpponentWon              || match.OpponentSeconds is not > 0 || !double.IsFinite(match.OpponentSeconds.Value)              || match.RequiredAscension is < 0 or > 10 || data.HumanIds.Contains(match.OpponentId)`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`data.HumanIds.Contains(match.OpponentId)`；返回值紧邻使用处：`BinaryExpressionSyntax: !PrivateAppointments.IsPrivate(match) || match.Status != "已结算" || !match.OpponentPrepared || !match.OpponentWon             || match.OpponentSeconds is not > 0 || !double.IsFinite(match.OpponentSeconds.Value)             || match.RequiredAscension is < 0 or > 10 || data.HumanIds.Contains(match.OpponentId)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(person.MaxAscension, highest)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(person.MaxAscension, highest)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(person.PrivateHighestClear, match.RequiredAscension)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(person.PrivateHighestClear, match.RequiredAscension)`
 

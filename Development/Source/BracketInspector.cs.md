@@ -60,7 +60,7 @@ private bool _pinned;
 - `viewport.VisibilityChanged` += `OnVisibilityChanged`
 - `ZIndex` = `18`
 
-<a id="symbol-489d06ef69bb"></a>
+<a id="symbol-0d3ab971c7dd"></a>
 
 ## `OnVisibilityChanged() — void OnVisibilityChanged()`
 
@@ -108,7 +108,7 @@ private bool _pinned;
 
 **调用者：** [`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)
 
-**调用：** [`NationalSpire.BracketInspector.Dismiss()`](BracketInspector.cs.md#symbol-4ae6702e936d)；[`NationalSpire.BracketInspector.HideAfterPointerLeaves()`](BracketInspector.cs.md#symbol-cd1dcb62a496)；[`ShowCard()`](BracketInspector.cs.md#symbol-2759aa16f0ae)
+**调用：** [`NationalSpire.BracketInspector.Dismiss()`](BracketInspector.cs.md#symbol-4ae6702e936d)；[`NationalSpire.BracketInspector.HideAfterPointerLeaves()`](BracketInspector.cs.md#symbol-cd1dcb62a496)；[`ShowCard()`](BracketInspector.cs.md#symbol-1e8392d02a9c)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BracketInspector._pinned`；`NationalSpire.BracketInspector._target`；`NationalSpire.BracketInspector.Dismiss()`；`NationalSpire.BracketInspector.HideAfterPointerLeaves()`；`ShowCard()`
 
@@ -127,7 +127,7 @@ private bool _pinned;
 - `button.MouseExited` += `HideAfterPointerLeaves`
 - `button.Pressed` += `() =>          {              if (_target == button && _pinned) { Dismiss(); return; }              ShowCard();              _pinned = true;          }`
 
-<a id="symbol-2759aa16f0ae"></a>
+<a id="symbol-1e8392d02a9c"></a>
 
 ## `ShowCard() — void ShowCard()`
 
@@ -190,7 +190,7 @@ private bool _pinned;
 
 来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.BracketInspector._Input(Godot.InputEvent)`](BracketInspector.cs.md#symbol-a23e4a2436da)；[`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`](BracketInspector.cs.md#symbol-ddfed770fc0f)；[`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`](BracketInspector.cs.md#symbol-955dfacc5bbe)；[`NationalSpire.BracketInspector.HideAfterPointerLeaves()`](BracketInspector.cs.md#symbol-cd1dcb62a496)；[`NationalSpire.BracketInspector.OnViewportExit()`](BracketInspector.cs.md#symbol-61dc2706269a)；[`NationalSpire.BracketInspector.PositionCard()`](BracketInspector.cs.md#symbol-7724845fc7ff)；[`OnVisibilityChanged()`](BracketInspector.cs.md#symbol-489d06ef69bb)
+**调用者：** [`NationalSpire.BracketInspector._Input(Godot.InputEvent)`](BracketInspector.cs.md#symbol-a23e4a2436da)；[`NationalSpire.BracketInspector.Attach(Godot.Control, Godot.ScrollContainer)`](BracketInspector.cs.md#symbol-ddfed770fc0f)；[`NationalSpire.BracketInspector.Bind(Godot.Button, System.Func<Godot.Control>)`](BracketInspector.cs.md#symbol-955dfacc5bbe)；[`NationalSpire.BracketInspector.HideAfterPointerLeaves()`](BracketInspector.cs.md#symbol-cd1dcb62a496)；[`NationalSpire.BracketInspector.OnViewportExit()`](BracketInspector.cs.md#symbol-61dc2706269a)；[`NationalSpire.BracketInspector.PositionCard()`](BracketInspector.cs.md#symbol-7724845fc7ff)；[`OnVisibilityChanged()`](BracketInspector.cs.md#symbol-0d3ab971c7dd)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.Node.SetProcess(bool)`
 
@@ -212,7 +212,7 @@ private bool _pinned;
 
 来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.BracketInspector._Process(double)`](BracketInspector.cs.md#symbol-e8da83ec37d7)；[`ShowCard()`](BracketInspector.cs.md#symbol-2759aa16f0ae)
+**调用者：** [`NationalSpire.BracketInspector._Process(double)`](BracketInspector.cs.md#symbol-e8da83ec37d7)；[`ShowCard()`](BracketInspector.cs.md#symbol-1e8392d02a9c)
 
 **调用：** [`NationalSpire.BracketInspector.Dismiss()`](BracketInspector.cs.md#symbol-4ae6702e936d)；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GetCombinedMinimumSize()`；`Godot.Control.GetGlobalRect()`；`Godot.Mathf.Clamp(float, float, float)`；`Godot.Node.GetParent()`；`Godot.Rect2.Intersects(Godot.Rect2, bool)`；`Godot.ScrollContainer.GetHScrollBar()`；`Godot.ScrollContainer.GetVScrollBar()`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`
 

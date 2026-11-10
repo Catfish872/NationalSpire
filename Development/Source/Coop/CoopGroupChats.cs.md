@@ -47,7 +47,7 @@
 - `_` = `AiService.ProcessGroupAsync(Current, Save, command.Target, text =>          {              if (World?.Id != world || World.Epoch != epoch) return;              var g = World.World.Chats.Groups.FirstOrDefault(g => g.Id == command.Target); if (g == null) return;              var turn = g.Turns.LastOrDefault(); if (turn == null) return;              foreach (var member in World.Members.Where(m => m.SteamId != Self && g.Members.Contains(m.PersonId)))                  foreach (var part in CoopAssembler.Split(CoopJson.Bytes(new CoopPrivateChunk(world, epoch, "group:" + g.Id, turn.Id, text, ++_privateSendSequence, AiService.GroupReasoningLive.GetValueOrDefault(world + "/group/" + g.Id).Text ?? ""))))                      Send(member.SteamId, "private-chunk", new CoopPrivatePart("group:" + g.Id, part));          })`
 - `_` = `AiService.SummarizeGroupAsync(Current, Save, command.Target, payload.Text)`
 
-<a id="symbol-4e723cc5a529"></a>
+<a id="symbol-2c4dd6def46d"></a>
 
 ## `Current() — CareerData? Current()`
 
@@ -74,7 +74,7 @@
 - `d.Ai` = `AiSettingsStore.Load(new())`
 - `d.PrivateMemorySources` = `World.Members.ToDictionary(m => m.PersonId, m => m.PersonId == member.PersonId ? d.Life.Mailbox : CoopJson.Copy(m.Life.Mailbox))`
 
-<a id="symbol-b079611d69a9"></a>
+<a id="symbol-500092220c28"></a>
 
 ## `Save(NationalSpire.CareerData) — void Save(CareerData d)`
 
@@ -103,7 +103,7 @@
 
 来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopRules.GroupCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-65a87ad49e08)；[`Save(NationalSpire.CareerData)`](CoopGroupChats.cs.md#symbol-b079611d69a9)
+**调用者：** [`NationalSpire.Coop.CoopRules.GroupCommand(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.Coop.CoopCommand)`](CoopGroupChats.cs.md#symbol-65a87ad49e08)；[`Save(NationalSpire.CareerData)`](CoopGroupChats.cs.md#symbol-500092220c28)
 
 **调用：** [`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](CoopRules.cs.md#symbol-99be42ec0491)；[`NationalSpire.Coop.CoopRules.RefreshPeople(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-8025e01818d7)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 

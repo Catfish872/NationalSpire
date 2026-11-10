@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`243CCF4DF3CFFA55F442889526B62C8B812E5F995F065083CCA1E1E42C094839`。来源：[源码](../../CareerWorldScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`A7A180218AAAFB3A282356F930903BA8B2E1FD68545A84A6303DAA2415057215`。来源：[源码](../../CareerWorldScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -227,27 +227,19 @@ private int _clubLimit = 8;
 
 **调用者：** [`NationalSpire.CareerScreen.Competition(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CareerWorldScreen.cs.md#symbol-35113b1f49bd)；[`NationalSpire.CareerScreen.LeagueTable(NationalSpire.CareerData, NationalSpire.WorldCompetition, bool)`](CareerBoardsScreen.cs.md#symbol-8456ab4b34a8)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.EsportsWorld.HistoricClub(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-81aa159a5766)；[`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerScreen.BoardLine(Godot.Container, NationalSpire.CareerData, int, string, string, string, string?, bool)`](CareerBoardsScreen.cs.md#symbol-7d1cd449d003)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；[`NationalSpire.EsportsWorld.HistoricClub(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`](EsportsWorld.cs.md#symbol-81aa159a5766)；[`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`](EsportsWorld.cs.md#symbol-1382bbc5c3c3)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerStanding.Clears`；`NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.HistoricClub(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.BoardLine(Godot.Container, NationalSpire.CareerData, int, string, string, string, string?, bool)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerStanding.Clears`；`NationalSpire.CareerStanding.Draws`；`NationalSpire.CareerStanding.Losses`；`NationalSpire.CareerStanding.PersonId`；`NationalSpire.CareerStanding.Points`；`NationalSpire.CareerStanding.Wins`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；`NationalSpire.EsportsWorld.HistoricClub(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；`NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new HBoxContainer()`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(table)`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(table);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_content.AddChild(Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。",16,_muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: _content.AddChild(Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。",16,_muted));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`line.AddChild(PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36))`；返回值紧邻使用处：`ExpressionStatementSyntax: line.AddChild(PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`line.AddChild(Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted))`；返回值紧邻使用处：`ExpressionStatementSyntax: line.AddChild(Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted));`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`rows.AddChild(line)`；返回值紧邻使用处：`ExpressionStatementSyntax: rows.AddChild(line);`
-- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data,entry.PersonId)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(data,entry.PersonId)}`
-- `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Card()`
-- `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(table)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Inner(table)`
-- `NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；输入表达式：`PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36)`；返回值紧邻使用处：`ArgumentSyntax: PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data,entry.PersonId)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.DisplayName(data,entry.PersonId)`
+- `NationalSpire.CareerScreen.BoardLine(Godot.Container, NationalSpire.CareerData, int, string, string, string, string?, bool)`；输入表达式：`BoardLine(_content,data,rank,CareerEngine.DisplayName(data,entry.PersonId),                  $"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}  ·  {entry.Wins} 胜  {entry.Draws} 平  {entry.Losses} 负  ·  {entry.Clears} 次通关",$"{entry.Points} 分",entry.PersonId,entry.PersonId=="player")`；返回值紧邻使用处：`ExpressionStatementSyntax: BoardLine(_content,data,rank,CareerEngine.DisplayName(data,entry.PersonId),                  $"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}  ·  {entry.Wins} 胜  {entry.Draws} 平  {entry.Losses} 负  ·  {entry.Clears} 次通关",$"{entry.Points} 分",entry.PersonId,entry.PersonId=="player");`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。",16,_muted)`；返回值紧邻使用处：`ArgumentSyntax: Text("排名依次比较：积分、胜场、通关次数、平均通关用时。成绩相同使用同一名次。三轮结束后，前二获得国际赛事候选资格。",16,_muted)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted)`；返回值紧邻使用处：`ArgumentSyntax: Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted)`
 - `NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`；输入表达式：`EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))`；返回值紧邻使用处：`InterpolationSyntax: {EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}`
 - `NationalSpire.EsportsWorld.HistoricClub(NationalSpire.CareerData, NationalSpire.WorldCompetition, string)`；输入表达式：`EsportsWorld.HistoricClub(data,c,entry.PersonId)`；返回值紧邻使用处：`ArgumentSyntax: EsportsWorld.HistoricClub(data,c,entry.PersonId)`
-- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Rankings(c)`；返回值紧邻使用处：`ForEachVariableStatementSyntax: foreach(var (entry,rank) in EsportsWorld.Rankings(c))          {              var line=new HBoxContainer();rows.AddChild(line);              line.AddChild(PersonLink(data,entry.PersonId,$"{rank:00}   {CareerEngine.DisplayName(data,entry.PersonId)}   ↗",36));              line.AddChild(Text($"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}    ·    {entry.Points} 分    ·    {entry.Wins} 胜 {entry.Draws} 平 {entry.Losses} 负    ·    {entry.Clears} 次通关",16,entry.PersonId=="player"?_gold:_muted));          }`
+- `NationalSpire.EsportsWorld.Rankings(NationalSpire.WorldCompetition)`；输入表达式：`EsportsWorld.Rankings(c)`；返回值紧邻使用处：`ForEachVariableStatementSyntax: foreach(var (entry,rank) in EsportsWorld.Rankings(c))              BoardLine(_content,data,rank,CareerEngine.DisplayName(data,entry.PersonId),                  $"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}  ·  {entry.Wins} 胜  {entry.Draws} 平  {entry.Losses} 负  ·  {entry.Clears} 次通关",$"{entry.Points} 分",entry.PersonId,entry.PersonId=="player");`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -256,7 +248,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData) — private void Clubs(CareerData data)`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
@@ -324,7 +316,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData) — private void ClubDirectory(CareerData data)`
 
-来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.CareerScreen.OwnedClubPanel(NationalSpire.CareerData)`](OwnedClubScreen.cs.md#symbol-d7bcae181c6a)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
@@ -362,7 +354,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.ClubSummary(NationalSpire.CareerData, NationalSpire.CareerClub, Godot.Container) — private void ClubSummary(CareerData data,CareerClub club,Container parent)`
 
-来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ClubDirectory(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-27a995f7ce9f)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
@@ -427,13 +419,13 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.Honors(NationalSpire.CareerData) — private void Honors(CareerData data)`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-fe94e59081ff)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`](CeremonyScreen.cs.md#symbol-071fb0b79ec4)；[`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`](CareerScreen.cs.md#symbol-e9950886933d)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.TakeLast<TSource>(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.SeasonHistory`；`NationalSpire.CareerDuel.Draws`；`NationalSpire.CareerDuel.LastDay`；`NationalSpire.CareerDuel.Losses`；`NationalSpire.CareerDuel.PersonId`；`NationalSpire.CareerDuel.Wins`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerHonor.Day`；`NationalSpire.CareerHonor.Detail`；`NationalSpire.CareerHonor.Season`；`NationalSpire.CareerHonor.Title`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.EsportsCareer.Duels`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonRecap.Points`；`NationalSpire.SeasonRecap.Prize`；`NationalSpire.SeasonRecap.Rank`；`NationalSpire.SeasonRecap.Season`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.SeasonHistory`；`NationalSpire.CareerDuel.Draws`；`NationalSpire.CareerDuel.LastDay`；`NationalSpire.CareerDuel.Losses`；`NationalSpire.CareerDuel.PersonId`；`NationalSpire.CareerDuel.Wins`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerHonor.Day`；`NationalSpire.CareerHonor.Detail`；`NationalSpire.CareerHonor.Season`；`NationalSpire.CareerHonor.Title`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`；`NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.EsportsCareer.Duels`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonRecap.Points`；`NationalSpire.SeasonRecap.Prize`；`NationalSpire.SeasonRecap.Rank`；`NationalSpire.SeasonRecap.Season`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -454,7 +446,7 @@ private int _clubLimit = 8;
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(data, rival.PersonId)`；返回值紧邻使用处：`InterpolationSyntax: {CareerEngine.DisplayName(data, rival.PersonId)}`
 - `NationalSpire.CareerMoney.Format(decimal)`；输入表达式：`CareerMoney.Format(recap.Prize)`；返回值紧邻使用处：`InterpolationSyntax: {CareerMoney.Format(recap.Prize)}`
 - `NationalSpire.CareerScreen.Card()`；输入表达式：`Card()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card()`
-- `NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData)`；输入表达式：`CeremonyInvitation(data)`；返回值紧邻使用处：`ExpressionStatementSyntax: CeremonyInvitation(data);`
+- `NationalSpire.CareerScreen.CeremonyInvitation(NationalSpire.CareerData, Godot.Container)`；输入表达式：`CeremonyInvitation(data,_content)`；返回值紧邻使用处：`ExpressionStatementSyntax: CeremonyInvitation(data,_content);`
 - `NationalSpire.CareerScreen.Inner(Godot.PanelContainer)`；输入表达式：`Inner(card)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Inner(card)`
 - `NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`；输入表达式：`PersonLink(data, rival.PersonId, $"{CareerEngine.DisplayName(data, rival.PersonId)}    ·    你 {rival.Wins} 胜 {rival.Draws} 平 {rival.Losses} 负    ↗", 44)`；返回值紧邻使用处：`ArgumentSyntax: PersonLink(data, rival.PersonId, $"{CareerEngine.DisplayName(data, rival.PersonId)}    ·    你 {rival.Wins} 胜 {rival.Draws} 平 {rival.Losses} 负    ↗", 44)`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("◆ " + h.Title, 25, _gold)`；返回值紧邻使用处：`ArgumentSyntax: Text("◆ " + h.Title, 25, _gold)`
@@ -482,7 +474,7 @@ private int _clubLimit = 8;
 
 ## `NationalSpire.CareerScreen.CompetitionRules() — private void CompetitionRules()`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
 

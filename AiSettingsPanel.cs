@@ -34,9 +34,17 @@ public static class AiSettingsPanel
     public static Label Build(VBoxContainer box, AiOptions options, Action save, Action generate, Action prompts,
         Action<string, bool> notice, Action? editing = null, string saveText = "保存设置", Action<Action>? confirmSwitch = null)
     {
+        return BuildConnections(box,options,save,generate,prompts,notice,editing,saveText,confirmSwitch,null);
+    }
+    internal static Label BuildConnections(VBoxContainer box,AiOptions options,Action save,Action generate,Action? prompts,
+        Action<string,bool> notice,Action? editing,string saveText,Action<Action>? confirmSwitch,Action<Func<bool>>? bindCommit,
+        string initialProfile=AiRouting.Default,Action<string>? profileSelected=null)
+    {
         AiRouting.Ensure(options);
         var (editor, routes) = Columns(box);
-        string selected = AiRouting.Default; bool loading = false, creating = false, deleteKey = false;
+        string selected = options.ConnectionProfiles.ContainsKey(initialProfile) ? initialProfile : AiRouting.Default;
+        profileSelected?.Invoke(selected);
+        bool loading = false, creating = false, deleteKey = false;
         string? draftKey = AiService.ProfileKey(selected);
         Label Text(string value)
         {
@@ -102,7 +110,7 @@ public static class AiSettingsPanel
         var profileName = new LineEdit { Name = "AiProfileName", Text = options.ConnectionProfiles[selected].Name, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
         saveRow.AddChild(profileName); profileName.TextChanged += _ => editing?.Invoke();
         var saveButton = new BroadcastButton { Name = "AiSaveProfile", Text = saveText, CustomMinimumSize = new(128, 46) }; saveRow.AddChild(saveButton);
-        Button("提示词配置", prompts);
+        if(prompts!=null) Button("提示词配置", prompts);
         var enabled = new CheckBox { Text = "启用 AI 社区", ButtonPressed = options.Enabled };
         enabled.Toggled += value => { editing?.Invoke(); options.Enabled = value; Save(); }; editor.AddChild(enabled);
         var endpoint = Input("服务地址（自动补全 /chat/completions）", options.ConnectionProfiles[selected].Endpoint, "AiEndpoint");
@@ -169,7 +177,7 @@ public static class AiSettingsPanel
         var status = Text("当前状态：" + PlayerFacingText.AiStatus(AiService.Status));
         var routeControls = new List<AiTaskRoutePicker>();
         var applyAll = new BroadcastButton { Name = "AiApplyAll", Text = "将当前方案应用到所有", CustomMinimumSize = new(0, 46) };
-        saveButton.Pressed += () =>
+        bool CommitProfile()
         {
             Diagnostics.Record("ai.settings.save-clicked", new { enteredCredential = !string.IsNullOrWhiteSpace(key.Text), available = AiService.HasKey });
             try
@@ -177,7 +185,7 @@ public static class AiSettingsPanel
                 // 点击保存时也提交仍在编辑的数字，不依赖焦点事件先后顺序。
                 bool valid = true;
                 foreach (var commit in commitNumbers) if (!commit()) valid = false;
-                if (!valid) { Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" }); return; }
+                if (!valid) { Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" }); return false; }
                 string name = profileName.Text.Trim(), address = endpoint.Text.Trim(), modelId = model.Text.Trim();
                 if (name.Length == 0) throw new ArgumentException("请填写方案名称。");
                 if (options.ConnectionProfiles.Any(p => p.Key != selected && p.Value.Name == name)) throw new ArgumentException("方案名称已存在，请修改名称。");
@@ -196,12 +204,14 @@ public static class AiSettingsPanel
                 CommitKey(); creating = false;
                 RefreshProfiles(); RefreshRoutes();
                 Diagnostics.Record("ai.settings.saved", new { enabled = options.Enabled, available = AiService.HasKey });
-                if (!options.Enabled) { notice("设置已保存。", false); return; }
-                if (!AiService.HasProfileKey(selected)) { notice("设置已保存，请填写 API 密钥。", true); return; }
-                generate(); notice("设置已保存。", false);
+                if (!options.Enabled) { notice("设置已保存。", false); return true; }
+                if (!AiService.HasProfileKey(selected)) { notice("设置已保存，请填写 API 密钥。", true); return true; }
+                generate(); notice("设置已保存。", false); return true;
             }
-            catch (Exception e) { Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name }); notice(e.Message, true); }
-        };
+            catch (Exception e) { Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name }); notice(e.Message, true); return false; }
+        }
+        saveButton.Pressed += () => CommitProfile();
+        bindCommit?.Invoke(()=>!Dirty() || CommitProfile());
         var routeTitle = new Label { Text = "任务使用方案" }; routeTitle.AddThemeFontSizeOverride("font_size", 22); routeTitle.AddThemeColorOverride("font_color", CareerVisuals.Gold); routes.AddChild(routeTitle);
         routes.AddChild(applyAll);
         foreach (var task in AiRouting.Tasks)
@@ -233,6 +243,7 @@ public static class AiSettingsPanel
         {
             var source = options.ConnectionProfiles[id]; draftKey = AiService.ProfileKey(id);
             selected = fresh ? Guid.NewGuid().ToString("N") : id; creating = fresh; deleteKey = false;
+            profileSelected?.Invoke(selected);
             profileName.Text = fresh ? AiRouting.NextName(options) : source.Name;
             endpoint.Text = source.Endpoint; model.Text = source.Model; key.Text = "";
             key.PlaceholderText = !string.IsNullOrWhiteSpace(draftKey) ? "已保存，留空保留当前密钥" : "请输入 API 密钥";

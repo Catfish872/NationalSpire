@@ -109,7 +109,7 @@ public partial class CareerScreen
         return toggle;
     }
 
-    private static TextureRect Glyph(string name, int size, Color color)
+    internal static TextureRect Glyph(string name, int size, Color color)
     {
         return new TextureRect { Texture = NavigationIcon(name), CustomMinimumSize = new(size,size),
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,

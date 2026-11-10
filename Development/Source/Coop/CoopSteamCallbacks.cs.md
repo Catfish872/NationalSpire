@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`3A61DDDF058780A73CD47E5FA060D12EB5B6D6A67E9F924082734C5A147A3F52`。来源：[源码](../../../Coop/CoopSteamCallbacks.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`DEC64E2916C740A389C92F3DA296EFCCB3CFF8C6DD981FBACA6334385E7D72A5`。来源：[源码](../../../Coop/CoopSteamCallbacks.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 

@@ -23,7 +23,7 @@ public static class CareerEngine
         changed |= nationalUpgrade;
         changed |= CareerMarket.Initialize(data);
         changed |= EsportsWorld.ClearInvalidRegistrations(data);
-        if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) CircuitWorld.EnsureOpenEvents(data);
+        if (data.Esports.Competitions.Any(c => c.Season == data.Season && c.Modern)) changed |= CircuitWorld.EnsureOpenEvents(data);
         PlayerIdentity.Ensure(data);
         CameoContent.Ensure(data);
         NpcRecords.Ensure(data);

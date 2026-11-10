@@ -743,7 +743,7 @@ public const string Guide = """
 
 来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-90c6ce98a73b)；[`NationalSpire.DateGameContent.Read(string)`](DateGameContent.cs.md#symbol-ad02667b222b)；[`NationalSpire.DateGameContent.RewritePhrase(NationalSpire.CareerData, string, string)`](DateGameContent.cs.md#symbol-28305905e4be)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)；[`NationalSpire.DateGameContent.Validate(NationalSpire.DateGameContent.Bundle, bool)`](DateGameContent.cs.md#symbol-a56139e0281f)
+**调用者：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-3c3252eecf2e)；[`NationalSpire.DateGameContent.Read(string)`](DateGameContent.cs.md#symbol-ad02667b222b)；[`NationalSpire.DateGameContent.RewritePhrase(NationalSpire.CareerData, string, string)`](DateGameContent.cs.md#symbol-28305905e4be)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)；[`NationalSpire.DateGameContent.Validate(NationalSpire.DateGameContent.Bundle, bool)`](DateGameContent.cs.md#symbol-a56139e0281f)
 
 **调用：** `string.ToLowerInvariant()`；`System.Convert.ToHexString(byte[])`；`System.Security.Cryptography.SHA256.HashData(byte[])`；`System.Text.Encoding.GetBytes(string)`
 
@@ -765,7 +765,7 @@ public const string Guide = """
 
 来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-90c6ce98a73b)；[`NationalSpire.DateGameContent.Validate(NationalSpire.DateGameContent.Bundle, bool)`](DateGameContent.cs.md#symbol-a56139e0281f)
+**调用者：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-3c3252eecf2e)；[`NationalSpire.DateGameContent.Validate(NationalSpire.DateGameContent.Bundle, bool)`](DateGameContent.cs.md#symbol-a56139e0281f)
 
 **调用：** `System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Text.RegularExpressions.Regex.Matches(string, string)`
 
@@ -790,7 +790,7 @@ public const string Guide = """
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-90c6ce98a73b)；[`NationalSpire.LiveCommentary.DateContentBanks()`](LiveCommentary.cs.md#symbol-f0a726313633)；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`Add(string, System.Collections.Generic.IEnumerable<string>)`](DateGameContent.cs.md#symbol-3c3252eecf2e)；[`NationalSpire.LiveCommentary.DateContentBanks()`](LiveCommentary.cs.md#symbol-f0a726313633)；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `Add(string, System.Collections.Generic.IEnumerable<string>)`；`NationalSpire.LiveCommentary.DateContentBanks()`；`NationalSpire.LiveSpeechComposer.Endings`；`NationalSpire.LiveVoiceCatalog.Banks`
 
@@ -811,7 +811,7 @@ public const string Guide = """
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-90c6ce98a73b"></a>
+<a id="symbol-3c3252eecf2e"></a>
 
 ## `Add(string, System.Collections.Generic.IEnumerable<string>) — void Add(string context, IEnumerable<string> lines)`
 
@@ -1100,7 +1100,7 @@ public const string Guide = """
 
 **调用者：** [`NationalSpire.DateGameContent.Apply(NationalSpire.CareerData, NationalSpire.DateGameContent.Bundle)`](DateGameContent.cs.md#symbol-5a89da7cbb82)；[`NationalSpire.DateGameContent.Files(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-c778174ab92f)；[`NationalSpire.DateGameContent.Import(NationalSpire.CareerData, string)`](DateGameContent.cs.md#symbol-2c2e135d0e20)；[`NationalSpire.DateGameContent.Read(string)`](DateGameContent.cs.md#symbol-ad02667b222b)
 
-**调用：** [`NationalSpire.DateGameContent.Key(string)`](DateGameContent.cs.md#symbol-04fef069e286)；[`NationalSpire.DateGameContent.Variables(string)`](DateGameContent.cs.md#symbol-b357dc27bdfb)；[`NationalSpire.DateGames.Defaults()`](DateGames.cs.md#symbol-f6f62ee5a1dd)；[`Require(bool, string)`](DateGameContent.cs.md#symbol-2a45b27774de)；`double.IsFinite(double)`；`string.Contains(char)`；`string.IndexOfAny(char[])`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Text.RegularExpressions.Regex.Replace(string, string, string)`
+**调用：** [`NationalSpire.DateGameContent.Key(string)`](DateGameContent.cs.md#symbol-04fef069e286)；[`NationalSpire.DateGameContent.Variables(string)`](DateGameContent.cs.md#symbol-b357dc27bdfb)；[`NationalSpire.DateGames.Defaults()`](DateGames.cs.md#symbol-f6f62ee5a1dd)；[`Require(bool, string)`](DateGameContent.cs.md#symbol-7d3219299e22)；`double.IsFinite(double)`；`string.Contains(char)`；`string.IndexOfAny(char[])`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Remove(T)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Text.RegularExpressions.Regex.Replace(string, string, string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateGameContent.Bundle.Catalog`；`NationalSpire.DateGameContent.Bundle.Conditions`；`NationalSpire.DateGameContent.Bundle.Format`；`NationalSpire.DateGameContent.Bundle.Profiles`；`NationalSpire.DateGameContent.Bundle.Rules`；`NationalSpire.DateGameContent.Bundle.Timing`；`NationalSpire.DateGameContent.Bundle.Version`；`NationalSpire.DateGameContent.Catalog`；`NationalSpire.DateGameContent.Key(string)`；`NationalSpire.DateGameContent.Phrase.Context`；`NationalSpire.DateGameContent.Phrase.Text`；`NationalSpire.DateGameContent.Profile.Lines`；`NationalSpire.DateGameContent.Profile.Remarks`；`NationalSpire.DateGameContent.Profile.Triggers`；`NationalSpire.DateGameContent.TriggerSpeech.Lines`；`NationalSpire.DateGameContent.Variables(string)`；`NationalSpire.DateGameRule.Enabled`；`NationalSpire.DateGameRule.Lines`；`NationalSpire.DateGameRule.Threshold`；`NationalSpire.DateGameRule.Trigger`；`NationalSpire.DateGames.Defaults()`；`NationalSpire.DateGameTiming.ChatSeconds`；`NationalSpire.DateGameTiming.FastMinimumFloor`；`NationalSpire.DateGameTiming.SpeechSeconds`；`NationalSpire.DateGameVoices.Ids`；`NationalSpire.DateGameVoices.Remarks`；`Require(bool, string)`
 
@@ -1157,7 +1157,7 @@ public const string Guide = """
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-2a45b27774de"></a>
+<a id="symbol-7d3219299e22"></a>
 
 ## `Require(bool, string) — void Require(bool condition, string message)`
 

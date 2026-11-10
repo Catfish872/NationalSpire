@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.ChatSettingsMenu()`](ChatManagementScreen.cs.md#symbol-282c1fec9c65)；[`NationalSpire.CareerScreen.ShowChatContextMenu(string, bool, Godot.Vector2)`](ChatContextMenuScreen.cs.md#symbol-0f3f090eb3e9)
 
-**调用：** [`NationalSpire.CareerScreen.ChatPinned(string)`](ChatContextMenuScreen.cs.md#symbol-7291798431e8)；[`NationalSpire.CareerScreen.CloseChatContextMenu()`](ChatContextMenuScreen.cs.md#symbol-02269de4e133)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.GroupMemberPicker(NationalSpire.GroupChat?, System.Action<System.Collections.Generic.List<string>>, bool, string, bool, bool)`](GroupChatScreen.cs.md#symbol-bd4740628e5d)；[`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`](ChatManagementScreen.cs.md#symbol-b95040f17d55)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)；[`NationalSpire.CareerScreen.SetChatPinned(string, bool)`](ChatContextMenuScreen.cs.md#symbol-8689933c2c76)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-6c19a8743aa3)；`NationalSpire.GroupCommand.GroupCommand()`
+**调用：** [`NationalSpire.CareerScreen.ChatPinned(string)`](ChatContextMenuScreen.cs.md#symbol-7291798431e8)；[`NationalSpire.CareerScreen.CloseChatContextMenu()`](ChatContextMenuScreen.cs.md#symbol-02269de4e133)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.GroupMemberPicker(NationalSpire.GroupChat?, System.Action<System.Collections.Generic.List<string>>, bool, string, bool, bool)`](GroupChatScreen.cs.md#symbol-bd4740628e5d)；[`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`](ChatManagementScreen.cs.md#symbol-b95040f17d55)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；[`NationalSpire.CareerScreen.SelectPrivate(string, int)`](PrivateMessageScreen.cs.md#symbol-be8cf79217b4)；[`NationalSpire.CareerScreen.SetChatPinned(string, bool)`](ChatContextMenuScreen.cs.md#symbol-8689933c2c76)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-ae8089bc8f1c)；`NationalSpire.GroupCommand.GroupCommand()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen.ChatDraftKey`；`NationalSpire.CareerScreen.ChatManageDialog()`；`NationalSpire.CareerScreen.ChatPinned(string)`；`NationalSpire.CareerScreen.ChatSettingsMenu()`；`NationalSpire.CareerScreen.CloseChatContextMenu()`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.ExportChatTranscript()`；`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`；`NationalSpire.CareerScreen.GroupMemberPicker(NationalSpire.GroupChat?, System.Action<System.Collections.Generic.List<string>>, bool, string, bool, bool)`；`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`；`NationalSpire.CareerScreen.PreviewPrivatePrompt()`；`NationalSpire.CareerScreen.PrivateMemory()`；`NationalSpire.CareerScreen.PrivateSettings()`；`NationalSpire.CareerScreen.ProactiveChatDialog()`；`NationalSpire.CareerScreen.RestoreChatDialog()`；`NationalSpire.CareerScreen.SelectGroup(string, int)`；`NationalSpire.CareerScreen.SelectPrivate(string, int)`；`NationalSpire.CareerScreen.SetChatPinned(string, bool)`；`NationalSpire.GroupCommand.People`；`Open(System.Action)`
 
@@ -50,7 +50,7 @@
 
 - `People` = `people`
 
-<a id="symbol-6c19a8743aa3"></a>
+<a id="symbol-ae8089bc8f1c"></a>
 
 ## `Open(System.Action) — void Open(Action action)`
 
@@ -111,7 +111,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Choice(string, string, System.Action)`](ChatManagementScreen.cs.md#symbol-cd91593858a6)；[`NationalSpire.CareerScreen.ConfirmChatRemoval(bool)`](ChatManagementScreen.cs.md#symbol-0e0563dae4b1)；[`NationalSpire.CareerScreen.ConfirmKick(string, bool)`](ChatManagementScreen.cs.md#symbol-93a2414720c3)；[`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`](ChatManagementScreen.cs.md#symbol-b95040f17d55)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`Rename()`](ChatManagementScreen.cs.md#symbol-95dfcd617555)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
+**调用：** [`Choice(string, string, System.Action)`](ChatManagementScreen.cs.md#symbol-318b4fbf31cb)；[`NationalSpire.CareerScreen.ConfirmChatRemoval(bool)`](ChatManagementScreen.cs.md#symbol-0e0563dae4b1)；[`NationalSpire.CareerScreen.ConfirmKick(string, bool)`](ChatManagementScreen.cs.md#symbol-93a2414720c3)；[`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`](ChatManagementScreen.cs.md#symbol-b95040f17d55)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-26060b09ab4b)；[`Rename()`](ChatManagementScreen.cs.md#symbol-5ba7852fc4b8)；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.ScrollContainer.ScrollContainer()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
 
 **字段、属性、事件及方法组引用：** `Choice(string, string, System.Action)`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ConfirmChatRemoval(bool)`；`NationalSpire.CareerScreen.ConfirmKick(string, bool)`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.OpenChatDialog(System.Action, bool)`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.GroupChat.Members`；`NationalSpire.GroupChat.Name`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.GroupChats.Name(NationalSpire.CareerData, string)`；`Rename()`
 
@@ -171,7 +171,7 @@
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Text` = `g.Name`
 
-<a id="symbol-95dfcd617555"></a>
+<a id="symbol-5ba7852fc4b8"></a>
 
 ## `Rename() — void Rename()`
 
@@ -197,7 +197,7 @@
 - `error.Visible` = `string.IsNullOrWhiteSpace(input.Text)`
 - `Text` = `input.Text`
 
-<a id="symbol-cd91593858a6"></a>
+<a id="symbol-318b4fbf31cb"></a>
 
 ## `Choice(string, string, System.Action) — void Choice(string title, string detail, Action action)`
 
@@ -226,7 +226,7 @@
 
 来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Accepted()`](ManualMemoryScreen.cs.md#symbol-06277074bffb)；[`Accepted()`](ManualMemoryScreen.cs.md#symbol-4951183734c1)；[`Choice(string, string, System.Action)`](ChatManagementScreen.cs.md#symbol-cd91593858a6)；[`NationalSpire.CareerScreen.ChatManageDialog()`](ChatManagementScreen.cs.md#symbol-785feea0fa06)；[`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ConfirmKick(string, bool)`](ChatManagementScreen.cs.md#symbol-93a2414720c3)；[`NationalSpire.CareerScreen.GroupMemory()`](GroupChatDialogs.cs.md#symbol-bf729ae9b3eb)；[`NationalSpire.CareerScreen.ManualMemoryCard(Godot.VBoxContainer, NationalSpire.ManualChatMemory)`](ManualMemoryScreen.cs.md#symbol-aad226291778)；[`NationalSpire.CareerScreen.PrivateMemory()`](PrivateMemoryScreen.cs.md#symbol-942a4a496637)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-6c19a8743aa3)；[`Rename()`](ChatManagementScreen.cs.md#symbol-95dfcd617555)；[`Section(string)`](PrivateMemoryScreen.cs.md#symbol-dfcd5054cde2)
+**调用者：** [`Accepted()`](ManualMemoryScreen.cs.md#symbol-1b6238c3f3d6)；[`Accepted()`](ManualMemoryScreen.cs.md#symbol-1fdcd95f532b)；[`Choice(string, string, System.Action)`](ChatManagementScreen.cs.md#symbol-318b4fbf31cb)；[`NationalSpire.CareerScreen.ChatManageDialog()`](ChatManagementScreen.cs.md#symbol-785feea0fa06)；[`NationalSpire.CareerScreen.ChatMenuItems(string, bool)`](ChatManagementScreen.cs.md#symbol-99485204d7d6)；[`NationalSpire.CareerScreen.ConfirmKick(string, bool)`](ChatManagementScreen.cs.md#symbol-93a2414720c3)；[`NationalSpire.CareerScreen.GroupMemory()`](GroupChatDialogs.cs.md#symbol-bf729ae9b3eb)；[`NationalSpire.CareerScreen.ManualMemoryCard(Godot.VBoxContainer, NationalSpire.ManualChatMemory)`](ManualMemoryScreen.cs.md#symbol-aad226291778)；[`NationalSpire.CareerScreen.PrivateMemory()`](PrivateMemoryScreen.cs.md#symbol-942a4a496637)；[`Open(System.Action)`](ChatManagementScreen.cs.md#symbol-ae8089bc8f1c)；[`Rename()`](ChatManagementScreen.cs.md#symbol-5ba7852fc4b8)；[`Section(string)`](PrivateMemoryScreen.cs.md#symbol-ce743b8bfd83)
 
 **调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
@@ -295,7 +295,7 @@
 - `Part` = `forget ? "forget" : "hide"`
 - `Text` = `forget ? "forget" : "hide"`
 
-<a id="symbol-76bac854f95b"></a>
+<a id="symbol-f13bdb3233f1"></a>
 
 ## `Removed() — void Removed()`
 
@@ -369,7 +369,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Field(string, int, int, int, string)`](ChatManagementScreen.cs.md#symbol-d80c31056200)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`](PrivateMessageScreen.cs.md#symbol-d622e0fb06ab)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`Godot.CheckBox.CheckBox()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.GroupCommand.GroupCommand()`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`NationalSpire.ProactiveChatSettings.ProactiveChatSettings()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`Field(string, int, int, int, string)`](ChatManagementScreen.cs.md#symbol-e4c9cef415ba)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`](GroupChatScreen.cs.md#symbol-ad0b1326ae05)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`](PrivateMessageScreen.cs.md#symbol-d622e0fb06ab)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`Godot.CheckBox.CheckBox()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.GroupCommand.GroupCommand()`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`NationalSpire.ProactiveChatSettings.ProactiveChatSettings()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
 **字段、属性、事件及方法组引用：** `Field(string, int, int, int, string)`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._privatePerson`；`NationalSpire.CareerScreen.CurrentGroup`；`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?, string?, System.Action<string>?)`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.GroupChat.Proactive`；`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`；`NationalSpire.GroupCommand.Proactive`；`NationalSpire.PrivateConversation.Proactive`；`NationalSpire.PrivateMessageCommand.Proactive`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；`NationalSpire.ProactiveChatSettings.DayChance`；`NationalSpire.ProactiveChatSettings.Enabled`；`NationalSpire.ProactiveChatSettings.EventChance`；`NationalSpire.ProactiveChatSettings.FinalAlwaysReply`；`NationalSpire.ProactiveChatSettings.MatchChance`；`NationalSpire.ProactiveChatSettings.Unanswered`；`NationalSpire.ProactiveChatSettings.UnansweredLimit`
 
@@ -418,7 +418,7 @@
 - `unanswered` = `Field("连续几轮后等待回应", current.UnansweredLimit, 1, int.MaxValue, "轮")`
 - `UnansweredLimit` = `(int)unanswered!.Value`
 
-<a id="symbol-d80c31056200"></a>
+<a id="symbol-e4c9cef415ba"></a>
 
 ## `Field(string, int, int, int, string) — SpinBox Field(string label, int value, int min, int max, string suffix)`
 

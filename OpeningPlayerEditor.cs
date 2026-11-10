@@ -2,49 +2,66 @@ using Godot;
 
 namespace NationalSpire;
 
-/// <summary>单人生涯、房主与首次加入的队员共用同一份个人资料编辑器。</summary>
 internal static class OpeningPlayerEditor
 {
-    internal static void Draw(VBoxContainer parent, CareerOpeningPlayer player, string defaultName, string defaultCountry, string? teamCountry = null)
+    internal static void Draw(VBoxContainer parent,CareerOpeningPlayer player,string defaultName,string defaultCountry,string? teamCountry=null,Action<string>? countryChanged=null)
     {
-        var panel = new BroadcastPanel { Accent = CareerVisuals.Teal };
-        panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("152633","365565",10,16)); parent.AddChild(panel);
-        var body = new VBoxContainer(); body.AddThemeConstantOverride("separation",10); panel.AddChild(body);
-        var title = new Label { Text = "选手档案" }; title.AddThemeColorOverride("font_color", CareerVisuals.Gold); body.AddChild(title);
-        if (teamCountry != null)
-            body.AddChild(new Label { Text = $"全队代表{teamCountry}参赛。外汇也按全队参赛国报价。" });
-        var grid = new GridContainer { Columns = 3 }; grid.AddThemeConstantOverride("h_separation",12); grid.AddThemeConstantOverride("v_separation",8); body.AddChild(grid);
-        VBoxContainer Field(string label)
-        {
-            var field = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-            var caption = new Label { Text = label }; caption.AddThemeColorOverride("font_color",CareerVisuals.Muted); field.AddChild(caption); grid.AddChild(field); return field;
+        var body=OpeningControls.Section(parent,"选手档案","contact-round","头像 · 身份 · 人物介绍",true);
+        var dossier=new HBoxContainer();dossier.AddThemeConstantOverride("separation",18);body.AddChild(dossier);
+        var portrait=new Button{CustomMinimumSize=new(108,108),SizeFlagsVertical=Control.SizeFlags.ShrinkCenter,AccessibilityName="选择头像",TooltipText="选择头像"};
+        dossier.AddChild(portrait);
+        var badge=new CareerAvatar{MouseFilter=Control.MouseFilterEnum.Ignore};portrait.AddChild(badge);badge.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);badge.OffsetLeft=badge.OffsetTop=8;badge.OffsetRight=badge.OffsetBottom=-8;
+        void Face(){badge.Art=AvatarImages.Read(player.Avatar??new())??CareerAvatars.Automatic(new CareerData(),"player");}
+        Face();portrait.Pressed+=()=>CareerScreen.ChooseOpeningAvatar(parent,player.Avatar,avatar=>{player.Avatar=avatar;Face();});
+        var details=new VBoxContainer{SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};dossier.AddChild(details);
+        var fields=new HBoxContainer();fields.AddThemeConstantOverride("separation",16);details.AddChild(fields);
+        var name=new LineEdit{Text=player.Name,PlaceholderText=defaultName};OpeningControls.Field(fields,"姓名").AddChild(name);name.TextChanged+=v=>player.Name=v;
+        var genders=new HBoxContainer();OpeningControls.Field(fields,"性别").AddChild(genders);var group=new ButtonGroup();
+        foreach(var gender in IdentityGender.Choices)
+            OpeningControls.Chip(genders,group,gender,gender==(player.Gender.Length==0?IdentityGender.Unset:player.Gender),()=>player.Gender=gender);
+        var nations=new HFlowContainer();OpeningControls.Field(details,"国籍").AddChild(nations);var flags=new ButtonGroup();
+        foreach(var n in EsportsWorld.Countries) OpeningControls.Chip(nations,flags,n,n==(player.Country.Length==0?defaultCountry:player.Country),()=>{player.Country=n;countryChanged?.Invoke(n);});
+        if(teamCountry!=null) body.AddChild(OpeningControls.Label($"全队代表{teamCountry}参赛，外汇按{teamCountry}报价。"));
+        var bio=new TextEdit{Text=player.Biography,PlaceholderText="写下选手的经历、身份或希望别人知道的事",CustomMinimumSize=new(0,66),WrapMode=TextEdit.LineWrappingMode.Boundary};
+        OpeningControls.Field(body,"人物介绍").AddChild(bio);bio.TextChanged+=()=>player.Biography=bio.Text;
+        var history=OpeningControls.Section(parent,"生涯起点","chart-no-axes-combined","资金 · 关注 · 战绩");
+        var grid=new GridContainer{Columns=3};grid.AddThemeConstantOverride("h_separation",12);grid.AddThemeConstantOverride("v_separation",8);history.AddChild(grid);
+        void Number(string title,string value,string hint,Action<string> set)
+        {var input=new LineEdit{Text=value,PlaceholderText=hint};OpeningControls.Field(grid,title).AddChild(input);input.TextChanged+=set.Invoke;}
+        int? Count(string s)=>int.TryParse(s,out var n)&&n>=0?n:null;
+        Action refreshTerms=()=>{};
+        Number("初始资金（美元）",player.Credits?.ToString()??"","0",s=>player.Credits=decimal.TryParse(s,out var n)&&n>=0?n:null);
+        Number("个人关注",player.Fans?.ToString()??"","28",s=>{player.Fans=Count(s);refreshTerms();});
+        grid.AddChild(new Control());
+        Number("胜场",player.Wins?.ToString()??"","0",s=>player.Wins=Count(s));Number("平局",player.Draws?.ToString()??"","0",s=>player.Draws=Count(s));Number("负场",player.Losses?.ToString()??"","0",s=>player.Losses=Count(s));
+        var sponsor=OpeningControls.Section(parent,"个人赞助","handshake","品牌与合同");
+        var summary=OpeningControls.Label("",18,CareerVisuals.Gold);sponsor.AddChild(summary);
+        var tools=new HBoxContainer();sponsor.AddChild(tools);
+        var filter=new LineEdit{PlaceholderText="搜索品牌、赛区或赞助类型",SizeFlagsHorizontal=Control.SizeFlags.ExpandFill};tools.AddChild(filter);
+        var none=new BroadcastButton{Text="无赞助"};tools.AddChild(none);
+        var cards=new GridContainer{Columns=3};cards.AddThemeConstantOverride("h_separation",8);cards.AddThemeConstantOverride("v_separation",8);sponsor.AddChild(cards);
+        var pager=new HBoxContainer();sponsor.AddChild(pager);
+        var prev=new BroadcastButton{Text="上一页"};var pageLabel=OpeningControls.Label("");pageLabel.SizeFlagsHorizontal=Control.SizeFlags.ExpandFill;pageLabel.HorizontalAlignment=HorizontalAlignment.Center;
+        var next=new BroadcastButton{Text="下一页"};pager.AddChild(prev);pager.AddChild(pageLabel);pager.AddChild(next);
+        var catalog=RegionalOrganizations.SponsorCatalog().ToArray();string[] types=["稳定支持","成绩奖励","品牌推广"];int page=0;
+        void DrawOffers(){
+            CareerVisuals.ClearContent(cards);var matches=catalog.Where(o=>(o.Brand+o.Country+types[o.Sector]).Contains(filter.Text.Trim(),StringComparison.OrdinalIgnoreCase)).ToList();
+            int pages=Math.Max(1,(matches.Count+5)/6);page=Math.Clamp(page,0,pages-1);
+            foreach(var o in matches.Skip(page*6).Take(6)){
+                var pick=new BroadcastButton{Text=o.Brand+"  ·  "+o.Country+"\n"+types[o.Sector],CustomMinimumSize=new(0,60),SizeFlagsHorizontal=Control.SizeFlags.ExpandFill,ToggleMode=true,ButtonPressed=player.Sponsor==o.Brand};
+                cards.AddChild(pick);pick.Pressed+=()=>{player.Sponsor=o.Brand;refreshTerms();DrawOffers();};
+            }
+            if(matches.Count==0)cards.AddChild(OpeningControls.Label("没有匹配的品牌"));
+            pageLabel.Text=$"{page+1} / {pages}";prev.Disabled=page==0;next.Disabled=page+1==pages;
         }
-        void Input(string label, string value, string hint, Action<string> changed)
-        {
-            var input = new LineEdit { Text = value, PlaceholderText = hint, CustomMinimumSize = new(128,42) };
-            Field(label).AddChild(input); input.TextChanged += changed.Invoke;
-        }
-        void Choose(string label, string first, IEnumerable<string> source, string value, Action<string> changed)
-        {
-            var list = source.Distinct().ToArray(); var choice = new OptionButton { FitToLongestItem = false };
-            choice.AddItem(first); foreach (var item in list) choice.AddItem(item); choice.Select(Array.IndexOf(list,value)+1);
-            Field(label).AddChild(choice); choice.ItemSelected += i => changed(i == 0 ? "" : list[(int)i-1]);
-        }
-        Input("姓名",player.Name,defaultName,v=>player.Name=v);
-        Choose("国籍","沿用 "+defaultCountry, EsportsWorld.Countries,player.Country,v=>player.Country=v);
-        Choose("性别","沿用默认", IdentityGender.Choices.Where(s=>s!=IdentityGender.Unset),player.Gender,v=>player.Gender=v);
-        void Count(string label,int? current,Action<int?> set) =>
-            Input(label,current?.ToString() ?? "","沿用默认",s => set(int.TryParse(s,out int n) && n>=0 ? n : null));
-        Count("胜场",player.Wins,v=>player.Wins=v); Count("平局",player.Draws,v=>player.Draws=v); Count("负场",player.Losses,v=>player.Losses=v);
-        Input("初始资金（美元）",player.Credits?.ToString() ?? "","沿用默认",s=>player.Credits=decimal.TryParse(s,out var n) && n>=0 ? n : null);
-        Choose("个人赞助","无赞助",RegionalOrganizations.SponsorCatalog().Select(s=>s.Brand),player.Sponsor,v=>player.Sponsor=v);
-        var avatar = new BroadcastButton { Text=player.Avatar?.Label ?? "选择头像", CustomMinimumSize=new(0,42) }; Field("头像").AddChild(avatar);
-        avatar.Pressed += () => {
-            var picker=new FileDialog { FileMode=FileDialog.FileModeEnum.OpenFile, Access=FileDialog.AccessEnum.Filesystem, Filters=["*.png,*.jpg,*.jpeg,*.webp ; 人物头像"] };
-            body.AddChild(picker); picker.FileSelected += path => { try { player.Avatar=AvatarImages.FromFile(path); avatar.Text=player.Avatar.Label; } catch(Exception e){avatar.Text=e.Message;} picker.QueueFree(); };
-            picker.Canceled += picker.QueueFree; picker.PopupCenteredRatio(.7f);
+        refreshTerms=()=>{
+            var o=catalog.FirstOrDefault(x=>x.Brand==player.Sponsor);
+            if(o.Brand==null){summary.Text="无赞助 · 进入生涯后仍可签约";return;}
+            var preview=new CareerData{Fans=player.Fans??28};
+            var contract=CareerCommerce.BuildPersonalOffer(preview,o.Sector,o.Brand,1,SponsorIncome.PersonalTier(preview));
+            summary.Text=$"{o.Brand}  ·  {contract.Plan}    基础赛季支持 {CareerMoney.Format(contract.Retainer)}  ·  胜场奖金 {CareerMoney.Format(contract.WinBonus)}"+(contract.FanBonus>0?$"  ·  关注 +{contract.FanBonus}":"");
         };
-        var biography = new TextEdit { Text = player.Biography, PlaceholderText="人物介绍 · 写下希望其他人知道的经历", CustomMinimumSize=new(0,78), WrapMode=TextEdit.LineWrappingMode.Boundary };
-        body.AddChild(biography); biography.TextChanged += () => player.Biography=biography.Text;
+        refreshTerms();DrawOffers();filter.TextChanged+=_=>{page=0;DrawOffers();};none.Pressed+=()=>{player.Sponsor="";refreshTerms();DrawOffers();};
+        prev.Pressed+=()=>{page--;DrawOffers();};next.Pressed+=()=>{page++;DrawOffers();};
     }
 }

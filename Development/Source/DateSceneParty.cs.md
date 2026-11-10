@@ -121,7 +121,7 @@ public const string Protocol = """
 
 **调用者：** [`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-42aa2fbcaa1f)
 
-**调用：** [`Changed(NationalSpire.DateSceneParticipant)`](DateSceneParty.cs.md#symbol-0a5419671439)；[`Line(NationalSpire.DateSceneParticipant, string, string)`](DateSceneParty.cs.md#symbol-c496042b25c0)
+**调用：** [`Changed(NationalSpire.DateSceneParticipant)`](DateSceneParty.cs.md#symbol-e8daf82b8063)；[`Line(NationalSpire.DateSceneParticipant, string, string)`](DateSceneParty.cs.md#symbol-df2209ee0a61)
 
 **字段、属性、事件及方法组引用：** `Changed(NationalSpire.DateSceneParticipant)`；`Line(NationalSpire.DateSceneParticipant, string, string)`；`NationalSpire.DateSceneParticipant.DefaultEmotionId`；`NationalSpire.DateSceneParticipant.Name`；`NationalSpire.DateSceneRequest.Participants`
 
@@ -137,7 +137,7 @@ public const string Protocol = """
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0a5419671439"></a>
+<a id="symbol-e8daf82b8063"></a>
 
 ## `Changed(NationalSpire.DateSceneParticipant) — string Changed(DateSceneParticipant p)`
 
@@ -156,7 +156,7 @@ public const string Protocol = """
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c496042b25c0"></a>
+<a id="symbol-df2209ee0a61"></a>
 
 ## `Line(NationalSpire.DateSceneParticipant, string, string) — string Line(DateSceneParticipant p, string emotion, string text)`
 

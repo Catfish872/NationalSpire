@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D339722AEF42D47BF0873CA9E2DE0457D5DDBA2C091305CEC39BDB1461C79A88`。来源：[源码](../../LiveCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9525C409CBE38E13F9BA58994B84B21E1A3907FC4E30293A4DEE1F5964794469`。来源：[源码](../../LiveCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -46,7 +46,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 **调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-c8c2562c90db)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -58,15 +58,15 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c8c2562c90db"></a>
+<a id="symbol-08a6a3290164"></a>
 
 ## `Visit(Godot.Node) — void Visit(Node node)`
 
 来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-c8c2562c90db)
+**调用者：** [`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-c8c2562c90db)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`
+**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -98,7 +98,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 - `HarmonyLib.Harmony.CreateClassProcessor(System.Type)`；输入表达式：`harmony.CreateClassProcessor(type)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: harmony.CreateClassProcessor(type).Patch`
 - `HarmonyLib.PatchClassProcessor.Patch()`；输入表达式：`harmony.CreateClassProcessor(type).Patch()`；返回值紧邻使用处：`ExpressionStatementSyntax: harmony.CreateClassProcessor(type).Patch();`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("patch:" + type.Name, e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("patch:" + type.Name, e);`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`assembly.GetTypes().Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var type in assembly.GetTypes().Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0))          {              try { harmony.CreateClassProcessor(type).Patch(); }              catch (Exception e) { Diagnostics.Error("patch:" + type.Name, e); GD.PushWarning($"[NationalSpire] {type.Name} 接口暂不可用，其他模块继续加载：{e.GetBaseException().Message}"); }          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`assembly.GetTypes().Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var type in assembly.GetTypes().Where(t => t.GetCustomAttributes(typeof(HarmonyPatch), false).Length > 0))         {             try { harmony.CreateClassProcessor(type).Patch(); }             catch (Exception e) { Diagnostics.Error("patch:" + type.Name, e); GD.PushWarning($"[NationalSpire] {type.Name} 接口暂不可用，其他模块继续加载：{e.GetBaseException().Message}"); }         }`
 - `System.Exception.GetBaseException()`；输入表达式：`e.GetBaseException()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: e.GetBaseException().Message`
 - `System.Reflection.Assembly.GetTypes()`；输入表达式：`assembly.GetTypes()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: assembly.GetTypes().Where`
 - `System.Reflection.MemberInfo.GetCustomAttributes(System.Type, bool)`；输入表达式：`t.GetCustomAttributes(typeof(HarmonyPatch), false)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: t.GetCustomAttributes(typeof(HarmonyPatch), false).Length`

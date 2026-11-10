@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)；[`NationalSpire.CareerScreen.PersonProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](ProfileScreen.cs.md#symbol-2d802d5a07b9)
 
-**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-034a337aa191)；[`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-c0574e6e60df)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-d2af8b2e0bc2)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`](PrivateMemoryScreen.cs.md#symbol-67f8f263b4a9)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`](ClubCoaching.cs.md#symbol-8b4ec414486e)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-bb8047a026c0)；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProjectSettings.GlobalizePath(string)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`NationalSpire.PrivateIdentityLayout.PrivateIdentityLayout()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.Threading.CancellationTokenSource.Cancel()`
+**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-eb4712515abb)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`](PrivateMemoryScreen.cs.md#symbol-67f8f263b4a9)；[`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`](PrivateMemoryScreen.cs.md#symbol-84294149ff91)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`](ClubCoaching.cs.md#symbol-8b4ec414486e)；[`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`](PortraitDesign.cs.md#symbol-8afe4d7864a5)；[`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`](PortraitDesignStore.cs.md#symbol-8db102d73ed8)；[`NationalSpire.PortraitDesignStore.Read(string, string)`](PortraitDesignStore.cs.md#symbol-2eeba99f517d)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；[`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-bb8047a026c0)；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.ProjectSettings.GlobalizePath(string)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Viewport.GuiGetFocusOwner()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`NationalSpire.PrivateIdentityLayout.PrivateIdentityLayout()`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.Threading.CancellationTokenSource.Cancel()`
 
 **字段、属性、事件及方法组引用：** `(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Control`；`(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Mode`；`Close()`；`CommitIds()`；`Controls(Godot.Node)`；`DrawPage()`；`Infer()`；`Message(string, bool)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.PrivateIdentityButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.PrivateLine(string, int, Godot.Color)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`；`NationalSpire.ClubCoaching.IsCoach(NationalSpire.CareerPerson)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Create(NationalSpire.CareerData, string, NationalSpire.CareerPerson?)`；`NationalSpire.PortraitDesignStore.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.PortraitDesignStore.Read(string, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`；`NationalSpire.PortraitPromptExport.Write(string, NationalSpire.PortraitDesign, string)`
 
@@ -152,15 +152,15 @@
 - `title.TooltipText` = `person.PublicName`
 - `ZIndex` = `40`
 
-<a id="symbol-c0574e6e60df"></a>
+<a id="symbol-eb4712515abb"></a>
 
 ## `Controls(Godot.Node) — IEnumerable<Control> Controls(Node node)`
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-c0574e6e60df)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
+**调用者：** [`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-eb4712515abb)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-c0574e6e60df)；`Godot.Node.GetChildren(bool)`；`System.Array.Empty<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`
+**调用：** [`Controls(Godot.Node)`](PortraitDesignScreen.cs.md#symbol-eb4712515abb)；`Godot.Node.GetChildren(bool)`；`System.Array.Empty<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`
 
 **字段、属性、事件及方法组引用：** `Controls(Godot.Node)`
 
@@ -175,13 +175,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-11f32ddfa187"></a>
+<a id="symbol-b5e3595bf2d6"></a>
 
 ## `Alive() — bool Alive()`
 
 来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)
+**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)
 
 **调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`
 
@@ -196,13 +196,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d2af8b2e0bc2"></a>
+<a id="symbol-0585a8e825bd"></a>
 
 ## `Message(string, bool) — void Message(string text, bool error = false)`
 
 来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Close()`](PortraitDesignScreen.cs.md#symbol-36b4c60c1103)；[`CommitId()`](PortraitDesignScreen.cs.md#symbol-1dc765f3022c)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
+**调用者：** [`Close()`](PortraitDesignScreen.cs.md#symbol-9a2763e37828)；[`CommitId()`](PortraitDesignScreen.cs.md#symbol-7f00b8a4d151)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
 **调用：** `Godot.Color.Color(string)`
 
@@ -218,13 +218,13 @@
 - `status.Text` = `text`
 - `status.TooltipText` = `text`
 
-<a id="symbol-034a337aa191"></a>
+<a id="symbol-46a98791b53f"></a>
 
 ## `CommitIds() — bool CommitIds()`
 
 来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Close()`](PortraitDesignScreen.cs.md#symbol-36b4c60c1103)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
+**调用者：** [`Close()`](PortraitDesignScreen.cs.md#symbol-9a2763e37828)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
 **调用：** `System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
 
@@ -237,13 +237,13 @@
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-37b37f95d923"></a>
+<a id="symbol-559316585c52"></a>
 
 ## `Field(Godot.Control, string, string, System.Action<string>, string) — LineEdit Field(Control parent, string label, string value, Action<string> changed, string name)`
 
 来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
 **调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
 
@@ -271,13 +271,13 @@
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `Text` = `value`
 
-<a id="symbol-e28176b102d0"></a>
+<a id="symbol-3c033cf416e7"></a>
 
 ## `Grid(Godot.Control) — GridContainer Grid(Control parent)`
 
 来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
 **调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -295,15 +295,15 @@
 - `Columns` = `2`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 
-<a id="symbol-255c66477991"></a>
+<a id="symbol-5edcd91edd93"></a>
 
 ## `DrawPage() — void DrawPage()`
 
 来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`CommitId()`](PortraitDesignScreen.cs.md#symbol-1dc765f3022c)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-034a337aa191)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`Field(Godot.Control, string, string, System.Action<string>, string)`](PortraitDesignScreen.cs.md#symbol-37b37f95d923)；[`Grid(Godot.Control)`](PortraitDesignScreen.cs.md#symbol-e28176b102d0)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.DrawPortraitStyles(Godot.VBoxContainer, NationalSpire.PortraitDesign)`](PortraitStyleScreen.cs.md#symbol-f030328fcc3e)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.PortraitDesigns.CustomEmotion(NationalSpire.PortraitEmotion)`](PortraitDesign.cs.md#symbol-b97d830814e5)；[`NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-c1635a7761da)；[`NationalSpire.PortraitDesigns.NewOutfit(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-869d10ff2f64)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.OptionButton.SetItemText(int, string)`；`Godot.PanelContainer.PanelContainer()`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
+**调用：** [`CommitId()`](PortraitDesignScreen.cs.md#symbol-7f00b8a4d151)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Field(Godot.Control, string, string, System.Action<string>, string)`](PortraitDesignScreen.cs.md#symbol-559316585c52)；[`Grid(Godot.Control)`](PortraitDesignScreen.cs.md#symbol-3c033cf416e7)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.DrawPortraitStyles(Godot.VBoxContainer, NationalSpire.PortraitDesign)`](PortraitStyleScreen.cs.md#symbol-f030328fcc3e)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.PortraitDesigns.CustomEmotion(NationalSpire.PortraitEmotion)`](PortraitDesign.cs.md#symbol-b97d830814e5)；[`NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-c1635a7761da)；[`NationalSpire.PortraitDesigns.NewOutfit(NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-869d10ff2f64)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HSeparator.HSeparator()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.QueueFree()`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.OptionButton.SetItemText(int, string)`；`Godot.PanelContainer.PanelContainer()`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
 
 **字段、属性、事件及方法组引用：** `CommitId()`；`CommitIds()`；`DrawPage()`；`Field(Godot.Control, string, string, System.Action<string>, string)`；`Grid(Godot.Control)`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.DrawPortraitStyles(Godot.VBoxContainer, NationalSpire.PortraitDesign)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.PortraitDesign.Basics`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.Outfits`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitDesigns.BasicFields`；`NationalSpire.PortraitDesigns.CustomEmotion(NationalSpire.PortraitEmotion)`；`NationalSpire.PortraitDesigns.NewEmotion(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.NewOutfit(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitDesigns.OutfitFields`；`NationalSpire.PortraitEmotion.Description`；`NationalSpire.PortraitEmotion.Enabled`；`NationalSpire.PortraitEmotion.Id`；`NationalSpire.PortraitEmotion.Name`；`NationalSpire.PortraitOutfit.Fields`；`NationalSpire.PortraitOutfit.Id`；`NationalSpire.PortraitOutfit.Name`
 
@@ -413,15 +413,15 @@
 - `TooltipText` = `emotion.Id == design.DefaultEmotionId ? "平淡差分作为基准保留" : "加入导出包"`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 
-<a id="symbol-1dc765f3022c"></a>
+<a id="symbol-7f00b8a4d151"></a>
 
 ## `CommitId() — bool CommitId()`
 
 来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
-**调用：** [`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-d2af8b2e0bc2)；[`NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`](PortraitDesign.cs.md#symbol-72711df647d3)；`Godot.Color.Color(string)`
+**调用：** [`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`](PortraitDesign.cs.md#symbol-72711df647d3)；`Godot.Color.Color(string)`
 
 **字段、属性、事件及方法组引用：** `Message(string, bool)`；`NationalSpire.PortraitDesigns.RenameEmotion(NationalSpire.PortraitDesign, NationalSpire.PortraitEmotion, string)`；`NationalSpire.PortraitEmotion.Id`
 
@@ -438,7 +438,7 @@
 - `code.Modulate` = `new Color("ee929d")`
 - `code.Text` = `emotion.Id`
 
-<a id="symbol-36b4c60c1103"></a>
+<a id="symbol-9a2763e37828"></a>
 
 ## `Close() — void Close()`
 
@@ -446,7 +446,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-034a337aa191)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-d2af8b2e0bc2)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GrabFocus()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.IsInsideTree()`；`Godot.Node.QueueFree()`；`System.Threading.CancellationTokenSource.Cancel()`
+**调用：** [`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Control.GrabFocus()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.IsInsideTree()`；`Godot.Node.QueueFree()`；`System.Threading.CancellationTokenSource.Cancel()`
 
 **字段、属性、事件及方法组引用：** `(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Control`；`(Godot.Control Control, Godot.Control.FocusModeEnum Mode).Mode`；`CommitIds()`；`Message(string, bool)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`
 
@@ -472,7 +472,7 @@
 - `closed` = `true`
 - `f.Control.FocusMode` = `f.Mode`
 
-<a id="symbol-9f69b6de5ae4"></a>
+<a id="symbol-84dd4f56a6bf"></a>
 
 ## `Infer() — async Task Infer()`
 
@@ -480,7 +480,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-11f32ddfa187)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-034a337aa191)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-d2af8b2e0bc2)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
+**调用：** [`Alive()`](PortraitDesignScreen.cs.md#symbol-b5e3595bf2d6)；[`CommitIds()`](PortraitDesignScreen.cs.md#symbol-46a98791b53f)；[`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`Message(string, bool)`](PortraitDesignScreen.cs.md#symbol-0585a8e825bd)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`](AiPortraitDesign.cs.md#symbol-b767cc172aa6)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`](PortraitDesign.cs.md#symbol-d981122aaf23)；[`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`](PortraitDesignStore.cs.md#symbol-2f8c936a01d4)；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.CancellationTokenSource.Cancel()`；`System.Threading.CancellationTokenSource.CancellationTokenSource()`；`System.Threading.CancellationTokenSource.Dispose()`
 
 **字段、属性、事件及方法组引用：** `Alive()`；`CommitIds()`；`DrawPage()`；`Message(string, bool)`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.InferPortraitAsync(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, System.Threading.CancellationToken)`；`NationalSpire.PlayerFacingText.LongError(string)`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PortraitDesigns.MergeInference(NationalSpire.PortraitDesign, NationalSpire.PortraitDesign, string)`；`NationalSpire.PortraitDesignStore.Save(string, NationalSpire.PortraitDesign)`
 

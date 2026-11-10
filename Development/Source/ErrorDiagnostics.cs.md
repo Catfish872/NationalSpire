@@ -21,7 +21,7 @@ private const string ErrorReference = "\n诊断编号：";
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-11dbde0b98d8)；[`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`](ErrorDiagnostics.cs.md#symbol-352228579747)；[`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`](ErrorDiagnostics.cs.md#symbol-00bf5510a307)
+**调用者：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-a64f9ae00fdd)；[`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`](ErrorDiagnostics.cs.md#symbol-352228579747)；[`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`](ErrorDiagnostics.cs.md#symbol-00bf5510a307)
 
 **调用：** [`NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`](LogRouting.cs.md#symbol-da8a28a9e81e)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PlayerFacingText.Head(string, int)`](PlayerFacingText.cs.md#symbol-9218219c34ce)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
 
@@ -92,7 +92,7 @@ private const string ErrorReference = "\n诊断编号：";
 
 **调用者：** [`NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string)`](CommunityScreen.cs.md#symbol-6bdab2812eba)
 
-**调用：** [`Find(string)`](ErrorDiagnostics.cs.md#symbol-f92dcb407dfc)；[`NationalSpire.Diagnostics.ReadErrorReference(string, out int, out string, out int)`](ErrorDiagnostics.cs.md#symbol-ef265abed991)；[`NationalSpire.Diagnostics.ReadLogs(string)`](LogStorage.cs.md#symbol-a180c6c02b7d)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`System.Collections.Generic.Queue<T>.ToArray()`；`System.IO.StringReader.ReadLine()`；`System.IO.StringReader.StringReader(string)`
+**调用：** [`Find(string)`](ErrorDiagnostics.cs.md#symbol-57fdc89fb913)；[`NationalSpire.Diagnostics.ReadErrorReference(string, out int, out string, out int)`](ErrorDiagnostics.cs.md#symbol-ef265abed991)；[`NationalSpire.Diagnostics.ReadLogs(string)`](LogStorage.cs.md#symbol-a180c6c02b7d)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`System.Collections.Generic.Queue<T>.ToArray()`；`System.IO.StringReader.ReadLine()`；`System.IO.StringReader.StringReader(string)`
 
 **字段、属性、事件及方法组引用：** `Find(string)`；`NationalSpire.Diagnostics.Events`；`NationalSpire.Diagnostics.Gate`；`NationalSpire.Diagnostics.LogNames`；`NationalSpire.Diagnostics.ReadErrorReference(string, out int, out string, out int)`；`NationalSpire.Diagnostics.ReadLogs(string)`；`NationalSpire.Diagnostics.Redact(string)`
 
@@ -111,7 +111,7 @@ private const string ErrorReference = "\n诊断编号：";
 
 - `recent` = `Events.ToArray()`
 
-<a id="symbol-f92dcb407dfc"></a>
+<a id="symbol-57fdc89fb913"></a>
 
 ## `Find(string) — string? Find(string line)`
 
@@ -148,7 +148,7 @@ private const string ErrorReference = "\n诊断编号：";
 
 **调用者：** [`NationalSpire.CareerStore.Data`](CareerStore.cs.md#symbol-9724f0dac935)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Coop.CoopJson.PublicBytes<T>(T)`](Coop/CoopData.cs.md#symbol-3f5e7638f9e9)；[`NationalSpire.Diagnostics.Export(NationalSpire.CareerData, string, string, string, object?, System.Collections.Generic.IReadOnlyDictionary<string, string>?)`](Diagnostics.cs.md#symbol-a22f068c4d41)；[`NationalSpire.Diagnostics.RetainErrors(NationalSpire.Coop.CoopWorld)`](ErrorDiagnostics.cs.md#symbol-fd99f468e9e7)
 
-**调用：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-11dbde0b98d8)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`](ErrorDiagnostics.cs.md#symbol-352228579747)；[`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`](ErrorDiagnostics.cs.md#symbol-00bf5510a307)；[`Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-5111a756c510)
+**调用：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-a64f9ae00fdd)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`](ErrorDiagnostics.cs.md#symbol-352228579747)；[`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`](ErrorDiagnostics.cs.md#symbol-00bf5510a307)；[`Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-64d5aaef398c)
 
 **字段、属性、事件及方法组引用：** `Keep(string, NationalSpire.LogArea, string)`；`NationalSpire.CareerData.Chats`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.PrivateMemorySources`；`NationalSpire.CareerData.WeeklyEditions`；`NationalSpire.CareerData.WorldId`；`NationalSpire.ChatWorld.Groups`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.NewsGeneration`；`NationalSpire.CommunityPost.ReactionGeneration`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ReactionGeneration`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`；`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`；`NationalSpire.GroupChat.Id`；`NationalSpire.GroupChat.Interactions`；`NationalSpire.GroupChat.SummaryError`；`NationalSpire.GroupChat.Turns`；`NationalSpire.GroupTurn.Error`；`NationalSpire.GroupTurn.Id`；`NationalSpire.GroupTurn.Notices`；`NationalSpire.LogArea.Community`；`NationalSpire.LogArea.Group`；`NationalSpire.LogArea.Weekly`；`NationalSpire.PrivateConversation.SummaryError`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateTurn.Error`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.WeeklyEdition.NewsWork`；`NationalSpire.WeeklyEdition.ProfilesWork`；`NationalSpire.WeeklyEdition.Week`；`Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string)`
 
@@ -177,7 +177,7 @@ private const string ErrorReference = "\n诊断编号：";
 - `turn.Error` = `Keep(turn.Error, LogArea.Group, context + "/interaction/" + conversation.Key + "/" + turn.Id)`
 - `turn.Notices[i]` = `Keep(turn.Notices[i], LogArea.Group, context + "/" + turn.Id + "/notice/" + i)`
 
-<a id="symbol-5111a756c510"></a>
+<a id="symbol-64d5aaef398c"></a>
 
 ## `Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string) — void Work(AiWorkState work, LogArea area, string context)`
 
@@ -185,7 +185,7 @@ private const string ErrorReference = "\n诊断编号：";
 
 **调用者：** [`NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`](ErrorDiagnostics.cs.md#symbol-83a342d01ea6)
 
-**调用：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-11dbde0b98d8)
+**调用：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-a64f9ae00fdd)
 
 **字段、属性、事件及方法组引用：** `Keep(string, NationalSpire.LogArea, string)`；`NationalSpire.AiWorkState.Error`
 
@@ -197,13 +197,13 @@ private const string ErrorReference = "\n诊断编号：";
 
 - `work.Error` = `Keep(work.Error, area, context)`
 
-<a id="symbol-11dbde0b98d8"></a>
+<a id="symbol-a64f9ae00fdd"></a>
 
 ## `Keep(string, NationalSpire.LogArea, string) — string Keep(string error, LogArea area, string context)`
 
 来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`](ErrorDiagnostics.cs.md#symbol-83a342d01ea6)；[`Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-5111a756c510)
+**调用者：** [`NationalSpire.Diagnostics.RetainErrors(NationalSpire.CareerData)`](ErrorDiagnostics.cs.md#symbol-83a342d01ea6)；[`Work(NationalSpire.AiWorkState, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-64d5aaef398c)
 
 **调用：** [`NationalSpire.Diagnostics.RetainError(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-3308746be2f3)
 

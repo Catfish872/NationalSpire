@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`73A4CCC6A6285614D4D94E32CBA4A81DC33EB33ADE8EB5A2F6891E1DB77E69F9`。来源：[源码](../../AvatarImages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E463B3A21DF4AF4BA5F0B9E7232EA15AA919299CC1974AD9759D25B3126653F2`。来源：[源码](../../AvatarImages.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -20,7 +20,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)；[`NationalSpire.OpeningPlayerEditor.Draw(Godot.VBoxContainer, NationalSpire.CareerOpeningPlayer, string, string, string?)`](OpeningPlayerEditor.cs.md#symbol-1e898e8feeab)
+**调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
 **调用：** [`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Godot.Image.Image()`；`Godot.Image.LoadJpgFromBuffer(byte[])`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.Image.LoadWebpFromBuffer(byte[])`；`string.ToLowerInvariant()`；`System.ArgumentException.ArgumentException(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetExtension(string?)`
 
@@ -47,7 +47,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-a7914f0d59d9)；[`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`](AvatarImages.cs.md#symbol-f46bb00e33dc)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)
+**调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-c2473d06e9db)；[`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`](AvatarImages.cs.md#symbol-f46bb00e33dc)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)
 
 **调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；[`NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`](AvatarImages.cs.md#symbol-b10dde67e8a0)；`System.ArgumentException.ArgumentException(string?)`
 
@@ -103,7 +103,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`owner.AddChild(viewport)`；返回值紧邻使用处：`ExpressionStatementSyntax: owner.AddChild(viewport);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`viewport.AddChild(new CareerAvatar { Size = new(192, 192), Art = art })`；返回值紧邻使用处：`ExpressionStatementSyntax: viewport.AddChild(new CareerAvatar { Size = new(192, 192), Art = art });`
 - `Godot.Node.QueueFree()`；输入表达式：`viewport.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: viewport.QueueFree();`
-- `Godot.SubViewport.SubViewport()`；输入表达式：`new SubViewport { Size = new(192, 192), TransparentBg = true, Disable3D = true,              RenderTargetUpdateMode = SubViewport.UpdateMode.Once }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new SubViewport { Size = new(192, 192), TransparentBg = true, Disable3D = true,              RenderTargetUpdateMode = SubViewport.UpdateMode.Once }`
+- `Godot.SubViewport.SubViewport()`；输入表达式：`new SubViewport { Size = new(192, 192), TransparentBg = true, Disable3D = true,             RenderTargetUpdateMode = SubViewport.UpdateMode.Once }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new SubViewport { Size = new(192, 192), TransparentBg = true, Disable3D = true,             RenderTargetUpdateMode = SubViewport.UpdateMode.Once }`
 - `Godot.Texture2D.GetImage()`；输入表达式：`viewport.GetTexture().GetImage()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = viewport.GetTexture().GetImage()`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(192, 192)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(192, 192)`
 - `Godot.Vector2I.Vector2I(int, int)`；输入表达式：`new(192, 192)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Size = new(192, 192)`
@@ -203,7 +203,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-c15914524c15)
+**调用者：** [`Face()`](OpeningPlayerEditor.cs.md#symbol-bfa0e310c4c5)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-223ba7b715b1)
 
 **调用：** [`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Convert.FromBase64String(string)`
 

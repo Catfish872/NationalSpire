@@ -143,7 +143,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitPeople.Ensure(NationalSpire.CareerData)`](CircuitPeople.cs.md#symbol-f59ba7354968)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)
+**调用者：** [`NationalSpire.EsportsWorld.AddRegionalClub(NationalSpire.CareerData, int, int, bool)`](EsportsWorld.cs.md#symbol-db32924cf09e)
 
 **调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`
 
@@ -204,7 +204,7 @@ private static readonly string[] BrandActivity = ["长期支持地区比赛。",
 
 来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData)`](CareerOpening.cs.md#symbol-520de3927565)；[`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken)`](OpeningGeneration.cs.md#symbol-1cd5b76b3812)；[`NationalSpire.OpeningPlayerEditor.Draw(Godot.VBoxContainer, NationalSpire.CareerOpeningPlayer, string, string, string?)`](OpeningPlayerEditor.cs.md#symbol-1e898e8feeab)
+**调用者：** [`NationalSpire.CareerOpeningPlayer.Apply(NationalSpire.CareerData)`](CareerOpening.cs.md#symbol-520de3927565)；[`NationalSpire.MarketCatalog.Build()`](CareerMarketData.cs.md#symbol-0ea0537e57b7)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)；[`NationalSpire.OpeningPlayerEditor.Draw(Godot.VBoxContainer, NationalSpire.CareerOpeningPlayer, string, string, string?, System.Action<string>?)`](OpeningPlayerEditor.cs.md#symbol-8ef16a8054cb)
 
 **调用：** [`NationalSpire.CareerCommerce.LegacySponsors(int)`](CareerCommerce.cs.md#symbol-0d09d372bf3d)；[`NationalSpire.RegionalOrganizations.Sponsors(string, int)`](RegionalOrganizations.cs.md#symbol-f76b5db64641)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`
 

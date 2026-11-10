@@ -632,7 +632,7 @@ private double _elapsed;
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)；[`NationalSpire.CareerScreen.RenderPostHeader(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-4c514e4927ad)
 
-**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CommunityVoteButton.CommunityVoteButton()`
+**调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-973ce83ac4ce)；[`Vote(int)`](CommunityScreen.cs.md#symbol-c7fecf2b615f)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CommunityVoteButton.CommunityVoteButton()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityVoteButton.Direction`；`NationalSpire.CommunityVoteButton.MainPost`；`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`；`Vote(int)`
 
@@ -669,13 +669,13 @@ private double _elapsed;
 - `ToggleMode` = `true`
 - `up.Pressed` += `() => Vote(1)`
 
-<a id="symbol-59164d186a43"></a>
+<a id="symbol-973ce83ac4ce"></a>
 
 ## `Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?) — void Update(CareerData current, CommunityPost currentPost, CommunityReply? currentReply)`
 
 来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)；[`Vote(int)`](CommunityScreen.cs.md#symbol-68cbc9d7d6e5)
+**调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)；[`Vote(int)`](CommunityScreen.cs.md#symbol-c7fecf2b615f)
 
 **调用：** [`NationalSpire.CommunityVotes.AudienceScore(int?)`](CommunityVotes.cs.md#symbol-9f70e52b989b)；[`NationalSpire.CommunityVotes.AudienceScore(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-64a35a4c39c2)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.Score(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-c51f3ec0b04f)；[`NationalSpire.CommunityVotes.Score(NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-90f30ba43b83)；`Godot.BaseButton.SetPressedNoSignal(bool)`；`Godot.CanvasItem.QueueRedraw()`；`long.ToString()`
 
@@ -702,7 +702,7 @@ private double _elapsed;
 - `score.TooltipText` = `$"受众净赞数：{audience}"                  + (choice == 1 ? "\n你已点赞（+1）" : choice == -1 ? "\n你已点踩（-1）" : "\n点击赞踩表达态度")`
 - `up.TooltipText` = `choice == 1 ? "取消点赞" : "点赞"`
 
-<a id="symbol-68cbc9d7d6e5"></a>
+<a id="symbol-c7fecf2b615f"></a>
 
 ## `Vote(int) — void Vote(int direction)`
 
@@ -710,7 +710,7 @@ private double _elapsed;
 
 **调用者：** [`NationalSpire.CareerScreen.DiscussionVotes(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-28983a9b63fd)
 
-**调用：** [`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-cfc51eea9b9f)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`](CommunityVotes.cs.md#symbol-99e71e3dfed8)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-59164d186a43)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`
+**调用：** [`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-cfc51eea9b9f)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`](CommunityThreads.cs.md#symbol-35173ffbb055)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-37dbe54453ea)；[`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`](CommunityVotes.cs.md#symbol-9cdbeae87bc5)；[`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`](CommunityVotes.cs.md#symbol-99e71e3dfed8)；[`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`](CommunityVotes.cs.md#symbol-6ae34f6f4987)；[`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`](CommunityScreen.cs.md#symbol-973ce83ac4ce)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._postSignature`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.Signature(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityPost.VoteRevision`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityThreads.All(NationalSpire.CareerData)`；`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityPost)`；`NationalSpire.CommunityVotes.Choice(NationalSpire.CareerData, NationalSpire.CommunityReply)`；`NationalSpire.CommunityVotes.SetVote(NationalSpire.CareerData, string, string, int, string)`；`NationalSpire.CommunityVotes.VoterId(NationalSpire.CareerData)`；`Update(NationalSpire.CareerData, NationalSpire.CommunityPost, NationalSpire.CommunityReply?)`
 

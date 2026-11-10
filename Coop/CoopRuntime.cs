@@ -53,6 +53,8 @@ public partial class CoopRuntime : Node
     private string _nativeAttempt = "";
     public ICoopPauseScene PauseScene { get; set; } = new CoopGamePauseScene();
     public bool Pausing => _pausing;
+    // 原版比赛结束后保留主菜单，直到玩家自行打开房间；断线暂停仍返回房间。
+    internal bool StayAtResultMenu { get; set; }
     private int _connectionGeneration;
     private double _liveTick;
     private CoopLive? _live;
@@ -83,7 +85,7 @@ public partial class CoopRuntime : Node
             {
                 checkpoint = savedId.Length > 0 ? await CoopSettings.Storage.LoadAsync(savedId) : new(npcSetup == null
                     ? CoopRules.Create(_connecting.Self, worldName, name, capacity, country)
-                    : CoopRules.CreateWorld(_connecting.Self, worldName, capacity, npcSetup.TeamCountry ?? country, npcSetup.Pool), null);
+                    : CoopRules.CreateWorld(_connecting.Self, worldName, capacity, npcSetup.TeamCountry ?? country, npcSetup.Pool,npcSetup.WorldId), null);
                 if (savedId.Length == 0 && npcSetup != null)
                 {
                     await npcSetup.World.Prepare(checkpoint.World.World, async () => { await ToSignal(GetTree(),Godot.SceneTree.SignalName.ProcessFrame); });
@@ -138,6 +140,7 @@ public partial class CoopRuntime : Node
             if (Session == null) return;
             // 等待转场结束时仍处理大厅通信，但不触发新的开赛和界面更新。
             if (_pausing) { Native?.PumpPendingNetwork(); return; }
+            if (Native?.Launched == true && RunManager.Instance.IsInProgress) StayAtResultMenu = true;
             string attempt = Session.World?.Run?.Attempt ?? "";
             if (attempt != _nativeAttempt && !RunManager.Instance.IsInProgress && !ReturningToMenu)
             { Native?.Close(); _nativeAttempt = attempt; _resumeRequired = Session.World?.Run?.Phase == "paused"; _completedPause = ""; }
@@ -150,7 +153,7 @@ public partial class CoopRuntime : Node
                 if (Native?.HasConnection == true) { _ = Pause(); return; }
             }
             if (!ReturningToMenu) Native?.Update();
-            if (Session.World?.Proposal != null && !RunManager.Instance.IsInProgress && !ReturningToMenu &&
+            if (!StayAtResultMenu && Session.World?.Proposal != null && !RunManager.Instance.IsInProgress && !ReturningToMenu &&
                 Native?.Entering != true && NGame.Instance?.MainMenu is { } menu && CareerScreen.Current == null && CoopScreen.Current == null)
                 CoopScreen.OpenCareerOrRoom(menu);
             if (Session.World?.Run is { Terminal: null } && !_pausing && (Native?.NeedsPause == true || Native?.Launched == true && !RunManager.Instance.IsInProgress)) { _ = Pause(); return; }
@@ -170,7 +173,7 @@ public partial class CoopRuntime : Node
     }
     private async Task PauseCore(string key)
     {
-        _pausing = true;
+        _pausing = true; StayAtResultMenu = false;
         var session = Session!;
         var native = Native;
         _resumeRequired = session.World?.Run != null;
@@ -222,12 +225,13 @@ public partial class CoopRuntime : Node
     {
         if (RunManager.Instance.IsInProgress || Native?.Entering == true) throw new InvalidOperationException("请先完成转场并保存退出当前对局。");
         Ai?.Stop(); Native?.Close(); _live?.Close(); Session?.Dispose(); Session = null; Native = null; Ai = null; _live = null;
-        InviteCode = ""; _resumeRequired = false;
+        InviteCode = ""; _resumeRequired = false; StayAtResultMenu = false;
     }
     public void Complete(RunHistory history)
     {
         if (Session?.World?.Run is not { } run || history.Seed != run.Seed) return;
         if (!history.Players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) return;
+        StayAtResultMenu = true;
         string historyKey = history.StartTime + "/" + history.Seed + "/" + history.Ascension + "/" + string.Join(',', history.Players.Select(p => p.Id).Order());
         if (Session.World.NativeHistoryReceipts.Contains(historyKey)) return;
         if (history.WasAbandoned && (_pausing || _resumeRequired || run.Phase == "paused" || !Session.Full || Native?.NeedsPause == true))
@@ -275,15 +279,14 @@ public static class CoopMenuPatch
         var button = new Button { Text = "国运尖塔：多人模式", Theme = CareerVisuals.CreateTheme() };
         __instance.AddChild(button); button.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.BottomLeft);
         button.OffsetLeft = 40; button.OffsetRight = 350; button.OffsetTop = -178; button.OffsetBottom = -114;
-        button.Pressed += () => CoopScreen.Open(__instance);
+        button.Pressed += () => { if (CoopRuntime.Bound) CoopScreen.OpenCareerOrRoom(__instance); else CoopScreen.Open(__instance); };
         MainMenuEntries.Bind(__instance, button);
-        if (!CoopRuntime.Bound) return;
-        if (DateGameReturn.Transitioning) CoopScreen.OpenCareerOrRoom(__instance);
-        else Callable.From(() =>
-        {
-            if (CoopRuntime.Bound && GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree())
-                CoopScreen.OpenCareerOrRoom(__instance);
-        }).CallDeferred();
+        if (CoopRuntime.Bound && CoopRuntime.Current?.StayAtResultMenu == false)
+            Callable.From(() =>
+            {
+                if (CoopRuntime.Bound && CoopRuntime.Current?.StayAtResultMenu == false && GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree())
+                    CoopScreen.OpenCareerOrRoom(__instance);
+            }).CallDeferred();
     }
 }
 [HarmonyPatch(typeof(ActiveScreenContext), nameof(ActiveScreenContext.GetCurrentScreen))]

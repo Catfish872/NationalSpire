@@ -1,10 +1,16 @@
 # AI 请求、交互与记忆
 
+## 开局表单
+
+OpeningGeneration.Generate 在首次填写时为草案确定世界编号，EsportsWorld.OpeningClubs 按正式建档顺序调用 AddRegionalClub，只生成 48 支队伍的资料。既有用户消息在可选值中按赛区列出本局队名；同一次请求同时填写选手资料及其他配置。解析加盟队伍时以赛区和队名匹配，成功才替换原选择；无匹配时保留原值。自建队名仍可自由填写。玩家提交前的再次生成继续使用该草案的世界编号。未调用 AI 的新生涯沿用原建档入口生成编号。Levels 在原 user 消息内给出国家、指标和等级的嵌套示例。Generate 对返回的 Levels 逐国逐项读取，只覆盖已知国家和指标的 0 至 9 整数等级。省略、空对象、无国家的平铺指标以及单项类型错误均保留相应表单值，其他合法配置仍写入草案。
+
+开局回归通过 Godot 开局窗口选择方案、填写描述、生成并提交草案。以官方 deepseek-v4-flash 连续验证单国、两国、沿用国运三个场景；另重放诊断包中缺失国家的原始返回，已填的工业等级保留，同时正确写入模型返回的姓名和资金。两份没有性格配置的实际旧模板分别经 PromptTransfer 导入，并与新增内置版本的 13 个有效模块逐段比对，导出再导入后仍然一致；新建时使用默认性格池，已有自定义比例在覆盖导入无性格字段的文件后保留。
+
 ## 随机事件流程
 
-首页或日历的 EventCards → OpenRandomEvent → EventCommand 接收开始、停止、跳过或选择。RandomEvents.Start 在当天首次开始时通过 EventPools.SelectRandom 读取当前模板的有效素材，默认110条，抽取0—3名可交流人物；最近24项素材参与排重，当前池全部用过后从当前池重新抽取。人物、Seed、Category、Materials 和 PublicPosts 此时保存，重新生成继续复用。日历问号只表示日期。每次开始保存一次 generating；ProcessEventAsync 使用现有 PrivateForegroundQueue、EnterPrivateQueue 和 RequestPrivateAsync(task:event)，成功或失败再保存一次。进入事件页面与途中弹窗本身不会发起随机事件模型请求；开始生成才调用一次模型。
+首页或日历的 EventCards → OpenRandomEvent → EventCommand 接收开始、停止、跳过或选择。RandomEvents.Start 首次展开时分别读取两项选择。随机素材由 EventPools.SelectRandom 在当前模板有效池中抽取，最近24项参与排重；全部用过后重新抽取。指定素材直接采用池内分类与原文，手写素材保存全文。随机人物从 ChatCandidates 抽取0—3名；指定人物保留所选 NPC，独自经历使用空名单。三种方式均交给 RandomEventPrompts.Materials 读取人物资料、交流历史和相关帖子。Seed、Category、People、Materials 和 PublicPosts 此时保存，重新生成继续复用。每次开始保存一次 generating；ProcessEventAsync 使用现有 PrivateForegroundQueue、EnterPrivateQueue 和 RequestPrivateAsync(task:event)，成功或失败再保存一次。进入事件页面、编辑选项与途中弹窗本身均不发起模型请求。
 
-RandomEventPrompts.Compose 的前两条消息固定为 system:当前 world 模板、WorldGuidance世界观使用引导与 EffectInstructions按当前经营身份生成的效果说明、参与者引导及玩家事实要求 与 user:当前 event 模板、已保存 PublicPosts 近期公开原帖正文、PlayerRecord生成的独立玩家资料及精简战绩、已保存 Materials。参与者引导说明相关人物是本次参与者，人物效果使用其中的人物编号，相关人物为空时创作玩家独自经历的单人事件。玩家事实要求为：玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。该要求由程序加入首次生成、自由行动续写和试写的系统消息。引导单独拼接，旧 Format 保留原文供旧模板识别；已有 Materials 直接复用。首次生成及试写在末尾追加 user:InitialFormat，要求 title、story 和2—4条 option/result/effects；此请求只说明首次创作任务。攻击性弱化版的 event 默认内容由 PromptPresets/reduced-aggression.json 提供，原样采用作者当前配置中的基础故事要求及千恋万花人物语气示例；其他三种内置模板沿用 Story。已有个人修改仍由 PromptLibrary.Get 优先读取。格式与效果说明由程序提供。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 缺少 event 时按所属模板补齐当前默认内容；旧自建模板沿原基础模板查询规则处理。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。Format 保留原版 LegacyInitialFormat 与 LegacyEffects 的逐字组合，供旧模板识别。实际 InitialFormat 移除笼统的数值正负表示增加和减少，由各效果分别说明。EffectInstructions 明确五类人物目标均为NPC，status/learning只调整NPC模拟比赛能力；补齐整数、商品/品牌/国家编号、临时状态期限、建设非负点数及约战日期/进阶/模式的解释。OwnedClubs.IsOwner为真时才加入clubFans整条示例和说明；未经营俱乐部时系统消息不出现该效果。首次、自由行动和试写共用Compose；Story及Continuation沿用原文。Materials 包含人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项私聊/群聊及共同经历、CommunityMemorySearch 检索的8项社区材料及其帖子正文和评论上下文、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。随机事件的 Profiles 使用 includeConversation:false、includePlayer:false，交流统一由 ChatTimeline 提供，玩家段落由 PlayerRecord 单独提供；私聊及群聊的 Profiles 默认行为保持原样。恶意行为可选人物只有好感≤0的本次人物。公开方式归界面。
+RandomEventPrompts.Compose 的前两条消息固定为 system:当前 world 模板、WorldGuidance世界观使用引导与 EffectInstructions按当前经营身份生成的效果说明、参与者引导及玩家事实要求 与 user:当前 event 模板、已保存 PublicPosts 近期公开原帖正文、PlayerRecord生成的独立玩家资料及精简战绩、已保存 Materials。参与者引导说明相关人物是本次参与者，人物效果使用其中的人物编号，相关人物为空时创作玩家独自经历的单人事件。玩家事实要求为：玩家信息必须以提供的事实为基准，不允许编造玩家的历史经历和比赛战绩。该要求由程序加入首次生成、自由行动续写和试写的系统消息。引导单独拼接，旧 Format 保留原文供旧模板识别；已有 Materials 直接复用。首次生成及试写在末尾追加 user:InitialFormat，要求 title、story 和2—4条 option/result/effects；此请求只说明首次创作任务。攻击性弱化版的 event 默认内容由 PromptPresets/reduced-aggression.json 提供，原样采用作者当前配置中的基础故事要求及千恋万花人物语气示例；国运风味特化尖塔继承弱化版的 event，其余内置模板沿用 Story。已有个人修改仍由 PromptLibrary.Get 优先读取。格式与效果说明由程序提供。编辑、恢复默认、导入和导出沿 PromptScreen/PromptTransfer；旧 JSON 缺少 event 时按所属模板补齐当前默认内容；旧自建模板沿原基础模板查询规则处理。EditableText 仅移除可识别的完整原版 Format 段，保留自定义创作文字；读取旧存档覆盖、选择旧自建模板、导入和导出共用该函数。Format 保留原版 LegacyInitialFormat 与 LegacyEffects 的逐字组合，供旧模板识别。实际 InitialFormat 移除笼统的数值正负表示增加和减少，由各效果分别说明。EffectInstructions 明确五类人物目标均为NPC，status/learning只调整NPC模拟比赛能力；补齐整数、商品/品牌/国家编号、临时状态期限、建设非负点数及约战日期/进阶/模式的解释。OwnedClubs.IsOwner为真时才加入clubFans整条示例和说明；未经营俱乐部时系统消息不出现该效果。首次、自由行动和试写共用Compose；Story及Continuation沿用原文。Materials 包含人物性格战绩及关系、ChatTimeline 会话总结、合并后最近20项私聊/群聊及共同经历、CommunityMemorySearch 检索的8项社区材料及其帖子正文和评论上下文、相关国家九项指标及说明、当天比赛与活动、钱包及收入参考、库存、商品价格、品牌和有关俱乐部。随机事件的 Profiles 使用 includeConversation:false、includePlayer:false，交流统一由 ChatTimeline 提供，玩家段落由 PlayerRecord 单独提供；私聊及群聊的 Profiles 默认行为保持原样。恶意行为可选人物只有好感≤0的本次人物。公开方式归界面。
 
 自由行动沿 EventCommand → RandomEvents.Custom 保存 CustomAction 和 CustomState=generating，随后复用 ProcessEventAsync 的队列、event 连接方案、思维解析和保存回调，额外调用一次模型。Compose(custom:true) 在相同前两条消息之后追加 assistant:原标题与故事的JSON、user:Continuation及玩家行动JSON。Continuation 使用已批准的50—200字结局要求，明确延续上文故事的文风、叙述口吻和人物说话方式，并遵循当前模板的具体文风要求；当前引导采用字段说明，移除了原短篇过程概述示例。模型只输出 result/effects；原选项及其结局、效果不加入续写请求。可编辑模板每次重新读取，人物资料、私聊/群聊、总结和帖子沿用本次保存的 Materials，近期公开原帖正文沿用 PublicPosts。新帖发布后，已展开事件继续使用首次材料；新事件重新选择。旧事件缺少 PublicPosts 时默认为空，仍使用原 Materials。世界观模板、随机事件模板、玩家资料及战绩、Materials 相同时，前两条消息逐字一致，后端可以复用文本前缀缓存；修改模板后采用修改后的文字。
 
@@ -76,7 +82,7 @@ WorldGuidance的当前原文为：世界观资料用于保持社会背景、人�
 
 AiRouting.Tasks 定义九项选择：weekly 周刊与介绍、news 发帖、discussion 回帖、private 私聊、group 群聊、private-summary 私聊总结、group-summary 群聊总结、arbitration 聊天仲裁、event 随机事件。随机事件未单独指定方案时使用 default。Category 将 profiles 归入 weekly，将 private-long-summary/group-long-summary 归入各自总结。自动帖子正文和同次生成的首批评论共用 news；玩家发帖或留言后生成的回应使用 discussion。两种聊天仲裁共用 arbitration，大小总结及手动/自动总结使用各自聊天的总结方案。
 
-主设置沿 AiTaskRoutePicker，聊天快捷入口沿单层 PopupMenu；两处共用 AiRouting.Assign → SaveAiSettings。快捷入口点击后直接向上展开方案名称列表，选中立即保存并关闭。选择只更新任务映射；约会沿 private 路由，群聊沿 group。已发出的请求继续使用原连接快照，后续请求读取最新映射。保存失败恢复原字典项，凭据沿原方案缓存读取。
+开局草案由当前开局表的连接方案直接解析地址、模型与密钥。聊天及其他已有任务仍由 AiRouting.ProfileId 读取各自的任务映射。主设置沿 AiTaskRoutePicker，聊天快捷入口沿 CareerDropdownLayer；两处共用 AiRouting.Assign → SaveAiSettings。快捷入口点击后在当前页面展开方案名称列表，选中立即保存并关闭。选择只更新任务映射；约会沿 private 路由，群聊沿 group。已发出的请求继续使用原连接快照，后续请求读取最新映射。保存失败恢复原字典项，凭据沿原方案缓存读取。
 
 全部请求通过 AiService.Connection(options, task) → AiRouting.ProfileId 读取任务指向，再从 ConnectionProfiles 取得地址、模型和显示名称，从 ProfileKey 取得该方案密钥。返回 AiConnection 值快照。新闻、回帖、周刊在原队列及间隔等待结束后取得快照；普通聊天和仲裁在等待结束后调用 RequestPrivateAsync，SummaryRequest 在原总结信号量通过后调用同一入口。请求消息结构、解析器、总结条件、并发和间隔继续由原模块管理。
 
@@ -130,7 +136,7 @@ NationalDevelopment.TryPublish 经 CareerEngine.Publish 写入 SourceBody、Rela
 
 ## 模板与固定协议
 
-PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本，PromptTransfer 负责导入导出。旧模板缺少新场景时使用该场景默认文本补齐，不要求玩家原模板已有全部场景。
+PromptLibrary / PromptTemplates / PromptPresets 提供内置和自定义文本，PromptTransfer 负责导入导出。旧模板缺少新场景时使用该场景默认文本补齐，不要求玩家原模板已有全部场景。国运风味特化尖塔和旮旯尖塔各内嵌源文件实际生效的十二段正文；Default 对未提供的模块分别沿 reduced-aggression 和 tieba-aggressive 查找。资源首次读取后缓存于进程中。两份旧文件均未提供性格池，内置选择复用 PersonalityPools.Read 的默认池及各模板独立的玩家修改。
 
 导入导出按已知场景逐项检查，额外场景字段保留。events 在缺少 event 时作为随机事件创作要求读取；两者同时存在时 event 优先，events 原文保留。Default 读取自建模板定义，Get 读取个人修改；Read/Apply 的 Validate 在补默认值前处理别名。date 继续作为已有的额外配置字段保留，约会实际调用 private。导入指定目标模板时按原来源模板解释默认项，再写入目标。Export 将其他额外个人修改一并写入 Sections；Apply 导入已有目标模板时将额外定义保存到目标模板的覆盖字典，保证再次导出保留原文；未知字段不调用内置场景默认值查询。版本1、2、3共用上述兼容入口。每次操作遍历模板场景及额外字段，配置保存沿原界面入口，没有新增模型调用、保存或广播。配置字典直接读取，不增加缓存。
 

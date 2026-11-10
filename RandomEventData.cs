@@ -3,6 +3,9 @@ using System.Text;
 
 namespace NationalSpire;
 
+// 空素材或空引用的名单表示随机；空名单表示玩家独自经历。
+public sealed record EventOpeningChoice(RandomEventSeed? Material = null, string[]? People = null);
+
 public sealed record EventLive(string Title, string Story, int Options)
 {
     public List<RandomEventOption> Choices { get; init; } = [];

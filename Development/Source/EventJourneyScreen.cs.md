@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`81D4A256FDCE936C4F2E84858BF29DD4C32280AD564AA57B29C3BAE1936A6C96`。来源：[源码](../../EventJourneyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8AD0C0AFC4DA2122337D0D1B943584A35FA3B9BA2D5831DFEBAFB4CE55E5ECF2`。来源：[源码](../../EventJourneyScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -84,16 +84,14 @@ private string _journeyNotice = "", _appointmentNotice = "";
 
 **调用者：** [`NationalSpire.CareerScreen.ShowJourneyEncounter()`](EventJourneyScreen.cs.md#symbol-4e94d6a77974)
 
-**调用：** [`NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int, bool)`](CareerEngine.cs.md#symbol-0c04b8ec5f73)；[`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`](CareerSession.cs.md#symbol-babd46c04a9f)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；`Godot.Node.QueueFree()`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CareerScreen.TravelTo(int)`](CalendarPlansScreen.cs.md#symbol-898d70175a58)；`Godot.Node.QueueFree()`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Journey`；`NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int, bool)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.EventJourney.Destination`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Journey`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._eventView`；`NationalSpire.CareerScreen.TravelTo(int)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.EventJourney.Destination`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Node.QueueFree()`；输入表达式：`_eventView.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _eventView.QueueFree();`
-- `NationalSpire.CareerEngine.AdvanceToDay(NationalSpire.CareerData, int, bool)`；输入表达式：`CareerEngine.AdvanceToDay(ViewData, destination)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerEngine.AdvanceToDay(ViewData, destination);`
-- `NationalSpire.CareerScreen.MultiplayerCommand(string, string, string, int, string, System.Action?)`；输入表达式：`MultiplayerCommand("propose-advance", number: destination, accepted: Render)`；返回值紧邻使用处：`IfStatementSyntax: if (MultiplayerCommand("propose-advance", number: destination, accepted: Render)) return;`
-- `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
+- `NationalSpire.CareerScreen.TravelTo(int)`；输入表达式：`TravelTo(destination)`；返回值紧邻使用处：`ExpressionStatementSyntax: TravelTo(destination);`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
 
 **赋值（含属性/字段和局部值）：**
@@ -104,7 +102,7 @@ private string _journeyNotice = "", _appointmentNotice = "";
 
 ## `NationalSpire.CareerScreen.ShowJourneyEncounter() — private void ShowJourneyEncounter()`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 

@@ -96,7 +96,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-38ed06afb7aa)
+**调用者：** [`Topic(NationalSpire.CommunityPost)`](PrivatePublicContext.cs.md#symbol-59d41f2e05e9)
 
 **调用：** [`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -218,7 +218,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 
 **调用者：** [`NationalSpire.CommunityMemorySearch.BuildSearch(NationalSpire.CareerData, int, System.Collections.Generic.HashSet<string>)`](CommunityMemorySearch.cs.md#symbol-a0f6a3280fc9)；[`NationalSpire.CommunityMemorySearch.MatchesTopic(string, string, NationalSpire.CommunityMemorySearch.Request?)`](CommunityMemorySearch.cs.md#symbol-9f4e57953da4)；[`NationalSpire.CommunityMemorySearch.ReplyTerms.Get(string)`](CommunityMemorySearch.cs.md#symbol-a1e834000caf)；[`NationalSpire.CommunityMemorySearch.Request.GetTerms(string)`](CommunityMemorySearch.cs.md#symbol-291651d7ac15)；[`NationalSpire.CommunityMemorySearch.Retrieve(NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>, int, System.Collections.Generic.ISet<string>, int, System.Collections.Generic.ISet<string>?, bool, NationalSpire.CommunityMemorySearch.Request?, System.Collections.Generic.IEnumerable<NationalSpire.CommunityPost>?)`](CommunityMemorySearch.cs.md#symbol-43d223752125)
 
-**调用：** [`Chinese(char)`](CommunityMemorySearch.cs.md#symbol-610a7e6b31c6)；[`Latin(char)`](CommunityMemorySearch.cs.md#symbol-a4c594b738a0)；`string.Substring(int, int)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`
+**调用：** [`Chinese(char)`](CommunityMemorySearch.cs.md#symbol-bb9b66b7d5ce)；[`Latin(char)`](CommunityMemorySearch.cs.md#symbol-58837bf70714)；`string.Substring(int, int)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`
 
 **字段、属性、事件及方法组引用：** `Chinese(char)`；`Latin(char)`
 
@@ -236,7 +236,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a4c594b738a0"></a>
+<a id="symbol-58837bf70714"></a>
 
 ## `Latin(char) — static bool Latin(char c)`
 
@@ -254,7 +254,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-610a7e6b31c6"></a>
+<a id="symbol-bb9b66b7d5ce"></a>
 
 ## `Chinese(char) — static bool Chinese(char c)`
 
@@ -429,7 +429,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 - `PostId` = `m.PostId`
 - `Text` = `posts.TryGetValue(m.PostId, out var post) ? $"《{post.Title}》中的记录：{AiGeneratedText.Memory(m)}" : AiGeneratedText.Memory(m)`
 
-<a id="symbol-4a39900d91f8"></a>
+<a id="symbol-ed8228a01c2a"></a>
 
 ## `Own(NationalSpire.CommunityMemory) — bool Own(CommunityMemory m)`
 
@@ -530,7 +530,7 @@ private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Com
 - `request` ??= `new()`
 - `Text` = `GameText.Plain(AiGeneratedText.Memory(d.Memory))`
 
-<a id="symbol-09fbea184b21"></a>
+<a id="symbol-aa56dd910891"></a>
 
 ## `Score(NationalSpire.CommunityMemorySearch.Document) — double Score(Document doc)`
 

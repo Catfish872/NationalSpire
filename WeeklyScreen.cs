@@ -131,7 +131,7 @@ public partial class CareerScreen
     {
         if (_tab != "社区" || _postId != null || !IsInstanceValid(_weeklyContent) || !_weeklyContent!.IsVisibleInTree()) return;
         if (!_weeklyAuto || !_weeklyContent.GetGlobalRect().Intersects(_scroll.GetGlobalRect())
-            || IsInstanceValid(_weeklySelector) && _weeklySelector!.GetPopup().Visible) return;
+            || IsInstanceValid(_weeklySelector) && CareerDropdownLayer.At(_weeklySelector!).Showing(_weeklySelector!)) return;
         var issue = _boundData.WeeklyEditions.FirstOrDefault(w => w.Week == _weeklyWeek);
         if (issue == null || CameoContent.VisibleSlides(issue).Count < 2) return;
         _weeklyClock += delta;

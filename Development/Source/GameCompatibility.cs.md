@@ -22,7 +22,7 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 
 **调用者：** [`NationalSpire.MatchStartWatch.ShowNotice()`](MatchStartWatch.cs.md#symbol-c904f0fb2bfd)
 
-**调用：** [`Queue(string)`](GameCompatibility.cs.md#symbol-fa9805f4a868)；[`Read(string)`](GameCompatibility.cs.md#symbol-85c5d143df54)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.CanProcess()`；`Godot.Node.IsInsideTree()`；`Godot.Node.IsProcessing()`；`System.Enum.ToString()`；`System.Exception.GetBaseException()`；`System.Reflection.FieldInfo.GetValue(object?)`；`System.Type.GetField(string, System.Reflection.BindingFlags)`
+**调用：** [`Queue(string)`](GameCompatibility.cs.md#symbol-c1eaf63295f7)；[`Read(string)`](GameCompatibility.cs.md#symbol-591913860564)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.CanProcess()`；`Godot.Node.IsInsideTree()`；`Godot.Node.IsProcessing()`；`System.Enum.ToString()`；`System.Exception.GetBaseException()`；`System.Reflection.FieldInfo.GetValue(object?)`；`System.Type.GetField(string, System.Reflection.BindingFlags)`
 
 **字段、属性、事件及方法组引用：** `<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.available`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.canProcess`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.currentVfx`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.finalizing`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.insideTree`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.loading`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.name`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.processing`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.processMode`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.toLoad`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.vfx`；`<anonymous type: bool available, bool insideTree, bool processing, bool canProcess, string processMode, object name, object toLoad, object loading, object finalizing, object vfx, object currentVfx, object vfxLoading>.vfxLoading`；`<anonymous type: bool available, string error>.available`；`<anonymous type: bool available, string error>.error`；`<anonymous type: bool available>.available`；`Queue(string)`；`Read(string)`
 
@@ -49,13 +49,13 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-85c5d143df54"></a>
+<a id="symbol-591913860564"></a>
 
 ## `Read(string) — object? Read(string name)`
 
 来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameCompatibility.AssetLoadingStatus()`](GameCompatibility.cs.md#symbol-a00822d68705)；[`Queue(string)`](GameCompatibility.cs.md#symbol-fa9805f4a868)
+**调用者：** [`NationalSpire.GameCompatibility.AssetLoadingStatus()`](GameCompatibility.cs.md#symbol-a00822d68705)；[`Queue(string)`](GameCompatibility.cs.md#symbol-c1eaf63295f7)
 
 **调用：** `object.GetType()`；`System.Reflection.FieldInfo.GetValue(object?)`；`System.Type.GetField(string, System.Reflection.BindingFlags)`
 
@@ -70,7 +70,7 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-fa9805f4a868"></a>
+<a id="symbol-c1eaf63295f7"></a>
 
 ## `Queue(string) — object Queue(string field)`
 
@@ -78,7 +78,7 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 
 **调用者：** [`NationalSpire.GameCompatibility.AssetLoadingStatus()`](GameCompatibility.cs.md#symbol-a00822d68705)
 
-**调用：** [`Read(string)`](GameCompatibility.cs.md#symbol-85c5d143df54)；`Godot.ResourceLoader.LoadThreadedGetStatus(string, Godot.Collections.Array)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Enum.ToString()`
+**调用：** [`Read(string)`](GameCompatibility.cs.md#symbol-591913860564)；`Godot.ResourceLoader.LoadThreadedGetStatus(string, Godot.Collections.Array)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Enum.ToString()`
 
 **字段、属性、事件及方法组引用：** `<anonymous type: bool available>.available`；`<anonymous type: int? count, <anonymous type: string path, string status>[] paths>.count`；`<anonymous type: int? count, <anonymous type: string path, string status>[] paths>.paths`；`<anonymous type: string path, string status>.path`；`<anonymous type: string path, string status>.status`；`Read(string)`
 

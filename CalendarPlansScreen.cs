@@ -10,6 +10,13 @@ public partial class CareerScreen
 
     private static bool ClubPlan(LifeActivity activity) =>
         CareerTraining.IsTraining(activity) || ClubPrograms.IsTraining(activity) || activity.Kind is "俱乐部" or "经营";
+    private bool SponsorNeedsPlan(CareerData d)=>CanManageClub && OwnedClubs.IsOwner(d) && d.Esports.OwnedClub is { } club && string.IsNullOrEmpty(club.NextSponsor);
+    private bool ActionablePlan(CareerData d,CalendarPlan p)=>p.Enabled && p.Confirm!=null && p.ActionText=="安排" && (p.Section!=SponsorPlans || SponsorNeedsPlan(d));
+    private static bool CanStartLifePlan(CareerData d, LifeActivity a,int cost)=>d.Credits>=cost && !(a.LongProject && d.Life.Activities.Any(x=>x.LongProject && x.Status=="进行中"));
+    private bool AvailablePlans(CareerData d)=>d.Life.Activities.Any(a=>a.Status=="可安排" && a.ExpiresDay>=d.Day && (d.Esports.ClubId.Length>0 || !ClubPlan(a)) && CanStartLifePlan(d,a,CareerRelics.Cost(d,a))) ||
+        (d.Esports.ClubId.Length>0 && (SponsorNeedsPlan(d) || TeamPreparations.Available(d).Any(cup=>TeamPlanState(d,cup)=="")));
+    private string TeamPlanState(CareerData d,WorldCompetition cup)=> d.TeamPreparations.Any(p=>p.CompetitionId==cup.Id && p.Team==TeamPreparations.PlayerTeam(cup) && p.Remaining>0)?"备赛已生效":
+        _multiplayer is {Host:false}?"由房主安排":d.PendingMatchId!=null?"当前比赛结束后可安排":CareerMoney.Balance(d)<TeamPreparations.Cost?"可用资金不足":"";
     private List<CalendarPlan> CalendarPlans(CareerData d)
     {
         bool member = d.Esports.ClubId.Length > 0;
@@ -38,7 +45,7 @@ public partial class CareerScreen
             {
                 if (MultiplayerCommand("activity", a.Id, target, accepted: ClearPlan)) return;
                 FinishPlan(CareerLife.Accept(d, a.Id, target));
-            }, d.Credits >= cost && !(a.LongProject && d.Life.Activities.Any(x => x.LongProject && x.Status == "进行中")), targets, Cost:cost,
+            }, CanStartLifePlan(d,a,cost), targets, Cost:cost,
                 TrainingDetails: program ? () => ClubPrograms.Details(d, quote) : training ? () => CareerTraining.Details(d, quote) : null));
         }
         if (!member) return plans;
@@ -91,8 +98,7 @@ public partial class CareerScreen
             var days = cup.Fixtures.Where(f => !f.Finished && (f.HomeTeam == team || f.AwayTeam == team))
                 .GroupBy(f => f.Round).OrderBy(g => g.Key).Take(active?.Remaining ?? 3).SelectMany(g => g.Select(f => f.Day)).ToHashSet();
             string dates = string.Join("、", days.Order().Select(day => GameCalendar.Date(d,day).ToString("M/d")));
-            string state = active != null ? "备赛已生效" : _multiplayer is {Host:false} ? "由房主安排" :
-                d.PendingMatchId != null ? "当前比赛结束后可安排" : CareerMoney.Balance(d) < TeamPreparations.Cost ? "可用资金不足" : "";
+            string state=TeamPlanState(d,cup);
             yield return new("team:" + cup.Id, TrainingPlans, "集体备赛 · " + cup.Name, CircuitWorld.TeamName(d,cup,team),
                 effect, dates.Length > 0 ? dates : "待赛程公布", days.Contains, () => ConfirmTeamPreparation(d,cup.Id),
                 state.Length == 0, Cost: TeamPreparations.Cost, Availability: state);
@@ -161,6 +167,7 @@ public partial class CareerScreen
                 row.AddChild(DashboardLabel(p.Title,18,_ink,true));
                 var arrow=Glyph(open?"chevron-up":"chevron-down",18,_gold); arrow.Name="DisclosureArrow"; row.AddChild(arrow);
                 var toggle=ActionRow(body,"PlanHeading",p.Title,()=>Choose(_planKey==p.Key?"":p.Key),row,76,13,10,"172c38","00000000","203d49");
+                if(ActionablePlan(d,p)) Dot(toggle);
                 toggle.SetMeta("expanded",open);
                 cards[p.Key]=new PlanCard(card,body,toggle,arrow);
                 if(open)
@@ -336,18 +343,19 @@ public partial class CareerScreen
         if (list.GetChildCount()==0) list.AddChild(DashboardLabel("暂无后续安排",16,_muted));
     }
 
+    private void TravelTo(int day)
+    {
+        if(day==ViewData.Day){OpenCalendarDay(day);return;}
+        if(MultiplayerCommand("propose-advance",number:day))return;
+        CareerEngine.AdvanceToDay(ViewData,day); _selectedDay=ViewData.Day; _calendarMonth=0; Render();
+    }
+
     private void CalendarCommands(CareerData d, HBoxContainer box)
     {
-        void Advance(int day)
-        {
-            if (day == d.Day) { OpenCalendarDay(day); return; }
-            if (MultiplayerCommand("propose-advance",number:day)) return; CareerEngine.AdvanceToDay(d,day);
-            _selectedDay = d.Day; _calendarMonth = 0; Render();
-        }
         box.AddChild(TeamButton("推进一天",AdvanceCareerDay,0));
-        if (CareerEngine.NextEventDay(d) is int day) box.AddChild(TeamButton("跳到下一个事件",()=>Advance(day),0));
-        box.AddChild(TeamButton("跳过四周",()=>Advance(d.Day + 28),0));
-        box.AddChild(TeamButton("下个赛季",()=>Advance(SeasonCalendar.End(d)+1),0));
+        if (CareerEngine.NextEventDay(d) is int day) box.AddChild(TeamButton("跳到下一个事件",()=>TravelTo(day),0));
+        box.AddChild(TeamButton("跳过四周",()=>TravelTo(d.Day + 28),0));
+        box.AddChild(TeamButton("下个赛季",()=>TravelTo(SeasonCalendar.End(d)+1),0));
         box.AddChild(new Control { SizeFlagsHorizontal=SizeFlags.ExpandFill });
         foreach(var button in box.GetChildren().OfType<Button>())
         {

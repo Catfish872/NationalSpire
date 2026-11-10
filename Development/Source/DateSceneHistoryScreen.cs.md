@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.AttachMemoryPlayback(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory, NationalSpire.DateMemoryPlayback)`](DateSceneMemoryScreen.cs.md#symbol-a203b37d1b91)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
-**调用：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`Fail(string)`](DateSceneHistoryScreen.cs.md#symbol-15ea0c72609d)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`](PrivateMessageScreen.cs.md#symbol-d622e0fb06ab)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`Fail(string)`](DateSceneHistoryScreen.cs.md#symbol-157d3a8abb9d)；[`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`](PrivateMessageScreen.cs.md#symbol-d622e0fb06ab)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.PrivateMessageCommand.PrivateMessageCommand()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
 **字段、属性、事件及方法组引用：** `Applied()`；`Fail(string)`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.PrivateCommand(string, NationalSpire.PrivateMessageCommand, System.Action?, string?, System.Action<string>?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessageCommand.Entry`；`NationalSpire.PrivateMessageCommand.Part`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.Scene`
 
@@ -50,13 +50,13 @@
 - `error` = `Text("", 17, _muted)`
 - `Part` = `"reply"`
 
-<a id="symbol-15ea0c72609d"></a>
+<a id="symbol-157d3a8abb9d"></a>
 
 ## `Fail(string) — void Fail(string message)`
 
 来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)
 
 **调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
@@ -70,7 +70,7 @@
 
 - `error.Text` = `message`
 
-<a id="symbol-75e4e13cfab0"></a>
+<a id="symbol-9df2cd48ebf4"></a>
 
 ## `Applied() — void Applied()`
 
@@ -78,7 +78,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)
 
-**调用：** [`Fail(string)`](DateSceneHistoryScreen.cs.md#symbol-15ea0c72609d)；[`NationalSpire.CareerScreen.CanResumeDateGame()`](DateGameScreen.cs.md#symbol-936de630737d)；[`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`](DateSceneMemories.cs.md#symbol-f4609a0121d1)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；[`NationalSpire.ICareerSession.Refresh()`](CareerSession.cs.md#symbol-bae3aaaf496d)；`Godot.Node.IsInsideTree()`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`Fail(string)`](DateSceneHistoryScreen.cs.md#symbol-157d3a8abb9d)；[`NationalSpire.CareerScreen.CanResumeDateGame()`](DateGameScreen.cs.md#symbol-936de630737d)；[`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`](DateSceneMemories.cs.md#symbol-f4609a0121d1)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；[`NationalSpire.ICareerSession.Refresh()`](CareerSession.cs.md#symbol-bae3aaaf496d)；`Godot.Node.IsInsideTree()`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `Fail(string)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dateEditingTurn`；`NationalSpire.CareerScreen._dateIndex`；`NationalSpire.CareerScreen._dateInputTurn`；`NationalSpire.CareerScreen._dateLines`；`NationalSpire.CareerScreen._dateMemory`；`NationalSpire.CareerScreen._dateMemoryKey`；`NationalSpire.CareerScreen._dateOffer`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateSource`；`NationalSpire.CareerScreen._dateState`；`NationalSpire.CareerScreen._dateTurn`；`NationalSpire.CareerScreen._dateView`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.CanResumeDateGame()`；`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.DateMemoryRecorder.Dirty`；`NationalSpire.DateMemoryRecorder.Memory`；`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`；`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneView.InputMode`；`NationalSpire.DateSceneView.RefreshHistory(bool)`；`NationalSpire.ICareerSession.Refresh()`
 

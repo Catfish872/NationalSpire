@@ -670,7 +670,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
 **调用：** `NationalSpire.PortraitOutfit.PortraitOutfit()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
 
@@ -697,7 +697,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)
 
 **调用：** `NationalSpire.PortraitEmotion.PortraitEmotion()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
 
@@ -722,7 +722,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-255c66477991)
+**调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
@@ -741,7 +741,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`CommitId()`](PortraitDesignScreen.cs.md#symbol-1dc765f3022c)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)
+**调用者：** [`CommitId()`](PortraitDesignScreen.cs.md#symbol-7f00b8a4d151)；[`NationalSpire.CareerScreen.NewDateEmotion(NationalSpire.CareerData, string, string)`](DateSceneAssetScreen.cs.md#symbol-29862ab95d64)
 
 **调用：** [`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -886,9 +886,9 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-9f69b6de5ae4)
+**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)
 
-**调用：** [`Merge(string, System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.Dictionary<string, string>, (string Id, string Label)[])`](PortraitDesign.cs.md#symbol-3bcc9c0d391f)；[`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；[`Value(string)`](PortraitDesign.cs.md#symbol-477e9ea3cb96)；`NationalSpire.PortraitEmotion.PortraitEmotion()`；`string.IndexOf(char)`；`string.IsNullOrWhiteSpace(string?)`；`string.LastIndexOf(string, System.StringComparison)`；`string.StartsWith(string)`；`string.Trim()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
+**调用：** [`Merge(string, System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.Dictionary<string, string>, (string Id, string Label)[])`](PortraitDesign.cs.md#symbol-573d69f899da)；[`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；[`Value(string)`](PortraitDesign.cs.md#symbol-f89d81d42a63)；`NationalSpire.PortraitEmotion.PortraitEmotion()`；`string.IndexOf(char)`；`string.IsNullOrWhiteSpace(string?)`；`string.LastIndexOf(string, System.StringComparison)`；`string.StartsWith(string)`；`string.Trim()`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.List<T>.Add(T)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
 **字段、属性、事件及方法组引用：** `Merge(string, System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.Dictionary<string, string>, (string Id, string Label)[])`；`NationalSpire.PortraitDesign.Basics`；`NationalSpire.PortraitDesign.Emotions`；`NationalSpire.PortraitDesign.Inferred`；`NationalSpire.PortraitDesign.Notes`；`NationalSpire.PortraitDesign.Outfits`；`NationalSpire.PortraitDesign.SelectedOutfit`；`NationalSpire.PortraitDesigns.BasicFields`；`NationalSpire.PortraitDesigns.OutfitFields`；`NationalSpire.PortraitDesigns.SafeId(string)`；`NationalSpire.PortraitEmotion.Description`；`NationalSpire.PortraitEmotion.Id`；`NationalSpire.PortraitEmotion.Name`；`NationalSpire.PortraitOutfit.Fields`；`NationalSpire.PortraitOutfit.Id`；`NationalSpire.PortraitOutfit.Name`；`Value(string)`
 
@@ -936,7 +936,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 - `target.Notes` = `notes.GetString()!`
 - `text` = `text[(start + 1)..end]`
 
-<a id="symbol-3bcc9c0d391f"></a>
+<a id="symbol-573d69f899da"></a>
 
 ## `Merge(string, System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.Dictionary<string, string>, (string Id, string Label)[]) — void Merge(string key, Dictionary<string, string> current, Dictionary<string, string> original, (string Id, string Label)[] fields)`
 
@@ -962,7 +962,7 @@ public static readonly (string Id, string Label)[] OutfitFields =
 
 - `current[id]` = `value.GetString()!`
 
-<a id="symbol-477e9ea3cb96"></a>
+<a id="symbol-f89d81d42a63"></a>
 
 ## `Value(string) — string Value(string key)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`FBE083A4EAFE113639C425C6E84B2FF94DCFCB3E08375E5E0ECAE5D9D8F8E58E`。来源：[源码](../../ChatToolToggle.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6D3927F0B417501BF7ED116A88C7CB2DB667E99E50D7EC1DF4959A6D5C9F8324`。来源：[源码](../../ChatToolToggle.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)
 
-**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-ba3b31b1bb7c)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`Paint(bool)`](ChatToolToggle.cs.md#symbol-6d072c54eae6)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.ChatToolIcon.ChatToolIcon()`
+**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-ba3b31b1bb7c)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`Paint(bool)`](ChatToolToggle.cs.md#symbol-3ff003a6c7cb)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.ChatToolIcon.ChatToolIcon()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.ChatTools`；`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ChatToolIcon.Enabled`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`Paint(bool)`
 
@@ -42,7 +42,7 @@
 - `button.ButtonPressed` = `options.ChatTools`
 - `button.Name` = `"ChatToolMode"`
 - `button.SizeFlagsVertical` = `SizeFlags.Fill`
-- `button.Toggled` += `enabled =>          {              options.ChatTools = enabled; ViewData.Ai.ChatTools = enabled; Paint(enabled);              try { AiSettingsStore.Save(options); }              catch (Exception e) { Diagnostics.Error("chat.tools.settings", e); }          }`
+- `button.Toggled` += `enabled =>         {             options.ChatTools = enabled; ViewData.Ai.ChatTools = enabled; Paint(enabled);             try { AiSettingsStore.Save(options); }             catch (Exception e) { Diagnostics.Error("chat.tools.settings", e); }         }`
 - `button.ToggleMode` = `true`
 - `button.TooltipText` = `"开启严格工具调用：AI总是口头答应但不生效？尝试开启此选项使用API允许的强制工具调用进行交互。\n已测试 DeepSeek 官方 API，其他渠道可用性未知。"`
 - `Enabled` = `options.ChatTools`
@@ -50,7 +50,7 @@
 - `options.ChatTools` = `enabled`
 - `ViewData.Ai.ChatTools` = `enabled`
 
-<a id="symbol-6d072c54eae6"></a>
+<a id="symbol-3ff003a6c7cb"></a>
 
 ## `Paint(bool) — void Paint(bool enabled)`
 

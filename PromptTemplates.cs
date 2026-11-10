@@ -8,12 +8,17 @@ public static partial class PromptLibrary
         new(DefaultTemplate, "国运日常 · 新版", "尖塔牵动生活，社区有热闹、偏心和针锋相对，也有人认真交流。"),
         new("reduced-aggression", "攻击性弱化版", "包含千恋万花具体示例，保留作者当前使用的社区文风与私信提示词。"),
         new("tieba-aggressive", "贴吧社区（攻击性加强）", "贴吧老哥社区 2.0，侧重贴吧式争论、起哄与强烈情绪。"),
-        new("legacy", "赛事叙述 · 旧版", "保留此前的写法，叙述较克制，主要围绕比赛与职业经历。")
+        new("legacy", "赛事叙述 · 旧版", "保留此前的写法，叙述较克制，主要围绕比赛与职业经历。"),
+        new("spire-flavor", "国运风味特化尖塔（高token开销）", "侧重国运世界设定与尖塔社区交流。"),
+        new("galgame-spire", "旮旯尖塔（高token开销）", "侧重人物对话与相处，私聊和群聊使用较长的提示词。")
     ];
     // 延迟构造，避免不同分部文件的静态初始化顺序影响旧模板读取。
     private static readonly Lazy<IReadOnlyList<PromptSection>> CurrentSections = new(BuildCurrent);
-    private static readonly Lazy<Dictionary<string, string>> ReducedAggression = new(() => ReadPreset("reduced-aggression"));
-    private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new(() => ReadPreset("tieba-aggressive"));
+    private static readonly Dictionary<string, (string Parent, Lazy<Dictionary<string, string>> Text)> Presets =
+        new Dictionary<string, string> {
+            ["reduced-aggression"] = DefaultTemplate, ["tieba-aggressive"] = DefaultTemplate,
+            ["spire-flavor"] = "reduced-aggression", ["galgame-spire"] = "tieba-aggressive"
+        }.ToDictionary(p => p.Key, p => (p.Value, new Lazy<Dictionary<string, string>>(() => ReadPreset(p.Key))));
     private static Dictionary<string, string> ReadPreset(string id)
     {
         using var stream = typeof(PromptLibrary).Assembly.GetManifestResourceStream($"NationalSpire.PromptPresets.{id}.json")
@@ -204,8 +209,11 @@ BOSS：
             template = custom.BaseTemplate;
         }
         // 独立预设只覆盖其提供的模块；旧模板和玩家已保存的修改继续使用原有内容。
-        var preset = template switch { "reduced-aggression" => ReducedAggression.Value, "tieba-aggressive" => TiebaAggressive.Value, _ => null };
-        if (preset?.TryGetValue(id, out var presetText) == true) return EditableText(id, presetText);
+        while (Presets.TryGetValue(template, out var preset))
+        {
+            if (preset.Text.Value.TryGetValue(id, out var presetText)) return EditableText(id, presetText);
+            template = preset.Parent;
+        }
         return (template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText;
     }
     public static void SelectTemplate(AiOptions options, string id)

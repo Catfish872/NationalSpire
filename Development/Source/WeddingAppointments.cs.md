@@ -191,7 +191,7 @@ public static readonly GoodVerb Verb = new("wedding", "举办婚礼", 1, 0);
 
 来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-ac557aac2b66)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`WeddingChoices()`](ConsumerPickerScreen.cs.md#symbol-5d38d6b346ee)；[`WeddingCost()`](ConsumerPickerScreen.cs.md#symbol-b427c5f58433)
+**调用者：** [`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-53a95c0ed02d)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)；[`WeddingChoices()`](ConsumerPickerScreen.cs.md#symbol-744c8ab57890)；[`WeddingCost()`](ConsumerPickerScreen.cs.md#symbol-df7125539e2d)
 
 **调用：** [`NationalSpire.WeddingAppointments.Services(NationalSpire.CareerData)`](WeddingAppointments.cs.md#symbol-2dfb2ee379ae)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 

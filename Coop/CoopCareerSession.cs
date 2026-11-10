@@ -15,6 +15,7 @@ public sealed class CoopCareerSession : ICareerSession
     private bool _disposed;
     public CareerData Data { get; private set; } = null!;
     public bool Host => _session.Host;
+    internal Task<RandomEventSeed[]> ReadEventPool(CancellationToken cancel) => _session.ReadEventPool(cancel);
     public bool Alive => !_disposed && CoopRuntime.Current?.Session == _session && _session.World != null;
     public event Action<string, bool>? Message;
     public string Status => $"多人模式 · 在线 {_session.Online.Count}人 · " + (Host ? "你是房主，开赛时全员准备" : "房主负责团队安排，你可以处理个人事务");

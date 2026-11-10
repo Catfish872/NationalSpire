@@ -37,9 +37,9 @@ public partial class CareerScreen
             + (!result.Win && result.RunSeconds>0 ? " · "+MatchRules.Time(result.RunSeconds) : "");
         string rivalPerformance=result.Settlement?.OpponentPerformance ??
             (match!=null ? MatchRules.Performance(match.OpponentWon,match.OpponentFloor,match.OpponentSeconds) : "对手详细成绩未记录");
-        MatchArena(data,result.Event,result.OpponentId,result.Opponent,draw?"平局":won?"胜利":"失败",result.Character,accent,out _,result.Day,
+        MatchArena(data,result.Event,result.OpponentId,result.Opponent,draw?"平局":won?"胜利":"失败",result.Character,accent,out var heroActions,result.Day,
             playerPerformance:ownPerformance,rivalPerformance:rivalPerformance,source:IsLatestReview(data)?"本场战报":"历史战报");
-        if (!pendingFailure) ReviewPager(data,result);
+        if (!pendingFailure) ReviewPager(data,result,heroActions);
         RenderTeam();
         var evidence = new List<string>();
         if (result.Evidence.FinalHp != null && result.Evidence.MaxHp > 0) evidence.Add($"生命 {result.Evidence.FinalHp}/{result.Evidence.MaxHp}");

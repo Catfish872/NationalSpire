@@ -44,6 +44,8 @@ public partial class CareerScreen
         }
         LoadChatPreferences(); _eventId = id; _eventSignature = "";
         var view = new EventStoryView(); _eventView = view;
+        view.EditMaterial = () => EditEventMaterial(view);
+        view.EditPeople = () => EditEventPeople(view);
         view.Paint = (label, value) => PaintMentionText(label, ViewData, value, RandomEvents.Find(ViewData, id)?.People, true);
         view.OpenPerson = OpenMention;
         view.Settings = RandomEventSettings;
@@ -52,7 +54,7 @@ public partial class CareerScreen
         view.Public.SetPressedNoSignal(ChatPreferences.GetValue(ChatPreferenceKey, "event-public", false).AsBool());
         view.Public.Toggled += value => { ChatPreferences.SetValue(ChatPreferenceKey, "event-public", value); WriteChatPreferences(); };
         view.Close = () => { view.QueueFree(); _eventView = null; Render(); };
-        view.Start = () => EventCommand("event-start"); view.Stop = () => EventCommand("event-stop"); view.Skip = () => EventCommand("event-skip");
+        view.Start = () => EventCommand("event-start", opening: view.Opening); view.Stop = () => EventCommand("event-stop"); view.Skip = () => EventCommand("event-skip");
         view.Custom = action => EventCommand("event-custom", action: action);
         view.ConfirmCustom = () => EventCommand("event-custom-choose", publicly: view.Public.ButtonPressed);
         view.Choose = index => EventCommand("event-choose", index, view.Public.ButtonPressed);
@@ -95,15 +97,16 @@ public partial class CareerScreen
             box.AddChild(Text("保存后重新安排未来尚未展开的事件。当天事件和已经生成的故事继续保留。", 16, _muted));
         });
     }
-    private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null, string? action = null)
+    private void EventCommand(string kind, int option = 0, bool publicly = false, string? id = null, string? action = null, EventOpeningChoice? opening = null)
     {
         string target = id ?? _eventId;
         void Updated() { if (_eventView != null) RefreshRandomEvent(); else Render(); }
-        if (MultiplayerCommand(kind, target, action ?? (publicly ? "public" : "private"), option, accepted: Updated)) return;
+        if (_multiplayer != null && MultiplayerCommand(kind, target, opening != null && (opening.Material != null || opening.People != null) ?
+            System.Text.Json.JsonSerializer.Serialize(opening, Coop.CoopJson.Options) : action ?? (publicly ? "public" : "private"), option, accepted: Updated)) return;
         var d = ViewData; string? error = kind switch
         {
             "event-custom" => RandomEvents.Custom(d, target, action ?? ""), "event-custom-choose" => RandomEvents.ChooseCustom(d, target, publicly),
-            "event-start" => RandomEvents.Start(d, target), "event-skip" => RandomEvents.Skip(d, target), "event-stop" => RandomEvents.Stop(d, target),
+            "event-start" => RandomEvents.Start(d, target, opening), "event-skip" => RandomEvents.Skip(d, target), "event-stop" => RandomEvents.Stop(d, target),
             "event-choose" => RandomEvents.Choose(d, target, option, publicly), _ => null
         };
         if (error != null) { if (_eventView != null) { _eventView.Status.Text = error; _eventView.Status.Show(); } else ShowCareerDialog("随机事件", error, () => true, "关闭", showCancel: false); return; }
@@ -182,6 +185,7 @@ public partial class EventStoryView : Control
         _thought = Rich(15); _thought.AddThemeColorOverride("default_color", Muted); _thinkingScroll.AddChild(_thought);
         _history = ActionButton("阅读故事经过 ▸", () => { _showHistory = !_showHistory; _story.Visible = _showHistory; _history.Text = _showHistory ? "收起故事经过 ▾" : "阅读故事经过 ▸"; }); _history.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; readingTools.AddChild(_history);
         _story = Rich(20); _story.Name = "EventStory"; _reading.AddChild(_story);
+        BuildOpeningCards();
         _start = new EventStoryButton { Caption = "展开这段故事", Detail = "人物、赛程与此刻的生活，在这里相遇", Mark = "?", CustomMinimumSize = new(0, 100) }; _start.Pressed += () => Start?.Invoke(); _reading.AddChild(_start);
         _options = new VBoxContainer(); _options.AddThemeConstantOverride("separation", 12); _reading.AddChild(_options);
         BuildCustomAction(_reading);
@@ -250,6 +254,7 @@ public partial class EventStoryView : Control
         if (_storyText != story) { _storyText = story; SetText(_story, story); }
         _story.Visible = !complete || _showHistory; _history.Visible = complete;
         _start.Visible = e.State == "waiting";
+        _openingCards.Visible = _start.Visible && e.Materials.Length == 0;
         _stop.Visible = (generating || customBusy) && busy;
         _retry.Visible = !complete && !skipped && e.State != "waiting" && (!generating || !busy);
         _retry.Visible &= !customBusy; _retry.Disabled = busy; _retry.Text = e.State == "failed" || generating ? "重试生成" : "重新生成";

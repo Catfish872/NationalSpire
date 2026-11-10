@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BF1DC6099D4CAF734FEA30D19B428C5C039811B866311A4BA43F4E48FBCC7061`。来源：[源码](../../CareerOpeningWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9AA16C207F3917411E7149E9A1DCFD2AB30B01D1F2A1B5C0BED67E8A8B8D20A0`。来源：[源码](../../CareerOpeningWorld.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.CareerOpeningWorld`。
+类型：`NationalSpire.CareerOpeningWorld`、`NationalSpire.CareerOpeningWorld.ClubSelection`。
 
 字段、事件及初始值（源码原样）：
 
@@ -67,11 +67,29 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-3cd4cbcb4ed1"></a>
+
+## `NationalSpire.CareerOpeningWorld.JoiningClub — public ClubSelection? JoiningClub`
+
+来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-b27bdb5e6e94"></a>
 
 ## `NationalSpire.CareerOpeningWorld.ClubName — public string ClubName`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -89,7 +107,7 @@
 
 ## `NationalSpire.CareerOpeningWorld.ClubCountry — public string ClubCountry`
 
-来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -107,7 +125,7 @@
 
 ## `NationalSpire.CareerOpeningWorld.ClubSponsor — public string ClubSponsor`
 
-来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -125,7 +143,7 @@
 
 ## `NationalSpire.CareerOpeningWorld.Prepare(NationalSpire.CareerData, System.Func<System.Threading.Tasks.Task>) — internal async Task Prepare(CareerData d, Func<Task> yieldFrame)`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)；[`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, System.Func<NationalSpire.CareerData, NationalSpire.CareerOpeningWorld, System.Threading.Tasks.Task>?)`](Coop/CoopRuntime.cs.md#symbol-c279dbe53a7e)
 
@@ -150,7 +168,7 @@
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`nation.ExtraProgress.Remove(i.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: nation.ExtraProgress.Remove(i.Id);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`nation.Progress.Remove(i.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: nation.Progress.Remove(i.Id);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`levels.TryGetValue(i.Id, out int level)`；返回值紧邻使用处：`IfStatementSyntax: if (levels.TryGetValue(i.Id, out int level)) { nation.Indicators[i.Id] = Math.Clamp(level,0,9); nation.Progress.Remove(i.Id); nation.ExtraProgress.Remove(i.Id); }`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Levels.TryGetValue(nation.Country, out var levels)`；返回值紧邻使用处：`IfStatementSyntax: if (Levels.TryGetValue(nation.Country, out var levels))                 foreach (var i in NationalDevelopment.All)                     if (levels.TryGetValue(i.Id, out int level)) { nation.Indicators[i.Id] = Math.Clamp(level,0,9); nation.Progress.Remove(i.Id); nation.ExtraProgress.Remove(i.Id); }`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Levels.TryGetValue(nation.Country, out var levels)`；返回值紧邻使用处：`IfStatementSyntax: if (Levels.TryGetValue(nation.Country, out var levels))                  foreach (var i in NationalDevelopment.All)                      if (levels.TryGetValue(i.Id, out int level)) { nation.Indicators[i.Id] = Math.Clamp(level,0,9); nation.Progress.Remove(i.Id); nation.ExtraProgress.Remove(i.Id); }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.Posts.Where(p => p.Day < d.Day)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var post in d.Posts.Where(p => p.Day < d.Day)) post.AiPending = false;`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`d.Life.RandomEvents.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Life.RandomEvents.Clear();`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`d.Matches.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: d.Matches.Clear();`

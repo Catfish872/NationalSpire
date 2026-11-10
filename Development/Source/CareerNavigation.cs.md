@@ -175,7 +175,7 @@ private Label _breadcrumb = null!;
 
 来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.GroupBubble(string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>?)`](GroupChatScreen.cs.md#symbol-870e7cca58c0)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.HomeIdentity(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerDashboard.cs.md#symbol-69636991bb5e)；[`NationalSpire.CareerScreen.OpenMention(Godot.Variant)`](MentionScreen.cs.md#symbol-1c66c471dc01)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)；[`NationalSpire.CareerScreen.RosterMember(NationalSpire.CareerData, NationalSpire.OwnedClubState, Godot.VBoxContainer, string, string, bool)`](ClubRosterScreen.cs.md#symbol-8191d4b2f80f)；[`OpenProfile()`](PrivateMemoryScreen.cs.md#symbol-352189880dd2)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-32f50e941fcb)；[`Select(string)`](CareerDashboard.cs.md#symbol-27f3e188a261)；[`ShowSavedCard()`](CharacterCardScreen.cs.md#symbol-4764de5dd941)
+**调用者：** [`NationalSpire.CareerScreen.AddProfileCards(NationalSpire.CareerData, Godot.GridContainer, System.Collections.Generic.IEnumerable<NationalSpire.CareerPerson>)`](CareerListCache.cs.md#symbol-13c7d56a75c4)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.BoardLine(Godot.Container, NationalSpire.CareerData, int, string, string, string, string?, bool)`](CareerBoardsScreen.cs.md#symbol-7d1cd449d003)；[`NationalSpire.CareerScreen.GroupBubble(string, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>?)`](GroupChatScreen.cs.md#symbol-870e7cca58c0)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.HomeIdentity(NationalSpire.CareerData, Godot.VBoxContainer)`](CareerDashboard.cs.md#symbol-69636991bb5e)；[`NationalSpire.CareerScreen.OpenMention(Godot.Variant)`](MentionScreen.cs.md#symbol-1c66c471dc01)；[`NationalSpire.CareerScreen.PersonLink(NationalSpire.CareerData, string, string, int)`](CareerAvatars.cs.md#symbol-89d5865e1272)；[`NationalSpire.CareerScreen.RenderWeeklyDetail(NationalSpire.CareerData)`](WeeklyScreen.cs.md#symbol-b3f0ffc5fb7d)；[`NationalSpire.CareerScreen.RosterMember(NationalSpire.CareerData, NationalSpire.OwnedClubState, Godot.VBoxContainer, string, string, bool)`](ClubRosterScreen.cs.md#symbol-8191d4b2f80f)；[`OpenProfile()`](PrivateMemoryScreen.cs.md#symbol-62a9132d4681)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-c7b37568ec95)；[`Select(string)`](CareerDashboard.cs.md#symbol-0f1435c9b701)；[`ShowSavedCard()`](CharacterCardScreen.cs.md#symbol-03c41b948782)
 
 **调用：** [`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；`Godot.CanvasItem.Hide()`
 
@@ -240,9 +240,9 @@ private Label _breadcrumb = null!;
 
 来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`Select(string)`](CareerDashboard.cs.md#symbol-27f3e188a261)
+**调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Profiles(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-70740adc3b48)；[`Select(string)`](CareerDashboard.cs.md#symbol-0f1435c9b701)
 
-**调用：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`SelectFilter()`](CareerNavigation.cs.md#symbol-ca48970cbdcc)
+**调用：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)；[`SelectFilter()`](CareerNavigation.cs.md#symbol-d1a335491580)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._scroll`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerScreen.Visit(System.Action)`；`SelectFilter()`
 
@@ -258,7 +258,7 @@ private Label _breadcrumb = null!;
 - `_scroll.ScrollVertical` = `0`
 - `_tab` = `"选手档案"`
 
-<a id="symbol-ca48970cbdcc"></a>
+<a id="symbol-d1a335491580"></a>
 
 ## `SelectFilter() — void SelectFilter()`
 
@@ -285,7 +285,7 @@ private Label _breadcrumb = null!;
 
 来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BeginClubDraft()`](OwnedClubScreen.cs.md#symbol-09bdfebb252f)；[`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.ClubAffiliationLink(NationalSpire.CareerData, NationalSpire.CareerClub?, bool)`](ProfileScreen.cs.md#symbol-144ebef36b30)；[`NationalSpire.CareerScreen.OpenCeremony()`](CeremonyScreen.cs.md#symbol-f5db35fa605b)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)；[`Select(string)`](CareerDashboard.cs.md#symbol-27f3e188a261)
+**调用者：** [`NationalSpire.CareerScreen.BeginClubDraft()`](OwnedClubScreen.cs.md#symbol-09bdfebb252f)；[`NationalSpire.CareerScreen.Ceremony(NationalSpire.CareerData)`](CeremonyScreen.cs.md#symbol-4a515aec3125)；[`NationalSpire.CareerScreen.ClubAffiliationLink(NationalSpire.CareerData, NationalSpire.CareerClub?, bool)`](ProfileScreen.cs.md#symbol-144ebef36b30)；[`NationalSpire.CareerScreen.OpenCeremony()`](CeremonyScreen.cs.md#symbol-f5db35fa605b)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)；[`Select(string)`](CareerDashboard.cs.md#symbol-0f1435c9b701)
 
 **调用：** [`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 
@@ -351,7 +351,7 @@ private Label _breadcrumb = null!;
 
 来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`LeaveEditor()`](CharacterCardScreen.cs.md#symbol-fcef6453b877)；[`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)
+**调用者：** [`LeaveEditor()`](CharacterCardScreen.cs.md#symbol-198a7f072dc9)；[`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)
 
 **调用：** [`NationalSpire.CareerScreen.ApplyLocation(NationalSpire.CareerScreen.Location)`](CareerNavigation.cs.md#symbol-326019f9e7f5)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.ClosePrivateMessages()`](PrivateMessageScreen.cs.md#symbol-eb21fd76632c)；[`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`](PrivateMessageScreen.cs.md#symbol-3ff4e47d4271)；[`NationalSpire.CareerScreen.OpenRandomEvent(string)`](RandomEventScreen.cs.md#symbol-b6a9dfbe8e4f)；[`NationalSpire.CareerScreen.RememberTab()`](CareerNavigation.cs.md#symbol-217738bbaf70)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.RestoreGroupScroll(string, int)`](GroupChatScreen.cs.md#symbol-b8810762e549)；[`NationalSpire.CareerScreen.RestoreScrollAsync(int, int)`](CareerScreen.cs.md#symbol-9df94d88557a)；[`NationalSpire.CareerScreen.ScrollChatTo(int)`](ChatHistoryScreen.cs.md#symbol-b728511cec65)；[`NationalSpire.CareerScreen.SelectGroup(string, int)`](GroupChatScreen.cs.md#symbol-72d02215d0db)；`System.Collections.Generic.Stack<T>.TryPop(out T)`
 

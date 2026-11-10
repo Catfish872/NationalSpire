@@ -6,6 +6,8 @@ public sealed class CareerOpeningWorld
     public int Season { get; set; } = 1;
     public Dictionary<string, Dictionary<string,int>> Levels { get; set; } = [];
     public string ClubMode { get; set; } = "";
+    public sealed record ClubSelection(string Id,string Name,string Country);
+    public ClubSelection? JoiningClub { get; set; }
     public string ClubName { get; set; } = "";
     public string ClubCountry { get; set; } = "";
     public string ClubSponsor { get; set; } = "";

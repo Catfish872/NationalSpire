@@ -966,7 +966,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)；[`NationalSpire.CareerScreen.SyncDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-4103852c245a)；[`NationalSpire.DateSceneMemories.Delete(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-a32b756f581f)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)；[`NationalSpire.CareerScreen.SyncDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-4103852c245a)；[`NationalSpire.DateSceneMemories.Delete(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-a32b756f581f)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)
 
 **调用：** [`NationalSpire.DateSceneAssetStore.Hash(byte[])`](DateSceneAssets.cs.md#symbol-e8871d339d39)；[`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；`System.IO.Path.Combine(string, string)`；`System.Text.Encoding.GetBytes(string)`
 
@@ -988,7 +988,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
 
 **调用：** [`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`](JsonText.cs.md#symbol-3f401a852f9d)；`System.IO.File.Exists(string?)`；`System.IO.File.OpenRead(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
@@ -1012,7 +1012,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)
 
 **调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Clear()`
 
@@ -1058,7 +1058,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-75e4e13cfab0)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
+**调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
 
 **调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.FileStream.FileStream(string, System.IO.FileMode, System.IO.FileAccess, System.IO.FileShare)`；`System.IO.Path.GetDirectoryName(string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(System.IO.Stream, TValue, System.Text.Json.JsonSerializerOptions?)`
 
@@ -1092,7 +1092,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DeleteDateDiaryDialog(NationalSpire.CareerData, string, NationalSpire.DateDiary, NationalSpire.DateSceneMemory?)`](DateDiaryScreen.cs.md#symbol-d6865c262849)；[`Removed()`](DateDiaryScreen.cs.md#symbol-a53845b89ff9)
+**调用者：** [`NationalSpire.CareerScreen.DeleteDateDiaryDialog(NationalSpire.CareerData, string, NationalSpire.DateDiary, NationalSpire.DateSceneMemory?)`](DateDiaryScreen.cs.md#symbol-d6865c262849)；[`Removed()`](DateDiaryScreen.cs.md#symbol-2f8eab9f5c80)
 
 **调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.IDateSceneExtension.DeleteMemory(NationalSpire.CareerData, string)`](DateSceneExtensions.cs.md#symbol-de17d2b01e2b)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.IO.File.Delete(string)`
 

@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`Commit()`](CareerLibraryScreen.cs.md#symbol-fbccab45f950)；[`Finish()`](CareerLibraryScreen.cs.md#symbol-d762082a415c)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Button.Button()`；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GrabFocus()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.LineEdit.SelectAll()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.StyleBoxFlat.SetBorderWidthAll(int)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`
+**调用：** [`Commit()`](CareerLibraryScreen.cs.md#symbol-60cd55e373bd)；[`Finish()`](CareerLibraryScreen.cs.md#symbol-bf5a66bdeae8)；[`NationalSpire.CareerScreen.Card()`](CareerScreen.cs.md#symbol-1542c756f2eb)；[`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`](DashboardControls.cs.md#symbol-1c4fb2c61c90)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Button.Button()`；`Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.AcceptEvent()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.GrabFocus()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.LineEdit.SelectAll()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.StyleBoxFlat.SetBorderWidthAll(int)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`
 
 **字段、属性、事件及方法组引用：** `Commit()`；`Finish()`；`Fit()`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ButtonStates`；`NationalSpire.CareerScreen.Card()`；`NationalSpire.CareerScreen.DashboardLabel(string, int, Godot.Color, bool)`；`NationalSpire.CareerScreen.NavigationIcon(string)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`
 
@@ -99,13 +99,13 @@
 - `Visible` = `editable`
 - `Visible` = `false`
 
-<a id="symbol-32a849b9ec60"></a>
+<a id="symbol-b7133de311f1"></a>
 
 ## `Fit() — void Fit()`
 
 来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Finish()`](CareerLibraryScreen.cs.md#symbol-d762082a415c)
+**调用者：** [`Finish()`](CareerLibraryScreen.cs.md#symbol-bf5a66bdeae8)
 
 **调用：** `Godot.Control.GetCombinedMinimumSize()`；`Godot.Control.GetThemeConstant(Godot.StringName, Godot.StringName)`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.Mathf.Ceil(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
 
@@ -126,15 +126,15 @@
 
 - `label.CustomMinimumSize` = `new(Math.Min(available,Mathf.Ceil(width)+2),0)`
 
-<a id="symbol-d762082a415c"></a>
+<a id="symbol-bf5a66bdeae8"></a>
 
 ## `Finish() — void Finish()`
 
 来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit()`](CareerLibraryScreen.cs.md#symbol-fbccab45f950)；[`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)
+**调用者：** [`Commit()`](CareerLibraryScreen.cs.md#symbol-60cd55e373bd)；[`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)
 
-**调用：** [`Fit()`](CareerLibraryScreen.cs.md#symbol-32a849b9ec60)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`
+**调用：** [`Fit()`](CareerLibraryScreen.cs.md#symbol-b7133de311f1)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`
 
 **字段、属性、事件及方法组引用：** `Fit()`
 
@@ -148,7 +148,7 @@
 
 - `editing` = `false`
 
-<a id="symbol-fbccab45f950"></a>
+<a id="symbol-60cd55e373bd"></a>
 
 ## `Commit() — async void Commit()`
 
@@ -156,7 +156,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)
 
-**调用：** [`Finish()`](CareerLibraryScreen.cs.md#symbol-d762082a415c)；[`NationalSpire.CareerLibrary.CheckedName(string)`](CareerLibrary.cs.md#symbol-a3506a652e84)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；`Godot.Control.GrabFocus()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.IsInsideTree()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`Finish()`](CareerLibraryScreen.cs.md#symbol-bf5a66bdeae8)；[`NationalSpire.CareerLibrary.CheckedName(string)`](CareerLibrary.cs.md#symbol-a3506a652e84)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；`Godot.Control.GrabFocus()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.IsInsideTree()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `Finish()`；`NationalSpire.CareerLibrary.CheckedName(string)`；`NationalSpire.CareerScreen.Notice(string, bool)`
 
@@ -188,7 +188,7 @@
 
 来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DeleteAsync()`](CareerLibraryScreen.cs.md#symbol-0915f742c2ed)；[`NationalSpire.CareerScreen.ConfirmCareerDeletion(string, int, string, System.Action, System.Func<System.Threading.Tasks.Task>?)`](CareerLibraryScreen.cs.md#symbol-9210e619e828)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
+**调用者：** [`DeleteAsync()`](CareerLibraryScreen.cs.md#symbol-8515ac0a1b17)；[`NationalSpire.CareerScreen.ConfirmCareerDeletion(string, int, string, System.Action, System.Func<System.Threading.Tasks.Task>?)`](CareerLibraryScreen.cs.md#symbol-9210e619e828)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
 **调用：** [`NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`](CareerLibrary.cs.md#symbol-c8ee3532fd85)；[`NationalSpire.CareerLibrary.Export(NationalSpire.CareerData, byte[]?, byte[]?)`](CareerLibrary.cs.md#symbol-6f1ccfef974f)；[`NationalSpire.CareerLibrary.ExportDesktop(string, byte[])`](CareerLibrary.cs.md#symbol-67e3d9bcf4e6)；[`NationalSpire.CareerLibrary.Import(string, byte[])`](CareerLibrary.cs.md#symbol-b347de421d96)；[`NationalSpire.CareerLibrary.List(string)`](CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Close()`](CareerScreen.cs.md#symbol-80dfd99fda3e)；[`NationalSpire.CareerScreen.ConfirmCareerDeletion(string, int, string, System.Action, System.Func<System.Threading.Tasks.Task>?)`](CareerLibraryScreen.cs.md#symbol-9210e619e828)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.CareerScreen.OpenFilePicker(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-ff4f80838b9c)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerScreen.ResetNavigation()`](CareerNavigation.cs.md#symbol-870e8f5590bb)；[`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerStore.DeleteCareer(string, string)`](CareerStore.cs.md#symbol-1b17c0b3af7f)；[`NationalSpire.CareerStore.RenameCareer(string, string, string)`](CareerStore.cs.md#symbol-3cdbf04175ae)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.CareerStore.SwitchCareer(string)`](CareerStore.cs.md#symbol-67c415b86d89)；[`NationalSpire.Coop.CoopCoordinator.RenameSaveAsync(string, string)`](Coop/CoopCoordinator.cs.md#symbol-8fb73d8fab79)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](Coop/CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.Coop.CoopScreen.OpenSaved(Godot.Control, string)`](Coop/CoopScreen.cs.md#symbol-ea5fafed6b79)；[`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](Coop/CoopStorage.cs.md#symbol-896c6be28762)；[`NationalSpire.Coop.CoopStorage.ExportArchiveAsync(string)`](Coop/CoopStorage.cs.md#symbol-fc7f730c7e18)；[`NationalSpire.Coop.CoopStorage.ImportArchiveAsync(byte[])`](Coop/CoopStorage.cs.md#symbol-f6efb73a242b)；[`NationalSpire.Coop.CoopStorage.IsArchive(byte[])`](Coop/CoopStorage.cs.md#symbol-4eabc44f08d2)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](Coop/CoopStorage.cs.md#symbol-91a27633a0d4)；[`NationalSpire.Coop.CoopStorage.RenameAsync(string, string)`](Coop/CoopStorage.cs.md#symbol-f57c0209907e)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.GetParent<T>()`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`
 
@@ -307,7 +307,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`DeleteAsync()`](CareerLibraryScreen.cs.md#symbol-0915f742c2ed)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.FindChild(string, bool, bool)`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`DeleteAsync()`](CareerLibraryScreen.cs.md#symbol-8515ac0a1b17)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.FindChild(string, bool, bool)`；`System.Action.Invoke()`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `DeleteAsync()`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpenCareerLibrary()`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`
 
@@ -339,7 +339,7 @@
 - `failure!.Text` = `e is IOException { HResult: unchecked((int)0x80070020) } ? "删除失败：存档文件正在使用，请稍后重试。" : "删除失败：" + e.Message`
 - `failure` = `Text("", 16, new Color("f29b9b"))`
 
-<a id="symbol-0915f742c2ed"></a>
+<a id="symbol-8515ac0a1b17"></a>
 
 ## `DeleteAsync() — async Task DeleteAsync()`
 

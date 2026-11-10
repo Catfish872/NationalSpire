@@ -156,7 +156,10 @@ public partial class CareerScreen
                     select.Select(editions.IndexOf(ceremony));select.ItemSelected+=index=>{_rankSeason=select.GetItemId((int)index);Render();};_content.AddChild(select);
                 }
                 var entries = _board=="赛季排名" ? ceremony?.FullSeason : ceremony?.FullYear;
-                CeremonyRanking(d, entries is {Count:>0}?entries:_board=="赛季排名"?ceremony?.SeasonTop??[]:ceremony?.YearTop??[]);
+                var rows = entries is {Count:>0} ? entries : _board=="赛季排名" ? ceremony?.SeasonTop : ceremony?.YearTop;
+                if (rows is { Count: > 0 }) CeremonyRanking(d,rows);
+                else if (_board=="年度排名") BoardNotice("trophy","年度排名尚未公布","每四个赛季评选一次，汇总这四个赛季的正式比赛表现。");
+                else BoardNotice("trophy","赛季排名尚未公布","赛季结束后，可在这里查看选手在正式比赛中的排名。");
                 if(ceremony!=null) CeremonyCriteria(d,ceremony,_board=="年度排名"); break;
             case "俱乐部排名": case "联赛个人榜":
                 var leagues = d.Esports.Competitions.Where(c=>c.Season==d.Season && c.Kind=="league").ToList();
@@ -164,24 +167,49 @@ public partial class CareerScreen
                 var league = leagues.FirstOrDefault(c=>c.Country==_rankRegion) ?? leagues.FirstOrDefault(c=>c.Country==d.Esports.Country) ?? leagues.FirstOrDefault();
                 foreach (var c in leagues) regions.AddChild(CaptionButton(c.Country,()=>{_rankRegion=c.Country;Render();},c==league));
                 if (league != null) LeagueTable(d,league,_board=="俱乐部排名");
-                else _content.AddChild(Text("本赛季尚无联赛排名",17,_muted));
+                else BoardNotice("flag","本赛季尚无联赛排名","联赛建立后可按赛区查看参赛名单与积分。");
                 break;
             default: FanChart(d); break;
         }
     }
+    private void BoardNotice(string icon, string title, string detail)
+    {
+        var panel = Card(); _content.AddChild(panel);
+        var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); Inner(panel).AddChild(row);
+        row.AddChild(Glyph(icon, 36, _gold));
+        var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(copy);
+        copy.AddChild(Text(title, 24, _ink)); copy.AddChild(Text(detail, 17, _muted));
+    }
+
+    private void BoardLine(Container parent,CareerData d,int place,string name,string context,string value,string? person=null,bool own=false)
+    {
+        var row=new HBoxContainer{MouseFilter=MouseFilterEnum.Ignore};row.AddThemeConstantOverride("separation",16);
+        var rank=DashboardLabel(place.ToString("00"),23,own||place<=3?_gold:_muted);
+        rank.HorizontalAlignment=HorizontalAlignment.Center;rank.VerticalAlignment=VerticalAlignment.Center;
+        var badge=new PanelContainer{CustomMinimumSize=new(56,42),SizeFlagsVertical=SizeFlags.ShrinkCenter,MouseFilter=MouseFilterEnum.Ignore};
+        badge.AddThemeStyleboxOverride("panel",CareerVisuals.Box(place<=3?"393326":"1b303d",place<=3?"8d764a":"3c5362",7,4));row.AddChild(badge);badge.AddChild(rank);
+        if(person!=null)row.AddChild(new CareerAvatar{Art=CareerAvatars.ForPerson(d,person),CustomMinimumSize=new(42,42),SizeFlagsVertical=SizeFlags.ShrinkCenter,MouseFilter=MouseFilterEnum.Ignore});
+        else row.AddChild(Glyph("flag",24,CareerVisuals.Teal));
+        var identity=new VBoxContainer{SizeFlagsHorizontal=SizeFlags.ExpandFill,Alignment=BoxContainer.AlignmentMode.Center,MouseFilter=MouseFilterEnum.Ignore};row.AddChild(identity);
+        identity.AddChild(DashboardLabel(name,19,own?_gold:_ink,true));identity.AddChild(DashboardLabel(context,15,_muted,true));
+        var metric=DashboardLabel(value,20,CareerVisuals.Teal);metric.HorizontalAlignment=HorizontalAlignment.Right;metric.SizeFlagsHorizontal=SizeFlags.ShrinkEnd;row.AddChild(metric);
+        if(person!=null){row.AddChild(Glyph("chevron-right",16,_muted));ActionRow(parent,"Standing_"+place,name,()=>OpenPerson(person),row,66,14,6,"152733",own?"ae9360":"2d434f","213c49");}
+        else {var panel=new PanelContainer();panel.AddThemeStyleboxOverride("panel",CareerVisuals.Box("152733",own?"ae9360":"2d434f",6,12));parent.AddChild(panel);panel.AddChild(row);}
+    }
+
     private void LeagueTable(CareerData d, WorldCompetition c, bool clubs)
     {
         if (clubs)
         {
             _content.AddChild(Text("俱乐部积分：胜3分、平1分、负0分；同分比较个人对决胜场。前二进入洲际杯。",17,_ink));
             int rank=0;
-            foreach (var row in CircuitWorld.TeamTable(c)) _content.AddChild(Text($"{++rank:00}   {CircuitWorld.TeamName(d,c,row.PersonId)}    {row.Points}分    {row.Wins}胜 {row.Draws}平 {row.Losses}负",19,row.PersonId==d.Esports.ClubId?_gold:_ink));
+            foreach(var row in CircuitWorld.TeamTable(c)) BoardLine(_content,d,++rank,CircuitWorld.TeamName(d,c,row.PersonId),$"{row.Wins} 胜   {row.Draws} 平   {row.Losses} 负",$"{row.Points} 分",own:row.PersonId==d.Esports.ClubId);
         }
         else if(c.Modern)
         {
             _content.AddChild(Text("奇数赛季个人表现前二自动进入世界总决赛；其余席位按世界积分和本季表现补齐。",17,CareerVisuals.Teal));
             foreach (var (row,rank) in EsportsWorld.Rankings(c).Take(6))
-                _content.AddChild(PersonLink(d,row.PersonId,$"{rank:00}   {CareerEngine.DisplayName(d,row.PersonId)}   {row.Wins}胜 {row.Losses}负   ↗",36));
+                BoardLine(_content,d,rank,CareerEngine.DisplayName(d,row.PersonId),$"{row.Wins} 胜   {row.Draws} 平   {row.Losses} 负",$"{row.Points} 分",row.PersonId,row.PersonId=="player");
         }
         else LegacyLeagueTable(d,c);
     }

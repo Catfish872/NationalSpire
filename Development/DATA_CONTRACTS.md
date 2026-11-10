@@ -117,7 +117,7 @@ FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。Pr
 
 ## 随机事件频率和公开帖快照
 
-读取旧事件时，显式为 `null` 的 `Seed` 与尚未抽取素材的空字符串共用相同语义。事件页面和抽取素材时的近期去重均可使用该值。
+读取旧事件时，显式为 `null` 的 `Seed` 与尚未抽取素材的空字符串共用相同语义。事件页面和抽取素材时的近期去重均可使用该值。EventOpeningChoice 是界面草稿和首次展开命令的输入，不增加生涯字段。Material 为空沿用随机抽取，People 为空随机抽人、空数组表示单人、有编号表示指定 NPC。手写素材的 Category 为空，背景沿用已有的原文分类与日常背景。旧事件已经保存 Materials 时，以该份资料为准。
 
 CareerLifeState.RandomEventMinDays/RandomEventMaxDays默认7/11，按当前生涯保存；界面整数输入最小为1，最大输入框下界随最小输入框变化，存储类型为Int32。旧JSON缺少字段时采用默认值；旧RandomEventsEnabled字段读取时忽略，下一次保存移除，原先关闭的生涯沿用已存间隔恢复排期。SetFrequency写入两个间隔，删除今天以后State=waiting且Materials、Story、Options均为空的日期记录，从当天按新区间重新安排。当天、已经生成材料或故事、完成和跳过的记录原样保留。日期计算使用Int64，超出游戏Int32日期范围时结束安排。
 
@@ -299,6 +299,7 @@ PrivateInteractionHistory.Capture 的合同快照增加 refillPeople、refillPos
 | CareerMatch / CareerResult / RunEvidence | 排赛、比赛准备、原版证据和结算 | 开赛、转播、历史、战报、荣誉、模型事实；通关与比赛胜负分别保存 |
 | CeremonyAward.Reason / Title | SeasonCeremony.PersonAward、ClubAwards生成；历史值保留 | CeremonyAwards与CreateWeeklyCover通过AwardDescription统一展示；新Reason也交给Close写入荣誉详情。评选公式独立保留在ScoringRules、ClubRules中，文案不参与得分、奖励与并列判定；具体入口见GAME_AND_UI的“颁奖文案与评选依据” |
 | CareerMatch.OpponentPrepared / OpponentWon / OpponentFloor / OpponentSeconds | MatchRules.PrepareOpponent；多人开赛由 CoopRules.Start 生成 | 表示已确定的对手成绩，转播和结算直接读取。更新用时分布不重算已有准备结果，不新增个人速度字段；用时参数和调用关系见 GAME_AND_UI 的“对手成绩与通关用时” |
+| WorldFixture.HomeParticipants / AwayParticipants | NPC个人赛事由 CircuitWorld.CooperativeRoster 首次同时确定两侧；正式赛果沿 SeasonCeremony.RecordParticipants 记录 | 每侧最多当前合作队伍人数个编号，双方名单互斥；预览、模拟、结算、关注及荣誉共用，随原生涯和共同世界保存。旧正式名单保留；没有新增独立缓存或文件 |
 | Character / CharacterId | 人物、GameBridge.ReadEvidence、结算 | 界面可以显示皮肤名称；发给 AI 的职业转换由 CharacterIdentity 处理 |
 | CommunityPost 原始主题/事实/赛果与正文/Replies | 事件发布、玩家提交、模型应用 | 原始事实与模型正文分开；parentId 指向同帖上文 |
 | CommunityPost / CommunityReply.AudienceScore | Remember → CommunityVotes.Update | 可空 Int32 受众原始净赞数；沿用 JSON 键 AiNetScore。界面按主楼/NPC 评论乘6、玩家评论乘16，再加手动票 |
@@ -318,3 +319,7 @@ CommunityVotes.Update每次建立人物编号字典、评论编号字典、父�
 内容通过Remember更新，重复计算相同输入数值稳定。AudienceScore以Int64按主楼/NPC评论乘6、玩家评论乘16；Score再加有效玩家票。SetVote按个人视图LocalHumanId识别玩家，单人取player；-1/0/+1分别点踩、取消、点赞，相同选择返回false，实际变化递增VoteRevision。程序评分变化也递增VoteRevision。调用者沿原保存入口提交，界面读取只计算分数之和。
 
 具体读写引用见 Source 中的字段与属性引用。索引记录引用事实，不能仅凭“引用了字段”推断该函数会修改字段；写入条件和先后顺序以流程与函数体为准。
+
+## 开局个人资料
+
+CareerOpeningPlayer.Fans 留空沿用原始关注数 28，填写 0 表示零关注。单人生成时写入 CareerData.Fans。房主创建与队员首次加入均经 CoopRules.ApplyOpening 复制到对应成员，房间同步与重连读取该成员的 Fans。

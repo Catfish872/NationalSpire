@@ -56,6 +56,7 @@ public sealed partial class CoopCoordinator : IDisposable
             OwnedClubs.RepairContractRoster(World.World, World.Members.Select(m => m.Life.Mailbox));
             OwnedClubs.EnsureMarket(World.World);
             CircuitPeople.Replenish(World.World);
+            if (World.World.Esports.Competitions.Any(c => c.Season == World.World.Season && c.Modern)) CircuitWorld.EnsureOpenEvents(World.World);
             EsportsWorld.ClearInvalidRegistrations(World.World);
             EsportsWorld.RefreshLeagueMatches(World.World);
             PlayerIdentity.Ensure(World.World);
@@ -181,6 +182,7 @@ public sealed partial class CoopCoordinator : IDisposable
             if (wire.Kind is "diagnostics-request" or "diagnostics-part" or "diagnostics-done") { ReceiveDiagnostic(sender, wire); return; }
             if (wire.Kind == "private-chunk") { ReceivePrivate(wire, received); return; }
             if (wire.Kind is "market-query" or "market-answer") { ReceiveMarket(sender, wire); return; }
+            if (wire.Kind is "event-pool-query" or "event-pool-answer") { ReceiveEventPool(sender, wire); return; }
             switch (wire.Kind)
             {
                 case "opening-revise" when !Host && World == null:

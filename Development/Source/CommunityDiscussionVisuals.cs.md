@@ -183,7 +183,7 @@ public const float AnchorY = 32;
 
 **调用者：** [`NationalSpire.CommunityDiscussionLines._Draw()`](CommunityDiscussionVisuals.cs.md#symbol-cbb586cf4902)
 
-**调用：** [`Add(Godot.Rect2, bool)`](CommunityDiscussionVisuals.cs.md#symbol-c78dbefebc25)；`Godot.Rect2.Rect2(float, float, float, float)`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.SortedDictionary<TKey, TValue>.SortedDictionary()`
+**调用：** [`Add(Godot.Rect2, bool)`](CommunityDiscussionVisuals.cs.md#symbol-be2fe26002a7)；`Godot.Rect2.Rect2(float, float, float, float)`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.SortedDictionary<TKey, TValue>.SortedDictionary()`
 
 **字段、属性、事件及方法组引用：** `(float x, int i).i`；`(float x, int i).x`；`(int Begin, int End, int Delta, bool Hole).Begin`；`(int Begin, int End, int Delta, bool Hole).Delta`；`(int Begin, int End, int Delta, bool Hole).End`；`(int Begin, int End, int Delta, bool Hole).Hole`；`Add(Godot.Rect2, bool)`
 
@@ -212,7 +212,7 @@ public const float AnchorY = 32;
 - `start` = `-1`
 - `start` = `x`
 
-<a id="symbol-c78dbefebc25"></a>
+<a id="symbol-be2fe26002a7"></a>
 
 ## `Add(Godot.Rect2, bool) — void Add(Rect2 rect, bool hole)`
 
@@ -299,7 +299,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-47364a1e99ce)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-e35b9baf76e6)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityReplyButton.MainPost`；`P(float, float)`
 
@@ -326,7 +326,7 @@ public const float AnchorY = 32;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-47364a1e99ce"></a>
+<a id="symbol-e35b9baf76e6"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
@@ -437,7 +437,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-07b6a8ac3a79)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.HasFocus()`
+**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-ba2eeb522fe8)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.HasFocus()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CommunityVoteButton.Direction`；`NationalSpire.CommunityVoteButton.MainPost`；`P(float, float)`
 
@@ -467,7 +467,7 @@ public const float AnchorY = 32;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-07b6a8ac3a79"></a>
+<a id="symbol-ba2eeb522fe8"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
@@ -559,7 +559,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-f215e45068ca)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-6904267349fe)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityShareButton.MainPost`；`P(float, float)`
 
@@ -581,7 +581,7 @@ public const float AnchorY = 32;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-f215e45068ca"></a>
+<a id="symbol-6904267349fe"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
@@ -673,7 +673,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-2e6282dcb409)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-49913ad08b35)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityReportButton.MainPost`；`P(float, float)`
 
@@ -695,7 +695,7 @@ public const float AnchorY = 32;
 
 - `A` = `.35f`
 
-<a id="symbol-2e6282dcb409"></a>
+<a id="symbol-49913ad08b35"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 

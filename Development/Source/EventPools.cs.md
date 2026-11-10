@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0BE52E141F322C1514ACE945157224125D6132FFEBFF3AC7BDCC3E5DEC4CC919`。来源：[源码](../../EventPools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1B015278363E82C82C9FDCF26F2D0E53C3911EE74FCAB06E3FABA295BBCAED69`。来源：[源码](../../EventPools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -183,7 +183,7 @@ public Snapshot? Value;
 
 来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)
+**调用者：** [`ShowCategory()`](EventPoolScreen.cs.md#symbol-ec1758375555)
 
 **调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -251,7 +251,7 @@ public Snapshot? Value;
 
 来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.EventPools.Get(NationalSpire.CareerData)`](EventPools.cs.md#symbol-251ecd73d129)；[`NationalSpire.EventPools.SelectRandom(NationalSpire.AiOptions, System.Collections.Generic.ISet<string>, System.Random)`](EventPools.cs.md#symbol-1c1bd4e75154)
+**调用者：** [`NationalSpire.CareerScreen.LoadEventLibrary(Godot.VBoxContainer, NationalSpire.RandomEventSeed?, System.Action<NationalSpire.RandomEventSeed>)`](EventOpeningScreen.cs.md#symbol-6b8a94f5911f)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.Coop.CoopCoordinator.ReadEventPool(System.Threading.CancellationToken)`](Coop/CoopRandomEvents.cs.md#symbol-191944b9b478)；[`NationalSpire.Coop.CoopCoordinator.ReceiveEventPool(ulong, NationalSpire.Coop.CoopWire)`](Coop/CoopRandomEvents.cs.md#symbol-7d2949d41b65)；[`NationalSpire.EventPools.Get(NationalSpire.CareerData)`](EventPools.cs.md#symbol-251ecd73d129)；[`NationalSpire.EventPools.SelectRandom(NationalSpire.AiOptions, System.Collections.Generic.ISet<string>, System.Random)`](EventPools.cs.md#symbol-1c1bd4e75154)
 
 **调用：** [`NationalSpire.EventPools.Build(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`](EventPools.cs.md#symbol-3077931c8bfc)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`object.ReferenceEquals(object?, object?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.GetOrCreateValue(TKey)`
 
@@ -318,12 +318,12 @@ public Snapshot? Value;
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`replaced.Add(id)`；返回值紧邻使用处：`IfStatementSyntax: if (replaced.Add(id)) daily.AddRange(entries.Select(e => new WorldEvents.Topic(topic.Key, e.Title, e.Detail)));`
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`replaced.Add(id)`；返回值紧邻使用处：`IfStatementSyntax: if (replaced.Add(id)) random.AddRange(entries.Select(e => new RandomEventSeed(category, e.Detail)));`
 - `System.Collections.Generic.HashSet<T>.HashSet()`；输入表达式：`new HashSet<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HashSet<string>()`
-- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`WorldEvents.Topics.Concat(WorldEvents.MatchTopics)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var topic in WorldEvents.Topics.Concat(WorldEvents.MatchTopics))          {              string id = "daily:" + topic.Key;              if (!bank.TryGetValue(id, out var entries)) daily.Add(topic);              else if (replaced.Add(id)) daily.AddRange(entries.Select(e => new WorldEvents.Topic(topic.Key, e.Title, e.Detail)));          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`WorldEvents.Topics.Concat(WorldEvents.MatchTopics)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var topic in WorldEvents.Topics.Concat(WorldEvents.MatchTopics))         {             string id = "daily:" + topic.Key;             if (!bank.TryGetValue(id, out var entries)) daily.Add(topic);             else if (replaced.Add(id)) daily.AddRange(entries.Select(e => new WorldEvents.Topic(topic.Key, e.Title, e.Detail)));         }`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`entries.Select(e => new RandomEventSeed(category, e.Detail))`；返回值紧邻使用处：`ArgumentSyntax: entries.Select(e => new RandomEventSeed(category, e.Detail))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`entries.Select(e => new RandomEventSeed(category.Name, e.Detail))`；返回值紧邻使用处：`ArgumentSyntax: entries.Select(e => new RandomEventSeed(category.Name, e.Detail))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`entries.Select(e => new WorldEvents.Topic(topic.Key, e.Title, e.Detail))`；返回值紧邻使用处：`ArgumentSyntax: entries.Select(e => new WorldEvents.Topic(topic.Key, e.Title, e.Detail))`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`RandomEventSeeds.All.Select(s => new RandomEventSeed(RandomEventSeeds.Category(s), s))`；返回值紧邻使用处：`ArgumentSyntax: RandomEventSeeds.All.Select(s => new RandomEventSeed(RandomEventSeeds.Category(s), s))`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Categories.Where(c => c.Group == "随机事件")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var category in Categories.Where(c => c.Group == "随机事件"))              if (bank.TryGetValue(category.Id, out var entries) && replaced.Add(category.Id))                  random.AddRange(entries.Select(e => new RandomEventSeed(category.Name, e.Detail)));`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Categories.Where(c => c.Group == "随机事件")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var category in Categories.Where(c => c.Group == "随机事件"))             if (bank.TryGetValue(category.Id, out var entries) && replaced.Add(category.Id))                 random.AddRange(entries.Select(e => new RandomEventSeed(category.Name, e.Detail)));`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`bank.TryGetValue(category.Id, out var entries)`；返回值紧邻使用处：`BinaryExpressionSyntax: bank.TryGetValue(category.Id, out var entries) && replaced.Add(category.Id)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`bank.TryGetValue(id, out var entries)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !bank.TryGetValue(id, out var entries)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`daily.Add(topic)`；返回值紧邻使用处：`ExpressionStatementSyntax: daily.Add(topic);`
@@ -349,7 +349,7 @@ public Snapshot? Value;
 
 来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string)`](RandomEvents.cs.md#symbol-605db3348248)
+**调用者：** [`NationalSpire.RandomEvents.Start(NationalSpire.CareerData, string, NationalSpire.EventOpeningChoice?)`](RandomEvents.cs.md#symbol-913aeeb9683c)
 
 **调用：** [`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；`System.Collections.Generic.ICollection<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Random.Next(int)`
 
@@ -373,9 +373,9 @@ public Snapshot? Value;
 
 来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-1be601c844a2)
+**调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-ec1758375555)
 
-**调用：** [`Escape(string)`](EventPools.cs.md#symbol-0a644b406682)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+**调用：** [`Escape(string)`](EventPools.cs.md#symbol-99d8572adf2e)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
 
 **字段、属性、事件及方法组引用：** `Escape(string)`；`NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`
 
@@ -390,7 +390,7 @@ public Snapshot? Value;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0a644b406682"></a>
+<a id="symbol-99d8572adf2e"></a>
 
 ## `Escape(string) — static string Escape(string s)`
 
@@ -418,7 +418,7 @@ public Snapshot? Value;
 
 来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Commit()`](EventPoolScreen.cs.md#symbol-88cc05540b83)
+**调用者：** [`Commit()`](EventPoolScreen.cs.md#symbol-624231f2175f)
 
 **调用：** `NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；`string.IsNullOrWhiteSpace(string?)`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(string)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
@@ -429,7 +429,7 @@ public Snapshot? Value;
 - `NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；输入表达式：`new(fields.Count == 2 ? fields[0] : "", fields[^1])`；返回值紧邻使用处：`ArgumentSyntax: new(fields.Count == 2 ? fields[0] : "", fields[^1])`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(raw)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(raw)) continue;`
 - `string.Replace(string, string?)`；输入表达式：`text.Replace("\r", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: text.Replace("\r", "").Split`
-- `string.Split(char, System.StringSplitOptions)`；输入表达式：`text.Replace("\r", "").Split('\n')`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string raw in text.Replace("\r", "").Split('\n'))          {              line++; if (string.IsNullOrWhiteSpace(raw)) continue;              var fields = new List<string>(); var current = new StringBuilder();              for (int i = 0; i < raw.Length; i++)              {                  char c = raw[i];                  if (c == '\\' && i + 1 < raw.Length && raw[i + 1] is 'n' or '\\' or '｜')                  { c = raw[++i]; current.Append(c == 'n' ? '\n' : c); }                  else if (c == '｜' && fields.Count == 0 && id.StartsWith("daily:")) { fields.Add(current.ToString().Trim()); current.Clear(); }                  else current.Append(c);              }              fields.Add(current.ToString().Trim());              if (fields.Any(string.IsNullOrWhiteSpace) || (id.StartsWith("daily:") && fields.Count != 2))                  throw new ArgumentException($"第 {line} 行：" + (id.StartsWith("daily:") ? "请填写标题｜内容。" : "请填写素材内容。"));              result.Add(new(fields.Count == 2 ? fields[0] : "", fields[^1]));          }`
+- `string.Split(char, System.StringSplitOptions)`；输入表达式：`text.Replace("\r", "").Split('\n')`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string raw in text.Replace("\r", "").Split('\n'))         {             line++; if (string.IsNullOrWhiteSpace(raw)) continue;             var fields = new List<string>(); var current = new StringBuilder();             for (int i = 0; i < raw.Length; i++)             {                 char c = raw[i];                 if (c == '\\' && i + 1 < raw.Length && raw[i + 1] is 'n' or '\\' or '｜')                 { c = raw[++i]; current.Append(c == 'n' ? '\n' : c); }                 else if (c == '｜' && fields.Count == 0 && id.StartsWith("daily:")) { fields.Add(current.ToString().Trim()); current.Clear(); }                 else current.Append(c);             }             fields.Add(current.ToString().Trim());             if (fields.Any(string.IsNullOrWhiteSpace) || (id.StartsWith("daily:") && fields.Count != 2))                 throw new ArgumentException($"第 {line} 行：" + (id.StartsWith("daily:") ? "请填写标题｜内容。" : "请填写素材内容。"));             result.Add(new(fields.Count == 2 ? fields[0] : "", fields[^1]));         }`
 - `string.StartsWith(string)`；输入表达式：`id.StartsWith("daily:")`；返回值紧邻使用处：`BinaryExpressionSyntax: c == '｜' && fields.Count == 0 && id.StartsWith("daily:")`
 - `string.StartsWith(string)`；输入表达式：`id.StartsWith("daily:")`；返回值紧邻使用处：`BinaryExpressionSyntax: id.StartsWith("daily:") && fields.Count != 2`
 - `string.StartsWith(string)`；输入表达式：`id.StartsWith("daily:")`；返回值紧邻使用处：`ConditionalExpressionSyntax: id.StartsWith("daily:") ? "请填写标题｜内容。" : "请填写素材内容。"`

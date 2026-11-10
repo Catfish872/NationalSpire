@@ -92,7 +92,7 @@ public const int Cost = 1200;
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TeamPreparationPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-a5b07c06671a)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
+**调用者：** [`NationalSpire.CareerScreen.TeamPlanState(NationalSpire.CareerData, NationalSpire.WorldCompetition)`](CalendarPlansScreen.cs.md#symbol-566c4f5c9bf3)；[`NationalSpire.CareerScreen.TeamPreparationPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-a5b07c06671a)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -112,7 +112,7 @@ public const int Cost = 1200;
 
 来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData, string)`](TeamPreparationScreen.cs.md#symbol-ddfd88d78cf2)；[`NationalSpire.CareerScreen.TeamPreparationPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-a5b07c06671a)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
+**调用者：** [`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-1eb97a843d59)；[`NationalSpire.CareerScreen.RenderTeamPreparations(NationalSpire.CareerData, string)`](TeamPreparationScreen.cs.md#symbol-ddfd88d78cf2)；[`NationalSpire.CareerScreen.TeamPreparationPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-a5b07c06671a)；[`NationalSpire.TeamPreparations.Buy(NationalSpire.CareerData, string)`](TeamPreparation.cs.md#symbol-440f4ccf2595)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Contains(T)`
 

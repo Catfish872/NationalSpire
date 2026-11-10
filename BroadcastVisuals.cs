@@ -162,12 +162,11 @@ public partial class CareerScreen
     private BroadcastTransition? _pageEffect;
     private void AnimatePage()
     {
-        string location = $"{_tab}:{_personId}:{_postId}:{_worldSection}:{_competitionId}:{_profileFilter}:{_communityFilter}";
+        string location = $"{_tab}:{_personId}:{_postId}:{_worldSection}:{_competitionId}:{_profileFilter}:{_communityFilter}:{_calendarMonth}:{_calendarMode}:{_fixtureScope}:{_fixtureInternational}:{_board}:{_rankRegion}:{_rankSeason}:{_shopPage}";
         _pageTween?.Kill(); _content.Modulate = Colors.White;
         if (_pageEffect != null) _pageEffect.Hide();
         if (_visualLocation == location) return;
         _visualLocation = location;
-        if (EventHub || _tab is "首页" or "日程" or "我的资产" or "生涯生活" or "结算" or "排行榜") return;
         int version = _renderVersion;
         Callable.From(() =>
         {

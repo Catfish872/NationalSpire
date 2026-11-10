@@ -13,7 +13,9 @@ public static class AppearanceLibrary
         public PortraitDesign Design { get; set; } = new();
         public Dictionary<string, Dictionary<string, string>> Outfits { get; set; } = [];
     }
-    private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true), new("charlotte", "夏洛特·赖特", true), new("alili", "阿莉莉", true)];
+    private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true), new("charlotte", "夏洛特·赖特", true), new("alili", "阿莉莉", true),
+        new("magic-ruby","魔法红宝石",true),new("miaoji","喵吉",true),new("akiyama-mizuki","晓山瑞希",true),new("salt-onigiri","盐饭团",true),new("hongcha","红茶",true),
+        new("xiaoya","小雅",true),new("tambourine-squad","铃鼓小队",true),new("fate-defying-oracle","忤逆命运的谕女",true)];
     public static string DirectoryPath => ProjectSettings.GlobalizePath("user://national_spire_portraits/library");
     private static string PathFor(string id) => Path.Combine(DirectoryPath, id + ".json");
     public static Entry[] List(CareerData? data = null)

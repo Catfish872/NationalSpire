@@ -20,10 +20,8 @@ public static class CircuitPeople
             for (int club = 0; club < 6; club++)
             {
                 string id = $"c{country}{club}";
-                if (EsportsWorld.Club(d, id) == null) d.Esports.Clubs.Add(new() { Id = id, Country = nation,
-                    Name = RegionalOrganizations.ClubName(d, nation, id), Color = new[] { "dfb66f", "75c9bc", "8babd8", "cd92ac" }[club % 4],
-                    Motto = new[] { "重视青训，也愿意等待新人成长", "凭稳定成绩争取国际赛场", "喜欢进攻，期待关键比赛的突破", "老将与新人共同争取下一座奖杯" }[club % 4] });
-                var team = EsportsWorld.Club(d, id)!; CareerCommerce.ConfigureClub(d, team, true);
+                var team = EsportsWorld.Club(d,id) ?? EsportsWorld.AddRegionalClub(d,country,club,false);
+                CareerCommerce.ConfigureClub(d, team, true);
                 int count = d.People.Count(p => p.ClubId == id && EsportsWorld.IsProfessional(p));
                 for (int i = count; i < CareerCommerce.ProfessionalCount(d, id); i++) Add(d, $"tour-{id}-{i}", nation, id, i == 5 && team.Identity == "争冠强队" ? "世界顶尖" : "职业选手", i == 5 && team.Identity == "争冠强队" ? 9 : 8);
                 int youth = d.People.Count(p => p.ClubId == id && p.Role == "青训选手");
