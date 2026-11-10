@@ -5,36 +5,26 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private DateSceneView? _dateView;
-    private DateSceneAssets? _dateAssets;
-    private PortraitDesign? _dateDesign;
-    private string _datePerson = "", _dateOffer = "", _dateKey = "", _dateTurn = "", _dateReply = "", _dateState = "", _dateAttachments = "", _dateSource = "";
-    private List<DateSceneLine> _dateLines = [];
+    protected DateSceneView? _dateView;
+    protected DateSceneAssets? _dateAssets;
+    protected PortraitDesign? _dateDesign;
+    protected string _datePerson = "", _dateOffer = "", _dateKey = "", _dateTurn = "", _dateReply = "", _dateState = "", _dateAttachments = "", _dateSource = "";
+    protected List<DateSceneLine> _dateLines = [];
     private List<DateSceneBackground> _dateBackgrounds = [];
     private string _dateBackground = "", _dateInitialBackground = "";
-    private int _dateIndex;
+    protected int _dateIndex;
     private string _dateEditingTurn = "";
     private readonly Dictionary<string, Texture2D> _dateTextures = [];
     private readonly HashSet<string> _dateMissingTextures = [];
     private string _dateTextureWarning = "";
-    private void PromptDateScene(string offer)
-    {
-        string person = _privatePerson; var data = ViewData;
-        var conversation = PrivateMessages.Conversation(data, person);
-        if (_privateGroup.Length > 0 || !conversation.Offers.Any(o => o.Id == offer && DateScenes.Available(data, o, conversation))) return;
-        ShowCareerDialog("进入约会场景", "以视觉小说方式继续这次活动；尚未导入立绘的角色使用默认剪影。", () =>
-        {
-            Callable.From(() => { if (IsInstanceValid(this) && CareerStore.IsCurrent(data)) OpenDateScene(offer); }).CallDeferred(); return true;
-        }, "进入场景", cancelText: "继续私聊");
-    }
-    private DateSceneRequest SceneRequest(bool opening = false) => new()
+    private DateSceneRequest SceneRequest(bool opening = false) => ConfigureDateRequest(new()
     {
         OfferId = _dateOffer, OutfitId = _dateAssets!.OutfitId, Opening = opening, Participants = DateParticipants(),
         DefaultEmotionId = _dateDesign!.DefaultEmotionId,
         Emotions = DateParticipants().First(p => p.PersonId == _datePerson).Emotions,
         GameInvitation = PrivateAttachments.Any(a => a.Kind == DateGames.AttachmentKind),
         Backgrounds = DateSceneBackgrounds.AutomaticChoices(_dateBackgrounds).ToDictionary(b => b.Id, b => b.Description), CurrentBackground = _dateBackground
-    };
+    });
     private void OpenDateScene(string offer, bool inputOnly = false, bool deferReply = false)
         => OpenDateSceneReady(offer, inputOnly, deferReply, null);
     private void OpenDateSceneReady(string offer, bool inputOnly, bool deferReply, Action? ready)
@@ -64,17 +54,24 @@ public partial class CareerScreen
             _dateTurn = _dateReply = _dateState = _dateAttachments = _dateSource = ""; _dateLines = []; _dateIndex = 0;
             _dateEditingTurn = "";
             _dateManualGameInput = inputOnly; _dateInputTurn = "";
-            var view = new DateSceneView { TextSpeed = _dateAssets.TextSpeed, WaitingSprites = [initialTexture],
-                WaitingDefault = initialTexture }; _dateView = view;
+            var view = DateSceneExtensions.NewView(); view.TextSpeed = _dateAssets.TextSpeed; view.WaitingSprites = [initialTexture];
+            view.WaitingDefault = initialTexture; _dateView = view;
             view.Advance = AdvanceDateScene; view.Submit = SendDateScene; view.AddAttachment = () => { if (_dateEditingTurn.Length == 0) PrivateActions(); else Notice("本次修订保留原消息附件；新附件可在下一轮添加。", false); }; view.Settings = DateSceneSettings; view.Exit = DateSceneExitChoices;
             view.ReturnToEdit = EditPreviousDateScene;
             view.EditPrevious = EditPreviousDateScene;
-            view.HistoryText = () => DateScenes.History(PrivateMessages.Conversation(ViewData, _datePerson), _dateOffer, _dateState == "complete" ? _dateTurn : "", _dateIndex, CareerEngine.Name(ViewData), CareerEngine.DisplayName(ViewData, _datePerson));
-            view.HistoryEntries = () => DateScenes.HistoryEntries(PrivateMessages.Conversation(ViewData, _datePerson), _dateOffer, _dateState == "complete" ? _dateTurn : "", _dateIndex, CareerEngine.Name(ViewData), CareerEngine.DisplayName(ViewData, _datePerson));
+            view.HistoryText = () => DateScenes.History(PrivateMessages.Conversation(ViewData, _datePerson), _dateOffer, DateHistoryCursor().Turn, DateHistoryCursor().Index, CareerEngine.Name(ViewData), CareerEngine.DisplayName(ViewData, _datePerson));
+            view.HistoryEntries = () => DateScenes.HistoryEntries(PrivateMessages.Conversation(ViewData, _datePerson), _dateOffer, DateHistoryCursor().Turn, DateHistoryCursor().Index, CareerEngine.Name(ViewData), CareerEngine.DisplayName(ViewData, _datePerson));
             view.DeleteHistoryReply = id => DeleteDateHistoryReply(_datePerson, _dateOffer, id);
+            view.JumpHistory = JumpDateHistory;
             view.Blocked = () => _dialogOverlay != null || ChatModelPickerOpen; view.Tick = TickDateScene;
-            view.RetryStop = () => PrivateCommand(PrivateMessages.Conversation(ViewData, _datePerson).Turns.Any(t => t.Status is "queued" or "sending") ? "dm-stop" : "dm-retry", new());
+            view.RetryStop = () =>
+            {
+                bool sending = PrivateMessages.Conversation(ViewData, _datePerson).Turns.Any(t => t.Status is "queued" or "sending");
+                PrivateCommand(sending ? "dm-stop" : "dm-retry", sending ? new() : new() { Scene = SceneRequest() });
+            };
             _stage.AddChild(view); view.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); view.Editor.Text = _privateInput!.Text;
+            DateViewOpened();
+            _dateHistoryReturn = view.AddSceneAction("返回当前进度", "DateHistoryReturn", ReturnFromDateHistory); _dateHistoryReturn.Hide();
             Button? modelButton = null;
             modelButton = view.AddInputAction("DateModelButton", AffectionArt.Texture("chat-model"), () => ShowChatModelPicker(modelButton!, "private"), "切换私聊和约会使用的模型方案");
             ConfigureModelPermission(modelButton);
@@ -108,7 +105,7 @@ public partial class CareerScreen
         }
         catch (Exception e) { CloseDateScene(); Notice("打开约会场景失败：" + e.Message, true); }
     }
-    private void CloseDateScene()
+    protected void CloseDateScene()
     {
         var resume = _dateRunResume; _dateRunResume = null;
         try { ReleaseDateSceneView(); }
@@ -124,6 +121,8 @@ public partial class CareerScreen
     private void ReleaseDateSceneView()
     {
         SaveDateMemory();
+        DateViewClosing();
+        _dateHistoryTurn = null; _dateHistoryLines = []; _dateHistoryReturn = null;
         if (_dateView != null && IsInstanceValid(_dateView))
         {
             if (_datePerson.Length > 0)
@@ -155,7 +154,8 @@ public partial class CareerScreen
         var gap2 = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(gap2); row.MoveChild(gap2, 3);
         foreach (string state in new[] { "font_color", "font_hover_color", "font_pressed_color", "font_focus_color" }) resume.AddThemeColorOverride(state, Colors.Black);
     }
-    private void LeaveDateScene(bool end)
+    protected virtual void LeaveDateScene(bool end) => CompleteDateLeave(end);
+    protected void CompleteDateLeave(bool end, Action? finished = null)
     {
         if (_dateView == null || _dateAssets == null) return;
         try
@@ -163,7 +163,11 @@ public partial class CareerScreen
             if (_dateState == "complete") _dateAssets.Bookmarks[_dateOffer] = new() { Turn = _dateTurn, ReplyHash = _dateReply, Index = _dateIndex };
             DateSceneAssetStore.Save(ViewData, _datePerson, _dateAssets);
             PrivateCommand(end ? "dm-date-end" : "dm-date-pause", new() { Offer = _dateOffer }, () =>
-            { SaveDateMemory(end); _cancelDialog?.Invoke(); CloseDateScene(); RefreshPrivateChat(); });
+            {
+                SaveDateMemory(end);
+                if (finished != null) finished();
+                else { _cancelDialog?.Invoke(); CloseDateScene(); RefreshPrivateChat(); }
+            });
         }
         catch (Exception e) { _dateView.Status.Text = "保存约会状态失败：" + e.Message; }
     }
@@ -184,6 +188,7 @@ public partial class CareerScreen
     private void TickDateScene()
     {
         if (_dateView == null || _dateAssets == null) return;
+        if (!BeforeDateTick()) return;
         var data = ViewData;
         TickDateGameActions();
         if (_dateView.InputMode && !RefreshDateParty()) return;
@@ -191,6 +196,11 @@ public partial class CareerScreen
         string speaker = _dateView.SpeakerId.Length > 0 ? _dateView.SpeakerId : _datePerson;
         _dateView.Relationship(PrivateMessages.Relation(data, speaker), speaker);
         var c = PrivateMessages.Conversation(data, _datePerson);
+        if (_dateHistoryTurn != null)
+        {
+            if (!c.Turns.Contains(_dateHistoryTurn) || _dateHistoryTurn.ReplyDeleted && _dateHistoryLines.Count > 0) ReturnFromDateHistory();
+            return;
+        }
         SyncDateMemory();
         _dateView.EditPreviousButton.Disabled = _dateEditingTurn.Length > 0 || !CanEditPreviousDate(c.Turns.LastOrDefault());
         if (!c.Offers.Any(o => o.Id == _dateOffer && DateScenes.Available(data, o, c))) { SaveDateMemory(c.DateSceneStates.GetValueOrDefault(_dateOffer) == "ended"); CloseDateScene(); return; }
@@ -251,6 +261,7 @@ public partial class CareerScreen
             return (CareerEngine.DisplayName(ViewData, speaker), PartyTexture(speaker, line.Emotion));
         });
         CaptureDateMemory();
+        DateLineShown(line);
     }
     private void ShowDateLine()
     {
@@ -258,6 +269,7 @@ public partial class CareerScreen
         ApplyDateBackground();
         if (_dateIndex >= _dateLines.Count)
         {
+            DatePlaybackInterrupted();
             if (_dateRunResume == null && DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer) is { } game) ShowDateGameChoices(game);
             else ShowDateInput();
         }
@@ -267,6 +279,7 @@ public partial class CareerScreen
             string speaker = _datePartyArt.ContainsKey(line.Speaker) ? line.Speaker : _datePerson;
             _dateView.ShowRoundLine(_dateLines, _dateIndex, CareerEngine.DisplayName(ViewData, speaker), PartyTexture(speaker, line.Emotion));
             _dateView.Streaming(_dateState == "streaming");
+            DateLineShown(line);
             CaptureDateMemory();
             if (_dateTextureWarning.Length > 0) _dateView.Status.Text = _dateTextureWarning;
         }
@@ -279,25 +292,36 @@ public partial class CareerScreen
         bool attend = offer.State == "已确认" && PrivateAppointments.Date(data, offer) == data.Day;
         if (!DateSceneParty.Eligible(data, offer, conversation) || !(attend || DateScenes.Available(data, offer, conversation))) return;
         var button = new DateChoiceButton { Name = "ExclusiveDate", Caption = conversation.DateSceneStates.GetValueOrDefault(offer.Id) == "paused" ? "继续约会" : "专属约会", CustomMinimumSize = new(150, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter };
-        button.Pressed += () =>
+        button.Pressed += () => { if (attend) ChooseDateAttendance(offer.Id, true); else OpenDateScene(offer.Id); };
+        row.AddChild(button);
+    }
+    private void ChooseDateAttendance(string offer, bool scene)
+    {
+        string person = _privatePerson; var data = ViewData;
+        ShowAttendanceChoices(scene, visible => PrivateCommand("dm-attend",new() { Offer=offer,Part=visible?"public":"",SceneAttendance=scene },()=>
         {
-            if (!attend) { PromptDateScene(offer.Id); return; }
-            ShowCareerDialog("专属约会", "选择这次赴约的公开方式。", () => true, "取消", box =>
+            _cancelDialog?.Invoke();
+            if(scene) Callable.From(()=>
             {
+                if(IsInstanceValid(this) && !IsQueuedForDeletion() && CareerStore.IsCurrent(data) && _privatePerson==person && _privateGroup.Length==0) OpenDateScene(offer);
+            }).CallDeferred();
+        }));
+    }
+    private void ShowAttendanceChoices(bool scene, Action<bool> attend)
+    {
+        ShowCareerDialog(scene ? "专属约会" : "直接赴约", scene ? "选择公开方式后进入视觉小说式的约会演出。" : "选择公开方式后会直接完成这次活动。", () => true, "取消", box =>
+        {
                 var choices = new HBoxContainer(); choices.AddThemeConstantOverride("separation", 20); box.AddChild(choices);
                 foreach (bool visible in new[] { false, true })
                 {
                     var choice = new DateChoiceButton { Name = visible ? "DatePublicChoice" : "DatePrivateChoice", Caption = visible ? "公开赴约" : "私密赴约",
                         Subtitle = visible ? "让这次相聚成为公开经历" : "将这次相聚留在彼此之间", Public = visible,
                         CustomMinimumSize = new(290, 150), SizeFlagsHorizontal = SizeFlags.ExpandFill };
-                    choice.Pressed += () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = visible ? "public" : "", SceneAttendance = true },
-                        () => { _cancelDialog?.Invoke(); Callable.From(() => PromptDateScene(offer.Id)).CallDeferred(); });
+                    choice.Pressed += () => attend(visible);
                     choices.AddChild(choice);
                 }
                 var error = Text("", 16, new Color("ee929d")); error.Name = "DateAttendanceError"; error.Hide(); box.AddChild(error);
-            }, showCancel: false);
-        };
-        row.AddChild(button);
+        }, showCancel: false);
     }
     private void SelectDateBackground(string id)
     {
@@ -308,6 +332,7 @@ public partial class CareerScreen
     }
     private void ApplyDateBackground()
     {
+        if (_dateHistoryTurn != null) { ApplyDateHistoryBackground(); return; }
         if (_dateAssets == null) return;
         string id = _dateAssets.Background;
         if (_dateAssets.AutoBackground)
@@ -319,6 +344,7 @@ public partial class CareerScreen
     }
     private void AdvanceDateScene()
     {
+        if (_dateHistoryTurn != null) { AdvanceDateHistory(); return; }
         if (_dateView == null || _dateState is not ("complete" or "streaming") || _dateIndex >= _dateLines.Count) return;
         CaptureDateMemory(); SaveDateMemory();
         // 末尾两段仍可能随标点和长句拆分变化，收到后续句段后再翻动。
@@ -336,8 +362,9 @@ public partial class CareerScreen
         if (_dateView?.InputMode != true || _dateView.HistoryOpen || _dateView.DialogueHidden) return;
         if (_dateEditingTurn.Length > 0)
         {
-            PrivateCommand("dm-date-revise", new() { Entry = _dateEditingTurn, Text = _dateView.Editor.Text }, () =>
+            PrivateCommand("dm-date-revise", new() { Entry = _dateEditingTurn, Text = _dateView.Editor.Text, Scene = SceneRequest() }, () =>
             {
+                DatePlaybackInterrupted(true);
                 _dateManualGameInput = false;
                 _dateEditingTurn = ""; _dateState = "";
                 _dateAssets?.Bookmarks.Remove(_dateOffer);
@@ -354,6 +381,7 @@ public partial class CareerScreen
         && (turn.Status == "failed" || !turn.Scene.Opening);
     private void EditPreviousDateScene()
     {
+        if (_dateHistoryTurn != null) { ConfirmDateHistoryInput(); return; }
         if (_dateView == null || _dateEditingTurn.Length > 0) return;
         var turn = PrivateMessages.Conversation(ViewData, _datePerson).Turns.LastOrDefault();
         if (!CanEditPreviousDate(turn)) return;
@@ -378,6 +406,7 @@ public partial class CareerScreen
             _stage.Resized += FitSettings; scroll.TreeExiting += () => _stage.Resized -= FitSettings; FitSettings();
             var box = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; box.AddThemeConstantOverride("separation", 14); scroll.AddChild(box);
             AddDateMemorySetting(box);
+            AddDateSettings(box);
             AddDateVoiceSettings(box);
             box.AddChild(Button("选择约会立绘与播报口吻", () =>
             {
@@ -398,7 +427,8 @@ public partial class CareerScreen
                             foreach (var p in _datePartyArt) game.Voices[p.Key] = p.Value.Assets.GameVoice;
                             CareerStore.Save(data);
                         }
-                        if (!_dateView.InputMode && _dateLines.Count > 0) ShowDateLine();
+                        if (_dateHistoryTurn != null) ShowDateHistoryPage(notify: false);
+                        else if (!_dateView.InputMode && _dateLines.Count > 0) ShowDateLine();
                     }, () => { }, firstOnly: false);
                 }).CallDeferred();
             }, 360));
@@ -448,7 +478,19 @@ public partial class CareerScreen
             var fade = new HSlider { Name = "DatePanelFade", MinValue = 0, MaxValue = 1, Step = 0, Value = assets.PanelFade, CustomMinimumSize = new(600, 35) }; box.AddChild(fade);
             fade.ValueChanged += value => { assets.PanelFade = value; Apply(); };
             speed.DragEnded += changed => { if (changed) Save(); }; fade.DragEnded += changed => { if (changed) Save(); };
-            box.AddChild(Button("从本轮第一句重看", () => { _dateIndex = 0; ShowDateLine(); _cancelDialog?.Invoke(); }, 240));
+            box.AddChild(Button("从约会开头回放", () =>
+            {
+                var first = PrivateMessages.Conversation(ViewData, person).Turns.FirstOrDefault(turn => turn.Scene?.OfferId == _dateOffer
+                    && (DateHistoryHasInput(turn) || DateHistoryHasReply(turn)));
+                _cancelDialog?.Invoke();
+                if (first != null) JumpDateHistory(first.Id);
+            }, 240));
+            box.AddChild(Button("从本轮第一句重看", () =>
+            {
+                _cancelDialog?.Invoke();
+                if (_dateHistoryTurn != null) JumpDateHistory(_dateHistoryTurn.Id);
+                else { _dateIndex = 0; ShowDateLine(); }
+            }, 240));
         }, showCancel: false);
         if (_dialogOverlay != null) _dialogOverlay.TreeExiting += () => { try { DateSceneAssetStore.Save(data, person, assets); } catch (Exception e) { Notice(e.Message, true); } };
     }

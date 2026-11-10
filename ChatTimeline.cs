@@ -53,18 +53,19 @@ public static class ChatTimeline
     public static string Summaries(CareerData d, IEnumerable<string> people, string excludeGroup = "", string excludePrivate = "")
     {
         var members = people.ToHashSet(); var b = new StringBuilder();
-        void Add(string source, IEnumerable<PrivateSummary> big, IEnumerable<PrivateSummary> small)
+        void Add(string source, IEnumerable<PrivateSummary> big, IEnumerable<PrivateSummary> small, IReadOnlyCollection<ManualChatMemory> manual)
         {
             var large = big.LastOrDefault(); var recent = small.LastOrDefault(s => s.Through > (large?.Through ?? 0));
-            if (large == null && recent == null) return;
+            if (large == null && recent == null && manual.Count == 0) return;
             b.AppendLine("<private_memory>").AppendLine(source);
             if (large != null) b.AppendLine($"长期总结（第{large.From + 1}至{large.Through}轮）：" + large.Text);
             if (recent != null) b.AppendLine($"近期总结（第{recent.From + 1}至{recent.Through}轮）：" + recent.Text);
+            foreach (var memory in manual) b.AppendLine(ManualChatMemories.Heading(d, memory) + "：" + memory.Text);
             b.AppendLine("</private_memory>");
         }
         foreach (var (human, box) in Mailboxes(d).OrderBy(x => x.Key, StringComparer.Ordinal))
             foreach (var c in box.Conversations.Values.Where(c => members.Contains(c.PersonId) && (c.PersonId != excludePrivate || human != GroupChats.Human(d))).OrderBy(c => c.PersonId, StringComparer.Ordinal))
-                Add($"私信知情人：{GroupChats.Name(d, human)}、{GroupChats.Name(d, c.PersonId)}。第一人称总结作者：{GroupChats.Name(d, c.PersonId)}，对象：{GroupChats.Name(d, human)}。", c.BigSummaries, c.SmallSummaries);
+                Add($"私信知情人：{GroupChats.Name(d, human)}、{GroupChats.Name(d, c.PersonId)}。第一人称总结作者：{GroupChats.Name(d, c.PersonId)}，对象：{GroupChats.Name(d, human)}。", c.BigSummaries, c.SmallSummaries, c.ManualMemories);
         foreach (var g in RelatedGroups(d, members, excludeGroup).OrderBy(g => g.Id, StringComparer.Ordinal))
         {
             var summaries = members.Where(p => ChatMembership.Knows(g, p)).SelectMany(p => new[] { true, false }
@@ -74,8 +75,13 @@ public static class ChatTimeline
             {
                 var first = group.First();
                 Add($"群聊《{g.Name}》；知情人：{string.Join("、", group.Select(x => GroupChats.Name(d, x.Person)))}。",
-                    first.Big ? [first.Summary] : [], first.Big ? [] : [first.Summary]);
+                    first.Big ? [first.Summary] : [], first.Big ? [] : [first.Summary], []);
             }
+            var manual = members.Where(p => ChatMembership.Knows(g, p))
+                .SelectMany(p => ManualChatMemories.Known(g, p).Select(m => (Person: p, Memory: m)))
+                .GroupBy(x => (x.Memory.Id, x.Memory.Text));
+            foreach (var group in manual)
+                Add($"群聊《{g.Name}》；知情人：{string.Join("、", group.Select(x => GroupChats.Name(d, x.Person)))}。", [], [], [group.First().Memory]);
         }
         return b.ToString();
     }
@@ -104,6 +110,7 @@ public static class ChatTimeline
         群聊 = g.Name, 说明 = "这是该人物参加的群聊记忆，不是帖子里已经公开的发言。其他人只知道公开说出的部分。", 知情人 = g.Members.Select(id => GroupChats.Name(d, id)).ToArray(),
         大总结 = ChatMembership.Summaries(g, person, true).LastOrDefault(s => g.Turns[s.Through - 1].Day <= day)?.Text,
         小总结 = ChatMembership.Summaries(g, person, false).LastOrDefault(s => g.Turns[s.Through - 1].Day <= day)?.Text,
+        手动记忆 = ManualChatMemories.Known(g, person).Where(m => m.Day <= day).Select(m => new { 日期 = GameCalendar.Text(d, m.Day), 内容 = m.Text }).ToArray(),
         最近记录 = g.Turns.Where(t => t.Status == "complete" && t.Day <= day && ChatMembership.Knows(g, person, t.Order)).TakeLast(5).Select(t => new { 日期 = PrivateAppointments.DateText(d, t.Day), 知情人 = ChatMembership.Readers(g, t.Order).Select(p => GroupChats.Name(d, p)).ToArray(), 发言 = t.Replies.Select(r => new { 人物 = GroupChats.Name(d, r.Author), 内容 = r.Text }), 玩家姓名 = GroupChats.Name(d, t.Sender), 玩家消息 = t.Text }).ToArray()
     };
 

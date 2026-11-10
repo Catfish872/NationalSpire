@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace NationalSpire;
 
-public sealed class DateSceneRequest
+public sealed class DateSceneRequest : ExtensibleData
 {
     public bool GameInvitation { get; set; }
     public string GameContext { get; set; } = "";
@@ -24,15 +24,18 @@ public sealed class DateSceneRequest
     public Dictionary<string, string> Backgrounds { get; set; } = [];
     public string CurrentBackground { get; set; } = "";
 }
-public sealed class DateSceneLine
+public sealed class DateSceneLine : ExtensibleData
 {
     public string Speaker { get; set; } = "";
     public string Text { get; set; } = "";
     public string Emotion { get; set; } = "neutral";
     public bool Narration { get; set; }
+    // The original on-disk name is retained for existing scene pages and diaries.
+    [System.Text.Json.Serialization.JsonPropertyName("SpeechContinuation")]
+    public bool SceneContinuation { get; set; }
     public string Background { get; set; } = "";
 }
-/// <summary>约会视图沿用已赴约的活动；逐句标注只能选择已有句段和差分编号。</summary>
+/// <summary>约会视图沿用已赴约的活动；逐句保存场景与立绘差分。</summary>
 public static class DateScenes
 {
     public const string Protocol = """
@@ -53,7 +56,8 @@ public static class DateScenes
         + "\n历史记录会合并同人物、同情绪的连续片段；本轮输出仍逐句标注。当前场景资料（每人的emotions指向emotionSets中同名的完整差分字典）：" + PromptMaterials(scene)
         + (scene.Participants.Count > 1 ? "\n" + Format(DateSceneParty.Protocol + DateSceneParty.ExchangeExample(scene)) : "")
         + (scene.GameInvitation ? "\n" + Format(DateGames.InvitationProtocol) : "")
-        + (scene.GameContext.Length > 0 ? "\n本轮消息中提供了当前对局编号、最新进程与聊天缘由，承接该进程交流。" + Format("依据玩家提出的具体技巧，使用现有Skill标记记录确实产生的学习。") : "");
+        + (scene.GameContext.Length > 0 ? "\n本轮消息中提供了当前对局编号、最新进程与聊天缘由，承接该进程交流。" + Format("依据玩家提出的具体技巧，使用现有Skill标记记录确实产生的学习。") : "")
+        + (DateSceneExtensions.Current?.Guidance(scene, tools) ?? "");
     }
     private static string PromptMaterials(DateSceneRequest scene)
     {
@@ -77,6 +81,7 @@ public static class DateScenes
             ["backgrounds"] = scene.Backgrounds, ["currentBackground"] = scene.CurrentBackground
         };
         if (singleEmotions != null) { material["defaultEmotion"] = scene.DefaultEmotionId; material["emotions"] = singleEmotions; }
+        DateSceneExtensions.Current?.Materials(scene, material);
         return JsonSerializer.Serialize(material, DateSceneParty.PromptJson);
     }
     public static bool SafeBackgroundId(string id) => id.Length is > 0 and <= 100 && id.All(c => char.IsLetterOrDigit(c) || c is '_' or '-');
@@ -209,8 +214,8 @@ public static class DateScenes
                     line.Emotion = sentenceEmotion;
                     lines.Add(line);
                 }
-                // 显式差分作用于完整句；为显示长度拆出的片段共享该句差分。
-                if (!sentence.Narration) emotion = null;
+                // A Scene/Emotion cue owns its entire text segment. Sentence and
+                // display-length splits retain it until the next explicit cue.
             }
             if (lines.Count > 0 && original.Backgrounds.ContainsKey(background)) { lines[0].Background = background; background = ""; }
             if (lines.Count == 0 && part.Length > 0 && result.Count > 0) result[^1].Text += part;
@@ -230,7 +235,9 @@ public static class DateScenes
             if (narration) { kind = "narration"; emotion = null; }
             else { kind = "dialogue"; emotion = found ?? scene.DefaultEmotionId; }
         }
-        Add(text[at..]); return result;
+        Add(text[at..]);
+        DateSceneExtensions.Current?.ReadSegment(original, fields, result);
+        return result;
     }
     public static string? ReplyFailure(string text) => Regex.IsMatch(text,
         @"我(?:无法|不能)(?:为你|为您)?(?:生成|提供)|NSFW", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
@@ -326,9 +333,28 @@ public static class DateScenes
     public static List<DateSceneLine> Lines(PrivateTurn turn)
     {
         var source = turn.SceneLines.Count > 0 && string.Concat(turn.SceneLines.Select(l => l.Text)) == turn.Reply ? turn.SceneLines : Split(turn.Reply);
-        return JoinNarration(source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine
-        { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" }))
+        var lines = JoinNarration(source.SelectMany(DisplayParts)
             .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList());
+        RestoreSentenceEmotions(lines);
+        return lines;
+    }
+    public static void RestoreSentenceEmotions(IReadOnlyList<DateSceneLine> lines)
+    {
+        for (int i = 1; i < lines.Count; i++)
+            if (lines[i].SceneContinuation && !lines[i].Narration && !lines[i - 1].Narration && lines[i].Speaker == lines[i - 1].Speaker)
+                lines[i].Emotion = lines[i - 1].Emotion;
+    }
+    private static IEnumerable<DateSceneLine> DisplayParts(DateSceneLine line)
+    {
+        var parts = Split(line.Text, line.Narration);
+        return parts.Select((part, index) =>
+        {
+            part.Speaker = line.Speaker; part.Narration |= line.Narration; part.Emotion = line.Emotion;
+            part.Background = index == 0 ? line.Background : ""; part.Extra = line.CopyExtra();
+            part.SceneContinuation = !part.Narration && (line.SceneContinuation || index > 0);
+            DateSceneExtensions.Current?.SplitLine(line, part, index);
+            return part;
+        });
     }
     public static string PromptHistory(PrivateTurn turn, string host)
     {
@@ -342,14 +368,14 @@ public static class DateScenes
                 result.Append("[Scene: narration, Background: ").Append(background).Append(']')
                     .Append(DisplayText(new() { Narration = true, Text = body.ToString() }));
             else result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host)
-                .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim());
+                .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim());
             body.Clear();
         }
         foreach (var line in Lines(turn))
         {
             // 历史恢复真实的说话人/情绪/转场边界；界面自动分页无需重复完整显示标签。
             bool same = current != null && line.Narration == current.Narration && line.Speaker == current.Speaker
-                && (line.Narration || line.Emotion == current.Emotion) && line.Background.Length == 0;
+                && (line.Narration || line.Emotion == current.Emotion && (DateSceneExtensions.Current?.MergeHistory(current, line) ?? true)) && line.Background.Length == 0;
             if (!same) { Flush(); current = line; }
             body.Append(line.Text);
         }

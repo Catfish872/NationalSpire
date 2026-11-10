@@ -40,6 +40,7 @@ public sealed class CareerData
     [System.Text.Json.Serialization.JsonIgnore] public Action<CareerData>? ExternalSave { get; set; }
     [System.Text.Json.Serialization.JsonIgnore] public Func<bool>? ExternalCurrent { get; set; }
     public CameoState Cameos { get; set; } = new();
+    public string SaveName { get; set; } = "";
     public string PlayerAlias { get; set; } = "";
     public string PlayerGender { get; set; } = IdentityGender.Unset;
     public List<string> PlayerNameAliases { get; set; } = [];

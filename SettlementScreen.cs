@@ -26,43 +26,25 @@ public partial class CareerScreen
             approval.Disabled = _multiplayer.HasVoted; actions.AddChild(approval);
             if (_multiplayer.Host) actions.AddChild(Button("取消准备", () => MultiplayerCommand("cancel", _multiplayer.ProposalId), 160));
         }
-        var result = data.Failure?.Result ?? data.Results.LastOrDefault();
+        var result = ReviewRecord(data);
         if (result == null) { AddHeading("尚无比赛结算", "完成一场已报名赛事后，战报会显示在这里。"); return; }
-        if (!pendingFailure && data.PendingSettlementId == result.MatchId) { data.PendingSettlementId = ""; CareerStore.Save(data); }
+        _reviewId = result.MatchId;
         var match = data.Matches.LastOrDefault(m => m.Id == result.MatchId);
         bool draw = result.Outcome == "平局" || match?.Draw == true;
         bool won = result.Outcome == "获胜" || result.Outcome.Length == 0 && (match?.PlayerWon ?? result.Win);
         var accent = draw ? CareerVisuals.Teal : won ? _gold : new Color("a5bcd5");
-        var hero = Card(); hero.Name = "SettlementHero"; hero.AddThemeStyleboxOverride("panel", CareerVisuals.Box(won ? "223039" : "192b3b", accent.ToHtml(false), 12, 26));
-        if (hero is BroadcastPanel panel) panel.Accent = accent;
-        _content.AddChild(hero); var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 30); hero.AddChild(row);
-        row.AddChild(new MatchMedallion { Victory = won, Accent = accent, CustomMinimumSize = new Vector2(180, 190), SizeFlagsVertical = SizeFlags.ShrinkCenter });
-        var intro = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; intro.AddThemeConstantOverride("separation", 10); row.AddChild(intro);
-        intro.AddChild(Text("MATCH RESULT   /   " + result.Event, 16, accent));
-        if (result.Simulated) intro.AddChild(Text("模拟赛果", 18, _gold));
-        intro.AddChild(Text(draw ? "势均力敌" : won ? "赢下这一场" : result.Outcome == "退赛" ? "本场退赛" : "本场失利", 42, _ink));
-        intro.AddChild(Text($"{GameCalendar.Text(data, result.Day)} · {MatchRules.AscensionLabel(result)}", 17, _muted));
-        intro.AddChild(Text(pendingFailure ? "选择重赛，或确认本场成绩。" : draw ? "双方成绩相同，等待下一次交锋。" : won ? "这场胜利，记入你的生涯。" : "本场成绩已记录，赛季仍在继续。", 19, accent));
+        string ownPerformance=MatchRules.Performance(result.Win,result.Floor,result.RunSeconds)
+            + (!result.Win && result.RunSeconds>0 ? " · "+MatchRules.Time(result.RunSeconds) : "");
+        string rivalPerformance=result.Settlement?.OpponentPerformance ??
+            (match!=null ? MatchRules.Performance(match.OpponentWon,match.OpponentFloor,match.OpponentSeconds) : "对手详细成绩未记录");
+        MatchArena(data,result.Event,result.OpponentId,result.Opponent,draw?"平局":won?"胜利":"失败",result.Character,accent,out _,result.Day,
+            playerPerformance:ownPerformance,rivalPerformance:rivalPerformance,source:IsLatestReview(data)?"本场战报":"历史战报");
+        if (!pendingFailure) ReviewPager(data,result);
         RenderTeam();
-        var contenders = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        contenders.AddThemeConstantOverride("h_separation", 18); _content.AddChild(contenders);
-        void Contender(string id, string name, string character, string performance, string detail)
-        {
-            var card = Card(); contenders.AddChild(card); var box = Inner(card);
-            box.AddChild(WithAvatar(data, id, Text(name, 26, id == "player" ? accent : _ink), 72, true));
-            box.AddChild(Text(character, 16, _muted)); box.AddChild(Text(performance, 23, _ink));
-            if (detail.Length > 0) box.AddChild(Text(detail, 16, CareerVisuals.Teal));
-        }
         var evidence = new List<string>();
         if (result.Evidence.FinalHp != null && result.Evidence.MaxHp > 0) evidence.Add($"生命 {result.Evidence.FinalHp}/{result.Evidence.MaxHp}");
         if (result.Evidence.PotionsRecorded) evidence.Add($"剩余药水 {result.Evidence.RemainingPotions.Count} 瓶");
         if (result.Evidence.PotionsUsed != null) evidence.Add($"本局用药 {result.Evidence.PotionsUsed} 次");
-        Contender("player", CareerEngine.Name(data) + (_multiplayer != null ? " · 我的表现" : ""), result.Character, MatchRules.Performance(result.Win, result.Floor, result.RunSeconds)
-            + (!result.Win && result.RunSeconds > 0 ? " · " + MatchRules.Time(result.RunSeconds) : ""), string.Join(" · ", evidence));
-        Contender(result.OpponentId, result.Opponent + (_multiplayer != null ? " · 对方队长" : ""), CareerEngine.Person(data, result.OpponentId)?.Character ?? "", result.Settlement?.OpponentPerformance
-            ?? (match != null ? MatchRules.Performance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds) : "对手详细成绩未记录"), "");
-        string decider = result.Settlement?.Decider ?? match?.Decider ?? "";
-        if (decider.Length > 0) _content.AddChild(Text(decider, 15, _muted));
         if (pendingFailure)
         {
             var choices = Card(); choices.Name = "FailureChoices"; _content.AddChild(choices);
@@ -80,18 +62,47 @@ public partial class CareerScreen
         }
         var rewards = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; rewards.AddThemeConstantOverride("h_separation", 18); _content.AddChild(rewards);
         void Reward(string title, string value, string description)
-        { var card = Card(); rewards.AddChild(card); var box = Inner(card); box.AddChild(Text(title, 16, _muted)); box.AddChild(Text(value, 29, accent)); box.AddChild(Text(description, 14, _muted)); }
+        {
+            var card=new PanelContainer {SizeFlagsHorizontal=SizeFlags.ExpandFill,CustomMinimumSize=new(0,94),TooltipText=description};
+            card.AddThemeStyleboxOverride("panel",CareerVisuals.Box("142633","304a5a",7,22));
+            rewards.AddChild(card);var row=new HBoxContainer(); row.AddThemeConstantOverride("separation",11); card.AddChild(row);
+            row.AddChild(Glyph(title=="本场收入"?"coins":title=="关注变化"?"users-round":"chart-no-axes-combined",20,_muted));
+            row.AddChild(DashboardLabel(title,17,_muted));
+            var amount=Text(value,30,_gold);amount.HorizontalAlignment=HorizontalAlignment.Right;row.AddChild(amount);
+        }
         Reward("本场收入", "+" + CareerMoney.Format(result.Prize), "含本场合同与荣誉奖励");
         Reward("关注变化", $"{result.FansDelta:+0;-0;0}", result.Settlement is { } snapshot ? $"赛后关注 {snapshot.Fans}" : "本场新增关注");
         Reward("选手评分", $"{result.RatingDelta:+0;-0;0}", result.Settlement is { } record ? $"赛后评分 {record.Rating}" : "本场评分变化");
-        foreach (string effect in result.LifeEffects) _content.AddChild(Text(effect, 16, CareerVisuals.Teal));
-        if (result.PlayedAscension > result.Ascension) _content.AddChild(Text($"本场挑战进阶 {result.PlayedAscension} · 挑战奖励 ×{result.RewardMultiplier:0.00}", 16, CareerVisuals.Teal));
-        if (result.WorldImpact.Length > 0 || result.Settlement?.Honors.Count > 0)
+        _content.AddChild(DashboardLabel(IsLatestReview(data)?"本场成绩已记录":"历史战报 · "+GameCalendar.Text(data,result.Day),16,_muted));
+        _content.AddChild(new HSeparator());
+        _content.AddChild(DashboardLabel("详细战报",24,_ink));
+        var report=new HBoxContainer {Name="SettlementReport"}; report.AddThemeConstantOverride("separation",25); _content.AddChild(report);
+        VBoxContainer Column(string title)
         {
-            var card = Card(); _content.AddChild(card); var box = Inner(card); box.AddChild(Text("属于这一场的收获", 23, _gold));
-            if (result.WorldImpact.Length > 0) box.AddChild(Text(result.WorldImpact, 18, _ink));
-            foreach (var honor in result.Settlement?.Honors ?? []) box.AddChild(Text("◆ " + honor, 20, _gold));
+            var column=new VBoxContainer {SizeFlagsHorizontal=SizeFlags.ExpandFill}; column.AddThemeConstantOverride("separation",8);
+            report.AddChild(column); column.AddChild(DashboardLabel(title,19,_gold)); return column;
         }
+        var run=Column("本局记录");
+        run.AddChild(DashboardLabel(GameCalendar.Text(data,result.Day)+" · "+MatchRules.AscensionLabel(result)+(result.Simulated?" · 模拟赛果":""),16,_muted,true));
+        run.AddChild(DashboardLabel(ownPerformance,17,_ink,true));
+        foreach(var item in evidence) run.AddChild(DashboardLabel(item,16,_muted,true));
+        var changes=Column("赛后变化");
+        string decider=result.Settlement?.Decider??match?.Decider??"";
+        if(decider.Length>0) changes.AddChild(DashboardLabel(decider,16,_ink,true));
+        foreach(string effect in result.LifeEffects) changes.AddChild(DashboardLabel(effect,16,CareerVisuals.Teal,true));
+        if(result.PlayedAscension>result.Ascension) changes.AddChild(DashboardLabel($"本场挑战进阶 {result.PlayedAscension} · 挑战奖励 ×{result.RewardMultiplier:0.00}",16,CareerVisuals.Teal,true));
+        if(result.WorldImpact.Length>0) changes.AddChild(DashboardLabel(result.WorldImpact,16,_ink,true));
+        foreach(var honor in result.Settlement?.Honors??[]) changes.AddChild(DashboardLabel("◆ "+honor,17,_gold,true));
+        _settlementMatch=result.MatchId; _settlementCommunity=DashboardLabel("",16,CareerVisuals.Teal,true); changes.AddChild(_settlementCommunity); RefreshSettlementDiscussion(data);
+        changes.AddChild(CaptionButton("查看社区讨论",()=>{
+            var post=CommunityThreads.All(data).FirstOrDefault(p=>p.EventKey=="match"+result.MatchId);
+            if(post!=null) OpenPost(post); else OpenCommunity();
+        }));
+        var review=Column("对局回顾");
+        foreach(var badge in result.Evidence.Badges.Take(6)) review.AddChild(DashboardLabel("◆ "+badge.Name+" · "+badge.Description,16,_ink,true));
+        review.AddChild(DashboardLabel("最近八场 · 到达楼层",16,_muted));
+        review.AddChild(new ResultChart {Results=data.Results.Take(data.Results.IndexOf(result)+1).TakeLast(8).ToList(),
+            CustomMinimumSize=new(0,110),SizeFlagsHorizontal=SizeFlags.ExpandFill});
         _content.AddChild(Text("赛后排名", 24, _gold));
         if (result.Settlement is { } captured)
         {
@@ -118,17 +129,6 @@ public partial class CareerScreen
                     box.AddChild(Text($"第 {encounter.Floor} 层 · {(encounter.Kind == "Boss" ? "BOSS" : "精英")} · {encounter.Name}", 16, _ink));
             }
         }
-        if (result.Evidence.Badges.Count > 0)
-        {
-            var card = Card(); _content.AddChild(card); var box = Inner(card); box.AddChild(Text("对局徽章", 22, _gold));
-            foreach (var badge in result.Evidence.Badges.Take(6)) box.AddChild(Text("◆ " + badge.Name + "   ·   " + badge.Description, 16, _ink));
-        }
-        var chart = Card(); _content.AddChild(chart); var cb = Inner(chart); cb.AddChild(Text("最近八场 · 到达楼层", 19, _gold));
-        cb.AddChild(new ResultChart { Results = data.Results.TakeLast(8).ToList(), CustomMinimumSize = new Vector2(520, 130), SizeFlagsHorizontal = SizeFlags.ExpandFill });
-        _settlementMatch = result.MatchId; _settlementCommunity = Text("", 17, CareerVisuals.Teal); _content.AddChild(_settlementCommunity); RefreshSettlementDiscussion(data);
-        var controls = new HBoxContainer(); controls.AddThemeConstantOverride("separation", 12); _content.AddChild(controls);
-        controls.AddChild(Button("查看社区讨论", () => { var post = CommunityThreads.All(data).FirstOrDefault(p => p.EventKey == "match" + result.MatchId); if (post != null) OpenPost(post); else OpenCommunity(); }, 220));
-        controls.AddChild(Button("继续赛季", () => SwitchTab("首页"), 180));
     }
     private void CompetitionOverview(CareerData data, CompetitionReview review)
     {
@@ -265,8 +265,10 @@ public partial class MatchMedallion : Control
     public Color Accent { get; set; } = CareerVisuals.Gold;
     public override void _Draw()
     {
-        var center = Size / 2;
-        Vector2 P(float x, float y) => center + new Vector2(x, y);
+        float scale=Math.Min(1f,Math.Min(Size.X/162f,Size.Y/162f));
+        DrawSetTransform(Size/2,0,Vector2.One*scale);
+        var center = Vector2.Zero;
+        Vector2 P(float x,float y) => new(x,y);
         DrawCircle(center, 77, new Color(Accent, .07f));
         for (int side = -1; side <= 1; side += 2)
         {

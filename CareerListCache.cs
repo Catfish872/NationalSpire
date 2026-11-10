@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -19,33 +19,12 @@ internal partial class CareerListCache : Control
     {
         get { if (_market == null) { _market = new MarketTerminal(); AddChild(_market); } return _market; }
     }
-    private bool _idle;
-    private string? _glyphs;
-    private int _glyphPosition;
-    private int _iconPosition;
-    private int _relicPosition;
     internal static CareerListCache For(Node menu)
     {
         var existing = menu.GetChildren().OfType<CareerListCache>().FirstOrDefault();
         if (existing != null) return existing;
-        var cache = new CareerListCache { Name = "NationalSpireListCache", Visible = false, Theme = CareerVisuals.CreateTheme(), _idle = true };
+        var cache = new CareerListCache { Name = "NationalSpireListCache", Visible = false, Theme = CareerVisuals.CreateTheme() };
         menu.AddChild(cache); return cache;
-    }
-    public override void _Process(double delta)
-    {
-        // 主菜单空闲时逐帧准备空控件，不读取生涯，不保存，不修改字体资源。
-        if (!_idle || CareerScreen.Current != null || Coop.CoopScreen.Current != null) return;
-        if (!Market.Prepare(2)) return;
-        if (_iconPosition < LifestyleArt.Sections.Length) { LifestyleArt.Icon(LifestyleArt.Sections[_iconPosition++]); return; }
-        if (_relicPosition < CareerRelics.Catalog.Length) { RelicArt.Read(CareerRelics.Catalog[_relicPosition++].Id); return; }
-        _glyphs ??= new string(string.Concat(PromptLibrary.Sections.Select(s => s.DefaultText).Concat(NamePools.CrowdStarts).Concat(NamePools.CrowdEnds)).Distinct().ToArray());
-        if (_glyphPosition < _glyphs.Length)
-        {
-            int length = Math.Min(32, _glyphs.Length - _glyphPosition);
-            CareerVisuals.WarmText(_glyphs.Substring(_glyphPosition, length)); _glyphPosition += length;
-        }
-        else if (Profiles.Count < 36) AddProfile();
-        else { _idle = false; _glyphs = null; SetProcess(false); }
     }
     internal ProfileRow AddProfile()
     {

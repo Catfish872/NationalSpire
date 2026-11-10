@@ -1,4 +1,4 @@
-﻿namespace NationalSpire;
+namespace NationalSpire;
 
 public static class CommunityThreads
 {
@@ -91,6 +91,15 @@ public static class CommunityThreads
     {
         if (post.SeenRevision == post.Revision) return;
         post.SeenRevision = post.Revision; CareerStore.Save(data);
+    }
+    public static void MarkAllRead(CareerData data)
+    {
+        bool changed = false;
+        foreach (var post in data.Posts.Concat(data.SavedThreads).Where(p => p.Revision > p.SeenRevision))
+        { post.SeenRevision = post.Revision; changed = true; }
+        foreach (var issue in data.WeeklyEditions.Where(w => w.Revision > w.SeenRevision))
+        { issue.SeenRevision = issue.Revision; changed = true; }
+        if (changed) CareerStore.Save(data);
     }
     public static int MarkProgramRead(CareerData data)
     {

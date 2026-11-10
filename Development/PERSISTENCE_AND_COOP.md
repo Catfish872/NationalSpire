@@ -9,8 +9,6 @@
 
 联机新建由房主展示 NpcGenerationScreen 并通过 CoopRuntime.Connect 传入临时配置；新世界的玩家姓名经 NpcGeneration.ResolvePlayerName 交给 CoopRules.Create 的 playerName 和 CoopCoordinator 的 name，队伍名称仍保存在共同世界 PlayerAlias。恢复检查点及加入房间继续使用原成员流程。CoopRules.Create 仅接收池与稳定世界 ID，保持规则层独立于本地文件读取。PNG/ZIP 批量导入在 Runtime 使用 NpcGeneration.ImportBatch，协调器首次 Commit 保存世界后提交 Installation，连接失败且尚未持久化时回滚设计绑定。恢复检查点沿旧入口跳过初始配置。共同世界广播所生成人物的性格快照；立绘图片延续本机资产库机制，客机需自行导入对应素材。联机窗口等待异步连接完成，失败时保留配置与文件清单，取消会调用 CancelConnection 并释放临时窗口。用户关闭配置窗口、取消或输入校验失败时当前生涯保持原记录。
 
-
-
 实际比赛的开赛进阶在调用原版开局前随生涯或共同世界保存；接收原版战绩、补结算、确认结果及重赛所读取的字段见 GAME_AND_UI 的原版战绩接收与结算进阶。该读取调整沿用现有保存顺序和文件结构。
 
 单人 GameBridge.StartMatch 的每阶段记录与资源观察沿 Diagnostics.Record 写入既有 matches.jsonl，每条完整写入后刷新，新增生涯保存和广播次数为0。转场或原版资源任务始终等待时，已经写入的阶段和路径保留在设备日志；强制退出后由原 Export/CapturePeerLogs 读取保留文件。StartDiagnostics 的记录范围、资源补丁与实测条件见 GAME_AND_UI 的开局阶段与资源诊断。当前五份比赛日志同时保留比赛、模拟、重赛选择及开局阶段，较早完整记录按同一轮换范围到期。
@@ -25,7 +23,9 @@ CoopSaveEntryPatch 在原版 RunSaveManager.SaveRun(AbstractRoom) 前记录 Shou
 
 随机事件详细诊断由执行模型请求的设备在本机保存，房主代成员执行时保存在房主。RequestPrivateAsync 在 task:event 请求前和请求结束各写入一次完整诊断，原生成、保存和广播次数沿用现有流程。CapturePeerLogs 收集八个固定功能各自最近五份日志、当前世界的比赛兼容条目、随机事件汇总、会话记录及最近五份原版游戏日志全文；现场字段及轮换见 DATA_CONTRACTS 的随机事件诊断记录。
 
-CareerStore.Data 在旧生涯读取及恢复之后调用 Diagnostics.RetainErrors，发生转换时沿已有 Save 保存一次。CareerStore.Save 在 ExternalSave 回调或本地序列化前调用同一入口；主文件和既有备份替换顺序保持原样。旧主文件首次迁移后可能仍在原 .bak 中保留完整错误，下一次正常保存按既有规则覆盖这份备份。Diagnostics.Export 也先调用同一入口，再导出当前生涯与全部日志。
+CareerStore.Data 在旧生涯读取及恢复之后调用 Diagnostics.RetainErrors，发生转换时沿已有 Save 保存一次。CareerStore.Save 在 ExternalSave 回调或本地序列化前调用同一入口；本地保存通过 JsonSerializer.Serialize(Stream, data, Json) 将 UTF-8 JSON 直接写入 .tmp，流关闭后校验现有主文件、保留有效 .bak，再沿 File.Move 覆盖主文件。现有序列化选项、保存锁、ExternalSave 回调、备份和替换顺序保持原样。流式写入减少整份 JSON 字符串及其转换缓冲的临时分配；临时文件创建或最终替换失败时沿原异常路径返回。旧主文件首次迁移后可能仍在原 .bak 中保留完整错误，下一次正常保存按既有规则覆盖这份备份。Diagnostics.Export 也先调用同一入口，再导出当前生涯与全部日志。
+
+CareerStore.Read、CareerLibrary 的列表与 ZIP 导入、DateSceneMemories 的读取与列表统一使用 JsonText.Read。读取器探测最多四字节，默认按 UTF-8 解析；带字节序标记的 UTF-16/UTF-32 内容经 Encoding.CreateTranscodingStream 转为 UTF-8 后交给 JsonSerializer。PrefixStream 将探测时读出的正文接回流前端，兼容 ZIP 条目的顺序读取。原流由调用方关闭，读取过程保持分块处理，完整 JSON 字符串和转码后的整份字节数组均省去。输出继续使用原有 UTF-8 序列化和临时文件替换规则。
 
 CoopJson.PublicBytes 在序列化 CareerData、CoopWorld 或 CoopSnapshot 前调用同一入口；CoopWorld 同时覆盖共同世界及每名成员的 Life.Mailbox 和 Life.RandomEvents。完整广播、检查点、共同生涯导出和 PublicCopy 因而使用相同处理。CoopStorage.Load 先校验原检查点哈希，再转换恢复资料中的长错误，下一次正常保存写入摘要，原检查点保留顺序不变。生涯的 PrivateMemorySources 及群内交互会话也参与检查。长错误归档使用本机文件及已有后台重试，不新增多人消息、保存次数或业务重试；错误原文由所在设备的诊断收集进入队友报告。
 
@@ -42,6 +42,8 @@ CoopCoordinator.StartEvent 接受 event-start 与 event-custom；Current 读取�
 PrivateSnapshot 与 SnapshotEncoder 同时清除共同 World.Life 和其他成员的 RandomEvents；收件人保留自己的故事及材料。四名成员分别编码、解码的隔离检查通过。真实 Steam 跨机延迟及断线重连未在本次实测。关闭进程后未完成事件保留材料供重试；complete 与 Selected 保证已完成事件重复点击只读取结果。
 
 ## 数量购买、会话管理与主动联系
+
+手动记忆沿 CareerScreen.PrivateCommand / GroupCommand → PrivateMessageCommands.Apply / GroupChats.Command → ManualChatMemories.Manage → CareerStore.Save → 成功回调重建列表。新增、编辑、删除每次复用一次原保存；IO 失败保留编辑窗口和内存中的修改，重试携带相同 Id，避免重复条目，重新启动读取成功落盘的版本。联机由 CoopRules 的个人视图执行、Capture / CaptureGroup 合并后提交，私聊归发送者的 Life.Mailbox，群聊归共享 Chats；原收据处理重复网络命令。编辑窗口监听会话错误消息，并在控件退出时解除订阅。
 
 训练完成的 CompletionDay / CompletionOrder 与 CoachTrainingPlan 一起序列化。单人 CareerLife.Advance 调用 ClubCoaching.Advance；多人 AdvanceMembers 在成员视图执行生活结算，Capture 合并 Esports.CoachTraining 和经营者 OwnedClub，并更新共享 Chats.Order。后续完整快照及检查点包含完成位置，界面按所属会话训练编号读取。训练结算复用原保存和广播步骤。双协调器经内存传输与实际磁盘检查点验证房主、客机、重新载入的完成顺序一致；真实 Steam 跨机传输待测。
 
@@ -91,6 +93,12 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 
 在合作存档里仍只举报NPC内容；沿既有dm-arbitrate命令，房主从成员View的权威帖子重建案件，再Capture到申请成员Life.Mailbox。Request与Context随个人信箱过滤；公开ArbitrationRecord及其处罚继续按原Merge进入人物档案。合成房主/客机命令验证目标绑定、权威正文覆盖、回执去重与PrivateSnapshot仅保留收件人信箱。真实联机发送、接收、检查点写盘与断线恢复尚待游戏环境验证；计时及边界见[社区讨论树与回复入口](GAME_AND_UI.md#社区讨论树与回复入口)。
 
+## 可选拓展数据的保存
+
+本体通过 `ExtensibleData` 保存场景请求、台词、回忆轮次与角色素材中的未知 JSON 字段。读写既有存档时保留原键名，复制已解析的可变对象时隔离副本。页面关闭、历史重输与回忆删除通过相应的生命周期钩子通知已注册的扩展。
+
+旧版背景库的图片清单、说明或隐藏项可以单独为空。`DateSceneBackgrounds.ReadUser` 为各个空集合提供默认值，保留其余集合的内容。编辑某一项时沿用现有的临时文件与原子替换写入流程。
+
 ## 多人约会与约会切磋的保存
 
 场景主轮次仍归主联系人信箱。DateSceneInvitations 在受邀者私信完成后写回同一玩家信箱的原活动 Participants；房主 StartPrivate 对 dm-date-invite 使用 Replacement 解析实际受邀者，并将私密分片仅发回发起玩家。DatePartyEffects 的学习及档案变更在原 MergePrivateLearning / PrivateProfileChanges.Merge 中按人物去重合并。SceneLines.Speaker 随现有 CoopPrivateChunk 传递。约会切磋的GameMatchId与GameChatRequest随原Scene保存；本局进度取LiveDateGame写入绑定对局的Snapshot。请求取得队列名额后刷新事实，修订沿原命令、交互撤回及存储顺序执行；额外保存和广播次数为0。游戏切磋仍限定单人生涯。活动选人衣服标记读取当前机器的立绘缓存，展示与窗口缓存均属于本机界面数据。PrivateMessageCommand.ToolMode随原命令发送；开场、重新输入、局内请求与结算续聊、结束和重试保存于排队轮次，加入邀请保存于Replacement指定的受邀者轮次。工具参数在完整返回后进入ToolCalls，格式转换继续在房主原请求处理器执行；新旧协议保持相同的保存与广播节点。旧单人轮次缺少参与列表及 Speaker 时继续用主联系人。
@@ -98,6 +106,8 @@ PrivateCommand / GroupCommand 继续负责发送、交互与已读。已读只�
 约会沿用原 private 提示词、房主快照与本机设置读取入口。场景情绪字典的 emotionSets 引用与连续显示片段的历史标签合并只属于请求组织；人物素材、Scene/SceneLines、聊天原文、保存次数、检查点和广播次数均沿原流程。
 
 约会历史逐轮删除复用 dm-delete 的权威业务提交：单人先由 CareerStore.Save 保存一次；联机继续由主机执行个人信箱命令和现有回执去重，发起客户端在成功回执后 Refresh 取得新视图，再修改本机回忆。普通对话与约会共用 PrivateMessages.Manage，约会清除分句/选项缓存并追溯多人物派生轮次的未确认事项。回忆清理采用 DateSceneMemories.RemoveReply，仅移除同轮回复与画面；关闭录制时仍更新已存文件，追加范围保持原状。Read、Save 和 ForPerson 对现存源轮次的 ReplyDeleted 做删除对齐，保留原文已归档的独立回忆；这也防止一次本机文件写入失败后重新显示已删原文。业务命令与本机回忆文件分步提交，本机写入失败保留源删除结果并在确认框提示重试。世界切换后停止旧回调，迟到成功回执只关闭发起它的确认框。存档结构继续兼容旧版本。
+
+历史重新输入的 dm-date-rewind 同时校验轮次、约会、会话修订号与末条编号。只有确认后构建一次临时生涯事务副本，在副本中逆序撤回；已赴约活动、已结算约战、已接受邀请及仲裁等受保护事项使整笔操作返回错误。单人提交一次 CareerStore.Save，保存异常恢复原引用；多人沿用房主命令事务、个人信箱隔离与回执去重。副本在调用结束后释放，回放点击只保留一段分句列表，确认与回放均保持生成队列静止；发送修改后的文字时才排队。原版游戏进度继续受既有业务保护。
 
 立绘布局继续保存于各人物既有 DateSceneAssets 本机文件。SpriteY 保留旧文件的屏幕坐标方向，DatePortraitPlacement.FromAssets 将其转换为界面中的向上正值；保存时反向转换。当前场景的个人X位移固定为自动站位，旧 SpriteX 字段保留用于历史数据兼容。DateScenePortraitSettings 默认选中所有对象，沿同一写入入口修改本次约会各人的指定数值；选择范围只属于当前设置窗口。单个人物仍按稳定编号独立设置。它追踪实际修改人物，滑动过程只改内存与显示，拖动结束、数字确认、换人及退出时通过 DateSceneAssetStore.Save 原子替换对应文件；失败保留待保存标记并显示提示。世界/本机玩家键变化后停止旧窗口的提交。关闭并重新进入从各自文件恢复。单人及联机各端均为本机显示偏好，业务存档与广播新增次数为0；素材、对话与模型路由沿原模块处理。回忆帧另外冻结个人布局和实际出场名单，播放时恢复当时设置。画面恢复按稳定人物编号复用立绘控件及当前透明度，仅新增或移除名单变化的人物；冻结的好感值直接显示。这些绘制修订沿用既有回忆格式和业务数据。DateCastRoster的最近四次完整发言队列与最近发言人只属于展示层，连续同人显示片段共享一次计数，旁白跳过且保持最近发言人；按本轮文本和已播放下标重建，Clear同时重置队列和最近发言人，AI输入、人物记忆、关系与联机快照保持原契约。
 
@@ -125,10 +135,14 @@ PortraitPackageImport.Read先读取并校验包，图片与导入选择暂存在
 
 CareerStore.Save 首先检查 ExternalSave：多人或专用视图传入时执行该回调，不写入单人默认文件。
 
+CareerStore.Paths 使用 ConditionalWeakTable 将仍在使用的生涯对象绑定到其文件路径。界面和异步调用释放旧生涯后，路径索引允许其完整对象图回收；后台仍持有的对象继续保存到原绑定路径。ReplaceFreshCareer 在新档保存成功后解除旧对象的当前状态与保存权限；保存失败恢复原绑定，迟到的旧请求沿已解除的 ExternalSave 结束。Read 使用流式反序列化；升级备份由 WriteMigrationBackup 写入唯一临时文件，完成后移动到备份路径，冲突与失败保留已有备份。CareerLibrary 的列表与 ZIP 导入也直接从流读取。
+
+社区回复的初次状态保存和队列获取共同位于 ProcessInteractionsAsync 的 try/finally 内。首次 IO 失败也会进入失败状态收尾，并清理 ScheduledInteractions 与已取得的队列租约；相同帖子在 IO 恢复后可重新处理。
+
 普通单人顺序：
 
 1. 进入 Gate，确定传入 CareerData 已绑定的 Paths 文件路径。
-2. 全部生涯序列化为 JSON 字符串，写入同目录 .tmp。
+2. JsonSerializer.Serialize(Stream, data, Json) 将 UTF-8 JSON 直接写入同目录 .tmp，关闭流后进入备份步骤。
 3. 主文件存在时比较已验证的文件长度、修改时间；缓存失效才重新 Read 校验。
 4. 主文件有效时复制到 .bak；损坏 JSON 或结构无效时保留原有正常备份。
 5. 将 .tmp 移动替换主文件，更新已验证标记。

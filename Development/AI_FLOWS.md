@@ -100,8 +100,6 @@ PersonalityLibrary.PromptProfile 在原性格维度上提供所选类别名称�
 
 本轮本地验收对 PrivateMessagePrompts.Compose（普通私聊/多人约会）与 GroupChatPrompts.Compose 的完整消息数组检查共同类别提示词及具体风格提示词同时存在；模型回复品质及真实接口时延留待玩家测试。
 
-
-
 | 请求 | 主要组织入口 | 上游数据 | 输出使用者 |
 | --- | --- | --- | --- |
 | 社区新闻 | AiService.ProcessNewsAsync、AiContext、AiPrompts、AiWireProtocol.Encode | 待发布事件、比赛事实、候选人物、模板、公开记忆 | ApplyNewsResponse 更新原帖与回复，CommunityThreads.Remember 更新任务、记忆和程序评分 |
@@ -429,12 +427,16 @@ Favour 表示目标值，大幅调整进入玩家确认。群聊下方还显示�
 
 ## 记忆引入、保密与排序
 
+手动记忆与自动摘要分别读取：PrivateMessagePrompts.Compose 注入当前私聊的 ManualMemories，GroupChatPrompts.Compose 按成员知情顺序注入本群条目，ChatTimeline.Summaries 收集相关来源及离群快照并注明知情人。PrivateMessages.PublicMemory 与 ChatTimeline.PublicMemory 按录入 Day 过滤未来材料。DateSceneParty.Context 和 PortraitDesign 的角色资料读取同一列表。新增与编辑经过 MemoryRevision / GroupChat.Revision 使旧异步总结失效，原自动总结和合并列表保持独立。手动条目作为参考记忆进入现有完整请求。
+
+`DateScenes.Guidance` 与 `ChatTools` 通过可选的 `IDateSceneExtension` 接收附加提示、回复字段与逐句元数据。默认字段是 Scene、Emotion、Background 和 Speaker。
+
 | 入口 | 来源选择 | 位置与下游 |
 | --- | --- | --- |
 | 私信 ChatTimeline.PrivateHistory | 对话对象参加的其他群；排除当前私信；每个来源最近 5 个完成轮次；日期不超过当前日期 | 与自己的保留原文按 Day、Order 排列；在当前待回复 UserOrder 之前 |
 | 群聊 ChatTimeline.External | 当前群员相关私信、其他相关群；排除当前群 | 与本群记录按时间顺序组织；来源标记人物、群及知情人 |
 | ChatTimeline.RelatedGroups | 当前相关 NPC 所参加的其他群，合并去重；不设置每人最多一个群的限制 | External、Summaries |
-| ChatTimeline.Summaries | 每个相关来源最后一条大总结，以及覆盖终点晚于该大总结的最后一条小总结 | 前部稳定资料；注明来源与第一人称对应人物 |
+| ChatTimeline.Summaries | 每个相关来源最后一条大总结，以及覆盖终点晚于该大总结的最后一条小总结；追加该来源可知的手动记忆 | 前部稳定资料；注明来源、知情人及对应人物 |
 | 社区 ChatTimeline.PublicMemories | 该人物确实参加的群，日期有效 | Persona 使用人物可知记忆；没有参加的群不作为其来源 |
 | CommunityMemorySearch | 公开事实与观点、人物、日期、已生成状态和排除来源 | PrivatePublicContext、社区与周刊资料；各人选择仍分别执行 |
 
@@ -505,3 +507,5 @@ AiWireProtocol沿用原通用字段解析和短编号转换。新闻和互动任
 周刊事实由 WeeklyJournal 在逐日流程中捕获，AiWeekly 分人物介绍与文章阶段完成。PublicationBacklog.Select 先使用原赛前、比赛、Priority、近期题材和日期排序，再进行原题材选择，最后将 RelatedPeople 包含 player 或 HumanIds 的帖子稳定排列在前，按 MaxNewsPosts 截取。相同人物相关帖沿用原排序；其余帖沿用原题材顺序。Compact 和 ProcessNewsAsync 继续将当次超额任务设为 superseded，原七天有效范围、分批生成、失败重试与保存入口继续执行。Select 创建本次候选列表和排序集合，读取最近八篇成品；缓存范围为本次选择。建队生活事实仍由次日 PublishPending 汇总进入这条队列。
 
 加载 Recover 将中断任务恢复到既有可重试状态。多人公共结果由 CoopAi 合并，只提交本任务生成内容，保留期间新增真人回复和其他已完成结果。
+
+现场历史的两个内容委托共用 `CareerScreen.DateHistoryCursor`：历史回放时读取 `_dateHistoryTurn/_dateHistoryIndex`，实时播放读取原轮次与句子位置。`DateScenes.HistoryEntries` 截断到当前句；Q 键与滚轮共用历史窗口，布局完成后滚到该截断结果底部。玩家输入页的索引为 -1，只显示到该轮玩家输入。日记回放继续按自身 `_pages.Take(_index+1)` 的游标提供内容。

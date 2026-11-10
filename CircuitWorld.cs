@@ -150,11 +150,11 @@ public static class CircuitWorld
         c.EntrantClubs.Remove(oldId); c.EntrantCountries.Remove(oldId);
         c.EntrantClubs[newId] = EsportsWorld.ClubOf(d, newId); c.EntrantCountries[newId] = EsportsWorld.CountryOf(d, newId);
     }
-    private static int DayOf(WorldCompetition c, int round) => c.CalendarDays == 84 ? c.CalendarStart + (c.Kind == "worldfinal" ? 63 + round * 4 : 64 + round * 4)
+    internal static int DayOf(WorldCompetition c, int round) => c.CalendarDays == 84 ? c.CalendarStart + (c.Kind == "worldfinal" ? 63 + round * 4 : 64 + round * 4)
         : (c.Season - 1) * 28 + (c.Kind == "worldfinal" ? 17 + round * 2 : 18 + round * 2);
     private static void AddTie(WorldCompetition c, string home, string away, int round, int day)
     {
-        int asc = c.Kind != "league" && round == RoundCount(c) ? 9 : 8;
+        int asc = KnockoutAscension(c, round);
         if (!c.TeamEvent) c.Fixtures.Add(new() { Id = $"{c.Id}-{round}-{c.Fixtures.Count}", Day = day, Round = round, HomeId = home, AwayId = away, Ascension = asc });
         else for (int i = 0; i < (c.Cooperative ? 1 : 3); i++) c.Fixtures.Add(new() { Id = $"{c.Id}-{round}-{c.Fixtures.Count}", Day = day, Round = round,
             HomeTeam = home, AwayTeam = away, HomeId = c.Rosters[home][i], AwayId = c.Rosters[away][i], Ascension = asc });
@@ -212,6 +212,10 @@ public static class CircuitWorld
         }
         c.Finished = true; CircuitLedger.Settle(d, c, publish); AutoEntry(d);
     }
+    internal static bool HasWorldFinal(int season) => season % 2 == 1;
+    internal static string InternationalTeamCup(int season) => HasWorldFinal(season) ? "continental" : "worldcup";
+    internal static int KnockoutAscension(WorldCompetition cup, int round) => cup.Kind != "league" && round == RoundCount(cup) ? 9 : 8;
+
     public static void CreateFinals(CareerData d, bool publish)
     {
         string finalId = $"worldfinal-{d.Season}";
@@ -237,13 +241,13 @@ public static class CircuitWorld
         bool newFinal = final == null;
         final ??= new WorldCompetition { FortuneVersion = 1, Id = finalId, Kind = "worldfinal", Name = "世界总决赛", Country = "国际", Season = d.Season,
             CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, Entrants = qualified.OrderBy(id => CareerEngine.StableHash(d.WorldId + d.Season + id)).ToList(), PlayerEntered = qualified.Contains("player") };
-        bool finalSeason = d.Season % 2 == 1;
+        bool finalSeason = HasWorldFinal(d.Season);
         if (finalSeason)
         {
             if (newFinal) { Snapshot(d, final); AddRound(final, final.Entrants, 1); d.Esports.Competitions.Add(final); }
             SchedulePlayer(d, final);
         }
-        string kind = d.Season % 2 == 0 ? "worldcup" : "continental";
+        string kind = InternationalTeamCup(d.Season);
         var cup = new WorldCompetition { FortuneVersion = 1, Id = $"{kind}-{d.Season}", Kind = kind, Name = EsportsWorld.StageName(kind), Country = "国际", Season = d.Season, CalendarStart = SeasonCalendar.Start(d), CalendarDays = SeasonCalendar.Length(d), Modern = true, PrizeVersion = 1, TeamEvent = true };
         foreach (var league in leagues)
         {

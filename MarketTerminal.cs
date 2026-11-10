@@ -14,7 +14,8 @@ internal partial class MarketTerminal : VBoxContainer
     private MarketEvent[] _selectedEvents = [];
     private readonly Label[] _metrics = new Label[4];
     private readonly MarketAssetButton[] _rows = new MarketAssetButton[8];
-    private readonly MarketPositionCard[] _holdings = new MarketPositionCard[5];
+    private readonly MarketPositionCard?[] _holdings = new MarketPositionCard?[5];
+    private VBoxContainer _holdingRows = null!;
     private readonly Label[] _trades = new Label[5];
     private readonly MarketEventRow[] _events = new MarketEventRow[4];
     private readonly Label[] _sources = new Label[3];
@@ -36,8 +37,13 @@ internal partial class MarketTerminal : VBoxContainer
     private VBoxContainer _right = null!;
     private ScrollContainer _assetScroll = null!;
     private MarketChart _chart = null!;
-    private readonly ConfigFile _preferences = new();
-    private bool _loaded;
+    private const string PreferencesPath = "user://NationalSpire_market.cfg";
+    private static readonly Lazy<ConfigFile> Preferences = new(() =>
+    {
+        var file = new ConfigFile();
+        file.Load(PreferencesPath);
+        return file;
+    });
     private Label Label(string text, int size = 16, Color? color = null)
     {
         var label = new Label { Text = text, SizeFlagsHorizontal = SizeFlags.ExpandFill, AutowrapMode = TextServer.AutowrapMode.WordSmart, MouseFilter = MouseFilterEnum.Ignore };
@@ -55,11 +61,10 @@ internal partial class MarketTerminal : VBoxContainer
         var box = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; panel.AddChild(box); return box;
     }
     private static MarketAmountInput Money() => new() { MinValue = 0, MaxValue = long.MaxValue * 10.0, AllowGreater = true, Value = 1000, Step = .01, Prefix = "$", SizeFlagsHorizontal = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 46) };
-    private IEnumerator<bool>? _builder;
     internal MarketTerminal()
     {
         // 仅替换终端自己的样式，不改共享主题或字体资源。
-        Theme = (Theme)CareerVisuals.CreateTheme().Duplicate(); Theme.DefaultFontSize = 16;
+        Theme = (Theme)CareerVisuals.CreateTheme().Duplicate(false); Theme.DefaultFontSize = 16;
         Theme.SetConstant("separation", "VBoxContainer", 6); Theme.SetConstant("separation", "HBoxContainer", 8);
         foreach (string type in new[] { "Button", "OptionButton", "CheckBox" })
         {
@@ -68,24 +73,15 @@ internal partial class MarketTerminal : VBoxContainer
             Theme.SetStylebox("pressed", type, CareerVisuals.Box("304f60", "e5c18b", 6, 6));
         }
         Theme.SetStylebox("normal", "LineEdit", CareerVisuals.Box("101c2a", "395365", 6, 6));
-        _builder = Build().GetEnumerator();
+        Build();
     }
-    internal bool Prepare(double budgetMilliseconds)
-    {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        while (_builder != null)
-        {
-            if (!_builder.MoveNext()) { _builder.Dispose(); _builder = null; break; }
-            if (watch.Elapsed.TotalMilliseconds >= budgetMilliseconds) break;
-        }
-        return _builder == null;
-    }
-    private IEnumerable<bool> Build()
+
+    private void Build()
     {
         SizeFlagsHorizontal = SizeFlags.ExpandFill;
         var top = new HBoxContainer(); AddChild(top);
         string[] titles = ["预计清仓净资产", "可用余额", "持仓保证金", "待偿借款"];
-        for (int i = 0; i < 4; i++) { var card = Panel(top); card.AddChild(Label(titles[i], 15)); _metrics[i] = Label("", 27, CareerVisuals.Gold); card.AddChild(_metrics[i]); yield return true; }
+        for (int i = 0; i < 4; i++) { var card = Panel(top); card.AddChild(Label(titles[i], 15)); _metrics[i] = Label("", 27, CareerVisuals.Gold); card.AddChild(_metrics[i]); }
         _columns = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; AddChild(_columns);
         var left = Panel(_columns, 22); var center = Panel(_columns, 53); _right = Panel(_columns, 25);
         left.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -104,11 +100,10 @@ internal partial class MarketTerminal : VBoxContainer
         left.AddChild(sort); sort.ItemSelected += i => { _sort = (int)i; ResetList(); };
         var watched = new CheckBox { Text = "只看自选" }; left.AddChild(watched); watched.Toggled += value => { _watchOnly = value; ResetList(); };
         _assetScroll = new ScrollContainer { Name = "MarketAssets", HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
-            SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 284), MouseFilter = MouseFilterEnum.Stop, MouseForcePassScrollEvents = false };
+            SizeFlagsVertical = SizeFlags.ExpandFill, CustomMinimumSize = new(0, 284), MouseFilter = MouseFilterEnum.Pass };
         left.AddChild(_assetScroll);
         var assetList = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; _assetScroll.AddChild(assetList);
-        for (int i = 0; i < _rows.Length; i++) { int row = i; _rows[i] = new MarketAssetButton(); _rows[i].Pressed += () => SelectRow(row); assetList.AddChild(_rows[i]); yield return true; }
-        yield return true;
+        for (int i = 0; i < _rows.Length; i++) { int row = i; _rows[i] = new MarketAssetButton(); _rows[i].Pressed += () => SelectRow(row); assetList.AddChild(_rows[i]); }
         _assetCount = Label(""); left.AddChild(_assetCount);
         var pages = new HBoxContainer(); left.AddChild(pages);
         pages.AddChild(Button("←", () => ChangePage(-1))); pages.AddChild(Button("→", () => ChangePage(1)));
@@ -151,9 +146,8 @@ internal partial class MarketTerminal : VBoxContainer
         {
             int row = i; _events[i] = new MarketEventRow();
             _events[i].Pressed += () => { if (row < _selectedEvents.Length && _selectedEvents[row].Person.Length > 0) _person?.Invoke(_selectedEvents[row].Person); };
-            center.AddChild(_events[i]); yield return true;
+            center.AddChild(_events[i]);
         }
-        yield return true;
         _right.AddChild(Label("资金存取", 22, CareerVisuals.Gold)); _transfer = Money(); _right.AddChild(_transfer);
         var transfers = new GridContainer { Columns = 2 }; _right.AddChild(transfers);
         foreach (var (action, title) in new[] { ("deposit", "存入"), ("withdraw", "取出"), ("borrow", "借款"), ("repay", "还款") }) { var button = Button(title, () => { decimal amount = _transfer.Amount / 10; _transfer.Apply(); Submit(new(action, Amount: amount)); }); button.Icon = LifestyleArt.Icon(action is "deposit" or "withdraw" ? "外汇" : "收支记录"); transfers.AddChild(button); }
@@ -183,12 +177,11 @@ internal partial class MarketTerminal : VBoxContainer
         _sellPrice = Label("", 13); _right.AddChild(_sellPrice);
         var sell = Button("做空", () => Open(-1)); MarketVisuals.ActionStyle(sell, "做空"); _right.AddChild(sell);
         sell.Name = "Short";
-        var bottom = new HBoxContainer(); AddChild(bottom); var holdings = Panel(bottom); var ledger = Panel(bottom);
+        var bottom = new HBoxContainer(); AddChild(bottom); var holdings = _holdingRows = Panel(bottom); var ledger = Panel(bottom);
         holdings.AddChild(Label("持仓", 22, CareerVisuals.Gold));
-        for (int i = 0; i < _holdings.Length; i++) { int row = i; _holdings[i] = new MarketPositionCard(() => ClosePosition(row), Submit); holdings.AddChild(_holdings[i]); yield return true; }
         var hp = new HBoxContainer(); holdings.AddChild(hp); hp.AddChild(Button("←", () => { _holdPage = Math.Max(0, _holdPage - 1); RefreshAccount(); })); hp.AddChild(Button("→", () => { _holdPage++; RefreshAccount(); }));
         ledger.AddChild(Label("结算与成交", 22, CareerVisuals.Gold));
-        for (int i = 0; i < _trades.Length; i++) { _trades[i] = Label("", 16); ledger.AddChild(_trades[i]); yield return true; }
+        for (int i = 0; i < _trades.Length; i++) { _trades[i] = Label("", 16); ledger.AddChild(_trades[i]); }
         var tp = new HBoxContainer(); ledger.AddChild(tp); tp.AddChild(Button("←", () => { _tradePage = Math.Max(0, _tradePage - 1); RefreshAccount(); })); tp.AddChild(Button("→", () => { _tradePage++; RefreshAccount(); }));
         Resized += () =>
         {
@@ -199,16 +192,14 @@ internal partial class MarketTerminal : VBoxContainer
     }
     internal void Bind(CareerData d, Action<MarketOrder> submit, Action<string> person)
     {
-        Prepare(double.PositiveInfinity);
         if (!ReferenceEquals(_data, d)) _inspection = null;
         _data = d; _submit = submit; _person = person;
         if (_inspection?.Revision != d.Market.Revision) _inspection = null;
         string identity = d.WorldId + ":" + GroupChats.Human(d);
-        if (!_loaded) { _preferences.Load("user://NationalSpire_market.cfg"); _loaded = true; }
         if (_identity != identity)
         {
             _identity = identity; _portion = 0; _watch.Clear(); _selected = ""; _page = _holdPage = _tradePage = 0;
-            if (_preferences.HasSectionKey(identity, "watch")) foreach (string id in _preferences.GetValue(identity, "watch").AsStringArray()) _watch.Add(id);
+            _watch.UnionWith(WatchedAssets(d));
         }
         _searchText.Clear(); var links = MarketDynamics.Links(d); var partners = MarketDynamics.Partners(d, links);
         var clubs = links.Where(l => l.Club).GroupBy(l => l.Brand).ToDictionary(g => g.Key,
@@ -366,20 +357,41 @@ internal partial class MarketTerminal : VBoxContainer
         _holdPage = Math.Min(_holdPage, Math.Max(0, (account.Positions.Count - 1) / 5));
         for (int i = 0; i < 5; i++)
         {
-            var p = account.Positions.Skip(_holdPage * 5 + i).FirstOrDefault(); _holdings[i].Visible = p != null || i == 0;
+            int index = _holdPage * _holdings.Length + i;
+            var p = index < account.Positions.Count ? account.Positions[index] : null;
+            var card = _holdings[i];
+            if (p == null && i > 0) { card?.Hide(); continue; }
+            if (card == null)
+            {
+                int row = i;
+                _holdings[i] = card = new MarketPositionCard(() => ClosePosition(row), Submit);
+                _holdingRows.AddChild(card);
+                _holdingRows.MoveChild(card, row + 1);
+            }
+            card.Show();
             var exit = p == null ? null : remote ? _inspection?.Exits.GetValueOrDefault(p.Id) : MarketClearing.PreviewClose(_data, p);
-            _holdings[i].Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision, exit, remote && exit == null);
+            card.Bind(p, p == null ? null : _data.Market.Quotes[p.Asset], _data.Market.Revision, exit, remote && exit == null);
         }
         _tradePage = Math.Min(_tradePage, Math.Max(0, (account.Trades.Count - 1) / 5));
         var trades = account.Trades.AsEnumerable().Reverse().Skip(_tradePage * 5).Take(5).ToArray();
         for (int i = 0; i < 5; i++) { _trades[i].Visible = i < trades.Length || i == 0; _trades[i].Text = i < trades.Length ? $"{GameCalendar.Text(_data, trades[i].Day)} · {trades[i].Text}\n{CareerMoney.Compact(trades[i].Change)}" : "暂无成交"; }
         if (remote && requestInspection) RequestInspection();
     }
+    internal static string[] WatchedAssets(CareerData d)
+    {
+        string key=d.WorldId+":"+GroupChats.Human(d);
+        return Preferences.Value.HasSectionKey(key, "watch") ? Preferences.Value.GetValue(key, "watch").AsStringArray() : [];
+    }
+    internal void ShowAsset(string id)
+    {
+        if(_data?.Market.Quotes.ContainsKey(id)!=true || !MarketCatalog.ById.TryGetValue(id,out var asset))return;
+        _forex=asset.Forex;ResetList();_selected=id;RefreshSelection();
+    }
     private void ToggleWatch()
     {
         if (_selected.Length == 0) return;
         if (!_watch.Add(_selected)) _watch.Remove(_selected);
-        _preferences.SetValue(_identity, "watch", _watch.Order().ToArray()); _preferences.Save("user://NationalSpire_market.cfg"); RefreshList();
+        Preferences.Value.SetValue(_identity, "watch", _watch.Order().ToArray()); Preferences.Value.Save(PreferencesPath); RefreshList();
     }
     private void Submit(MarketOrder order) => _submit?.Invoke(order);
     internal void SetOrderMargin(decimal margin)

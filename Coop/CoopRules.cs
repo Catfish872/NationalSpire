@@ -51,7 +51,7 @@ public static partial class CoopRules
         var data = View(w, member);
         data.Esports.PlayerContract = w.World.Esports.PlayerContract == null ? null : CoopJson.Copy(w.World.Esports.PlayerContract);
         data.PendingMatchId = w.World.Failure == null ? w.Run?.MatchId : null;
-        foreach (var thread in CommunityThreads.All(data))
+        foreach (var thread in data.Posts.Concat(data.SavedThreads))
         {
             if (thread.AuthorId == member.PersonId) thread.AuthorId = "player";
             foreach (var reply in thread.Replies) if (reply.AuthorId == member.PersonId) reply.AuthorId = "player";
@@ -131,8 +131,8 @@ public static partial class CoopRules
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
-            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "propose-enter" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
-            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "ceremony-read" or "read" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
+            if (!command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "propose-enter" or "ceremony-read" or "read" or "read-all" or "rename-save" or "community-vote" or "cancel" or "reading" or "character" or "avatar" or "gender" or "rival-level" or "failure-confirm" or "failure-retry" or "abandon-run") && !full) return (original, Reject("需要2—4位在线队员。"));
+            if (w.Run != null && !command.Kind.StartsWith("dm-") && !command.Kind.StartsWith("group-") && command.Kind is not ("consumer-reserve" or "consumer-remove" or "ceremony-read" or "read" or "read-all" or "rename-save" or "community-vote" or "cancel" or "reading" or "propose-resume" or "propose-enter" or "confirm" or "avatar" or "gender" or "failure-confirm" or "failure-retry" or "abandon-run" or "restart-run")) return (original, Reject("当前比赛尚未结束，请继续对局。"));
             if (command.Kind.StartsWith("group-", StringComparison.Ordinal)) error = GroupCommand(w, member, command);
             else if (command.Kind.StartsWith("dm-", StringComparison.Ordinal)) error = PrivateCommand(w, member, command);
             else if (command.Kind.StartsWith("event-", StringComparison.Ordinal)) error = EventCommand(w, member, command);
@@ -275,7 +275,7 @@ public static partial class CoopRules
                 case "relic": case "activity": case "skip": case "sponsor":
                     var view = View(w, member);
                     if (command.Kind == "relic") error = CareerRelics.Buy(view, command.Target);
-                    if (command.Kind == "activity") error = CareerLife.Accept(view, command.Target);
+                    if (command.Kind == "activity") error = CareerLife.Accept(view, command.Target, command.Text);
                     if (command.Kind == "skip") CareerLife.SkipRound(view);
                     if (command.Kind == "sponsor")
                     {
@@ -310,6 +310,15 @@ public static partial class CoopRules
                         if (w.World.WeeklyEditions.FirstOrDefault(p => p.Week == pair.Key) is { } rw)
                             member.ReadWeeks[pair.Key] = Math.Max(member.ReadWeeks.GetValueOrDefault(pair.Key), Math.Min(pair.Value, rw.Revision));
                     if (member.Results.Any(r => r.MatchId == reading.Settlement)) member.SeenSettlement = reading.Settlement;
+                    break;
+                case "read-all":
+                    foreach (var thread in w.World.Posts.Concat(w.World.SavedThreads))
+                        member.ReadPosts[thread.Id] = Math.Max(thread.Revision, member.ReadPosts.GetValueOrDefault(thread.Id));
+                    foreach (var week in w.World.WeeklyEditions) member.ReadWeeks[week.Week] = week.Revision;
+                    break;
+                case "rename-save":
+                    if (sender != w.Owner) { error = "生涯名称由房主管理。"; break; }
+                    w.World.SaveName = CareerLibrary.CheckedName(command.Text);
                     break;
                 case "read":
                     if (CommunityThreads.All(w.World).FirstOrDefault(p => p.Id == command.Target) is { } read) member.ReadPosts[read.Id] = read.Revision;

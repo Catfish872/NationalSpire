@@ -11,7 +11,7 @@ public sealed record DatePortraitPlacement(double Scale = 1, double Y = 0)
     public static DatePortraitPlacement FromAssets(DateSceneAssets assets) => new DatePortraitPlacement(assets.SpriteScale, -assets.SpriteY).Normalized();
 }
 
-public sealed class DateSceneAssets
+public sealed class DateSceneAssets : ExtensibleData
 {
     public string OutfitId { get; set; } = "";
     public Dictionary<string, Dictionary<string, string>> Outfits { get; set; } = [];
@@ -79,7 +79,7 @@ public static class DateSceneAssetStore
         try
         {
             return Read(data, person).Outfits.Values.SelectMany(outfit => outfit.Values).Any(hash =>
-                hash.Length == 64 && hash.All(char.IsAsciiHexDigit) && File.Exists(BlobPath(hash)));
+                IsImageHash(hash) && File.Exists(BlobPath(hash)));
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException or JsonException) { return false; }
     }
@@ -90,9 +90,10 @@ public static class DateSceneAssetStore
         finally { if (File.Exists(temporary)) File.Delete(temporary); }
     }
     public static string Hash(byte[] bytes) => Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+    internal static bool IsImageHash(string? hash) => hash is { Length: 64 } && hash.All(char.IsAsciiHexDigit);
     public static string BlobPath(string hash)
     {
-        if (hash.Length != 64 || hash.Any(c => !char.IsAsciiHexDigit(c))) throw new InvalidDataException("图像缓存编号无效。");
+        if (!IsImageHash(hash)) throw new InvalidDataException("图像缓存编号无效。");
         return Path.Combine(DirectoryPath, "images", hash + ".png");
     }
     // 调用者已经完成图片与摘要校验；同一份字节直接复用，避免角色包逐图重复解码。
@@ -165,11 +166,12 @@ public static class DateSceneAssetStore
         var merged = PortraitPackageImport.Merge(plan, design, assets, new HashSet<string>());
         assets.OutfitId = merged.Assets.OutfitId; assets.Outfits = merged.Assets.Outfits;
     }
-    public static string ImportBackground(string path)
+    internal static byte[] ReadBackgroundFile(string path)
     {
         if (new FileInfo(path).Length > 64 * 1024 * 1024) throw new InvalidDataException("背景图片超过64MB，请缩小后导入。");
-        return ImportBackgroundBytes(File.ReadAllBytes(path), Path.GetExtension(path));
+        return File.ReadAllBytes(path);
     }
+    public static string ImportBackground(string path) => ImportBackgroundBytes(ReadBackgroundFile(path), Path.GetExtension(path));
     public static string ImportBackgroundBytes(byte[] bytes, string extension)
     {
         using var image = ReadBackgroundImage(bytes, extension);

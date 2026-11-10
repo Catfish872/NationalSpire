@@ -86,11 +86,13 @@ public partial class CareerScreen
         ShowCareerDialog("群聊记忆", "", () => true, "关闭", box =>
         {
             var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions);
+            var create = PrivateButton("新建记忆总结", () => OpenChatDialog(() => EditManualMemory()), 155); create.Name = "CreateManualMemory"; actions.AddChild(create);
             actions.AddChild(PrivateButton("生成小总结", () => GroupCommand("group-summary", new() { Text = "small" }), 140));
             actions.AddChild(PrivateButton("合并长期记忆", () => GroupCommand("group-summary", new() { Text = "big" }), 150));
             actions.AddChild(PrivateButton("清空聊天", () => OpenChatDialog(() => ShowCareerDialog("清空群聊记录", "清空聊天原文，保留总结和已经生效的交互。", () => { GroupCommand("group-clear", new()); return true; }, "清空")), 110));
             var scroll = new ScrollContainer { CustomMinimumSize = new(670, 350), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             var items = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; items.AddThemeConstantOverride("separation", 14); scroll.AddChild(items);
+            foreach (var memory in g.ManualMemories.AsEnumerable().Reverse()) ManualMemoryCard(items, memory);
             foreach (var (part, summaries) in new[] { ("big", g.BigSummaries), ("small", g.SmallSummaries) }) foreach (var s in summaries)
             {
                 var entry = new VBoxContainer(); items.AddChild(entry); entry.AddChild(PrivateText((part == "big" ? "大总结" : "小总结") + $" · 第{s.From + 1}—{s.Through}轮", 17, _gold));

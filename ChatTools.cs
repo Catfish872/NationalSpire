@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -160,14 +160,12 @@ public static class ChatTools
             foreach (string key in new[] { "Scene", "Emotion", "Background" })
                 replyProperties[key] = new { type = "string", description = "沿用本次约会场景资料中的 " + key + "，先于 Reply 填写。" };
         replyProperties["Reply"] = new { type = "string", description = "本段完整正文，保持当前模板要求的文风与篇幅，包含角色语言或约会旁白。" };
+        if (turn?.Scene is { } sceneRequest) DateSceneExtensions.Current?.ReplySchema(sceneRequest, replyProperties);
         string replyDescription = turn?.Scene is { Ending: false } active
             ? DateScenes.Guidance(active, tools: true) : "按发言顺序填写完整正文。";
         object[] interactions = definitions;
         var exampleReply = new Dictionary<string, object>();
         if (group != null) exampleReply["Speaker"] = "p2";
-        if (party) exampleReply["Speaker"] = turn!.Scene!.Participants[0].PersonId;
-        if (turn?.Scene is { Ending: false } exampleScene)
-        { exampleReply["Scene"] = "dialogue"; exampleReply["Emotion"] = exampleScene.DefaultEmotionId; exampleReply["Background"] = "current"; }
         exampleReply["Reply"] = "明天再切磋一局吧，我把今天没弄明白的地方整理好。";
         var exampleAction = new Dictionary<string, object> { ["Type"] = "match", ["Match"] = "邀请", ["Date"] = "2026-01-18", ["Ascension"] = 6, ["Mode"] = "切磋" };
         if (group != null)
@@ -175,13 +173,7 @@ public static class ChatTools
             exampleReply["Reply"] = "明天一起看录像吧，我把今天没弄明白的地方整理好。";
             exampleAction = new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" };
         }
-        if (date)
-        {
-            exampleReply["Reply"] = "刚才聊得很开心，你还想去哪里走走？";
-            exampleAction = new() { ["Type"] = "date_choice", ["DateChoice"] = "（指向附近的小路。）一起走走吧。" };
-        }
         string exampleReasoning = group != null ? "共同活动已有成员同意参加，按实际日期、内容与谈妥的参与者登记一项活动邀请。" : "双方已经表达再次切磋的意向，按本轮实际日期与进阶登记邀请。";
-        if (date) exampleReasoning = "承接当前约会交流，填写逐句内容与两项待玩家选择的回应。";
         bool ending = turn?.Scene?.Ending == true;
         if (ending)
         {
@@ -190,8 +182,11 @@ public static class ChatTools
             exampleAction = new() { ["Type"] = "date_diary", ["DateDiary"] = "今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。", ["Location"] = "地点未明确" };
         }
         var exampleActions = new List<Dictionary<string, object>> { exampleAction };
-        if (date && !ending) exampleActions.Add(new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" });
-        string example = JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        string example = date
+            ? "本轮约会每个完整句子填写独立的 Replies 对象；Scene、Emotion、Background 使用本轮场景资料。"
+                + "Reply 填写本句正文；Interactions 登记实际交互及两项 date_choice 玩家建议。"
+                + (DateSceneExtensions.Current?.ReplyExample(turn!.Scene!) ?? "")
+            : JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         object[] tools = [new { type = "function", function = new { name = "send_message", strict = true, description = Guidance + (group != null ? "\n共同活动已有日期，且正文中有人明确表示参加时，Interactions 同时登记 activity 邀请，填写已谈妥的活动内容和参与者。正文与交互登记同一个决定。" : "") + "\n以下只演示参数组织，人物、日期、进阶和正文取自本轮实际交流：\n" + example + "\n" + ActivityIntentGuidance + "\n" + OrdinaryGuidance + (ending ? "\n" + DateDiaries.ToolEnding : ""),
             parameters = new { type = "object", properties = new Dictionary<string, object>
             {
@@ -201,7 +196,7 @@ public static class ChatTools
                     ? "填写本轮实际交互，并填写两项date_choice玩家建议。" + (party ? "每名NPC的关系、学习、状态和档案变化使用其完整PersonId作为Actor。" : "") + "约会对局邀请使用date_game逐人回应；该约会对局沿当前活动开始。"
                     : "必须填写本轮的全部实际交互，无交互填 []。每项的 Type 选择其类型，其余字段按该项说明填写。", items = new { anyOf = interactions } }
             }, required = new[] { "Reasoning", "Replies", "Interactions" }, additionalProperties = false } } }];
-        return new(features, tools, group != null, date, party);
+        return new(features, tools, group != null, date, party, DateSceneExtensions.Current?.RequiredMetadata(turn?.Scene));
     }
 }
 
@@ -223,10 +218,11 @@ public sealed class ChatToolRequest
     public object[] Definitions { get; }
     public bool Group { get; }
     private readonly bool _scene, _party;
+    private readonly string[] _requiredMetadata;
     public List<ChatToolCall> Calls { get; } = [];
     public string Error { get; private set; } = "";
-    internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group, bool scene = false, bool party = false)
-    { _features = features.ToDictionary(f => f.Name, StringComparer.OrdinalIgnoreCase); Definitions = definitions; Group = group; _scene = scene; _party = party; }
+    internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group, bool scene = false, bool party = false, string[]? requiredMetadata = null)
+    { _features = features.ToDictionary(f => f.Name, StringComparer.OrdinalIgnoreCase); Definitions = definitions; Group = group; _scene = scene; _party = party; _requiredMetadata = requiredMetadata ?? []; }
     public void Feed(JsonElement message, Action<string>? progress = null, Action<string>? reasoning = null)
     {
         if (!message.TryGetProperty("tool_calls", out var calls) || calls.ValueKind != JsonValueKind.Array) return;
@@ -244,7 +240,7 @@ public sealed class ChatToolRequest
                 if (call.Name == "send_message")
                 {
                     if (!_streams.TryGetValue(index, out var reader))
-                    { reader = new(Group, _scene, _party); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); }
+                    { reader = new(Group, _scene, _party, _requiredMetadata); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); }
                     else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning);
                 }
             }
@@ -275,7 +271,7 @@ public sealed class ChatToolRequest
                     {
                         if (reply.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "正文段落应为对象"); continue; }
                         var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                        foreach (string key in new[] { "Scene", "Emotion", "Background" })
+                        foreach (string key in DateSceneExtensions.MetadataFields.Where(key => key != "Speaker"))
                             if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value);
                         yield return (fields, reply.TryGetProperty("Reply", out var text) ? Value(text) : "", reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : "");
                     }
@@ -337,8 +333,9 @@ public sealed class ChatToolRequest
 }
 
 /// <summary>只增量读取正文段落的字符串；参数全文由调用记录保存，交互在完整解析后执行。</summary>
-internal sealed class ChatReplyStream(bool group, bool scene = false, bool party = false)
+internal sealed class ChatReplyStream(bool group, bool scene = false, bool party = false, string[]? requiredMetadata = null)
 {
+    public ChatReplyStream(bool group, bool scene, bool party) : this(group, scene, party, null) { }
     private sealed class Frame(char kind, bool replies, bool paragraph)
     {
         public char Kind = kind;
@@ -356,10 +353,11 @@ internal sealed class ChatReplyStream(bool group, bool scene = false, bool party
     public void Feed(string chunk, Action<string>? progress, Action<string>? reasoning)
     {
         var output = new StringBuilder(); var analysis = new StringBuilder();
-        void Flush(Frame frame)
+        void Flush(Frame frame, bool complete = false)
         {
             if (frame.Pending.Length == 0 || frame.Paragraph && (group || party) && !frame.Metadata.ContainsKey("Speaker")) return;
             if (frame.Paragraph && scene && new[] { "Scene", "Emotion", "Background" }.Any(key => !frame.Metadata.ContainsKey(key))) return;
+            if (frame.Paragraph && !complete && (requiredMetadata ?? []).Any(key => !frame.Metadata.ContainsKey(key))) return;
             int count = frame.Pending.Length;
             if (char.IsHighSurrogate(frame.Pending[count - 1])) count--;
             if (count == 0) return;
@@ -368,10 +366,7 @@ internal sealed class ChatReplyStream(bool group, bool scene = false, bool party
             if (!frame.Opened)
             {
                 if (group) output.Append("[Speaker: ").Append(frame.Metadata["Speaker"]).Append("]\n");
-                else if (frame.Metadata.ContainsKey("Scene"))
-                    output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral"))
-                        .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current"))
-                        .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append(']');
+                else if (frame.Metadata.ContainsKey("Scene")) output.Append(JsonSerializer.Serialize(frame.Metadata));
                 frame.Opened = true;
             }
             output.Append(frame.Pending.ToString(0, count)); frame.Pending.Remove(0, count);
@@ -379,7 +374,7 @@ internal sealed class ChatReplyStream(bool group, bool scene = false, bool party
         void Character(char c)
         {
             if (!_key && _owner != null && (_owner.Paragraph && _field == "Reply" || _frames.Count == 1 && _field == "Reasoning")) _owner.Pending.Append(c);
-            else if (_key || _owner?.Paragraph == true && _field is "Speaker" or "Scene" or "Emotion" or "Background") _token.Append(c);
+            else if (_key || _owner?.Paragraph == true && DateSceneExtensions.MetadataFields.Contains(_field)) _token.Append(c);
         }
         foreach (char c in chunk)
         {
@@ -402,7 +397,7 @@ internal sealed class ChatReplyStream(bool group, bool scene = false, bool party
                 {
                     _quoted = false;
                     if (_key && _owner != null) { _owner.Key = _token.ToString(); _owner.KeyExpected = false; }
-                    else if (_owner?.Paragraph == true && _field is "Speaker" or "Scene" or "Emotion" or "Background") _owner.Metadata[_field] = _token.ToString();
+                    else if (_owner?.Paragraph == true && DateSceneExtensions.MetadataFields.Contains(_field)) _owner.Metadata[_field] = _token.ToString();
                     _token.Clear();
                     if (_owner != null && (_owner.Paragraph || _field == "Reasoning")) Flush(_owner);
                 }
@@ -417,7 +412,7 @@ internal sealed class ChatReplyStream(bool group, bool scene = false, bool party
             else if (c is '}' or ']')
             {
                 if (_frames.TryPop(out var frame) && frame.Paragraph)
-                { Flush(frame); if (frame.Opened) output.Append('\n'); }
+                { Flush(frame, true); if (frame.Opened) output.Append('\n'); }
             }
             else if (c == ',' && parent?.Kind == '{') { parent.KeyExpected = true; parent.Key = ""; }
         }

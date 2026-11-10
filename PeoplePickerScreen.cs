@@ -5,9 +5,9 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     /// <summary>群成员和商城附件共用搜索、分类、头像与可见行复用。</summary>
-    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220, bool showPortraits = false)
+    private void PeoplePicker(VBoxContainer box, IReadOnlyList<CareerPerson> candidates, HashSet<string> selected, bool single, Action changed, int height = 220, bool showPortraits = false, string initialFilter = "全部")
     {
-        var d = ViewData; string search = "", filter = "全部";
+        var d = ViewData; string search = "", filter = initialFilter;
         var portraits = new Dictionary<string, bool>();
         var opponents = d.Results.AsEnumerable().Reverse().SelectMany(r => r.OpponentParticipants.Append(r.OpponentId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
         var authors = CommunityThreads.All(d).OrderByDescending(p => p.Day).SelectMany(p => p.Replies.AsEnumerable().Reverse().Select(r => r.AuthorId).Prepend(p.AuthorId)).Distinct().Select((id, i) => (id, i)).ToDictionary(x => x.id, x => x.i);
@@ -69,5 +69,19 @@ public partial class CareerScreen
             button.ToggleMode = true; button.SetPressedNoSignal(f == filter); button.AddThemeFontSizeOverride("font_size", 14); button.CustomMinimumSize = new(0, 34); filters.AddChild(button);
         }
         searchBox.TextChanged += value => { search = value.Trim(); Refresh(); }; scroll.GetVScrollBar().ValueChanged += _ => ShowRows(); list.Resized += ShowRows; scroll.Resized += ShowRows; Refresh();
+    }
+
+    private void ChoosePrivateContact()
+    {
+        var selected = new HashSet<string>();
+        var candidates = ViewData.People.Where(p => PrivateMessages.CanChat(ViewData,p.Id)).ToArray();
+        Button? start = null;
+        ShowCareerDialog("发起私聊","",() =>
+        {
+            if (selected.FirstOrDefault() is not { } id) return false;
+            Callable.From(() => OpenPrivateMessages(id)).CallDeferred();
+            return true;
+        },"开始私聊",box => PeoplePicker(box,candidates,selected,true,() => { if (start != null) start.Disabled = selected.Count == 0; },300,initialFilter:"熟悉的人"),
+            footer:(_,_,accept) => { start = accept; start.Disabled = selected.Count == 0; });
     }
 }

@@ -48,7 +48,7 @@ public partial class CareerScreen
     }
     private void ContactSort(Control anchor)
     {
-        ContactMenu(anchor.GlobalPosition + new Vector2(0, anchor.Size.Y + 6) - _privateOverlay!.GlobalPosition, box =>
+        ContactMenu(_privateOverlay!.GetGlobalTransform().AffineInverse() * (anchor.GetGlobalTransform() * new Vector2(0, anchor.Size.Y + 6)), box =>
         {
             var buttons = new Dictionary<string, Button>();
             void Highlight()
@@ -74,7 +74,7 @@ public partial class CareerScreen
     private void BuildContactSearch(VBoxContainer sidebar)
     {
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 6); sidebar.AddChild(row);
-        var search = new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(216, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(search);
+        var search = new LineEdit { Name = "ContactSearch", PlaceholderText = "搜索选手或群聊", CustomMinimumSize = new(174, 42), SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(search);
         foreach (string state in new[] { "normal", "focus" })
         {
             var style = (StyleBox)search.GetThemeStylebox(state).Duplicate(); style.ContentMarginTop = style.ContentMarginBottom = 8;

@@ -178,8 +178,8 @@ public static partial class AiService
         async Task ReleasePending() { using var lease = await pending; }
     }
 
-    internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
-        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null)
+    public static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
+        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null, int? maximumTokens = null, int? maximumResponseBytes = null)
     {
         using var logScope = Diagnostics.RequestLog(task, context);
         var connection = Connection(options, task);
@@ -189,6 +189,7 @@ public static partial class AiService
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", connection.Key);
         var payload = new Dictionary<string, object> { ["model"] = connection.Model, ["messages"] = messages, ["stream"] = stream };
+        if (maximumTokens is { } limit) { payload["max_tokens"] = limit; payload["thinking"] = new { type = "disabled" }; }
         if (tools != null)
         {
             payload["tools"] = tools.Definitions;
@@ -219,10 +220,18 @@ public static partial class AiService
         try
         {
             using var response = await PrivateTransport(request, token);
-            if (!response.IsSuccessStatusCode) throw new HttpRequestException(await HttpFailure(response));
+            if (!response.IsSuccessStatusCode)
+            {
+                string failureBody = maximumResponseBytes is { } errorLimit
+                    ? Diagnostics.Redact($"HTTP {(int)response.StatusCode} {response.ReasonPhrase}\n" + await ReadPrivateResponseBounded(response.Content, errorLimit, token).ConfigureAwait(false))
+                    : await HttpFailure(response);
+                throw new HttpRequestException(failureBody);
+            }
             if (!stream || response.Content.Headers.ContentType?.MediaType == "application/json")
             {
-                string body = await response.Content.ReadAsStringAsync(token);
+                string body = maximumResponseBytes is { } maximumBytes
+                    ? await ReadPrivateResponseBounded(response.Content, maximumBytes, token).ConfigureAwait(false)
+                    : await response.Content.ReadAsStringAsync(token);
                 using var document = JsonDocument.Parse(body);
                 if (document.RootElement.TryGetProperty("error", out var error)) throw new InvalidDataException(error.ToString());
                 RememberUsage(document.RootElement);
@@ -291,6 +300,22 @@ public static partial class AiService
             if (task == "event") Diagnostics.RecordEvent(context, trace, "response", new { connection.Model, connection.ProfileId, stream, messages,
                 error = failure, content = received.ToString(), reasoning = thoughts.ToString() });
         }
+    }
+    private static async Task<string> ReadPrivateResponseBounded(HttpContent content, int maximumBytes, CancellationToken cancellation)
+    {
+        if (maximumBytes <= 0 || content.Headers.ContentLength > maximumBytes)
+            throw new InvalidDataException("接口回复超过本次请求的容量上限。");
+        using var stream = await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
+        using var output = new MemoryStream();
+        byte[] buffer = new byte[8192];
+        int count;
+        while ((count = await stream.ReadAsync(buffer, cancellation).ConfigureAwait(false)) > 0)
+        {
+            if (output.Length + count > maximumBytes)
+                throw new InvalidDataException("接口回复超过本次请求的容量上限。");
+            output.Write(buffer, 0, count);
+        }
+        return Encoding.UTF8.GetString(output.GetBuffer(), 0, (int)output.Length);
     }
     private static string PrivateReasoning(JsonElement message)
     {

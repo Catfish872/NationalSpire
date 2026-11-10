@@ -15,7 +15,8 @@ public sealed class RandomEventRecord
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public int Day { get; set; }
     public string State { get; set; } = "waiting";
-    public string Seed { get; set; } = "";
+    private string _seed = "";
+    public string Seed { get => _seed; set => _seed = value ?? ""; }
     public string Category { get; set; } = "";
     public List<string> People { get; set; } = [];
     public string Materials { get; set; } = "";

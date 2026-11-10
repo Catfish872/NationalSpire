@@ -59,7 +59,7 @@ public partial class CoopScreen : Control, IScreenContext
     {
         SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); MouseFilter = MouseFilterEnum.Stop;
         var background = new BroadcastBackdrop(); AddChild(background); background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        _stage = new Control(); AddChild(_stage); Resized += Fit; Fit();
+        _stage = LandscapeViewport.Mount(this);
         var margin = new MarginContainer(); _stage.AddChild(margin); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         foreach (string edge in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 38);
         var frame = new VBoxContainer(); frame.AddThemeConstantOverride("separation", 24); margin.AddChild(frame);
@@ -75,8 +75,6 @@ public partial class CoopScreen : Control, IScreenContext
         _footer = new VBoxContainer(); frame.AddChild(_footer);
         _entrySequence = Session?.World?.EntrySequence ?? -1; Render();
     }
-    private void Fit()
-    { float scale = Math.Min(Size.X / 1600f, Size.Y / 1000f); _stage.Size = new(1600, 1000); _stage.Scale = Vector2.One * scale; _stage.Position = (Size - _stage.Size * scale) / 2; }
     public override void _Process(double delta)
     {
         _tick += delta; if (_tick < .3) return; _tick = 0;
@@ -184,10 +182,11 @@ public partial class CoopScreen : Control, IScreenContext
         foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day))
         {
             var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row);
-            Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
+            string displayName=CareerLibrary.DisplayName(cp.World.World,cp.World.Name);
+            Text(row, $"{displayName} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);
             Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190);
             bool deleting = false;
-            Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
+            Button(row, "删除", () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () =>
             {
                 if (deleting) return; deleting = true;
                 try

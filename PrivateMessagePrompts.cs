@@ -166,6 +166,8 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
         }
         foreach (var s in c.BigSummaries) Add("user", SummaryHeader(s, "合并摘要") + s.Text);
         foreach (var s in c.SmallSummaries) Add("user", SummaryHeader(s, "聊天摘要") + s.Text);
+        foreach (var memory in c.ManualMemories)
+            Add("user", $"玩家为{p.PublicName}与{CareerEngine.Name(data)}的往来补充的{ManualChatMemories.Heading(data, memory)}\n" + memory.Text);
         string externalSummaries = ChatTimeline.Summaries(data, [c.PersonId], excludePrivate: c.PersonId);
         if (externalSummaries.Length > 0) Add("user", externalSummaries);
         if (data.Chats.Groups.Any(g => ChatMembership.Knows(g, c.PersonId))) Add("user", ChatTimeline.PrivateHistoryNote);

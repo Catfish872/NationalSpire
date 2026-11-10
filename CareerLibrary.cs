@@ -17,9 +17,25 @@ public static class CareerLibrary
         return ValidName(file) && File.Exists(path) ? path : original;
     }
     private static bool ValidName(string file) => file == "national_spire_career.json" || file.StartsWith("national_spire_career-") && file.EndsWith(".json") && Guid.TryParseExact(file[22..^5], "N", out _);
+    internal static string DisplayName(CareerData data, string? original = null) =>
+        string.IsNullOrWhiteSpace(data.SaveName) ? original ?? CareerEngine.Name(data) : data.SaveName;
+    internal static string CheckedName(string name)
+    {
+        name = name.Trim();
+        if (name.Length is 0 or > 80 || name.Any(char.IsControl))
+            throw new InvalidDataException("请输入 1 到 80 个字符的存档名称。");
+        return name;
+    }
+    internal static string CheckedPath(string original, string path)
+    {
+        path = Path.GetFullPath(path);
+        if (!string.Equals(Path.GetDirectoryName(Path.GetFullPath(original)), Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase) || !ValidName(Path.GetFileName(path)))
+            throw new InvalidDataException("生涯路径无效。");
+        return path;
+    }
     public static void Select(string original, string path)
     {
-        if (System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(original)) != System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path)) || !ValidName(System.IO.Path.GetFileName(path))) throw new InvalidDataException("生涯路径无效。");
+        path = CheckedPath(original, path);
         File.WriteAllText(Selection(original) + ".tmp", System.IO.Path.GetFileName(path)); File.Move(Selection(original) + ".tmp", Selection(original), true);
     }
     public static IEnumerable<CareerLibraryEntry> List(string original)
@@ -28,8 +44,8 @@ public static class CareerLibrary
         if (!Directory.Exists(folder)) yield break;
         foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc))
         {
-            CareerData? d = null; try { d = CoopJson.Read<CareerData>(File.ReadAllBytes(file)); } catch { }
-            if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));
+            CareerData? d = null; try { using var input = File.OpenRead(file); d = JsonText.Read<CareerData>(input, CoopJson.Options); } catch { }
+            if (d != null) yield return new(file, DisplayName(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));
         }
     }
     public static string Create(string original, CareerData data)
@@ -40,10 +56,8 @@ public static class CareerLibrary
     }
     public static string Delete(string original, string path)
     {
-        original = System.IO.Path.GetFullPath(original); path = System.IO.Path.GetFullPath(path);
-        string folder = System.IO.Path.GetDirectoryName(original)!, file = System.IO.Path.GetFileName(path);
-        if (!string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase) || !ValidName(file))
-            throw new InvalidDataException("生涯路径无效。");
+        path = CheckedPath(original, path);
+        string folder = Path.GetDirectoryName(path)!, file = Path.GetFileName(path);
         if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase))
             throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");
         string backup = System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"));
@@ -80,7 +94,7 @@ public static class CareerLibrary
     {
         using var zip = new ZipArchive(new MemoryStream(bytes), ZipArchiveMode.Read);
         var entry = zip.GetEntry("career.json") ?? throw new InvalidDataException("文件没有单人生涯记录。");
-        using var stream = entry.Open(); using var reader = new StreamReader(stream); var data = JsonSerializer.Deserialize<CareerData>(reader.ReadToEnd(), CoopJson.Options) ?? throw new InvalidDataException("生涯内容为空。");
+        using var stream = entry.Open(); var data = JsonText.Read<CareerData>(stream, CoopJson.Options) ?? throw new InvalidDataException("生涯内容为空。");
         if (data.Version > 4 || data.People is not { Count: > 0 } || data.Season < 1 || data.LongSeasonsFrom < 0 || data.Day <= SeasonCalendar.Start(data) || data.Day > SeasonCalendar.End(data)
             || data.Matches == null || data.Results == null || data.Posts == null || data.Standings == null || data.Ai == null) throw new InvalidDataException("生涯版本或内容无效。");
         byte[]? run = null;

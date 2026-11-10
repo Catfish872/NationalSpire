@@ -21,7 +21,7 @@ public partial class CareerScreen
             });
         }, title: "邀请其他人加入约会", single: true);
     }
-    private readonly Dictionary<string, (PortraitDesign Design, DateSceneAssets Assets)> _datePartyArt = [];
+    protected readonly Dictionary<string, (PortraitDesign Design, DateSceneAssets Assets)> _datePartyArt = [];
     private readonly HashSet<string> _dateDefaultPeople = [];
     private List<DateSceneParticipant> DateParticipants() => _datePartyArt.Select(pair => new DateSceneParticipant
     {

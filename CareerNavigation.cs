@@ -6,7 +6,10 @@ public partial class CareerScreen
 {
     private sealed record Location(string Tab, string? Person, string? Post, string WorldSection, string? Competition,
         string ProfileFilter, string CommunityFilter, int PostLimit, int SelectedDay, int Scroll, int ProfileLimit, string ProfileQuery, string LifeSection, int LifeLimit,
-        string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "", string Event = "");
+        string Group = "", int ChatScroll = 0, int ChatPage = 0, string PrivatePerson = "", string Event = "", DashboardLocation? Dashboard = null, ShopLocation? Shop = null, bool ChatOpen = false);
+    private sealed record ShopLocation(bool Owned, string Tier, string Category, string Selected, int Page);
+    private sealed record DashboardLocation(string Review, string Match, int Month, string Pane, string Plan, string Target, int PlanScroll,
+        string Board, string Region, string Scope, string Kind, string International, string OwnerSection, int WeekDay, string FixtureRegion, string ProfileClub, int FixtureSeason);
     private sealed record TabVisit(Location Location, Location[] History);
     private readonly Stack<Location> _backHistory = new();
     private readonly Dictionary<string, TabVisit> _tabVisits = new();
@@ -15,9 +18,20 @@ public partial class CareerScreen
     private Label _breadcrumb = null!;
     private Location CaptureLocation() => new(_tab, _personId, _postId, _worldSection, _competitionId,
         _profileFilter, _communityFilter, _postLimit, _selectedDay, _scroll.ScrollVertical, _profileLimit, _profileQuery, _lifeSection, _lifeHistoryLimit,
-        Event: _eventView?.Visible == true ? _eventId : "");
+        ChatOpen: _privateOverlay != null, Group: _privateGroup, PrivatePerson: _privatePerson,
+        ChatScroll: _privateOverlay == null ? 0 : _privateScroll?.ScrollVertical ?? 0, ChatPage: _privateOverlay == null ? 0 : ChatPage,
+        Event: _eventView?.Visible == true ? _eventId : "", Dashboard: new(_reviewId,_arenaMatchId,_calendarMonth,_calendarMode,_planKey,
+            _planTarget,CurrentPlanScroll(),_board,_rankRegion,_fixtureScope,_fixtureKind,_fixtureInternational,_ownerSection,_weekDay,_fixtureRegion,_profileClubId,_fixtureSeason),
+        Shop: _tab == "生涯生活" && _lifeSection == "消费商城" ? new(_shopOwned,_shopTier,_shopCategory,_shopSelected,_shopPage) : null);
     private void ApplyLocation(Location location)
     {
+        if (location.Shop is { } shop) (_shopOwned,_shopTier,_shopCategory,_shopSelected,_shopPage) = (shop.Owned,shop.Tier,shop.Category,shop.Selected,shop.Page);
+        if (location.Dashboard is { } v)
+        {
+            (_reviewId,_arenaMatchId,_calendarMonth,_calendarMode,_planKey,_planTarget,_planScroll) = (v.Review,v.Match,v.Month,v.Pane,v.Plan,v.Target,v.PlanScroll);
+            _fixtureRegion=v.FixtureRegion; _profileClubId=v.ProfileClub; _fixtureSeason=v.FixtureSeason;
+            (_board,_rankRegion,_fixtureScope,_fixtureKind,_fixtureInternational,_ownerSection,_weekDay) = (v.Board,v.Region,v.Scope,v.Kind,v.International,v.OwnerSection,v.WeekDay);
+        }
         _tab = location.Tab; _personId = location.Person; _postId = location.Post;
         _worldSection = location.WorldSection; _competitionId = location.Competition;
         _profileFilter = location.ProfileFilter; _communityFilter = location.CommunityFilter;
@@ -32,12 +46,13 @@ public partial class CareerScreen
         _confirmReset = false;
         RememberTab();
         _backHistory.Push(CaptureLocation());
+        if (_privateOverlay != null) ClosePrivateMessagesCore(false);
         if (_backHistory.Count > 64)
         {
             var recent = _backHistory.Take(64).Reverse().ToArray(); _backHistory.Clear();
             foreach (var location in recent) _backHistory.Push(location);
         }
-        destination(); _scroll.ScrollVertical = 0; Render();
+        AcknowledgeReview(ViewData); destination(); _scroll.ScrollVertical = 0; Render();
     }
     private void SwitchTab(string tab)
     {
@@ -56,7 +71,7 @@ public partial class CareerScreen
     }
     private void OpenPerson(string id)
     {
-        if (_tab == "选手档案" && _personId == id) return;
+        if (_privateOverlay == null && _tab == "选手档案" && _personId == id) return;
         Visit(() => { _eventView?.Hide(); _personId = id; _tab = "选手档案"; });
     }
     private void OpenPost(CommunityPost post)
@@ -78,6 +93,8 @@ public partial class CareerScreen
     }
     private void OpenWorldSection(string section)
     {
+        if (section is "国运榜" or "国家发展" or "世界荣誉") { OpenLifePage(section); return; }
+        if (section == "世界积分") { Visit(() => { _tab = "排行榜"; _board = "世界排名"; }); return; }
         if (_tab == "赛事与俱乐部" && _worldSection == section && _competitionId == null) return;
         Visit(() => { _tab = "赛事与俱乐部"; _worldSection = section; _competitionId = null; });
     }
@@ -87,6 +104,7 @@ public partial class CareerScreen
     private void Back()
     {
         if (ViewData.Failure != null) return;
+        if (_privateOverlay != null) { ClosePrivateMessages(); return; }
         if (_confirmReset) { _confirmReset = false; Render(); return; }
         RememberTab();
         if (_backHistory.TryPop(out var previous))
@@ -94,6 +112,7 @@ public partial class CareerScreen
             ApplyLocation(previous); Render(); _ = RestoreScrollAsync(previous.Scroll, _renderVersion);
             if (previous.Group.Length > 0) { SelectGroup(previous.Group, previous.ChatPage); _ = RestoreGroupScroll(previous.Group, previous.ChatScroll); }
             else if (previous.PrivatePerson.Length > 0) { OpenPrivateMessages(previous.PrivatePerson, page: previous.ChatPage); _ = ScrollChatTo(previous.ChatScroll); }
+            else if (previous.ChatOpen) OpenPrivateMessages();
             else if (previous.Event.Length > 0) OpenRandomEvent(previous.Event);
         }
         else if (_tab == "社区" && _postId != null) { _postId = null; _scroll.ScrollVertical = 0; Render(); }
@@ -119,8 +138,8 @@ public partial class CareerScreen
         if (_backHistory.TryPeek(out var chat) && chat.Group.Length > 0) destination = "群聊";
         else if (chat?.PrivatePerson.Length > 0) destination = "私聊";
         else if (chat?.Event.Length > 0) destination = "随机事件";
-        _backButton.Text = "← 返回" + destination; _backButton.Disabled = !CanGoBack;
-        _backButton.TooltipText = CanGoBack ? "返回上一处内容，恢复筛选和阅读位置。快捷键：Esc" : "当前已是栏目入口。";
+        _backButton.Disabled = !CanGoBack;
+        _backButton.TooltipText = CanGoBack ? "返回" + destination + "（Esc）" : "当前已是栏目入口。";
         string detail = _tab switch
         {
             "社区" when _postId == ComposePostId => "发表新帖",

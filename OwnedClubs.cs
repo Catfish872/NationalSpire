@@ -288,10 +288,9 @@ public static class OwnedClubs
         Report(d, "签约", CareerEngine.DisplayName(d, signing.PersonId) + "加盟", "签订" + PlanName(signing.Plan) + "合同，进入" + signing.Position + "阵容。", [signing.PersonId]);
         CareerStore.Save(d); return null;
     }
-    public static string? Swap(CareerData d, string first, string second)
+    internal static string? SwapError(CareerData d, string first, string second)
     {
         if (!IsOwner(d) || d.PendingMatchId != null) return "比赛进行中，暂时不能调整阵容。";
-        CharacterDeletion.RepairStarters(d);
         if (CharacterDeletion.DeletedStarterVacancy(d)) return CharacterDeletion.MissingStarter;
         var o = d.Esports.OwnedClub!;
         if (Humans(d).Contains(first) || Humans(d).Contains(second) || first == second || !o.Contracts.Any(c => c.PersonId == first) || !o.Contracts.Any(c => c.PersonId == second)) return "请选择两名不同的签约选手。";
@@ -300,31 +299,78 @@ public static class OwnedClubs
         if (a == "教练" || b == "教练") return "教练岗位请使用转任调整。";
         if (a == b) return "这两名选手的位置相同。";
         if ((b != "首发" && o.Contracts.Any(c => c.PersonId == first && c.GuaranteedStarter)) || (a != "首发" && o.Contracts.Any(c => c.PersonId == second && c.GuaranteedStarter))) return "明星合同约定首发席位。";
+        return null;
+    }
+
+    private static void SwapSeats(CareerData d,string first,string second)
+    {
+        var o=d.Esports.OwnedClub!;
+        string a=Position(o,first), b=Position(o,second);
         PositionList(o, a).Remove(first); PositionList(o, b).Remove(second); PositionList(o, a).Add(second); PositionList(o, b).Add(first);
         o.Contracts.Single(c => c.PersonId == first).Position = b;
         o.Contracts.Single(c => c.PersonId == second).Position = a;
         foreach (string id in new[] { first, second }) UpdateRosterRole(CareerEngine.Person(d, id)!, Position(o, id));
+    }
+    public static string? Swap(CareerData d, string first, string second)
+    {
+        if (IsOwner(d)) CharacterDeletion.RepairStarters(d);
+        if (SwapError(d,first,second) is { } error) return error;
+        SwapSeats(d,first,second);
         OwnedClubSchedule.UpdateLineup(d); CareerStore.Save(d); return null;
     }
-    public static string? Release(CareerData d, string id, string replacement = "")
+    private static bool RequiredStarter(CareerData d,string position) => position=="首发" && d.Esports.OwnedClub!.Starters.Count<=Math.Max(3,ActiveHumans(d).Count);
+    private static string? ReleaseError(CareerData d, string id, string replacement, string? projectedPosition=null)
     {
         if (!IsOwner(d) || d.PendingMatchId != null) return "请先完成当前比赛。";
         var o = d.Esports.OwnedClub!; var c = o.Contracts.FirstOrDefault(c => c.PersonId == id);
         if (c == null) return "合同不存在。";
         if (ReservedStarter(d, id)) return "该首发已约定下赛季被转会选手接替，届时可解约。";
-        bool starter = o.Starters.Contains(id);
-        bool needsReplacement = starter && o.Starters.Count <= Math.Max(3, ActiveHumans(d).Count);
-        if (needsReplacement && (!o.Reserves.Contains(replacement) || o.Reserves.Count <= 3)) return "请先补充一名轮换，再选择接替首发的选手。";
-        if (!starter && o.Reserves.Contains(id) && o.Reserves.Count <= 3) return "请保留至少三名轮换。";
-        decimal fee = ExitFee(d, c);
-        if (CareerMoney.Balance(d) < fee) return "解约费用不足。";
+        string position=projectedPosition??Position(o,id);
+        if (RequiredStarter(d,position) && (!o.Reserves.Contains(replacement) || o.Reserves.Count <= 3)) return "请先补充一名轮换，再选择接替首发的选手。";
+        if (position=="轮换" && o.Reserves.Count<=3) return "请保留至少三名轮换。";
+        return CareerMoney.Balance(d)<ExitFee(d,c) ? "解约费用不足。" : null;
+    }
+    public static string? Release(CareerData d, string id, string replacement = "")
+    {
+        if (ReleaseError(d,id,replacement) is { } error) return error;
+        ReleaseContract(d,id,replacement);
+        return null;
+    }
+    private static void ReleaseContract(CareerData d,string id,string replacement)
+    {
+        var o=d.Esports.OwnedClub!;
+        var c=o.Contracts.Single(c=>c.PersonId==id);
+        bool promote=RequiredStarter(d,Position(o,id));
+        decimal fee=ExitFee(d,c);
         Pay(d, CareerEngine.DisplayName(d, id) + "解约补偿", -fee);
-        if (starter) { o.Starters.Remove(id); if (needsReplacement) { o.Reserves.Remove(replacement); o.Starters.Add(replacement); UpdateRosterRole(CareerEngine.Person(d, replacement)!, "首发"); } }
+        o.Starters.Remove(id);
+        if (promote)
+        {
+            o.Reserves.Remove(replacement); o.Starters.Add(replacement);
+            if (o.Contracts.FirstOrDefault(p=>p.PersonId==replacement) is { } promoted) promoted.Position="首发";
+            if (CareerEngine.Person(d,replacement) is { } person) UpdateRosterRole(person,"首发");
+        }
         o.Contracts.Remove(c); o.Reserves.Remove(id); o.Youth.Remove(id); o.Coaches.Remove(id); o.CoachAppointments.RemoveAll(a => a.PersonId == id); ClubCoaching.StopTraining(d, id); CareerEngine.Person(d, id)!.ClubId = ""; CareerEngine.Person(d, id)!.ClubPosition = "";
         OwnedClubSchedule.UpdateLineup(d);
         CareerTraining.InvalidateForecast(d);
         Report(d, "转会", CareerEngine.DisplayName(d, id) + "离队", "双方结束球员合同，选手重新进入自由市场。", [id]);
-        CareerStore.Save(d); return null;
+        CareerStore.Save(d);
+    }
+
+    internal static string? ReplaceAndReleaseError(CareerData d,string outgoing,string incoming)
+    {
+        var o=d.Esports.OwnedClub;
+        if (o==null || outgoing==incoming || !o.Contracts.Any(c=>c.PersonId==incoming)) return "请选择接替的签约选手。";
+        if (RequiredStarter(d,Position(o,outgoing))) return ReleaseError(d,outgoing,incoming);
+        return SwapError(d,outgoing,incoming) ?? ReleaseError(d,outgoing,"",Position(o,incoming));
+    }
+    private static string? ReplaceAndRelease(CareerData d,string outgoing,string incoming)
+    {
+        if (ReplaceAndReleaseError(d,outgoing,incoming) is { } error) return error;
+        bool promote=RequiredStarter(d,Position(d.Esports.OwnedClub!,outgoing));
+        if (!promote) SwapSeats(d,outgoing,incoming);
+        ReleaseContract(d,outgoing,promote?incoming:"");
+        return null;
     }
     public static string? Assign(CareerData d, string id, string position)
     {
@@ -600,6 +646,7 @@ public static class OwnedClubs
             case "player-position": return ClubCoaching.SetPlayerPosition(d, target, text);
             case "training-cancel": ClubCoaching.StopTraining(d, target); CareerStore.Save(d); return null;
             case "swap": return Swap(d, target, text);
+            case "replace-release": return ReplaceAndRelease(d,target,text);
             case "release": return Release(d, target, text);
             case "position": return Assign(d, target, text);
             case "sponsor": return ChangeSponsor(d, target);

@@ -51,11 +51,8 @@ public partial class BroadcastBackdrop : Control
     {
         float w = Size.X, h = Size.Y;
         DrawRect(new Rect2(Vector2.Zero, Size), new Color("090e18"));
-        DrawColoredPolygon([new(w * .42f, 0), new(w, 0), new(w, h * .65f), new(w * .12f, h)], new Color("0e1b29"));
-        DrawColoredPolygon([new(w * .72f, 0), new(w * .88f, 0), new(w * .47f, h), new(w * .31f, h)], new Color("112531"));
-        for (int i = 0; i < 10; i++)
-            DrawLine(new Vector2(w * .55f + i * 46, 0), new Vector2(w * .15f + i * 46, h), new Color("69dcd008"), 1);
-        DrawLine(new Vector2(w * .88f, 0), new Vector2(w * .47f, h), new Color("86bca521"), 1, true);
+        DrawColoredPolygon([new(w*.58f,0),new(w*.79f,0),new(w*.44f,h),new(w*.23f,h)],new Color("0e1c27"));
+        DrawColoredPolygon([new(w*.79f,0),new(w*1.09f,0),new(w*.74f,h),new(w*.44f,h)],new Color("0c1622"));
         DrawRect(new Rect2(0, 0, w * .28f, 3), CareerVisuals.Lime);
         DrawRect(new Rect2(w * .28f + 6, 0, w * .11f, 3), CareerVisuals.Teal);
     }
@@ -69,23 +66,6 @@ public partial class BroadcastScroll : ScrollContainer
     public override void _Ready()
     {
         GetVScrollBar().GuiInput += input => { if (input is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left }) StopMotion(); };
-    }
-    public override void _Input(InputEvent input)
-    {
-        if (!IsVisibleInTree() || input is not InputEventMouseButton wheel || wheel.ButtonIndex is not (MouseButton.WheelUp or MouseButton.WheelDown)) return;
-        if (!GetGlobalRect().HasPoint(wheel.Position)) return;
-        // 在原生 GUI 分发前消费滚轮，同一次输入只有一个滚动来源。编辑器、数值框和嵌套滚动区保留自己的输入。
-        var hovered = GetViewport().GuiGetHoveredControl();
-        Node? current = hovered;
-        while (current != null && current != this)
-        {
-            if (current is SpinBox or TextEdit or ScrollContainer or Popup) return;
-            if (current is Control { MouseFilter: MouseFilterEnum.Stop, MouseForcePassScrollEvents: false }) return;
-            current = current.GetParent();
-        }
-        if (hovered != null && current != this) return;
-        GetViewport().SetInputAsHandled();
-        if (wheel.Pressed) ScrollWheel(wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1, wheel.Factor);
     }
     internal void ScrollWheel(int direction, double factor)
     {
@@ -106,7 +86,21 @@ public partial class BroadcastScroll : ScrollContainer
     }
     public override void _GuiInput(InputEvent input)
     {
-        if (input is InputEventPanGesture or InputEventScreenDrag || input is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left }) StopMotion();
+        // Godot has hit-tested this event and routed it through the actual child under the pointer.
+        // Child editors and nested scroll views get the first opportunity to consume it.
+        if (input is InputEventMouseButton wheel && wheel.ButtonIndex is MouseButton.WheelDown or MouseButton.WheelUp)
+        {
+            var bar = GetVScrollBar();
+            int direction = wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1;
+            if (direction > 0 ? bar.Value >= bar.MaxValue - bar.Page : bar.Value <= 0)
+            {
+                StopMotion();
+                return;
+            }
+            if (wheel.Pressed) ScrollWheel(direction, wheel.Factor);
+            AcceptEvent();
+        }
+        else if (input is InputEventPanGesture or InputEventScreenDrag || input is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left }) StopMotion();
     }
     public override void _ExitTree() => StopMotion();
 }
@@ -173,6 +167,7 @@ public partial class CareerScreen
         if (_pageEffect != null) _pageEffect.Hide();
         if (_visualLocation == location) return;
         _visualLocation = location;
+        if (EventHub || _tab is "首页" or "日程" or "我的资产" or "生涯生活" or "结算" or "排行榜") return;
         int version = _renderVersion;
         Callable.From(() =>
         {

@@ -106,6 +106,11 @@ public partial class CareerScreen
         if (_ceremonySection == "获奖名单") CeremonyAwards(data, record);
         else CeremonyRanking(data, _ceremonySection == "年度 TOP 20" ? (record.FullYear.Count > 0 ? record.FullYear : record.YearTop) : (record.FullSeason.Count > 0 ? record.FullSeason : record.SeasonTop));
 
+        CeremonyCriteria(data,record,_ceremonySection=="年度 TOP 20");
+    }
+
+    private void CeremonyCriteria(CareerData data,CeremonyRecord record,bool annual)
+    {
         var rules = Button(_ceremonyRules ? "收起评选依据" : "查看评选依据", () =>
         { int y = _scroll.ScrollVertical; _ceremonyRules = !_ceremonyRules; Render(); _ = RestoreScrollAsync(y, _renderVersion); }, 180);
         _content.AddChild(rules);
@@ -114,7 +119,7 @@ public partial class CareerScreen
             var method = Card(); _content.AddChild(method); var explanation = Inner(method);
             explanation.AddChild(Text(record.RulesVersion >= 2 ? SeasonCeremony.ScoringRules : "此届按旧版规则授予，保留原始得分与荣誉。新规则从更新后举行的盛典执行。", 16, _ink));
             if (record.RulesVersion >= 2) explanation.AddChild(Text(SeasonCeremony.ClubRules + "新秀以首次职业参赛记录为准，至少出场两次。", 16, _muted));
-            var self = (_ceremonySection == "年度 TOP 20" ? record.FullYear : record.FullSeason).FirstOrDefault(r=>r.Id==CeremonySelf(data));
+            var self = (annual ? record.FullYear : record.FullSeason).FirstOrDefault(r=>r.Id==CeremonySelf(data));
             if (self != null) foreach (string line in self.Breakdown) explanation.AddChild(Text(line, 15, _muted));
         }
     }

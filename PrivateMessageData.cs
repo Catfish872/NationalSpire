@@ -27,6 +27,13 @@ public sealed class PrivateRelation : System.Text.Json.Serialization.IJsonOnDese
     private int _favour;
     private string _relationship = "初识";
     private bool _deserializing;
+    public int? LastFavourChange { get; set; }
+    internal void SetFavour(int value)
+    {
+        int before = Favour;
+        Favour = value;
+        if (Favour != before) LastFavourChange = Favour - before;
+    }
     public int Favour
     {
         get => _favour;
@@ -77,6 +84,7 @@ public sealed class PrivateConversation
 {
     public List<DateDiary> DateDiaries { get; set; } = [];
     public HashSet<string> DeletedDateDiaries { get; set; } = [];
+    public HashSet<string> RewoundDateTurns { get; set; } = [];
     public bool EventOnly { get; set; }
     public Dictionary<string, string> DateSceneStates { get; set; } = [];
     public bool Hidden { get; set; }
@@ -94,6 +102,7 @@ public sealed class PrivateConversation
     public int ContextStart { get; set; }
     public List<PrivateSummary> SmallSummaries { get; set; } = [];
     public List<PrivateSummary> BigSummaries { get; set; } = [];
+    public List<ManualChatMemory> ManualMemories { get; set; } = [];
     public string SummaryError { get; set; } = "";
     public int SeenCount { get; set; }
     public List<PrivateOffer> Offers { get; set; } = [];

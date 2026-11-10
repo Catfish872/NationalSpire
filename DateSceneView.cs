@@ -17,6 +17,7 @@ public partial class DateSceneView : Control
     public Func<string>? HistoryText;
     public Func<IReadOnlyList<DateHistoryEntry>>? HistoryEntries;
     public Action<string>? DeleteHistoryReply;
+    public Action<string>? JumpHistory;
     public bool HistoryOpen => _history?.Visible == true;
     public bool DialogueHidden => _interface?.Visible == false;
     public bool InputMode { get; private set; }
@@ -124,16 +125,16 @@ public partial class DateSceneView : Control
     }
     private MarginContainer _margin = null!;
     private Gradient _glass = null!;
-    private PanelContainer _history = null!;
-    private RichTextLabel _historyText = null!;
-    private DateHistoryList _historyList = null!;
+    protected PanelContainer _history = null!;
+    protected RichTextLabel _historyText = null!;
+    protected DateHistoryList _historyList = null!;
     private double? _historyRestoreScroll;
     private int _historyScrollPending;
     private VBoxContainer _body = null!, _composer = null!;
     private RichTextLabel _text = null!;
     private FontVariation _lineFont = null!, _editorFont = null!, _nameFont = null!, _historyFont = null!;
     private readonly Dictionary<(ulong Font, int Size), float> _fontGaps = [];
-    private Label _name = null!, _hint = null!;
+    protected Label _name = null!, _hint = null!;
     private HBoxContainer _settings = null!;
     private ScrollContainer _attachmentScroll = null!;
     private double _poll, _typing;
@@ -144,7 +145,7 @@ public partial class DateSceneView : Control
     private readonly Dictionary<ulong, float> _headRatios = [];
     private Button _waitAction = null!, _editFailure = null!;
     private static readonly Color Ink = new("eff4f6");
-    private Button ActionButton(string text, Action action, string name, int width = 100)
+    protected Button ActionButton(string text, Action action, string name, int width = 100)
     {
         var button = new Button { Name = name, Text = text, CustomMinimumSize = new(width, 48), FocusMode = FocusModeEnum.None };
         button.AddThemeFontSizeOverride("font_size", 18); button.AddThemeStyleboxOverride("normal", CareerVisuals.Box("243d50", "638698", 7, 10));
@@ -229,7 +230,9 @@ public partial class DateSceneView : Control
         CommunityReplyExpressions.Attach(Editor, _composer, tools, actions);
         _gameChoices = new VBoxContainer { Name = "DateGameChoices", Alignment = BoxContainer.AlignmentMode.Center, Visible = false };
         _gameChoices.AddThemeConstantOverride("separation", 16); _interface.AddChild(_gameChoices);
-        _hint = new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }; _hint.AddThemeColorOverride("font_color", new("b3c7cf")); _body.AddChild(_hint);
+        var dialogueFooter = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; dialogueFooter.AddThemeConstantOverride("separation", 18); _body.AddChild(dialogueFooter);
+        dialogueFooter.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore });
+        _hint = new Label { Name = "DateAdvanceHint", Text = "单击继续  ›", HorizontalAlignment = HorizontalAlignment.Right, MouseFilter = MouseFilterEnum.Ignore }; _hint.AddThemeColorOverride("font_color", new("b3c7cf")); dialogueFooter.AddChild(_hint);
         _hintDismissed = DateSceneAssetStore.ContinueHintDismissed();
         Status = new Label { Name = "DateStatus", MaxLinesVisible = 1, TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis,
             VerticalAlignment = VerticalAlignment.Center, MouseFilter = MouseFilterEnum.Pass };
@@ -335,18 +338,19 @@ public partial class DateSceneView : Control
     {
         if (what == NotificationApplicationFocusOut) { _fastForwardHeld = false; _fastForwardPause = 0; }
     }
-    private void OpenHistory()
+    protected void OpenHistory()
     {
         _history.Show(); RefreshHistory(true);
         if (HistoryEntries != null) _historyList.GrabFocus(); else _historyText.GrabFocus();
     }
-    private VScrollBar HistoryScrollBar() => HistoryEntries != null ? _historyList.GetVScrollBar() : _historyText.GetVScrollBar();
+    protected VScrollBar HistoryScrollBar() => HistoryEntries != null ? _historyList.GetVScrollBar() : _historyText.GetVScrollBar();
     public void RefreshHistory(bool toEnd = false)
     {
         if (!HistoryOpen) return;
         _historyRestoreScroll = toEnd ? null : HistoryScrollBar().Value;
         _historyText.Visible = HistoryEntries == null; _historyList.Visible = HistoryEntries != null;
-        if (HistoryEntries != null) _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply);
+        if (HistoryEntries != null) _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply,
+            JumpHistory == null ? null : id => { CloseHistory(); JumpHistory(id); });
         else _historyText.Text = HistoryText?.Invoke() ?? "约会开始后的对话会显示在这里。";
         _historyScrollPending = 2;
     }
@@ -456,9 +460,11 @@ public partial class DateSceneView : Control
         if (_backgroundBlend < 1) { _queuedBackgroundTexture?.Dispose(); _queuedBackgroundTexture = texture; _queuedBackgroundId = background; }
         else BeginBackground(texture, background);
     }
-    public static Texture2D CreateBackground(string background)
+    public static Texture2D CreateBackground(string background) => UploadBackground(DateSceneBackgrounds.Pixels(background));
+    internal static Texture2D PreviewBackground(DateSceneBackground background) => UploadBackground(background.ReadPixels());
+    private static Texture2D UploadBackground(Image? source)
     {
-        using var pixels = DateSceneBackgrounds.Pixels(background);
+        using var pixels = source;
         if (pixels != null)
         {
             pixels.GenerateMipmaps();
@@ -482,7 +488,7 @@ public partial class DateSceneView : Control
     private (string Speaker, string Emotion, bool Narration) _shownPresentation;
     public void ShowLine(DateSceneLine line, string speaker, Texture2D sprite)
         => ShowLineCore(line, speaker, sprite, true);
-    private void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)
+    protected virtual void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)
     {
         _shownPresentation = (line.Speaker, line.Emotion, line.Narration);
         _gameChoices.Hide(); _replyChoices.Hide();
@@ -502,7 +508,7 @@ public partial class DateSceneView : Control
         _text.Text = DateScenes.DisplayText(line); _text.ScrollToLine(0); _text.VisibleCharacters = TextSpeed >= InstantSpeed ? -1 : 0; _typing = 0; _firstTypeFrame = true; Status.Text = ""; Layout();
         _fastForwardPause = 0;
     }
-    public void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)
+    public virtual void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)
     {
         _gameChoices.Hide();
         if (!keepWaiting) EndWaiting();
@@ -530,7 +536,7 @@ public partial class DateSceneView : Control
         _waitAction.Visible = active; _waitAction.Text = "停止生成";
         Status.Text = active ? "正在续写…" : "";
     }
-    public void ShowWaiting(string status, bool failed = false)
+    public virtual void ShowWaiting(string status, bool failed = false)
     { _gameChoices.Hide(); _replyChoices.Hide(); InputMode = false; _composer.Hide(); _text.Hide(); _hint.Hide(); _name.Hide(); _nameBox.Hide(); _favourHost.Visible = _showAffectionBadge; Status.Text = status; _waitAction.Show(); _editFailure.Visible = failed; _waitAction.Text = failed ? "重新生成" : "停止生成"; SetDialogueVisible(true); BeginWaiting(); }
     public void ShowAttachments() => _attachmentScroll.Visible = Attachments.GetChildCount() > 0;
     public override void _Process(double delta)

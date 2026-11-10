@@ -42,6 +42,13 @@ public sealed class CoopStorage(string root)
         => Schedule(world.Id, () => { Save(world, run); return true; }, token, true);
     public Task<Checkpoint> LoadAsync(string id) => Schedule(id, () => Load(id));
     public Task<byte[]> ExportArchiveAsync(string id) => Schedule(id, () => ExportArchive(id));
+    public Task RenameAsync(string id, string name) => Schedule(id, () =>
+    {
+        var checkpoint = Load(id);
+        checkpoint.World.World.SaveName = CareerLibrary.CheckedName(name);
+        Save(checkpoint.World, checkpoint.Run);
+        return true;
+    }, write: true);
     public Task DeleteAsync(string id) => Schedule(id, () => { Delete(id); return true; });
     public Task<string> ImportArchiveAsync(byte[] bytes) => Task.Run(() => ImportArchive(bytes));
     public async Task<List<Checkpoint>> ListAsync()

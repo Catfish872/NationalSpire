@@ -16,7 +16,7 @@ public partial class CareerScreen
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
             box.AddChild(Text(contract.Brand + "  /  " + (contract.TargetId == "player" ? "个人赞助" : "俱乐部赞助"), 24, _gold));
-            box.AddChild(Text(contract.TargetId == "player" ? CareerCommerce.SponsorTerms(d, contract) : $"合作至第 {contract.EndSeason} 赛季 · 按当前关注每赛季支持球队 {CareerMoney.Format(SponsorIncome.Retainer(d, contract))}", 17, _ink));
+            box.AddChild(Text(contract.TargetId == "player" ? CareerCommerce.SponsorTerms(d, contract) : $"合作至第 {contract.EndSeason} 赛季 · 按当前关注每赛季支持战队 {CareerMoney.Format(SponsorIncome.Retainer(d, contract))}", 17, _ink));
             box.AddChild(Text(contract.Slogan, 17, _muted));
             if (contract.Description.Length > 0) box.AddChild(Text(contract.Description, 16, _muted));
         }
@@ -38,7 +38,7 @@ public partial class CareerScreen
                 }, 180));
             }
         }
-        _content.AddChild(Button("安排赛场之外的生活 →", () => Visit(() => _tab = "生涯生活"), 310));
+        _content.AddChild(Button("安排赛场之外的生活 →", () => Visit(() => { _tab = "日程"; _calendarMode = "计划"; ClearPlan(); }), 310));
     }
     private void NationRanking(CareerData data)
     {
@@ -46,7 +46,7 @@ public partial class CareerScreen
         _content.AddChild(Text("国际赛事胜方获得国运，负方扣除等量国运；同国对阵不改变国家国运。国运榜每四赛季重新排名，国运带来的资金会支持选手、俱乐部和青训。", 17, _muted));
         int rank = 0;
         var nationTable = CircuitLedger.NationTable(data);
-        foreach (var row in CircuitLedger.NationTable(data))
+        foreach (var row in nationTable)
         {
             var nation = data.Esports.Nations.FirstOrDefault(n => n.Country == row.Country);
             var card = Card(); _content.AddChild(card); var box = Inner(card);
@@ -67,7 +67,7 @@ public partial class CareerScreen
         _content.AddChild(Text("新一届冠军诞生前，这里保留上届世界总决赛排名。", 17, _muted));
         var latest = data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Completed).Select(a => a.Season).DefaultIfEmpty(0).Max();
         var current = data.Esports.Competitions.FirstOrDefault(c => c.Season == data.Season && c.Kind == "worldfinal");
-        if (current != null) _content.AddChild(Button("本届签表与比赛结果   →", () => OpenCompetition(current.Id), 400));
+        if (current != null) _content.AddChild(Button("本届签表与比赛结果   →", () => Visit(()=>{_tab="赛程";_fixtureScope="国际赛事";_fixtureInternational=current.Id;}), 400));
         if (latest == 0) { _content.AddChild(Text("首届世界总决赛席位将在联赛结束后公布。联赛个人前二自动入围，其余席位按世界积分和本季表现补齐。", 20, _ink)); return; }
         foreach (var award in data.Esports.CircuitAwards.Where(a => a.Kind == "worldfinal" && a.Season == latest && a.Completed).OrderBy(a => a.Stage).ThenBy(a => a.PersonId))
         {
@@ -113,11 +113,8 @@ public partial class CareerScreen
         if (c.Finished) _content.AddChild(Text("◆ 冠军：" + (c.TeamEvent ? CircuitWorld.TeamName(data, c, c.ChampionTeam) : CareerEngine.DisplayName(data, c.ChampionId)), 25, _gold));
         if (c.Kind == "league")
         {
-            _content.AddChild(Text("俱乐部积分：胜3分、平1分、负0分；同分比较个人对决胜场。前二进入洲际杯。", 17, _ink));
-            int rank = 0;
-            foreach (var row in CircuitWorld.TeamTable(c)) _content.AddChild(Text($"{++rank:00}   {CircuitWorld.TeamName(data, c, row.PersonId)}    {row.Points}分    {row.Wins}胜 {row.Draws}平 {row.Losses}负", 19, row.PersonId == data.Esports.ClubId ? _gold : _ink));
-            _content.AddChild(Text("奇数赛季个人表现前二自动进入世界总决赛；其余席位按世界积分和本季表现补齐。", 17, CareerVisuals.Teal));
-            foreach (var (row, personalRank) in EsportsWorld.Rankings(c).Take(6)) _content.AddChild(PersonLink(data, row.PersonId, $"{personalRank:00}   {CareerEngine.DisplayName(data, row.PersonId)}   {row.Wins}胜 {row.Losses}负   ↗", 36));
+            LeagueTable(data,c,true);
+            LeagueTable(data,c,false);
         }
         foreach (var round in c.Fixtures.GroupBy(f => f.Round).OrderBy(g => g.Key))
         {

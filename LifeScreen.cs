@@ -4,90 +4,41 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private string _lifeSection = "活动与计划";
+    private string _lifeSection = "消费商城";
     private int _lifeHistoryLimit = 8;
     private void Life(CareerData d)
     {
-        if (_lifeSection == "活动与计划") AddHeading("赛场之外", "安排一点自己的生活，也看看这些选择后来怎样了。");
-        foreach (string message in d.Life.RepairNotices.TakeLast(4)) _content.AddChild(Text(message, 16, CareerVisuals.Teal));
-        if (_lifeSection is "活动与计划" or "收支记录") _content.AddChild(Text($"可用资金 {CareerMoney.Compact(CareerMoney.Balance(d))} · 已记录比赛奖金 {CareerMoney.Format(d.Life.PrizeTotal)}", 18, _gold));
-        var tabs = new HFlowContainer(); _content.AddChild(tabs);
-        foreach (string name in LifestyleArt.Sections)
-        {
-            var tab = FilterButton(name, _lifeSection == name, () => { _lifeSection = name; _lifeHistoryLimit = 8; Render(); }, 165);
-            tab.Icon = LifestyleArt.Icon(name); tab.AddThemeConstantOverride("icon_max_width", 22); tabs.AddChild(tab);
-        }
-        if (_lifeSection == "我的空间") { LifeCollection(d); return; }
-        if (_lifeSection == "消费商城") { ConsumerShop(d); return; }
+        if (_lifeSection == "活动与计划") { _tab = "日程"; _calendarMode = "计划"; Calendar(d); return; }
+        if (_lifeSection == "收支记录") { AssetsPage(d); return; }
         if (_lifeSection == "人气榜") { FanChart(d); return; }
-        if (_lifeSection == "交易市场") { MarketScreen(d); return; }
         if (_lifeSection == "公开消息") { LifeNews(d); return; }
-        if (_lifeSection == "收支记录")
+        bool nation = _lifeSection is "国运榜" or "国家发展" or "世界荣誉";
+        if (nation)
         {
-            foreach (var entry in d.Life.Ledger.AsEnumerable().Reverse().Take(40))
-                _content.AddChild(Text($"{GameCalendar.Text(d, entry.Day)} · {entry.Title}\n{(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))} · 余额 {CareerMoney.Format(entry.Balance)}", 18, _ink));
-            if (d.Life.Ledger.Count == 0) _content.AddChild(Text("新的收入和花销会记在这里。", 18, _muted));
-            return;
+            var options = new HFlowContainer(); SecondaryTabInset(_content).AddChild(options);
+            foreach (var name in new[] { "国运榜","国家发展","世界荣誉" })
+                options.AddChild(FilterButton(name, _lifeSection == name, () => OpenLifePage(name), 140));
         }
-        var available = d.Life.Activities.Where(a => a.Status == "可安排" && a.ExpiresDay >= d.Day).ToList();
-        _content.AddChild(Text("这一轮，想做些什么？", 23, _gold));
-        if (available.Count > 0)
+        else if (_lifeSection != "交易市场")
         {
-            _content.AddChild(Text($"从 {available.Count} 项安排中选择一项。其他邀请随本轮结束，之后还会有新的机会。", 17, _muted));
-            _content.AddChild(Button("这轮先不安排", () => ConfirmLife("跳过这轮安排", "本轮所有邀请将结束，新的机会将在日程推进后出现。", () => { if (MultiplayerCommand("skip")) return; CareerLife.SkipRound(d); Render(); }), 210));
+            var tabs = TabStrip(_content,30,secondary:true);
+            tabs.AddChild(UnderlineTab("消费商城", () => OpenLifePage("消费商城"), _lifeSection == "消费商城"));
+            tabs.AddChild(UnderlineTab("遗物手办", () => OpenLifePage("我的空间"), _lifeSection == "我的空间"));
         }
-        if (available.Count == 0) _content.AddChild(Text("暂时没有新的活动邀请。日程推进后，会陆续出现新的机会。", 17, _muted));
-        foreach (var a in available) ActivityCard(d, a);
-        var ongoing = d.Life.Activities.Where(a => a.Status == "进行中").OrderBy(a => a.FinishDay).ToList();
-        if (ongoing.Count > 0) _content.AddChild(Text("正在进行", 23, _gold));
-        foreach (var a in ongoing) ActivityCard(d, a);
-        var completed = d.Life.Activities.Where(a => a.Status == "已完成").OrderByDescending(a => a.FinishDay).ToList();
-        if (completed.Count > 0) _content.AddChild(Text("留下的经历", 23, _gold));
-        foreach (var a in completed.Take(_lifeHistoryLimit)) ActivityCard(d, a);
-        if (completed.Count > _lifeHistoryLimit) _content.AddChild(Button("查看更多经历", () => { _lifeHistoryLimit += 8; Render(); }, 200));
+        if (_lifeSection != "消费商城") AddLifeRepairNotices(d, _content);
+        switch (_lifeSection)
+        {
+            case "国运榜": NationRanking(d); break;
+            case "国家发展": DevelopmentScreen(d); break;
+            case "世界荣誉": WorldHonors(d); break;
+            case "交易市场": MarketScreen(d); break;
+            case "我的空间": LifeCollection(d); break;
+            default: ConsumerShop(d); break;
+        }
     }
-    private void ActivityCard(CareerData d, LifeActivity a)
+    private static void AddLifeRepairNotices(CareerData data, VBoxContainer target)
     {
-        var card = Card(); _content.AddChild(card); var box = Inner(card);
-        box.AddThemeConstantOverride("separation", 16);
-        box.AddChild(Text(a.Title + " · " + a.Kind, 22, _gold));
-        if (!CareerTraining.IsTraining(a) && !ClubPrograms.IsTraining(a))
-        {
-            string detail = a.Detail.Split('。')[0];
-            if (detail.Length > 0) box.AddChild(Text(detail, 17, _ink));
-        }
-        if (a.Status == "可安排")
-        {
-            if (CareerTraining.IsTraining(a) && CareerTraining.Kind(a.Title) is not ("team" or "team-growth"))
-            {
-                var people = CareerTraining.Targets(d);
-                var select = new OptionButton { CustomMinimumSize = new Vector2(280, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill };
-                foreach (var p in people) select.AddItem(p.PublicName + (CareerTraining.ActiveRoster(d, p.Id) ? " · 当前参赛" : " · 轮换"));
-                select.Select(Math.Max(0, people.FindIndex(p => p.Id == a.PersonId)));
-                select.ItemSelected += index => { a.PersonId = people[(int)index].Id; Render(); };
-                box.AddChild(select);
-            }
-            int cost = CareerRelics.Cost(d, a), duration = CareerRelics.Duration(d, a);
-            box.AddChild(Text($"费用 {CareerMoney.Format(cost)} · {duration} 天", 16, _muted));
-            if (cost < a.Cost || duration < a.Duration) box.AddChild(Text($"原价 {CareerMoney.Format(a.Cost)} / {a.Duration} 天 · 已计入当前筹备与手办优惠", 14, CareerVisuals.Teal));
-            var effects = Text(CareerLife.Expected(d, a), 19, CareerVisuals.Teal);
-            if (CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a))
-            {
-                effects.TooltipText = ClubPrograms.IsTraining(a) ? ClubPrograms.Details(d, a) : CareerTraining.Details(d, a);
-                effects.MouseFilter = MouseFilterEnum.Pass; effects.MouseDefaultCursorShape = CursorShape.Help;
-            }
-            box.AddChild(effects);
-            var actions = new HBoxContainer(); box.AddChild(actions);
-            var accept = Button("选择这项安排", () => ConfirmLife("确认安排", $"{a.Title}\n{CareerLife.Expected(d, a)}\n费用 {CareerMoney.Format(CareerRelics.Cost(d, a))}，本轮只选这一项。", () => { if (MultiplayerCommand("activity", a.Id)) return; var error = CareerLife.Accept(d, a.Id, CareerTraining.IsTraining(a) ? a.PersonId : ""); Render(); Notice(error ?? "安排已确认，可以在这里查看进展。", error != null); }), 180);
-            accept.Disabled = d.Credits < cost || a.LongProject && d.Life.Activities.Any(x => x.LongProject && x.Status == "进行中"); actions.AddChild(accept);
-
-        }
-        else
-        {
-            box.AddChild(Text(a.Status == "进行中" ? $"{PrivateAppointments.DateText(d, a.StartedDay)}开始 · 预计{PrivateAppointments.DateText(d, a.FinishDay)}完成" : $"{PrivateAppointments.DateText(d, a.FinishDay)}完成 · 花费 {CareerMoney.Format(a.PaidCost >= 0 ? a.PaidCost : a.Cost)}", 16, _muted));
-            box.AddChild(Text(a.Result, 18, CareerVisuals.Teal));
-            if ((CareerTraining.IsTraining(a) || ClubPrograms.IsTraining(a)) && a.Status == "进行中") box.AddChild(Text(CareerLife.Expected(d, a), 18, _muted));
-        }
+        foreach (string note in data.Life.RepairNotices.TakeLast(4)) target.AddChild(Text(note, 16, CareerVisuals.Teal));
     }
     private void ConfirmLife(string title, string question, Action action) => ShowCareerDialog(title, question, () => { action(); return true; });
     private void LifeCollection(CareerData d)

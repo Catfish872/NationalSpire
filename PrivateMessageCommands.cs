@@ -25,7 +25,12 @@ public static class PrivateMessageCommands
         if (error == null && kind is "dm-send" or "dm-retry" or "dm-regenerate" or "dm-date-open" or "dm-date-end" or "dm-date-revise" or "dm-date-game-next" or "dm-date-invite")
         {
             var pending = PrivateMessages.Conversation(data, kind == "dm-date-invite" ? command.Replacement : person).Turns.LastOrDefault(t => t.Status == "queued");
-            if (pending != null) { pending.ToolMode = command.ToolMode ?? data.Ai.ChatTools; pending.ToolCalls.Clear(); }
+            if (pending != null)
+            {
+                pending.ToolMode = command.ToolMode ?? data.Ai.ChatTools; pending.ToolCalls.Clear();
+                if (kind is "dm-retry" or "dm-regenerate" or "dm-date-revise" && pending.Scene is { } oldScene)
+                    pending.Scene = DateSceneExtensions.Current?.RefreshRequest(data, person, oldScene, command.Scene) ?? oldScene;
+            }
         }
         return error;
     }
@@ -40,7 +45,8 @@ public static class PrivateMessageCommands
         var c = kind == "dm-attend" && PrivateMessages.Mailbox(data).Conversations.TryGetValue(person, out var existing)
             ? existing : PrivateMessages.Conversation(data, person);
         if (MatchFailure.Locked(data) is { } failure) return failure;
-        if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary")
+        if (kind == "dm-date-rewind") return DateHistoryRewind.Apply(data, person, command);
+        if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary" or "dm-memory-add" or "dm-memory-edit" or "dm-memory-delete")
             return PrivateMessages.Manage(data, c, kind, command);
         switch (kind)
         {

@@ -31,6 +31,12 @@ public sealed class DateMemoryRecorder(DateSceneMemory memory)
     public DateMemoryFrame? LastFrame { get; private set; } = memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault() ?? memory.Initial;
     public void Sync(PrivateConversation conversation)
     {
+        if (Memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id)) > 0)
+        {
+            Dirty = true;
+            LastFrame = Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault() ?? Memory.Initial;
+        }
+        foreach (string id in _seen.Keys.Where(conversation.RewoundDateTurns.Contains).ToArray()) _seen.Remove(id);
         foreach (var turn in conversation.Turns.Where(t => t.Scene?.OfferId == Memory.OfferId && !t.Scene.Ending))
         {
             var signature = (turn.User, turn.Reply, turn.Status, turn.ReplyDeleted);
@@ -44,6 +50,7 @@ public sealed class DateMemoryRecorder(DateSceneMemory memory)
             string user = turn.UserDeleted || turn.Scene!.Opening || turn.Scene.GameEvent.Length > 0 ? "" : turn.User;
             if (entry.User != user) entry.Choice = false;
             entry.User = user;
+            DateSceneExtensions.Current?.RecordTurn(entry, turn.Scene!);
             if (PendingChoice.Length > 0 && entry.User == PendingChoice) { entry.Choice = true; PendingChoice = ""; }
             entry.Complete = turn.Status == "complete" && !turn.ReplyDeleted;
             if (entry.Complete)
@@ -74,7 +81,7 @@ public sealed class DateMemoryPerson
     public string Default { get; set; } = "";
     public Dictionary<string, string> Emotions { get; set; } = [];
 }
-public sealed class DateMemoryTurn
+public sealed class DateMemoryTurn : ExtensibleData
 {
     public string Id { get; set; } = "";
     public string User { get; set; } = "";
@@ -125,7 +132,8 @@ public static class DateSceneMemories
     {
         string path = FilePath(data, offer);
         if (!File.Exists(path)) return null;
-        var memory = JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(path), PortraitDesigns.Json);
+        using var input = File.OpenRead(path);
+        var memory = JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json);
         if (memory == null || memory.Version != 1 || memory.OfferId != offer) throw new InvalidDataException("约会回忆格式无效。");
         ReconcileDeletedReplies(data, memory);
         return memory;
@@ -141,6 +149,7 @@ public static class DateSceneMemories
     {
         var conversation = PrivateMessages.Mailbox(data).Conversations.GetValueOrDefault(memory.Host);
         if (conversation == null) return;
+        memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id));
         foreach (var turn in conversation.Turns.Where(t => t.Scene?.OfferId == memory.OfferId && t.ReplyDeleted)) RemoveReply(memory, turn.Id);
     }
     public static void Save(CareerData data, DateSceneMemory memory)
@@ -149,11 +158,17 @@ public static class DateSceneMemories
         ReconcileDeletedReplies(data, memory);
         string path = FilePath(data, memory.OfferId); Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         string temporary = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
-        try { File.WriteAllText(temporary, JsonSerializer.Serialize(memory, PortraitDesigns.Json), new UTF8Encoding(false)); File.Move(temporary, path, true); Cache.Remove(DirectoryPath(data)); }
+        try
+        {
+            using (var output = new FileStream(temporary, FileMode.CreateNew, System.IO.FileAccess.Write, FileShare.Read))
+                JsonSerializer.Serialize(output, memory, PortraitDesigns.Json);
+            File.Move(temporary, path, true); Cache.Remove(DirectoryPath(data));
+        }
         finally { if (File.Exists(temporary)) File.Delete(temporary); }
     }
     public static void Delete(CareerData data, string offer)
     {
+        DateSceneExtensions.Current?.DeleteMemory(data, offer);
         File.Delete(FilePath(data, offer)); Cache.Remove(DirectoryPath(data));
     }
     public static List<DateSceneMemory> ForPerson(CareerData data, string person, out string warning)
@@ -168,20 +183,22 @@ public static class DateSceneMemories
             {
                 try
                 {
-                    var memory = JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(file.FullName), PortraitDesigns.Json);
+                    using var input = file.OpenRead();
+                    var memory = JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json);
                     if (memory is { Version: 1 } && memory.Turns.Any(t => t.User.Length > 0 || t.Lines.Count > 0)) result.Add(memory);
                 }
                 catch (Exception e) { errors.Add("一份回忆读取失败：" + e.Message); }
             }
-            Cache[directory] = cached = (stamp, result, string.Join("\n", errors));
+            Cache.Clear(); Cache[directory] = cached = (stamp, result, string.Join("\n", errors));
         }
         warning = cached.Warning;
-        foreach (var memory in cached.Memories) ReconcileDeletedReplies(data, memory);
         var conversations = PrivateMessages.Mailbox(data).Conversations;
         var deleted = conversations.Values.SelectMany(c => c.DeletedDateDiaries).ToHashSet();
-        return cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId)
+        var selected = cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId)
             && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList();
+        foreach (var memory in selected) ReconcileDeletedReplies(data, memory);
+        return selected;
     }
-    public static DateSceneLine CopyLine(DateSceneLine line) => new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background };
-    public static bool SameLine(DateSceneLine a, DateSceneLine b) => a.Speaker == b.Speaker && a.Narration == b.Narration && a.Emotion == b.Emotion && a.Background == b.Background && a.Text == b.Text;
+    public static DateSceneLine CopyLine(DateSceneLine line) => new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background, SceneContinuation = line.SceneContinuation, Extra = line.CopyExtra() };
+    public static bool SameLine(DateSceneLine a, DateSceneLine b) => a.Speaker == b.Speaker && a.Narration == b.Narration && a.Emotion == b.Emotion && a.Background == b.Background && a.Text == b.Text && a.SceneContinuation == b.SceneContinuation && ExtensibleData.SameExtra(a, b);
 }

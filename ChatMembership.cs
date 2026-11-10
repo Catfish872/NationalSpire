@@ -5,6 +5,7 @@ public sealed class GroupDeparture
     public long ThroughOrder { get; set; }
     public List<PrivateSummary> SmallSummaries { get; set; } = [];
     public List<PrivateSummary> BigSummaries { get; set; } = [];
+    public List<ManualChatMemory> ManualMemories { get; set; } = [];
 }
 
 /// <summary>会话入口管理与人物可读取的群聊时间范围共用同一份成员资料。</summary>
@@ -31,7 +32,7 @@ public static class ChatMembership
         {
             c.Forgotten = true;
             foreach (var offer in c.Offers) offer.MemoryDeleted = true;
-            c.Turns.Clear(); c.SmallSummaries.Clear(); c.BigSummaries.Clear(); c.ContextStart = 0;
+            c.Turns.Clear(); c.SmallSummaries.Clear(); c.BigSummaries.Clear(); c.ManualMemories.Clear(); c.ContextStart = 0;
             c.SummaryStatus = c.SummaryError = c.SummaryRequest = ""; c.SeenCount = 0; c.MemoryRevision++;
             c.Proactive.Unanswered = 0;
             Invalidate(d, [c.PersonId]);
@@ -47,7 +48,8 @@ public static class ChatMembership
         {
             if (person == GroupChats.Human(d) || !g.Members.Contains(person)) return "请选择其他群成员。";
             if (action == "kick") g.Departures[person] = new() { ThroughOrder = d.Chats.Order,
-                SmallSummaries = g.SmallSummaries.ToList(), BigSummaries = g.BigSummaries.ToList() };
+                SmallSummaries = g.SmallSummaries.ToList(), BigSummaries = g.BigSummaries.ToList(),
+                ManualMemories = g.ManualMemories.Select(m => new ManualChatMemory { Id = m.Id, Text = m.Text, Day = m.Day, Order = m.Order }).ToList() };
             else { g.Departures.Remove(person); g.MemoryStarts[person] = d.Chats.Order + 1; Invalidate(d, [person]); }
             g.Members.Remove(person);
             g.Entries.Add(new() { Order = GroupChats.NextOrder(d), Day = d.Day, Author = person, Notice = true, Text = GroupChats.Name(d, person) + "已离开群聊" });
@@ -58,9 +60,9 @@ public static class ChatMembership
             if (action == "forget")
             {
                 Invalidate(d, g.Members.Concat(g.Departures.Keys).ToArray());
-                g.Forgotten = true; g.Turns.Clear(); g.Entries.Clear(); g.SmallSummaries.Clear(); g.BigSummaries.Clear();
+                g.Forgotten = true; g.Turns.Clear(); g.Entries.Clear(); g.SmallSummaries.Clear(); g.BigSummaries.Clear(); g.ManualMemories.Clear();
                 g.SummarizedThrough = 0; g.SummaryError = g.SummaryStatus = ""; g.Departures.Clear();
-                foreach (var lane in g.Interactions.Values) { lane.Turns.Clear(); lane.SmallSummaries.Clear(); lane.BigSummaries.Clear(); }
+                foreach (var lane in g.Interactions.Values) { lane.Turns.Clear(); lane.SmallSummaries.Clear(); lane.BigSummaries.Clear(); lane.ManualMemories.Clear(); }
             }
         }
         g.Revision++; return null;

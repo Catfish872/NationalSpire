@@ -75,6 +75,12 @@ public static class PrivateInteractionHistory
 
     public static void Record(CareerData d, string id, PrivateTurn turn, JsonObject before, bool contract = false)
     {
+        if (before["relation"]?[nameof(PrivateRelation.Favour)] is JsonValue previous && previous.TryGetValue<int>(out int initial))
+        {
+            var relation = PrivateMessages.Relation(d,id);
+            relation.LastFavourChange = relation.Favour != initial ? relation.Favour-initial :
+                before["relation"]?[nameof(PrivateRelation.LastFavourChange)]?.GetValue<int>();
+        }
         if (contract && d.LocalHumanId.Length > 0)
         {
             var oldIds = before["events"]!.AsArray().Select(e => e!["Id"]!.GetValue<string>()).ToHashSet();
@@ -83,6 +89,22 @@ public static class PrivateInteractionHistory
         var after = Capture(d, id, contract, before.ContainsKey("goodQuantities"));
         var change = Difference(before, after);
         if (change is { } pair) turn.InteractionUndo.Add(new() { Before = (JsonObject)pair.Before!, After = (JsonObject)pair.After!, Contract = contract });
+    }
+
+    internal static int? LatestFavourChange(PrivateConversation conversation, PrivateRelation? relation)
+    {
+        if (relation == null || relation.LastFavourChange.HasValue) return relation?.LastFavourChange;
+        // Earlier saves keep before/after values with the reply that applied the change.
+        foreach (var turn in conversation.Turns.AsEnumerable().Reverse().Where(t => !t.ReplyDeleted))
+        foreach (var undo in turn.InteractionUndo.AsEnumerable().Reverse())
+        {
+            if (undo.PersonId.Length > 0 && undo.PersonId != conversation.PersonId) continue;
+            if (undo.After["relation"]?["Favour"] is JsonValue after && after.TryGetValue<int>(out int current) &&
+                undo.Before["relation"]?["Favour"] is JsonValue before && before.TryGetValue<int>(out int prior))
+                return current == relation.Favour && current != prior ? current-prior : null;
+        }
+        var offer = conversation.Offers.LastOrDefault(o=>o.Kind=="favour" && o.State=="已确认" && o.FavourTargets.Count>0);
+        return offer != null && offer.FavourTargets[^1]==relation.Favour && offer.FavourBefore!=relation.Favour ? relation.Favour-offer.FavourBefore : null;
     }
 
     // 对象按字段、数组按稳定身份保存差异；不在每一轮复制完整人物或世界存档。

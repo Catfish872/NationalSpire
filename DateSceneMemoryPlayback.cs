@@ -57,35 +57,57 @@ public partial class DateSceneView
 public partial class DateMemoryPlayback : Control
 {
     public Action? Closed;
+    internal Action<Exception>? OpeningFailed;
     public Action<string>? DeleteReply;
     public Func<bool>? Blocked;
     public DateSceneMemory Memory { get; set; } = new();
-    private DateSceneView _view = null!;
+    protected DateSceneView _view = null!;
     private readonly Dictionary<string, Texture2D> _textures = [];
-    private readonly List<(DateSceneLine Line, string Name, bool Player, DateMemoryFrame Frame, string Turn, int Index)> _pages = [];
-    private int _index;
+    protected readonly List<(DateSceneLine Line, string Name, bool Player, DateMemoryFrame Frame, string Turn, int Index)> _pages = [];
+    protected int _index;
     private string _warning = "";
     public override void _Ready()
     {
+        try { OpenPlayback(); }
+        catch (Exception e)
+        {
+            GD.PushWarning("[NationalSpire] 回忆打开失败：" + e.Message);
+            Hide();
+            Callable.From(() =>
+            {
+                if (!IsInstanceValid(this) || IsQueuedForDeletion()) return;
+                OpeningFailed?.Invoke(e);
+                QueueFree();
+            }).CallDeferred();
+        }
+    }
+    private void OpenPlayback()
+    {
         Name = "DateMemoryPlayback"; SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); MouseFilter = MouseFilterEnum.Stop; ZIndex = 32;
         BuildPages();
-        _view = new DateSceneView { TextSpeed = 75, Advance = Next, Exit = Close, HistoryText = History, HistoryEntries = HistoryEntries,
-            DeleteHistoryReply = DeleteReply, Blocked = Blocked };
+        _view = DateSceneExtensions.NewView(); _view.TextSpeed = 75; _view.Advance = Next; _view.Exit = Close;
+        _view.HistoryText = History; _view.HistoryEntries = HistoryEntries; _view.DeleteHistoryReply = DeleteReply;
+        _view.Blocked = Blocked; _view.JumpHistory = JumpToTurn;
         AddChild(_view); _view.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        _view.MemoryControls(() => { _index = Math.Max(0, _index - 1); ShowPage(); }, () => { _index = 0; ShowPage(); });
-        ShowPage();
+        _view.MemoryControls(() => { PlaybackInterrupted(); _index = Math.Max(0, _index - 1); ShowPage(); }, () => { PlaybackInterrupted(); _index = 0; ShowPage(); });
+        PlaybackReady(); ShowPage();
     }
+    protected virtual void PlaybackReady() { }
+    protected virtual void PlaybackInterrupted(bool clearWork = false) { }
+    protected virtual void PageShown() { }
     private void BuildPages()
     {
         _pages.Clear();
         var last = Memory.Initial ?? new DateMemoryFrame { Cast = Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList(), Speaker = Memory.Host };
         foreach (var turn in Memory.Turns)
         {
+            var lines = turn.Lines.Select(DateSceneMemories.CopyLine).ToList();
+            DateScenes.RestoreSentenceEmotions(lines);
             var roster = new DateCastRoster();
             if (turn.User.Length > 0) _pages.Add((new() { Text = turn.User }, Memory.Player + (turn.Choice ? " · 选择回应" : ""), true, turn.UserFrame ?? last, turn.Id, -1));
             for (int index = 0; index < turn.Lines.Count; index++)
             {
-                var line = turn.Lines[index];
+                var line = lines[index];
                 if (string.IsNullOrWhiteSpace(line.Text)) continue;
                 roster.Observe(line, Memory.Host);
                 var frame = turn.Frames.GetValueOrDefault(index);
@@ -100,6 +122,17 @@ public partial class DateMemoryPlayback : Control
                         frame.Speaker = speaker; frame.Portraits[speaker] = person.Emotions.GetValueOrDefault(line.Emotion, person.Default);
                     }
                     if (Memory.Backgrounds.TryGetValue(line.Background, out string? background)) frame.Background = background;
+                }
+                else if (line.Emotion != turn.Lines[index].Emotion && !line.Narration)
+                {
+                    // Repair a proven shared-Scene split in a display copy while
+                    // retaining the recorded frame and its other presentation values.
+                    string speaker = Memory.People.ContainsKey(line.Speaker) ? line.Speaker : Memory.Host;
+                    if (Memory.People.TryGetValue(speaker, out var person) && person.Emotions.TryGetValue(line.Emotion, out string? portrait))
+                    {
+                        frame = JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(frame))!;
+                        frame.Portraits[speaker] = portrait;
+                    }
                 }
                 last = frame;
                 _pages.Add((line, line.Narration ? "" : Memory.People.GetValueOrDefault(line.Speaker)?.Name ?? Memory.People.GetValueOrDefault(frame.Speaker)?.Name ?? "", false, frame, turn.Id, index));
@@ -118,19 +151,27 @@ public partial class DateMemoryPlayback : Control
     {
         if (_pages.Count == 0)
         {
+            PlaybackInterrupted();
             _view.ShowMemoryFrame(new(), new() { Narration = true, Text = "这份回忆中尚无对话记录。" }, "", false, Memory.People, Texture);
             return;
         }
         var page = _pages[_index];
+        if (page.Player || page.Line.Narration) PlaybackInterrupted();
         _view.ShowMemoryFrame(page.Frame, page.Line, page.Name, page.Player, Memory.People, Texture);
         try { _view.Background(page.Frame.Background, true, page.Frame.Blur); }
         catch (Exception e) { _view.Background("", false); _warning = "回忆背景读取失败：" + e.Message; }
         _view.Status.Text = _warning.Length > 0 ? _warning : $"回忆 · {_index + 1}/{_pages.Count}";
+        PageShown();
     }
     private void Next()
     {
         if (_index + 1 < _pages.Count) { _index++; ShowPage(); }
         else _view.Status.Text = "回忆已播放完毕 · 可从头回看或返回日记";
+    }
+    private void JumpToTurn(string id)
+    {
+        int page = _pages.FindIndex(p => p.Turn == id);
+        if (page >= 0) { PlaybackInterrupted(); _index = page; ShowPage(); }
     }
     private string History()
     {
@@ -138,17 +179,18 @@ public partial class DateMemoryPlayback : Control
         foreach (var page in _pages.Take(_index + 1)) text.AppendLine(page.Name.Length > 0 ? page.Name : "旁白").AppendLine(DateScenes.DisplayText(page.Line)).AppendLine();
         return text.ToString();
     }
-    private IReadOnlyList<DateHistoryEntry> HistoryEntries() => _pages.Take(_index + 1)
+    protected IReadOnlyList<DateHistoryEntry> HistoryEntries() => _pages.Take(_index + 1)
         .GroupBy(p => (p.Turn, p.Player)).Select(g => new DateHistoryEntry(g.Key.Turn,
             string.Join("\n\n", g.Select(p => (p.Name.Length > 0 ? p.Name : "旁白") + "\n" + DateScenes.DisplayText(p.Line))), !g.Key.Player)).ToList();
     public void RefreshHistory()
     {
+        PlaybackInterrupted(true);
         var anchor = _pages.Count > 0 ? (_pages[_index].Turn, _pages[_index].Index) : ("", -1);
         BuildPages(); int found = _pages.FindIndex(p => (p.Turn, p.Index) == anchor);
         _index = found >= 0 ? found : Math.Clamp(_index, 0, Math.Max(0, _pages.Count - 1));
         ShowPage(); _view.RefreshHistory();
     }
-    public void GoBack() => _view.GoBack();
+    public void GoBack() { if (IsInstanceValid(_view)) _view.GoBack(); }
     public void Close() { Hide(); Closed?.Invoke(); QueueFree(); }
     public override void _ExitTree() { foreach (var texture in _textures.Values) texture.Dispose(); }
 }

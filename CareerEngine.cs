@@ -253,12 +253,12 @@ public static class CareerEngine
             player = new RunPerformance(runClear, playerFloor, playerSeconds),
             opponent = new RunPerformance(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value),
             comparison, cards, deckSummary, evidence });
-        if (!confirmFailure && !forfeit && (comparison < 0 || !runClear && comparison > 0) && m.DateGame == null)
+        if (!confirmFailure && !forfeit && m.DateGame == null && (comparison <= 0 || !runClear))
         {
             if (d.Failure != null) return;
             d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
                 CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
-                Day = d.Day, Event = m.Event, Outcome = comparison > 0 ? "获胜" : "失利", Character = character, CharacterId = characterId,
+                Day = d.Day, Event = m.Event, Outcome = comparison switch { < 0 => "失利", 0 => "平局", _ => "获胜" }, Character = character, CharacterId = characterId,
                 Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
                 Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, Simulated = simulated, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
             d.PendingMatchId = null; d.PendingSince = 0;

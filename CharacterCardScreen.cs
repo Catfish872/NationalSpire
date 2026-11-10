@@ -6,7 +6,14 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private Control? _characterCardOverlay;
+    private bool _characterCardInPage;
     private Action? _closeCharacterCard;
+    private void OpenProfileCreator()
+    {
+        if (_tab == "创建角色" || _multiplayer?.Host == false) return;
+        if (ViewData.PendingMatchId != null) { Notice("请在比赛结束后编辑角色。", true); return; }
+        Visit(() => { _tab = "创建角色"; _personId = null; });
+    }
     private bool CanEditCharacter(CareerData data, string id) => id == "player" || !data.HumanIds.Contains(id) && _multiplayer?.Host != false;
     private void OpenCharacterCard(CareerData data, string? id, CareerPerson? imported = null)
         => OpenCharacterCardCore(data, id, imported, null);
@@ -28,16 +35,19 @@ public partial class CareerScreen
             if (pendingDesign != null && pendingAssets != null) installation = new(data, draft.Id, pendingDesign, pendingAssets);
             else if (package != null) installation = new(data, package);
         }
-        var previousFocus = GetViewport().GuiGetFocusOwner();
+        bool inPage = create && _tab == "创建角色";
+        var previousFocus = inPage ? null : GetViewport().GuiGetFocusOwner();
         IEnumerable<Control> Controls(Node node) => node.GetChildren().SelectMany(child =>
             (child is Control c ? new[] { c } : Array.Empty<Control>()).Concat(Controls(child)));
-        var focus = Controls(_stage).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode)).ToList();
+        var focus = (inPage ? Enumerable.Empty<Control>() : Controls(_stage)).Where(c => c.FocusMode != FocusModeEnum.None).Select(c => (Control: c, Mode: c.FocusMode)).ToList();
         foreach (var entry in focus) entry.Control.FocusMode = FocusModeEnum.None;
         var shade = new ColorRect { Name = "CharacterCardEditor", Color = new(0, 0, 0, .84f), MouseFilter = MouseFilterEnum.Stop, ZIndex = 15 };
-        _characterCardOverlay = shade; _stage.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        _characterCardOverlay = shade; _characterCardInPage = inPage;
+        if (inPage) Put(_stage, shade, 148, 133, 1423, 840);
+        else { _stage.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect); }
         var margin = new MarginContainer(); shade.AddChild(margin); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        foreach (string edge in new[] { "left", "right" }) margin.AddThemeConstantOverride("margin_" + edge, 100);
-        foreach (string edge in new[] { "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 45);
+        foreach (string edge in new[] { "left", "right" }) margin.AddThemeConstantOverride("margin_" + edge, inPage ? 0 : 100);
+        foreach (string edge in new[] { "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, inPage ? 0 : 45);
         var panel = Card(); margin.AddChild(panel); var root = Inner(panel); root.AddThemeConstantOverride("separation", 16);
         var header = new HBoxContainer(); header.AddThemeConstantOverride("separation", 22); root.AddChild(header);
         AvatarArt AutomaticPortrait()
@@ -226,15 +236,24 @@ public partial class CareerScreen
         {
             installation?.Dispose(); installation = null;
             if (!IsInstanceValid(shade) || shade.IsQueuedForDeletion()) return;
-            shade.QueueFree(); _characterCardOverlay = null; _closeCharacterCard = null;
+            shade.Hide(); shade.QueueFree(); _characterCardOverlay = null; _characterCardInPage = false; _closeCharacterCard = null;
             foreach (var entry in focus) if (IsInstanceValid(entry.Control) && !entry.Control.IsQueuedForDeletion()) entry.Control.FocusMode = entry.Mode;
             if (IsInstanceValid(previousFocus) && previousFocus.IsInsideTree() && !previousFocus.IsQueuedForDeletion() && previousFocus.IsVisibleInTree()) previousFocus.GrabFocus();
         }
-        _closeCharacterCard = CloseEditor;
+        void LeaveEditor()
+        {
+            CloseEditor();
+            if (inPage && _tab == "创建角色") Back();
+        }
+        _closeCharacterCard = LeaveEditor;
         void ShowSavedCard()
         {
             installation?.Commit(); installation = null; CloseEditor();
-            if (_tab == "选手档案" && _personId == edit.Target)
+            if (inPage)
+            {
+                _tab = "选手档案"; _personId = edit.Target; _scroll.ScrollVertical = 0; Render();
+            }
+            else if (_tab == "选手档案" && _personId == edit.Target)
             {
                 int position = _scroll.ScrollVertical; Render(); _ = RestoreScrollAsync(position, _renderVersion);
             }
@@ -332,7 +351,7 @@ public partial class CareerScreen
             catch (Exception e) { if (IsInstanceValid(status)) { status.Text = "导出失败：" + e.Message; status.Modulate = new Color("f08080"); } }
         }, 150); exportDesign.Name = "ExportCharacterDesign"; actions.AddChild(exportDesign);
         actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-        var cancelButton = Button("取消", CloseEditor, 150); cancelButton.Name = "CharacterCancel"; actions.AddChild(cancelButton);
+        var cancelButton = Button("取消", LeaveEditor, 150); cancelButton.Name = "CharacterCancel"; actions.AddChild(cancelButton);
         actions.AddChild(saveButton);
         shade.TreeExiting += () => { installation?.Dispose(); installation = null; };
     }

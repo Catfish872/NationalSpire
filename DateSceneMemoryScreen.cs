@@ -4,11 +4,11 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private DateMemoryRecorder? _dateMemory;
+    protected DateMemoryRecorder? _dateMemory;
     private string _dateMemoryKey = "";
     private bool _dateRecording;
     private readonly Dictionary<ulong, string> _dateMemoryImages = [];
-    private DateMemoryPlayback? _dateMemoryPlayback;
+    protected DateMemoryPlayback? _dateMemoryPlayback;
 
     private string RememberDateImage(Texture2D texture)
     {
@@ -47,13 +47,14 @@ public partial class CareerScreen
             _dateMemory.Memory.People[person] = entry; _dateMemory.Dirty = true;
         }
     }
-    private void SyncDateMemory()
+    protected void SyncDateMemory()
     {
         if (_dateMemory == null || _datePerson.Length == 0 || DateSceneMemories.FilePath(ViewData, _dateOffer) != _dateMemoryKey) return;
         _dateMemory.Sync(PrivateMessages.Conversation(ViewData, _datePerson));
     }
     private void CaptureDateMemory()
     {
+        if (_dateHistoryTurn != null) return;
         if (_dateMemory == null || _dateView == null || _dateAssets == null || _dateIndex >= _dateLines.Count) return;
         try
         {
@@ -111,17 +112,34 @@ public partial class CareerScreen
             catch (Exception e) { record.SetPressedNoSignal(_dateRecording); Notice(e.Message, true); }
         };
     }
-    private void OpenDateMemory(CareerData data, string person, DateSceneMemory memory)
+    protected void OpenDateMemory(CareerData data, string person, DateSceneMemory memory)
     {
-        if (_dateMemoryPlayback != null) return;
+        if (IsInstanceValid(_dateMemoryPlayback) && _dateMemoryPlayback!.IsInsideTree() && !_dateMemoryPlayback.IsQueuedForDeletion()) return;
         _cancelDialog?.Invoke();
-        var replay = new DateMemoryPlayback { Memory = memory, Blocked = () => _dialogOverlay != null };
+        AttachMemoryPlayback(data, person, memory, CreateDateMemoryPlayback(data, memory));
+    }
+
+    private void AttachMemoryPlayback(CareerData data, string person, DateSceneMemory memory, DateMemoryPlayback replay)
+    {
         replay.DeleteReply = id => DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory);
         _dateMemoryPlayback = replay;
+        replay.TreeExited += () => { if (_dateMemoryPlayback == replay) _dateMemoryPlayback = null; };
+        replay.OpeningFailed = error =>
+        {
+            if (_dateMemoryPlayback != replay || !IsInsideTree() || IsQueuedForDeletion() || ViewData.WorldId != data.WorldId) return;
+            _dateMemoryPlayback = null;
+            ShowCareerDialog("回忆打开失败", error.Message, () =>
+            {
+                _cancelDialog?.Invoke();
+                DateDiaryEntryDialog(ViewData, person, memory.OfferId);
+                return true;
+            }, "返回日记", showCancel: false);
+        };
         replay.Closed = () =>
         {
+            if (_dateMemoryPlayback != replay) return;
             _dateMemoryPlayback = null;
-            if (IsInsideTree() && CareerStore.IsCurrent(data)) DateDiaryEntryDialog(data, person, memory.OfferId);
+            if (IsInsideTree() && !IsQueuedForDeletion() && ViewData.WorldId == data.WorldId) DateDiaryEntryDialog(ViewData, person, memory.OfferId);
         };
         _stage.AddChild(replay);
     }

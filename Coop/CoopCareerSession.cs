@@ -11,6 +11,7 @@ public sealed class CoopCareerSession : ICareerSession
     private string _presence = "";
     private CoopCommand? _pending;
     private int _queuedCeremony;
+    private Action? _queuedReadAll;
     private Action? _accepted;
     private bool _disposed;
     public CareerData Data { get; private set; } = null!;
@@ -42,6 +43,11 @@ public sealed class CoopCareerSession : ICareerSession
     public bool Refresh()
     {
         if (!Alive) return false;
+        if (_pending == null && _queuedReadAll is { } afterRead)
+        {
+            _queuedReadAll = null;
+            Send("read-all", accepted: afterRead);
+        }
         if (_pending == null && _queuedCeremony > 0)
         {
             int season = _queuedCeremony; _queuedCeremony = 0;
@@ -72,6 +78,11 @@ public sealed class CoopCareerSession : ICareerSession
     public void Send(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)
     {
         if (!Alive) { Message?.Invoke("房间已断开，请返回队伍重新加入。", true); return; }
+        if (kind == "read-all" && _pending != null)
+        {
+            if (_pending.Kind != kind) _queuedReadAll = accepted ?? (() => { });
+            return;
+        }
         if (kind == "ceremony-read" && _pending != null)
         { if (int.TryParse(target, out int season)) _queuedCeremony = Math.Max(_queuedCeremony, season); return; }
         if (_pending != null) { Message?.Invoke("正在同步上一项操作。", false); return; }

@@ -8,7 +8,7 @@ public partial class CareerScreen
     internal static void SelectNpcGeneration(Control parent, AiOptions ai, Func<NpcGenerationSetup, Task> selected, Action? cancelled = null)
     {
         var screen = new CareerScreen { Theme = CareerVisuals.CreateTheme() }; parent.AddChild(screen); screen.SetProcess(false); screen.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        screen._stage = new Control(); screen.AddChild(screen._stage); screen.Resized += screen.FitStage; screen.FitStage();
+        screen._stage = LandscapeViewport.Mount(screen);
         bool complete = false;
         screen.OpenNpcGeneration(ai, _ => { }, selectedAsync: async plan => { await selected(plan); complete = true; }, team: true);
         screen._dialogOverlay!.TreeExiting += () => { if (!complete) cancelled?.Invoke(); if (!screen.IsQueuedForDeletion()) screen.QueueFree(); };

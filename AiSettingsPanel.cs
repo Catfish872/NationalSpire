@@ -15,18 +15,26 @@ public static class AiSettingsPanel
         return picker;
     }
 
+    internal static (VBoxContainer Left, VBoxContainer Right) Columns(VBoxContainer box)
+    {
+        var row = new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        row.AddThemeConstantOverride("separation", 22); box.AddChild(row);
+        VBoxContainer Add(float share, string fill, string edge, int gap)
+        {
+            var panel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = share };
+            panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box(fill, edge, 10, 18)); row.AddChild(panel);
+            var column = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+            column.AddThemeConstantOverride("separation", gap); panel.AddChild(column);
+            return column;
+        }
+        return (Add(1.2f, "102330", "385565", 10), Add(1, "122735", "426575", 13));
+    }
+
     public static Label Build(VBoxContainer box, AiOptions options, Action save, Action generate, Action prompts,
         Action<string, bool> notice, Action? editing = null, string saveText = "保存设置", Action<Action>? confirmSwitch = null)
     {
         AiRouting.Ensure(options);
-        var columns = new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-        columns.AddThemeConstantOverride("separation", 22); box.AddChild(columns);
-        var editorPanel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1.2f };
-        editorPanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102330", "385565", 10, 18)); columns.AddChild(editorPanel);
-        var editor = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; editor.AddThemeConstantOverride("separation", 10); editorPanel.AddChild(editor);
-        var routePanel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-        routePanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 10, 18)); columns.AddChild(routePanel);
-        var routes = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }; routes.AddThemeConstantOverride("separation", 13); routePanel.AddChild(routes);
+        var (editor, routes) = Columns(box);
         string selected = AiRouting.Default; bool loading = false, creating = false, deleteKey = false;
         string? draftKey = AiService.ProfileKey(selected);
         Label Text(string value)

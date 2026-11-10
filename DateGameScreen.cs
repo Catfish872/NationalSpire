@@ -7,13 +7,11 @@ public partial class CareerScreen
 {
     private Action? _dateRunResume;
     private Button? _dateGameAction, _dateResumeGame;
-    private bool _dateManualGameInput, _datePhoneManualInput;
-    private string _dateInputTurn = "", _datePhonePerson = "", _datePhoneOffer = "";
-    private Button? _datePhoneReturn;
+    private bool _dateManualGameInput;
+    private string _dateInputTurn = "";
     private void AddDateGameActions()
     {
         _dateGameAction = _dateView!.AddInputAction("DateGameInvite", AffectionArt.Texture("calendar-crossed-swords"), InviteDateGame, "发起对局邀请");
-        _dateView.AddInputAction("DatePhone", AffectionArt.Texture("date-phone"), DatePhone, "打开讯息");
         _dateResumeGame = _dateView.ExitButton;
         _dateView.Resume = ResumeDateGame;
         TickDateGameActions();
@@ -67,29 +65,6 @@ public partial class CareerScreen
             level = new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,
                 Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }; row.AddChild(level);
         });
-    }
-    private void DatePhone()
-    {
-        if (_dateView?.InputMode != true) return;
-        string person = _dateView.SpeakerId.Length > 0 ? _dateView.SpeakerId : _datePerson;
-        SaveDateGameBookmark();
-        PrivateCommand("dm-date-pause", new() { Offer = _dateOffer }, () =>
-        {
-            _datePhonePerson = _datePerson; _datePhoneOffer = _dateOffer;
-            _datePhoneManualInput = _dateManualGameInput;
-            var resume = _dateRunResume; _dateRunResume = null;
-            CloseDateScene(); _dateRunResume = resume; OpenPrivateMessages(person);
-            if (_datePhoneReturn != null) _datePhoneReturn.Show();
-        });
-    }
-    private void ReturnFromDatePhone()
-    {
-        if (_datePhonePerson.Length == 0 || _datePhoneOffer.Length == 0) return;
-        string person = _datePhonePerson, offer = _datePhoneOffer;
-        var conversation = PrivateMessages.Conversation(ViewData, person);
-        if (!conversation.Offers.Any(o => o.Id == offer && DateScenes.Available(ViewData, o, conversation)))
-        { Notice("这场约会已经结束。", false); _datePhoneReturn?.Hide(); return; }
-        OpenPrivateMessages(person); OpenDateScene(offer, inputOnly: _datePhoneManualInput);
     }
     private void ShowDateInput(bool manualGame = false, bool keepWaiting = false)
     {

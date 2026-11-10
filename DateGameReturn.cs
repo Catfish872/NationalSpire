@@ -1,7 +1,6 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes;
-using MegaCrit.Sts2.Core.Nodes.Screens.GameOverScreen;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Runs;
@@ -13,26 +12,41 @@ namespace NationalSpire;
 public static class DateGameReturn
 {
     private static int _returning;
+    private static WeakReference<CareerData>? _finishedData;
+    private static string _finishedId = "";
+    internal static void RecordBoundHistory(CareerData d, CareerMatch match)
+    {
+        if (d.PendingSettlementId!=match.Id && d.Failure?.Result.MatchId!=match.Id) return;
+        _finishedData = new(d); _finishedId = match.Id;
+    }
+    private static string RecordedId(CareerData d) =>
+        _finishedData?.TryGetTarget(out var origin) == true && ReferenceEquals(origin, d) &&
+        (_finishedId == d.PendingSettlementId || _finishedId == d.Failure?.Result.MatchId) ? _finishedId : "";
+
+    internal static string ReturnId(CareerData d)
+    {
+        string id = RecordedId(d);
+        // When leaving a live run only its own history can claim the menu. At startup a saved date may resume.
+        return id.Length > 0 || Transitioning ? id : Pending(d)?.Id ?? "";
+    }
+    internal static void Opened() { _finishedData = null; _finishedId = ""; }
     internal static bool Transitioning => _returning > 0;
+    internal static void BeginFinalReturn() => _returning++;
+    internal static void EndFinalReturn() => _returning--;
     internal static async Task AfterMainMenu(Task original, NGame game)
     {
-        var data = CareerStore.Data;
-        if (Pending(data) == null) { await original; return; }
-        _returning++;
         try
         {
             await original;
+            // A newly mounted menu is handled in _Ready, inside the native transition. Also cover a reused menu.
             try
             {
-                // 原版完成旧场景释放和新菜单挂载后，统一恢复约会并入队战后回复。
-                if (!GodotObject.IsInstanceValid(game) || !game.IsInsideTree()) return;
-                await game.ToSignal(game.GetTree(), SceneTree.SignalName.ProcessFrame);
-                if (_returning == 1 && GodotObject.IsInstanceValid(game) && CareerStore.IsCurrent(data) && game.MainMenu is { } menu)
+                if (!Coop.CoopRuntime.Bound && GodotObject.IsInstanceValid(game) && game.IsInsideTree() && game.MainMenu is { } menu)
                     CareerScreen.ReturnToDate(menu);
             }
-            catch (Exception e) { Diagnostics.Error("date.game.restore", e); }
+            catch (Exception e) { Diagnostics.Error("match.return.menu", e); }
         }
-        finally { _returning--; }
+        finally { EndFinalReturn(); }
     }
     internal static CareerMatch? SavedMatch(CareerData data, string host, string offer, SerializableRun saved)
     {
@@ -59,68 +73,41 @@ public static class DateGameReturn
         return () => RuntimeApi.Invoke(resume, menu, (object?)null);
     }
     public static CareerMatch? Pending(CareerData data) => data.Matches.LastOrDefault(m => m.DateGame?.ReturnPending == true && m.Status == "已结算");
-    private static bool CurrentRun() => Pending(CareerStore.Data) is { } match && LiveRunBridge.Current?.DateGameMatchId == match.Id;
-    internal static async Task AfterIntro(Task original, NGameOverScreen screen)
-    {
-        await original;
-        if (!CurrentRun() || !GodotObject.IsInstanceValid(screen) || !screen.IsInsideTree()) return;
-        try
-        {
-            // 沿用原版的分数、徽章和发现流程；该方法的按钮参数只供信号签名使用。
-            if (AccessTools.Field(typeof(NGameOverScreen), "_isAnimatingSummary")?.GetValue(screen) is false)
-                AccessTools.Method(typeof(NGameOverScreen), "OpenSummaryScreen")!.Invoke(screen, [null]);
-        }
-        catch (Exception e) { Diagnostics.Error("date.game.summary", e); }
-    }
-    internal static async Task AfterSummary(Task original, NGameOverScreen screen)
-    {
-        await original;
-        if (!CurrentRun() || !GodotObject.IsInstanceValid(screen) || !screen.IsInsideTree()) return;
-        try { if (NGame.Instance is { } game) await game.ReturnToMainMenuAfterRun(); }
-        catch (Exception e) { Diagnostics.Error("date.game.return", e); }
-    }
 }
 
+// This is the native final return action, after the player's game-over screens and unlocks.
 [HarmonyPatch(typeof(NGame), nameof(NGame.ReturnToMainMenuAfterRun))]
 public static class DateGameMenuReturnPatch
 {
-    public static void Postfix(NGame __instance, ref Task __result)
-    { if (DateGameReturn.Pending(CareerStore.Data) != null) __result = DateGameReturn.AfterMainMenu(__result, __instance); }
-}
-
-[HarmonyPatch(typeof(NGameOverScreen), "AnimateIn")]
-public static class DateGameIntroPatch
-{
-    public static bool Prepare() => AccessTools.Method(typeof(NGameOverScreen), "OpenSummaryScreen") != null
-        && AccessTools.Method(typeof(NGameOverScreen), "AnimateIn")?.ReturnType == typeof(Task)
-        && AccessTools.Method(typeof(NGameOverScreen), "AnimateRunSummary")?.ReturnType == typeof(Task);
-    public static void Postfix(NGameOverScreen __instance, ref Task __result)
-    { if (DateGameReturn.Pending(CareerStore.Data) != null) __result = DateGameReturn.AfterIntro(__result, __instance); }
-}
-[HarmonyPatch(typeof(NGameOverScreen), "AnimateRunSummary")]
-public static class DateGameSummaryPatch
-{
-    public static bool Prepare() => DateGameIntroPatch.Prepare();
-    public static void Postfix(NGameOverScreen __instance, ref Task __result)
-    { if (DateGameReturn.Pending(CareerStore.Data) != null) __result = DateGameReturn.AfterSummary(__result, __instance); }
+    public static void Prefix() => DateGameReturn.BeginFinalReturn();
+    public static void Postfix(NGame __instance, ref Task __result) => __result = DateGameReturn.AfterMainMenu(__result, __instance);
+    public static void Finalizer(Exception? __exception)
+    {
+        if (__exception != null) DateGameReturn.EndFinalReturn();
+    }
 }
 
 public partial class CareerScreen
 {
     internal static void ReturnToDate(NMainMenu menu)
     {
-        var data = CareerStore.Data; var match = DateGameReturn.Pending(data);
-        if (match?.DateGame is not { } game || !IsInstanceValid(menu) || !menu.IsInsideTree() || Current != null) return;
+        var data=CareerStore.Data; string id=DateGameReturn.ReturnId(data);
+        if (id.Length==0 || !IsInstanceValid(menu) || !menu.IsInsideTree() || Current!=null) return;
+        OpenCareerView(menu, null, "结算", id);
+        if (Current != null) DateGameReturn.Opened();
+    }
+    private bool ResumeSettledDate(CareerData data, CareerMatch match)
+    {
+        var game=match.DateGame!;
         var c = PrivateMessages.Conversation(data, game.Host);
         if (!c.Offers.Any(o => o.Id == game.OfferId && DateScenes.Available(data, o, c)))
-        { game.ReturnPending = false; CareerStore.Save(data); return; }
-        OpenView(menu, null, "通讯");
-        if (Current is not { } screen) return;
-        screen.OpenPrivateMessages(game.Host);
-        screen.OpenDateSceneReady(game.OfferId, false, true, () =>
+        { game.ReturnPending=false; CareerStore.Save(data); return false; }
+        _tab="赛事"; _reviewId=""; Render(); OpenPrivateMessages(game.Host);
+        OpenDateSceneReady(game.OfferId, false, true, () =>
         {
-            screen.StartDateGameReply(match, "result");
-            Diagnostics.Record("date.game.restored", new { match = match.Id, offer = game.OfferId, visible = screen._dateView?.IsVisibleInTree() == true });
+            StartDateGameReply(match, "result");
+            Diagnostics.Record("date.game.restored", new { match = match.Id, offer = game.OfferId, visible = _dateView?.IsVisibleInTree() == true });
         });
+        return true;
     }
 }

@@ -238,6 +238,22 @@ public sealed partial class CoopCoordinator : IDisposable
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartEvent(sender, command);
         if (result.Outcome.Accepted && !result.Outcome.Duplicate) StartGroup(sender, command);
     }
+    internal async Task RenameSaveAsync(string id, string name)
+    {
+        if (!Host || World?.Id != id) throw new InvalidOperationException("请由当前房主修改生涯名称。");
+        var command = new CoopCommand(id, World.Epoch, Guid.NewGuid().ToString("N"), World.Revision, "rename-save", Text: name);
+        var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        void Reply(CoopReply reply)
+        {
+            if (reply.Id != command.Id) return;
+            if (reply.Outcome.Accepted) completion.TrySetResult(true);
+            else completion.TrySetException(new InvalidOperationException(reply.Outcome.Message));
+        }
+        Replied += Reply;
+        try { SubmitReady(command, _ => { }, error => completion.TrySetException(error)); await completion.Task; }
+        finally { Replied -= Reply; }
+    }
+
     public void Commit(CoopWorld world, byte[]? nativeSave, bool broadcast = true)
     {
         if (!Host || _closed || world.Owner != Self || World != null && World.Id != world.Id) throw new InvalidOperationException("无权提交这个世界。");

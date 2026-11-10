@@ -83,7 +83,9 @@ public static class CharacterDesignPackage
         }
         byte[] Bytes(string file, int limit)
         {
-            if (!entries.TryGetValue(file, out var entry) || entry.Length <= 0 || entry.Length > limit) throw new InvalidDataException("角色设计包缺少或超出大小限制：" + file);
+            if (!entries.TryGetValue(file, out var entry)) throw new InvalidDataException("角色设计包缺少文件：" + file);
+            if (entry.Length <= 0) throw new InvalidDataException("角色设计包中的文件为空：" + file);
+            if (entry.Length > limit) throw new InvalidDataException($"角色设计包中的文件超过{limit / (1024 * 1024)}MB限制：" + file);
             using var stream = entry.Open(); byte[] bytes = new byte[(int)entry.Length]; stream.ReadExactly(bytes); if (stream.ReadByte() != -1) throw new InvalidDataException("文件长度校验失败。"); return bytes;
         }
         byte[] metadata = Bytes("character-design.json", MaxMetadata);
@@ -117,8 +119,9 @@ public static class CharacterDesignPackage
             if (manifest.Version == 1) item.Emotion = legacyIds.OrderByDescending(id => id.Length).FirstOrDefault(id => MatchesEmotion(item.Id, id)) ?? item.Id;
             if (item.Emotion == null || !PortraitDesigns.SafeId(item.Emotion) || !MatchesEmotion(item.Id, item.Emotion)) throw new InvalidDataException("情绪差分映射无效。");
             byte[] bytes = Bytes(item.File, 64 * 1024 * 1024);
-            if (DateSceneAssetStore.Hash(bytes) != item.Hash) throw new InvalidDataException("立绘摘要与清单不一致：" + item.Id);
-            using var image = DateSceneAssetStore.ReadImage(bytes, true); images.Add(item.File, bytes);
+            using var image = DateSceneAssetStore.ReadImage(bytes, true);
+            // 玩家可重新保存或替换包内PNG；以实际内容重建缓存引用。
+            item.Hash = DateSceneAssetStore.Hash(bytes); images.Add(item.File, bytes);
         }
         foreach (string id in manifest.Sprites.Select(s => s.Emotion).Append(manifest.DefaultEmotionId).Distinct())
             if (!design.Emotions.Any(e => e.Id == id)) design.Emotions.Add(new() { Id = id, Name = id });

@@ -28,6 +28,7 @@ public partial class LiveRunBridge : Node
         hudVisible = IsInstanceValid(_hud) && _hud.Visible, overlayVisible = IsInstanceValid(_mapOverlay) && _mapOverlay!.Visible };
     private RunState _run = null!;
     private CareerData _data = null!;
+    internal string BoundMatchId => _match.Id;
     private CareerMatch _match = null!;
     private CareerPerson _rival = null!;
     private Player _player = null!;

@@ -53,6 +53,8 @@ public static class PrivateMessages
                 }
                 entry["说明"] = $"以下是{person.PublicName}与{name}的私信摘要和最近记录。摘要由{person.PublicName}以第一人称记录，其中‘我’指{person.PublicName}，‘你’指{name}。";
                 entry["长期摘要"] = Summary(big); entry["近期摘要"] = Summary(small);
+                entry["手动记忆"] = conversation.ManualMemories.Where(m => m.Day <= day)
+                    .Select(m => new { 日期 = GameCalendar.Text(data, m.Day), 内容 = m.Text }).ToArray();
                 entry["最近记录"] = messages.Select(m => new { 日期 = PrivateAppointments.DateText(data, m.Day), 发言人 = m.Speaker, 内容 = m.Text }).ToArray();
             }
             result.Add(entry);
@@ -96,19 +98,19 @@ public static class PrivateMessages
     public static int Favour(CareerData data, string id) => Mailbox(data).Relations.GetValueOrDefault(id)?.Favour ?? 0;
     public static void ChangeFavour(CareerData data, string id, int delta)
     {
-        var relation = Relation(data, id); relation.Favour = Math.Clamp(relation.Favour + delta, -100, 100); relation.Revision++;
+        var relation = Relation(data, id); relation.SetFavour(relation.Favour + delta); relation.Revision++;
         data.Life.Relationships[id] = relation.Favour;
     }
     public static void EditRelation(CareerData data, CareerLifeState life, string human, string id, CharacterRelationEdit edit)
     {
         var fields = new List<string>();
-        if (edit.Favour.HasValue) fields.Add(nameof(PrivateRelation.Favour));
+        if (edit.Favour.HasValue) { fields.Add(nameof(PrivateRelation.Favour)); fields.Add(nameof(PrivateRelation.LastFavourChange)); }
         if (edit.Relationship != null) fields.Add(nameof(PrivateRelation.Relationship));
         if (edit.Impression != null) fields.Add(nameof(PrivateRelation.Impression));
         if (fields.Count == 0) return;
         var box = Mailbox(life);
         if (!box.Relations.TryGetValue(id, out var relation)) box.Relations[id] = relation = new();
-        if (edit.Favour is { } favour) { relation.Favour = favour; life.Relationships[id] = favour; }
+        if (edit.Favour is { } favour) { relation.SetFavour(favour); life.Relationships[id] = relation.Favour; }
         if (edit.Relationship != null) relation.Relationship = edit.Relationship;
         if (edit.Impression != null) relation.Impression = edit.Impression;
         relation.Revision++;
@@ -198,6 +200,12 @@ public static class PrivateMessages
     public static string? Manage(CareerData data, PrivateConversation c, string kind, PrivateMessageCommand command)
     {
         if (c.Turns.Any(t => t.Status is "queued" or "sending")) return "请先等待回复完成，或停止生成。";
+        if (kind.StartsWith("dm-memory-", StringComparison.Ordinal))
+        {
+            var error = ManualChatMemories.Manage(data, c.ManualMemories, kind[10..], command.Entry, command.Text);
+            if (error == null) { c.MemoryRevision++; c.SummaryError = ""; }
+            return error;
+        }
         if (kind == "dm-summary")
         {
             if (c.SummaryStatus.Length > 0) return "正在总结，请稍候。";
@@ -432,7 +440,7 @@ public sealed class PrivateStreamParser
                 int colon = segment.IndexOfAny(new[] { ':', '：' });
                 if (colon <= 0 || !fields.TryAdd(segment[..colon].Trim(), segment[(colon + 1)..].Trim())) { fields.Clear(); break; }
             }
-            string[] allowed = fields.ContainsKey("DateChoice") ? ["DateChoice"] : fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("DateGame") ? ["DateGame", "Actor"] : fields.ContainsKey("DateJoin") ? ["DateJoin"] : fields.ContainsKey("Scene") ? ["Scene", "Emotion", "Background", "Speaker"] : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
+            string[] allowed = fields.ContainsKey("DateChoice") ? ["DateChoice"] : fields.ContainsKey("DateDiary") ? ["DateDiary", "Location"] : fields.ContainsKey("DateGame") ? ["DateGame", "Actor"] : fields.ContainsKey("DateJoin") ? ["DateJoin"] : fields.ContainsKey("Scene") ? fields.Keys.ToArray() : fields.ContainsKey("Oath") ? ["Oath", "Id"] : fields.ContainsKey("Gift") ? ["Gift", "Id"] : fields.ContainsKey("Lineup") ? ["Lineup", "Id"] : fields.ContainsKey("Training") ? ["Training", "Id"] : fields.ContainsKey("Activity") ? ["Activity", "Id", "Title", "Detail", "Season", "Day", "Date"]
                 : fields.ContainsKey("Post") ? ["Post", "Title", "Body"]
                 : fields.ContainsKey("Profile") ? ["Profile", "Value", "Reason"]
                 : fields.ContainsKey("Favour") || fields.ContainsKey("Attitude") || fields.ContainsKey("Relationship") ? ["Favour", "Attitude", "Relationship"]
@@ -456,7 +464,7 @@ public sealed class PrivateStreamParser
             var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var p in json.RootElement.EnumerateObject())
             {
-                if (p.Value.ValueKind != JsonValueKind.String || !new[] { "Scene", "Emotion", "Background", "Speaker", "Reply" }.Contains(p.Name, StringComparer.OrdinalIgnoreCase)
+                if (p.Value.ValueKind != JsonValueKind.String || p.Name.Length is 0 or > 64
                     || !fields.TryAdd(p.Name, p.Value.GetString()!)) return false;
             }
             if (!fields.TryGetValue("Scene", out var kind) || kind is not ("dialogue" or "narration") || !fields.ContainsKey("Emotion") || !fields.ContainsKey("Background")) return false;

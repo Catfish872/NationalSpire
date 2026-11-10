@@ -4,39 +4,19 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private void CoachManagement(CareerData d)
+    private void TogglePlayerCoach(CareerData d)
     {
-        var o = d.Esports.OwnedClub!;
-        var box = ClubCard("教练与席位", "教练提升轮换与青训陪练效果，多名教练取最高加成。");
-        var row = new HFlowContainer(); row.AddThemeConstantOverride("h_separation", 12); row.AddThemeConstantOverride("v_separation", 10); box.AddChild(row);
-        row.AddChild(Text($"当前陪练系数 ×{ClubCoaching.Factor(d):0.#}", 20, CareerVisuals.Teal));
-        if (ClubCoaching.PlayerFeatures(d))
-        {
-            row.AddChild(ClubButton(o.PlayerCoach ? "结束教练任职" : "兼任教练", () =>
-                ShowCareerDialog(o.PlayerCoach ? "结束教练任职" : "兼任教练", o.PlayerCoach ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。", () => { ClubAction(d, "player-coach", o.PlayerCoach ? "0" : "1"); return true; }), 170));
-            var positionActions = new HBoxContainer(); positionActions.AddThemeConstantOverride("separation", 12); row.AddChild(positionActions);
-            positionActions.AddChild(ClubButton(o.PlayerReserve ? "恢复首发" : "退出首发", () => PlayerPositionDialog(d), 190));
-            positionActions.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
-            if (o.PlayerPositionSeason > 0)
-            {
-                box.AddChild(Text($"第{o.PlayerPositionSeason}赛季转为{o.PlayerNextPosition} · 与{CareerEngine.DisplayName(d, o.PlayerReplacement)}调整席位", 17, _gold));
-                box.AddChild(ClubButton("撤销席位申请", () => ClubAction(d, "player-position", target: "取消"), 170));
-            }
-        }
-        else row.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
-        foreach (var a in o.CoachAppointments)
-        {
-            var pending = new HFlowContainer(); box.AddChild(pending);
-            pending.AddChild(Text($"{CareerEngine.DisplayName(d, a.PersonId)} · 第{a.Season}赛季转任教练", 17, _muted));
-            pending.AddChild(ClubButton("取消调整", () => ClubAction(d, "coach-cancel", target: a.PersonId), 120));
-        }
+        bool ending = ClubCoaching.PlayerCoach(d);
+        ShowCareerDialog(ending ? "结束教练" : "兼任教练", ending ? "停止未完成的教练训练，已获得成长保留。" : "可在队员私信中附上训练计划，由对方确认后开始。",
+            () => { ClubAction(d,"player-coach",ending ? "0" : "1"); return true; });
     }
-    private void PlayerPositionDialog(CareerData d)
+
+    private void PlayerPositionDialog(CareerData d, string? preferred = null)
     {
         var o = d.Esports.OwnedClub!;
         bool reserve = !o.PlayerReserve;
         var ids = reserve ? ClubCoaching.Replacements(d) : OwnedClubs.ReplaceableStarters(d);
-        string selected = ids.FirstOrDefault() ?? "";
+        string selected = preferred != null && ids.Contains(preferred) ? preferred : ids.FirstOrDefault() ?? "";
         Label? error = null;
         ShowCareerDialog(reserve ? "退出首发" : "恢复首发", OwnedClubSchedule.PlayerPositionTiming(d), () =>
         {
@@ -46,7 +26,7 @@ public partial class CareerScreen
         }, "确认调整", box =>
         {
             box.AddChild(Text(CareerEngine.Name(d) + (reserve ? " · 首发 → 轮换" : " · 轮换 → 首发"), 18, _ink));
-            if (ids.Count > 0) box.AddChild(ClubSelect(ids.Select(id => (reserve ? "接替首发 · " : "转入轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), 0, i => selected = ids[i]));
+            if (ids.Count > 0) box.AddChild(ClubSelect(ids.Select(id => (reserve ? "接替首发 · " : "转入轮换 · ") + CareerEngine.DisplayName(d, id)).ToArray(), ids.IndexOf(selected), i => selected = ids[i]));
             error = Text(ids.Count == 0 ? "没有符合条件的接替人选，请先补齐阵容。" : "", 16, new Color("ee929d")); box.AddChild(error);
         });
     }
@@ -60,9 +40,18 @@ public partial class CareerScreen
         ShowCareerDialog("转任教练", CareerEngine.DisplayName(d, id) + (scheduled ? " · 下赛季生效" : " · 立即生效") + "\n合同待遇保留，转任后不再兼任选手。", () =>
         {
             if (MultiplayerCommand("owned-coach", id, replacement)) return true;
-            var result = ClubCoaching.Appoint(d, id, replacement);
+            var current = ViewData;
+            if (current.WorldId != d.WorldId || !OwnedClubs.IsOwner(current))
+            { error!.Text = "当前俱乐部已变更，请重新选择队员。"; return false; }
+            var result = ClubCoaching.Appoint(current, id, replacement);
             if (result != null) { error!.Text = result; return false; }
-            Render(); return true;
+            _cancelDialog?.Invoke();
+            int version = _renderVersion;
+            Callable.From(() =>
+            {
+                if (IsInstanceValid(this) && IsInsideTree() && !IsQueuedForDeletion() && _renderVersion == version) RefreshClub();
+            }).CallDeferred();
+            return true;
         }, "确认转任", box =>
         {
             if (ids.Count > 0) box.AddChild(ClubSelect(ids.Select(i => "接替首发 · " + CareerEngine.DisplayName(d, i)).ToArray(), 0, i => replacement = ids[i]));

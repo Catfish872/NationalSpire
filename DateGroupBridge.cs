@@ -15,7 +15,8 @@ public static class DateGroupBridge
             if (c.Offers.FirstOrDefault(o => o.DateSourceGroup == group && o.DateSourceOffer == source) is { } offer) return (c, offer);
         return null;
     }
-    public static string? Begin(CareerData data, GroupChat group, PrivateOffer source)
+    public static string? Begin(CareerData data, GroupChat group, PrivateOffer source) => Begin(data,group,source,false);
+    public static string? Begin(CareerData data, GroupChat group, PrivateOffer source,bool publicly)
     {
         if (source.Kind != "activity" || !source.Participants.Contains(GroupChats.Human(data))) return "需要参加这项活动才能进入约会。";
         var people = source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct().ToList();
@@ -23,7 +24,7 @@ public static class DateGroupBridge
         if (Find(data, group.Id, source.Id) is { } existing)
             return DateScenes.Available(data, existing.Offer, existing.Conversation) ? null : "这场约会已经结束。";
         if (source.State == "已确认")
-        { if (SocialAppointments.Attend(data, source, scene: true) is { } error) return error; }
+        { if (SocialAppointments.Attend(data, source, publicly, scene: true) is { } error) return error; }
         else if (source.State != "已赴约" || PrivateAppointments.Date(data, source) != data.Day) return "请在约定当天赴约。";
         string host = people.Contains(source.ActorId) ? source.ActorId : people[0];
         var proxy = Coop.CoopJson.Copy(source);

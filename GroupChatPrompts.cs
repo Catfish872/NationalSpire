@@ -140,6 +140,11 @@ NPC 向另一名 NPC 提出约战也须输出 Match 标记，例如 [Match: 邀�
             if (readers.Length > 0) Add("user", $"本群第{s.From + 1}至{s.Through}轮总结；知情人：{string.Join("、", readers.Select(p => GroupChats.Name(d, p)))}\n" + s.Text);
         }
         var completed = g.Turns.Select((t, i) => (t, i)).Where(x => x.t.Status == "complete").ToArray();
+        foreach (var memory in g.ManualMemories)
+        {
+            var readers = g.Members.Where(p => ChatMembership.Knows(g, p, memory.Order)).ToArray();
+            if (readers.Length > 0) Add("user", $"本群{ManualChatMemories.Heading(d, memory)}；知情人：{string.Join("、", readers.Select(p => GroupChats.Name(d, p)))}\n" + memory.Text);
+        }
         int recentStart = completed.Length > g.Settings.RecentRounds ? completed[completed.Length - g.Settings.RecentRounds - 1].i + 1 : 0;
         int start = Math.Min(g.SummarizedThrough, recentStart);
         long externalStart = recentStart > 0 ? g.Turns.Skip(recentStart).Select(t => t.Order).DefaultIfEmpty(d.Chats.Order + 1).Min() : 0;

@@ -6,7 +6,7 @@ public static class CareerVisuals
 {
     private static Font? _font;
     private static Theme? _theme;
-    internal static void WarmText(string text) => InterfaceFont().GetStringSize(text, fontSize: 19);
+
     private static Font InterfaceFont()
     {
         if (_font != null && GodotObject.IsInstanceValid(_font)) return _font;
@@ -21,7 +21,50 @@ public static class CareerVisuals
             MsdfPixelRange = 24, MsdfSize = 48
         };
     }
-    public static readonly Color Ink = new("f2f6fa"), Muted = new("bbcad6"), Gold = new("eed39b"), Teal = new("80e7db"), Lime = new("c4f36b");
+    private static readonly Dictionary<(int Weight,int Tracking),FontVariation> TextFonts = new();
+    private static Font? _rasterFace;
+    private static readonly Lazy<SystemFont> ColorEmoji = new(() => new SystemFont {
+        FontNames = ["Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji"],
+        AllowSystemFallback = true, MultichannelSignedDistanceField = false
+    });
+    internal static Font EmojiFont => ColorEmoji.Value;
+    private static int _fontDensity = 1;
+
+    internal static void FitTextDensity(float outputScale)
+    {
+        int density = Mathf.NearestPo2(Math.Max(1, Mathf.CeilToInt(outputScale - .001f)));
+        if (density == _fontDensity) return;
+        _fontDensity = density;
+        if (_rasterFace is FontFile file) file.Oversampling = density;
+        else if (_rasterFace is SystemFont system) system.Oversampling = density;
+    }
+
+    internal static Font InterfaceText(int weight = 400, int tracking = 0)
+    {
+        if (TextFonts.TryGetValue((weight,tracking),out var cached) && GodotObject.IsInstanceValid(cached)) return cached;
+        var native = InterfaceFont();
+        var variant = native is FontVariation original ? (FontVariation)original.Duplicate(false) : new FontVariation { BaseFont = native };
+        variant.Fallbacks = [EmojiFont, .. variant.Fallbacks];
+        variant.SpacingGlyph += tracking;
+        if (weight >= 700) variant.VariationEmbolden += .6f;
+        return TextFonts[(weight,tracking)] = variant;
+    }
+
+    private static FontVariation? _cashFont;
+    internal static Font CashFont()
+    {
+        if (_cashFont != null && GodotObject.IsInstanceValid(_cashFont)) return _cashFont;
+        // The large balance needs filled outlines at the physical display density.
+        // All mixed UI text and avatar badges keep the game's original MSDF rendering.
+        var variant = (FontVariation)InterfaceText(700,2).Duplicate(false);
+        _rasterFace = (Font)variant.BaseFont.Duplicate(false);
+        if (_rasterFace is FontFile file) { file.MultichannelSignedDistanceField = false; file.Oversampling = _fontDensity; }
+        else if (_rasterFace is SystemFont system) { system.MultichannelSignedDistanceField = false; system.Oversampling = _fontDensity; }
+        variant.BaseFont = _rasterFace;
+        return _cashFont = variant;
+    }
+
+    public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = new("eed39b"), Teal = new("80e7db"), Lime = new("c4f36b");
     public static void ClearContent(Node parent)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.Clear);
@@ -57,7 +100,7 @@ public static class CareerVisuals
     {
         if (_theme != null && GodotObject.IsInstanceValid(_theme)) return _theme;
         var theme = new Theme { DefaultFontSize = 19 };
-        theme.DefaultFont = InterfaceFont();
+        theme.DefaultFont = InterfaceText(tracking: 0);
         foreach (string type in new[] { "Button", "OptionButton", "MenuButton", "CheckBox" })
         {
             theme.SetStylebox("normal", type, Box("1d3040", "395365", 8, 14));
@@ -84,6 +127,26 @@ public static class CareerVisuals
             theme.SetIcon(state, "CheckBox", icon); theme.SetIcon(state + "_disabled", "CheckBox", icon);
         }
         theme.SetConstant("h_separation", "CheckBox", 10);
+        foreach (bool on in new[] {false,true})
+        foreach (bool disabled in new[] {false,true})
+        {
+            using var svg = new Image();
+            string track = disabled ? "#384956" : on ? "#80e7db" : "#546774";
+            string knob = disabled ? "#9ca9b0" : on ? "#123b3b" : "#e0e8eb";
+            svg.LoadSvgFromString($"<svg xmlns='http://www.w3.org/2000/svg' width='34' height='20'><rect x='1' y='1' width='32' height='18' rx='9' fill='{track}'/><circle cx='{(on?24:10)}' cy='10' r='6' fill='{knob}'/></svg>");
+            var icon = ImageTexture.CreateFromImage(svg);
+            string key = (on ? "checked" : "unchecked") + (disabled ? "_disabled" : "");
+            theme.SetIcon(key,"CheckButton",icon);
+        }
+        foreach (string state in new[]{"normal","disabled","pressed","hover","hover_pressed"})
+        {
+            bool lit=state is "pressed" or "hover" or "hover_pressed";
+            theme.SetStylebox(state,"CheckButton",Box(lit?"28434c":"142632",lit?"658c91":"395365",5,6));
+        }
+        theme.SetStylebox("focus","CheckButton",Box("00000000","80e7db",5,0));
+        theme.SetFontSize("font_size","CheckButton",15);
+        theme.SetConstant("check_v_offset","CheckButton",0);
+        theme.SetConstant("h_separation","CheckButton",8);
         theme.SetStylebox("normal", "LineEdit", Box("101c2a", "395365", 8, 12));
         theme.SetStylebox("focus", "LineEdit", Box("172e3e", "70d4bc", 8, 12));
         theme.SetStylebox("panel", "PopupMenu", Box("122331"));
@@ -110,7 +173,7 @@ public partial class CareerArt : Control
     public override void _Ready() { MouseFilter = MouseFilterEnum.Ignore; Resized += QueueRedraw; }
     public override void _Draw()
     {
-        var center = new Vector2(Size.X * .65f, Size.Y * .47f);
+        var center = new Vector2(Size.X * (Compact ? .5f : .65f), Size.Y * .47f);
         float r = Math.Min(Size.X, Size.Y) * .34f;
         var faint = new Color(.44f, .83f, .74f, .14f);
         DrawArc(center, r, 0, Mathf.Tau, 96, faint, 1.5f, true);

@@ -32,7 +32,6 @@ public partial class CareerScreen
         => DateDiaryEntryDialog(data, person, "");
     private void DateDiaryEntryDialog(CareerData data, string person, string offerId)
     {
-        var conversation = PrivateMessages.Conversation(data, person);
         var memories = DateSceneMemories.ForPerson(data, person, out string memoryWarning);
         var references = DateDiaries.ForPerson(data, person);
         var diaries = references.Select(e => e.Diary).ToList();
@@ -64,12 +63,30 @@ public partial class CareerScreen
                 erase.CustomMinimumSize = new(48, 48); erase.AddChild(new DateMemoryEraser { MouseFilter = MouseFilterEnum.Ignore }); actions.AddChild(erase);
                 if (memory != null)
                 {
-                    var enter = PrivateButton("进入回忆", () => OpenDateMemory(data, person, memory), 150);
+                    var enter = PrivateButton("进入回忆", () => EnterDiaryMemory(data, person, memory), 150);
                     enter.Name = "DateEnterMemory"; actions.AddChild(enter);
                 }
             }
         }, showCancel: false);
     }
+    private void EnterDiaryMemory(CareerData data, string person, DateSceneMemory memory)
+    {
+        _cancelDialog?.Invoke();
+        var previous = _openingDialogReturn;
+        _openingDialogReturn = () =>
+        {
+            if (ViewData.WorldId == data.WorldId) DateDiaryEntryDialog(ViewData, person, memory.OfferId);
+        };
+        try { OpenDateMemoryChoice(data, person, memory); }
+        catch (MissingMemberException e)
+        {
+            GD.PushWarning("[NationalSpire] 回忆扩展接口不兼容，使用本体回放：" + e.Message);
+            _cancelDialog?.Invoke();
+            AttachMemoryPlayback(data, person, memory, new DateMemoryPlayback { Memory = memory, Blocked = () => _dialogOverlay != null });
+        }
+        finally { _openingDialogReturn = previous; }
+    }
+
     private void DeleteDateDiaryDialog(CareerData data, string person, DateDiary diary, DateSceneMemory? memory)
     {
         _cancelDialog?.Invoke();

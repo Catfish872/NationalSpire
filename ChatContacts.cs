@@ -64,7 +64,13 @@ public static class ChatContacts
         for (int i = 0; i < boundaries.Length - 1; i++) if (code >= boundaries[i] && code < boundaries[i + 1]) return "ABCDEFGHJKLMNOPQRSTWXYZ"[i];
         return first;
     }
+    public static IEnumerable<ChatContact> Recent(CareerData data, HashSet<string> hidden)
+        => Collect(data,new ChatContactPreferences { Hidden = hidden },"全部","",recentOnly:true);
+
     public static List<ChatContact> List(CareerData data, ChatContactPreferences preferences, string filter, string query)
+        => Collect(data,preferences,filter,query,recentOnly:false);
+
+    private static List<ChatContact> Collect(CareerData data, ChatContactPreferences preferences, string filter, string query, bool recentOnly)
     {
         var box = PrivateMessages.Mailbox(data); var people = data.People.ToDictionary(p => p.Id);
         var entries = new List<ChatContact>();
@@ -75,17 +81,28 @@ public static class ChatContacts
             foreach (string id in ids)
             {
                 if (!people.TryGetValue(id, out var p) || !PrivateMessages.CanChat(data, id) || GroupChats.IsHuman(data, id) || box.Conversations.GetValueOrDefault(id)?.Hidden == true) continue;
-                var turn = box.Conversations.GetValueOrDefault(id)?.Turns.LastOrDefault(PrivateMessages.VisibleInCommunications);
+                var conversation = box.Conversations.GetValueOrDefault(id);
+                var visible = conversation?.Turns.Where(PrivateMessages.VisibleInCommunications);
+                var turn = recentOnly ? visible?.MaxBy(t => (Math.Max(t.UserOrder,t.ReplyOrder),t.Day)) : visible?.LastOrDefault();
+                if (recentOnly && (turn == null || conversation!.Forgotten)) continue;
                 entries.Add(new(id, false, p.PublicName, box.Relations.GetValueOrDefault(id)?.Favour ?? 0, Math.Max(turn?.UserOrder ?? 0, turn?.ReplyOrder ?? 0), turn?.Day ?? 0));
             }
         }
         if (filter != "私信")
             foreach (var group in GroupChats.Visible(data).Where(g => query.Length == 0 || g.Name.Contains(query, StringComparison.OrdinalIgnoreCase) || g.Members.Any(id => GroupChats.Name(data, id).Contains(query, StringComparison.OrdinalIgnoreCase))))
             {
-                var turn = group.Turns.LastOrDefault(); var entry = group.Entries.LastOrDefault();
-                long order = Math.Max(Math.Max(turn?.Order ?? 0, turn?.Replies.LastOrDefault()?.Order ?? 0), entry?.Order ?? 0);
+                static long Latest(GroupTurn t) => Math.Max(t.Order,t.Replies.Count == 0 ? 0 : t.Replies.Max(r=>r.Order));
+                var turn = recentOnly ? group.Turns.MaxBy(t => (Latest(t),t.Day)) : group.Turns.LastOrDefault();
+                var entry = recentOnly ? group.Entries.MaxBy(e => (e.Order,e.Day)) : group.Entries.LastOrDefault();
+                if (recentOnly && (group.Forgotten || turn == null && entry == null)) continue;
+                long order = Math.Max(turn == null ? 0 : Latest(turn),entry?.Order ?? 0);
                 entries.Add(new(group.Id, true, group.Name, 0, order, Math.Max(turn?.Day ?? 0, entry?.Day ?? 0)));
             }
+        if (recentOnly)
+            return entries.Where(e => !preferences.Hidden.Contains(e.Key))
+                .OrderByDescending(e => e.Order).ThenByDescending(e => e.Day)
+                .ThenByDescending(e => e.Order == 0 && !e.Group ? box.Conversations[e.Id].LastReplyOrder : 0)
+                .ThenBy(e => e.Key, StringComparer.Ordinal).ToList();
         var pins = preferences.Pinned.Select((key, i) => (key, i)).GroupBy(p => p.key).ToDictionary(g => g.Key, g => g.First().i);
         entries = entries.Where(e => preferences.ShowHidden || !preferences.Hidden.Contains(e.Key)).ToList();
         var pinned = entries.Where(e => pins.ContainsKey(e.Key)).OrderBy(e => pins[e.Key]);

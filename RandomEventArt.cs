@@ -20,23 +20,107 @@ public static class RandomEventArt
         ["音乐"] = ["concert_hall", "livehouse", "ktv"],
     };
     public static string Category(string seed) => RandomEventSeeds.Category(seed);
-    public static string Category(RandomEventRecord e) => e.Category.Length > 0 ? e.Category : Category(e.Seed);
+    public static string Category(RandomEventRecord e) => e.Category is { Length: > 0 } category ? category : Category(e.Seed ?? "");
     public static string Select(RandomEventRecord e)
     {
-        if (e.Seed.Length == 0) return "";
-        var pool = Pools[Category(e)];
+        if (string.IsNullOrEmpty(e.Seed)) return "";
+        if (!Pools.TryGetValue(Category(e), out var pool)) pool = Pools[Category(e.Seed)];
         return pool[(int)((uint)CareerEngine.StableHash(e.Id + ":art:" + e.Seed) % pool.Length)];
     }
+    private static readonly SemaphoreSlim DecodeSlot = new(1);
+    internal static bool IsGameArt(string id) => id.StartsWith("game:", StringComparison.Ordinal);
+    private static string GamePath(string id) => "res://images/events/" + id[5..] + ".png";
+
+    private static Image? ReadPixels(string id, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        if (id.Length == 0) id = "bg_cityRiver_evening";
+        var entry = DateSceneBackgrounds.Read(out _).FirstOrDefault(b => b.Id == id);
+        token.ThrowIfCancellationRequested();
+        var pixels = entry?.ReadPixels();
+        if (!token.IsCancellationRequested) pixels?.GenerateMipmaps();
+        return pixels;
+    }
+
     public static Texture2D? Load(string id)
     {
-        if (id.Length == 0) id = "bg_cityRiver_evening";
-        if (id.StartsWith("game:", StringComparison.Ordinal))
+        if (IsGameArt(id))
         {
-            string path = "res://images/events/" + id[5..] + ".png";
+            string path = GamePath(id);
             return ResourceLoader.Exists(path) ? GD.Load<Texture2D>(path) : null;
         }
-        var entry = DateSceneBackgrounds.Read(out _).FirstOrDefault(b => b.Id == id);
-        return entry == null ? null : DateSceneView.CreateBackground(entry.Image);
+        using var pixels = ReadPixels(id, CancellationToken.None);
+        return pixels == null ? null : ImageTexture.CreateFromImage(pixels);
+    }
+
+    internal static async Task<Texture2D?> LoadAsync(string id, SceneTree tree, CancellationToken token)
+    {
+        if (IsGameArt(id))
+        {
+            string path = GamePath(id);
+            if (!ResourceLoader.Exists(path) || ResourceLoader.LoadThreadedRequest(path, "Texture2D") != Error.Ok) return null;
+            while (ResourceLoader.LoadThreadedGetStatus(path) == ResourceLoader.ThreadLoadStatus.InProgress)
+                await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            return ResourceLoader.LoadThreadedGet(path) as Texture2D;
+        }
+        await DecodeSlot.WaitAsync(token);
+        try
+        {
+            // Decode and build mipmaps on a private CPU image. Upload only a still-visible request on the Godot thread.
+            using var pixels = await Task.Run(() => ReadPixels(id, token), token);
+            token.ThrowIfCancellationRequested();
+            return pixels == null ? null : ImageTexture.CreateFromImage(pixels);
+        }
+        finally { DecodeSlot.Release(); }
+    }
+}
+
+internal partial class EventArtPicture : TextureRect
+{
+    private CancellationTokenSource? _pending;
+    private Texture2D? _owned;
+
+    internal async void ShowArt(string id)
+    {
+        _pending?.Cancel();
+        var request = _pending = new CancellationTokenSource();
+        bool gameArt = RandomEventArt.IsGameArt(id);
+        try
+        {
+            var texture = await RandomEventArt.LoadAsync(id, GetTree(), request.Token);
+            if (request.IsCancellationRequested || !IsInstanceValid(this) || IsQueuedForDeletion())
+            {
+                if (!gameArt) texture?.Dispose();
+                return;
+            }
+            SetArt(texture, gameArt);
+        }
+        catch (Exception e)
+        {
+            if (!request.IsCancellationRequested)
+            {
+                SetArt(null, false);
+                GD.PushWarning("[NationalSpire] 际遇背景加载失败：" + e.Message);
+            }
+        }
+        finally
+        {
+            if (_pending == request) _pending = null;
+            request.Dispose();
+        }
+    }
+    private void SetArt(Texture2D? texture, bool gameArt)
+    {
+        var previous = _owned;
+        Texture = texture;
+        _owned = gameArt ? null : texture;
+        if (Material is ShaderMaterial material) material.SetShaderParameter("original", gameArt ? 1f : 0f);
+        previous?.Dispose();
+    }
+    public override void _ExitTree()
+    {
+        _pending?.Cancel();
+        SetArt(null, false);
     }
 }
 

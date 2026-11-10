@@ -16,7 +16,7 @@ public static partial class Diagnostics
         using (BeginLog(area, context)) Record("error.full", new { id, context, error });
         string reference = ErrorReference + (int)area + "/" + id;
         string text = PlayerFacingText.LongError(error);
-        return (text.Length <= ErrorTextLimit - reference.Length ? text : text[..(ErrorTextLimit - reference.Length - 1)] + "…") + reference;
+        return PlayerFacingText.Head(text, ErrorTextLimit - reference.Length) + reference;
     }
 
     internal static string ErrorExplanation(string error)

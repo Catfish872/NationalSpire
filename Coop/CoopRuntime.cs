@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
@@ -263,7 +263,13 @@ public static class CoopMenuPatch
         button.OffsetLeft = 40; button.OffsetRight = 350; button.OffsetTop = -178; button.OffsetBottom = -114;
         button.Pressed += () => CoopScreen.Open(__instance);
         MainMenuEntries.Bind(__instance, button);
-        if (CoopRuntime.Bound) Callable.From(() => CoopScreen.OpenCareerOrRoom(__instance)).CallDeferred();
+        if (!CoopRuntime.Bound) return;
+        if (DateGameReturn.Transitioning) CoopScreen.OpenCareerOrRoom(__instance);
+        else Callable.From(() =>
+        {
+            if (CoopRuntime.Bound && GodotObject.IsInstanceValid(__instance) && __instance.IsInsideTree())
+                CoopScreen.OpenCareerOrRoom(__instance);
+        }).CallDeferred();
     }
 }
 [HarmonyPatch(typeof(ActiveScreenContext), nameof(ActiveScreenContext.GetCurrentScreen))]

@@ -19,10 +19,14 @@ public partial class CareerScreen
     {
         var published = data.WeeklyEditions.Where(w => CameoContent.VisibleSlides(w).Count > 0).OrderByDescending(w => w.Week).ToList();
         var latest = data.WeeklyEditions.LastOrDefault();
-        if (latest == null) return;
         var section = Card(); section.Name = "WeeklySection"; _content.AddChild(section); var box = Inner(section);
         var heading = new HBoxContainer(); box.AddChild(heading);
         var headingText = Text("尖塔双周刊", 25, _gold); headingText.SizeFlagsHorizontal = SizeFlags.ExpandFill; heading.AddChild(headingText);
+        if (latest == null)
+        {
+            var empty = Text("尚无已发行期刊",16,_muted); empty.HorizontalAlignment = HorizontalAlignment.Right;
+            heading.AddChild(empty); return;
+        }
         if (published.Count > 0)
         {
             var cover = CameoContent.VisibleSlides(published[0]).FirstOrDefault(s => s.CeremonySeason > 0);

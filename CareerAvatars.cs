@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace NationalSpire;
 
@@ -11,11 +11,15 @@ public static class CareerAvatars
         if (personId == "player" && data.PlayerCard is { Character.Length: > 0 } card) return card.Character;
         if (personId == "player" && data.HumanIds.Count > 0) return data.SelectedCharacter.Length > 0 ? data.SelectedCharacter : "IRONCLAD";
         if (personId != "player") return CareerEngine.Person(data, personId)?.Character ?? "";
-        var available = GameBridge.Characters().Select(character => character.Id.ToString()).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var player in PlayerArchive.Read().Recent.FirstOrDefault()?.Players ?? [])
+        var recent = PlayerArchive.Read().Recent.FirstOrDefault();
+        if (recent != null)
         {
-            string character = player.Character.ToString();
-            if (available.Contains(character)) return character;
+            var available = GameBridge.Characters();
+            foreach (var player in recent.Players)
+            {
+                string character = player.Character.ToString();
+                if (available.Any(c => c.Id.ToString().Equals(character, StringComparison.OrdinalIgnoreCase))) return character;
+            }
         }
         return "IRONCLAD";
     }
@@ -40,8 +44,28 @@ public static class CareerAvatars
     }
 }
 
+// Both the native option button and its popup draw the same framed portrait as a character tile.
+internal partial class CareerAvatarIcon : Texture2D
+{
+    internal const int Pixels = 48;
+    internal AvatarArt Art { get; init; } = new(null, CareerVisuals.Teal, "");
+    private StyleBoxFlat? _frame;
+    public override int _GetWidth() => Pixels;
+    public override int _GetHeight() => Pixels;
+    public override bool _HasAlpha() => true;
+    public override void _Draw(Rid canvas, Vector2 pos, Color modulate, bool transpose) =>
+        _DrawRect(canvas, new Rect2(pos, new Vector2(Pixels, Pixels)), false, modulate, transpose);
+    public override void _DrawRect(Rid canvas, Rect2 rect, bool tile, Color modulate, bool transpose)
+    {
+        _frame ??= CareerAvatar.PortraitFrame(Art);
+        _frame.Draw(canvas, rect);
+        CareerAvatar.DrawFace(canvas, rect, rect.Grow(-CareerAvatar.ArtworkInset * rect.Size.X / Pixels), Art, modulate);
+    }
+}
+
 public partial class CareerAvatar : Control
 {
+    internal const float ArtworkInset = 4;
     private StyleBoxFlat? _frame;
     public string PersonId { get; set; } = "";
     public bool Simplified { get; init; }
@@ -49,30 +73,47 @@ public partial class CareerAvatar : Control
     public AvatarIdentity? Identity { get => _identity; set { _identity = value; _frame = null; QueueRedraw(); } }
     private AvatarArt _art = new(null, CareerVisuals.Teal, "");
     public AvatarArt Art { get => _art; set { _art = value; _frame = null; QueueRedraw(); } }
+    internal static StyleBoxFlat PortraitFrame(AvatarArt art, AvatarIdentity? identity = null, bool simplified = false) =>
+        CareerVisuals.Box("0b1b22", identity?.UseOathFrame == true || identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat"
+            ? "00000000" : identity?.DisplayFrame.Color ?? art.Accent.ToHtml(), simplified ? 3 : 8, 0);
+
+    private static Rect2 PortraitRegion(Texture2D texture)
+    {
+        var size = texture.GetSize();
+        var square = Vector2.One * Math.Min(size.X, size.Y);
+        return new Rect2((size - square) / 2, square);
+    }
     public override void _Ready() { MouseFilter = MouseFilterEnum.Ignore; Resized += QueueRedraw; }
     public override void _Draw()
     {
         var bounds = new Rect2(Vector2.Zero, Size);
-        _frame ??= CareerVisuals.Box("0b1b22", Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? "00000000" : Identity?.DisplayFrame.Color ?? Art.Accent.ToHtml(), Simplified ? 3 : 8, 0);
+        _frame ??= PortraitFrame(Art, Identity, Simplified);
         float inset = Identity?.UseOathFrame == true || Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? Math.Min(Size.X, Size.Y) * .09f
-            : Identity is { DisplayFrame.Grade: > 0 } framed ? Math.Min(Size.X, Size.Y) * (framed.DisplayFrame.Grade >= 6 ? .14f : .105f) : Simplified ? Math.Min(2, Size.X * .06f) : 4;
+            : Identity is { DisplayFrame.Grade: > 0 } framed ? Math.Min(Size.X, Size.Y) * (framed.DisplayFrame.Grade >= 6 ? .14f : .105f) : Simplified ? Math.Min(2, Size.X * .06f) : ArtworkInset;
         var inner = bounds.Grow(-inset);
         DrawStyleBox(_frame, Identity?.SelectedFrame is "friend" or "intimate" or "lover" or "cat" ? inner : bounds);
-        if (Art.Texture is { } texture && GodotObject.IsInstanceValid(texture) && texture.GetWidth() > 0 && texture.GetHeight() > 0)
-        {
-            // 仅取卡面中心的正方形；绘制资源，不添加拦截鼠标的子控件。
-            float edge = Math.Min(texture.GetWidth(), texture.GetHeight());
-            var source = new Rect2((texture.GetWidth() - edge) / 2, (texture.GetHeight() - edge) / 2, edge, edge);
-            DrawTextureRectRegion(texture, inner, source);
-        }
-        else
-        {
-            var center = Size / 2;
-            DrawCircle(center + new Vector2(0, -Size.Y * .15f), Size.X * .14f, Art.Accent);
-            DrawArc(center + new Vector2(0, Size.Y * .33f), Size.X * .27f, Mathf.Pi, Mathf.Tau, 24, Art.Accent, Math.Max(3, Size.X * .1f), true);
-        }
+        DrawFace(GetCanvasItem(), bounds, inner, Art, Colors.White);
         if (Identity is { } identity) DrawHonors(identity);
     }
+
+    internal static void DrawFace(Rid canvas, Rect2 bounds, Rect2 inner, AvatarArt art, Color modulate)
+    {
+        if (art.Texture is { } texture && AvatarAssets.Usable(texture))
+        {
+            texture.DrawRectRegion(canvas, inner, PortraitRegion(texture), modulate);
+            return;
+        }
+        var center = bounds.GetCenter();
+        var size = bounds.Size;
+        var color = art.Accent * modulate;
+        RenderingServer.CanvasItemAddCircle(canvas, center + new Vector2(0, -size.Y * .15f), size.X * .14f, color);
+        Span<Vector2> shoulders = stackalloc Vector2[24];
+        var origin = center + new Vector2(0, size.Y * .33f);
+        for (int i = 0; i < shoulders.Length; i++)
+            shoulders[i] = origin + Vector2.FromAngle(Mathf.Pi + Mathf.Pi * i / (shoulders.Length - 1)) * (size.X * .27f);
+        RenderingServer.CanvasItemAddPolyline(canvas, shoulders, [color], Math.Max(3, size.X * .1f), true);
+    }
+
     private void DrawHonors(AvatarIdentity identity)
     {
         var color = new Color(identity.UseOathFrame ? "dce6f1" : identity.DisplayFrame.Color);
@@ -88,9 +129,12 @@ public partial class CareerAvatar : Control
             DrawCircle(center, radius, new Color("06101c"));
             DrawArc(center, radius - 1, 0, Mathf.Tau, 32, color, Math.Max(1.5f, radius * .16f), true);
             DrawArc(center, radius - 3, Mathf.Pi, Mathf.Tau * .92f, 16, color.Lightened(.35f), 1, true);
-            string number = identity.Ascension.ToString(); int fontSize = (int)(radius * 1.35f);
-            var font = GetThemeDefaultFont(); var textSize = font.GetStringSize(number, fontSize: fontSize);
-            DrawString(font, center + new Vector2(-textSize.X / 2, (font.GetAscent(fontSize) - font.GetDescent(fontSize)) / 2), number, fontSize: fontSize, modulate: Colors.White);
+            string number = identity.Ascension.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            int fontSize = (int)(radius * 1.35f);
+            var font = GetThemeDefaultFont();
+            var size = font.GetStringSize(number,fontSize:fontSize);
+            DrawString(font,center + new Vector2(-size.X/2,(font.GetAscent(fontSize)-font.GetDescent(fontSize))/2),
+                number,fontSize:fontSize,modulate:Colors.White);
         }
         if (identity.Role.Length == 0 || identity.SelectedFrame == "cat") return;
         var origin = new Vector2(radius + 1, h - radius - 1);
@@ -111,6 +155,7 @@ public partial class CareerAvatar : Control
             default: Line(-3, -4, 3, -4); Line(-3, 4, 3, 4); Line(-3, -4, 3, 4); Line(3, -4, -3, 4); break;
         }
     }
+
 }
 
 public partial class CareerScreen
@@ -154,13 +199,12 @@ public partial class CareerScreen
     private Control Avatar(CareerData data, string personId, int size = 52, bool clickable = true, Action? open = null)
     {
         using var timing = UiPerformance.Measure(UiPerformance.Work.AvatarControl);
-        var art = CareerAvatars.ForPerson(data, personId);
-        var identity = AvatarHonors.ForPerson(data, personId);
-        var picture = new CareerAvatar { PersonId = personId, Art = art, Identity = identity, CustomMinimumSize = new Vector2(size, size),
+        var picture = new CareerAvatar { PersonId = personId, CustomMinimumSize = new Vector2(size, size),
             SizeFlagsHorizontal = SizeFlags.ShrinkBegin, SizeFlagsVertical = SizeFlags.ShrinkCenter };
-        if (!clickable) { picture.TooltipText = identity.Description; return picture; }
+        if (!clickable) { BindPortrait(data, personId, picture); return picture; }
         var button = new BroadcastButton { CustomMinimumSize = new Vector2(size, size), SizeFlagsHorizontal = SizeFlags.ShrinkBegin,
-            SizeFlagsVertical = SizeFlags.ShrinkCenter, TooltipText = CareerEngine.DisplayName(data, personId) + " · " + identity.Description + "\n查看人物档案", FocusMode = FocusModeEnum.All };
+            SizeFlagsVertical = SizeFlags.ShrinkCenter, FocusMode = FocusModeEnum.All };
+        BindPortrait(data, personId, picture, button);
         foreach (string state in new[] { "normal", "hover", "pressed" }) button.AddThemeStyleboxOverride(state, new StyleBoxEmpty());
         button.AddChild(picture); picture.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         button.MouseEntered += () => picture.Modulate = new Color(1.15f, 1.15f, 1.15f);
@@ -168,6 +212,16 @@ public partial class CareerScreen
         button.Pressed += open ?? (() => OpenPerson(personId));
         return button;
     }
+    private static void BindPortrait(CareerData data, string id, CareerAvatar picture, Button? button = null)
+    {
+        var art = CareerAvatars.ForPerson(data, id);
+        var identity = AvatarHonors.ForPerson(data, id);
+        if (picture.Art != art) picture.Art = art;
+        if (picture.Identity != identity) picture.Identity = identity;
+        if (button == null) picture.TooltipText = identity.Description;
+        else button.TooltipText = CareerEngine.DisplayName(data, id) + " · " + identity.Description + "\n查看人物档案";
+    }
+
     private HBoxContainer WithAvatar(CareerData data, string id, Control content, int size = 52, bool clickable = true)
     {
         var row = new HBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddThemeConstantOverride("separation", 12);

@@ -130,7 +130,13 @@ public partial class CareerScreen
         {
             string id = section.Id;
             var button = Button(section.Name, () => { selected = id; Show(); }, 145);
-            button.ToggleMode = true; buttons[id] = button; tabs.AddChild(button);
+            button.ToggleMode = true; buttons[id] = button;
+            if (id == "private-long-summary" && _multiplayer == null)
+            {
+                var pair = new HBoxContainer(); pair.AddThemeConstantOverride("separation", 8); tabs.AddChild(pair);
+                pair.AddChild(button); pair.AddChild(Button("约会发言", EditDateGameRules, 125));
+            }
+            else tabs.AddChild(button);
         }
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions);
         void Confirm(string title, string question, Action action) => ShowCareerDialog(title, question, () => { action(); return true; });

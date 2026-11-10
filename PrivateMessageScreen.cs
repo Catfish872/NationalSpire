@@ -5,7 +5,9 @@ namespace NationalSpire;
 
 public partial class CareerScreen
 {
-    private Control? _privateOverlay;
+    private Control? _privateOverlay, _chatHeaderTools;
+    private const int ContactPanelWidth = 290, ChatColumnGap = 14;
+    private const int ChatLeft = 122 + ChatColumnGap;
     private Control? _privateList;
     private VBoxContainer? _privateBody;
     private Label? _privateTitle, _privateStatus;
@@ -27,7 +29,7 @@ public partial class CareerScreen
     private ChatComposerLayout? _privateActions;
     private Action<bool>? _privateExpressions;
     private ChatComposerPanel? _privateComposer;
-    private static Label PrivateText(string value, int size, Color color)
+    protected static Label PrivateText(string value, int size, Color color)
     { var label = Text(value, size, color); label.Text = value; return label; }
 
     private void OpenPrivateMessages(string person = "", string group = "", int page = -1)
@@ -38,24 +40,35 @@ public partial class CareerScreen
         _privateRows.Clear(); _privateEntries.Clear();
         LoadChatPreferences();
         var shade = new ColorRect { Name = "PrivateMessages", Color = new Color("0a121d"), MouseFilter = MouseFilterEnum.Stop, ZIndex = 22 };
-        _privateOverlay = shade; _stage.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        var margin = new MarginContainer(); shade.AddChild(margin); margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        foreach (string edge in new[] { "left", "right", "top", "bottom" }) margin.AddThemeConstantOverride("margin_" + edge, 30);
-        var layout = new VBoxContainer(); layout.AddThemeConstantOverride("separation", 18); margin.AddChild(layout);
-        var header = new HBoxContainer(); header.AddThemeConstantOverride("separation", 16); layout.AddChild(header);
-        var brand = new VBoxContainer(); brand.AddThemeConstantOverride("separation", 3); header.AddChild(brand);
-        brand.AddChild(PrivateLine("通讯", 30, _gold));
-        brand.AddChild(PrivateLine("国运尖塔 · 选手通讯", 14, _muted));
-        header.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
-        _datePhoneReturn = PrivateButton("返回约会", ReturnFromDatePhone, 150); _datePhoneReturn.Name = "DatePhoneReturn";
-        _datePhoneReturn.Visible = _datePhoneOffer.Length > 0; header.AddChild(_datePhoneReturn);
-        var settings = PrivateButton("", ChatSettingsMenu, 52); settings.Name = "ChatSettingsButton"; settings.TooltipText = "通讯设置"; settings.AddChild(new PrivateIcon { Gear = true, MouseFilter = MouseFilterEnum.Ignore }); header.AddChild(settings);
-        header.AddChild(PrivateButton("关闭", ClosePrivateMessages, 100));
-        _privateProposal = new VBoxContainer(); _privateProposal.AddThemeConstantOverride("separation", 10); layout.AddChild(_privateProposal);
+        _privateOverlay = shade;
+        Put(_stage, shade, ChatLeft, 133, MainWidth + 148 - ChatLeft, 840);
+        _scroll.Hide(); _sectionBar.Hide();
+        _backButton.Disabled = false; _backButton.Show();
+        _backButton.TooltipText = "返回" + _pageTitle.Text + "（Esc）";
+        _pageTitle.Text = "通讯";
+        StyleNavigationRail();
+        var layout = new VBoxContainer();
+        layout.AddThemeConstantOverride("separation", 10);
+        shade.AddChild(layout); layout.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        var tools = new HBoxContainer { Name = "ChatHeaderTools" };
+        _chatHeaderTools = tools; tools.AddThemeConstantOverride("separation", 14);
+        Put(_stage, tools, ChatLeft + ContactPanelWidth + ChatColumnGap, 40, 150, 41);
+        var settings = FramedAction("", ChatSettingsMenu, width: 134, height: 41, quiet: true);
+        settings.Name = "ChatSettingsButton"; settings.AccessibilityName = "通讯设置"; tools.AddChild(settings);
+        var caption = new HBoxContainer { Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Ignore };
+        caption.AddThemeConstantOverride("separation",9); settings.AddChild(caption); caption.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        var gear = new Control { CustomMinimumSize = new(26,26), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore };
+        gear.AddChild(new PrivateIcon { Gear = true, MouseFilter = MouseFilterEnum.Ignore }); caption.AddChild(gear);
+        var settingsText = DashboardLabel("通讯设置",17,_ink); settingsText.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+        caption.AddChild(settingsText);
+        shade.VisibilityChanged += () => { if (IsInstanceValid(tools)) tools.Visible = shade.Visible; };
+
+
+        _privateProposal = new VBoxContainer { Visible = false }; _privateProposal.AddThemeConstantOverride("separation", 10); layout.AddChild(_privateProposal);
         _privateProposalSignature = "";
-        var columns = new HBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }; columns.AddThemeConstantOverride("separation", 14); layout.AddChild(columns);
-        var left = new PanelContainer(); left.CustomMinimumSize = new(290, 0); left.SizeFlagsHorizontal = SizeFlags.Fill; columns.AddChild(left);
-        left.AddThemeStyleboxOverride("panel", CareerVisuals.Box("101b29", "3c5265", 12, 16));
+        var columns = new HBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }; columns.AddThemeConstantOverride("separation", ChatColumnGap); layout.AddChild(columns);
+        var left = new PanelContainer { Name = "ChatContactsPanel" }; left.CustomMinimumSize = new(ContactPanelWidth, 0); left.SizeFlagsHorizontal = SizeFlags.Fill; columns.AddChild(left);
+        left.AddThemeStyleboxOverride("panel", CareerVisuals.Box("101b29", "3c5265", 12, 13));
         var sidebar = Inner(left); sidebar.AddThemeConstantOverride("separation", 18);
         BuildContactSearch(sidebar);
         GroupSidebar(sidebar);
@@ -63,13 +76,20 @@ public partial class CareerScreen
         _privateListScroll = listScroll;
         _privateList = new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }; listScroll.AddChild(_privateList);
         _privateListEmpty = Text("搜索选手，或从档案发起私信。", 16, _muted);
-        _privateListEmpty.CustomMinimumSize = new(260, 0); _privateList.AddChild(_privateListEmpty);
+        _privateListEmpty.CustomMinimumSize = new(0, 0); _privateList.AddChild(_privateListEmpty);
         _privateListEmpty.SetAnchorsAndOffsetsPreset(LayoutPreset.TopWide);
         listScroll.GetVScrollBar().ValueChanged += _ => ShowPrivateListRows();
         listScroll.Resized += ShowPrivateListRows; _privateList.Resized += ShowPrivateListRows;
-        var main = new PanelContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddChild(main);
-        main.AddThemeStyleboxOverride("panel", CareerVisuals.Box("182838", "405b70", 12, 24));
-        var chat = Inner(main); chat.AddThemeConstantOverride("separation", 14);
+        var main = new PanelContainer { Name = "ChatMessagePanel", SizeFlagsHorizontal = SizeFlags.ExpandFill }; columns.AddChild(main);
+        void AlignTools()
+        {
+            if (!IsInstanceValid(tools) || !main.IsInsideTree()) return;
+            var local = _stage.GetGlobalTransform().AffineInverse();
+            tools.Position = new((local * main.GlobalPosition).X, (local * _backButton.GlobalPosition).Y);
+        }
+        columns.SortChildren += AlignTools; Callable.From(AlignTools).CallDeferred();
+        main.AddThemeStyleboxOverride("panel", CareerVisuals.Box("182838", "405b70", 12, 18));
+        var chat = Inner(main); chat.AddThemeConstantOverride("separation", 10);
         _privateHeading = new HBoxContainer(); _privateHeading.AddThemeConstantOverride("separation", 18); chat.AddChild(_privateHeading);
         _privateTitle = Text("选择一位选手", 25, _ink); _privateHeading.AddChild(_privateTitle);
         _privateScroll = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; chat.AddChild(_privateScroll);
@@ -139,23 +159,15 @@ public partial class CareerScreen
     {
         if (_privateOverlay == null) return;
         CloseChatContextMenu(); CloseContactMenu(); CloseDateScene();
-        _datePhonePerson = _datePhoneOffer = ""; _datePhoneReturn = null;
         _privateScrollRevision++;
         if (ChatDraftKey.Length > 0 && _privateInput != null) _privateDrafts[ChatDraftKey] = _privateInput.Text;
         _privateStreamText = _privateStreamThought = _groupReasoningUpdate = null;
         _groupStreamParser = null; _groupStreamLabels.Clear();
         _privatePages.Reset(_chatPageSize); _groupPages.Reset(_chatPageSize);
         _privateExpandedTraining.Clear(); _privateExpressions = null; _privateActions = null; _privateComposer = null;
-        _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = ""; _privateGroup = "";
+        _chatHeaderTools?.Hide(); _chatHeaderTools?.QueueFree(); _chatHeaderTools = null;
+        _privateOverlay.Hide(); _privateOverlay.QueueFree(); _privateOverlay = null; _privatePerson = ""; _privateGroup = "";
         _boundData = ViewData; if (render) Render();
-    }
-    private void OpenPrivatePerson(string person)
-    {
-        if (ViewData.Failure != null) return;
-        var previous = CaptureLocation() with { PrivatePerson = _privatePerson, ChatScroll = _privateScroll!.ScrollVertical, ChatPage = ChatPage };
-        ClosePrivateMessagesCore(false);
-        Visit(() => { _tab = "选手档案"; _personId = person; });
-        _backHistory.Pop(); _backHistory.Push(previous); UpdateNavigation();
     }
     private void SelectPrivate(string person, int page = -1)
     {
@@ -177,9 +189,10 @@ public partial class CareerScreen
         var box = PrivateMessages.Mailbox(ViewData);
         int unread = box.Conversations.Values.Sum(c => Math.Max(0, PrivateMessages.UnreadInCommunications(c)));
         unread += GroupChats.Visible(ViewData).Sum(g => Math.Max(0, g.Turns.Count(t => t.Status == "complete") - g.Seen.GetValueOrDefault(GroupChats.Human(ViewData))));
-        if (_privateBadge != null) { _privateBadge.TooltipText = unread > 0 ? $"通讯 · {unread} 条未读" : "通讯"; _privateBadge.Modulate = unread > 0 ? CareerVisuals.Gold : Colors.White; }
+        if (_privateBadge != null) { _privateBadge.TooltipText = unread > 0 ? $"通讯 · {unread} 条未读" : "通讯"; SetRailCount(_railMailCount,unread); }
         if (_privateOverlay == null) return;
-        _multiplayer?.Refresh(); RefreshPrivateProposal(); RefreshPrivateList(); RefreshPrivateChat();
+        if (_multiplayer?.Refresh() == true) UpdateHeaderAccount(ViewData);
+        RefreshPrivateProposal(); RefreshPrivateList(); RefreshPrivateChat();
     }
     private void RefreshPrivateProposal()
     {
@@ -187,7 +200,8 @@ public partial class CareerScreen
         string signature = _multiplayer.ProposalId + _multiplayer.ProposalText + _multiplayer.HasVoted;
         if (signature == _privateProposalSignature) return;
         _privateProposalSignature = signature; CareerVisuals.ClearContent(_privateProposal);
-        if (_multiplayer.ProposalId.Length == 0) return;
+        _privateProposal.Visible = _multiplayer.ProposalId.Length > 0;
+        if (!_privateProposal.Visible) return;
         _privateProposal.AddChild(Text(_multiplayer.ProposalText, 17, _gold));
         var buttons = new HBoxContainer(); buttons.AddThemeConstantOverride("separation", 14); _privateProposal.AddChild(buttons);
         var approve = PrivateButton(_multiplayer.HasVoted ? "已准备，等待队友" : "准备开赛", () => _multiplayer.Send("confirm", _multiplayer.ProposalId), 220);
@@ -219,7 +233,7 @@ public partial class CareerScreen
         _privateStreamLastText = text; _privateStreamLastThought = thought;
         if (bottom && follow && ChatAtLatest) _ = ScrollPrivateToBottom();
     }
-    private void RefreshPrivateChat(bool follow = true)
+    protected void RefreshPrivateChat(bool follow = true)
     {
         if (_privateGroup.Length > 0) { RefreshGroupChat(); return; }
         if (_privatePerson.Length == 0 || _privateBody == null || _privateInput == null) return;
@@ -283,10 +297,9 @@ public partial class CareerScreen
             PrivateLineupCard(data, request, _privateBody);
         if (ChatAtLatest)
         {
-            // 场景正文独立展示；好感确认继续复用私聊的原确认卡和命令。
-            foreach (var offer in c.Offers.Where(o => o.Kind == "favour" && o.State == "待确认"))
-                if (DateSceneEffects.SourceTurn(PrivateMessages.Mailbox(data), c.PersonId, offer.TurnId) is { Scene: not null, UserDeleted: false, ReplyDeleted: false }
-                    && !visibleTurns.Any(t => t.Id == offer.TurnId && PrivateMessages.VisibleInCommunications(t))) AddPrivateOffer(data, offer);
+            // 场景正文独立展示；场景内建立的邀约与好感确认沿用私聊操作卡。
+            var visibleSources = visibleTurns.Where(PrivateMessages.VisibleInCommunications).Select(t => t.Id).ToHashSet();
+            foreach (var offer in c.Offers.Where(o => ShowSceneOfferOutsideHistory(data, c, o, visibleSources))) AddPrivateOffer(data, offer);
             AddPausedDateScenes(data, c);
         }
         if (_privatePages.Count == 0)
@@ -364,6 +377,11 @@ public partial class CareerScreen
         var data = ViewData;
         try
         {
+            if (kind == "dm-date-rewind")
+            {
+                if (DateHistoryRewind.Apply(data, person, command, save: true) is { } rewindError) { Fail(rewindError); return; }
+                accepted?.Invoke(); _privateListSignature = _privateSignature = ""; return;
+            }
             if (PrivateMessageCommands.Apply(data, kind, person, command) is { } error)
             {
                 if (kind == "dm-confirm") { CareerStore.Save(data); _privateSignature = ""; }
@@ -380,6 +398,20 @@ public partial class CareerScreen
         }
         catch (Exception e) { Fail(AiService.FailureReason(e)); }
     }
+    private static bool ShowSceneOfferOutsideHistory(CareerData data, PrivateConversation conversation, PrivateOffer offer, IReadOnlySet<string> visibleSources)
+    {
+        bool pendingDecision = offer.State == "待确认" && offer.Kind is "favour" or "activity" or "match" or "training" or "contract" or "publish";
+        bool retainedActivity = offer.Kind == "activity" && offer.State is "已确认" or "已赴约";
+        if ((!pendingDecision && !retainedActivity) || visibleSources.Contains(offer.TurnId)) return false;
+        // 正在进行或暂停的场景使用原有继续入口；其余已赴约活动按场景规则判断。
+        if (offer.State == "已赴约" && (conversation.DateSceneStates.GetValueOrDefault(offer.Id) is "active" or "paused"
+            || !DateScenes.Available(data, offer, conversation))) return false;
+        if(retainedActivity && PrivateAppointments.Date(data,offer)==data.Day) return true;
+        var source = DateSceneEffects.SourceTurn(PrivateMessages.Mailbox(data), conversation.PersonId, offer.TurnId);
+        if (source == null) return retainedActivity;
+        return source.Scene != null && (retainedActivity || !source.UserDeleted && !source.ReplyDeleted);
+    }
+
     private void ShowPrivateCommandError(string error)
     {
         error = PlayerFacingText.LongError(error);
@@ -485,7 +517,7 @@ public partial class CareerScreen
         var previous = CaptureLocation() with { PrivatePerson = _privatePerson, ChatScroll = _privateScroll!.ScrollVertical, ChatPage = ChatPage };
         int day = PrivateAppointments.Date(ViewData, offer);
         ClosePrivateMessagesCore(false);
-        Visit(() => { _tab = "日程"; _selectedDay = day; });
+        OpenCalendarDay(day);
         _backHistory.Pop(); _backHistory.Push(previous); UpdateNavigation();
     }
     private void AddPrivateOffer(CareerData data, PrivateOffer offer)
@@ -534,8 +566,7 @@ public partial class CareerScreen
             if (offer.State == "待确认") row.AddChild(PrivateButton("确认约定", () => PrivateCommand("dm-confirm", new() { Offer = offer.Id }), 150));
             if (offer.State == "已确认" && PrivateAppointments.Date(data, offer) == data.Day)
             {
-                row.AddChild(PrivateButton("私密赴约", () => PrivateCommand("dm-attend", new() { Offer = offer.Id }), 140));
-                row.AddChild(PrivateButton("公开赴约", () => PrivateCommand("dm-attend", new() { Offer = offer.Id, Part = "public" }), 140));
+                row.AddChild(PrivateButton("直接赴约", () => ChooseDateAttendance(offer.Id, false), 140));
             }
             if (offer.State == "已确认") row.AddChild(PrivateButton("查看日程", () => OpenPrivateOfferCalendar(offer), 120));
             AddDateSceneAction(data, offer, row);

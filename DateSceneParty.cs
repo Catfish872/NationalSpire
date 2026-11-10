@@ -74,6 +74,7 @@ public static class DateSceneParty
             relation = RelationContext(PrivateMessages.Relation(data, p.PersonId)),
             memory = PrivateMessages.Mailbox(data).Conversations.TryGetValue(p.PersonId, out var c) && !c.Forgotten
                 ? string.Join("\n", c.BigSummaries.Concat(c.SmallSummaries).TakeLast(2).Select(s => s.Text)
+                    .Concat(c.ManualMemories.Select(m => ManualChatMemories.Heading(data, m) + "：" + m.Text))
                     .Concat(c.Turns.Where(t => t.Status == "complete" && !t.ReplyDeleted && t.Scene == null).TakeLast(3)
                         .Select(t => (t.UserDeleted ? "" : "玩家：" + t.User + "\n") + p.Name + "：" + t.Reply))) : ""
         }), PromptJson);
