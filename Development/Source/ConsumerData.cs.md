@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`AC79F7A77DEC598EA68B54A7A13B84F352AF4F728993A3B82442FBD24DDBBBA3`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2E531D4AEEABE325934E0947D83E63942203F65FEA23D1B2F5C8EC5D622DBBEA`。来源：[源码](../../ConsumerData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -590,7 +590,7 @@ public static readonly Good[] All = Build();
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-be93238a8d33)；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-ade1eb7c9eca)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
+**调用：** [`Item(string, string, string, string, int, bool, bool, int)`](ConsumerData.cs.md#symbol-be93238a8d33)；`NationalSpire.GoodVerb.GoodVerb(string, string, int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`；[`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`](ConsumerData.cs.md#symbol-ade1eb7c9eca)
 
 **字段、属性、事件及方法组引用：** `Item(string, string, string, string, int, bool, bool, int)`；`NationalSpire.ConsumerCatalog.Luxury`；`NationalSpire.ConsumerCatalog.Mass`；`NationalSpire.ConsumerCatalog.Middle`；`NationalSpire.ConsumerCatalog.Promo`；`NationalSpire.ConsumerCatalog.Rich`；`Wear(string, string, string, string, int, params NationalSpire.GoodVerb[])`
 

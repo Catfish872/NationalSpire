@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F911C31933FEEBDB338153A712F6C150770E6E315F61911026139B3D37488D10`。来源：[源码](../../ContactRowButton.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`19932AEA72192057C7270767AEE415595EA743CAC1BF26D8E9379E556624707C`。来源：[源码](../../ContactRowButton.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -88,7 +88,7 @@ private ChatContacts.Events _events;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`](ConsumerGiftControls.cs.md#symbol-f09cb809a74c)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`](ConsumerGiftControls.cs.md#symbol-f09cb809a74c)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AffectionArt.Texture(string)`；`NationalSpire.ChatContacts.Events.Date`；`NationalSpire.ChatContacts.Events.DateToday`；`NationalSpire.ChatContacts.Events.Match`；`NationalSpire.ChatContacts.Events.MatchToday`；`NationalSpire.ChatContacts.Events.Wedding`；`NationalSpire.ChatContacts.Events.WeddingToday`；`NationalSpire.ContactRowButton._events`；`NationalSpire.ContactRowButton._hidden`；`NationalSpire.ContactRowButton._pinned`；`NationalSpire.ContactRowButton._selected`；`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`
 

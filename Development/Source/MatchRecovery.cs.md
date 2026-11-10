@@ -22,7 +22,7 @@ public const string SingleplayerInUse = "请在主菜单手动放弃当前对局
 
 **调用者：** [`NationalSpire.GameBridge.RecoverPending()`](GameBridge.cs.md#symbol-7e7d899f5086)
 
-**调用：** `long.TryParse(string?, out long)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Path.GetFileNameWithoutExtension(string?)`；`long.TryParse(string?, out long)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

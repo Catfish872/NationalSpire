@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A3CF06D10261D8F664009FE1FF77A51ADF832A6948590F44EECCA20D191C3192`。来源：[源码](../../LogStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`35537F8EC35A79A565E48B9752F83CF8216890795C934DF138F7E4338A4CB3AA`。来源：[源码](../../LogStorage.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -73,7 +73,7 @@ private static readonly Dictionary<string, LogWriter> LogWriters = [];
 
 **调用者：** [`NationalSpire.Diagnostics.AppendLog(string, string)`](LogStorage.cs.md#symbol-fff9b7250296)；[`NationalSpire.Diagnostics.ReadLogs(string)`](LogStorage.cs.md#symbol-a180c6c02b7d)
 
-**调用：** `string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.DirectoryInfo.DirectoryInfo(string)`；`System.IO.DirectoryInfo.EnumerateFiles(string)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.DirectoryInfo.DirectoryInfo(string)`；`System.IO.DirectoryInfo.EnumerateFiles(string)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`string.StartsWith(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -131,7 +131,7 @@ private static readonly Dictionary<string, LogWriter> LogWriters = [];
 
 **调用者：** [`NationalSpire.Diagnostics.Configure(string)`](Diagnostics.cs.md#symbol-4dd1cd0d7324)
 
-**调用：** [`NationalSpire.Diagnostics.AppendLog(string, string)`](LogStorage.cs.md#symbol-fff9b7250296)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`string.TrimEnd(params char[]?)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Exception.ToString()`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string, System.IO.SearchOption)`；`System.IO.File.Delete(string)`；`System.IO.File.ReadAllText(string, System.Text.Encoding)`；`System.IO.Path.Combine(string, string)`
+**调用：** [`NationalSpire.Diagnostics.AppendLog(string, string)`](LogStorage.cs.md#symbol-fff9b7250296)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Exception.ToString()`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string, System.IO.SearchOption)`；`System.IO.File.Delete(string)`；`System.IO.File.ReadAllText(string, System.Text.Encoding)`；`System.IO.Path.Combine(string, string)`；`string.TrimEnd(params char[]?)`
 
 **字段、属性、事件及方法组引用：** `(string Folder, string Pattern, string Name).Folder`；`(string Folder, string Pattern, string Name).Name`；`(string Folder, string Pattern, string Name).Pattern`；`NationalSpire.Diagnostics._directory`；`NationalSpire.Diagnostics._writeError`；`NationalSpire.Diagnostics.AppendLog(string, string)`；`NationalSpire.Diagnostics.Gate`；`NationalSpire.Diagnostics.Redact(string)`
 
@@ -308,7 +308,7 @@ private static readonly Dictionary<string, LogWriter> LogWriters = [];
 
 **调用者：** [`NationalSpire.Diagnostics.ErrorDetail(string)`](ErrorDiagnostics.cs.md#symbol-1825d5559456)；[`NationalSpire.Diagnostics.ReadEventRecords()`](EventDiagnostics.cs.md#symbol-40b02ea907c8)；[`NationalSpire.Diagnostics.ReadMatchTraces(string?)`](MatchDiagnostics.cs.md#symbol-98c47503da5b)
 
-**调用：** [`NationalSpire.Diagnostics.LogFiles(string, string)`](LogStorage.cs.md#symbol-f84080f52bcb)；[`NationalSpire.Diagnostics.OpenTraceSnapshot(string, out long)`](MatchDiagnostics.cs.md#symbol-8f11b54b7a73)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`NationalSpire.Diagnostics.TraceSnapshot.TraceSnapshot(System.IO.FileStream, long)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.KeyValuePair<TKey, TValue>.KeyValuePair(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Exception.ToString()`；`System.IO.Directory.Exists(string?)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Stream.Dispose()`；`System.IO.StreamReader.ReadToEnd()`；`System.IO.StreamReader.StreamReader(System.IO.Stream, System.Text.Encoding?, bool, int, bool)`
+**调用：** [`NationalSpire.Diagnostics.LogFiles(string, string)`](LogStorage.cs.md#symbol-f84080f52bcb)；[`NationalSpire.Diagnostics.OpenTraceSnapshot(string, out long)`](MatchDiagnostics.cs.md#symbol-8f11b54b7a73)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；`NationalSpire.Diagnostics.TraceSnapshot.TraceSnapshot(System.IO.FileStream, long)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.KeyValuePair<TKey, TValue>.KeyValuePair(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Exception.ToString()`；`System.IO.Directory.Exists(string?)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Stream.Dispose()`；`System.IO.StreamReader.ReadToEnd()`；`System.IO.StreamReader.StreamReader(System.IO.Stream, System.Text.Encoding?, bool, int, bool)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`
 
 **字段、属性、事件及方法组引用：** `(string Name, NationalSpire.Diagnostics.TraceSnapshot Stream).Name`；`(string Name, NationalSpire.Diagnostics.TraceSnapshot Stream).Stream`；`NationalSpire.Diagnostics._directory`；`NationalSpire.Diagnostics._writeError`；`NationalSpire.Diagnostics.Gate`；`NationalSpire.Diagnostics.LogFiles(string, string)`；`NationalSpire.Diagnostics.OpenTraceSnapshot(string, out long)`；`NationalSpire.Diagnostics.PendingLog.Line`；`NationalSpire.Diagnostics.PendingLog.Path`；`NationalSpire.Diagnostics.PendingLogs`；`NationalSpire.Diagnostics.Redact(string)`
 

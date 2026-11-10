@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C6D5393A49B5E1337686979B5B19569EC4E7B3F7B17F1EE9EB34989F6EEFE573`。来源：[源码](../../CareerNarrative.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8D48480A2A52D310DFA8E57F4335AA4D22AA415621E72BC08864A66F4E3B1F1D`。来源：[源码](../../CareerNarrative.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerNarrative.NewsAudience(NationalSpire.CareerData, string, string, NationalSpire.CareerMatch?, System.Collections.Generic.List<string>?)`](CareerNarrative.cs.md#symbol-0dd83004ae4e)；[`NationalSpire.CareerNarrative.RepairNews(NationalSpire.CareerData)`](CareerNarrative.cs.md#symbol-f7d8afb43e10)；[`NationalSpire.CommunityThreads.Audience(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-a16197b41bab)
 
-**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`](SpireArbitration.cs.md#symbol-909e0981d663)；`string.IsNullOrEmpty(string?)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`](SpireArbitration.cs.md#symbol-909e0981d663)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Contains(T)`；`string.IsNullOrEmpty(string?)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.HumanIds`；`NationalSpire.CareerData.People`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.CompetitionId`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Role`；`NationalSpire.EsportsCareer.Competitions`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.SpireArbitration.Muted(NationalSpire.CareerPerson)`；`NationalSpire.WorldCompetition.Country`；`NationalSpire.WorldCompetition.Id`
 
@@ -52,7 +52,7 @@
 
 **调用者：** [`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`](CareerEngine.cs.md#symbol-cd8fd2c800e7)；[`NationalSpire.CareerNarrative.RepairNews(NationalSpire.CareerData)`](CareerNarrative.cs.md#symbol-f7d8afb43e10)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.NewsAudience(NationalSpire.CareerData, string, string, NationalSpire.CareerMatch?, System.Collections.Generic.List<string>?)`](CareerNarrative.cs.md#symbol-0dd83004ae4e)；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.NewsAudience(NationalSpire.CareerData, string, string, NationalSpire.CareerMatch?, System.Collections.Generic.List<string>?)`](CareerNarrative.cs.md#symbol-0dd83004ae4e)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerNarrative.NewsAudience(NationalSpire.CareerData, string, string, NationalSpire.CareerMatch?, System.Collections.Generic.List<string>?)`；`NationalSpire.CareerPerson.Id`
 
@@ -154,7 +154,7 @@
 
 **调用者：** [`NationalSpire.CareerNarrative.News(NationalSpire.CareerData, string, string, string, string, NationalSpire.CareerMatch?)`](CareerNarrative.cs.md#symbol-adf20872be24)；[`NationalSpire.CareerNarrative.RepairNews(NationalSpire.CareerData)`](CareerNarrative.cs.md#symbol-f7d8afb43e10)
 
-**调用：** [`NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-0ebab312a182)；`string.Replace(string, string?)`；`string.Trim()`；`System.Text.RegularExpressions.Regex.Replace(string, string, string)`
+**调用：** [`NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-0ebab312a182)；`System.Text.RegularExpressions.Regex.Replace(string, string, string)`；`string.Replace(string, string?)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`
 
@@ -283,9 +283,9 @@
 
 来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.World(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-ce5a79e2aa5c)
+**调用者：** [`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；`int.ToString()`；`string.Replace(string, string?)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`int.ToString()`；`string.Replace(string, string?)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Losses`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerHonor.Id`；`NationalSpire.CareerNarrative.Pick(string, int)`；`NationalSpire.EsportsCareer.BestClear`；`NationalSpire.EsportsCareer.Honors`；`NationalSpire.EsportsCareer.License`；`NationalSpire.EsportsCareer.WinStreak`
 
@@ -312,7 +312,7 @@
 
 **调用者：** [`NationalSpire.CareerNarrative.News(NationalSpire.CareerData, string, string, string, string, NationalSpire.CareerMatch?)`](CareerNarrative.cs.md#symbol-adf20872be24)；[`NationalSpire.CareerNarrative.Reply(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`](CareerNarrative.cs.md#symbol-6be1cdf0085f)
 
-**调用：** [`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；`string.Contains(string)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`string.Contains(string)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.Wins`；`NationalSpire.CareerDuel.PersonId`；`NationalSpire.CareerDuel.Wins`；`NationalSpire.CareerMatch.Decider`；`NationalSpire.CareerMatch.Draw`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentWon`；`NationalSpire.CareerMatch.PlayerWon`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Round`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerResult.MatchId`；`NationalSpire.CareerResult.Win`；`NationalSpire.EsportsCareer.Duels`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`
 
@@ -344,7 +344,7 @@
 
 **调用者：** [`NationalSpire.CareerMigration.UpgradeRules(NationalSpire.CareerData)`](CareerMigration.cs.md#symbol-94c0855d9c16)；[`NationalSpire.CareerNarrative.FreshReply(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string, System.Collections.Generic.ISet<string>)`](CareerNarrative.cs.md#symbol-670f136e0dfa)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`](CareerNarrative.cs.md#symbol-77d0573f3e7a)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；`int.ToString()`；`string.Replace(string, string?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`](CareerNarrative.cs.md#symbol-77d0573f3e7a)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`int.ToString()`；`string.Replace(string, string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerDuel.PersonId`；`NationalSpire.CareerDuel.Wins`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Kind`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`；`NationalSpire.CareerNarrative.Pick(string, int)`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.EsportsCareer.Duels`；`NationalSpire.NarrativeText.Banks`
 
@@ -402,7 +402,7 @@
 
 **调用者：** [`NationalSpire.CareerEngine.Publish(NationalSpire.CareerData, string, string, string, string, bool, System.Collections.Generic.List<string>?, NationalSpire.CareerMatch?)`](CareerEngine.cs.md#symbol-cd8fd2c800e7)
 
-**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`](CareerNarrative.cs.md#symbol-77d0573f3e7a)；[`NationalSpire.CareerNarrative.NewsBody(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-40783a5a4a36)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；[`NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-0ebab312a182)；`NationalSpire.CareerPerson.CareerPerson()`；`string.IndexOf(char)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`
+**调用：** [`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`](CareerNarrative.cs.md#symbol-77d0573f3e7a)；[`NationalSpire.CareerNarrative.NewsBody(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-40783a5a4a36)；[`NationalSpire.CareerNarrative.Pick(string, int)`](CareerNarrative.cs.md#symbol-08d5c3447a84)；[`NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`](CareerNarrative.cs.md#symbol-0ebab312a182)；`NationalSpire.CareerPerson.CareerPerson()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`string.IndexOf(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerMatch.Draw`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.PlayerWon`；`NationalSpire.CareerMatch.Status`；`NationalSpire.CareerNarrative.Bank(NationalSpire.CareerData, NationalSpire.CareerPerson, string, NationalSpire.CareerMatch?, int, string)`；`NationalSpire.CareerNarrative.NewsBody(string, NationalSpire.CareerData?)`；`NationalSpire.CareerNarrative.Pick(string, int)`；`NationalSpire.CareerNarrative.PublicNameText(string, NationalSpire.CareerData?)`；`NationalSpire.NarrativeText.Banks`
 

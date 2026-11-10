@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5F5A25095113352E3839263709671D501C56508EB61C8466BA2B42C1F9D68A97`。来源：[源码](../../CommunityVotes.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E92CC293FB6E4F8F750C3AFD55F92879EB7C58D37B22F8F3C32DC5CFA5526110`。来源：[源码](../../CommunityVotes.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -159,7 +159,7 @@ private const int PlayerReplyMultiplier = 16;
 
 **调用者：** [`NationalSpire.CommunityThreads.Remember(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-0da035a7b345)
 
-**调用：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-95158a15f438)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`Calculate(string, string, string, bool, int)`](CommunityVotes.cs.md#symbol-95158a15f438)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToLookup<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<int>.Max()`
 
 **字段、属性、事件及方法组引用：** `Calculate(string, string, string, bool, int)`；`Fans(string)`；`NationalSpire.CareerData.People`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CommunityPost.AudienceScore`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Body`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityPost.MatchKind`；`NationalSpire.CommunityPost.RelatedPeople`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityPost.Title`；`NationalSpire.CommunityPost.VoteRevision`；`NationalSpire.CommunityReply.AudienceScore`；`NationalSpire.CommunityReply.AuthorId`；`NationalSpire.CommunityReply.Body`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`
 
@@ -214,7 +214,7 @@ private const int PlayerReplyMultiplier = 16;
 
 **调用者：** [`NationalSpire.CommunityVotes.Update(NationalSpire.CareerData, NationalSpire.CommunityPost)`](CommunityVotes.cs.md#symbol-324728201fc4)
 
-**调用：** [`Fans(string)`](CommunityVotes.cs.md#symbol-781408ef809e)；[`NationalSpire.CommunityVotes.Variation(string, string)`](CommunityVotes.cs.md#symbol-92501d24e9b4)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Abs(double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Log(double)`；`System.Math.Log10(double)`；`System.Math.Min(double, double)`；`System.Math.Pow(double, double)`；`System.Math.Round(double)`；`System.Math.Sqrt(double)`
+**调用：** [`Fans(string)`](CommunityVotes.cs.md#symbol-781408ef809e)；[`NationalSpire.CommunityVotes.Variation(string, string)`](CommunityVotes.cs.md#symbol-92501d24e9b4)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Math.Abs(double)`；`System.Math.Clamp(double, double, double)`；`System.Math.Log(double)`；`System.Math.Log10(double)`；`System.Math.Min(double, double)`；`System.Math.Pow(double, double)`；`System.Math.Round(double)`；`System.Math.Sqrt(double)`；`string.Contains(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `Fans(string)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Connections`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Titles`；`NationalSpire.CommunityPost.AuthorId`；`NationalSpire.CommunityPost.Id`；`NationalSpire.CommunityVotes.Variation(string, string)`
 

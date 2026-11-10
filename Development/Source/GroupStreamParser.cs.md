@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`7D5F109555F52C0B0ED7679F841A1CDDF0C21EC0B9739249E50D7F2C5E04116C`。来源：[源码](../../GroupStreamParser.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`FD66228438632D793ED1ADAEA136ECA811B9DE4EA599EB5DCEA4E4DF4830765F`。来源：[源码](../../GroupStreamParser.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -121,7 +121,7 @@ private char _close;
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.UpdateGroupStream(NationalSpire.GroupChat, string, string)`](GroupChatScreen.cs.md#symbol-c33de3d8ae73)；[`NationalSpire.ChatTranscript.Group(NationalSpire.CareerData, NationalSpire.GroupChat)`](ChatTranscript.cs.md#symbol-f3a90964e01d)
 
-**调用：** [`NationalSpire.GroupStreamParser.Append(string)`](GroupStreamParser.cs.md#symbol-5d78762a5748)；[`NationalSpire.GroupStreamParser.BarePrefix(string)`](GroupStreamParser.cs.md#symbol-263b0bd03db9)；[`NationalSpire.GroupStreamParser.Normalize(string)`](GroupStreamParser.cs.md#symbol-06d52914e647)；[`NationalSpire.GroupStreamParser.TrySpeaker(string, out string)`](GroupStreamParser.cs.md#symbol-26619136db8e)；[`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)；`char.IsWhiteSpace(char)`；`char.ToString()`；`NationalSpire.GroupStreamParser.Speech.Speech(string)`；`string.Trim()`；`string.TrimEnd()`；`string.TrimEnd(params char[]?)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Match(string)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`NationalSpire.GroupStreamParser.Append(string)`](GroupStreamParser.cs.md#symbol-5d78762a5748)；[`NationalSpire.GroupStreamParser.BarePrefix(string)`](GroupStreamParser.cs.md#symbol-263b0bd03db9)；[`NationalSpire.GroupStreamParser.Normalize(string)`](GroupStreamParser.cs.md#symbol-06d52914e647)；`NationalSpire.GroupStreamParser.Speech.Speech(string)`；[`NationalSpire.GroupStreamParser.TrySpeaker(string, out string)`](GroupStreamParser.cs.md#symbol-26619136db8e)；[`NationalSpire.PrivateStreamParser.Feed(string)`](PrivateMessages.cs.md#symbol-f34e8e2406af)；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Match(string)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`；`char.IsWhiteSpace(char)`；`char.ToString()`；`string.Trim()`；`string.TrimEnd()`；`string.TrimEnd(params char[]?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GroupStreamParser._actions`；`NationalSpire.GroupStreamParser._close`；`NationalSpire.GroupStreamParser._header`；`NationalSpire.GroupStreamParser._headerAtStart`；`NationalSpire.GroupStreamParser._lineStart`；`NationalSpire.GroupStreamParser.Actions`；`NationalSpire.GroupStreamParser.Append(string)`；`NationalSpire.GroupStreamParser.BarePrefix(string)`；`NationalSpire.GroupStreamParser.Canonical`；`NationalSpire.GroupStreamParser.Messages`；`NationalSpire.GroupStreamParser.Normalize(string)`；`NationalSpire.GroupStreamParser.TrySpeaker(string, out string)`；`NationalSpire.PrivateStreamParser.Feed(string)`
 
@@ -173,7 +173,7 @@ private char _close;
 
 **调用者：** [`NationalSpire.GroupStreamParser.Feed(string)`](GroupStreamParser.cs.md#symbol-9d7375d651fe)；[`NationalSpire.GroupStreamParser.Finish()`](GroupStreamParser.cs.md#symbol-4f31ed556cc9)
 
-**调用：** `char.IsWhiteSpace(char)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string)`；`string.Trim()`；`System.Text.StringBuilder.Append(string?)`
+**调用：** `System.Text.StringBuilder.Append(string?)`；`char.IsWhiteSpace(char)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GroupStreamParser._lineStart`；`NationalSpire.GroupStreamParser.Error`；`NationalSpire.GroupStreamParser.Messages`；`NationalSpire.GroupStreamParser.Speech.Body`
 
@@ -199,7 +199,7 @@ private char _close;
 
 **调用者：** [`NationalSpire.GroupStreamParser.Feed(string)`](GroupStreamParser.cs.md#symbol-9d7375d651fe)
 
-**调用：** `string.ToLowerInvariant()`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`
+**调用：** `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`string.ToLowerInvariant()`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -242,7 +242,7 @@ private char _close;
 
 **调用者：** [`NationalSpire.GroupStreamParser.Feed(string)`](GroupStreamParser.cs.md#symbol-9d7375d651fe)
 
-**调用：** `string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`string.TrimStart(params char[]?)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`
+**调用：** `System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`string.StartsWith(string, System.StringComparison)`；`string.TrimStart()`；`string.TrimStart(params char[]?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GroupStreamParser.SpeakerLabels`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BD4A2C07D00691A195001AC87DF5205D3403C84F96119847FB83D2EE3D9B05AD`。来源：[源码](../../CharacterIdentity.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8C2BFDE4476B0C5C8BC9408C5B991494A765A220B4CA4FF36C6FFECB7E82F55F`。来源：[源码](../../CharacterIdentity.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -58,7 +58,7 @@ private static readonly IReadOnlyDictionary<string, string> Empty = new Dictiona
 
 **调用者：** [`Add(string, string, string?)`](CharacterIdentity.cs.md#symbol-af17e7fe683c)；[`NationalSpire.CharacterCards.Read(NationalSpire.CareerData, string)`](CharacterCards.cs.md#symbol-3c3ff9c389dd)；[`NationalSpire.CharacterIdentity.Name(NationalSpire.CareerData, string)`](CharacterIdentity.cs.md#symbol-4d068357a08b)；[`NationalSpire.CharacterIdentity.Resolve(string, string, System.Func<System.Collections.Generic.IEnumerable<NationalSpire.CharacterDefinition>>)`](CharacterIdentity.cs.md#symbol-3e35ac458848)；[`NationalSpire.PrivateProfileChanges.SetValue(NationalSpire.CareerPerson, string, string)`](PrivateProfileChanges.cs.md#symbol-ad07c3469174)
 
-**调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Func<TResult>.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CharacterIdentity.OriginalSource`
 
@@ -98,7 +98,7 @@ private static readonly IReadOnlyDictionary<string, string> Empty = new Dictiona
 
 **调用者：** [`NationalSpire.CharacterIdentity.Aliases(NationalSpire.CareerData)`](CharacterIdentity.cs.md#symbol-7612117e6b1e)；[`NationalSpire.CharacterIdentity.ForResult(NationalSpire.CareerResult)`](CharacterIdentity.cs.md#symbol-6c3ca5d0abad)
 
-**调用：** [`NationalSpire.CharacterIdentity.OriginalName(string)`](CharacterIdentity.cs.md#symbol-94292e3754dd)；`string.Equals(string?, string?, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CharacterIdentity.OriginalName(string)`](CharacterIdentity.cs.md#symbol-94292e3754dd)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Func<TResult>.Invoke()`；`string.Equals(string?, string?, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CharacterDefinition.DisplayName`；`NationalSpire.CharacterDefinition.Id`；`NationalSpire.CharacterIdentity.OriginalName(string)`
 
@@ -142,7 +142,7 @@ private static readonly IReadOnlyDictionary<string, string> Empty = new Dictiona
 
 **调用者：** [`NationalSpire.CharacterIdentity.Name(NationalSpire.CareerData, string)`](CharacterIdentity.cs.md#symbol-4d068357a08b)
 
-**调用：** [`Add(string, string, string?)`](CharacterIdentity.cs.md#symbol-af17e7fe683c)；[`NationalSpire.CharacterIdentity.ReadDefinitions()`](CharacterIdentity.cs.md#symbol-201cf0836885)；[`NationalSpire.CharacterIdentity.Resolve(string, string, System.Func<System.Collections.Generic.IEnumerable<NationalSpire.CharacterDefinition>>)`](CharacterIdentity.cs.md#symbol-3e35ac458848)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** [`Add(string, string, string?)`](CharacterIdentity.cs.md#symbol-af17e7fe683c)；[`NationalSpire.CharacterIdentity.ReadDefinitions()`](CharacterIdentity.cs.md#symbol-201cf0836885)；[`NationalSpire.CharacterIdentity.Resolve(string, string, System.Func<System.Collections.Generic.IEnumerable<NationalSpire.CharacterDefinition>>)`](CharacterIdentity.cs.md#symbol-3e35ac458848)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>, System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Func<TResult>.Invoke()`
 
 **字段、属性、事件及方法组引用：** `(string Alias, string Original).Alias`；`(string Alias, string Original).Original`；`Add(string, string, string?)`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerResult.Character`；`NationalSpire.CareerResult.CharacterId`；`NationalSpire.CharacterDefinition.DisplayName`；`NationalSpire.CharacterDefinition.Id`；`NationalSpire.CharacterIdentity.OriginalSource`；`NationalSpire.CharacterIdentity.ReadDefinitions()`；`NationalSpire.CharacterIdentity.Resolve(string, string, System.Func<System.Collections.Generic.IEnumerable<NationalSpire.CharacterDefinition>>)`
 
@@ -195,7 +195,7 @@ private static readonly IReadOnlyDictionary<string, string> Empty = new Dictiona
 
 **调用者：** [`NationalSpire.CharacterIdentity.Aliases(NationalSpire.CareerData)`](CharacterIdentity.cs.md#symbol-7612117e6b1e)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Func<TResult>.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CharacterIdentity.Source`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 

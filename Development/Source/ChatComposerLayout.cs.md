@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1F715E9E23CE2DBB0C93CD65E84EB15E76932130EE551FC60BAC63C1C5B32263`。来源：[源码](../../ChatComposerLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8801A92106AD6C8CC5E078BF02018F37226AD25C3D06916E1CD85FB6F1E8F2F0`。来源：[源码](../../ChatComposerLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -34,7 +34,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)；[`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)
 
-**调用：** [`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`NationalSpire.ChatComposerButtonSlot.ChatComposerButtonSlot()`；[`NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`](ChatComposerLayout.cs.md#symbol-50b5fb8cff87)；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.IEnumerable.OfType<TResult>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerLayout.CompactButtons(Godot.Control)`
 
@@ -220,7 +220,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPrivateMessages(string, string, int)`](PrivateMessageScreen.cs.md#symbol-3ff4e47d4271)
 
-**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.GetParent<T>()`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.ScrollContainer.ScrollContainer()`
+**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetIndex(bool)`；`Godot.Node.GetParent<T>()`；`Godot.Node.MoveChild(Godot.Node, int)`；`Godot.Node.RemoveChild(Godot.Node)`；`Godot.ScrollContainer.ScrollContainer()`；[`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel._attachments`；`NationalSpire.ChatComposerPanel._body`；`NationalSpire.ChatComposerPanel._bounds`；`NationalSpire.ChatComposerPanel._editor`；`NationalSpire.ChatComposerPanel._heading`；`NationalSpire.ChatComposerPanel._headingViewport`；`NationalSpire.ChatComposerPanel.QueueResize()`
 
@@ -281,7 +281,7 @@ public event Action<bool>? ExpansionChanged;
 
 **调用者：** [`NationalSpire.CareerScreen.SendPrivate()`](PrivateMessageScreen.cs.md#symbol-748ab66a7351)；[`NationalSpire.ChatComposerPanel.Toggle()`](ChatComposerLayout.cs.md#symbol-19c3c4544409)
 
-**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.ChatComposerPanel.QueueResize()`](ChatComposerLayout.cs.md#symbol-f90f839a1baa)；`System.Action<T>.Invoke(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatComposerPanel.Expanded`；`NationalSpire.ChatComposerPanel.ExpansionChanged`；`NationalSpire.ChatComposerPanel.QueueResize()`
 

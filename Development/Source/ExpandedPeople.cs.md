@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1B6A99184C032F9A385FF59EB1659E3C3BCCFA2ADE7D8E83EDB890FBD9F4F60E`。来源：[源码](../../ExpandedPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1B357B711DE9081D17156800B612D26B254CBCD92668517CFB713C086FF0BA87`。来源：[源码](../../ExpandedPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,7 +22,7 @@ private static readonly Dictionary<string, string[]> RoleBios = new();
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.ContentPools.Append(System.Collections.Generic.Dictionary<string, string[]>, string)`](ContentPools.cs.md#symbol-0a02f29bf822)；[`NationalSpire.ContentPools.Words(string)`](ContentPools.cs.md#symbol-5d478310fd36)；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`NationalSpire.ContentPools.Append(System.Collections.Generic.Dictionary<string, string[]>, string)`](ContentPools.cs.md#symbol-0a02f29bf822)；[`NationalSpire.ContentPools.Words(string)`](ContentPools.cs.md#symbol-5d478310fd36)；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`string.Split(char, System.StringSplitOptions)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ContentPools.Append(System.Collections.Generic.Dictionary<string, string[]>, string)`；`NationalSpire.ContentPools.Words(string)`；`NationalSpire.HumanNames.AdditionalFamilies`；`NationalSpire.HumanNames.CommonFamilies`；`NationalSpire.NamePools.CrowdEnds`；`NationalSpire.NamePools.CrowdStarts`；`NationalSpire.WorldPeople.FamilyNames`；`NationalSpire.WorldPeople.FanBios`；`NationalSpire.WorldPeople.GivenNames`；`NationalSpire.WorldPeople.NickEnds`；`NationalSpire.WorldPeople.NickStarts`；`NationalSpire.WorldPeople.ProBios`；`NationalSpire.WorldPeople.RoleBios`；`NationalSpire.WorldPeople.Styles`；`NationalSpire.WorldPeople.YouthBios`
 

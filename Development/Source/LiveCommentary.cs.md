@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`93B4A72284BC12FAA41F2DA6D6241F1C223C474E88E821F41E4E459FCEB4AC7D`。来源：[源码](../../LiveCommentary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8CBA2CB4E403D2E73BE841FF42F23785FB5F6A7A7881594F7788632C5205ADE7`。来源：[源码](../../LiveCommentary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -1078,7 +1078,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 **调用者：** [`NationalSpire.LiveCommentary.Finish(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-243aedb210e3)；[`NationalSpire.LiveCommentary.ObserveTurn(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-8cbc1ed10ae3)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)
 
-**调用：** `int.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`int.ToString()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BattleObservation.Cards`；`NationalSpire.BattleObservation.Damage`；`NationalSpire.BattleObservation.Draws`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.LastCard`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.BroadcastMemory.BestDamage`；`NationalSpire.BroadcastMemory.CleanStreak`；`NationalSpire.BroadcastMemory.EliteVisits`；`NationalSpire.BroadcastMemory.UnknownVisits`
 
@@ -1233,7 +1233,7 @@ private static readonly Dictionary<string, string[]> Lines = [];
 
 **调用者：** [`NationalSpire.Coop.CoopBroadcast.Tick()`](Coop/CoopBroadcast.cs.md#symbol-3be13ce2aa51)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
-**调用：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；`int.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Math.Abs(int)`；`System.Math.Sign(int)`
+**调用：** [`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`](LiveCommentary.cs.md#symbol-28e751a76070)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Math.Abs(int)`；`System.Math.Sign(int)`；`int.ToString()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BroadcastMemory.CandidateLeader`；`NationalSpire.BroadcastMemory.GapChangedAt`；`NationalSpire.BroadcastMemory.LastAnnouncedGap`；`NationalSpire.BroadcastMemory.ObservedGap`；`NationalSpire.BroadcastMemory.StableLeader`；`NationalSpire.BroadcastMemory.TopicTimes`；`NationalSpire.LiveCommentary.Speak(NationalSpire.BroadcastMemory, string, double, string, System.Collections.Generic.Dictionary<string, string>, bool)`
 

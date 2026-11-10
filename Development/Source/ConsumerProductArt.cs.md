@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9ACFC8B79DBA59D60F2C6B9DFA7D8DA30F4044523A384DABBE2813192450CB4D`。来源：[源码](../../ConsumerProductArt.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E6DBD13198BCB9A483751DCACE0A54BDBE19C2552B27E20DB897371CF956D5EF`。来源：[源码](../../ConsumerProductArt.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 

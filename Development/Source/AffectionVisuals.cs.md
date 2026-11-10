@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`102A26A519FA6E894441F52A250F8F26F847E2C5B4E02129AFEE9530B98CE98D`。来源：[源码](../../AffectionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`034FB78E0CD65973A93F7C7F77DE932F2D8BED3E8C6AAA53AE6983EEC3B885D7`。来源：[源码](../../AffectionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -164,7 +164,7 @@ private bool _animate = true;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`](RelationshipPresentation.cs.md#symbol-bac5ded19066)；[`NationalSpire.RelationshipPresentation.Progress(int)`](RelationshipPresentation.cs.md#symbol-d986c8a42da8)；[`NationalSpire.RelationshipPresentation.Tier(int)`](RelationshipPresentation.cs.md#symbol-46c9c691f66a)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Font.GetAscent(int)`；`Godot.Font.GetDescent(int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.DistanceTo(Godot.Vector2)`；`Godot.Vector2.Lerp(Godot.Vector2, float)`；`Godot.Vector2.Vector2(float, float)`；`int.ToString(System.IFormatProvider?)`；`System.Math.Max(int, int)`；`System.Math.Min(float, float)`；`System.Math.Round(double)`
+**调用：** `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawString(Godot.Font, Godot.Vector2, string, Godot.HorizontalAlignment, float, int, Godot.Color?, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation, float)`；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.Color.Color(string)`；`Godot.Control.GetThemeDefaultFont()`；`Godot.Font.GetAscent(int)`；`Godot.Font.GetDescent(int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.DistanceTo(Godot.Vector2)`；`Godot.Vector2.Lerp(Godot.Vector2, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；[`NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`](RelationshipPresentation.cs.md#symbol-bac5ded19066)；[`NationalSpire.RelationshipPresentation.Progress(int)`](RelationshipPresentation.cs.md#symbol-d986c8a42da8)；[`NationalSpire.RelationshipPresentation.Tier(int)`](RelationshipPresentation.cs.md#symbol-46c9c691f66a)；`System.Math.Max(int, int)`；`System.Math.Min(float, float)`；`System.Math.Round(double)`；`int.ToString(System.IFormatProvider?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AffectionArt.Numbers`；`NationalSpire.AffectionArt.ProgressColors`；`NationalSpire.AffectionArt.Texture(string)`；`NationalSpire.AffectionBadge._display`；`NationalSpire.AffectionBadge.Compact`；`NationalSpire.AffectionBadge.Relation`；`NationalSpire.PrivateRelation.Appearance`；`NationalSpire.RelationshipAppearance.Lover`；`NationalSpire.RelationshipPresentation.OathAppearance(NationalSpire.PrivateRelation?)`；`NationalSpire.RelationshipPresentation.Progress(int)`；`NationalSpire.RelationshipPresentation.Tier(int)`
 
@@ -280,7 +280,7 @@ private bool _animate = true;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；`Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.CanvasItem.DrawTextureRectRegion(Godot.Texture2D, Godot.Rect2, Godot.Rect2, Godot.Color?, bool, bool)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
+**调用：** `Godot.CanvasItem.DrawTextureRect(Godot.Texture2D, Godot.Rect2, bool, Godot.Color?, bool)`；`Godot.CanvasItem.DrawTextureRectRegion(Godot.Texture2D, Godot.Rect2, Godot.Rect2, Godot.Color?, bool, bool)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AffectionArt.Texture(string)`](AffectionVisuals.cs.md#symbol-966474984d6a)；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AffectionArt.Texture(string)`；`NationalSpire.RelationshipIcon.Bond`；`NationalSpire.RelationshipIcon.Tight`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`362AF9C1C091BEA6984CA9283DAC41C176BC8E448274A171698ED08B1B992F61`。来源：[源码](../../PromptTransfer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`ECDDA06149801780B64E51FF8AA7212DBE27C0DCC6037D29F236921F6B0B3D05`。来源：[源码](../../PromptTransfer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -449,7 +449,7 @@ private static readonly JsonSerializerOptions Json = new()
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)
 
-**调用：** `string.IsNullOrWhiteSpace(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.WriteAllText(string, string?, System.Text.Encoding)`；`System.IO.IOException.IOException(string?)`；`System.IO.Path.Combine(string, string)`；`System.Text.UTF8Encoding.UTF8Encoding(bool)`
+**调用：** `System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.WriteAllText(string, string?, System.Text.Encoding)`；`System.IO.IOException.IOException(string?)`；`System.IO.Path.Combine(string, string)`；`System.Text.UTF8Encoding.UTF8Encoding(bool)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PromptTransfer.Desktop`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`A14DCD1037EF657D9BC404086C1E4AFC5F915585371CB862B67BCB8166EEBA59`。来源：[源码](../../ConsumerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`711DF1848A7AD7977733320785FB63D0C4EF91E03C1D40FD82EF0CBE1AD0F55F`。来源：[源码](../../ConsumerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -47,7 +47,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 **调用者：** [`NationalSpire.ConsumerVisuals.ProductStyle(Godot.Button, bool, bool)`](ConsumerVisuals.cs.md#symbol-4d4df8cb62c8)
 
-**调用：** [`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；[`NationalSpire.ConsumerVisuals.Style(bool, bool)`](ConsumerVisuals.cs.md#symbol-340545590823)；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`Godot.Resource.Duplicate(bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** `Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`Godot.Resource.Duplicate(bool)`；[`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；[`NationalSpire.ConsumerVisuals.Style(bool, bool)`](ConsumerVisuals.cs.md#symbol-340545590823)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ConsumerVisuals.Accent(bool)`；`NationalSpire.ConsumerVisuals.Products`；`NationalSpire.ConsumerVisuals.Style(bool, bool)`
 
@@ -95,7 +95,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 **调用者：** [`Get(bool, bool)`](ConsumerVisuals.cs.md#symbol-0db6dc7411c3)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** `Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ConsumerVisuals.Accent(bool)`；`NationalSpire.ConsumerVisuals.Styles`
 
@@ -218,7 +218,7 @@ private static readonly Dictionary<(bool Current, bool Selected, bool Hover), St
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.ConsumerVisuals.Accent(bool)`](ConsumerVisuals.cs.md#symbol-03b075ea8cd2)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ConsumerSeal.Current`；`NationalSpire.ConsumerSeal.Promo`；`NationalSpire.ConsumerSeal.Ticket`；`NationalSpire.ConsumerVisuals.Accent(bool)`
 

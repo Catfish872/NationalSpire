@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`59FD8E518D5836B642B99C259E23EAEF1590011957D60454D6346011F8569E99`。来源：[源码](../../AiGeneratedText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`95A61A1E1543BD5571074A4F37FF052C72C564EE33A13496D3597A79DC547AC1`。来源：[源码](../../AiGeneratedText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -58,7 +58,7 @@
 
 **调用者：** [`NationalSpire.ChatAttachments.Material(NationalSpire.CareerData, NationalSpire.PrivateOffer, string)`](ChatAttachments.cs.md#symbol-90d268266519)；[`NationalSpire.GroupChatPrompts.UserText(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.GroupTurn)`](GroupChatPrompts.cs.md#symbol-28b2a2534bee)；[`NationalSpire.PrivateMessagePrompts.UserText(NationalSpire.CareerData, NationalSpire.PrivateTurn, NationalSpire.PrivateConversation, bool)`](PrivateMessagePrompts.cs.md#symbol-2e632c46656c)；[`NationalSpire.SpireArbitration.Context(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn)`](SpireArbitration.cs.md#symbol-b1beb5c71e60)
 
-**调用：** [`NationalSpire.CommunitySharing.Text(NationalSpire.CareerData, NationalSpire.CommunityQuote)`](CommunitySharing.cs.md#symbol-276822babdcb)；[`NationalSpire.GameCalendar.ConvertJsonDates(NationalSpire.CareerData, System.Text.Json.Nodes.JsonNode)`](GameCalendar.cs.md#symbol-c34ff65ec393)；[`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-315d5a4ef0fd)；[`NationalSpire.RelationshipGifts.Special(string)`](RelationshipGifts.cs.md#symbol-d05881b51110)；`string.Replace(string, string?, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.CommunitySharing.Text(NationalSpire.CareerData, NationalSpire.CommunityQuote)`](CommunitySharing.cs.md#symbol-276822babdcb)；[`NationalSpire.GameCalendar.ConvertJsonDates(NationalSpire.CareerData, System.Text.Json.Nodes.JsonNode)`](GameCalendar.cs.md#symbol-c34ff65ec393)；[`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`](RelationshipGifts.cs.md#symbol-315d5a4ef0fd)；[`NationalSpire.RelationshipGifts.Special(string)`](RelationshipGifts.cs.md#symbol-d05881b51110)；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；`string.Replace(string, string?, System.StringComparison)`；`string.StartsWith(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CommunityReporting.Kind`；`NationalSpire.CommunitySharing.Kind`；`NationalSpire.CommunitySharing.Text(NationalSpire.CareerData, NationalSpire.CommunityQuote)`；`NationalSpire.GameCalendar.ConvertJsonDates(NationalSpire.CareerData, System.Text.Json.Nodes.JsonNode)`；`NationalSpire.PrivateOffer.AiDetail`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.GoodId`；`NationalSpire.PrivateOffer.Kind`；`NationalSpire.PrivateOffer.Quote`；`NationalSpire.RelationshipGifts.Description(NationalSpire.PrivateOffer)`；`NationalSpire.RelationshipGifts.Special(string)`
 

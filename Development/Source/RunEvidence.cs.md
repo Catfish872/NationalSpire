@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6586D1BFB81B0C1FE816ACC9A06DF540D96B3075B19F532A823E2EE1AC0C17B1`。来源：[源码](../../RunEvidence.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`49CFF1BCCE63F552B68CDDF076C271B359A979C75463B75CB6431E08B62EC2B9`。来源：[源码](../../RunEvidence.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -292,7 +292,7 @@
 
 **调用者：** [`NationalSpire.RunEvidence.Summary()`](RunEvidence.cs.md#symbol-d852a24404b2)
 
-**调用：** `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.RunEncounter.Act`；`NationalSpire.RunEncounter.Floor`；`NationalSpire.RunEncounter.Kind`；`NationalSpire.RunEncounter.Name`；`NationalSpire.RunEvidence.DefeatedEncounters`
 
@@ -335,7 +335,7 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](Coop/CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.RunEvidence.Summary()`](RunEvidence.cs.md#symbol-d852a24404b2)
 
-**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GameText.Plain(string)`；`NationalSpire.RunEvidence.FinalHp`；`NationalSpire.RunEvidence.GoldGained`；`NationalSpire.RunEvidence.MaxHp`；`NationalSpire.RunEvidence.PotionSlots`；`NationalSpire.RunEvidence.PotionsObtained`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.RemainingGold`；`NationalSpire.RunEvidence.RemainingPotions`
 
@@ -363,7 +363,7 @@
 
 **调用者：** [`NationalSpire.CommunityThreads.RememberMatch(NationalSpire.CareerData, NationalSpire.CareerResult)`](CommunityThreads.cs.md#symbol-fe6de6f8dd52)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)
 
-**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.RunEvidence.EncounterSummary()`](RunEvidence.cs.md#symbol-60b323da03b9)；[`NationalSpire.RunEvidence.ResourceSummary()`](RunEvidence.cs.md#symbol-5809d489d617)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.RunEvidence.EncounterSummary()`](RunEvidence.cs.md#symbol-60b323da03b9)；[`NationalSpire.RunEvidence.ResourceSummary()`](RunEvidence.cs.md#symbol-5809d489d617)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GameText.Plain(string)`；`NationalSpire.RunBadge.Description`；`NationalSpire.RunBadge.Name`；`NationalSpire.RunEvidence.Badges`；`NationalSpire.RunEvidence.EncounterSummary()`；`NationalSpire.RunEvidence.ResourceSummary()`
 

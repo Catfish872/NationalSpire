@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4BC37EC10EC08A9FCE4EFD1025461EC5D0DEBD72B5EE977A11FBE33F97489E36`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`78312A640C458989855F11EC9E5881F174DF90EA1AFF157AAF8FE9317FF85AC1`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -47,7 +47,7 @@ private static readonly Lazy<Dictionary<string, string>> TiebaAggressive = new((
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(System.IO.Stream, System.Text.Json.JsonSerializerOptions?)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(System.IO.Stream, System.Text.Json.JsonSerializerOptions?)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PromptLibrary.Sections`；`NationalSpire.PromptSection.Id`
 

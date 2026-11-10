@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`DD8ADE81C5C89FF2D83CD78115A250A22147E5A86548156A846CA9C8B04AC166`。来源：[源码](../../PromptLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6B79D0591B99BB03429CDD89AF5B569F2FD25250AA9ADB6AD6386B88C79F1CF9`。来源：[源码](../../PromptLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -123,7 +123,7 @@
 
 **调用者：** [`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)
 
-**调用：** [`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.PromptLibrary.MergePrivateText(string, string)`](PromptLibrary.cs.md#symbol-7b690052ba47)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.CustomPromptTemplates`；`NationalSpire.CustomPromptTemplate.Sections`；`NationalSpire.PrivateMessagePrompts.Guide`；`NationalSpire.PromptLibrary.MergePrivateText(string, string)`
 
@@ -147,7 +147,7 @@
 
 **调用者：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string)`](PromptLibrary.cs.md#symbol-101a181e9f40)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
-**调用：** `string.Contains(string, System.StringComparison)`；`string.Replace(string, string?, System.StringComparison)`；`string.Replace(string, string?)`；`string.Trim()`
+**调用：** `string.Contains(string, System.StringComparison)`；`string.Replace(string, string?)`；`string.Replace(string, string?, System.StringComparison)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.RandomEventPrompts.Format`；`NationalSpire.RandomEventPrompts.Story`
 
@@ -171,7 +171,7 @@
 
 **调用者：** [`Show()`](PromptScreen.cs.md#symbol-26218fc52477)
 
-**调用：** `string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptOverrides`
 
@@ -191,7 +191,7 @@
 
 **调用者：** [`ChangeTemplate(System.Action, string, bool)`](PromptScreen.cs.md#symbol-32c868c23420)；[`NationalSpire.AiService.Summarize(NationalSpire.CareerData, string, string, string)`](AiPrivateMessages.cs.md#symbol-1ec00f25b0bb)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.Coop.CoopCoordinator.Broadcast()`](Coop/CoopCoordinator.cs.md#symbol-8a047804722d)；[`NationalSpire.GroupChatPrompts.Section(NationalSpire.CareerData, string)`](GroupChatPrompts.cs.md#symbol-faefbd7982b5)；[`NationalSpire.PortraitDesigns.Messages(NationalSpire.CareerData, string, NationalSpire.PortraitDesign)`](PortraitDesign.cs.md#symbol-3f8b0db3fc3f)；[`NationalSpire.PrivateMessagePrompts.Section(NationalSpire.CareerData, string)`](PrivateMessagePrompts.cs.md#symbol-9529e63edd53)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Editorial(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-cdd41a28416a)；[`NationalSpire.RandomEventPrompts.Compose(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.AiOptions?, bool)`](RandomEventPrompts.cs.md#symbol-81999ba65eb3)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
-**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`
 
@@ -218,7 +218,7 @@
 
 **调用者：** [`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)；[`SaveDrafts()`](PromptScreen.cs.md#symbol-52d59cd4371f)
 
-**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；[`NationalSpire.PromptLibrary.Normalize(string)`](PromptLibrary.cs.md#symbol-d988613378c8)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`
+**调用：** [`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.EditableText(string, string)`](PromptLibrary.cs.md#symbol-09cee4947d64)；[`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`](PromptLibrary.cs.md#symbol-b864e7d26d29)；[`NationalSpire.PromptLibrary.Normalize(string)`](PromptLibrary.cs.md#symbol-d988613378c8)；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.PromptOverrides`；`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`；`NationalSpire.PromptLibrary.EditableText(string, string)`；`NationalSpire.PromptLibrary.MergePrivatePrompt(NationalSpire.AiOptions)`；`NationalSpire.PromptLibrary.Normalize(string)`
 
@@ -268,7 +268,7 @@
 
 **调用者：** [`NationalSpire.AiService.ComposeSystem(NationalSpire.AiOptions, string)`](AiPrompts.cs.md#symbol-7a07a16bbdcd)
 
-**调用：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`
 

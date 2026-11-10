@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`78893F4F63B9C44EC09DFE0FB6B0217FAFE0C37B3B9804B73A700215995958B3`。来源：[源码](../../ConsumerAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C54DDEDBE390C460A198513963D25AD0D44CC974D6E1544C57CD2D523DB74EBC`。来源：[源码](../../ConsumerAttachments.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -243,7 +243,7 @@
 
 来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.RestoreConsumerDrafts()`](ConsumerCommerceScreen.cs.md#symbol-4c75feed1e1b)；[`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerAttachments.Prepare(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-bb17fc71b2da)；[`NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-f88b230b016a)；[`NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>)`](ConsumerAttachments.cs.md#symbol-cefd490f72aa)；[`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`](ConsumerAttachments.cs.md#symbol-6858c8b6300b)
+**调用者：** [`NationalSpire.CareerScreen.RestoreConsumerDrafts()`](ConsumerCommerceScreen.cs.md#symbol-4c75feed1e1b)；[`NationalSpire.ChatAttachments.Gift(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.Dictionary<string, string>)`](ChatAttachments.cs.md#symbol-cc6db06cee88)；[`NationalSpire.ChatAttachments.Prepare(NationalSpire.CareerData, string, NationalSpire.PrivateOffer, bool)`](ChatAttachments.cs.md#symbol-4e7c361b1f77)；[`NationalSpire.ConsumerAttachments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-c0f0a7c39a70)；[`NationalSpire.ConsumerAttachments.Resolve(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool)`](ConsumerAttachments.cs.md#symbol-f88b230b016a)；[`NationalSpire.ConsumerAttachments.Sent(NationalSpire.CareerData, System.Collections.Generic.IEnumerable<NationalSpire.PrivateOffer>)`](ConsumerAttachments.cs.md#symbol-cefd490f72aa)；[`NationalSpire.ConsumerAttachments.Validate(NationalSpire.CareerData, string, string, NationalSpire.PrivateOffer, string)`](ConsumerAttachments.cs.md#symbol-6858c8b6300b)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

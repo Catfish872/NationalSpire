@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`05F876D314E0687D49F9B9A74DD81285211CA078C7F7147F5D853A7356D8AF21`。来源：[源码](../../AppearanceLibraryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D6974674912F44864EEBCF19109B45AD23B95452E2BF7A6D65E542592C240495`。来源：[源码](../../AppearanceLibraryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -95,7 +95,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-6c40b8e1641a)；[`Refresh(string)`](AppearanceLibraryScreen.cs.md#symbol-6a433a7b81b7)
 
-**调用：** [`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)；[`NationalSpire.AppearanceLibrary.Preview(NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-2cbd15385625)；[`NationalSpire.DateSceneAssetStore.Texture(string, bool)`](DateSceneAssets.cs.md#symbol-616d47ee9d6a)；`Godot.GodotObject.Dispose()`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`
+**调用：** `Godot.GodotObject.Dispose()`；[`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)；[`NationalSpire.AppearanceLibrary.Preview(NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-2cbd15385625)；[`NationalSpire.DateSceneAssetStore.Texture(string, bool)`](DateSceneAssets.cs.md#symbol-616d47ee9d6a)；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`；`NationalSpire.AppearanceLibrary.Package.Outfits`；`NationalSpire.AppearanceLibrary.Preview(NationalSpire.AppearanceLibrary.Package)`；`NationalSpire.DateSceneAssetStore.Texture(string, bool)`
 
@@ -126,7 +126,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.BuildAppearanceLibrary(Godot.VBoxContainer, NationalSpire.CareerData, string, System.Action<(NationalSpire.PortraitDesign Design, NationalSpire.DateSceneAssets Assets)>, System.Action<string, System.Action>?)`](AppearanceLibraryScreen.cs.md#symbol-6c40b8e1641a)
 
-**调用：** [`NationalSpire.AppearanceLibrary.List()`](AppearanceLibrary.cs.md#symbol-1f96a80ecca2)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.Select(int)`；`System.Array.FindIndex<T>(T[], System.Predicate<T>)`
+**调用：** `Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.Select(int)`；[`NationalSpire.AppearanceLibrary.List()`](AppearanceLibrary.cs.md#symbol-1f96a80ecca2)；[`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)；`System.Array.FindIndex<T>(T[], System.Predicate<T>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Entry.BuiltIn`；`NationalSpire.AppearanceLibrary.Entry.Id`；`NationalSpire.AppearanceLibrary.Entry.Name`；`NationalSpire.AppearanceLibrary.List()`；`Select(int)`
 

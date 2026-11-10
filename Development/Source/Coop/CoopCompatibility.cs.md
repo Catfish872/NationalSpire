@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`B0C6F359BB4342D6B9E3220A1642444BF8E2981A656612436897BE4B2794E99E`。来源：[源码](../../../Coop/CoopCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9821A4DEEEE05767F8203BEEF2825157F89475BC08B5C9BB07A15CC2F48D730F`。来源：[源码](../../../Coop/CoopCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Connect(bool, string, string, int, string, string, string, NationalSpire.NpcGenerationSetup?)`](CoopRuntime.cs.md#symbol-5c58a004498a)
 
-**调用：** [`NationalSpire.Coop.NativeLobbyApi.Validate()`](NativeLobbyApi.cs.md#symbol-de1b7a4fe8ee)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameCompatibility.ActRng(string)`](../GameCompatibility.cs.md#symbol-68363869a9cf)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](../RuntimeApi.cs.md#symbol-8426661c18c8)；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`
+**调用：** `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；[`NationalSpire.Coop.NativeLobbyApi.Validate()`](NativeLobbyApi.cs.md#symbol-de1b7a4fe8ee)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameCompatibility.ActRng(string)`](../GameCompatibility.cs.md#symbol-68363869a9cf)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](../RuntimeApi.cs.md#symbol-8426661c18c8)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`
 
 **字段、属性、事件及方法组引用：** `(System.Type Type, string Name).Name`；`(System.Type Type, string Name).Type`；`NationalSpire.Coop.NativeLobbyApi.Validate()`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.GameCompatibility.ActRng(string)`；`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`
 

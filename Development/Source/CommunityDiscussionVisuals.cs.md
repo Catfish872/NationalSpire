@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6497A642DB8A63A434CC22E9E5B36B68893DB1F3DF54192B5E53263A3946A383`。来源：[源码](../../CommunityDiscussionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`036ADE2DFB6F9FBB3F2376599AA13679CD31C543A10A8CB0105BC227D23AD6D3`。来源：[源码](../../CommunityDiscussionVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -120,7 +120,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CommunityDiscussionLines.GuideGeometry(System.Collections.Generic.IReadOnlyList<Godot.Rect2>, System.Collections.Generic.IReadOnlyList<Godot.Rect2>)`](CommunityDiscussionVisuals.cs.md#symbol-b32fdd308a98)；`Godot.ArrayMesh.AddSurfaceFromArrays(Godot.Mesh.PrimitiveType, Godot.Collections.Array, Godot.Collections.Array<Godot.Collections.Array>, Godot.Collections.Dictionary, Godot.Mesh.ArrayFormat)`；`Godot.ArrayMesh.ArrayMesh()`；`Godot.CanvasItem.DrawMesh(Godot.Mesh, Godot.Texture2D, Godot.Transform2D?, Godot.Color?)`；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Collections.Array.Array()`；`Godot.Collections.Array.Resize(int)`；`Godot.GodotObject.Dispose()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(float, float)`
+**调用：** `Godot.ArrayMesh.AddSurfaceFromArrays(Godot.Mesh.PrimitiveType, Godot.Collections.Array, Godot.Collections.Array<Godot.Collections.Array>, Godot.Collections.Dictionary, Godot.Mesh.ArrayFormat)`；`Godot.ArrayMesh.ArrayMesh()`；`Godot.CanvasItem.DrawMesh(Godot.Mesh, Godot.Texture2D, Godot.Transform2D?, Godot.Color?)`；`Godot.CanvasItem.GetGlobalTransform()`；`Godot.CanvasItem.IsVisibleInTree()`；`Godot.Collections.Array.Array()`；`Godot.Collections.Array.Resize(int)`；`Godot.GodotObject.Dispose()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Transform2D.AffineInverse()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CommunityDiscussionLines.GuideGeometry(System.Collections.Generic.IReadOnlyList<Godot.Rect2>, System.Collections.Generic.IReadOnlyList<Godot.Rect2>)`](CommunityDiscussionVisuals.cs.md#symbol-b32fdd308a98)；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CommunityDiscussionLines._branches`；`NationalSpire.CommunityDiscussionLines._guideMesh`；`NationalSpire.CommunityDiscussionLines._toggles`；`NationalSpire.CommunityDiscussionLines.AnchorY`；`NationalSpire.CommunityDiscussionLines.GuideColor`；`NationalSpire.CommunityDiscussionLines.GuideGeometry(System.Collections.Generic.IReadOnlyList<Godot.Rect2>, System.Collections.Generic.IReadOnlyList<Godot.Rect2>)`；`NationalSpire.CommunityDiscussionLines.Gutter`
 
@@ -260,7 +260,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityReplyButton.MainPost`
 
@@ -299,7 +299,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-e35b9baf76e6)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** `Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`；[`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-e35b9baf76e6)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityReplyButton.MainPost`；`P(float, float)`
 
@@ -389,7 +389,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityVoteButton.MainPost`
 
@@ -437,7 +437,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-ba2eeb522fe8)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.HasFocus()`
+**调用：** `Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(string)`；`Godot.Control.HasFocus()`；[`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-ba2eeb522fe8)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.CommunityVoteButton.Direction`；`NationalSpire.CommunityVoteButton.MainPost`；`P(float, float)`
 
@@ -512,7 +512,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityShareButton.MainPost`
 
@@ -559,7 +559,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-6904267349fe)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** `Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`；[`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-6904267349fe)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityShareButton.MainPost`；`P(float, float)`
 
@@ -626,7 +626,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CommunityReportButton.MainPost`
 
@@ -673,7 +673,7 @@ public const float AnchorY = 32;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-49913ad08b35)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`
+**调用：** `Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Control.HasFocus()`；[`P(float, float)`](CommunityDiscussionVisuals.cs.md#symbol-49913ad08b35)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CommunityReportButton.MainPost`；`P(float, float)`
 

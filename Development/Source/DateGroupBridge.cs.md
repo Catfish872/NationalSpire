@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`75B6C152F26FB82597132B071E9E5708E7E3F1E3C827703FD498FAC06233A883`。来源：[源码](../../DateGroupBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`38535AA25A68557FFA1D18EEF1FD9CDBE520A3B57B1DEA149EFE7F51B6D09066`。来源：[源码](../../DateGroupBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -79,7 +79,7 @@
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.GroupOffer(NationalSpire.GroupChat, NationalSpire.GroupEffect, NationalSpire.PrivateOffer)`](GroupChatScreen.cs.md#symbol-3afa41099b93)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-3f1369ff69ca)
+**调用者：** [`Enter(bool)`](GroupChatScreen.cs.md#symbol-388435e1dc29)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
 
 **调用：** [`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -99,7 +99,26 @@
 
 来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`；输入表达式：`Begin(data,group,source,false)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => Begin(data,group,source,false)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-5d930edf4c6f"></a>
+
+## `NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool) — public static string? Begin(CareerData data, GroupChat group, PrivateOffer source,bool publicly)`
+
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-3f1369ff69ca)；[`NationalSpire.GroupChats.CommandCore(NationalSpire.CareerData, string, string, NationalSpire.GroupCommand)`](GroupChats.cs.md#symbol-136432a1ec5d)
 
 **调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateGroupBridge.Find(NationalSpire.CareerData, string, string)`](DateGroupBridge.cs.md#symbol-6bffe5cc487f)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.GroupChats.Human(NationalSpire.CareerData)`](GroupChats.cs.md#symbol-d2f9293a6561)；[`NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`](GroupChats.cs.md#symbol-24bc82bdbbd4)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；[`NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`](SocialAppointments.cs.md#symbol-59e09ef2b579)；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Contains(T)`
 
@@ -115,7 +134,7 @@
 - `NationalSpire.GroupChats.IsHuman(NationalSpire.CareerData, string)`；输入表达式：`GroupChats.IsHuman(data, p)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GroupChats.IsHuman(data, p)`
 - `NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`；输入表达式：`PrivateAppointments.Date(data, source)`；返回值紧邻使用处：`BinaryExpressionSyntax: PrivateAppointments.Date(data, source) != data.Day`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(data, host)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Conversation(data, host).Offers`
-- `NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`；输入表达式：`SocialAppointments.Attend(data, source, scene: true)`；返回值紧邻使用处：`IsPatternExpressionSyntax: SocialAppointments.Attend(data, source, scene: true) is { } error`
+- `NationalSpire.SocialAppointments.Attend(NationalSpire.CareerData, NationalSpire.PrivateOffer, bool, bool)`；输入表达式：`SocialAppointments.Attend(data, source, publicly, scene: true)`；返回值紧邻使用处：`IsPatternExpressionSyntax: SocialAppointments.Attend(data, source, publicly, scene: true) is { } error`
 - `System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；输入表达式：`source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct().ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct().ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct().ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.Participants.Where(p => !GroupChats.IsHuman(data, p) && CareerEngine.Person(data, p) != null).Distinct`
@@ -136,7 +155,7 @@
 
 ## `NationalSpire.DateGroupBridge.Sync(NationalSpire.CareerData, NationalSpire.PrivateOffer) — public static void Sync(CareerData data, PrivateOffer proxy)`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneInvitations.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>)`](DateSceneInvitations.cs.md#symbol-b18700ea221f)；[`NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool)`](DateSceneData.cs.md#symbol-81bdbfbfe1d8)
 
@@ -160,7 +179,7 @@
 
 ## `NationalSpire.DateGroupBridge.Merge(NationalSpire.CareerData, NationalSpire.CareerData) — public static void Merge(CareerData world, CareerData view)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Capture(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopMember, NationalSpire.CareerData)`](Coop/CoopRules.cs.md#symbol-99be42ec0491)；[`Save(NationalSpire.CareerData)`](Coop/CoopPrivateMessages.cs.md#symbol-08dfeba4e37a)
 

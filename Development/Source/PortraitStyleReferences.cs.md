@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BE6870719D9DD6DA74E50B625F85B920318EBF0A9139881835A662EBC8ED5E1F`。来源：[源码](../../PortraitStyleReferences.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`46F2494273925BE6C82ADB762B6056DF32D080AFD6CC440A456F24A20BFCBFD5`。来源：[源码](../../PortraitStyleReferences.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -40,7 +40,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.OS.GetExecutablePath()`；`Godot.ProjectSettings.GlobalizePath(string)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.IO.File.Exists(string?)`；`System.IO.Path.Combine(params string[])`；`System.IO.Path.Combine(string, string, string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`
+**调用：** `Godot.OS.GetExecutablePath()`；`Godot.ProjectSettings.GlobalizePath(string)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.IO.File.Exists(string?)`；`System.IO.Path.Combine(params string[])`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.Combine(string, string, string, string)`；`System.IO.Path.GetDirectoryName(string?)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -154,7 +154,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`](PortraitStyleReferences.cs.md#symbol-f6ac6cf512f8)；[`NationalSpire.PortraitStyleReferences.NormalizePrimary(NationalSpire.PortraitStyleGroup)`](PortraitStyleReferences.cs.md#symbol-d49e42385613)；[`NationalSpire.PortraitStyleReferences.Store(NationalSpire.PortraitStyleImage, byte[])`](PortraitStyleReferences.cs.md#symbol-0a6c9f2034e7)；`NationalSpire.PortraitStyleImage.PortraitStyleImage()`；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Convert.ToHexString(byte[])`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.Security.Cryptography.SHA256.HashData(byte[])`
+**调用：** `NationalSpire.PortraitStyleImage.PortraitStyleImage()`；[`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`](PortraitStyleReferences.cs.md#symbol-f6ac6cf512f8)；[`NationalSpire.PortraitStyleReferences.NormalizePrimary(NationalSpire.PortraitStyleGroup)`](PortraitStyleReferences.cs.md#symbol-d49e42385613)；[`NationalSpire.PortraitStyleReferences.Store(NationalSpire.PortraitStyleImage, byte[])`](PortraitStyleReferences.cs.md#symbol-0a6c9f2034e7)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Convert.ToHexString(byte[])`；`System.IO.File.ReadAllBytes(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetExtension(string?)`；`System.IO.Path.GetFileName(string?)`；`System.Security.Cryptography.SHA256.HashData(byte[])`；`string.ToLowerInvariant()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleGroup.Images`；`NationalSpire.PortraitStyleImage.Enabled`；`NationalSpire.PortraitStyleImage.Extension`；`NationalSpire.PortraitStyleImage.Id`；`NationalSpire.PortraitStyleImage.Name`；`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`；`NationalSpire.PortraitStyleReferences.NormalizePrimary(NationalSpire.PortraitStyleGroup)`；`NationalSpire.PortraitStyleReferences.Store(NationalSpire.PortraitStyleImage, byte[])`
 
@@ -191,7 +191,7 @@
 
 **调用者：** [`NationalSpire.PortraitStyleReferences.EnsureLibrary(NationalSpire.PortraitDesign, string?)`](PortraitStyleReferences.cs.md#symbol-545c98f9afe4)；[`NationalSpire.PortraitStyleReferences.Import(NationalSpire.PortraitStyleGroup, string)`](PortraitStyleReferences.cs.md#symbol-1978611d6c14)
 
-**调用：** [`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；`string.Equals(string?, System.StringComparison)`；`System.Convert.ToHexString(byte[])`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.Security.Cryptography.SHA256.HashData(byte[])`
+**调用：** [`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；`System.Convert.ToHexString(byte[])`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.Security.Cryptography.SHA256.HashData(byte[])`；`string.Equals(string?, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleImage.Id`；`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`；`NationalSpire.PortraitStyleReferences.CacheDirectory`
 
@@ -222,7 +222,7 @@
 
 **调用者：** [`NationalSpire.PortraitStyleReferences.Entries(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-36810afabe68)；[`NationalSpire.PortraitStyleReferences.ReadBytes(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-305cedf5de7f)；[`NationalSpire.PortraitStyleReferences.Store(NationalSpire.PortraitStyleImage, byte[])`](PortraitStyleReferences.cs.md#symbol-0a6c9f2034e7)
 
-**调用：** `char.IsAsciiHexDigit(char)`；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string)`；`char.IsAsciiHexDigit(char)`；`string.ToLowerInvariant()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleImage.Extension`；`NationalSpire.PortraitStyleImage.Id`
 
@@ -265,7 +265,7 @@
 
 **调用者：** [`NationalSpire.PortraitStyleReferences.Bytes(NationalSpire.PortraitStyleImage, string?)`](PortraitStyleReferences.cs.md#symbol-79f6d9abc7df)；[`NationalSpire.PortraitStyleReferences.EnsureLibrary(NationalSpire.PortraitDesign, string?)`](PortraitStyleReferences.cs.md#symbol-545c98f9afe4)；[`NationalSpire.PortraitStyleReferences.Thumbnail(NationalSpire.PortraitStyleImage)`](PortraitStyleReferences.cs.md#symbol-4569d1f013cf)
 
-**调用：** [`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；`string.Equals(string?, System.StringComparison)`；`System.Convert.ToHexString(byte[])`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.FileNotFoundException.FileNotFoundException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Security.Cryptography.SHA256.HashData(byte[])`
+**调用：** [`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；`System.Convert.ToHexString(byte[])`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.FileNotFoundException.FileNotFoundException(string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Security.Cryptography.SHA256.HashData(byte[])`；`string.Equals(string?, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleImage.Id`；`NationalSpire.PortraitStyleImage.Name`；`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`
 
@@ -316,7 +316,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`](PortraitStyleReferences.cs.md#symbol-f6ac6cf512f8)；[`NationalSpire.PortraitStyleReferences.ReadBytes(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-305cedf5de7f)；`Godot.Image.GetHeight()`；`Godot.Image.GetWidth()`；`Godot.Image.Resize(int, int, Godot.Image.Interpolation)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.Math.Max(int, int)`；`System.Math.Min(double, double)`
+**调用：** `Godot.Image.GetHeight()`；`Godot.Image.GetWidth()`；`Godot.Image.Resize(int, int, Godot.Image.Interpolation)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；[`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`](PortraitStyleReferences.cs.md#symbol-f6ac6cf512f8)；[`NationalSpire.PortraitStyleReferences.ReadBytes(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-305cedf5de7f)；`System.Math.Max(int, int)`；`System.Math.Min(double, double)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleImage.Extension`；`NationalSpire.PortraitStyleReferences.CacheDirectory`；`NationalSpire.PortraitStyleReferences.Decode(byte[], string)`；`NationalSpire.PortraitStyleReferences.ReadBytes(NationalSpire.PortraitStyleImage, string)`
 
@@ -389,7 +389,7 @@
 
 **调用者：** [`NationalSpire.PortraitStyleReferences.Instructions(NationalSpire.PortraitDesign, bool, string)`](PortraitStyleReferences.cs.md#symbol-5a43303b8efd)
 
-**调用：** [`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；[`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；[`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-9378112df23b)；`NationalSpire.PortraitStyleEntry.PortraitStyleEntry(NationalSpire.PortraitStyleImage, string, int)`；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
+**调用：** [`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；`NationalSpire.PortraitStyleEntry.PortraitStyleEntry(NationalSpire.PortraitStyleImage, string, int)`；[`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`](PortraitStyleReferences.cs.md#symbol-a4ea2e81556b)；[`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-9378112df23b)；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitDesigns.SafeId(string)`；`NationalSpire.PortraitStyleGroup.Id`；`NationalSpire.PortraitStyleGroup.Images`；`NationalSpire.PortraitStyleGroup.Name`；`NationalSpire.PortraitStyleGroup.PrimaryId`；`NationalSpire.PortraitStyleImage.Enabled`；`NationalSpire.PortraitStyleImage.Extension`；`NationalSpire.PortraitStyleImage.Id`；`NationalSpire.PortraitStyleReferences.AssetPath(NationalSpire.PortraitStyleImage, string)`；`NationalSpire.PortraitStyleReferences.CacheDirectory`；`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`
 
@@ -424,7 +424,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.PortraitStyleReferences.Entries(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-36810afabe68)；[`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-9378112df23b)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+**调用：** [`NationalSpire.PortraitStyleReferences.Entries(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-36810afabe68)；[`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`](PortraitStyleReferences.cs.md#symbol-9378112df23b)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitStyleEntry.File`；`NationalSpire.PortraitStyleEntry.Image`；`NationalSpire.PortraitStyleEntry.Order`；`NationalSpire.PortraitStyleGroup.Name`；`NationalSpire.PortraitStyleGroup.Requirements`；`NationalSpire.PortraitStyleImage.Name`；`NationalSpire.PortraitStyleReferences.Entries(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitStyleReferences.Selected(NationalSpire.PortraitDesign)`
 

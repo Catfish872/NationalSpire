@@ -21,7 +21,7 @@
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Describe()`](GameCardKnowledge.cs.md#symbol-5a0afbe041e1)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`MegaCrit.Sts2.Core.Models.CardModel.FinalizeUpgradeInternal()`；`MegaCrit.Sts2.Core.Models.CardModel.ToMutable()`；`MegaCrit.Sts2.Core.Models.CardModel.UpgradeInternal()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.CardReference.CardReference(string, string, string)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`Describe()`](GameCardKnowledge.cs.md#symbol-5a0afbe041e1)；`MegaCrit.Sts2.Core.Models.CardModel.FinalizeUpgradeInternal()`；`MegaCrit.Sts2.Core.Models.CardModel.ToMutable()`；`MegaCrit.Sts2.Core.Models.CardModel.UpgradeInternal()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.CardReference.CardReference(string, string, string)`；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`
 
 **字段、属性、事件及方法组引用：** `Describe()`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.GameText.Plain(string)`
 
@@ -51,7 +51,7 @@
 
 **调用者：** [`NationalSpire.GameCardKnowledge.Read()`](GameCardKnowledge.cs.md#symbol-58b00f45030f)
 
-**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`int.ToString()`；`MegaCrit.Sts2.Core.Entities.Cards.CardEnergyCost.GetWithModifiers(MegaCrit.Sts2.Core.Entities.Cards.CostModifiers)`；`MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`
+**调用：** `MegaCrit.Sts2.Core.Entities.Cards.CardEnergyCost.GetWithModifiers(MegaCrit.Sts2.Core.Entities.Cards.CostModifiers)`；`MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`int.ToString()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GameText.Plain(string)`
 

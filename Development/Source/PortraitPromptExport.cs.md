@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5078CA638BD80047352F1B6813529BBAEB395655C7A11197F1EB0A207DE1BDF3`。来源：[源码](../../PortraitPromptExport.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`94AF3977D4B04B7D2DB06B5A1A6A0F7DAED52ADFD278923DC4359E7ED92771B6`。来源：[源码](../../PortraitPromptExport.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -85,7 +85,7 @@ private const string Guide = """
 
 **调用者：** [`NationalSpire.CareerScreen.OpenPortraitDesigner(NationalSpire.CareerData, string)`](PortraitDesignScreen.cs.md#symbol-3bb5119a73ca)
 
-**调用：** [`NationalSpire.PortraitPromptExport.Files(NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-381ffd792ba0)；`string.Concat<T>(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.DateTime.ToString(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Compression.ZipArchive.CreateEntry(string, System.IO.Compression.CompressionLevel)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.Compression.ZipFile.Open(string, System.IO.Compression.ZipArchiveMode)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetInvalidFileNameChars()`；`System.IO.StreamWriter.StreamWriter(System.IO.Stream, System.Text.Encoding)`；`System.IO.StreamWriter.Write(string?)`；`System.Text.UTF8Encoding.UTF8Encoding(bool)`
+**调用：** [`NationalSpire.PortraitPromptExport.Files(NationalSpire.PortraitDesign, string)`](PortraitPromptExport.cs.md#symbol-381ffd792ba0)；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.DateTime.ToString(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Compression.ZipArchive.CreateEntry(string, System.IO.Compression.CompressionLevel)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.Compression.ZipFile.Open(string, System.IO.Compression.ZipArchiveMode)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetInvalidFileNameChars()`；`System.IO.StreamWriter.StreamWriter(System.IO.Stream, System.Text.Encoding)`；`System.IO.StreamWriter.Write(string?)`；`System.Text.UTF8Encoding.UTF8Encoding(bool)`；`string.Concat<T>(System.Collections.Generic.IEnumerable<T>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PortraitPromptExport.Files(NationalSpire.PortraitDesign, string)`
 

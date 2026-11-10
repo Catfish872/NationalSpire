@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`068091CCB4D6F9D9C42E654C5E1A80EC601A246627A8B7B09B9F5496D5084EAB`。来源：[源码](../../AiSettingsPanel.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E4EE84663B5236926D99C2679B6889855FF672B3A0F52D6CC101A1DA0EC05019`。来源：[源码](../../AiSettingsPanel.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -40,17 +40,68 @@
 - `Name` = `"RivalLevel"`
 - `SizeFlagsHorizontal` = `Control.SizeFlags.ExpandFill`
 
+<a id="symbol-c1842fa7a32e"></a>
+
+## `NationalSpire.AiSettingsPanel.Columns(Godot.VBoxContainer) — internal static (VBoxContainer Left, VBoxContainer Right) Columns(VBoxContainer box)`
+
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.CareerScreen.AiSettings(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-6dafb04d04fd)
+
+**调用：** [`Add(float, string, string, int)`](AiSettingsPanel.cs.md#symbol-3c5dd1fa546c)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+
+**字段、属性、事件及方法组引用：** `Add(float, string, string, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Add(float, string, string, int)`；输入表达式：`Add(1, "122735", "426575", 13)`；返回值紧邻使用处：`ArgumentSyntax: Add(1, "122735", "426575", 13)`
+- `Add(float, string, string, int)`；输入表达式：`Add(1.2f, "102330", "385565", 10)`；返回值紧邻使用处：`ArgumentSyntax: Add(1.2f, "102330", "385565", 10)`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 22);`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(row);`
+
+**赋值（含属性/字段和局部值）：**
+
+- `SizeFlagsHorizontal` = `Control.SizeFlags.ExpandFill`
+
+<a id="symbol-3c5dd1fa546c"></a>
+
+## `Add(float, string, string, int) — VBoxContainer Add(float share, string fill, string edge, int gap)`
+
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.AiSettingsPanel.Columns(Godot.VBoxContainer)`](AiSettingsPanel.cs.md#symbol-c1842fa7a32e)
+
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.VBoxContainer.VBoxContainer()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`column.AddThemeConstantOverride("separation", gap)`；返回值紧邻使用处：`ExpressionStatementSyntax: column.AddThemeConstantOverride("separation", gap);`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box(fill, edge, 10, 18))`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddThemeStyleboxOverride("panel", CareerVisuals.Box(fill, edge, 10, 18));`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`panel.AddChild(column)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.AddChild(column);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(panel);`
+- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = share }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = share }`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box(fill, edge, 10, 18)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box(fill, edge, 10, 18)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `SizeFlagsHorizontal` = `Control.SizeFlags.ExpandFill`
+- `SizeFlagsStretchRatio` = `share`
+
 <a id="symbol-8fb9cbc85381"></a>
 
 ## `NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?) — public static Label Build(VBoxContainer box, AiOptions options, Action save, Action generate, Action prompts, Action<string, bool> notice, Action? editing = null, string saveText = "保存设置", Action<Action>? confirmSwitch = null)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AiSettings(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-6dafb04d04fd)
 
-**调用：** [`Button(string, System.Action)`](AiSettingsPanel.cs.md#symbol-1774d28a11bf)；[`CommitKey()`](AiSettingsPanel.cs.md#symbol-965bdffd5689)；[`Current()`](AiSettingsPanel.cs.md#symbol-9680f9c80a3e)；[`FilterModels()`](AiSettingsPanel.cs.md#symbol-edc96cae7912)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.GetItemMetadata(int)`；`Godot.OptionButton.OptionButton()`；`Godot.PanelContainer.PanelContainer()`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Variant.AsString()`；`Godot.Vector2.Vector2(float, float)`；[`Input(string, string, string)`](AiSettingsPanel.cs.md#symbol-b3d3d5d7a42f)；[`InvalidateModels()`](AiSettingsPanel.cs.md#symbol-0c17fb6f7f49)；[`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；`NationalSpire.AiConnectionProfile.AiConnectionProfile()`；[`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.HasProfileKey(string)`](AiService.cs.md#symbol-79f735f59baf)；[`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；`NationalSpire.AiTaskRoutePicker.AiTaskRoutePicker()`；[`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`](AiTaskRoutePicker.cs.md#symbol-7a35c2ddf3d1)；`NationalSpire.BroadcastButton.BroadcastButton()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PlayerFacingText.AiStatus(string)`](PlayerFacingText.cs.md#symbol-6179a4a56aad)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`Number(string, string, int, int, int, System.Action<int>)`](AiSettingsPanel.cs.md#symbol-a2e61442cbfd)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-7d731dbc5403)；[`Save()`](AiSettingsPanel.cs.md#symbol-f1fd5937e73b)；[`Switch(System.Action)`](AiSettingsPanel.cs.md#symbol-a8cc5f502137)；`System.Action.Invoke()`；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Exception.GetType()`；`System.Func<TResult>.Invoke()`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`；[`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`
+**调用：** [`Button(string, System.Action)`](AiSettingsPanel.cs.md#symbol-1774d28a11bf)；[`CommitKey()`](AiSettingsPanel.cs.md#symbol-965bdffd5689)；[`Current()`](AiSettingsPanel.cs.md#symbol-9680f9c80a3e)；[`FilterModels()`](AiSettingsPanel.cs.md#symbol-edc96cae7912)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.GetItemMetadata(int)`；`Godot.OptionButton.OptionButton()`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Variant.AsString()`；`Godot.Vector2.Vector2(float, float)`；[`Input(string, string, string)`](AiSettingsPanel.cs.md#symbol-b3d3d5d7a42f)；[`InvalidateModels()`](AiSettingsPanel.cs.md#symbol-0c17fb6f7f49)；[`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；`NationalSpire.AiConnectionProfile.AiConnectionProfile()`；[`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-7a203ffde56e)；[`NationalSpire.AiService.FailureReason(System.Exception)`](AiService.cs.md#symbol-a50bcbf6dda5)；[`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`](AiModels.cs.md#symbol-142ecf753d1d)；[`NationalSpire.AiService.HasProfileKey(string)`](AiService.cs.md#symbol-79f735f59baf)；[`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；[`NationalSpire.AiSettingsPanel.Columns(Godot.VBoxContainer)`](AiSettingsPanel.cs.md#symbol-c1842fa7a32e)；`NationalSpire.AiTaskRoutePicker.AiTaskRoutePicker()`；[`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`](AiTaskRoutePicker.cs.md#symbol-7a35c2ddf3d1)；`NationalSpire.BroadcastButton.BroadcastButton()`；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PlayerFacingText.AiStatus(string)`](PlayerFacingText.cs.md#symbol-6179a4a56aad)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；[`Number(string, string, int, int, int, System.Action<int>)`](AiSettingsPanel.cs.md#symbol-a2e61442cbfd)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-7d731dbc5403)；[`Save()`](AiSettingsPanel.cs.md#symbol-f1fd5937e73b)；[`Switch(System.Action)`](AiSettingsPanel.cs.md#symbol-a8cc5f502137)；`System.Action.Invoke()`；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Exception.GetType()`；`System.Func<TResult>.Invoke()`；`System.Uri.TryCreate(string?, System.UriKind, out System.Uri?)`；[`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`
 
-**字段、属性、事件及方法组引用：** `Button(string, System.Action)`；`CommitKey()`；`Current()`；`FilterModels()`；`Input(string, string, string)`；`InvalidateModels()`；`Load(string, bool)`；`NationalSpire.AiConnectionProfile.Endpoint`；`NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.MaxNewsPosts`；`NationalSpire.AiOptions.MaximumNewsPostCount`；`NationalSpire.AiOptions.MinimumIntervalSeconds`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiOptions.TaskProfiles`；`NationalSpire.AiRouting.Default`；`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`；`NationalSpire.AiRouting.Tasks`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`；`NationalSpire.AiService.HasKey`；`NationalSpire.AiService.HasProfileKey(string)`；`NationalSpire.AiService.ProfileKey(string)`；`NationalSpire.AiService.Status`；`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.PlayerFacingText.AiStatus(string)`；`NationalSpire.PlayerFacingText.LongError(string)`；`Number(string, string, int, int, int, System.Action<int>)`；`RefreshProfiles()`；`RefreshRoutes()`；`Save()`；`Switch(System.Action)`；`Text(string)`
+**字段、属性、事件及方法组引用：** `Button(string, System.Action)`；`CommitKey()`；`Current()`；`FilterModels()`；`Input(string, string, string)`；`InvalidateModels()`；`Load(string, bool)`；`NationalSpire.AiConnectionProfile.Endpoint`；`NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiOptions.Enabled`；`NationalSpire.AiOptions.Endpoint`；`NationalSpire.AiOptions.MaxConcurrentRequests`；`NationalSpire.AiOptions.MaxNewsPosts`；`NationalSpire.AiOptions.MaximumNewsPostCount`；`NationalSpire.AiOptions.MinimumIntervalSeconds`；`NationalSpire.AiOptions.Model`；`NationalSpire.AiOptions.RequestTimeoutMinutes`；`NationalSpire.AiOptions.TaskProfiles`；`NationalSpire.AiRouting.Default`；`NationalSpire.AiRouting.Ensure(NationalSpire.AiOptions)`；`NationalSpire.AiRouting.Tasks`；`NationalSpire.AiService.FailureReason(System.Exception)`；`NationalSpire.AiService.FetchModelsAsync(string, string?, string)`；`NationalSpire.AiService.HasKey`；`NationalSpire.AiService.HasProfileKey(string)`；`NationalSpire.AiService.ProfileKey(string)`；`NationalSpire.AiService.Status`；`NationalSpire.AiSettingsPanel.Columns(Godot.VBoxContainer)`；`NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.PlayerFacingText.AiStatus(string)`；`NationalSpire.PlayerFacingText.LongError(string)`；`Number(string, string, int, int, int, System.Action<int>)`；`RefreshProfiles()`；`RefreshRoutes()`；`Save()`；`Switch(System.Action)`；`Text(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -63,24 +114,15 @@
 - `Godot.CheckBox.CheckBox()`；输入表达式：`new CheckBox { Text = "启用 AI 社区", ButtonPressed = options.Enabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CheckBox { Text = "启用 AI 社区", ButtonPressed = options.Enabled }`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`Text("连接方案").AddThemeColorOverride("font_color", CareerVisuals.Gold)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text("连接方案").AddThemeColorOverride("font_color", CareerVisuals.Gold);`
 - `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`routeTitle.AddThemeColorOverride("font_color", CareerVisuals.Gold)`；返回值紧邻使用处：`ExpressionStatementSyntax: routeTitle.AddThemeColorOverride("font_color", CareerVisuals.Gold);`
-- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`columns.AddThemeConstantOverride("separation", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: columns.AddThemeConstantOverride("separation", 22);`
-- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`editor.AddThemeConstantOverride("separation", 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddThemeConstantOverride("separation", 10);`
-- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`routes.AddThemeConstantOverride("separation", 13)`；返回值紧邻使用处：`ExpressionStatementSyntax: routes.AddThemeConstantOverride("separation", 13);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`details.AddThemeFontSizeOverride("font_size", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: details.AddThemeFontSizeOverride("font_size", 16);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`routeTitle.AddThemeFontSizeOverride("font_size", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: routeTitle.AddThemeFontSizeOverride("font_size", 22);`
-- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`editorPanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102330", "385565", 10, 18))`；返回值紧邻使用处：`ExpressionStatementSyntax: editorPanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102330", "385565", 10, 18));`
-- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`routePanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 10, 18))`；返回值紧邻使用处：`ExpressionStatementSyntax: routePanel.AddThemeStyleboxOverride("panel", CareerVisuals.Box("122735", "426575", 10, 18));`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`GodotObject.IsInstanceValid(fetch)`；返回值紧邻使用处：`BinaryExpressionSyntax: GodotObject.IsInstanceValid(fetch) && !fetch.IsQueuedForDeletion()`
 - `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`fetch.IsQueuedForDeletion()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !fetch.IsQueuedForDeletion()`
-- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.Label.Label()`；输入表达式：`new Label { Text = "任务使用方案" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Label { Text = "任务使用方案" }`
 - `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "AiKey", Secret = true, PlaceholderText = AiService.HasProfileKey(selected) ? "已保存，留空保留当前密钥" : "请输入 API 密钥", CustomMinimumSize = new(0, 42) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: key = new LineEdit { Name = "AiKey", Secret = true, PlaceholderText = AiService.HasProfileKey(selected) ? "已保存，留空保留当前密钥" : "请输入 API 密钥", CustomMinimumSize = new(0, 42) }`
 - `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "AiModelFilter", PlaceholderText = "搜索模型", CustomMinimumSize = new(0, 42) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "AiModelFilter", PlaceholderText = "搜索模型", CustomMinimumSize = new(0, 42) }`
 - `Godot.LineEdit.LineEdit()`；输入表达式：`new LineEdit { Name = "AiProfileName", Text = options.ConnectionProfiles[selected].Name, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LineEdit { Name = "AiProfileName", Text = options.ConnectionProfiles[selected].Name, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(columns)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(columns);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`columns.AddChild(editorPanel)`；返回值紧邻使用处：`ExpressionStatementSyntax: columns.AddChild(editorPanel);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`columns.AddChild(routePanel)`；返回值紧邻使用处：`ExpressionStatementSyntax: columns.AddChild(routePanel);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(details)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(details);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(enabled)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(enabled);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(fetch)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(fetch);`
@@ -88,10 +130,8 @@
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(modelChoices)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(modelChoices);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(saveRow)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(saveRow);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editor.AddChild(selectionRow)`；返回值紧邻使用处：`ExpressionStatementSyntax: editor.AddChild(selectionRow);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`editorPanel.AddChild(editor)`；返回值紧邻使用处：`ExpressionStatementSyntax: editorPanel.AddChild(editor);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`modelChoices.AddChild(filter)`；返回值紧邻使用处：`ExpressionStatementSyntax: modelChoices.AddChild(filter);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`modelChoices.AddChild(picker)`；返回值紧邻使用处：`ExpressionStatementSyntax: modelChoices.AddChild(picker);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`routePanel.AddChild(routes)`；返回值紧邻使用处：`ExpressionStatementSyntax: routePanel.AddChild(routes);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`routes.AddChild(applyAll)`；返回值紧邻使用处：`ExpressionStatementSyntax: routes.AddChild(applyAll);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`routes.AddChild(panel)`；返回值紧邻使用处：`ExpressionStatementSyntax: routes.AddChild(panel);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`routes.AddChild(routeTitle)`；返回值紧邻使用处：`ExpressionStatementSyntax: routes.AddChild(routeTitle);`
@@ -102,10 +142,7 @@
 - `Godot.OptionButton.GetItemMetadata(int)`；输入表达式：`profiles.GetItemMetadata((int)index)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: profiles.GetItemMetadata((int)index).AsString`
 - `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "AiModelList", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "AiModelList", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
 - `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "AiProfiles", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "AiProfiles", FitToLongestItem = false, CustomMinimumSize = new(0, 46), SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
-- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
-- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1.2f }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsStretchRatio = 1.2f }`
 - `Godot.TextEdit.TextEdit()`；输入表达式：`new TextEdit { Name = "AiModelError", Visible = false, Editable = false, CustomMinimumSize = new(0, 110), WrapMode = TextEdit.LineWrappingMode.Boundary }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new TextEdit { Name = "AiModelError", Visible = false, Editable = false, CustomMinimumSize = new(0, 110), WrapMode = TextEdit.LineWrappingMode.Boundary }`
-- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { Visible = false }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { Visible = false }`
 - `Godot.Variant.AsString()`；输入表达式：`profiles.GetItemMetadata((int)index).AsString()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = profiles.GetItemMetadata((int)index).AsString()`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(0, 110)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(0, 110)`
@@ -127,14 +164,13 @@
 - `NationalSpire.AiService.HasProfileKey(string)`；输入表达式：`AiService.HasProfileKey(selected)`；返回值紧邻使用处：`ConditionalExpressionSyntax: AiService.HasProfileKey(selected) ? "已保存，留空保留当前密钥" : "请输入 API 密钥"`
 - `NationalSpire.AiService.HasProfileKey(string)`；输入表达式：`AiService.HasProfileKey(selected)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !AiService.HasProfileKey(selected)`
 - `NationalSpire.AiService.ProfileKey(string)`；输入表达式：`AiService.ProfileKey(selected)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = AiService.ProfileKey(selected)`
+- `NationalSpire.AiSettingsPanel.Columns(Godot.VBoxContainer)`；输入表达式：`Columns(box)`；返回值紧邻使用处：`AssignmentExpressionSyntax: var (editor, routes) = Columns(box)`
 - `NationalSpire.AiTaskRoutePicker.AiTaskRoutePicker()`；输入表达式：`new AiTaskRoutePicker()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new AiTaskRoutePicker()`
 - `NationalSpire.AiTaskRoutePicker.Configure(NationalSpire.AiOptions, string, System.Action, System.Action<string, bool>)`；输入表达式：`panel.Configure(options, task.Id, save, notice)`；返回值紧邻使用处：`ExpressionStatementSyntax: panel.Configure(options, task.Id, save, notice);`
 - `NationalSpire.BroadcastButton.BroadcastButton()`；输入表达式：`new BroadcastButton { Name = "AiApplyAll", Text = "将当前方案应用到所有", CustomMinimumSize = new(0, 46) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastButton { Name = "AiApplyAll", Text = "将当前方案应用到所有", CustomMinimumSize = new(0, 46) }`
 - `NationalSpire.BroadcastButton.BroadcastButton()`；输入表达式：`new BroadcastButton { Name = "AiFetchModels", Text = "获取模型列表", CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastButton { Name = "AiFetchModels", Text = "获取模型列表", CustomMinimumSize = new(220, 48), SizeFlagsHorizontal = Control.SizeFlags.ShrinkBegin }`
 - `NationalSpire.BroadcastButton.BroadcastButton()`；输入表达式：`new BroadcastButton { Name = "AiNewProfile", Text = "＋ 新建", CustomMinimumSize = new(96, 46) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastButton { Name = "AiNewProfile", Text = "＋ 新建", CustomMinimumSize = new(96, 46) }`
 - `NationalSpire.BroadcastButton.BroadcastButton()`；输入表达式：`new BroadcastButton { Name = "AiSaveProfile", Text = saveText, CustomMinimumSize = new(128, 46) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastButton { Name = "AiSaveProfile", Text = saveText, CustomMinimumSize = new(128, 46) }`
-- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("102330", "385565", 10, 18)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("102330", "385565", 10, 18)`
-- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("122735", "426575", 10, 18)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("122735", "426575", 10, 18)`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.settings.save-clicked", new { enteredCredential = !string.IsNullOrWhiteSpace(key.Text), available = AiService.HasKey })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.settings.save-clicked", new { enteredCredential = !string.IsNullOrWhiteSpace(key.Text), available = AiService.HasKey });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" });`
@@ -209,7 +245,6 @@
 - `Secret` = `true`
 - `SizeFlagsHorizontal` = `Control.SizeFlags.ExpandFill`
 - `SizeFlagsHorizontal` = `Control.SizeFlags.ShrinkBegin`
-- `SizeFlagsStretchRatio` = `1.2f`
 - `Text` = `"任务使用方案"`
 - `Text` = `"启用 AI 社区"`
 - `Text` = `"将当前方案应用到所有"`
@@ -266,12 +301,13 @@
 - `profiles.ItemSelected` += `index => { if (loading) return; string target = profiles.GetItemMetadata((int)index).AsString(); if (target != selected) Switch(() => Load(target, false)); }`
 - `saveButton.Pressed` += `() => { Diagnostics.Record("ai.settings.save-clicked", new { enteredCredential = !string.IsNullOrWhiteSpace(key.Text), available = AiService.HasKey }); try { // 点击保存时也提交仍在编辑的数字，不依赖焦点事件先后顺序。 bool valid = true; foreach (var commit in commitNumbers) if (!commit()) valid = false; if (!valid) { Diagnostics.Record("ai.settings.save-rejected", new { reason = "number" }); return; } string name = profileName.Text.Trim(), address = endpoint.Text.Trim(), modelId = model.Text.Trim(); if (name.Length == 0) throw new ArgumentException("请填写方案名称。"); if (options.ConnectionProfiles.Any(p => p.Key != selected && p.Value.Name == name)) throw new ArgumentException("方案名称已存在，请修改名称。"); if (!Uri.TryCreate(address, UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https") || modelId.Length == 0) throw new ArgumentException("请填写有效的服务地址和模型名称。"); var prior = options.ConnectionProfiles.GetValueOrDefault(selected); options.ConnectionProfiles[selected] = new() { Name = name, Endpoint = address, Model = modelId }; if (selected == AiRouting.Default) { options.Endpoint = address; options.Model = modelId; } try { save(); } catch { if (prior == null) options.ConnectionProfiles.Remove(selected); else options.ConnectionProfiles[selected] = prior; if (selected == AiRouting.Default && prior != null) { options.Endpoint = prior.Endpoint; options.Model = prior.Model; } throw; } CommitKey(); creating = false; RefreshProfiles(); RefreshRoutes(); Diagnostics.Record("ai.settings.saved", new { enabled = options.Enabled, available = AiService.HasKey }); if (!options.Enabled) { notice("设置已保存。", false); return; } if (!AiService.HasProfileKey(selected)) { notice("设置已保存，请填写 API 密钥。", true); return; } generate(); notice("设置已保存。", false); } catch (Exception e) { Diagnostics.Record("ai.settings.save-failed", new { error = e.GetType().Name }); notice(e.Message, true); } }`
 - `valid` = `false`
+- `var (editor, routes)` = `Columns(box)`
 
 <a id="symbol-1b91d4c01f99"></a>
 
 ## `Text(string) — Label Text(string value)`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Input(string, string, string)`](AiSettingsPanel.cs.md#symbol-b3d3d5d7a42f)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`Number(string, string, int, int, int, System.Action<int>)`](AiSettingsPanel.cs.md#symbol-a2e61442cbfd)
 
@@ -296,7 +332,7 @@
 
 ## `Button(string, System.Action) — void Button(string title, Action action)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
@@ -321,11 +357,11 @@
 
 ## `Save() — void Save()`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Commit()`](AiSettingsPanel.cs.md#symbol-4b717c808863)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** `System.Action.Invoke()`（委托实际目标见流程文档）；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
+**调用：** `System.Action.Invoke()`；`System.Action<T1, T2>.Invoke(T1, T2)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -341,11 +377,11 @@
 
 ## `Input(string, string, string) — LineEdit Input(string title, string value, string name)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** `Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`；[`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)
 
 **字段、属性、事件及方法组引用：** `Text(string)`
 
@@ -369,11 +405,11 @@
 
 ## `Number(string, string, int, int, int, System.Action<int>) — void Number(string title, string name, int value, int min, int max, Action<int> update)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`Commit()`](AiSettingsPanel.cs.md#symbol-4b717c808863)；[`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`int.ToString()`；`NationalSpire.BroadcastButton.BroadcastButton()`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Clamp(int, int, int)`
+**调用：** [`Commit()`](AiSettingsPanel.cs.md#symbol-4b717c808863)；`Godot.HBoxContainer.HBoxContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`System.Action.Invoke()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Clamp(int, int, int)`；[`Text(string)`](AiSettingsPanel.cs.md#symbol-1b91d4c01f99)；`int.ToString()`
 
 **字段、属性、事件及方法组引用：** `Commit()`；`Text(string)`
 
@@ -418,11 +454,11 @@
 
 ## `Commit() — bool Commit()`
 
-来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Number(string, string, int, int, int, System.Action<int>)`](AiSettingsPanel.cs.md#symbol-a2e61442cbfd)
 
-**调用：** [`Save()`](AiSettingsPanel.cs.md#symbol-f1fd5937e73b)；`int.ToString()`；`int.TryParse(string?, out int)`；`string.Trim()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
+**调用：** [`Save()`](AiSettingsPanel.cs.md#symbol-f1fd5937e73b)；`System.Action<T1, T2>.Invoke(T1, T2)`；`System.Action<T>.Invoke(T)`；`int.ToString()`；`int.TryParse(string?, out int)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `Save()`
 
@@ -446,11 +482,11 @@
 
 ## `CommitKey() — void CommitKey()`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`NationalSpire.AiService.HasProfileKey(string)`](AiService.cs.md#symbol-79f735f59baf)；[`NationalSpire.AiService.PersistKey(string, string)`](AiService.cs.md#symbol-017daf4a239c)；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`；`System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.AiService.HasProfileKey(string)`](AiService.cs.md#symbol-79f735f59baf)；[`NationalSpire.AiService.PersistKey(string, string)`](AiService.cs.md#symbol-017daf4a239c)；`System.Action<T1, T2>.Invoke(T1, T2)`；`string.IsNullOrWhiteSpace(string?)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiService.HasProfileKey(string)`；`NationalSpire.AiService.PersistKey(string, string)`
 
@@ -473,11 +509,11 @@
 
 ## `FilterModels() — void FilterModels()`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** `Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.Select(int)`；`string.Contains(string, System.StringComparison)`；`string.Trim()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** `Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.Select(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Contains(string, System.StringComparison)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -501,7 +537,7 @@
 
 ## `InvalidateModels() — void InvalidateModels()`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
@@ -523,7 +559,7 @@
 
 ## `Current() — bool Current()`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
@@ -544,7 +580,7 @@
 
 ## `RefreshRoutes() — void RefreshRoutes()`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
@@ -566,7 +602,7 @@
 
 ## `RefreshProfiles() — void RefreshProfiles()`
 
-来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Load(string, bool)`](AiSettingsPanel.cs.md#symbol-96678e748257)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`Switch(System.Action)`](AiSettingsPanel.cs.md#symbol-a8cc5f502137)
 
@@ -592,7 +628,7 @@
 
 ## `Dirty() — bool Dirty()`
 
-来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Switch(System.Action)`](AiSettingsPanel.cs.md#symbol-a8cc5f502137)
 
@@ -611,11 +647,11 @@
 
 ## `Load(string, bool) — void Load(string id, bool fresh)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`InvalidateModels()`](AiSettingsPanel.cs.md#symbol-0c17fb6f7f49)；[`NationalSpire.AiRouting.NextName(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-761de1a86dc4)；[`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-7d731dbc5403)；`string.IsNullOrWhiteSpace(string?)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
+**调用：** [`InvalidateModels()`](AiSettingsPanel.cs.md#symbol-0c17fb6f7f49)；[`NationalSpire.AiRouting.NextName(NationalSpire.AiOptions)`](AiRouting.cs.md#symbol-761de1a86dc4)；[`NationalSpire.AiService.ProfileKey(string)`](AiService.cs.md#symbol-96c9adf50cfa)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；[`RefreshRoutes()`](AiSettingsPanel.cs.md#symbol-7d731dbc5403)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `InvalidateModels()`；`NationalSpire.AiConnectionProfile.Endpoint`；`NationalSpire.AiConnectionProfile.Model`；`NationalSpire.AiConnectionProfile.Name`；`NationalSpire.AiOptions.ConnectionProfiles`；`NationalSpire.AiRouting.NextName(NationalSpire.AiOptions)`；`NationalSpire.AiService.ProfileKey(string)`；`RefreshProfiles()`；`RefreshRoutes()`
 
@@ -646,11 +682,11 @@
 
 ## `Switch(System.Action) — void Switch(Action action)`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)
 
-**调用：** [`Dirty()`](AiSettingsPanel.cs.md#symbol-b55c6d251317)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`Dirty()`](AiSettingsPanel.cs.md#symbol-b55c6d251317)；[`RefreshProfiles()`](AiSettingsPanel.cs.md#symbol-0d7456fd0036)；`System.Action.Invoke()`；`System.Action<T>.Invoke(T)`
 
 **字段、属性、事件及方法组引用：** `Dirty()`；`RefreshProfiles()`
 

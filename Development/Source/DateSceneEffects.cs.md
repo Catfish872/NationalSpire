@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F1473DD13900452EE0930128130F84516B167A9D8A758A7176B54B9074221F78`。来源：[源码](../../DateSceneEffects.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8E92A0E0018438767DAF3ACFB655D157CF52F465B998DA9DD059AC6496693B91`。来源：[源码](../../DateSceneEffects.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -20,7 +20,7 @@
 
 来源：源码第 6 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.PrivateMessages.RemoveDeletedOffers(NationalSpire.PrivateConversation, NationalSpire.PrivateMailbox?)`](PrivateMessages.cs.md#symbol-b239ace74471)
+**调用者：** [`NationalSpire.CareerScreen.ShowSceneOfferOutsideHistory(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, System.Collections.Generic.IReadOnlySet<string>)`](PrivateMessageScreen.cs.md#symbol-ef223dfd3ae0)；[`NationalSpire.PrivateMessages.ConfirmFavour(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, bool)`](PrivateMessages.cs.md#symbol-056e9f8e0046)；[`NationalSpire.PrivateMessages.RemoveDeletedOffers(NationalSpire.PrivateConversation, NationalSpire.PrivateMailbox?)`](PrivateMessages.cs.md#symbol-b239ace74471)
 
 **调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`
 

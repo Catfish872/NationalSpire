@@ -40,7 +40,7 @@
 
 **调用者：** [`NationalSpire.LiveCommentary.RefreshCommentary()`](CommentaryRefresh.cs.md#symbol-e65d5ff87a87)；[`NationalSpire.LiveCommentary.ReplaceBank(System.Collections.Generic.Dictionary<string, string[]>, string)`](CommentaryRefresh.cs.md#symbol-bf541bb1ad03)；[`NationalSpire.LiveSpeechComposer.Create()`](LiveSpeechComposer.cs.md#symbol-2d212bce6757)；[`NationalSpire.LiveVoiceCatalog.Create()`](LiveVoiceCatalog.cs.md#symbol-401bebd9f275)；[`NationalSpire.NarrativeText.NarrativeText()`](ExpandedNarrative.cs.md#symbol-871dd311d8d4)；[`NationalSpire.WorldPeople.WorldPeople()`](ExpandedPeople.cs.md#symbol-e0e51594f12d)
 
-**调用：** `string.IndexOf(char)`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`string.IndexOf(char)`；`string.Split(char, System.StringSplitOptions)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

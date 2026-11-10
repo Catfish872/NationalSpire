@@ -22,7 +22,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
-**调用：** [`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Godot.Image.Image()`；`Godot.Image.LoadJpgFromBuffer(byte[])`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.Image.LoadWebpFromBuffer(byte[])`；`string.ToLowerInvariant()`；`System.ArgumentException.ArgumentException(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetExtension(string?)`
+**调用：** `Godot.Image.Image()`；`Godot.Image.LoadJpgFromBuffer(byte[])`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.Image.LoadWebpFromBuffer(byte[])`；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`System.ArgumentException.ArgumentException(string?)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetExtension(string?)`；`string.ToLowerInvariant()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`
 
@@ -71,7 +71,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`System.IO.InvalidDataException.InvalidDataException(string?)`
+**调用：** `Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`
 
@@ -93,7 +93,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CareerScreen.OpenDateAssets(NationalSpire.CareerData, string)`](DateSceneAssetScreen.cs.md#symbol-a45b4a628cd5)
 
-**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.SubViewport.SubViewport()`；`Godot.Texture2D.GetImage()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Vector2I.Vector2I(int, int)`；`Godot.Viewport.GetTexture()`；`NationalSpire.CareerAvatar.CareerAvatar()`
+**调用：** `Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.SubViewport.SubViewport()`；`Godot.Texture2D.GetImage()`；`Godot.Vector2.Vector2(float, float)`；`Godot.Vector2I.Vector2I(int, int)`；`Godot.Viewport.GetTexture()`；[`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`NationalSpire.CareerAvatar.CareerAvatar()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Description`；`NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`；`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`；`NationalSpire.CareerAvatar.Art`
 
@@ -129,7 +129,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** [`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`](AvatarImages.cs.md#symbol-b10dde67e8a0)
 
-**调用：** [`NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`](AvatarImages.cs.md#symbol-b10dde67e8a0)；`Godot.GodotObject.Dispose()`；`Godot.Image.Decompress()`；`Godot.Image.GetHeight()`；`Godot.Image.GetRegion(Godot.Rect2I)`；`Godot.Image.GetWidth()`；`Godot.Image.IsCompressed()`；`Godot.Rect2I.Rect2I(int, int, int, int)`；`Godot.Texture2D.GetImage()`；`Godot.Vector2.Vector2(float, float)`；`System.ArgumentException.ArgumentException(string?)`
+**调用：** `Godot.GodotObject.Dispose()`；`Godot.Image.Decompress()`；`Godot.Image.GetHeight()`；`Godot.Image.GetRegion(Godot.Rect2I)`；`Godot.Image.GetWidth()`；`Godot.Image.IsCompressed()`；`Godot.Rect2I.Rect2I(int, int, int, int)`；`Godot.Texture2D.GetImage()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`](AvatarImages.cs.md#symbol-b10dde67e8a0)；`System.ArgumentException.ArgumentException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarImages.TextureImage(Godot.Texture2D)`
 
@@ -161,7 +161,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** [`NationalSpire.AvatarImages.FromArt(NationalSpire.AvatarArt, string)`](AvatarImages.cs.md#symbol-11dcaf1a0f5d)；[`NationalSpire.AvatarImages.FromCardPng(byte[])`](AvatarImages.cs.md#symbol-1bd15f735eef)；[`NationalSpire.AvatarImages.FromCharacterCardArt(Godot.Node, NationalSpire.AvatarArt)`](AvatarImages.cs.md#symbol-f46bb00e33dc)；[`NationalSpire.AvatarImages.FromFile(string)`](AvatarImages.cs.md#symbol-2455dc6874f9)；[`NationalSpire.AvatarSources.Steam()`](AvatarSources.cs.md#symbol-bc266fec0f45)
 
-**调用：** [`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`Godot.Image.Convert(Godot.Image.Format)`；`Godot.Image.Decompress()`；`Godot.Image.GetHeight()`；`Godot.Image.GetRegion(Godot.Rect2I)`；`Godot.Image.GetWidth()`；`Godot.Image.IsCompressed()`；`Godot.Image.IsEmpty()`；`Godot.Image.Resize(int, int, Godot.Image.Interpolation)`；`Godot.Image.SavePngToBuffer()`；`Godot.Rect2I.Rect2I(int, int, int, int)`；`NationalSpire.PlayerAvatar.PlayerAvatar()`；`System.ArgumentException.ArgumentException(string?)`；`System.Convert.ToBase64String(byte[])`；`System.Math.Min(int, int)`
+**调用：** `Godot.Image.Convert(Godot.Image.Format)`；`Godot.Image.Decompress()`；`Godot.Image.GetHeight()`；`Godot.Image.GetRegion(Godot.Rect2I)`；`Godot.Image.GetWidth()`；`Godot.Image.IsCompressed()`；`Godot.Image.IsEmpty()`；`Godot.Image.Resize(int, int, Godot.Image.Interpolation)`；`Godot.Image.SavePngToBuffer()`；`Godot.Rect2I.Rect2I(int, int, int, int)`；`NationalSpire.PlayerAvatar.PlayerAvatar()`；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`System.ArgumentException.ArgumentException(string?)`；`System.Convert.ToBase64String(byte[])`；`System.Math.Min(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PlayerAvatar.Label`；`NationalSpire.PlayerAvatar.MaxBytes`；`NationalSpire.PlayerAvatar.Png`；`NationalSpire.PlayerAvatar.Source`；`NationalSpire.PlayerAvatar.Validate()`
 
@@ -205,7 +205,7 @@ private static readonly Dictionary<string, AvatarArt> Cache = [];
 
 **调用者：** [`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`Select(NationalSpire.PlayerAvatar)`](AvatarScreen.cs.md#symbol-07697461993d)
 
-**调用：** [`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Convert.FromBase64String(string)`
+**调用：** `Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；[`NationalSpire.PlayerAvatar.Validate()`](PlayerAvatar.cs.md#symbol-96ff07617629)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Convert.FromBase64String(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarImages.Cache`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.PlayerAvatar.Label`；`NationalSpire.PlayerAvatar.Png`；`NationalSpire.PlayerAvatar.Source`；`NationalSpire.PlayerAvatar.Validate()`
 

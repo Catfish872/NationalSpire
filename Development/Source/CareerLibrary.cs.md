@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`01FFD1C6FCF432BF00157E14F0281DC260490C394E1ECC49D6114363338BCF54`。来源：[源码](../../CareerLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D53F0DE75A580FAC1101E671A948D0FB07081A1B6E2B63604FFB680B94AA4A41`。来源：[源码](../../CareerLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+
 ```
 
 <a id="symbol-aa9eb7491d1b"></a>
@@ -39,7 +40,7 @@
 
 **调用者：** [`NationalSpire.CareerLibrary.Delete(string, string)`](CareerLibrary.cs.md#symbol-261c89b42954)；[`NationalSpire.CareerLibrary.List(string)`](CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerStore.FilePath`](CareerStore.cs.md#symbol-1b56b90e6589)
 
-**调用：** [`NationalSpire.CareerLibrary.Selection(string)`](CareerLibrary.cs.md#symbol-aa9eb7491d1b)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`string.Trim()`；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`
+**调用：** [`NationalSpire.CareerLibrary.Selection(string)`](CareerLibrary.cs.md#symbol-aa9eb7491d1b)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.Selection(string)`；`NationalSpire.CareerLibrary.ValidName(string)`
 
@@ -63,9 +64,9 @@
 
 来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLibrary.Delete(string, string)`](CareerLibrary.cs.md#symbol-261c89b42954)；[`NationalSpire.CareerLibrary.List(string)`](CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerLibrary.Select(string, string)`](CareerLibrary.cs.md#symbol-e83d55812872)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)
+**调用者：** [`NationalSpire.CareerLibrary.CheckedPath(string, string)`](CareerLibrary.cs.md#symbol-bc9895036567)；[`NationalSpire.CareerLibrary.List(string)`](CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)
 
-**调用：** `string.EndsWith(string)`；`string.StartsWith(string)`；`System.Guid.TryParseExact(string?, string?, out System.Guid)`
+**调用：** `System.Guid.TryParseExact(string?, string?, out System.Guid)`；`string.EndsWith(string)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -78,73 +79,138 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-c8ee3532fd85"></a>
+
+## `NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?) — internal static string DisplayName(CareerData data, string? original = null)`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerLibrary.List(string)`](CareerLibrary.cs.md#symbol-49ca8927a7b3)；[`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)；[`NationalSpire.Coop.CoopScreen.Entrance()`](Coop/CoopScreen.cs.md#symbol-ef98f9c7ba09)
+
+**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；`string.IsNullOrWhiteSpace(string?)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.SaveName`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: original ?? CareerEngine.Name(data)`
+- `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(data.SaveName)`；返回值紧邻使用处：`ConditionalExpressionSyntax: string.IsNullOrWhiteSpace(data.SaveName) ? original ?? CareerEngine.Name(data) : data.SaveName`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-a3506a652e84"></a>
+
+## `NationalSpire.CareerLibrary.CheckedName(string) — internal static string CheckedName(string name)`
+
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Commit()`](CareerLibraryScreen.cs.md#symbol-71e6d1949c02)；[`NationalSpire.CareerStore.RenameCareer(string, string, string)`](CareerStore.cs.md#symbol-3cdbf04175ae)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopStorage.RenameAsync(string, string)`](Coop/CoopStorage.cs.md#symbol-f57c0209907e)
+
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`string.Trim()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`name.Any(char.IsControl)`；返回值紧邻使用处：`BinaryExpressionSyntax: name.Length is 0 or > 80 || name.Any(char.IsControl)`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("请输入 1 到 80 个字符的存档名称。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("请输入 1 到 80 个字符的存档名称。");`
+- `string.Trim()`；输入表达式：`name.Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: name = name.Trim()`
+
+**赋值（含属性/字段和局部值）：**
+
+- `name` = `name.Trim()`
+
+<a id="symbol-bc9895036567"></a>
+
+## `NationalSpire.CareerLibrary.CheckedPath(string, string) — internal static string CheckedPath(string original, string path)`
+
+来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerLibrary.Delete(string, string)`](CareerLibrary.cs.md#symbol-261c89b42954)；[`NationalSpire.CareerLibrary.Select(string, string)`](CareerLibrary.cs.md#symbol-e83d55812872)；[`NationalSpire.CareerStore.RenameCareer(string, string, string)`](CareerStore.cs.md#symbol-3cdbf04175ae)
+
+**调用：** [`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`；`string.Equals(string?, string?, System.StringComparison)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.ValidName(string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(Path.GetFileName(path))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ValidName(Path.GetFileName(path))`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯路径无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("生涯路径无效。");`
+- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`Path.GetDirectoryName(Path.GetFullPath(original))`；返回值紧邻使用处：`ArgumentSyntax: Path.GetDirectoryName(Path.GetFullPath(original))`
+- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`Path.GetDirectoryName(path)`；返回值紧邻使用处：`ArgumentSyntax: Path.GetDirectoryName(path)`
+- `System.IO.Path.GetFileName(string?)`；输入表达式：`Path.GetFileName(path)`；返回值紧邻使用处：`ArgumentSyntax: Path.GetFileName(path)`
+- `System.IO.Path.GetFullPath(string)`；输入表达式：`Path.GetFullPath(original)`；返回值紧邻使用处：`ArgumentSyntax: Path.GetFullPath(original)`
+- `System.IO.Path.GetFullPath(string)`；输入表达式：`Path.GetFullPath(path)`；返回值紧邻使用处：`AssignmentExpressionSyntax: path = Path.GetFullPath(path)`
+- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(Path.GetDirectoryName(Path.GetFullPath(original)), Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.Equals(Path.GetDirectoryName(Path.GetFullPath(original)), Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `path` = `Path.GetFullPath(path)`
+
 <a id="symbol-e83d55812872"></a>
 
 ## `NationalSpire.CareerLibrary.Select(string, string) — public static void Select(string original, string path)`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerStore.SwitchCareer(string)`](CareerStore.cs.md#symbol-67c415b86d89)
 
-**调用：** [`NationalSpire.CareerLibrary.Selection(string)`](CareerLibrary.cs.md#symbol-aa9eb7491d1b)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`
+**调用：** [`NationalSpire.CareerLibrary.CheckedPath(string, string)`](CareerLibrary.cs.md#symbol-bc9895036567)；[`NationalSpire.CareerLibrary.Selection(string)`](CareerLibrary.cs.md#symbol-aa9eb7491d1b)；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?)`；`System.IO.Path.GetFileName(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.Selection(string)`；`NationalSpire.CareerLibrary.ValidName(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.CheckedPath(string, string)`；`NationalSpire.CareerLibrary.Selection(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerLibrary.Selection(string)`；输入表达式：`Selection(original)`；返回值紧邻使用处：`ArgumentSyntax: Selection(original)`
+- `NationalSpire.CareerLibrary.CheckedPath(string, string)`；输入表达式：`CheckedPath(original, path)`；返回值紧邻使用处：`AssignmentExpressionSyntax: path = CheckedPath(original, path)`
 - `NationalSpire.CareerLibrary.Selection(string)`；输入表达式：`Selection(original)`；返回值紧邻使用处：`BinaryExpressionSyntax: Selection(original) + ".tmp"`
-- `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(System.IO.Path.GetFileName(path))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ValidName(System.IO.Path.GetFileName(path))`
+- `NationalSpire.CareerLibrary.Selection(string)`；输入表达式：`Selection(original)`；返回值紧邻使用处：`ArgumentSyntax: Selection(original)`
 - `System.IO.File.Move(string, string, bool)`；输入表达式：`File.Move(Selection(original) + ".tmp", Selection(original), true)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Move(Selection(original) + ".tmp", Selection(original), true);`
 - `System.IO.File.WriteAllText(string, string?)`；输入表达式：`File.WriteAllText(Selection(original) + ".tmp", System.IO.Path.GetFileName(path))`；返回值紧邻使用处：`ExpressionStatementSyntax: File.WriteAllText(Selection(original) + ".tmp", System.IO.Path.GetFileName(path));`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯路径无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("生涯路径无效。");`
-- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(original))`；返回值紧邻使用处：`BinaryExpressionSyntax: System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(original)) != System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path))`
-- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path))`；返回值紧邻使用处：`BinaryExpressionSyntax: System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(original)) != System.IO.Path.GetDirectoryName(System.IO.Path.GetFullPath(path))`
 - `System.IO.Path.GetFileName(string?)`；输入表达式：`System.IO.Path.GetFileName(path)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFileName(path)`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`System.IO.Path.GetFullPath(original)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFullPath(original)`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`System.IO.Path.GetFullPath(path)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFullPath(path)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `path` = `CheckedPath(original, path)`
 
 <a id="symbol-49ca8927a7b3"></a>
 
 ## `NationalSpire.CareerLibrary.List(string) — public static IEnumerable<CareerLibraryEntry> List(string original)`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；[`NationalSpire.Coop.CoopJson.Read<T>(byte[])`](Coop/CoopData.cs.md#symbol-1f7bf7625062)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.ReadAllBytes(string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`
+**调用：** [`NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`](CareerLibrary.cs.md#symbol-c8ee3532fd85)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；[`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`](JsonText.cs.md#symbol-3f401a852f9d)；[`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-0f707d2c9895)；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.IO.Directory.Exists(string?)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.OpenRead(string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerLibrary.SelectedPath(string)`；`NationalSpire.CareerLibrary.ValidName(string)`；`NationalSpire.Coop.CoopJson.Read<T>(byte[])`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`；`NationalSpire.CareerLibrary.SelectedPath(string)`；`NationalSpire.CareerLibrary.ValidName(string)`；`NationalSpire.Coop.CoopJson.Options`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；`NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(d)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(d)`
+- `NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`；输入表达式：`DisplayName(d)`；返回值紧邻使用处：`ArgumentSyntax: DisplayName(d)`
 - `NationalSpire.CareerLibrary.SelectedPath(string)`；输入表达式：`SelectedPath(original)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = SelectedPath(original)`
 - `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(System.IO.Path.GetFileName(f))`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: f => ValidName(System.IO.Path.GetFileName(f))`
-- `NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；输入表达式：`new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day))`；返回值紧邻使用处：`YieldStatementSyntax: yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));`
-- `NationalSpire.Coop.CoopJson.Read<T>(byte[])`；输入表达式：`CoopJson.Read<CareerData>(File.ReadAllBytes(file))`；返回值紧邻使用处：`AssignmentExpressionSyntax: d = CoopJson.Read<CareerData>(File.ReadAllBytes(file))`
+- `NationalSpire.CareerLibraryEntry.CareerLibraryEntry(string, string, int, int, bool, string)`；输入表达式：`new(file, DisplayName(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day))`；返回值紧邻使用处：`YieldStatementSyntax: yield return new(file, DisplayName(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));`
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(d, d.Day)`；返回值紧邻使用处：`ArgumentSyntax: GameCalendar.Text(d, d.Day)`
+- `NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；输入表达式：`JsonText.Read<CareerData>(input, CoopJson.Options)`；返回值紧邻使用处：`AssignmentExpressionSyntax: d = JsonText.Read<CareerData>(input, CoopJson.Options)`
 - `NationalSpire.SeasonCalendar.Day(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Day(d, d.Day)`；返回值紧邻使用处：`ArgumentSyntax: SeasonCalendar.Day(d, d.Day)`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc))          {              CareerData? d = null; try { d = CoopJson.Read<CareerData>(File.ReadAllBytes(file)); } catch { }              if (d != null) yield return new(file, CareerEngine.Name(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day));          }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string file in Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending(File.GetLastWriteTimeUtc)) { CareerData? d = null; try { using var input = File.OpenRead(file); d = JsonText.Read<CareerData>(input, CoopJson.Options); } catch { } if (d != null) yield return new(file, DisplayName(d), d.Season, SeasonCalendar.Day(d, d.Day), file == selected, GameCalendar.Text(d, d.Day)); }`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, "national_spire_career*.json").Where(f => ValidName(System.IO.Path.GetFileName(f))).OrderByDescending`
 - `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(folder)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Directory.Exists(folder)`
 - `System.IO.Directory.GetFiles(string, string)`；输入表达式：`Directory.GetFiles(folder, "national_spire_career*.json")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, "national_spire_career*.json").Where`
-- `System.IO.File.ReadAllBytes(string)`；输入表达式：`File.ReadAllBytes(file)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllBytes(file)`
+- `System.IO.File.OpenRead(string)`；输入表达式：`File.OpenRead(file)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = File.OpenRead(file)`
 - `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`System.IO.Path.GetDirectoryName(original)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: System.IO.Path.GetDirectoryName(original)!`
 - `System.IO.Path.GetFileName(string?)`；输入表达式：`System.IO.Path.GetFileName(f)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFileName(f)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `d` = `CoopJson.Read<CareerData>(File.ReadAllBytes(file))`
+- `d` = `JsonText.Read<CareerData>(input, CoopJson.Options)`
 
 <a id="symbol-bb2b0ce2be9d"></a>
 
 ## `NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData) — public static string Create(string original, CareerData data)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerLibrary.Import(string, byte[])`](CareerLibrary.cs.md#symbol-b347de421d96)；[`NationalSpire.CareerScreen.BeginNpcSetup(bool)`](NpcGenerationScreen.cs.md#symbol-b4785dd51d2b)
 
@@ -171,59 +237,53 @@
 
 ## `NationalSpire.CareerLibrary.Delete(string, string) — public static string Delete(string original, string path)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerStore.DeleteCareer(string, string)`](CareerStore.cs.md#symbol-1b17c0b3af7f)
 
-**调用：** [`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；[`NationalSpire.CareerLibrary.ValidName(string)`](CareerLibrary.cs.md#symbol-42ea11f25dc4)；`string.Equals(string?, string?, System.StringComparison)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.Directory.Delete(string)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.Move(string, string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.Path.Combine(string, string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`
+**调用：** [`NationalSpire.CareerLibrary.CheckedPath(string, string)`](CareerLibrary.cs.md#symbol-bc9895036567)；[`NationalSpire.CareerLibrary.SelectedPath(string)`](CareerLibrary.cs.md#symbol-8caea35cd8af)；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.Directory.Delete(string)`；`System.IO.Directory.GetFiles(string, string)`；`System.IO.File.Move(string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.Combine(string, string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.IO.Path.GetFileName(string?)`；`System.IO.Path.GetFullPath(string)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`string.Equals(string?, string?, System.StringComparison)`；`string.StartsWith(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.SelectedPath(string)`；`NationalSpire.CareerLibrary.ValidName(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerLibrary.CheckedPath(string, string)`；`NationalSpire.CareerLibrary.SelectedPath(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.CareerLibrary.CheckedPath(string, string)`；输入表达式：`CheckedPath(original, path)`；返回值紧邻使用处：`AssignmentExpressionSyntax: path = CheckedPath(original, path)`
 - `NationalSpire.CareerLibrary.SelectedPath(string)`；输入表达式：`SelectedPath(original)`；返回值紧邻使用处：`ArgumentSyntax: SelectedPath(original)`
-- `NationalSpire.CareerLibrary.ValidName(string)`；输入表达式：`ValidName(file)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !ValidName(file)`
-- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.Equals(folder, System.IO.Path.GetDirectoryName(path), StringComparison.OrdinalIgnoreCase)`
-- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase))              throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
-- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".broken-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-")`
-- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".pre-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-")`
-- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".reset-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-")`
-- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); }).Append(path)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); }).Append(path).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.AsEnumerable<TSource>()`；输入表达式：`moved.AsEnumerable()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: moved.AsEnumerable().Reverse`
 - `System.Collections.Generic.IEnumerable<TSource>.Reverse<TSource>()`；输入表达式：`moved.AsEnumerable().Reverse()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string source in moved.AsEnumerable().Reverse()) File.Move(System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)), source);`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append(path).ToArray()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p =>          {              string suffix = p[path.Length..];              return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-");          }).Append`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); }).Append(path).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); }).Append(path).ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where(p => { string suffix = p[path.Length..]; return suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-"); }).Append`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`moved.Add(source)`；返回值紧邻使用处：`ExpressionStatementSyntax: moved.Add(source);`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`BinaryExpressionSyntax: file + "-" + Guid.NewGuid().ToString("N")`
-- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
 - `System.IO.Directory.CreateDirectory(string)`；输入表达式：`Directory.CreateDirectory(backup)`；返回值紧邻使用处：`ExpressionStatementSyntax: Directory.CreateDirectory(backup);`
 - `System.IO.Directory.Delete(string)`；输入表达式：`Directory.Delete(backup)`；返回值紧邻使用处：`ExpressionStatementSyntax: Directory.Delete(backup);`
 - `System.IO.Directory.GetFiles(string, string)`；输入表达式：`Directory.GetFiles(folder, file + ".*")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.GetFiles(folder, file + ".*").Where`
-- `System.IO.File.Move(string, string)`；输入表达式：`File.Move(source, System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)))`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Move(source, System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)));`
 - `System.IO.File.Move(string, string)`；输入表达式：`File.Move(System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)), source)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Move(System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)), source);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯路径无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("生涯路径无效。");`
-- `System.IO.Path.Combine(string, string, string)`；输入表达式：`System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"))`
+- `System.IO.File.Move(string, string)`；输入表达式：`File.Move(source, System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)))`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Move(source, System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source)));`
 - `System.IO.Path.Combine(string, string)`；输入表达式：`System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source))`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.Combine(backup, System.IO.Path.GetFileName(source))`
-- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`System.IO.Path.GetDirectoryName(original)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: System.IO.Path.GetDirectoryName(original)!`
-- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`System.IO.Path.GetDirectoryName(path)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetDirectoryName(path)`
-- `System.IO.Path.GetFileName(string?)`；输入表达式：`System.IO.Path.GetFileName(path)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.IO.Path.GetFileName(path)`
+- `System.IO.Path.Combine(string, string, string)`；输入表达式：`System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = System.IO.Path.Combine(folder, ".deleted", file + "-" + Guid.NewGuid().ToString("N"))`
+- `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`Path.GetDirectoryName(path)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Path.GetDirectoryName(path)!`
+- `System.IO.Path.GetFileName(string?)`；输入表达式：`Path.GetFileName(path)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Path.GetFileName(path)`
 - `System.IO.Path.GetFileName(string?)`；输入表达式：`System.IO.Path.GetFileName(source)`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFileName(source)`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`System.IO.Path.GetFullPath(original)`；返回值紧邻使用处：`AssignmentExpressionSyntax: original = System.IO.Path.GetFullPath(original)`
-- `System.IO.Path.GetFullPath(string)`；输入表达式：`System.IO.Path.GetFullPath(path)`；返回值紧邻使用处：`AssignmentExpressionSyntax: path = System.IO.Path.GetFullPath(path)`
 - `System.IO.Path.GetFullPath(string)`；输入表达式：`System.IO.Path.GetFullPath(SelectedPath(original))`；返回值紧邻使用处：`ArgumentSyntax: System.IO.Path.GetFullPath(SelectedPath(original))`
+- `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
+- `string.Equals(string?, string?, System.StringComparison)`；输入表达式：`string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase)`；返回值紧邻使用处：`IfStatementSyntax: if (string.Equals(path, System.IO.Path.GetFullPath(SelectedPath(original)), StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("请先切换到另一份生涯，再删除当前生涯。");`
+- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".broken-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-") || suffix.StartsWith(".broken-")`
+- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".pre-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-")`
+- `string.StartsWith(string)`；输入表达式：`suffix.StartsWith(".reset-")`；返回值紧邻使用处：`BinaryExpressionSyntax: suffix is ".bak" or ".tmp" or ".run" or ".run.backup" || suffix.StartsWith(".pre-") || suffix.StartsWith(".reset-")`
 
 **赋值（含属性/字段和局部值）：**
 
-- `original` = `System.IO.Path.GetFullPath(original)`
-- `path` = `System.IO.Path.GetFullPath(path)`
+- `path` = `CheckedPath(original, path)`
 
 <a id="symbol-6f1ccfef974f"></a>
 
 ## `NationalSpire.CareerLibrary.Export(NationalSpire.CareerData, byte[]?, byte[]?) — public static byte[] Export(CareerData data, byte[]? run = null, byte[]? backup = null)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
@@ -254,17 +314,18 @@
 
 ## `NationalSpire.CareerLibrary.Import(string, byte[]) — public static string Import(string original, byte[] bytes)`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** [`NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`](CareerLibrary.cs.md#symbol-bb2b0ce2be9d)；[`NationalSpire.SeasonCalendar.End(NationalSpire.CareerData)`](SeasonCalendar.cs.md#symbol-6b4c49a62324)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；`System.IO.Compression.ZipArchive.GetEntry(string)`；`System.IO.Compression.ZipArchive.ZipArchive(System.IO.Stream, System.IO.Compression.ZipArchiveMode)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.MemoryStream(byte[])`；`System.IO.MemoryStream.ToArray()`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.IO.StreamReader.ReadToEnd()`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`](CareerLibrary.cs.md#symbol-bb2b0ce2be9d)；[`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`](JsonText.cs.md#symbol-3f401a852f9d)；[`NationalSpire.SeasonCalendar.End(NationalSpire.CareerData)`](SeasonCalendar.cs.md#symbol-6b4c49a62324)；[`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`](SeasonCalendar.cs.md#symbol-ee7b01d76b23)；`System.IO.Compression.ZipArchive.GetEntry(string)`；`System.IO.Compression.ZipArchive.ZipArchive(System.IO.Stream, System.IO.Compression.ZipArchiveMode)`；`System.IO.Compression.ZipArchiveEntry.Open()`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.MemoryStream(byte[])`；`System.IO.MemoryStream.ToArray()`；`System.IO.Stream.CopyTo(System.IO.Stream)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.LongSeasonsFrom`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.Standings`；`NationalSpire.CareerData.Version`；`NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Options`；`NationalSpire.SeasonCalendar.End(NationalSpire.CareerData)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Ai`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.LongSeasonsFrom`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.Posts`；`NationalSpire.CareerData.Results`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerData.Standings`；`NationalSpire.CareerData.Version`；`NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`；`NationalSpire.Coop.CoopJson.Options`；`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；`NationalSpire.SeasonCalendar.End(NationalSpire.CareerData)`；`NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerLibrary.Create(string, NationalSpire.CareerData)`；输入表达式：`Create(original, data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Create(original, data)`
+- `NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；输入表达式：`JsonText.Read<CareerData>(stream, CoopJson.Options)`；返回值紧邻使用处：`BinaryExpressionSyntax: JsonText.Read<CareerData>(stream, CoopJson.Options) ?? throw new InvalidDataException("生涯内容为空。")`
 - `NationalSpire.SeasonCalendar.End(NationalSpire.CareerData)`；输入表达式：`SeasonCalendar.End(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: data.Day > SeasonCalendar.End(data)`
 - `NationalSpire.SeasonCalendar.Start(NationalSpire.CareerData, int)`；输入表达式：`SeasonCalendar.Start(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: data.Day <= SeasonCalendar.Start(data)`
 - `System.IO.Compression.ZipArchive.GetEntry(string)`；输入表达式：`zip.GetEntry("career.json")`；返回值紧邻使用处：`BinaryExpressionSyntax: zip.GetEntry("career.json") ?? throw new InvalidDataException("文件没有单人生涯记录。")`
@@ -274,20 +335,17 @@
 - `System.IO.Compression.ZipArchiveEntry.Open()`；输入表达式：`entry.Open()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = entry.Open()`
 - `System.IO.Compression.ZipArchiveEntry.Open()`；输入表达式：`native.Open()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = native.Open()`
 - `System.IO.Compression.ZipArchiveEntry.Open()`；输入表达式：`nativeBackup.Open()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = nativeBackup.Open()`
-- `System.IO.File.WriteAllBytes(string, byte[])`；输入表达式：`File.WriteAllBytes(path + ".run.backup", backup)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.WriteAllBytes(path + ".run.backup", backup);`
 - `System.IO.File.WriteAllBytes(string, byte[])`；输入表达式：`File.WriteAllBytes(path + ".run", run)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.WriteAllBytes(path + ".run", run);`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯版本或内容无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("生涯版本或内容无效。");`
-- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯内容为空。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidDataException("生涯内容为空。")`
+- `System.IO.File.WriteAllBytes(string, byte[])`；输入表达式：`File.WriteAllBytes(path + ".run.backup", backup)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.WriteAllBytes(path + ".run.backup", backup);`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("文件没有单人生涯记录。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidDataException("文件没有单人生涯记录。")`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯内容为空。")`；返回值紧邻使用处：`ThrowExpressionSyntax: throw new InvalidDataException("生涯内容为空。")`
+- `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("生涯版本或内容无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("生涯版本或内容无效。");`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("这份生涯包缺少未完成对局的原版存档。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("这份生涯包缺少未完成对局的原版存档。");`
 - `System.IO.MemoryStream.MemoryStream()`；输入表达式：`new MemoryStream()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MemoryStream()`
 - `System.IO.MemoryStream.MemoryStream(byte[])`；输入表达式：`new MemoryStream(bytes)`；返回值紧邻使用处：`ArgumentSyntax: new MemoryStream(bytes)`
-- `System.IO.MemoryStream.ToArray()`；输入表达式：`target.ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: backup = target.ToArray()`
 - `System.IO.MemoryStream.ToArray()`；输入表达式：`target.ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: run = target.ToArray()`
+- `System.IO.MemoryStream.ToArray()`；输入表达式：`target.ToArray()`；返回值紧邻使用处：`AssignmentExpressionSyntax: backup = target.ToArray()`
 - `System.IO.Stream.CopyTo(System.IO.Stream)`；输入表达式：`source.CopyTo(target)`；返回值紧邻使用处：`ExpressionStatementSyntax: source.CopyTo(target);`
-- `System.IO.StreamReader.ReadToEnd()`；输入表达式：`reader.ReadToEnd()`；返回值紧邻使用处：`ArgumentSyntax: reader.ReadToEnd()`
-- `System.IO.StreamReader.StreamReader(System.IO.Stream)`；输入表达式：`new StreamReader(stream)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new StreamReader(stream)`
-- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<CareerData>(reader.ReadToEnd(), CoopJson.Options)`；返回值紧邻使用处：`BinaryExpressionSyntax: JsonSerializer.Deserialize<CareerData>(reader.ReadToEnd(), CoopJson.Options) ?? throw new InvalidDataException("生涯内容为空。")`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -298,11 +356,11 @@
 
 ## `NationalSpire.CareerLibrary.ExportDesktop(string, byte[]) — public static string ExportDesktop(string name, byte[] bytes)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenCareerLibrary()`](CareerLibraryScreen.cs.md#symbol-57e1d5f83960)
 
-**调用：** `string.Concat<T>(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.DateTime.ToString(string?)`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetInvalidFileNameChars()`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.DateTime.ToString(string?)`；`System.Environment.GetFolderPath(System.Environment.SpecialFolder)`；`System.IO.File.WriteAllBytes(string, byte[])`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetInvalidFileNameChars()`；`string.Concat<T>(System.Collections.Generic.IEnumerable<T>)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

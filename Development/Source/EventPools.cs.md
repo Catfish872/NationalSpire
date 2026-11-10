@@ -204,7 +204,7 @@ public Snapshot? Value;
 
 **调用者：** [`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
-**调用：** `string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`
+**调用：** `System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`string.IsNullOrWhiteSpace(string?)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`；`NationalSpire.EventPools.Defaults`
 
@@ -253,7 +253,7 @@ public Snapshot? Value;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.EventPools.Get(NationalSpire.CareerData)`](EventPools.cs.md#symbol-251ecd73d129)；[`NationalSpire.EventPools.SelectRandom(NationalSpire.AiOptions, System.Collections.Generic.ISet<string>, System.Random)`](EventPools.cs.md#symbol-1c1bd4e75154)
 
-**调用：** [`NationalSpire.EventPools.Build(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`](EventPools.cs.md#symbol-3077931c8bfc)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`object.ReferenceEquals(object?, object?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.GetOrCreateValue(TKey)`
+**调用：** [`NationalSpire.EventPools.Build(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`](EventPools.cs.md#symbol-3077931c8bfc)；[`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-51c9e7869e6e)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>.GetOrCreateValue(TKey)`；`object.ReferenceEquals(object?, object?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.EventPoolOverrides`；`NationalSpire.EventPools.Build(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>)`；`NationalSpire.EventPools.Cache.Source`；`NationalSpire.EventPools.Cache.Template`；`NationalSpire.EventPools.Cache.Value`；`NationalSpire.EventPools.Caches`；`NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions)`
 
@@ -300,7 +300,7 @@ public Snapshot? Value;
 
 **调用者：** [`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)
 
-**调用：** [`NationalSpire.RandomEventSeeds.Category(string)`](RandomEventSeeds.cs.md#symbol-be664de1cd8d)；`NationalSpire.EventPools.Snapshot.Snapshot()`；`NationalSpire.RandomEventSeed.RandomEventSeed(string, string)`；`NationalSpire.WorldEvents.Topic.Topic(string, string, string)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
+**调用：** `NationalSpire.EventPools.Snapshot.Snapshot()`；`NationalSpire.RandomEventSeed.RandomEventSeed(string, string)`；[`NationalSpire.RandomEventSeeds.Category(string)`](RandomEventSeeds.cs.md#symbol-be664de1cd8d)；`NationalSpire.WorldEvents.Topic.Topic(string, string, string)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.EventPoolCategory.Group`；`NationalSpire.EventPoolCategory.Id`；`NationalSpire.EventPoolCategory.Name`；`NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`；`NationalSpire.EventPools.Categories`；`NationalSpire.EventPools.Snapshot.Daily`；`NationalSpire.EventPools.Snapshot.Random`；`NationalSpire.EventPools.Snapshot.RandomUsesDefault`；`NationalSpire.RandomEventSeeds.All`；`NationalSpire.RandomEventSeeds.Category(string)`；`NationalSpire.WorldEvents.MatchTopics`；`NationalSpire.WorldEvents.Topic.Key`；`NationalSpire.WorldEvents.Topics`
 
@@ -375,7 +375,7 @@ public Snapshot? Value;
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`ShowCategory()`](EventPoolScreen.cs.md#symbol-e27bbf8a9d14)
 
-**调用：** [`Escape(string)`](EventPools.cs.md#symbol-99d8572adf2e)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`
+**调用：** [`Escape(string)`](EventPools.cs.md#symbol-99d8572adf2e)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string)`
 
 **字段、属性、事件及方法组引用：** `Escape(string)`；`NationalSpire.EventPoolEntry.Detail`；`NationalSpire.EventPoolEntry.Title`
 
@@ -420,7 +420,7 @@ public Snapshot? Value;
 
 **调用者：** [`Commit()`](EventPoolScreen.cs.md#symbol-15a258d19400)
 
-**调用：** `NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；`string.IsNullOrWhiteSpace(string?)`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(string)`；`string.Trim()`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** `NationalSpire.EventPoolEntry.EventPoolEntry(string, string)`；`System.ArgumentException.ArgumentException(string?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`；`string.IsNullOrWhiteSpace(string?)`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(string)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

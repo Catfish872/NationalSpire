@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`7707E1B73C8FDCB4AF54F64BC02987DC8051408D6C87C0E35ED9C720D39B3BA1`。来源：[源码](../../DateSceneView.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8BBF0E11627A8B657037BDAACB90910FE9F382D1CEC01ED3A3C889D2EDBEAF5F`。来源：[源码](../../DateSceneView.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -16,6 +16,7 @@ public Func<bool>? Blocked;
 public Func<string>? HistoryText;
 public Func<IReadOnlyList<DateHistoryEntry>>? HistoryEntries;
 public Action<string>? DeleteHistoryReply;
+public Action<string>? JumpHistory;
 private HBoxContainer _inputTools = null!;
 private VBoxContainer _gameChoices = null!, _replyChoices = null!;
 public const double InstantSpeed = 300;
@@ -40,16 +41,16 @@ private readonly Dictionary<string, (int Value, string Delta, ulong Until)> _sho
 private bool _showAffectionBadge = true;
 private MarginContainer _margin = null!;
 private Gradient _glass = null!;
-private PanelContainer _history = null!;
-private RichTextLabel _historyText = null!;
-private DateHistoryList _historyList = null!;
+protected PanelContainer _history = null!;
+protected RichTextLabel _historyText = null!;
+protected DateHistoryList _historyList = null!;
 private double? _historyRestoreScroll;
 private int _historyScrollPending;
 private VBoxContainer _body = null!, _composer = null!;
 private RichTextLabel _text = null!;
 private FontVariation _lineFont = null!, _editorFont = null!, _nameFont = null!, _historyFont = null!;
 private readonly Dictionary<(ulong Font, int Size), float> _fontGaps = [];
-private Label _name = null!, _hint = null!;
+protected Label _name = null!, _hint = null!;
 private HBoxContainer _settings = null!;
 private ScrollContainer _attachmentScroll = null!;
 private double _poll, _typing;
@@ -193,7 +194,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.HistoryOpen — public bool HistoryOpen`
 
-来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -211,7 +212,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.DialogueHidden — public bool DialogueHidden`
 
-来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -229,7 +230,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.InputMode — public bool InputMode`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 23 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -247,9 +248,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action) — public void SetReplyChoices(string first, Action chooseFirst, string second, Action chooseSecond)`
 
-来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)
 
 **调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)；[`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)
 
@@ -275,7 +276,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string) — private void AddChoiceCopy(Button choice, string text)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)
 
@@ -329,7 +330,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.AddInputAction(string, Godot.Texture2D, System.Action, string) — public Button AddInputAction(string name, Texture2D icon, Action action, string tooltip)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddDateGameActions()`](DateGameScreen.cs.md#symbol-fdf5726e3b97)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
@@ -353,7 +354,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action) — public void ShowGameChoices(Action start, Action cancel)`
 
-来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ShowDateGameChoices(NationalSpire.CareerMatch)`](DateGameScreen.cs.md#symbol-d1774dd40624)
 
@@ -390,7 +391,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.TextSpeed — public double TextSpeed`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -408,7 +409,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.CanFastForward — private bool CanFastForward`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -428,9 +429,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.AffectionVisibility(bool) — public void AffectionVisibility(bool visible)`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)
 
@@ -449,9 +450,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool) — public void Relationship(PrivateRelation relation, string person = "", bool animate = true)`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting._Ready()`](DateSceneTesting.cs.md#symbol-2174d0446f18)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** `Godot.Time.GetTicksMsec()`；[`NationalSpire.AffectionBadge.Bind(NationalSpire.PrivateRelation, bool)`](AffectionVisuals.cs.md#symbol-4ff387bfe107)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.WrapRelationship(string)`](DateSceneView.cs.md#symbol-d534753534b0)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -478,7 +479,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.WrapRelationship(string) — private string WrapRelationship(string text)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool)`](DateSceneView.cs.md#symbol-949c1add6c05)
 
@@ -498,13 +499,13 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-1ed75a76342e"></a>
 
-## `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int) — private Button ActionButton(string text, Action action, string name, int width = 100)`
+## `NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int) — protected Button ActionButton(string text, Action action, string name, int width = 100)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.DateSceneView.AddInputAction(string, Godot.Texture2D, System.Action, string)`](DateSceneView.cs.md#symbol-0d0da39d688e)；[`NationalSpire.DateSceneView.AddSceneAction(string, string, System.Action)`](DateSceneCast.cs.md#symbol-97b88ee931cf)；[`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)
+**调用者：** [`NationalSpire.DateSceneView.AddChoiceCopy(Godot.Button, string)`](DateSceneView.cs.md#symbol-ee5b6c67d3d5)；[`NationalSpire.DateSceneView.AddInputAction(string, Godot.Texture2D, System.Action, string)`](DateSceneView.cs.md#symbol-0d0da39d688e)；[`NationalSpire.DateSceneView.AddSceneAction(string, string, System.Action)`](DateSceneCast.cs.md#symbol-97b88ee931cf)；[`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.Button.Button()`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Button.Button()`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`
 
@@ -520,17 +521,17 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 **赋值（含属性/字段和局部值）：**
 
-- `button.Pressed` += `action`
 - `CustomMinimumSize` = `new(width, 48)`
 - `FocusMode` = `FocusModeEnum.None`
 - `Name` = `name`
 - `Text` = `text`
+- `button.Pressed` += `action`
 
 <a id="symbol-db339768c993"></a>
 
 ## `NationalSpire.DateSceneView._Ready() — public override void _Ready()`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -577,6 +578,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_replyChoices.AddThemeConstantOverride("separation", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: _replyChoices.AddThemeConstantOverride("separation", 16);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_settings.AddThemeConstantOverride("separation", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: _settings.AddThemeConstantOverride("separation", 18);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`actions.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddThemeConstantOverride("separation", 12);`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`dialogueFooter.AddThemeConstantOverride("separation", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: dialogueFooter.AddThemeConstantOverride("separation", 18);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`historyBody.AddThemeConstantOverride("separation", 22)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddThemeConstantOverride("separation", 22);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`tools.AddThemeConstantOverride("separation", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: tools.AddThemeConstantOverride("separation", 12);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`Editor.AddThemeFontSizeOverride("font_size", 30)`；返回值紧邻使用处：`ExpressionStatementSyntax: Editor.AddThemeFontSizeOverride("font_size", 30);`
@@ -601,6 +603,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Control.Control()`；输入表达式：`new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _interface = new Control { Name = "DateInterface", MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.Control()`；输入表达式：`new Control { Position = new(8, 4), Size = new(80, 68), MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Control { Position = new(8, 4), Size = new(80, 68), MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.Control()`；输入表达式：`new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`ArgumentSyntax: new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
+- `Godot.Control.Control()`；输入表达式：`new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`ArgumentSyntax: new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_backgroundPrevious.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _backgroundPrevious.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_history.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _history.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
@@ -611,6 +614,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`relationButton.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: relationButton.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Gradient.Gradient()`；输入表达式：`new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _glass = new Gradient { Offsets = [0, .05f, 1], Colors = [new Color(0,0,0,0), new Color(0,0,0,.75f), new Color(0,0,0,1)] }`
 - `Godot.GradientTexture2D.GradientTexture2D()`；输入表达式：`new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }`；返回值紧邻使用处：`AssignmentExpressionSyntax: Texture = new GradientTexture2D { Width = 4, Height = 2048, FillFrom = new(.5f, 0), FillTo = new(.5f, 1), Gradient = _glass }`
+- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _settings = new HBoxContainer { Name = "DateHoverBar", Alignment = BoxContainer.AlignmentMode.Center, MouseFilter = MouseFilterEnum.Stop, Modulate = new(1,1,1,0) }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DateNavigation" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _navigation = new HBoxContainer { Name = "DateNavigation" }`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
@@ -631,8 +635,8 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_attachmentScroll.AddChild(Attachments)`；返回值紧邻使用处：`ExpressionStatementSyntax: _attachmentScroll.AddChild(Attachments);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_composer)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_composer);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_editFailure)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_editFailure);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_hint)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_hint);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(_text)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(_text);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_body.AddChild(dialogueFooter)`；返回值紧邻使用处：`ExpressionStatementSyntax: _body.AddChild(dialogueFooter);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(Editor)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(Editor);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(_attachmentScroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(_attachmentScroll);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_composer.AddChild(actions)`；返回值紧邻使用处：`ExpressionStatementSyntax: _composer.AddChild(actions);`
@@ -664,6 +668,8 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill })`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`actions.AddChild(tools)`；返回值紧邻使用处：`ExpressionStatementSyntax: actions.AddChild(tools);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`badge.AddChild(_favourBadge)`；返回值紧邻使用处：`ExpressionStatementSyntax: badge.AddChild(_favourBadge);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`dialogueFooter.AddChild(_hint)`；返回值紧邻使用处：`ExpressionStatementSyntax: dialogueFooter.AddChild(_hint);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`dialogueFooter.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore })`；返回值紧邻使用处：`ExpressionStatementSyntax: dialogueFooter.AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill, MouseFilter = MouseFilterEnum.Ignore });`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(_historyList)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(_historyList);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(_historyText)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(_historyText);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`historyBody.AddChild(historyHint)`；返回值紧邻使用处：`ExpressionStatementSyntax: historyBody.AddChild(historyHint);`
@@ -876,7 +882,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `SpacedFont(Godot.Control, string) — FontVariation SpacedFont(Control control, string key)`
 
-来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 265 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
@@ -898,7 +904,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Click(Godot.InputEvent) — private void Click(InputEvent e)`
 
-来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -918,7 +924,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.AdvanceDialogue() — private bool AdvanceDialogue()`
 
-来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 278 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.Click(Godot.InputEvent)`](DateSceneView.cs.md#symbol-cb37d8aeee1d)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)
 
@@ -944,7 +950,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView._Input(Godot.InputEvent) — public override void _Input(InputEvent e)`
 
-来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 285 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1005,7 +1011,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView._Notification(int) — public override void _Notification(int what)`
 
-来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1023,9 +1029,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-a52c1f416ddc"></a>
 
-## `NationalSpire.DateSceneView.OpenHistory() — private void OpenHistory()`
+## `NationalSpire.DateSceneView.OpenHistory() — protected void OpenHistory()`
 
-来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 341 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
@@ -1045,9 +1051,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-fe210725a87c"></a>
 
-## `NationalSpire.DateSceneView.HistoryScrollBar() — private VScrollBar HistoryScrollBar()`
+## `NationalSpire.DateSceneView.HistoryScrollBar() — protected VScrollBar HistoryScrollBar()`
 
-来源：源码第 343 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 346 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)
 
@@ -1067,19 +1073,21 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.RefreshHistory(bool) — public void RefreshHistory(bool toEnd = false)`
 
-来源：源码第 344 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)；[`NationalSpire.DateSceneView.OpenHistory()`](DateSceneView.cs.md#symbol-a52c1f416ddc)
 
-**调用：** `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；[`NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`](DateHistoryList.cs.md#symbol-49f0126dc7e3)；[`NationalSpire.DateSceneView.HistoryScrollBar()`](DateSceneView.cs.md#symbol-fe210725a87c)；`System.Func<TResult>.Invoke()`
+**调用：** `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；[`NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?, System.Action<string>?)`](DateHistoryList.cs.md#symbol-49f0126dc7e3)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.HistoryScrollBar()`](DateSceneView.cs.md#symbol-fe210725a87c)；`System.Action<T>.Invoke(T)`；`System.Func<TResult>.Invoke()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`；`NationalSpire.DateSceneView.DeleteHistoryReply`；`NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.HistoryScrollBar()`；`NationalSpire.DateSceneView.HistoryText`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyRestoreScroll`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?, System.Action<string>?)`；`NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.DeleteHistoryReply`；`NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.HistoryOpen`；`NationalSpire.DateSceneView.HistoryScrollBar()`；`NationalSpire.DateSceneView.HistoryText`；`NationalSpire.DateSceneView.JumpHistory`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyList`；`NationalSpire.DateSceneView._historyRestoreScroll`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView._historyText`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Control.GetThemeFontSize(Godot.StringName, Godot.StringName)`；输入表达式：`_historyText.GetThemeFontSize("normal_font_size")`；返回值紧邻使用处：`ArgumentSyntax: _historyText.GetThemeFontSize("normal_font_size")`
-- `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?)`；输入表达式：`_historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply)`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply);`
+- `NationalSpire.DateHistoryList.Populate(System.Collections.Generic.IReadOnlyList<NationalSpire.DateHistoryEntry>, Godot.Font, int, System.Action<string>?, System.Action<string>?)`；输入表达式：`_historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply, JumpHistory == null ? null : id => { CloseHistory(); JumpHistory(id); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _historyList.Populate(HistoryEntries(), _historyFont, _historyText.GetThemeFontSize("normal_font_size"), DeleteHistoryReply, JumpHistory == null ? null : id => { CloseHistory(); JumpHistory(id); });`
+- `NationalSpire.DateSceneView.CloseHistory()`；输入表达式：`CloseHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: CloseHistory();`
 - `NationalSpire.DateSceneView.HistoryScrollBar()`；输入表达式：`HistoryScrollBar()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: HistoryScrollBar().Value`
+- `System.Action<T>.Invoke(T)`；输入表达式：`JumpHistory(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: JumpHistory(id);`
 - `System.Func<TResult>.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: HistoryText?.Invoke()`
 - `System.Func<TResult>.Invoke()`；输入表达式：`HistoryEntries()`；返回值紧邻使用处：`ArgumentSyntax: HistoryEntries()`
 
@@ -1095,11 +1103,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.CloseHistory() — private void CloseHistory()`
 
-来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 357 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.GoBack()`](DateSceneView.cs.md#symbol-c97afbe9881b)
+**调用者：** [`NationalSpire.DateSceneView.GoBack()`](DateSceneView.cs.md#symbol-c97afbe9881b)；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)；`Godot.CanvasItem.Hide()`
+**调用：** `Godot.CanvasItem.Hide()`；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._history`；`NationalSpire.DateSceneView._historyScrollPending`；`NationalSpire.DateSceneView.SetDialogueVisible(bool)`
 
@@ -1116,9 +1124,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.SetDialogueVisible(bool) — private void SetDialogueVisible(bool visible)`
 
-来源：源码第 358 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)；[`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView.ShowWaiting(string, bool)`](DateSceneView.cs.md#symbol-c6c25a66fde3)
+**调用者：** [`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView.ShowWaiting(string, bool)`](DateSceneView.cs.md#symbol-c6c25a66fde3)；[`NationalSpire.DateSceneView._Input(Godot.InputEvent)`](DateSceneView.cs.md#symbol-557ca90aab66)
 
 **调用：** `Godot.Control.GrabFocus()`；`Godot.Control.ReleaseFocus()`
 
@@ -1137,11 +1145,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.GoBack() — public void GoBack()`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateMemoryPlayback.GoBack()`](DateSceneMemoryPlayback.cs.md#symbol-c036240ab245)
+**调用者：** [`NationalSpire.CareerScreen.ReturnFromDateHistory()`](DateHistoryReplayScreen.cs.md#symbol-5fa807ec8766)；[`NationalSpire.DateMemoryPlayback.GoBack()`](DateSceneMemoryPlayback.cs.md#symbol-c036240ab245)
 
-**调用：** [`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.DateSceneView.CloseHistory()`](DateSceneView.cs.md#symbol-83672fb8ae11)；`System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView.CloseHistory()`；`NationalSpire.DateSceneView.Exit`；`NationalSpire.DateSceneView.HistoryOpen`
 
@@ -1157,7 +1165,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Layout() — private void Layout()`
 
-来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 371 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.AffectionVisibility(bool)`](DateSceneView.cs.md#symbol-7da14922fda4)；[`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.PortraitPlacements(System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DatePortraitPlacement>)`](DateSceneCast.cs.md#symbol-80abec64fd7f)；[`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)；[`NationalSpire.DateSceneView.Presentation(double, double, double, bool)`](DateSceneView.cs.md#symbol-32ea38e8c82d)；[`NationalSpire.DateSceneView.Relationship(NationalSpire.PrivateRelation, string, bool)`](DateSceneView.cs.md#symbol-949c1add6c05)；[`NationalSpire.DateSceneView.SetCast(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneCast>)`](DateSceneCast.cs.md#symbol-913514fd78e1)；[`NationalSpire.DateSceneView.SetReplyChoices(string, System.Action, string, System.Action)`](DateSceneView.cs.md#symbol-697ad465ef9e)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)；[`NationalSpire.DateSceneView.ShowInput(string, bool, bool)`](DateSceneView.cs.md#symbol-4f0d075ed97b)；[`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)
 
@@ -1245,11 +1253,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double) — private void SetTextSpacing(FontVariation font, int size, double extra)`
 
-来源：源码第 404 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 408 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.Preferences(int, double, double)`](DateSceneView.cs.md#symbol-878552c24bd8)
 
-**调用：** `double.IsFinite(double)`；`Godot.Font.GetRids()`；`Godot.Font.GetSpacing(Godot.TextServer.SpacingType)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.GodotObject.GetInstanceId()`；`Godot.TextServer.FontGetGlyphAdvance(Godot.Rid, long, long)`；`Godot.TextServer.FontGetGlyphIndex(Godot.Rid, long, long, long)`；`Godot.TextServer.FontGetGlyphSize(Godot.Rid, Godot.Vector2I, long)`；`Godot.TextServer.FontHasChar(Godot.Rid, long)`；`Godot.TextServerManager.GetPrimaryInterface()`；`Godot.Vector2I.Vector2I(int, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Math.Clamp(double, double, double)`；`System.Math.Max(float, float)`；`System.Math.Round(double)`
+**调用：** `Godot.Font.GetRids()`；`Godot.Font.GetSpacing(Godot.TextServer.SpacingType)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.GodotObject.GetInstanceId()`；`Godot.TextServer.FontGetGlyphAdvance(Godot.Rid, long, long)`；`Godot.TextServer.FontGetGlyphIndex(Godot.Rid, long, long, long)`；`Godot.TextServer.FontGetGlyphSize(Godot.Rid, Godot.Vector2I, long)`；`Godot.TextServer.FontHasChar(Godot.Rid, long)`；`Godot.TextServerManager.GetPrimaryInterface()`；`Godot.Vector2I.Vector2I(int, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Math.Clamp(double, double, double)`；`System.Math.Max(float, float)`；`System.Math.Round(double)`；`double.IsFinite(double)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._fontGaps`
 
@@ -1282,11 +1290,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Preferences(int, double, double) — public void Preferences(int fontSize, double fade, double spacing = 1)`
 
-来源：源码第 426 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 430 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double)`](DateSceneView.cs.md#symbol-fecef0523d98)；`Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`
+**调用：** `Godot.Color.Color(float, float, float, float)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetHeight(int)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double)`](DateSceneView.cs.md#symbol-fecef0523d98)；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._editorFont`；`NationalSpire.DateSceneView._glass`；`NationalSpire.DateSceneView._historyFont`；`NationalSpire.DateSceneView._historyText`；`NationalSpire.DateSceneView._lineFont`；`NationalSpire.DateSceneView._name`；`NationalSpire.DateSceneView._nameFont`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.Layout()`；`NationalSpire.DateSceneView.SetTextSpacing(Godot.FontVariation, int, double)`
 
@@ -1318,11 +1326,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Presentation(double, double, double, bool) — public void Presentation(double scale, double x, double y, bool outline)`
 
-来源：源码第 437 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 441 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`Apply()`](DateSceneScreen.cs.md#symbol-1f00e77adbe1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
-**调用：** [`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；`double.IsFinite(double)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`System.Math.Clamp(double, double, double)`
+**调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；`System.Math.Clamp(double, double, double)`；`double.IsFinite(double)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._spriteScale`；`NationalSpire.DateSceneView._spriteX`；`NationalSpire.DateSceneView._spriteY`；`NationalSpire.DateSceneView._text`；`NationalSpire.DateSceneView.Editor`；`NationalSpire.DateSceneView.Layout()`
 
@@ -1350,11 +1358,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Background(string, bool, double) — public void Background(string background, bool blur, double amount = 3)`
 
-来源：源码第 446 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 450 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.SelectDateBackground(string)`](DateSceneScreen.cs.md#symbol-4d37da1a3f4b)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)
+**调用者：** [`NationalSpire.CareerScreen.ApplyDateHistoryBackground()`](DateHistoryReplayScreen.cs.md#symbol-7fde49dd3258)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.SelectDateBackground(string)`](DateSceneScreen.cs.md#symbol-4d37da1a3f4b)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)
 
-**调用：** [`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`](DateSceneView.cs.md#symbol-99d35c646db1)；[`NationalSpire.DateSceneView.CreateBackground(string)`](DateSceneView.cs.md#symbol-30a197722f91)；`double.IsFinite(double)`；`Godot.GodotObject.Dispose()`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；`System.Math.Clamp(double, double, double)`
+**调用：** `Godot.GodotObject.Dispose()`；`Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`；[`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`](DateSceneView.cs.md#symbol-99d35c646db1)；[`NationalSpire.DateSceneView.CreateBackground(string)`](DateSceneView.cs.md#symbol-30a197722f91)；`System.Math.Clamp(double, double, double)`；`double.IsFinite(double)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneView._backgroundBlend`；`NationalSpire.DateSceneView._backgroundId`；`NationalSpire.DateSceneView._backgroundMaterial`；`NationalSpire.DateSceneView._backgroundTexture`；`NationalSpire.DateSceneView._previousBackgroundMaterial`；`NationalSpire.DateSceneView._queuedBackgroundId`；`NationalSpire.DateSceneView._queuedBackgroundTexture`；`NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string)`；`NationalSpire.DateSceneView.CreateBackground(string)`
 
@@ -1381,13 +1389,53 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.CreateBackground(string) — public static Texture2D CreateBackground(string background)`
 
-来源：源码第 459 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 463 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)；[`NationalSpire.RandomEventArt.Load(string)`](RandomEventArt.cs.md#symbol-5147b98e47ca)；[`Preview()`](DateSceneBackgroundScreen.cs.md#symbol-1531e6366b73)
+**调用者：** [`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)
 
-**调用：** [`NationalSpire.DateSceneBackgrounds.Pixels(string)`](DateSceneBackgrounds.cs.md#symbol-3098b5a3a6eb)；`Godot.Color.Color(string)`；`Godot.Image.CreateEmpty(int, int, bool, Godot.Image.Format)`；`Godot.Image.Fill(Godot.Color)`；`Godot.Image.GenerateMipmaps(bool)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`
+**调用：** [`NationalSpire.DateSceneBackgrounds.Pixels(string)`](DateSceneBackgrounds.cs.md#symbol-3098b5a3a6eb)；[`NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`](DateSceneView.cs.md#symbol-9a9b35629203)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackgrounds.Pixels(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackgrounds.Pixels(string)`；`NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackgrounds.Pixels(string)`；输入表达式：`DateSceneBackgrounds.Pixels(background)`；返回值紧邻使用处：`ArgumentSyntax: DateSceneBackgrounds.Pixels(background)`
+- `NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`；输入表达式：`UploadBackground(DateSceneBackgrounds.Pixels(background))`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => UploadBackground(DateSceneBackgrounds.Pixels(background))`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-30dd91686bcd"></a>
+
+## `NationalSpire.DateSceneView.PreviewBackground(NationalSpire.DateSceneBackground) — internal static Texture2D PreviewBackground(DateSceneBackground background)`
+
+来源：源码第 464 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Preview()`](DateSceneBackgroundScreen.cs.md#symbol-1531e6366b73)
+
+**调用：** [`NationalSpire.DateSceneBackground.ReadPixels()`](DateSceneBackgrounds.cs.md#symbol-53d208267ec2)；[`NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`](DateSceneView.cs.md#symbol-9a9b35629203)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneBackground.ReadPixels()`；`NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateSceneBackground.ReadPixels()`；输入表达式：`background.ReadPixels()`；返回值紧邻使用处：`ArgumentSyntax: background.ReadPixels()`
+- `NationalSpire.DateSceneView.UploadBackground(Godot.Image?)`；输入表达式：`UploadBackground(background.ReadPixels())`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => UploadBackground(background.ReadPixels())`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-9a9b35629203"></a>
+
+## `NationalSpire.DateSceneView.UploadBackground(Godot.Image?) — private static Texture2D UploadBackground(Image? source)`
+
+来源：源码第 465 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateSceneView.CreateBackground(string)`](DateSceneView.cs.md#symbol-30a197722f91)；[`NationalSpire.DateSceneView.PreviewBackground(NationalSpire.DateSceneBackground)`](DateSceneView.cs.md#symbol-30dd91686bcd)
+
+**调用：** `Godot.Color.Color(string)`；`Godot.Image.CreateEmpty(int, int, bool, Godot.Image.Format)`；`Godot.Image.Fill(Godot.Color)`；`Godot.Image.GenerateMipmaps(bool)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -1397,7 +1445,6 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 - `Godot.Image.GenerateMipmaps(bool)`；输入表达式：`pixels.GenerateMipmaps()`；返回值紧邻使用处：`ExpressionStatementSyntax: pixels.GenerateMipmaps();`
 - `Godot.ImageTexture.CreateFromImage(Godot.Image)`；输入表达式：`ImageTexture.CreateFromImage(image)`；返回值紧邻使用处：`ReturnStatementSyntax: return ImageTexture.CreateFromImage(image);`
 - `Godot.ImageTexture.CreateFromImage(Godot.Image)`；输入表达式：`ImageTexture.CreateFromImage(pixels)`；返回值紧邻使用处：`ReturnStatementSyntax: return ImageTexture.CreateFromImage(pixels);`
-- `NationalSpire.DateSceneBackgrounds.Pixels(string)`；输入表达式：`DateSceneBackgrounds.Pixels(background)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneBackgrounds.Pixels(background)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -1406,9 +1453,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.BeginBackground(Godot.Texture2D, string) — private void BeginBackground(Texture2D texture, string id)`
 
-来源：源码第 470 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 476 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)；[`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)
+**调用者：** [`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)；[`NationalSpire.DateSceneView._Process(double)`](DateSceneView.cs.md#symbol-e901780018ca)
 
 **调用：** `Godot.ShaderMaterial.SetShaderParameter(Godot.StringName, Godot.Variant)`
 
@@ -1431,7 +1478,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 476 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 482 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1459,9 +1506,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D) — public void ShowLine(DateSceneLine line, string speaker, Texture2D sprite)`
 
-来源：源码第 483 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 489 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+**调用者：** [`NationalSpire.CareerScreen.ShowDateHistoryPage(bool)`](DateHistoryReplayScreen.cs.md#symbol-9cf8a8172aa4)
 
 **调用：** [`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)
 
@@ -1476,9 +1523,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-d19549d8d807"></a>
 
-## `NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool) — private void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)`
+## `NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool) — protected virtual void ShowLineCore(DateSceneLine line, string speaker, Texture2D sprite, bool advanceCast)`
 
-来源：源码第 485 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 491 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneView.ShowLine(NationalSpire.DateSceneLine, string, Godot.Texture2D)`](DateSceneView.cs.md#symbol-1801b5d93aa1)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)；[`NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`](DateSceneCast.cs.md#symbol-35177f2945fc)
 
@@ -1524,11 +1571,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-4f0d075ed97b"></a>
 
-## `NationalSpire.DateSceneView.ShowInput(string, bool, bool) — public void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)`
+## `NationalSpire.DateSceneView.ShowInput(string, bool, bool) — public virtual void ShowInput(string name, bool keepWaiting = false, bool showChoices = true)`
 
-来源：源码第 505 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 511 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneTesting.EditPreviousInput()`](DateSceneTesting.cs.md#symbol-4e7bc34c63a1)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.DateSceneView.ShowGameChoices(System.Action, System.Action)`](DateSceneView.cs.md#symbol-c0903cec21b6)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)
 
@@ -1561,9 +1608,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?) — public void AppendLine(IReadOnlyList<DateSceneLine> round, int index, Func<(string Name, Texture2D Texture)>? portrait = null)`
 
-来源：源码第 512 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 518 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AppendDateLine(NationalSpire.DateSceneLine)`](DateSceneScreen.cs.md#symbol-243385a70bb8)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)
+**调用者：** [`NationalSpire.CareerScreen.AppendDateLine(NationalSpire.DateSceneLine)`](DateSceneScreen.cs.md#symbol-243385a70bb8)
 
 **调用：** [`NationalSpire.DateSceneView.ShowRoundLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, Godot.Texture2D)`](DateSceneCast.cs.md#symbol-35177f2945fc)；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；`System.Func<TResult>.Invoke()`
 
@@ -1587,9 +1634,9 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.Streaming(bool) — public void Streaming(bool active)`
 
-来源：源码第 528 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 534 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateHistoryPage(bool)`](DateHistoryReplayScreen.cs.md#symbol-9cf8a8172aa4)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** 无已绑定显式调用。
 
@@ -1606,11 +1653,11 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 <a id="symbol-c6c25a66fde3"></a>
 
-## `NationalSpire.DateSceneView.ShowWaiting(string, bool) — public void ShowWaiting(string status, bool failed = false)`
+## `NationalSpire.DateSceneView.ShowWaiting(string, bool) — public virtual void ShowWaiting(string status, bool failed = false)`
 
-来源：源码第 533 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 539 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string)`](DateGameScreen.cs.md#symbol-8963173330c9)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneTesting.Generate(string)`](DateSceneTesting.cs.md#symbol-970e66145f4d)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string)`](DateGameScreen.cs.md#symbol-8963173330c9)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateSceneView._Ready()`](DateSceneView.cs.md#symbol-db339768c993)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；[`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.SetDialogueVisible(bool)`](DateSceneView.cs.md#symbol-11800b4bb8d0)
 
@@ -1641,7 +1688,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView.ShowAttachments() — public void ShowAttachments()`
 
-来源：源码第 535 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 541 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EditPreviousDateScene()`](DateSceneScreen.cs.md#symbol-68bbfe92ebcf)；[`NationalSpire.CareerScreen.RefreshDateSceneAttachments()`](DateSceneScreen.cs.md#symbol-4cd4fd18856d)
 
@@ -1661,7 +1708,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateSceneView._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 536 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 542 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1723,7 +1770,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateChoiceButton.Caption — public string Caption`
 
-来源：源码第 580 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 586 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1741,7 +1788,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateChoiceButton.Subtitle — public string Subtitle`
 
-来源：源码第 581 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 587 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1759,7 +1806,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateChoiceButton.Public — public bool Public`
 
-来源：源码第 582 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 588 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1777,7 +1824,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateChoiceButton._Ready() — public override void _Ready()`
 
-来源：源码第 583 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 589 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1803,7 +1850,7 @@ private (string Speaker, string Emotion, bool Narration) _shownPresentation;
 
 ## `NationalSpire.DateChoiceButton._Draw() — public override void _Draw()`
 
-来源：源码第 589 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 595 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

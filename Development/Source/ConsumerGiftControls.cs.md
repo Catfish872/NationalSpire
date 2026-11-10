@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5DF26251E65F13603A41A419AFC95C136427DF51916828ABE21653AE2F339BAC`。来源：[源码](../../ConsumerGiftControls.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E43BBE8949A451CE21D8BEA97C732E47CB11C2176B507211D5FD4CEA2F2D8E31`。来源：[源码](../../ConsumerGiftControls.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -134,7 +134,7 @@ private LineEdit _number = null!;
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerDetail(NationalSpire.CareerData, NationalSpire.Good, NationalSpire.ConsumerPurchases, Godot.VBoxContainer)`](ConsumerScreen.cs.md#symbol-d0b5fafc7e7c)；[`NationalSpire.CareerScreen.ConsumerEditor(bool, NationalSpire.ConsumerComposer?, NationalSpire.PrivateOffer?, string, string, NationalSpire.CareerScreen.ConsumerEdit?)`](ConsumerPickerScreen.cs.md#symbol-0f5d28176960)
 
-**调用：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.RestoreText(string)`](ConsumerGiftControls.cs.md#symbol-7a371acfafe4)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.RestoreText(string)`](ConsumerGiftControls.cs.md#symbol-7a371acfafe4)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `Action(string, int)`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ConsumerQuantity._number`；`NationalSpire.ConsumerQuantity.Changed`；`NationalSpire.ConsumerQuantity.RestoreText(string)`；`NationalSpire.ConsumerQuantity.SetValue(int)`
 
@@ -174,7 +174,7 @@ private LineEdit _number = null!;
 
 **调用者：** [`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`Godot.Button.Button()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Math.Clamp(long, long, long)`
+**调用：** `Godot.Button.Button()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.ConsumerQuantity.SetValue(int)`](ConsumerGiftControls.cs.md#symbol-e2e90c4c8401)；`System.Action.Invoke()`；`System.Math.Clamp(long, long, long)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ConsumerQuantity.Changed`；`NationalSpire.ConsumerQuantity.Maximum`；`NationalSpire.ConsumerQuantity.Minimum`；`NationalSpire.ConsumerQuantity.SetValue(int)`；`NationalSpire.ConsumerQuantity.Value`
 
@@ -236,7 +236,7 @@ private LineEdit _number = null!;
 
 **调用者：** [`Action(string, int)`](ConsumerGiftControls.cs.md#symbol-53199fb9fdba)；[`Changed(bool)`](ConsumerPickerScreen.cs.md#symbol-4cac190b7ec0)；[`NationalSpire.ConsumerQuantity.Initialize(int)`](ConsumerGiftControls.cs.md#symbol-a0db04226b0a)
 
-**调用：** `int.ToString(System.IFormatProvider?)`；`System.Math.Clamp(int, int, int)`
+**调用：** `System.Math.Clamp(int, int, int)`；`int.ToString(System.IFormatProvider?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ConsumerQuantity._number`；`NationalSpire.ConsumerQuantity.Maximum`；`NationalSpire.ConsumerQuantity.Minimum`；`NationalSpire.ConsumerQuantity.Valid`；`NationalSpire.ConsumerQuantity.Value`
 
@@ -299,7 +299,7 @@ private LineEdit _number = null!;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`](ConsumerGiftControls.cs.md#symbol-f09cb809a74c)；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`
+**调用：** `Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；[`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`](ConsumerGiftControls.cs.md#symbol-f09cb809a74c)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GiftRingMark.Completed`；`NationalSpire.GiftRingMark.DrawDiamond(Godot.CanvasItem, Godot.Rect2, bool, Godot.Color)`
 

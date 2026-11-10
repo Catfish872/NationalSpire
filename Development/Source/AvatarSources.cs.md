@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
-**调用：** [`NationalSpire.AvatarAssets.Load(string, int, bool, int)`](AvatarAssets.cs.md#symbol-00e6fbec5eac)；[`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
+**调用：** `MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；[`NationalSpire.AvatarAssets.Load(string, int, bool, int)`](AvatarAssets.cs.md#symbol-00e6fbec5eac)；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；[`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；`NationalSpire.GameBridge.Characters()`；`NationalSpire.GameText.Plain(string)`
 
@@ -47,7 +47,7 @@
 
 **调用者：** [`Gallery()`](AvatarScreen.cs.md#symbol-e01b201de3dc)
 
-**调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`Godot.ResourceLoader.Exists(string, string)`；`Godot.ResourceLoader.Load<T>(string, string, Godot.ResourceLoader.CacheMode)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** `Godot.ResourceLoader.Exists(string, string)`；`Godot.ResourceLoader.Load<T>(string, string, Godot.ResourceLoader.CacheMode)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.AvatarChoice.AvatarChoice(string, string, string, System.Func<NationalSpire.AvatarArt?>)`；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarChoice.Name`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.GameText.Plain(string)`
 
@@ -76,7 +76,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.OpenAvatarSettings(NationalSpire.CareerData, NationalSpire.PlayerAvatar?, System.Action<NationalSpire.PlayerAvatar>?, string, NationalSpire.AvatarArt?)`](AvatarScreen.cs.md#symbol-368e97fdd27f)
 
-**调用：** [`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Godot.Image.CreateFromData(int, int, bool, Godot.Image.Format, byte[])`；`Steamworks.SteamFriends.GetLargeFriendAvatar(Steamworks.CSteamID)`；`Steamworks.SteamUser.BLoggedOn()`；`Steamworks.SteamUser.GetSteamID()`；`Steamworks.SteamUtils.GetImageRGBA(int, byte[], int)`；`Steamworks.SteamUtils.GetImageSize(int, out uint, out uint)`；`System.ArgumentException.ArgumentException(string?)`；`System.Threading.Tasks.Task.Delay(int)`
+**调用：** `Godot.Image.CreateFromData(int, int, bool, Godot.Image.Format, byte[])`；[`NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`](AvatarImages.cs.md#symbol-14844fefd20e)；`Steamworks.SteamFriends.GetLargeFriendAvatar(Steamworks.CSteamID)`；`Steamworks.SteamUser.BLoggedOn()`；`Steamworks.SteamUser.GetSteamID()`；`Steamworks.SteamUtils.GetImageRGBA(int, byte[], int)`；`Steamworks.SteamUtils.GetImageSize(int, out uint, out uint)`；`System.ArgumentException.ArgumentException(string?)`；`System.Threading.Tasks.Task.Delay(int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarImages.FromImage(Godot.Image, string, string)`
 

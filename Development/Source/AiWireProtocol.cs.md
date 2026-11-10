@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`11573FFE2D7B47293290EB509B368C03CF7C7CD70C079245DAD6E1B3BAA141E2`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0DDC738C15EA7D3D3D93391D8252759132851D81A08A9795210F0F11076E9BD8`。来源：[源码](../../AiWireProtocol.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -76,7 +76,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **调用者：** [`NationalSpire.AiService.BuildNewsPayload(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.CommunityPost>, NationalSpire.AiWireProtocol, string?)`](AiService.cs.md#symbol-847b058813c9)；[`NationalSpire.AiService.GenerateWeekly(NationalSpire.CareerData, NationalSpire.WeeklyEdition, bool, bool)`](AiWeekly.cs.md#symbol-9db02a002768)；[`NationalSpire.AiService.ProcessInteractionsAsync(System.Collections.Generic.IEnumerable<string>, NationalSpire.CareerData?)`](AiDiscussion.cs.md#symbol-63a666dde156)；[`NationalSpire.AiService.TestPromptAsync(NationalSpire.CareerData, NationalSpire.PromptTestSession, System.Collections.Generic.IReadOnlyDictionary<string, string>, bool)`](PromptTesting.cs.md#symbol-48585ad62c60)
 
-**调用：** [`NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-724c4b9d095b)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool, NationalSpire.CareerData?)`](AiWireProtocol.cs.md#symbol-cb7b09cee7e3)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Text.Json.Nodes.JsonArray.JsonArray(params System.Text.Json.Nodes.JsonNode?[])`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+**调用：** [`NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-724c4b9d095b)；[`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool, NationalSpire.CareerData?)`](AiWireProtocol.cs.md#symbol-cb7b09cee7e3)；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Text.Json.Nodes.JsonArray.JsonArray(params System.Text.Json.Nodes.JsonNode?[])`；`System.Text.Json.Nodes.JsonNode.Parse(string, System.Text.Json.Nodes.JsonNodeOptions?, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.Nodes.JsonNode.ToJsonString(System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.Nodes.JsonObject.JsonObject(System.Text.Json.Nodes.JsonNodeOptions?)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`；`string.Contains(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `(string Earlier, string Current).Current`；`(string Earlier, string Current).Earlier`；`NationalSpire.AiWireProtocol._data`；`NationalSpire.AiWireProtocol._encode`；`NationalSpire.AiWireProtocol._names`；`NationalSpire.AiWireProtocol.AddMemorySources(System.Text.Json.Nodes.JsonNode)`；`NationalSpire.AiWireProtocol.Json`；`NationalSpire.AiWireProtocol.Rewrite(System.Text.Json.Nodes.JsonNode, System.Collections.Generic.Dictionary<string, string>, bool, NationalSpire.CareerData?)`
 
@@ -248,7 +248,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **调用者：** [`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)
 
-**调用：** `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Trim()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.RegularExpressions.Regex.Escape(string)`；`System.Text.RegularExpressions.Regex.Match(string, string)`；`System.Text.RegularExpressions.Regex.Matches(string, string, System.Text.RegularExpressions.RegexOptions)`
+**调用：** `System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.RegularExpressions.Regex.Escape(string)`；`System.Text.RegularExpressions.Regex.Match(string, string)`；`System.Text.RegularExpressions.Regex.Matches(string, string, System.Text.RegularExpressions.RegexOptions)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -286,7 +286,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **调用者：** [`NationalSpire.AiWireProtocol.ReadBody(string, bool, string?)`](AiWireProtocol.cs.md#symbol-9f5c579e6675)
 
-**调用：** `string.Equals(string?, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.Nodes.JsonNode.AsObject()`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.Nodes.JsonNode.AsObject()`；`string.Equals(string?, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -307,7 +307,7 @@ private static readonly HashSet<string> IdFields = ["id", "Id", "authorId", "Aut
 
 **调用者：** [`NationalSpire.AiWireProtocol.Decode(string, bool, string?)`](AiWireProtocol.cs.md#symbol-1b2e04d42691)；[`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)
 
-**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`
+**调用：** [`NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`](AiWireProtocol.cs.md#symbol-ee9bc80e3996)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.Nodes.JsonObject.ContainsKey(string)`；`System.Text.Json.Nodes.JsonObject.Remove(string)`；`string.ToLowerInvariant()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiWireProtocol.NormalizeFields(System.Text.Json.Nodes.JsonNode)`
 

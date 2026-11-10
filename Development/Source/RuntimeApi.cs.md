@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`93513ECFBFA8D094B760CF73E3AECA02205825AF47AE9D4DBC44E04AA6EAFB6E`。来源：[源码](../../RuntimeApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`BEF9A85050570757CEF6744C2B2E8F7E9A6C534A58295122D74930F9D66D9C26`。来源：[源码](../../RuntimeApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -87,7 +87,7 @@ private readonly ConstructorInfo _constructor;
 
 **调用者：** [`NationalSpire.GameCompatibility.MapRng(object, int)`](GameCompatibility.cs.md#symbol-a2187753991c)
 
-**调用：** [`NationalSpire.SeedApi.FromValue(object, string)`](RuntimeApi.cs.md#symbol-346ec3f6612f)；`object.GetType()`；`System.MissingMemberException.MissingMemberException(string?, string?)`；`System.Reflection.PropertyInfo.GetValue(object?)`；`System.Type.GetProperty(string, System.Reflection.BindingFlags)`
+**调用：** [`NationalSpire.SeedApi.FromValue(object, string)`](RuntimeApi.cs.md#symbol-346ec3f6612f)；`System.MissingMemberException.MissingMemberException(string?, string?)`；`System.Reflection.PropertyInfo.GetValue(object?)`；`System.Type.GetProperty(string, System.Reflection.BindingFlags)`；`object.GetType()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.SeedApi.FromValue(object, string)`
 

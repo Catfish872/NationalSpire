@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F46CAEB1439EB0A2CC593B7FB255E7783CA140D05BF2AA773CB6D578C00AFC41`。来源：[源码](../../PortraitStyleScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5657F33467B61D1A05E4AB343FBA8EE53AD858C0AF3407CA28BFE007468FD3DB`。来源：[源码](../../PortraitStyleScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`DrawPage()`](PortraitDesignScreen.cs.md#symbol-5edcd91edd93)
 
-**调用：** [`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.PortraitModelPrompts.Default(string)`](PortraitModelPrompts.cs.md#symbol-e2cc08446a70)；[`NationalSpire.PortraitModelPrompts.Get(NationalSpire.PortraitDesign)`](PortraitModelPrompts.cs.md#symbol-78c7c2214dc7)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Array.FindIndex<T>(T[], System.Predicate<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Math.Max(int, int)`
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.TextEdit.TextEdit()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.PortraitModelPrompts.Default(string)`](PortraitModelPrompts.cs.md#symbol-e2cc08446a70)；[`NationalSpire.PortraitModelPrompts.Get(NationalSpire.PortraitDesign)`](PortraitModelPrompts.cs.md#symbol-78c7c2214dc7)；`System.Array.FindIndex<T>(T[], System.Predicate<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `(string Id, string Name).Id`；`(string Id, string Name).Name`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.PortraitDesign.ModelConstraints`；`NationalSpire.PortraitDesign.PromptModel`；`NationalSpire.PortraitModelPrompts.Default(string)`；`NationalSpire.PortraitModelPrompts.Get(NationalSpire.PortraitDesign)`；`NationalSpire.PortraitModelPrompts.Models`
 

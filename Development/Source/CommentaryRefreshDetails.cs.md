@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BCBEF4CB508D3DEE2FF38244508FDC174A30282430644C3A15B7724A0196F7D9`。来源：[源码](../../CommentaryRefreshDetails.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`778165A1FD87B3CC55076EA433F875FB97076AA958F26D9114EEBECBE2F421B6`。来源：[源码](../../CommentaryRefreshDetails.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 

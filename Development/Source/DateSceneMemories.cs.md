@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2BCB0A37523E81A5EABE2FA5F2A092031B72679556AEDB945BBD0E03644572ED`。来源：[源码](../../DateSceneMemories.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B39FE87F19EC978C8D6189E111319FB4E5C1A16E3BCF0B76076CA2DDF3718B1C`。来源：[源码](../../DateSceneMemories.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -316,30 +316,41 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 **调用者：** [`NationalSpire.CareerScreen.SyncDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-4103852c245a)
 
-**调用：** `NationalSpire.DateMemoryTurn.DateMemoryTurn()`；[`NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`](DateSceneMemories.cs.md#symbol-f89ef1794aeb)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`
+**调用：** `NationalSpire.DateMemoryTurn.DateMemoryTurn()`；[`NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`](DateSceneMemories.cs.md#symbol-f89ef1794aeb)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.IDateSceneExtension.RecordTurn(NationalSpire.DateMemoryTurn, NationalSpire.DateSceneRequest)`](DateSceneExtensions.cs.md#symbol-45c2e47b1379)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryRecorder.Dirty`；`NationalSpire.DateMemoryRecorder.LastFrame`；`NationalSpire.DateMemoryRecorder.Memory`；`NationalSpire.DateMemoryRecorder.PendingChoice`；`NationalSpire.DateMemoryRecorder._seen`；`NationalSpire.DateMemoryTurn.Choice`；`NationalSpire.DateMemoryTurn.Complete`；`NationalSpire.DateMemoryTurn.Frames`；`NationalSpire.DateMemoryTurn.Id`；`NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateMemoryTurn.UserFrame`；`NationalSpire.DateSceneMemories.CopyLine(NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.GameEvent`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.PrivateTurn.User`；`NationalSpire.PrivateTurn.UserDeleted`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryRecorder.Dirty`；`NationalSpire.DateMemoryRecorder.LastFrame`；`NationalSpire.DateMemoryRecorder.Memory`；`NationalSpire.DateMemoryRecorder.PendingChoice`；`NationalSpire.DateMemoryRecorder._seen`；`NationalSpire.DateMemoryTurn.Choice`；`NationalSpire.DateMemoryTurn.Complete`；`NationalSpire.DateMemoryTurn.Frames`；`NationalSpire.DateMemoryTurn.Id`；`NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateMemoryTurn.UserFrame`；`NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneMemories.CopyLine(NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneMemory.Initial`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.GameEvent`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；`NationalSpire.IDateSceneExtension.RecordTurn(NationalSpire.DateMemoryTurn, NationalSpire.DateSceneRequest)`；`NationalSpire.PrivateConversation.RewoundDateTurns`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`；`NationalSpire.PrivateTurn.Status`；`NationalSpire.PrivateTurn.User`；`NationalSpire.PrivateTurn.UserDeleted`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateMemoryTurn.DateMemoryTurn()`；输入表达式：`new() { Id = turn.Id, UserFrame = LastFrame }`；返回值紧邻使用处：`AssignmentExpressionSyntax: entry = new() { Id = turn.Id, UserFrame = LastFrame }`
 - `NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`；输入表达式：`DateSceneMemories.SameLine(lines[index], entry.Lines[index])`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !DateSceneMemories.SameLine(lines[index], entry.Lines[index])`
 - `NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；输入表达式：`DateScenes.Lines(turn)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: DateScenes.Lines(turn).Select`
+- `NationalSpire.IDateSceneExtension.RecordTurn(NationalSpire.DateMemoryTurn, NationalSpire.DateSceneRequest)`；输入表达式：`.RecordTurn(entry, turn.Scene!)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.RecordTurn(entry, turn.Scene!)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`entry.Frames.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: entry.Frames.Clear();`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`_seen.Remove(id)`；返回值紧邻使用处：`ExpressionStatementSyntax: _seen.Remove(id);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`entry.Frames.Remove(index)`；返回值紧邻使用处：`ExpressionStatementSyntax: entry.Frames.Remove(index);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_seen.TryGetValue(turn.Id, out var before)`；返回值紧邻使用处：`BinaryExpressionSyntax: _seen.TryGetValue(turn.Id, out var before) && before == signature`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`conversation.RewoundDateTurns.Contains(t.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: t => conversation.RewoundDateTurns.Contains(t.Id)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`Memory.Turns.FirstOrDefault(t => t.Id == turn.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Memory.Turns.FirstOrDefault(t => t.Id == turn.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；输入表达式：`Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault()`；返回值紧邻使用处：`BinaryExpressionSyntax: Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault() ?? Memory.Initial`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`t.Frames.OrderBy(p => p.Key)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: t.Frames.OrderBy(p => p.Key).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`t.Frames.OrderBy(p => p.Key).Select(p => p.Value)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`_seen.Keys.Where(conversation.RewoundDateTurns.Contains).ToArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string id in _seen.Keys.Where(conversation.RewoundDateTurns.Contains).ToArray()) _seen.Remove(id);`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`entry.Frames.Keys.ToList()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (int index in entry.Frames.Keys.ToList()) if (index >= lines.Count || index >= entry.Lines.Count || !DateSceneMemories.SameLine(lines[index], entry.Lines[index])) entry.Frames.Remove(index);`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.Where(t => t.Scene?.OfferId == Memory.OfferId && !t.Scene.Ending)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var turn in conversation.Turns.Where(t => t.Scene?.OfferId == Memory.OfferId && !t.Scene.Ending)) { var signature = (turn.User, turn.Reply, turn.Status, turn.ReplyDeleted); if (_seen.TryGetValue(turn.Id, out var before) && before == signature) continue; _seen[turn.Id] = signature; var entry = Memory.Turns.FirstOrDefault(t => t.Id == turn.Id); if (entry == null) { entry = new() { Id = turn.Id, UserFrame = LastFrame }; Memory.Turns.Add(entry); } // 重试也可来自已播放部分内容的失败轮次；界面可能只观察到重新开始发送。 if (turn.Status == "queued" || turn.Status == "sending" && (entry.Complete || before.Status != "sending")) { entry.Lines.Clear(); entry.Frames.Clear(); } string user = turn.UserDeleted || turn.Scene!.Opening || turn.Scene.GameEvent.Length > 0 ? "" : turn.User; if (entry.User != user) entry.Choice = false; entry.User = user; if (PendingChoice.Length > 0 && entry.User == PendingChoice) { entry.Choice = true; PendingChoice = ""; } entry.Complete = turn.Status == "complete" && !turn.ReplyDeleted; if (entry.Complete) { var lines = DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine).ToList(); foreach (int index in entry.Frames.Keys.ToList()) if (index >= lines.Count || index >= entry.Lines.Count || !DateSceneMemories.SameLine(lines[index], entry.Lines[index])) entry.Frames.Remove(index); entry.Lines = lines; } if (turn.ReplyDeleted) { entry.Lines.Clear(); entry.Frames.Clear(); } Dirty = true; }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`_seen.Keys.Where(conversation.RewoundDateTurns.Contains)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: _seen.Keys.Where(conversation.RewoundDateTurns.Contains).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.Where(t => t.Scene?.OfferId == Memory.OfferId && !t.Scene.Ending)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var turn in conversation.Turns.Where(t => t.Scene?.OfferId == Memory.OfferId && !t.Scene.Ending)) { var signature = (turn.User, turn.Reply, turn.Status, turn.ReplyDeleted); if (_seen.TryGetValue(turn.Id, out var before) && before == signature) continue; _seen[turn.Id] = signature; var entry = Memory.Turns.FirstOrDefault(t => t.Id == turn.Id); if (entry == null) { entry = new() { Id = turn.Id, UserFrame = LastFrame }; Memory.Turns.Add(entry); } // 重试也可来自已播放部分内容的失败轮次；界面可能只观察到重新开始发送。 if (turn.Status == "queued" || turn.Status == "sending" && (entry.Complete || before.Status != "sending")) { entry.Lines.Clear(); entry.Frames.Clear(); } string user = turn.UserDeleted || turn.Scene!.Opening || turn.Scene.GameEvent.Length > 0 ? "" : turn.User; if (entry.User != user) entry.Choice = false; entry.User = user; DateSceneExtensions.Current?.RecordTurn(entry, turn.Scene!); if (PendingChoice.Length > 0 && entry.User == PendingChoice) { entry.Choice = true; PendingChoice = ""; } entry.Complete = turn.Status == "complete" && !turn.ReplyDeleted; if (entry.Complete) { var lines = DateScenes.Lines(turn).Select(DateSceneMemories.CopyLine).ToList(); foreach (int index in entry.Frames.Keys.ToList()) if (index >= lines.Count || index >= entry.Lines.Count || !DateSceneMemories.SameLine(lines[index], entry.Lines[index])) entry.Frames.Remove(index); entry.Lines = lines; } if (turn.ReplyDeleted) { entry.Lines.Clear(); entry.Frames.Clear(); } Dirty = true; }`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`Memory.Turns.Add(entry)`；返回值紧邻使用处：`ExpressionStatementSyntax: Memory.Turns.Add(entry);`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`entry.Lines.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: entry.Lines.Clear();`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`Memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id))`；返回值紧邻使用处：`BinaryExpressionSyntax: Memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id)) > 0`
 
 **赋值（含属性/字段和局部值）：**
 
 - `Dirty` = `true`
 - `Id` = `turn.Id`
+- `LastFrame` = `Memory.Turns.SelectMany(t => t.Frames.OrderBy(p => p.Key).Select(p => p.Value)).LastOrDefault() ?? Memory.Initial`
 - `PendingChoice` = `""`
 - `UserFrame` = `LastFrame`
 - `_seen[turn.Id]` = `signature`
@@ -354,7 +365,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame) — public void Capture(string turn, int index, DateSceneLine line, DateMemoryFrame frame)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.CaptureDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-7b36ced91124)
 
@@ -385,7 +396,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryPerson.Name — public string Name`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -403,7 +414,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryPerson.Default — public string Default`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -421,7 +432,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryPerson.Emotions — public Dictionary<string, string> Emotions`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -439,7 +450,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.Id — public string Id`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -457,7 +468,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.User — public string User`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -475,7 +486,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.Choice — public bool Choice`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -493,7 +504,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.Complete — public bool Complete`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -511,7 +522,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.UserFrame — public DateMemoryFrame? UserFrame`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -529,7 +540,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.Lines — public List<DateSceneLine> Lines`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -547,7 +558,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryTurn.Frames — public Dictionary<int, DateMemoryFrame> Frames`
 
-来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -565,7 +576,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Placements — public Dictionary<string, DatePortraitPlacement> Placements`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -583,7 +594,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Background — public string Background`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -601,7 +612,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Speaker — public string Speaker`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -619,7 +630,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Cast — public List<string> Cast`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -637,7 +648,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Portraits — public Dictionary<string, string> Portraits`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -655,7 +666,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Anchors — public Dictionary<string, string> Anchors`
 
-来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -673,7 +684,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.FontSize — public int FontSize`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -691,7 +702,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Fade — public double Fade`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -709,7 +720,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Spacing — public double Spacing`
 
-来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -727,7 +738,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Blur — public double Blur`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -745,7 +756,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Scale — public double Scale`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -763,7 +774,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.X — public double X`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -781,7 +792,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Y — public double Y`
 
-来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -799,7 +810,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Outline — public bool Outline`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -817,7 +828,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Badge — public bool Badge`
 
-来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -835,7 +846,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Favour — public int Favour`
 
-来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -853,7 +864,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Relationship — public string Relationship`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -871,7 +882,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Bond — public int? Bond`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -889,7 +900,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateMemoryFrame.Oath — public bool Oath`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -907,7 +918,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.Recording — public static bool Recording`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -932,7 +943,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData) — public static string DirectoryPath(CareerData data)`
 
-来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneMemories.Delete(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-a32b756f581f)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ForPerson(NationalSpire.CareerData, string, out string)`](DateSceneMemories.cs.md#symbol-8302de288689)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)
 
@@ -953,7 +964,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string) — public static string FilePath(CareerData data, string offer)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)；[`NationalSpire.CareerScreen.SyncDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-4103852c245a)；[`NationalSpire.DateSceneMemories.Delete(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-a32b756f581f)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)
 
@@ -975,22 +986,22 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string) — public static DateSceneMemory? Read(CareerData data, string offer)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
 
-**调用：** [`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`](JsonText.cs.md#symbol-3f401a852f9d)；`System.IO.File.Exists(string?)`；`System.IO.File.OpenRead(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.Version`；`NationalSpire.PortraitDesigns.Json`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.Version`；`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；`NationalSpire.PortraitDesigns.Json`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；输入表达式：`FilePath(data, offer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = FilePath(data, offer)`
 - `NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；输入表达式：`ReconcileDeletedReplies(data, memory)`；返回值紧邻使用处：`ExpressionStatementSyntax: ReconcileDeletedReplies(data, memory);`
+- `NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；输入表达式：`JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json)`
 - `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(path)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !File.Exists(path)`
-- `System.IO.File.ReadAllText(string)`；输入表达式：`File.ReadAllText(path)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllText(path)`
+- `System.IO.File.OpenRead(string)`；输入表达式：`File.OpenRead(path)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = File.OpenRead(path)`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("约会回忆格式无效。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("约会回忆格式无效。");`
-- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(path), PortraitDesigns.Json)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(path), PortraitDesigns.Json)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -999,7 +1010,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string) — public static bool RemoveReply(DateSceneMemory memory, string turnId)`
 
-来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)
 
@@ -1021,20 +1032,22 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory) — public static void ReconcileDeletedReplies(CareerData data, DateSceneMemory memory)`
 
-来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneMemories.ForPerson(NationalSpire.CareerData, string, out string)`](DateSceneMemories.cs.md#symbol-8302de288689)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)
 
-**调用：** [`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`](DateSceneMemories.cs.md#symbol-f4609a0121d1)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`](DateSceneMemories.cs.md#symbol-f4609a0121d1)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryTurn.Id`；`NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneRequest.OfferId`；`NationalSpire.PrivateConversation.RewoundDateTurns`；`NationalSpire.PrivateConversation.Turns`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；`NationalSpire.PrivateTurn.Id`；`NationalSpire.PrivateTurn.ReplyDeleted`；`NationalSpire.PrivateTurn.Scene`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateSceneMemories.RemoveReply(NationalSpire.DateSceneMemory, string)`；输入表达式：`RemoveReply(memory, turn.Id)`；返回值紧邻使用处：`ExpressionStatementSyntax: RemoveReply(memory, turn.Id);`
 - `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(data).Conversations`
+- `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`conversation.RewoundDateTurns.Contains(t.Id)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: t => conversation.RewoundDateTurns.Contains(t.Id)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`conversation.Turns.Where(t => t.Scene?.OfferId == memory.OfferId && t.ReplyDeleted)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var turn in conversation.Turns.Where(t => t.Scene?.OfferId == memory.OfferId && t.ReplyDeleted)) RemoveReply(memory, turn.Id);`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`PrivateMessages.Mailbox(data).Conversations.GetValueOrDefault(memory.Host)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Mailbox(data).Conversations.GetValueOrDefault(memory.Host)`
+- `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id))`；返回值紧邻使用处：`ExpressionStatementSyntax: memory.Turns.RemoveAll(t => conversation.RewoundDateTurns.Contains(t.Id));`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -1043,11 +1056,11 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory) — public static void Save(CareerData data, DateSceneMemory memory)`
 
-来源：源码第 146 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-4386f1155e7c)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)
 
-**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?, System.Text.Encoding)`；`System.IO.Path.GetDirectoryName(string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.UTF8Encoding.UTF8Encoding(bool)`
+**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.FileStream.FileStream(string, System.IO.FileMode, System.IO.FileAccess, System.IO.FileShare)`；`System.IO.Path.GetDirectoryName(string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(System.IO.Stream, TValue, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneMemories.Cache`；`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PrivateConversation.DeletedDateDiaries`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`
 
@@ -1066,10 +1079,9 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 - `System.IO.File.Delete(string)`；输入表达式：`File.Delete(temporary)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Delete(temporary);`
 - `System.IO.File.Exists(string?)`；输入表达式：`File.Exists(temporary)`；返回值紧邻使用处：`IfStatementSyntax: if (File.Exists(temporary)) File.Delete(temporary);`
 - `System.IO.File.Move(string, string, bool)`；输入表达式：`File.Move(temporary, path, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Move(temporary, path, true);`
-- `System.IO.File.WriteAllText(string, string?, System.Text.Encoding)`；输入表达式：`File.WriteAllText(temporary, JsonSerializer.Serialize(memory, PortraitDesigns.Json), new UTF8Encoding(false))`；返回值紧邻使用处：`ExpressionStatementSyntax: File.WriteAllText(temporary, JsonSerializer.Serialize(memory, PortraitDesigns.Json), new UTF8Encoding(false));`
+- `System.IO.FileStream.FileStream(string, System.IO.FileMode, System.IO.FileAccess, System.IO.FileShare)`；输入表达式：`new FileStream(temporary, FileMode.CreateNew, System.IO.FileAccess.Write, FileShare.Read)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new FileStream(temporary, FileMode.CreateNew, System.IO.FileAccess.Write, FileShare.Read)`
 - `System.IO.Path.GetDirectoryName(string?)`；输入表达式：`Path.GetDirectoryName(path)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Path.GetDirectoryName(path)!`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(memory, PortraitDesigns.Json)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(memory, PortraitDesigns.Json)`
-- `System.Text.UTF8Encoding.UTF8Encoding(bool)`；输入表达式：`new UTF8Encoding(false)`；返回值紧邻使用处：`ArgumentSyntax: new UTF8Encoding(false)`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(System.IO.Stream, TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(output, memory, PortraitDesigns.Json)`；返回值紧邻使用处：`ExpressionStatementSyntax: JsonSerializer.Serialize(output, memory, PortraitDesigns.Json);`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -1078,18 +1090,19 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.Delete(NationalSpire.CareerData, string) — public static void Delete(CareerData data, string offer)`
 
-来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeleteDateDiaryDialog(NationalSpire.CareerData, string, NationalSpire.DateDiary, NationalSpire.DateSceneMemory?)`](DateDiaryScreen.cs.md#symbol-d6865c262849)；[`Removed()`](DateDiaryScreen.cs.md#symbol-d4d8f582fe1c)
 
-**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.IO.File.Delete(string)`
+**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.IDateSceneExtension.DeleteMemory(NationalSpire.CareerData, string)`](DateSceneExtensions.cs.md#symbol-de17d2b01e2b)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.IO.File.Delete(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneMemories.Cache`；`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneMemories.Cache`；`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；`NationalSpire.IDateSceneExtension.DeleteMemory(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；输入表达式：`DirectoryPath(data)`；返回值紧邻使用处：`ArgumentSyntax: DirectoryPath(data)`
 - `NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`；输入表达式：`FilePath(data, offer)`；返回值紧邻使用处：`ArgumentSyntax: FilePath(data, offer)`
+- `NationalSpire.IDateSceneExtension.DeleteMemory(NationalSpire.CareerData, string)`；输入表达式：`.DeleteMemory(data, offer)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.DeleteMemory(data, offer)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；输入表达式：`Cache.Remove(DirectoryPath(data))`；返回值紧邻使用处：`ExpressionStatementSyntax: Cache.Remove(DirectoryPath(data));`
 - `System.IO.File.Delete(string)`；输入表达式：`File.Delete(FilePath(data, offer))`；返回值紧邻使用处：`ExpressionStatementSyntax: File.Delete(FilePath(data, offer));`
 
@@ -1100,19 +1113,21 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.ForPerson(NationalSpire.CareerData, string, out string) — public static List<DateSceneMemory> ForPerson(CareerData data, string person, out string warning)`
 
-来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`](DateDiaryScreen.cs.md#symbol-fb4ba1a3b5fa)；[`NationalSpire.CareerScreen.PrivateProfile(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PrivateMessageScreen.cs.md#symbol-8e28d3a34860)
 
-**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.Directory.EnumerateFiles(string, string)`；`System.IO.Directory.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`
+**调用：** [`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`](DateSceneMemories.cs.md#symbol-9455c4e36faf)；[`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-f23dfc6f28c7)；[`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`](JsonText.cs.md#symbol-3f401a852f9d)；[`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.IO.Directory.EnumerateFiles(string, string)`；`System.IO.Directory.Exists(string?)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.FileInfo.OpenRead()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateSceneMemories.Cache`；`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneMemory.Ended`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneMemory.Version`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateConversation.DeletedDateDiaries`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateSceneMemories.Cache`；`NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；`NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.DateSceneMemory.Ended`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneMemory.Version`；`NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；`NationalSpire.PortraitDesigns.Json`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateConversation.DeletedDateDiaries`；`NationalSpire.PrivateMailbox.Conversations`；`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateSceneMemories.DirectoryPath(NationalSpire.CareerData)`；输入表达式：`DirectoryPath(data)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DirectoryPath(data)`
 - `NationalSpire.DateSceneMemories.ReconcileDeletedReplies(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；输入表达式：`ReconcileDeletedReplies(data, memory)`；返回值紧邻使用处：`ExpressionStatementSyntax: ReconcileDeletedReplies(data, memory);`
+- `NationalSpire.JsonText.Read<T>(System.IO.Stream, System.Text.Json.JsonSerializerOptions)`；输入表达式：`JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonText.Read<DateSceneMemory>(input, PortraitDesigns.Json)`
 - `NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`；输入表达式：`PrivateMessages.Mailbox(data)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PrivateMessages.Mailbox(data).Conversations`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Clear()`；输入表达式：`Cache.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: Cache.Clear();`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`m.People.ContainsKey(person)`；返回值紧邻使用处：`BinaryExpressionSyntax: m.People.ContainsKey(person) && !deleted.Contains(m.OfferId)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Cache.TryGetValue(directory, out var cached)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Cache.TryGetValue(directory, out var cached)`
 - `System.Collections.Generic.HashSet<T>.Contains(T)`；输入表达式：`deleted.Contains(m.OfferId)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !deleted.Contains(m.OfferId)`
@@ -1123,7 +1138,7 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`conversations.Values.SelectMany(c => c.DeletedDateDiaries)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: conversations.Values.SelectMany(c => c.DeletedDateDiaries).ToHashSet`
 - `System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；输入表达式：`conversations.Values.SelectMany(c => c.DeletedDateDiaries).ToHashSet()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = conversations.Values.SelectMany(c => c.DeletedDateDiaries).ToHashSet()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`Directory.EnumerateFiles(directory, "*.json").Select(p => new FileInfo(p)).OrderBy(f => f.Name).ToList()`；返回值紧邻使用处：`ConditionalExpressionSyntax: Directory.Exists(directory) ? Directory.EnumerateFiles(directory, "*.json").Select(p => new FileInfo(p)).OrderBy(f => f.Name).ToList() : []`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList()`；返回值紧邻使用处：`ReturnStatementSyntax: return cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList();`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: cached.Memories.Where(m => m.People.ContainsKey(person) && !deleted.Contains(m.OfferId) && (m.Ended || conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId) == "ended")).ToList`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`.DateSceneStates.GetValueOrDefault(m.OfferId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`conversations.GetValueOrDefault(m.Host)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: conversations.GetValueOrDefault(m.Host)?.DateSceneStates.GetValueOrDefault(m.OfferId)`
@@ -1133,9 +1148,8 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string>()`
 - `System.IO.Directory.EnumerateFiles(string, string)`；输入表达式：`Directory.EnumerateFiles(directory, "*.json")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Directory.EnumerateFiles(directory, "*.json").Select`
 - `System.IO.Directory.Exists(string?)`；输入表达式：`Directory.Exists(directory)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Directory.Exists(directory) ? Directory.EnumerateFiles(directory, "*.json").Select(p => new FileInfo(p)).OrderBy(f => f.Name).ToList() : []`
-- `System.IO.File.ReadAllText(string)`；输入表达式：`File.ReadAllText(file.FullName)`；返回值紧邻使用处：`ArgumentSyntax: File.ReadAllText(file.FullName)`
 - `System.IO.FileInfo.FileInfo(string)`；输入表达式：`new FileInfo(p)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p => new FileInfo(p)`
-- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(file.FullName), PortraitDesigns.Json)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonSerializer.Deserialize<DateSceneMemory>(File.ReadAllText(file.FullName), PortraitDesigns.Json)`
+- `System.IO.FileInfo.OpenRead()`；输入表达式：`file.OpenRead()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = file.OpenRead()`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", errors)`；返回值紧邻使用处：`ArgumentSyntax: string.Join("\n", errors)`
 - `string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；输入表达式：`string.Join('|', files.Select(f => f.Name + ":" + f.Length + ":" + f.LastWriteTimeUtc.Ticks))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = string.Join('|', files.Select(f => f.Name + ":" + f.Length + ":" + f.LastWriteTimeUtc.Ticks))`
 
@@ -1149,23 +1163,26 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.CopyLine(NationalSpire.DateSceneLine) — public static DateSceneLine CopyLine(DateSceneLine line)`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame)`](DateSceneMemories.cs.md#symbol-9b3816f4efa8)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
-**调用：** `NationalSpire.DateSceneLine.DateSceneLine()`
+**调用：** `NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.ExtensibleData.CopyExtra()`](ExtensionData.cs.md#symbol-e92ffbabd9a6)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.SceneContinuation`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.ExtensibleData.CopyExtra()`；`NationalSpire.ExtensibleData.Extra`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background }`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background }`
+- `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background, SceneContinuation = line.SceneContinuation, Extra = line.CopyExtra() }`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => new() { Speaker = line.Speaker, Text = line.Text, Emotion = line.Emotion, Narration = line.Narration, Background = line.Background, SceneContinuation = line.SceneContinuation, Extra = line.CopyExtra() }`
+- `NationalSpire.ExtensibleData.CopyExtra()`；输入表达式：`line.CopyExtra()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Extra = line.CopyExtra()`
 
 **赋值（含属性/字段和局部值）：**
 
 - `Background` = `line.Background`
 - `Emotion` = `line.Emotion`
+- `Extra` = `line.CopyExtra()`
 - `Narration` = `line.Narration`
+- `SceneContinuation` = `line.SceneContinuation`
 - `Speaker` = `line.Speaker`
 - `Text` = `line.Text`
 
@@ -1173,15 +1190,16 @@ private static readonly Dictionary<string, (string Stamp, List<DateSceneMemory> 
 
 ## `NationalSpire.DateSceneMemories.SameLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine) — public static bool SameLine(DateSceneLine a, DateSceneLine b)`
 
-来源：源码第 186 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame)`](DateSceneMemories.cs.md#symbol-9b3816f4efa8)；[`NationalSpire.DateMemoryRecorder.Sync(NationalSpire.PrivateConversation)`](DateSceneMemories.cs.md#symbol-949d37f3d89e)
 
-**调用：** 无已绑定显式调用。
+**调用：** [`NationalSpire.ExtensibleData.SameExtra(NationalSpire.ExtensibleData, NationalSpire.ExtensibleData)`](ExtensionData.cs.md#symbol-1152bf46669b)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.SceneContinuation`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.ExtensibleData.SameExtra(NationalSpire.ExtensibleData, NationalSpire.ExtensibleData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.ExtensibleData.SameExtra(NationalSpire.ExtensibleData, NationalSpire.ExtensibleData)`；输入表达式：`ExtensibleData.SameExtra(a, b)`；返回值紧邻使用处：`BinaryExpressionSyntax: a.Speaker == b.Speaker && a.Narration == b.Narration && a.Emotion == b.Emotion && a.Background == b.Background && a.Text == b.Text && a.SceneContinuation == b.SceneContinuation && ExtensibleData.SameExtra(a, b)`
 
 **赋值（含属性/字段和局部值）：**

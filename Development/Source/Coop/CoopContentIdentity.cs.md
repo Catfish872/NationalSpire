@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Compatibility`](CoopRuntime.cs.md#symbol-252dd3ac9940)
 
-**调用：** `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Convert.ToHexString(byte[])`；`System.Text.Encoding.GetBytes(string)`；`uint.ToString(System.IFormatProvider?)`
+**调用：** `System.Collections.Generic.IEnumerable<T>.Order<T>(System.Collections.Generic.IComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Convert.ToHexString(byte[])`；`System.Text.Encoding.GetBytes(string)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.StartsWith(string, System.StringComparison)`；`uint.ToString(System.IFormatProvider?)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

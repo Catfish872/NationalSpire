@@ -255,7 +255,7 @@ public const string ToolEnding = "本次约会已结束。本轮同时提交两�
 
 **调用者：** [`NationalSpire.DateDiaries.Complete(NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IEnumerable<System.Collections.Generic.Dictionary<string, string>>)`](DateDiaries.cs.md#symbol-947bb3a428c9)；[`NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool)`](DateSceneData.cs.md#symbol-81bdbfbfe1d8)
 
-**调用：** `NationalSpire.DateDiary.DateDiary()`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** `NationalSpire.DateDiary.DateDiary()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`string.StartsWith(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateDiary.Content`；`NationalSpire.DateDiary.Day`；`NationalSpire.DateDiary.OfferId`；`NationalSpire.DateDiary.Season`；`NationalSpire.DateDiary.Title`；`NationalSpire.PrivateConversation.DateDiaries`；`NationalSpire.PrivateOffer.Day`；`NationalSpire.PrivateOffer.Detail`；`NationalSpire.PrivateOffer.Id`；`NationalSpire.PrivateOffer.Season`；`NationalSpire.PrivateOffer.Title`
 

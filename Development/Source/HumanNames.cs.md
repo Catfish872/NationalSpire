@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3BB1BBDD63ECEB5C3AC8BFB1D0DB7EF23D6AECA7C054EC7EF96F33062CBA83E3`。来源：[源码](../../HumanNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`13323F352664F3BE3E30BF9467E9265E51CE5408D36E5A4AC530DB2043975D0E`。来源：[源码](../../HumanNames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -73,7 +73,7 @@ private static readonly string[] FemaleHandles = ContentPools.Words("阿琳 小�
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.ContentPools.Words(string)`](ContentPools.cs.md#symbol-5d478310fd36)；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** [`NationalSpire.ContentPools.Words(string)`](ContentPools.cs.md#symbol-5d478310fd36)；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>(System.Collections.Generic.IEqualityComparer<TSource>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`string.Split(char, System.StringSplitOptions)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ContentPools.Words(string)`
 
@@ -198,7 +198,7 @@ private static readonly string[] FemaleHandles = ContentPools.Words("阿琳 小�
 
 **调用者：** [`NationalSpire.IdentityGender.Ensure(NationalSpire.CareerData)`](IdentityGender.cs.md#symbol-95c66fc7bbdb)
 
-**调用：** [`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；[`NationalSpire.WorldPeople.Surnames(string)`](WorldPeople.cs.md#symbol-806b3e0e373d)；`string.Contains(char)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；[`NationalSpire.WorldPeople.Surnames(string)`](WorldPeople.cs.md#symbol-806b3e0e373d)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Contains(char)`；`string.Split(char, System.StringSplitOptions)`；`string.StartsWith(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.HumanNames.Female`；`NationalSpire.HumanNames.Male`；`NationalSpire.HumanNames.Region(string)`；`NationalSpire.WorldPeople.Surnames(string)`
 
@@ -250,7 +250,7 @@ private static readonly string[] FemaleHandles = ContentPools.Words("阿琳 小�
 
 **调用者：** [`NationalSpire.PlayerIdentity.Ensure(NationalSpire.CareerData)`](PlayerIdentity.cs.md#symbol-340085e81d95)；[`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`](WorldPeople.cs.md#symbol-731e781389c6)
 
-**调用：** [`NationalSpire.HumanNames.Givens(int, string)`](HumanNames.cs.md#symbol-d0b10d5e7ba8)；[`NationalSpire.HumanNames.LegalName(string, string, System.Random)`](HumanNames.cs.md#symbol-36b85f84360f)；[`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；`char.IsDigit(char)`；`System.Random.Next(int, int)`；`System.Random.Next(int)`
+**调用：** [`NationalSpire.HumanNames.Givens(int, string)`](HumanNames.cs.md#symbol-d0b10d5e7ba8)；[`NationalSpire.HumanNames.LegalName(string, string, System.Random)`](HumanNames.cs.md#symbol-36b85f84360f)；[`NationalSpire.HumanNames.Region(string)`](HumanNames.cs.md#symbol-19bea338cda6)；`System.Random.Next(int)`；`System.Random.Next(int, int)`；`char.IsDigit(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.HumanNames.FemaleHandles`；`NationalSpire.HumanNames.Givens(int, string)`；`NationalSpire.HumanNames.Handles`；`NationalSpire.HumanNames.LegalName(string, string, System.Random)`；`NationalSpire.HumanNames.MaleHandles`；`NationalSpire.HumanNames.Region(string)`
 

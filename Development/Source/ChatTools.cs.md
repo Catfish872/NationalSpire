@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5CD725DC1E901838ACF95C2F4A53DDED23326D6BD6A9B08FAE9F82DD9D7A7B45`。来源：[源码](../../ChatTools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8ADC413FB928A586C0EDD12122F90918AA44CD9B2702CFB22DFEED048E7E460A`。来源：[源码](../../ChatTools.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,6 +22,7 @@ private readonly StringBuilder _arguments = new();
 private readonly Dictionary<string, ChatTools.Feature> _features;
 private readonly Dictionary<int, ChatReplyStream> _streams = [];
 private readonly bool _scene, _party;
+private readonly string[] _requiredMetadata;
 public char Kind = kind;
 public bool Replies = replies, Paragraph = paragraph, KeyExpected = kind == '{', Opened;
 public string Key = "";
@@ -270,14 +271,14 @@ private Frame? _owner;
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.CareerScreen.PreviewGroupPrompt()`](GroupChatDialogs.cs.md#symbol-b6bc7a2d0206)；[`NationalSpire.CareerScreen.PreviewPrivatePrompt()`](PrivateMessageScreen.cs.md#symbol-aefc38a1fba3)
 
-**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool)`](ChatTools.cs.md#symbol-6a6f6970a865)；[`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；`NationalSpire.ChatTools.Feature.Feature(string, string, string, string[])`；[`NationalSpire.ChatTools.Features(bool)`](ChatTools.cs.md#symbol-0f2c54f8dd7f)；[`NationalSpire.ChatTools.SceneGuidance(string)`](ChatTools.cs.md#symbol-fdd76a823cce)；[`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-42aa2fbcaa1f)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`NationalSpire.OwnedClubs.IsRecruitable(NationalSpire.CareerPerson)`](OwnedClubs.cs.md#symbol-11345d1ef285)；`System.Array.Empty<T>()`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, int, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool, string[]?)`](ChatTools.cs.md#symbol-6a6f6970a865)；[`NationalSpire.ChatTools.Describe(string)`](ChatTools.cs.md#symbol-f5d3458d67bf)；`NationalSpire.ChatTools.Feature.Feature(string, string, string, string[])`；[`NationalSpire.ChatTools.Features(bool)`](ChatTools.cs.md#symbol-0f2c54f8dd7f)；[`NationalSpire.ChatTools.SceneGuidance(string)`](ChatTools.cs.md#symbol-fdd76a823cce)；[`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-42aa2fbcaa1f)；[`NationalSpire.IDateSceneExtension.ReplyExample(NationalSpire.DateSceneRequest)`](DateSceneExtensions.cs.md#symbol-f4b624b75fe6)；[`NationalSpire.IDateSceneExtension.ReplySchema(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object>)`](DateSceneExtensions.cs.md#symbol-bfc252430145)；[`NationalSpire.IDateSceneExtension.RequiredMetadata(NationalSpire.DateSceneRequest?)`](DateSceneExtensions.cs.md#symbol-a87019935579)；[`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-871ad0e2a2c9)；[`NationalSpire.OwnedClubs.IsRecruitable(NationalSpire.CareerPerson)`](OwnedClubs.cs.md#symbol-11345d1ef285)；`System.Array.Empty<T>()`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, int, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.Replace(string, string?)`；`string.Split(char, System.StringSplitOptions)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.ChatTools.ActivityIntentGuidance`；`NationalSpire.ChatTools.Describe(string)`；`NationalSpire.ChatTools.Feature.Description`；`NationalSpire.ChatTools.Feature.Fields`；`NationalSpire.ChatTools.Feature.Key`；`NationalSpire.ChatTools.Feature.Name`；`NationalSpire.ChatTools.Features(bool)`；`NationalSpire.ChatTools.Guidance`；`NationalSpire.ChatTools.OrdinaryGuidance`；`NationalSpire.ChatTools.SceneGuidance(string)`；`NationalSpire.DateDiaries.ToolEnding`；`NationalSpire.DateGames.InvitationProtocol`；`NationalSpire.DateSceneInvitations.Protocol`；`NationalSpire.DateSceneParticipant.PersonId`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.GameInvitation`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.GroupChatPrompts.ActorFormat`；`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsRecruitable(NationalSpire.CareerPerson)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateTurn.DateInvitation`；`NationalSpire.PrivateTurn.Scene`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.ChatTools.ActivityIntentGuidance`；`NationalSpire.ChatTools.Describe(string)`；`NationalSpire.ChatTools.Feature.Description`；`NationalSpire.ChatTools.Feature.Fields`；`NationalSpire.ChatTools.Feature.Key`；`NationalSpire.ChatTools.Feature.Name`；`NationalSpire.ChatTools.Features(bool)`；`NationalSpire.ChatTools.Guidance`；`NationalSpire.ChatTools.OrdinaryGuidance`；`NationalSpire.ChatTools.SceneGuidance(string)`；`NationalSpire.DateDiaries.ToolEnding`；`NationalSpire.DateGames.InvitationProtocol`；`NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneInvitations.Protocol`；`NationalSpire.DateSceneRequest.Ending`；`NationalSpire.DateSceneRequest.GameInvitation`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.GroupChatPrompts.ActorFormat`；`NationalSpire.IDateSceneExtension.ReplyExample(NationalSpire.DateSceneRequest)`；`NationalSpire.IDateSceneExtension.ReplySchema(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object>)`；`NationalSpire.IDateSceneExtension.RequiredMetadata(NationalSpire.DateSceneRequest?)`；`NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；`NationalSpire.OwnedClubs.IsRecruitable(NationalSpire.CareerPerson)`；`NationalSpire.PrivateConversation.PersonId`；`NationalSpire.PrivateTurn.DateInvitation`；`NationalSpire.PrivateTurn.Scene`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, conversation.PersonId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, conversation.PersonId) is { } person`
-- `NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool)`；输入表达式：`new(features, tools, group != null, date, party)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(features, tools, group != null, date, party);`
+- `NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool, string[]?)`；输入表达式：`new(features, tools, group != null, date, party, DateSceneExtensions.Current?.RequiredMetadata(turn?.Scene))`；返回值紧邻使用处：`ReturnStatementSyntax: return new(features, tools, group != null, date, party, DateSceneExtensions.Current?.RequiredMetadata(turn?.Scene));`
 - `NationalSpire.ChatTools.Describe(string)`；输入表达式：`Describe(f.Description)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Describe(f.Description)`
 - `NationalSpire.ChatTools.Describe(string)`；输入表达式：`Describe(string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6)))`；返回值紧邻使用处：`BinaryExpressionSyntax: description.Replace("你可以从玩家的具体讲解中", "各人可以从交流中的具体讲解中") .Replace("玩家提供了具体、适用条件明确的做法", "交流中提供了具体、适用条件明确的做法") + "\n" + Describe(string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6)))`
 - `NationalSpire.ChatTools.Feature.Feature(string, string, string, string[])`；输入表达式：`new("date_choice", "DateChoice", "每轮提供两项不同的玩家回应或动作建议，每项最多24字；使用两条date_choice交互，等待玩家选择后才执行。", ["DateChoice"])`；返回值紧邻使用处：`ArgumentSyntax: new("date_choice", "DateChoice", "每轮提供两项不同的玩家回应或动作建议，每项最多24字；使用两条date_choice交互，等待玩家选择后才执行。", ["DateChoice"])`
@@ -290,6 +291,9 @@ private Frame? _owner;
 - `NationalSpire.ChatTools.SceneGuidance(string)`；输入表达式：`SceneGuidance(DateSceneInvitations.Protocol)`；返回值紧邻使用处：`ArgumentSyntax: SceneGuidance(DateSceneInvitations.Protocol)`
 - `NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`；输入表达式：`DateScenes.Guidance(active, tools: true)`；返回值紧邻使用处：`ConditionalExpressionSyntax: turn?.Scene is { Ending: false } active ? DateScenes.Guidance(active, tools: true) : "按发言顺序填写完整正文。"`
 - `NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`；输入表达式：`DateScenes.Guidance(scene, tools: true)`；返回值紧邻使用处：`ArgumentSyntax: DateScenes.Guidance(scene, tools: true)`
+- `NationalSpire.IDateSceneExtension.ReplyExample(NationalSpire.DateSceneRequest)`；输入表达式：`.ReplyExample(turn!.Scene!)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.ReplyExample(turn!.Scene!)`
+- `NationalSpire.IDateSceneExtension.ReplySchema(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object>)`；输入表达式：`.ReplySchema(sceneRequest, replyProperties)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.ReplySchema(sceneRequest, replyProperties)`
+- `NationalSpire.IDateSceneExtension.RequiredMetadata(NationalSpire.DateSceneRequest?)`；输入表达式：`.RequiredMetadata(turn?.Scene)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.RequiredMetadata(turn?.Scene)`
 - `NationalSpire.OwnedClubs.CanOperate(NationalSpire.CareerData)`；输入表达式：`OwnedClubs.CanOperate(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: OwnedClubs.CanOperate(data) && person.ClubId != data.Esports.ClubId`
 - `NationalSpire.OwnedClubs.IsRecruitable(NationalSpire.CareerPerson)`；输入表达式：`OwnedClubs.IsRecruitable(person)`；返回值紧邻使用处：`BinaryExpressionSyntax: OwnedClubs.CanOperate(data) && person.ClubId != data.Esports.ClubId && OwnedClubs.IsRecruitable(person)`
 - `System.Array.Empty<T>()`；输入表达式：`Array.Empty<string>()`；返回值紧邻使用处：`SwitchExpressionArmSyntax: _ => Array.Empty<string>()`
@@ -299,8 +303,6 @@ private Frame? _owner;
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, object> { ["type"] = k is "Favour" or "Skill" or "Mood" or "Days" or "Ascension" or "Signing" or "Wage" or "WinBonus" or "Weeks" ? "integer" : "string", ["description"] = k switch { "Actor" => f.Name == "activity" ? "已经谈妥的完整活动参与者编号，包括参加活动的玩家，多人以竖线分隔。" : f.Name == "training" ? "本次接受或拒绝训练的全部受训者编号，多人以竖线分隔。" : "作出决定或变化的人物编号。", "Target" => "关系或约战的对方人物编号。", "Related" => "发帖希望回应的人物编号，以竖线分隔。", "Coach" => "训练教练的人物编号。", "Id" => "邀请新活动填0；接受、拒绝或改期时填写本轮对应类型的待处理卡片实际编号。", _ => "含义和适用条件见本工具说明中的 " + k + "。" } }`；返回值紧邻使用处：`CastExpressionSyntax: (object)new Dictionary<string, object> { ["type"] = k is "Favour" or "Skill" or "Mood" or "Days" or "Ascension" or "Signing" or "Wage" or "WinBonus" or "Weeks" ? "integer" : "string", ["description"] = k switch { "Actor" => f.Name == "activity" ? "已经谈妥的完整活动参与者编号，包括参加活动的玩家，多人以竖线分隔。" : f.Name == "training" ? "本次接受或拒绝训练的全部受训者编号，多人以竖线分隔。" : "作出决定或变化的人物编号。", "Target" => "关系或约战的对方人物编号。", "Related" => "发帖希望回应的人物编号，以竖线分隔。", "Coach" => "训练教练的人物编号。", "Id" => "邀请新活动填0；接受、拒绝或改期时填写本轮对应类型的待处理卡片实际编号。", _ => "含义和适用条件见本工具说明中的 " + k + "。" } }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, object>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, object>()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: exampleAction = new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" }`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" }`；返回值紧邻使用处：`ArgumentSyntax: new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" }`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["Type"] = "date_choice", ["DateChoice"] = "（指向附近的小路。）一起走走吧。" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: exampleAction = new() { ["Type"] = "date_choice", ["DateChoice"] = "（指向附近的小路。）一起走走吧。" }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new() { ["Type"] = "date_diary", ["DateDiary"] = "今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。", ["Location"] = "地点未明确" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: exampleAction = new() { ["Type"] = "date_diary", ["DateDiary"] = "今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。", ["Location"] = "地点未明确" }`
 - `System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`properties.Keys.Except(required)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: properties.Keys.Except(required).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`Enumerable.Range(0, 1 << optional.Length).Select(mask => { var selected = properties.Where(p => required.Contains(p.Key) || (mask & (1 << Array.IndexOf(optional, p.Key))) != 0).ToDictionary(p => p.Key, p => p.Value); return (object)new { type = "object", properties = selected, required = selected.Keys.ToArray(), additionalProperties = false }; })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, 1 << optional.Length).Select(mask => { var selected = properties.Where(p => required.Contains(p.Key) || (mask & (1 << Array.IndexOf(optional, p.Key))) != 0).ToDictionary(p => p.Key, p => p.Value); return (object)new { type = "object", properties = selected, required = selected.Keys.ToArray(), additionalProperties = false }; }).ToArray`
@@ -319,7 +321,6 @@ private Frame? _owner;
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`features.Where(f => f.Name != "scene")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: features.Where(f => f.Name != "scene").Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`properties.Where(p => required.Contains(p.Key) || (mask & (1 << Array.IndexOf(optional, p.Key))) != 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: properties.Where(p => required.Contains(p.Key) || (mask & (1 << Array.IndexOf(optional, p.Key))) != 0).ToDictionary`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, int, bool>)`；输入表达式：`GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6)`；返回值紧邻使用处：`ArgumentSyntax: GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6)`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`exampleActions.Add(new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" })`；返回值紧邻使用处：`ExpressionStatementSyntax: exampleActions.Add(new() { ["Type"] = "date_choice", ["DateChoice"] = "（在长椅旁停下。）坐一会儿，继续聊聊吧。" });`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`features.Add(new("date_choice", "DateChoice", "每轮提供两项不同的玩家回应或动作建议，每项最多24字；使用两条date_choice交互，等待玩家选择后才执行。", ["DateChoice"]))`；返回值紧邻使用处：`ExpressionStatementSyntax: features.Add(new("date_choice", "DateChoice", "每轮提供两项不同的玩家回应或动作建议，每项最多24字；使用两条date_choice交互，等待玩家选择后才执行。", ["DateChoice"]));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`features.Add(new("date_diary", "DateDiary", DateDiaries.ToolEnding, ["DateDiary", "Location"]))`；返回值紧邻使用处：`ExpressionStatementSyntax: features.Add(new("date_diary", "DateDiary", DateDiaries.ToolEnding, ["DateDiary", "Location"]));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`features.Add(new("date_game", "DateGame", SceneGuidance(DateGames.InvitationProtocol), ["DateGame", "Actor"]))`；返回值紧邻使用处：`ExpressionStatementSyntax: features.Add(new("date_game", "DateGame", SceneGuidance(DateGames.InvitationProtocol), ["DateGame", "Actor"]));`
@@ -335,7 +336,7 @@ private Frame? _owner;
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<string> { "Type" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<string> { "Type" }`
 - `System.Collections.Generic.List<T>.RemoveAll(System.Predicate<T>)`；输入表达式：`features.RemoveAll(f => f.Name == "contract")`；返回值紧邻使用处：`ExpressionStatementSyntax: features.RemoveAll(f => f.Name == "contract");`
 - `System.Linq.Enumerable.Range(int, int)`；输入表达式：`Enumerable.Range(0, 1 << optional.Length)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Enumerable.Range(0, 1 << optional.Length).Select`
-- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`；返回值紧邻使用处：`ConditionalExpressionSyntax: date ? "本轮约会每个完整句子填写独立的 Replies 对象；Scene、Emotion、Background 使用本轮场景资料。" + "Reply 填写本句正文；Interactions 登记实际交互及两项 date_choice 玩家建议。" + (DateSceneExtensions.Current?.ReplyExample(turn!.Scene!) ?? "") : JsonSerializer.Serialize(new { Reasoning = exampleReasoning, Replies = new[] { exampleReply }, Interactions = exampleActions }, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping })`
 - `System.Text.Json.JsonSerializerOptions.JsonSerializerOptions()`；输入表达式：`new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`；返回值紧邻使用处：`ArgumentSyntax: new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping }`
 - `string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6))`；返回值紧邻使用处：`ArgumentSyntax: string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6))`
 - `string.Replace(string, string?)`；输入表达式：`description.Replace("你可以从玩家的具体讲解中", "各人可以从交流中的具体讲解中")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: description.Replace("你可以从玩家的具体讲解中", "各人可以从交流中的具体讲解中") .Replace`
@@ -354,8 +355,6 @@ private Frame? _owner;
 - `["Actor"]` = `"p1|p2|p3"`
 - `["Ascension"]` = `6`
 - `["Date"]` = `"2026-01-18"`
-- `["DateChoice"]` = `"（在长椅旁停下。）坐一会儿，继续聊聊吧。"`
-- `["DateChoice"]` = `"（指向附近的小路。）一起走走吧。"`
 - `["DateDiary"]` = `"今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。"`
 - `["Detail"]` = `"讨论今天的比赛"`
 - `["Id"]` = `"0"`
@@ -367,7 +366,6 @@ private Frame? _owner;
 - `["Replies"]` = `new { type = "array", description = replyDescription, items = new { type = "object", properties = replyProperties, required = replyProperties.Keys.ToArray(), additionalProperties = false } }`
 - `["Title"]` = `"一起看录像"`
 - `["Type"]` = `"activity"`
-- `["Type"]` = `"date_choice"`
 - `["Type"]` = `"date_diary"`
 - `["Type"]` = `"match"`
 - `["description"]` = `k switch { "Actor" => f.Name == "activity" ? "已经谈妥的完整活动参与者编号，包括参加活动的玩家，多人以竖线分隔。" : f.Name == "training" ? "本次接受或拒绝训练的全部受训者编号，多人以竖线分隔。" : "作出决定或变化的人物编号。", "Target" => "关系或约战的对方人物编号。", "Related" => "发帖希望回应的人物编号，以竖线分隔。", "Coach" => "训练教练的人物编号。", "Id" => "邀请新活动填0；接受、拒绝或改期时填写本轮对应类型的待处理卡片实际编号。", _ => "含义和适用条件见本工具说明中的 " + k + "。" }`
@@ -375,19 +373,12 @@ private Frame? _owner;
 - `description` = `description.Replace("你可以从玩家的具体讲解中", "各人可以从交流中的具体讲解中") .Replace("玩家提供了具体、适用条件明确的做法", "交流中提供了具体、适用条件明确的做法") + "\n" + Describe(string.Join("\n", GroupChatPrompts.ActorFormat.Split('\n').Where((line, index) => index is 0 or 2 or 7 || f.Name == "match" && index == 3 || f.Name is "relationship" or "skill" && index == 4 || f.Name == "post" && index == 6)))`
 - `description` = `description.Replace("普通聊天无需附带任何工具参数。", "本轮没有上述学习变化时省略 skill 交互，其他交互按各自说明判断。")`
 - `exampleAction` = `new() { ["Type"] = "activity", ["Activity"] = "邀请", ["Id"] = "0", ["Title"] = "一起看录像", ["Date"] = "2026-01-18", ["Detail"] = "讨论今天的比赛", ["Actor"] = "p1|p2|p3" }`
-- `exampleAction` = `new() { ["Type"] = "date_choice", ["DateChoice"] = "（指向附近的小路。）一起走走吧。" }`
 - `exampleAction` = `new() { ["Type"] = "date_diary", ["DateDiary"] = "今天和他按约定见面，聊起各自最近的生活。原本只想简单说几句，后来却越聊越放松。离开时，我还惦记着刚才没说完的话。", ["Location"] = "地点未明确" }`
-- `exampleReasoning` = `"承接当前约会交流，填写逐句内容与两项待玩家选择的回应。"`
 - `exampleReasoning` = `"本次相处已结束，根据完整记录发送感想，并整理这场约会的日记。"`
-- `exampleReply["Background"]` = `"current"`
-- `exampleReply["Emotion"]` = `exampleScene.DefaultEmotionId`
 - `exampleReply["Reply"]` = `"今天和你聊得很开心，回去路上还在想我们刚才说的事。"`
-- `exampleReply["Reply"]` = `"刚才聊得很开心，你还想去哪里走走？"`
 - `exampleReply["Reply"]` = `"明天一起看录像吧，我把今天没弄明白的地方整理好。"`
 - `exampleReply["Reply"]` = `"明天再切磋一局吧，我把今天没弄明白的地方整理好。"`
-- `exampleReply["Scene"]` = `"dialogue"`
 - `exampleReply["Speaker"]` = `"p2"`
-- `exampleReply["Speaker"]` = `turn!.Scene!.Participants[0].PersonId`
 - `features` = `features.Select(f => f.Name is "relationship" or "skill" or "mood" or "profile" ? f with { Fields = [.. f.Fields, "Actor"], Description = f.Description + "\nActor填写本次约会中实际发生变化的NPC完整PersonId，关系变化的对象为玩家。" } : f).ToList()`
 - `properties["Type"]` = `new { type = "string", @enum = new[] { f.Name } }`
 - `replyProperties["Reply"]` = `new { type = "string", description = "本段完整正文，保持当前模板要求的文风与篇幅，包含角色语言或约会旁白。" }`
@@ -399,7 +390,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolCall.Index — public int Index`
 
-来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -417,7 +408,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolCall.Id — public string Id`
 
-来源：源码第 211 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -435,7 +426,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolCall.Name — public string Name`
 
-来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 207 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -453,7 +444,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolCall.Arguments — public string Arguments`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 209 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -474,7 +465,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolCall.AppendArguments(string?) — internal void AppendArguments(string? value)`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 210 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)
 
@@ -493,7 +484,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Definitions — public object[] Definitions`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -511,7 +502,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Group — public bool Group`
 
-来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -529,7 +520,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Calls — public List<ChatToolCall> Calls`
 
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 222 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -547,7 +538,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Error — public string Error`
 
-来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -563,15 +554,15 @@ private Frame? _owner;
 
 <a id="symbol-6a6f6970a865"></a>
 
-## `NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool) — internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group, bool scene = false, bool party = false)`
+## `NationalSpire.ChatToolRequest.ChatToolRequest(System.Collections.Generic.IEnumerable<NationalSpire.ChatTools.Feature>, object[], bool, bool, bool, string[]?) — internal ChatToolRequest(IEnumerable<ChatTools.Feature> features, object[] definitions, bool group, bool scene = false, bool party = false, string[]? requiredMetadata = null)`
 
-来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 224 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatTools.Create(NationalSpire.CareerData, NationalSpire.PrivateConversation?, NationalSpire.PrivateTurn?, NationalSpire.GroupChat?)`](ChatTools.cs.md#symbol-da501aed0ab9)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IEqualityComparer<TKey>?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatToolRequest.Definitions`；`NationalSpire.ChatToolRequest.Group`；`NationalSpire.ChatToolRequest._features`；`NationalSpire.ChatToolRequest._party`；`NationalSpire.ChatToolRequest._scene`；`NationalSpire.ChatTools.Feature.Name`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatToolRequest.Definitions`；`NationalSpire.ChatToolRequest.Group`；`NationalSpire.ChatToolRequest._features`；`NationalSpire.ChatToolRequest._party`；`NationalSpire.ChatToolRequest._requiredMetadata`；`NationalSpire.ChatToolRequest._scene`；`NationalSpire.ChatTools.Feature.Name`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -583,23 +574,24 @@ private Frame? _owner;
 - `Group` = `group`
 - `_features` = `features.ToDictionary(f => f.Name, StringComparer.OrdinalIgnoreCase)`
 - `_party` = `party`
+- `_requiredMetadata` = `requiredMetadata ?? []`
 - `_scene` = `scene`
 
 <a id="symbol-bfdf106e5cdf"></a>
 
 ## `NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?) — public void Feed(JsonElement message, Action<string>? progress = null, Action<string>? reasoning = null)`
 
-来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
+**调用者：** [`Event()`](AiPrivateMessages.cs.md#symbol-29b10fe25b87)；[`NationalSpire.AiService.RequestPrivateAsync(NationalSpire.AiOptions, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>, bool, System.Action<string>?, System.Threading.CancellationToken, System.Action<string>?, string, string, NationalSpire.ChatToolRequest?, int?, int?)`](AiPrivateMessages.cs.md#symbol-bab48bdb57c8)
 
-**调用：** `NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool)`；[`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)；[`NationalSpire.ChatToolCall.AppendArguments(string?)`](ChatTools.cs.md#symbol-506dc7ff027a)；`NationalSpire.ChatToolCall.ChatToolCall()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetInt32()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
+**调用：** `NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool, string[]?)`；[`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)；[`NationalSpire.ChatToolCall.AppendArguments(string?)`](ChatTools.cs.md#symbol-506dc7ff027a)；`NationalSpire.ChatToolCall.ChatToolCall()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetInt32()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`；`NationalSpire.ChatToolCall.AppendArguments(string?)`；`NationalSpire.ChatToolCall.Arguments`；`NationalSpire.ChatToolCall.Id`；`NationalSpire.ChatToolCall.Index`；`NationalSpire.ChatToolCall.Name`；`NationalSpire.ChatToolRequest.Calls`；`NationalSpire.ChatToolRequest.Group`；`NationalSpire.ChatToolRequest._party`；`NationalSpire.ChatToolRequest._scene`；`NationalSpire.ChatToolRequest._streams`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`；`NationalSpire.ChatToolCall.AppendArguments(string?)`；`NationalSpire.ChatToolCall.Arguments`；`NationalSpire.ChatToolCall.Id`；`NationalSpire.ChatToolCall.Index`；`NationalSpire.ChatToolCall.Name`；`NationalSpire.ChatToolRequest.Calls`；`NationalSpire.ChatToolRequest.Group`；`NationalSpire.ChatToolRequest._party`；`NationalSpire.ChatToolRequest._requiredMetadata`；`NationalSpire.ChatToolRequest._scene`；`NationalSpire.ChatToolRequest._streams`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool)`；输入表达式：`new(Group, _scene, _party)`；返回值紧邻使用处：`AssignmentExpressionSyntax: reader = new(Group, _scene, _party)`
+- `NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool, string[]?)`；输入表达式：`new(Group, _scene, _party, _requiredMetadata)`；返回值紧邻使用处：`AssignmentExpressionSyntax: reader = new(Group, _scene, _party, _requiredMetadata)`
 - `NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`；输入表达式：`reader.Feed(args.GetString() ?? "", progress, reasoning)`；返回值紧邻使用处：`ExpressionStatementSyntax: reader.Feed(args.GetString() ?? "", progress, reasoning);`
 - `NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`；输入表达式：`reader.Feed(call.Arguments, progress, reasoning)`；返回值紧邻使用处：`ExpressionStatementSyntax: reader.Feed(call.Arguments, progress, reasoning);`
 - `NationalSpire.ChatToolCall.AppendArguments(string?)`；输入表达式：`call.AppendArguments(args.GetString())`；返回值紧邻使用处：`ExpressionStatementSyntax: call.AppendArguments(args.GetString());`
@@ -607,7 +599,7 @@ private Frame? _owner;
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_streams.TryGetValue(index, out var reader)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_streams.TryGetValue(index, out var reader)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`Calls.FirstOrDefault(c => c.Index == index)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Calls.FirstOrDefault(c => c.Index == index)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`Calls.Add(call)`；返回值紧邻使用处：`ExpressionStatementSyntax: Calls.Add(call);`
-- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`calls.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in calls.EnumerateArray()) { int index = item.TryGetProperty("index", out var n) ? n.GetInt32() : fallback; fallback++; var call = Calls.FirstOrDefault(c => c.Index == index); if (call == null) { call = new() { Index = index }; Calls.Add(call); } if (item.TryGetProperty("id", out var id)) call.Id += id.GetString(); if (item.TryGetProperty("function", out var function)) { if (function.TryGetProperty("name", out var name)) call.Name += name.GetString(); if (function.TryGetProperty("arguments", out var args)) call.AppendArguments(args.GetString()); if (call.Name == "send_message") { if (!_streams.TryGetValue(index, out var reader)) { reader = new(Group, _scene, _party); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); } else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning); } } }`
+- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`calls.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in calls.EnumerateArray()) { int index = item.TryGetProperty("index", out var n) ? n.GetInt32() : fallback; fallback++; var call = Calls.FirstOrDefault(c => c.Index == index); if (call == null) { call = new() { Index = index }; Calls.Add(call); } if (item.TryGetProperty("id", out var id)) call.Id += id.GetString(); if (item.TryGetProperty("function", out var function)) { if (function.TryGetProperty("name", out var name)) call.Name += name.GetString(); if (function.TryGetProperty("arguments", out var args)) call.AppendArguments(args.GetString()); if (call.Name == "send_message") { if (!_streams.TryGetValue(index, out var reader)) { reader = new(Group, _scene, _party, _requiredMetadata); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); } else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning); } } }`
 - `System.Text.Json.JsonElement.GetInt32()`；输入表达式：`n.GetInt32()`；返回值紧邻使用处：`ConditionalExpressionSyntax: item.TryGetProperty("index", out var n) ? n.GetInt32() : fallback`
 - `System.Text.Json.JsonElement.GetString()`；输入表达式：`args.GetString()`；返回值紧邻使用处：`ArgumentSyntax: args.GetString()`
 - `System.Text.Json.JsonElement.GetString()`；输入表达式：`args.GetString()`；返回值紧邻使用处：`BinaryExpressionSyntax: args.GetString() ?? ""`
@@ -616,7 +608,7 @@ private Frame? _owner;
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`function.TryGetProperty("arguments", out args)`；返回值紧邻使用处：`IfStatementSyntax: if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning);`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`function.TryGetProperty("arguments", out var args)`；返回值紧邻使用处：`IfStatementSyntax: if (function.TryGetProperty("arguments", out var args)) call.AppendArguments(args.GetString());`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`function.TryGetProperty("name", out var name)`；返回值紧邻使用处：`IfStatementSyntax: if (function.TryGetProperty("name", out var name)) call.Name += name.GetString();`
-- `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`item.TryGetProperty("function", out var function)`；返回值紧邻使用处：`IfStatementSyntax: if (item.TryGetProperty("function", out var function)) { if (function.TryGetProperty("name", out var name)) call.Name += name.GetString(); if (function.TryGetProperty("arguments", out var args)) call.AppendArguments(args.GetString()); if (call.Name == "send_message") { if (!_streams.TryGetValue(index, out var reader)) { reader = new(Group, _scene, _party); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); } else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning); } }`
+- `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`item.TryGetProperty("function", out var function)`；返回值紧邻使用处：`IfStatementSyntax: if (item.TryGetProperty("function", out var function)) { if (function.TryGetProperty("name", out var name)) call.Name += name.GetString(); if (function.TryGetProperty("arguments", out var args)) call.AppendArguments(args.GetString()); if (call.Name == "send_message") { if (!_streams.TryGetValue(index, out var reader)) { reader = new(Group, _scene, _party, _requiredMetadata); _streams[index] = reader; reader.Feed(call.Arguments, progress, reasoning); } else if (function.TryGetProperty("arguments", out args)) reader.Feed(args.GetString() ?? "", progress, reasoning); } }`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`item.TryGetProperty("id", out var id)`；返回值紧邻使用处：`IfStatementSyntax: if (item.TryGetProperty("id", out var id)) call.Id += id.GetString();`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`item.TryGetProperty("index", out var n)`；返回值紧邻使用处：`ConditionalExpressionSyntax: item.TryGetProperty("index", out var n) ? n.GetInt32() : fallback`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`message.TryGetProperty("tool_calls", out var calls)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !message.TryGetProperty("tool_calls", out var calls)`
@@ -628,24 +620,24 @@ private Frame? _owner;
 - `call.Id` += `id.GetString()`
 - `call.Name` += `name.GetString()`
 - `call` = `new() { Index = index }`
-- `reader` = `new(Group, _scene, _party)`
+- `reader` = `new(Group, _scene, _party, _requiredMetadata)`
 
 <a id="symbol-229eb9d26f21"></a>
 
 ## `NationalSpire.ChatToolRequest.Read() — private IEnumerable<(Dictionary<string, string> Fields, string Reply, string Speaker)> Read()`
 
-来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 249 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Apply(NationalSpire.PrivateStreamParser)`](ChatTools.cs.md#symbol-2741ec79193e)；[`NationalSpire.ChatToolRequest.FallbackText()`](ChatTools.cs.md#symbol-e2b21aa13bda)
 
-**调用：** [`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-cd510b59d78a)；[`NationalSpire.ChatToolRequest.RecordError(string, string)`](ChatTools.cs.md#symbol-af4909caab69)；[`NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-781c76caa651)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
+**调用：** [`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-cd510b59d78a)；[`NationalSpire.ChatToolRequest.RecordError(string, string)`](ChatTools.cs.md#symbol-af4909caab69)；[`NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-781c76caa651)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatToolCall.Arguments`；`NationalSpire.ChatToolCall.Index`；`NationalSpire.ChatToolCall.Name`；`NationalSpire.ChatToolRequest.Calls`；`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`；`NationalSpire.ChatToolRequest.RecordError(string, string)`；`NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatToolCall.Arguments`；`NationalSpire.ChatToolCall.Index`；`NationalSpire.ChatToolCall.Name`；`NationalSpire.ChatToolRequest.Calls`；`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`；`NationalSpire.ChatToolRequest.RecordError(string, string)`；`NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`；`NationalSpire.DateSceneExtensions.MetadataFields`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`；输入表达式：`ReadItem(call.Name, root)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ReadItem(call.Name, root) is { } legacy`
 - `NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`；输入表达式：`ReadItem(Value(type), item)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ReadItem(Value(type), item) is { } action`
+- `NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`；输入表达式：`ReadItem(call.Name, root)`；返回值紧邻使用处：`IsPatternExpressionSyntax: ReadItem(call.Name, root) is { } legacy`
 - `NationalSpire.ChatToolRequest.RecordError(string, string)`；输入表达式：`RecordError(call.Name, "参数应为对象")`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordError(call.Name, "参数应为对象");`
 - `NationalSpire.ChatToolRequest.RecordError(string, string)`；输入表达式：`RecordError(call.Name, "正文段落应为对象")`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordError(call.Name, "正文段落应为对象");`
 - `NationalSpire.ChatToolRequest.RecordError(string, string)`；输入表达式：`RecordError(call.Name, e.Message)`；返回值紧邻使用处：`ExpressionStatementSyntax: RecordError(call.Name, e.Message);`
@@ -657,10 +649,11 @@ private Frame? _owner;
 - `NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`；输入表达式：`Value(value)`；返回值紧邻使用处：`AssignmentExpressionSyntax: fields[key] = Value(value)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；输入表达式：`new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Calls.OrderBy(c => c.Index)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var call in Calls.OrderBy(c => c.Index))          {              JsonDocument? json = null;              try              {                  json = JsonDocument.Parse(call.Arguments);              }              catch (JsonException e) { RecordError(call.Name, e.Message); }              if (json == null) continue;              using (json)              {                  var root = json.RootElement;                  if (call.Name != "send_message")                  {                      if (ReadItem(call.Name, root) is { } legacy) yield return legacy;                      continue;                  }                  if (root.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "参数应为对象"); continue; }                  if (root.TryGetProperty("Replies", out var replies) && replies.ValueKind == JsonValueKind.Array)                      foreach (var reply in replies.EnumerateArray())                      {                          if (reply.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "正文段落应为对象"); continue; }                          var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);                          foreach (string key in new[] { "Scene", "Emotion", "Background" })                              if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value);                          yield return (fields, reply.TryGetProperty("Reply", out var text) ? Value(text) : "", reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : "");                      }                  if (root.TryGetProperty("Reply", out var simple)) yield return (new(), Value(simple), root.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : "");                  if (root.TryGetProperty("Interactions", out var interactions) && interactions.ValueKind == JsonValueKind.Array)                      foreach (var item in interactions.EnumerateArray())                          if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("Type", out var type)                              && ReadItem(Value(type), item) is { } action) yield return action;              }          }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`Calls.OrderBy(c => c.Index)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var call in Calls.OrderBy(c => c.Index)) { JsonDocument? json = null; try { json = JsonDocument.Parse(call.Arguments); } catch (JsonException e) { RecordError(call.Name, e.Message); } if (json == null) continue; using (json) { var root = json.RootElement; if (call.Name != "send_message") { if (ReadItem(call.Name, root) is { } legacy) yield return legacy; continue; } if (root.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "参数应为对象"); continue; } if (root.TryGetProperty("Replies", out var replies) && replies.ValueKind == JsonValueKind.Array) foreach (var reply in replies.EnumerateArray()) { if (reply.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "正文段落应为对象"); continue; } var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); foreach (string key in DateSceneExtensions.MetadataFields.Where(key => key != "Speaker")) if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value); yield return (fields, reply.TryGetProperty("Reply", out var text) ? Value(text) : "", reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : ""); } if (root.TryGetProperty("Reply", out var simple)) yield return (new(), Value(simple), root.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : ""); if (root.TryGetProperty("Interactions", out var interactions) && interactions.ValueKind == JsonValueKind.Array) foreach (var item in interactions.EnumerateArray()) if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("Type", out var type) && ReadItem(Value(type), item) is { } action) yield return action; } }`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`DateSceneExtensions.MetadataFields.Where(key => key != "Speaker")`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (string key in DateSceneExtensions.MetadataFields.Where(key => key != "Speaker")) if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value);`
 - `System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；输入表达式：`JsonDocument.Parse(call.Arguments)`；返回值紧邻使用处：`AssignmentExpressionSyntax: json = JsonDocument.Parse(call.Arguments)`
-- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`interactions.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in interactions.EnumerateArray())                          if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("Type", out var type)                              && ReadItem(Value(type), item) is { } action) yield return action;`
-- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`replies.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var reply in replies.EnumerateArray())                      {                          if (reply.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "正文段落应为对象"); continue; }                          var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);                          foreach (string key in new[] { "Scene", "Emotion", "Background" })                              if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value);                          yield return (fields, reply.TryGetProperty("Reply", out var text) ? Value(text) : "", reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : "");                      }`
+- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`interactions.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var item in interactions.EnumerateArray()) if (item.ValueKind == JsonValueKind.Object && item.TryGetProperty("Type", out var type) && ReadItem(Value(type), item) is { } action) yield return action;`
+- `System.Text.Json.JsonElement.EnumerateArray()`；输入表达式：`replies.EnumerateArray()`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var reply in replies.EnumerateArray()) { if (reply.ValueKind != JsonValueKind.Object) { RecordError(call.Name, "正文段落应为对象"); continue; } var fields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); foreach (string key in DateSceneExtensions.MetadataFields.Where(key => key != "Speaker")) if (reply.TryGetProperty(key, out var value)) fields[key] = Value(value); yield return (fields, reply.TryGetProperty("Reply", out var text) ? Value(text) : "", reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : ""); }`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`item.TryGetProperty("Type", out var type)`；返回值紧邻使用处：`BinaryExpressionSyntax: item.ValueKind == JsonValueKind.Object && item.TryGetProperty("Type", out var type)`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`reply.TryGetProperty("Reply", out var text)`；返回值紧邻使用处：`ConditionalExpressionSyntax: reply.TryGetProperty("Reply", out var text) ? Value(text) : ""`
 - `System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；输入表达式：`reply.TryGetProperty("Speaker", out var speaker)`；返回值紧邻使用处：`ConditionalExpressionSyntax: reply.TryGetProperty("Speaker", out var speaker) ? Value(speaker) : ""`
@@ -679,11 +672,11 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement) — private string Value(JsonElement value)`
 
-来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；[`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-cd510b59d78a)
 
-**调用：** [`NationalSpire.ChatToolRequest.RecordError(string, string)`](ChatTools.cs.md#symbol-af4909caab69)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetRawText()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`
+**调用：** [`NationalSpire.ChatToolRequest.RecordError(string, string)`](ChatTools.cs.md#symbol-af4909caab69)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Text.Json.JsonElement.EnumerateArray()`；`System.Text.Json.JsonElement.GetRawText()`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.ToString()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatToolRequest.RecordError(string, string)`
 
@@ -705,7 +698,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement) — private (Dictionary<string, string> Fields, string Reply, string Speaker)? ReadItem(string name, JsonElement item)`
 
-来源：源码第 296 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)
 
@@ -733,7 +726,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.RecordError(string, string) — private void RecordError(string name, string reason)`
 
-来源：源码第 310 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 306 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；[`NationalSpire.ChatToolRequest.ReadItem(string, System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-cd510b59d78a)；[`NationalSpire.ChatToolRequest.Value(System.Text.Json.JsonElement)`](ChatTools.cs.md#symbol-781c76caa651)
 
@@ -753,11 +746,11 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.FallbackText() — public string FallbackText()`
 
-来源：源码第 312 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 308 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`FinishText()`](AiPrivateMessages.cs.md#symbol-105a40137cba)
 
-**调用：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.ChatToolRequest.Read()`](ChatTools.cs.md#symbol-229eb9d26f21)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.HashSet(System.Collections.Generic.IEqualityComparer<T>?)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `(System.Collections.Generic.Dictionary<string, string> Fields, string Reply, string Speaker).Fields`；`(System.Collections.Generic.Dictionary<string, string> Fields, string Reply, string Speaker).Reply`；`(System.Collections.Generic.Dictionary<string, string> Fields, string Reply, string Speaker).Speaker`；`NationalSpire.ChatToolRequest.Group`；`NationalSpire.ChatToolRequest.Read()`
 
@@ -780,7 +773,7 @@ private Frame? _owner;
 
 ## `NationalSpire.ChatToolRequest.Apply(NationalSpire.PrivateStreamParser) — public void Apply(PrivateStreamParser parser)`
 
-来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 318 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessGroupAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string>?)`](AiGroupChats.cs.md#symbol-caddadc35a6b)；[`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
 
@@ -805,28 +798,47 @@ private Frame? _owner;
 - `fields["Speaker"]` = `speaker`
 - `sceneOffset` = `offset + reply.Length`
 
+<a id="symbol-ffb7de4ed525"></a>
+
+## `NationalSpire.ChatReplyStream.ChatReplyStream(bool, bool, bool) — public ChatReplyStream(bool group, bool scene, bool party)`
+
+来源：源码第 338 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-3c38f9bbe535"></a>
 
 ## `NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?) — public void Feed(string chunk, Action<string>? progress, Action<string>? reasoning)`
 
-来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatToolRequest.Feed(System.Text.Json.JsonElement, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-bfdf106e5cdf)
 
-**调用：** [`Character(char)`](ChatTools.cs.md#symbol-ea611f3d7f57)；[`Flush(NationalSpire.ChatReplyStream.Frame)`](ChatTools.cs.md#symbol-d73653f05501)；`NationalSpire.ChatReplyStream.Frame.Frame(char, bool, bool)`；`System.Action<T>.Invoke(T)`；`System.Collections.Generic.Stack<T>.Push(T)`；`System.Collections.Generic.Stack<T>.TryPeek(out T)`；`System.Collections.Generic.Stack<T>.TryPop(out T)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`Character(char)`](ChatTools.cs.md#symbol-ea611f3d7f57)；[`Flush(NationalSpire.ChatReplyStream.Frame, bool)`](ChatTools.cs.md#symbol-d73653f05501)；`NationalSpire.ChatReplyStream.Frame.Frame(char, bool, bool)`；`System.Action<T>.Invoke(T)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.Stack<T>.Push(T)`；`System.Collections.Generic.Stack<T>.TryPeek(out T)`；`System.Collections.Generic.Stack<T>.TryPop(out T)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
-**字段、属性、事件及方法组引用：** `Character(char)`；`Flush(NationalSpire.ChatReplyStream.Frame)`；`NationalSpire.ChatReplyStream.Frame.Key`；`NationalSpire.ChatReplyStream.Frame.KeyExpected`；`NationalSpire.ChatReplyStream.Frame.Kind`；`NationalSpire.ChatReplyStream.Frame.Metadata`；`NationalSpire.ChatReplyStream.Frame.Opened`；`NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Replies`；`NationalSpire.ChatReplyStream._escape`；`NationalSpire.ChatReplyStream._field`；`NationalSpire.ChatReplyStream._frames`；`NationalSpire.ChatReplyStream._key`；`NationalSpire.ChatReplyStream._owner`；`NationalSpire.ChatReplyStream._quoted`；`NationalSpire.ChatReplyStream._token`；`NationalSpire.ChatReplyStream._unicode`；`NationalSpire.ChatReplyStream._unicodeLeft`
+**字段、属性、事件及方法组引用：** `Character(char)`；`Flush(NationalSpire.ChatReplyStream.Frame, bool)`；`NationalSpire.ChatReplyStream.Frame.Key`；`NationalSpire.ChatReplyStream.Frame.KeyExpected`；`NationalSpire.ChatReplyStream.Frame.Kind`；`NationalSpire.ChatReplyStream.Frame.Metadata`；`NationalSpire.ChatReplyStream.Frame.Opened`；`NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Replies`；`NationalSpire.ChatReplyStream._escape`；`NationalSpire.ChatReplyStream._field`；`NationalSpire.ChatReplyStream._frames`；`NationalSpire.ChatReplyStream._key`；`NationalSpire.ChatReplyStream._owner`；`NationalSpire.ChatReplyStream._quoted`；`NationalSpire.ChatReplyStream._token`；`NationalSpire.ChatReplyStream._unicode`；`NationalSpire.ChatReplyStream._unicodeLeft`；`NationalSpire.DateSceneExtensions.MetadataFields`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Character(char)`；输入表达式：`Character((char)_unicode)`；返回值紧邻使用处：`ExpressionStatementSyntax: Character((char)_unicode);`
 - `Character(char)`；输入表达式：`Character(c switch { 'n' => '\n', 'r' => '\r', 't' => '\t', 'b' => '\b', 'f' => '\f', _ => c })`；返回值紧邻使用处：`ExpressionStatementSyntax: Character(c switch { 'n' => '\n', 'r' => '\r', 't' => '\t', 'b' => '\b', 'f' => '\f', _ => c });`
 - `Character(char)`；输入表达式：`Character(c)`；返回值紧邻使用处：`ExpressionStatementSyntax: Character(c);`
-- `Flush(NationalSpire.ChatReplyStream.Frame)`；输入表达式：`Flush(_owner)`；返回值紧邻使用处：`ExpressionStatementSyntax: Flush(_owner);`
-- `Flush(NationalSpire.ChatReplyStream.Frame)`；输入表达式：`Flush(frame)`；返回值紧邻使用处：`ExpressionStatementSyntax: Flush(frame);`
+- `Flush(NationalSpire.ChatReplyStream.Frame, bool)`；输入表达式：`Flush(_owner)`；返回值紧邻使用处：`ExpressionStatementSyntax: Flush(_owner);`
+- `Flush(NationalSpire.ChatReplyStream.Frame, bool)`；输入表达式：`Flush(frame, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Flush(frame, true);`
 - `NationalSpire.ChatReplyStream.Frame.Frame(char, bool, bool)`；输入表达式：`new(c, c == '[' && parent?.Key == "Replies", c == '{' && parent?.Replies == true)`；返回值紧邻使用处：`ArgumentSyntax: new(c, c == '[' && parent?.Key == "Replies", c == '{' && parent?.Replies == true)`
 - `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(analysis.ToString())`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: reasoning?.Invoke(analysis.ToString())`
 - `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(output.ToString())`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: progress?.Invoke(output.ToString())`
+- `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`DateSceneExtensions.MetadataFields.Contains(_field)`；返回值紧邻使用处：`BinaryExpressionSyntax: _owner?.Paragraph == true && DateSceneExtensions.MetadataFields.Contains(_field)`
 - `System.Collections.Generic.Stack<T>.Push(T)`；输入表达式：`_frames.Push(new(c, c == '[' && parent?.Key == "Replies", c == '{' && parent?.Replies == true))`；返回值紧邻使用处：`ExpressionStatementSyntax: _frames.Push(new(c, c == '[' && parent?.Key == "Replies", c == '{' && parent?.Replies == true));`
 - `System.Collections.Generic.Stack<T>.TryPeek(out T)`；输入表达式：`_frames.TryPeek(out var parent)`；返回值紧邻使用处：`ExpressionStatementSyntax: _frames.TryPeek(out var parent);`
 - `System.Collections.Generic.Stack<T>.TryPop(out T)`；输入表达式：`_frames.TryPop(out var frame)`；返回值紧邻使用处：`BinaryExpressionSyntax: _frames.TryPop(out var frame) && frame.Paragraph`
@@ -858,37 +870,29 @@ private Frame? _owner;
 
 <a id="symbol-d73653f05501"></a>
 
-## `Flush(NationalSpire.ChatReplyStream.Frame) — void Flush(Frame frame)`
+## `Flush(NationalSpire.ChatReplyStream.Frame, bool) — void Flush(Frame frame, bool complete = false)`
 
-来源：源码第 359 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)
 
-**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Remove(int, int)`；`System.Text.StringBuilder.ToString(int, int)`；`char.IsHighSurrogate(char)`
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Remove(int, int)`；`System.Text.StringBuilder.ToString(int, int)`；`char.IsHighSurrogate(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.ChatReplyStream.Frame.Metadata`；`NationalSpire.ChatReplyStream.Frame.Opened`；`NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Pending`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`frame.Metadata.ContainsKey("Scene")`；返回值紧邻使用处：`IfStatementSyntax: if (frame.Metadata.ContainsKey("Scene")) output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append(']');`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`frame.Metadata.ContainsKey("Scene")`；返回值紧邻使用处：`IfStatementSyntax: if (frame.Metadata.ContainsKey("Scene")) output.Append(JsonSerializer.Serialize(frame.Metadata));`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`frame.Metadata.ContainsKey("Speaker")`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !frame.Metadata.ContainsKey("Speaker")`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`frame.Metadata.ContainsKey(key)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !frame.Metadata.ContainsKey(key)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`(requiredMetadata ?? []).Any(key => !frame.Metadata.ContainsKey(key))`；返回值紧邻使用处：`BinaryExpressionSyntax: frame.Paragraph && !complete && (requiredMetadata ?? []).Any(key => !frame.Metadata.ContainsKey(key))`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`new[] { "Scene", "Emotion", "Background" }.Any(key => !frame.Metadata.ContainsKey(key))`；返回值紧邻使用处：`BinaryExpressionSyntax: frame.Paragraph && scene && new[] { "Scene", "Emotion", "Background" }.Any(key => !frame.Metadata.ContainsKey(key))`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`frame.Metadata.GetValueOrDefault("Background", "current")`；返回值紧邻使用处：`ArgumentSyntax: frame.Metadata.GetValueOrDefault("Background", "current")`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`frame.Metadata.GetValueOrDefault("Emotion", "neutral")`；返回值紧邻使用处：`ArgumentSyntax: frame.Metadata.GetValueOrDefault("Emotion", "neutral")`
-- `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`frame.Metadata.GetValueOrDefault("Speaker", "")`；返回值紧邻使用处：`BinaryExpressionSyntax: ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "")`
-- `System.Text.StringBuilder.Append(char)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append(']')`；返回值紧邻使用处：`ExpressionStatementSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append(']');`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(frame.Metadata)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(frame.Metadata)`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`analysis.Append(frame.Pending.ToString(0, count))`；返回值紧邻使用处：`ExpressionStatementSyntax: analysis.Append(frame.Pending.ToString(0, count));`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Scene: ").Append(frame.Metadata["Scene"]).Append(", Emotion: ").Append(frame.Metadata.GetValueOrDefault("Emotion", "neutral")) .Append(", Background: ").Append(frame.Metadata.GetValueOrDefault("Background", "current")) .Append(party ? ", Speaker: " + frame.Metadata.GetValueOrDefault("Speaker", "") : "").Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Speaker: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Speaker: ").Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Speaker: ").Append(frame.Metadata["Speaker"])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: output.Append("[Speaker: ").Append(frame.Metadata["Speaker"]).Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append("[Speaker: ").Append(frame.Metadata["Speaker"]).Append("]\n")`；返回值紧邻使用处：`ExpressionStatementSyntax: output.Append("[Speaker: ").Append(frame.Metadata["Speaker"]).Append("]\n");`
+- `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append(JsonSerializer.Serialize(frame.Metadata))`；返回值紧邻使用处：`ExpressionStatementSyntax: output.Append(JsonSerializer.Serialize(frame.Metadata));`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`output.Append(frame.Pending.ToString(0, count))`；返回值紧邻使用处：`ExpressionStatementSyntax: output.Append(frame.Pending.ToString(0, count));`
 - `System.Text.StringBuilder.Remove(int, int)`；输入表达式：`frame.Pending.Remove(0, count)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.Pending.Remove(0, count);`
 - `System.Text.StringBuilder.ToString(int, int)`；输入表达式：`frame.Pending.ToString(0, count)`；返回值紧邻使用处：`ArgumentSyntax: frame.Pending.ToString(0, count)`
@@ -902,16 +906,17 @@ private Frame? _owner;
 
 ## `Character(char) — void Character(char c)`
 
-来源：源码第 379 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatReplyStream.Feed(string, System.Action<string>?, System.Action<string>?)`](ChatTools.cs.md#symbol-3c38f9bbe535)
 
-**调用：** `System.Text.StringBuilder.Append(char)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Text.StringBuilder.Append(char)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.ChatReplyStream._field`；`NationalSpire.ChatReplyStream._frames`；`NationalSpire.ChatReplyStream._key`；`NationalSpire.ChatReplyStream._owner`；`NationalSpire.ChatReplyStream._token`；`NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Pending`
+**字段、属性、事件及方法组引用：** `NationalSpire.ChatReplyStream.Frame.Paragraph`；`NationalSpire.ChatReplyStream.Frame.Pending`；`NationalSpire.ChatReplyStream._field`；`NationalSpire.ChatReplyStream._frames`；`NationalSpire.ChatReplyStream._key`；`NationalSpire.ChatReplyStream._owner`；`NationalSpire.ChatReplyStream._token`；`NationalSpire.DateSceneExtensions.MetadataFields`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`DateSceneExtensions.MetadataFields.Contains(_field)`；返回值紧邻使用处：`BinaryExpressionSyntax: _owner?.Paragraph == true && DateSceneExtensions.MetadataFields.Contains(_field)`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`_owner.Pending.Append(c)`；返回值紧邻使用处：`ExpressionStatementSyntax: _owner.Pending.Append(c);`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`_token.Append(c)`；返回值紧邻使用处：`ExpressionStatementSyntax: _token.Append(c);`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0BFE123FA666E6AC0C9B2D72A9BB56C48B120FA4BEAC0610074B3A8430BF7790`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2605A6A84602B579E643D1E4437C7B89CB1652C984A863628919E27ADEEFD807`。来源：[源码](../../MarketVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -59,7 +59,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketPositionCard.Bind(NationalSpire.MarketPosition?, NationalSpire.MarketQuote?, long, NationalSpire.MarketExecution.Exit?, bool)`](MarketVisuals.cs.md#symbol-fd36a7e27494)；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** `Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Cards`
 
@@ -89,7 +89,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketAssetButton.Bind(NationalSpire.MarketAsset, NationalSpire.MarketQuote, bool, bool)`](MarketVisuals.cs.md#symbol-4e16b3f4bac4)；[`NationalSpire.MarketEventRow.MarketEventRow()`](MarketVisuals.cs.md#symbol-b32cc5c2b62a)；[`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
-**调用：** [`NationalSpire.MarketVisuals.Card(string, bool, bool)`](MarketVisuals.cs.md#symbol-aef7b9c00c48)；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
+**调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；[`NationalSpire.MarketVisuals.Card(string, bool, bool)`](MarketVisuals.cs.md#symbol-aef7b9c00c48)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketVisuals.Card(string, bool, bool)`
 
@@ -113,7 +113,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
+**调用：** `Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Lerp(Godot.Color, float)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Actions`
 
@@ -210,7 +210,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshList()`](MarketTerminal.cs.md#symbol-38f64566d7c6)
 
-**调用：** [`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)；`decimal.ToString(string?)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`
+**调用：** `Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)；`decimal.ToString(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAsset.Country`；`NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketAssetButton._change`；`NationalSpire.MarketAssetButton._icon`；`NationalSpire.MarketAssetButton._name`；`NationalSpire.MarketAssetButton._price`；`NationalSpire.MarketAssetButton._sector`；`NationalSpire.MarketQuote.Previous`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`
 
@@ -242,7 +242,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
 
-**调用：** [`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`](MarketVisuals.cs.md#symbol-7d1876899194)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Muted`；`NationalSpire.MarketEventRow._change`；`NationalSpire.MarketEventRow._day`；`NationalSpire.MarketEventRow._title`；`NationalSpire.MarketVisuals.Style(Godot.Button, string, bool)`
 
@@ -286,7 +286,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshSelection()`](MarketTerminal.cs.md#symbol-c8cd06b76400)
 
-**调用：** [`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`double.ToString(string?)`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`
+**调用：** `Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-eb37c8a67b51)；`double.ToString(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Teal`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；`NationalSpire.MarketEvent.Change`；`NationalSpire.MarketEvent.Day`；`NationalSpire.MarketEvent.Person`；`NationalSpire.MarketEventRow._change`；`NationalSpire.MarketEventRow._day`；`NationalSpire.MarketEventRow._title`
 
@@ -371,7 +371,7 @@ private bool _margin;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.MarketVisuals.LevelColor(int)`](MarketVisuals.cs.md#symbol-0f0bdceb25d3)；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.MarketVisuals.LevelColor(int)`](MarketVisuals.cs.md#symbol-0f0bdceb25d3)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.DevelopmentGauge.Enhancement`；`NationalSpire.DevelopmentGauge.Level`；`NationalSpire.MarketVisuals.LevelColor(int)`
 
@@ -399,9 +399,9 @@ private bool _margin;
 
 来源：源码第 157 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketTerminal.Build()`](MarketTerminal.cs.md#symbol-285abee5b9f5)
+**调用者：** [`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)
 
-**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-183827086673)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
+**调用：** [`ActionButton(string, string, System.Action)`](MarketVisuals.cs.md#symbol-183827086673)；`Godot.Button.Button()`；`Godot.CanvasItem.Hide()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；[`NationalSpire.MarketPositionCard.Edit(bool)`](MarketVisuals.cs.md#symbol-cbcb21a0a9e2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)
 
 **字段、属性、事件及方法组引用：** `ActionButton(string, string, System.Action)`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketPositionCard._actions`；`NationalSpire.MarketPositionCard._apply`；`NationalSpire.MarketPositionCard._clear`；`NationalSpire.MarketPositionCard._close`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._icon`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._preview`；`NationalSpire.MarketPositionCard._proceeds`；`NationalSpire.MarketPositionCard._profit`；`NationalSpire.MarketPositionCard._revision`；`NationalSpire.MarketPositionCard._submit`；`NationalSpire.MarketPositionCard._terms`；`NationalSpire.MarketPositionCard._title`；`NationalSpire.MarketPositionCard.Apply()`；`NationalSpire.MarketPositionCard.Edit(bool)`；`NationalSpire.MarketPositionCard.Preview()`；`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`
 
@@ -468,7 +468,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
-**调用：** [`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；`Godot.Button.Button()`；`Godot.Vector2.Vector2(float, float)`
+**调用：** `Godot.Button.Button()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.LifestyleArt.Icon(string)`
 
@@ -494,7 +494,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketTerminal.RefreshAccount(bool)`](MarketTerminal.cs.md#symbol-9559baf40113)；[`NationalSpire.MarketTerminal.Unbind()`](MarketTerminal.cs.md#symbol-76844d4631c4)
 
-**调用：** [`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)；[`NationalSpire.MarketQuote.ExecutionCopy()`](CareerMarketData.cs.md#symbol-0dd7cd2eabdc)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Card(string, bool, bool)`](MarketVisuals.cs.md#symbol-aef7b9c00c48)；`decimal.ToString(string?)`；`Godot.CanvasItem.Hide()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)；[`NationalSpire.LifestyleArt.Icon(string)`](LifestyleArt.cs.md#symbol-91f9b2ac06fa)；[`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-2508c79f1fc5)；[`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`](MarketExecution.cs.md#symbol-90e04f0c7b2e)；[`NationalSpire.MarketPositionCard.Price(decimal)`](MarketVisuals.cs.md#symbol-acc535d1e8c4)；[`NationalSpire.MarketQuote.ExecutionCopy()`](CareerMarketData.cs.md#symbol-0dd7cd2eabdc)；[`NationalSpire.MarketVisuals.Accent(string)`](MarketVisuals.cs.md#symbol-7251a1de5493)；[`NationalSpire.MarketVisuals.Card(string, bool, bool)`](MarketVisuals.cs.md#symbol-aef7b9c00c48)；`decimal.ToString(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`；`NationalSpire.CareerMoney.Format(decimal)`；`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.LifestyleArt.Icon(string)`；`NationalSpire.MarketAsset.Forex`；`NationalSpire.MarketAsset.Name`；`NationalSpire.MarketAsset.Sector`；`NationalSpire.MarketCatalog.ById`；`NationalSpire.MarketExecution.Close(NationalSpire.MarketPosition, NationalSpire.MarketQuote)`；`NationalSpire.MarketExecution.Exit.Fee`；`NationalSpire.MarketExecution.Exit.Fill`；`NationalSpire.MarketExecution.Exit.Proceeds`；`NationalSpire.MarketExecution.Exit.Profit`；`NationalSpire.MarketExecution.Fill.Average`；`NationalSpire.MarketExecution.ReferencePrice(NationalSpire.MarketQuote)`；`NationalSpire.MarketPosition.Asset`；`NationalSpire.MarketPosition.Direction`；`NationalSpire.MarketPosition.Entry`；`NationalSpire.MarketPosition.ExecutionVersion`；`NationalSpire.MarketPosition.Leverage`；`NationalSpire.MarketPosition.Margin`；`NationalSpire.MarketPosition.StopPrice`；`NationalSpire.MarketPosition.Units`；`NationalSpire.MarketPositionCard._actions`；`NationalSpire.MarketPositionCard._close`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._icon`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._proceeds`；`NationalSpire.MarketPositionCard._profit`；`NationalSpire.MarketPositionCard._quote`；`NationalSpire.MarketPositionCard._revision`；`NationalSpire.MarketPositionCard._terms`；`NationalSpire.MarketPositionCard._title`；`NationalSpire.MarketPositionCard.Price(decimal)`；`NationalSpire.MarketQuote.ExecutionCopy()`；`NationalSpire.MarketQuote.Price`；`NationalSpire.MarketVisuals.Accent(string)`；`NationalSpire.MarketVisuals.Card(string, bool, bool)`
 
@@ -600,7 +600,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
-**调用：** [`NationalSpire.MarketAmountInput.SetAmount(decimal)`](MarketAmountInput.cs.md#symbol-b73158988cf2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)；`Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；`Godot.SpinBox.GetLineEdit()`
+**调用：** `Godot.CanvasItem.Show()`；`Godot.Control.GrabFocus()`；`Godot.SpinBox.GetLineEdit()`；[`NationalSpire.MarketAmountInput.SetAmount(decimal)`](MarketAmountInput.cs.md#symbol-b73158988cf2)；[`NationalSpire.MarketPositionCard.Preview()`](MarketVisuals.cs.md#symbol-5a8785632454)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketAmountInput.SetAmount(decimal)`；`NationalSpire.MarketPosition.StopPrice`；`NationalSpire.MarketPositionCard._apply`；`NationalSpire.MarketPositionCard._clear`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._margin`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._quote`；`NationalSpire.MarketPositionCard.DisplayScale`；`NationalSpire.MarketPositionCard.Preview()`；`NationalSpire.MarketQuote.Price`
 
@@ -673,7 +673,7 @@ private bool _margin;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)；`Godot.SpinBox.Apply()`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`
+**调用：** `Godot.SpinBox.Apply()`；`NationalSpire.MarketOrder.MarketOrder(string, string, decimal, int, int, int, long, decimal?)`；[`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`](MarketVisuals.cs.md#symbol-75caf63f639d)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketAmountInput.Amount`；`NationalSpire.MarketPosition.Id`；`NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._input`；`NationalSpire.MarketPositionCard._margin`；`NationalSpire.MarketPositionCard._position`；`NationalSpire.MarketPositionCard._revision`；`NationalSpire.MarketPositionCard.DisplayScale`；`NationalSpire.MarketPositionCard.Send(NationalSpire.MarketOrder)`
 
@@ -695,7 +695,7 @@ private bool _margin;
 
 **调用者：** [`NationalSpire.MarketPositionCard.Apply()`](MarketVisuals.cs.md#symbol-dd2c5ccf395d)；[`NationalSpire.MarketPositionCard.MarketPositionCard(System.Action, System.Action<NationalSpire.MarketOrder>)`](MarketVisuals.cs.md#symbol-66bfead77ff7)
 
-**调用：** `Godot.CanvasItem.Hide()`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** `Godot.CanvasItem.Hide()`；`System.Action<T>.Invoke(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketPositionCard._editor`；`NationalSpire.MarketPositionCard._submit`
 

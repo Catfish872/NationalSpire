@@ -147,7 +147,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ApplyReceived(System.Action)`](CoopReception.cs.md#symbol-f7e7dbbfc94b)
 
-**调用：** `System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** `System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._preparedView`
 
@@ -165,9 +165,9 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`](CoopCareerSession.cs.md#symbol-b761b96e0df4)；[`NationalSpire.Coop.CoopCoordinator.Submit(string, string, string, int, string)`](CoopCoordinator.cs.md#symbol-d7ec39d842f3)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)
+**调用者：** [`NationalSpire.Coop.CoopCareerSession.Send(string, string, string, int, string, System.Action?)`](CoopCareerSession.cs.md#symbol-b761b96e0df4)；[`NationalSpire.Coop.CoopCoordinator.RenameSaveAsync(string, string)`](CoopCoordinator.cs.md#symbol-8fb73d8fab79)；[`NationalSpire.Coop.CoopCoordinator.Submit(string, string, string, int, string)`](CoopCoordinator.cs.md#symbol-d7ec39d842f3)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)
 
-**调用：** [`Submit()`](CoopReception.cs.md#symbol-690f4f77e4f1)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.OperationCanceledException.OperationCanceledException(string?)`
+**调用：** `NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；[`Submit()`](CoopReception.cs.md#symbol-690f4f77e4f1)；`System.Action<T>.Invoke(T)`；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.OperationCanceledException.OperationCanceledException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator.Receiving`；`Submit()`
 
@@ -190,7 +190,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`](CoopReception.cs.md#symbol-ebee1cc829c5)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-11ae699cefda)；`System.Action<T>.Invoke(T)`（委托实际目标见流程文档）；`System.InvalidOperationException.InvalidOperationException(string?)`
+**调用：** [`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`](CoopCoordinator.cs.md#symbol-11ae699cefda)；`System.Action<T>.Invoke(T)`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCommand.Epoch`；`NationalSpire.Coop.CoopCommand.Revision`；`NationalSpire.Coop.CoopCommand.World`；`NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator.Retry(NationalSpire.Coop.CoopCommand)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Revision`
 
@@ -213,7 +213,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Tick()`](CoopCoordinator.cs.md#symbol-4253349561bc)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.ReceiveError(System.Exception)`](CoopReception.cs.md#symbol-fb570e3c7ba0)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.Dequeue()`；`System.Collections.Generic.Queue<T>.TryPeek(out T)`；`System.Diagnostics.Stopwatch.GetElapsedTime(long)`；`System.Diagnostics.Stopwatch.GetTimestamp()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.Coop.CoopCoordinator.ReceiveError(System.Exception)`](CoopReception.cs.md#symbol-fb570e3c7ba0)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](../UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Action.Invoke()`；`System.Collections.Generic.Queue<T>.Dequeue()`；`System.Collections.Generic.Queue<T>.TryPeek(out T)`；`System.Diagnostics.Stopwatch.GetElapsedTime(long)`；`System.Diagnostics.Stopwatch.GetTimestamp()`；`System.Func<TResult>.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._closed`；`NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.Finished`；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.Snapshot`；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.Step`；`NationalSpire.Coop.CoopCoordinator.ReceiveError(System.Exception)`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.CoopReceive`
 
@@ -241,7 +241,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.PumpReceived()`](CoopReception.cs.md#symbol-a09fec904cc1)；[`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Changed`；`NationalSpire.Coop.CoopCoordinator.Status`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 
@@ -262,7 +262,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Receive(ulong, NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-892f19740afa)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`](CoopCoordinator.cs.md#symbol-4f91858a07d3)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.Enqueue(T)`
+**调用：** [`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`](CoopCoordinator.cs.md#symbol-4f91858a07d3)；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.ReceivedWork(System.Func<bool>, System.Action?, System.Action?, bool)`；`System.Action.Invoke()`；`System.Collections.Generic.Queue<T>.Enqueue(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator.Changed`；`NationalSpire.Coop.CoopCoordinator.CompleteReplies()`；`Step()`
 
@@ -352,7 +352,7 @@ private (CoopWorld Source, CareerData Data)? _preparedView;
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.Dispose()`](CoopCoordinator.cs.md#symbol-a57b33d7004f)
 
-**调用：** `System.Action.Invoke()`（委托实际目标见流程文档）；`System.Collections.Generic.Queue<T>.TryDequeue(out T)`；`System.Threading.CancellationTokenSource.Cancel()`
+**调用：** `System.Action.Invoke()`；`System.Collections.Generic.Queue<T>.TryDequeue(out T)`；`System.Threading.CancellationTokenSource.Cancel()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._preparedView`；`NationalSpire.Coop.CoopCoordinator._received`；`NationalSpire.Coop.CoopCoordinator._receiveLifetime`；`NationalSpire.Coop.CoopCoordinator.ReceivedWork.Cancelled`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`945B8C07BD769636712ED7A5CC02AD151B4FF2BE4E8043DEE09FF15F057116E9`。来源：[源码](../../DateSceneMemoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`41534AB806504CA06327570C46BAE7CC95B76B829DF44B0E35591AC878141822`。来源：[源码](../../DateSceneMemoryScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,11 +11,11 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-private DateMemoryRecorder? _dateMemory;
+protected DateMemoryRecorder? _dateMemory;
 private string _dateMemoryKey = "";
 private bool _dateRecording;
 private readonly Dictionary<ulong, string> _dateMemoryImages = [];
-private DateMemoryPlayback? _dateMemoryPlayback;
+protected DateMemoryPlayback? _dateMemoryPlayback;
 ```
 
 <a id="symbol-5fae395fe1f4"></a>
@@ -116,11 +116,11 @@ private DateMemoryPlayback? _dateMemoryPlayback;
 
 <a id="symbol-4103852c245a"></a>
 
-## `NationalSpire.CareerScreen.SyncDateMemory() — private void SyncDateMemory()`
+## `NationalSpire.CareerScreen.SyncDateMemory() — protected void SyncDateMemory()`
 
 来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.BeginDateMemory(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateSceneMemoryScreen.cs.md#symbol-e0190873cf74)；[`NationalSpire.CareerScreen.ConfirmDateHistoryInput()`](DateHistoryReplayScreen.cs.md#symbol-e9d44f3bf0bb)；[`NationalSpire.CareerScreen.SaveDateMemory(bool)`](DateSceneMemoryScreen.cs.md#symbol-c76191deb959)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
 
 **调用：** [`NationalSpire.DateMemoryRecorder.Sync(NationalSpire.PrivateConversation)`](DateSceneMemories.cs.md#symbol-949d37f3d89e)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)
 
@@ -145,7 +145,7 @@ private DateMemoryPlayback? _dateMemoryPlayback;
 
 **调用：** [`NationalSpire.CareerScreen.RefreshDateMemoryPeople()`](DateSceneMemoryScreen.cs.md#symbol-afd6840c2c58)；[`NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame)`](DateSceneMemories.cs.md#symbol-9b3816f4efa8)；[`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`](DateSceneBackgrounds.cs.md#symbol-05e1fa49f816)；[`NationalSpire.DateSceneView.CaptureMemoryFrame(System.Func<Godot.Texture2D, string>)`](DateSceneMemoryPlayback.cs.md#symbol-72b7e856545d)；[`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-8a6bb6e78fa5)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.RefreshDateMemoryPeople()`；`NationalSpire.CareerScreen.RememberDateImage(Godot.Texture2D)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._dateAssets`；`NationalSpire.CareerScreen._dateBackground`；`NationalSpire.CareerScreen._dateIndex`；`NationalSpire.CareerScreen._dateLines`；`NationalSpire.CareerScreen._dateMemory`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateTurn`；`NationalSpire.CareerScreen._dateView`；`NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Badge`；`NationalSpire.DateMemoryFrame.Blur`；`NationalSpire.DateMemoryFrame.Bond`；`NationalSpire.DateMemoryFrame.Fade`；`NationalSpire.DateMemoryFrame.Favour`；`NationalSpire.DateMemoryFrame.FontSize`；`NationalSpire.DateMemoryFrame.Oath`；`NationalSpire.DateMemoryFrame.Outline`；`NationalSpire.DateMemoryFrame.Relationship`；`NationalSpire.DateMemoryFrame.Scale`；`NationalSpire.DateMemoryFrame.Spacing`；`NationalSpire.DateMemoryFrame.Speaker`；`NationalSpire.DateMemoryFrame.X`；`NationalSpire.DateMemoryFrame.Y`；`NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame)`；`NationalSpire.DateMemoryRecorder.Memory`；`NationalSpire.DateSceneAssets.BlurAmount`；`NationalSpire.DateSceneAssets.FontSize`；`NationalSpire.DateSceneAssets.LetterSpacing`；`NationalSpire.DateSceneAssets.PanelFade`；`NationalSpire.DateSceneAssets.ShowAffectionBadge`；`NationalSpire.DateSceneAssets.SpriteScale`；`NationalSpire.DateSceneAssets.SpriteX`；`NationalSpire.DateSceneAssets.SpriteY`；`NationalSpire.DateSceneAssets.TextOutline`；`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`；`NationalSpire.DateSceneMemory.Backgrounds`；`NationalSpire.DateSceneView.CaptureMemoryFrame(System.Func<Godot.Texture2D, string>)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.OathConfirmed`；`NationalSpire.PrivateRelation.Relationship`；`NationalSpire.PrivateRelation.SelectedBond`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.RefreshDateMemoryPeople()`；`NationalSpire.CareerScreen.RememberDateImage(Godot.Texture2D)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._dateAssets`；`NationalSpire.CareerScreen._dateBackground`；`NationalSpire.CareerScreen._dateHistoryTurn`；`NationalSpire.CareerScreen._dateIndex`；`NationalSpire.CareerScreen._dateLines`；`NationalSpire.CareerScreen._dateMemory`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateTurn`；`NationalSpire.CareerScreen._dateView`；`NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Badge`；`NationalSpire.DateMemoryFrame.Blur`；`NationalSpire.DateMemoryFrame.Bond`；`NationalSpire.DateMemoryFrame.Fade`；`NationalSpire.DateMemoryFrame.Favour`；`NationalSpire.DateMemoryFrame.FontSize`；`NationalSpire.DateMemoryFrame.Oath`；`NationalSpire.DateMemoryFrame.Outline`；`NationalSpire.DateMemoryFrame.Relationship`；`NationalSpire.DateMemoryFrame.Scale`；`NationalSpire.DateMemoryFrame.Spacing`；`NationalSpire.DateMemoryFrame.Speaker`；`NationalSpire.DateMemoryFrame.X`；`NationalSpire.DateMemoryFrame.Y`；`NationalSpire.DateMemoryRecorder.Capture(string, int, NationalSpire.DateSceneLine, NationalSpire.DateMemoryFrame)`；`NationalSpire.DateMemoryRecorder.Memory`；`NationalSpire.DateSceneAssets.BlurAmount`；`NationalSpire.DateSceneAssets.FontSize`；`NationalSpire.DateSceneAssets.LetterSpacing`；`NationalSpire.DateSceneAssets.PanelFade`；`NationalSpire.DateSceneAssets.ShowAffectionBadge`；`NationalSpire.DateSceneAssets.SpriteScale`；`NationalSpire.DateSceneAssets.SpriteX`；`NationalSpire.DateSceneAssets.SpriteY`；`NationalSpire.DateSceneAssets.TextOutline`；`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`；`NationalSpire.DateSceneMemory.Backgrounds`；`NationalSpire.DateSceneView.CaptureMemoryFrame(System.Func<Godot.Texture2D, string>)`；`NationalSpire.DateSceneView.Status`；`NationalSpire.PrivateMessages.Relation(NationalSpire.CareerData, string)`；`NationalSpire.PrivateRelation.Favour`；`NationalSpire.PrivateRelation.OathConfirmed`；`NationalSpire.PrivateRelation.Relationship`；`NationalSpire.PrivateRelation.SelectedBond`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -178,9 +178,9 @@ private DateMemoryPlayback? _dateMemoryPlayback;
 
 ## `NationalSpire.CareerScreen.SaveDateMemory(bool) — private void SaveDateMemory(bool end = false)`
 
-来源：源码第 74 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddDateMemorySetting(Godot.VBoxContainer)`](DateSceneMemoryScreen.cs.md#symbol-e85e0fc39965)；[`NationalSpire.CareerScreen.AdvanceDateScene()`](DateSceneScreen.cs.md#symbol-96e53c8a266f)；[`NationalSpire.CareerScreen.LeaveDateScene(bool)`](DateSceneScreen.cs.md#symbol-942f3afae68b)；[`NationalSpire.CareerScreen.ReleaseDateSceneView()`](DateSceneScreen.cs.md#symbol-ea637ecbc4b0)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
+**调用者：** [`NationalSpire.CareerScreen.AddDateMemorySetting(Godot.VBoxContainer)`](DateSceneMemoryScreen.cs.md#symbol-e85e0fc39965)；[`NationalSpire.CareerScreen.AdvanceDateScene()`](DateSceneScreen.cs.md#symbol-96e53c8a266f)；[`NationalSpire.CareerScreen.CompleteDateLeave(bool, System.Action?)`](DateSceneScreen.cs.md#symbol-da3333a7be3d)；[`NationalSpire.CareerScreen.ConfirmDateHistoryInput()`](DateHistoryReplayScreen.cs.md#symbol-e9d44f3bf0bb)；[`NationalSpire.CareerScreen.ReleaseDateSceneView()`](DateSceneScreen.cs.md#symbol-ea637ecbc4b0)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)
 
 **调用：** `Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；[`NationalSpire.CareerScreen.CaptureDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-7b36ced91124)；[`NationalSpire.CareerScreen.SyncDateMemory()`](DateSceneMemoryScreen.cs.md#symbol-4103852c245a)；[`NationalSpire.DateSceneBackgrounds.ResolveImage(string)`](DateSceneBackgrounds.cs.md#symbol-05e1fa49f816)；[`NationalSpire.DateSceneMemories.FilePath(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-c6266089e238)；[`NationalSpire.DateSceneMemories.Read(NationalSpire.CareerData, string)`](DateSceneMemories.cs.md#symbol-99fb40e5b954)；[`NationalSpire.DateSceneMemories.Save(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](DateSceneMemories.cs.md#symbol-4fa62fbdceed)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -217,7 +217,7 @@ private DateMemoryPlayback? _dateMemoryPlayback;
 
 ## `NationalSpire.CareerScreen.AddDateMemorySetting(Godot.VBoxContainer) — private void AddDateMemorySetting(VBoxContainer box)`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
 
@@ -248,31 +248,57 @@ private DateMemoryPlayback? _dateMemoryPlayback;
 
 <a id="symbol-5a8c8e2619a9"></a>
 
-## `NationalSpire.CareerScreen.OpenDateMemory(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory) — private void OpenDateMemory(CareerData data, string person, DateSceneMemory memory)`
+## `NationalSpire.CareerScreen.OpenDateMemory(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory) — protected void OpenDateMemory(CareerData data, string person, DateSceneMemory memory)`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`](DateDiaryScreen.cs.md#symbol-fb4ba1a3b5fa)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateMemoryChoice(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory)`](CareerScreenExtensions.cs.md#symbol-db34df2d56c6)
 
-**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.IsInsideTree()`；[`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`](DateDiaryScreen.cs.md#symbol-fb4ba1a3b5fa)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；`NationalSpire.DateMemoryPlayback.DateMemoryPlayback()`；`System.Action.Invoke()`
+**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.IsInsideTree()`；[`NationalSpire.CareerScreen.AttachMemoryPlayback(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory, NationalSpire.DateMemoryPlayback)`](DateSceneMemoryScreen.cs.md#symbol-a203b37d1b91)；[`NationalSpire.CareerScreen.CreateDateMemoryPlayback(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`](CareerScreenExtensions.cs.md#symbol-bd56cbc47967)；`System.Action.Invoke()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`；`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dateMemoryPlayback`；`NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.DateMemoryPlayback.Blocked`；`NationalSpire.DateMemoryPlayback.Closed`；`NationalSpire.DateMemoryPlayback.DeleteReply`；`NationalSpire.DateMemoryPlayback.Memory`；`NationalSpire.DateMemoryPlayback.RefreshHistory()`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.AttachMemoryPlayback(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory, NationalSpire.DateMemoryPlayback)`；`NationalSpire.CareerScreen.CreateDateMemoryPlayback(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dateMemoryPlayback`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_stage.AddChild(replay)`；返回值紧邻使用处：`ExpressionStatementSyntax: _stage.AddChild(replay);`
-- `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInsideTree() && CareerStore.IsCurrent(data)`
-- `NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`；输入表达式：`DateDiaryEntryDialog(data, person, memory.OfferId)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateDiaryEntryDialog(data, person, memory.OfferId);`
-- `NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`；输入表达式：`DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory)`
-- `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(data)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInsideTree() && CareerStore.IsCurrent(data)`
-- `NationalSpire.DateMemoryPlayback.DateMemoryPlayback()`；输入表达式：`new DateMemoryPlayback { Memory = memory, Blocked = () => _dialogOverlay != null }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new DateMemoryPlayback { Memory = memory, Blocked = () => _dialogOverlay != null }`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_dateMemoryPlayback)`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(_dateMemoryPlayback) && _dateMemoryPlayback!.IsInsideTree()`
+- `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`_dateMemoryPlayback.IsQueuedForDeletion()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_dateMemoryPlayback.IsQueuedForDeletion()`
+- `Godot.Node.IsInsideTree()`；输入表达式：`_dateMemoryPlayback!.IsInsideTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInstanceValid(_dateMemoryPlayback) && _dateMemoryPlayback!.IsInsideTree()`
+- `NationalSpire.CareerScreen.AttachMemoryPlayback(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory, NationalSpire.DateMemoryPlayback)`；输入表达式：`AttachMemoryPlayback(data, person, memory, CreateDateMemoryPlayback(data, memory))`；返回值紧邻使用处：`ExpressionStatementSyntax: AttachMemoryPlayback(data, person, memory, CreateDateMemoryPlayback(data, memory));`
+- `NationalSpire.CareerScreen.CreateDateMemoryPlayback(NationalSpire.CareerData, NationalSpire.DateSceneMemory)`；输入表达式：`CreateDateMemoryPlayback(data, memory)`；返回值紧邻使用处：`ArgumentSyntax: CreateDateMemoryPlayback(data, memory)`
 - `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Blocked` = `() => _dialogOverlay != null`
-- `Memory` = `memory`
+
+<a id="symbol-a203b37d1b91"></a>
+
+## `NationalSpire.CareerScreen.AttachMemoryPlayback(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory, NationalSpire.DateMemoryPlayback) — private void AttachMemoryPlayback(CareerData data, string person, DateSceneMemory memory, DateMemoryPlayback replay)`
+
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.EnterDiaryMemory(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory)`](DateDiaryScreen.cs.md#symbol-15d246c49d27)；[`NationalSpire.CareerScreen.OpenDateMemory(NationalSpire.CareerData, string, NationalSpire.DateSceneMemory)`](DateSceneMemoryScreen.cs.md#symbol-5a8c8e2619a9)
+
+**调用：** `Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.IsInsideTree()`；[`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`](DateDiaryScreen.cs.md#symbol-fb4ba1a3b5fa)；[`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`](DateSceneHistoryScreen.cs.md#symbol-aab4554aa037)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；`System.Action.Invoke()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.WorldId`；`NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`；`NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerScreen._cancelDialog`；`NationalSpire.CareerScreen._dateMemoryPlayback`；`NationalSpire.CareerScreen._stage`；`NationalSpire.DateMemoryPlayback.Closed`；`NationalSpire.DateMemoryPlayback.DeleteReply`；`NationalSpire.DateMemoryPlayback.OpeningFailed`；`NationalSpire.DateMemoryPlayback.RefreshHistory()`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.OfferId`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`IsQueuedForDeletion()`；返回值紧邻使用处：`BinaryExpressionSyntax: _dateMemoryPlayback != replay || !IsInsideTree() || IsQueuedForDeletion()`
+- `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`IsQueuedForDeletion()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsQueuedForDeletion()`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_stage.AddChild(replay)`；返回值紧邻使用处：`ExpressionStatementSyntax: _stage.AddChild(replay);`
+- `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsInsideTree()`
+- `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: IsInsideTree() && !IsQueuedForDeletion()`
+- `NationalSpire.CareerScreen.DateDiaryEntryDialog(NationalSpire.CareerData, string, string)`；输入表达式：`DateDiaryEntryDialog(ViewData, person, memory.OfferId)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateDiaryEntryDialog(ViewData, person, memory.OfferId);`
+- `NationalSpire.CareerScreen.DeleteDateHistoryReply(string, string, string, NationalSpire.DateSceneMemory?, System.Action?)`；输入表达式：`DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: id => DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory)`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("回忆打开失败", error.Message, () => { _cancelDialog?.Invoke(); DateDiaryEntryDialog(ViewData, person, memory.OfferId); return true; }, "返回日记", showCancel: false)`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("回忆打开失败", error.Message, () => { _cancelDialog?.Invoke(); DateDiaryEntryDialog(ViewData, person, memory.OfferId); return true; }, "返回日记", showCancel: false);`
+- `System.Action.Invoke()`；输入表达式：`.Invoke()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _cancelDialog?.Invoke()`
+
+**赋值（含属性/字段和局部值）：**
+
 - `_dateMemoryPlayback` = `null`
 - `_dateMemoryPlayback` = `replay`
-- `replay.Closed` = `() => { _dateMemoryPlayback = null; if (IsInsideTree() && CareerStore.IsCurrent(data)) DateDiaryEntryDialog(data, person, memory.OfferId); }`
+- `replay.Closed` = `() => { if (_dateMemoryPlayback != replay) return; _dateMemoryPlayback = null; if (IsInsideTree() && !IsQueuedForDeletion() && ViewData.WorldId == data.WorldId) DateDiaryEntryDialog(ViewData, person, memory.OfferId); }`
 - `replay.DeleteReply` = `id => DeleteDateHistoryReply(memory.Host, memory.OfferId, id, memory, replay.RefreshHistory)`
+- `replay.OpeningFailed` = `error => { if (_dateMemoryPlayback != replay || !IsInsideTree() || IsQueuedForDeletion() || ViewData.WorldId != data.WorldId) return; _dateMemoryPlayback = null; ShowCareerDialog("回忆打开失败", error.Message, () => { _cancelDialog?.Invoke(); DateDiaryEntryDialog(ViewData, person, memory.OfferId); return true; }, "返回日记", showCancel: false); }`
+- `replay.TreeExited` += `() => { if (_dateMemoryPlayback == replay) _dateMemoryPlayback = null; }`

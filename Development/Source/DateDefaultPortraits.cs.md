@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E8FCB451C82DCBC2F72BA2DFED83B5A25F2D8D260CC3C9F1E017355F938BE145`。来源：[源码](../../DateDefaultPortraits.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C46E61A602E408B729561D71999EE800E16E4C4AFD2A412706FCBB64C807F72B`。来源：[源码](../../DateDefaultPortraits.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -46,7 +46,7 @@
 
 来源：源码第 10 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Default(string)`](DatePresentationScreen.cs.md#symbol-927bbd82bd6a)；[`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)；[`NationalSpire.DateSceneTesting.Initialize(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](DateSceneTesting.cs.md#symbol-91667df79532)
+**调用者：** [`Default(string)`](DatePresentationScreen.cs.md#symbol-927bbd82bd6a)；[`NationalSpire.CareerScreen.PartyTexture(string, string)`](DateScenePartyScreen.cs.md#symbol-53bfcf8e2a43)
 
 **调用：** `Godot.Image.Image()`；`Godot.Image.LoadPngFromBuffer(byte[])`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；[`NationalSpire.IdentityGender.Of(NationalSpire.CareerData, string)`](IdentityGender.cs.md#symbol-961507352d98)；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 

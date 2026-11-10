@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5F179718B14502D05D547F9136B35C4C51412356BEC7BD23A7D5D18292109BC2`。来源：[源码](../../GameCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EB64DEDC7A8D2B483BBF63A36F577C3DD8B9371BB8717F5AA72B6D70FD30B99F`。来源：[源码](../../GameCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -158,7 +158,7 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 
 **调用者：** [`NationalSpire.Entry.Init()`](Entry.cs.md#symbol-f4f7468c39e8)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.Combine(string, string, string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.Reflection.Assembly.GetName()`；`System.Reflection.MethodBase.Invoke(object?, object?[]?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`；`System.Type.GetMethod(string, System.Reflection.BindingFlags, System.Type[])`；`System.Version.ToString()`
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.IO.File.Exists(string?)`；`System.IO.File.ReadAllText(string)`；`System.IO.Path.Combine(string, string)`；`System.IO.Path.Combine(string, string, string)`；`System.IO.Path.GetDirectoryName(string?)`；`System.Reflection.Assembly.GetName()`；`System.Reflection.MethodBase.Invoke(object?, object?[]?)`；`System.Text.Json.JsonDocument.Parse(string, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetProperty(string)`；`System.Text.Json.JsonElement.GetString()`；`System.Type.GetMethod(string, System.Reflection.BindingFlags, System.Type[])`；`System.Version.ToString()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`
 

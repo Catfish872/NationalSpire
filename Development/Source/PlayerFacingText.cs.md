@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3139418DBFDADB072B14D4AAE0385BE858489FC89E1066CC701E710423C1D0CA`。来源：[源码](../../PlayerFacingText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`42D32B7006724713A2EB9D9270E2067041D1FA94665BC96CCD1D71DD2F043126`。来源：[源码](../../PlayerFacingText.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -41,7 +41,7 @@
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.CareerScreen.GroupCommand(string, NationalSpire.GroupCommand, System.Action?)`](GroupChatScreen.cs.md#symbol-9f2d53ad7587)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.ShowPrivateCommandError(string)`](PrivateMessageScreen.cs.md#symbol-b6171f4aaa2c)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.Diagnostics.RetainError(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-3308746be2f3)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.PlayerFacingText.AiError(string)`](PlayerFacingText.cs.md#symbol-be617f3bd292)；[`Refresh()`](PromptTestScreen.cs.md#symbol-007f7562f9b8)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-cdc41fbb950f)
+**调用者：** [`Fail(string)`](GroupChatScreen.cs.md#symbol-d25d3e33fb40)；[`Fail(string)`](ManualMemoryScreen.cs.md#symbol-7f68b9aa26bc)；[`Infer()`](PortraitDesignScreen.cs.md#symbol-84dd4f56a6bf)；[`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpenPromptTest(NationalSpire.CareerData, Godot.Control, System.Collections.Generic.Dictionary<string, string>, string)`](PromptTestScreen.cs.md#symbol-4e150abf093b)；[`NationalSpire.CareerScreen.RefreshGroupChat()`](GroupChatScreen.cs.md#symbol-b56fe79b2db7)；[`NationalSpire.CareerScreen.RefreshPrivateChat(bool)`](PrivateMessageScreen.cs.md#symbol-cef7c0adba54)；[`NationalSpire.CareerScreen.ShowPrivateCommandError(string)`](PrivateMessageScreen.cs.md#symbol-b6171f4aaa2c)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.Diagnostics.RetainError(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-3308746be2f3)；[`NationalSpire.EventStoryView.Display(NationalSpire.CareerData, NationalSpire.RandomEventRecord, NationalSpire.EventLive?, bool)`](RandomEventScreen.cs.md#symbol-f847e9f29b0e)；[`NationalSpire.PlayerFacingText.AiError(string)`](PlayerFacingText.cs.md#symbol-be617f3bd292)；[`Refresh()`](PromptTestScreen.cs.md#symbol-007f7562f9b8)；[`ShowMaterial()`](PromptTestScreen.cs.md#symbol-cdc41fbb950f)
 
 **调用：** [`NationalSpire.Diagnostics.ErrorExplanation(string)`](ErrorDiagnostics.cs.md#symbol-5c9c7984b1e7)；[`NationalSpire.Diagnostics.Redact(string)`](Diagnostics.cs.md#symbol-f014e01c492a)；[`NationalSpire.PlayerFacingText.Field(System.Text.Json.JsonElement, string)`](PlayerFacingText.cs.md#symbol-9d12296da106)；[`NationalSpire.PlayerFacingText.Head(string, int)`](PlayerFacingText.cs.md#symbol-9218219c34ce)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Net.WebUtility.HtmlDecode(string?)`；`System.Text.Json.JsonDocument.Parse(System.ReadOnlyMemory<char>, System.Text.Json.JsonDocumentOptions)`；`System.Text.Json.JsonElement.GetString()`；`System.Text.Json.JsonElement.TryGetProperty(string, out System.Text.Json.JsonElement)`；`System.Text.RegularExpressions.Regex.Match(string, string)`；`System.Text.RegularExpressions.Regex.Match(string, string, System.Text.RegularExpressions.RegexOptions)`；`string.Contains(string)`；`string.Contains(string, System.StringComparison)`；`string.IndexOf(char)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`string.LastIndexOf(char)`；`string.StartsWith(string)`；`string.Trim()`；`string?.AsMemory(int, int)`
 
@@ -110,18 +110,20 @@
 
 <a id="symbol-9218219c34ce"></a>
 
-## `NationalSpire.PlayerFacingText.Head(string, int) — private static string Head(string text, int length)`
+## `NationalSpire.PlayerFacingText.Head(string, int) — internal static string Head(string text, int length)`
 
 来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)
+**调用者：** [`NationalSpire.Diagnostics.RetainError(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-3308746be2f3)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)
 
-**调用：** 无已绑定显式调用。
+**调用：** `char.IsHighSurrogate(char)`；`char.IsLowSurrogate(char)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `char.IsHighSurrogate(char)`；输入表达式：`char.IsHighSurrogate(text[end - 1])`；返回值紧邻使用处：`BinaryExpressionSyntax: end > 0 && char.IsHighSurrogate(text[end - 1])`
+- `char.IsLowSurrogate(char)`；输入表达式：`char.IsLowSurrogate(text[end])`；返回值紧邻使用处：`BinaryExpressionSyntax: end > 0 && char.IsHighSurrogate(text[end - 1]) && char.IsLowSurrogate(text[end])`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -130,7 +132,7 @@
 
 ## `NationalSpire.PlayerFacingText.AiErrorPreview(string) — public static string AiErrorPreview(string detail)`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RenderWorkStatus(Godot.VBoxContainer, NationalSpire.AiWorkState, System.Action, string)`](CommunityScreen.cs.md#symbol-6bdab2812eba)
 
@@ -151,7 +153,7 @@
 
 ## `NationalSpire.PlayerFacingText.AiStatus(string) — public static string AiStatus(string status)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiSettingsPanel.Build(Godot.VBoxContainer, NationalSpire.AiOptions, System.Action, System.Action, System.Action, System.Action<string, bool>, System.Action?, string, System.Action<System.Action>?)`](AiSettingsPanel.cs.md#symbol-8fb9cbc85381)；[`NationalSpire.CareerScreen._Process(double)`](CareerScreen.cs.md#symbol-de0dbc5f9504)
 

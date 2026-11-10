@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.BuildPrivateComposerActions(Godot.VBoxContainer)`](PrivateMessageScreen.cs.md#symbol-a7be0d6513a6)
 
-**调用：** [`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-ba3b31b1bb7c)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`Paint(bool)`](ChatToolToggle.cs.md#symbol-3ff003a6c7cb)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.ChatToolIcon.ChatToolIcon()`
+**调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；[`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-b37e55b3af97)；[`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`](AiSettingsStore.cs.md#symbol-ba3b31b1bb7c)；[`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`](PrivateMemoryScreen.cs.md#symbol-5378f7528eb3)；`NationalSpire.ChatToolIcon.ChatToolIcon()`；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`Paint(bool)`](ChatToolToggle.cs.md#symbol-3ff003a6c7cb)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AiOptions.ChatTools`；`NationalSpire.AiSettingsStore.Load(NationalSpire.AiOptions)`；`NationalSpire.AiSettingsStore.Save(NationalSpire.AiOptions)`；`NationalSpire.CareerData.Ai`；`NationalSpire.CareerScreen.PrivateButton(string, System.Action, float)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.ChatToolIcon.Enabled`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`Paint(bool)`
 
@@ -58,7 +58,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.BuildChatToolToggle(Godot.HBoxContainer)`](ChatToolToggle.cs.md#symbol-cdbc2a8ad7ca)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.QueueRedraw()`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`
+**调用：** `Godot.CanvasItem.QueueRedraw()`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.ChatToolIcon.Enabled`
 

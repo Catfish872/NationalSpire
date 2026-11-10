@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CF7647C87AA18E89A793F059D4BD40606262BA0011CFA2BC5D81BD576BC02B4A`。来源：[源码](../../CommunityDiscussionLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`6555D85248C9D564A0DF5389AA2378D32CD47C123EEAFB0BD200248B8FAEE00D`。来源：[源码](../../CommunityDiscussionLayout.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -129,7 +129,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.RenderDiscussion(NationalSpire.CareerData, NationalSpire.CommunityPost, Godot.VBoxContainer)`](CommunityScreen.cs.md#symbol-1799ee450143)
 
-**调用：** [`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-7120f3e9af63)；`NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List(int)`
+**调用：** `NationalSpire.CommunityDiscussionLayout.Item.Item(NationalSpire.CommunityReply, NationalSpire.CommunityDiscussionLayout.Item?, int, bool)`；[`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`](CommunityThreads.cs.md#symbol-7120f3e9af63)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List(int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CommunityDiscussionLayout.Item.Descendants`；`NationalSpire.CommunityDiscussionLayout.Item.Floor`；`NationalSpire.CommunityDiscussionLayout.Item.Parent`；`NationalSpire.CommunityDiscussionLayout.Item.Reply`；`NationalSpire.CommunityDiscussionLayout.Item.Visible`；`NationalSpire.CommunityPost.Replies`；`NationalSpire.CommunityReply.Id`；`NationalSpire.CommunityReply.ParentId`；`NationalSpire.CommunityThreads.ReadingOrder(NationalSpire.CommunityPost)`
 

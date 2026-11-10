@@ -46,7 +46,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 **调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -66,7 +66,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 **调用者：** [`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`
+**调用：** `Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -88,7 +88,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 **调用者：** [`NationalSpire.Entry.Init()`](Entry.cs.md#symbol-f4f7468c39e8)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`Godot.GD.PushWarning(string)`；`HarmonyLib.Harmony.CreateClassProcessor(System.Type)`；`HarmonyLib.PatchClassProcessor.Patch()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Exception.GetBaseException()`；`System.Reflection.Assembly.GetTypes()`；`System.Reflection.MemberInfo.GetCustomAttributes(System.Type, bool)`
+**调用：** `Godot.GD.PushWarning(string)`；`HarmonyLib.Harmony.CreateClassProcessor(System.Type)`；`HarmonyLib.PatchClassProcessor.Patch()`；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Exception.GetBaseException()`；`System.Reflection.Assembly.GetTypes()`；`System.Reflection.MemberInfo.GetCustomAttributes(System.Type, bool)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`
 

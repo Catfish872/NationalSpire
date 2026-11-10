@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`60B1CE92FB6FD870BBC3A3558E143AB903682D75F637855718B59474FC7C3BBB`。来源：[源码](../../AppearanceLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8260157AE869EE6E6C5CC2E2526CCA173D340CC09004BA287B79A5E4F26BD822`。来源：[源码](../../AppearanceLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -175,7 +175,7 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 **调用者：** [`NationalSpire.AppearanceLibrary.Import(NationalSpire.CareerData, string, NationalSpire.CharacterDesignPackage.Imported?)`](AppearanceLibrary.cs.md#symbol-e5bd2a2cd1b7)；[`NationalSpire.AppearanceLibrary.Load(NationalSpire.CareerData, NationalSpire.AppearanceLibrary.Entry)`](AppearanceLibrary.cs.md#symbol-310593b772c6)
 
-**调用：** [`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；`NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`NationalSpire.AppearanceLibrary.Package.Package()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** `NationalSpire.AppearanceLibrary.Entry.Entry(string, string, bool)`；`NationalSpire.AppearanceLibrary.Package.Package()`；[`NationalSpire.AppearanceLibrary.PathFor(string)`](AppearanceLibrary.cs.md#symbol-57a16bc4af68)；[`NationalSpire.DateSceneAssetStore.Store(byte[], string)`](DateSceneAssets.cs.md#symbol-a774cf2421cf)；`System.Collections.Generic.Dictionary<TKey, TValue>.Add(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.Directory.CreateDirectory(string)`；`System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllText(string, string?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.DirectoryPath`；`NationalSpire.AppearanceLibrary.Package.Design`；`NationalSpire.AppearanceLibrary.Package.Name`；`NationalSpire.AppearanceLibrary.Package.Outfits`；`NationalSpire.AppearanceLibrary.PathFor(string)`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CharacterDesignPackage.Binding.File`；`NationalSpire.CharacterDesignPackage.Binding.Hash`；`NationalSpire.CharacterDesignPackage.Binding.Id`；`NationalSpire.CharacterDesignPackage.Binding.Outfit`；`NationalSpire.CharacterDesignPackage.Imported.Design`；`NationalSpire.CharacterDesignPackage.Imported.Images`；`NationalSpire.CharacterDesignPackage.Imported.Metadata`；`NationalSpire.CharacterDesignPackage.Imported.Person`；`NationalSpire.CharacterDesignPackage.Manifest.Sprites`；`NationalSpire.DateSceneAssetStore.Store(byte[], string)`；`NationalSpire.PortraitDesigns.Json`
 
@@ -281,7 +281,7 @@ private static readonly Entry[] BuiltIns = [new("haruka", "井上遥香", true),
 
 **调用者：** [`Select(int)`](AppearanceLibraryScreen.cs.md#symbol-76eb3d9afaf1)
 
-**调用：** `string.StartsWith(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`string.StartsWith(string, System.StringComparison)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AppearanceLibrary.Package.Design`；`NationalSpire.AppearanceLibrary.Package.Outfits`；`NationalSpire.PortraitDesign.DefaultEmotionId`；`NationalSpire.PortraitDesign.SelectedOutfit`
 

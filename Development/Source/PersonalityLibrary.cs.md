@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0B823F0C1210D4AC5F85119C2DFEF7A2401BB6065952E73DBF26208F763FB4E4`。来源：[源码](../../PersonalityLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`80DFDE475D14BBC3FE6064A2D90A2CDBEBA924C561C2B0AA061B6FDF29F558F8`。来源：[源码](../../PersonalityLibrary.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -489,7 +489,7 @@ public const string AttitudeScale = "attitude是人物持续的态度倾向，�
 
 **调用者：** [`NationalSpire.PersonalityLibrary.Attitude(NationalSpire.CareerData, string, NationalSpire.PersonalityProfile, string, int)`](PersonalityLibrary.cs.md#symbol-7eb96c180f4e)；[`NationalSpire.PersonalityLibrary.CommunityAttitude(NationalSpire.CareerData, string, NationalSpire.PersonalityProfile, string, int)`](PersonalityLibrary.cs.md#symbol-e8df01dc8d21)
 
-**调用：** `System.Collections.Generic.IEnumerable<double>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`；`System.Math.Exp(double)`；`System.Math.Pow(double, double)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<double>.Sum()`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Clamp(double, double, double)`；`System.Math.Clamp(int, int, int)`；`System.Math.Exp(double)`；`System.Math.Pow(double, double)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

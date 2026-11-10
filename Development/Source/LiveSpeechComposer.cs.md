@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`93A07778FD4E4C4DE1D0F26E604DB16AD128F7CC5A27383FCFABA75847F8562D`。来源：[源码](../../LiveSpeechComposer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`ACC06FA172C10EF959FEC77C0B366667730F3202EA50EE32E6ACCC66A816D521`。来源：[源码](../../LiveSpeechComposer.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -59,7 +59,7 @@ public static readonly Dictionary<string, string[]> Endings = Create();
 
 **调用者：** [`NationalSpire.LiveSpeechComposer.Compose(string, string, NationalSpire.BroadcastMemory, string, int, System.Collections.Generic.IReadOnlyDictionary<string, string>?, System.Action<string, string>?)`](LiveSpeechComposer.cs.md#symbol-360bdc1037c5)
 
-**调用：** `string.Contains(string, System.StringComparison)`；`string.Substring(int, int)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Max(int, int)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Linq.Enumerable.Range(int, int)`；`System.Math.Max(int, int)`；`string.Contains(string, System.StringComparison)`；`string.Substring(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.LiveSpeechComposer.RepeatedIdeas`
 

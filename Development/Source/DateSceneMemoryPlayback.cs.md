@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`46D5AD4C7085E3882A7DD23D1586C3C55352E87B83C2FA1D3FC49AAD9676AE7E`。来源：[源码](../../DateSceneMemoryPlayback.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`905615CFF059F56B6F777A4DCF7B0A9501A47CC57781388547C651215AD99C8E`。来源：[源码](../../DateSceneMemoryPlayback.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -12,12 +12,13 @@
 
 ```csharp
 public Action? Closed;
+internal Action<Exception>? OpeningFailed;
 public Action<string>? DeleteReply;
 public Func<bool>? Blocked;
-private DateSceneView _view = null!;
+protected DateSceneView _view = null!;
 private readonly Dictionary<string, Texture2D> _textures = [];
-private readonly List<(DateSceneLine Line, string Name, bool Player, DateMemoryFrame Frame, string Turn, int Index)> _pages = [];
-private int _index;
+protected readonly List<(DateSceneLine Line, string Name, bool Player, DateMemoryFrame Frame, string Turn, int Index)> _pages = [];
+protected int _index;
 private string _warning = "";
 ```
 
@@ -59,7 +60,7 @@ private string _warning = "";
 
 来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateMemoryPlayback._Ready()`](DateSceneMemoryPlayback.cs.md#symbol-d7bfbc4c7f9b)
+**调用者：** [`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.Node.GetNode<T>(Godot.NodePath)`；[`NationalSpire.DateSceneView.AddSceneAction(string, string, System.Action)`](DateSceneCast.cs.md#symbol-97b88ee931cf)
 
@@ -141,7 +142,7 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.Memory — public DateSceneMemory Memory`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -160,13 +161,40 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback._Ready() — public override void _Ready()`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；[`NationalSpire.DateMemoryPlayback.BuildPages()`](DateSceneMemoryPlayback.cs.md#symbol-e09e5b7ddabe)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)；`NationalSpire.DateSceneView.DateSceneView()`；[`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`](DateSceneMemoryPlayback.cs.md#symbol-714c8ce810da)；`System.Math.Max(int, int)`
+**调用：** `Godot.Callable.CallDeferred(params Godot.Variant[])`；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.QueueFree()`；[`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)；`System.Action<T>.Invoke(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.Blocked`；`NationalSpire.DateMemoryPlayback.BuildPages()`；`NationalSpire.DateMemoryPlayback.Close()`；`NationalSpire.DateMemoryPlayback.DeleteReply`；`NationalSpire.DateMemoryPlayback.History()`；`NationalSpire.DateMemoryPlayback.HistoryEntries()`；`NationalSpire.DateMemoryPlayback.Next()`；`NationalSpire.DateMemoryPlayback.ShowPage()`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateSceneView.Advance`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DeleteHistoryReply`；`NationalSpire.DateSceneView.Exit`；`NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.HistoryText`；`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`；`NationalSpire.DateSceneView.TextSpeed`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.OpenPlayback()`；`NationalSpire.DateMemoryPlayback.OpeningFailed`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `Godot.Callable.CallDeferred(params Godot.Variant[])`；输入表达式：`Callable.From(() => { if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OpeningFailed?.Invoke(e); QueueFree(); }).CallDeferred()`；返回值紧邻使用处：`ExpressionStatementSyntax: Callable.From(() => { if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OpeningFailed?.Invoke(e); QueueFree(); }).CallDeferred();`
+- `Godot.Callable.From(System.Action)`；输入表达式：`Callable.From(() => { if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OpeningFailed?.Invoke(e); QueueFree(); })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Callable.From(() => { if (!IsInstanceValid(this) || IsQueuedForDeletion()) return; OpeningFailed?.Invoke(e); QueueFree(); }).CallDeferred`
+- `Godot.CanvasItem.Hide()`；输入表达式：`Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: Hide();`
+- `Godot.GD.PushWarning(string)`；输入表达式：`GD.PushWarning("[NationalSpire] 回忆打开失败：" + e.Message)`；返回值紧邻使用处：`ExpressionStatementSyntax: GD.PushWarning("[NationalSpire] 回忆打开失败：" + e.Message);`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(this)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsInstanceValid(this)`
+- `Godot.GodotObject.IsQueuedForDeletion()`；输入表达式：`IsQueuedForDeletion()`；返回值紧邻使用处：`BinaryExpressionSyntax: !IsInstanceValid(this) || IsQueuedForDeletion()`
+- `Godot.Node.QueueFree()`；输入表达式：`QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: QueueFree();`
+- `NationalSpire.DateMemoryPlayback.OpenPlayback()`；输入表达式：`OpenPlayback()`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenPlayback();`
+- `System.Action<T>.Invoke(T)`；输入表达式：`.Invoke(e)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: OpeningFailed?.Invoke(e)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-314d3bb28f9e"></a>
+
+## `NationalSpire.DateMemoryPlayback.OpenPlayback() — private void OpenPlayback()`
+
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateMemoryPlayback._Ready()`](DateSceneMemoryPlayback.cs.md#symbol-d7bfbc4c7f9b)
+
+**调用：** `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；[`NationalSpire.DateMemoryPlayback.BuildPages()`](DateSceneMemoryPlayback.cs.md#symbol-e09e5b7ddabe)；[`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`](DateSceneMemoryPlayback.cs.md#symbol-6b4e2524ef0e)；[`NationalSpire.DateMemoryPlayback.PlaybackReady()`](DateSceneMemoryPlayback.cs.md#symbol-aaee89473f92)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)；[`NationalSpire.DateSceneExtensions.NewView()`](DateSceneExtensions.cs.md#symbol-54c33728d696)；[`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`](DateSceneMemoryPlayback.cs.md#symbol-714c8ce810da)；`System.Math.Max(int, int)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.Blocked`；`NationalSpire.DateMemoryPlayback.BuildPages()`；`NationalSpire.DateMemoryPlayback.Close()`；`NationalSpire.DateMemoryPlayback.DeleteReply`；`NationalSpire.DateMemoryPlayback.History()`；`NationalSpire.DateMemoryPlayback.HistoryEntries()`；`NationalSpire.DateMemoryPlayback.JumpToTurn(string)`；`NationalSpire.DateMemoryPlayback.Next()`；`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；`NationalSpire.DateMemoryPlayback.PlaybackReady()`；`NationalSpire.DateMemoryPlayback.ShowPage()`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateSceneExtensions.NewView()`；`NationalSpire.DateSceneView.Advance`；`NationalSpire.DateSceneView.Blocked`；`NationalSpire.DateSceneView.DeleteHistoryReply`；`NationalSpire.DateSceneView.Exit`；`NationalSpire.DateSceneView.HistoryEntries`；`NationalSpire.DateSceneView.HistoryText`；`NationalSpire.DateSceneView.JumpHistory`；`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`；`NationalSpire.DateSceneView.TextSpeed`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -174,38 +202,95 @@ private string _warning = "";
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_view.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_view)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_view);`
 - `NationalSpire.DateMemoryPlayback.BuildPages()`；输入表达式：`BuildPages()`；返回值紧邻使用处：`ExpressionStatementSyntax: BuildPages();`
+- `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；输入表达式：`PlaybackInterrupted()`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaybackInterrupted();`
+- `NationalSpire.DateMemoryPlayback.PlaybackReady()`；输入表达式：`PlaybackReady()`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaybackReady();`
 - `NationalSpire.DateMemoryPlayback.ShowPage()`；输入表达式：`ShowPage()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowPage();`
-- `NationalSpire.DateSceneView.DateSceneView()`；输入表达式：`new DateSceneView { TextSpeed = 75, Advance = Next, Exit = Close, HistoryText = History, HistoryEntries = HistoryEntries, DeleteHistoryReply = DeleteReply, Blocked = Blocked }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _view = new DateSceneView { TextSpeed = 75, Advance = Next, Exit = Close, HistoryText = History, HistoryEntries = HistoryEntries, DeleteHistoryReply = DeleteReply, Blocked = Blocked }`
-- `NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`；输入表达式：`_view.MemoryControls(() => { _index = Math.Max(0, _index - 1); ShowPage(); }, () => { _index = 0; ShowPage(); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.MemoryControls(() => { _index = Math.Max(0, _index - 1); ShowPage(); }, () => { _index = 0; ShowPage(); });`
+- `NationalSpire.DateSceneExtensions.NewView()`；输入表达式：`DateSceneExtensions.NewView()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _view = DateSceneExtensions.NewView()`
+- `NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`；输入表达式：`_view.MemoryControls(() => { PlaybackInterrupted(); _index = Math.Max(0, _index - 1); ShowPage(); }, () => { PlaybackInterrupted(); _index = 0; ShowPage(); })`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.MemoryControls(() => { PlaybackInterrupted(); _index = Math.Max(0, _index - 1); ShowPage(); }, () => { PlaybackInterrupted(); _index = 0; ShowPage(); });`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, _index - 1)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _index = Math.Max(0, _index - 1)`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Advance` = `Next`
-- `Blocked` = `Blocked`
-- `DeleteHistoryReply` = `DeleteReply`
-- `Exit` = `Close`
-- `HistoryEntries` = `HistoryEntries`
-- `HistoryText` = `History`
 - `MouseFilter` = `MouseFilterEnum.Stop`
 - `Name` = `"DateMemoryPlayback"`
-- `TextSpeed` = `75`
 - `ZIndex` = `32`
 - `_index` = `0`
 - `_index` = `Math.Max(0, _index - 1)`
-- `_view` = `new DateSceneView { TextSpeed = 75, Advance = Next, Exit = Close, HistoryText = History, HistoryEntries = HistoryEntries, DeleteHistoryReply = DeleteReply, Blocked = Blocked }`
+- `_view.Advance` = `Next`
+- `_view.Blocked` = `Blocked`
+- `_view.DeleteHistoryReply` = `DeleteReply`
+- `_view.Exit` = `Close`
+- `_view.HistoryEntries` = `HistoryEntries`
+- `_view.HistoryText` = `History`
+- `_view.JumpHistory` = `JumpToTurn`
+- `_view.TextSpeed` = `75`
+- `_view` = `DateSceneExtensions.NewView()`
+
+<a id="symbol-aaee89473f92"></a>
+
+## `NationalSpire.DateMemoryPlayback.PlaybackReady() — protected virtual void PlaybackReady()`
+
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-6b4e2524ef0e"></a>
+
+## `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool) — protected virtual void PlaybackInterrupted(bool clearWork = false)`
+
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateMemoryPlayback.JumpToTurn(string)`](DateSceneMemoryPlayback.cs.md#symbol-7616877887cf)；[`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-98b753a5b8f3"></a>
+
+## `NationalSpire.DateMemoryPlayback.PageShown() — protected virtual void PageShown()`
+
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
 
 <a id="symbol-e09e5b7ddabe"></a>
 
 ## `NationalSpire.DateMemoryPlayback.BuildPages() — private void BuildPages()`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)；[`NationalSpire.DateMemoryPlayback._Ready()`](DateSceneMemoryPlayback.cs.md#symbol-d7bfbc4c7f9b)
+**调用者：** [`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)
 
-**调用：** `NationalSpire.DateCastRoster.DateCastRoster()`；[`NationalSpire.DateCastRoster.Observe(NationalSpire.DateSceneLine, string)`](DateSceneCast.cs.md#symbol-d85e4199ab71)；`NationalSpire.DateMemoryFrame.DateMemoryFrame()`；`NationalSpire.DateSceneLine.DateSceneLine()`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`string.IsNullOrWhiteSpace(string?)`
+**调用：** `NationalSpire.DateCastRoster.DateCastRoster()`；[`NationalSpire.DateCastRoster.Observe(NationalSpire.DateSceneLine, string)`](DateSceneCast.cs.md#symbol-d85e4199ab71)；`NationalSpire.DateMemoryFrame.DateMemoryFrame()`；`NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-c33e325f9eea)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；`string.IsNullOrWhiteSpace(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateCastRoster.Observe(NationalSpire.DateSceneLine, string)`；`NationalSpire.DateCastRoster.Visible`；`NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Cast`；`NationalSpire.DateMemoryFrame.Portraits`；`NationalSpire.DateMemoryFrame.Speaker`；`NationalSpire.DateMemoryPerson.Default`；`NationalSpire.DateMemoryPerson.Emotions`；`NationalSpire.DateMemoryPerson.Name`；`NationalSpire.DateMemoryPlayback.Memory`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryTurn.Choice`；`NationalSpire.DateMemoryTurn.Frames`；`NationalSpire.DateMemoryTurn.Id`；`NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateMemoryTurn.UserFrame`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateSceneMemory.Backgrounds`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.Initial`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneMemory.Player`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneParty.VisibleMaximum`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateCastRoster.Observe(NationalSpire.DateSceneLine, string)`；`NationalSpire.DateCastRoster.Visible`；`NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Cast`；`NationalSpire.DateMemoryFrame.Portraits`；`NationalSpire.DateMemoryFrame.Speaker`；`NationalSpire.DateMemoryPerson.Default`；`NationalSpire.DateMemoryPerson.Emotions`；`NationalSpire.DateMemoryPerson.Name`；`NationalSpire.DateMemoryPlayback.Memory`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryTurn.Choice`；`NationalSpire.DateMemoryTurn.Frames`；`NationalSpire.DateMemoryTurn.Id`；`NationalSpire.DateMemoryTurn.Lines`；`NationalSpire.DateMemoryTurn.User`；`NationalSpire.DateMemoryTurn.UserFrame`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateSceneMemories.CopyLine(NationalSpire.DateSceneLine)`；`NationalSpire.DateSceneMemory.Backgrounds`；`NationalSpire.DateSceneMemory.Host`；`NationalSpire.DateSceneMemory.Initial`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneMemory.Player`；`NationalSpire.DateSceneMemory.Turns`；`NationalSpire.DateSceneParty.VisibleMaximum`；`NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -213,12 +298,17 @@ private string _warning = "";
 - `NationalSpire.DateCastRoster.Observe(NationalSpire.DateSceneLine, string)`；输入表达式：`roster.Observe(line, Memory.Host)`；返回值紧邻使用处：`ExpressionStatementSyntax: roster.Observe(line, Memory.Host);`
 - `NationalSpire.DateMemoryFrame.DateMemoryFrame()`；输入表达式：`new DateMemoryFrame { Cast = Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList(), Speaker = Memory.Host }`；返回值紧邻使用处：`BinaryExpressionSyntax: Memory.Initial ?? new DateMemoryFrame { Cast = Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList(), Speaker = Memory.Host }`
 - `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new() { Text = turn.User }`；返回值紧邻使用处：`ArgumentSyntax: new() { Text = turn.User }`
+- `NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`；输入表达式：`DateScenes.RestoreSentenceEmotions(lines)`；返回值紧邻使用处：`ExpressionStatementSyntax: DateScenes.RestoreSentenceEmotions(lines);`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`Memory.People.ContainsKey(line.Speaker)`；返回值紧邻使用处：`ConditionalExpressionSyntax: Memory.People.ContainsKey(line.Speaker) ? line.Speaker : Memory.Host`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Memory.Backgrounds.TryGetValue(line.Background, out string? background)`；返回值紧邻使用处：`IfStatementSyntax: if (Memory.Backgrounds.TryGetValue(line.Background, out string? background)) frame.Background = background;`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Memory.People.TryGetValue(speaker, out var person)`；返回值紧邻使用处：`BinaryExpressionSyntax: !line.Narration && Memory.People.TryGetValue(speaker, out var person)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Memory.People.TryGetValue(speaker, out var person)`；返回值紧邻使用处：`BinaryExpressionSyntax: Memory.People.TryGetValue(speaker, out var person) && person.Emotions.TryGetValue(line.Emotion, out string? portrait)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`person.Emotions.TryGetValue(line.Emotion, out string? portrait)`；返回值紧邻使用处：`BinaryExpressionSyntax: Memory.People.TryGetValue(speaker, out var person) && person.Emotions.TryGetValue(line.Emotion, out string? portrait)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`turn.Lines.Select(DateSceneMemories.CopyLine)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: turn.Lines.Select(DateSceneMemories.CopyLine).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`Memory.People.Keys.Take(DateSceneParty.VisibleMaximum)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Cast = Memory.People.Keys.Take(DateSceneParty.VisibleMaximum).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`roster.Visible.ToList()`；返回值紧邻使用处：`AssignmentExpressionSyntax: frame.Cast = roster.Visible.ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`turn.Lines.Select(DateSceneMemories.CopyLine).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = turn.Lines.Select(DateSceneMemories.CopyLine).ToList()`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`Memory.People.GetValueOrDefault(frame.Speaker)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Memory.People.GetValueOrDefault(frame.Speaker)?.Name`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`Memory.People.GetValueOrDefault(line.Speaker)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Memory.People.GetValueOrDefault(line.Speaker)?.Name`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`turn.Frames.GetValueOrDefault(index)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = turn.Frames.GetValueOrDefault(index)`
@@ -226,7 +316,9 @@ private string _warning = "";
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`_pages.Add((line, line.Narration ? "" : Memory.People.GetValueOrDefault(line.Speaker)?.Name ?? Memory.People.GetValueOrDefault(frame.Speaker)?.Name ?? "", false, frame, turn.Id, index))`；返回值紧邻使用处：`ExpressionStatementSyntax: _pages.Add((line, line.Narration ? "" : Memory.People.GetValueOrDefault(line.Speaker)?.Name ?? Memory.People.GetValueOrDefault(frame.Speaker)?.Name ?? "", false, frame, turn.Id, index));`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`_pages.Add((new() { Text = turn.User }, Memory.Player + (turn.Choice ? " · 选择回应" : ""), true, turn.UserFrame ?? last, turn.Id, -1))`；返回值紧邻使用处：`ExpressionStatementSyntax: _pages.Add((new() { Text = turn.User }, Memory.Player + (turn.Choice ? " · 选择回应" : ""), true, turn.UserFrame ?? last, turn.Id, -1));`
 - `System.Collections.Generic.List<T>.Clear()`；输入表达式：`_pages.Clear()`；返回值紧邻使用处：`ExpressionStatementSyntax: _pages.Clear();`
+- `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(frame))`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(frame))!`
 - `System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(last))`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(last))!`
+- `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(frame)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(frame)`
 - `System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`；输入表达式：`JsonSerializer.Serialize(last)`；返回值紧邻使用处：`ArgumentSyntax: JsonSerializer.Serialize(last)`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(line.Text)`；返回值紧邻使用处：`IfStatementSyntax: if (string.IsNullOrWhiteSpace(line.Text)) continue;`
 
@@ -238,7 +330,9 @@ private string _warning = "";
 - `frame.Background` = `background`
 - `frame.Cast` = `roster.Visible.ToList()`
 - `frame.Portraits[speaker]` = `person.Emotions.GetValueOrDefault(line.Emotion, person.Default)`
+- `frame.Portraits[speaker]` = `portrait`
 - `frame.Speaker` = `speaker`
+- `frame` = `JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(frame))!`
 - `frame` = `JsonSerializer.Deserialize<DateMemoryFrame>(JsonSerializer.Serialize(last))!`
 - `last` = `frame`
 
@@ -246,7 +340,7 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.Texture(string) — private Texture2D Texture(string hash)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -272,17 +366,19 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.ShowPage() — private void ShowPage()`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateMemoryPlayback.Next()`](DateSceneMemoryPlayback.cs.md#symbol-1dd6f6d35fc8)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)；[`NationalSpire.DateMemoryPlayback._Ready()`](DateSceneMemoryPlayback.cs.md#symbol-d7bfbc4c7f9b)
+**调用者：** [`NationalSpire.DateMemoryPlayback.JumpToTurn(string)`](DateSceneMemoryPlayback.cs.md#symbol-7616877887cf)；[`NationalSpire.DateMemoryPlayback.Next()`](DateSceneMemoryPlayback.cs.md#symbol-1dd6f6d35fc8)；[`NationalSpire.DateMemoryPlayback.OpenPlayback()`](DateSceneMemoryPlayback.cs.md#symbol-314d3bb28f9e)；[`NationalSpire.DateMemoryPlayback.RefreshHistory()`](DateSceneMemoryPlayback.cs.md#symbol-9343ac064a30)
 
-**调用：** `NationalSpire.DateMemoryFrame.DateMemoryFrame()`；`NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用：** `NationalSpire.DateMemoryFrame.DateMemoryFrame()`；[`NationalSpire.DateMemoryPlayback.PageShown()`](DateSceneMemoryPlayback.cs.md#symbol-98b753a5b8f3)；[`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`](DateSceneMemoryPlayback.cs.md#symbol-6b4e2524ef0e)；`NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateSceneView.Background(string, bool, double)`](DateSceneView.cs.md#symbol-9c58edcaf529)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Blur`；`NationalSpire.DateMemoryPlayback.Memory`；`NationalSpire.DateMemoryPlayback.Texture(string)`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateMemoryPlayback._warning`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneView.Background(string, bool, double)`；`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`；`NationalSpire.DateSceneView.Status`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryFrame.Background`；`NationalSpire.DateMemoryFrame.Blur`；`NationalSpire.DateMemoryPlayback.Memory`；`NationalSpire.DateMemoryPlayback.PageShown()`；`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；`NationalSpire.DateMemoryPlayback.Texture(string)`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateMemoryPlayback._warning`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateSceneMemory.People`；`NationalSpire.DateSceneView.Background(string, bool, double)`；`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`；`NationalSpire.DateSceneView.Status`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateMemoryFrame.DateMemoryFrame()`；输入表达式：`new()`；返回值紧邻使用处：`ArgumentSyntax: new()`
+- `NationalSpire.DateMemoryPlayback.PageShown()`；输入表达式：`PageShown()`；返回值紧邻使用处：`ExpressionStatementSyntax: PageShown();`
+- `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；输入表达式：`PlaybackInterrupted()`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaybackInterrupted();`
 - `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new() { Narration = true, Text = "这份回忆中尚无对话记录。" }`；返回值紧邻使用处：`ArgumentSyntax: new() { Narration = true, Text = "这份回忆中尚无对话记录。" }`
 - `NationalSpire.DateSceneView.Background(string, bool, double)`；输入表达式：`_view.Background("", false)`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.Background("", false);`
 - `NationalSpire.DateSceneView.Background(string, bool, double)`；输入表达式：`_view.Background(page.Frame.Background, true, page.Frame.Blur)`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.Background(page.Frame.Background, true, page.Frame.Blur);`
@@ -300,7 +396,7 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.Next() — private void Next()`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 166 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -316,11 +412,33 @@ private string _warning = "";
 
 - `_view.Status.Text` = `"回忆已播放完毕 · 可从头回看或返回日记"`
 
+<a id="symbol-7616877887cf"></a>
+
+## `NationalSpire.DateMemoryPlayback.JumpToTurn(string) — private void JumpToTurn(string id)`
+
+来源：源码第 171 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`](DateSceneMemoryPlayback.cs.md#symbol-6b4e2524ef0e)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；`NationalSpire.DateMemoryPlayback.ShowPage()`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._pages`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；输入表达式：`PlaybackInterrupted()`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaybackInterrupted();`
+- `NationalSpire.DateMemoryPlayback.ShowPage()`；输入表达式：`ShowPage()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowPage();`
+- `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`_pages.FindIndex(p => p.Turn == id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = _pages.FindIndex(p => p.Turn == id)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `_index` = `page`
+
 <a id="symbol-b888e2863847"></a>
 
 ## `NationalSpire.DateMemoryPlayback.History() — private string History()`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 176 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -343,9 +461,9 @@ private string _warning = "";
 
 <a id="symbol-095d68561b37"></a>
 
-## `NationalSpire.DateMemoryPlayback.HistoryEntries() — private IReadOnlyList<DateHistoryEntry> HistoryEntries()`
+## `NationalSpire.DateMemoryPlayback.HistoryEntries() — protected IReadOnlyList<DateHistoryEntry> HistoryEntries()`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 182 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -371,17 +489,18 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.RefreshHistory() — public void RefreshHistory()`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.DateMemoryPlayback.BuildPages()`](DateSceneMemoryPlayback.cs.md#symbol-e09e5b7ddabe)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.DateMemoryPlayback.BuildPages()`](DateSceneMemoryPlayback.cs.md#symbol-e09e5b7ddabe)；[`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`](DateSceneMemoryPlayback.cs.md#symbol-6b4e2524ef0e)；[`NationalSpire.DateMemoryPlayback.ShowPage()`](DateSceneMemoryPlayback.cs.md#symbol-cf0986d25dad)；[`NationalSpire.DateSceneView.RefreshHistory(bool)`](DateSceneView.cs.md#symbol-0762d57cebb4)；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Clamp(int, int, int)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.BuildPages()`；`NationalSpire.DateMemoryPlayback.ShowPage()`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateSceneView.RefreshHistory(bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback.BuildPages()`；`NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；`NationalSpire.DateMemoryPlayback.ShowPage()`；`NationalSpire.DateMemoryPlayback._index`；`NationalSpire.DateMemoryPlayback._pages`；`NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateSceneView.RefreshHistory(bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateMemoryPlayback.BuildPages()`；输入表达式：`BuildPages()`；返回值紧邻使用处：`ExpressionStatementSyntax: BuildPages();`
+- `NationalSpire.DateMemoryPlayback.PlaybackInterrupted(bool)`；输入表达式：`PlaybackInterrupted(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: PlaybackInterrupted(true);`
 - `NationalSpire.DateMemoryPlayback.ShowPage()`；输入表达式：`ShowPage()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowPage();`
 - `NationalSpire.DateSceneView.RefreshHistory(bool)`；输入表达式：`_view.RefreshHistory()`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.RefreshHistory();`
 - `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`_pages.FindIndex(p => (p.Turn, p.Index) == anchor)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = _pages.FindIndex(p => (p.Turn, p.Index) == anchor)`
@@ -396,17 +515,18 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.GoBack() — public void GoBack()`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen._Input(Godot.InputEvent)`](CareerScreen.cs.md#symbol-a9891646fd75)
 
-**调用：** [`NationalSpire.DateSceneView.GoBack()`](DateSceneView.cs.md#symbol-c97afbe9881b)
+**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；[`NationalSpire.DateSceneView.GoBack()`](DateSceneView.cs.md#symbol-c97afbe9881b)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateMemoryPlayback._view`；`NationalSpire.DateSceneView.GoBack()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.DateSceneView.GoBack()`；输入表达式：`_view.GoBack()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => _view.GoBack()`
+- `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_view)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_view)) _view.GoBack();`
+- `NationalSpire.DateSceneView.GoBack()`；输入表达式：`_view.GoBack()`；返回值紧邻使用处：`ExpressionStatementSyntax: _view.GoBack();`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -415,7 +535,7 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback.Close() — public void Close()`
 
-来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -436,7 +556,7 @@ private string _warning = "";
 
 ## `NationalSpire.DateMemoryPlayback._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

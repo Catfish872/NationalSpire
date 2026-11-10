@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`5E36F834986FC04DB7B37FBEBE9DAB533F285CEE30F895A0A125761C74B18720`。来源：[源码](../../../Coop/CoopMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1C84E1F3466F55DCBDF78B7C607669835C81E9FF02549AFE0840D1BADB592FA8`。来源：[源码](../../../Coop/CoopMarket.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,7 +22,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.InspectMarket(NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-fa87d36508d0)；[`NationalSpire.Coop.CoopCoordinator.ReceiveMarket(ulong, NationalSpire.Coop.CoopWire)`](CoopMarket.cs.md#symbol-1d6c27a5f526)
 
-**调用：** [`NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`](../MarketClearing.cs.md#symbol-d078c0ca2b29)；`NationalSpire.CareerData.CareerData()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+**调用：** `NationalSpire.CareerData.CareerData()`；[`NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`](../MarketClearing.cs.md#symbol-d078c0ca2b29)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.TradingAccounts`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.MarketClearing.Inspect(NationalSpire.CareerData, NationalSpire.MarketInspection)`
 
@@ -68,7 +68,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
-**调用：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](../CareerMarket.cs.md#symbol-6b9ac5b0686c)；`NationalSpire.CareerData.CareerData()`
+**调用：** `NationalSpire.CareerData.CareerData()`；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](../CareerMarket.cs.md#symbol-6b9ac5b0686c)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerData.MarketAccounts`；`NationalSpire.CareerData.TradingAccounts`；`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`；`NationalSpire.Coop.CoopMember.Credits`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopWorld.World`
 
@@ -125,7 +125,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-6aa505a8b0a6)；`NationalSpire.Coop.CoopCoordinator.MarketQuery.MarketQuery(string, string, string, NationalSpire.MarketInspection)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Threading.Tasks.Task<TResult>.WaitAsync(System.TimeSpan)`；`System.Threading.Tasks.TaskCompletionSource<TResult>.TaskCompletionSource()`；`System.TimeSpan.FromSeconds(long)`
+**调用：** `NationalSpire.Coop.CoopCoordinator.MarketQuery.MarketQuery(string, string, string, NationalSpire.MarketInspection)`；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-6aa505a8b0a6)；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Threading.Tasks.Task<TResult>.WaitAsync(System.TimeSpan)`；`System.Threading.Tasks.TaskCompletionSource<TResult>.TaskCompletionSource()`；`System.TimeSpan.FromSeconds(long)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator._transport`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.Epoch`；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.Error`；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.Result`；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.World`；`NationalSpire.Coop.CoopCoordinator.marketQueries`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.ICoopTransport.Owner`
 
@@ -156,7 +156,7 @@ private readonly Dictionary<string, TaskCompletionSource<MarketAnswer>> marketQu
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.ReceiveNow(ulong, NationalSpire.Coop.CoopWire, System.DateTime)`](CoopCoordinator.cs.md#symbol-796041df5e9f)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-6aa505a8b0a6)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.MarketAnswer(string, string, string, NationalSpire.MarketInspectionResult?, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Threading.Tasks.TaskCompletionSource<TResult>.TrySetResult(TResult)`
+**调用：** `NationalSpire.Coop.CoopCoordinator.MarketAnswer.MarketAnswer(string, string, string, NationalSpire.MarketInspectionResult?, string)`；[`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`](CoopCoordinator.cs.md#symbol-4239da75be84)；[`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`](CoopCoordinator.cs.md#symbol-0145ddb8062f)；[`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`](CoopMarket.cs.md#symbol-6aa505a8b0a6)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Threading.Tasks.TaskCompletionSource<TResult>.TrySetResult(TResult)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.MarketAnswer.Id`；`NationalSpire.Coop.CoopCoordinator.marketQueries`；`NationalSpire.Coop.CoopCoordinator.MarketQuery.Epoch`；`NationalSpire.Coop.CoopCoordinator.MarketQuery.Id`；`NationalSpire.Coop.CoopCoordinator.MarketQuery.Request`；`NationalSpire.Coop.CoopCoordinator.MarketQuery.World`；`NationalSpire.Coop.CoopCoordinator.Read<T>(NationalSpire.Coop.CoopWire)`；`NationalSpire.Coop.CoopCoordinator.Send<T>(ulong, string, T)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopRules.InspectMarket(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.MarketInspection)`；`NationalSpire.Coop.CoopWire.Kind`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 

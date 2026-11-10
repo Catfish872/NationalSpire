@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`230BA724C78A810D9B59FBE4B202A65CDC02651FA20A9DE8CE96DA8EABE65D04`。来源：[源码](../../ErrorDiagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C0097742550B9C22780148E97992420917DA2265218DF0F061D80AD80A826361`。来源：[源码](../../ErrorDiagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,14 +23,15 @@ private const string ErrorReference = "\n诊断编号：";
 
 **调用者：** [`Keep(string, NationalSpire.LogArea, string)`](ErrorDiagnostics.cs.md#symbol-35592b43c886)；[`NationalSpire.Diagnostics.RetainLifeErrors(NationalSpire.CareerLifeState, string)`](ErrorDiagnostics.cs.md#symbol-352228579747)；[`NationalSpire.Diagnostics.RetainMailboxErrors(NationalSpire.PrivateMailbox, string)`](ErrorDiagnostics.cs.md#symbol-00bf5510a307)
 
-**调用：** [`NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`](LogRouting.cs.md#symbol-da8a28a9e81e)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
+**调用：** [`NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`](LogRouting.cs.md#symbol-da8a28a9e81e)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.PlayerFacingText.Head(string, int)`](PlayerFacingText.cs.md#symbol-9218219c34ce)；[`NationalSpire.PlayerFacingText.LongError(string)`](PlayerFacingText.cs.md#symbol-f9422d3b8971)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`；`NationalSpire.Diagnostics.ErrorReference`；`NationalSpire.Diagnostics.ErrorTextLimit`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.PlayerFacingText.LongError(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`；`NationalSpire.Diagnostics.ErrorReference`；`NationalSpire.Diagnostics.ErrorTextLimit`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.PlayerFacingText.Head(string, int)`；`NationalSpire.PlayerFacingText.LongError(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.Diagnostics.BeginLog(NationalSpire.LogArea, string)`；输入表达式：`BeginLog(area, context)`；返回值紧邻使用处：`UsingStatementSyntax: using (BeginLog(area, context)) Record("error.full", new { id, context, error });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Record("error.full", new { id, context, error })`；返回值紧邻使用处：`ExpressionStatementSyntax: Record("error.full", new { id, context, error });`
+- `NationalSpire.PlayerFacingText.Head(string, int)`；输入表达式：`PlayerFacingText.Head(text, ErrorTextLimit - reference.Length)`；返回值紧邻使用处：`BinaryExpressionSyntax: PlayerFacingText.Head(text, ErrorTextLimit - reference.Length) + reference`
 - `NationalSpire.PlayerFacingText.LongError(string)`；输入表达式：`PlayerFacingText.LongError(error)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PlayerFacingText.LongError(error)`
 - `System.Guid.NewGuid()`；输入表达式：`Guid.NewGuid()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Guid.NewGuid().ToString`
 - `System.Guid.ToString(string?)`；输入表达式：`Guid.NewGuid().ToString("N")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Guid.NewGuid().ToString("N")`

@@ -40,7 +40,7 @@ private decimal? _entered;
 
 **调用者：** [`NationalSpire.MarketTerminal.Money()`](MarketTerminal.cs.md#symbol-965685631592)
 
-**调用：** `decimal.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out decimal)`；`Godot.SpinBox.GetLineEdit()`；`string.Trim()`；`string.TrimStart(char)`；`System.Math.Abs(double)`；`System.Math.BitIncrement(double)`
+**调用：** `Godot.SpinBox.GetLineEdit()`；`System.Math.Abs(double)`；`System.Math.BitIncrement(double)`；`decimal.TryParse(string?, System.Globalization.NumberStyles, System.IFormatProvider?, out decimal)`；`string.Trim()`；`string.TrimStart(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketAmountInput._entered`
 

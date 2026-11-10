@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`3D6379D49C890273735BFB772D712ACC31E0940B5F981C145D013C7522FE0953`。来源：[源码](../../EconomicActions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8D16191876D4F1854EE35900B3903326BB68724891641EFE9E0A8A9CC8E871EB`。来源：[源码](../../EconomicActions.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerAttachmentConfirmation(NationalSpire.ConsumerComposer, NationalSpire.PrivateOffer, System.Action?)`](ConsumerCommerceScreen.cs.md#symbol-f3a03a858f88)；[`NationalSpire.CareerScreen.ConsumerSubmit(NationalSpire.CareerData, NationalSpire.Good, string, System.Collections.Generic.List<string>, int)`](ConsumerScreen.cs.md#symbol-f212593005f6)；[`NationalSpire.CareerScreen.RemoveConsumerDraft(NationalSpire.PrivateOffer)`](ConsumerCommerceScreen.cs.md#symbol-635682b51731)；[`NationalSpire.CareerScreen.ReserveConsumerDraft(NationalSpire.PrivateOffer)`](ConsumerCommerceScreen.cs.md#symbol-27b7a54df1f4)
 
-**调用：** [`NationalSpire.CareerData.EncodingHeader()`](CareerData.cs.md#symbol-09cee4b6558d)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](Coop/CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.EconomicActions.Copy(NationalSpire.CareerData, NationalSpire.CareerData)`](EconomicActions.cs.md#symbol-d4ca2504b704)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CareerData.EncodingHeader()`](CareerData.cs.md#symbol-09cee4b6558d)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`](Coop/CoopData.cs.md#symbol-85d2410ea3ba)；[`NationalSpire.EconomicActions.Copy(NationalSpire.CareerData, NationalSpire.CareerData)`](EconomicActions.cs.md#symbol-d4ca2504b704)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`System.Func<T, TResult>.Invoke(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.EncodingHeader()`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopJson.Detached(NationalSpire.CareerData)`；`NationalSpire.EconomicActions.Copy(NationalSpire.CareerData, NationalSpire.CareerData)`；`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.EconomicSave`
 
@@ -47,7 +47,7 @@
 
 **调用者：** [`NationalSpire.CareerScreen.MarketSubmit(NationalSpire.CareerData, NationalSpire.MarketOrder)`](MarketScreen.cs.md#symbol-fbc36ef790b1)
 
-**调用：** [`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.MarketState.RevisionCopy()`](CareerMarketData.cs.md#symbol-bf57296d6030)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)；`NationalSpire.CareerData.CareerData()`；`NationalSpire.CareerLifeState.CareerLifeState()`
+**调用：** `NationalSpire.CareerData.CareerData()`；`NationalSpire.CareerLifeState.CareerLifeState()`；[`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](CareerMarket.cs.md#symbol-6b9ac5b0686c)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`](EconomicActions.cs.md#symbol-d99b9fe32a07)；[`NationalSpire.MarketState.RevisionCopy()`](CareerMarketData.cs.md#symbol-bf57296d6030)；[`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`](UiPerformance.cs.md#symbol-fb8ca8555fbe)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Credits`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.Market`；`NationalSpire.CareerLifeState.CreditFraction`；`NationalSpire.CareerLifeState.Ledger`；`NationalSpire.CareerLifeState.Trading`；`NationalSpire.CareerMarket.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.EconomicActions.Persist(NationalSpire.CareerData, System.Action)`；`NationalSpire.MarketOrder.Action`；`NationalSpire.MarketState.RevisionCopy()`；`NationalSpire.UiPerformance.Measure(NationalSpire.UiPerformance.Work, string?)`；`NationalSpire.UiPerformance.Work.EconomicSave`
 
@@ -86,7 +86,7 @@
 
 **调用者：** [`NationalSpire.EconomicActions.Save(NationalSpire.CareerData, System.Func<NationalSpire.CareerData, string?>)`](EconomicActions.cs.md#symbol-6ec38e492fe6)；[`NationalSpire.EconomicActions.Trade(NationalSpire.CareerData, NationalSpire.MarketOrder)`](EconomicActions.cs.md#symbol-f0516c3ecf95)
 
-**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`AB69E72BEAFCEF93647D14011D38FF0E35D55337839452B6C40255C85B9B9411`。来源：[源码](../../GroupAvatar.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`11B597472E5C605E79F57B633031665F3F5C0A3A211EBA390C0C04748570696B`。来源：[源码](../../GroupAvatar.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -48,12 +48,13 @@ private readonly List<CareerAvatar> _pictures = [];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** 无已绑定显式调用。
+**调用：** [`NationalSpire.GroupAvatar.Arrange()`](GroupAvatar.cs.md#symbol-b80fa1ee586a)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.GroupAvatar.Arrange()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.GroupAvatar.Arrange()`；输入表达式：`Arrange()`；返回值紧邻使用处：`ExpressionStatementSyntax: Arrange();`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -66,9 +67,9 @@ private readonly List<CareerAvatar> _pictures = [];
 
 来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)
+**调用者：** [`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.ShowPrivateListRows()`](PrivateListRows.cs.md#symbol-a42f68b15faf)
 
-**调用：** [`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.GroupAvatar.Arrange()`](GroupAvatar.cs.md#symbol-b80fa1ee586a)；[`NationalSpire.GroupAvatar.Members(NationalSpire.CareerData, NationalSpire.GroupChat)`](GroupAvatar.cs.md#symbol-821b26d40593)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.QueueRedraw()`；`Godot.CanvasItem.Show()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.CareerAvatar.CareerAvatar()`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.QueueRedraw()`；`Godot.CanvasItem.Show()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.CareerAvatar.CareerAvatar()`；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.GroupAvatar.Arrange()`](GroupAvatar.cs.md#symbol-b80fa1ee586a)；[`NationalSpire.GroupAvatar.Members(NationalSpire.CareerData, NationalSpire.GroupChat)`](GroupAvatar.cs.md#symbol-821b26d40593)；`System.Collections.Generic.List<T>.Add(T)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.PersonId`；`NationalSpire.CareerAvatar.Simplified`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.GroupAvatar._pictures`；`NationalSpire.GroupAvatar.Arrange()`；`NationalSpire.GroupAvatar.Members(NationalSpire.CareerData, NationalSpire.GroupChat)`
 
@@ -96,7 +97,7 @@ private readonly List<CareerAvatar> _pictures = [];
 
 来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GroupAvatar.Update(NationalSpire.CareerData, NationalSpire.GroupChat)`](GroupAvatar.cs.md#symbol-5d97e2be271b)
+**调用者：** [`NationalSpire.GroupAvatar.Update(NationalSpire.CareerData, NationalSpire.GroupChat)`](GroupAvatar.cs.md#symbol-5d97e2be271b)；[`NationalSpire.GroupAvatar._Ready()`](GroupAvatar.cs.md#symbol-f26071d5307b)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(float, float)`
 
@@ -125,7 +126,7 @@ private readonly List<CareerAvatar> _pictures = [];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+**调用：** `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawStyleBox(Godot.StyleBox, Godot.Rect2)`；`Godot.Rect2.Rect2(Godot.Vector2, Godot.Vector2)`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.GroupAvatar._pictures`
 

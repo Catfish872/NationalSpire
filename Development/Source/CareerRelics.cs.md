@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B7FFD3E9C50103DC4F3DC659123AD037CA3645AE81BC5663F89DEA767AD9D8EC`。来源：[源码](../../CareerRelics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`36E5A10F80B49CDA3F07A059E31719FE0D6119A3E497400EA1DC41C707BD2FB4`。来源：[源码](../../CareerRelics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -560,7 +560,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)
 
 **调用：** [`NationalSpire.CareerRelics.Discounts(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c0eb9f3fff83)；[`NationalSpire.CareerRelics.Media(NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-9d3d212bb912)；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 
@@ -587,7 +587,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.ActivityCard(NationalSpire.CareerData, NationalSpire.LifeActivity)`](LifeScreen.cs.md#symbol-5b3e0aaad277)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)；[`NationalSpire.CareerScreen.PlanDetails(NationalSpire.CareerData, NationalSpire.CareerScreen.CalendarPlan, System.Action<string>)`](CalendarPlansScreen.cs.md#symbol-0f7a307ccb1c)
 
 **调用：** [`NationalSpire.CareerRelics.Has(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-7b703fddee2f)；[`NationalSpire.CareerRelics.State(NationalSpire.CareerData, string)`](CareerRelics.cs.md#symbol-6618444af155)；[`NationalSpire.CareerTraining.IsTraining(NationalSpire.LifeActivity)`](CareerTraining.cs.md#symbol-98adbc7a75dc)；[`NationalSpire.ClubPrograms.IsTraining(NationalSpire.LifeActivity)`](OwnedClubs.cs.md#symbol-f251644672be)；`System.Math.Max(int, int)`
 

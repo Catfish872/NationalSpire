@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EA1F1CAF265C1748D0DDE024BD278A853CB795757D6D6FE78FA2C464BDD5F2B0`。来源：[源码](../../NpcAvatarFrames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`84B5BF5C61346C53CFB1EA4F2A0CB23CDDBBD0EE2DE13D20A5D5EEFE1181546A`。来源：[源码](../../NpcAvatarFrames.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 

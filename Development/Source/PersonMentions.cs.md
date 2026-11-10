@@ -58,7 +58,7 @@ private readonly Branch _root = new();
 
 **调用者：** [`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`](MentionScreen.cs.md#symbol-97692853b81c)
 
-**调用：** `char.ToUpperInvariant(char)`；`NationalSpire.PersonMentions.Branch.Branch()`；`string.Trim()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`
+**调用：** `NationalSpire.PersonMentions.Branch.Branch()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`char.ToUpperInvariant(char)`；`string.Trim()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PersonMentions._root`；`NationalSpire.PersonMentions.Branch.Children`；`NationalSpire.PersonMentions.Branch.People`
 
@@ -102,7 +102,7 @@ private readonly Branch _root = new();
 
 **调用者：** [`NationalSpire.CareerScreen.PaintMentionText(Godot.RichTextLabel, NationalSpire.CareerData, string, System.Collections.Generic.IEnumerable<string>?, bool)`](MentionScreen.cs.md#symbol-97692853b81c)
 
-**调用：** [`NationalSpire.PersonMentions.Latin(char)`](PersonMentions.cs.md#symbol-f13ab45ad1a5)；`char.ToUpperInvariant(char)`；`NationalSpire.PersonMentions.Match.Match(int, int, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.PersonMentions.Latin(char)`](PersonMentions.cs.md#symbol-f13ab45ad1a5)；`NationalSpire.PersonMentions.Match.Match(int, int, string)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`char.ToUpperInvariant(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.PersonMentions._root`；`NationalSpire.PersonMentions.Branch.Children`；`NationalSpire.PersonMentions.Branch.People`；`NationalSpire.PersonMentions.Latin(char)`；`NationalSpire.PersonMentions.Match.Length`
 

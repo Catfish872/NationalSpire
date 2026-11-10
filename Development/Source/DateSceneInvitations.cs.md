@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0FEB544A6D1DBAD401ECD3B61983664F4F25FB1280EC2D6DF69E3670087F844B`。来源：[源码](../../DateSceneInvitations.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`0CEC9B813FF1264F077059F55C53D95C6DB1B0C66BD1283EDB4DD7C6CBF2330B`。来源：[源码](../../DateSceneInvitations.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 

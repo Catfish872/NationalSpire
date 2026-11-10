@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0CB84F79020690BC2D17C57D24432C72117E12CD871E82457CFD30A4016978A4`。来源：[源码](../../LifeCatalog.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`03F8F1D18306E931943485736AD0B434A377E5D21347BE2D543EB510810098EC`。来源：[源码](../../LifeCatalog.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -73,7 +73,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 
 **调用者：** [`NationalSpire.LifeCatalog.Build()`](LifeCatalog.cs.md#symbol-fca7f4607860)
 
-**调用：** `NationalSpire.LifeCatalog.Plan.Plan(string, string, string, string, string, int, int, bool, bool)`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.List<T>.Add(T)`
+**调用：** `NationalSpire.LifeCatalog.Plan.Plan(string, string, string, string, string, int, int, bool, bool)`；`System.Collections.Generic.List<T>.Add(T)`；`string.Split(char, System.StringSplitOptions)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -92,7 +92,7 @@ public static readonly (string Key, string Title, int Cost)[] Objects = [
 
 来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerLife.UpgradeOffers(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e7f329375f86)
+**调用者：** [`NationalSpire.CareerLife.Complete(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerLife.cs.md#symbol-e559cea1bbf6)；[`NationalSpire.CareerLife.RepairActivities(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-ce584c11d638)；[`NationalSpire.CareerLife.UpgradeOffers(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-e7f329375f86)；[`NationalSpire.LifeActivity.PreviewFor(NationalSpire.CareerData, string)`](LifeData.cs.md#symbol-f86a52faa0da)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

@@ -21,7 +21,7 @@ private readonly BigInteger value;
 
 来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.MarketNumber.implicit operator NationalSpire.MarketNumber(decimal)`](MarketNumber.cs.md#symbol-6f3343e45b7c)；[`NationalSpire.MarketNumber.operator -(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-9eb51e04bd9b)；[`NationalSpire.MarketNumber.operator -(NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-7b14bc2067f9)；[`NationalSpire.MarketNumber.operator *(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-dfe5a007f1e3)；[`NationalSpire.MarketNumber.operator /(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-fb2c51db513d)；[`NationalSpire.MarketNumber.operator +(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-03408c8b8cb9)；[`NationalSpire.MarketNumber.Parse(string)`](MarketNumber.cs.md#symbol-fd06b4e8340e)；[`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)
+**调用者：** [`NationalSpire.MarketNumber.Parse(string)`](MarketNumber.cs.md#symbol-fd06b4e8340e)；[`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)；[`NationalSpire.MarketNumber.implicit operator NationalSpire.MarketNumber(decimal)`](MarketNumber.cs.md#symbol-6f3343e45b7c)；[`NationalSpire.MarketNumber.operator *(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-dfe5a007f1e3)；[`NationalSpire.MarketNumber.operator +(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-03408c8b8cb9)；[`NationalSpire.MarketNumber.operator -(NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-7b14bc2067f9)；[`NationalSpire.MarketNumber.operator -(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-9eb51e04bd9b)；[`NationalSpire.MarketNumber.operator /(NationalSpire.MarketNumber, NationalSpire.MarketNumber)`](MarketNumber.cs.md#symbol-fb2c51db513d)
 
 **调用：** 无已绑定显式调用。
 
@@ -42,7 +42,7 @@ private readonly BigInteger value;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.MarketNumber.MarketNumber(System.Numerics.BigInteger)`](MarketNumber.cs.md#symbol-84f74dcc6239)；`decimal.GetBits(decimal)`；`System.Numerics.BigInteger.Pow(System.Numerics.BigInteger, int)`
+**调用：** [`NationalSpire.MarketNumber.MarketNumber(System.Numerics.BigInteger)`](MarketNumber.cs.md#symbol-84f74dcc6239)；`System.Numerics.BigInteger.Pow(System.Numerics.BigInteger, int)`；`decimal.GetBits(decimal)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -349,7 +349,7 @@ private readonly BigInteger value;
 
 **调用者：** [`Leverage(NationalSpire.MarketNumber)`](MarketVisuals.cs.md#symbol-160df92af6e9)；[`NationalSpire.CareerMoney.Compact(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-9439f9696cab)；[`NationalSpire.CareerMoney.Format(NationalSpire.MarketNumber)`](LifeData.cs.md#symbol-c64f7b9abf31)；[`NationalSpire.MarketNumber.ToString()`](MarketNumber.cs.md#symbol-b93eea41cb69)
 
-**调用：** [`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)；`string.Contains(char)`；`string.Contains(string)`；`string.TrimEnd(char)`；`System.Numerics.BigInteger.Abs(System.Numerics.BigInteger)`；`System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger, System.Numerics.BigInteger, out System.Numerics.BigInteger)`；`System.Numerics.BigInteger.ToString(string?, System.IFormatProvider?)`
+**调用：** [`NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`](MarketNumber.cs.md#symbol-a3385d50f19f)；`System.Numerics.BigInteger.Abs(System.Numerics.BigInteger)`；`System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger, System.Numerics.BigInteger, out System.Numerics.BigInteger)`；`System.Numerics.BigInteger.ToString(string?, System.IFormatProvider?)`；`string.Contains(char)`；`string.Contains(string)`；`string.TrimEnd(char)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.MarketNumber.Round(NationalSpire.MarketNumber, int)`；`NationalSpire.MarketNumber.Scale`；`NationalSpire.MarketNumber.value`
 
@@ -375,7 +375,7 @@ private readonly BigInteger value;
 
 **调用者：** [`NationalSpire.MarketExecution.Root(NationalSpire.MarketNumber, int)`](MarketExecution.cs.md#symbol-614fd34b2cf6)；[`NationalSpire.MarketNumberConverter.Read(ref System.Text.Json.Utf8JsonReader, System.Type, System.Text.Json.JsonSerializerOptions)`](MarketNumber.cs.md#symbol-d9c48181e0d9)
 
-**调用：** [`NationalSpire.MarketNumber.MarketNumber(System.Numerics.BigInteger)`](MarketNumber.cs.md#symbol-84f74dcc6239)；`int.Parse(string, System.IFormatProvider?)`；`string.IndexOf(char)`；`string.IndexOfAny(char[])`；`string.Replace(string, string?)`；`System.Numerics.BigInteger.Parse(string, System.IFormatProvider?)`；`System.Numerics.BigInteger.Pow(System.Numerics.BigInteger, int)`
+**调用：** [`NationalSpire.MarketNumber.MarketNumber(System.Numerics.BigInteger)`](MarketNumber.cs.md#symbol-84f74dcc6239)；`System.Numerics.BigInteger.Parse(string, System.IFormatProvider?)`；`System.Numerics.BigInteger.Pow(System.Numerics.BigInteger, int)`；`int.Parse(string, System.IFormatProvider?)`；`string.IndexOf(char)`；`string.IndexOfAny(char[])`；`string.Replace(string, string?)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 

@@ -45,7 +45,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用者：** [`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.Player(object, bool)`](NativeLobbyApi.cs.md#symbol-60a2df09ad65)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`](NativeLobbyApi.cs.md#symbol-92249f368b32)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)
 
-**调用：** [`NationalSpire.Coop.NativeLobbyApi.Find(System.Type, string)`](NativeLobbyApi.cs.md#symbol-dc3d59409e04)；`object.GetType()`；`System.NotSupportedException.NotSupportedException()`；`System.Reflection.FieldInfo.GetValue(object?)`；`System.Reflection.PropertyInfo.GetValue(object?)`
+**调用：** [`NationalSpire.Coop.NativeLobbyApi.Find(System.Type, string)`](NativeLobbyApi.cs.md#symbol-dc3d59409e04)；`System.NotSupportedException.NotSupportedException()`；`System.Reflection.FieldInfo.GetValue(object?)`；`System.Reflection.PropertyInfo.GetValue(object?)`；`object.GetType()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.NativeLobbyApi.Find(System.Type, string)`
 
@@ -68,7 +68,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`](NativeLobbyApi.cs.md#symbol-92249f368b32)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)
 
-**调用：** [`NationalSpire.Coop.NativeLobbyApi.Read(object, string)`](NativeLobbyApi.cs.md#symbol-01ff70538942)；`NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`
+**调用：** `NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`；[`NationalSpire.Coop.NativeLobbyApi.Read(object, string)`](NativeLobbyApi.cs.md#symbol-01ff70538942)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.NativeLobbyApi.Read(object, string)`
 
@@ -134,7 +134,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`](CoopNativeRun.cs.md#symbol-2d3e3dcdd4d4)；[`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)；[`NationalSpire.Coop.CoopNativeRun.WaitingStage()`](CoopNativeRun.cs.md#symbol-40773357613d)
 
-**调用：** [`NationalSpire.Coop.NativeLobbyApi.Player(object, bool)`](NativeLobbyApi.cs.md#symbol-60a2df09ad65)；[`NationalSpire.Coop.NativeLobbyApi.Read(object, string)`](NativeLobbyApi.cs.md#symbol-01ff70538942)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](../RuntimeApi.cs.md#symbol-8426661c18c8)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](../RuntimeApi.cs.md#symbol-65f56c93bd1a)；`NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.IEnumerable.Cast<TResult>()`；`System.Reflection.PropertyInfo.GetValue(object?)`；`System.Type.GetProperty(string)`
+**调用：** `NationalSpire.Coop.NativeLobbyApi.Member.Member(ulong, bool, MegaCrit.Sts2.Core.Models.CharacterModel?, MegaCrit.Sts2.Core.Unlocks.SerializableUnlockState?)`；[`NationalSpire.Coop.NativeLobbyApi.Player(object, bool)`](NativeLobbyApi.cs.md#symbol-60a2df09ad65)；[`NationalSpire.Coop.NativeLobbyApi.Read(object, string)`](NativeLobbyApi.cs.md#symbol-01ff70538942)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](../RuntimeApi.cs.md#symbol-8426661c18c8)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](../RuntimeApi.cs.md#symbol-65f56c93bd1a)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.IEnumerable.Cast<TResult>()`；`System.Reflection.PropertyInfo.GetValue(object?)`；`System.Type.GetProperty(string)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.NativeLobbyApi.Player(object, bool)`；`NationalSpire.Coop.NativeLobbyApi.Read(object, string)`；`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`；`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`
 
@@ -363,7 +363,7 @@ private static readonly Dictionary<(Type, string), MemberInfo> Members = [];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `System.Func<T1, T2, TResult>.Invoke(T1, T2)`（委托实际目标见流程文档）
+**调用：** `System.Func<T1, T2, TResult>.Invoke(T1, T2)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.NativeLobbyListener.Callback`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9C27CEF2BE2466147F072E758C1E490F1354018D97688280EFA299F34BE10642`。来源：[源码](../../DateSceneCast.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`E0EC4951E0DA3FDE5C2817E4E87BF46121ED45500B6B9B85274F1308D94F5C3A`。来源：[源码](../../DateSceneCast.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -227,7 +227,7 @@ private readonly Dictionary<string, DatePortraitPlacement> _portraitPlacements =
 
 来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RefreshDateParty()`](DateScenePartyScreen.cs.md#symbol-3918c1aaf95a)；[`NationalSpire.DateSceneTesting._Ready()`](DateSceneTesting.cs.md#symbol-2174d0446f18)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
+**调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.RefreshDateParty()`](DateScenePartyScreen.cs.md#symbol-3918c1aaf95a)；[`NationalSpire.DateSceneView.ShowMemoryFrame(NationalSpire.DateMemoryFrame, NationalSpire.DateSceneLine, string, bool, System.Collections.Generic.IReadOnlyDictionary<string, NationalSpire.DateMemoryPerson>, System.Func<string, Godot.Texture2D>)`](DateSceneMemoryPlayback.cs.md#symbol-428af8387aa7)
 
 **调用：** [`NationalSpire.DateSceneView.BeginWaiting()`](DateSceneWaiting.cs.md#symbol-289036db5043)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.Layout()`](DateSceneView.cs.md#symbol-80b96be1ed4b)；[`NationalSpire.DateSceneView.RestoreVisibleCast(System.Collections.Generic.IEnumerable<string>)`](DateSceneCast.cs.md#symbol-2d5e455c25d0)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.Clear()`；`System.Collections.Generic.List<T>.ToArray()`
 
@@ -297,7 +297,7 @@ private readonly Dictionary<string, DatePortraitPlacement> _portraitPlacements =
 
 来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.DateSceneTesting.Show()`](DateSceneTesting.cs.md#symbol-ea6d8bf11dd7)；[`NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?)`](DateSceneView.cs.md#symbol-eecb2292c03b)
+**调用者：** [`NationalSpire.CareerScreen.ShowDateHistoryPage(bool)`](DateHistoryReplayScreen.cs.md#symbol-9cf8a8172aa4)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?)`](DateSceneView.cs.md#symbol-eecb2292c03b)
 
 **调用：** [`NationalSpire.DateCastRoster.Replay(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string)`](DateSceneCast.cs.md#symbol-b3a34a475c3e)；[`NationalSpire.DateSceneView.EndWaiting()`](DateSceneWaiting.cs.md#symbol-03e797c35180)；[`NationalSpire.DateSceneView.RestoreVisibleCast(System.Collections.Generic.IEnumerable<string>)`](DateSceneCast.cs.md#symbol-2d5e455c25d0)；[`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`
 
@@ -435,7 +435,7 @@ private readonly Dictionary<string, DatePortraitPlacement> _portraitPlacements =
 
 来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`](DateSceneMemoryPlayback.cs.md#symbol-714c8ce810da)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateSceneView.MemoryControls(System.Action, System.Action)`](DateSceneMemoryPlayback.cs.md#symbol-714c8ce810da)
 
 **调用：** `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；[`NationalSpire.DateSceneView.ActionButton(string, System.Action, string, int)`](DateSceneView.cs.md#symbol-1ed75a76342e)
 

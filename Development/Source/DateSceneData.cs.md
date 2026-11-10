@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B459823B7A41827566CAD087EBF8A2A7C3716F096898630641FC0E660770EE5F`。来源：[源码](../../DateSceneData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F9F7BD1E536551ABB138523D12EA5A6FA8846D653AC92AD21CAB1DD3FBEDDA0D`。来源：[源码](../../DateSceneData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -385,11 +385,29 @@ public const int MaxLineCharacters = 48;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-b9f0b4583c66"></a>
+
+## `NationalSpire.DateSceneLine.SceneContinuation — public bool SceneContinuation`
+
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目字段引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-4e7d2cd6abfd"></a>
 
 ## `NationalSpire.DateSceneLine.Background — public string Background`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -407,13 +425,13 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool) — public static string Guidance(DateSceneRequest scene, bool tools = false)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatTools.Create(NationalSpire.CareerData, NationalSpire.PrivateConversation?, NationalSpire.PrivateTurn?, NationalSpire.GroupChat?)`](ChatTools.cs.md#symbol-da501aed0ab9)；[`NationalSpire.PrivateMessagePrompts.Compose(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?, string?, System.Collections.Generic.List<NationalSpire.PrivateMessagePrompts.ContextSpan>?)`](PrivateMessagePrompts.cs.md#symbol-de94bbbea5ea)
 
-**调用：** [`Format(string)`](DateSceneData.cs.md#symbol-484b95e40c27)；[`NationalSpire.DateSceneParty.ExchangeExample(NationalSpire.DateSceneRequest)`](DateSceneParty.cs.md#symbol-d5df29df1375)；[`NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-ef9b9e70ca5d)；`string.Replace(string, string?)`
+**调用：** [`Format(string)`](DateSceneData.cs.md#symbol-484b95e40c27)；[`NationalSpire.DateSceneParty.ExchangeExample(NationalSpire.DateSceneRequest)`](DateSceneParty.cs.md#symbol-d5df29df1375)；[`NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-ef9b9e70ca5d)；[`NationalSpire.IDateSceneExtension.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneExtensions.cs.md#symbol-13d12c07d9db)；`string.Replace(string, string?)`
 
-**字段、属性、事件及方法组引用：** `Format(string)`；`NationalSpire.DateGames.InvitationProtocol`；`NationalSpire.DateSceneParty.ExchangeExample(NationalSpire.DateSceneRequest)`；`NationalSpire.DateSceneParty.Protocol`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.GameContext`；`NationalSpire.DateSceneRequest.GameInvitation`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`；`NationalSpire.DateScenes.Protocol`
+**字段、属性、事件及方法组引用：** `Format(string)`；`NationalSpire.DateGames.InvitationProtocol`；`NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneParty.ExchangeExample(NationalSpire.DateSceneRequest)`；`NationalSpire.DateSceneParty.Protocol`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.GameContext`；`NationalSpire.DateSceneRequest.GameInvitation`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`；`NationalSpire.DateScenes.Protocol`；`NationalSpire.IDateSceneExtension.Guidance(NationalSpire.DateSceneRequest, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -423,6 +441,7 @@ public const int MaxLineCharacters = 48;
 - `Format(string)`；输入表达式：`Format(Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId))`；返回值紧邻使用处：`BinaryExpressionSyntax: Format(Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId)) + "\n历史记录会合并同人物、同情绪的连续片段；本轮输出仍逐句标注。当前场景资料（每人的emotions指向emotionSets中同名的完整差分字典）："`
 - `NationalSpire.DateSceneParty.ExchangeExample(NationalSpire.DateSceneRequest)`；输入表达式：`DateSceneParty.ExchangeExample(scene)`；返回值紧邻使用处：`BinaryExpressionSyntax: DateSceneParty.Protocol + DateSceneParty.ExchangeExample(scene)`
 - `NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`；输入表达式：`PromptMaterials(scene)`；返回值紧邻使用处：`BinaryExpressionSyntax: Format(Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId)) + "\n历史记录会合并同人物、同情绪的连续片段；本轮输出仍逐句标注。当前场景资料（每人的emotions指向emotionSets中同名的完整差分字典）：" + PromptMaterials(scene)`
+- `NationalSpire.IDateSceneExtension.Guidance(NationalSpire.DateSceneRequest, bool)`；输入表达式：`.Guidance(scene, tools)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.Guidance(scene, tools)`
 - `string.Replace(string, string?)`；输入表达式：`Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId)`；返回值紧邻使用处：`ArgumentSyntax: Protocol.Replace("Emotion: neutral", "Emotion: " + scene.DefaultEmotionId)`
 
 **赋值（含属性/字段和局部值）：**
@@ -432,7 +451,7 @@ public const int MaxLineCharacters = 48;
 
 ## `Format(string) — string Format(string text)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-42aa2fbcaa1f)
 
@@ -451,16 +470,17 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest) — private static string PromptMaterials(DateSceneRequest scene)`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.Guidance(NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-42aa2fbcaa1f)
 
-**调用：** [`Register(System.Collections.Generic.Dictionary<string, string>)`](DateSceneData.cs.md#symbol-6062c19c6f71)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`NationalSpire.IDateSceneExtension.Materials(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object?>)`](DateSceneExtensions.cs.md#symbol-28302b18c917)；[`Register(System.Collections.Generic.Dictionary<string, string>)`](DateSceneData.cs.md#symbol-6062c19c6f71)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Text.Json.JsonSerializer.Serialize<TValue>(TValue, System.Text.Json.JsonSerializerOptions?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneParticipant.DefaultEmotionId`；`NationalSpire.DateSceneParticipant.Emotions`；`NationalSpire.DateSceneParticipant.Name`；`NationalSpire.DateSceneParticipant.PersonId`；`NationalSpire.DateSceneParty.PromptJson`；`NationalSpire.DateSceneRequest.Backgrounds`；`NationalSpire.DateSceneRequest.CurrentBackground`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.Detail`；`NationalSpire.DateSceneRequest.Emotions`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateSceneRequest.Title`；`Register(System.Collections.Generic.Dictionary<string, string>)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneParticipant.DefaultEmotionId`；`NationalSpire.DateSceneParticipant.Emotions`；`NationalSpire.DateSceneParticipant.Name`；`NationalSpire.DateSceneParticipant.PersonId`；`NationalSpire.DateSceneParty.PromptJson`；`NationalSpire.DateSceneRequest.Backgrounds`；`NationalSpire.DateSceneRequest.CurrentBackground`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.Detail`；`NationalSpire.DateSceneRequest.Emotions`；`NationalSpire.DateSceneRequest.Opening`；`NationalSpire.DateSceneRequest.Participants`；`NationalSpire.DateSceneRequest.Title`；`NationalSpire.IDateSceneExtension.Materials(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object?>)`；`Register(System.Collections.Generic.Dictionary<string, string>)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.IDateSceneExtension.Materials(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, object?>)`；输入表达式：`.Materials(scene, material)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.Materials(scene, material)`
 - `Register(System.Collections.Generic.Dictionary<string, string>)`；输入表达式：`Register(p.Emotions)`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: emotions = Register(p.Emotions)`
 - `Register(System.Collections.Generic.Dictionary<string, string>)`；输入表达式：`Register(scene.Emotions)`；返回值紧邻使用处：`ConditionalExpressionSyntax: participants.Length == 0 ? Register(scene.Emotions) : null`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, Dictionary<string, string>>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, Dictionary<string, string>>()`
@@ -486,7 +506,7 @@ public const int MaxLineCharacters = 48;
 
 ## `Register(System.Collections.Generic.Dictionary<string, string>) — string Register(Dictionary<string, string> emotions)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.PromptMaterials(NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-ef9b9e70ca5d)
 
@@ -509,11 +529,11 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.SafeBackgroundId(string) — public static bool SafeBackgroundId(string id)`
 
-来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.SafeId(string)`](DateSceneBackgrounds.cs.md#symbol-19bb6c988fd7)；[`NationalSpire.DateScenes.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-190a72e967ad)
 
-**调用：** `char.IsLetterOrDigit(char)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`char.IsLetterOrDigit(char)`
 
 **字段、属性、事件及方法组引用：** 无已绑定项目引用。
 
@@ -529,7 +549,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.OneToOne(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?) — public static bool OneToOne(CareerData data, PrivateOffer offer, PrivateConversation? conversation)`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -552,9 +572,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?) — public static bool Available(CareerData data, PrivateOffer offer, PrivateConversation? conversation = null)`
 
-来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AddDateSceneAction(NationalSpire.CareerData, NationalSpire.PrivateOffer, Godot.HBoxContainer)`](DateSceneScreen.cs.md#symbol-413adf55a103)；[`NationalSpire.CareerScreen.AddPausedDateScenes(NationalSpire.CareerData, NationalSpire.PrivateConversation)`](DateSceneScreen.cs.md#symbol-a5b10d9fb0b8)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.PromptDateScene(string)`](DateSceneScreen.cs.md#symbol-d6c92b4f494c)；[`NationalSpire.CareerScreen.ReturnFromDatePhone()`](DateGameScreen.cs.md#symbol-006d35effe08)；[`NationalSpire.CareerScreen.ReturnToDate(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](DateGameReturn.cs.md#symbol-f14ac682e7c3)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateGames.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>)`](DateGames.cs.md#symbol-e72b5454cf31)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-3f1369ff69ca)；[`NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool)`](DateSceneData.cs.md#symbol-81bdbfbfe1d8)；[`NationalSpire.DateScenes.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-190a72e967ad)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
+**调用者：** [`NationalSpire.CareerScreen.AddDateSceneAction(NationalSpire.CareerData, NationalSpire.PrivateOffer, Godot.HBoxContainer)`](DateSceneScreen.cs.md#symbol-413adf55a103)；[`NationalSpire.CareerScreen.AddPausedDateScenes(NationalSpire.CareerData, NationalSpire.PrivateConversation)`](DateSceneScreen.cs.md#symbol-a5b10d9fb0b8)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.ResumeSettledDate(NationalSpire.CareerData, NationalSpire.CareerMatch)`](DateGameReturn.cs.md#symbol-9e75de0044f4)；[`NationalSpire.CareerScreen.ShowSceneOfferOutsideHistory(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, System.Collections.Generic.IReadOnlySet<string>)`](PrivateMessageScreen.cs.md#symbol-ef223dfd3ae0)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateGames.Respond(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.Dictionary<string, string>>)`](DateGames.cs.md#symbol-e72b5454cf31)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)；[`NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool)`](DateSceneData.cs.md#symbol-81bdbfbfe1d8)；[`NationalSpire.DateScenes.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest, bool)`](DateSceneData.cs.md#symbol-190a72e967ad)；[`NationalSpire.PrivateMessages.PrepareAttachments(NationalSpire.CareerData, string, System.Collections.Generic.List<NationalSpire.PrivateOffer>)`](PrivateMessages.cs.md#symbol-f2d6d9cf9c86)
 
 **调用：** [`NationalSpire.DateGroupBridge.SourceActive(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](DateGroupBridge.cs.md#symbol-f6c6214fb9e2)；[`NationalSpire.DateSceneParty.Eligible(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneParty.cs.md#symbol-0b65821baf62)；[`NationalSpire.PrivateAppointments.Date(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](PrivateAppointments.cs.md#symbol-15c716ec61a1)；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
@@ -576,7 +596,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Leave(NationalSpire.CareerData, NationalSpire.PrivateConversation, string, bool) — public static string? Leave(CareerData data, PrivateConversation conversation, string offerId, bool end)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
@@ -614,9 +634,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest, bool) — public static string? Validate(CareerData data, PrivateConversation conversation, DateSceneRequest request, bool retained = false)`
 
-来源：源码第 115 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateGames.FollowUp(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest)`](DateGames.cs.md#symbol-7a75a34b8321)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateGames.FollowUp(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest)`](DateGames.cs.md#symbol-7a75a34b8321)；[`NationalSpire.DateHistoryRewind.Apply(NationalSpire.CareerData, string, NationalSpire.PrivateMessageCommand, bool)`](DateHistoryRewind.cs.md#symbol-b8b9d3bc8651)；[`NationalSpire.PrivateMessageCommands.ApplyCore(NationalSpire.CareerData, string, string, NationalSpire.PrivateMessageCommand)`](PrivateMessageCommands.cs.md#symbol-1472969f513b)
 
 **调用：** [`NationalSpire.DateGames.ValidateContext(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest, bool)`](DateGames.cs.md#symbol-e6d10e3baa71)；[`NationalSpire.DateSceneParty.Validate(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateOffer, NationalSpire.DateSceneRequest)`](DateSceneParty.cs.md#symbol-9fb95a4d45a5)；[`NationalSpire.DateScenes.Available(NationalSpire.CareerData, NationalSpire.PrivateOffer, NationalSpire.PrivateConversation?)`](DateSceneData.cs.md#symbol-0d3e014bcb63)；[`NationalSpire.DateScenes.SafeBackgroundId(string)`](DateSceneData.cs.md#symbol-5652957ff027)；[`NationalSpire.PortraitDesigns.SafeId(string)`](PortraitDesign.cs.md#symbol-7497548faaf1)；[`NationalSpire.WeddingAppointments.Description(NationalSpire.CareerData, NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-b0c3ba2ccdb6)；[`NationalSpire.WeddingAppointments.IsWedding(NationalSpire.PrivateOffer)`](WeddingAppointments.cs.md#symbol-f30a9608f6f8)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
@@ -647,7 +667,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Choices(NationalSpire.PrivateStreamParser) — public static List<string> Choices(PrivateStreamParser parser)`
 
-来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
 
@@ -675,9 +695,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest) — public static List<DateSceneLine> TaggedLines(PrivateStreamParser parser, DateSceneRequest scene)`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-a004e611929b)
+**调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)；[`Progress(string)`](AiPrivateMessages.cs.md#symbol-a004e611929b)
 
 **调用：** [`NationalSpire.DateSceneParty.ForSpeaker(NationalSpire.DateSceneRequest, string)`](DateSceneParty.cs.md#symbol-c3a9f302456e)；[`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`Segment(int)`](DateSceneData.cs.md#symbol-d9b852a716e1)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Last<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`；`string.TrimEnd()`；`string.TrimStart()`
 
@@ -709,11 +729,11 @@ public const int MaxLineCharacters = 48;
 
 ## `Segment(int) — void Segment(int limit)`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-00bcca1f004c)
 
-**调用：** [`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)；`string.IsNullOrWhiteSpace(string?)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`
+**调用：** [`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`string.IsNullOrWhiteSpace(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`
 
@@ -732,7 +752,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string) — private static string? EmotionId(DateSceneRequest scene, string value)`
 
-来源：源码第 158 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；[`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)
 
@@ -759,11 +779,11 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.InferEmotion(NationalSpire.DateSceneRequest, string) — private static string InferEmotion(DateSceneRequest scene, string text)`
 
-来源：源码第 170 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)
 
-**调用：** `string.Split(params char[]?)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string)`
+**调用：** `System.Text.RegularExpressions.Regex.IsMatch(string, string)`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`string.Split(params char[]?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateSceneRequest.Emotions`
 
@@ -780,13 +800,13 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?) — private static List<DateSceneLine> ReadSegment(string text, DateSceneRequest scene, Dictionary<string, string>? fields)`
 
-来源：源码第 191 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Segment(int)`](DateSceneData.cs.md#symbol-d9b852a716e1)
 
-**调用：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)；[`NationalSpire.DateSceneParty.ForSpeaker(NationalSpire.DateSceneRequest, string)`](DateSceneParty.cs.md#symbol-c3a9f302456e)；[`NationalSpire.DateSceneParty.Resolve(NationalSpire.DateSceneRequest, string)`](DateSceneParty.cs.md#symbol-6bfcef03874d)；[`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, string, System.Text.RegularExpressions.RegexOptions)`；`string.ToLowerInvariant()`；`string.Trim()`
+**调用：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)；[`NationalSpire.DateSceneParty.ForSpeaker(NationalSpire.DateSceneRequest, string)`](DateSceneParty.cs.md#symbol-c3a9f302456e)；[`NationalSpire.DateSceneParty.Resolve(NationalSpire.DateSceneRequest, string)`](DateSceneParty.cs.md#symbol-6bfcef03874d)；[`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`](DateSceneData.cs.md#symbol-a6609cbcddd2)；[`NationalSpire.IDateSceneExtension.ReadSegment(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?, System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneExtensions.cs.md#symbol-a9b634965b55)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；`System.Collections.Generic.List<T>.List()`；`System.Text.RegularExpressions.Regex.IsMatch(string, string, System.Text.RegularExpressions.RegexOptions)`；`System.Text.RegularExpressions.Regex.Matches(string, string)`；`System.Text.RegularExpressions.Regex.Replace(string, string, string, System.Text.RegularExpressions.RegexOptions)`；`string.ToLowerInvariant()`；`string.Trim()`
 
-**字段、属性、事件及方法组引用：** `Add(string)`；`NationalSpire.DateSceneParty.ForSpeaker(NationalSpire.DateSceneRequest, string)`；`NationalSpire.DateSceneParty.Resolve(NationalSpire.DateSceneRequest, string)`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`
+**字段、属性、事件及方法组引用：** `Add(string)`；`NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneParty.ForSpeaker(NationalSpire.DateSceneRequest, string)`；`NationalSpire.DateSceneParty.Resolve(NationalSpire.DateSceneRequest, string)`；`NationalSpire.DateSceneRequest.DefaultEmotionId`；`NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`；`NationalSpire.IDateSceneExtension.ReadSegment(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?, System.Collections.Generic.List<NationalSpire.DateSceneLine>)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -796,6 +816,7 @@ public const int MaxLineCharacters = 48;
 - `NationalSpire.DateSceneParty.Resolve(NationalSpire.DateSceneRequest, string)`；输入表达式：`DateSceneParty.Resolve(scene, fields?.GetValueOrDefault("Speaker", "") ?? "")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateSceneParty.Resolve(scene, fields?.GetValueOrDefault("Speaker", "") ?? "")`
 - `NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`；输入表达式：`EmotionId(scene, candidate)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = EmotionId(scene, candidate)`
 - `NationalSpire.DateScenes.EmotionId(NationalSpire.DateSceneRequest, string)`；输入表达式：`EmotionId(scene, fields["Emotion"])`；返回值紧邻使用处：`BinaryExpressionSyntax: EmotionId(scene, fields["Emotion"]) ?? scene.DefaultEmotionId`
+- `NationalSpire.IDateSceneExtension.ReadSegment(NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?, System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；输入表达式：`.ReadSegment(original, fields, result)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.ReadSegment(original, fields, result)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`.ContainsKey("Emotion")`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: fields?.ContainsKey("Emotion")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`.GetValueOrDefault("Background", "")`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: fields?.GetValueOrDefault("Background", "")`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`；输入表达式：`.GetValueOrDefault("Scene", "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: .GetValueOrDefault("Scene", "").ToLowerInvariant`
@@ -820,7 +841,7 @@ public const int MaxLineCharacters = 48;
 
 ## `Add(string) — void Add(string part)`
 
-来源：源码第 200 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 205 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.ReadSegment(string, NationalSpire.DateSceneRequest, System.Collections.Generic.Dictionary<string, string>?)`](DateSceneData.cs.md#symbol-df380ec1333f)
 
@@ -832,7 +853,7 @@ public const int MaxLineCharacters = 48;
 
 - `NationalSpire.DateScenes.InferEmotion(NationalSpire.DateSceneRequest, string)`；输入表达式：`InferEmotion(scene, sentence.Text)`；返回值紧邻使用处：`BinaryExpressionSyntax: emotion ?? InferEmotion(scene, sentence.Text)`
 - `NationalSpire.DateScenes.Split(string, bool)`；输入表达式：`Split(sentence.Text, sentence.Narration)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var line in Split(sentence.Text, sentence.Narration)) { line.Speaker = line.Narration ? "" : speaker; line.Emotion = sentenceEmotion; lines.Add(line); }`
-- `NationalSpire.DateScenes.SplitSentences(string, bool, int)`；输入表达式：`SplitSentences(part, kind is "narration" or "旁白", int.MaxValue)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var sentence in SplitSentences(part, kind is "narration" or "旁白", int.MaxValue)) { string sentenceEmotion = sentence.Narration ? scene.DefaultEmotionId : emotion ?? InferEmotion(scene, sentence.Text); foreach (var line in Split(sentence.Text, sentence.Narration)) { line.Speaker = line.Narration ? "" : speaker; line.Emotion = sentenceEmotion; lines.Add(line); } // 显式差分作用于完整句；为显示长度拆出的片段共享该句差分。 if (!sentence.Narration) emotion = null; }`
+- `NationalSpire.DateScenes.SplitSentences(string, bool, int)`；输入表达式：`SplitSentences(part, kind is "narration" or "旁白", int.MaxValue)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var sentence in SplitSentences(part, kind is "narration" or "旁白", int.MaxValue)) { string sentenceEmotion = sentence.Narration ? scene.DefaultEmotionId : emotion ?? InferEmotion(scene, sentence.Text); foreach (var line in Split(sentence.Text, sentence.Narration)) { line.Speaker = line.Narration ? "" : speaker; line.Emotion = sentenceEmotion; lines.Add(line); } // A Scene/Emotion cue owns its entire text segment. Sentence and // display-length splits retain it until the next explicit cue. }`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`original.Backgrounds.ContainsKey(background)`；返回值紧邻使用处：`BinaryExpressionSyntax: lines.Count > 0 && original.Backgrounds.ContainsKey(background)`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`lines.Add(line)`；返回值紧邻使用处：`ExpressionStatementSyntax: lines.Add(line);`
 - `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`result.AddRange(lines)`；返回值紧邻使用处：`ExpressionStatementSyntax: result.AddRange(lines);`
@@ -841,7 +862,6 @@ public const int MaxLineCharacters = 48;
 **赋值（含属性/字段和局部值）：**
 
 - `background` = `""`
-- `emotion` = `null`
 - `line.Emotion` = `sentenceEmotion`
 - `line.Speaker` = `line.Narration ? "" : speaker`
 - `lines[0].Background` = `background`
@@ -851,7 +871,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ReplyFailure(string) — public static string? ReplyFailure(string text)`
 
-来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiService.ProcessPrivateAsync(System.Func<NationalSpire.CareerData?>, System.Action<NationalSpire.CareerData>, string, System.Action<string, string>?)`](AiPrivateMessages.cs.md#symbol-935c714481c1)
 
@@ -870,9 +890,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Split(string, bool) — public static List<DateSceneLine> Split(string text, bool narration = false)`
 
-来源：源码第 239 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
+**调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)；[`NationalSpire.DateScenes.DisplayParts(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-2d444f7f549e)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
 
 **调用：** [`NationalSpire.DateScenes.SplitSentences(string, bool, int)`](DateSceneData.cs.md#symbol-dd74e35c7d6b)
 
@@ -889,7 +909,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ExpressionSpans(string) — private static List<(int Start, int End)> ExpressionSpans(string text)`
 
-来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.ShortParts(string, int)`](DateSceneData.cs.md#symbol-8f114a9558ac)；[`NationalSpire.DateScenes.SplitSentences(string, bool, int)`](DateSceneData.cs.md#symbol-dd74e35c7d6b)
 
@@ -914,7 +934,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.SentenceTail(string, int, System.Collections.Generic.Dictionary<int, int>) — private static int SentenceTail(string text, int at, Dictionary<int, int> expressions)`
 
-来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.SplitSentences(string, bool, int)`](DateSceneData.cs.md#symbol-dd74e35c7d6b)
 
@@ -939,7 +959,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.SplitSentences(string, bool, int) — private static List<DateSceneLine> SplitSentences(string text, bool narration, int limit)`
 
-来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 276 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Add(string)`](DateSceneData.cs.md#symbol-cc5d8bbe1494)；[`NationalSpire.DateScenes.Split(string, bool)`](DateSceneData.cs.md#symbol-4bfd36365879)
 
@@ -970,7 +990,7 @@ public const int MaxLineCharacters = 48;
 
 ## `Flush() — void Flush()`
 
-来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 280 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.SplitSentences(string, bool, int)`](DateSceneData.cs.md#symbol-dd74e35c7d6b)
 
@@ -1001,7 +1021,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.ShortParts(string, int) — private static IEnumerable<string> ShortParts(string text, int limit)`
 
-来源：源码第 300 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 307 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Flush()`](DateSceneData.cs.md#symbol-04a627eaa3b2)
 
@@ -1030,7 +1050,7 @@ public const int MaxLineCharacters = 48;
 
 ## `CanCut(int) — bool CanCut(int at)`
 
-来源：源码第 304 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 311 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.ShortParts(string, int)`](DateSceneData.cs.md#symbol-8f114a9558ac)
 
@@ -1049,53 +1069,94 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn) — public static List<DateSceneLine> Lines(PrivateTurn turn)`
 
-来源：源码第 326 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateMemoryRecorder.Sync(NationalSpire.PrivateConversation)`](DateSceneMemories.cs.md#symbol-949d37f3d89e)；[`NationalSpire.DateSceneParty.SharedMemory(NationalSpire.CareerData, string, string)`](DateSceneParty.cs.md#symbol-5315c2e1b812)；[`NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-e8fbec0a77e3)；[`NationalSpire.DateScenes.PromptHistory(NationalSpire.PrivateTurn, string)`](DateSceneData.cs.md#symbol-1bee81f08078)
+**调用者：** [`NationalSpire.CareerScreen.DateHistoryHasReply(NationalSpire.PrivateTurn)`](DateHistoryReplayScreen.cs.md#symbol-7558f6f313ac)；[`NationalSpire.CareerScreen.FinishDateHistory()`](DateHistoryReplayScreen.cs.md#symbol-fe282030be0f)；[`NationalSpire.CareerScreen.JumpDateHistory(string)`](DateHistoryReplayScreen.cs.md#symbol-7a7ba1016ab5)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.TickDateScene()`](DateSceneScreen.cs.md#symbol-5923316321e9)；[`NationalSpire.DateMemoryRecorder.Sync(NationalSpire.PrivateConversation)`](DateSceneMemories.cs.md#symbol-949d37f3d89e)；[`NationalSpire.DateSceneParty.SharedMemory(NationalSpire.CareerData, string, string)`](DateSceneParty.cs.md#symbol-5315c2e1b812)；[`NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-e8fbec0a77e3)；[`NationalSpire.DateScenes.PromptHistory(NationalSpire.PrivateTurn, string)`](DateSceneData.cs.md#symbol-1bee81f08078)
 
-**调用：** `NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；[`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`NationalSpire.DateScenes.Split(string, bool)`](DateSceneData.cs.md#symbol-4bfd36365879)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Concat(System.Collections.Generic.IEnumerable<string?>)`；`string.IsNullOrWhiteSpace(string?)`
+**调用：** [`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；[`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-da243e86633f)；[`NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`](DateSceneData.cs.md#symbol-c33e325f9eea)；[`NationalSpire.DateScenes.Split(string, bool)`](DateSceneData.cs.md#symbol-4bfd36365879)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`string.Concat(System.Collections.Generic.IEnumerable<string?>)`；`string.IsNullOrWhiteSpace(string?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；`NationalSpire.DateScenes.Split(string, bool)`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.SceneLines`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.DisplayParts(NationalSpire.DateSceneLine)`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；`NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；`NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`；`NationalSpire.DateScenes.Split(string, bool)`；`NationalSpire.PrivateTurn.Reply`；`NationalSpire.PrivateTurn.SceneLines`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" }`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: (part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" }`
 - `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；输入表达式：`DisplayText(line)`；返回值紧邻使用处：`ArgumentSyntax: DisplayText(line)`
-- `NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；输入表达式：`JoinNarration(source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList())`；返回值紧邻使用处：`ReturnStatementSyntax: return JoinNarration(source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList());`
-- `NationalSpire.DateScenes.Split(string, bool)`；输入表达式：`Split(line.Text, line.Narration)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Split(line.Text, line.Narration).Select`
+- `NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>)`；输入表达式：`JoinNarration(source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = JoinNarration(source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList())`
+- `NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>)`；输入表达式：`RestoreSentenceEmotions(lines)`；返回值紧邻使用处：`ExpressionStatementSyntax: RestoreSentenceEmotions(lines);`
 - `NationalSpire.DateScenes.Split(string, bool)`；输入表达式：`Split(turn.Reply)`；返回值紧邻使用处：`ConditionalExpressionSyntax: turn.SceneLines.Count > 0 && string.Concat(turn.SceneLines.Select(l => l.Text)) == turn.Reply ? turn.SceneLines : Split(turn.Reply)`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`turn.SceneLines.Select(l => l.Text)`；返回值紧邻使用处：`ArgumentSyntax: turn.SceneLines.Select(l => l.Text)`
-- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })`
-- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" }))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where`
-- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList()`；返回值紧邻使用处：`ArgumentSyntax: source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList()`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.SelectMany(line => Split(line.Text, line.Narration).Select((part, index) => new DateSceneLine { Speaker = line.Speaker, Text = part.Text, Narration = line.Narration || part.Narration, Emotion = line.Emotion, Background = index == 0 ? line.Background : "" })) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`source.SelectMany(DisplayParts)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.SelectMany(DisplayParts) .Where`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList()`；返回值紧邻使用处：`ArgumentSyntax: source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line)))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: source.SelectMany(DisplayParts) .Where(line => !string.IsNullOrWhiteSpace(DisplayText(line))).ToList`
 - `string.Concat(System.Collections.Generic.IEnumerable<string?>)`；输入表达式：`string.Concat(turn.SceneLines.Select(l => l.Text))`；返回值紧邻使用处：`BinaryExpressionSyntax: string.Concat(turn.SceneLines.Select(l => l.Text)) == turn.Reply`
 - `string.IsNullOrWhiteSpace(string?)`；输入表达式：`string.IsNullOrWhiteSpace(DisplayText(line))`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !string.IsNullOrWhiteSpace(DisplayText(line))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `Background` = `index == 0 ? line.Background : ""`
-- `Emotion` = `line.Emotion`
-- `Narration` = `line.Narration || part.Narration`
-- `Speaker` = `line.Speaker`
-- `Text` = `part.Text`
+
+<a id="symbol-c33e325f9eea"></a>
+
+## `NationalSpire.DateScenes.RestoreSentenceEmotions(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>) — public static void RestoreSentenceEmotions(IReadOnlyList<DateSceneLine> lines)`
+
+来源：源码第 341 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateMemoryPlayback.BuildPages()`](DateSceneMemoryPlayback.cs.md#symbol-e09e5b7ddabe)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.SceneContinuation`；`NationalSpire.DateSceneLine.Speaker`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+- `lines[i].Emotion` = `lines[i - 1].Emotion`
+
+<a id="symbol-2d444f7f549e"></a>
+
+## `NationalSpire.DateScenes.DisplayParts(NationalSpire.DateSceneLine) — private static IEnumerable<DateSceneLine> DisplayParts(DateSceneLine line)`
+
+来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.DateScenes.Split(string, bool)`](DateSceneData.cs.md#symbol-4bfd36365879)；[`NationalSpire.ExtensibleData.CopyExtra()`](ExtensionData.cs.md#symbol-e92ffbabd9a6)；[`NationalSpire.IDateSceneExtension.SplitLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine, int)`](DateSceneExtensions.cs.md#symbol-7ce3600d7671)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.SceneContinuation`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.Split(string, bool)`；`NationalSpire.ExtensibleData.CopyExtra()`；`NationalSpire.ExtensibleData.Extra`；`NationalSpire.IDateSceneExtension.SplitLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine, int)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.DateScenes.Split(string, bool)`；输入表达式：`Split(line.Text, line.Narration)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Split(line.Text, line.Narration)`
+- `NationalSpire.ExtensibleData.CopyExtra()`；输入表达式：`line.CopyExtra()`；返回值紧邻使用处：`AssignmentExpressionSyntax: part.Extra = line.CopyExtra()`
+- `NationalSpire.IDateSceneExtension.SplitLine(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine, int)`；输入表达式：`.SplitLine(line, part, index)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.SplitLine(line, part, index)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`parts.Select((part, index) => { part.Speaker = line.Speaker; part.Narration |= line.Narration; part.Emotion = line.Emotion; part.Background = index == 0 ? line.Background : ""; part.Extra = line.CopyExtra(); part.SceneContinuation = !part.Narration && (line.SceneContinuation || index > 0); DateSceneExtensions.Current?.SplitLine(line, part, index); return part; })`；返回值紧邻使用处：`ReturnStatementSyntax: return parts.Select((part, index) => { part.Speaker = line.Speaker; part.Narration |= line.Narration; part.Emotion = line.Emotion; part.Background = index == 0 ? line.Background : ""; part.Extra = line.CopyExtra(); part.SceneContinuation = !part.Narration && (line.SceneContinuation || index > 0); DateSceneExtensions.Current?.SplitLine(line, part, index); return part; });`
+
+**赋值（含属性/字段和局部值）：**
+
+- `part.Background` = `index == 0 ? line.Background : ""`
+- `part.Emotion` = `line.Emotion`
+- `part.Extra` = `line.CopyExtra()`
+- `part.Narration` |= `line.Narration`
+- `part.SceneContinuation` = `!part.Narration && (line.SceneContinuation || index > 0)`
+- `part.Speaker` = `line.Speaker`
 
 <a id="symbol-1bee81f08078"></a>
 
 ## `NationalSpire.DateScenes.PromptHistory(NationalSpire.PrivateTurn, string) — public static string PromptHistory(PrivateTurn turn, string host)`
 
-来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 359 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.ChatTimeline.PrivateHistory(NationalSpire.CareerData, NationalSpire.PrivateConversation, NationalSpire.PrivateTurn?)`](ChatTimeline.cs.md#symbol-4c7ee0ce6871)；[`NationalSpire.DateDiaries.Guidance(NationalSpire.PrivateConversation, NationalSpire.DateSceneRequest)`](DateDiaries.cs.md#symbol-81cb927c13c4)
 
-**调用：** [`Flush()`](DateSceneData.cs.md#symbol-5a50e4e9d311)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
+**调用：** [`Flush()`](DateSceneData.cs.md#symbol-5a50e4e9d311)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.IDateSceneExtension.MergeHistory(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`](DateSceneExtensions.cs.md#symbol-b666a4747dcc)；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.StringBuilder()`；`System.Text.StringBuilder.ToString()`
 
-**字段、属性、事件及方法组引用：** `Flush()`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`
+**字段、属性、事件及方法组引用：** `Flush()`；`NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；`NationalSpire.IDateSceneExtension.MergeHistory(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Flush()`；输入表达式：`Flush()`；返回值紧邻使用处：`ExpressionStatementSyntax: Flush();`
-- `NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；输入表达式：`Lines(turn)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var line in Lines(turn)) { // 历史恢复真实的说话人/情绪/转场边界；界面自动分页无需重复完整显示标签。 bool same = current != null && line.Narration == current.Narration && line.Speaker == current.Speaker && (line.Narration || line.Emotion == current.Emotion) && line.Background.Length == 0; if (!same) { Flush(); current = line; } body.Append(line.Text); }`
+- `NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`；输入表达式：`Lines(turn)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var line in Lines(turn)) { // 历史恢复真实的说话人/情绪/转场边界；界面自动分页无需重复完整显示标签。 bool same = current != null && line.Narration == current.Narration && line.Speaker == current.Speaker && (line.Narration || line.Emotion == current.Emotion && (DateSceneExtensions.Current?.MergeHistory(current, line) ?? true)) && line.Background.Length == 0; if (!same) { Flush(); current = line; } body.Append(line.Text); }`
+- `NationalSpire.IDateSceneExtension.MergeHistory(NationalSpire.DateSceneLine, NationalSpire.DateSceneLine)`；输入表达式：`.MergeHistory(current, line)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.MergeHistory(current, line)`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`body.Append(line.Text)`；返回值紧邻使用处：`ExpressionStatementSyntax: body.Append(line.Text);`
 - `System.Text.StringBuilder.StringBuilder()`；输入表达式：`new StringBuilder()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new StringBuilder()`
 - `System.Text.StringBuilder.ToString()`；输入表达式：`result.ToString()`；返回值紧邻使用处：`ReturnStatementSyntax: return result.ToString();`
@@ -1108,28 +1169,30 @@ public const int MaxLineCharacters = 48;
 
 ## `Flush() — void Flush()`
 
-来源：源码第 336 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.PromptHistory(NationalSpire.PrivateTurn, string)`](DateSceneData.cs.md#symbol-1bee81f08078)
 
-**调用：** `NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`；`string.Trim()`
+**调用：** `NationalSpire.DateSceneLine.DateSceneLine()`；[`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`](DateSceneData.cs.md#symbol-711ab692d366)；[`NationalSpire.IDateSceneExtension.HistoryCue(NationalSpire.DateSceneLine)`](DateSceneExtensions.cs.md#symbol-5dda5c304d1f)；`System.Text.StringBuilder.Append(char)`；`System.Text.StringBuilder.Append(string?)`；`System.Text.StringBuilder.Clear()`；`System.Text.StringBuilder.ToString()`；`string.Trim()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateSceneExtensions.Current`；`NationalSpire.DateSceneLine.Background`；`NationalSpire.DateSceneLine.Emotion`；`NationalSpire.DateSceneLine.Narration`；`NationalSpire.DateSceneLine.Speaker`；`NationalSpire.DateSceneLine.Text`；`NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；`NationalSpire.IDateSceneExtension.HistoryCue(NationalSpire.DateSceneLine)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.DateSceneLine.DateSceneLine()`；输入表达式：`new() { Narration = true, Text = body.ToString() }`；返回值紧邻使用处：`ArgumentSyntax: new() { Narration = true, Text = body.ToString() }`
 - `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine)`；输入表达式：`DisplayText(new() { Narration = true, Text = body.ToString() })`；返回值紧邻使用处：`ArgumentSyntax: DisplayText(new() { Narration = true, Text = body.ToString() })`
-- `System.Text.StringBuilder.Append(char)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append(']')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append(']').Append`
+- `NationalSpire.IDateSceneExtension.HistoryCue(NationalSpire.DateSceneLine)`；输入表达式：`.HistoryCue(current)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateSceneExtensions.Current?.HistoryCue(current)`
+- `System.Text.StringBuilder.Append(char)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append(']')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append(']').Append`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`result.Append("[Scene: narration, Background: ").Append(background).Append(']')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: narration, Background: ").Append(background).Append(']') .Append`
 - `System.Text.StringBuilder.Append(char)`；输入表达式：`result.Append('\n')`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Append('\n');`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append`
-- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim())`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim());`
+- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append`
+- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append`
+- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append`
+- `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim())`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Append("[Scene: dialogue, Speaker: ").Append(current.Speaker.Length > 0 ? current.Speaker : host) .Append(", Emotion: ").Append(current.Emotion).Append(DateSceneExtensions.Current?.HistoryCue(current) ?? "").Append(", Background: ").Append(background).Append(']').Append(body.ToString().Trim());`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: narration, Background: ")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: narration, Background: ").Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: narration, Background: ").Append(background)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: result.Append("[Scene: narration, Background: ").Append(background).Append`
 - `System.Text.StringBuilder.Append(string?)`；输入表达式：`result.Append("[Scene: narration, Background: ").Append(background).Append(']') .Append(DisplayText(new() { Narration = true, Text = body.ToString() }))`；返回值紧邻使用处：`ExpressionStatementSyntax: result.Append("[Scene: narration, Background: ").Append(background).Append(']') .Append(DisplayText(new() { Narration = true, Text = body.ToString() }));`
@@ -1147,7 +1210,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.JoinNarration(System.Collections.Generic.List<NationalSpire.DateSceneLine>) — private static List<DateSceneLine> JoinNarration(List<DateSceneLine> lines)`
 
-来源：源码第 358 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 384 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.DateScenes.TaggedLines(NationalSpire.PrivateStreamParser, NationalSpire.DateSceneRequest)`](DateSceneData.cs.md#symbol-00bcca1f004c)
 
@@ -1170,7 +1233,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.BackgroundAt(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneLine>, int, string, System.Collections.Generic.ISet<string>?) — public static string BackgroundAt(IEnumerable<DateSceneLine> lines, int index, string initial, ISet<string>? available = null)`
 
-来源：源码第 369 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 395 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.DateSceneBackgrounds.At(System.Collections.Generic.IEnumerable<NationalSpire.DateSceneBackground>, System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, string, string)`](DateSceneBackgrounds.cs.md#symbol-0f51af8c0e19)
 
@@ -1191,9 +1254,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.DisplayText(NationalSpire.DateSceneLine) — public static string DisplayText(DateSceneLine line)`
 
-来源：源码第 372 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 398 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-5a50e4e9d311)；[`NationalSpire.DateMemoryPlayback.History()`](DateSceneMemoryPlayback.cs.md#symbol-b888e2863847)；[`NationalSpire.DateMemoryPlayback.HistoryEntries()`](DateSceneMemoryPlayback.cs.md#symbol-095d68561b37)；[`NationalSpire.DateSceneParty.SharedMemory(NationalSpire.CareerData, string, string)`](DateSceneParty.cs.md#symbol-5315c2e1b812)；[`NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-e8fbec0a77e3)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)；[`NationalSpire.DateSceneTesting._Process(double)`](DateSceneTesting.cs.md#symbol-e5cbbec1bb0d)；[`NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?)`](DateSceneView.cs.md#symbol-eecb2292c03b)；[`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)
+**调用者：** [`Flush()`](DateSceneData.cs.md#symbol-5a50e4e9d311)；[`NationalSpire.DateMemoryPlayback.History()`](DateSceneMemoryPlayback.cs.md#symbol-b888e2863847)；[`NationalSpire.DateMemoryPlayback.HistoryEntries()`](DateSceneMemoryPlayback.cs.md#symbol-095d68561b37)；[`NationalSpire.DateSceneParty.SharedMemory(NationalSpire.CareerData, string, string)`](DateSceneParty.cs.md#symbol-5315c2e1b812)；[`NationalSpire.DateSceneView.AppendLine(System.Collections.Generic.IReadOnlyList<NationalSpire.DateSceneLine>, int, System.Func<(string Name, Godot.Texture2D Texture)>?)`](DateSceneView.cs.md#symbol-eecb2292c03b)；[`NationalSpire.DateSceneView.ShowLineCore(NationalSpire.DateSceneLine, string, Godot.Texture2D, bool)`](DateSceneView.cs.md#symbol-d19549d8d807)；[`NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-e8fbec0a77e3)；[`NationalSpire.DateScenes.Lines(NationalSpire.PrivateTurn)`](DateSceneData.cs.md#symbol-801111e76ca9)
 
 **调用：** `string.Replace(string, string?)`；`string.Trim()`
 
@@ -1215,9 +1278,9 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.History(NationalSpire.PrivateConversation, string, string, int, string, string) — public static string History(PrivateConversation conversation, string offerId, string currentTurn, int index, string player, string npc)`
 
-来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 400 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.OpenDateScene(string, bool, bool)`](DateSceneScreen.cs.md#symbol-bb8a80d5df80)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
+**调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)
 
 **调用：** [`NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-e8fbec0a77e3)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
@@ -1236,7 +1299,7 @@ public const int MaxLineCharacters = 48;
 
 ## `NationalSpire.DateScenes.HistoryEntries(NationalSpire.PrivateConversation, string, string, int, string, string) — public static IReadOnlyList<DateHistoryEntry> HistoryEntries(PrivateConversation conversation, string offerId, string currentTurn, int index, string player, string npc)`
 
-来源：源码第 379 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 405 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.DateScenes.History(NationalSpire.PrivateConversation, string, string, int, string, string)`](DateSceneData.cs.md#symbol-13e129fe5e9e)
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`547E61BAF2700A29D645FFFFF9A86D7513AA39184366FC49CE1CD6B56B38923E`。来源：[源码](../../../Coop/CoopScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`3C3BA686BCA06031A43CFF5063FF674CB2F6F6E74F5417DA531044B9AF6BAE92`。来源：[源码](../../../Coop/CoopScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -131,7 +131,7 @@ private CoopCoordinator? _replySession;
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.OpenRoom()`](CoopCareerSession.cs.md#symbol-cf5687c76814)；[`NationalSpire.Coop.CoopMenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](CoopRuntime.cs.md#symbol-898c6637244f)；[`NationalSpire.Coop.CoopScreen.OpenCareerOrRoom(Godot.Control)`](CoopScreen.cs.md#symbol-eee7991d404e)；[`NationalSpire.Coop.CoopScreen.OpenSaved(Godot.Control, string)`](CoopScreen.cs.md#symbol-ea5fafed6b79)
 
-**调用：** [`NationalSpire.CareerVisuals.CreateTheme()`](../CareerVisuals.cs.md#symbol-a5f88af9f360)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`NationalSpire.Coop.CoopScreen.CoopScreen()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.IEnumerable.OfType<TResult>()`
+**调用：** `Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；[`NationalSpire.CareerVisuals.CreateTheme()`](../CareerVisuals.cs.md#symbol-a5f88af9f360)；`NationalSpire.Coop.CoopScreen.CoopScreen()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.IEnumerable.OfType<TResult>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.CreateTheme()`；`NationalSpire.Coop.CoopScreen._hidden`；`NationalSpire.Coop.CoopScreen.Current`
 
@@ -183,7 +183,7 @@ private CoopCoordinator? _replySession;
 
 **调用者：** [`NationalSpire.Coop.CoopSteamRunPlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-b889ef6fb033)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginSaved(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-dc951f669f46)
 
-**调用：** [`NationalSpire.Coop.CoopScreen.Close()`](CoopScreen.cs.md#symbol-96fa80fbf85e)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；[`NationalSpire.Coop.CoopScreen.Close()`](CoopScreen.cs.md#symbol-96fa80fbf85e)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopScreen.Close()`；`NationalSpire.Coop.CoopScreen.Current`
 
@@ -227,7 +227,7 @@ private CoopCoordinator? _replySession;
 
 **调用者：** [`NationalSpire.Coop.CoopScreen._Process(double)`](CoopScreen.cs.md#symbol-ac85af6ab46f)
 
-**调用：** [`NationalSpire.CareerScreen.OpenView(Godot.Control, NationalSpire.ICareerSession?, string?)`](../CareerScreen.cs.md#symbol-2b6ef58a9693)；[`NationalSpire.Coop.CoopCareerSession.CoopCareerSession(NationalSpire.Coop.CoopCoordinator, Godot.Control)`](CoopCareerSession.cs.md#symbol-be42258ccf13)；[`NationalSpire.Coop.CoopScreen.Close()`](CoopScreen.cs.md#symbol-96fa80fbf85e)；`Godot.Node.GetParent()`
+**调用：** `Godot.Node.GetParent()`；[`NationalSpire.CareerScreen.OpenView(Godot.Control, NationalSpire.ICareerSession?, string?)`](../CareerScreen.cs.md#symbol-2b6ef58a9693)；[`NationalSpire.Coop.CoopCareerSession.CoopCareerSession(NationalSpire.Coop.CoopCoordinator, Godot.Control)`](CoopCareerSession.cs.md#symbol-be42258ccf13)；[`NationalSpire.Coop.CoopScreen.Close()`](CoopScreen.cs.md#symbol-96fa80fbf85e)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.OpenView(Godot.Control, NationalSpire.ICareerSession?, string?)`；`NationalSpire.Coop.CoopScreen.Close()`；`NationalSpire.Coop.CoopScreen.Session`
 
@@ -249,9 +249,9 @@ private CoopCoordinator? _replySession;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Fit()`](CoopScreen.cs.md#symbol-6b20e36f164d)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.BroadcastBackdrop.BroadcastBackdrop()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.MarginContainer.MarginContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.BroadcastBackdrop.BroadcastBackdrop()`；`NationalSpire.BroadcastScroll.BroadcastScroll()`；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.LandscapeViewport.Mount(Godot.Control)`](../DashboardViewport.cs.md#symbol-adb87fe8fef5)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen._back`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._entrySequence`；`NationalSpire.Coop.CoopScreen._footer`；`NationalSpire.Coop.CoopScreen._stage`；`NationalSpire.Coop.CoopScreen._status`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Fit()`；`NationalSpire.Coop.CoopScreen.Leave()`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopWorld.EntrySequence`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Leave()`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopScreen._back`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._entrySequence`；`NationalSpire.Coop.CoopScreen._footer`；`NationalSpire.Coop.CoopScreen._stage`；`NationalSpire.Coop.CoopScreen._status`；`NationalSpire.Coop.CoopWorld.EntrySequence`；`NationalSpire.LandscapeViewport.Mount(Godot.Control)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -259,16 +259,14 @@ private CoopCoordinator? _replySession;
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`frame.AddThemeConstantOverride("separation", 24)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.AddThemeConstantOverride("separation", 24);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`margin.AddThemeConstantOverride("margin_" + edge, 38)`；返回值紧邻使用处：`ExpressionStatementSyntax: margin.AddThemeConstantOverride("margin_" + edge, 38);`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`padding.AddThemeConstantOverride("margin_bottom", 28)`；返回值紧邻使用处：`ExpressionStatementSyntax: padding.AddThemeConstantOverride("margin_bottom", 28);`
-- `Godot.Control.Control()`；输入表达式：`new Control()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _stage = new Control()`
+- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: background.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: margin.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
-- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.MarginContainer.MarginContainer()`；输入表达式：`new MarginContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MarginContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.MarginContainer.MarginContainer()`；输入表达式：`new MarginContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new MarginContainer()`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_stage.AddChild(margin)`；返回值紧邻使用处：`ExpressionStatementSyntax: _stage.AddChild(margin);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_stage)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_stage);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(background)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(background);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_stage.AddChild(margin)`；返回值紧邻使用处：`ExpressionStatementSyntax: _stage.AddChild(margin);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`frame.AddChild(_footer)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.AddChild(_footer);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`frame.AddChild(header)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.AddChild(header);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`frame.AddChild(scroll)`；返回值紧邻使用处：`ExpressionStatementSyntax: frame.AddChild(scroll);`
@@ -276,65 +274,41 @@ private CoopCoordinator? _replySession;
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`margin.AddChild(frame)`；返回值紧邻使用处：`ExpressionStatementSyntax: margin.AddChild(frame);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`padding.AddChild(_body)`；返回值紧邻使用处：`ExpressionStatementSyntax: padding.AddChild(_body);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`scroll.AddChild(padding)`；返回值紧邻使用处：`ExpressionStatementSyntax: scroll.AddChild(padding);`
-- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _body = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
-- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _footer = new VBoxContainer()`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _body = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new VBoxContainer()`
+- `Godot.VBoxContainer.VBoxContainer()`；输入表达式：`new VBoxContainer()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _footer = new VBoxContainer()`
 - `NationalSpire.BroadcastBackdrop.BroadcastBackdrop()`；输入表达式：`new BroadcastBackdrop()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastBackdrop()`
 - `NationalSpire.BroadcastScroll.BroadcastScroll()`；输入表达式：`new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BroadcastScroll { SizeFlagsVertical = SizeFlags.ExpandFill, HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }`
 - `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(header, "返回主菜单", Leave, 180)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _back = Button(header, "返回主菜单", Leave, 180)`
-- `NationalSpire.Coop.CoopScreen.Fit()`；输入表达式：`Fit()`；返回值紧邻使用处：`ExpressionStatementSyntax: Fit();`
 - `NationalSpire.Coop.CoopScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
-- `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(brand, "国运尖塔：多人模式", 32, CareerVisuals.Gold)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(brand, "国运尖塔：多人模式", 32, CareerVisuals.Gold);`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(brand, "一起攀登，同一支队伍，同一个赛季。", 17, CareerVisuals.Muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(brand, "一起攀登，同一支队伍，同一个赛季。", 17, CareerVisuals.Muted);`
+- `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(brand, "国运尖塔：多人模式", 32, CareerVisuals.Gold)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(brand, "国运尖塔：多人模式", 32, CareerVisuals.Gold);`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(frame, "", 17, CareerVisuals.Teal)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _status = Text(frame, "", 17, CareerVisuals.Teal)`
+- `NationalSpire.LandscapeViewport.Mount(Godot.Control)`；输入表达式：`LandscapeViewport.Mount(this)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _stage = LandscapeViewport.Mount(this)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
+- `MouseFilter` = `MouseFilterEnum.Stop`
+- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
+- `SizeFlagsVertical` = `SizeFlags.ExpandFill`
 - `_back` = `Button(header, "返回主菜单", Leave, 180)`
 - `_body` = `new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }`
 - `_entrySequence` = `Session?.World?.EntrySequence ?? -1`
 - `_footer` = `new VBoxContainer()`
-- `_stage` = `new Control()`
+- `_stage` = `LandscapeViewport.Mount(this)`
 - `_status` = `Text(frame, "", 17, CareerVisuals.Teal)`
-- `HorizontalScrollMode` = `ScrollContainer.ScrollMode.Disabled`
-- `MouseFilter` = `MouseFilterEnum.Stop`
-- `Resized` += `Fit`
-- `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
-- `SizeFlagsVertical` = `SizeFlags.ExpandFill`
-
-<a id="symbol-6b20e36f164d"></a>
-
-## `NationalSpire.Coop.CoopScreen.Fit() — private void Fit()`
-
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
-
-**调用者：** [`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)
-
-**调用：** `Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
-
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopScreen._stage`
-
-**调用输入与返回值使用（源码表达式，不推测运行条件）：**
-
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(1600, 1000)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _stage.Size = new(1600, 1000)`
-- `System.Math.Min(float, float)`；输入表达式：`Math.Min(Size.X / 1600f, Size.Y / 1000f)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Min(Size.X / 1600f, Size.Y / 1000f)`
-
-**赋值（含属性/字段和局部值）：**
-
-- `_stage.Position` = `(Size - _stage.Size * scale) / 2`
-- `_stage.Scale` = `Vector2.One * scale`
-- `_stage.Size` = `new(1600, 1000)`
 
 <a id="symbol-ac85af6ab46f"></a>
 
 ## `NationalSpire.Coop.CoopScreen._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.Coop.CoopScreen.EnterCareer()`](CoopScreen.cs.md#symbol-88e296cd2158)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Linq.Enumerable.Empty<TResult>()`
+**调用：** [`NationalSpire.Coop.CoopScreen.EnterCareer()`](CoopScreen.cs.md#symbol-88e296cd2158)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Linq.Enumerable.Empty<TResult>()`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Online`；`NationalSpire.Coop.CoopCoordinator.Status`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen._dialog`；`NationalSpire.Coop.CoopScreen._entrySequence`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopScreen._presence`；`NationalSpire.Coop.CoopScreen._revision`；`NationalSpire.Coop.CoopScreen._status`；`NationalSpire.Coop.CoopScreen._tick`；`NationalSpire.Coop.CoopScreen._working`；`NationalSpire.Coop.CoopScreen.EnterCareer()`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopWorld.CareerStarted`；`NationalSpire.Coop.CoopWorld.EntrySequence`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`
 
@@ -358,11 +332,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen._Input(Godot.InputEvent) — public override void _Input(InputEvent input)`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.Coop.CoopScreen.Leave()`](CoopScreen.cs.md#symbol-187bb3392c96)；`Godot.Node.GetViewport()`；`Godot.Node.QueueFree()`；`Godot.Viewport.SetInputAsHandled()`
+**调用：** `Godot.Node.GetViewport()`；`Godot.Node.QueueFree()`；`Godot.Viewport.SetInputAsHandled()`；[`NationalSpire.Coop.CoopScreen.Leave()`](CoopScreen.cs.md#symbol-187bb3392c96)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopScreen._dialog`；`NationalSpire.Coop.CoopScreen.Leave()`
 
@@ -381,7 +355,7 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Leave() — private void Leave()`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen._Input(Godot.InputEvent)`](CoopScreen.cs.md#symbol-5fc019f0fab0)
 
@@ -403,9 +377,9 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?) — private static Label Text(Node parent, string value, int size = 19, Color? color = null)`
 
-来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
+**调用者：** [`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)
 
 **调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -428,9 +402,9 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int) — private static Button Button(Node parent, string text, Action action, int width = 220)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 105 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
+**调用者：** [`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)；[`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)
 
 **调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`
 
@@ -453,11 +427,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?) — private static VBoxContainer Card(Node parent, string title, Color? accent = null)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](../CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.BroadcastPanel.BroadcastPanel()`；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](../CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)
 
 **字段、属性、事件及方法组引用：** `NationalSpire.BroadcastPanel.Accent`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`
 
@@ -481,7 +455,7 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string) — private static LineEdit Input(Node parent, string placeholder, string value = "")`
 
-来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
 
@@ -506,11 +480,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string) — private void Confirm(string title, string question, Action action, string confirmText = "确认")`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Leave()`](CoopScreen.cs.md#symbol-187bb3392c96)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
 
-**调用：** [`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；`Godot.CenterContainer.CenterContainer()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`System.Action.Invoke()`（委托实际目标见流程文档）
+**调用：** `Godot.CenterContainer.CenterContainer()`；`Godot.Color.Color(float, float, float, float)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；`System.Action.Invoke()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopScreen._dialog`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopScreen._stage`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`
 
@@ -549,7 +523,7 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool) — private async Task Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "", NpcGenerationSetup? npcSetup = null, bool reportToSetup = false)`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`](CoopScreen.cs.md#symbol-af359fd6d523)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.OpenSaved(Godot.Control, string)`](CoopScreen.cs.md#symbol-ea5fafed6b79)
 
@@ -585,11 +559,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Submit(string, string) — private void Submit(string kind, string target = "")`
 
-来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`](CoopReception.cs.md#symbol-ebee1cc829c5)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
+**调用：** `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`NationalSpire.Coop.CoopCommand.CoopCommand(string, string, string, long, string, string, string, int, string)`；[`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`](CoopReception.cs.md#symbol-ebee1cc829c5)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；`System.Guid.NewGuid()`；`System.Guid.ToString(string?)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Replied`；`NationalSpire.Coop.CoopCoordinator.SubmitReady(NationalSpire.Coop.CoopCommand, System.Action<NationalSpire.Coop.CoopCommand>, System.Action<System.Exception>)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopScreen._pending`；`NationalSpire.Coop.CoopScreen._replySession`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Replied(NationalSpire.Coop.CoopReply)`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Revision`
 
@@ -618,7 +592,7 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Replied(NationalSpire.Coop.CoopReply) — private void Replied(CoopReply reply)`
 
-来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -639,11 +613,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Render() — private void Render()`
 
-来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopScreen._Process(double)`](CoopScreen.cs.md#symbol-ac85af6ab46f)；[`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)；[`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`](CoopScreen.cs.md#symbol-af359fd6d523)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Replied(NationalSpire.Coop.CoopReply)`](CoopScreen.cs.md#symbol-9a00bed0ae7c)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)
+**调用者：** [`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`](CoopScreen.cs.md#symbol-af359fd6d523)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Replied(NationalSpire.Coop.CoopReply)`](CoopScreen.cs.md#symbol-9a00bed0ae7c)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)；[`NationalSpire.Coop.CoopScreen._Process(double)`](CoopScreen.cs.md#symbol-ac85af6ab46f)；[`NationalSpire.Coop.CoopScreen._Ready()`](CoopScreen.cs.md#symbol-5affb9c9c17f)
 
-**调用：** [`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](../CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.Coop.CoopRuntime.Disconnect()`](CoopRuntime.cs.md#symbol-a4550fd42c36)；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Linq.Enumerable.Empty<TResult>()`
+**调用：** [`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](../CareerVisuals.cs.md#symbol-561d8fe38106)；[`NationalSpire.Coop.CoopRuntime.Disconnect()`](CoopRuntime.cs.md#symbol-a4550fd42c36)；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Entrance()`](CoopScreen.cs.md#symbol-ef98f9c7ba09)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`](CoopScreen.cs.md#symbol-b46abec89d85)；`System.Collections.Generic.IEnumerable<T>.Order<T>()`；`System.Linq.Enumerable.Empty<TResult>()`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.Coop.CoopCoordinator.Online`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopRuntime.Disconnect()`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._footer`；`NationalSpire.Coop.CoopScreen._presence`；`NationalSpire.Coop.CoopScreen._revision`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.Entrance()`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Runtime`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld)`；`NationalSpire.Coop.CoopWorld.Revision`
 
@@ -671,13 +645,13 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.Entrance() — private async void Entrance()`
 
-来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 162 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)
 
-**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.DisplayServer.ClipboardGet()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.GetItemText(int)`；`Godot.OptionButton.GetSelectedId()`；`Godot.OptionButton.OptionButton()`；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`](CoopScreen.cs.md#symbol-af359fd6d523)；[`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`](CoopScreen.cs.md#symbol-5ca0d288e876)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](CoopStorage.cs.md#symbol-896c6be28762)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](../GameCalendar.cs.md#symbol-eb37c8a67b51)；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`string.Trim()`
+**调用：** `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.DisplayServer.ClipboardGet()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.GetItemText(int)`；`Godot.OptionButton.GetSelectedId()`；`Godot.OptionButton.OptionButton()`；[`NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`](../CareerLibrary.cs.md#symbol-c8ee3532fd85)；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`](CoopScreen.cs.md#symbol-af359fd6d523)；[`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`](CoopScreen.cs.md#symbol-5ca0d288e876)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`](CoopStorage.cs.md#symbol-896c6be28762)；[`NationalSpire.Coop.CoopStorage.ListAsync()`](CoopStorage.cs.md#symbol-91a27633a0d4)；[`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`](../GameCalendar.cs.md#symbol-eb37c8a67b51)；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`string.Trim()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.PlayerName`；`NationalSpire.CareerVisuals.Lime`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`；`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`；`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopSettings.Storage`；`NationalSpire.Coop.CoopStorage.Checkpoint.World`；`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`；`NationalSpire.Coop.CoopStorage.ListAsync()`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Name`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Season`；`NationalSpire.CareerEngine.PlayerName`；`NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`；`NationalSpire.CareerVisuals.Lime`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`；`NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`；`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`；`NationalSpire.Coop.CoopScreen.Render()`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopSettings.Storage`；`NationalSpire.Coop.CoopStorage.Checkpoint.World`；`NationalSpire.Coop.CoopStorage.DeleteAsync(string)`；`NationalSpire.Coop.CoopStorage.ListAsync()`；`NationalSpire.Coop.CoopWorld.Id`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Name`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -705,16 +679,17 @@ private CoopCoordinator? _replySession;
 - `Godot.OptionButton.GetItemText(int)`；输入表达式：`country.GetItemText(country.Selected)`；返回值紧邻使用处：`ArgumentSyntax: country.GetItemText(country.Selected)`
 - `Godot.OptionButton.GetSelectedId()`；输入表达式：`count.GetSelectedId()`；返回值紧邻使用处：`ArgumentSyntax: count.GetSelectedId()`
 - `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton()`
+- `NationalSpire.CareerLibrary.DisplayName(NationalSpire.CareerData, string?)`；输入表达式：`CareerLibrary.DisplayName(cp.World.World,cp.World.Name)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =CareerLibrary.DisplayName(cp.World.World,cp.World.Name)`
 - `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(actions, "加入房间", () => { _ = Connect(false, name.Text, code: code.Text); }, 180)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(actions, "加入房间", () => { _ = Connect(false, name.Text, code: code.Text); }, 180);`
 - `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(actions, "粘贴邀请码", () => code.Text = DisplayServer.ClipboardGet().Trim(), 190);`
 - `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(host, "创建房间并邀请队友", () => { _ = Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)); }, 300)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(host, "创建房间并邀请队友", () => { _ = Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected)); }, 300);`
-- `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100);`
+- `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(row, "删除", () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(row, "删除", () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100);`
 - `NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；输入表达式：`Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190)`；返回值紧邻使用处：`ExpressionStatementSyntax: Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190);`
 - `NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；输入表达式：`Card(_body, "你的选手名字")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card(_body, "你的选手名字")`
 - `NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；输入表达式：`Card(_body, "已有多人生涯")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card(_body, "已有多人生涯")`
 - `NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；输入表达式：`Card(columns, "创建房间", CareerVisuals.Lime)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card(columns, "创建房间", CareerVisuals.Lime)`
 - `NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；输入表达式：`Card(columns, "加入朋友的房间")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Card(columns, "加入朋友的房间")`
-- `NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`；输入表达式：`Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除")`
+- `NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`；输入表达式：`Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除")`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除")`
 - `NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`；输入表达式：`Connect(false, name.Text, code: code.Text)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = Connect(false, name.Text, code: code.Text)`
 - `NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`；输入表达式：`Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected))`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = Connect(true, name.Text, count.GetSelectedId(), country.GetItemText(country.Selected))`
 - `NationalSpire.Coop.CoopScreen.Connect(bool, string, int, string, string, string, NationalSpire.NpcGenerationSetup?, bool)`；输入表达式：`Connect(true, name.Text, saved: cp.World.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = Connect(true, name.Text, saved: cp.World.Id)`
@@ -723,13 +698,13 @@ private CoopCoordinator? _replySession;
 - `NationalSpire.Coop.CoopScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(host, "创建后邀请朋友，进入生涯安排赛事，开赛时全员准备。", 18, CareerVisuals.Muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(host, "创建后邀请朋友，进入生涯安排赛事，开赛时全员准备。", 18, CareerVisuals.Muted);`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(join, "让房主在等待房间中复制邀请码发给你，然后粘贴到这里。", 18, CareerVisuals.Muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(join, "让房主在等待房间中复制邀请码发给你，然后粘贴到这里。", 18, CareerVisuals.Muted);`
-- `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);`
+- `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(row, $"{displayName} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(row, $"{displayName} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18);`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(saves, "尚无多人存档。创建房间后会自动保存。", 18, CareerVisuals.Muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(saves, "尚无多人存档。创建房间后会自动保存。", 18, CareerVisuals.Muted);`
 - `NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；输入表达式：`Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted)`；返回值紧邻使用处：`ExpressionStatementSyntax: Text(saves, "房主重新打开存档后可邀请朋友加入。删除只移除本机这份存档。", 17, CareerVisuals.Muted);`
 - `NationalSpire.Coop.CoopStorage.DeleteAsync(string)`；输入表达式：`CoopSettings.Storage.DeleteAsync(cp.World.Id)`；返回值紧邻使用处：`AwaitExpressionSyntax: await CoopSettings.Storage.DeleteAsync(cp.World.Id)`
 - `NationalSpire.Coop.CoopStorage.ListAsync()`；输入表达式：`CoopSettings.Storage.ListAsync()`；返回值紧邻使用处：`AwaitExpressionSyntax: await CoopSettings.Storage.ListAsync()`
 - `NationalSpire.GameCalendar.Text(NationalSpire.CareerData, int)`；输入表达式：`GameCalendar.Text(cp.World.World, cp.World.World.Day)`；返回值紧邻使用处：`InterpolationSyntax: {GameCalendar.Text(cp.World.World, cp.World.World.Day)}`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`checkpoints.OrderByDescending(c => c.World.World.Day)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day)) { var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row); Text(row, $"{cp.World.Name} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18); Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190); bool deleting = false; Button(row, "删除", () => Confirm("删除多人存档", $"{cp.World.Name} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100); }`
+- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`checkpoints.OrderByDescending(c => c.World.World.Day)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var cp in checkpoints.OrderByDescending(c => c.World.World.Day)) { var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); saves.AddChild(row); string displayName=CareerLibrary.DisplayName(cp.World.World,cp.World.Name); Text(row, $"{displayName} · {GameCalendar.Text(cp.World.World, cp.World.World.Day)} · {cp.World.Members.Count} 位成员", 18); Button(row, "继续并邀请", () => { _ = Connect(true, name.Text, saved: cp.World.Id); }, 190); bool deleting = false; Button(row, "删除", () => Confirm("删除多人存档", $"{displayName} · 第{cp.World.World.Season}赛季 · {GameCalendar.Text(cp.World.World, cp.World.World.Day)}\n从列表移除，文件保留在本机备份中。", async () => { if (deleting) return; deleting = true; try { if (Session?.World?.Id == cp.World.Id) throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。"); await CoopSettings.Storage.DeleteAsync(cp.World.Id); if (IsInstanceValid(this) && !IsQueuedForDeletion()) Render(); } catch (Exception error) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = error.Message; } finally { deleting = false; } }, "删除"), 100); }`
 - `System.InvalidOperationException.InvalidOperationException(string?)`；输入表达式：`new InvalidOperationException("请先退出这份生涯的房间，再删除存档。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidOperationException("请先退出这份生涯的房间，再删除存档。");`
 - `string.Trim()`；输入表达式：`DisplayServer.ClipboardGet().Trim()`；返回值紧邻使用处：`AssignmentExpressionSyntax: code.Text = DisplayServer.ClipboardGet().Trim()`
 
@@ -752,11 +727,11 @@ private CoopCoordinator? _replySession;
 
 ## `NationalSpire.Coop.CoopScreen.WaitingRoom(NationalSpire.Coop.CoopWorld) — private void WaitingRoom(CoopWorld world)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 202 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)
 
-**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](../AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](../CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](../CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`](CoopScreen.cs.md#symbol-5ca0d288e876)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.GameBridge.Characters()`](../GameBridge.cs.md#symbol-1233494dda40)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.DisplayServer.ClipboardSet(string)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Max(int, int)`
+**调用：** `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.DisplayServer.ClipboardSet(string)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Vector2.Vector2(float, float)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](../AvatarHonors.cs.md#symbol-5207a1627331)；`NationalSpire.CareerAvatar.CareerAvatar()`；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](../CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerVisuals.Box(string, string, int, int)`](../CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`](CoopScreen.cs.md#symbol-806347605946)；[`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`](CoopScreen.cs.md#symbol-eab6cd747232)；[`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`](CoopScreen.cs.md#symbol-cbbe81fc6508)；[`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`](CoopScreen.cs.md#symbol-5ca0d288e876)；[`NationalSpire.Coop.CoopScreen.Submit(string, string)`](CoopScreen.cs.md#symbol-9efdcfdc1723)；[`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`](CoopScreen.cs.md#symbol-2120a3a9f30d)；[`NationalSpire.GameBridge.Characters()`](../GameBridge.cs.md#symbol-1233494dda40)；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Max(int, int)`；`string.Join(string?, System.Collections.Generic.IEnumerable<string?>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.RandomCharacterChoice`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.Lime`；`NationalSpire.CareerVisuals.Muted`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.Coop.CoopCommand.Kind`；`NationalSpire.Coop.CoopCommand.Target`；`NationalSpire.Coop.CoopCoordinator.Full`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.Online`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopMember.Character`；`NationalSpire.Coop.CoopMember.Name`；`NationalSpire.Coop.CoopMember.PersonId`；`NationalSpire.Coop.CoopMember.RandomCharacter`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopProposal.Id`；`NationalSpire.Coop.CoopProposal.Kind`；`NationalSpire.Coop.CoopProposal.Label`；`NationalSpire.Coop.CoopProposal.Participants`；`NationalSpire.Coop.CoopProposal.Votes`；`NationalSpire.Coop.CoopRun.Characters`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.Terminal`；`NationalSpire.Coop.CoopRuntime.InviteCode`；`NationalSpire.Coop.CoopScreen._body`；`NationalSpire.Coop.CoopScreen._footer`；`NationalSpire.Coop.CoopScreen._message`；`NationalSpire.Coop.CoopScreen._pending`；`NationalSpire.Coop.CoopScreen.Button(Godot.Node, string, System.Action, int)`；`NationalSpire.Coop.CoopScreen.Card(Godot.Node, string, Godot.Color?)`；`NationalSpire.Coop.CoopScreen.Confirm(string, string, System.Action, string)`；`NationalSpire.Coop.CoopScreen.EnterCareer()`；`NationalSpire.Coop.CoopScreen.Input(Godot.Node, string, string)`；`NationalSpire.Coop.CoopScreen.Runtime`；`NationalSpire.Coop.CoopScreen.Session`；`NationalSpire.Coop.CoopScreen.Submit(string, string)`；`NationalSpire.Coop.CoopScreen.Text(Godot.Node, string, int, Godot.Color?)`；`NationalSpire.Coop.CoopWorld.CareerStarted`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Owner`；`NationalSpire.Coop.CoopWorld.Proposal`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.GameBridge.Characters()`
 

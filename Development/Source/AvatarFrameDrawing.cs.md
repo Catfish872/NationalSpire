@@ -21,7 +21,7 @@
 
 **调用者：** [`NationalSpire.CareerAvatar.DrawHonors(NationalSpire.AvatarIdentity)`](CareerAvatars.cs.md#symbol-e94ed9976fb6)
 
-**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-02a7b3d8e0ed)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-7b66cc740838)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-70e0c20a0ac2)；[`Shape(Godot.Color, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-806f5f5a7a65)；[`Stroke(Godot.Color, float, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-218332effc6c)；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
+**调用：** `Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(Godot.Color, float)`；`Godot.Color.Color(string)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；`Godot.Vector2.Vector2(float, float)`；[`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-02a7b3d8e0ed)；[`P(float, float)`](AvatarFrameDrawing.cs.md#symbol-7b66cc740838)；[`Ring(float, float, Godot.Color)`](AvatarFrameDrawing.cs.md#symbol-70e0c20a0ac2)；[`Shape(Godot.Color, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-806f5f5a7a65)；[`Stroke(Godot.Color, float, params Godot.Vector2[])`](AvatarFrameDrawing.cs.md#symbol-218332effc6c)；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Math.Max(float, float)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.AvatarFrame.Color`；`NationalSpire.AvatarFrame.Grade`；`Octagon(float, float)`；`P(float, float)`；`Ring(float, float, Godot.Color)`；`Shape(Godot.Color, params Godot.Vector2[])`；`Stroke(Godot.Color, float, params Godot.Vector2[])`
 
@@ -281,7 +281,7 @@
 
 **调用者：** [`NationalSpire.CareerAvatar.DrawMetalFrame(NationalSpire.AvatarFrame)`](AvatarFrameDrawing.cs.md#symbol-85654168c2bc)
 
-**调用：** [`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)；`Godot.CanvasItem.DrawPolygon(Godot.Vector2[], Godot.Color[], Godot.Vector2[], Godot.Texture2D)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`
+**调用：** `Godot.CanvasItem.DrawPolygon(Godot.Vector2[], Godot.Color[], Godot.Vector2[], Godot.Texture2D)`；`Godot.Color.Darkened(float)`；`Godot.Color.Lightened(float)`；[`Octagon(float, float)`](AvatarFrameDrawing.cs.md#symbol-aa56b78dde46)
 
 **字段、属性、事件及方法组引用：** `Octagon(float, float)`
 
