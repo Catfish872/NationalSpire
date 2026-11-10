@@ -7,6 +7,12 @@ public static class CareerLife
     {
         ConsumerEngine.Ensure(d);
         RandomEvents.Ensure(d);
+        // 本地魔改：点赞公式更新后（A+B），载入时一次性按新公式重算所有旧帖/楼中楼分数。
+        if (d.CommunityVoteVersion < CommunityVotes.FormulaVersion)
+        {
+            foreach (var post in CommunityThreads.All(d)) CommunityVotes.Update(d, post);
+            d.CommunityVoteVersion = CommunityVotes.FormulaVersion;
+        }
         RefreshPublicFacts(d);
         if (d.Esports.EcosystemVersion < 1 || d.Life.Version >= Version) return;
         if (d.Life.Version >= 3) { UpgradeOffers(d); d.Life.Version = Version; return; }

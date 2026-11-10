@@ -24,6 +24,10 @@ public partial class CareerScreen
         var categories = new ItemList { Name = "PoolCategories", CustomMinimumSize = new(170, 0), SizeFlagsVertical = SizeFlags.ExpandFill }; body.AddChild(categories);
         var content = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; content.AddThemeConstantOverride("separation", 10); body.AddChild(content);
         var section = Text("", 21, _gold); content.AddChild(section);
+        var prefixHelp = Text(EventPools.ParticipantUsage, 14, _muted);
+        prefixHelp.Name = "PoolParticipantUsage";
+        prefixHelp.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        content.AddChild(prefixHelp);
         var toolbar = new HBoxContainer(); toolbar.AddThemeConstantOverride("separation", 10); content.AddChild(toolbar);
         var single = new HBoxContainer { SizeFlagsVertical = SizeFlags.ExpandFill }; single.AddThemeConstantOverride("separation", 14); content.AddChild(single);
         var list = new ItemList { Name = "PoolEntries", CustomMinimumSize = new(240, 0), SizeFlagsVertical = SizeFlags.ExpandFill, MaxTextLines = 2 }; single.AddChild(list);
@@ -97,7 +101,9 @@ public partial class CareerScreen
             entries = EventPools.Entries(drafts, category).ToList(); selected = entries.Count > 0 ? 0 : -1;
             Heading();
             summary.Text = "分类固定，内容可自由增删。保存后用于后续抽取，已有故事和帖子保留原文。";
-            title.Visible = tokens.Visible = preview.Visible = Daily(); FillList();
+            title.Visible = tokens.Visible = preview.Visible = Daily();
+            prefixHelp.Visible = !Daily();
+            FillList();
             loading = true; bulk.Text = EventPools.BulkText(category, entries); loading = false;
             bulkHelp.Text = Daily() ? "每行填写：标题｜内容。{人}替换为选手，{队}替换为俱乐部；内容换行写为 \\n。" : "每行一条故事素材；素材中的换行写为 \\n。";
             status.Text = drafts.ContainsKey(category) ? "当前分类使用自定义内容" : "当前分类跟随内置内容更新";
