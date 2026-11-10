@@ -101,8 +101,8 @@ public static partial class AiService
                 using var eventLease = await EnterPrivateQueue(owner, "prompt-preview/event", timeout.Token);
                 if (!Current() || Connection(owner.Ai, "event") != connection) throw new ArgumentException("设置或生涯已切换，请重新测试。");
                 CommunityThreads.SetWork(test.Work, "sending");
-                string result = await RequestPrivateAsync(options, RandomEventPrompts.Compose(test.Snapshot, new() { Materials = test.Context }, options), false, null,
-                    timeout.Token, context: "prompt-test-event", task: "event");
+                string result = await RequestPrivateAsync(owner, RandomEventPrompts.Compose(test.Snapshot, new() { Materials = test.Context }, options), false, null,
+                    timeout.Token, context: "prompt-test-event", task: "event", requestOptions: options);
                 if (!Current()) throw new ArgumentException("设置或生涯已切换，本次结果已放弃。");
                 test.Previous = test.Result; test.Result = ApplyTestResponse(test.Snapshot, test, result);
                 CommunityThreads.SetWork(test.Work, "completed"); return;

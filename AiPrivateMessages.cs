@@ -61,7 +61,7 @@ public static partial class AiService
             if (turn.RequestKind == "arbitration")
             {
                 var record = new StringBuilder();
-                string response = await RequestPrivateAsync(data.Ai, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration");
+                string response = await RequestPrivateAsync(data, SpireArbitration.Compose(data, conversation, turn), false, null, cancel.Token, chunk => record.Append(chunk), "private/" + key + "/" + turnId, task: "arbitration");
                 var decision = SpireArbitration.Parse(response);
                 cancel.Token.ThrowIfCancellationRequested();
                 data = current(); if (data == null) return;
@@ -90,7 +90,7 @@ public static partial class AiService
                 if ((DateTime.UtcNow - lastProgress).TotalMilliseconds < 100) return;
                 lastProgress = DateTime.UtcNow; Notify(parser.Text);
             }
-            await RequestPrivateAsync(data.Ai, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId, tools: tools);
+            await RequestPrivateAsync(data, messages, true, Progress, cancel.Token, Thinking, "private/" + key + "/" + turnId, tools: tools);
             cancel.Token.ThrowIfCancellationRequested(); parser.Finish();
             tools?.Apply(parser);
             data = current(); if (data == null || PrivateKey(data, person) != key || !PrivateMessages.CanChat(data, person)) return;
@@ -152,15 +152,17 @@ public static partial class AiService
         async Task ReleasePending() { using var lease = await pending; }
     }
 
-    internal static async Task<string> RequestPrivateAsync(AiOptions options, List<Dictionary<string, string>> messages, bool stream,
-        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null)
+    internal static async Task<string> RequestPrivateAsync(CareerData data, List<Dictionary<string, string>> messages, bool stream,
+        Action<string>? progress, CancellationToken token, Action<string>? reasoning = null, string context = "", string task = "private", ChatToolRequest? tools = null, AiOptions? requestOptions = null)
     {
         using var logScope = Diagnostics.RequestLog(task, context);
+        var options = requestOptions ?? data.Ai;
         var connection = Connection(options, task);
         if (string.IsNullOrWhiteSpace(connection.Key)) throw new InvalidOperationException("请先在模组设置中保存密钥。");
         if (!TryGetEndpoint(connection.Endpoint, out var endpoint)) throw new ArgumentException("接口地址无效。");
         using var request = new HttpRequestMessage(HttpMethod.Post, endpoint);
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", connection.Key);
+        ApplyProviderHeaders(request, data);
         var payload = new Dictionary<string, object> { ["model"] = connection.Model, ["messages"] = messages, ["stream"] = stream };
         if (tools != null)
         {
@@ -319,13 +321,13 @@ public static partial class AiService
     {
         var p = CareerEngine.Person(data, person)!;
         List<Dictionary<string, string>> messages = [new() { ["role"] = "system", ["content"] = PromptLibrary.Get(data.Ai, section) + $"\n你是{p.PublicName}，以{p.PublicName}的第一人称整理与玩家{CareerEngine.Name(data)}的聊天。\n{p.PublicName}的性格 " + JsonSerializer.Serialize(PersonalityLibrary.PromptProfile(p.Personality), Json) + "\n性格使用说明：" + PersonalityLibrary.ProfileUsage }, new() { ["role"] = "user", ["content"] = content }];
-        return SummaryRequest(data.Ai, messages, "private-summary");
+        return SummaryRequest(data, messages, "private-summary");
     }
-    private static async Task<string> SummaryRequest(AiOptions options, List<Dictionary<string, string>> messages, string task)
+    private static async Task<string> SummaryRequest(CareerData data, List<Dictionary<string, string>> messages, string task)
     {
-        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(options.RequestTimeoutMinutes, 2, 30)));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(Math.Clamp(data.Ai.RequestTimeoutMinutes, 2, 30)));
         await PrivateSummaryQueue.WaitAsync(timeout.Token);
-        try { return await RequestPrivateAsync(options, messages, false, null, timeout.Token, task: task); }
+        try { return await RequestPrivateAsync(data, messages, false, null, timeout.Token, task: task); }
         finally { PrivateSummaryQueue.Release(); }
     }
 }

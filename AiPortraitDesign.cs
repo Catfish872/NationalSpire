@@ -12,6 +12,6 @@ public static partial class AiService
         using var lease = await EnterPrivateQueue(data, "portrait/" + person, cancel.Token);
         cancel.Token.ThrowIfCancellationRequested();
         if (!CareerStore.IsCurrent(data)) throw new OperationCanceledException("生涯已切换。", cancel.Token);
-        return await RequestPrivateAsync(data.Ai, messages, false, null, cancel.Token, context: "portrait-design/" + person, task: "private");
+        return await RequestPrivateAsync(data, messages, false, null, cancel.Token, context: "portrait-design/" + person, task: "private");
     }
 }

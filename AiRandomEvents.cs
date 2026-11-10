@@ -34,7 +34,7 @@ public static partial class AiService
             PrivateForegroundQueue.Configure(d.Ai.MaxConcurrentRequests);
             using var lease = await EnterPrivateQueue(d, key, cancel.Token);
             phase = "等待响应"; Update(true);
-            await RequestPrivateAsync(d.Ai, RandomEventPrompts.Compose(d, e, d.Ai, custom), true, chunk =>
+            await RequestPrivateAsync(d, RandomEventPrompts.Compose(d, e, d.Ai, custom), true, chunk =>
             {
                 parser.Feed(chunk); phase = "正在书写"; Update();
             }, cancel.Token, reasoning: chunk => { thoughts.Append(chunk); phase = "正在思考"; Update(); }, context: key, task: "event");

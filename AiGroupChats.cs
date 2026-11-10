@@ -45,7 +45,7 @@ public static partial class AiService
             turn.Status = "sending"; save(d);
             if (turn.ArbitrationTargets.Count > 0)
             {
-                string verdict = await RequestPrivateAsync(d.Ai, GroupArbitration.Compose(d, g, turn), false, null, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "arbitration");
+                string verdict = await RequestPrivateAsync(d, GroupArbitration.Compose(d, g, turn), false, null, cancel.Token, Reasoning, context: "group/" + group + "/" + id, task: "arbitration");
                 d = current(); g = d?.Chats.Groups.FirstOrDefault(x => x.Id == group); turn = g?.Turns.FirstOrDefault(x => x.Id == id);
                 if (d == null || g == null || turn == null) return;
                 cancel.Token.ThrowIfCancellationRequested(); GroupArbitration.Apply(d, g, turn, verdict);
@@ -53,7 +53,7 @@ public static partial class AiService
             }
             var messages = GroupChatPrompts.Compose(d, g, turn);
             var tools = ChatTools.Enabled(d.Ai, turn.ToolMode) ? ChatTools.Create(d, group: g) : null;
-            await RequestPrivateAsync(d.Ai, messages, true, chunk =>
+            await RequestPrivateAsync(d, messages, true, chunk =>
             {
                 raw.Append(chunk); parser.Feed(chunk); GroupLive[key] = raw.ToString();
                 if (parser.Messages.Count > turn.SpeechOrders.Count)
@@ -125,7 +125,7 @@ public static partial class AiService
                 long first = from == 0 ? 0 : g.Turns.Skip(from).Take(end - from).Select(t => t.Order).DefaultIfEmpty(0).Min();
                 long last = g.Turns.Take(end).SelectMany(t => t.Replies.Select(r => r.Order).Append(t.Order)).DefaultIfEmpty(0).Max();
                 string source = JsonSerializer.Serialize(new { 群聊 = g.Name, 聊天 = own, 成员变化 = g.Entries.Where(e => e.Order >= first && e.Order <= last).Select(e => new { 日期 = PrivateAppointments.DateText(d, e.Day), e.Text }) }, Json);
-                string text = await SummaryRequest(d.Ai, [new() { ["role"] = "system", ["content"] = GroupChatPrompts.Section(d, "group-summary") }, new() { ["role"] = "user", ["content"] = source }], "group-summary");
+                string text = await SummaryRequest(d, [new() { ["role"] = "system", ["content"] = GroupChatPrompts.Section(d, "group-summary") }, new() { ["role"] = "user", ["content"] = source }], "group-summary");
                 d = current(); g = d?.Chats.Groups.FirstOrDefault(g => g.Id == group);
                 if (d == null || g == null || g.Revision != revision) return;
                 if (string.IsNullOrWhiteSpace(text)) throw new InvalidDataException("群聊总结为空。");
@@ -135,7 +135,7 @@ public static partial class AiService
             {
                 var selected = g.SmallSummaries.Take(g.Settings.MergeOldest).ToArray(); if (selected.Length == 0) return;
                 g.SummaryStatus = "正在合并长期记忆"; save(d);
-                string text = await SummaryRequest(d.Ai, [new() { ["role"] = "system", ["content"] = GroupChatPrompts.Section(d, "group-long-summary") }, new() { ["role"] = "user", ["content"] = string.Join("\n\n", selected.Select(s => s.Text)) }], "group-summary");
+                string text = await SummaryRequest(d, [new() { ["role"] = "system", ["content"] = GroupChatPrompts.Section(d, "group-long-summary") }, new() { ["role"] = "user", ["content"] = string.Join("\n\n", selected.Select(s => s.Text)) }], "group-summary");
                 d = current(); g = d?.Chats.Groups.FirstOrDefault(g => g.Id == group);
                 if (d == null || g == null || g.Revision != revision) return;
                 if (string.IsNullOrWhiteSpace(text)) throw new InvalidDataException("群聊长期总结为空。");
