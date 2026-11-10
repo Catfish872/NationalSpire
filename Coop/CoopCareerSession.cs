@@ -10,7 +10,6 @@ public sealed class CoopCareerSession : ICareerSession
     private long _revision = -1;
     private string _presence = "";
     private CoopCommand? _pending;
-    private int _queuedCeremony;
     private Action? _accepted;
     private bool _disposed;
     public CareerData Data { get; private set; } = null!;
@@ -42,11 +41,6 @@ public sealed class CoopCareerSession : ICareerSession
     public bool Refresh()
     {
         if (!Alive) return false;
-        if (_pending == null && _queuedCeremony > 0)
-        {
-            int season = _queuedCeremony; _queuedCeremony = 0;
-            Send("ceremony-read", season.ToString());
-        }
         var w = _session.World!; string presence = string.Join(',', _session.Online.Order()) + "|" + RunStatus + "|" + _pending?.Id;
         if (Data != null && _revision == w.Revision && _presence == presence) return false;
         _revision = w.Revision; _presence = presence;
@@ -60,20 +54,38 @@ public sealed class CoopCareerSession : ICareerSession
     }
     private void SaveReading(CareerData data)
     {
-        if (!Alive || _pending != null || !ReferenceEquals(data, Data)) return;
+        if (!Alive || !ReferenceEquals(data, Data)) return;
         var member = _session.World!.Members.Single(m => m.SteamId == _session.Self);
         var reading = new CoopReading();
-        foreach (var post in CommunityThreads.All(data).Where(p => p.SeenRevision > member.ReadPosts.GetValueOrDefault(p.Id)).Take(80)) reading.Posts[post.Id] = post.SeenRevision;
+        foreach (var post in CommunityThreads.All(data).Where(p => p.SeenRevision > member.ReadPosts.GetValueOrDefault(p.Id))) reading.Posts[post.Id] = post.SeenRevision;
         foreach (var week in data.WeeklyEditions.Where(w => w.SeenRevision > member.ReadWeeks.GetValueOrDefault(w.Week))) reading.Weeks[week.Week] = week.SeenRevision;
         if (data.PendingSettlementId.Length == 0 && data.Results.LastOrDefault()?.MatchId is { } id && member.SeenSettlement != id) reading.Settlement = id;
         if (reading.Posts.Count > 0 || reading.Weeks.Count > 0 || reading.Settlement.Length > 0)
-            Send("reading", text: System.Text.Json.JsonSerializer.Serialize(reading, CoopJson.Options));
+            _session.SyncReading(reading);
     }
     public void Send(string kind, string target = "", string text = "", int number = 0, string parent = "", Action? accepted = null)
     {
         if (!Alive) { Message?.Invoke("房间已断开，请返回队伍重新加入。", true); return; }
-        if (kind == "ceremony-read" && _pending != null)
-        { if (int.TryParse(target, out int season)) _queuedCeremony = Math.Max(_queuedCeremony, season); return; }
+        if (kind == "reading")
+        {
+            var reading = System.Text.Json.JsonSerializer.Deserialize<CoopReading>(text, CoopJson.Options);
+            if (reading != null) _session.SyncReading(reading);
+            accepted?.Invoke();
+            return;
+        }
+        if (kind == "ceremony-read")
+        {
+            if (int.TryParse(target, out int season)) _session.SyncReading(new CoopReading { CeremonySeason = season });
+            accepted?.Invoke();
+            return;
+        }
+        if (kind == "read")
+        {
+            if (_session.World is { } world && CommunityThreads.All(world.World).FirstOrDefault(p => p.Id == target) is { } post)
+                _session.SyncReading(new CoopReading { Posts = { [post.Id] = post.Revision } });
+            accepted?.Invoke();
+            return;
+        }
         if (_pending != null) { Message?.Invoke("正在同步上一项操作。", false); return; }
         var w = _session.World!;
         _pending = new(w.Id, w.Epoch, Guid.NewGuid().ToString("N"), w.Revision, kind, target, text, number, parent); _accepted = accepted;

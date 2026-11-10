@@ -82,9 +82,9 @@ FinalAlwaysReply 默认 false，旧JSON缺少字段时采用同一默认值。Pr
 | --- | --- | --- | --- |
 | CareerData | 单人由 CareerStore 绑定实例和文件；多人由 CoopWorld.World 管理共享部分 | 生涯规则、游戏事实、AI 成品 | 页面、模拟、上下文、迁移、序列化 |
 | CoopWorld | 房主 CoopCoordinator；操作经 CoopRules，AI 经保存回调 | 命令结果、成员状态、最新共享生涯、原版比赛状态 | 检查点、Broadcast、个人视图、原版恢复 |
-| CoopMember | CoopRules 及个人交互保存合并 | SteamId、个人身份、资金、生活、私信、战绩、已读信息 | 个人视图、本人快照、群聊记忆来源 |
+| CoopMember | CoopRules（ApplyReading / PreserveLocalReading 等）及个人交互保存合并 | SteamId、个人身份、资金、生活、私信、战绩、已读信息（含 CoopReading.CeremonySeason） | 个人视图、本人快照、群聊记忆来源 |
 | 多人个人 CareerData 视图 | AI Current 使用 View；界面使用统一 InterfaceView | 独立副本覆盖本人字段；客机持久保存后可后台准备 | 主线程按来源 World 消费一次；实际修改仍按原用途合并回房主 |
-| 客机接收队列与候选快照 | CoopReception / QueueSnapshot / PumpReceived | 压缩分片、流式、回执、运行消息和本机操作 | 保存与可选视图准备完成前不交给页面或原版对局；关闭取消等待与未发送操作 |
+| 客机接收队列与候选快照 | CoopReception / QueueSnapshot / PumpReceived | 压缩分片、_snapshotSequence 序号、流式、回执、运行消息和本机操作 | 淘汰过期未落盘快照；保存与可选视图准备完成并合并 PreserveLocalReading 前不交给页面或原版对局；关闭取消等待与未发送操作 |
 | CoopStorage 目录协调 | Schedule 与按绝对路径共享的 Gate | 排队存储操作、当前与上一份文件字节 | 跨实例按目录串行，磁盘读写互斥；恢复格式不变 |
 | ExternalCurrent / ExternalSave | 会话或公共 AI 任务建立；JsonIgnore | 当前绑定、会话编号、代次、个人视图 | CareerStore.IsCurrent / Save、AI 完成后的有效性与保存 |
 | PrivateMemorySources | 多人聊天 Current 填入其他真人信箱；JsonIgnore | 当前各成员信箱副本 | ChatTimeline；群聊交互通过 CaptureGroup 合并实际变更 |

@@ -154,4 +154,5 @@ public sealed class CoopReading
  public Dictionary<string,long> Posts {get;set;} = [];
  public Dictionary<int,long> Weeks {get;set;} = [];
  public string Settlement {get;set;} = "";
+ public int CeremonySeason {get;set;}
 }

@@ -8,6 +8,9 @@ public sealed partial class CoopCoordinator
     private readonly Queue<ReceivedWork> _received = [];
     private readonly CancellationTokenSource _receiveLifetime = new();
     private int _viewReaders;
+    private long _snapshotSequence;
+    private bool _replacingSnapshot;
+    private readonly Queue<(Action Send, Action<Exception> Fail)> _replacementCommands = [];
     private (CoopWorld Source, CareerData Data)? _preparedView;
     public bool Receiving => !Host && _received.Count != 0;
 
@@ -52,7 +55,20 @@ public sealed partial class CoopCoordinator
             catch (Exception error) { failed(error); }
         }
         if (!Receiving) Submit();
-        else _received.Enqueue(new(() => true, Submit, () => failed(new OperationCanceledException("房间已断开，请返回队伍重新加入。"))));
+        else _received.Enqueue(new(() => true, () =>
+        {
+            if (_replacingSnapshot) _replacementCommands.Enqueue((Submit, failed));
+            else Submit();
+        }, () => failed(new OperationCanceledException("房间已断开，请返回队伍重新加入。"))));
+    }
+
+    private void FinishReplacement(Exception? error = null)
+    {
+        _replacingSnapshot = false;
+        while (_replacementCommands.TryDequeue(out var command))
+        {
+            if (error == null) command.Send(); else command.Fail(error);
+        }
     }
 
     private void PumpReceived()
@@ -63,7 +79,11 @@ public sealed partial class CoopCoordinator
         {
             bool complete;
             try { complete = work.Step(); }
-            catch (Exception error) { ReceiveError(error); complete = true; }
+            catch (Exception error)
+            {
+                if (work.Snapshot && _replacingSnapshot) FinishReplacement(error);
+                ReceiveError(error); complete = true;
+            }
             if (!complete) break;
             _received.Dequeue();
             try { work.Finished?.Invoke(); }
@@ -76,12 +96,14 @@ public sealed partial class CoopCoordinator
 
     private void QueueSnapshot(ulong sender, CoopAssembler.Complete complete)
     {
+        long sequence = ++_snapshotSequence;
         Task<CoopSnapshot>? decoding = null;
         Task<CareerData?>? saving = null;
         CoopSnapshot? snapshot = null;
         bool prepare = false, published = false;
         bool Step()
         {
+            if (sequence < _snapshotSequence && saving == null) { _replacingSnapshot = true; return true; }
             if (decoding == null)
             {
                 decoding = Task.Run(() =>
@@ -94,7 +116,16 @@ public sealed partial class CoopCoordinator
                 snapshot = decoding.GetAwaiter().GetResult();
                 if (snapshot.World.Owner != sender || snapshot.World.Schema != 1 || !snapshot.World.Members.Any(m => m.SteamId == Self))
                     throw new InvalidDataException("存档成员不匹配。");
-                if (World != null && (World.Id != snapshot.World.Id || World.Epoch == snapshot.World.Epoch && World.Revision > snapshot.World.Revision)) return true;
+                if (World != null && (World.Id != snapshot.World.Id || World.Epoch == snapshot.World.Epoch && World.Revision > snapshot.World.Revision))
+                {
+                    if (_replacingSnapshot && sequence == _snapshotSequence)
+                    {
+                        if (World.Id == snapshot.World.Id) FinishReplacement();
+                        else FinishReplacement(new InvalidOperationException("房间会话已改变，请重新操作。"));
+                    }
+                    return true;
+                }
+                CoopRules.PreserveLocalReading(World, snapshot.World, Self);
                 prepare = _viewReaders > 0;
                 saving = SaveReceived(snapshot, prepare, Self);
                 return false;
@@ -102,6 +133,8 @@ public sealed partial class CoopCoordinator
             if (!saving!.IsCompleted) return false;
             using var publishing = UiPerformance.Measure(UiPerformance.Work.CoopPublish);
             var view = saving.GetAwaiter().GetResult();
+            CoopRules.PreserveLocalReading(World, snapshot.World, Self, view);
+            _readingDirty = false;
             World = snapshot.World; NativeSave = snapshot.Run;
             CoopJson.Detached(World.World);
             _preparedView = prepare && view != null ? (World, view) : null;
@@ -110,7 +143,12 @@ public sealed partial class CoopCoordinator
             { AiService.GroupLive.Remove(World.Id + "/group/" + group.Id); AiService.GroupReasoningLive.Remove(World.Id + "/group/" + group.Id); }
             published = true; return true;
         }
-        _received.Enqueue(new(Step, () => { if (published) { CompleteReplies(); Changed?.Invoke(); } }, Snapshot: true));
+        _received.Enqueue(new(Step, () =>
+        {
+            if (!published) return;
+            if (_replacingSnapshot) FinishReplacement();
+            CompleteReplies(); Changed?.Invoke();
+        }, Snapshot: true));
     }
     private async Task<CareerData?> SaveReceived(CoopSnapshot snapshot, bool prepare, ulong self)
     {
@@ -124,6 +162,7 @@ public sealed partial class CoopCoordinator
     private void CloseReceived()
     {
         _receiveLifetime.Cancel(); _preparedView = null;
+        if (_replacingSnapshot) FinishReplacement(new OperationCanceledException("房间已断开，请返回队伍重新加入。"));
         while (_received.TryDequeue(out var work)) work.Cancelled?.Invoke();
     }
 }

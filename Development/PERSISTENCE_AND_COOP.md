@@ -179,10 +179,10 @@ community-vote复用原CoopCommand：Target为帖子编号，Parent为空表示�
 | --- | --- | --- | --- |
 | 1 | CoopCareerSession.Send / CoopScreen.Submit → SubmitReady → Retry / 网络 command | 点击保留 Id 和参数、占用 pending；客机等待此前收到的事件，再读取 Revision；房主直接发送 | Execute；原 Retry 重发实际发送的完整命令 |
 | 2 | CoopRules.Apply | 身份、会话、操作版本、已处理 Receipts、在线名单 | 复制后执行规则，返回 World 与 Outcome；重复命令复用旧结果 |
-| 3 | Execute → Commit(..., broadcast:false) | 接受结果或实际变更 | CoopStorage.Save 先写入检查点，再替换房主当前 World |
+| 3 | Execute → Commit(..., broadcast:false) | 接受结果或实际变更 | PreserveLocalReading 合并保留已读进度，CoopStorage.Save 先写入检查点，再替换房主当前 World |
 | 4 | Execute → reply | 处理结果与已提交 World.Revision | 本人回执或发送给客机 |
-| 5 | Broadcast | 最新 World、NativeSave、每名接收者 | 每人自己的完整快照分片 |
-| 6 | Receive → Collect → QueueSnapshot → PumpReceived | 收齐分片入队；后台 Decode / Read；主线程校验成员、会话、版本；后台 SaveReceived | 检查点持久保存及可选个人视图准备完成后，一起更新 World / NativeSave |
+| 5 | Broadcast | 最新 World、NativeSave、每名接收者 | CancelPending 清理未开始的旧排队批次，生成每人自己的完整快照分片 |
+| 6 | Receive → Collect → QueueSnapshot → PumpReceived | 收齐分片入队；按 _snapshotSequence 淘汰尚未落盘的旧快照；后台 Decode / Read；主线程校验成员、会话、版本并 PreserveLocalReading；后台 SaveReceived | 检查点持久保存及可选个人视图准备完成后，再次 PreserveLocalReading 并一起更新 World / NativeSave |
 | 7 | CompleteReplies、Changed | 已确认回执与已收到对应版本 | 个人操作完成；CoopCareerSession.Refresh 重建视图；页面刷新 |
 | 8 | 房主 TriggerAi / StartPrivate / StartGroup | 已成功且非重复的命令 | 相关生成入口，不因同命令重发再次生成 |
 
@@ -190,7 +190,7 @@ community-vote复用原CoopCommand：Target为帖子编号，Parent为空表示�
 
 ### 客机后台接收与操作顺序
 
-CoopReception.cs 集中管理客机队列。Receive 在主线程收集 snapshot 分片，最后一片到达后才放入完整消息。队首快照在后台执行 Complete.Decode 与 Read，产生独立 CoopSnapshot。后面的完整快照保留压缩分片，一次只解码、保存一份。
+阅读进度（`reading`、`read`、`ceremony-read`）由 CoopCareerSession.SaveReading 与 Send 直接调用 CoopCoordinator.SyncReading → CoopRules.ApplyReading 原地更新对应 CoopMember 的 ReadPosts、ReadWeeks、SeenSettlement、SeenCeremonySeason，清空本机 `_preparedView` 并标记 `_readingDirty`，客机通过 `_control` 优先队列单向发送 `reading` 消息给房主。房主收到 `reading`（或兼容旧命令入口）同样调用 ApplyReading 并标记 `_readingDirty`，在心跳检查静置满 2 秒或 Dispose 时由 FlushReadingSave 保存检查点，不递增 World.Revision、不触发 Broadcast。房主 Commit 与客机 QueueSnapshot 发布前均调用 CoopRules.PreserveLocalReading，将旧世界/本地已推进的阅读状态单调合并到新世界及预备视图中。CoopReception.cs 集中管理客机队列。Receive 在主线程收集 snapshot 分片，每收到一片即刷新 `_lastHello`，最后一片到达后才放入完整消息。QueueSnapshot 为每份完整快照分配递增 `_snapshotSequence`；队首快照在后台执行 Complete.Decode 与 Read，若队列中已有更新的 `_snapshotSequence` 且当前快照尚未进入 SaveReceived，则直接跳过旧快照。客机在 `World == null` 且 `!Receiving`、距上次收到 snapshot 分片或发送 `hello` 超过 5 秒时才重发 `hello`。房主收到 `hello` 时，仅当成员尚未加入、昵称变化、存在待决 Proposal 或非比赛状态下在线参赛名单不一致时才复制世界并 Commit；若世界状态无需变更，仅在 `!_transport.HasPending(sender, "snapshot")` 且距上次向该成员发送快照满 8 秒时调用 SendSnapshots([sender]) 单点补发，与 Broadcast 共用同一发送入口；一次读取模板并按收件人分别编码。CoopSteam 按 `(Peer, Kind)` 维护批次号 `_currentBatch` 与已开始发送集合 `_startedBatches`；CancelPending 递增批次号并仅从 `_outgoing` 队列移除尚未发送首片的排队批次，已进入 `_startedBatches` 的在途批次保留剩余尾片直至发完；Update 每帧最多接收 128 条消息、发送 64 条消息，当某成员触发 `k_EResultLimitExceeded` 时记入本帧 `blocked` 集合，通过 TrySendUnblocked 跳过该受阻成员并继续发送队列中其他成员的分片。
 
 private-chunk、live、reply、run-*、诊断消息，以及 ApplyReceived / SubmitReady 按入队顺序处理。private 与 live 组装超时使用实际接收时间。ping 立即更新在线名单并发送 pong，Epoch 检查仍按队列顺序进行。房主 ReceiveNow、Execute、Commit、保存节点及广播数量保持原流程。
 
@@ -198,7 +198,7 @@ SaveReceived 调用 SaveAsync，持久保存成功后按需在后台建立独立
 
 WaitForReceived 只等待调用前已经收到的事件。完成或取消通过异步继续的 TaskCompletionSource 返回。CoopNativeRun 的新局/读档响应、准备校验、开始比赛等待此入口。随机角色 PlayerChanged 使用 ApplyReceived，并核对原 generation、attempt、Epoch、resume。等待期间原版连接通信和战斗网络继续执行；实际断线与 Pause 不等待存储队列。
 
-界面点击时沿原 pending 防止重复操作。SubmitReady 到达队首时只更新 Revision，保留命令 Id 和参数，再调用原 Retry、Receipts 与 CompleteReplies。关闭页面解除订阅，已经点击的操作继续；会话关闭取消未发送操作和等待。已开始的持久写入完成当前清单步骤，未开始的 SaveAsync 检查取消令牌。没有新增业务重试或房主迁移。
+界面点击时沿原 pending 防止重复操作。SubmitReady 保留命令 Id 和参数。若点击前收齐的快照让位于后来收齐的快照，暂存该点击，等替代快照保存并发布后按原顺序读取 Revision 并提交一次；其余命令在到达队首时读取 Revision。发送与回执沿用 Retry、Receipts 与 CompleteReplies。关闭页面解除订阅，已经点击的操作继续；会话关闭取消未发送操作和等待。已开始的持久写入完成当前清单步骤，未开始的 SaveAsync 检查取消令牌。没有新增业务重试或房主迁移。
 
 ## 角色卡保存与多人归属
 

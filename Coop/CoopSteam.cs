@@ -9,8 +9,11 @@ public sealed class CoopSteam : ICoopTransport
     private const int Channel = 19831;
     private CSteamID _lobby;
     private readonly HashSet<ulong> _peers = [];
-    private readonly Queue<(ulong Peer, byte[] Bytes)> _outgoing = [];
-    private readonly Queue<(ulong Peer, byte[] Bytes)> _control = [];
+    private readonly Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)> _outgoing = [];
+    private readonly Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)> _control = [];
+    private readonly Dictionary<(ulong Peer, string Kind), int> _currentBatch = [];
+    private readonly HashSet<(ulong Peer, string Kind, int Batch)> _startedBatches = [];
+    private int _nextBatch;
     private readonly CoopPacketAssembly _packets = new();
     private readonly Callback<SteamNetworkingMessagesSessionRequest_t> _requests;
     private CallResult<LobbyCreated_t>? _create;
@@ -70,12 +73,27 @@ public sealed class CoopSteam : ICoopTransport
         _enter.Set(SteamMatchmaking.JoinLobby(new(lobby)));
         await ready.Task.WaitAsync(TimeSpan.FromSeconds(30));
     }
+    public void CancelPending(ulong peer, string kind)
+    {
+        _currentBatch[(peer, kind)] = ++_nextBatch;
+        if (_outgoing.Count == 0) return;
+        int count = _outgoing.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var item = _outgoing.Dequeue();
+            // 只取消尚未开始向 Steam 缓冲区发送的完整排队批次；已发出一半的批次必须保留剩余尾片，避免客机卡在残缺分片。
+            if (item.Peer != peer || item.Kind != kind || _startedBatches.Contains((item.Peer, item.Kind, item.Batch)))
+                _outgoing.Enqueue(item);
+        }
+    }
+    public bool HasPending(ulong peer, string kind) => _outgoing.Any(item => item.Peer == peer && item.Kind == kind);
     public void Send(ulong peer, CoopWire wire)
     {
         if (_closed || peer == Self) return;
         if (_outgoing.Count + _control.Count > 8000) throw new IOException("房间发送队列超出限制。");
-        var queue = wire.Kind is "command" or "reply" or "ping" or "pong" or "error" ? _control : _outgoing;
-        foreach (byte[] bytes in CoopPacketAssembly.Pack(wire)) queue.Enqueue((peer, bytes));
+        var queue = wire.Kind is "command" or "reply" or "reading" or "ping" or "pong" or "error" ? _control : _outgoing;
+        int batch = _currentBatch.GetValueOrDefault((peer, wire.Kind));
+        foreach (byte[] bytes in CoopPacketAssembly.Pack(wire)) queue.Enqueue((peer, wire.Kind, batch, bytes));
     }
     public void Update()
     {
@@ -84,7 +102,7 @@ public sealed class CoopSteam : ICoopTransport
         for (int i = 0; i < SteamMatchmaking.GetNumLobbyMembers(_lobby); i++) _peers.Add(SteamMatchmaking.GetLobbyMemberByIndex(_lobby, i).m_SteamID);
         _packets.RetainPeers(_peers);
         // 原版负责 Steam 回调；仅轮询专用频道。
-        var messages = new IntPtr[32]; int count = SteamNetworkingMessages.ReceiveMessagesOnChannel(Channel, messages, messages.Length);
+        var messages = new IntPtr[128]; int count = SteamNetworkingMessages.ReceiveMessagesOnChannel(Channel, messages, messages.Length);
         for (int i = 0; i < count; i++)
         {
             var packet = SteamNetworkingMessage_t.FromIntPtr(messages[i]);
@@ -98,20 +116,55 @@ public sealed class CoopSteam : ICoopTransport
             catch (Exception e) { Diagnostics.Error("coop.packet", e); }
             finally { SteamNetworkingMessage_t.Release(messages[i]); }
         }
-        for (int n = 0; n < 12; n++)
+        HashSet<ulong> blocked = [];
+        for (int n = 0; n < 64; n++)
         {
             var queue = _control.Count > 0 ? _control : _outgoing;
             if (!queue.TryPeek(out var send)) break;
             if (!_peers.Contains(send.Peer)) { queue.Dequeue(); continue; }
-            var identity = new SteamNetworkingIdentity(); identity.SetSteamID64(send.Peer);
-            var pin = GCHandle.Alloc(send.Bytes, GCHandleType.Pinned);
-            EResult result;
-            try { result = SteamNetworkingMessages.SendMessageToUser(ref identity, pin.AddrOfPinnedObject(), (uint)send.Bytes.Length, Constants.k_nSteamNetworkingSend_Reliable, Channel); }
-            finally { pin.Free(); }
-            if (result == EResult.k_EResultLimitExceeded) break;
+            if (blocked.Contains(send.Peer))
+            {
+                if (!TrySendUnblocked(queue, blocked)) break;
+                continue;
+            }
+            var result = SendPacket(send.Peer, send.Bytes);
+            if (result == EResult.k_EResultLimitExceeded)
+            {
+                blocked.Add(send.Peer);
+                if (!TrySendUnblocked(queue, blocked)) break;
+                continue;
+            }
             queue.Dequeue();
+            if (ReferenceEquals(queue, _outgoing)) _startedBatches.Add((send.Peer, send.Kind, send.Batch));
             if (result != EResult.k_EResultOK) throw new IOException("Steam 生涯消息发送失败：" + result);
         }
+        if (_outgoing.Count == 0) _startedBatches.Clear();
+    }
+    private static EResult SendPacket(ulong peer, byte[] bytes)
+    {
+        var identity = new SteamNetworkingIdentity(); identity.SetSteamID64(peer);
+        var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+        try { return SteamNetworkingMessages.SendMessageToUser(ref identity, pin.AddrOfPinnedObject(), (uint)bytes.Length, Constants.k_nSteamNetworkingSend_Reliable, Channel); }
+        finally { pin.Free(); }
+    }
+    private bool TrySendUnblocked(Queue<(ulong Peer, string Kind, int Batch, byte[] Bytes)> queue, HashSet<ulong> blocked)
+    {
+        int total = queue.Count;
+        bool sent = false;
+        EResult? failed = null;
+        for (int i = 0; i < total; i++)
+        {
+            var item = queue.Dequeue();
+            if (!_peers.Contains(item.Peer)) continue;
+            if (sent || failed != null || blocked.Contains(item.Peer)) { queue.Enqueue(item); continue; }
+            var result = SendPacket(item.Peer, item.Bytes);
+            if (result == EResult.k_EResultLimitExceeded) { blocked.Add(item.Peer); queue.Enqueue(item); continue; }
+            if (ReferenceEquals(queue, _outgoing)) _startedBatches.Add((item.Peer, item.Kind, item.Batch));
+            if (result != EResult.k_EResultOK) { failed = result; continue; }
+            sent = true;
+        }
+        if (failed is { } err) throw new IOException("Steam 生涯消息发送失败：" + err);
+        return sent;
     }
     public void Dispose()
     {
@@ -119,6 +172,6 @@ public sealed class CoopSteam : ICoopTransport
         _pending?.TrySetCanceled(); _pending = null;
         foreach (ulong peer in _peers.Where(p => p != Self)) { var id = new SteamNetworkingIdentity(); id.SetSteamID64(peer); SteamNetworkingMessages.CloseChannelWithUser(ref id, Channel); }
         if (_lobby != CSteamID.Nil) SteamMatchmaking.LeaveLobby(_lobby);
-        _requests.Dispose(); _create?.Dispose(); _enter?.Dispose(); _peers.Clear(); _outgoing.Clear(); _control.Clear(); _packets.Clear();
+        _requests.Dispose(); _create?.Dispose(); _enter?.Dispose(); _peers.Clear(); _outgoing.Clear(); _control.Clear(); _currentBatch.Clear(); _startedBatches.Clear(); _packets.Clear();
     }
 }
