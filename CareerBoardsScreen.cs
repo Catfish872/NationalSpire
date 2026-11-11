@@ -178,7 +178,7 @@ public partial class CareerScreen
         var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 18); Inner(panel).AddChild(row);
         row.AddChild(Glyph(icon, 36, _gold));
         var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(copy);
-        copy.AddChild(Text(title, 24, _ink)); copy.AddChild(Text(detail, 17, _muted));
+        copy.AddChild(Text(title, 24, _ink)); if (detail.Length > 0) copy.AddChild(Text(detail, 17, _muted));
     }
 
     private void BoardLine(Container parent,CareerData d,int place,string name,string context,string value,string? person=null,bool own=false)
@@ -188,7 +188,7 @@ public partial class CareerScreen
         rank.HorizontalAlignment=HorizontalAlignment.Center;rank.VerticalAlignment=VerticalAlignment.Center;
         var badge=new PanelContainer{CustomMinimumSize=new(56,42),SizeFlagsVertical=SizeFlags.ShrinkCenter,MouseFilter=MouseFilterEnum.Ignore};
         badge.AddThemeStyleboxOverride("panel",CareerVisuals.Box(place<=3?"393326":"1b303d",place<=3?"8d764a":"3c5362",7,4));row.AddChild(badge);badge.AddChild(rank);
-        if(person!=null)row.AddChild(new CareerAvatar{Art=CareerAvatars.ForPerson(d,person),CustomMinimumSize=new(42,42),SizeFlagsVertical=SizeFlags.ShrinkCenter,MouseFilter=MouseFilterEnum.Ignore});
+        if(person!=null)row.AddChild(Avatar(d,person,46,false));
         else row.AddChild(Glyph("flag",24,CareerVisuals.Teal));
         var identity=new VBoxContainer{SizeFlagsHorizontal=SizeFlags.ExpandFill,Alignment=BoxContainer.AlignmentMode.Center,MouseFilter=MouseFilterEnum.Ignore};row.AddChild(identity);
         identity.AddChild(DashboardLabel(name,19,own?_gold:_ink,true));identity.AddChild(DashboardLabel(context,15,_muted,true));
@@ -207,7 +207,7 @@ public partial class CareerScreen
         }
         else if(c.Modern)
         {
-            _content.AddChild(Text("奇数赛季个人表现前二自动进入世界总决赛；其余席位按世界积分和本季表现补齐。",17,CareerVisuals.Teal));
+            _content.AddChild(Text("奇数赛季前两名直通世界总决赛，其余席位按世界积分和本季表现补齐。",17,CareerVisuals.Teal));
             foreach (var (row,rank) in EsportsWorld.Rankings(c).Take(6))
                 BoardLine(_content,d,rank,CareerEngine.DisplayName(d,row.PersonId),$"{row.Wins} 胜   {row.Draws} 平   {row.Losses} 负",$"{row.Points} 分",row.PersonId,row.PersonId=="player");
         }

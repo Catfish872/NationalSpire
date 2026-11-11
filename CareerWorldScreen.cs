@@ -162,15 +162,24 @@ public partial class CareerScreen
     private void ClubSummary(CareerData data,CareerClub club,Container parent)
     {
         var card = Card(); card.Name="Club_"+club.Id; card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("142332", club.Color)); parent.AddChild(card); var box = Inner(card);
-        box.AddChild(Text(club.Country + "    /    累计冠军 " + club.Titles, 14, _muted));
         box.AddChild(Text(club.Name + (club.Id == data.Esports.ClubId ? "  ·  你的俱乐部" : ""), 24, new Color(club.Color)));
-        box.AddChild(Text(club.Identity + " · " + club.Motto, 16, _muted));
+        box.AddChild(Text(club.Country + " · " + club.Identity, 16, _muted));
+        if(club.Motto.Length>0) box.AddChild(Text(club.Motto,16,_ink));
+        StatStrip(box,CareerVisuals.Teal,("累计冠军",club.Titles.ToString()),("关注",$"{ClubAudience.Total(data,club.Id):N0}"),
+            ("可用资金",CareerMoney.Format(club.Budget)),("青训",data.People.Count(p=>p.ClubId==club.Id && p.Role=="青训选手")+" 人"));
         var sponsor = data.Esports.Sponsors.LastOrDefault(s => s.TargetId == club.Id && s.EndSeason >= data.Season);
-        if (sponsor != null) box.AddChild(Text("合作品牌：" + sponsor.Brand, 15, _muted));
-        box.AddChild(Text($"俱乐部关注 {ClubAudience.Total(data, club.Id):N0} · 可用资金 {CareerMoney.Format(club.Budget)} · 青训 {data.People.Count(p => p.ClubId == club.Id && p.Role == "青训选手")} 人", 16, CareerVisuals.Teal));
-        if (club.SeasonReport.Length > 0) box.AddChild(Text(club.SeasonReport, 15, _muted));
-        foreach (var entry in club.Ledger.TakeLast(3))
-            box.AddChild(Text($"{GameCalendar.Text(data, entry.Day)} · {entry.Title} · {(entry.Amount >= 0 ? "+" : "−")}{CareerMoney.Format(Math.Abs((long)entry.Amount))}", 14, _muted));
+        if(sponsor!=null) box.AddChild(Text("合作品牌  "+sponsor.Brand,16,_muted));
+        if(club.SeasonReport.Length>0 || club.Ledger.Count>0)
+        {
+            var buttons=InfoRow(box);
+            if(club.SeasonReport.Length>0) FoldDetails(box,buttons,"经营报告").AddChild(Text(club.SeasonReport,16,_ink));
+            if(club.Ledger.Count>0)
+            {
+                var details=FoldDetails(box,buttons,"最近流水");
+                foreach(var entry in club.Ledger.TakeLast(3))
+                    details.AddChild(SponsorLine(entry.Title,"",(entry.Amount>=0?"+":"−")+CareerMoney.Format(Math.Abs((long)entry.Amount)),GameCalendar.Text(data,entry.Day),_ink));
+            }
+        }
         if (club.TrainingFund > 0) box.AddChild(Text($"待使用专项资金 {CareerMoney.Format(club.TrainingFund)}", 15, _gold));
         foreach (var p in data.People.Where(p => p.ClubId == club.Id && EsportsWorld.IsProfessional(p)).OrderByDescending(p => p.Rating))
             box.AddChild(PersonLink(data, p.Id, $"{p.PublicName}  ·  {ClubRole(data, club.Id, p.Id)}  ↗", 40));

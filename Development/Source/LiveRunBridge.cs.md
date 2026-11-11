@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`ACC46266058A468AC72F968A38D6F247E90C8A71549EAAE50367CEDF11983EDB`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2F4BDD747458C3DAB5AD143F5F5F4AE58AE7A565A92ECFD10E76E776BAAB734F`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -231,9 +231,9 @@ private List<RouteNode>? _planningMap;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`](LiveDateGame.cs.md#symbol-4bd2094f6d33)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；[`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.UpdateRace()`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；`NationalSpire.LiveRunBridge.UpdateRace()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -241,8 +241,8 @@ private List<RouteNode>? _planningMap;
 - `Godot.CanvasItem.Hide()`；输入表达式：`_mapOverlay!.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.Hide();`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide();`
 - `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(_data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(_data)`
-- `NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`；输入表达式：`AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused)`；返回值紧邻使用处：`ExpressionStatementSyntax: AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused);`
 - `NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；输入表达式：`Guard(UpdateRace)`；返回值紧邻使用处：`ExpressionStatementSyntax: Guard(UpdateRace);`
+- `NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；输入表达式：`TickDateRequestClock(delta)`；返回值紧邻使用处：`ExpressionStatementSyntax: TickDateRequestClock(delta);`
 
 **赋值（含属性/字段和局部值）：**
 

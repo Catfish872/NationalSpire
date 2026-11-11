@@ -171,7 +171,7 @@ private float _hover, _press;
 
 来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Choose(string, string)`](CalendarPlansScreen.cs.md#symbol-e149c41061ce)
+**调用者：** [`Choose(string, string)`](CalendarPlansScreen.cs.md#symbol-f1fe80b26080)
 
 **调用：** [`NationalSpire.CalendarDayButton.SelectDate(bool)`](CalendarDayButton.cs.md#symbol-c7e15f459308)
 

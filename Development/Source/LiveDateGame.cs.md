@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C58A838806356854630738B739481E1914FF406063CAF44BADB3B499A0C1F22D`。来源：[源码](../../LiveDateGame.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`041ADDC5CCAC95409A7736FC780FFE7DD4F230665EEE47295D70E59C132F4C41`。来源：[源码](../../LiveDateGame.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -42,13 +42,33 @@ private readonly ulong _player;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-4bd2094f6d33"></a>
+<a id="symbol-85266af9ae90"></a>
 
-## `NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool) — private void AdvanceDateRequestClock(double delta, double runSeconds, bool paused)`
+## `NationalSpire.LiveRunBridge.TickDateRequestClock(double) — private void TickDateRequestClock(double delta)`
 
 来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge._Process(double)`](LiveRunBridge.cs.md#symbol-d7e63bc009ff)
+
+**调用：** [`NationalSpire.LiveCompatibility.IsDateRunPaused()`](LiveCompatibility.cs.md#symbol-b752ad935441)；[`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`](LiveDateGame.cs.md#symbol-4bd2094f6d33)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveCompatibility.IsDateRunPaused()`；`NationalSpire.LiveRunBridge._datePause`；`NationalSpire.LiveRunBridge._dateRequestSeconds`；`NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LiveCompatibility.IsDateRunPaused()`；输入表达式：`LiveCompatibility.IsDateRunPaused()`；返回值紧邻使用处：`BinaryExpressionSyntax: _datePause != null || LiveCompatibility.IsDateRunPaused()`
+- `NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool)`；输入表达式：`AdvanceDateRequestClock(delta,          _dateRequestSeconds < 0 ? RunManager.Instance.RunTime : 0, _datePause != null || LiveCompatibility.IsDateRunPaused())`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: => AdvanceDateRequestClock(delta,          _dateRequestSeconds < 0 ? RunManager.Instance.RunTime : 0, _datePause != null || LiveCompatibility.IsDateRunPaused())`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-4bd2094f6d33"></a>
+
+## `NationalSpire.LiveRunBridge.AdvanceDateRequestClock(double, double, bool) — private void AdvanceDateRequestClock(double delta, double runSeconds, bool paused)`
+
+来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)
 
 **调用：** `System.Math.Max(double, double)`
 
@@ -67,7 +87,7 @@ private readonly ulong _player;
 
 ## `NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool) — private void UpdateDateGame(LiveMatchState live, RivalProgress primary, double seconds, ref bool changed)`
 
-来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
@@ -147,23 +167,24 @@ private readonly ulong _player;
 
 ## `NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double) — private void UpdateDateGameAction(DateGameState game, double seconds)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
-**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.LiveRaceHud.AddAction(string, System.Action)`](LiveRaceHud.cs.md#symbol-e4440860b387)；[`NationalSpire.LiveRaceHud.ClearChatRequest()`](LiveRaceHud.cs.md#symbol-c0be666418f2)；[`NationalSpire.LiveRaceHud.HoldChatRequest(bool)`](LiveRaceHud.cs.md#symbol-654af1fb17c1)；[`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`](LiveRaceHud.cs.md#symbol-e42d7e040efa)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
+**调用：** [`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.LiveCompatibility.IsDateRunPaused()`](LiveCompatibility.cs.md#symbol-b752ad935441)；[`NationalSpire.LiveRaceHud.AddAction(string, System.Action)`](LiveRaceHud.cs.md#symbol-e4440860b387)；[`NationalSpire.LiveRaceHud.ClearChatRequest()`](LiveRaceHud.cs.md#symbol-c0be666418f2)；[`NationalSpire.LiveRaceHud.HoldChatRequest(bool)`](LiveRaceHud.cs.md#symbol-654af1fb17c1)；[`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`](LiveRaceHud.cs.md#symbol-e42d7e040efa)；[`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`](PrivateMessages.cs.md#symbol-3712b7336055)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
-**字段、属性、事件及方法组引用：** `(NationalSpire.AvatarArt Art, NationalSpire.AvatarIdentity Identity).Art`；`(NationalSpire.AvatarArt Art, NationalSpire.AvatarIdentity Identity).Identity`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.DateGameState.Host`；`NationalSpire.DateGameState.OfferId`；`NationalSpire.DateGameState.PendingChat`；`NationalSpire.DateGameState.PendingLine`；`NationalSpire.DateGameState.PendingSpeaker`；`NationalSpire.DateGameState.PendingUntil`；`NationalSpire.LiveRaceHud.AddAction(string, System.Action)`；`NationalSpire.LiveRaceHud.ClearChatRequest()`；`NationalSpire.LiveRaceHud.HoldChatRequest(bool)`；`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`；`NationalSpire.LiveRequestButton.Remaining`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._dateAvatars`；`NationalSpire.LiveRunBridge._dateChatAction`；`NationalSpire.LiveRunBridge._datePauseAccepted`；`NationalSpire.LiveRunBridge._dateRespondAction`；`NationalSpire.LiveRunBridge._dateRespondRequested`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`
+**字段、属性、事件及方法组引用：** `(NationalSpire.AvatarArt Art, NationalSpire.AvatarIdentity Identity).Art`；`(NationalSpire.AvatarArt Art, NationalSpire.AvatarIdentity Identity).Identity`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.DateGameState.Host`；`NationalSpire.DateGameState.OfferId`；`NationalSpire.DateGameState.PendingChat`；`NationalSpire.DateGameState.PendingLine`；`NationalSpire.DateGameState.PendingSpeaker`；`NationalSpire.DateGameState.PendingUntil`；`NationalSpire.LiveCompatibility.IsDateRunPaused()`；`NationalSpire.LiveRaceHud.AddAction(string, System.Action)`；`NationalSpire.LiveRaceHud.ClearChatRequest()`；`NationalSpire.LiveRaceHud.HoldChatRequest(bool)`；`NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`；`NationalSpire.LiveRequestButton.Remaining`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._dateAvatars`；`NationalSpire.LiveRunBridge._dateChatAction`；`NationalSpire.LiveRunBridge._datePauseAccepted`；`NationalSpire.LiveRunBridge._dateRespondAction`；`NationalSpire.LiveRunBridge._dateRespondRequested`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.PrivateConversation.DateSceneStates`；`NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`AvatarHonors.ForPerson(_data, game.PendingSpeaker)`；返回值紧邻使用处：`ArgumentSyntax: AvatarHonors.ForPerson(_data, game.PendingSpeaker)`
 - `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(_data, game.PendingSpeaker)`；返回值紧邻使用处：`ArgumentSyntax: CareerAvatars.ForPerson(_data, game.PendingSpeaker)`
 - `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, game.PendingSpeaker)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.DisplayName(_data, game.PendingSpeaker)`
+- `NationalSpire.LiveCompatibility.IsDateRunPaused()`；输入表达式：`LiveCompatibility.IsDateRunPaused()`；返回值紧邻使用处：`BinaryExpressionSyntax: _datePauseAccepted || LiveCompatibility.IsDateRunPaused()`
 - `NationalSpire.LiveRaceHud.AddAction(string, System.Action)`；输入表达式：`_hud.AddAction("继续约会", () => { _dateRespondRequested = false; _datePauseAccepted = true; _hud.HoldChatRequest(true); })`；返回值紧邻使用处：`AssignmentExpressionSyntax: _dateChatAction = _hud.AddAction("继续约会", () => { _dateRespondRequested = false; _datePauseAccepted = true; _hud.HoldChatRequest(true); })`
 - `NationalSpire.LiveRaceHud.ClearChatRequest()`；输入表达式：`_hud.ClearChatRequest()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.ClearChatRequest();`
 - `NationalSpire.LiveRaceHud.HoldChatRequest(bool)`；输入表达式：`_hud.HoldChatRequest(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.HoldChatRequest(true);`
-- `NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`；输入表达式：`_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || RunManager.Instance.IsPaused, _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`；返回值紧邻使用处：`CastExpressionSyntax: (LiveRequestButton)_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || RunManager.Instance.IsPaused, _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`
+- `NationalSpire.LiveRaceHud.ShowChatRequest(string, string, string, NationalSpire.AvatarArt, NationalSpire.AvatarIdentity, double, bool, Godot.Button, System.Action)`；输入表达式：`_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || LiveCompatibility.IsDateRunPaused(), _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`；返回值紧邻使用处：`CastExpressionSyntax: (LiveRequestButton)_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || LiveCompatibility.IsDateRunPaused(), _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`
 - `NationalSpire.PrivateMessages.Conversation(NationalSpire.CareerData, string)`；输入表达式：`PrivateMessages.Conversation(_data, game.Host)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PrivateMessages.Conversation(_data, game.Host)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`_dateAvatars.TryGetValue(game.PendingSpeaker, out var appearance)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !_dateAvatars.TryGetValue(game.PendingSpeaker, out var appearance)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`conversation.DateSceneStates.GetValueOrDefault(game.OfferId)`；返回值紧邻使用处：`BinaryExpressionSyntax: conversation.DateSceneStates.GetValueOrDefault(game.OfferId) != "ended"`
@@ -177,7 +198,7 @@ private readonly ulong _player;
 - `_dateChatAction.Visible` = `available`
 - `_dateChatAction` = `_hud.AddAction("继续约会", () => { _dateRespondRequested = false; _datePauseAccepted = true; _hud.HoldChatRequest(true); })`
 - `_datePauseAccepted` = `true`
-- `_dateRespondAction` = `(LiveRequestButton)_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || RunManager.Instance.IsPaused, _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`
+- `_dateRespondAction` = `(LiveRequestButton)_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,                  appearance.Art, appearance.Identity, remaining, _datePauseAccepted || LiveCompatibility.IsDateRunPaused(), _dateChatAction,                  () => { _dateRespondRequested = true; _datePauseAccepted = true; })`
 - `_dateRespondAction` = `null`
 - `_dateRespondRequested` = `false`
 - `_dateRespondRequested` = `true`
@@ -187,16 +208,17 @@ private readonly ulong _player;
 
 ## `NationalSpire.LiveRunBridge.CanOpenDateChat() — private bool CanOpenDateChat()`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
-**调用：** 无已绑定显式调用。
+**调用：** [`NationalSpire.LiveCompatibility.IsDateRunPaused()`](LiveCompatibility.cs.md#symbol-b752ad935441)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Current`；`NationalSpire.LiveRunBridge._datePause`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.Current`；`NationalSpire.LiveCompatibility.IsDateRunPaused()`；`NationalSpire.LiveRunBridge._datePause`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.LiveCompatibility.IsDateRunPaused()`；输入表达式：`LiveCompatibility.IsDateRunPaused()`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !LiveCompatibility.IsDateRunPaused()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -205,7 +227,7 @@ private readonly ulong _player;
 
 ## `NationalSpire.LiveRunBridge.OpenDateGameChat(double) — private void OpenDateGameChat(double seconds)`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
@@ -234,7 +256,7 @@ private readonly ulong _player;
 
 ## `NationalSpire.LiveRunBridge.ResumeDateRun() — private void ResumeDateRun()`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 114 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge._ExitTree()`](LiveRunBridge.cs.md#symbol-1d45315292ab)；[`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)
 
@@ -256,7 +278,7 @@ private readonly ulong _player;
 
 ## `NationalSpire.DateGamePause.DateGamePause(ulong) — public DateGamePause(ulong player)`
 
-来源：源码第 120 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 122 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)
 
@@ -275,13 +297,13 @@ private readonly ulong _player;
 
 ## `NationalSpire.DateGamePause.Acquire() — public void Acquire()`
 
-来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)
 
-**调用：** `MegaCrit.Sts2.Core.Combat.CombatManager.Pause()`；`MegaCrit.Sts2.Core.GameActions.ActionExecutor.Pause()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.ActionQueueIsPaused(ulong)`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.PauseAllPlayerQueues()`
+**调用：** [`NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`](LiveCompatibility.cs.md#symbol-7978d8a89b5c)；`MegaCrit.Sts2.Core.Combat.CombatManager.Pause()`；`MegaCrit.Sts2.Core.GameActions.ActionExecutor.Pause()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.ActionQueueIsPaused(ulong)`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.PauseAllPlayerQueues()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateGamePause._acquired`；`NationalSpire.DateGamePause._player`；`NationalSpire.DateGamePause._queuesWerePaused`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateGamePause._acquired`；`NationalSpire.DateGamePause._player`；`NationalSpire.DateGamePause._queuesWerePaused`；`NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -289,32 +311,32 @@ private readonly ulong _player;
 - `MegaCrit.Sts2.Core.GameActions.ActionExecutor.Pause()`；输入表达式：`RunManager.Instance.ActionExecutor.Pause()`；返回值紧邻使用处：`ExpressionStatementSyntax: RunManager.Instance.ActionExecutor.Pause();`
 - `MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.ActionQueueIsPaused(ulong)`；输入表达式：`RunManager.Instance.ActionQueueSet.ActionQueueIsPaused(_player)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _queuesWerePaused = RunManager.Instance.ActionQueueSet.ActionQueueIsPaused(_player)`
 - `MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.PauseAllPlayerQueues()`；输入表达式：`RunManager.Instance.ActionQueueSet.PauseAllPlayerQueues()`；返回值紧邻使用处：`ExpressionStatementSyntax: RunManager.Instance.ActionQueueSet.PauseAllPlayerQueues();`
+- `NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`；输入表达式：`LiveCompatibility.SetDateTimerPaused(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: LiveCompatibility.SetDateTimerPaused(true);`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_acquired` = `true`
 - `_queuesWerePaused` = `RunManager.Instance.ActionQueueSet.ActionQueueIsPaused(_player)`
-- `RunManager.Instance.IsPaused` = `true`
 
 <a id="symbol-1b8e2cb9178c"></a>
 
 ## `NationalSpire.DateGamePause.Dispose() — public void Dispose()`
 
-来源：源码第 131 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.ResumeDateRun()`](LiveDateGame.cs.md#symbol-9d0f51bc5495)
 
-**调用：** `MegaCrit.Sts2.Core.Combat.CombatManager.Unpause()`；`MegaCrit.Sts2.Core.GameActions.ActionExecutor.Unpause()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.UnpauseAllPlayerQueues()`
+**调用：** [`NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`](LiveCompatibility.cs.md#symbol-7978d8a89b5c)；`MegaCrit.Sts2.Core.Combat.CombatManager.Unpause()`；`MegaCrit.Sts2.Core.GameActions.ActionExecutor.Unpause()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.UnpauseAllPlayerQueues()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.DateGamePause._acquired`；`NationalSpire.DateGamePause._queuesWerePaused`
+**字段、属性、事件及方法组引用：** `NationalSpire.DateGamePause._acquired`；`NationalSpire.DateGamePause._queuesWerePaused`；`NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Combat.CombatManager.Unpause()`；输入表达式：`CombatManager.Instance.Unpause()`；返回值紧邻使用处：`ExpressionStatementSyntax: CombatManager.Instance.Unpause();`
 - `MegaCrit.Sts2.Core.GameActions.ActionExecutor.Unpause()`；输入表达式：`RunManager.Instance.ActionExecutor.Unpause()`；返回值紧邻使用处：`ExpressionStatementSyntax: RunManager.Instance.ActionExecutor.Unpause();`
 - `MegaCrit.Sts2.Core.GameActions.Multiplayer.ActionQueueSet.UnpauseAllPlayerQueues()`；输入表达式：`RunManager.Instance.ActionQueueSet.UnpauseAllPlayerQueues()`；返回值紧邻使用处：`ExpressionStatementSyntax: RunManager.Instance.ActionQueueSet.UnpauseAllPlayerQueues();`
+- `NationalSpire.LiveCompatibility.SetDateTimerPaused(bool)`；输入表达式：`LiveCompatibility.SetDateTimerPaused(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: LiveCompatibility.SetDateTimerPaused(false);`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_acquired` = `false`
-- `RunManager.Instance.IsPaused` = `false`

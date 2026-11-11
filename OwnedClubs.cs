@@ -360,7 +360,7 @@ public static class OwnedClubs
         o.Contracts.Remove(c); o.Reserves.Remove(id); o.Youth.Remove(id); o.Coaches.Remove(id); o.CoachAppointments.RemoveAll(a => a.PersonId == id); ClubCoaching.StopTraining(d, id); CareerEngine.Person(d, id)!.ClubId = ""; CareerEngine.Person(d, id)!.ClubPosition = "";
         OwnedClubSchedule.UpdateLineup(d);
         CareerTraining.InvalidateForecast(d);
-        Report(d, "转会", CareerEngine.DisplayName(d, id) + "离队", "双方结束球员合同，选手重新进入自由市场。", [id]);
+        Report(d, "转会", CareerEngine.DisplayName(d, id) + "离队", "双方结束选手合同，选手重新进入自由市场。", [id]);
         CareerStore.Save(d);
     }
 

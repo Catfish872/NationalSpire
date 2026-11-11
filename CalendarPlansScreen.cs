@@ -6,26 +6,24 @@ public partial class CareerScreen
 {
     private const string PersonalPlans = "个人生活安排", TrainingPlans = "俱乐部训练安排", SponsorPlans = "俱乐部赞助";
     private sealed record CalendarPlan(string Key, string Section, string Title, string Target, string Effect, string Dates, Func<int, bool> Covers,
-        Action? Confirm = null, bool Enabled = true, List<CareerPerson>? Targets = null, string ActionText = "安排", int Cost = 0, string Availability = "", Func<string>? TrainingDetails = null);
+        Action? Confirm = null, bool Enabled = true, List<CareerPerson>? Targets = null, string ActionText = "安排", int Cost = 0, string Availability = "", Func<string>? TrainingDetails = null, bool Notify = false);
 
     private static bool ClubPlan(LifeActivity activity) =>
         CareerTraining.IsTraining(activity) || ClubPrograms.IsTraining(activity) || activity.Kind is "俱乐部" or "经营";
-    private bool SponsorNeedsPlan(CareerData d)=>CanManageClub && OwnedClubs.IsOwner(d) && d.Esports.OwnedClub is { } club && string.IsNullOrEmpty(club.NextSponsor);
-    private bool ActionablePlan(CareerData d,CalendarPlan p)=>p.Enabled && p.Confirm!=null && p.ActionText=="安排" && (p.Section!=SponsorPlans || SponsorNeedsPlan(d));
+    private static bool PendingInvitation(CareerData d, LifeActivity a) => a.Status == "可安排" && a.ExpiresDay >= d.Day && (d.Esports.ClubId.Length > 0 || !ClubPlan(a));
     private static bool CanStartLifePlan(CareerData d, LifeActivity a,int cost)=>d.Credits>=cost && !(a.LongProject && d.Life.Activities.Any(x=>x.LongProject && x.Status=="进行中"));
-    private bool AvailablePlans(CareerData d)=>d.Life.Activities.Any(a=>a.Status=="可安排" && a.ExpiresDay>=d.Day && (d.Esports.ClubId.Length>0 || !ClubPlan(a)) && CanStartLifePlan(d,a,CareerRelics.Cost(d,a))) ||
-        (d.Esports.ClubId.Length>0 && (SponsorNeedsPlan(d) || TeamPreparations.Available(d).Any(cup=>TeamPlanState(d,cup)=="")));
+    private bool AvailablePlans(CareerData d) => PendingPlans(d) ||
+        (d.Esports.ClubId.Length > 0 && TeamPreparations.Available(d).Any(cup => TeamPlanState(d,cup).Length == 0));
     private string TeamPlanState(CareerData d,WorldCompetition cup)=> d.TeamPreparations.Any(p=>p.CompetitionId==cup.Id && p.Team==TeamPreparations.PlayerTeam(cup) && p.Remaining>0)?"备赛已生效":
         _multiplayer is {Host:false}?"由房主安排":d.PendingMatchId!=null?"当前比赛结束后可安排":CareerMoney.Balance(d)<TeamPreparations.Cost?"可用资金不足":"";
     private List<CalendarPlan> CalendarPlans(CareerData d)
     {
         bool member = d.Esports.ClubId.Length > 0;
         var plans = member ? TeamPreparationPlans(d).ToList() : new List<CalendarPlan>();
-        foreach (var a in d.Life.Activities.Where(a => a.Status == "可安排" && a.ExpiresDay >= d.Day))
+        foreach (var a in d.Life.Activities.Where(a => PendingInvitation(d, a)))
         {
             bool training = CareerTraining.IsTraining(a), program = ClubPrograms.IsTraining(a);
             bool club = ClubPlan(a);
-            if (club && !member) continue;
             var targets = training && CareerTraining.Kind(a.Title) is not ("team" or "team-growth") ? CareerTraining.Targets(d) : null;
             string target = a.Id == _planKey && targets?.Any(p => p.Id == _planTarget) == true ? _planTarget :
                 targets?.FirstOrDefault(p => p.Id == a.PersonId)?.Id ?? targets?.FirstOrDefault()?.Id ?? a.PersonId;
@@ -45,7 +43,7 @@ public partial class CareerScreen
             {
                 if (MultiplayerCommand("activity", a.Id, target, accepted: ClearPlan)) return;
                 FinishPlan(CareerLife.Accept(d, a.Id, target));
-            }, CanStartLifePlan(d,a,cost), targets, Cost:cost,
+            }, CanStartLifePlan(d,a,cost), targets, Cost:cost, Notify:true,
                 TrainingDetails: program ? () => ClubPrograms.Details(d, quote) : training ? () => CareerTraining.Details(d, quote) : null));
         }
         if (!member) return plans;
@@ -86,7 +84,7 @@ public partial class CareerScreen
     }
     private IEnumerable<CalendarPlan> TeamPreparationPlans(CareerData d)
     {
-        const string effect = "未来三个比赛轮次，NPC 队友的通关率提高 16 个百分点，与临时训练取较高值。";
+        const string effect = "未来三个比赛轮次，NPC 队友的通关率提高 16%，与临时训练取较高值。";
         var competitions = TeamPreparations.Available(d).ToList();
         if (competitions.Count == 0)
             yield return new("team:upcoming", TrainingPlans, "集体备赛", "参赛队友", effect, "待赛程公布", _ => false,
@@ -101,7 +99,7 @@ public partial class CareerScreen
             string state=TeamPlanState(d,cup);
             yield return new("team:" + cup.Id, TrainingPlans, "集体备赛 · " + cup.Name, CircuitWorld.TeamName(d,cup,team),
                 effect, dates.Length > 0 ? dates : "待赛程公布", days.Contains, () => ConfirmTeamPreparation(d,cup.Id),
-                state.Length == 0, Cost: TeamPreparations.Cost, Availability: state);
+                state.Length == 0, Cost: TeamPreparations.Cost, Availability: state, Notify: state.Length == 0);
         }
     }
     private int CurrentPlanScroll() => _tab=="日程" && _calendarMode=="计划" &&
@@ -167,7 +165,7 @@ public partial class CareerScreen
                 row.AddChild(DashboardLabel(p.Title,18,_ink,true));
                 var arrow=Glyph(open?"chevron-up":"chevron-down",18,_gold); arrow.Name="DisclosureArrow"; row.AddChild(arrow);
                 var toggle=ActionRow(body,"PlanHeading",p.Title,()=>Choose(_planKey==p.Key?"":p.Key),row,76,13,10,"172c38","00000000","203d49");
-                if(ActionablePlan(d,p)) Dot(toggle);
+                if(p.Notify) Dot(toggle);
                 toggle.SetMeta("expanded",open);
                 cards[p.Key]=new PlanCard(card,body,toggle,arrow);
                 if(open)

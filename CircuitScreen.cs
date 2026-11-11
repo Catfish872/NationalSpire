@@ -12,25 +12,34 @@ public partial class CareerScreen
         _content.AddChild(Text("商业合作", 24, _gold));
         var contracts = d.Esports.Sponsors.Where(s => (s.TargetId == "player" && s.Accepted || d.Esports.ClubId.Length > 0 && s.TargetId == d.Esports.ClubId)
             && s.EndedDay == 0 && s.StartSeason <= d.Season && s.EndSeason >= d.Season).ToList();
+        void Terms(VBoxContainer box, SponsorContract c, bool personal)
+        {
+            var fields = new List<(string, string)> { ("每季支持", CareerMoney.Format(SponsorIncome.Retainer(d, c))) };
+            if (personal) fields.Add(("每胜奖金", CareerMoney.Format(SponsorIncome.WinBonus(d, c))));
+            if (personal && c.FanBonus > 0) fields.Add(("每胜关注", $"+{c.FanBonus}"));
+            fields.Add(("合同到期", $"第 {c.EndSeason} 赛季")); StatStrip(box,_ink,fields.ToArray());
+            var bar=InfoRow(box);var detail=FoldDetails(box,bar,"品牌介绍");
+            foreach (var line in new[]{c.Slogan,c.Description}.Where(t=>!string.IsNullOrWhiteSpace(t)).Distinct()) detail.AddChild(Text(line,16,_muted));
+        }
         foreach (var contract in contracts)
         {
             var card = Card(); _content.AddChild(card); var box = Inner(card);
-            box.AddChild(Text(contract.Brand + "  /  " + (contract.TargetId == "player" ? "个人赞助" : "俱乐部赞助"), 24, _gold));
-            box.AddChild(Text(contract.TargetId == "player" ? CareerCommerce.SponsorTerms(d, contract) : $"合作至第 {contract.EndSeason} 赛季 · 按当前关注每赛季支持战队 {CareerMoney.Format(SponsorIncome.Retainer(d, contract))}", 17, _ink));
-            box.AddChild(Text(contract.Slogan, 17, _muted));
-            if (contract.Description.Length > 0) box.AddChild(Text(contract.Description, 16, _muted));
+            var header=InfoRow(box); InfoColumn(header).AddChild(Text(contract.Brand,24,_gold));
+            header.AddChild(Text(contract.TargetId=="player"?"本期 · 个人赞助":"本期 · 俱乐部赞助",16,_muted));
+            Terms(box,contract,contract.TargetId=="player");
         }
         var active = CareerCommerce.ActiveSponsor(d);
-        if (active?.NextOffer is { } next) _content.AddChild(Text($"下期合作 · {next.Brand} / {next.Plan} · 第 {active.EndSeason + 1} 赛季生效", 18, CareerVisuals.Teal));
+        if (active?.NextOffer is { } next) _content.AddChild(Text($"下期已选　{next.Brand} · {next.Plan}　　第 {active.EndSeason + 1} 赛季生效",18,CareerVisuals.Teal));
         {
-            _content.AddChild(Text(active != null ? "当前合作自动续约，也可选择下期更换方案。收入按付款时的关注数计算。" : d.Esports.License < 3 ? "取得职业资格后，将收到个人赞助邀请。" : "挑选一份个人赞助。接受后发放本季支持，合同到期自动续约。", 17, _muted));
+            _content.AddChild(Text(active != null ? "个人赞助到期自动续约，改选方案后下期生效。" : d.Esports.License < 3 ? "取得职业资格后开放个人赞助。" : "签约后领取本季支持，到期自动续约。",17,_muted));
+            if(active!=null || d.Esports.SponsorOffers.Any(s=>s.ExpiresDay>=d.Day))
+                _content.AddChild(Text("金额按付款时的关注数结算。",16,_muted));
             foreach (var offer in d.Esports.SponsorOffers.Where(s => s.ExpiresDay >= d.Day))
             {
                 var card = Card(); _content.AddChild(card); var box = Inner(card);
-                box.AddChild(Text(offer.Brand + "  /  " + offer.Plan, 24, _gold));
-                box.AddChild(Text(CareerCommerce.SponsorTerms(d, offer), 17, _ink));
-                box.AddChild(Text(offer.Slogan + $" · 邀请剩余 {offer.ExpiresDay - d.Day + 1} 天", 16, _muted));
-                if (offer.Description.Length > 0) box.AddChild(Text(offer.Description, 16, _muted));
+                var header=InfoRow(box); InfoColumn(header).AddChild(Text(offer.Brand,24,_gold));
+                header.AddChild(Text($"{offer.Plan} · 邀请剩余 {offer.ExpiresDay - d.Day + 1} 天",16,_muted));
+                Terms(box,offer,true);
                 box.AddChild(Button(active == null ? "接受赞助" : "选择下期方案", () =>
                 {
                     if (MultiplayerCommand("sponsor", offer.Id)) return; var error = CareerCommerce.AcceptSponsor(d, offer); Render(); Notice(error ?? (active == null ? "合作已确认，本季支持已经到账。" : "下期方案已确认，当前合同到期后生效。"), error != null);
@@ -87,8 +96,17 @@ public partial class CareerScreen
     private void CircuitRanking(CareerData data)
     {
         _content.AddChild(Text("世界积分榜", 30, _gold));
-        _content.AddChild(Text("最近四赛季，取最高六项赛事成绩相加。新赛季开始时，四赛季以前的成绩到期。", 18, _ink));
-        var rules = new HBoxContainer(); rules.AddThemeConstantOverride("separation", 12); _content.AddChild(rules);
+        var own = CircuitLedger.Counted(data, "player").ToList();
+        var summary = Card(); _content.AddChild(summary); var sb = Inner(summary);
+        sb.AddChild(Text("近 4 季 · 取最高 6 项",17,_muted));
+        int rank = 0;
+        var ranking = data.Esports.CircuitAwards.Select(a => a.PersonId).Distinct().Select(id => (Id: id, Points: CircuitLedger.Points(data, id)))
+            .Where(x => x.Points > 0).OrderByDescending(x => x.Points).ThenBy(x => x.Id, StringComparer.Ordinal).ToList();
+        int ownRank = ranking.Any(x => x.Id == "player") ? ranking.Count(x => x.Points > CircuitLedger.Points(data, "player")) + 1 : 0;
+        var stats = new List<(string,string)> { ("我的积分",own.Sum(x=>x.Points).ToString()), ("计入成绩",$"{own.Count} 项") };
+        if (ownRank>0) stats.Add(("我的排名",$"第 {ownRank} 名"));
+        StatStrip(sb,_gold,stats.ToArray()); var actions=InfoRow(sb);
+        var rules=FoldDetails(sb,actions,"赛事积分规则");
         void PointsRule(string name, string amounts)
         {
             var panel = Card(); panel.SizeFlagsHorizontal = SizeFlags.ExpandFill; rules.AddChild(panel);
@@ -96,22 +114,18 @@ public partial class CareerScreen
         }
         PointsRule("国内联赛个人积分", "第1名 300分　·　第2名 180分　·　第3—4名 105分\n第5—8名 54分　·　其余 20分");
         PointsRule("世界总决赛积分", "冠军 1500分　·　亚军 900分　·　四强 525分\n八强 270分　·　十六强 120分　·　三十二强 50分");
-        var own = CircuitLedger.Counted(data, "player").ToList();
-        var summary = Card(); _content.AddChild(summary); var sb = Inner(summary);
-        sb.AddChild(Text($"我的积分：{own.Sum(a => a.Points)}    /    已计入 {own.Count} 项成绩", 24, _gold));
-        foreach (var award in own) sb.AddChild(Text($"第{award.Season}赛季 {award.Event} · {award.Place}：{award.Points}分    （第{award.Season + 4}赛季开始到期）", 16, _ink));
-        int rank = 0;
-        var ranking = data.Esports.CircuitAwards.Select(a => a.PersonId).Distinct().Select(id => (Id: id, Points: CircuitLedger.Points(data, id)))
-            .Where(x => x.Points > 0).OrderByDescending(x => x.Points).ThenBy(x => x.Id, StringComparer.Ordinal).ToList();
-        int ownRank = ranking.Any(x => x.Id == "player") ? ranking.Count(x => x.Points > CircuitLedger.Points(data, "player")) + 1 : 0;
-        if (ownRank > 0) sb.AddChild(Text($"当前排名：第 {ownRank} 名", 18, CareerVisuals.Teal));
-        _content.AddChild(Text("同分并列。下方展示前64位，个人排名始终显示在上方。", 15, _muted));
+        if(own.Count>0)
+        {
+            var details=FoldDetails(sb,actions,"我的计分成绩");
+            foreach (var award in own) details.AddChild(Text($"第 {award.Season} 赛季　{award.Event} · {award.Place}　{award.Points} 分　　第 {award.Season+4} 赛季到期",16,_ink));
+        }
+        _content.AddChild(Text("前 64 名 · 同分同名次",16,_muted));
         foreach (var row in ranking.Take(64))
         {
             rank = ranking.Count(x => x.Points > row.Points) + 1;
             BoardLine(_content,data,rank,CareerEngine.DisplayName(data,row.Id),EsportsWorld.CountryOf(data,row.Id),$"{row.Points} 分",row.Id,row.Id=="player");
         }
-        if (ranking.Count == 0) BoardNotice("flag","等待首项赛事成绩","计入积分的赛事结束后，这里按积分排列选手。");
+        if (ranking.Count == 0) BoardNotice("flag","等待首项赛事成绩","");
     }
     private void ModernCompetition(CareerData data, WorldCompetition c)
     {

@@ -14,6 +14,8 @@ public partial class LiveRunBridge
     private bool _datePauseAccepted, _dateRespondRequested;
     private double _dateOpenRetry;
     private double _dateRequestSeconds = -1;
+    private void TickDateRequestClock(double delta) => AdvanceDateRequestClock(delta,
+        _dateRequestSeconds < 0 ? RunManager.Instance.RunTime : 0, _datePause != null || LiveCompatibility.IsDateRunPaused());
     private void AdvanceDateRequestClock(double delta, double runSeconds, bool paused)
     {
         // 原版 RunTime 只有整秒；请求沿用其起点，随后按有效游戏帧累计小数秒。
@@ -81,7 +83,7 @@ public partial class LiveRunBridge
                 _dateAvatars[game.PendingSpeaker] = appearance = (CareerAvatars.ForPerson(_data, game.PendingSpeaker), AvatarHonors.ForPerson(_data, game.PendingSpeaker));
             double remaining = _datePauseAccepted && _dateRespondAction != null ? _dateRespondAction.Remaining : game.PendingUntil - seconds;
             _dateRespondAction = (LiveRequestButton)_hud.ShowChatRequest(game.PendingChat, CareerEngine.DisplayName(_data, game.PendingSpeaker), game.PendingLine,
-                appearance.Art, appearance.Identity, remaining, _datePauseAccepted || RunManager.Instance.IsPaused, _dateChatAction,
+                appearance.Art, appearance.Identity, remaining, _datePauseAccepted || LiveCompatibility.IsDateRunPaused(), _dateChatAction,
                 () => { _dateRespondRequested = true; _datePauseAccepted = true; });
         }
         else { _hud.ClearChatRequest(); _dateRespondAction = null; }
@@ -89,7 +91,7 @@ public partial class LiveRunBridge
         _dateChatAction.TooltipText = _datePauseAccepted ? "当前动作结束后进入约会" : "";
         _dateChatAction.Visible = available;
     }
-    private bool CanOpenDateChat() => _datePause == null && CareerScreen.Current == null && !RunManager.Instance.IsPaused
+    private bool CanOpenDateChat() => _datePause == null && CareerScreen.Current == null && !LiveCompatibility.IsDateRunPaused()
         && !RunManager.Instance.IsGameOver && !CombatManager.Instance.IsAboutToLose
         && (!CombatManager.Instance.IsInProgress || !CombatManager.Instance.EndingPlayerTurnPhaseOne
             && !CombatManager.Instance.EndingPlayerTurnPhaseTwo && !CombatManager.Instance.IsEnemyTurnStarted)
@@ -112,7 +114,7 @@ public partial class LiveRunBridge
     private void ResumeDateRun() { var pause = _datePause; _datePause = null; pause?.Dispose(); if (IsInstanceValid(_hud)) _hud.HoldChatRequest(false); }
 }
 
-/// <summary>取得并归还本次暂停；战斗、队列与计时一起恢复。</summary>
+/// <summary>进入约会时暂停战斗与动作队列；原版支持计时暂停时一同暂停，返回对局时恢复。</summary>
 internal sealed class DateGamePause : IDisposable
 {
     private bool _acquired, _queuesWerePaused;
@@ -123,7 +125,7 @@ internal sealed class DateGamePause : IDisposable
         if (_acquired) return;
         _queuesWerePaused = RunManager.Instance.ActionQueueSet.ActionQueueIsPaused(_player);
         _acquired = true;
-        RunManager.Instance.IsPaused = true;
+        LiveCompatibility.SetDateTimerPaused(true);
         RunManager.Instance.ActionExecutor.Pause();
         CombatManager.Instance.Pause();
         if (!_queuesWerePaused) RunManager.Instance.ActionQueueSet.PauseAllPlayerQueues();
@@ -139,7 +141,7 @@ internal sealed class DateGamePause : IDisposable
             finally
             {
                 try { RunManager.Instance.ActionExecutor.Unpause(); }
-                finally { RunManager.Instance.IsPaused = false; }
+                finally { LiveCompatibility.SetDateTimerPaused(false); }
             }
         }
     }

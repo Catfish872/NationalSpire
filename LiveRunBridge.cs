@@ -118,7 +118,7 @@ public partial class LiveRunBridge : Node
         if (_ended) return;
         if (_faulted || !CareerStore.IsCurrent(_data) || _data.PendingMatchId != _match.Id)
         { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
-        if (_match.DateGame != null) AdvanceDateRequestClock(delta, RunManager.Instance.RunTime, RunManager.Instance.IsPaused);
+        if (_match.DateGame != null) TickDateRequestClock(delta);
         _tick += delta;
         _mapCheck += delta;
         if (_tick < .2) return;

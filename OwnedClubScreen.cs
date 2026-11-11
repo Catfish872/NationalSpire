@@ -16,7 +16,7 @@ public partial class CareerScreen
         var card = Card(); _content.AddChild(card);
         if (accent) { card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("193340", "8da98f", 8, 24)); if (card is BroadcastPanel b) b.Accent = _gold; }
         var box = Inner(card); box.AddThemeConstantOverride("separation", 16);
-        box.AddChild(Text(title, accent ? 29 : 23, accent ? _gold : _ink));
+        if (title.Length > 0) box.AddChild(Text(title, accent ? 29 : 23, accent ? _gold : _ink));
         if (!string.IsNullOrEmpty(subtitle)) box.AddChild(Text(subtitle, 17, _muted));
         return box;
     }
@@ -122,34 +122,50 @@ public partial class CareerScreen
             && (!draftMode || !_clubDraft!.Signings.Any(s => s.PersonId == p.Id))).ToList();
         _marketPage = Math.Clamp(_marketPage, 0, Math.Max(0, (candidates.Count - 1) / 5));
         _content.AddChild(Text($"自由市场 · {candidates.Count} 人 · 第 {_marketPage + 1} 页", 17, _muted));
-        _content.AddChild(Text("轮换、青训分别提供陪练加成；各组前三人全额计算，第4人约30%、第5人约16%，之后继续递减。", 17, _muted));
+        PracticeRules(_content);
         foreach (var p in candidates.Skip(_marketPage * 5).Take(5))
         {
             if (!_signChoices.TryGetValue(p.Id, out var selection)) _signChoices[p.Id] = selection = new() { PersonId = p.Id, Position = p.MaxAscension >= 9 ? "首发" : "轮换" };
-            var box = ClubCard(OwnedClubs.Tier(p) + "  /  " + p.PublicName);
-            box.AddChild(PersonLink(d, p.Id, $"进阶 {p.MaxAscension}  ·  {p.Character}  ·  历史 {p.Wins} 胜 {p.Losses} 负   查看档案 ↗", 52));
-            box.AddChild(Text($"A8 预计通关率 {MatchRules.ClearChance(d, p, 8) * 100:0.#}% · {p.Style}", 18, CareerVisuals.Teal));
-            box.AddChild(Text("可签为首发、轮换、青训或教练。", 16, _muted));
-            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 14); box.AddChild(row);
+            var box = ClubCard("");
+            var head = InfoRow(box);
+            head.AddChild(Avatar(d, p.Id, 58));
+            var identity = InfoColumn(head);
+            var names = InfoRow(identity);
+            var name = DashboardLabel(p.PublicName, 24, _ink); name.SizeFlagsHorizontal = SizeFlags.ShrinkBegin; names.AddChild(name);
+            names.AddChild(DashboardLabel(OwnedClubs.Tier(p), 16, CareerVisuals.Teal));
+            identity.AddChild(Text(p.Character, 16, _muted));
+            var profile = Button("查看档案", () => OpenPerson(p.Id), 120);
+            profile.SizeFlagsVertical = SizeFlags.ShrinkCenter; head.AddChild(profile);
+            box.AddChild(Hairline());
+            StatStrip(box, _ink, ("历史战绩", $"{p.Wins} 胜 {p.Losses} 负"),
+                ("个人 A8 预计通关率", $"{MatchRules.ClearChance(d, p, 8) * 100:0.#}%"), ("打法", p.Style));
+            box.AddChild(Hairline());
+            var row = InfoRow(box);
             string[] plans = ["steady", "performance", "growth"];
             if (!plans.Contains(selection.Plan)) selection.Plan = plans[0];
-            row.AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RefreshClub(); }));
+            ChoiceField(row, "合同").AddChild(ClubSelect(plans.Select(OwnedClubs.PlanName).ToArray(), Array.IndexOf(plans, selection.Plan), i => { selection.Plan = plans[i]; RefreshClub(); }));
             string[] roles = ["首发", "轮换", "青训", "教练"];
-            row.AddChild(ClubSelect(roles, Array.IndexOf(roles, selection.Position), i => { selection.Position = roles[i]; RefreshClub(); }));
+            ChoiceField(row, "席位").AddChild(ClubSelect(roles, Array.IndexOf(roles, selection.Position), i => { selection.Position = roles[i]; RefreshClub(); }));
             if (!draftMode && selection.Position == "首发")
             {
                 var replacements = OwnedClubs.ReplaceableStarters(d);
                 if (replacements.Count > 0)
                 {
                     if (!replacements.Contains(selection.ReplaceId)) selection.ReplaceId = replacements[0];
-                    box.AddChild(ClubSelect(replacements.Select(id => "转为轮换 · " + CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => selection.ReplaceId = replacements[i]));
+                    ChoiceField(row, "转为轮换").AddChild(ClubSelect(replacements.Select(id => CareerEngine.DisplayName(d, id)).ToArray(), replacements.IndexOf(selection.ReplaceId), i => selection.ReplaceId = replacements[i]));
                 }
                 else { selection.ReplaceId = ""; box.AddChild(Text(OwnedClubs.StarterReplacementError(d, "")!, 16, _muted)); }
             }
             ClubPracticePreview(d, box, selection, draftMode);
             var q = OwnedClubs.Quote(p, selection.Plan);
-            box.AddChild(Text($"签约费 {CareerMoney.Format(q.Signing)}    周薪 {CareerMoney.Format(q.Wage)}    每次获胜奖金 {CareerMoney.Format(q.WinBonus)}    合约 {q.Days / 7} 周", 18, _gold));
-            box.AddChild(Text(selection.Plan == "growth" && selection.Position != "教练" ? "每周积累长期成长，随已有提升逐渐减慢。" : "到期自动续约，免重复签约费。", 16, _muted));
+            box.AddChild(Hairline());
+            StatStrip(box, _gold, ("签约费", CareerMoney.Format(q.Signing)), ("周薪", CareerMoney.Format(q.Wage)),
+                ("每胜奖金", CareerMoney.Format(q.WinBonus)), ("合同期限", $"{q.Days / 7} 周"));
+            box.AddChild(Hairline());
+            var footer = InfoRow(box);
+            var terms = InfoColumn(footer); terms.AddChild(Text("到期自动续约，续约免签约费", 16, _muted));
+            if (selection.Plan == "growth" && selection.Position != "教练")
+                terms.AddChild(Text("每周积累长期成长，随已有提升逐渐减慢。", 16, _muted));
             var add = ClubButton(draftMode ? "加入签约草案" : selection.Position == "教练" ? "签约这位教练" : "签约这位选手", () =>
             {
                 var signing = new ClubSigning { PersonId = p.Id, Plan = selection.Plan, Position = selection.Position, ReplaceId = selection.ReplaceId };
@@ -157,7 +173,7 @@ public partial class CareerScreen
                 else ShowCareerDialog("确认签约", $"{p.PublicName} · {signing.Position}\n初付 {CareerMoney.Format(q.Signing)}，周薪 {CareerMoney.Format(q.Wage)}，获胜奖金 {CareerMoney.Format(q.WinBonus)}。合约到期自动续约。", () => { ClubAction(d, "recruit", JsonSerializer.Serialize(signing)); return true; });
             }, 220);
             bool full = selection.Position == "首发" && (draftMode ? _clubDraft!.Signings.Count(s => s.Position == "首发") >= OwnedClubs.RequiredAiStarters(d) : selection.ReplaceId.Length == 0);
-            add.Disabled |= full; box.AddChild(add);
+            add.Disabled |= full; footer.AddChild(add);
             if (full && draftMode) box.AddChild(Text("首发席位已满，请调整签约草案。", 16, _muted));
         }
         var pages = new HFlowContainer(); _content.AddChild(pages);
@@ -180,8 +196,15 @@ public partial class CareerScreen
         var group = signing.Position == "轮换" ? reserves : youth;
         if (!group.Contains(signing.PersonId)) group.Add(signing.PersonId);
         double after = (OwnedClubs.GroupPractice(d, reserves, 8) + OwnedClubs.GroupPractice(d, youth, 8)) * factor;
-        box.AddChild(Text($"首发 A8 通关率加成 +{after * 100:0.00}% · 签约增量 {(after - before) * 100:+0.00;-0.00;0.00}%", 17, CareerVisuals.Teal));
-        if (group.Count > 3) box.AddChild(Text($"{signing.Position}已有 {group.Count} 人，第4人起陪练收益大幅递减。", 16, _muted));
+        var panel = new PanelContainer();
+        var style = CareerVisuals.Box("153338", "153338", 5, 12);
+        style.BorderWidthLeft = 3; style.BorderColor = CareerVisuals.Teal;
+        panel.AddThemeStyleboxOverride("panel", style); box.AddChild(panel);
+        var row = InfoRow(panel); var title = InfoColumn(row);
+        title.AddChild(Text("首发 A8 通关率加成", 20, _ink)); title.AddChild(Text($"签约后{signing.Position} {group.Count} 人", 16, _muted));
+        var values = InfoColumn(row); values.SizeFlagsStretchRatio = 2;
+        StatStrip(values, CareerVisuals.Teal,
+            ("签约后合计", $"+{after * 100:0.00}%"), ("本次增加", $"{(after - before) * 100:+0.00;-0.00;0.00}%"));
     }
     private void ClubWeeklyFinance(VBoxContainer box, OwnedSponsor? sponsor, int fans, decimal wages, int achievement = 0)
     {
@@ -274,11 +297,11 @@ public partial class CareerScreen
         }
         box = ClubCard("俱乐部赞助");
         string[] sponsors = ["steady", "results", "fans"];
-        string[] plans = ["稳定经营", "赢球奖励", "关注收益"];
+        string[] plans = ["稳定经营", "胜场奖励", "关注收益"];
         box.AddChild(ClubSelect(sponsors.Select((id, i) => OwnedClubs.SponsorQuote(d, id).Brand + " · " + plans[i]).ToArray(), Array.IndexOf(sponsors, draft.Sponsor), i => { draft.Sponsor = sponsors[i]; RefreshClub(); }));
         var sponsor = OwnedClubs.SponsorQuote(d, draft.Sponsor);
         box.AddChild(Text(RegionalOrganizations.SponsorDescription(sponsor.Brand), 16, _muted));
-        box.AddChild(Text($"每次赢球基础赞助奖金 {CareerMoney.Format(sponsor.WinBonus)}，随俱乐部关注提高；选手奖金另付。", 17, _muted));
+        box.AddChild(Text($"每次获胜的基础赞助奖金 {CareerMoney.Format(sponsor.WinBonus)}，随俱乐部关注提高；选手奖金另付。", 17, _muted));
         int fans = OwnedClubs.StartingFans(d); decimal wages = OwnedClubs.WeeklyWages(d, draft), initial = OwnedClubs.InitialCost(d, draft);
         box = ClubCard("俱乐部收支", $"初始关注 {fans:N0}");
         ClubWeeklyFinance(box, sponsor, fans, wages);
@@ -327,21 +350,8 @@ public partial class CareerScreen
         if (_ownerSection == "招募") { ClubMarket(d, false); return; }
         if (_ownerSection == "赞助")
         {
-            var sb = ClubCard("俱乐部赞助", "8 周一约，原品牌自动续约。周收入与胜场奖金按付款时的关注数计算；也可提前选择下期品牌。");
-            if (o.Sponsor is { } active) sb.AddChild(Text($"{active.Brand}  ·  每周 {CareerMoney.Format(OwnedClubs.SponsorWeekly(active, ClubAudience.Total(d, o.ClubId)))}  ·  赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(active, ClubAudience.Total(d, o.ClubId)))}  ·  {GameCalendar.Text(d, active.EndDay)}到期", 20, _gold));
-            foreach (string id in new[] { "steady", "results", "fans" })
-            {
-                var s = OwnedClubs.SponsorQuote(d, id);
-                sb.AddChild(Text(RegionalOrganizations.SponsorDescription(s.Brand), 16, _muted));
-                sb.AddChild(ClubButton($"{s.Brand} · 周结 {CareerMoney.Format(OwnedClubs.SponsorWeekly(s, ClubAudience.Total(d, o.ClubId)))} · 赢球 {CareerMoney.Format(OwnedClubs.SponsorWinBonus(s, ClubAudience.Total(d, o.ClubId)))}", () => ShowCareerDialog("确认下期赞助", "选择 " + s.Brand + "？当前合同按期执行。", () => { ClubAction(d, "sponsor", target: id); return true; }), 0));
-            }
-            if (o.NextSponsor.Length > 0) sb.AddChild(Text("下期已选 " + OwnedClubs.SponsorQuote(d, o.NextSponsor).Brand, 18, CareerVisuals.Teal));
-            sb.AddChild(Text("成绩赞助 · 持续 8 周，同类取最高档", 21, _gold));
-            sb.AddChild(Text("连胜奖励每季每档一次。关注超过 1 万后，新增关注逐渐减少。", 16, _muted));
-            sb.AddChild(Text("联赛三连胜 · 关注 +600 · 签约奖 $6,000 · 每周 +$3,000\n联赛五连胜 · 关注 +1,200 · 签约奖 $12,000 · 每周 +$6,000", 17, _ink));
-            sb.AddChild(Text("联赛冠军 · 关注 +3,000 · 签约奖 $20,000 · 每周 +$10,000\n亚军 +2,000 / $14,000 / $7,000，季军 +1,200 / $8,000 / $4,000\n其余名次也有奖励，洲际赛按名次翻倍。", 17, _muted));
-            foreach (var deal in o.AchievementSponsors.Where(s => s.EndDay > d.Day).OrderByDescending(s => s.Weekly))
-                sb.AddChild(Text($"{deal.Title} · 每周 {CareerMoney.Format(deal.Weekly)} · {GameCalendar.Text(d, deal.EndDay)}到期", 17, CareerVisuals.Teal));
+            ClubBrandOffers(d, o);
+            AchievementOffers(d, o);
             ShowSponsors(d); return;
         }
         if (_ownerSection == "账目")
@@ -350,8 +360,6 @@ public partial class CareerScreen
             AddLedgerTable(statement, d, o.Ledger, visibleRows: 6);
             return;
         }
-        _content.AddChild(Text("轮换与青训各组前三人全额陪练，第4人起大幅递减。青训每周成长并测评进阶。", 17, _muted));
-        _content.AddChild(Text(_multiplayer != null ? "全体真人固定出战。" : "首发固定 3 人，可与轮换交换；调整从尚未开打的对阵生效。", 17, _muted));
         foreach (var t in o.Transfers.Where(t => !t.Arrived))
             _content.AddChild(PersonLink(d, t.Contract.PersonId, $"第 {t.ArrivalSeason} 赛季加盟 · {CareerEngine.DisplayName(d, t.Contract.PersonId)} · {t.Position}", 48));
         RosterMembers(d,o);

@@ -44,14 +44,16 @@ public partial class CareerScreen
     private void LifeCollection(CareerData d)
     {
         CareerRelics.Shop(d);
-        _content.AddChild(Text($"遗物手办 · 已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}", 25, _gold));
-        _content.AddChild(Text("摆在这里，陪伴你的职业生涯。效果仅用于赛场之外，不会把遗物带入对局。", 17, _ink));
-        _content.AddChild(Text("同款收藏长期生效。货架每14天更新，国运排名越高，可选藏品越多。", 15, _muted));
-        _content.AddChild(Text($"本期手办 · {d.Esports.Country}国运第{CircuitLedger.NationTable(d).FindIndex(n => n.Country == d.Esports.Country) + 1}名 · {GameCalendar.Text(d, d.Life.RestockDay)}上新", 23, _gold));
+        var head=InfoRow(_content);InfoColumn(head).AddChild(Text("遗物手办",25,_gold));
+        head.AddChild(Text($"已收藏 {d.Life.Figurines.Count} / {CareerRelics.Catalog.Length}",18,CareerVisuals.Teal));
+        _content.AddChild(Text("赛场外生效 · 每 14 天上新",17,_ink));
+        var shelf=InfoRow(_content);InfoColumn(shelf).AddChild(Text("本期藏品",23,_gold));
+        shelf.AddChild(Text(GameCalendar.Text(d,d.Life.RestockDay)+" 上新",16,_muted));
+        _content.AddChild(Text($"{d.Esports.Country}国运第 {CircuitLedger.NationTable(d).FindIndex(n=>n.Country==d.Esports.Country)+1} 名 · 排名越高，可选藏品越多",16,_muted));
         var store = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         store.AddThemeConstantOverride("h_separation", 16); store.AddThemeConstantOverride("v_separation", 16); _content.AddChild(store);
         foreach (var item in CareerRelics.Offers(d)) FigurineCard(d, store, item, false);
-        if (d.Life.Shop.Count == 0) _content.AddChild(Text("本期没有新藏品上架。现有收藏继续生效。", 18, _muted));
+        if (d.Life.Shop.Count == 0) _content.AddChild(Text("本期暂无新藏品", 18, _muted));
         _content.AddChild(Text("已拥有的收藏", 23, _gold));
         var owned = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
         owned.AddThemeConstantOverride("h_separation", 16); owned.AddThemeConstantOverride("v_separation", 16); _content.AddChild(owned);
@@ -72,7 +74,7 @@ public partial class CareerScreen
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered, MouseFilter = MouseFilterEnum.Ignore });
         else row.AddChild(Text("◆", 40, _gold));
         var title = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; row.AddChild(title);
-        title.AddChild(Text(item.Name + " · 手办", 22, _gold));
+        title.AddChild(Text(item.Name, 22, _gold));
         int price = CareerRelics.PurchasePrice(d, item);
         title.AddChild(Text(owned ? CareerRelics.Status(d, item) : CareerMoney.Format(price), 16, CareerVisuals.Teal));
         if (!owned && price < item.Price) box.AddChild(Text($"原价 {CareerMoney.Format(item.Price)} · 送货员七折", 14, _muted));

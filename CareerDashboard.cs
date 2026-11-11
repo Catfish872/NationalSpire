@@ -113,7 +113,7 @@ public partial class CareerScreen
         host.AddChild(dot); dot.SetAnchorsAndOffsetsPreset(LayoutPreset.TopRight);
         dot.OffsetLeft = -20; dot.OffsetRight = -3; dot.OffsetTop = 0; return dot;
     }
-    private static bool PendingPlans(CareerData d) => d.Life.Activities.Any(a => a.Status == "可安排" && a.ExpiresDay >= d.Day && (d.Esports.ClubId.Length > 0 || !ClubPlan(a)));
+    private static bool PendingPlans(CareerData d) => d.Life.Activities.Any(a => PendingInvitation(d, a));
     private static VBoxContainer FlatPanel(Container parent,string name,int height,string fill,int padding)
     {
         var panel=new PanelContainer { Name=name, CustomMinimumSize=new(0,height),SizeFlagsHorizontal=SizeFlags.ExpandFill };

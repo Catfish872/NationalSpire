@@ -106,7 +106,7 @@ public static class EsportsWorld
             for (int i = 0; i < 2; i++)
             {
                 d.People.Add(new CareerPerson { Id = $"y{country}_{i}", Name = WorldPeople.Name(d, $"y{country}_{i}", Countries[country], false), Country = Countries[country], Region = Countries[country] + "青训中心", ClubId = $"c{country}{i}", Role = "青训选手", MaxAscension = 6 + i, Character = Characters[(country + i) % 5], Style = Styles[(country + i) % 5], Rating = 1040 + i * 60, Wins = 6 + i, Losses = 55 + country, Voice = "渴望职业合同，容易模仿明星的构筑" });
-                if (country > 0) d.People.Add(new CareerPerson { Id = $"fan{country}_{i}", Name = WorldPeople.Name(d, $"fan{country}_{i}", Countries[country], true), Country = Countries[country], Region = Countries[country] + "社区", Role = "普通玩家", MaxAscension = i + 1, Character = Characters[(country + i) % 5], Style = "偏爱稀有牌", Rating = 650 + country * 8, Wins = 1 + i, Losses = 40 + country, Voice = i == 0 ? "主队球迷，情绪热烈" : "普通观众，经常在第一幕失败" });
+                if (country > 0) d.People.Add(new CareerPerson { Id = $"fan{country}_{i}", Name = WorldPeople.Name(d, $"fan{country}_{i}", Countries[country], true), Country = Countries[country], Region = Countries[country] + "社区", Role = "普通玩家", MaxAscension = i + 1, Character = Characters[(country + i) % 5], Style = "偏爱稀有牌", Rating = 650 + country * 8, Wins = 1 + i, Losses = 40 + country, Voice = i == 0 ? "支持主队，情绪热烈" : "普通观众，经常在第一幕失败" });
             }
         }
         for (int i = 0; i < 16; i++) if (CareerEngine.Person(d, "p" + i) is { } p)

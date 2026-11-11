@@ -309,8 +309,8 @@ public partial class CareerScreen : Control, IScreenContext
             button.Disabled = ViewData.Failure != null && name != "结算";
             if (_styledRail==activeRail) continue;
             bool active = name == activeRail;
-            string fill = active ? "28434c" : name == "社区" ? "152b38" : "0c1824";
-            string edge = active ? "658c91" : name == "社区" ? "365866" : fill;
+            string fill = active ? "28434c" : "0c1824";
+            string edge = active ? "658c91" : fill;
             ButtonSurface(button,fill,edge,active ? "34545d" : "213945","658c91",0);
             button.AddThemeColorOverride("font_color",active ? _gold : _muted);
             button.AddThemeColorOverride("font_hover_color",active ? _gold : _ink);
@@ -410,7 +410,9 @@ public partial class CareerScreen : Control, IScreenContext
             }
         }
         else if(CareerEngine.NextAvailable(data)!=null) Primary("选择参赛赛事",()=>GoHub("赛事"));
-        actions.AddChild(FramedAction("日程安排",()=>OpenCalendarDay(day),width:112,height:46,quiet:true));
+        var calendarAction = FramedAction("日程安排",()=>OpenCalendarDay(day),width:112,height:46,quiet:true);
+        actions.AddChild(calendarAction);
+        if (AvailablePlans(data)) Dot(calendarAction);
         if (next?.Match is { } nextMatch)
             actions.AddChild(FramedAction("查看赛程", () => OpenMatchFixture(data, nextMatch), width: 112, height: 46, quiet: true));
         var poster=new VBoxContainer {CustomMinimumSize=new(276,0)}; poster.AddThemeConstantOverride("separation",3); focus.AddChild(poster);

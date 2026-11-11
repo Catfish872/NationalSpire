@@ -23,6 +23,10 @@ public partial class CareerScreen
             var heading = new HBoxContainer(); heading.AddThemeConstantOverride("separation",8); group.AddChild(heading);
             var title = DashboardLabel(role,23,_gold); title.SizeFlagsHorizontal=SizeFlags.ShrinkBegin; heading.AddChild(title);
             var count = DashboardLabel("/ "+ids.Count+" 人", 18, _muted); heading.AddChild(count);
+            if (role == "首发")
+                group.AddChild(Text(_multiplayer != null ? "全体真人固定出战。" : "3 个席位 · 可与轮换交换，调整对尚未开赛的对阵生效。", 16, _muted));
+            if (role == "轮换") PracticeRules(group);
+            if (role == "青训") group.AddChild(Text("陪练 · 每周成长并测评进阶", 16, _muted));
             if (role == "教练")
             {
                 count.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;

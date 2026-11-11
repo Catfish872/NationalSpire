@@ -1,7 +1,10 @@
 using System.Reflection;
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Screens;
+using MegaCrit.Sts2.Core.Nodes.Screens.Capstones;
 using MegaCrit.Sts2.Core.Nodes.Screens.Map;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -11,6 +14,16 @@ namespace NationalSpire;
 public static class LiveCompatibility
 {
     private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+    // 原版提供对局计时暂停时才使用它。旧版仍可从暂停菜单判断是否应暂缓约会请求。
+    private static class DateTimer
+    {
+        private static readonly PropertyInfo? Pause = typeof(RunManager).GetProperty("IsPaused", Flags);
+        internal static readonly Func<RunManager, bool>? Read = Pause?.GetMethod?.CreateDelegate<Func<RunManager, bool>>();
+        internal static readonly Action<RunManager, bool>? Write = Pause?.SetMethod?.CreateDelegate<Action<RunManager, bool>>();
+    }
+    internal static bool IsDateRunPaused() => DateTimer.Read?.Invoke(RunManager.Instance)
+        ?? (NCapstoneContainer.Instance?.CurrentCapstoneScreen is NCapstoneSubmenuStack { ScreenType: NetScreenType.PauseMenu });
+    internal static void SetDateTimerPaused(bool paused) => DateTimer.Write?.Invoke(RunManager.Instance, paused);
     private static readonly MethodInfo? StateReader = new[] { "GetRunState", "GetState", "DebugOnlyGetState" }
         .Select(name => typeof(RunManager).GetMethod(name, Flags, Type.EmptyTypes))
         .FirstOrDefault(m => m != null && typeof(RunState).IsAssignableFrom(m.ReturnType));

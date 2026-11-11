@@ -22,7 +22,7 @@ private Action? _closeCharacterCard;
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Select(string)`](CareerDashboard.cs.md#symbol-0f1435c9b701)
+**调用者：** [`Select(string)`](CareerDashboard.cs.md#symbol-79d37566e720)
 
 **调用：** [`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 

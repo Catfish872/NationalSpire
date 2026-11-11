@@ -616,7 +616,7 @@ private const string SeedCharacters = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`UpdateReward()`](CareerScreen.cs.md#symbol-fadc2e7393c5)
+**调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`UpdateReward()`](CareerScreen.cs.md#symbol-d97d7cf60e39)
 
 **调用：** `System.Math.Clamp(int, int, int)`
 
@@ -635,7 +635,7 @@ private const string SeedCharacters = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerAudience.MatchGain(string, int, bool, bool, bool, int, double, int)`](CareerAudience.cs.md#symbol-58faacd06f00)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`UpdateReward()`](CareerScreen.cs.md#symbol-fadc2e7393c5)
+**调用者：** [`NationalSpire.CareerAudience.MatchGain(string, int, bool, bool, bool, int, double, int)`](CareerAudience.cs.md#symbol-58faacd06f00)；[`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`NationalSpire.CareerLife.Ensure(NationalSpire.CareerData)`](CareerLife.cs.md#symbol-eb417e39aebf)；[`UpdateReward()`](CareerScreen.cs.md#symbol-d97d7cf60e39)
 
 **调用：** `System.Math.Round(double, System.MidpointRounding)`
 

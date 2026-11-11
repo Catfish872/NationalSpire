@@ -560,7 +560,7 @@ public static readonly Item[] Catalog = [
 
 来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-1eb97a843d59)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)
+**调用者：** [`NationalSpire.CareerLife.Accept(NationalSpire.CareerData, string, string)`](CareerLife.cs.md#symbol-cce5ea9d3250)；[`NationalSpire.CareerScreen.CalendarPlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-60a9060c5331)
 
 **调用：** [`NationalSpire.CareerRelics.Discounts(NationalSpire.CareerData, NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-c0eb9f3fff83)；[`NationalSpire.CareerRelics.Media(NationalSpire.LifeActivity)`](CareerRelics.cs.md#symbol-9d3d212bb912)；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`
 

@@ -2,27 +2,68 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9525C409CBE38E13F9BA58994B84B21E1A3907FC4E30293A4DEE1F5964794469`。来源：[源码](../../LiveCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`68A71EC8603461ECCDDAAB107345097F4EC84BA87F43124F47A31D4A43BC9CD7`。来源：[源码](../../LiveCompatibility.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.LiveCompatibility`。
+类型：`NationalSpire.LiveCompatibility`、`NationalSpire.LiveCompatibility.DateTimer`。
 
 字段、事件及初始值（源码原样）：
 
 ```csharp
 private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+private static readonly PropertyInfo? Pause = typeof(RunManager).GetProperty("IsPaused", Flags);
+internal static readonly Func<RunManager, bool>? Read = Pause?.GetMethod?.CreateDelegate<Func<RunManager, bool>>();
+internal static readonly Action<RunManager, bool>? Write = Pause?.SetMethod?.CreateDelegate<Action<RunManager, bool>>();
 private static readonly MethodInfo? StateReader = new[] { "GetRunState", "GetState", "DebugOnlyGetState" }
         .Select(name => typeof(RunManager).GetMethod(name, Flags, Type.EmptyTypes))
         .FirstOrDefault(m => m != null && typeof(RunState).IsAssignableFrom(m.ReturnType));
 private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).FirstOrDefault(f => f.FieldType == typeof(RunState));
 ```
 
+<a id="symbol-b752ad935441"></a>
+
+## `NationalSpire.LiveCompatibility.IsDateRunPaused() — internal static bool IsDateRunPaused()`
+
+来源：源码第 24 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LiveRunBridge.CanOpenDateChat()`](LiveDateGame.cs.md#symbol-ae2a19aa7c3a)；[`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)；[`NationalSpire.LiveRunBridge.UpdateDateGameAction(NationalSpire.DateGameState, double)`](LiveDateGame.cs.md#symbol-e4061f52dd90)
+
+**调用：** `System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveCompatibility.DateTimer.Read`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Func<T, TResult>.Invoke(T)`；输入表达式：`.Invoke(RunManager.Instance)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateTimer.Read?.Invoke(RunManager.Instance)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-7978d8a89b5c"></a>
+
+## `NationalSpire.LiveCompatibility.SetDateTimerPaused(bool) — internal static void SetDateTimerPaused(bool paused)`
+
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.DateGamePause.Acquire()`](LiveDateGame.cs.md#symbol-c615b37330ed)；[`NationalSpire.DateGamePause.Dispose()`](LiveDateGame.cs.md#symbol-1b8e2cb9178c)
+
+**调用：** `System.Action<T1, T2>.Invoke(T1, T2)`（委托实际目标见流程文档）
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LiveCompatibility.DateTimer.Write`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Action<T1, T2>.Invoke(T1, T2)`；输入表达式：`.Invoke(RunManager.Instance, paused)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateTimer.Write?.Invoke(RunManager.Instance, paused)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-b0c55be23807"></a>
 
 ## `NationalSpire.LiveCompatibility.ReadState(MegaCrit.Sts2.Core.Nodes.NRun) — public static RunState? ReadState(NRun node)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun)`](LiveRunBridge.cs.md#symbol-5639c4c6edfd)
 
@@ -42,11 +83,11 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 ## `NationalSpire.LiveCompatibility.MapPoints(Godot.Node) — public static Dictionary<MegaCrit.Sts2.Core.Map.MapCoord, NMapPoint> MapPoints(Node screen)`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-dccab061568e)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -58,15 +99,15 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-08a6a3290164"></a>
+<a id="symbol-dccab061568e"></a>
 
 ## `Visit(Godot.Node) — void Visit(Node node)`
 
-来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)
+**调用者：** [`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-dccab061568e)
 
-**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-08a6a3290164)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`
+**调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-dccab061568e)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.GetChildren(bool)`
 
 **字段、属性、事件及方法组引用：** `Visit(Godot.Node)`
 
@@ -84,7 +125,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 ## `NationalSpire.LiveCompatibility.Install(HarmonyLib.Harmony, System.Reflection.Assembly) — public static void Install(Harmony harmony, Assembly assembly)`
 
-来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Entry.Init()`](Entry.cs.md#symbol-f4f7468c39e8)
 
