@@ -10,6 +10,8 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 发布与本地安装前同步核对 NationalSpire.json.version 和 Diagnostics.ModVersion，并读取最终 DLL 元数据中的 ModVersion 常量确认构建结果。安装后核对目标目录的清单版本及 DLL、清单 SHA-256。Diagnostics.ModVersion 同时用于 CareerScreen 品牌版本、Entry 加载记录、诊断导出和 CoopRuntime.Compatibility 发布版本标识；修改常量后重新编译整个生产项目，使这些调用者使用同一版本。上述检查在构建与安装阶段执行。
 
+每次更新 GitHub 时，必须同步更新根目录 README.md 中的已完成清单，记录本次实际完成的功能、修复与优化。发布验收须核对远程 README.md 中的本次完成条目。
+
 ## 开始修改前
 
 1. 阅读目录、负责章节及函数索引，核对源码摘要与当前文件。
