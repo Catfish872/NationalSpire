@@ -51,12 +51,11 @@ public static class MatchFailure
     {
         var failure = d.Failure!;
         var match = d.Matches.Single(m => m.Id == failure.Result.MatchId);
+        match.ChosenMode = failure.Result.Mode;
         // 旧待确认记录在首次选择时保存原对手，后续确认和重新选择都读取同一份成绩。
         failure.Opponent ??= match.Seed == failure.Result.Seed && match.OpponentPrepared && match.OpponentSeconds.HasValue
             ? new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds.Value)
-            : MatchRules.Simulate(d, match.OpponentId, match.RequiredAscension,
-                d.WorldId + (d.CooperativeMembers > 1 ? ":coop:" : ":") + failure.Result.Seed,
-                match.Day, d.CooperativeMembers > 1, d.Esports.Competitions.FirstOrDefault(c => c.Id == match.CompetitionId), failure.Result.Seed);
+            : MatchRules.SimulateOpponent(d, match, failure.Result.Seed);
         var opponent = failure.Opponent.Value;
         match.Seed = failure.Result.Seed;
         match.OpponentWon = opponent.Cleared; match.OpponentFloor = opponent.Floor;

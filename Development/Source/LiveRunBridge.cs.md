@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`2F4BDD747458C3DAB5AD143F5F5F4AE58AE7A565A92ECFD10E76E776BAAB734F`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`9BDF8231E5C91F72556419941FFF55561B66BC7F298CDDD2C2BDD9046476D1B9`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -19,6 +19,7 @@ private Player _player = null!;
 private BattleObservation? _battle;
 private LiveRaceHud _hud = null!;
 private RivalMapOverlay? _mapOverlay;
+private BlitzRivalMarkers? _blitzMap;
 private double _tick;
 private double _mapCheck;
 private bool _faulted, _commentaryFaulted, _ended;
@@ -95,13 +96,13 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.Attach(MegaCrit.Sts2.Core.Nodes.NRun, MegaCrit.Sts2.Core.Runs.RunState) — public static void Attach(NRun node, RunState run)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun)`](LiveRunBridge.cs.md#symbol-5639c4c6edfd)
 
-**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`](CareerRunBinding.cs.md#symbol-814ae5a03226)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`MegaCrit.Sts2.Core.Context.LocalContext.GetMe(MegaCrit.Sts2.Core.Runs.IPlayerCollection?)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.LiveRunBridge.LiveRunBridge()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Enum.ToString()`
+**调用：** [`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`](CareerRunBinding.cs.md#symbol-98b98bdd8fa3)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetChildren(bool)`；`MegaCrit.Sts2.Core.Context.LocalContext.GetMe(MegaCrit.Sts2.Core.Runs.IPlayerCollection?)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.LiveRunBridge.LiveRunBridge()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.IEnumerable.OfType<TResult>()`；`System.Enum.ToString()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.character`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.expectedSeed`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.mode`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.players`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.runSeed`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.SelectedAscension`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`；`NationalSpire.CareerStore.Data`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`
+**字段、属性、事件及方法组引用：** `<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.character`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.expectedSeed`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.mode`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.players`；`<anonymous type: string PendingMatchId, string runSeed, string expectedSeed, int AscensionLevel, int players, string mode, string character, string SelectedCharacter, int SelectedAscension>.runSeed`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerData.SelectedAscension`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`；`NationalSpire.CareerStore.Data`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -110,7 +111,7 @@ private List<RouteNode>? _planningMap;
 - `MegaCrit.Sts2.Core.Context.LocalContext.GetMe(MegaCrit.Sts2.Core.Runs.IPlayerCollection?)`；输入表达式：`LocalContext.GetMe(run)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = LocalContext.GetMe(run)`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`.Character.Id.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: run.Players.FirstOrDefault()?.Character.Id.ToString()`
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(data, match.OpponentId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: CareerEngine.Person(data, match.OpponentId) is not { } rival`
-- `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`；输入表达式：`CareerRunBinding.Find(data, run.Rng.StringSeed, run.Players.FirstOrDefault()?.Character.Id.ToString() ?? "",              run.AscensionLevel, run.Players.Count, run.GameMode == GameMode.Standard)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerRunBinding.Find(data, run.Rng.StringSeed, run.Players.FirstOrDefault()?.Character.Id.ToString() ?? "",              run.AscensionLevel, run.Players.Count, run.GameMode == GameMode.Standard)`
+- `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`；输入表达式：`CareerRunBinding.Find(data, run.Rng.StringSeed, run.Players.FirstOrDefault()?.Character.Id.ToString() ?? "",              run.AscensionLevel, run.Players.Count, run.GameMode.ToString())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CareerRunBinding.Find(data, run.Rng.StringSeed, run.Players.FirstOrDefault()?.Character.Id.ToString() ?? "",              run.AscensionLevel, run.Players.Count, run.GameMode.ToString())`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("live.binding_skipped", new { data.PendingMatchId, runSeed = run.Rng.StringSeed,                  expectedSeed = data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId)?.Seed,                  run.AscensionLevel, players = run.Players.Count, mode = run.GameMode.ToString(),                  character = run.Players.FirstOrDefault()?.Character.Id.ToString(), data.SelectedCharacter, data.SelectedAscension })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("live.binding_skipped", new { data.PendingMatchId, runSeed = run.Rng.StringSeed,                  expectedSeed = data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId)?.Seed,                  run.AscensionLevel, players = run.Players.Count, mode = run.GameMode.ToString(),                  character = run.Players.FirstOrDefault()?.Character.Id.ToString(), data.SelectedCharacter, data.SelectedAscension });`
 - `NationalSpire.LiveRunBridge.LiveRunBridge()`；输入表达式：`new LiveRunBridge { _run = run, _data = data, _match = match, _rival = rival, _player = player }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new LiveRunBridge { _run = run, _data = data, _match = match, _rival = rival, _player = player }`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>()`；输入表达式：`node.GetChildren().OfType<LiveRunBridge>().Any()`；返回值紧邻使用处：`IfStatementSyntax: if (node.GetChildren().OfType<LiveRunBridge>().Any()) return;`
@@ -118,6 +119,7 @@ private List<RouteNode>? _planningMap;
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId)?.Seed`
 - `System.Collections.IEnumerable.OfType<TResult>()`；输入表达式：`node.GetChildren().OfType<LiveRunBridge>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: node.GetChildren().OfType<LiveRunBridge>().Any`
 - `System.Enum.ToString()`；输入表达式：`run.GameMode.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: mode = run.GameMode.ToString()`
+- `System.Enum.ToString()`；输入表达式：`run.GameMode.ToString()`；返回值紧邻使用处：`ArgumentSyntax: run.GameMode.ToString()`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -131,7 +133,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge._Ready() — public override void _Ready()`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -174,13 +176,13 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LiveRunBridge.ResumeDateRun()`](LiveDateGame.cs.md#symbol-9d0f51bc5495)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.QueueFree()`
+**调用：** [`NationalSpire.BlitzRivalMarkers.Dispose()`](BlitzRivalMarkers.cs.md#symbol-5d22b60b0de2)；[`NationalSpire.LiveRunBridge.ResumeDateRun()`](LiveDateGame.cs.md#symbol-9d0f51bc5495)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.QueueFree()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge.Current`；`NationalSpire.LiveRunBridge.HpChanged(int, int)`；`NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState)`；`NationalSpire.LiveRunBridge.OnHistoryChanged()`；`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`；`NationalSpire.LiveRunBridge.ResumeDateRun()`
+**字段、属性、事件及方法组引用：** `NationalSpire.BlitzRivalMarkers.Dispose()`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge.Current`；`NationalSpire.LiveRunBridge.HpChanged(int, int)`；`NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState)`；`NationalSpire.LiveRunBridge.OnHistoryChanged()`；`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`；`NationalSpire.LiveRunBridge.ResumeDateRun()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -188,6 +190,7 @@ private List<RouteNode>? _planningMap;
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.QueueFree();`
 - `Godot.Node.QueueFree()`；输入表达式：`_hud.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.QueueFree();`
 - `Godot.Node.QueueFree()`；输入表达式：`_mapOverlay!.QueueFree()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.QueueFree();`
+- `NationalSpire.BlitzRivalMarkers.Dispose()`；输入表达式：`.Dispose()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _blitzMap?.Dispose()`
 - `NationalSpire.LiveRunBridge.ResumeDateRun()`；输入表达式：`ResumeDateRun()`；返回值紧邻使用处：`ExpressionStatementSyntax: ResumeDateRun();`
 
 **赋值（含属性/字段和局部值）：**
@@ -202,7 +205,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.Guard(System.Action, bool) — internal static void Guard(Action action, bool commentaryOnly = false)`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 104 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-74af22831368)；[`NationalSpire.LiveRunBridge._Process(double)`](LiveRunBridge.cs.md#symbol-d7e63bc009ff)；[`NationalSpire.LiveRunBridge.OnHistoryChanged()`](LiveRunBridge.cs.md#symbol-10bf254b1599)；[`NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom)`](LiveRunBridge.cs.md#symbol-df914af86259)；[`NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun)`](LiveRunBridge.cs.md#symbol-5639c4c6edfd)；[`NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-81cb2332df19)；[`NationalSpire.LiveVictoryPatch.Prefix(bool)`](LiveRunBridge.cs.md#symbol-363ebe5825ab)
 
@@ -227,19 +230,20 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge._Process(double) — public override void _Process(double delta)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；[`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** [`NationalSpire.BlitzRivalMarkers.Hide()`](BlitzRivalMarkers.cs.md#symbol-a0b3dcfd2e88)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；[`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；`NationalSpire.LiveRunBridge.UpdateRace()`
+**字段、属性、事件及方法组引用：** `NationalSpire.BlitzRivalMarkers.Hide()`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；`NationalSpire.LiveRunBridge.UpdateRace()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.Hide()`；输入表达式：`_hud.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _hud.Hide();`
 - `Godot.CanvasItem.Hide()`；输入表达式：`_mapOverlay!.Hide()`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay!.Hide();`
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide();`
+- `NationalSpire.BlitzRivalMarkers.Hide()`；输入表达式：`.Hide()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _blitzMap?.Hide()`
 - `NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；输入表达式：`CareerStore.IsCurrent(_data)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !CareerStore.IsCurrent(_data)`
 - `NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；输入表达式：`Guard(UpdateRace)`；返回值紧邻使用处：`ExpressionStatementSyntax: Guard(UpdateRace);`
 - `NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；输入表达式：`TickDateRequestClock(delta)`；返回值紧邻使用处：`ExpressionStatementSyntax: TickDateRequestClock(delta);`
@@ -254,7 +258,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.CopyMap(MegaCrit.Sts2.Core.Map.ActMap, int, bool) — private static List<RouteNode> CopyMap(ActMap map, int act, bool secondBoss)`
 
-来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -273,7 +277,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.PlanningMap() — private List<RouteNode> PlanningMap()`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-2cc6442b9fc5)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)
 
@@ -294,7 +298,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.EnsurePlan(ref bool) — private void EnsurePlan(ref bool changed)`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
@@ -319,7 +323,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.UpdateRace() — private void UpdateRace()`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -342,13 +346,13 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.RefreshRace(ref bool) — private void RefreshRace(ref bool changed)`
 
-来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateRace()`](LiveRunBridge.cs.md#symbol-9566200347bc)
 
-**调用：** [`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`](LiveAtmosphere.cs.md#symbol-0b25ed42c5ca)；[`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`](LiveCommentary.cs.md#symbol-dd61728b3570)；[`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-931725c8305b)；[`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`](LiveCommentary.cs.md#symbol-7a552211c71b)；[`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`](LiveAtmosphere.cs.md#symbol-5475ccc1b529)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)；[`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-64cfa3e4c0ca)；[`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`](LiveRaceHud.cs.md#symbol-cfd9d62c7d32)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-2cc6442b9fc5)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)；[`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`](LiveShopObserver.cs.md#symbol-76febe44c2f1)；[`NationalSpire.LiveVoices.Ambient(bool, int, double)`](LiveCrowd.cs.md#symbol-789980beddf3)；[`NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`](LiveVoices.cs.md#symbol-3ffa230aebe8)；[`NationalSpire.LiveVoices.Poll(double, double)`](LiveVoices.cs.md#symbol-fc95fe2519bc)；[`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`](LiveVoices.cs.md#symbol-ea0ff7a1e0eb)；[`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`](LiveVoices.cs.md#symbol-44512aead226)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`](LiveMatch.cs.md#symbol-78308976d2a9)；[`NationalSpire.RivalSimulation.RoomName(string)`](LiveMatch.cs.md#symbol-2c599e9f210a)；[`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`](LiveMatch.cs.md#symbol-719ee73c10ff)；[`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`](LiveMatch.cs.md#symbol-dc9f5474f9f6)；`Godot.CanvasItem.Hide()`；`Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；`NationalSpire.BattleObservation.BattleObservation()`；`object.ReferenceEquals(object?, object?)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`
+**调用：** [`NationalSpire.BlitzRivalMarkers.Hide()`](BlitzRivalMarkers.cs.md#symbol-a0b3dcfd2e88)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`](LiveAtmosphere.cs.md#symbol-0b25ed42c5ca)；[`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`](LiveCommentary.cs.md#symbol-dd61728b3570)；[`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-931725c8305b)；[`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`](LiveCommentary.cs.md#symbol-7a552211c71b)；[`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`](LiveAtmosphere.cs.md#symbol-5475ccc1b529)；[`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`](LiveCommentary.cs.md#symbol-ee9616c0239b)；[`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`](LiveMoments.cs.md#symbol-64cfa3e4c0ca)；[`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`](LiveRaceHud.cs.md#symbol-cfd9d62c7d32)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)；[`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`](LiveRunBridge.cs.md#symbol-c7a514513ce3)；[`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`](LiveRunBridge.cs.md#symbol-2cc6442b9fc5)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`](LiveDateGame.cs.md#symbol-cb87a418530f)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)；[`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`](LiveShopObserver.cs.md#symbol-76febe44c2f1)；[`NationalSpire.LiveVoices.Ambient(bool, int, double)`](LiveCrowd.cs.md#symbol-789980beddf3)；[`NationalSpire.LiveVoices.LiveVoices(NationalSpire.CareerData, NationalSpire.CareerMatch, NationalSpire.BroadcastMemory, System.Collections.Generic.IEnumerable<string>)`](LiveVoices.cs.md#symbol-3ffa230aebe8)；[`NationalSpire.LiveVoices.Poll(double, double)`](LiveVoices.cs.md#symbol-fc95fe2519bc)；[`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`](LiveVoices.cs.md#symbol-ea0ff7a1e0eb)；[`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`](LiveVoices.cs.md#symbol-44512aead226)；[`NationalSpire.MatchRules.Time(double?)`](MatchRules.cs.md#symbol-13ecc28f8403)；[`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`](LiveMatch.cs.md#symbol-78308976d2a9)；[`NationalSpire.RivalSimulation.RoomName(string)`](LiveMatch.cs.md#symbol-2c599e9f210a)；[`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`](LiveMatch.cs.md#symbol-719ee73c10ff)；[`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`](LiveMatch.cs.md#symbol-dc9f5474f9f6)；`Godot.CanvasItem.Hide()`；`Godot.GD.PushWarning(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；`NationalSpire.BattleObservation.BattleObservation()`；`object.ReferenceEquals(object?, object?)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.adjustedActs`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.finish`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.match`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerAct`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerFloor`；`NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.RouteFloor`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.DateGameState.Companions`；`NationalSpire.DateGameState.People`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`；`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`；`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.PaceAdjustedActs`；`NationalSpire.LiveMatchState.PaceNeutralUntil`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._datePause`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._lastMap`；`NationalSpire.LiveRunBridge._lossFloor`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapRetryAt`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._shop`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`；`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`；`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`；`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`；`NationalSpire.LiveShopChange.CardType`；`NationalSpire.LiveShopChange.DeckSize`；`NationalSpire.LiveShopChange.Gold`；`NationalSpire.LiveShopChange.Item`；`NationalSpire.LiveShopChange.Kind`；`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；`NationalSpire.LiveVoices.Ambient(bool, int, double)`；`NationalSpire.LiveVoices.Poll(double, double)`；`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Finished`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；`NationalSpire.RivalSimulation.RoomName(string)`；`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.End`；`NationalSpire.RivalStep.Floor`；`NationalSpire.RivalStep.Kind`
+**字段、属性、事件及方法组引用：** `<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.adjustedActs`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.finish`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.match`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerAct`；`<anonymous type: string match, double seconds, int playerAct, int playerFloor, System.Collections.Generic.List<int> adjustedActs, double finish>.playerFloor`；`NationalSpire.BattleObservation.Floor`；`NationalSpire.BattleObservation.Hp`；`NationalSpire.BattleObservation.Kind`；`NationalSpire.BattleObservation.MaxHp`；`NationalSpire.BattleObservation.Turn`；`NationalSpire.BlitzRivalMarkers.Hide()`；`NationalSpire.BroadcastMemory.LastSpoke`；`NationalSpire.BroadcastMemory.RouteFloor`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Event`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerMatch.OpponentSeconds`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.DateGameState.Companions`；`NationalSpire.DateGameState.People`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LiveCommentary.Atmosphere(NationalSpire.BroadcastMemory, NationalSpire.AtmosphereContext, string, double)`；`NationalSpire.LiveCommentary.Gap(NationalSpire.BroadcastMemory, int, int, int, int, string, string, int, int, double, string)`；`NationalSpire.LiveCommentary.PlayerLoss(NationalSpire.BroadcastMemory, int, int, int, int, string, string, double)`；`NationalSpire.LiveCommentary.RebaseGap(NationalSpire.BroadcastMemory, int, int, double)`；`NationalSpire.LiveCommentary.Rival(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, string, string, string, double)`；`NationalSpire.LiveCommentary.Route(NationalSpire.BroadcastMemory, NationalSpire.BattleObservation, string, string, double)`；`NationalSpire.LiveCommentary.UnknownRoom(NationalSpire.BroadcastMemory, int, string, int, int, int, string, string, double)`；`NationalSpire.LiveMatchState.Commentary`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.PaceAdjustedActs`；`NationalSpire.LiveMatchState.PaceNeutralUntil`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRaceHud.SetRace(string, string, int, int, bool, double)`；`NationalSpire.LiveRunBridge._battle`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._commentaryFaulted`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._datePause`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._lastMap`；`NationalSpire.LiveRunBridge._lossFloor`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapRetryAt`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._pendingLoss`；`NationalSpire.LiveRunBridge._player`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge._shop`；`NationalSpire.LiveRunBridge._voices`；`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`；`NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?)`；`NationalSpire.LiveRunBridge.EnsurePlan(ref bool)`；`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`；`NationalSpire.LiveRunBridge.UpdateDateGame(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double, ref bool)`；`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`；`NationalSpire.LiveShopChange.CardType`；`NationalSpire.LiveShopChange.DeckSize`；`NationalSpire.LiveShopChange.Gold`；`NationalSpire.LiveShopChange.Item`；`NationalSpire.LiveShopChange.Kind`；`NationalSpire.LiveShopObserver.Read(MegaCrit.Sts2.Core.Runs.RunState, bool)`；`NationalSpire.LiveVoices.Ambient(bool, int, double)`；`NationalSpire.LiveVoices.Poll(double, double)`；`NationalSpire.LiveVoices.Rival(int, int, int, int, NationalSpire.RivalProgress, NationalSpire.LiveMatchState, double, System.Collections.Generic.IEnumerable<(string Id, NationalSpire.RivalProgress Progress, int MaxHp)>?)`；`NationalSpire.LiveVoices.Shop(string, string, int, int, string, int, double, string)`；`NationalSpire.MatchRules.Time(double?)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Finished`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；`NationalSpire.RivalSimulation.RoomName(string)`；`NationalSpire.RivalSimulation.TryAdjustPace(NationalSpire.LiveMatchState, double, int, int)`；`NationalSpire.RivalSimulation.UpgradeHealthPlan(NationalSpire.LiveMatchState, NationalSpire.CareerMatch, NationalSpire.CareerPerson, double)`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.End`；`NationalSpire.RivalStep.Floor`；`NationalSpire.RivalStep.Kind`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -357,6 +361,7 @@ private List<RouteNode>? _planningMap;
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`IsInstanceValid(_mapOverlay)`；返回值紧邻使用处：`IfStatementSyntax: if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide();`
 - `NationalSpire.AtmosphereContext.AtmosphereContext(string, string, string, string, int, int, int, string, int, int, int, int, bool)`；输入表达式：`new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`；返回值紧邻使用处：`ArgumentSyntax: new AtmosphereContext(CareerEngine.Name(_data), _rival.PublicName, _match.Event,                  _rival.Character, _match.RequiredAscension, _run.TotalFloor, _run.CurrentActIndex, _run.CurrentRoom?.RoomType.ToString() ?? "",                  _player.Creature.CurrentHp, _player.Creature.MaxHp, _player.Gold, _battle?.Turn ?? 0, CombatManager.Instance.IsInProgress)`
 - `NationalSpire.BattleObservation.BattleObservation()`；输入表达式：`new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentMapPoint?.PointType.ToString() ?? "", Hp = _player.Creature.CurrentHp, MaxHp = _player.Creature.MaxHp }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new BattleObservation { Floor = _run.TotalFloor, Kind = _run.CurrentMapPoint?.PointType.ToString() ?? "", Hp = _player.Creature.CurrentHp, MaxHp = _player.Creature.MaxHp }`
+- `NationalSpire.BlitzRivalMarkers.Hide()`；输入表达式：`.Hide()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: _blitzMap?.Hide()`
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(_data)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(_data)`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("live.map", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("live.map", e);`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,                  playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("live.pace_adjusted", new { match = _match.Id, seconds, playerAct = _run.CurrentActIndex,                  playerFloor = _run.TotalFloor, adjustedActs = live.PaceAdjustedActs, finish = live.Steps[^1].End });`
@@ -419,7 +424,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double) — private void ObservePotions(BroadcastMemory memory, double seconds)`
 
-来源：源码第 238 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 240 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
@@ -451,7 +456,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.EnergyGained(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int) — public void EnergyGained(PlayerCombatState state, int gain)`
 
-来源：源码第 260 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-74af22831368)
 
@@ -473,7 +478,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.RewardSkipped(MegaCrit.Sts2.Core.Rewards.CardReward) — public void RewardSkipped(CardReward reward)`
 
-来源：源码第 267 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-81cb2332df19)
 
@@ -495,7 +500,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.RunEnded(bool) — public void RunEnded(bool victory)`
 
-来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 275 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveVictoryPatch.Prefix(bool)`](LiveRunBridge.cs.md#symbol-363ebe5825ab)
 
@@ -521,7 +526,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState) — private void CalibrateMap(LiveMatchState live)`
 
-来源：源码第 284 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 286 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
@@ -541,13 +546,13 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double) — private void UpdateMap(LiveMatchState live, RivalProgress progress, double seconds)`
 
-来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)
 
-**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`](LiveRunBridge.cs.md#symbol-2f08e8cbdbe3)；[`NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`](LiveRaceHud.cs.md#symbol-6200daa39f4a)；[`NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool)`](LiveRaceHud.cs.md#symbol-683532d7c3b5)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`MegaCrit.Sts2.Core.Map.MapCoord.MapCoord(int, int)`；`NationalSpire.RivalMapOverlay.RivalMapOverlay()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`](AvatarAssets.cs.md#symbol-1d4beb6f533e)；[`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`](AvatarHonors.cs.md#symbol-5207a1627331)；[`NationalSpire.BlitzRivalMarkers.Update(NationalSpire.CareerData, Godot.Control, MegaCrit.Sts2.Core.Map.ActMap, int, double, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](BlitzRivalMarkers.cs.md#symbol-9f0927789a81)；[`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-f3fe7eb74cad)；[`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`](LiveCompatibility.cs.md#symbol-e7d2ddafdb60)；[`NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`](LiveRunBridge.cs.md#symbol-2f08e8cbdbe3)；[`NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`](LiveRaceHud.cs.md#symbol-6200daa39f4a)；[`NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool, string, string)`](LiveRaceHud.cs.md#symbol-7b27533a2169)；[`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`](LiveMatch.cs.md#symbol-78308976d2a9)；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetParent()`；`Godot.Node.QueueFree()`；`MegaCrit.Sts2.Core.Map.MapCoord.MapCoord(int, int)`；`NationalSpire.BlitzRivalMarkers.BlitzRivalMarkers()`；`NationalSpire.LiveMapRival.LiveMapRival(string, string, NationalSpire.RivalProgress, int, System.Collections.Generic.IReadOnlyList<NationalSpire.RivalStep>)`；`NationalSpire.RivalMapOverlay.RivalMapOverlay()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRunBridge._artRetryAt`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapScreen`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`；`NationalSpire.RivalMapOverlay.Art`；`NationalSpire.RivalMapOverlay.Identity`；`NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`；`NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.Col`；`NationalSpire.RivalStep.Row`；`NationalSpire.RivalStep.Start`
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarArt.Texture`；`NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；`NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.BlitzRivalMarkers.Update(NationalSpire.CareerData, Godot.Control, MegaCrit.Sts2.Core.Map.ActMap, int, double, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Live`；`NationalSpire.CareerMatch.OpponentId`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.DateGameState.Companions`；`NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`；`NationalSpire.LiveMatchState.MaxHp`；`NationalSpire.LiveMatchState.Steps`；`NationalSpire.LiveRunBridge._artRetryAt`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._mapCompatible`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._mapPoints`；`NationalSpire.LiveRunBridge._mapScreen`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._rival`；`NationalSpire.LiveRunBridge._run`；`NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`；`NationalSpire.MatchModes.Blitz`；`NationalSpire.RivalMapOverlay.Art`；`NationalSpire.RivalMapOverlay.Identity`；`NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`；`NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool, string, string)`；`NationalSpire.RivalProgress.Dead`；`NationalSpire.RivalProgress.Hp`；`NationalSpire.RivalProgress.Step`；`NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；`NationalSpire.RivalStep.Act`；`NationalSpire.RivalStep.Col`；`NationalSpire.RivalStep.Row`；`NationalSpire.RivalStep.Start`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -567,25 +572,37 @@ private List<RouteNode>? _planningMap;
 - `MegaCrit.Sts2.Core.Map.MapCoord.MapCoord(int, int)`；输入表达式：`new MapCoord(step.Col, step.Row)`；返回值紧邻使用处：`ArgumentSyntax: new MapCoord(step.Col, step.Row)`
 - `NationalSpire.AvatarAssets.Usable(Godot.Texture2D?)`；输入表达式：`AvatarAssets.Usable(_mapOverlay.Art.Texture)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !AvatarAssets.Usable(_mapOverlay.Art.Texture)`
 - `NationalSpire.AvatarHonors.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`AvatarHonors.ForPerson(_data, _rival.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Identity = AvatarHonors.ForPerson(_data, _rival.Id)`
+- `NationalSpire.BlitzRivalMarkers.BlitzRivalMarkers()`；输入表达式：`new()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _blitzMap ??= new()`
+- `NationalSpire.BlitzRivalMarkers.Update(NationalSpire.CareerData, Godot.Control, MegaCrit.Sts2.Core.Map.ActMap, int, double, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`；输入表达式：`_blitzMap.Update(_data, NRun.Instance!.GlobalUi, _run.Map, _run.CurrentActIndex, seconds, rivals)`；返回值紧邻使用处：`ExpressionStatementSyntax: _blitzMap.Update(_data, NRun.Instance!.GlobalUi, _run.Map, _run.CurrentActIndex, seconds, rivals);`
 - `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(_data, _rival.Id)`；返回值紧邻使用处：`ArgumentSyntax: CareerAvatars.ForPerson(_data, _rival.Id)`
 - `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(_data, _rival.Id)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Art = CareerAvatars.ForPerson(_data, _rival.Id)`
+- `NationalSpire.CareerEngine.DisplayName(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.DisplayName(_data, m.OpponentId)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.DisplayName(_data, m.OpponentId)`
 - `NationalSpire.LiveCompatibility.MapPoints(Godot.Node)`；输入表达式：`LiveCompatibility.MapPoints(screen)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _mapPoints = LiveCompatibility.MapPoints(screen)`
+- `NationalSpire.LiveMapRival.LiveMapRival(string, string, NationalSpire.RivalProgress, int, System.Collections.Generic.IReadOnlyList<NationalSpire.RivalStep>)`；输入表达式：`new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: m => new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps)`
+- `NationalSpire.LiveMapRival.LiveMapRival(string, string, NationalSpire.RivalProgress, int, System.Collections.Generic.IReadOnlyList<NationalSpire.RivalStep>)`；输入表达式：`new(_rival.Id, _rival.PublicName, progress, live.MaxHp, live.Steps)`；返回值紧邻使用处：`InitializerExpressionSyntax: { new(_rival.Id, _rival.PublicName, progress, live.MaxHp, live.Steps) }`
 - `NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`；输入表达式：`MapPosition(at)`；返回值紧邻使用处：`AssignmentExpressionSyntax: marker = MapPosition(at)`
 - `NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint)`；输入表达式：`MapPosition(point)`；返回值紧邻使用处：`ArgumentSyntax: MapPosition(point)`
 - `NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt)`；输入表达式：`_mapOverlay.RefreshArt(CareerAvatars.ForPerson(_data, _rival.Id))`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay.RefreshArt(CareerAvatars.ForPerson(_data, _rival.Id));`
 - `NationalSpire.RivalMapOverlay.RivalMapOverlay()`；输入表达式：`new RivalMapOverlay { Art = CareerAvatars.ForPerson(_data, _rival.Id), Identity = AvatarHonors.ForPerson(_data, _rival.Id) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _mapOverlay = new RivalMapOverlay { Art = CareerAvatars.ForPerson(_data, _rival.Id), Identity = AvatarHonors.ForPerson(_data, _rival.Id) }`
-- `NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool)`；输入表达式：`_mapOverlay.UpdateState(path, marker, _rival.PublicName, progress.Hp, live.MaxHp, progress.Dead)`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay.UpdateState(path, marker, _rival.PublicName, progress.Hp, live.MaxHp, progress.Dead);`
+- `NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool, string, string)`；输入表达式：`_mapOverlay.UpdateState(path, marker, _rival.PublicName, progress.Hp, live.MaxHp, progress.Dead)`；返回值紧邻使用处：`ExpressionStatementSyntax: _mapOverlay.UpdateState(path, marker, _rival.PublicName, progress.Hp, live.MaxHp, progress.Dead);`
+- `NationalSpire.RivalSimulation.At(NationalSpire.LiveMatchState, double)`；输入表达式：`RivalSimulation.At(m.Live!, seconds)`；返回值紧邻使用处：`ArgumentSyntax: RivalSimulation.At(m.Live!, seconds)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`points.TryGetValue(new MapCoord(progress.Step.Col, progress.Step.Row), out var at)`；返回值紧邻使用处：`BinaryExpressionSyntax: progress.Step.Act == _run.CurrentActIndex && points.TryGetValue(new MapCoord(progress.Step.Col, progress.Step.Row), out var at)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`points.TryGetValue(new MapCoord(step.Col, step.Row), out var point)`；返回值紧邻使用处：`IfStatementSyntax: if (points.TryGetValue(new MapCoord(step.Col, step.Row), out var point)) path.Add(MapPosition(point));`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`_mapPoints.Values.Any(p => !IsInstanceValid(p) || p.IsQueuedForDeletion())`；返回值紧邻使用处：`BinaryExpressionSyntax: _mapScreen != screen || _mapPoints == null || _mapPoints.Count == 0 || _mapPoints.Values.Any(p => !IsInstanceValid(p) || p.IsQueuedForDeletion())`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>()`；输入表达式：`points.Values.First()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: points.Values.First().GetParent`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps))`；返回值紧邻使用处：`ArgumentSyntax: game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps))`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`game.Companions.Where(m => m.Live is { Steps.Count: > 0 })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`live.Steps.Where(s => s.Act == _run.CurrentActIndex && s.Start <= seconds)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var step in live.Steps.Where(s => s.Act == _run.CurrentActIndex && s.Start <= seconds))          {              if (points.TryGetValue(new MapCoord(step.Col, step.Row), out var point)) path.Add(MapPosition(point));          }`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`path.Add(MapPosition(point))`；返回值紧邻使用处：`ExpressionStatementSyntax: path.Add(MapPosition(point));`
+- `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`rivals.AddRange(game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps)))`；返回值紧邻使用处：`ExpressionStatementSyntax: rivals.AddRange(game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => new LiveMapRival(m.OpponentId,                      CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps)));`
+- `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<LiveMapRival> { new(_rival.Id, _rival.PublicName, progress, live.MaxHp, live.Steps) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<LiveMapRival> { new(_rival.Id, _rival.PublicName, progress, live.MaxHp, live.Steps) }`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<Vector2>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<Vector2>()`
+- `System.Enum.ToString()`；输入表达式：`_run.GameMode.ToString()`；返回值紧邻使用处：`BinaryExpressionSyntax: _run.GameMode.ToString() == MatchModes.Blitz`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_artRetryAt` = `seconds + 3`
+- `_blitzMap` ??= `new()`
 - `_mapOverlay` = `new RivalMapOverlay { Art = CareerAvatars.ForPerson(_data, _rival.Id), Identity = AvatarHonors.ForPerson(_data, _rival.Id) }`
 - `_mapOverlay` = `null`
 - `_mapPoints` = `LiveCompatibility.MapPoints(screen)`
@@ -598,7 +615,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.MapPosition(MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapPoint) — private Vector2 MapPosition(NMapPoint point)`
 
-来源：源码第 319 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 331 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
@@ -619,7 +636,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.OnWon(MegaCrit.Sts2.Core.Rooms.CombatRoom) — private void OnWon(CombatRoom room)`
 
-来源：源码第 321 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -638,7 +655,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.OnHistoryChanged() — private void OnHistoryChanged()`
 
-来源：源码第 322 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 334 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -661,7 +678,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.OnCombat(MegaCrit.Sts2.Core.Combat.ICombatState) — private void OnCombat(ICombatState state)`
 
-来源：源码第 335 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 347 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge._Ready()`](LiveRunBridge.cs.md#symbol-26fa8bae2af0)
 
@@ -687,7 +704,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.HpChanged(int, int) — private void HpChanged(int before, int after)`
 
-来源：源码第 341 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -711,7 +728,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry) — public void History(ICombatState state, CombatHistoryEntry entry)`
 
-来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 361 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OnHistoryChanged()`](LiveRunBridge.cs.md#symbol-10bf254b1599)
 
@@ -754,7 +771,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.FinishCombat() — public void FinishCombat()`
 
-来源：源码第 364 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 376 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -783,7 +800,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunBridge.Emit(NationalSpire.BroadcastLine?) — private void Emit(BroadcastLine? line)`
 
-来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 386 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.EnergyGained(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int)`](LiveRunBridge.cs.md#symbol-1d29bfc1f633)；[`NationalSpire.LiveRunBridge.FinishCombat()`](LiveRunBridge.cs.md#symbol-1e798ae2b209)；[`NationalSpire.LiveRunBridge.History(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry)`](LiveRunBridge.cs.md#symbol-42aede5a364b)；[`NationalSpire.LiveRunBridge.ObservePotions(NationalSpire.BroadcastMemory, double)`](LiveRunBridge.cs.md#symbol-e509c91bb4f4)；[`NationalSpire.LiveRunBridge.RefreshRace(ref bool)`](LiveRunBridge.cs.md#symbol-f03ac37c2ac4)；[`NationalSpire.LiveRunBridge.RewardSkipped(MegaCrit.Sts2.Core.Rewards.CardReward)`](LiveRunBridge.cs.md#symbol-c012e2474371)；[`NationalSpire.LiveRunBridge.RunEnded(bool)`](LiveRunBridge.cs.md#symbol-d5b5bb6d87cd)
 
@@ -824,7 +841,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunReadyPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 404 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 416 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -843,7 +860,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveRunReadyPatch.Postfix(MegaCrit.Sts2.Core.Nodes.NRun) — public static void Postfix(NRun __instance)`
 
-来源：源码第 405 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -865,7 +882,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveEnergyPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 415 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 427 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -884,7 +901,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveEnergyPatch.Prefix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, out int) — public static void Prefix(PlayerCombatState __instance, out int __state)`
 
-来源：源码第 416 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 428 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -903,7 +920,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveEnergyPatch.Postfix(MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState, int) — public static void Postfix(PlayerCombatState __instance, int __state)`
 
-来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 429 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -924,7 +941,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveSkippedRewardPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 424 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 436 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -943,7 +960,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveSkippedRewardPatch.Postfix(MegaCrit.Sts2.Core.Rewards.CardReward) — public static void Postfix(CardReward __instance)`
 
-来源：源码第 425 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 437 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -963,7 +980,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveVictoryPatch.Prepare() — public static bool Prepare()`
 
-来源：源码第 431 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 443 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -982,7 +999,7 @@ private List<RouteNode>? _planningMap;
 
 ## `NationalSpire.LiveVictoryPatch.Prefix(bool) — public static void Prefix(bool isVictory)`
 
-来源：源码第 432 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 444 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`5B67EEEBDC5F95D046ED7C57561CF8BB26A7A9A9BD1ED3C96A6A14EB316DC3D1`。来源：[源码](../../DateGameScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`605757F8DFFF2EF8A1867CC45BF68F4C036AF223BA675DB2CE717C57FD5DD1DD`。来源：[源码](../../DateGameScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -124,30 +124,23 @@ private string _dateInputTurn = "";
 
 **调用者：** [`NationalSpire.CareerScreen.ShowDateGameChoices(NationalSpire.CareerMatch)`](DateGameScreen.cs.md#symbol-d1774dd40624)
 
-**调用：** [`NationalSpire.AvatarAssets.Load(string, int, bool, int)`](AvatarAssets.cs.md#symbol-00e6fbec5eac)；[`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.DateGames.AwaitingStart(NationalSpire.CareerData, string, string)`](DateGames.cs.md#symbol-30dbc76323ef)；[`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.MatchRules.PreferredAscension(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-73f327295a53)；`Godot.CanvasItem.QueueRedraw()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.SpinBox.Apply()`；`Godot.SpinBox.SpinBox()`；`Godot.Vector2.Vector2(float, float)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.AvatarAssets.Load(string, int, bool, int)`](AvatarAssets.cs.md#symbol-00e6fbec5eac)；[`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.DateGames.AwaitingStart(NationalSpire.CareerData, string, string)`](DateGames.cs.md#symbol-30dbc76323ef)；[`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.MatchModes.Select(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`](MatchModes.cs.md#symbol-51d0719d4fbb)；[`NationalSpire.MatchModeSelector.MatchModeSelector(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`](MatchModeSelector.cs.md#symbol-40bbec50deea)；`Godot.CanvasItem.QueueRedraw()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.Vector2.Vector2(float, float)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.CareerAvatar.CareerAvatar()`；`System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；`System.Math.Max(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerScreen._dateOffer`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateRunResume`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._starting`；`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.DateGames.AwaitingStart(NationalSpire.CareerData, string, string)`；`NationalSpire.GameBridge.Characters()`；`NationalSpire.MatchRules.PreferredAscension(NationalSpire.CareerData, NationalSpire.CareerMatch)`
+**字段、属性、事件及方法组引用：** `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；`NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerData.SelectedCharacter`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerScreen._dateOffer`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._dateRunResume`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._starting`；`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.DateGames.AwaitingStart(NationalSpire.CareerData, string, string)`；`NationalSpire.GameBridge.Characters()`；`NationalSpire.MatchModes.Select(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`；`NationalSpire.MatchModeSelector.Changed`；`NationalSpire.MatchModeSelector.Level`；`NationalSpire.MatchModeSelector.Mode`；`NationalSpire.MatchModeSelector.RecordedAscension`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.QueueRedraw()`；输入表达式：`portrait.QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: portrait.QueueRedraw();`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`characterRow.AddThemeConstantOverride("separation", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: characterRow.AddThemeConstantOverride("separation", 16);`
-- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`row.AddThemeConstantOverride("separation", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddThemeConstantOverride("separation", 16);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { Name = "DateGameCharacterRow" }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { Name = "DateGameCharacterRow" }`
-- `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer()`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(characterRow)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(characterRow);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(row);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(level)`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(level);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`box.AddChild(Text("出战角色", 18, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: box.AddChild(Text("出战角色", 18, _ink));`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`characterRow.AddChild(choice)`；返回值紧邻使用处：`ExpressionStatementSyntax: characterRow.AddChild(choice);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`characterRow.AddChild(portrait)`；返回值紧邻使用处：`ExpressionStatementSyntax: characterRow.AddChild(portrait);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(level)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(level);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(Text("挑战进阶", 18, _ink))`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(Text("挑战进阶", 18, _ink));`
 - `Godot.OptionButton.AddItem(string, int)`；输入表达式：`choice.AddItem(character.Title.GetFormattedText())`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.AddItem(character.Title.GetFormattedText());`
 - `Godot.OptionButton.OptionButton()`；输入表达式：`new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter }`
 - `Godot.OptionButton.Select(int)`；输入表达式：`choice.Select(selected)`；返回值紧邻使用处：`ExpressionStatementSyntax: choice.Select(selected);`
-- `Godot.SpinBox.Apply()`；输入表达式：`level!.Apply()`；返回值紧邻使用处：`ExpressionStatementSyntax: level!.Apply();`
-- `Godot.SpinBox.SpinBox()`；输入表达式：`new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,                  Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: level = new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,                  Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }`
-- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(160, 44)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(160, 44)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(456, 44)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(456, 44)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(48, 48)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(48, 48)`
 - `MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；输入表达式：`character.Title.GetFormattedText()`；返回值紧邻使用处：`ArgumentSyntax: character.Title.GetFormattedText()`
@@ -156,45 +149,43 @@ private string _dateInputTurn = "";
 - `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；输入表达式：`AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`
 - `NationalSpire.AvatarAssets.Load(string, int, bool, int)`；输入表达式：`AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`；返回值紧邻使用处：`AssignmentExpressionSyntax: portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`
 - `NationalSpire.CareerAvatar.CareerAvatar()`；输入表达式：`new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore }`
-- `NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`；输入表达式：`LaunchDateGame(match, characters[selected], (int)level.Value)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = LaunchDateGame(match, characters[selected], (int)level.Value)`
+- `NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`；输入表达式：`LaunchDateGame(match, characters[selected], level.RecordedAscension)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = LaunchDateGame(match, characters[selected], level.RecordedAscension)`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice("没有可用角色。", true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice("没有可用角色。", true);`
-- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("开始约会对局", "选择本局使用的角色和进阶。", () =>          {              if (_starting || DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id != match.Id) return false;              level!.Apply(); _ = LaunchDateGame(match, characters[selected], (int)level.Value); return true;          }, "开始游戏", box =>          {              box.AddChild(Text("出战角色", 18, _ink));              var characterRow = new HBoxContainer { Name = "DateGameCharacterRow" }; characterRow.AddThemeConstantOverride("separation", 16); box.AddChild(characterRow);              var portrait = new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore };              characterRow.AddChild(portrait);              var choice = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };              foreach (var character in characters) choice.AddItem(character.Title.GetFormattedText());              choice.Select(selected); choice.ItemSelected += i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }; characterRow.AddChild(choice);              var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); box.AddChild(row);              row.AddChild(Text("挑战进阶", 18, _ink));              level = new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,                  Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }; row.AddChild(level);          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("开始约会对局", "选择本局使用的角色和进阶。", () =>          {              if (_starting || DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id != match.Id) return false;              level!.Apply(); _ = LaunchDateGame(match, characters[selected], (int)level.Value); return true;          }, "开始游戏", box =>          {              box.AddChild(Text("出战角色", 18, _ink));              var characterRow = new HBoxContainer { Name = "DateGameCharacterRow" }; characterRow.AddThemeConstantOverride("separation", 16); box.AddChild(characterRow);              var portrait = new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore };              characterRow.AddChild(portrait);              var choice = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };              foreach (var character in characters) choice.AddItem(character.Title.GetFormattedText());              choice.Select(selected); choice.ItemSelected += i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }; characterRow.AddChild(choice);              var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); box.AddChild(row);              row.AddChild(Text("挑战进阶", 18, _ink));              level = new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,                  Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }; row.AddChild(level);          });`
+- `NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；输入表达式：`ShowCareerDialog("开始约会对局", "选择本局使用的角色、模式和进阶。", () =>          {              if (_starting || DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id != match.Id) return false;              MatchModes.Select(ViewData, match, level!.Mode, level.Level);              _ = LaunchDateGame(match, characters[selected], level.RecordedAscension); return true;          }, "开始游戏", box =>          {              box.AddChild(Text("出战角色", 18, _ink));              var characterRow = new HBoxContainer { Name = "DateGameCharacterRow" }; characterRow.AddThemeConstantOverride("separation", 16); box.AddChild(characterRow);              var portrait = new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore };              characterRow.AddChild(portrait);              var choice = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };              foreach (var character in characters) choice.AddItem(character.Title.GetFormattedText());              choice.Select(selected); choice.ItemSelected += i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }; characterRow.AddChild(choice);              level = new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }; box.AddChild(level);              level.Changed += (mode, native) => { MatchModes.Select(ViewData, match, mode, native); CareerStore.Save(ViewData); };          })`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowCareerDialog("开始约会对局", "选择本局使用的角色、模式和进阶。", () =>          {              if (_starting || DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id != match.Id) return false;              MatchModes.Select(ViewData, match, level!.Mode, level.Level);              _ = LaunchDateGame(match, characters[selected], level.RecordedAscension); return true;          }, "开始游戏", box =>          {              box.AddChild(Text("出战角色", 18, _ink));              var characterRow = new HBoxContainer { Name = "DateGameCharacterRow" }; characterRow.AddThemeConstantOverride("separation", 16); box.AddChild(characterRow);              var portrait = new CareerAvatar { Name = "DateGameCharacterPortrait", Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false), CustomMinimumSize = new(48, 48), SizeFlagsVertical = SizeFlags.ShrinkCenter, MouseFilter = MouseFilterEnum.Ignore };              characterRow.AddChild(portrait);              var choice = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };              foreach (var character in characters) choice.AddItem(character.Title.GetFormattedText());              choice.Select(selected); choice.ItemSelected += i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }; characterRow.AddChild(choice);              level = new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }; box.AddChild(level);              level.Changed += (mode, native) => { MatchModes.Select(ViewData, match, mode, native); CareerStore.Save(ViewData); };          });`
 - `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("出战角色", 18, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text("出战角色", 18, _ink)`
-- `NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；输入表达式：`Text("挑战进阶", 18, _ink)`；返回值紧邻使用处：`ArgumentSyntax: Text("挑战进阶", 18, _ink)`
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(ViewData)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(ViewData);`
 - `NationalSpire.DateGames.AwaitingStart(NationalSpire.CareerData, string, string)`；输入表达式：`DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id`
 - `NationalSpire.GameBridge.Characters()`；输入表达式：`GameBridge.Characters()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GameBridge.Characters()`
-- `NationalSpire.MatchRules.PreferredAscension(NationalSpire.CareerData, NationalSpire.CareerMatch)`；输入表达式：`MatchRules.PreferredAscension(ViewData, match)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Value = MatchRules.PreferredAscension(ViewData, match)`
+- `NationalSpire.MatchModes.Select(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`；输入表达式：`MatchModes.Select(ViewData, match, level!.Mode, level.Level)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchModes.Select(ViewData, match, level!.Mode, level.Level);`
+- `NationalSpire.MatchModes.Select(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`；输入表达式：`MatchModes.Select(ViewData, match, mode, native)`；返回值紧邻使用处：`ExpressionStatementSyntax: MatchModes.Select(ViewData, match, mode, native);`
+- `NationalSpire.MatchModeSelector.MatchModeSelector(NationalSpire.CareerData, NationalSpire.CareerMatch, bool)`；输入表达式：`new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }`；返回值紧邻使用处：`AssignmentExpressionSyntax: level = new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }`
 - `System.Collections.Generic.List<T>.FindIndex(System.Predicate<T>)`；输入表达式：`characters.FindIndex(c => c.Id.ToString() == ViewData.SelectedCharacter)`；返回值紧邻使用处：`ArgumentSyntax: characters.FindIndex(c => c.Id.ToString() == ViewData.SelectedCharacter)`
 - `System.Math.Max(int, int)`；输入表达式：`Math.Max(0, characters.FindIndex(c => c.Id.ToString() == ViewData.SelectedCharacter))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Math.Max(0, characters.FindIndex(c => c.Id.ToString() == ViewData.SelectedCharacter))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `_` = `LaunchDateGame(match, characters[selected], (int)level.Value)`
+- `_` = `LaunchDateGame(match, characters[selected], level.RecordedAscension)`
 - `Art` = `AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`
 - `choice.ItemSelected` += `i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }`
-- `CustomMinimumSize` = `new(160, 44)`
 - `CustomMinimumSize` = `new(456, 44)`
 - `CustomMinimumSize` = `new(48, 48)`
-- `level` = `new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,                  Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }`
-- `MaxValue` = `10`
-- `MinValue` = `match.RequiredAscension`
+- `level.Changed` += `(mode, native) => { MatchModes.Select(ViewData, match, mode, native); CareerStore.Save(ViewData); }`
+- `level` = `new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
-- `Name` = `"DateGameAscension"`
 - `Name` = `"DateGameCharacter"`
 - `Name` = `"DateGameCharacterPortrait"`
 - `Name` = `"DateGameCharacterRow"`
+- `Name` = `"DateGameModeSelector"`
 - `portrait.Art` = `AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false)`
 - `selected` = `(int)i`
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
-- `Step` = `1`
-- `Value` = `MatchRules.PreferredAscension(ViewData, match)`
 
 <a id="symbol-f7a3691c9897"></a>
 
 ## `NationalSpire.CareerScreen.ShowDateInput(bool, bool) — private void ShowDateInput(bool manualGame = false, bool keepWaiting = false)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.EditPreviousDateScene()`](DateSceneScreen.cs.md#symbol-68bbfe92ebcf)；[`NationalSpire.CareerScreen.FinishDateHistory()`](DateHistoryReplayScreen.cs.md#symbol-fe282030be0f)；[`NationalSpire.CareerScreen.OpenDateSceneReady(string, bool, bool, System.Action?)`](DateSceneScreen.cs.md#symbol-bf30200a2448)；[`NationalSpire.CareerScreen.ReturnFromDateHistory()`](DateHistoryReplayScreen.cs.md#symbol-5fa807ec8766)；[`NationalSpire.CareerScreen.ShowDateGameChoices(NationalSpire.CareerMatch)`](DateGameScreen.cs.md#symbol-d1774dd40624)；[`NationalSpire.CareerScreen.ShowDateLine()`](DateSceneScreen.cs.md#symbol-1580b0be190e)；[`NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string)`](DateGameScreen.cs.md#symbol-8963173330c9)
 
@@ -231,7 +222,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.ChooseDateReply(string) — private void ChooseDateReply(string text)`
 
-来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 86 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)
 
@@ -256,7 +247,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string) — private void StartDateGameReply(CareerMatch match, string reason)`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenRunDate(MegaCrit.Sts2.Core.Nodes.NRun, NationalSpire.CareerMatch, System.Action, bool)`](DateGameScreen.cs.md#symbol-c74330b4dd26)；[`NationalSpire.CareerScreen.ResumeSettledDate(NationalSpire.CareerData, NationalSpire.CareerMatch)`](DateGameReturn.cs.md#symbol-9e75de0044f4)
 
@@ -291,7 +282,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int) — private async Task LaunchDateGame(CareerMatch match, MegaCrit.Sts2.Core.Models.CharacterModel character, int ascension)`
 
-来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateGameStartDialog(NationalSpire.CareerMatch)`](DateGameScreen.cs.md#symbol-c88ac7d5c81a)
 
@@ -322,7 +313,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.OpenRunDate(MegaCrit.Sts2.Core.Nodes.NRun, NationalSpire.CareerMatch, System.Action, bool) — internal static bool OpenRunDate(NRun run, CareerMatch match, Action resume, bool respond = false)`
 
-来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveRunBridge.OpenDateGameChat(double)`](LiveDateGame.cs.md#symbol-6383bcf560b6)
 
@@ -347,7 +338,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.CanResumeDateGame() — private bool CanResumeDateGame()`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Applied()`](DateSceneHistoryScreen.cs.md#symbol-9df2cd48ebf4)；[`NationalSpire.CareerScreen.DateSceneExitChoices()`](DateSceneScreen.cs.md#symbol-52133982acce)；[`NationalSpire.CareerScreen.ResumeDateGame()`](DateGameScreen.cs.md#symbol-fa0cab10e943)；[`NationalSpire.CareerScreen.ShowDateInput(bool, bool)`](DateGameScreen.cs.md#symbol-f7a3691c9897)；[`NationalSpire.CareerScreen.StartDateGameReply(NationalSpire.CareerMatch, string)`](DateGameScreen.cs.md#symbol-8963173330c9)；[`NationalSpire.CareerScreen.TickDateGameActions()`](DateGameScreen.cs.md#symbol-c55c74e4c1fe)
 
@@ -366,7 +357,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.ResumeDateGame() — private void ResumeDateGame()`
 
-来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneExitChoices()`](DateSceneScreen.cs.md#symbol-52133982acce)
 
@@ -400,7 +391,7 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.SaveDateGameBookmark() — private void SaveDateGameBookmark()`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 178 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.ResumeDateGame()`](DateGameScreen.cs.md#symbol-fa0cab10e943)
 
@@ -424,11 +415,11 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.EditDateGameRules() — private void EditDateGameRules()`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Fill()`](DateGameScreen.cs.md#symbol-2d04f2a5c851)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateGameContent.Apply(NationalSpire.CareerData, NationalSpire.DateGameContent.Bundle)`](DateGameContent.cs.md#symbol-5a89da7cbb82)；[`NationalSpire.DateGameContent.Import(NationalSpire.CareerData, string)`](DateGameContent.cs.md#symbol-2c2e135d0e20)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)；[`NationalSpire.DateGameContent.Write(string, NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-7f516f204c6d)；[`NationalSpire.DateGames.Label(string)`](DateGames.cs.md#symbol-4695e14bac35)；[`NationalSpire.DateGames.Upgrade(NationalSpire.CareerData)`](DateGames.cs.md#symbol-2c3d1fff3942)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.SpinBox.SpinBox()`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerData.CareerData()`；`NationalSpire.DateVoiceEdits.DateVoiceEdits()`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.IO.File.ReadAllText(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
+**调用：** [`Fill()`](DateGameScreen.cs.md#symbol-d81da512b492)；[`NationalSpire.CareerScreen.Button(string, System.Action, float)`](CareerScreen.cs.md#symbol-716373f2517f)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`](CareerFilePicker.cs.md#symbol-fc912b90d797)；[`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](Coop/CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.DateGameContent.Apply(NationalSpire.CareerData, NationalSpire.DateGameContent.Bundle)`](DateGameContent.cs.md#symbol-5a89da7cbb82)；[`NationalSpire.DateGameContent.Import(NationalSpire.CareerData, string)`](DateGameContent.cs.md#symbol-2c2e135d0e20)；[`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-f9fa9ec59680)；[`NationalSpire.DateGameContent.Write(string, NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`](DateGameContent.cs.md#symbol-7f516f204c6d)；[`NationalSpire.DateGames.Label(string)`](DateGames.cs.md#symbol-4695e14bac35)；[`NationalSpire.DateGames.Upgrade(NationalSpire.CareerData)`](DateGames.cs.md#symbol-2c3d1fff3942)；`Godot.CheckBox.CheckBox()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.Clear()`；`Godot.OptionButton.OptionButton()`；`Godot.OptionButton.Select(int)`；`Godot.OS.ShellShowInFileManager(string, bool)`；`Godot.SpinBox.SpinBox()`；`Godot.TextEdit.TextEdit()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerData.CareerData()`；`NationalSpire.DateVoiceEdits.DateVoiceEdits()`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.IO.File.ReadAllText(string)`；`System.IO.FileInfo.FileInfo(string)`；`System.IO.InvalidDataException.InvalidDataException(string?)`
 
 **字段、属性、事件及方法组引用：** `Fill()`；`NationalSpire.CareerData.DateGameRules`；`NationalSpire.CareerData.DateGameTiming`；`NationalSpire.CareerData.DateGameVoiceEdits`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.Button(string, System.Action, float)`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.PickNestedFile(string, string[], System.Action<string>, System.Action<string[]>?)`；`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.DateGameContent.Apply(NationalSpire.CareerData, NationalSpire.DateGameContent.Bundle)`；`NationalSpire.DateGameContent.Import(NationalSpire.CareerData, string)`；`NationalSpire.DateGameContent.Snapshot(NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`；`NationalSpire.DateGameContent.Write(string, NationalSpire.CareerData, System.Collections.Generic.List<NationalSpire.DateGameRule>?)`；`NationalSpire.DateGameRule.Chat`；`NationalSpire.DateGameRule.Enabled`；`NationalSpire.DateGameRule.Threshold`；`NationalSpire.DateGameRule.Trigger`；`NationalSpire.DateGames.Label(string)`；`NationalSpire.DateGames.Upgrade(NationalSpire.CareerData)`；`NationalSpire.DateGameVoices.Ids`；`NationalSpire.DateGameVoices.Labels`；`NationalSpire.DateVoiceEdits.Triggers`；`NationalSpire.PromptTransfer.Desktop`
 
@@ -532,11 +523,11 @@ private string _dateInputTurn = "";
 - `working.DateGameVoiceEdits[profile]` = `edits = new()`
 - `WrapMode` = `TextEdit.LineWrappingMode.Boundary`
 
-<a id="symbol-2d04f2a5c851"></a>
+<a id="symbol-d81da512b492"></a>
 
 ## `Fill() — void Fill()`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.EditDateGameRules()`](DateGameScreen.cs.md#symbol-0a1b70a243b1)
 
@@ -562,11 +553,11 @@ private string _dateInputTurn = "";
 
 ## `NationalSpire.CareerScreen.AddDateVoiceSettings(Godot.VBoxContainer) — private void AddDateVoiceSettings(VBoxContainer box)`
 
-来源：源码第 253 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 252 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DateSceneSettings()`](DateSceneScreen.cs.md#symbol-0845ec2acab1)
 
-**调用：** [`NationalSpire.CareerScreen.DateParticipants()`](DateScenePartyScreen.cs.md#symbol-658316b8bf70)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`Select()`](DateGameScreen.cs.md#symbol-b12ee547dd53)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
+**调用：** [`NationalSpire.CareerScreen.DateParticipants()`](DateScenePartyScreen.cs.md#symbol-658316b8bf70)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`](DateSceneAssets.cs.md#symbol-57fe620f4cc9)；[`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`](DateSceneAssets.cs.md#symbol-2bf1f40a912e)；[`Select()`](DateGameScreen.cs.md#symbol-7b1c04ac495d)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.OptionButton.AddItem(string, int)`；`Godot.OptionButton.OptionButton()`；`Godot.Vector2.Vector2(float, float)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerData.Matches`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerScreen._dateAssets`；`NationalSpire.CareerScreen._datePerson`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.DateParticipants()`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerScreen.ViewData`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.DateGameState.Voices`；`NationalSpire.DateGameVoices.Ids`；`NationalSpire.DateGameVoices.Labels`；`NationalSpire.DateSceneAssets.GameVoice`；`NationalSpire.DateSceneAssetStore.Read(NationalSpire.CareerData, string)`；`NationalSpire.DateSceneAssetStore.Save(NationalSpire.CareerData, string, NationalSpire.DateSceneAssets)`；`NationalSpire.DateSceneParticipant.Name`；`NationalSpire.DateSceneParticipant.PersonId`；`Select()`
 
@@ -604,11 +595,11 @@ private string _dateInputTurn = "";
 - `SizeFlagsHorizontal` = `SizeFlags.ExpandFill`
 - `voice.ItemSelected` += `index =>          {              string id = people[person.Selected].PersonId;              var art = id == _datePerson ? _dateAssets! : DateSceneAssetStore.Read(ViewData, id);              art.GameVoice = DateGameVoices.Ids[(int)index]; DateSceneAssetStore.Save(ViewData, id, art);              if (ViewData.Matches.FirstOrDefault(m => m.Id == ViewData.PendingMatchId)?.DateGame is { } active) { active.Voices[id] = art.GameVoice; CareerStore.Save(ViewData); }          }`
 
-<a id="symbol-b12ee547dd53"></a>
+<a id="symbol-7b1c04ac495d"></a>
 
 ## `Select() — void Select()`
 
-来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.AddDateVoiceSettings(Godot.VBoxContainer)`](DateGameScreen.cs.md#symbol-ad300bbb552d)
 

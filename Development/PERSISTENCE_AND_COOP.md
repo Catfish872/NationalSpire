@@ -47,6 +47,16 @@ CoopCoordinator.StartEvent 接受 event-start 与 event-custom；Current 读取�
 
 PrivateSnapshot 与 SnapshotEncoder 同时清除共同 World.Life 和其他成员的 RandomEvents；收件人保留自己的故事及材料。四名成员分别编码、解码的隔离检查通过。真实 Steam 跨机延迟及断线重连未在本次实测。关闭进程后未完成事件保留材料供重试；complete 与 Selected 保证已完成事件重复点击只读取结果。
 
+## 聊天操作的版本检查
+
+CoopRules.Apply 先核对成员身份、World、Epoch 和请求编号，再检查 Revision。reply、dm-*、group-* 与 event-start 接受当前版本及较早版本，并在房主当前世界副本执行原有业务检查；未来版本仍由原版本检查退回。同一提议的 confirm 继续使用原独立规则，其余命令沿原版本要求。论坛回复按帖子编号及 Parent 楼层编号查找，追加实际发送成员的回复。私聊使用发起成员当前 Life.Mailbox，群聊使用当前共享 Chats；邀约、余额、场景、群成员及生成状态由已有处理函数检查。event-start 继续检查事件编号、当天日期、完成状态与正在生成状态，事件选择仍使用原版本要求。
+
+CareerScreen.PrivateCommand 为 dm-retry、dm-stop 填入当前轮次 Entry，GroupCommand 为 group-retry、group-regenerate、group-stop 填入 Interaction.Entry。既有 dm-regenerate 和 dm-date-revise 已携带轮次编号。ChatCommandTargets 集中列出新增绑定轮次的五项操作；PrivateMessageCommands.ApplyCore 与 GroupChats.CommandCore 在修改或取消前核对选中轮次是否仍为最新轮次。较早请求缺少轮次编号时，这五项继续要求生涯版本一致；其他请求按原字段解读。该处理复用现有消息字段，生涯与网络交换格式沿原版本。
+
+成功操作沿 Apply 的一次世界副本、一次 Revision 递增和一份 Receipt 进入 CoopCoordinator.Execute，继续一次 Commit 检查点、一份回执、一轮原完整广播。重复请求先通过原 Receipt 返回，业务不再执行，保存与重发沿协调器既有规则。聊天版本判定为固定数量的字符串与整数比较；仅较早版本的上述五项操作额外读取一次小命令中的轮次编号。群聊重新生成原有的回退预演副本保持原调用次数。新增网络消息类型、确认等待及保存入口均为零。离开页面、断线、重连与关闭进程继续由原命令回执、快照及检查点恢复流程管理。
+
+2026-11-13 使用生产程序集、当前游戏资源及真实 CoopRules.Apply，构造队友请求在其他更新后到达的顺序。论坛追加与重复请求、目标帖子与楼层删除、私聊发送与已读、邀约确认、旧停止请求遇到新消息、群聊创建与发言、指定轮次重新生成、离群后发送，以及个人事件开始均按当前对象处理通过。输入为含1,598人物、两名真人的生涯，19次规则处理累计1,543.4519ms、当前线程分配344,171,848字节。逐次时间包含各次内部复制与业务处理，互不嵌套；论坛首次57.2228ms，私聊发送155.5331ms、已读131.5293ms、确认116.2836ms，群聊创建98.0229ms、两次发送106.6176及107.2750ms、重新生成224.2435ms，事件开始96.2218ms。该验收模拟到达顺序，未经过协调器磁盘检查点或 Steam 网络。网络、断线重连及一分钟开赛等待本轮未实测；保存与广播次数通过既有协调器调用顺序核对。原始结果保留在维护者本地.artifacts/completion-113/chat-freshness.json。
+
 ## 数量购买、会话管理与主动联系
 
 手动记忆沿 CareerScreen.PrivateCommand / GroupCommand → PrivateMessageCommands.Apply / GroupChats.Command → ManualChatMemories.Manage → CareerStore.Save → 成功回调重建列表。新增、编辑、删除每次复用一次原保存；IO 失败保留编辑窗口和内存中的修改，重试携带相同 Id，避免重复条目，重新启动读取成功落盘的版本。联机由 CoopRules 的个人视图执行、Capture / CaptureGroup 合并后提交，私聊归发送者的 Life.Mailbox，群聊归共享 Chats；原收据处理重复网络命令。编辑窗口监听会话错误消息，并在控件退出时解除订阅。
@@ -228,6 +238,14 @@ BindMarket把TradingAccounts绑定当前操作副本的全部成员，含离线�
 
 market-query沿CoopCoordinator原成员和发送方检查，再核对世界编号及Epoch。ReceiveMarket→CoopRules.InspectMarket→MarketClearing.Inspect读取房主当前资料，返回请求者净资产、双向订单摘要和指定本人仓位退出结果。market-answer经房主身份检查，按请求编号完成等待；等待上限10秒，结束时删除请求记录。查询对Revision、Receipts、存档与广播均保持只读。PrivateSnapshot/SnapshotEncoder继续过滤其他人的Trading。客户端按页面代次、对象引用和报价版本应用结果，实际交易仍由原CoopCommand及MarketOrder版本检查处理。离开页面后过期响应随请求完成释放，关闭进程和断线继续使用原检查点恢复完整交易。
 
+## 比赛模式的保存与传递
+
+单人选择后，Select 更新本场模式、记录进阶和该模式偏好，再调用原 CareerStore.Save。开局沿原顺序保存准备、绑定和成功状态，向游戏传入所选模式及原生进阶。失败保存模式与记录进阶，确认和重赛复用 FailureDecision；约会返回与继续游戏使用同一匹配规则。
+
+多人 ascension 的 Text 携带模式、Number 携带记录进阶。房主沿原命令执行、保存和广播；开局提议冻结模式与进阶，全队继续各自确认原提议。Prepare 写入 CoopRun.Mode 与原生 Ascension，Host/Join 以同一模式建立游戏大厅，暂停恢复沿原对局文件与 CoopRun 继续。命令种类、确认轮次、等待和广播入口保持原流程。
+
+恐惧资料在首次地图准备时读入 DreadDominions，随原保存进入检查点；多人由房主建立并沿原快照传递。结算把实际历史与提供者编号对应。顶部显示只持有房间控件及头像缓存，换图、退出或断开时释放，刷新读取已有进度。
+
 ## 多人命令提交的完整顺序
 
 community-vote复用原CoopCommand：Target为帖子编号，Parent为空表示主楼或填写回复编号，Number为-1 / 0 / +1。CoopRules.Apply从已校验发送者取得member.PersonId，并传给同一CommunityVotes.SetVote，玩家身份由房主确定。该操作沿用成员、World、Epoch、Revision、收据去重与失败待选择检查；在线人数和正在比赛两处许可名单允许投票。接受后继续执行下表的单次检查点、回执和按接收者广播流程，界面以提交后的快照更新。CoopRuntime.TriggerAi继续使用现有发帖、回复等触发名单，community-vote产生0次新AI请求。
@@ -356,6 +374,10 @@ Load 在目录锁内复制 current、previous 清单及 world.json / run.bin 字
 ListAsync 后台列出目录，逐项使用 LoadAsync；损坏目录沿原列表规则略过。ImportArchiveAsync 后台复用原解析与校验；编号已存在或有排队写入时另设编号，在协调锁内预留目录，再调用原 Save。CoopRuntime.Connect 使用 LoadAsync，等待后检查连接 generation。CoopScreen.Entrance、CareerLibraryScreen 的多人列表、导入、导出、删除使用异步入口；完成后核对控件有效性。关闭页面不撤销已经点击的文件操作；重复删除沿按钮 pending 处理。
 
 客机收到完整快照也调用这套保存。房主的完整资料与客机的脱敏资料不是同一范围；客机不是新的房主，恢复仍由原房主主持。
+
+CoopNativeRun.Encode / Decode 将当前游戏的 SerializableRun 直接交给 PacketWriter / PacketReader，保存为 run.bin。清单记录文件哈希，游戏对象及属性在二进制内容中使用当前游戏和已加载模组共同生成的编号表。接口多版本适配保持这条保存与恢复链，旧游戏继续使用旧游戏的序列化实现，v0.113.0 使用其自身实现。当前两进程专项覆盖 v0.113.0 保存后在同版本暂停恢复，具体操作与计时见 GAME_AND_UI 的游戏接口的多版本适配。
+
+跨游戏版本读取旧 run.bin 尚未完成适配。v0.113.0 在玩家额外资料、对局额外资料和对局顶层增加布尔字段；当前二进制读取顺序随之变化，旧字节还涉及当时模型编号与当前编号的对应关系。现有检查点未保存生成它的游戏版本和完整编号表，当前 Decode 也未对旧二进制结构执行迁移。游戏普通 JSON 对局文件的迁移与这条多人二进制链分别执行。旧文件转换属于独立的数据迁移设计，现有兼容实现保持原保存格式与资料。
 
 ## 中断和恢复的现有职责
 

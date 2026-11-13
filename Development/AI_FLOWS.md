@@ -62,6 +62,12 @@ ProcessNewsAsync 继续负责筛选、queued/sending/completed/failed 状态、�
 
 世界观与游戏知识使用 PromptLibrary.Get(options, world) 读取当前所选模板及个人修改，缺省内容沿原模板查询入口提供。社区发帖、回帖、周刊文章和人物介绍由 AiService.ComposeSystem → PromptLibrary.Editorial 加入系统消息。私聊通过 PrivateMessagePrompts.Compose → Section，群聊通过 GroupChatPrompts.Compose → Section 加入系统消息；两处 Section 优先使用多人房主广播的 PrivatePromptSnapshot，缺省时读取本机当前模板。CoopCoordinator.Broadcast 把房主的 world 与聊天模板一同写入客机快照；房主实际处理聊天时清空旧快照并读取当前房主设置。
 
+六套内置模板均包含愚者。PromptTemplates.FoolKnowledge 集中维护详细职业说明，BuildCurrent 和 ReadPreset 共用 IncludeFoolKnowledge，将说明插入各模板储君介绍的固定末句之后。输入为内置世界观字符串，返回补充愚者后的字符串；五套详细模板各插入一次并沿原 Lazy 缓存，进程重启后重新构造。ReadPreset 仅在资源提供 world 时处理，缺省板块继续继承父模板。LegacySections 在原游戏知识概述末尾保留一句简短介绍。国运风味模板的原生职业列举同时包含愚者。角色、遗物、卡牌和状态名称读取本机 v0.113.0 简体中文资源核对，悲伤与射击空窗期的评价属于国运世界人物的看法。
+
+Default、Get 和自建模板继续按原优先级选择个人覆盖及父模板，玩家保存的世界观全文保持原值。人物发言、历史正文和既有请求快照沿原保存内容保留，后续生成读取当前有效模板。详细默认文本每次请求增加490字符，国运风味连同职业列举共增加492字符，旧版概述增加24字符；消息结构、请求次数及同步入口沿用原流程。旋律介绍按哇的攻击、啾的格挡、叽的抽牌蓄能与重复出牌分别说明，并保留哇 爆破、啾 四肢、曲中意、啾 副歌及啾 叽的具体配合。卡牌名称与费用、触发条件使用当前游戏的简体中文资源和卡牌处理核对；当地选手的保守取向属于世界观评价。
+
+2026-11-13 生产 Release DLL 与生产界面验收程序集均编译通过，0警告0错误。在 Windows、Godot4.5.1、.NET9 及当前游戏程序集与实际资源中读取六套默认世界观，并逐套检查原五职业及世界观全文、个人覆盖均保持原值。六套首次读取分别为1.8286、1.1589、0.2935、0.2109、0.9828、0.9041ms，累计5.3788ms；再次读取分别为0.0416、0.0082、0.0029、0.0046、0.0039、0.0031ms，累计0.0643ms。顺序为新版、弱化、贴吧、旧版、国运风味、旮旯尖塔。首次当前线程分配合计1,011,912字节，再次合计2,176字节；每次完整 Get 调用独立计时。检查使用临时内存配置，新增生涯保存、模型请求和联机消息均为0。游戏内模型对话与真实联机本轮未实测。逐次结果和实际文本保留在维护者本地.artifacts/completion-113，修改前世界观保留在.artifacts/fool-113/before-worlds.json。
+
 约会、约会日记与结束后的普通私聊感想使用同一 PrivateMessagePrompts.Compose，世界观随首条系统消息进入请求，场景及日记引导随后追加。活跃约会、普通私信与结束感想统一读取 private，保留玩家当前私信提示词全文。私聊仲裁、社区举报的 SpireArbitration.Compose 和群聊仲裁的 GroupArbitration.Compose 也加入 world。PortraitDesign.Messages 将 world 放进角色外观设计请求的用户资料。私聊小总结、大总结通过 Summarize 读取专用总结模板、人物身份、性格和待总结内容；群聊小总结、大总结通过 SummarizeGroupAsync 读取专用总结模板及原文或小总结；这四种总结请求没有单独拼接 world。
 
 随机事件由 RandomEventPrompts.Compose 在首条系统消息先加入 world，再加入 WorldGuidance，最后加入原效果说明；Get 每次读取传入 options，参数缺省时使用 data.Ai。第二条用户消息继续使用原 event 模板、PlayerRecord 和 Materials；首次格式与自由行动续写引导分别沿原后续消息加入。AiRandomEvents.ProcessEventAsync 及 PromptTesting 的事件分支共用 Compose，覆盖首次生成、重试、自由行动与试写。多人 StartEvent.Current 使用房主当前 AiSettingsStore 配置，成员视图继续提供个人战绩及事件材料。已经保存的故事与 Materials 沿原记录保留，下一次生成读取当时的世界观。此处每次新增一次 Get 查询和一次系统消息字符串拼接，增加的字符包括所选 world、WorldGuidance原文及分隔换行；请求次数、材料整理次数、保存和同步次数均沿原流程，没有新增缓存。
@@ -123,6 +129,12 @@ PersonalityLibrary.PromptProfile 在原性格维度上提供所选类别名称�
 | 提示词试写 | PromptTesting、PromptTestData | 隔离试写资料与选定模板 | 试写结果显示；不是正式生涯交互提交 |
 
 具体函数签名与上下游调用见[索引](SOURCE_MAP.md)。私信与群聊使用流式通道，社区新闻与互动等待完整响应后应用；不要把不同请求的返回处理混用。
+
+## 比赛结算中的模式资料
+
+ChallengeNote 是 AiContext、WeeklyJournal、CommunityThreads 与比赛报告共用的挑战说明。普通和快速沿用原文字并使用比赛记录进阶。恐惧采用用户指定的玩家主动开启恐惧模式文字，说明固定进阶10、难度极高和对手仍按赛事进阶参赛；多人称呼继续使用玩家队伍与对手队伍。
+
+ReadDefeatedEncounters 读取全部已完成精英和首领，DreadFacts 将本幕实际效果提供者与遭遇编号对应。RunEvidence.ForPrompt 只在提供者的 Name 后增加恐惧模式难度提高附注，内容按普通战斗、精英战斗、首领战依次说明实际强化。双首领时，提供者附注同时说明本幕两位首领的自身强化。材料通过原比赛上下文进入既有请求，系统消息、默认提示词、模板和消息结构沿用原实现。
 
 ## 经济和国家发展的公开事实
 

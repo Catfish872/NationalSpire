@@ -27,7 +27,7 @@ internal static class ContentPoolMigration
             if (data.ContentPoolVersion >= 1) continue;
             int seed = CareerEngine.StableHash(data.WorldId + ":expanded-profile:" + person.Id);
             person.Biography = WorldPeople.Biography(person.Role, seed);
-            int character = Array.IndexOf(new[] { "铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君" }, person.Character);
+            int character = NpcCharacters.Index(person.Character);
             if (character >= 0) person.Style = WorldPeople.PlayingStyle(character, seed);
             person.Personality.Version = 0;
             PersonalityLibrary.Ensure(data, person);

@@ -85,7 +85,7 @@ private static readonly FieldInfo? RunField = typeof(NRun).GetFields(Flags).Firs
 
 来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
+**调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Runs.IRunState, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](Coop/CoopLive.cs.md#symbol-a444164580e0)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
 **调用：** [`Visit(Godot.Node)`](LiveCompatibility.cs.md#symbol-dccab061568e)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1B6A99184C032F9A385FF59EB1659E3C3BCCFA2ADE7D8E83EDB890FBD9F4F60E`。来源：[源码](../../ExpandedPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`CA8C9A8DA6202F4CA26549C06667EA09F228E418FBD1FA7F90443F3AE0ECE8EA`。来源：[源码](../../ExpandedPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -73,7 +73,7 @@ private static readonly Dictionary<string, string[]> RoleBios = new();
 
 ## `NationalSpire.WorldPeople.Biography(string, int) — public static string Biography(string role, int seed)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)
 
@@ -92,7 +92,7 @@ private static readonly Dictionary<string, string[]> RoleBios = new();
 
 ## `NationalSpire.WorldPeople.PlayingStyle(int, int) — public static string PlayingStyle(int character, int seed)`
 
-来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)；[`NationalSpire.OwnedClubs.EnsureMarket(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-3dba497c8606)
 

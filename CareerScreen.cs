@@ -821,7 +821,6 @@ public partial class CareerScreen : Control, IScreenContext
         if (match != null)
         {
             var box=new VBoxContainer(); box.AddThemeConstantOverride("separation",14); _content.AddChild(box);
-            bool placementPrize = data.Esports.Competitions.Any(c => c.Id == match.CompetitionId && c.Kind == "worldfinal" && c.PrizeVersion >= 1);
             var chars = GameBridge.Characters();
             var selection = Card(); selection.Name = "MatchCharacterSelection";
             selection.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102b39", "47788a", 10, 20)); box.AddChild(selection);
@@ -905,25 +904,28 @@ public partial class CareerScreen : Control, IScreenContext
             randomCharacter.Name = "MatchRandomCharacter"; randomCharacter.Disabled = chars.Count == 0;
             randomCharacter.TooltipText = "开赛时从当前可用角色中随机确定，包含已启用的模组角色；继续比赛沿用存档角色。";
             characterButtons.Add(chars.Count, randomCharacter); heading.AddChild(randomCharacter);
-            choices.AddChild(selectedLabel);
+            selectedLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            selectedLabel.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            heading.AddChild(selectedLabel); heading.MoveChild(selectedLabel, 1);
             SelectCharacter(selectedCharacter);
-            var ascRow = new HBoxContainer(); ascRow.AddThemeConstantOverride("separation", 12); box.AddChild(ascRow);
-            var ascTitle=Text(_multiplayer == null ? "个人挑战进阶" : "全队挑战进阶",17,_muted); ascTitle.AutowrapMode=TextServer.AutowrapMode.Off; ascTitle.SizeFlagsHorizontal=SizeFlags.ShrinkBegin; ascRow.AddChild(ascTitle);
-            var asc = new SpinBox { Name = "MatchAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1, Value = MatchRules.PreferredAscension(data, match), CustomMinimumSize = new Vector2(120, 45) };
-            var rewardPreview = Text("", 16, CareerVisuals.Teal);
-            void UpdateReward() => rewardPreview.Text = placementPrize ? $"赛事进阶 {match.RequiredAscension} · 个人挑战的关注奖励 ×{MatchRules.RewardMultiplier(match.RequiredAscension, (int)asc.Value):0.00}。名次奖金以最终排名为准。" : $"赛事进阶 {match.RequiredAscension} · 单场奖励 ×{MatchRules.RewardMultiplier(match.RequiredAscension, (int)asc.Value):0.00} · 获胜奖金 {CareerMoney.Format(MatchRules.Reward(match.Prize, MatchRules.RewardMultiplier(match.RequiredAscension, (int)asc.Value)))}\n每提高一级，奖金和获胜或平局时的关注奖励增加 15%。战报仍按比赛规定的进阶记录。";
+            choices.AddChild(new ColorRect { Color = new Color("47788a55"), CustomMinimumSize = new(0, 1), MouseFilter = MouseFilterEnum.Ignore });
+            var ascRow = new HBoxContainer(); ascRow.AddThemeConstantOverride("separation", 16); choices.AddChild(ascRow);
+            var asc = new MatchModeSelector(data, match, _multiplayer is not { Host: false }) { SizeFlagsVertical = SizeFlags.ShrinkCenter };
+            var rewardPreview = DashboardLabel("", 26, _gold);
+            void UpdateReward() => rewardPreview.Text = $"×{MatchRules.RewardMultiplier(match.RequiredAscension, asc.RecordedAscension, asc.Mode):0.00}";
             UpdateReward();
-            if (_multiplayer is { Host: false }) asc.Editable = false;
-            asc.ValueChanged += value =>
+            asc.Changed += (mode, level) =>
             {
-                if (MultiplayerCommand("ascension", match.Id, number: (int)value)) return;
-                match.ChosenAscension = data.SelectedAscension = (int)value;
-                UpdateReward(); CareerStore.Save(data);
+                UpdateReward();
+                if (MultiplayerCommand("ascension", match.Id, text: mode, number: asc.RecordedAscension)) return;
+                MatchModes.Select(data, match, mode, level); CareerStore.Save(data);
             };
-            box.AddChild(rewardPreview);
             ascRow.AddChild(asc); ascRow.AddChild(new Control {SizeFlagsHorizontal=SizeFlags.ExpandFill});
+            var rewardBadge = new PanelContainer { Name = "MatchRewardMultiplier", SizeFlagsVertical = SizeFlags.ShrinkCenter };
+            rewardBadge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("173b46aa", "47788a66", 8, 12));
+            var rewardRow = new HBoxContainer(); rewardRow.AddThemeConstantOverride("separation", 9); rewardBadge.AddChild(rewardRow);
+            rewardRow.AddChild(DashboardLabel("奖励", 16, CareerVisuals.Teal)); rewardRow.AddChild(rewardPreview); ascRow.AddChild(rewardBadge);
             ascRow.AddChild(MatchReviewButton(data));
-            box.AddChild(Text($"比赛种子：{match.Seed}", 15, _muted));
             if (match.Decider.Length > 0) box.AddChild(Text(match.Decider, 18, _gold));
             bool future = match.Day > data.Day;
             bool due = !future && match.Registered;
@@ -937,23 +939,23 @@ public partial class CareerScreen : Control, IScreenContext
                     if(registration!=null) Notice(registration,true); return;
                 }
                 if (chars.Count == 0) { Notice("没有可用角色。", true); return; }
-                if (MultiplayerCommand("propose-start", match.Id, number: (int)asc.Value)) return;
+                if (MultiplayerCommand("propose-start", match.Id, text: asc.Mode, number: asc.RecordedAscension)) return;
                 if (_starting) return;
                 _starting = true;
                 var character = selectedCharacter == chars.Count ? GameBridge.RandomChoice() : chars[Math.Clamp(selectedCharacter, 0, chars.Count - 1)];
-                var error = await GameBridge.StartMatch(match, character, (int)asc.Value);
+                var error = await GameBridge.StartMatch(match, character, asc.RecordedAscension);
                 _starting = false;
                 if (IsInstanceValid(this) && !IsQueuedForDeletion() && error != null) Notice(error, true);
             }
             MatchArena(data,match.Event,match.OpponentId,CareerEngine.DisplayName(data,match.OpponentId),future?"前往比赛日":due?"开赛":"报名比赛",
-                data.RandomCharacter?"随机角色":chars.Count>0?PlayerArchive.CharacterName(chars[Math.Clamp(selectedCharacter,0,chars.Count-1)].Id):CareerAvatars.MainCharacter(data,"player"),CareerVisuals.Teal,out var controls,match.Day,Launch);
+                data.RandomCharacter?"随机角色":chars.Count>0?PlayerArchive.CharacterName(chars[Math.Clamp(selectedCharacter,0,chars.Count-1)].Id):CareerAvatars.MainCharacter(data,"player"),CareerVisuals.Teal,out var controls,match.Day,Launch,seed:match.Seed);
             _content.MoveChild(box,-1);
             if (due && data.PendingMatchId == null && _multiplayer is not {Host:false}) controls.AddChild(ArenaTextAction("模拟本场", "fast-forward", CareerVisuals.Teal, () =>
             {
-                if (MultiplayerCommand("propose-simulate", match.Id, number: (int)asc.Value)) return;
+                if (MultiplayerCommand("propose-simulate", match.Id, text: asc.Mode, number: asc.RecordedAscension)) return;
                 if (chars.Count == 0) return;
                 var character = selectedCharacter == chars.Count ? GameBridge.RandomChoice() : chars[Math.Clamp(selectedCharacter, 0, chars.Count - 1)];
-                var error = PlayerSimulation.Run(data, match, character.Title.GetFormattedText(), character.Id.ToString(), (int)asc.Value);
+                var error = PlayerSimulation.Run(data, match, character.Title.GetFormattedText(), character.Id.ToString(), asc.RecordedAscension, asc.Mode);
                 if (error == null && data.PendingSettlementId == match.Id && data.Results.Any(r => r.MatchId == match.Id)) { _tab="结算"; _reviewId=match.Id; }
                 Render(); if (error != null) Notice(error, true);
             }));

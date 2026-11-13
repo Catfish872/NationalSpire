@@ -16,7 +16,7 @@ public static class DateGameReturn
         var match = DateGames.InProgress(data, host, offer);
         return match != null && CareerRunBinding.Find(data, saved.SerializableRng?.Seed ?? "",
             saved.Players?.FirstOrDefault()?.CharacterId?.ToString() ?? "", saved.Ascension,
-            saved.Players?.Count ?? 0, saved.GameMode == GameMode.Standard, saved.StartTime)?.Id == match.Id ? match : null;
+            saved.Players?.Count ?? 0, saved.GameMode.ToString(), saved.StartTime)?.Id == match.Id ? match : null;
     }
     internal static Action PrepareSavedResume(CareerData data, string host, string offer)
     {

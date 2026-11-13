@@ -1,18 +1,31 @@
 using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Runs;
+using System.Reflection;
 
 namespace NationalSpire;
 
 /// <summary>读取当前实际地图；后续幕预测失败时，只替换该幕的模拟路线。</summary>
 public static class LiveMaps
 {
+    private static readonly FieldInfo? BlitzRooms = typeof(ActMap).Assembly.GetType("MegaCrit.Sts2.Core.Map.BlitzActMap")
+        ?.GetField("pointTypes", BindingFlags.Public | BindingFlags.Static);
     public static List<RouteNode> Read(IRunState run, CareerMatch match, bool cooperative)
     {
+        DreadFacts.Capture(match, run);
         var nodes = new List<RouteNode>();
         for (int act = 0; act < run.Acts.Count; act++)
         {
             bool second = match.RequiredAscension >= 10 && act == run.Acts.Count - 1;
             if (act == run.CurrentActIndex) { nodes.AddRange(Copy(run.Map, act, second)); continue; }
+            if (run.GameMode.ToString() == MatchModes.Blitz && BlitzRooms?.GetValue(null) is MapPointType[] rooms)
+            {
+                var kinds = new[] { MapPointType.Ancient }.Concat(rooms).Append(MapPointType.Boss).ToList();
+                if (second) kinds.Add(MapPointType.Boss);
+                int col = run.Map.StartingMapPoint.coord.col;
+                nodes.AddRange(kinds.Select((kind, row) => new RouteNode(act, row, col, kind.ToString(),
+                    row + 1 < kinds.Count ? [(row + 1, col)] : [])));
+                continue;
+            }
             try
             {
                 var map = new StandardActMap(GameCompatibility.MapRng(run.Rng, act + 1), run.Acts[act], cooperative, false, second);

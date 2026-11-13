@@ -231,13 +231,22 @@ public static class MatchRules
     {
         if (match.OpponentPrepared) return;
         var person = CareerEngine.Person(data, match.OpponentId) ?? throw new InvalidOperationException("对手不存在");
-        var result = Simulate(data, person.Id, match.RequiredAscension, data.WorldId + ":" + match.Seed, match.Day,
-            data.CooperativeMembers > 1, data.Esports.Competitions.FirstOrDefault(c => c.Id == match.CompetitionId), match.Seed);
+        var result = SimulateOpponent(data, match, match.Seed);
         match.OpponentWon = result.Cleared; match.OpponentFloor = result.Floor;
         match.OpponentSeconds = result.Seconds; match.OpponentPrepared = true;
     }
 
-    public static double RewardMultiplier(int officialAscension, int playedAscension) => 1 + Math.Clamp(playedAscension - officialAscension, 0, 10) * 0.15;
+    public static RunPerformance SimulateOpponent(CareerData data, CareerMatch match, string seed)
+    {
+        bool cooperative = data.CooperativeMembers > 1;
+        var result = Simulate(data, match.OpponentId, match.RequiredAscension, data.WorldId + (cooperative ? ":coop:" : ":") + seed,
+            match.Day, cooperative, data.Esports.Competitions.FirstOrDefault(c => c.Id == match.CompetitionId), seed);
+        // 原算法、局内水平倍率及失败用时全部完成后，仅在此处调整一次快速模式用时。
+        return result with { Seconds = result.Seconds * MatchModes.RivalTimeScale(MatchModes.ForMatch(match)) };
+    }
+
+    public static double RewardMultiplier(int officialAscension, int playedAscension, string mode = MatchModes.Standard)
+        => 1 + Math.Clamp(playedAscension - officialAscension, 0, 10) * 0.15 + (mode == MatchModes.Dread ? .5 : 0);
     public static int Reward(int amount, double multiplier) => (int)Math.Round(amount * multiplier, MidpointRounding.AwayFromZero);
     public static string Time(double? seconds)
     {
@@ -248,7 +257,9 @@ public static class MatchRules
     public static string Performance(bool cleared, int floor, double? seconds) => cleared ? "通关 · " + Time(seconds) : floor < 0 ? "禁赛缺席" : $"止步第 {floor} 层";
     public static string AscensionLabel(CareerResult result) => result.OfficialAscensionVerified ? $"赛事进阶 {result.Ascension}" : "旧赛制记录 · 赛事进阶未核实";
     public static string? ChallengeNote(CareerResult result, bool cooperative = false) =>
-        result.OfficialAscensionVerified && result.PlayedAscension is { } played && played > result.Ascension
+        result.OfficialAscensionVerified && result.Mode == MatchModes.Dread
+            ? $"{(cooperative ? "玩家队伍" : "玩家")}主动开启恐惧模式！恐惧模式在固定进阶 10 的基础上进一步提升大量难度，整体难度极高；{(cooperative ? "对手队伍" : "对手")}仍按赛事进阶 {result.Ascension} 参赛。"
+        : result.OfficialAscensionVerified && result.PlayedAscension is { } played && played > result.Ascension
             ? $"{(cooperative ? "玩家队伍" : "玩家")}主动提高挑战进阶，以进阶 {played} 参赛；{(cooperative ? "对手队伍" : "对手")}仍按赛事进阶 {result.Ascension} 参赛。"
             : null;
     public static string Report(CareerMatch match, CareerResult result, bool cooperative = false)

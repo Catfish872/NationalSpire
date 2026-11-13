@@ -29,7 +29,7 @@ public static class PrivateProfileChanges
         change.Field = Fields.FirstOrDefault(f => f == change.Field || Label(f) == change.Field) ?? change.Field;
         if (!Fields.Contains(change.Field) || string.IsNullOrWhiteSpace(change.After) || change.After.Length > 1200
             || string.IsNullOrWhiteSpace(change.Reason) || p.PrivateProfileReceipts.Contains(change.Id)) return false;
-        if (change.Field == "擅长角色" && !new[] { "铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君" }.Contains(change.After)
+        if (change.Field == "擅长角色" && NpcCharacters.Index(change.After) < 0
             && !CharacterIdentity.Source().Any(c => c.DisplayName == change.After || c.Id == change.After)) return false;
         change.Before = Value(p, change.Field);
         SetValue(p, change.Field, change.After);

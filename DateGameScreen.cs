@@ -46,11 +46,12 @@ public partial class CareerScreen
         var characters = GameBridge.Characters();
         if (characters.Count == 0) { Notice("没有可用角色。", true); return; }
         int selected = Math.Max(0, characters.FindIndex(c => c.Id.ToString() == ViewData.SelectedCharacter));
-        SpinBox? level = null;
-        ShowCareerDialog("开始约会对局", "选择本局使用的角色和进阶。", () =>
+        MatchModeSelector? level = null;
+        ShowCareerDialog("开始约会对局", "选择本局使用的角色、模式和进阶。", () =>
         {
             if (_starting || DateGames.AwaitingStart(ViewData, _datePerson, _dateOffer)?.Id != match.Id) return false;
-            level!.Apply(); _ = LaunchDateGame(match, characters[selected], (int)level.Value); return true;
+            MatchModes.Select(ViewData, match, level!.Mode, level.Level);
+            _ = LaunchDateGame(match, characters[selected], level.RecordedAscension); return true;
         }, "开始游戏", box =>
         {
             box.AddChild(Text("出战角色", 18, _ink));
@@ -60,10 +61,8 @@ public partial class CareerScreen
             var choice = new OptionButton { Name = "DateGameCharacter", CustomMinimumSize = new(456, 44), SizeFlagsHorizontal = SizeFlags.ExpandFill, SizeFlagsVertical = SizeFlags.ShrinkCenter };
             foreach (var character in characters) choice.AddItem(character.Title.GetFormattedText());
             choice.Select(selected); choice.ItemSelected += i => { selected = (int)i; portrait.Art = AvatarAssets.Load(characters[selected].Title.GetFormattedText(), 0, false); portrait.QueueRedraw(); }; characterRow.AddChild(choice);
-            var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); box.AddChild(row);
-            row.AddChild(Text("挑战进阶", 18, _ink));
-            level = new SpinBox { Name = "DateGameAscension", MinValue = match.RequiredAscension, MaxValue = 10, Step = 1,
-                Value = MatchRules.PreferredAscension(ViewData, match), CustomMinimumSize = new(160, 44) }; row.AddChild(level);
+            level = new MatchModeSelector(ViewData, match) { Name = "DateGameModeSelector" }; box.AddChild(level);
+            level.Changed += (mode, native) => { MatchModes.Select(ViewData, match, mode, native); CareerStore.Save(ViewData); };
         });
     }
     private void ShowDateInput(bool manualGame = false, bool keepWaiting = false)

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F78F70849E466880C5A3EDB1BCCDBB31BA7CE80C38737753FB36229E224FB924`。来源：[源码](../../LiveMaps.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8157A7FC80F2205F3E17967AA6506701B20BA75A9D61D8434D2787FD312B9E2C`。来源：[源码](../../LiveMaps.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,19 +11,21 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+private static readonly FieldInfo? BlitzRooms = typeof(ActMap).Assembly.GetType("MegaCrit.Sts2.Core.Map.BlitzActMap")
+        ?.GetField("pointTypes", BindingFlags.Public | BindingFlags.Static);
 ```
 
 <a id="symbol-c878186b1e5a"></a>
 
 ## `NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool) — public static List<RouteNode> Read(IRunState run, CareerMatch match, bool cooperative)`
 
-来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.LiveRunBridge.PlanningMap()`](LiveRunBridge.cs.md#symbol-733c41e89044)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.GameCompatibility.MapRng(object, int)`](GameCompatibility.cs.md#symbol-a2187753991c)；[`NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`](LiveMaps.cs.md#symbol-4f5b35fc24c7)；[`NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`](LiveMatch.cs.md#symbol-3b51df8cd703)；`MegaCrit.Sts2.Core.Map.StandardActMap.StandardActMap(MegaCrit.Sts2.Core.Random.Rng, MegaCrit.Sts2.Core.Models.ActModel, bool, bool, bool, MegaCrit.Sts2.Core.Map.MapPointTypeCounts?, bool)`；`MegaCrit.Sts2.Core.Models.ActModel.GetNumberOfRooms(bool)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.DreadFacts.Capture(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Runs.IRunState)`](DreadFacts.cs.md#symbol-f5ed76aeee69)；[`NationalSpire.GameCompatibility.MapRng(object, int)`](GameCompatibility.cs.md#symbol-a2187753991c)；[`NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`](LiveMaps.cs.md#symbol-4f5b35fc24c7)；[`NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`](LiveMatch.cs.md#symbol-3b51df8cd703)；`MegaCrit.Sts2.Core.Map.StandardActMap.StandardActMap(MegaCrit.Sts2.Core.Random.Rng, MegaCrit.Sts2.Core.Models.ActModel, bool, bool, bool, MegaCrit.Sts2.Core.Map.MapPointTypeCounts?, bool)`；`MegaCrit.Sts2.Core.Models.ActModel.GetNumberOfRooms(bool)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.RouteNode.RouteNode(int, int, int, string, System.Collections.Generic.List<(int Row, int Col)>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`；`System.Reflection.FieldInfo.GetValue(object?)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: string match, int act, bool cooperative, string model>.match`；`<anonymous type: string match, int act, bool cooperative, string model>.model`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.GameCompatibility.MapRng(object, int)`；`NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`；`NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`
+**字段、属性、事件及方法组引用：** `<anonymous type: string match, int act, bool cooperative, string model>.match`；`<anonymous type: string match, int act, bool cooperative, string model>.model`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerMatch.RequiredAscension`；`NationalSpire.CareerMatch.Seed`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.DreadFacts.Capture(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Runs.IRunState)`；`NationalSpire.GameCompatibility.MapRng(object, int)`；`NationalSpire.LiveMaps.BlitzRooms`；`NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`；`NationalSpire.MatchModes.Blitz`；`NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -32,14 +34,25 @@
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`run.Acts[act].Id.ToString()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: model = run.Acts[act].Id.ToString()`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("live.map_prediction", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("live.map_prediction", e);`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("live.independent_route", new { match = match.Id, act, cooperative, model = run.Acts[act].Id.ToString() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("live.independent_route", new { match = match.Id, act, cooperative, model = run.Acts[act].Id.ToString() });`
+- `NationalSpire.DreadFacts.Capture(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Runs.IRunState)`；输入表达式：`DreadFacts.Capture(match, run)`；返回值紧邻使用处：`ExpressionStatementSyntax: DreadFacts.Capture(match, run);`
 - `NationalSpire.GameCompatibility.MapRng(object, int)`；输入表达式：`GameCompatibility.MapRng(run.Rng, act + 1)`；返回值紧邻使用处：`ArgumentSyntax: GameCompatibility.MapRng(run.Rng, act + 1)`
 - `NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`；输入表达式：`Copy(map, act, second)`；返回值紧邻使用处：`ArgumentSyntax: Copy(map, act, second)`
 - `NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`；输入表达式：`Copy(run.Map, act, second)`；返回值紧邻使用处：`ArgumentSyntax: Copy(run.Map, act, second)`
 - `NationalSpire.RivalSimulation.IndependentMap(int, int, bool, string)`；输入表达式：`RivalSimulation.IndependentMap(act, run.Acts[act].GetNumberOfRooms(cooperative), second, match.Seed)`；返回值紧邻使用处：`ArgumentSyntax: RivalSimulation.IndependentMap(act, run.Acts[act].GetNumberOfRooms(cooperative), second, match.Seed)`
+- `NationalSpire.RouteNode.RouteNode(int, int, int, string, System.Collections.Generic.List<(int Row, int Col)>)`；输入表达式：`new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : [])`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: (kind, row) => new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : [])`
+- `System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；输入表达式：`new[] { MapPointType.Ancient }.Concat(rooms).Append(MapPointType.Boss)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new[] { MapPointType.Ancient }.Concat(rooms).Append(MapPointType.Boss).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`new[] { MapPointType.Ancient }.Concat(rooms)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new[] { MapPointType.Ancient }.Concat(rooms).Append`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, int, TResult>)`；输入表达式：`kinds.Select((kind, row) => new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : []))`；返回值紧邻使用处：`ArgumentSyntax: kinds.Select((kind, row) => new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : []))`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`new[] { MapPointType.Ancient }.Concat(rooms).Append(MapPointType.Boss).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new[] { MapPointType.Ancient }.Concat(rooms).Append(MapPointType.Boss).ToList()`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`kinds.Add(MapPointType.Boss)`；返回值紧邻使用处：`ExpressionStatementSyntax: kinds.Add(MapPointType.Boss);`
 - `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`nodes.AddRange(Copy(map, act, second))`；返回值紧邻使用处：`ExpressionStatementSyntax: nodes.AddRange(Copy(map, act, second));`
 - `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`nodes.AddRange(Copy(run.Map, act, second))`；返回值紧邻使用处：`ExpressionStatementSyntax: nodes.AddRange(Copy(run.Map, act, second));`
+- `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`nodes.AddRange(kinds.Select((kind, row) => new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : [])))`；返回值紧邻使用处：`ExpressionStatementSyntax: nodes.AddRange(kinds.Select((kind, row) => new RouteNode(act, row, col, kind.ToString(),                     row + 1 < kinds.Count ? [(row + 1, col)] : [])));`
 - `System.Collections.Generic.List<T>.AddRange(System.Collections.Generic.IEnumerable<T>)`；输入表达式：`nodes.AddRange(RivalSimulation.IndependentMap(act, run.Acts[act].GetNumberOfRooms(cooperative), second, match.Seed))`；返回值紧邻使用处：`ExpressionStatementSyntax: nodes.AddRange(RivalSimulation.IndependentMap(act, run.Acts[act].GetNumberOfRooms(cooperative), second, match.Seed));`
 - `System.Collections.Generic.List<T>.List()`；输入表达式：`new List<RouteNode>()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new List<RouteNode>()`
+- `System.Enum.ToString()`；输入表达式：`kind.ToString()`；返回值紧邻使用处：`ArgumentSyntax: kind.ToString()`
+- `System.Enum.ToString()`；输入表达式：`run.GameMode.ToString()`；返回值紧邻使用处：`BinaryExpressionSyntax: run.GameMode.ToString() == MatchModes.Blitz`
+- `System.Reflection.FieldInfo.GetValue(object?)`；输入表达式：`.GetValue(null)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: BlitzRooms?.GetValue(null)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -48,7 +61,7 @@
 
 ## `NationalSpire.LiveMaps.Copy(MegaCrit.Sts2.Core.Map.ActMap, int, bool) — public static List<RouteNode> Copy(ActMap map, int act, bool secondBoss)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LiveMaps.Read(MegaCrit.Sts2.Core.Runs.IRunState, NationalSpire.CareerMatch, bool)`](LiveMaps.cs.md#symbol-c878186b1e5a)；[`NationalSpire.LiveRunBridge.CopyMap(MegaCrit.Sts2.Core.Map.ActMap, int, bool)`](LiveRunBridge.cs.md#symbol-03b8653f5c4b)
 
@@ -79,9 +92,9 @@
 
 ## `NationalSpire.LiveMaps.Matches(MegaCrit.Sts2.Core.Map.ActMap, System.Collections.Generic.IEnumerable<NationalSpire.RivalStep>, int) — public static bool Matches(ActMap map, IEnumerable<RivalStep> steps, int act)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)
+**调用者：** [`NationalSpire.Coop.CoopLive.Update()`](Coop/CoopLive.cs.md#symbol-fe745d15ee63)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Runs.IRunState, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](Coop/CoopLive.cs.md#symbol-a444164580e0)；[`NationalSpire.LiveRunBridge.CalibrateMap(NationalSpire.LiveMatchState)`](LiveRunBridge.cs.md#symbol-7252231ccb09)
 
 **调用：** `MegaCrit.Sts2.Core.Map.ActMap.GetPoint(MegaCrit.Sts2.Core.Map.MapCoord)`；`MegaCrit.Sts2.Core.Map.MapCoord.MapCoord(int, int)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`
 

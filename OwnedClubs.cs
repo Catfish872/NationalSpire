@@ -24,11 +24,11 @@ public static class OwnedClubs
             string id = "free-agent-" + d.Esports.Country + "-" + i;
             if (d.People.Any(p => p.Id == id)) continue;
             int seed = CareerEngine.StableHash(d.WorldId + id), level = i < 8 ? 6 : i < 14 ? 7 : i < 21 ? 8 : 9;
-            string[] chars = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
+            int character = NpcCharacters.Select(seed);
             var p = new CareerPerson { Id = id, Gender = IdentityGender.Assigned(d, id), Country = d.Esports.Country, Region = d.Esports.Country + "赛区",
                 Name = WorldPeople.Name(d, id, d.Esports.Country, false), Role = level == 6 ? "青训选手" : "职业选手",
-                MaxAscension = level, Rating = 680 + level * 76 + seed % 201, Character = chars[seed % 5],
-                Style = WorldPeople.PlayingStyle(seed % 5, seed / 5), Biography = "自由选手，正在寻找适合自己的俱乐部。" };
+                MaxAscension = level, Rating = 680 + level * 76 + seed % 201, Character = NpcCharacters.Names[character],
+                Style = WorldPeople.PlayingStyle(character, seed / NpcCharacters.Available.Count), Biography = "自由选手，正在寻找适合自己的俱乐部。" };
             InitializeRecruit(d, p); PersonalityLibrary.Ensure(d, p); d.People.Add(p);
         }
     }

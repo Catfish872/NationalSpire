@@ -79,6 +79,8 @@ public sealed class CareerData
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int SelectedAscension { get; set; }
+    public string SelectedMode { get; set; } = MatchModes.Standard;
+    public int? SelectedBlitzAscension { get; set; }
     public string SelectedCharacter { get; set; } = "";
     public string? PendingMatchId { get; set; }
     public List<CareerMatch> Matches { get; set; } = [];
@@ -112,6 +114,8 @@ public sealed class SeasonRecap
     public int Prize { get; set; }
 }
 
+public sealed record DreadActFact(string Boss, string Description);
+
 public sealed class CareerMatch
 {
     public DateGameState? DateGame { get; set; }
@@ -126,6 +130,9 @@ public sealed class CareerMatch
     public bool Draw { get; set; }
     public int? PlayedAscension { get; set; }
     public int? ChosenAscension { get; set; }
+    public string? ChosenMode { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public Dictionary<int, DreadActFact>? DreadDominions { get; set; }
     public bool OpponentPrepared { get; set; }
     public double? OpponentSeconds { get; set; }
     public double? PlayerSeconds { get; set; }
@@ -270,6 +277,7 @@ public sealed class CommunityMemory
 
 public sealed class CareerResult
 {
+    public string Mode { get; set; } = MatchModes.Standard;
     public bool Simulated { get; set; }
     public List<string> PlayerParticipants { get; set; } = [];
     public List<string> OpponentParticipants { get; set; } = [];

@@ -90,7 +90,7 @@ public partial class CareerScreen
         string decider=result.Settlement?.Decider??match?.Decider??"";
         if(decider.Length>0) changes.AddChild(DashboardLabel(decider,16,_ink,true));
         foreach(string effect in result.LifeEffects) changes.AddChild(DashboardLabel(effect,16,CareerVisuals.Teal,true));
-        if(result.PlayedAscension>result.Ascension) changes.AddChild(DashboardLabel($"本场挑战进阶 {result.PlayedAscension} · 挑战奖励 ×{result.RewardMultiplier:0.00}",16,CareerVisuals.Teal,true));
+        if(result.PlayedAscension>result.Ascension || result.Mode==MatchModes.Dread) changes.AddChild(DashboardLabel($"本场挑战进阶 {result.PlayedAscension} · 挑战奖励 ×{result.RewardMultiplier:0.00}",16,CareerVisuals.Teal,true));
         if(result.WorldImpact.Length>0) changes.AddChild(DashboardLabel(result.WorldImpact,16,_ink,true));
         foreach(var honor in result.Settlement?.Honors??[]) changes.AddChild(DashboardLabel("◆ "+honor,17,_gold,true));
         _settlementMatch=result.MatchId; _settlementCommunity=DashboardLabel("",16,CareerVisuals.Teal,true); changes.AddChild(_settlementCommunity); RefreshSettlementDiscussion(data);

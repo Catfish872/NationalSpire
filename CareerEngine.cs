@@ -46,12 +46,12 @@ public static class CareerEngine
         data.NpcPersonalityPool = personalityPool == null ? null : Coop.CoopJson.Copy(personalityPool);
         // 旧赛制用于存档兼容回归；正常新生涯启用完整生态。
         if (!expanded) data.Esports.EcosystemVersion = -1;
-        string[] characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
-        string[] styles = ["偏爱力量与高费攻击", "偏爱中毒", "偏爱充能球", "依赖奥斯蒂", "重视辉星"];
+        string[] styles = ["偏爱力量与高费攻击", "偏爱中毒", "偏爱充能球", "依赖奥斯蒂", "重视辉星", "偏爱瞄准与一箭爆发"];
         for (int i = 0; i < 22; i++)
         {
             int level = i < 10 ? i % 4 : i < 16 ? 6 + i % 2 : i == 21 ? 9 : 8;
-            data.People.Add(new CareerPerson { Id = "p" + i, Name = WorldPeople.Name(data, "p" + i, "中国", i < 10), Country = "中国", Region = i < 10 ? "本地社区" : "国内赛区", Character = characters[i % 5], Style = styles[i % 5], MaxAscension = level,
+            int character = NpcCharacters.Select(i);
+            data.People.Add(new CareerPerson { Id = "p" + i, Name = WorldPeople.Name(data, "p" + i, "中国", i < 10), Country = "中国", Region = i < 10 ? "本地社区" : "国内赛区", Character = NpcCharacters.Names[character], Style = styles[character], MaxAscension = level,
                 Wins = i < 10 ? i % 3 : 5 + i / 2, Losses = 24 + i * 3, Rating = 680 + level * 76 + i * 4,
                 Role = level >= 9 ? "世界顶尖" : level >= 8 ? "职业选手" : level >= 6 ? "青训选手" : "普通玩家",
                 Voice = new[] { "谨慎，喜欢引用战绩", "热情，容易放大单次表现", "偏爱本赛区选手，会承认对手的好成绩" }[i % 3] });
@@ -262,7 +262,7 @@ public static class CareerEngine
         {
             if (d.Failure != null) return;
             d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
-                CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName,
+                CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName, Mode = MatchModes.ForMatch(m),
                 Day = d.Day, Event = m.Event, Outcome = comparison switch { < 0 => "失利", 0 => "平局", _ => "获胜" }, Character = character, CharacterId = characterId,
                 Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
                 Win = runClear, Floor = floor, Seed = m.Seed, Cards = cards, Simulated = simulated, DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() } };
@@ -284,7 +284,7 @@ public static class CareerEngine
                 Day = d.Day, Event = m.Event, Opponent = opponent.PublicName, Character = character, CharacterId = characterId, Ascension = m.RequiredAscension,
                 PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards,
                 DeckSummary = deckSummary ?? [], Evidence = evidence ?? new() };
-            friendly.Simulated = simulated;
+            friendly.Mode = forfeit ? MatchModes.Standard : MatchModes.ForMatch(m); friendly.Simulated = simulated;
             if (m.DateGame is { } dateGame && !simulated && !forfeit) dateGame.ReturnPending = true;
             d.Results.Add(friendly); d.PendingMatchId = null; d.PendingSince = 0;
             if (m.Kind == "private-challenge") Publish(d, "match" + m.Id, m.Event + " · " + friendly.Outcome, MatchRules.Report(m, friendly, d.CooperativeMembers > 1), "约战", true, [m.OpponentId], m);
@@ -293,7 +293,7 @@ public static class CareerEngine
             CareerStore.Save(d); return;
         }
         int rating = d.Rating, fans = d.Fans; decimal credits = d.Credits;
-        double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension);
+        double multiplier = forfeit ? 1 : MatchRules.RewardMultiplier(m.RequiredAscension, ascension, MatchModes.ForMatch(m));
         if (m.PlayerWon) { d.Wins++; d.Rating += 20 + m.RequiredAscension * 3; d.Credits += MatchRules.Reward(m.Prize, multiplier); }
         else if (m.Draw) { d.Draws++; d.Rating += 8; d.Credits += MatchRules.Reward(m.Prize / 2, multiplier); }
         else { d.Losses++; d.Rating = Math.Max(500, d.Rating - 7); }
@@ -313,7 +313,7 @@ public static class CareerEngine
         CircuitWorld.AutoEntry(d);
         string verdict = forfeit ? "退赛" : m.Draw ? "平局" : m.PlayerWon ? "获胜" : "失利";
         var record = new CareerResult { MatchId = m.Id, Kind = m.Kind, CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Outcome = verdict, Day = d.Day, Event = m.Event, Opponent = opponent.PublicName, Character = character, CharacterId = characterId, Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = m.PlayerSeconds, RewardMultiplier = multiplier, Win = runClear && !forfeit, Floor = floor, Seed = m.Seed, Cards = cards };
-        record.Simulated = simulated;
+        record.Mode = forfeit ? MatchModes.Standard : MatchModes.ForMatch(m); record.Simulated = simulated;
         d.Results.Add(record);
         record.DeckSummary = deckSummary ?? [];
         record.Evidence = evidence ?? new();

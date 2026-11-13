@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E79C6C08BD49E1F9D4EB7F006EFC4B251AC7890F1F80564E8B5B207217B4399A`。来源：[源码](../../WorldPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EC8CEFD56C99985DCDAE1AA7FFDB3C5F0F93F884BC1DE96C0E50BB10E0EA1FD6`。来源：[源码](../../WorldPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -44,7 +44,8 @@ private static readonly string[][] Styles =
         ["中毒积累，习惯等待关键牌", "弃牌配合，偏爱熟悉的过牌组合", "小刀与多次攻击，容易高估连续出牌", "格挡与中毒，打法偏慢", "偏爱低费攻击，选牌积极", "重视保留手牌，依赖固定构筑范本"],
         ["闪电球输出，偏爱增加球位", "冰霜球防御，打法谨慎", "集中与充能球，依赖关键能力牌", "黑暗球积累，习惯等待爆发", "球体触发，喜欢追求单回合高输出", "偏爱零费攻击，对球体构筑较为保守"],
         ["围绕奥斯蒂攻击，偏爱稳定的召唤支援", "奥斯蒂承担伤害，路线选择谨慎", "末日积累，愿意延长战斗", "偏爱奥斯蒂与末日混合构筑", "优先寻找熟悉的召唤配合", "重视召唤持续性，升级选择保守"],
-        ["辉星积累，偏爱后期集中输出", "铸剑构筑，围绕熟悉的攻击安排升级", "辉星与高费牌，选牌较为贪心", "偏爱低费过渡，等待核心牌出现", "铸剑与防御，前期路线谨慎", "习惯保留辉星，对消耗时机比较犹豫"]
+        ["辉星积累，偏爱后期集中输出", "铸剑构筑，围绕熟悉的攻击安排升级", "辉星与高费牌，选牌较为贪心", "偏爱低费过渡，等待核心牌出现", "铸剑与防御，前期路线谨慎", "习惯保留辉星，对消耗时机比较犹豫"],
+        ["瞄准积累，偏爱沉重射击的一箭爆发", "箭矢回收，依赖熟悉的召回配合", "多次攻击，重视箭矢松脱后的再次射击", "偏爱哇牌的直接伤害，常忽略啾与叽的配合", "拉伸防御，常担心射击后的空窗期", "悲伤转化，偏爱生长与拉伸配合"]
     ];
 private static readonly string[] ProBios = ["常在赛前整理往届战报，把熟悉的选牌顺序记进笔记。", "训练结束后仍会留在复盘室，但更愿意讨论自己熟悉的角色。", "习惯保存失利的种子，希望下一次能用同一种构筑走得更远。", "比赛前喜欢独自准备，公开采访通常比场上表现克制。", "经常参与队内交流，对自己认定的核心牌很有耐心。", "喜欢研究其他赛区的招牌构筑，临场采用时仍然谨慎。", "会认真阅读支持者的赛后讨论，也会记下质疑自己的观点。", "赛前安排规律，训练笔记里保留着大量被划掉的构筑计划。"];
 private static readonly string[] YouthBios = ["把职业选手的牌组抄进练习本，还在寻找适合自己的打法。", "训练时常与同伴交换种子，期待下一次选拔机会。", "会反复观看熟悉角色的战报，遇到陌生构筑容易迟疑。", "总把职业联赛日程贴在桌边，平时从低进阶练习开始。", "对俱乐部试训充满期待，也清楚自己还缺少稳定成绩。", "习惯写下当天最遗憾的一次选择，第二天重新尝试。"];
@@ -55,7 +56,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.Surnames(string) — internal static string[] Surnames(string country)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.HumanNames.KnownGender(string, string)`](HumanNames.cs.md#symbol-a5552e5b910e)；[`NationalSpire.HumanNames.LegalName(string, string, System.Random)`](HumanNames.cs.md#symbol-36b85f84360f)；[`NationalSpire.HumanNames.NameCount`](HumanNames.cs.md#symbol-c812deb59ef9)
 
@@ -74,7 +75,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.NameCombinations — public static int NameCombinations`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -92,7 +93,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool) — public static string Name(CareerData data, string id, string country, bool nickname)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`](CareerEngine.cs.md#symbol-d3b571ec95e8)；[`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)；[`NationalSpire.OwnedClubs.EnsureMarket(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-3dba497c8606)；[`NationalSpire.WorldPeople.Enrich(NationalSpire.CareerData)`](WorldPeople.cs.md#symbol-243cbdaa90c2)
 
@@ -122,36 +123,36 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.Enrich(NationalSpire.CareerData) — public static void Enrich(CareerData data)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`](CareerEngine.cs.md#symbol-d3b571ec95e8)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
 
-**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PersonalityLibrary.cs.md#symbol-902b2bd837d2)；[`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`](WorldPeople.cs.md#symbol-731e781389c6)；`NationalSpire.CareerPerson.CareerPerson()`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`](EsportsWorld.cs.md#symbol-c10dfd5a2e0e)；[`NationalSpire.NpcCharacters.Index(string)`](NpcCharacters.cs.md#symbol-8f7f43f17d89)；[`NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`](PersonalityLibrary.cs.md#symbol-902b2bd837d2)；[`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`](WorldPeople.cs.md#symbol-731e781389c6)；`NationalSpire.CareerPerson.CareerPerson()`；`System.Array.IndexOf<T>(T[], T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Country`；`NationalSpire.CareerClub.Id`；`NationalSpire.CareerData.ContentVersion`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.CameoId`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.EditedCard`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Region`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`；`NationalSpire.WorldPeople.ContentVersion`；`NationalSpire.WorldPeople.FanBios`；`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`；`NationalSpire.WorldPeople.ProBios`；`NationalSpire.WorldPeople.Styles`；`NationalSpire.WorldPeople.Temperaments`；`NationalSpire.WorldPeople.Voices`；`NationalSpire.WorldPeople.YouthBios`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerClub.Country`；`NationalSpire.CareerClub.Id`；`NationalSpire.CareerData.ContentVersion`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerData.People`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerPerson.Biography`；`NationalSpire.CareerPerson.CameoId`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.EditedCard`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.Losses`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerPerson.Name`；`NationalSpire.CareerPerson.Rating`；`NationalSpire.CareerPerson.Region`；`NationalSpire.CareerPerson.Role`；`NationalSpire.CareerPerson.Style`；`NationalSpire.CareerPerson.SupportedClubId`；`NationalSpire.CareerPerson.Temperament`；`NationalSpire.CareerPerson.Voice`；`NationalSpire.CareerPerson.Wins`；`NationalSpire.EsportsCareer.Clubs`；`NationalSpire.EsportsWorld.Countries`；`NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；`NationalSpire.NpcCharacters.Available`；`NationalSpire.NpcCharacters.Index(string)`；`NationalSpire.NpcCharacters.Names`；`NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`；`NationalSpire.WorldPeople.ContentVersion`；`NationalSpire.WorldPeople.FanBios`；`NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`；`NationalSpire.WorldPeople.ProBios`；`NationalSpire.WorldPeople.Styles`；`NationalSpire.WorldPeople.Temperaments`；`NationalSpire.WorldPeople.Voices`；`NationalSpire.WorldPeople.YouthBios`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(data.WorldId + ":identity:" + person.Id)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(data.WorldId + ":identity:" + person.Id)`
 - `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(data.WorldId + id)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.StableHash(data.WorldId + id)`
-- `NationalSpire.CareerPerson.CareerPerson()`；输入表达式：`new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = characters[rng.Next(5)], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) }`；返回值紧邻使用处：`ArgumentSyntax: new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = characters[rng.Next(5)], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) }`
+- `NationalSpire.CareerPerson.CareerPerson()`；输入表达式：`new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) }`；返回值紧邻使用处：`ArgumentSyntax: new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) }`
 - `NationalSpire.EsportsWorld.IsProfessional(NationalSpire.CareerPerson)`；输入表达式：`EsportsWorld.IsProfessional(person)`；返回值紧邻使用处：`ConditionalExpressionSyntax: EsportsWorld.IsProfessional(person) ? ProBios : person.Role == "青训选手" ? YouthBios : FanBios`
+- `NationalSpire.NpcCharacters.Index(string)`；输入表达式：`NpcCharacters.Index(person.Character)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = NpcCharacters.Index(person.Character)`
 - `NationalSpire.PersonalityLibrary.Ensure(NationalSpire.CareerData, NationalSpire.CareerPerson)`；输入表达式：`PersonalityLibrary.Ensure(data, person)`；返回值紧邻使用处：`ExpressionStatementSyntax: PersonalityLibrary.Ensure(data, person);`
 - `NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool)`；输入表达式：`Name(data, id, country, true)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Name = Name(data, id, country, true)`
-- `System.Array.IndexOf<T>(T[], T)`；输入表达式：`Array.IndexOf(characters, person.Character)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Array.IndexOf(characters, person.Character)`
 - `System.Array.IndexOf<T>(T[], T)`；输入表达式：`Array.IndexOf(EsportsWorld.Countries, country)`；返回值紧邻使用处：`InterpolationSyntax: {Array.IndexOf(EsportsWorld.Countries, country)}`
 - `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Any(p => p.Id == id)`；返回值紧邻使用处：`IfStatementSyntax: if (data.People.Any(p => p.Id == id)) continue;`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.People.Count(p => p.Country == country && p.Role == "普通玩家")`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.People.Count(p => p.Country == country && p.Role == "普通玩家")`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`data.Esports.Clubs.Where(c => c.Country == person.Country).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = data.Esports.Clubs.Where(c => c.Country == person.Country).ToArray()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`data.Esports.Clubs.Where(c => c.Country == person.Country)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: data.Esports.Clubs.Where(c => c.Country == person.Country).ToArray`
-- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`data.People.Add(new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = characters[rng.Next(5)], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) })`；返回值紧邻使用处：`ExpressionStatementSyntax: data.People.Add(new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = characters[rng.Next(5)], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) });`
+- `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`data.People.Add(new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) })`；返回值紧邻使用处：`ExpressionStatementSyntax: data.People.Add(new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",                      Role = "普通玩家", Character = NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) });`
 - `System.Random.Next(int, int)`；输入表达式：`rng.Next(1, 6)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Wins = rng.Next(1, 6)`
 - `System.Random.Next(int, int)`；输入表达式：`rng.Next(30, 95)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Losses = rng.Next(30, 95)`
 - `System.Random.Next(int, int)`；输入表达式：`rng.Next(620, 860)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Rating = rng.Next(620, 860)`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(4)`；返回值紧邻使用处：`AssignmentExpressionSyntax: MaxAscension = rng.Next(4)`
-- `System.Random.Next(int)`；输入表达式：`rng.Next(5)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(5)`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(bank.Length)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(bank.Length)`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(clubs.Length)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(clubs.Length)`
+- `System.Random.Next(int)`；输入表达式：`rng.Next(NpcCharacters.Available.Count)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(NpcCharacters.Available.Count)`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(Styles[character].Length)`；返回值紧邻使用处：`ArgumentSyntax: rng.Next(Styles[character].Length)`
 - `System.Random.Next(int)`；输入表达式：`rng.Next(Temperaments.Length)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = rng.Next(Temperaments.Length)`
 - `System.Random.Random(int)`；输入表达式：`new Random(CareerEngine.StableHash(data.WorldId + ":identity:" + person.Id))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Random(CareerEngine.StableHash(data.WorldId + ":identity:" + person.Id))`
@@ -159,7 +160,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 **赋值（含属性/字段和局部值）：**
 
-- `Character` = `characters[rng.Next(5)]`
+- `Character` = `NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]]`
 - `Country` = `country`
 - `data.ContentVersion` = `ContentVersion`
 - `Id` = `id`

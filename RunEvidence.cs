@@ -29,7 +29,9 @@ public sealed class RunEvidence
         var fields = new Dictionary<string, object?>
         {
             [nameof(FinalHp)] = plain.FinalHp, [nameof(MaxHp)] = plain.MaxHp,
-            [nameof(Badges)] = plain.Badges, [nameof(DefeatedEncounters)] = plain.DefeatedEncounters
+            [nameof(Badges)] = plain.Badges,
+            [nameof(DefeatedEncounters)] = plain.DefeatedEncounters?.Select(e => new { e.Act, e.Floor, e.Kind,
+                Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()
         };
         if (PotionSlots is not null) fields[nameof(PotionSlots)] = PotionSlots;
         if (PotionsRecorded) fields[nameof(RemainingPotions)] = plain.RemainingPotions;
@@ -65,7 +67,11 @@ public sealed class RunEvidence
         return GameText.Plain(string.Join("；", parts));
     }
 }
-public sealed record RunEncounter(int Act, int Floor, string Kind, string Name);
+public sealed record RunEncounter(int Act, int Floor, string Kind, string Name)
+{
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? DreadEffect { get; init; }
+}
 public sealed class RunBadge
 {
     public string Name { get; set; } = "";

@@ -86,6 +86,7 @@ public static class GroupChats
         }
         var g = Visible(d).FirstOrDefault(g => g.Id == id);
         if (g == null) return "群聊已不存在。";
+        if (ChatCommandTargets.Changed(kind, command.Interaction.Entry, g.Turns.LastOrDefault()?.Id)) return "所选消息之后已有新的消息，请查看当前群聊。";
         if (kind == "group-rename")
         {
             string name = command.Text.Trim();

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`6586D1BFB81B0C1FE816ACC9A06DF540D96B3075B19F532A823E2EE1AC0C17B1`。来源：[源码](../../RunEvidence.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`96610424E1250220F94EE4BE4A7D5B219448D03E39C7D4BA72E70BEFA065F0C8`。来源：[源码](../../RunEvidence.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -263,19 +263,21 @@
 
 **调用者：** [`NationalSpire.AiService.MatchContext(NationalSpire.CareerData, NationalSpire.CommunityPost)`](AiContext.cs.md#symbol-eaa3e44ce66a)；[`NationalSpire.AiService.PlayerPublicRecord(NationalSpire.CareerData, int, bool)`](AiContext.cs.md#symbol-99772c8e0814)
 
-**调用：** [`NationalSpire.RunEvidence.PlainText()`](RunEvidence.cs.md#symbol-0a70d5e23e9a)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`
+**调用：** [`NationalSpire.RunEvidence.PlainText()`](RunEvidence.cs.md#symbol-0a70d5e23e9a)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.RunEvidence.Badges`；`NationalSpire.RunEvidence.DefeatedEncounters`；`NationalSpire.RunEvidence.FinalHp`；`NationalSpire.RunEvidence.GoldGained`；`NationalSpire.RunEvidence.MaxHp`；`NationalSpire.RunEvidence.PlainText()`；`NationalSpire.RunEvidence.PotionSlots`；`NationalSpire.RunEvidence.PotionsObtained`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.RemainingGold`；`NationalSpire.RunEvidence.RemainingPotions`
+**字段、属性、事件及方法组引用：** `<anonymous type: int Act, int Floor, string Kind, string Name>.Name`；`NationalSpire.RunEncounter.Act`；`NationalSpire.RunEncounter.DreadEffect`；`NationalSpire.RunEncounter.Floor`；`NationalSpire.RunEncounter.Kind`；`NationalSpire.RunEncounter.Name`；`NationalSpire.RunEvidence.Badges`；`NationalSpire.RunEvidence.DefeatedEncounters`；`NationalSpire.RunEvidence.FinalHp`；`NationalSpire.RunEvidence.GoldGained`；`NationalSpire.RunEvidence.MaxHp`；`NationalSpire.RunEvidence.PlainText()`；`NationalSpire.RunEvidence.PotionSlots`；`NationalSpire.RunEvidence.PotionsObtained`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.RemainingGold`；`NationalSpire.RunEvidence.RemainingPotions`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.RunEvidence.PlainText()`；输入表达式：`PlainText()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = PlainText()`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, object?>          {              [nameof(FinalHp)] = plain.FinalHp, [nameof(MaxHp)] = plain.MaxHp,              [nameof(Badges)] = plain.Badges, [nameof(DefeatedEncounters)] = plain.DefeatedEncounters          }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, object?>          {              [nameof(FinalHp)] = plain.FinalHp, [nameof(MaxHp)] = plain.MaxHp,              [nameof(Badges)] = plain.Badges, [nameof(DefeatedEncounters)] = plain.DefeatedEncounters          }`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；输入表达式：`new Dictionary<string, object?>          {              [nameof(FinalHp)] = plain.FinalHp, [nameof(MaxHp)] = plain.MaxHp,              [nameof(Badges)] = plain.Badges,              [nameof(DefeatedEncounters)] = plain.DefeatedEncounters?.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()          }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Dictionary<string, object?>          {              [nameof(FinalHp)] = plain.FinalHp, [nameof(MaxHp)] = plain.MaxHp,              [nameof(Badges)] = plain.Badges,              [nameof(DefeatedEncounters)] = plain.DefeatedEncounters?.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()          }`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name })`；返回值紧邻使用处：`MemberAccessExpressionSyntax: .Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList`
+- `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: plain.DefeatedEncounters?.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()`
 
 **赋值（含属性/字段和局部值）：**
 
 - `[nameof(Badges)]` = `plain.Badges`
-- `[nameof(DefeatedEncounters)]` = `plain.DefeatedEncounters`
+- `[nameof(DefeatedEncounters)]` = `plain.DefeatedEncounters?.Select(e => new { e.Act, e.Floor, e.Kind,                  Name = e.DreadEffect is { Length: > 0 } effect ? e.Name + "（恐惧模式难度提高：" + effect + "）" : e.Name }).ToList()`
 - `[nameof(FinalHp)]` = `plain.FinalHp`
 - `[nameof(MaxHp)]` = `plain.MaxHp`
 - `fields[nameof(GoldGained)]` = `GoldGained`
@@ -288,7 +290,7 @@
 
 ## `NationalSpire.RunEvidence.EncounterSummary() — public string EncounterSummary()`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.RunEvidence.Summary()`](RunEvidence.cs.md#symbol-d852a24404b2)
 
@@ -311,9 +313,9 @@
 
 ## `NationalSpire.RunEvidence.CompletedEncounters(System.Collections.Generic.IReadOnlyList<NationalSpire.RunEncounter>, bool, bool) — public static List<RunEncounter> CompletedEncounters(IReadOnlyList<RunEncounter> rooms, bool cleared, bool finalRoomCompleted)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-e0b622ef14ef)
+**调用者：** [`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`](GameBridge.cs.md#symbol-0910b7cd5c5f)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, int, bool>)`
 
@@ -331,7 +333,7 @@
 
 ## `NationalSpire.RunEvidence.ResourceSummary() — public string ResourceSummary()`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](Coop/CoopRules.cs.md#symbol-926ebe8770ca)；[`NationalSpire.RunEvidence.Summary()`](RunEvidence.cs.md#symbol-d852a24404b2)
 
@@ -359,7 +361,7 @@
 
 ## `NationalSpire.RunEvidence.Summary() — public string Summary()`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CommunityThreads.RememberMatch(NationalSpire.CareerData, NationalSpire.CareerResult)`](CommunityThreads.cs.md#symbol-fe6de6f8dd52)；[`NationalSpire.WeeklyJournal.CloseWeek(NationalSpire.CareerData)`](WeeklyJournal.cs.md#symbol-fe6dece0c758)
 
@@ -383,11 +385,29 @@
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-25d45f430792"></a>
+
+## `NationalSpire.RunEncounter.DreadEffect — public string? DreadEffect`
+
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-bd78765f94ec"></a>
 
 ## `NationalSpire.RunBadge.Name — public string Name`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -405,7 +425,7 @@
 
 ## `NationalSpire.RunBadge.Description — public string Description`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -423,7 +443,7 @@
 
 ## `NationalSpire.RunBadge.Rarity — public string Rarity`
 
-来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -27,7 +27,22 @@ public static partial class PromptLibrary
             ?? throw new InvalidOperationException("内置提示词资源为空：" + id);
         if (sections.Any(p => !Sections.Any(s => s.Id == p.Key) || string.IsNullOrWhiteSpace(p.Value)))
             throw new InvalidOperationException("内置提示词模块无效：" + id);
+        if (sections.TryGetValue("world", out var world)) sections["world"] = IncludeFoolKnowledge(world);
         return sections;
+    }
+    private const string FoolKnowledge = """
+愚者：
+初始：77血，初始遗物歌曲之弓，每场战斗开始时获得6点瞄准。初始只有1支箭矢。
+核心机制：箭矢、瞄准、旋律与拉伸。射中敌人后，箭矢使其进入扎穿状态。再命中该敌人3次或击败敌人，箭矢就会松脱并返回。瞄准增加下一支箭矢的伤害，随后消耗。
+瞄准流：依靠炫技积累瞄准，再用沉重射击获得双倍瞄准加成。主流选手追求一箭击杀，认为一箭没有打死就是瞄准叠得还不够。
+旋律流：哇牌偏攻击，啾牌偏格挡，叽牌偏抽牌、蓄能与重复出牌。打出对应卡牌后，旋律持续到本回合结束。先有啾或叽旋律，哇 爆破能攻击全体两次；先有哇或叽旋律，啾 四肢能从2费降为0费。曲中意靠获得不同旋律抽牌，啾 副歌能打出手中所有哇、叽牌。当地选手嫌混合旋律难记，常只围绕一种旋律选牌，更愿意积累拉伸，再用啾 叽恢复获得格挡时消耗的拉伸。
+常见评价：愚者就像名字一样，只有笨蛋才会选。说笑等卡牌会把悲伤加入手牌，当地人因此认为选了愚者只会手牌充满悲伤。箭射出去后，进攻空窗期极强，为了取回一支箭还得继续攻击，被认为是亏本设计。生长虽然能消耗悲伤换取拉伸，但又要专门寻找配合，被认为是先把自己卡住，再想办法补救。
+""";
+    // 内置模板共用职业说明，插入储君介绍之后；个人修改仍由原覆盖入口处理。
+    private static string IncludeFoolKnowledge(string world)
+    {
+        const string regentEnd = "打法：只要能铸的都是key卡，两个熔炉就能铸出巨剑。";
+        return world.Replace(regentEnd, regentEnd + "\n\n" + FoolKnowledge, StringComparison.Ordinal);
     }
     public static IReadOnlyList<PromptSection> Sections => CurrentSections.Value;
     private static IReadOnlyList<PromptSection> BuildCurrent()
@@ -179,7 +194,7 @@ BOSS：
         """;
         return LegacySections.Select(s => s with { DefaultText = s.Id switch
         {
-            "world" => world,
+            "world" => IncludeFoolKnowledge(world),
             "voice" => voice,
             "news" => """
             标题直接表达态度或疑问，正文通常两到四句，只围绕作者想聊的一个重点。评论各接自己在意的部分，可以自然岔开，楼主按兴趣参与。

@@ -31,6 +31,7 @@ public static class Entry
         CareerEngine.PlayerNameSource = () => PlatformUtil.GetPlayerNameRaw(PlatformUtil.PrimaryPlatform, PlatformUtil.GetLocalPlayerId(PlatformUtil.PrimaryPlatform));
         CharacterIdentity.OriginalSource = GameCharacterNames.Originals;
         CharacterIdentity.Source = () => GameCharacterNames.Definitions(GameBridge.Characters());
+        NpcCharacters.Source = () => GameBridge.Characters().Where(c => GameCharacterNames.IsOriginal(c.GetType())).Select(c => c.Id.Entry);
         CardKnowledge.Source = GameCardKnowledge.Read;
         CardKnowledge.SourceVersion = () => MegaCrit.Sts2.Core.Localization.LocManager.Instance.Language;
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);

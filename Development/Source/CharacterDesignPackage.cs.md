@@ -569,7 +569,7 @@ private bool _committed;
 
 来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`ImportSprites()`](DateSceneAssetScreen.cs.md#symbol-9567cf21af7e)；[`NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-35fa453dd634)；[`NationalSpire.DatePresentation.Save(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.DatePresentation.Selection>)`](DatePresentation.cs.md#symbol-6b2ede6c9f6f)；[`NationalSpire.NpcGeneration.ImportBatch.Commit()`](NpcGenerationSetup.cs.md#symbol-9e8174232934)；[`ShowSavedCard()`](CharacterCardScreen.cs.md#symbol-03c41b948782)
+**调用者：** [`ImportSprites()`](DateSceneAssetScreen.cs.md#symbol-9567cf21af7e)；[`NationalSpire.AppearanceLibrary.Apply(NationalSpire.CareerData, string, NationalSpire.AppearanceLibrary.Package)`](AppearanceLibrary.cs.md#symbol-35fa453dd634)；[`NationalSpire.DatePresentation.Save(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.DatePresentation.Selection>)`](DatePresentation.cs.md#symbol-6b2ede6c9f6f)；[`NationalSpire.NpcGeneration.ImportBatch.Commit()`](NpcGenerationSetup.cs.md#symbol-9e8174232934)；[`ShowSavedCard()`](CharacterCardScreen.cs.md#symbol-b8738fabd73d)
 
 **调用：** 无已绑定显式调用。
 
@@ -588,7 +588,7 @@ private bool _committed;
 
 来源：源码第 164 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`CloseEditor()`](CharacterCardScreen.cs.md#symbol-854a36468bfd)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DatePresentation.Save(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.DatePresentation.Selection>)`](DatePresentation.cs.md#symbol-6b2ede6c9f6f)；[`NationalSpire.NpcGeneration.ImportBatch.Dispose()`](NpcGenerationSetup.cs.md#symbol-91acee9b5250)
+**调用者：** [`CloseEditor()`](CharacterCardScreen.cs.md#symbol-d6450a66380d)；[`NationalSpire.CareerScreen.OpenCharacterCardCore(NationalSpire.CareerData, string?, NationalSpire.CareerPerson?, NationalSpire.CharacterDesignPackage.Imported?)`](CharacterCardScreen.cs.md#symbol-c2fe452ad056)；[`NationalSpire.CharacterDesignPackage.Installation.Installation(NationalSpire.CareerData, string, NationalSpire.PortraitDesign, NationalSpire.DateSceneAssets)`](CharacterDesignPackage.cs.md#symbol-27a8ea8feef4)；[`NationalSpire.DatePresentation.Save(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<NationalSpire.DatePresentation.Selection>)`](DatePresentation.cs.md#symbol-6b2ede6c9f6f)；[`NationalSpire.NpcGeneration.ImportBatch.Dispose()`](NpcGenerationSetup.cs.md#symbol-91acee9b5250)
 
 **调用：** `System.IO.File.Delete(string)`；`System.IO.File.Exists(string?)`；`System.IO.File.Move(string, string, bool)`；`System.IO.File.WriteAllBytes(string, byte[])`
 

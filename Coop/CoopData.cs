@@ -96,6 +96,7 @@ public sealed class CoopMember
 }
 public sealed class CoopProposal
 {
+    public string Mode { get; set; } = MatchModes.Standard;
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string Kind { get; set; } = "";
     public string Target { get; set; } = "";
@@ -106,6 +107,7 @@ public sealed class CoopProposal
 }
 public sealed class CoopRun
 {
+    public string Mode { get; set; } = MatchModes.Standard;
     public string Attempt { get; set; } = Guid.NewGuid().ToString("N");
     public string MatchId { get; set; } = "";
     public string Phase { get; set; } = "preparing";

@@ -250,7 +250,8 @@ public partial class CoopRuntime : Node
             })
         }, includePlan: true);
         if (!Session.Host) return;
-        var details = history.Players.ToDictionary(p => p.Id, p => GameBridge.ReadPlayerHistory(history, p));
+        var match = Session.World.World.Matches.Single(m => m.Id == run.MatchId);
+        var details = history.Players.ToDictionary(p => p.Id, p => GameBridge.ReadPlayerHistory(history, p, match));
         var players = history.Players.Select(p =>
         {
             var evidence = details[p.Id].Evidence;

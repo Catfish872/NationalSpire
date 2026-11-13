@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`88CA21352F2C55D91786AF21FCB8207CA51C60C52147E020E2F7B79EA867E4A4`。来源：[源码](../../LiveRaceHud.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5AB609429BAA1A6F3EC86404307AC9CF44EC342061534D040A7A0FB02EE3FD3F`。来源：[源码](../../LiveRaceHud.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -40,11 +40,13 @@ private const float ExpandedWidth = 326;
 private string _raceName = "赛事转播";
 private Vector2[] _path = [];
 private Vector2? _marker;
+private Vector2? _destination;
 private PanelContainer _badge = null!;
-private Label _label = null!;
+private Label? _label, _caption;
 private CareerAvatar _avatar = null!;
 private Tween? _move;
 private string _signature = "";
+private bool _hovered;
 ```
 
 <a id="symbol-b5a8cd9a2617"></a>
@@ -871,11 +873,29 @@ private string _signature = "";
 
 - `parent.Resized` -= `RestorePosition`
 
+<a id="symbol-fe6b8d01747b"></a>
+
+## `NationalSpire.RivalMapOverlay.Compact — public bool Compact`
+
+来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-590c9b7cc64b"></a>
 
 ## `NationalSpire.RivalMapOverlay.BadgeOffset — public Vector2 BadgeOffset`
 
-来源：源码第 254 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -894,7 +914,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.Identity — public AvatarIdentity? Identity`
 
-来源：源码第 255 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -912,7 +932,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.Art — public AvatarArt Art`
 
-来源：源码第 256 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 257 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -931,41 +951,73 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._Ready() — public override void _Ready()`
 
-来源：源码第 264 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 267 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.CreateTheme()`](CareerVisuals.cs.md#symbol-a5f88af9f360)；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`
+**调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.CreateTheme()`](CareerVisuals.cs.md#symbol-a5f88af9f360)；`Godot.CanvasItem.QueueRedraw()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Label.Label()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.PanelContainer.PanelContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.CareerAvatar.CareerAvatar()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.CreateTheme()`；`NationalSpire.RivalMapOverlay._avatar`；`NationalSpire.RivalMapOverlay._badge`；`NationalSpire.RivalMapOverlay._label`；`NationalSpire.RivalMapOverlay.Art`；`NationalSpire.RivalMapOverlay.Identity`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerAvatar.Art`；`NationalSpire.CareerAvatar.Identity`；`NationalSpire.CareerAvatar.Simplified`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.CreateTheme()`；`NationalSpire.RivalMapOverlay._avatar`；`NationalSpire.RivalMapOverlay._badge`；`NationalSpire.RivalMapOverlay._caption`；`NationalSpire.RivalMapOverlay._hovered`；`NationalSpire.RivalMapOverlay._label`；`NationalSpire.RivalMapOverlay.Art`；`NationalSpire.RivalMapOverlay.Compact`；`NationalSpire.RivalMapOverlay.Identity`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Godot.CanvasItem.QueueRedraw()`；输入表达式：`QueueRedraw()`；返回值紧邻使用处：`ExpressionStatementSyntax: QueueRedraw();`
+- `Godot.Color.Color(string)`；输入表达式：`new("07131b")`；返回值紧邻使用处：`ArgumentSyntax: new("07131b")`
+- `Godot.Color.Color(string)`；输入表达式：`new("e8f9f6")`；返回值紧邻使用处：`ArgumentSyntax: new("e8f9f6")`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_caption.AddThemeColorOverride("font_color", new("e8f9f6"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _caption.AddThemeColorOverride("font_color", new("e8f9f6"));`
+- `Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；输入表达式：`_caption.AddThemeColorOverride("font_outline_color", new("07131b"))`；返回值紧邻使用处：`ExpressionStatementSyntax: _caption.AddThemeColorOverride("font_outline_color", new("07131b"));`
+- `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`_caption.AddThemeConstantOverride("outline_size", 4)`；返回值紧邻使用处：`ExpressionStatementSyntax: _caption.AddThemeConstantOverride("outline_size", 4);`
+- `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_caption.AddThemeFontSizeOverride("font_size", 10)`；返回值紧邻使用处：`ExpressionStatementSyntax: _caption.AddThemeFontSizeOverride("font_size", 10);`
 - `Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；输入表达式：`_label.AddThemeFontSizeOverride("font_size", 14)`；返回值紧邻使用处：`ExpressionStatementSyntax: _label.AddThemeFontSizeOverride("font_size", 14);`
 - `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232deb", "70baba", 8, 6))`；返回值紧邻使用处：`ExpressionStatementSyntax: _badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232deb", "70baba", 8, 6));`
+- `Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；输入表达式：`_badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232df0", "70baba", 5, 1))`；返回值紧邻使用处：`ExpressionStatementSyntax: _badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232df0", "70baba", 5, 1));`
+- `Godot.Control.Control()`；输入表达式：`new Control { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new(24, 24) }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new Control { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new(24, 24) }`
+- `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`_avatar.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: _avatar.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.HBoxContainer.HBoxContainer()`；输入表达式：`new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }`
 - `Godot.Label.Label()`；输入表达式：`new Label { MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _label = new Label { MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Label.Label()`；输入表达式：`new Label { Position = new(17, 16), MouseFilter = MouseFilterEnum.Ignore }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _caption = new Label { Position = new(17, 16), MouseFilter = MouseFilterEnum.Ignore }`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_badge.AddChild(face)`；返回值紧邻使用处：`ExpressionStatementSyntax: _badge.AddChild(face);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_badge.AddChild(row)`；返回值紧邻使用处：`ExpressionStatementSyntax: _badge.AddChild(row);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`AddChild(_badge)`；返回值紧邻使用处：`ExpressionStatementSyntax: AddChild(_badge);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`face.AddChild(_avatar)`；返回值紧邻使用处：`ExpressionStatementSyntax: face.AddChild(_avatar);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`face.AddChild(_caption)`；返回值紧邻使用处：`ExpressionStatementSyntax: face.AddChild(_caption);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(_avatar)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(_avatar);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`row.AddChild(_label)`；返回值紧邻使用处：`ExpressionStatementSyntax: row.AddChild(_label);`
 - `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new Vector2(125, 72) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _badge = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new Vector2(125, 72) }`
+- `Godot.PanelContainer.PanelContainer()`；输入表达式：`new PanelContainer { MouseFilter = MouseFilterEnum.Pass, CustomMinimumSize = new(26, 26) }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _badge = new PanelContainer { MouseFilter = MouseFilterEnum.Pass, CustomMinimumSize = new(26, 26) }`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(125, 72)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(125, 72)`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new Vector2(42, 42)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new Vector2(42, 42)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(17, 16)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Position = new(17, 16)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(24, 24)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(24, 24)`
+- `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(26, 26)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize = new(26, 26)`
 - `NationalSpire.CareerAvatar.CareerAvatar()`；输入表达式：`new CareerAvatar { Art = Art, Identity = Identity, CustomMinimumSize = new Vector2(42, 42), SizeFlagsVertical = SizeFlags.ShrinkCenter }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _avatar = new CareerAvatar { Art = Art, Identity = Identity, CustomMinimumSize = new Vector2(42, 42), SizeFlagsVertical = SizeFlags.ShrinkCenter }`
+- `NationalSpire.CareerAvatar.CareerAvatar()`；输入表达式：`new CareerAvatar { Art = Art, Simplified = true }`；返回值紧邻使用处：`AssignmentExpressionSyntax: _avatar = new CareerAvatar { Art = Art, Simplified = true }`
 - `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("10232deb", "70baba", 8, 6)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("10232deb", "70baba", 8, 6)`
+- `NationalSpire.CareerVisuals.Box(string, string, int, int)`；输入表达式：`CareerVisuals.Box("10232df0", "70baba", 5, 1)`；返回值紧邻使用处：`ArgumentSyntax: CareerVisuals.Box("10232df0", "70baba", 5, 1)`
 - `NationalSpire.CareerVisuals.CreateTheme()`；输入表达式：`CareerVisuals.CreateTheme()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Theme = CareerVisuals.CreateTheme()`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_avatar` = `new CareerAvatar { Art = Art, Identity = Identity, CustomMinimumSize = new Vector2(42, 42), SizeFlagsVertical = SizeFlags.ShrinkCenter }`
+- `_avatar` = `new CareerAvatar { Art = Art, Simplified = true }`
+- `_badge.MouseEntered` += `() => { _hovered = true; QueueRedraw(); }`
+- `_badge.MouseExited` += `() => { _hovered = false; QueueRedraw(); }`
 - `_badge` = `new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new Vector2(125, 72) }`
+- `_badge` = `new PanelContainer { MouseFilter = MouseFilterEnum.Pass, CustomMinimumSize = new(26, 26) }`
+- `_caption` = `new Label { Position = new(17, 16), MouseFilter = MouseFilterEnum.Ignore }`
+- `_hovered` = `false`
+- `_hovered` = `true`
 - `_label` = `new Label { MouseFilter = MouseFilterEnum.Ignore }`
 - `Art` = `Art`
 - `CustomMinimumSize` = `new Vector2(125, 72)`
 - `CustomMinimumSize` = `new Vector2(42, 42)`
+- `CustomMinimumSize` = `new(24, 24)`
+- `CustomMinimumSize` = `new(26, 26)`
 - `Identity` = `Identity`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
+- `MouseFilter` = `MouseFilterEnum.Pass`
+- `Position` = `new(17, 16)`
+- `Simplified` = `true`
 - `SizeFlagsVertical` = `SizeFlags.ShrinkCenter`
 - `Theme` = `CareerVisuals.CreateTheme()`
 - `ZIndex` = `10`
@@ -974,9 +1026,9 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay.RefreshArt(NationalSpire.AvatarArt) — public void RefreshArt(AvatarArt art)`
 
-来源：源码第 273 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
+**调用者：** [`NationalSpire.BlitzRivalMarkers.Update(NationalSpire.CareerData, Godot.Control, MegaCrit.Sts2.Core.Map.ActMap, int, double, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](BlitzRivalMarkers.cs.md#symbol-9f0927789a81)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
 **调用：** 无已绑定显式调用。
 
@@ -990,17 +1042,17 @@ private string _signature = "";
 - `_avatar.Art` = `art`
 - `Art` = `art`
 
-<a id="symbol-683532d7c3b5"></a>
+<a id="symbol-7b27533a2169"></a>
 
-## `NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool) — public void UpdateState(List<Vector2> path, Vector2? marker, string name, int hp, int max, bool dead)`
+## `NationalSpire.RivalMapOverlay.UpdateState(System.Collections.Generic.List<Godot.Vector2>, Godot.Vector2?, string, int, int, bool, string, string) — public void UpdateState(List<Vector2> path, Vector2? marker, string name, int hp, int max, bool dead, string detail = "", string caption = "")`
 
-来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Map.ActMap, int)`](Coop/CoopLive.cs.md#symbol-3ddf0280ec69)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
+**调用者：** [`NationalSpire.BlitzRivalMarkers.Update(NationalSpire.CareerData, Godot.Control, MegaCrit.Sts2.Core.Map.ActMap, int, double, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](BlitzRivalMarkers.cs.md#symbol-9f0927789a81)；[`NationalSpire.Coop.CoopLive.UpdateMap(NationalSpire.Coop.CoopRun, MegaCrit.Sts2.Core.Runs.IRunState, System.Collections.Generic.IReadOnlyList<NationalSpire.LiveMapRival>)`](Coop/CoopLive.cs.md#symbol-a444164580e0)；[`NationalSpire.LiveRunBridge.UpdateMap(NationalSpire.LiveMatchState, NationalSpire.RivalProgress, double)`](LiveRunBridge.cs.md#symbol-cedfec15a9e5)
 
 **调用：** `Godot.CanvasItem.Hide()`；`Godot.CanvasItem.QueueRedraw()`；`Godot.CanvasItem.Show()`；`Godot.Node.CreateTween()`；`Godot.Tween.Kill()`；`Godot.Tween.SetEase(Godot.Tween.EaseType)`；`Godot.Tween.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.List<T>.ToArray()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.RivalMapOverlay._badge`；`NationalSpire.RivalMapOverlay._label`；`NationalSpire.RivalMapOverlay._marker`；`NationalSpire.RivalMapOverlay._move`；`NationalSpire.RivalMapOverlay._path`；`NationalSpire.RivalMapOverlay._signature`；`NationalSpire.RivalMapOverlay.BadgeOffset`
+**字段、属性、事件及方法组引用：** `NationalSpire.RivalMapOverlay._badge`；`NationalSpire.RivalMapOverlay._caption`；`NationalSpire.RivalMapOverlay._destination`；`NationalSpire.RivalMapOverlay._label`；`NationalSpire.RivalMapOverlay._marker`；`NationalSpire.RivalMapOverlay._move`；`NationalSpire.RivalMapOverlay._path`；`NationalSpire.RivalMapOverlay._signature`；`NationalSpire.RivalMapOverlay.BadgeOffset`；`NationalSpire.RivalMapOverlay.Compact`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -1018,6 +1070,9 @@ private string _signature = "";
 **赋值（含属性/字段和局部值）：**
 
 - `_badge.Position` = `destination`
+- `_badge.TooltipText` = `detail`
+- `_caption!.Text` = `caption`
+- `_destination` = `destination`
 - `_label.Text` = `name + $"\n{hp}/{max}" + (dead ? " · 已出局" : "")`
 - `_marker` = `marker`
 - `_move` = `CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out)`
@@ -1028,20 +1083,22 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._Draw() — public override void _Draw()`
 
-来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 315 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；`Godot.Color.Color(string)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.RivalMapOverlay._path`
+**字段、属性、事件及方法组引用：** `NationalSpire.RivalMapOverlay._hovered`；`NationalSpire.RivalMapOverlay._path`；`NationalSpire.RivalMapOverlay.Compact`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；输入表达式：`DrawArc(point, 20, 0, Mathf.Tau, 24, new Color("70baba99"), 2, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawArc(point, 20, 0, Mathf.Tau, 24, new Color("70baba99"), 2, true);`
 - `Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；输入表达式：`DrawPolyline(_path, new Color("70baba88"), 3, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline(_path, new Color("70baba88"), 3, true);`
+- `Godot.CanvasItem.DrawPolyline(Godot.Vector2[], Godot.Color, float, bool)`；输入表达式：`DrawPolyline(_path, new Color("82e2d5b0"), 2, true)`；返回值紧邻使用处：`ExpressionStatementSyntax: DrawPolyline(_path, new Color("82e2d5b0"), 2, true);`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("70baba88")`；返回值紧邻使用处：`ArgumentSyntax: new Color("70baba88")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("70baba99")`；返回值紧邻使用处：`ArgumentSyntax: new Color("70baba99")`
+- `Godot.Color.Color(string)`；输入表达式：`new Color("82e2d5b0")`；返回值紧邻使用处：`ArgumentSyntax: new Color("82e2d5b0")`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -1050,7 +1107,7 @@ private string _signature = "";
 
 ## `NationalSpire.RivalMapOverlay._ExitTree() — public override void _ExitTree()`
 
-来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 325 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

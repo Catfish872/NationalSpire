@@ -6,8 +6,7 @@ public static class EsportsWorld
 {
     public static readonly string[] Countries = ["中国", "日本", "韩国", "德国", "法国", "巴西", "英国", "美国"];
     private static readonly string[][] ClubNames = [ ["龙门竞技", "长夜俱乐部"], ["月见竞技", "赤枫俱乐部"], ["白虎电竞", "晨星竞技"], ["莱茵守望", "黑森林竞技"], ["白鸢俱乐部", "蔚蓝竞技"], ["金羽竞技", "雨林俱乐部"], ["王冠竞技", "雾港俱乐部"], ["极光竞技", "边境俱乐部"] ];
-    private static readonly string[] Characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
-    private static readonly string[] Styles = ["力量与高费攻击", "中毒与弃牌", "充能球与集中", "奥斯蒂与末日", "辉星与铸剑"];
+    private static readonly string[] Styles = ["力量与高费攻击", "中毒与弃牌", "充能球与集中", "奥斯蒂与末日", "辉星与铸剑", "箭矢与瞄准"];
     public static string LicenseName(CareerData d) => new[] { "社区新人", "城市挑战者", "青训选手", "职业选手" }[Math.Clamp(d.Esports.License, 0, 3)];
     public static CareerClub? Club(CareerData d, string id) => d.Esports.Clubs.FirstOrDefault(c => c.Id == id);
     public static string ClubName(CareerData d, string id) => Club(d, id)?.Name ?? "自由选手";
@@ -99,14 +98,16 @@ public static class EsportsWorld
                 if (p == null) { p = new CareerPerson { Id = id, Name = WorldPeople.Name(d, id, Countries[country], false) }; d.People.Add(p); }
                 p.Country = Countries[country]; p.Region = Countries[country] + "职业赛区"; p.ClubId = $"c{country}{i / 4}";
                 p.MaxAscension = i == 5 ? 9 : 8; p.Role = i == 5 ? "世界顶尖" : "职业选手";
-                p.Character = Characters[(country + i) % 5]; p.Style = Styles[(country + i) % 5];
+                int character = NpcCharacters.Select(country + i);
+                p.Character = NpcCharacters.Names[character]; p.Style = Styles[character];
                 p.Rating = 1280 + i * 18 + country * 7; p.Wins = Math.Max(p.Wins, 12 + i * 2); p.Losses = Math.Max(p.Losses, 70 + country * 9 + i * 3);
                 p.Voice = new[] { "传统派，喜欢用熟悉流派解释比赛", "谨慎，会先核对交手战绩", "自信，败给强者后愿意承认差距", "重视俱乐部荣誉，偏爱本队选手" }[i % 4];
             }
             for (int i = 0; i < 2; i++)
             {
-                d.People.Add(new CareerPerson { Id = $"y{country}_{i}", Name = WorldPeople.Name(d, $"y{country}_{i}", Countries[country], false), Country = Countries[country], Region = Countries[country] + "青训中心", ClubId = $"c{country}{i}", Role = "青训选手", MaxAscension = 6 + i, Character = Characters[(country + i) % 5], Style = Styles[(country + i) % 5], Rating = 1040 + i * 60, Wins = 6 + i, Losses = 55 + country, Voice = "渴望职业合同，容易模仿明星的构筑" });
-                if (country > 0) d.People.Add(new CareerPerson { Id = $"fan{country}_{i}", Name = WorldPeople.Name(d, $"fan{country}_{i}", Countries[country], true), Country = Countries[country], Region = Countries[country] + "社区", Role = "普通玩家", MaxAscension = i + 1, Character = Characters[(country + i) % 5], Style = "偏爱稀有牌", Rating = 650 + country * 8, Wins = 1 + i, Losses = 40 + country, Voice = i == 0 ? "支持主队，情绪热烈" : "普通观众，经常在第一幕失败" });
+                int character = NpcCharacters.Select(country + i);
+                d.People.Add(new CareerPerson { Id = $"y{country}_{i}", Name = WorldPeople.Name(d, $"y{country}_{i}", Countries[country], false), Country = Countries[country], Region = Countries[country] + "青训中心", ClubId = $"c{country}{i}", Role = "青训选手", MaxAscension = 6 + i, Character = NpcCharacters.Names[character], Style = Styles[character], Rating = 1040 + i * 60, Wins = 6 + i, Losses = 55 + country, Voice = "渴望职业合同，容易模仿明星的构筑" });
+                if (country > 0) d.People.Add(new CareerPerson { Id = $"fan{country}_{i}", Name = WorldPeople.Name(d, $"fan{country}_{i}", Countries[country], true), Country = Countries[country], Region = Countries[country] + "社区", Role = "普通玩家", MaxAscension = i + 1, Character = NpcCharacters.Names[character], Style = "偏爱稀有牌", Rating = 650 + country * 8, Wins = 1 + i, Losses = 40 + country, Voice = i == 0 ? "支持主队，情绪热烈" : "普通观众，经常在第一幕失败" });
             }
         }
         for (int i = 0; i < 16; i++) if (CareerEngine.Person(d, "p" + i) is { } p)

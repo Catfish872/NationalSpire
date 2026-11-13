@@ -76,11 +76,12 @@ public static class PlayerSimulation
         return result with { Seconds = lower + (upper - lower) * rng.NextDouble() };
     }
 
-    public static string? Run(CareerData d, CareerMatch match, string character, string characterId, int? ascension = null)
+    public static string? Run(CareerData d, CareerMatch match, string character, string characterId, int? ascension = null, string? mode = null)
     {
         if (d.PendingMatchId != null || d.Failure != null || match.Day != d.Day || match.Status != "待赛" || !match.Registered)
             return "请先完成当前比赛，再模拟当天已报名的比赛。";
         if (EsportsWorld.EntryReason(d, match) is { } error) return error;
+        if (mode != null) MatchModes.Select(d, match, mode, MatchModes.NativeAscension(mode, ascension ?? match.RequiredAscension));
         MatchRules.PrepareSeed(d, match); MatchRules.PrepareOpponent(d, match);
         var result = Sample(d, match, ascension: ascension);
         CareerEngine.FinishMatch(d, match, result.Cleared, false, result.Floor, character, ascension ?? match.RequiredAscension, [], result.Seconds,

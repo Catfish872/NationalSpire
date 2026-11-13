@@ -1,13 +1,37 @@
 using System.Reflection;
 using System.Text.Json;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Random;
+using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves;
 
 namespace NationalSpire;
 
 public static class GameCompatibility
 {
+    public static MethodInfo SingleplayerStart(Type acts)
+    {
+        bool player = typeof(NGame).GetMethods().Any(m => m.Name == "StartNewSingleplayerRun"
+            && m.GetParameters().FirstOrDefault()?.ParameterType == typeof(Player));
+        return player
+            ? RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(Player), typeof(bool), acts,
+                typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(bool), typeof(int))
+            : RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool), acts,
+                typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int));
+    }
+    public static Task StartSingleplayer(MethodInfo start, NGame game, CharacterModel character, List<ActModel> acts, string seed, int ascension, string mode = MatchModes.Standard)
+    {
+        if (start.GetParameters()[0].ParameterType == typeof(Player))
+        {
+            // 与旧开局内部的读取时机一致，保留当前档案的卡牌、遗物解锁进度和单人编号。
+            var player = Player.CreateForNewRun(character, SaveManager.Instance.GenerateUnlockStateFromProgress(), 1UL);
+            return (Task)RuntimeApi.Invoke(start, game, player, true, acts, Array.Empty<ModifierModel>(), seed, MatchModes.Native(mode), false, ascension)!;
+        }
+        return (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), seed, MatchModes.Native(mode), ascension)!;
+    }
     /// <summary>仅在开局长时间等待时读取加载队列；版本字段缺失作为诊断缺口返回。</summary>
     public static object AssetLoadingStatus()
     {

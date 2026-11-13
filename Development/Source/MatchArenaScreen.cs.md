@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`115A97855BA15C3C1D8E7A20933A2E56EF352CB7032BDB2F4997421089D4E554`。来源：[源码](../../MatchArenaScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`761F8789F3F040A2A633FC4E85A234B1AA68148C3EDDAB57CE6E6939A7CA4D32`。来源：[源码](../../MatchArenaScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -460,7 +460,7 @@ private Label? _arenaCharacter;
 
 来源：源码第 155 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.RosterMember(NationalSpire.CareerData, NationalSpire.OwnedClubState, Godot.VBoxContainer, string, string, bool)`](ClubRosterScreen.cs.md#symbol-8191d4b2f80f)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-c7b37568ec95)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
+**调用者：** [`NationalSpire.CareerScreen.RosterMember(NationalSpire.CareerData, NationalSpire.OwnedClubState, Godot.VBoxContainer, string, string, bool)`](ClubRosterScreen.cs.md#symbol-8191d4b2f80f)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-38ebaaa9d37d)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
 
 **调用：** [`NationalSpire.GameBridge.Characters()`](GameBridge.cs.md#symbol-1233494dda40)；[`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`](PlayerArchive.cs.md#symbol-9ab35bc5f38f)；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`string.Equals(string?, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -478,15 +478,15 @@ private Label? _arenaCharacter;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-c382a00cf2e6"></a>
+<a id="symbol-c4eb3ccea4ca"></a>
 
-## `NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string) — private void MatchArena(CareerData d,string title,string opponent,string opponentName,string state,string playerCharacter,Color accent,          out HBoxContainer actions, int day, Action? launch=null, string? playerPerformance=null, string? rivalPerformance=null, string source="赛事")`
+## `NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?) — private void MatchArena(CareerData d,string title,string opponent,string opponentName,string state,string playerCharacter,Color accent,          out HBoxContainer actions, int day, Action? launch=null, string? playerPerformance=null, string? rivalPerformance=null, string source="赛事", string? seed=null)`
 
 来源：源码第 161 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)
 
-**调用：** [`Center(Godot.Control, float, float, float, float)`](MatchArenaScreen.cs.md#symbol-bf615569daf9)；[`Line(string, int, Godot.Color)`](MatchArenaScreen.cs.md#symbol-13ce45b12552)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerScreen.Put(Godot.Control, Godot.Control, float, float, float, float)`](CareerDashboard.cs.md#symbol-e49412bc4596)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-8a08be365f83)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-c7b37568ec95)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Control.HasFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MatchArenaBackdrop.MatchArenaBackdrop()`；`NationalSpire.MatchMedallion.MatchMedallion()`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.DateOnly.ToString(string?)`
+**调用：** [`Center(Godot.Control, float, float, float, float)`](MatchArenaScreen.cs.md#symbol-2b0dc56b4008)；[`Line(string, int, Godot.Color)`](MatchArenaScreen.cs.md#symbol-dd5effa95879)；[`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-00283e0414cc)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.NavigationIcon(string)`](CareerDashboard.cs.md#symbol-3c49977c9503)；[`NationalSpire.CareerScreen.Put(Godot.Control, Godot.Control, float, float, float, float)`](CareerDashboard.cs.md#symbol-e49412bc4596)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`](GameCalendar.cs.md#symbol-8a08be365f83)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-38ebaaa9d37d)；`Godot.BaseButton.IsHovered()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.Control()`；`Godot.Control.GetThemeFont(Godot.StringName, Godot.StringName)`；`Godot.Control.HasFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.MatchArenaBackdrop.MatchArenaBackdrop()`；`NationalSpire.MatchMedallion.MatchMedallion()`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.DateOnly.ToString(string?)`
 
 **字段、属性、事件及方法组引用：** `Center(Godot.Control, float, float, float, float)`；`Line(string, int, Godot.Color)`；`NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ButtonStates`；`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.NavigationIcon(string)`；`NationalSpire.CareerScreen.Put(Godot.Control, Godot.Control, float, float, float, float)`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.Teal`；`NationalSpire.GameCalendar.Date(NationalSpire.CareerData, int)`；`NationalSpire.ICareerSession.Host`；`NationalSpire.MatchArenaBackdrop.Launch`；`NationalSpire.MatchMedallion.Accent`；`NationalSpire.MatchMedallion.Victory`；`Participant(string, string, string, bool, string?)`
 
@@ -494,10 +494,10 @@ private Label? _arenaCharacter;
 
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(actions,.5f,launch==null?375:340,360,40)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(actions,.5f,launch==null?375:340,360,40);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(emblem,.5f,86,170,180)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(emblem,.5f,86,170,180);`
+- `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(eventTitle,.5f,20,426,60)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(eventTitle,.5f,20,426,60);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(heading,.5f,274,300,57)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(heading,.5f,274,300,57);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(Line(state,42,accent),.5f,274,300,57)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(Line(state,42,accent),.5f,274,300,57);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(Line(state=="胜利"?"VICTORY":state=="失败"?"DEFEAT":"DRAW",15,_muted),.5f,339,200,24)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(Line(state=="胜利"?"VICTORY":state=="失败"?"DEFEAT":"DRAW",15,_muted),.5f,339,200,24);`
-- `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(Line(title,19,_gold),.5f,20,426,60)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(Line(title,19,_gold),.5f,20,426,60);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(new MatchMedallion {Victory=state=="胜利",Accent=accent,MouseFilter=MouseFilterEnum.Ignore},.5f,86,170,180)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(new MatchMedallion {Victory=state=="胜利",Accent=accent,MouseFilter=MouseFilterEnum.Ignore},.5f,86,170,180);`
 - `Center(Godot.Control, float, float, float, float)`；输入表达式：`Center(src,1,20,180,26)`；返回值紧邻使用处：`ExpressionStatementSyntax: Center(src,1,20,180,26);`
 - `Godot.BaseButton.IsHovered()`；输入表达式：`emblem.IsHovered()`；返回值紧邻使用处：`BinaryExpressionSyntax: heading.Disabled || emblem.IsHovered()`
@@ -526,7 +526,7 @@ private Label? _arenaCharacter;
 - `Line(string, int, Godot.Color)`；输入表达式：`Line(source,14,_muted)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =Line(source,14,_muted)`
 - `Line(string, int, Godot.Color)`；输入表达式：`Line(state,42,accent)`；返回值紧邻使用处：`ArgumentSyntax: Line(state,42,accent)`
 - `Line(string, int, Godot.Color)`；输入表达式：`Line(state=="胜利"?"VICTORY":state=="失败"?"DEFEAT":"DRAW",15,_muted)`；返回值紧邻使用处：`ArgumentSyntax: Line(state=="胜利"?"VICTORY":state=="失败"?"DEFEAT":"DRAW",15,_muted)`
-- `Line(string, int, Godot.Color)`；输入表达式：`Line(title,19,_gold)`；返回值紧邻使用处：`ArgumentSyntax: Line(title,19,_gold)`
+- `Line(string, int, Godot.Color)`；输入表达式：`Line(title,19,_gold)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = Line(title,19,_gold)`
 - `NationalSpire.CareerEngine.Name(NationalSpire.CareerData)`；输入表达式：`CareerEngine.Name(d)`；返回值紧邻使用处：`ArgumentSyntax: CareerEngine.Name(d)`
 - `NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；输入表达式：`CareerEngine.Person(d,opponent)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: CareerEngine.Person(d,opponent)?.Character`
 - `NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；输入表达式：`CaptionButton("",launch)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =CaptionButton("",launch)`
@@ -558,6 +558,7 @@ private Label? _arenaCharacter;
 - `emblem.MouseExited` += `heading.QueueRedraw`
 - `emblem.Name` = `"ArenaStart"`
 - `emblem.TooltipText` = `state`
+- `eventTitle.TooltipText` = `"比赛种子\n" + seed`
 - `heading.Disabled` = `emblem.Disabled`
 - `heading.Draw` += `()=>              {                  if (heading.Disabled || emblem.IsHovered() || !(heading.IsHovered() || heading.HasFocus())) return;                  float width=heading.GetThemeFont("font").GetStringSize(state,fontSize:size).X;                  float x=(heading.Size.X-width)/2, y=heading.Size.Y-3;                  heading.DrawLine(new(x,y),new(x+width,y),CareerVisuals.Teal,2);              }`
 - `heading.Name` = `"ArenaStateAction"`
@@ -569,13 +570,13 @@ private Label? _arenaCharacter;
 - `src.OffsetRight` = `-28`
 - `Victory` = `state=="胜利"`
 
-<a id="symbol-bf615569daf9"></a>
+<a id="symbol-2b0dc56b4008"></a>
 
 ## `Center(Godot.Control, float, float, float, float) — void Center(Control node,float fraction,float y,float width,float height)`
 
 来源：源码第 168 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string)`](MatchArenaScreen.cs.md#symbol-c382a00cf2e6)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-c7b37568ec95)
+**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-38ebaaa9d37d)
 
 **调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -594,13 +595,13 @@ private Label? _arenaCharacter;
 - `node.OffsetRight` = `width/2`
 - `node.OffsetTop` = `y`
 
-<a id="symbol-13ce45b12552"></a>
+<a id="symbol-dd5effa95879"></a>
 
 ## `Line(string, int, Godot.Color) — Label Line(string value,int size,Color color)`
 
 来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string)`](MatchArenaScreen.cs.md#symbol-c382a00cf2e6)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-c7b37568ec95)
+**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-38ebaaa9d37d)
 
 **调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)
 
@@ -615,15 +616,15 @@ private Label? _arenaCharacter;
 - `label.HorizontalAlignment` = `HorizontalAlignment.Center`
 - `label.VerticalAlignment` = `VerticalAlignment.Center`
 
-<a id="symbol-c7b37568ec95"></a>
+<a id="symbol-38ebaaa9d37d"></a>
 
 ## `Participant(string, string, string, bool, string?) — void Participant(string id,string name,string character,bool player,string? performance)`
 
 来源：源码第 177 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string)`](MatchArenaScreen.cs.md#symbol-c382a00cf2e6)
+**调用者：** [`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)
 
-**调用：** [`Center(Godot.Control, float, float, float, float)`](MatchArenaScreen.cs.md#symbol-bf615569daf9)；[`Line(string, int, Godot.Color)`](MatchArenaScreen.cs.md#symbol-13ce45b12552)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerScreen.ArenaCharacterName(string)`](MatchArenaScreen.cs.md#symbol-8a35d94d8045)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.OpenPerson(string)`](CareerNavigation.cs.md#symbol-4430ec2bce8b)；[`NationalSpire.CareerVisuals.InterfaceText(int, int)`](CareerVisuals.cs.md#symbol-a7767494d113)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`string.IsNullOrWhiteSpace(string?)`；`System.Math.Max(int, int)`
+**调用：** [`Center(Godot.Control, float, float, float, float)`](MatchArenaScreen.cs.md#symbol-2b0dc56b4008)；[`Line(string, int, Godot.Color)`](MatchArenaScreen.cs.md#symbol-dd5effa95879)；[`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`](CareerEngine.cs.md#symbol-e88f87203328)；[`NationalSpire.CareerScreen.ArenaCharacterName(string)`](MatchArenaScreen.cs.md#symbol-8a35d94d8045)；[`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`](CareerAvatars.cs.md#symbol-9f2c4623a902)；[`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`](CareerDashboard.cs.md#symbol-22831701f7f1)；[`NationalSpire.CareerScreen.OpenPerson(string)`](CareerNavigation.cs.md#symbol-4430ec2bce8b)；[`NationalSpire.CareerVisuals.InterfaceText(int, int)`](CareerVisuals.cs.md#symbol-a7767494d113)；[`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`](EsportsWorld.cs.md#symbol-54b1e9fa0cf0)；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Font.GetStringSize(string, Godot.HorizontalAlignment, float, int, Godot.TextServer.JustificationFlag, Godot.TextServer.Direction, Godot.TextServer.Orientation)`；`string.IsNullOrWhiteSpace(string?)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `Center(Godot.Control, float, float, float, float)`；`Line(string, int, Godot.Color)`；`NationalSpire.CareerData.AvatarHighestClear`；`NationalSpire.CareerData.Esports`；`NationalSpire.CareerEngine.Person(NationalSpire.CareerData, string)`；`NationalSpire.CareerPerson.ClubId`；`NationalSpire.CareerPerson.Country`；`NationalSpire.CareerPerson.MaxAscension`；`NationalSpire.CareerScreen._arenaCharacter`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen.ArenaCharacterName(string)`；`NationalSpire.CareerScreen.Avatar(NationalSpire.CareerData, string, int, bool, System.Action?)`；`NationalSpire.CareerScreen.CaptionButton(string, System.Action, bool)`；`NationalSpire.CareerScreen.OpenPerson(string)`；`NationalSpire.CareerVisuals.InterfaceText(int, int)`；`NationalSpire.EsportsCareer.ClubId`；`NationalSpire.EsportsCareer.Country`；`NationalSpire.EsportsWorld.ClubName(NationalSpire.CareerData, string)`
 

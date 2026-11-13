@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`C8DB6FAFAA97B6B843D5B84B7B5DF0D0403FF1918CEB2CA1E265E45BB7858C22`。来源：[源码](../../DateGameReturn.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`72F504C1531BC65340DD9753FE3FAAA17F92CD09087EB0C666F86896534AF686`。来源：[源码](../../DateGameReturn.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,16 +21,17 @@
 
 **调用者：** [`NationalSpire.DateGameReturn.PrepareSavedResume(NationalSpire.CareerData, string, string)`](DateGameReturn.cs.md#symbol-5f5af2e8993e)
 
-**调用：** [`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`](CareerRunBinding.cs.md#symbol-814ae5a03226)；[`NationalSpire.DateGames.InProgress(NationalSpire.CareerData, string, string)`](DateGames.cs.md#symbol-a63bde99754a)；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`
+**调用：** [`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`](CareerRunBinding.cs.md#symbol-98b98bdd8fa3)；[`NationalSpire.DateGames.InProgress(NationalSpire.CareerData, string, string)`](DateGames.cs.md#symbol-a63bde99754a)；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Enum.ToString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerMatch.Id`；`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`；`NationalSpire.DateGames.InProgress(NationalSpire.CareerData, string, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerMatch.Id`；`NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`；`NationalSpire.DateGames.InProgress(NationalSpire.CareerData, string, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`.ToString()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .CharacterId?.ToString()`
-- `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, bool, long?)`；输入表达式：`CareerRunBinding.Find(data, saved.SerializableRng?.Seed ?? "",              saved.Players?.FirstOrDefault()?.CharacterId?.ToString() ?? "", saved.Ascension,              saved.Players?.Count ?? 0, saved.GameMode == GameMode.Standard, saved.StartTime)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: CareerRunBinding.Find(data, saved.SerializableRng?.Seed ?? "",              saved.Players?.FirstOrDefault()?.CharacterId?.ToString() ?? "", saved.Ascension,              saved.Players?.Count ?? 0, saved.GameMode == GameMode.Standard, saved.StartTime)?.Id`
+- `NationalSpire.CareerRunBinding.Find(NationalSpire.CareerData, string, string, int, int, string, long?)`；输入表达式：`CareerRunBinding.Find(data, saved.SerializableRng?.Seed ?? "",              saved.Players?.FirstOrDefault()?.CharacterId?.ToString() ?? "", saved.Ascension,              saved.Players?.Count ?? 0, saved.GameMode.ToString(), saved.StartTime)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: CareerRunBinding.Find(data, saved.SerializableRng?.Seed ?? "",              saved.Players?.FirstOrDefault()?.CharacterId?.ToString() ?? "", saved.Ascension,              saved.Players?.Count ?? 0, saved.GameMode.ToString(), saved.StartTime)?.Id`
 - `NationalSpire.DateGames.InProgress(NationalSpire.CareerData, string, string)`；输入表达式：`DateGames.InProgress(data, host, offer)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = DateGames.InProgress(data, host, offer)`
 - `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`.FirstOrDefault()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .FirstOrDefault()?.CharacterId?.ToString()`
+- `System.Enum.ToString()`；输入表达式：`saved.GameMode.ToString()`；返回值紧邻使用处：`ArgumentSyntax: saved.GameMode.ToString()`
 
 **赋值（含属性/字段和局部值）：**
 

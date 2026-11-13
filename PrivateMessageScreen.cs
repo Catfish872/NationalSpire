@@ -367,6 +367,8 @@ public partial class CareerScreen
     {
         command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
         string person = target ?? _privatePerson;
+        if (ChatCommandTargets.LatestTurn(kind) && command.Entry.Length == 0)
+            command.Entry = PrivateMessages.Mailbox(ViewData).Conversations.GetValueOrDefault(person)?.Turns.LastOrDefault()?.Id ?? "";
         void Fail(string message)
         {
             if (failed != null) { failed(message); return; }

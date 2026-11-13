@@ -35,7 +35,8 @@ public static partial class WorldPeople
         ["中毒积累，习惯等待关键牌", "弃牌配合，偏爱熟悉的过牌组合", "小刀与多次攻击，容易高估连续出牌", "格挡与中毒，打法偏慢", "偏爱低费攻击，选牌积极", "重视保留手牌，依赖固定构筑范本"],
         ["闪电球输出，偏爱增加球位", "冰霜球防御，打法谨慎", "集中与充能球，依赖关键能力牌", "黑暗球积累，习惯等待爆发", "球体触发，喜欢追求单回合高输出", "偏爱零费攻击，对球体构筑较为保守"],
         ["围绕奥斯蒂攻击，偏爱稳定的召唤支援", "奥斯蒂承担伤害，路线选择谨慎", "末日积累，愿意延长战斗", "偏爱奥斯蒂与末日混合构筑", "优先寻找熟悉的召唤配合", "重视召唤持续性，升级选择保守"],
-        ["辉星积累，偏爱后期集中输出", "铸剑构筑，围绕熟悉的攻击安排升级", "辉星与高费牌，选牌较为贪心", "偏爱低费过渡，等待核心牌出现", "铸剑与防御，前期路线谨慎", "习惯保留辉星，对消耗时机比较犹豫"]
+        ["辉星积累，偏爱后期集中输出", "铸剑构筑，围绕熟悉的攻击安排升级", "辉星与高费牌，选牌较为贪心", "偏爱低费过渡，等待核心牌出现", "铸剑与防御，前期路线谨慎", "习惯保留辉星，对消耗时机比较犹豫"],
+        ["瞄准积累，偏爱沉重射击的一箭爆发", "箭矢回收，依赖熟悉的召回配合", "多次攻击，重视箭矢松脱后的再次射击", "偏爱哇牌的直接伤害，常忽略啾与叽的配合", "拉伸防御，常担心射击后的空窗期", "悲伤转化，偏爱生长与拉伸配合"]
     ];
     private static readonly string[] ProBios = ["常在赛前整理往届战报，把熟悉的选牌顺序记进笔记。", "训练结束后仍会留在复盘室，但更愿意讨论自己熟悉的角色。", "习惯保存失利的种子，希望下一次能用同一种构筑走得更远。", "比赛前喜欢独自准备，公开采访通常比场上表现克制。", "经常参与队内交流，对自己认定的核心牌很有耐心。", "喜欢研究其他赛区的招牌构筑，临场采用时仍然谨慎。", "会认真阅读支持者的赛后讨论，也会记下质疑自己的观点。", "赛前安排规律，训练笔记里保留着大量被划掉的构筑计划。"];
     private static readonly string[] YouthBios = ["把职业选手的牌组抄进练习本，还在寻找适合自己的打法。", "训练时常与同伴交换种子，期待下一次选拔机会。", "会反复观看熟悉角色的战报，遇到陌生构筑容易迟疑。", "总把职业联赛日程贴在桌边，平时从低进阶练习开始。", "对俱乐部试训充满期待，也清楚自己还缺少稳定成绩。", "习惯写下当天最遗憾的一次选择，第二天重新尝试。"];
@@ -60,7 +61,6 @@ public static partial class WorldPeople
     public static void Enrich(CareerData data)
     {
         if (data.ContentVersion >= ContentVersion) return;
-        string[] characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
         foreach (string country in EsportsWorld.Countries)
         {
             int count = data.People.Count(p => p.Country == country && p.Role == "普通玩家");
@@ -70,7 +70,7 @@ public static partial class WorldPeople
                 if (data.People.Any(p => p.Id == id)) continue;
                 var rng = new Random(CareerEngine.StableHash(data.WorldId + id));
                 data.People.Add(new CareerPerson { Id = id, Name = Name(data, id, country, true), Country = country, Region = country + "社区",
-                    Role = "普通玩家", Character = characters[rng.Next(5)], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) });
+                    Role = "普通玩家", Character = NpcCharacters.Names[NpcCharacters.Available[rng.Next(NpcCharacters.Available.Count)]], MaxAscension = rng.Next(4), Wins = rng.Next(1, 6), Losses = rng.Next(30, 95), Rating = rng.Next(620, 860) });
             }
         }
         foreach (var person in data.People)
@@ -86,7 +86,7 @@ public static partial class WorldPeople
                 var bank = EsportsWorld.IsProfessional(person) ? ProBios : person.Role == "青训选手" ? YouthBios : FanBios;
                 person.Biography = bank[rng.Next(bank.Length)];
             }
-            int character = Array.IndexOf(characters, person.Character);
+            int character = NpcCharacters.Index(person.Character);
             if (character >= 0) person.Style = Styles[character][rng.Next(Styles[character].Length)];
             if (person.SupportedClubId.Length == 0)
             {

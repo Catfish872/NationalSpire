@@ -15,10 +15,16 @@ public static class CareerRunBinding
 
     public static CareerMatch? Find(CareerData data, string seed, string character, int ascension,
         int playerCount, bool standard, long? startTime = null)
+        => Find(data, seed, character, ascension, playerCount, standard ? MatchModes.Standard : "", startTime);
+
+    public static CareerMatch? Find(CareerData data, string seed, string character, int ascension,
+        int playerCount, string mode, long? startTime = null)
     {
-        if (data.PendingMatchId == null || playerCount != 1 || !standard
-            || character != data.SelectedCharacter || ascension != data.SelectedAscension
+        if (data.PendingMatchId == null || playerCount != 1
+            || character != data.SelectedCharacter
             || (startTime.HasValue && data.PendingSince != 0 && startTime.Value < data.PendingSince - 5)) return null;
-        return data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId && m.Status == "待赛" && SameSeed(m.Seed, seed));
+        return data.Matches.FirstOrDefault(m => m.Id == data.PendingMatchId && m.Status == "待赛" && SameSeed(m.Seed, seed)
+            && MatchModes.ForMatch(m) == mode
+            && ascension == MatchModes.NativeAscension(mode, m.ChosenAscension ?? data.SelectedAscension));
     }
 }

@@ -18,7 +18,8 @@ public sealed class CoopLive(CoopCoordinator session)
     private string _diagnosticAttempt = "";
     private int _diagnosticResume = -1;
     private readonly Dictionary<string, RivalMapOverlay> _maps = [];
-    public void Close() { if (_hud != null && GodotObject.IsInstanceValid(_hud)) _hud.QueueFree(); _broadcast?.Dispose(); _broadcast = null; _heard.Clear(); foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.QueueFree(); _maps.Clear(); _hud = null; _attached = ""; }
+    private BlitzRivalMarkers? _blitzMap;
+    public void Close() { if (_hud != null && GodotObject.IsInstanceValid(_hud)) _hud.QueueFree(); _broadcast?.Dispose(); _broadcast = null; _heard.Clear(); foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.QueueFree(); _maps.Clear(); _blitzMap?.Dispose(); _blitzMap = null; _hud = null; _attached = ""; }
     public void Update()
     {
         if (session.World?.Run is not { } live || !RunManager.Instance.IsInProgress || NRun.Instance == null) { Close(); return; }
@@ -71,14 +72,15 @@ public sealed class CoopLive(CoopCoordinator session)
             session.PublishLive();
         }
         var lines = new List<string> { "共同生涯  /  团队赛", $"我方第 {live.Act + 1} 幕 · {live.Floor} 层 · {MatchRules.Time(live.Clock)}" };
+        var rivals = live.RivalMembers.Where(p => p.Value.Steps.Count > 0).Select(p => new LiveMapRival(p.Key,
+            CareerEngine.DisplayName(session.World.World, p.Key), RivalSimulation.At(p.Value, live.Clock), p.Value.MaxHp, p.Value.Steps)).ToList();
         foreach (var player in live.Players) lines.Add(session.World.Members.First(m => m.SteamId == player.Id).Name + $"  {player.Hp}/{player.MaxHp}" + (player.Dead ? " · 暂时倒下" : ""));
         if (live.Rival is { Steps.Count: > 0 })
         {
             var progress = RivalSimulation.At(live.Rival, live.Clock);
             lines.Add($"\n对方第 {progress.Step.Act + 1} 幕 · {progress.Step.Floor} 层" + (progress.Finished ? progress.Dead ? " · 全队止步" : " · 已通关" : " · " + RivalSimulation.RoomName(progress.Step.Kind)));
             if (progress.Step.Act == state.CurrentActIndex && !LiveMaps.Matches(state.Map, live.Rival.Steps, state.CurrentActIndex)) lines[^1] += " · 独立路线";
-            foreach (var rival in live.RivalMembers)
-                lines.Add(CareerEngine.DisplayName(session.World.World, rival.Key) + $"  {RivalSimulation.At(rival.Value, live.Clock).Hp}/{rival.Value.MaxHp}");
+            foreach (var rival in rivals) lines.Add(rival.Name + $"  {rival.Progress.Hp}/{rival.MaxHp}");
         }
 
         if (!session.Full) lines.Add("队员连接中断，正在暂停比赛");
@@ -108,7 +110,7 @@ public sealed class CoopLive(CoopCoordinator session)
                 id.Length > 0 ? AvatarHonors.ForPerson(session.World.World, id) : null);
         }
         _heard.IntersectWith(live.Speeches.Select(s => s.Id));
-        UpdateMap(live, state.Map, state.CurrentActIndex);
+        UpdateMap(live, state, rivals);
     }
     private void ConfirmStop()
     {
@@ -131,8 +133,16 @@ public sealed class CoopLive(CoopCoordinator session)
             finally { if (GodotObject.IsInstanceValid(cover)) cover.QueueFree(); }
         };
     }
-    private void UpdateMap(CoopRun live, ActMap actualMap, int act)
+    private void UpdateMap(CoopRun live, IRunState state, IReadOnlyList<LiveMapRival> rivals)
     {
+        var actualMap = state.Map;
+        int act = state.CurrentActIndex;
+        if (state.GameMode.ToString() == MatchModes.Blitz)
+        {
+            _blitzMap ??= new();
+            _blitzMap.Update(session.World!.World, NRun.Instance!.GlobalUi, actualMap, act, live.Clock, rivals);
+            return;
+        }
         if (live.Rival == null || NMapScreen.Instance is not { IsOpen: true } screen)
         { foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.Hide(); return; }
         if (!LiveMaps.Matches(actualMap, live.Rival.Steps, act))
@@ -153,7 +163,7 @@ public sealed class CoopLive(CoopCoordinator session)
             }
             overlay.Show();
             Vector2 Position(NMapPoint point) => overlay.GetGlobalTransformWithCanvas().AffineInverse() * (point.GetGlobalTransformWithCanvas() * (point is NNormalMapPoint ? Vector2.Zero : point.Size * .5f));
-            var progress = RivalSimulation.At(member, live.Clock);
+            var progress = rivals.First(r => r.Id == id).Progress;
             var path = i == 0 ? live.Rival.Steps.Where(s => s.Act == act && s.Start <= live.Clock && points.ContainsKey(new(s.Col, s.Row))).Select(s => Position(points[new(s.Col, s.Row)])).ToList() : new List<Vector2>();
             Vector2? at = progress.Step.Act == act && points.TryGetValue(new(progress.Step.Col, progress.Step.Row), out var point) ? Position(point) : null;
             overlay.UpdateState(path, at, CareerEngine.DisplayName(session.World!.World, id), progress.Hp, member.MaxHp, progress.Dead);

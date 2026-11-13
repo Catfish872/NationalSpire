@@ -35,7 +35,7 @@ public static class GameCharacterNames
                     .ToDictionary(g => g.Key, g => g.First().Hp, StringComparer.OrdinalIgnoreCase);
                 _healthLanguage = language;
             }
-            return _startingHp.GetValueOrDefault(character, 75);
+            return _startingHp.GetValueOrDefault(character, NpcCharacters.Index(character) == 5 ? 77 : 75);
         }
     }
     public static bool IsOriginal(Type type) => type.Assembly == typeof(CharacterModel).Assembly;

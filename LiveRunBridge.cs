@@ -35,6 +35,7 @@ public partial class LiveRunBridge : Node
     private BattleObservation? _battle;
     private LiveRaceHud _hud = null!;
     private RivalMapOverlay? _mapOverlay;
+    private BlitzRivalMarkers? _blitzMap;
     private double _tick;
     private double _mapCheck;
     private bool _faulted, _commentaryFaulted, _ended;
@@ -54,7 +55,7 @@ public partial class LiveRunBridge : Node
         var data = CareerStore.Data;
         if (data.PendingMatchId == null) return;
         var match = CareerRunBinding.Find(data, run.Rng.StringSeed, run.Players.FirstOrDefault()?.Character.Id.ToString() ?? "",
-            run.AscensionLevel, run.Players.Count, run.GameMode == GameMode.Standard);
+            run.AscensionLevel, run.Players.Count, run.GameMode.ToString());
         if (match == null)
         {
             Diagnostics.Record("live.binding_skipped", new { data.PendingMatchId, runSeed = run.Rng.StringSeed,
@@ -98,6 +99,7 @@ public partial class LiveRunBridge : Node
         if (Current == this) Current = null;
         if (IsInstanceValid(_hud)) _hud.QueueFree();
         if (IsInstanceValid(_mapOverlay)) _mapOverlay!.QueueFree();
+        _blitzMap?.Dispose();
     }
     internal static void Guard(Action action, bool commentaryOnly = false)
     {
@@ -117,7 +119,7 @@ public partial class LiveRunBridge : Node
     {
         if (_ended) return;
         if (_faulted || !CareerStore.IsCurrent(_data) || _data.PendingMatchId != _match.Id)
-        { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
+        { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); _blitzMap?.Hide(); return; }
         if (_match.DateGame != null) TickDateRequestClock(delta);
         _tick += delta;
         _mapCheck += delta;
@@ -233,7 +235,7 @@ public partial class LiveRunBridge : Node
         if (_match.DateGame == null) _hud.SetRace(_rival.PublicName, status, progress.Hp, live.MaxHp, progress.Step.Act != _run.CurrentActIndex, seconds);
         if (seconds >= _mapRetryAt)
             try { UpdateMap(live, progress, seconds); }
-            catch (Exception e) { Diagnostics.Error("live.map", e); _mapRetryAt = seconds + 5; _mapPoints = null; if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); GD.PushWarning("[NationalSpire] 地图标记等待重建：" + e.Message); }
+            catch (Exception e) { Diagnostics.Error("live.map", e); _mapRetryAt = seconds + 5; _mapPoints = null; if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); _blitzMap?.Hide(); GD.PushWarning("[NationalSpire] 地图标记等待重建：" + e.Message); }
     }
     private void ObservePotions(BroadcastMemory memory, double seconds)
     {
@@ -289,6 +291,16 @@ public partial class LiveRunBridge : Node
 
     private void UpdateMap(LiveMatchState live, RivalProgress progress, double seconds)
     {
+        if (_run.GameMode.ToString() == MatchModes.Blitz)
+        {
+            _blitzMap ??= new();
+            var rivals = new List<LiveMapRival> { new(_rival.Id, _rival.PublicName, progress, live.MaxHp, live.Steps) };
+            if (_match.DateGame is { } game)
+                rivals.AddRange(game.Companions.Where(m => m.Live is { Steps.Count: > 0 }).Select(m => new LiveMapRival(m.OpponentId,
+                    CareerEngine.DisplayName(_data, m.OpponentId), RivalSimulation.At(m.Live!, seconds), m.Live!.MaxHp, m.Live.Steps)));
+            _blitzMap.Update(_data, NRun.Instance!.GlobalUi, _run.Map, _run.CurrentActIndex, seconds, rivals);
+            return;
+        }
         var screen = NMapScreen.Instance;
         if (screen == null || !screen.IsOpen || !_mapCompatible) { if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); return; }
         if (_mapScreen != screen || _mapPoints == null || _mapPoints.Count == 0 || _mapPoints.Values.Any(p => !IsInstanceValid(p) || p.IsQueuedForDeletion()))

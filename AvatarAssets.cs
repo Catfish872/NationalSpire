@@ -11,7 +11,7 @@ public static class AvatarAssets
     private static readonly Dictionary<string, string> CharacterAliases = new(StringComparer.OrdinalIgnoreCase)
     {
         ["铁甲战士"] = "IRONCLAD", ["静默猎手"] = "SILENT", ["故障机器人"] = "DEFECT",
-        ["亡灵契约师"] = "NECROBINDER", ["储君"] = "REGENT"
+        ["亡灵契约师"] = "NECROBINDER", ["储君"] = "REGENT", ["愚者"] = "FOOL", ["The Fool"] = "FOOL"
     };
     public static AvatarArt Load(string character, int variation, bool preferCard, int newsImportance = 0)
     {

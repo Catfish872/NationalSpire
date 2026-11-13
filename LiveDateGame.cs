@@ -39,7 +39,7 @@ public partial class LiveRunBridge
             if (companion == null)
             {
                 companion = new() { Id = _match.Id + "/" + person, Kind = "private-friendly", Day = _match.Day, Seed = _match.Seed,
-                    SeedRandomized = true, RequiredAscension = _match.RequiredAscension, ChosenAscension = _match.ChosenAscension, OpponentId = person };
+                    SeedRandomized = true, RequiredAscension = _match.RequiredAscension, ChosenMode = _match.ChosenMode, ChosenAscension = _match.ChosenAscension, OpponentId = person };
                 MatchRules.PrepareOpponent(_data, companion); game.Companions.Add(companion);
                 changed = true;
             }

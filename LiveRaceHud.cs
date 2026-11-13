@@ -251,19 +251,38 @@ public partial class LiveRaceHud : PanelContainer
 /// <summary>仅绘制已走路线，地图缩放和拖动由原生父控件处理。</summary>
 public partial class RivalMapOverlay : Control
 {
+    public bool Compact { get; init; }
     public Vector2 BadgeOffset { get; set; } = new(25, -48);
     public AvatarIdentity? Identity { get; set; }
     public AvatarArt Art { get; set; } = new(null, CareerVisuals.Teal, "");
     private Vector2[] _path = [];
     private Vector2? _marker;
+    private Vector2? _destination;
     private PanelContainer _badge = null!;
-    private Label _label = null!;
+    private Label? _label, _caption;
     private CareerAvatar _avatar = null!;
     private Tween? _move;
     private string _signature = "";
+    private bool _hovered;
     public override void _Ready()
     {
         MouseFilter = MouseFilterEnum.Ignore; ZIndex = 10; Theme = CareerVisuals.CreateTheme();
+        if (Compact)
+        {
+            _badge = new PanelContainer { MouseFilter = MouseFilterEnum.Pass, CustomMinimumSize = new(26, 26) };
+            _badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232df0", "70baba", 5, 1)); AddChild(_badge);
+            var face = new Control { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new(24, 24) }; _badge.AddChild(face);
+            _avatar = new CareerAvatar { Art = Art, Simplified = true }; face.AddChild(_avatar);
+            _avatar.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+            _caption = new Label { Position = new(17, 16), MouseFilter = MouseFilterEnum.Ignore };
+            _caption.AddThemeFontSizeOverride("font_size", 10);
+            _caption.AddThemeColorOverride("font_color", new("e8f9f6"));
+            _caption.AddThemeColorOverride("font_outline_color", new("07131b"));
+            _caption.AddThemeConstantOverride("outline_size", 4); face.AddChild(_caption);
+            _badge.MouseEntered += () => { _hovered = true; QueueRedraw(); };
+            _badge.MouseExited += () => { _hovered = false; QueueRedraw(); };
+            return;
+        }
         _badge = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, CustomMinimumSize = new Vector2(125, 72) };
         _badge.AddThemeStyleboxOverride("panel", CareerVisuals.Box("10232deb", "70baba", 8, 6)); AddChild(_badge);
         var row = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore }; _badge.AddChild(row);
@@ -271,28 +290,35 @@ public partial class RivalMapOverlay : Control
         _label = new Label { MouseFilter = MouseFilterEnum.Ignore }; _label.AddThemeFontSizeOverride("font_size", 14); row.AddChild(_label);
     }
     public void RefreshArt(AvatarArt art) { Art = art; _avatar.Art = art; }
-    public void UpdateState(List<Vector2> path, Vector2? marker, string name, int hp, int max, bool dead)
+    public void UpdateState(List<Vector2> path, Vector2? marker, string name, int hp, int max, bool dead, string detail = "", string caption = "")
     {
-        string signature = string.Join(';', path) + ":" + marker + ":" + hp + ":" + dead;
+        string signature = string.Join(';', path) + ":" + marker + ":" + BadgeOffset + ":" + hp + ":" + dead + ":" + detail + ":" + caption;
         if (_signature == signature) return;
         _signature = signature; _path = path.ToArray();
-        _label.Text = name + $"\n{hp}/{max}" + (dead ? " · 已出局" : "");
+        if (_label != null) _label.Text = name + $"\n{hp}/{max}" + (dead ? " · 已出局" : "");
+        if (Compact) { _badge.TooltipText = detail; _caption!.Text = caption; }
         if (marker is { } at)
         {
             var destination = at + BadgeOffset;
             _badge.Show();
-            if (_marker != marker)
+            if (_destination != destination)
             {
                 _move?.Kill();
                 if (_marker == null) _badge.Position = destination;
                 else { _move = CreateTween().SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out); _move.TweenProperty(_badge, "position", destination, .45); }
             }
+            _destination = destination;
         }
         else _badge.Hide();
         _marker = marker; QueueRedraw();
     }
     public override void _Draw()
     {
+        if (Compact)
+        {
+            if (_hovered && _path.Length > 1) DrawPolyline(_path, new Color("82e2d5b0"), 2, true);
+            return;
+        }
         if (_path.Length > 1) DrawPolyline(_path, new Color("70baba88"), 3, true);
         foreach (var point in _path) DrawArc(point, 20, 0, Mathf.Tau, 24, new Color("70baba99"), 2, true);
     }

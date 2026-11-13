@@ -256,6 +256,8 @@ public partial class CareerScreen
     {
         command.ToolMode = AiSettingsStore.Load(ViewData.Ai).ChatTools;
         string id = target ?? _privateGroup;
+        if (ChatCommandTargets.LatestTurn(kind) && command.Interaction.Entry.Length == 0)
+            command.Interaction.Entry = ViewData.Chats.Groups.FirstOrDefault(g => g.Id == id)?.Turns.LastOrDefault()?.Id ?? "";
         void Fail(string message)
         {
             if (failed != null) { failed(message); return; }

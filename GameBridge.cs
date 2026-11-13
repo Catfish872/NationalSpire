@@ -38,7 +38,9 @@ public static class GameBridge
         if (data.PendingMatchId != null) return trace.Finish("已有一场生涯比赛进行中。");
         if (!data.Matches.Contains(match) || match.Status != "待赛" || !match.Registered || match.Day != data.Day) return trace.Finish("请先报名并前往比赛日。");
         if (EsportsWorld.EntryReason(data, match) is { } locked) return trace.Finish(locked);
-        if (ascension < match.RequiredAscension || ascension > 10) return trace.Finish($"本场进阶范围为 {match.RequiredAscension}—10。");
+        string mode = MatchModes.Preferred(data, match);
+        if (!MatchModes.Valid(mode, match.RequiredAscension, ascension)) return trace.Finish("挑战进阶超出本场范围。");
+        MatchModes.Select(data, match, mode, MatchModes.NativeAscension(mode, ascension));
         var clock = System.Diagnostics.Stopwatch.StartNew();
         bool transitionStarted = false;
         MatchStartWatch? loading = null;
@@ -74,8 +76,7 @@ public static class GameBridge
             trace.Write("parameters", new { match.Seed, character = character.Id.ToString(), ascension, acts = acts.Select(a => a.Id.ToString()).ToArray() });
             stage = "检查原生开局接口";
             trace.Stage(stage);
-            var start = RuntimeApi.Bind(typeof(NGame), "StartNewSingleplayerRun", false, typeof(CharacterModel), typeof(bool),
-                acts.GetType(), typeof(ModifierModel[]), typeof(string), typeof(GameMode), typeof(int));
+            var start = GameCompatibility.SingleplayerStart(acts.GetType());
             if (!typeof(Task).IsAssignableFrom(start.ReturnType)) throw new NotSupportedException("开局接口的返回类型发生变化。");
             long preparedAt = clock.ElapsedMilliseconds;
             Diagnostics.Record("match.preflight", new { game = GameCompatibility.Version(), rng = GameCompatibility.SeedMode, start = start.ToString(),
@@ -97,14 +98,13 @@ public static class GameBridge
             data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             data.PendingHistoryExcluded = SaveManager.Instance.GetAllRunHistoryNames().ToHashSet();
             data.SelectedCharacter = character.Id.ToString();
-            data.SelectedAscension = ascension;
             CareerStore.Save(data);
             long savedAt = clock.ElapsedMilliseconds;
             stage = "执行原生开局";
             loading.Stage(stage);
             trace.Stage(stage);
             trace.Method(start, "begin");
-            await (Task)RuntimeApi.Invoke(start, game, character, true, acts, Array.Empty<ModifierModel>(), match.Seed, GameMode.Standard, ascension)!;
+            await GameCompatibility.StartSingleplayer(start, game, character, acts, match.Seed, MatchModes.NativeAscension(mode, ascension), mode);
             trace.Method(start, "complete");
             stage = "保存开局成功后的生涯数据";
             trace.Stage(stage);
@@ -156,7 +156,7 @@ public static class GameBridge
     public static bool MatchesPending(CareerData data, RunHistory history)
     {
         return CareerRunBinding.Find(data, history.Seed, history.Players.FirstOrDefault()?.Character.ToString() ?? "",
-            data.SelectedAscension, history.Players.Count, history.GameMode == GameMode.Standard, history.StartTime) != null;
+            MatchModes.PendingNativeAscension(data), history.Players.Count, history.GameMode.ToString(), history.StartTime) != null;
     }
 
     public static void CompleteHistory(RunHistory history)
@@ -164,14 +164,14 @@ public static class GameBridge
         var data = CareerStore.Data;
         if (!MatchesPending(data, history)) return;
         var match = data.Matches.First(m => m.Id == data.PendingMatchId);
-        var detail = ReadPlayerHistory(history, history.Players[0]);
+        var detail = ReadPlayerHistory(history, history.Players[0], match);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
             history.MapPointHistory.Sum(a => a.Count), detail.Character, MatchRules.PreferredAscension(data, match), detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);
         PlayerArchive.Invalidate();
         _ = AiService.ProcessPendingAsync();
     }
 
-    public static CareerResult ReadPlayerHistory(RunHistory history, RunHistoryPlayer player)
+    public static CareerResult ReadPlayerHistory(RunHistory history, RunHistoryPlayer player, CareerMatch? match = null)
     {
         var cards = new List<string>();
         var deckNames = new List<string>();
@@ -182,7 +182,7 @@ public static class GameBridge
         }
         var deckSummary = deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count()).ToList();
         var evidence = new RunEvidence { PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount };
-        try { evidence.DefeatedEncounters = ReadDefeatedEncounters(history); }
+        try { evidence.DefeatedEncounters = ReadDefeatedEncounters(history, match); }
         catch (Exception e) { Diagnostics.Error("history.encounters", e); }
         var roomStats = history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList();
         if (roomStats.LastOrDefault() is { MaxHp: > 0 } last)
@@ -223,11 +223,14 @@ public static class GameBridge
             }
             catch { /* 已卸载的 Mod 卡牌不阻止结算。 */ }
         }
-        return new() { Character = PlayerArchive.CharacterName(player.Character), CharacterId = player.Character.ToString(), Cards = cards, DeckSummary = deckSummary, Evidence = evidence };
+        return new() { Character = PlayerArchive.CharacterName(player.Character), CharacterId = player.Character.ToString(), Mode = history.GameMode.ToString(), Cards = cards, DeckSummary = deckSummary, Evidence = evidence };
     }
 
-    private static List<RunEncounter> ReadDefeatedEncounters(RunHistory history)
+    private static List<RunEncounter> ReadDefeatedEncounters(RunHistory history, CareerMatch? match)
     {
+        bool dread = history.GameMode.ToString() == MatchModes.Dread;
+        if (dread && match != null && RunManager.Instance.DebugOnlyGetState() is { } actual
+            && CareerRunBinding.SameSeed(history.Seed, actual.Rng.StringSeed)) DreadFacts.Capture(match, actual);
         var rooms = new List<RunEncounter>();
         int floor = 0;
         for (int act = 0; act < history.MapPointHistory.Count; act++)
@@ -244,7 +247,8 @@ public static class GameBridge
                         catch { /* 已卸载的模组遭遇保留标识，不根据地图候选池补造名称。 */ }
                     }
                     // 保留所有房间的位置，终局失败时仅排除最后一个尚未完成的房间。
-                    rooms.Add(new(act + 1, floor, kind, GameText.Plain(name.Length > 0 ? name : kind == "Boss" ? "未识别BOSS" : "未识别精英")));
+                    rooms.Add(new(act + 1, floor, kind, GameText.Plain(name.Length > 0 ? name : kind == "Boss" ? "未识别BOSS" : "未识别精英"))
+                    { DreadEffect = dread && kind == "Boss" && room.ModelId is { } boss ? DreadFacts.Effect(match, act + 1, boss.ToString()) : null });
                 }
             }
         // 战后领取奖励时退赛仍算击败；只采信同一份原版历史对应的已完成房间。

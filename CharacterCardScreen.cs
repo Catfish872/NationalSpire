@@ -170,7 +170,7 @@ public partial class CareerScreen
         var preset = Choice(presetRow, "能力预设", CharacterCards.Templates, Array.IndexOf(CharacterCards.Templates, draft.AbilityTemplate.Length > 0 ? draft.AbilityTemplate : draft.Role), _ => { }, "CardPreset");
         var abilityFields = Pair(ability);
         var role = Line(abilityFields, "职业 · 可自定义", draft.Role, v => draft.Role = v, "CardRole");
-        var characterNames = CharacterIdentity.Source().Select(c => c.DisplayName).Concat(new[] { "铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君", draft.Character }).Where(s => s.Length > 0).Distinct().ToArray();
+        var characterNames = CharacterIdentity.Source().Select(c => c.DisplayName).Concat(NpcCharacters.Names).Append(draft.Character).Where(s => s.Length > 0).Distinct().ToArray();
         void SetCharacter(string value) { draft.Character = value; if (draft.Avatar.Source == "auto") portrait.Art = AutomaticPortrait(); }
         var character = Line(abilityFields, "擅长角色", draft.Character, SetCharacter, "CardCharacter");
         Choice(ability, "选择已安装的角色", characterNames, Array.IndexOf(characterNames, draft.Character), n => { character.Text = characterNames[n]; SetCharacter(character.Text); });

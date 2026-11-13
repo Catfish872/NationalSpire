@@ -187,13 +187,25 @@ public static partial class CoopRules
         // 同一提议的投票互不覆盖；其他队员先确认或阅读消息后，仍接受该提议的确认。
         bool sameProposal = command.Kind == "confirm" && original.Proposal?.Id == command.Target
             && command.Revision <= original.Revision;
-        if (command.Revision != original.Revision && !sameProposal) return (original, Reject("状态已更新，请查看最新内容后重新操作。"));
+        // 聊天按具体帖子、人物、群聊及邀约处理；无关队员的更新不使这些操作失效。
+        bool currentChat = command.Kind == "reply" || command.Kind.StartsWith("dm-", StringComparison.Ordinal)
+            || command.Kind.StartsWith("group-", StringComparison.Ordinal) || command.Kind == "event-start";
+        if (command.Revision != original.Revision && !sameProposal && !(currentChat && command.Revision < original.Revision))
+            return (original, Reject("状态已更新，请查看最新内容后重新操作。"));
         var w = CoopJson.Copy(original); CoopJson.Detached(w.World);
         BindMarket(w);
         var member = w.Members.Single(m => m.SteamId == sender);
         string? error = null;
         try
         {
+            // 兼容未携带消息编号的旧请求，其针对最新轮次的操作仍沿用整份版本检查。
+            if (command.Revision < original.Revision && ChatCommandTargets.LatestTurn(command.Kind))
+            {
+                string entry = command.Kind.StartsWith("dm-", StringComparison.Ordinal)
+                    ? System.Text.Json.JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text)!.Entry
+                    : System.Text.Json.JsonSerializer.Deserialize<GroupCommand>(command.Text)!.Interaction.Entry;
+                if (entry.Length == 0) return (original, Reject("状态已更新，请查看最新内容后重新操作。"));
+            }
             bool full = online.Count is >= 2 and <= 4;
             if (w.World.Failure != null && command.Kind is not ("failure-confirm" or "failure-retry") && !(w.World.Failure.RetryRequested && command.Kind is "confirm" or "cancel")) return (original, Reject(MatchFailure.Locked(w.World)!));
             if (w.Proposal is { } ready && ready.Participants.Count > 0 && !ready.Participants.SetEquals(online)) w.Proposal = null;
@@ -278,7 +290,7 @@ public static partial class CoopRules
                     if (!full) return (original, Reject("重赛需要2—4位在线队员。"));
                     var retried = MatchFailure.Retry(w.World, command.Text == "new");
                     w.LatestCheckpoint = "";
-                    w.Proposal = new() { Kind = "start", Target = retried.Id, Number = retried.ChosenAscension ?? retried.RequiredAscension, Participants = online.ToHashSet(), Votes = [sender], Label = "准备重赛 · " + retried.Event };
+                    w.Proposal = new() { Kind = "start", Target = retried.Id, Mode = MatchModes.ForMatch(retried), Number = retried.ChosenAscension ?? retried.RequiredAscension, Participants = online.ToHashSet(), Votes = [sender], Label = "准备重赛 · " + retried.Event };
                     break;
                 case "restart-run": case "abandon-run":
                     if (sender != w.Owner || w.Run?.Phase != "paused") return (original, Reject("请先暂停当前比赛，由房主处理。"));
@@ -293,7 +305,7 @@ public static partial class CoopRules
                     w.Run = null; w.LatestCheckpoint = ""; w.World.PendingMatchId = null; w.World.PendingSince = 0;
                     {
                         if (!full) return (original, Reject("重赛需要2—4位在线队员。"));
-                        w.Proposal = new() { Kind = "start", Target = interrupted.Id, Number = interrupted.ChosenAscension ?? interrupted.RequiredAscension, Participants = online.ToHashSet(), Votes = [sender], Label = "重新准备 · " + interrupted.Event };
+                        w.Proposal = new() { Kind = "start", Target = interrupted.Id, Mode = MatchModes.ForMatch(interrupted), Number = interrupted.ChosenAscension ?? interrupted.RequiredAscension, Participants = online.ToHashSet(), Votes = [sender], Label = "重新准备 · " + interrupted.Event };
                     }
                     break;
                 case "gender":
@@ -309,9 +321,13 @@ public static partial class CoopRules
                     var selectedMatch = w.World.Matches.FirstOrDefault(m => m.Id == command.Target && m.Status == "待赛");
                     if (sender != w.Owner) error = "全队挑战进阶由房主设置。";
                     else if (w.Proposal != null) error = "请先完成或取消当前团队提议。";
-                    else if (selectedMatch == null || command.Number < selectedMatch.RequiredAscension || command.Number > 10)
+                    else if (selectedMatch == null || !MatchModes.Valid(command.Text.Length == 0 ? MatchModes.Standard : command.Text, selectedMatch.RequiredAscension, command.Number))
                         error = "挑战进阶超出本场范围。";
-                    else selectedMatch.ChosenAscension = w.World.SelectedAscension = command.Number;
+                    else
+                    {
+                        string selectedMode = command.Text.Length == 0 ? MatchModes.Standard : command.Text;
+                        MatchModes.Select(w.World, selectedMatch, selectedMode, MatchModes.NativeAscension(selectedMode, command.Number));
+                    }
                     break;
                 case "character":
                     if (command.Target == CareerEngine.RandomCharacterChoice && characters.Count > 0) { member.RandomCharacter = true; w.Proposal = null; }
@@ -403,7 +419,8 @@ public static partial class CoopRules
                     if (kind is not ("advance" or "register" or "club" or "leave-club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
                     if (kind == "leave-club" && ClubDeparture.Error(w.World) is { } departureError) { error = departureError; break; }
                     if (kind == "resume" && w.Run?.Phase != "paused") { error = "正在连接比赛，请等待连接完成。"; break; }
-                    var proposal = new CoopProposal { Kind = kind, Target = command.Target, Number = command.Number, Votes = [sender], Participants = online.ToHashSet(), Label = ProposalLabel(w, kind, command.Target, command.Number) };
+                    var proposal = new CoopProposal { Kind = kind, Target = command.Target, Mode = command.Text.Length == 0 ? MatchModes.Standard : command.Text,
+                        Number = command.Number, Votes = [sender], Participants = online.ToHashSet(), Label = ProposalLabel(w, kind, command.Target, command.Number) };
                     if (kind is "start" or "resume" or "simulate" or "leave-club") w.Proposal = proposal;
                     else error = ExecuteProposal(w, proposal, characters);
                     break;
@@ -418,7 +435,7 @@ public static partial class CoopRules
                     participant.Character = characters.Order(StringComparer.Ordinal).ElementAt(CareerEngine.StableHash(match.Seed + ":" + participant.SteamId) % characters.Count);
                     simulation.Characters[participant.SteamId] = participant.Character;
                 }
-                var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), simulation.Ascension,
+                var performance = PlayerSimulation.Sample(w.World, match, played.SelectMany(m => m.Results), MatchModes.RecordedAscension(simulation.Mode, simulation.Ascension),
                     PlayerSimulation.WinChance(played.Sum(m => m.Wins), played.Sum(m => m.Losses), played.Sum(m => m.Draws)));
                 var players = played.Select(m => new CoopLivePlayer(m.SteamId, m.Character, 0, 0, !performance.Cleared)).ToList();
                 w = Settle(w, simulation.Attempt, performance.Cleared, false, performance.Floor, performance.Seconds, players,
@@ -483,9 +500,9 @@ public static partial class CoopRules
                 return error;
             case "start":
                 if (d.Failure is { RetryRequested: true } && w.Run?.Phase == "decision") w.Run = null;
-                return Prepare(w, p.Target, p.Number, characters, p.Participants);
+                return Prepare(w, p.Target, p.Number, characters, p.Participants, p.Mode);
             case "simulate":
-                var simulationError = Prepare(w, p.Target, p.Number, characters, p.Participants);
+                var simulationError = Prepare(w, p.Target, p.Number, characters, p.Participants, p.Mode);
                 if (simulationError == null) w.Run!.Phase = "simulation";
                 return simulationError;
             default: return "团队安排无效。";
@@ -606,11 +623,11 @@ public static partial class CoopRules
         if (result.Count != w.World.CooperativeMembers) throw new InvalidOperationException("对手队伍人数不足，赛事不能开始。");
         return result;
     }
-    public static string? Prepare(CoopWorld w, string matchId, int ascension, IReadOnlySet<string> characters, IReadOnlySet<ulong>? participants = null)
+    public static string? Prepare(CoopWorld w, string matchId, int ascension, IReadOnlySet<string> characters, IReadOnlySet<ulong>? participants = null, string mode = MatchModes.Standard)
     {
         var d = w.World; var m = d.Matches.FirstOrDefault(m => m.Id == matchId);
         if (m == null || m.Status != "待赛" || !m.Registered || m.Day != d.Day || d.PendingMatchId != null || w.Run != null) return "这场比赛当前不能开始。";
-        if (ascension < m.RequiredAscension || ascension > 10) return "挑战进阶超出本场范围。";
+        if (!MatchModes.Valid(mode, m.RequiredAscension, ascension)) return "挑战进阶超出本场范围。";
         if (EsportsWorld.EntryReason(d, m) is { } error) return error;
         var roster = w.Members.Where(m => participants == null || participants.Contains(m.SteamId)).ToList();
         if (characters.Count == 0 || roster.Count is < 2 or > 4 || roster.Any(m => !m.RandomCharacter && !characters.Contains(m.Character))) return "请在线队员选择可用角色（2—4人）。";
@@ -620,14 +637,13 @@ public static partial class CoopRules
         m.Seed = m.Seed.ToUpperInvariant().Replace('O', '0').Replace('I', '1').Trim();
         var rivals = Opponents(w, m);
         // 团队表现取决于整体能力与配合，不复制某一人的单人成绩。
-        var competition = d.Esports.Competitions.FirstOrDefault(c => c.Id == m.CompetitionId);
-        var perf = MatchRules.Simulate(d, m.OpponentId, m.RequiredAscension, d.WorldId + ":coop:" + m.Seed, m.Day, true,
-            competition, m.Seed);
+        MatchModes.Select(d, m, mode, MatchModes.NativeAscension(mode, ascension));
+        var perf = MatchRules.SimulateOpponent(d, m, m.Seed);
         m.OpponentPrepared = true; m.OpponentWon = perf.Cleared; m.OpponentFloor = perf.Floor; m.OpponentSeconds = perf.Seconds;
-        w.Run = new() { MatchId = m.Id, Seed = m.Seed, Ascension = ascension, Characters = roster.ToDictionary(p => p.SteamId, p => p.RandomCharacter ? CareerEngine.RandomCharacterChoice : p.Character), Opponents = rivals.Select(p => p.Id).ToList() };
+        w.Run = new() { MatchId = m.Id, Seed = m.Seed, Mode = mode, Ascension = MatchModes.NativeAscension(mode, ascension),
+            Characters = roster.ToDictionary(p => p.SteamId, p => p.RandomCharacter ? CareerEngine.RandomCharacterChoice : p.Character), Opponents = rivals.Select(p => p.Id).ToList() };
         if (d.Failure != null) MatchFailure.Record(d, "retry-started");
         d.Failure = null;
-        m.ChosenAscension = d.SelectedAscension = ascension;
         Diagnostics.RecordMatch(w, "prepared");
         w.RosterLocked = true; d.PendingMatchId = m.Id; d.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); return null;
     }
@@ -652,7 +668,7 @@ public static partial class CoopRules
             DefeatedEncounters = details?.Values.FirstOrDefault(p => p.Evidence.DefeatedEncounters != null)?.Evidence.DefeatedEncounters?.ToList()
         };
         Diagnostics.RecordMatch(w, "settlement-input", new { clear, abandoned, floor, seconds, players, details }, includePlan: true);
-        CareerEngine.FinishMatch(d, match, clear, abandoned, floor, "合作队伍", run.Ascension, [], seconds, evidence: teamEvidence, confirmFailure: confirmFailure, forfeit: forfeit, simulated: simulated);
+        CareerEngine.FinishMatch(d, match, clear, abandoned, floor, "合作队伍", MatchModes.RecordedAscension(run.Mode, run.Ascension), [], seconds, evidence: teamEvidence, confirmFailure: confirmFailure, forfeit: forfeit, simulated: simulated);
         if (d.Failure is { } pending)
         {
             pending.Result.PlayerParticipants = played.Select(m => m.PersonId).ToList();
@@ -675,7 +691,7 @@ public static partial class CoopRules
             int priorRating = member.Rating, priorFans = member.Fans;
             member.Rating = Math.Max(500, member.Rating + d.Rating - rating); member.Fans += d.Fans - fans;
             if (!PrivateAppointments.IsPrivate(match)) { if (match.Draw) member.Draws++; else if (match.PlayerWon) member.Wins++; else member.Losses++; }
-            if (clear && !abandoned) member.HighestClear = Math.Max(member.HighestClear, run.Ascension);
+            if (clear && !abandoned) member.HighestClear = Math.Max(member.HighestClear, MatchModes.RecordedAscension(run.Mode, run.Ascension));
             var personal = CoopJson.Copy(record); personal.Character = member.Character; personal.CharacterId = member.Character;
             if (details?.TryGetValue(member.SteamId, out var detail) == true)
             { personal.Character = detail.Character; personal.CharacterId = detail.CharacterId.Length > 0 ? detail.CharacterId : member.Character; personal.Cards = detail.Cards; personal.DeckSummary = detail.DeckSummary; personal.Evidence = detail.Evidence; }

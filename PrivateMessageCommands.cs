@@ -17,6 +17,11 @@ public sealed class PrivateMessageCommand
     public PrivateHistorySettings? Settings { get; set; }
     public ProactiveChatSettings? Proactive { get; set; }
 }
+internal static class ChatCommandTargets
+{
+    internal static bool LatestTurn(string kind) => kind is "dm-retry" or "dm-stop" or "group-retry" or "group-regenerate" or "group-stop";
+    internal static bool Changed(string kind, string selected, string? latest) => LatestTurn(kind) && selected.Length > 0 && selected != latest;
+}
 public static class PrivateMessageCommands
 {
     public static string? Apply(CareerData data, string kind, string person, PrivateMessageCommand command)
@@ -44,6 +49,7 @@ public static class PrivateMessageCommands
         if (kind is "dm-date-open" or "dm-date-revise" or "dm-send" or "dm-retry" or "dm-regenerate" or "dm-arbitrate" && AiService.PrivateBusy(data, person)) return "正在结束上一条请求，请稍候再发送。";
         var c = kind == "dm-attend" && PrivateMessages.Mailbox(data).Conversations.TryGetValue(person, out var existing)
             ? existing : PrivateMessages.Conversation(data, person);
+        if (ChatCommandTargets.Changed(kind, command.Entry, c.Turns.LastOrDefault()?.Id)) return "所选消息之后已有新的消息，请查看当前对话。";
         if (MatchFailure.Locked(data) is { } failure) return failure;
         if (kind == "dm-date-rewind") return DateHistoryRewind.Apply(data, person, command);
         if (kind is "dm-edit" or "dm-delete" or "dm-clear" or "dm-summary-edit" or "dm-summary-delete" or "dm-summary" or "dm-memory-add" or "dm-memory-edit" or "dm-memory-delete")

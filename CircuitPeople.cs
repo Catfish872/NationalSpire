@@ -3,7 +3,6 @@
 /// <summary>扩充持久人物及关系，已有身份和当前赛程保持稳定。</summary>
 public static class CircuitPeople
 {
-    private static readonly string[] Characters = ["铁甲战士", "静默猎手", "故障机器人", "亡灵契约师", "储君"];
     private static readonly string[][] Names = [
         ["山海竞技", "云帆竞技", "北辰竞技", "赤霄竞技"], ["青岚竞技", "朝凪竞技", "银杏竞技", "千羽竞技"],
         ["海潮竞技", "雪峰竞技", "苍穹竞技", "白昼竞技"], ["银杉竞技", "河谷竞技", "铁鹰竞技", "远山竞技"],
@@ -58,9 +57,10 @@ public static class CircuitPeople
     {
         if (CareerEngine.Person(d, id) != null) return;
         int seed = CareerEngine.StableHash(d.WorldId + id);
+        int character = NpcCharacters.Select(seed);
         d.People.Add(new() { Id = id, Name = WorldPeople.Name(d, id, country, role is "普通玩家" or "主播"), Country = country,
             ClubId = club, Region = country + (club.Length > 0 ? "职业赛区" : "社区"), Role = role, MaxAscension = level,
-            Character = Characters[seed % 5], Style = WorldPeople.PlayingStyle(seed % 5, seed / 5), Rating = level >= 8 ? 1200 + seed % 350 : 630 + level * 55,
+            Character = NpcCharacters.Names[character], Style = WorldPeople.PlayingStyle(character, seed / NpcCharacters.Available.Count), Rating = level >= 8 ? 1200 + seed % 350 : 630 + level * 55,
             Wins = level >= 6 ? 8 + seed % 30 : seed % 5, Losses = 40 + seed % 100,
             Biography = WorldPeople.Biography(role, seed) });
         NpcRecords.Initialize(d.People[^1], CareerEngine.StableHash(d.WorldId + ":records:" + id));

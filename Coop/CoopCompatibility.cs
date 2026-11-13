@@ -29,7 +29,7 @@ public static class CoopCompatibility
         try
         {
             NativeLobbyApi.Validate();
-            RuntimeApi.Bind(typeof(NGame), "StartNewMultiplayerRun", false, typeof(StartRunLobby), typeof(bool), typeof(List<ActModel>), typeof(List<ModifierModel>), typeof(string), typeof(int));
+            NativeLobbyApi.MultiplayerStart(typeof(List<ActModel>), typeof(List<ModifierModel>));
             RuntimeApi.Bind(typeof(RunManager), "SetUpSavedMultiplayer", false, typeof(RunState), typeof(LoadRunLobby));
             RuntimeApi.Bind(typeof(NGame), "LoadRun", false, typeof(RunState), typeof(SerializableRoom));
             _ = GameCompatibility.ActRng("COOP-COMPATIBILITY");

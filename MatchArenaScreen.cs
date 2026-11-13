@@ -159,7 +159,7 @@ public partial class CareerScreen
     }
     private Label? _arenaCharacter;
     private void MatchArena(CareerData d,string title,string opponent,string opponentName,string state,string playerCharacter,Color accent,
-        out HBoxContainer actions, int day, Action? launch=null, string? playerPerformance=null, string? rivalPerformance=null, string source="赛事")
+        out HBoxContainer actions, int day, Action? launch=null, string? playerPerformance=null, string? rivalPerformance=null, string source="赛事", string? seed=null)
     {
         var host=new Control { Name=launch==null?"SettlementHero":"MatchHero", CustomMinimumSize=new(0,480) };
         _content.AddChild(host);
@@ -193,7 +193,9 @@ public partial class CareerScreen
         var date=Text(GameCalendar.Date(d,day).ToString("yyyy.MM.dd"),14,_muted); Put(host,date,28,20,200,26);
         var src=Line(source,14,_muted);src.HorizontalAlignment=HorizontalAlignment.Right;Center(src,1,20,180,26);src.OffsetLeft=-210;src.OffsetRight=-28;
         Participant("player",CareerEngine.Name(d),playerCharacter,true,playerPerformance);
-        Center(Line(title,19,_gold),.5f,20,426,60);
+        var eventTitle = Line(title,19,_gold);
+        if (seed != null) eventTitle.TooltipText = "比赛种子\n" + seed;
+        Center(eventTitle,.5f,20,426,60);
         if(launch!=null)
         {
             var emblem=CaptionButton("",launch); emblem.Name="ArenaStart";emblem.Icon=NavigationIcon(state=="前往比赛日"?"fast-forward":"swords-start");

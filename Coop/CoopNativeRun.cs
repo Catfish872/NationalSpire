@@ -52,8 +52,7 @@ public sealed class CoopSteamRunPlatform : ICoopNativePlatform
     public async Task BeginNew(StartRunLobby lobby, IReadOnlyList<ActModel> acts, IReadOnlyList<ModifierModel> modifiers, string seed, int ascension, CancellationToken token = default)
     {
         var game = NGame.Instance ?? throw new InvalidOperationException("游戏场景尚未初始化。");
-        var start = RuntimeApi.Bind(typeof(NGame), "StartNewMultiplayerRun", false, typeof(StartRunLobby), typeof(bool),
-            acts.GetType(), modifiers.GetType(), typeof(string), typeof(int));
+        var start = NativeLobbyApi.MultiplayerStart(acts.GetType(), modifiers.GetType());
         // 与原版选人大厅一致，在任何对局节点创建前初始化远端光标和表情通信。
         game.RemoteCursorContainer.Initialize(lobby.InputSynchronizer, NativeLobbyApi.Players(lobby).Select(p => p.Id));
         game.ReactionContainer.InitializeNetworking(lobby.NetService);
@@ -65,7 +64,7 @@ public sealed class CoopSteamRunPlatform : ICoopNativePlatform
         try
         {
             token.ThrowIfCancellationRequested();
-            await (Task)RuntimeApi.Invoke(start, game, lobby, true, acts, modifiers, seed, ascension)!;
+            await NativeLobbyApi.StartMultiplayer(start, game, lobby, acts, modifiers, seed, ascension);
             lobby.CleanUp(false);
         }
         finally { await game.Transition.FadeIn(.2f); }
@@ -107,7 +106,13 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
                 if (args.Length == 0) BeginRun();
                 else BeginRun((string)args[0]!, (List<ActModel>)args[1]!, (IReadOnlyList<ModifierModel>)args[2]!);
                 break;
-            case "PlayerChanged": PlayerChanged(NativeLobbyApi.Player(args[0]!), (bool)args[1]!); break;
+            case "PlayerChanged":
+                var player = NativeLobbyApi.Player(args[0]!);
+                bool random = args.Length == 2 ? (bool)args[1]!
+                    : session.World?.Run?.Characters.GetValueOrDefault(player.Id) == CareerEngine.RandomCharacterChoice
+                        && player.Character != null && player.Character is not MegaCrit.Sts2.Core.Models.Characters.RandomCharacter
+                        && player.Character.GetType().Name != "RotatingCharacter";
+                PlayerChanged(player, random); break;
             case "RemotePlayerDisconnected": if (!_stopping && (_launched || _entering)) NeedsPause = true; break;
             case "LocalPlayerDisconnected": if (!_stopping && HasConnection) NeedsPause = true; break;
         }
@@ -194,7 +199,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             _attempt = session.World!.Run!.Attempt;
             NativeLobbyApi.Validate();
             var service = NativeLobbyApi.Service<NetHostGameService>(_platform.Version()); _service = service;
-            service.ClientConnected += id => { if (!session.World!.Run!.Characters.ContainsKey(id)) service.DisconnectClient(id, NetError.Quit); };
+            service.ClientConnected += id => { if (!session.World!.Run!.Characters.ContainsKey(id)) NativeLobbyApi.Disconnect(service, id, NetError.Quit); };
             service.ClientDisconnected += (_, _) => { if (!_stopping && generation == _generation && ReferenceEquals(service, _service) && (_launched || _entering)) NeedsPause = true; };
             string lobbyId = await _platform.Host(service, session.World.Run!.Characters.Count);
             if (generation != _generation) { if (service.IsConnected) service.Disconnect(NetError.Quit); return; }
@@ -205,8 +210,8 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             }
             else
             {
-                _start = new(GameMode.Standard, service, StartListener, session.World.Run!.Characters.Count);
-                NativeLobbyApi.AddLocal(_start, UnlockState.all, 10); _start.SetLocalCharacter(Character());
+                _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World.Run!.Mode), service, StartListener, session.World.Run.Characters.Count);
+                NativeLobbyApi.AddLocal(_start, UnlockState.all, 10); NativeLobbyApi.SetCharacter(_start, Character());
                 _start.SetSeed(session.World.Run.Seed); _start.SyncAscensionChange(session.World.Run.Ascension);
             }
             _lobby = lobbyId;
@@ -265,7 +270,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
                 {
                     await session.WaitForReceived();
                     if (generation != _generation || !ReferenceEquals(service, _service)) return;
-                    _start = new(GameMode.Standard, service, StartListener, session.World!.Run!.Characters.Count); _start.InitializeFromMessage(message); _start.SetLocalCharacter(Character()); _start.SetReady(true);
+                    _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World!.Run!.Mode), service, StartListener, session.World.Run.Characters.Count); _start.InitializeFromMessage(message); NativeLobbyApi.SetCharacter(_start, Character()); _start.SetReady(true);
                 }
                 catch (Exception e) { if (generation == _generation) Fail(e); }
             });
@@ -274,7 +279,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             await connected.Task.WaitAsync(timeout.Token);
             if (generation != _generation) return;
             if (load) service.SendMessage(new ClientLoadJoinRequestMessage());
-            else service.SendMessage(new ClientLobbyJoinRequestMessage { maxAscensionUnlocked = 10, unlockState = UnlockState.all.ToSerializable() });
+            else service.SendMessage(NativeLobbyApi.JoinRequest(UnlockState.all, 10));
         }
         catch (Exception e) { if (generation == _generation) Fail(e); }
         finally { if (generation == _generation) _busy = false; }
