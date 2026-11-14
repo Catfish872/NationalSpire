@@ -117,7 +117,7 @@ public partial class LiveRunBridge : Node
     }
     public override void _Process(double delta)
     {
-        if (_ended) return;
+        if (_ended || LeagueNativeMatch.InFinal) return;
         if (_faulted || !CareerStore.IsCurrent(_data) || _data.PendingMatchId != _match.Id)
         { _hud.Hide(); if (IsInstanceValid(_mapOverlay)) _mapOverlay!.Hide(); _blitzMap?.Hide(); return; }
         if (_match.DateGame != null) TickDateRequestClock(delta);

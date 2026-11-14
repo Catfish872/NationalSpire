@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`69E4532E6D741E1EDCB6D61D94316A5B6ACD9D14429F4A67667649337B000493`。来源：[源码](../../MatchStartWatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`26F5931421AA4E48DD16B13573E70D519770378EBDA2E4FFE67D1FE62FF27F12`。来源：[源码](../../MatchStartWatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.MatchStartWatch`、`NationalSpire.MatchStartLoadPatch`。
+类型：`NationalSpire.MatchStartWatch`、`NationalSpire.MatchStartLoadPatch`、`NationalSpire.OpeningRoomReveal`、`NationalSpire.OpeningRoomMusic`。
 
 字段、事件及初始值（源码原样）：
 
@@ -49,7 +49,7 @@ private bool _finished;
 
 来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
+**调用者：** [`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 
 **调用：** `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`NationalSpire.MatchStartWatch.MatchStartWatch()`；`System.InvalidOperationException.InvalidOperationException(string?)`
 
@@ -77,7 +77,7 @@ private bool _finished;
 
 来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
+**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 
 **调用：** [`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)
 
@@ -330,7 +330,7 @@ private bool _finished;
 
 来源：源码第 121 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
+**调用者：** [`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 
 **调用：** [`NationalSpire.MatchStartWatch.ClearNotice()`](MatchStartWatch.cs.md#symbol-af68067deb85)；`Godot.Node.QueueFree()`
 
@@ -393,14 +393,52 @@ private bool _finished;
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.MatchStartWatch.Observe(System.Threading.Tasks.Task, string)`](MatchStartWatch.cs.md#symbol-e2f08ce47fcb)
+**调用：** [`NationalSpire.CareerScreen.OpeningChapter(System.Threading.Tasks.Task)`](LeagueArenaScreen.cs.md#symbol-5f1f6efd38ec)；[`NationalSpire.MatchStartWatch.Observe(System.Threading.Tasks.Task, string)`](MatchStartWatch.cs.md#symbol-e2f08ce47fcb)
 
-**字段、属性、事件及方法组引用：** `NationalSpire.MatchStartWatch.Observe(System.Threading.Tasks.Task, string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.OpeningChapter(System.Threading.Tasks.Task)`；`NationalSpire.MatchStartWatch.Observe(System.Threading.Tasks.Task, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.CareerScreen.OpeningChapter(System.Threading.Tasks.Task)`；输入表达式：`CareerScreen.OpeningChapter(__result)`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=CareerScreen.OpeningChapter(__result)`
 - `NationalSpire.MatchStartWatch.Observe(System.Threading.Tasks.Task, string)`；输入表达式：`MatchStartWatch.Observe(__result, stage)`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result = MatchStartWatch.Observe(__result, stage)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `__result` = `CareerScreen.OpeningChapter(__result)`
 - `__result` = `MatchStartWatch.Observe(__result, stage)`
+
+<a id="symbol-ded27ae4f0bc"></a>
+
+## `NationalSpire.OpeningRoomReveal.Prefix(Godot.Control?) — static void Prefix(Control? node)`
+
+来源：源码第 154 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.CareerScreen.RevealOpening()`](LeagueArenaScreen.cs.md#symbol-bf9d7644463b)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.OpeningVisible`；`NationalSpire.CareerScreen.RevealOpening()`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerScreen.RevealOpening()`；输入表达式：`CareerScreen.RevealOpening()`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerScreen.RevealOpening();`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-feee284ed990"></a>
+
+## `NationalSpire.OpeningRoomMusic.Prefix() — static bool Prefix()`
+
+来源：源码第 159 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.OpeningVisible`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**

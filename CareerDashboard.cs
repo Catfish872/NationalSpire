@@ -326,13 +326,13 @@ public partial class CareerScreen
         _pageTitle.Text = _tab switch { "首页"=>"生涯大厅","日程"=>"日程安排","赛事"=>"赛事赛程","赛程"=>"赛程","生涯生活" => _lifeSection == "公开消息" ? "公开消息" : "消费投资",
             "赛事与俱乐部" when _competitionId==null && _worldSection is "赛事总览" or "晋级规则" => "赛事信息",
             "赛事与俱乐部" => _worldSection, "选手档案" or "创建角色" => "档案馆", "社区" => "尖塔社区", _=>_tab };
-        bool life = _tab == "生涯生活" && _lifeSection is "消费商城" or "我的空间" or "交易市场" or "国运榜" or "国家发展" or "世界荣誉";
+        bool life = _tab == "生涯生活" && (_lifeSection is "消费商城" or "我的空间" or "交易市场" or "国运榜" or "国家发展" or "世界荣誉" || LeaguePage(_lifeSection));
         bool profiles = _tab is "选手档案" or "创建角色";
         _sectionBar.Visible = EventHub || life || profiles;
         if (!_sectionBar.Visible) return;
         string[] names = profiles ? ["我的档案","选手名录","创建角色"]
-            : life ? ["商城","投资","国运"] : ["开赛","赛程","俱乐部","赛事信息"];
-        string active = life ? _lifeSection switch { "消费商城" or "我的空间" => "商城", "交易市场" => "投资", _ => "国运" }
+            : life ? ["商城","投资","国运","集卡"] : ["开赛","赛程","俱乐部","赛事信息"];
+        string active = life ? _lifeSection switch { "消费商城" or "我的空间" => "商城", "交易市场" => "投资", _ when LeaguePage(_lifeSection) => "集卡", _ => "国运" }
             : profiles ? (_tab == "创建角色" ? "创建角色" : _personId == "player" ? "我的档案" : "选手名录")
             : _tab=="赛事"?"开赛":_tab=="赛程"?"赛程":_worldSection is "俱乐部" or "所属俱乐部"?"俱乐部":"赛事信息";
         bool guest = profiles && _multiplayer?.Host == false;
@@ -350,6 +350,7 @@ public partial class CareerScreen
                 case "商城": OpenLifePage("消费商城"); break;
                 case "投资": OpenLifePage("交易市场"); break;
                 case "国运": OpenLifePage("国运榜"); break;
+                case "集卡": OpenLifePage("集卡"); break;
                 case "开赛": GoHub("赛事"); break;
                 case "赛程": GoHub("赛程"); break;
                 case "俱乐部": OpenWorldSection("俱乐部"); break;

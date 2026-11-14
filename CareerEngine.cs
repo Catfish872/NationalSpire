@@ -250,7 +250,8 @@ public static class CareerEngine
         var postsBeforeResult = d.Posts.Select(p => p.Id).ToHashSet();
         MatchRules.PrepareOpponent(d, m);
         int playerFloor = Math.Max(0, floor); double playerSeconds = Math.Round(runSeconds, 3);
-        int comparison = forfeit ? -1 : MatchRules.Compare(new(runClear, playerFloor, playerSeconds),
+        bool? duel = runClear && m.OpponentWon && !simulated && !forfeit ? m.FinalDuelWon : null;
+        int comparison = forfeit ? -1 : duel.HasValue ? (duel.Value ? 1 : -1) : MatchRules.Compare(new(runClear, playerFloor, playerSeconds),
             new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value));
         string attempt = Guid.NewGuid().ToString("N");
         Diagnostics.Record("match.result", new { d.WorldId, d.Season, d.Day, attempt, m.Id, m.Seed,
@@ -261,7 +262,7 @@ public static class CareerEngine
         if (!confirmFailure && !forfeit && m.DateGame == null && (comparison <= 0 || !runClear))
         {
             if (d.Failure != null) return;
-            d.Failure = new() { Attempt = attempt, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
+            d.Failure = new() { Attempt = attempt, FinalDuelWon = duel, Abandoned = abandoned, Opponent = new(m.OpponentWon, m.OpponentFloor, m.OpponentSeconds!.Value), Result = new() { MatchId = m.Id, Kind = m.Kind,
                 CompetitionId = m.CompetitionId, OpponentId = m.OpponentId, Opponent = opponent.PublicName, Mode = MatchModes.ForMatch(m),
                 Day = d.Day, Event = m.Event, Outcome = comparison switch { < 0 => "失利", 0 => "平局", _ => "获胜" }, Character = character, CharacterId = characterId,
                 Ascension = m.RequiredAscension, PlayedAscension = ascension, RunSeconds = playerSeconds,
@@ -274,7 +275,7 @@ public static class CareerEngine
         m.Draw = comparison == 0; m.PlayerWon = comparison > 0;
         if (runClear && !forfeit) d.AvatarHighestClear = Math.Max(d.AvatarHighestClear, ascension);
         if (CircuitWorld.ReplayTie(d, m)) return;
-        m.Decider = runClear && m.OpponentWon && !forfeit ? "双方通关，按游戏记录的通关用时比较，较快者获胜。" : "";
+        m.Decider = duel.HasValue ? "双方通关，最终对决决定比赛胜负。" : runClear && m.OpponentWon && !forfeit ? "双方通关，按游戏记录的通关用时比较，较快者获胜。" : "";
         EsportsWorld.BreakKnockoutTie(d, m);
         m.Status = forfeit ? "退赛" : "已结算";
         if (PrivateAppointments.IsPrivate(m))

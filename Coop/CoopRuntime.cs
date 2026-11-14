@@ -104,6 +104,7 @@ public partial class CoopRuntime : Node
                 }
                 if (generation != _connectionGeneration) throw new OperationCanceledException("已取消连接。");
                 if (checkpoint.World.Owner != _connecting.Self) throw new InvalidOperationException("这个检查点属于另一名主机。");
+                if(checkpoint.World.Run?.LeagueTeam==true)checkpoint.World.Run=null;
                 if (checkpoint.World.Run is { Terminal: null } savedRun) savedRun.Phase = "paused";
                 if (savedId.Length > 0) checkpoint.World.CareerStarted |= checkpoint.World.RosterLocked || checkpoint.World.World.Day > checkpoint.World.OpeningDay;
                 if (savedId.Length > 0 || npcSetup == null) checkpoint.World.World.Ai.Enabled = AiSettingsStore.Load(new()).Enabled;
@@ -185,9 +186,10 @@ public partial class CoopRuntime : Node
             {
                 if (session.Host && run.Phase != "paused")
                 {
+                    if(run.LeagueTeam){session.SendRun("run-return", new { epoch=session.World.Epoch,attempt=run.Attempt,resume=run.ResumeCount });CoopRules.FinishLeagueTeam(session,run.Attempt,null);}else{
                     var paused = CoopJson.Copy(session.World); paused.Run!.Phase = "paused"; paused.Run.FailureReason = native?.LastError ?? ""; paused.Proposal = null; paused.Revision++;
                     session.Commit(paused, session.NativeSave);
-                    session.SendRun("run-return", new { epoch = session.World.Epoch, attempt = run.Attempt, resume = run.ResumeCount });
+                    session.SendRun("run-return", new { epoch = session.World.Epoch, attempt = run.Attempt, resume = run.ResumeCount });}
                 }
                 else if (!session.Host && run.Phase != "paused" && native?.PauseRequestedByHost != true)
                 {
@@ -229,7 +231,7 @@ public partial class CoopRuntime : Node
     }
     public void Complete(RunHistory history)
     {
-        if (Session?.World?.Run is not { } run || history.Seed != run.Seed) return;
+        if (Session?.World?.Run is not {LeagueTeam:false} run || history.Seed != run.Seed) return;
         if (!history.Players.Select(p => p.Id).Order().SequenceEqual(run.Characters.Keys.Order())) return;
         StayAtResultMenu = true;
         string historyKey = history.StartTime + "/" + history.Seed + "/" + history.Ascension + "/" + string.Join(',', history.Players.Select(p => p.Id).Order());
@@ -258,6 +260,7 @@ public partial class CoopRuntime : Node
             return new CoopLivePlayer(p.Id, p.Character.ToString(), evidence.FinalHp ?? 0, evidence.MaxHp ?? 0, evidence.FinalHp == 0);
         }).ToList();
         var recorded = CoopJson.Copy(Session.World);
+        recorded.World.Matches.Single(m => m.Id == run.MatchId).FinalDuelWon = match.OpponentWon ? ArchitectFinal.Result(history.MapPointHistory) : null;
         recorded.NativeHistoryReceipts.Add(historyKey);
         recorded.Run!.Terminal = new(history.Win && !history.WasAbandoned, history.MapPointHistory.Sum(a => a.Count), history.RunTime, players) { Details = details };
         recorded.Revision++;

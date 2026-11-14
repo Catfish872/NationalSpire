@@ -144,5 +144,17 @@ public static class MatchStartLoadPatch
             _ => "主菜单资源"
         };
         __result = MatchStartWatch.Observe(__result, stage);
+        if(__originalMethod.Name=="LoadActAssets")__result=CareerScreen.OpeningChapter(__result);
     }
+}
+
+// 首个房间挂入场景时才交还画面与声音，后续房间沿用游戏原有顺序。
+[HarmonyPatch(typeof(NRun),nameof(NRun.SetCurrentRoom))]
+internal static class OpeningRoomReveal {
+    static void Prefix(Control? node){if(node!=null&&CareerScreen.OpeningVisible)CareerScreen.RevealOpening();}
+}
+
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController),"UpdateMusic")]
+internal static class OpeningRoomMusic {
+    static bool Prefix()=>!CareerScreen.OpeningVisible;
 }

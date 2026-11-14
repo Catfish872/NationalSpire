@@ -107,6 +107,7 @@ public sealed class CoopProposal
 }
 public sealed class CoopRun
 {
+    public bool LeagueTeam {get;set;}
     public string Mode { get; set; } = MatchModes.Standard;
     public string Attempt { get; set; } = Guid.NewGuid().ToString("N");
     public string MatchId { get; set; } = "";

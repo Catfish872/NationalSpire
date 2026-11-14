@@ -239,6 +239,11 @@ public static partial class CoopRules
                     error = PrivateMessageCommands.Apply(attachmentView, command.Kind, command.Target, System.Text.Json.JsonSerializer.Deserialize<PrivateMessageCommand>(command.Text)!);
                     if (error == null) Capture(w, member, attachmentView);
                     break;
+                case "league":
+                    var albumView = View(w, member);
+                    error = LeagueCards.Apply(albumView, command.Target, command.Text, command.Number);
+                    if (error == null) Capture(w, member, albumView);
+                    break;
                 case "consumer-buy":
                 case "consumer-use":
                     var consumerView = View(w, member);
@@ -416,12 +421,12 @@ public static partial class CoopRules
                     if (sender != w.Owner) { error = "团队安排由房主操作。"; break; }
                     if (w.Proposal != null) { error = "请先完成或取消当前提议。"; break; }
                     string kind = command.Kind[8..];
-                    if (kind is not ("advance" or "register" or "club" or "leave-club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
+                    if (kind is not ("league-team" or "advance" or "register" or "club" or "leave-club" or "start" or "resume" or "enter" or "auto" or "simulate")) { error = "团队安排无效。"; break; }
                     if (kind == "leave-club" && ClubDeparture.Error(w.World) is { } departureError) { error = departureError; break; }
                     if (kind == "resume" && w.Run?.Phase != "paused") { error = "正在连接比赛，请等待连接完成。"; break; }
                     var proposal = new CoopProposal { Kind = kind, Target = command.Target, Mode = command.Text.Length == 0 ? MatchModes.Standard : command.Text,
                         Number = command.Number, Votes = [sender], Participants = online.ToHashSet(), Label = ProposalLabel(w, kind, command.Target, command.Number) };
-                    if (kind is "start" or "resume" or "simulate" or "leave-club") w.Proposal = proposal;
+                    if (kind is "league-team" or "start" or "resume" or "simulate" or "leave-club") w.Proposal = proposal;
                     else error = ExecuteProposal(w, proposal, characters);
                     break;
             }
@@ -451,17 +456,39 @@ public static partial class CoopRules
     }
     public static string ProposalLabel(CoopWorld w, string kind, string target, int number) => kind switch
     {
-        "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
+        "league-team" => "使用各自的收藏牌组参加团体镜面对决", "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
         "simulate" => "模拟 " + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到{GameCalendar.Text(w.World, number)}", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "leave-club" => "全队退出 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
     };
+    internal static string? PrepareLeagueTeam(CoopWorld w,IReadOnlySet<ulong> participants){
+        if(!LeagueSolverLink.Supported)return LeagueSolverLink.Unavailable;
+        var roster=w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId).ToArray();
+        if(w.Run!=null||roster.Length<2)return "需要至少两名在线队员，并先结束当前对局。";
+        var run=new CoopRun{LeagueTeam=true};run.Seed="NS-CARDS-"+run.Attempt[..12];
+        foreach(var member in roster){
+            var album=member.Life.League;
+            if(!LeagueCards.Ready(album))return member.Name+"尚未准备好 35 张出战牌。";
+            run.Characters[member.SteamId]=LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id.ToString();
+        }
+        w.Run=run;return null;
+    }
+    internal static void FinishLeagueTeam(CoopCoordinator session,string attempt,bool? won){
+        if(!session.Host||session.World?.Run is not {LeagueTeam:true} run||run.Attempt!=attempt)return;
+        var next=CoopJson.Copy(session.World);next.Revision++;
+        if(won.HasValue)foreach(var member in next.Members.Where(m=>run.Characters.ContainsKey(m.SteamId))){
+            var album=member.Life.League;var finish=new LeagueFinish(attempt,"团体镜面对手",LeagueLadder.Tier(album.Rating));
+            var view=View(next,member);LeagueCards.Apply(view,"result",System.Text.Json.JsonSerializer.Serialize(finish),won.Value?1:0);Capture(next,member,view);
+        }
+        next.Run=null;session.Commit(next,null);
+    }
     private static string? ExecuteProposal(CoopWorld w, CoopProposal p, IReadOnlySet<string> characters)
     {
         var d = w.World;
         switch (p.Kind)
         {
             case "leave-club": return ClubDeparture.Leave(d);
+            case "league-team": return PrepareLeagueTeam(w,p.Participants);
             case "dm-match": return ConfirmPrivateMatch(w, p);
             case "enter":
                 w.CareerStarted = true; w.EntrySequence++; return null;

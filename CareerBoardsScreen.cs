@@ -57,7 +57,7 @@ public partial class CareerScreen
         AddLedgerTable(Section("账户流水",0), d, ledger);
 
         var actions=Section("消费投资",245);
-        foreach (var (name,tab,icon) in new[]{("商城","消费商城","store"),("投资","交易市场","chart-candlestick"),("国运","国运榜","landmark")})
+        foreach (var (name,tab,icon) in new[]{("商城","消费商城","store"),("投资","交易市场","chart-candlestick"),("国运","国运榜","landmark"),("卡包","开包","layers")})
         {
             var line=new HBoxContainer(); line.AddThemeConstantOverride("separation",11);
             var tile=new PanelContainer { CustomMinimumSize=new(42,42),SizeFlagsVertical=SizeFlags.ShrinkCenter,MouseFilter=MouseFilterEnum.Ignore };

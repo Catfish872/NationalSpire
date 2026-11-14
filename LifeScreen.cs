@@ -8,6 +8,7 @@ public partial class CareerScreen
     private int _lifeHistoryLimit = 8;
     private void Life(CareerData d)
     {
+        if (LeaguePage(_lifeSection)) { LeagueScreen(d); return; }
         if (_lifeSection == "活动与计划") { _tab = "日程"; _calendarMode = "计划"; Calendar(d); return; }
         if (_lifeSection == "收支记录") { AssetsPage(d); return; }
         if (_lifeSection == "人气榜") { FanChart(d); return; }

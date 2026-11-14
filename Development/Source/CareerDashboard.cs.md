@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8E0D281FA53718D8C93BE747D6A55DD17236E214A6FAE7011D1BE6EC3472B4DE`。来源：[源码](../../CareerDashboard.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`83CEBF49167E859B83A9690ABE4735EFE145CEAF5081082F4D78FB09E575E228`。来源：[源码](../../CareerDashboard.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -54,7 +54,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 来源：源码第 22 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`MonthArrow(bool, int)`](CareerScreen.cs.md#symbol-950248099d2c)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`](DashboardControls.cs.md#symbol-34af00babbac)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`NationalSpire.CareerScreen.PlanCard.ShowExpanded(bool)`](CalendarPlansScreen.cs.md#symbol-c9a82d9a2cd6)；[`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
+**调用者：** [`MonthArrow(bool, int)`](CareerScreen.cs.md#symbol-7af815579857)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.ButtonIcon(Godot.Button, string, int, bool)`](DashboardControls.cs.md#symbol-34af00babbac)；[`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`NationalSpire.CareerScreen.PlanCard.ShowExpanded(bool)`](CalendarPlansScreen.cs.md#symbol-c9a82d9a2cd6)；[`NationalSpire.CareerScreen.SaveRow(Godot.VBoxContainer, string, string, string, bool, System.Func<string, System.Threading.Tasks.Task>, bool)`](CareerLibraryScreen.cs.md#symbol-ba7dbc5dacaa)；[`Side(bool, string, bool)`](FixtureScheduleScreen.cs.md#symbol-766128f05c3d)
 
 **调用：** `Godot.Image.Image()`；`Godot.Image.LoadSvgFromString(string, float)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.IO.StreamReader.ReadToEnd()`；`System.IO.StreamReader.StreamReader(System.IO.Stream)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 
@@ -80,7 +80,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`MonthArrow(bool, int)`](CareerScreen.cs.md#symbol-950248099d2c)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.ClubPlanEntry()`](CareerWorldScreen.cs.md#symbol-1607d360210f)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`NationalSpire.CareerScreen.PlanPane(NationalSpire.CareerData, Godot.VBoxContainer, Godot.ScrollContainer, System.Collections.Generic.List<NationalSpire.CareerScreen.CalendarPlan>, NationalSpire.CalendarDayButton[])`](CalendarPlansScreen.cs.md#symbol-078c4f908d4c)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)；[`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-38ebaaa9d37d)
+**调用者：** [`MonthArrow(bool, int)`](CareerScreen.cs.md#symbol-7af815579857)；[`NationalSpire.CareerScreen.AddFixtureRow(NationalSpire.CareerData, NationalSpire.CareerScreen.FixtureEntry, Godot.VBoxContainer, bool)`](FixtureScheduleScreen.cs.md#symbol-237327497b3f)；[`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.ClubPlanEntry()`](CareerWorldScreen.cs.md#symbol-1607d360210f)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.InternationalBracket(NationalSpire.CareerData, NationalSpire.WorldCompetition, Godot.HBoxContainer)`](FixtureScheduleScreen.cs.md#symbol-992db6cc73f9)；[`NationalSpire.CareerScreen.MatchArena(NationalSpire.CareerData, string, string, string, string, string, Godot.Color, out Godot.HBoxContainer, int, System.Action?, string?, string?, string, string?)`](MatchArenaScreen.cs.md#symbol-c4eb3ccea4ca)；[`NationalSpire.CareerScreen.PlanPane(NationalSpire.CareerData, Godot.VBoxContainer, Godot.ScrollContainer, System.Collections.Generic.List<NationalSpire.CareerScreen.CalendarPlan>, NationalSpire.CalendarDayButton[])`](CalendarPlansScreen.cs.md#symbol-078c4f908d4c)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)；[`NationalSpire.CareerScreen.Settlement(NationalSpire.CareerData)`](SettlementScreen.cs.md#symbol-ec46df6667fd)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-eaa8c36beede)
 
 **调用：** `Godot.Button.Button()`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.StyleBoxFlat.StyleBoxFlat()`；`Godot.Vector2.Vector2(float, float)`
 
@@ -117,7 +117,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.DashboardHeader(NationalSpire.CareerData)`](CareerDashboard.cs.md#symbol-959727dcb8cd)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)
+**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.DashboardHeader(NationalSpire.CareerData)`](CareerDashboard.cs.md#symbol-959727dcb8cd)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)
 
 **调用：** [`ColorText(bool)`](CareerDashboard.cs.md#symbol-87150ae0a985)；[`NationalSpire.CareerScreen.DashboardTheme()`](DashboardControls.cs.md#symbol-72d1c6b180c3)；`Godot.BaseButton.IsHovered()`；`Godot.Button.Button()`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawRect(Godot.Rect2, Godot.Color, bool, float, bool)`；`Godot.Control.AddThemeColorOverride(Godot.StringName, Godot.Color)`；`Godot.Control.AddThemeFontOverride(Godot.StringName, Godot.Font)`；`Godot.Control.AddThemeFontSizeOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.HasFocus()`；`Godot.Rect2.Rect2(float, float, float, float)`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.Vector2.Vector2(float, float)`
 
@@ -231,7 +231,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)；[`NationalSpire.CareerScreen.ReviewPager(NationalSpire.CareerData, NationalSpire.CareerResult, Godot.HBoxContainer)`](MatchArenaScreen.cs.md#symbol-2553d6834735)
+**调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.FixtureSchedule(NationalSpire.CareerData)`](FixtureScheduleScreen.cs.md#symbol-e95df6046805)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.RankingPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-c8e7b9304826)；[`NationalSpire.CareerScreen.ReviewPager(NationalSpire.CareerData, NationalSpire.CareerResult, Godot.HBoxContainer)`](MatchArenaScreen.cs.md#symbol-2553d6834735)
 
 **调用：** [`NationalSpire.CareerScreen.Baseline(Godot.Control)`](DashboardControls.cs.md#symbol-d7fcbfd7f416)；[`NationalSpire.CareerScreen.SecondaryTabInset(Godot.Container)`](CareerDashboard.cs.md#symbol-fc9ce0453d21)；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -741,7 +741,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 来源：源码第 304 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`Select(string)`](CareerDashboard.cs.md#symbol-79d37566e720)
+**调用者：** [`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.PlayerProfile(NationalSpire.CareerData)`](ProfileScreen.cs.md#symbol-ce70d1ef24b8)；[`Select(string)`](CareerDashboard.cs.md#symbol-65cb4edb82b3)
 
 **调用：** [`NationalSpire.CareerScreen.ClearPlan()`](CareerDashboard.cs.md#symbol-26b8e8ad029b)；[`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 
@@ -836,15 +836,17 @@ private CareerAvatar _railPortraitImage = null!;
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
-**调用：** [`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-1eb97a843d59)；[`NationalSpire.CareerScreen.IsLatestReview(NationalSpire.CareerData)`](MatchArenaScreen.cs.md#symbol-7436948d6a10)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CareerScreen.UpdateHeaderAccount(NationalSpire.CareerData)`](CareerDashboard.cs.md#symbol-52ec8ee2b3ad)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Select(string)`](CareerDashboard.cs.md#symbol-79d37566e720)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`](CalendarPlansScreen.cs.md#symbol-1eb97a843d59)；[`NationalSpire.CareerScreen.IsLatestReview(NationalSpire.CareerData)`](MatchArenaScreen.cs.md#symbol-7436948d6a10)；[`NationalSpire.CareerScreen.LeaguePage(string)`](LeagueScreen.cs.md#symbol-0cfda266604d)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CareerScreen.UpdateHeaderAccount(NationalSpire.CareerData)`](CareerDashboard.cs.md#symbol-52ec8ee2b3ad)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Select(string)`](CareerDashboard.cs.md#symbol-65cb4edb82b3)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._backButton`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._eventHeaderSelection`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._pageTitle`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._planDot`；`NationalSpire.CareerScreen._sectionBar`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.CanGoBack`；`NationalSpire.CareerScreen.EventHub`；`NationalSpire.CareerScreen.IsLatestReview(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；`NationalSpire.CareerScreen.UpdateHeaderAccount(NationalSpire.CareerData)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.ICareerSession.Host`；`Select(string)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._backButton`；`NationalSpire.CareerScreen._competitionId`；`NationalSpire.CareerScreen._eventHeaderSelection`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen._pageTitle`；`NationalSpire.CareerScreen._personId`；`NationalSpire.CareerScreen._planDot`；`NationalSpire.CareerScreen._sectionBar`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen._worldSection`；`NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.CanGoBack`；`NationalSpire.CareerScreen.EventHub`；`NationalSpire.CareerScreen.IsLatestReview(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LeaguePage(string)`；`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；`NationalSpire.CareerScreen.UpdateHeaderAccount(NationalSpire.CareerData)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.ICareerSession.Host`；`Select(string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_sectionBar.AddChild(tab)`；返回值紧邻使用处：`ExpressionStatementSyntax: _sectionBar.AddChild(tab);`
 - `NationalSpire.CareerScreen.AvailablePlans(NationalSpire.CareerData)`；输入表达式：`AvailablePlans(d)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _planDot.Visible = AvailablePlans(d)`
 - `NationalSpire.CareerScreen.IsLatestReview(NationalSpire.CareerData)`；输入表达式：`IsLatestReview(d)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !IsLatestReview(d)`
+- `NationalSpire.CareerScreen.LeaguePage(string)`；输入表达式：`LeaguePage(_lifeSection)`；返回值紧邻使用处：`BinaryExpressionSyntax: _lifeSection is "消费商城" or "我的空间" or "交易市场" or "国运榜" or "国家发展" or "世界荣誉" || LeaguePage(_lifeSection)`
+- `NationalSpire.CareerScreen.LeaguePage(string)`；输入表达式：`LeaguePage(_lifeSection)`；返回值紧邻使用处：`WhenClauseSyntax: when LeaguePage(_lifeSection)`
 - `NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；输入表达式：`UnderlineTab(name, () => Select(name), active==name,120,23,true)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = UnderlineTab(name, () => Select(name), active==name,120,23,true)`
 - `NationalSpire.CareerScreen.UpdateHeaderAccount(NationalSpire.CareerData)`；输入表达式：`UpdateHeaderAccount(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: UpdateHeaderAccount(d);`
 - `NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；输入表达式：`CareerVisuals.ClearContent(_sectionBar)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerVisuals.ClearContent(_sectionBar);`
@@ -861,7 +863,7 @@ private CareerAvatar _railPortraitImage = null!;
 - `tab.MouseDefaultCursorShape` = `CursorShape.Arrow`
 - `tab.TooltipText` = `"由房主创建角色"`
 
-<a id="symbol-79d37566e720"></a>
+<a id="symbol-65cb4edb82b3"></a>
 
 ## `Select(string) — void Select(string name)`
 
@@ -878,6 +880,7 @@ private CareerAvatar _railPortraitImage = null!;
 - `NationalSpire.CareerScreen.GoHub(string)`；输入表达式：`GoHub("赛程")`；返回值紧邻使用处：`ExpressionStatementSyntax: GoHub("赛程");`
 - `NationalSpire.CareerScreen.GoHub(string)`；输入表达式：`GoHub("赛事")`；返回值紧邻使用处：`ExpressionStatementSyntax: GoHub("赛事");`
 - `NationalSpire.CareerScreen.OpenLifePage(string)`；输入表达式：`OpenLifePage("国运榜")`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenLifePage("国运榜");`
+- `NationalSpire.CareerScreen.OpenLifePage(string)`；输入表达式：`OpenLifePage("集卡")`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenLifePage("集卡");`
 - `NationalSpire.CareerScreen.OpenLifePage(string)`；输入表达式：`OpenLifePage("交易市场")`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenLifePage("交易市场");`
 - `NationalSpire.CareerScreen.OpenLifePage(string)`；输入表达式：`OpenLifePage("消费商城")`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenLifePage("消费商城");`
 - `NationalSpire.CareerScreen.OpenPerson(string)`；输入表达式：`OpenPerson("player")`；返回值紧邻使用处：`ExpressionStatementSyntax: OpenPerson("player");`
@@ -893,9 +896,9 @@ private CareerAvatar _railPortraitImage = null!;
 
 ## `NationalSpire.CareerScreen.OpenLifePage(string) — private void OpenLifePage(string name)`
 
-来源：源码第 370 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 371 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-5d55d72dcdea)；[`NationalSpire.CareerScreen.BuildCommunityToolbar(NationalSpire.CareerData)`](CommunityFilters.cs.md#symbol-19e3d9d8326a)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.OpenWorldSection(string)`](CareerNavigation.cs.md#symbol-e41ea7b0d93d)；[`OpenMarket()`](CareerScreen.cs.md#symbol-b56f5758541f)；[`Select(string)`](CareerDashboard.cs.md#symbol-79d37566e720)
+**调用者：** [`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-5d55d72dcdea)；[`NationalSpire.CareerScreen.BuildCommunityToolbar(NationalSpire.CareerData)`](CommunityFilters.cs.md#symbol-19e3d9d8326a)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.LeagueGo(string)`](LeagueScreen.cs.md#symbol-46069e214cbd)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)；[`NationalSpire.CareerScreen.OpenWorldSection(string)`](CareerNavigation.cs.md#symbol-e41ea7b0d93d)；[`OpenMarket()`](CareerScreen.cs.md#symbol-ec24a1b9257f)；[`Select(string)`](CareerDashboard.cs.md#symbol-65cb4edb82b3)
 
 **调用：** [`NationalSpire.CareerScreen.Visit(System.Action)`](CareerNavigation.cs.md#symbol-d49752019228)
 
@@ -914,7 +917,7 @@ private CareerAvatar _railPortraitImage = null!;
 
 ## `NationalSpire.CareerScreen.ClearPlan() — private void ClearPlan()`
 
-来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 375 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.ClubPlanEntry()`](CareerWorldScreen.cs.md#symbol-1607d360210f)；[`NationalSpire.CareerScreen.FinishPlan(string?)`](CalendarPlansScreen.cs.md#symbol-100b2aec3e40)；[`NationalSpire.CareerScreen.GoHub(string)`](CareerDashboard.cs.md#symbol-06744bf6f9f0)；[`NationalSpire.CareerScreen.OpenCalendarDay(int)`](CalendarPlansScreen.cs.md#symbol-d6b7c872ea02)；[`NationalSpire.CareerScreen.ShowSponsors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-c9965ddff0d7)
 

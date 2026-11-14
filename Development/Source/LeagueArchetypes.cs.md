@@ -1,0 +1,181 @@
+# LeagueArchetypes.cs
+
+[返回文件依赖索引](../SOURCE_MAP.md)
+
+源码 SHA-256：`4DA3F96F198CD5F8174C3DA7DBBDE49615B7EF98A8B7EB3098510EFA5542718A`。来源：[源码](../../LeagueArchetypes.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+
+## 类型与字段
+
+类型：`NationalSpire.LeagueArchetypes`、`NationalSpire.LeagueArchetypes.Plan`、`NationalSpire.LeagueArchetypes.Engine`。
+
+字段、事件及初始值（源码原样）：
+
+```csharp
+internal readonly string[] Keys=Terms.Split(',');
+internal readonly string[] Anchors=Core.Split(' '), Partners=Support.Split(' ');
+internal readonly HashSet<string> Draw=(draw+" FLASH_OF_STEEL FINESSE MASTER_OF_STRATEGY THINKING_AHEAD").Split(' ').ToHashSet();
+internal readonly HashSet<string> Energy=(energy+" PRODUCTION DISCOVERY").Split(' ').ToHashSet();
+internal static readonly Dictionary<string,Engine> Engines=new(){
+        ["IRONCLAD"]=new("POMMEL_STRIKE SHRUG_IT_OFF BATTLE_TRANCE BURNING_PACT OFFERING DARK_EMBRACE","OFFERING BLOODLETTING PYRE HAVOC CORRUPTION"),
+        ["SILENT"]=new("BACKFLIP ACROBATICS ESCAPE_PLAN PREPARED ADRENALINE REFLEX","ADRENALINE TACTICIAN BULLET_TIME"),
+        ["DEFECT"]=new("COOLHEADED SKIM OVERCLOCK MACHINE_LEARNING","TURBO CHARGE_BATTERY AGGREGATE DOUBLE_ENERGY"),
+        ["NECROBINDER"]=new("CAPTURE_SPIRIT PARSE GLIMPSE_BEYOND GRAVE_WARDEN REAVE NEUROSURGE","WISP BORROWED_TIME INVOKE NEUROSURGE"),
+        ["REGENT"]=new("GLIMMER PROPHESIZE BIG_BANG GLOW DECISIONS_DECISIONS","BIG_BANG ALIGNMENT ORBIT DECISIONS_DECISIONS"),
+        ["FOOL"]=new("RUMMAGE KI_CHANT ENNUI MOTIF WREST PUNCH_OF_JOY ECSTASY BRIGHTEN_UP","KI_REST ENCORE YAH KI_VERSE PUNCH_OF_JOY ECSTASY BRIGHTEN_UP")};
+internal static readonly Dictionary<string,(string Guard,string Sustain)> Defense=new(){
+        ["IRONCLAD"]=("SHRUG_IT_OFF TRUE_GRIT EVIL_EYE FLAME_BARRIER IRON_WAVE IMPERVIOUS","FEEL_NO_PAIN UNMOVABLE BARRICADE"),
+        ["SILENT"]=("BACKFLIP LEG_SWEEP CLOAK_AND_DAGGER DODGE_AND_ROLL DEFLECT","FOOTWORK AFTERIMAGE WRAITH_FORM"),
+        ["DEFECT"]=("LEAP GLACIER COOLHEADED COLD_SNAP CHILL CHARGE_BATTERY","GLACIER LOOP DEFRAGMENT"),
+        ["NECROBINDER"]=("GRAVE_WARDEN BONE_SHARDS BODYGUARD NEGATIVE_PULSE DELAY","SHROUD DANSE_MACABRE AFTERLIFE"),
+        ["REGENT"]=("GATHER_LIGHT BULWARK PARTICLE_WALL CLOAK_OF_STARS","PARRY NEUTRON_AEGIS CHILD_OF_THE_STARS"),
+        ["FOOL"]=("JEST BOUNCE CHO_FIRM CHO_READY HARMONIC_SHIELD","DEEP_STRETCH HIDDEN_ROOTS SONG_PATH")};
+private static readonly Plan[] Plans=[
+            new("IRONCLAD","力量重击","力量,高伤,高费","INFLAME DEMON_FORM PRIMAL_FORCE","BLUDGEON UPPERCUT POMMEL_STRIKE SHRUG_IT_OFF"),
+            new("IRONCLAD","消耗精简","消耗,精简,去留","BURNING_PACT TRUE_GRIT DARK_EMBRACE","FEEL_NO_PAIN CORRUPTION SECOND_WIND EVIL_EYE ASHEN_STRIKE FINESSE FLASH_OF_STEEL"),
+            new("IRONCLAD","生命交换","生命交换,续航,生命余量","BLOODLETTING HEMOKINESIS RUPTURE","CRUELTY OFFERING BLOOD_WALL SHRUG_IT_OFF"),
+            new("IRONCLAD","格挡反击","格挡,防御","BODY_SLAM BARRICADE SHRUG_IT_OFF","IMPERVIOUS FLAME_BARRIER IRON_WAVE UNMOVABLE"),
+            new("IRONCLAD","力量连击","多次攻击,多段","INFLAME ONE_TWO_PUNCH SWORD_BOOMERANG","WHIRLWIND TWIN_STRIKE POMMEL_STRIKE SHRUG_IT_OFF"),
+            new("IRONCLAD","锻造强攻","升级,可靠攻击","ARMAMENTS AGGRESSION PERFECTED_STRIKE","POMMEL_STRIKE HEADBUTT TWIN_STRIKE IRON_WAVE"),
+            new("SILENT","毒素积累","中毒,毒素","DEADLY_POISON BOUNCING_FLASK ACCELERANT","NOXIOUS_FUMES CORROSIVE_WAVE BUBBLE_BUBBLE BACKFLIP LEG_SWEEP"),
+            new("SILENT","弃牌周转","弃牌,过牌","ACROBATICS TACTICIAN REFLEX","PREPARED CALCULATED_GAMBLE DAGGER_THROW TOOLS_OF_THE_TRADE UNTOUCHABLE FLICK_FLACK MEMENTO_MORI"),
+            new("SILENT","小刀连击","小刀,连续出牌,多次出牌","BLADE_DANCE ACCURACY CLOAK_AND_DAGGER","INFINITE_BLADES AFTERIMAGE FINISHER BACKFLIP"),
+            new("SILENT","守势用毒","稳定防守,格挡与中毒","BACKFLIP DEADLY_POISON LEG_SWEEP","DODGE_AND_ROLL FOOTWORK NOXIOUS_FUMES ACCELERANT"),
+            new("SILENT","低费快攻","低费,攻击积极","BACKSTAB SLICE FINISHER","ADRENALINE DEFLECT DAGGER_THROW BACKFLIP FLASH_OF_STEEL"),
+            new("SILENT","保留蓄势","保留","WELL_LAID_PLANS PREDATOR BULLET_TIME","BACKFLIP BURST SKEWER ESCAPE_PLAN"),
+            new("DEFECT","闪电输出","闪电球,闪电","BALL_LIGHTNING ZAP STORM","CAPACITOR DUALCAST BARRAGE COMPILE_DRIVER"),
+            new("DEFECT","冰霜防御","冰霜,防御球","GLACIER COOLHEADED COLD_SNAP","CHILL DEFRAGMENT LOOP DUALCAST ECHO_FORM BARRAGE HAILSTORM"),
+            new("DEFECT","集中强化","集中,能力牌","DEFRAGMENT CAPACITOR BIASED_COGNITION","GLACIER COOLHEADED BALL_LIGHTNING LOOP"),
+            new("DEFECT","黑暗蓄能","黑暗","DARKNESS LOOP MULTI_CAST","DUALCAST GLACIER COOLHEADED CAPACITOR SHATTER"),
+            new("DEFECT","充能球连锁","球位,触发,连锁,混合","MULTI_CAST DUALCAST RAINBOW","CAPACITOR COOLHEADED BALL_LIGHTNING GLACIER"),
+            new("DEFECT","零费回收","零费,过牌","CLAW ALL_FOR_ONE SCRAPE","HOLOGRAM OVERCLOCK SKIM GO_FOR_THE_EYES FLASH_OF_STEEL FINESSE"),
+            new("NECROBINDER","召唤攻击","攻击,奥斯蒂参与","BODYGUARD UNLEASH POKE","RIGHT_HAND_HAND FETCH BONE_SHARDS AFTERLIFE"),
+            new("NECROBINDER","召唤防守","承担,稳定性,稳定,承担压力","BODYGUARD REANIMATE AFTERLIFE","PULL_AGGRO NECRO_MASTERY INVOKE SPUR"),
+            new("NECROBINDER","灾厄积累","末日,灾厄,逐步积累","SCOURGE NO_ESCAPE COUNTDOWN","DEATHBRINGER SHROUD TIMES_UP END_OF_DAYS"),
+            new("NECROBINDER","召唤与灾厄","混合","BODYGUARD SCOURGE SHROUD","NO_ESCAPE DEATHBRINGER AFTERLIFE RIGHT_HAND_HAND"),
+            new("NECROBINDER","持续召唤","支援,召唤,持续","INVOKE NECRO_MASTERY AFTERLIFE","BODYGUARD RIGHT_HAND_HAND REANIMATE FETCH GRAVE_WARDEN HAUNT SOUL_STORM"),
+            new("REGENT","辉星爆发","辉星,集中输出","VENERATE ROYAL_GAMBLE COMET","GENESIS METEOR_SHOWER RADIATE CHILD_OF_THE_STARS"),
+            new("REGENT","君王之剑","铸剑,铸造","REFINE_BLADE THE_SMITH SUMMON_FORTH","FURNACE SWORD_SAGE SPOILS_OF_BATTLE SEEKING_EDGE"),
+            new("REGENT","辉星续航","余量,保留,续航,高费","GENESIS CHILD_OF_THE_STARS VENERATE","BLACK_HOLE GLOW RADIATE CLOAK_OF_STARS"),
+            new("REGENT","低费过渡","低费","GLOW VENERATE FALLING_STAR","PARTICLE_WALL COLLISION_COURSE PHOTON_CUT CLOAK_OF_STARS"),
+            new("REGENT","铸剑防守","铸剑与防御,防御并行,防守","PARRY REFINE_BLADE BULWARK","FURNACE SUMMON_FORTH SPOILS_OF_BATTLE THE_SMITH SWORD_SAGE"),
+            new("FOOL","瞄准重射","瞄准,沉重","NOCK HEAVY_SHOT ARCHERY","BRACE RECALL QUICK_SHOT QUIVER"),
+            new("FOOL","箭矢周转","召回,箭袋,松脱,多次攻击,取箭","RECALL QUICK_SHOT WREST","QUIVER UPROOT HOBBLING_SHOT YAH"),
+            new("FOOL","拉伸防守","拉伸,空窗","DEEP_STRETCH HIDDEN_ROOTS JEST","BOUNCE HOBBLING_SHOT HEAVY_SHOT NOCK"),
+            new("FOOL","悲伤转化","悲伤,生长","BRIGHTEN_UP GROWTH ECSTASY","SELF_DEPRECATE ALL_IS_WELL JEST ENNUI"),
+            new("FOOL","哇音强攻","哇牌","WAH_HAMMER WAH_SWEEP VIOLENT_CHORD","WAH_BLAST WAH_TOUCH RHYTHM_STRIKE"),
+            new("FOOL","啾音护身","啾牌,歌之道","SONG_PATH CHO_FIRM CHO_CHORUS","CHO_READY CHO_LIMBS HARMONIC_SHIELD MOTIF MELODIC_SHOT"),
+            new("FOOL","叽音蓄势","休止符,叽牌","KI_REST TUNE KI_VERSE","KI_WHIP KI_CHANT RHYTHM_STRIKE"),
+            new("FOOL","三种旋律","曲中意,三种旋律","MOTIF HARMONIC_SHIELD WAH_CHO_KI","CHO_KI WAH_KI LULLABY MELODIC_SHOT"),
+            new("FOOL","悲伤与喜悦","喜悦,狂喜","PUNCH_OF_JOY ECSTASY JEST","ENNUI ALL_IS_WELL ANGUISH BRIGHTEN_UP GROWTH"),
+    ];
+private static readonly Dictionary<string,Plan[]> ByRole=Plans.GroupBy(x=>x.Role).ToDictionary(g=>g.Key,g=>g.ToArray());
+private static readonly int[][] Styles=[
+        [0,1,2,3,4,5,0,1,0,2,1,4,5,1,5,3,0,2],
+        [0,1,2,3,4,5,3,1,2,4,5,2,0,1,2,1,4,3],
+        [0,1,2,3,4,5,0,1,2,4,3,5,5,4,2,1,4,2],
+        [0,1,2,3,4,1,4,2,0,1,3,1,4,0,2,4,2,4],
+        [0,1,2,3,4,2,0,1,2,3,1,0,2,4,2,4,2,1],
+        [0,1,1,4,2,3,0,0,1,1,1,2,5,6,2,8,2,7],
+    ];
+```
+
+<a id="symbol-cd70b308c5e8"></a>
+
+## `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string) — private static bool Has(Dictionary<string,int> deck,string ids)`
+
+来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)
+
+**调用：** `string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `string.Split(char, System.StringSplitOptions)`；输入表达式：`ids.Split(' ')`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ids.Split(' ').Any`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`ids.Split(' ').Any(deck.ContainsKey)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>ids.Split(' ').Any(deck.ContainsKey)`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-0609e465e6ba"></a>
+
+## `NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>) — internal static bool Enabled(string id,Dictionary<string,int> deck)`
+
+来源：源码第 30 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)；[`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`Supply(System.Collections.Generic.HashSet<string>, int)`](LeagueLadder.cs.md#symbol-43af4e1a16e8)
+
+**调用：** [`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)；[`NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`](LeagueArchetypes.cs.md#symbol-cd70b308c5e8)；`string.StartsWith(string)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.Entry.Model`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`；输入表达式：`Enabled("WREST",deck)`；返回值紧邻使用处：`BinaryExpressionSyntax: Enabled("WREST",deck)&&Has(deck,"WREST RECALL UPROOT")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"ACROBATICS PREPARED CALCULATED_GAMBLE DAGGER_THROW TOOLS_OF_THE_TRADE")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "TACTICIAN" or "REFLEX"=>Has(deck,"ACROBATICS PREPARED CALCULATED_GAMBLE DAGGER_THROW TOOLS_OF_THE_TRADE")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"BIG_BANG GLOW ROYAL_GAMBLE VENERATE GENESIS")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "ALIGNMENT" or "DECISIONS_DECISIONS"=>Has(deck,"BIG_BANG GLOW ROYAL_GAMBLE VENERATE GENESIS")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"BURNING_PACT TRUE_GRIT SECOND_WIND CORRUPTION EVIL_EYE")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "DARK_EMBRACE" or "FEEL_NO_PAIN"=>Has(deck,"BURNING_PACT TRUE_GRIT SECOND_WIND CORRUPTION EVIL_EYE")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"GLACIER COOLHEADED COLD_SNAP CHILL")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "LOOP" or "DEFRAGMENT"=>Has(deck,"GLACIER COOLHEADED COLD_SNAP CHILL")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"GLOW ROYAL_GAMBLE VENERATE GENESIS BIG_BANG")`；返回值紧邻使用处：`BinaryExpressionSyntax: Has(deck,"GLOW ROYAL_GAMBLE VENERATE GENESIS BIG_BANG")&&Has(deck,"RADIATE COMET COLLISION_COURSE PARTICLE_WALL CLOAK_OF_STARS ALIGNMENT")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"JEST ENNUI BRIGHTEN_UP MOURNING_BLOW")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "PUNCH_OF_JOY" or "ECSTASY"=>Has(deck,"JEST ENNUI BRIGHTEN_UP MOURNING_BLOW")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"QUICK_SHOT HEAVY_SHOT HOBBLING_SHOT MELODIC_SHOT")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "WREST"=>Has(deck,"QUICK_SHOT HEAVY_SHOT HOBBLING_SHOT MELODIC_SHOT")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"RADIATE COMET COLLISION_COURSE PARTICLE_WALL CLOAK_OF_STARS ALIGNMENT")`；返回值紧邻使用处：`BinaryExpressionSyntax: Has(deck,"GLOW ROYAL_GAMBLE VENERATE GENESIS BIG_BANG")&&Has(deck,"RADIATE COMET COLLISION_COURSE PARTICLE_WALL CLOAK_OF_STARS ALIGNMENT")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"REFINE_BLADE SUMMON_FORTH FURNACE BULWARK THE_SMITH SPOILS_OF_BATTLE")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "PARRY"=>Has(deck,"REFINE_BLADE SUMMON_FORTH FURNACE BULWARK THE_SMITH SPOILS_OF_BATTLE")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"SCOURGE NO_ESCAPE COUNTDOWN DEATHBRINGER NEGATIVE_PULSE")`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "SHROUD"=>Has(deck,"SCOURGE NO_ESCAPE COUNTDOWN DEATHBRINGER NEGATIVE_PULSE")`
+- `NationalSpire.LeagueArchetypes.Has(System.Collections.Generic.Dictionary<string, int>, string)`；输入表达式：`Has(deck,"WREST RECALL UPROOT")`；返回值紧邻使用处：`BinaryExpressionSyntax: Enabled("WREST",deck)&&Has(deck,"WREST RECALL UPROOT")`
+- `string.StartsWith(string)`；输入表达式：`k.StartsWith("CHO_")`；返回值紧邻使用处：`BinaryExpressionSyntax: k.StartsWith("WAH_")||k.StartsWith("KI_")||k.StartsWith("CHO_")`
+- `string.StartsWith(string)`；输入表达式：`k.StartsWith("CHO_")`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: k=>k.StartsWith("CHO_")`
+- `string.StartsWith(string)`；输入表达式：`k.StartsWith("KI_")`；返回值紧邻使用处：`BinaryExpressionSyntax: k.StartsWith("WAH_")||k.StartsWith("KI_")`
+- `string.StartsWith(string)`；输入表达式：`k.StartsWith("WAH_")`；返回值紧邻使用处：`BinaryExpressionSyntax: k.StartsWith("WAH_")||k.StartsWith("KI_")`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`deck.Any(p=>LeagueCards.Catalog[p.Key].Model.EnergyCost.Canonical>=2)`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "DANSE_MACABRE"=>deck.Any(p=>LeagueCards.Catalog[p.Key].Model.EnergyCost.Canonical>=2)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`deck.Keys.Any(k=>k.StartsWith("CHO_"))`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "SONG_PATH"=>deck.Keys.Any(k=>k.StartsWith("CHO_"))`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`deck.Keys.Any(k=>k.StartsWith("WAH_")||k.StartsWith("KI_")||k.StartsWith("CHO_"))`；返回值紧邻使用处：`SwitchExpressionArmSyntax: "MOTIF" or "KI_VERSE"=>deck.Keys.Any(k=>k.StartsWith("WAH_")||k.StartsWith("KI_")||k.StartsWith("CHO_"))`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-8cffe8f79fa2"></a>
+
+## `NationalSpire.LeagueArchetypes.Resolve(string, string) — internal static Plan Resolve(string role,string style)`
+
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-6efcffde32aa)；[`NationalSpire.LeagueArchetypes.Name(string, string)`](LeagueArchetypes.cs.md#symbol-eed6465b998c)；[`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+
+**调用：** [`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.NpcCharacters.Index(string)`](NpcCharacters.cs.md#symbol-8f7f43f17d89)；[`NationalSpire.WorldPeople.StyleIndex(int, string)`](WorldPeople.cs.md#symbol-96edbe6fcf7d)；`string.Contains(string, System.StringComparison)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.LeagueArchetypes.ByRole`；`NationalSpire.LeagueArchetypes.Plan.Keys`；`NationalSpire.LeagueArchetypes.Styles`；`NationalSpire.NpcCharacters.Index(string)`；`NationalSpire.WorldPeople.StyleIndex(int, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.CareerEngine.StableHash(string)`；输入表达式：`CareerEngine.StableHash(style)`；返回值紧邻使用处：`CastExpressionSyntax: (uint)CareerEngine.StableHash(style)`
+- `NationalSpire.NpcCharacters.Index(string)`；输入表达式：`NpcCharacters.Index(role)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =NpcCharacters.Index(role)`
+- `NationalSpire.WorldPeople.StyleIndex(int, string)`；输入表达式：`WorldPeople.StyleIndex(character,style)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =WorldPeople.StyleIndex(character,style)`
+- `string.Contains(string, System.StringComparison)`；输入表达式：`style.Contains(k,StringComparison.Ordinal)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: k=>style.Contains(k,StringComparison.Ordinal)`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`best.Keys.Any(style.Contains)`；返回值紧邻使用处：`BinaryExpressionSyntax: best!=null&&best.Keys.Any(style.Contains)`
+- `System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`choices.MaxBy(p=>p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal)).Sum(k=>k.Length))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =choices.MaxBy(p=>p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal)).Sum(k=>k.Length))`
+- `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal)).Sum(k=>k.Length)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: p=>p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal)).Sum(k=>k.Length)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: p.Keys.Where(k=>style.Contains(k,StringComparison.Ordinal)).Sum`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-eed6465b998c"></a>
+
+## `NationalSpire.LeagueArchetypes.Name(string, string) — internal static string Name(string role,string style)`
+
+来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)
+
+**调用：** [`NationalSpire.LeagueArchetypes.Resolve(string, string)`](LeagueArchetypes.cs.md#symbol-8cffe8f79fa2)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueArchetypes.Plan.Title`；`NationalSpire.LeagueArchetypes.Resolve(string, string)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LeagueArchetypes.Resolve(string, string)`；输入表达式：`Resolve(role,style)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Resolve(role,style).Title`
+
+**赋值（含属性/字段和局部值）：**

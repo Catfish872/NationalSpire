@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`9BDF8231E5C91F72556419941FFF55561B66BC7F298CDDD2C2BDD9046476D1B9`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`76B9B6B18A1069374BDB81C577F44BEB64E428D43D123CF7633FA8717FEF9015`。来源：[源码](../../LiveRunBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -236,7 +236,7 @@ private List<RouteNode>? _planningMap;
 
 **调用：** [`NationalSpire.BlitzRivalMarkers.Hide()`](BlitzRivalMarkers.cs.md#symbol-a0b3dcfd2e88)；[`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`](CareerStore.cs.md#symbol-ead7461ee7cb)；[`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`](LiveRunBridge.cs.md#symbol-65a24868959d)；[`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`](LiveDateGame.cs.md#symbol-85266af9ae90)；`Godot.CanvasItem.Hide()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.BlitzRivalMarkers.Hide()`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；`NationalSpire.LiveRunBridge.UpdateRace()`
+**字段、属性、事件及方法组引用：** `NationalSpire.BlitzRivalMarkers.Hide()`；`NationalSpire.CareerData.PendingMatchId`；`NationalSpire.CareerMatch.DateGame`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerStore.IsCurrent(NationalSpire.CareerData)`；`NationalSpire.LeagueNativeMatch.InFinal`；`NationalSpire.LiveRunBridge._blitzMap`；`NationalSpire.LiveRunBridge._data`；`NationalSpire.LiveRunBridge._ended`；`NationalSpire.LiveRunBridge._faulted`；`NationalSpire.LiveRunBridge._hud`；`NationalSpire.LiveRunBridge._mapCheck`；`NationalSpire.LiveRunBridge._mapOverlay`；`NationalSpire.LiveRunBridge._match`；`NationalSpire.LiveRunBridge._tick`；`NationalSpire.LiveRunBridge.Guard(System.Action, bool)`；`NationalSpire.LiveRunBridge.TickDateRequestClock(double)`；`NationalSpire.LiveRunBridge.UpdateRace()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 

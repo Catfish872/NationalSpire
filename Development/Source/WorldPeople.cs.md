@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`EC8CEFD56C99985DCDAE1AA7FFDB3C5F0F93F884BC1DE96C0E50BB10E0EA1FD6`。来源：[源码](../../WorldPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`2C2CDA8B189D0897772EDD8A5631C99580A41DA2F0B821ED7DECDC315E5CFE6D`。来源：[源码](../../WorldPeople.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -52,11 +52,30 @@ private static readonly string[] YouthBios = ["把职业选手的牌组抄进练
 private static readonly string[] FanBios = ["工作之余爬塔，观赛时间通常比自己的对局更长。", "和朋友一起追比赛，最常讨论的是自己没见过的卡牌。", "喜欢收藏赛后战报，自己的挑战仍经常止步前期。", "比赛日会提前安排时间，平时偶尔参加社区活动。", "比起争论打法，更愿意记住那些让自己印象深刻的选手。", "常在社区分享失败经历，希望有一天也能交出漂亮战报。", "喜欢在通勤时阅读赛区新闻，对本地选手格外熟悉。", "看过不少比赛，却仍常被同一类敌人挡住去路。"];
 ```
 
+<a id="symbol-96edbe6fcf7d"></a>
+
+## `NationalSpire.WorldPeople.StyleIndex(int, string) — internal static int StyleIndex(int character,string style)`
+
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueArchetypes.Resolve(string, string)`](LeagueArchetypes.cs.md#symbol-8cffe8f79fa2)
+
+**调用：** `System.Array.IndexOf<T>(T[], T)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.WorldPeople.Styles`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Array.IndexOf<T>(T[], T)`；输入表达式：`Array.IndexOf(Styles[character],style)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>Array.IndexOf(Styles[character],style)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-806b3e0e373d"></a>
 
 ## `NationalSpire.WorldPeople.Surnames(string) — internal static string[] Surnames(string country)`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.HumanNames.KnownGender(string, string)`](HumanNames.cs.md#symbol-a5552e5b910e)；[`NationalSpire.HumanNames.LegalName(string, string, System.Random)`](HumanNames.cs.md#symbol-36b85f84360f)；[`NationalSpire.HumanNames.NameCount`](HumanNames.cs.md#symbol-c812deb59ef9)
 
@@ -75,7 +94,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.NameCombinations — public static int NameCombinations`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -93,7 +112,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.Name(NationalSpire.CareerData, string, string, bool) — public static string Name(CareerData data, string id, string country, bool nickname)`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`](CareerEngine.cs.md#symbol-d3b571ec95e8)；[`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)；[`NationalSpire.EsportsWorld.Initialize(NationalSpire.CareerData)`](EsportsWorld.cs.md#symbol-ca5840a56e8d)；[`NationalSpire.OwnedClubs.EnsureMarket(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-3dba497c8606)；[`NationalSpire.WorldPeople.Enrich(NationalSpire.CareerData)`](WorldPeople.cs.md#symbol-243cbdaa90c2)
 
@@ -123,7 +142,7 @@ private static readonly string[] FanBios = ["工作之余爬塔，观赛时间�
 
 ## `NationalSpire.WorldPeople.Enrich(NationalSpire.CareerData) — public static void Enrich(CareerData data)`
 
-来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerEngine.CreateNew(bool, int, NationalSpire.PersonalityPool?, string?, string?, string)`](CareerEngine.cs.md#symbol-d3b571ec95e8)；[`NationalSpire.CareerEngine.NormalizeRoster(NationalSpire.CareerData)`](CareerEngine.cs.md#symbol-eb11b96e7400)
 

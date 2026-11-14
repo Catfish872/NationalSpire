@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`7E2AD33CCEF150FAF96217F2688B667B9E14AFF52455889697B12AAFEBC391AA`。来源：[源码](../../LifeScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`16C4091DCC306699E0E82052EF466AD3F717CF9E43D5CC0B96DB368D1F80BC1E`。来源：[源码](../../LifeScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -23,9 +23,9 @@ private int _lifeHistoryLimit = 8;
 
 **调用者：** [`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)
 
-**调用：** [`NationalSpire.CareerScreen.AddLifeRepairNotices(NationalSpire.CareerData, Godot.VBoxContainer)`](LifeScreen.cs.md#symbol-e1843514c51a)；[`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-5d55d72dcdea)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-825caeb63a3b)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b665478390f0)；[`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)；[`NationalSpire.CareerScreen.SecondaryTabInset(Godot.Container)`](CareerDashboard.cs.md#symbol-fc9ce0453d21)；[`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`](CareerDashboard.cs.md#symbol-5eacabf68317)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CareerScreen.WorldHonors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-3c1f80d447a9)；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`NationalSpire.CareerScreen.AddLifeRepairNotices(NationalSpire.CareerData, Godot.VBoxContainer)`](LifeScreen.cs.md#symbol-e1843514c51a)；[`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`](CareerBoardsScreen.cs.md#symbol-5d55d72dcdea)；[`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-a96caa224878)；[`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`](DevelopmentScreen.cs.md#symbol-2d48676d5e88)；[`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-509582b2b893)；[`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`](BroadcastVisuals.cs.md#symbol-15d48434171e)；[`NationalSpire.CareerScreen.LeaguePage(string)`](LeagueScreen.cs.md#symbol-0cfda266604d)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)；[`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-825caeb63a3b)；[`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`](MarketScreen.cs.md#symbol-333b046d27f4)；[`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-b665478390f0)；[`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)；[`NationalSpire.CareerScreen.SecondaryTabInset(Godot.Container)`](CareerDashboard.cs.md#symbol-fc9ce0453d21)；[`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`](CareerDashboard.cs.md#symbol-5eacabf68317)；[`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`](CareerDashboard.cs.md#symbol-fd46a77c3667)；[`NationalSpire.CareerScreen.WorldHonors(NationalSpire.CareerData)`](CircuitScreen.cs.md#symbol-3c1f80d447a9)；`Godot.HFlowContainer.HFlowContainer()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._calendarMode`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.AddLifeRepairNotices(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.OpenLifePage(string)`；`NationalSpire.CareerScreen.SecondaryTabInset(Godot.Container)`；`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`；`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；`NationalSpire.CareerScreen.WorldHonors(NationalSpire.CareerData)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._calendarMode`；`NationalSpire.CareerScreen._content`；`NationalSpire.CareerScreen._lifeSection`；`NationalSpire.CareerScreen._tab`；`NationalSpire.CareerScreen.AddLifeRepairNotices(NationalSpire.CareerData, Godot.VBoxContainer)`；`NationalSpire.CareerScreen.AssetsPage(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.Calendar(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；`NationalSpire.CareerScreen.LeaguePage(string)`；`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.NationRanking(NationalSpire.CareerData)`；`NationalSpire.CareerScreen.OpenLifePage(string)`；`NationalSpire.CareerScreen.SecondaryTabInset(Godot.Container)`；`NationalSpire.CareerScreen.TabStrip(Godot.Container, int, bool, bool)`；`NationalSpire.CareerScreen.UnderlineTab(string, System.Action, bool, int, int, bool, bool)`；`NationalSpire.CareerScreen.WorldHonors(NationalSpire.CareerData)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -41,6 +41,8 @@ private int _lifeHistoryLimit = 8;
 - `NationalSpire.CareerScreen.DevelopmentScreen(NationalSpire.CareerData)`；输入表达式：`DevelopmentScreen(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: DevelopmentScreen(d);`
 - `NationalSpire.CareerScreen.FanChart(NationalSpire.CareerData)`；输入表达式：`FanChart(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: FanChart(d);`
 - `NationalSpire.CareerScreen.FilterButton(string, bool, System.Action, float)`；输入表达式：`FilterButton(name, _lifeSection == name, () => OpenLifePage(name), 140)`；返回值紧邻使用处：`ArgumentSyntax: FilterButton(name, _lifeSection == name, () => OpenLifePage(name), 140)`
+- `NationalSpire.CareerScreen.LeaguePage(string)`；输入表达式：`LeaguePage(_lifeSection)`；返回值紧邻使用处：`IfStatementSyntax: if (LeaguePage(_lifeSection)) { LeagueScreen(d); return; }`
+- `NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`；输入表达式：`LeagueScreen(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueScreen(d);`
 - `NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`；输入表达式：`LifeCollection(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: LifeCollection(d);`
 - `NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData)`；输入表达式：`LifeNews(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: LifeNews(d);`
 - `NationalSpire.CareerScreen.MarketScreen(NationalSpire.CareerData)`；输入表达式：`MarketScreen(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: MarketScreen(d);`
@@ -63,7 +65,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.AddLifeRepairNotices(NationalSpire.CareerData, Godot.VBoxContainer) — private static void AddLifeRepairNotices(CareerData data, VBoxContainer target)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.ConsumerShop(NationalSpire.CareerData)`](ConsumerScreen.cs.md#symbol-992c668fa0a5)；[`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 
@@ -84,9 +86,9 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.ConfirmLife(string, string, System.Action) — private void ConfirmLife(string title, string question, Action action)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.PlanPane(NationalSpire.CareerData, Godot.VBoxContainer, Godot.ScrollContainer, System.Collections.Generic.List<NationalSpire.CareerScreen.CalendarPlan>, NationalSpire.CalendarDayButton[])`](CalendarPlansScreen.cs.md#symbol-078c4f908d4c)
+**调用者：** [`NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool)`](LifeScreen.cs.md#symbol-8732620351f6)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.CareerScreen.PlanPane(NationalSpire.CareerData, Godot.VBoxContainer, Godot.ScrollContainer, System.Collections.Generic.List<NationalSpire.CareerScreen.CalendarPlan>, NationalSpire.CalendarDayButton[])`](CalendarPlansScreen.cs.md#symbol-078c4f908d4c)
 
 **调用：** [`NationalSpire.CareerScreen.ShowCareerDialog(string, string, System.Func<bool>, string, System.Action<Godot.VBoxContainer>?, bool, bool, string, bool, Godot.StyleBoxFlat?, System.Action<Godot.HBoxContainer, Godot.Button, Godot.Button>?)`](CareerDialog.cs.md#symbol-df0355cc8433)；`System.Action.Invoke()`（委托实际目标见流程文档）
 
@@ -104,7 +106,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData) — private void LifeCollection(CareerData d)`
 
-来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 
@@ -169,7 +171,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.FigurineCard(NationalSpire.CareerData, Godot.GridContainer, NationalSpire.CareerRelics.Item, bool) — private void FigurineCard(CareerData d, GridContainer parent, CareerRelics.Item item, bool owned)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LifeCollection(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-7fd7cd27279c)
 
@@ -231,7 +233,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.RenamePlayer(NationalSpire.CareerData) — private void RenamePlayer(CareerData data)`
 
-来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -267,7 +269,7 @@ private int _lifeHistoryLimit = 8;
 
 ## `NationalSpire.CareerScreen.LifeNews(NationalSpire.CareerData) — private void LifeNews(CareerData d)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Life(NationalSpire.CareerData)`](LifeScreen.cs.md#symbol-0cdff88b6131)
 

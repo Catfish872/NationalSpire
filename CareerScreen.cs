@@ -201,6 +201,8 @@ public partial class CareerScreen : Control, IScreenContext
     }
     public override void _ExitTree()
     {
+
+        foreach(var item in _recentFaces)item.Face.QueueFree();_recentFaces.Clear();
         CloseDateScene();
         if (_listCache != null && IsInstanceValid(_listCache) && _listCache.IsInsideTree()) _listCache.Release();
         if (_multiplayer != null) { _multiplayer.Message -= Notice; _multiplayer.Dispose(); }
@@ -243,7 +245,7 @@ public partial class CareerScreen : Control, IScreenContext
         _renderVersion++;
         _mentionsChecked = false;
         _notice.Hide();
-        _listCache?.Release(); CareerVisuals.ClearContent(_content);
+        _listCache?.Release(); StoreFaces(_content); CareerVisuals.ClearContent(_content);
         _content.SizeFlagsVertical = SizeFlags.Fill;
         _content.AddThemeConstantOverride("separation", 18);
         _pageTitle.Text = _tab == "首页" ? "生涯大厅" : _tab == "赛事与俱乐部" && _worldSection == "颁奖盛典" ? "颁奖盛典" : _tab;

@@ -44,7 +44,7 @@ private static readonly Lazy<SeedApi> Seeds = new(() => new(typeof(StringHelper)
 
 来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
+**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)
 
 **调用：** [`NationalSpire.MatchModes.Native(string)`](MatchModes.cs.md#symbol-5c0b5a07fb3c)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；`MegaCrit.Sts2.Core.Entities.Players.Player.CreateForNewRun(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Unlocks.UnlockState, ulong)`；`MegaCrit.Sts2.Core.Saves.SaveManager.GenerateUnlockStateFromProgress()`；`System.Array.Empty<T>()`；`System.Reflection.MethodBase.GetParameters()`
 

@@ -148,6 +148,7 @@ public sealed class CareerMatch
     public string Status { get; set; } = "待赛";
     public bool PlayerWon { get; set; }
     public bool OpponentWon { get; set; }
+    public bool? FinalDuelWon { get; set; }
     public int OpponentFloor { get; set; }
     public int PlayerFloor { get; set; }
 }

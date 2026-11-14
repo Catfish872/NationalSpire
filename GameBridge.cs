@@ -84,35 +84,41 @@ public static class GameBridge
             stage = "播放开赛转场";
             loading.Stage(stage);
             trace.Stage(stage);
-            transitionStarted = true;
-            NAudioManager.Instance?.StopMusic();
-            SfxCmd.Play(character.CharacterTransitionSfx);
-            await game.Transition.FadeOut(0.4f, character.CharacterSelectTransitionPath);
-            stage = "准备比赛对手";
-            trace.Stage(stage);
-            MatchRules.PrepareOpponent(data, match);
-            stage = "保存比赛与生涯的关联";
-            trace.Stage(stage);
-            match.ChosenAscension = ascension;
-            data.PendingMatchId = match.Id;
-            data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            data.PendingHistoryExcluded = SaveManager.Instance.GetAllRunHistoryNames().ToHashSet();
-            data.SelectedCharacter = character.Id.ToString();
-            CareerStore.Save(data);
-            long savedAt = clock.ElapsedMilliseconds;
-            stage = "执行原生开局";
-            loading.Stage(stage);
-            trace.Stage(stage);
-            trace.Method(start, "begin");
-            await GameCompatibility.StartSingleplayer(start, game, character, acts, match.Seed, MatchModes.NativeAscension(mode, ascension), mode);
-            trace.Method(start, "complete");
-            stage = "保存开局成功后的生涯数据";
-            trace.Stage(stage);
-            if (data.Failure != null) MatchFailure.Record(data, "retry-started");
-            data.Failure = null; CareerStore.Save(data);
-            GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");
-            Diagnostics.Record("match.started", new { match.Id, match.Seed, ascension, saveMs = savedAt - preparedAt, prepareMs = preparedAt, startMs = clock.ElapsedMilliseconds - savedAt });
+            if(match.DateGame==null&&CareerScreen.Current is {} screen)await screen.FormalGate(data,match,PlayerArchive.CharacterName(character.Id),Begin);
+            else await Begin();
             return trace.Finish(null);
+            async Task Begin(){
+                transitionStarted = true;
+                NAudioManager.Instance?.StopMusic();
+                if(!CareerScreen.UseOpening(character.CharacterTransitionSfx)){
+                    SfxCmd.Play(character.CharacterTransitionSfx);
+                    await game.Transition.FadeOut(0.4f, character.CharacterSelectTransitionPath);
+                }
+                stage = "准备比赛对手";
+                trace.Stage(stage);
+                MatchRules.PrepareOpponent(data, match);
+                stage = "保存比赛与生涯的关联";
+                trace.Stage(stage);
+                match.ChosenAscension = ascension;
+                data.PendingMatchId = match.Id;
+                data.PendingSince = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                data.PendingHistoryExcluded = SaveManager.Instance.GetAllRunHistoryNames().ToHashSet();
+                data.SelectedCharacter = character.Id.ToString();
+                CareerStore.Save(data);
+                long savedAt = clock.ElapsedMilliseconds;
+                stage = "执行原生开局";
+                loading.Stage(stage);
+                trace.Stage(stage);
+                trace.Method(start, "begin");
+                await GameCompatibility.StartSingleplayer(start, game, character, acts, match.Seed, MatchModes.NativeAscension(mode, ascension), mode);
+                trace.Method(start, "complete");
+                stage = "保存开局成功后的生涯数据";
+                trace.Stage(stage);
+                if (data.Failure != null) MatchFailure.Record(data, "retry-started");
+                data.Failure = null; CareerStore.Save(data);
+                GD.Print($"[NationalSpire] 开局耗时：接口检查及章节选择 {preparedAt}ms，转场及生涯保存 {savedAt - preparedAt}ms，原生开局 {clock.ElapsedMilliseconds - savedAt}ms");
+                Diagnostics.Record("match.started", new { match.Id, match.Seed, ascension, saveMs = savedAt - preparedAt, prepareMs = preparedAt, startMs = clock.ElapsedMilliseconds - savedAt });
+            }
         }
         catch (Exception e)
         {
@@ -164,6 +170,7 @@ public static class GameBridge
         var data = CareerStore.Data;
         if (!MatchesPending(data, history)) return;
         var match = data.Matches.First(m => m.Id == data.PendingMatchId);
+        match.FinalDuelWon = match.OpponentWon ? ArchitectFinal.Result(history.MapPointHistory) : null;
         var detail = ReadPlayerHistory(history, history.Players[0], match);
         CareerEngine.FinishMatch(data, match, history.Win, history.WasAbandoned,
             history.MapPointHistory.Sum(a => a.Count), detail.Character, MatchRules.PreferredAscension(data, match), detail.Cards, history.RunTime, detail.DeckSummary, detail.Evidence, detail.CharacterId);

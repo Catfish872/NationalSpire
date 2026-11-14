@@ -6,6 +6,7 @@ public sealed class FailureDecision
     public string Attempt { get; set; } = Guid.NewGuid().ToString("N");
     public CareerResult Result { get; set; } = new();
     public RunPerformance? Opponent { get; set; }
+    public bool? FinalDuelWon { get; set; }
     public bool Abandoned { get; set; }
     public bool RetryRequested { get; set; }
 }
@@ -41,7 +42,7 @@ public static class MatchFailure
         }
         // 重赛重新计时，楼层观察、发言冷却和观众状态归属于本轮实际对局。
         if (m.Live != null) m.Live.Commentary = new();
-        m.PlayerSeconds = null; m.PlayerFloor = 0; m.Draw = m.PlayerWon = false;
+        m.FinalDuelWon = null; m.PlayerSeconds = null; m.PlayerFloor = 0; m.Draw = m.PlayerWon = false;
         d.PendingMatchId = null; d.PendingSince = 0;
         failure.RetryRequested = true;
         return m;
@@ -57,7 +58,7 @@ public static class MatchFailure
             ? new(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds.Value)
             : MatchRules.SimulateOpponent(d, match, failure.Result.Seed);
         var opponent = failure.Opponent.Value;
-        match.Seed = failure.Result.Seed;
+        match.Seed = failure.Result.Seed; match.FinalDuelWon = failure.FinalDuelWon;
         match.OpponentWon = opponent.Cleared; match.OpponentFloor = opponent.Floor;
         match.OpponentSeconds = opponent.Seconds; match.OpponentPrepared = true;
         match.ChosenAscension = failure.Result.PlayedAscension ?? failure.Result.Ascension;

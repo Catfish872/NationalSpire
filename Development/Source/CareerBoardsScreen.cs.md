@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`20FECB13958FCF876653D52B223D3C3FF38A98A66359C087F3AFD339B361310A`。来源：[源码](../../CareerBoardsScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`92DA09F76F875EAF9399A2619E4DD16381B6386231909ED7E7E4E9F5C89E8530`。来源：[源码](../../CareerBoardsScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -253,7 +253,7 @@ private const int LedgerRowHeight = 58;
 - `table.GuiInput` += `input =>          {              if (input is InputEventMouseButton wheel && wheel.ButtonIndex is MouseButton.WheelUp or MouseButton.WheelDown)              {                  if (wheel.Pressed) scroll.ScrollWheel(wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1, wheel.Factor);                  table.AcceptEvent();              }              else if (input is InputEventPanGesture pan)              {                  scroll.StopMotion();                  var bar = scroll.GetVScrollBar();                  bar.Value += pan.Delta.Y * bar.Page / 8;                  table.AcceptEvent();              }          }`
 - `table.MouseEntered` += `page.StopMotion`
 
-<a id="symbol-97bb28cca4a2"></a>
+<a id="symbol-25a3a7d0f24f"></a>
 
 ## `AlignHeader() — void AlignHeader()`
 

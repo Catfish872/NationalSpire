@@ -59,15 +59,18 @@ public sealed class CoopSteamRunPlatform : ICoopNativePlatform
         CareerScreen.CloseCurrent(); CoopScreen.CloseCurrent();
         NAudioManager.Instance?.StopMusic();
         var character = NativeLobbyApi.Local(lobby).Character!;
-        SfxCmd.Play(character.CharacterTransitionSfx);
-        await game.Transition.FadeOut(.4f, character.CharacterSelectTransitionPath);
+        bool opening=CareerScreen.UseOpening(character.CharacterTransitionSfx);
+        if(!opening){
+            SfxCmd.Play(character.CharacterTransitionSfx);
+            await game.Transition.FadeOut(.4f, character.CharacterSelectTransitionPath);
+        }
         try
         {
             token.ThrowIfCancellationRequested();
             await NativeLobbyApi.StartMultiplayer(start, game, lobby, acts, modifiers, seed, ascension);
             lobby.CleanUp(false);
         }
-        finally { await game.Transition.FadeIn(.2f); }
+        finally { if(!opening)await game.Transition.FadeIn(.2f); }
     }
     public async Task BeginSaved(LoadRunLobby lobby, CancellationToken token = default)
     {
@@ -153,12 +156,12 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
         PumpPendingNetwork();
         if (session.Host && !_launched && session.Full)
         {
-            if (_start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Run!.Characters.Count && !NativeLobbyApi.Local(_start).Ready
+            if (session.World?.Run!=null && _start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Run!.Characters.Count && !NativeLobbyApi.Local(_start).Ready
                 && starting.Where(p => p.Id != session.Self).All(p => p.Ready)) _start.SetReady(true);
-            if (_load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Run!.Characters.Count && !loading.First(p => p.Id == session.Self).Ready
+            if (session.World?.Run!=null && _load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Run!.Characters.Count && !loading.First(p => p.Id == session.Self).Ready
                 && loading.Where(p => p.Id != session.Self).All(p => p.Ready)) _load.SetReady(true);
         }
-        if (session.World?.Run == null) { if (_launched && !RunManager.Instance.IsInProgress) Close(); return; }
+        if (session.World?.Run == null) { if (_launched && !RunManager.Instance.IsInProgress) Close(); else if(NeedsPause && RunManager.Instance.IsInProgress && LeagueNativeMatch.IsTeamMatch)_=CoopRuntime.Current!.Pause();return; }
         if (session.World.Run.Terminal != null || session.World.Run.Phase == "paused" || !session.World.Run.Characters.ContainsKey(session.Self)) return;
         if (session.Host && session.Full && CoopRuntime.Current?.ResumeRequired != true && !_busy && _service == null && !RunManager.Instance.IsInProgress) _ = Host();
         if (_launched && !session.Full) NeedsPause = true;
@@ -199,7 +202,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             _attempt = session.World!.Run!.Attempt;
             NativeLobbyApi.Validate();
             var service = NativeLobbyApi.Service<NetHostGameService>(_platform.Version()); _service = service;
-            service.ClientConnected += id => { if (!session.World!.Run!.Characters.ContainsKey(id)) NativeLobbyApi.Disconnect(service, id, NetError.Quit); };
+            service.ClientConnected += id => { if (session.World?.Run?.Characters.ContainsKey(id)!=true) NativeLobbyApi.Disconnect(service, id, NetError.Quit); };
             service.ClientDisconnected += (_, _) => { if (!_stopping && generation == _generation && ReferenceEquals(service, _service) && (_launched || _entering)) NeedsPause = true; };
             string lobbyId = await _platform.Host(service, session.World.Run!.Characters.Count);
             if (generation != _generation) { if (service.IsConnected) service.Disconnect(NetError.Quit); return; }
@@ -312,11 +315,18 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
             if (!await ShouldAllowRunToBegin()) throw new InvalidDataException("队伍开赛条件发生变化。");
             if (generation != _generation) return;
             var lobby = _start!; _entering = true;
-            await _platform.BeginNew(lobby, acts, modifiers, seed, session.World!.Run!.Ascension, _lifetime.Token);
+            var record=session.World!.Run!;
+            if(record.LeagueTeam){await LeagueNativeMatch.StartTeam(session,lobby,acts);}
+            else{
+                if(CareerScreen.Current is {} screen && session.World.World.Matches.FirstOrDefault(m=>m.Id==record.MatchId) is {} match)
+                    await screen.FormalGate(CoopRules.InterfaceView(session.World,session.Self),match,PlayerArchive.CharacterName(NativeLobbyApi.Local(lobby).Character!.Id),Begin);
+                else await Begin();
+                Task Begin()=>_platform.BeginNew(lobby, acts, modifiers, seed, record.Ascension, _lifetime.Token);
+            }
             if (generation != _generation) return;
             _start = null;
             _launched = true;
-            if (session.Host) Save(RunManager.Instance.ToSave(null));
+            if (session.Host&&!record.LeagueTeam) Save(RunManager.Instance.ToSave(null));
             Status = "比赛进行中";
         }
         catch (Exception e) { if (generation == _generation) Fail(e); }
@@ -344,6 +354,7 @@ public sealed class CoopNativeRun(CoopCoordinator session, ICoopNativePlatform? 
     }
     public void Save(SerializableRun save)
     {
+        if(session.World?.Run?.LeagueTeam==true)return;
         if (!session.Host || session.World?.Run == null || session.World.Run.Phase == "paused")
         { Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" }); return; }
         Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,

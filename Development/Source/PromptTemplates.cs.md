@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`56539BC4BEAE167480006025F494BC9C453E3CB8A6643DA6AC2D12FB8DCB7BEE`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`C951FA50BC148BE92DFAB52E86E16F7ED13B1059BB29EC28998AD2E8C4779876`。来源：[源码](../../PromptTemplates.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -21,9 +21,10 @@ private static readonly Dictionary<string, (string Parent, Lazy<Dictionary<strin
 private const string FoolKnowledge = """
 愚者：
 初始：77血，初始遗物歌曲之弓，每场战斗开始时获得6点瞄准。初始只有1支箭矢。
-核心机制：箭矢、瞄准、旋律与拉伸。射中敌人后，箭矢使其进入扎穿状态。再命中该敌人3次或击败敌人，箭矢就会松脱并返回。瞄准增加下一支箭矢的伤害，随后消耗。
+核心机制：箭矢、瞄准、旋律、拉伸，以及悲伤与喜悦。射中敌人后，箭矢使其进入扎穿状态。再命中该敌人3次或击败敌人，箭矢就会松脱并返回。瞄准增加下一支箭矢的伤害，随后消耗。
 瞄准流：依靠炫技积累瞄准，再用沉重射击获得双倍瞄准加成。主流选手追求一箭击杀，认为一箭没有打死就是瞄准叠得还不够。
 旋律流：哇牌偏攻击，啾牌偏格挡，叽牌偏抽牌、蓄能与重复出牌。打出对应卡牌后，旋律持续到本回合结束。先有啾或叽旋律，哇 爆破能攻击全体两次；先有哇或叽旋律，啾 四肢能从2费降为0费。曲中意靠获得不同旋律抽牌，啾 副歌能打出手中所有哇、叽牌。当地选手嫌混合旋律难记，常只围绕一种旋律选牌，更愿意积累拉伸，再用啾 叽恢复获得格挡时消耗的拉伸。
+悲伤流：说笑获得格挡时生成悲伤。悲伤是无法打出的保留状态牌。喜悦之拳在攻击后转化一张悲伤，每层狂喜在回合开始时转化一张。转化所得的喜悦只需0费，打出后获得1点能量并抽1张牌。
 常见评价：愚者就像名字一样，只有笨蛋才会选。说笑等卡牌会把悲伤加入手牌，当地人因此认为选了愚者只会手牌充满悲伤。箭射出去后，进攻空窗期极强，为了取回一支箭还得继续攻击，被认为是亏本设计。生长虽然能消耗悲伤换取拉伸，但又要专门寻找配合，被认为是先把自己卡住，再想办法补救。
 """;
 ```
@@ -85,7 +86,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.IncludeFoolKnowledge(string) — private static string IncludeFoolKnowledge(string world)`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PromptLibrary.BuildCurrent()`](PromptTemplates.cs.md#symbol-a6fed82a7f3f)；[`NationalSpire.PromptLibrary.ReadPreset(string)`](PromptTemplates.cs.md#symbol-237e889aeae3)
 
@@ -104,7 +105,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.Sections — public static IReadOnlyList<PromptSection> Sections`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -122,7 +123,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.BuildCurrent() — private static IReadOnlyList<PromptSection> BuildCurrent()`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -144,7 +145,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.TemplateId(NationalSpire.AiOptions) — public static string TemplateId(AiOptions options)`
 
-来源：源码第 215 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.AiOptions.PersonalityPool`](CareerData.cs.md#symbol-4c9707e1239d)；[`NationalSpire.CareerScreen.ConfirmPromptImport(NationalSpire.CareerData, string, System.Action)`](PromptScreen.cs.md#symbol-b9da8509093b)；[`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.EventPools.Get(NationalSpire.AiOptions)`](EventPools.cs.md#symbol-5c94170cef9e)；[`NationalSpire.EventPools.Overrides(NationalSpire.AiOptions, string?)`](EventPools.cs.md#symbol-bc809b41fa9c)；[`NationalSpire.EventPools.Save(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.List<NationalSpire.EventPoolEntry>>, string?)`](EventPools.cs.md#symbol-a7331058425b)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-7db48705d31b)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string)`](PromptTemplates.cs.md#symbol-50231e85e9e7)；[`NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions)`](PromptTemplates.cs.md#symbol-facad1ba9cab)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`RefreshWorlds()`](NpcGenerationScreen.cs.md#symbol-d70d044589cc)
 
@@ -164,7 +165,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.Template(NationalSpire.AiOptions) — public static PromptTemplate Template(AiOptions options)`
 
-来源：源码第 216 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenEventPoolSettings(NationalSpire.CareerData)`](EventPoolScreen.cs.md#symbol-8608563c139b)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`Show()`](PromptScreen.cs.md#symbol-26218fc52477)
 
@@ -185,7 +186,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.Default(NationalSpire.AiOptions, string) — public static string Default(AiOptions options, string id)`
 
-来源：源码第 217 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 218 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.PromptLibrary.Get(NationalSpire.AiOptions, string)`](PromptLibrary.cs.md#symbol-3f64d002bbbe)；[`NationalSpire.PromptLibrary.Save(NationalSpire.AiOptions, string, string)`](PromptLibrary.cs.md#symbol-101a181e9f40)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)；[`NationalSpire.PromptTransfer.Export(NationalSpire.AiOptions, System.Collections.Generic.IReadOnlyDictionary<string, string>)`](PromptTransfer.cs.md#symbol-0bce76771cbe)；[`NationalSpire.PromptTransfer.Validate(NationalSpire.PromptTransfer.Bundle)`](PromptTransfer.cs.md#symbol-c81f82a79264)
 
@@ -215,7 +216,7 @@ private const string FoolKnowledge = """
 
 ## `NationalSpire.PromptLibrary.SelectTemplate(NationalSpire.AiOptions, string) — public static void SelectTemplate(AiOptions options, string id)`
 
-来源：源码第 234 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpenNpcGeneration(NationalSpire.AiOptions, System.Action<NationalSpire.NpcGenerationSetup>, bool, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>?, int, bool, string)`](NpcGenerationScreen.cs.md#symbol-7f1e60697c26)；[`NationalSpire.CareerScreen.OpenPromptSettings(NationalSpire.CareerData)`](PromptScreen.cs.md#symbol-fda1b116cf88)；[`NationalSpire.OpeningGeneration.Generate(NationalSpire.NpcGenerationSetup, string, System.Threading.CancellationToken, string)`](OpeningGeneration.cs.md#symbol-37e33fdb3fd4)；[`NationalSpire.PromptLibrary.CreateTemplate(NationalSpire.AiOptions, string, string)`](CustomPromptTemplates.cs.md#symbol-89804de92137)；[`NationalSpire.PromptLibrary.DeleteTemplate(NationalSpire.AiOptions, string)`](CustomPromptTemplates.cs.md#symbol-c0e48d11dac8)；[`NationalSpire.PromptTransfer.Apply(NationalSpire.AiOptions, NationalSpire.PromptTransfer.Bundle, string?)`](PromptTransfer.cs.md#symbol-3403e8b82dd8)
 

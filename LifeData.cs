@@ -2,6 +2,7 @@ namespace NationalSpire;
 
 public sealed class CareerLifeState
 {
+    public LeagueAlbum League { get; set; } = new();
     public List<RandomEventRecord> RandomEvents { get; set; } = [];
     public int RandomEventMinDays { get; set; } = 7;
     public int RandomEventMaxDays { get; set; } = 11;

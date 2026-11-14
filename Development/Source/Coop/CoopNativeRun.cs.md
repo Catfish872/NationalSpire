@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`7312CC92766D4A46A5B473D1CA92746E99271DF48FE34021E0C61ACD84EF1439`。来源：[源码](../../../Coop/CoopNativeRun.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`B133D9ACEEF06E37142B4095CC0A5604DD5C1ACDFEB2412A3F36F7836002A1AF`。来源：[源码](../../../Coop/CoopNativeRun.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -86,7 +86,7 @@ private string _waitingStage = "";
 
 来源：源码第 25 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)
+**调用者：** [`Begin()`](CoopNativeRun.cs.md#symbol-059004c8f56c)
 
 **调用：** 无已绑定显式调用。
 
@@ -212,9 +212,9 @@ private string _waitingStage = "";
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.CareerScreen.CloseCurrent()`](../CareerSession.cs.md#symbol-5830f879d8f9)；[`NationalSpire.Coop.CoopScreen.CloseCurrent()`](CoopScreen.cs.md#symbol-3f7660e3fc51)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.MultiplayerStart(System.Type, System.Type)`](NativeLobbyApi.cs.md#symbol-9d261ef08b5d)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)；[`NationalSpire.Coop.NativeLobbyApi.StartMultiplayer(System.Reflection.MethodInfo, MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int)`](NativeLobbyApi.cs.md#symbol-fc5021e96790)；`MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.CleanUp(bool, MegaCrit.Sts2.Core.Entities.Multiplayer.NetError)`；`MegaCrit.Sts2.Core.Nodes.Audio.NAudioManager.StopMusic()`；`MegaCrit.Sts2.Core.Nodes.Multiplayer.NRemoteMouseCursorContainer.Initialize(MegaCrit.Sts2.Core.Multiplayer.Game.PeerInput.PeerInputSynchronizer, System.Collections.Generic.IEnumerable<ulong>)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；`object.GetType()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`
+**调用：** [`NationalSpire.CareerScreen.CloseCurrent()`](../CareerSession.cs.md#symbol-5830f879d8f9)；[`NationalSpire.CareerScreen.UseOpening(string?)`](../LeagueArenaScreen.cs.md#symbol-714fe2bbacbd)；[`NationalSpire.Coop.CoopScreen.CloseCurrent()`](CoopScreen.cs.md#symbol-3f7660e3fc51)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.MultiplayerStart(System.Type, System.Type)`](NativeLobbyApi.cs.md#symbol-9d261ef08b5d)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)；[`NationalSpire.Coop.NativeLobbyApi.StartMultiplayer(System.Reflection.MethodInfo, MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int)`](NativeLobbyApi.cs.md#symbol-fc5021e96790)；`MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.CleanUp(bool, MegaCrit.Sts2.Core.Entities.Multiplayer.NetError)`；`MegaCrit.Sts2.Core.Nodes.Audio.NAudioManager.StopMusic()`；`MegaCrit.Sts2.Core.Nodes.Multiplayer.NRemoteMouseCursorContainer.Initialize(MegaCrit.Sts2.Core.Multiplayer.Game.PeerInput.PeerInputSynchronizer, System.Collections.Generic.IEnumerable<ulong>)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；`object.GetType()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.CloseCurrent()`；`NationalSpire.Coop.CoopScreen.CloseCurrent()`；`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Member.Character`；`NationalSpire.Coop.NativeLobbyApi.Member.Id`；`NationalSpire.Coop.NativeLobbyApi.MultiplayerStart(System.Type, System.Type)`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.StartMultiplayer(System.Reflection.MethodInfo, MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.CloseCurrent()`；`NationalSpire.CareerScreen.UseOpening(string?)`；`NationalSpire.Coop.CoopScreen.CloseCurrent()`；`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Member.Character`；`NationalSpire.Coop.NativeLobbyApi.Member.Id`；`NationalSpire.Coop.NativeLobbyApi.MultiplayerStart(System.Type, System.Type)`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.StartMultiplayer(System.Reflection.MethodInfo, MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -226,6 +226,7 @@ private string _waitingStage = "";
 - `MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；输入表达式：`game.Transition.FadeOut(.4f, character.CharacterSelectTransitionPath)`；返回值紧邻使用处：`AwaitExpressionSyntax: await game.Transition.FadeOut(.4f, character.CharacterSelectTransitionPath)`
 - `MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；输入表达式：`game.ReactionContainer.InitializeNetworking(lobby.NetService)`；返回值紧邻使用处：`ExpressionStatementSyntax: game.ReactionContainer.InitializeNetworking(lobby.NetService);`
 - `NationalSpire.CareerScreen.CloseCurrent()`；输入表达式：`CareerScreen.CloseCurrent()`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerScreen.CloseCurrent();`
+- `NationalSpire.CareerScreen.UseOpening(string?)`；输入表达式：`CareerScreen.UseOpening(character.CharacterTransitionSfx)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =CareerScreen.UseOpening(character.CharacterTransitionSfx)`
 - `NationalSpire.Coop.CoopScreen.CloseCurrent()`；输入表达式：`CoopScreen.CloseCurrent()`；返回值紧邻使用处：`ExpressionStatementSyntax: CoopScreen.CloseCurrent();`
 - `NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；输入表达式：`NativeLobbyApi.Local(lobby)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: NativeLobbyApi.Local(lobby).Character`
 - `NationalSpire.Coop.NativeLobbyApi.MultiplayerStart(System.Type, System.Type)`；输入表达式：`NativeLobbyApi.MultiplayerStart(acts.GetType(), modifiers.GetType())`；返回值紧邻使用处：`EqualsValueClauseSyntax: = NativeLobbyApi.MultiplayerStart(acts.GetType(), modifiers.GetType())`
@@ -244,7 +245,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopSteamRunPlatform.BeginSaved(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby, System.Threading.CancellationToken) — public async Task BeginSaved(LoadRunLobby lobby, CancellationToken token = default)`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -280,7 +281,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.StartListener — private IStartRunLobbyListener StartListener`
 
-来源：源码第 98 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -299,7 +300,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.LoadListener — private ILoadRunLobbyListener LoadListener`
 
-来源：源码第 99 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -318,7 +319,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[]) — private object? Callback(System.Reflection.MethodInfo method, object?[] args)`
 
-来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -344,7 +345,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.PauseRequestedByHost — public bool PauseRequestedByHost`
 
-来源：源码第 126 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -362,7 +363,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Status — public string Status`
 
-来源：源码第 134 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -380,7 +381,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.LastError — public string LastError`
 
-来源：源码第 135 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -398,7 +399,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Launched — public bool Launched`
 
-来源：源码第 136 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -416,7 +417,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Entering — public bool Entering`
 
-来源：源码第 137 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -434,7 +435,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.WaitForEntry() — public Task WaitForEntry()`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)
 
@@ -452,7 +453,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.HasConnection — public bool HasConnection`
 
-来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 142 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -470,7 +471,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.OwnsConnection(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService) — public bool OwnsConnection(INetGameService service)`
 
-来源：源码第 140 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 143 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopDisconnectMenuPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunManager, ref System.Threading.Tasks.Task)`](CoopRuntime.cs.md#symbol-a193812f456a)
 
@@ -489,7 +490,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.StopConnection() — public void StopConnection()`
 
-来源：源码第 141 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)
 
@@ -510,7 +511,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork() — public void PumpPendingNetwork()`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 150 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)；[`NationalSpire.Coop.CoopRuntime._Process(double)`](CoopRuntime.cs.md#symbol-ec1513bd09b1)
 
@@ -529,7 +530,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.NeedsPause — public bool NeedsPause`
 
-来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 151 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -547,13 +548,13 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Update() — public void Update()`
 
-来源：源码第 149 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 152 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime._Process(double)`](CoopRuntime.cs.md#symbol-ec1513bd09b1)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopNativeRun.Close()`](CoopNativeRun.cs.md#symbol-c8afc67dbfe3)；[`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`](CoopNativeRun.cs.md#symbol-fa50e38bdb28)；[`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork()`](CoopNativeRun.cs.md#symbol-1e34d21d8d03)；[`NationalSpire.Coop.CoopNativeRun.WaitingStage()`](CoopNativeRun.cs.md#symbol-40773357613d)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`](NativeLobbyApi.cs.md#symbol-92249f368b32)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby.SetReady(bool)`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.SetReady(bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.TimeoutException.TimeoutException(string?)`；`System.TimeSpan.FromSeconds(long)`
+**调用：** [`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopNativeRun.Close()`](CoopNativeRun.cs.md#symbol-c8afc67dbfe3)；[`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`](CoopNativeRun.cs.md#symbol-fa50e38bdb28)；[`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork()`](CoopNativeRun.cs.md#symbol-1e34d21d8d03)；[`NationalSpire.Coop.CoopNativeRun.WaitingStage()`](CoopNativeRun.cs.md#symbol-40773357613d)；[`NationalSpire.Coop.CoopRuntime.Pause()`](CoopRuntime.cs.md#symbol-4d6b5e85d748)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`](NativeLobbyApi.cs.md#symbol-92249f368b32)；[`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-433695ce5c9e)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby.SetReady(bool)`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.SetReady(bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.TimeoutException.TimeoutException(string?)`；`System.TimeSpan.FromSeconds(long)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: bool host, string attempt, string stage>.attempt`；`<anonymous type: bool host, string attempt, string stage>.host`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.attempt`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.epoch`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.load`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.lobby`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.resume`；`NationalSpire.Coop.CoopCoordinator.Full`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.Receiving`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopNativeRun._announced`；`NationalSpire.Coop.CoopNativeRun._attempt`；`NationalSpire.Coop.CoopNativeRun._began`；`NationalSpire.Coop.CoopNativeRun._busy`；`NationalSpire.Coop.CoopNativeRun._checkedStage`；`NationalSpire.Coop.CoopNativeRun._failed`；`NationalSpire.Coop.CoopNativeRun._launched`；`NationalSpire.Coop.CoopNativeRun._load`；`NationalSpire.Coop.CoopNativeRun._lobby`；`NationalSpire.Coop.CoopNativeRun._service`；`NationalSpire.Coop.CoopNativeRun._start`；`NationalSpire.Coop.CoopNativeRun._stopping`；`NationalSpire.Coop.CoopNativeRun._waitingStage`；`NationalSpire.Coop.CoopNativeRun.Close()`；`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`；`NationalSpire.Coop.CoopNativeRun.Host()`；`NationalSpire.Coop.CoopNativeRun.NeedsPause`；`NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork()`；`NationalSpire.Coop.CoopNativeRun.Status`；`NationalSpire.Coop.CoopNativeRun.WaitingStage()`；`NationalSpire.Coop.CoopRun.Characters`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopRun.Terminal`；`NationalSpire.Coop.CoopRuntime.Current`；`NationalSpire.Coop.CoopRuntime.ResumeRequired`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Member.Id`；`NationalSpire.Coop.NativeLobbyApi.Member.Ready`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Diagnostics.Record(string, object)`
+**字段、属性、事件及方法组引用：** `<anonymous type: bool host, string attempt, string stage>.attempt`；`<anonymous type: bool host, string attempt, string stage>.host`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.attempt`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.epoch`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.load`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.lobby`；`<anonymous type: string epoch, string attempt, int resume, string lobby, bool load>.resume`；`NationalSpire.Coop.CoopCoordinator.Full`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.Receiving`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopNativeRun._announced`；`NationalSpire.Coop.CoopNativeRun._attempt`；`NationalSpire.Coop.CoopNativeRun._began`；`NationalSpire.Coop.CoopNativeRun._busy`；`NationalSpire.Coop.CoopNativeRun._checkedStage`；`NationalSpire.Coop.CoopNativeRun._failed`；`NationalSpire.Coop.CoopNativeRun._launched`；`NationalSpire.Coop.CoopNativeRun._load`；`NationalSpire.Coop.CoopNativeRun._lobby`；`NationalSpire.Coop.CoopNativeRun._service`；`NationalSpire.Coop.CoopNativeRun._start`；`NationalSpire.Coop.CoopNativeRun._stopping`；`NationalSpire.Coop.CoopNativeRun._waitingStage`；`NationalSpire.Coop.CoopNativeRun.Close()`；`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`；`NationalSpire.Coop.CoopNativeRun.Host()`；`NationalSpire.Coop.CoopNativeRun.NeedsPause`；`NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork()`；`NationalSpire.Coop.CoopNativeRun.Status`；`NationalSpire.Coop.CoopNativeRun.WaitingStage()`；`NationalSpire.Coop.CoopRun.Characters`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopRun.Terminal`；`NationalSpire.Coop.CoopRuntime.Current`；`NationalSpire.Coop.CoopRuntime.Pause()`；`NationalSpire.Coop.CoopRuntime.ResumeRequired`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Member.Id`；`NationalSpire.Coop.NativeLobbyApi.Member.Ready`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.LeagueNativeMatch.IsTeamMatch`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -565,13 +566,14 @@ private string _waitingStage = "";
 - `NationalSpire.Coop.CoopNativeRun.Host()`；输入表达式：`Host()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _ = Host()`
 - `NationalSpire.Coop.CoopNativeRun.PumpPendingNetwork()`；输入表达式：`PumpPendingNetwork()`；返回值紧邻使用处：`ExpressionStatementSyntax: PumpPendingNetwork();`
 - `NationalSpire.Coop.CoopNativeRun.WaitingStage()`；输入表达式：`WaitingStage()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = WaitingStage()`
+- `NationalSpire.Coop.CoopRuntime.Pause()`；输入表达式：`CoopRuntime.Current!.Pause()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _=CoopRuntime.Current!.Pause()`
 - `NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；输入表达式：`NativeLobbyApi.Local(_start)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: NativeLobbyApi.Local(_start).Ready`
 - `NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby)`；输入表达式：`NativeLobbyApi.Players(_load)`；返回值紧邻使用处：`IsPatternExpressionSyntax: NativeLobbyApi.Players(_load) is var loading`
 - `NationalSpire.Coop.NativeLobbyApi.Players(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；输入表达式：`NativeLobbyApi.Players(_start)`；返回值紧邻使用处：`IsPatternExpressionSyntax: NativeLobbyApi.Players(_start) is var starting`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.native.wait", new { host = session.Host, attempt = _attempt, stage })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.native.wait", new { host = session.Host, attempt = _attempt, stage });`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`session.World.Run.Characters.ContainsKey(session.Self)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !session.World.Run.Characters.ContainsKey(session.Self)`
-- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`loading.Where(p => p.Id != session.Self).All(p => p.Ready)`；返回值紧邻使用处：`BinaryExpressionSyntax: _load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Run!.Characters.Count && !loading.First(p => p.Id == session.Self).Ready                  && loading.Where(p => p.Id != session.Self).All(p => p.Ready)`
-- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`starting.Where(p => p.Id != session.Self).All(p => p.Ready)`；返回值紧邻使用处：`BinaryExpressionSyntax: _start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Run!.Characters.Count && !NativeLobbyApi.Local(_start).Ready                  && starting.Where(p => p.Id != session.Self).All(p => p.Ready)`
+- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`loading.Where(p => p.Id != session.Self).All(p => p.Ready)`；返回值紧邻使用处：`BinaryExpressionSyntax: session.World?.Run!=null && _load != null && NativeLobbyApi.Players(_load) is var loading && loading.Count == session.World!.Run!.Characters.Count && !loading.First(p => p.Id == session.Self).Ready                 && loading.Where(p => p.Id != session.Self).All(p => p.Ready)`
+- `System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；输入表达式：`starting.Where(p => p.Id != session.Self).All(p => p.Ready)`；返回值紧邻使用处：`BinaryExpressionSyntax: session.World?.Run!=null && _start != null && NativeLobbyApi.Players(_start) is var starting && starting.Count == session.World!.Run!.Characters.Count && !NativeLobbyApi.Local(_start).Ready                 && starting.Where(p => p.Id != session.Self).All(p => p.Ready)`
 - `System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；输入表达式：`loading.First(p => p.Id == session.Self)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: loading.First(p => p.Id == session.Self).Ready`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`loading.Where(p => p.Id != session.Self)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: loading.Where(p => p.Id != session.Self).All`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`starting.Where(p => p.Id != session.Self)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: starting.Where(p => p.Id != session.Self).All`
@@ -582,6 +584,7 @@ private string _waitingStage = "";
 
 **赋值（含属性/字段和局部值）：**
 
+- `_` = `CoopRuntime.Current!.Pause()`
 - `_` = `Host()`
 - `_announced` = `DateTime.UtcNow`
 - `_checkedStage` = `DateTime.UtcNow`
@@ -593,7 +596,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.WaitingStage() — private string WaitingStage()`
 
-来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)
 
@@ -617,7 +620,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Host() — private async Task Host()`
 
-来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 195 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)
 
@@ -646,7 +649,7 @@ private string _waitingStage = "";
 - `NationalSpire.Coop.NativeLobbyApi.Validate()`；输入表达式：`NativeLobbyApi.Validate()`；返回值紧邻使用处：`ExpressionStatementSyntax: NativeLobbyApi.Validate();`
 - `NationalSpire.MatchModes.Native(string)`；输入表达式：`MatchModes.Native(session.World.Run!.Mode)`；返回值紧邻使用处：`ArgumentSyntax: MatchModes.Native(session.World.Run!.Mode)`
 - `object.ReferenceEquals(object?, object?)`；输入表达式：`ReferenceEquals(service, _service)`；返回值紧邻使用处：`BinaryExpressionSyntax: !_stopping && generation == _generation && ReferenceEquals(service, _service)`
-- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`session.World!.Run!.Characters.ContainsKey(id)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !session.World!.Run!.Characters.ContainsKey(id)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；输入表达式：`.Characters.ContainsKey(id)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: .Run?.Characters.ContainsKey(id)`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -662,7 +665,7 @@ private string _waitingStage = "";
 - `LastError` = `""`
 - `NeedsPause` = `true`
 - `PauseRequestedByHost` = `false`
-- `service.ClientConnected` += `id => { if (!session.World!.Run!.Characters.ContainsKey(id)) NativeLobbyApi.Disconnect(service, id, NetError.Quit); }`
+- `service.ClientConnected` += `id => { if (session.World?.Run?.Characters.ContainsKey(id)!=true) NativeLobbyApi.Disconnect(service, id, NetError.Quit); }`
 - `service.ClientDisconnected` += `(_, _) => { if (!_stopping && generation == _generation && ReferenceEquals(service, _service) && (_launched || _entering)) NeedsPause = true; }`
 - `Status` = `"等待全体队员进入比赛"`
 
@@ -670,7 +673,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Message(NationalSpire.Coop.CoopWire) — public void Message(CoopWire wire)`
 
-来源：源码第 223 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -717,7 +720,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Join(string, bool) — private async Task Join(string lobby, bool load)`
 
-来源：源码第 244 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Message(NationalSpire.Coop.CoopWire)`](CoopNativeRun.cs.md#symbol-3f383e39c601)
 
@@ -733,8 +736,8 @@ private string _waitingStage = "";
 - `MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.InitializeFromMessage(MegaCrit.Sts2.Core.Multiplayer.Messages.Lobby.ClientLobbyJoinResponseMessage)`；输入表达式：`_start.InitializeFromMessage(message)`；返回值紧邻使用处：`ExpressionStatementSyntax: _start.InitializeFromMessage(message);`
 - `MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.SetReady(bool)`；输入表达式：`_start.SetReady(true)`；返回值紧邻使用处：`ExpressionStatementSyntax: _start.SetReady(true);`
 - `MegaCrit.Sts2.Core.Multiplayer.Messages.Lobby.ClientLoadJoinRequestMessage.ClientLoadJoinRequestMessage()`；输入表达式：`new ClientLoadJoinRequestMessage()`；返回值紧邻使用处：`ArgumentSyntax: new ClientLoadJoinRequestMessage()`
-- `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.RegisterMessageHandler<T>(MegaCrit.Sts2.Core.Multiplayer.Game.MessageHandlerDelegate<T>)`；输入表达式：`service.RegisterMessageHandler<ClientLoadJoinResponseMessage>(async (message, _) =>              {                  try                  {                      await session.WaitForReceived();                      if (generation != _generation || !ReferenceEquals(service, _service)) return;                      _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true);                  }                  catch (Exception e) { if (generation == _generation) Fail(e); }              })`；返回值紧邻使用处：`ExpressionStatementSyntax: service.RegisterMessageHandler<ClientLoadJoinResponseMessage>(async (message, _) =>              {                  try                  {                      await session.WaitForReceived();                      if (generation != _generation || !ReferenceEquals(service, _service)) return;                      _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true);                  }                  catch (Exception e) { if (generation == _generation) Fail(e); }              });`
-- `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.RegisterMessageHandler<T>(MegaCrit.Sts2.Core.Multiplayer.Game.MessageHandlerDelegate<T>)`；输入表达式：`service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>(async (message, _) =>              {                  try                  {                      await session.WaitForReceived();                      if (generation != _generation || !ReferenceEquals(service, _service)) return;                      _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World!.Run!.Mode), service, StartListener, session.World.Run.Characters.Count); _start.InitializeFromMessage(message); NativeLobbyApi.SetCharacter(_start, Character()); _start.SetReady(true);                  }                  catch (Exception e) { if (generation == _generation) Fail(e); }              })`；返回值紧邻使用处：`ExpressionStatementSyntax: service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>(async (message, _) =>              {                  try                  {                      await session.WaitForReceived();                      if (generation != _generation || !ReferenceEquals(service, _service)) return;                      _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World!.Run!.Mode), service, StartListener, session.World.Run.Characters.Count); _start.InitializeFromMessage(message); NativeLobbyApi.SetCharacter(_start, Character()); _start.SetReady(true);                  }                  catch (Exception e) { if (generation == _generation) Fail(e); }              });`
+- `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.RegisterMessageHandler<T>(MegaCrit.Sts2.Core.Multiplayer.Game.MessageHandlerDelegate<T>)`；输入表达式：`service.RegisterMessageHandler<ClientLoadJoinResponseMessage>(async (message, _) =>             {                 try                 {                     await session.WaitForReceived();                     if (generation != _generation || !ReferenceEquals(service, _service)) return;                     _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true);                 }                 catch (Exception e) { if (generation == _generation) Fail(e); }             })`；返回值紧邻使用处：`ExpressionStatementSyntax: service.RegisterMessageHandler<ClientLoadJoinResponseMessage>(async (message, _) =>             {                 try                 {                     await session.WaitForReceived();                     if (generation != _generation || !ReferenceEquals(service, _service)) return;                     _load = new(service, LoadListener, message); Validate(_load.Run); _load.SetReady(true);                 }                 catch (Exception e) { if (generation == _generation) Fail(e); }             });`
+- `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.RegisterMessageHandler<T>(MegaCrit.Sts2.Core.Multiplayer.Game.MessageHandlerDelegate<T>)`；输入表达式：`service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>(async (message, _) =>             {                 try                 {                     await session.WaitForReceived();                     if (generation != _generation || !ReferenceEquals(service, _service)) return;                     _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World!.Run!.Mode), service, StartListener, session.World.Run.Characters.Count); _start.InitializeFromMessage(message); NativeLobbyApi.SetCharacter(_start, Character()); _start.SetReady(true);                 }                 catch (Exception e) { if (generation == _generation) Fail(e); }             })`；返回值紧邻使用处：`ExpressionStatementSyntax: service.RegisterMessageHandler<ClientLobbyJoinResponseMessage>(async (message, _) =>             {                 try                 {                     await session.WaitForReceived();                     if (generation != _generation || !ReferenceEquals(service, _service)) return;                     _start = NativeLobbyApi.CreateStart(MatchModes.Native(session.World!.Run!.Mode), service, StartListener, session.World.Run.Characters.Count); _start.InitializeFromMessage(message); NativeLobbyApi.SetCharacter(_start, Character()); _start.SetReady(true);                 }                 catch (Exception e) { if (generation == _generation) Fail(e); }             });`
 - `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.RegisterMessageHandler<T>(MegaCrit.Sts2.Core.Multiplayer.Game.MessageHandlerDelegate<T>)`；输入表达式：`service.RegisterMessageHandler<InitialGameInfoMessage>((_, _) => { })`；返回值紧邻使用处：`ExpressionStatementSyntax: service.RegisterMessageHandler<InitialGameInfoMessage>((_, _) => { });`
 - `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.SendMessage<T>(T)`；输入表达式：`service.SendMessage(NativeLobbyApi.JoinRequest(UnlockState.all, 10))`；返回值紧邻使用处：`ExpressionStatementSyntax: service.SendMessage(NativeLobbyApi.JoinRequest(UnlockState.all, 10));`
 - `MegaCrit.Sts2.Core.Multiplayer.NetClientGameService.SendMessage<T>(T)`；输入表达式：`service.SendMessage(new ClientLoadJoinRequestMessage())`；返回值紧邻使用处：`ExpressionStatementSyntax: service.SendMessage(new ClientLoadJoinRequestMessage());`
@@ -780,7 +783,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Character() — private CharacterModel Character()`
 
-来源：源码第 287 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 290 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.Join(string, bool)`](CoopNativeRun.cs.md#symbol-a3ff2d717caf)
 
@@ -792,8 +795,8 @@ private string _waitingStage = "";
 
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`c.Id.ToString()`；返回值紧邻使用处：`BinaryExpressionSyntax: c.Id.ToString() == session.World.Run.Characters[session.Self]`
 - `NationalSpire.GameBridge.Characters()`；输入表达式：`GameBridge.Characters()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: GameBridge.Characters().Single`
-- `NationalSpire.GameBridge.RandomChoice()`；输入表达式：`GameBridge.RandomChoice()`；返回值紧邻使用处：`ConditionalExpressionSyntax: session.World!.Run!.Characters[session.Self] == CareerEngine.RandomCharacterChoice          ? GameBridge.RandomChoice() : GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`
-- `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`；返回值紧邻使用处：`ConditionalExpressionSyntax: session.World!.Run!.Characters[session.Self] == CareerEngine.RandomCharacterChoice          ? GameBridge.RandomChoice() : GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`
+- `NationalSpire.GameBridge.RandomChoice()`；输入表达式：`GameBridge.RandomChoice()`；返回值紧邻使用处：`ConditionalExpressionSyntax: session.World!.Run!.Characters[session.Self] == CareerEngine.RandomCharacterChoice         ? GameBridge.RandomChoice() : GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`
+- `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`；返回值紧邻使用处：`ConditionalExpressionSyntax: session.World!.Run!.Characters[session.Self] == CareerEngine.RandomCharacterChoice         ? GameBridge.RandomChoice() : GameBridge.Characters().Single(c => c.Id.ToString() == session.World.Run.Characters[session.Self])`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -802,7 +805,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun) — public static byte[] Encode(SerializableRun save)`
 
-来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)
 
@@ -823,7 +826,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Decode(byte[]) — public static SerializableRun Decode(byte[] bytes)`
 
-来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 294 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)
 
@@ -844,7 +847,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun) — private void Validate(SerializableRun save)`
 
-来源：源码第 293 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 296 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun()`](CoopNativeRun.cs.md#symbol-77d1b0a8ef74)；[`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.Join(string, bool)`](CoopNativeRun.cs.md#symbol-a3ff2d717caf)；[`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)
 
@@ -858,7 +861,7 @@ private string _waitingStage = "";
 - `MegaCrit.Sts2.Core.Runs.RunState.FromSerializable(MegaCrit.Sts2.Core.Saves.SerializableRun)`；输入表达式：`RunState.FromSerializable(save)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = RunState.FromSerializable(save)`
 - `System.Collections.Generic.IEnumerable<T>.Order<T>()`；输入表达式：`run.Characters.Keys.Order()`；返回值紧邻使用处：`ArgumentSyntax: run.Characters.Keys.Order()`
 - `System.Collections.Generic.IEnumerable<T>.Order<T>()`；输入表达式：`state.Players.Select(p => p.NetId).Order()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: state.Players.Select(p => p.NetId).Order().SequenceEqual`
-- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`state.Players.Any(p => run.Characters[p.NetId] != p.Character.Id.ToString())`；返回值紧邻使用处：`BinaryExpressionSyntax: state.Rng.StringSeed != run.Seed || state.AscensionLevel != run.Ascension || !state.Players.Select(p => p.NetId).Order().SequenceEqual(run.Characters.Keys.Order())              || state.Players.Any(p => run.Characters[p.NetId] != p.Character.Id.ToString())`
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`state.Players.Any(p => run.Characters[p.NetId] != p.Character.Id.ToString())`；返回值紧邻使用处：`BinaryExpressionSyntax: state.Rng.StringSeed != run.Seed || state.AscensionLevel != run.Ascension || !state.Players.Select(p => p.NetId).Order().SequenceEqual(run.Characters.Keys.Order())             || state.Players.Any(p => run.Characters[p.NetId] != p.Character.Id.ToString())`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`state.Players.Select(p => p.NetId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: state.Players.Select(p => p.NetId).Order`
 - `System.Collections.Generic.IEnumerable<TSource>.SequenceEqual<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；输入表达式：`state.Players.Select(p => p.NetId).Order().SequenceEqual(run.Characters.Keys.Order())`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !state.Players.Select(p => p.NetId).Order().SequenceEqual(run.Characters.Keys.Order())`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("原版对局与共同生涯绑定不一致。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("原版对局与共同生涯绑定不一致。");`
@@ -870,7 +873,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin() — public async Task<bool> ShouldAllowRunToBegin()`
 
-来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 302 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun()`](CoopNativeRun.cs.md#symbol-77d1b0a8ef74)；[`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)
 
@@ -895,21 +898,27 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>) — public async void BeginRun(string seed, List<ActModel> acts, IReadOnlyList<ModifierModel> modifiers)`
 
-来源：源码第 306 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 309 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)
 
-**调用：** [`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`](CoopNativeRun.cs.md#symbol-fa50e38bdb28)；[`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)；[`NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`](CoopNativeRun.cs.md#symbol-2d3e3dcdd4d4)；[`NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-2ebc550752a9)；`MegaCrit.Sts2.Core.Runs.RunManager.ToSave(MegaCrit.Sts2.Core.Rooms.AbstractRoom?)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Threading.Tasks.TaskCompletionSource.TaskCompletionSource()`；`System.Threading.Tasks.TaskCompletionSource.TrySetResult()`
+**调用：** [`Begin()`](CoopNativeRun.cs.md#symbol-059004c8f56c)；[`NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`](../LeagueArenaScreen.cs.md#symbol-72880a76b76f)；[`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`](CoopNativeRun.cs.md#symbol-fa50e38bdb28)；[`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-5825a51bfef3)；[`NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`](CoopNativeRun.cs.md#symbol-2d3e3dcdd4d4)；[`NationalSpire.Coop.CoopRules.InterfaceView(NationalSpire.Coop.CoopWorld, ulong)`](CoopRules.cs.md#symbol-c23013f591a9)；[`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`](NativeLobbyApi.cs.md#symbol-81508394bacc)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](../LeagueTeamMatch.cs.md#symbol-81e11d18adc7)；[`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`](../PlayerArchive.cs.md#symbol-9ab35bc5f38f)；`MegaCrit.Sts2.Core.Runs.RunManager.ToSave(MegaCrit.Sts2.Core.Rooms.AbstractRoom?)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.IO.InvalidDataException.InvalidDataException(string?)`；`System.Threading.Tasks.TaskCompletionSource.TaskCompletionSource()`；`System.Threading.Tasks.TaskCompletionSource.TrySetResult()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopNativeRun._entering`；`NationalSpire.Coop.CoopNativeRun._entryCompleted`；`NationalSpire.Coop.CoopNativeRun._generation`；`NationalSpire.Coop.CoopNativeRun._launched`；`NationalSpire.Coop.CoopNativeRun._lifetime`；`NationalSpire.Coop.CoopNativeRun._platform`；`NationalSpire.Coop.CoopNativeRun._start`；`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`；`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`；`NationalSpire.Coop.CoopNativeRun.Status`；`NationalSpire.Coop.CoopRun.Ascension`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`
+**字段、属性、事件及方法组引用：** `Begin()`；`NationalSpire.CareerData.Matches`；`NationalSpire.CareerMatch.Id`；`NationalSpire.CareerScreen.Current`；`NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.Self`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopNativeRun._entering`；`NationalSpire.Coop.CoopNativeRun._entryCompleted`；`NationalSpire.Coop.CoopNativeRun._generation`；`NationalSpire.Coop.CoopNativeRun._launched`；`NationalSpire.Coop.CoopNativeRun._start`；`NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`；`NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`；`NationalSpire.Coop.CoopNativeRun.Status`；`NationalSpire.Coop.CoopRules.InterfaceView(NationalSpire.Coop.CoopWorld, ulong)`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.MatchId`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；`NationalSpire.Coop.NativeLobbyApi.Member.Character`；`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`；`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `Begin()`；输入表达式：`Begin()`；返回值紧邻使用处：`AwaitExpressionSyntax: await Begin()`
 - `MegaCrit.Sts2.Core.Runs.RunManager.ToSave(MegaCrit.Sts2.Core.Rooms.AbstractRoom?)`；输入表达式：`RunManager.Instance.ToSave(null)`；返回值紧邻使用处：`ArgumentSyntax: RunManager.Instance.ToSave(null)`
+- `NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`；输入表达式：`screen.FormalGate(CoopRules.InterfaceView(session.World,session.Self),match,PlayerArchive.CharacterName(NativeLobbyApi.Local(lobby).Character!.Id),Begin)`；返回值紧邻使用处：`AwaitExpressionSyntax: await screen.FormalGate(CoopRules.InterfaceView(session.World,session.Self),match,PlayerArchive.CharacterName(NativeLobbyApi.Local(lobby).Character!.Id),Begin)`
 - `NationalSpire.Coop.CoopNativeRun.Fail(System.Exception)`；输入表达式：`Fail(e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Fail(e);`
 - `NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun)`；输入表达式：`Save(RunManager.Instance.ToSave(null))`；返回值紧邻使用处：`ExpressionStatementSyntax: Save(RunManager.Instance.ToSave(null));`
 - `NationalSpire.Coop.CoopNativeRun.ShouldAllowRunToBegin()`；输入表达式：`ShouldAllowRunToBegin()`；返回值紧邻使用处：`AwaitExpressionSyntax: await ShouldAllowRunToBegin()`
-- `NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`；输入表达式：`_platform.BeginNew(lobby, acts, modifiers, seed, session.World!.Run!.Ascension, _lifetime.Token)`；返回值紧邻使用处：`AwaitExpressionSyntax: await _platform.BeginNew(lobby, acts, modifiers, seed, session.World!.Run!.Ascension, _lifetime.Token)`
+- `NationalSpire.Coop.CoopRules.InterfaceView(NationalSpire.Coop.CoopWorld, ulong)`；输入表达式：`CoopRules.InterfaceView(session.World,session.Self)`；返回值紧邻使用处：`ArgumentSyntax: CoopRules.InterfaceView(session.World,session.Self)`
+- `NationalSpire.Coop.NativeLobbyApi.Local(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby)`；输入表达式：`NativeLobbyApi.Local(lobby)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: NativeLobbyApi.Local(lobby).Character`
+- `NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`；输入表达式：`LeagueNativeMatch.StartTeam(session,lobby,acts)`；返回值紧邻使用处：`AwaitExpressionSyntax: await LeagueNativeMatch.StartTeam(session,lobby,acts)`
+- `NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`；输入表达式：`PlayerArchive.CharacterName(NativeLobbyApi.Local(lobby).Character!.Id)`；返回值紧邻使用处：`ArgumentSyntax: PlayerArchive.CharacterName(NativeLobbyApi.Local(lobby).Character!.Id)`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`session.World.World.Matches.FirstOrDefault(m=>m.Id==record.MatchId)`；返回值紧邻使用处：`IsPatternExpressionSyntax: session.World.World.Matches.FirstOrDefault(m=>m.Id==record.MatchId) is {} match`
 - `System.IO.InvalidDataException.InvalidDataException(string?)`；输入表达式：`new InvalidDataException("队伍开赛条件发生变化。")`；返回值紧邻使用处：`ThrowStatementSyntax: throw new InvalidDataException("队伍开赛条件发生变化。");`
 - `System.Threading.Tasks.TaskCompletionSource.TaskCompletionSource()`；输入表达式：`new()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _entryCompleted = new()`
 - `System.Threading.Tasks.TaskCompletionSource.TrySetResult()`；输入表达式：`completed.TrySetResult()`；返回值紧邻使用处：`ExpressionStatementSyntax: completed.TrySetResult();`
@@ -923,11 +932,30 @@ private string _waitingStage = "";
 - `_start` = `null`
 - `Status` = `"比赛进行中"`
 
+<a id="symbol-059004c8f56c"></a>
+
+## `Begin() — Task Begin()`
+
+来源：源码第 324 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)
+
+**调用：** [`NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-2ebc550752a9)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Coop.CoopNativeRun._lifetime`；`NationalSpire.Coop.CoopNativeRun._platform`；`NationalSpire.Coop.CoopRun.Ascension`；`NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.Coop.ICoopNativePlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`；输入表达式：`_platform.BeginNew(lobby, acts, modifiers, seed, record.Ascension, _lifetime.Token)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>_platform.BeginNew(lobby, acts, modifiers, seed, record.Ascension, _lifetime.Token)`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-77d1b0a8ef74"></a>
 
 ## `NationalSpire.Coop.CoopNativeRun.BeginRun() — public async void BeginRun()`
 
-来源：源码第 325 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 335 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)
 
@@ -959,13 +987,13 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Save(MegaCrit.Sts2.Core.Saves.SerializableRun) — public void Save(SerializableRun save)`
 
-来源：源码第 345 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 355 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.Coop.CoopSavePatch.Prefix(MegaCrit.Sts2.Core.Saves.SerializableRun, bool, ref System.Threading.Tasks.Task)`](CoopRuntime.cs.md#symbol-5743aede4fef)
 
 **调用：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopJson.Hash(byte[])`](CoopData.cs.md#symbol-ca6c9ee59a2a)；[`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-e1fc04234566)；[`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`](CoopNativeRun.cs.md#symbol-6504cc92be0b)；[`NationalSpire.Coop.CoopWorld.RunCheckpoint()`](CoopData.cs.md#symbol-37c5b2e81f81)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`](../MatchDiagnostics.cs.md#symbol-2f83ebe4626e)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: bool Host, string attempt, string phase, string reason>.attempt`；`<anonymous type: bool Host, string attempt, string phase, string reason>.phase`；`<anonymous type: bool Host, string attempt, string phase, string reason>.reason`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.checkpointBytes`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.hp`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.visited`；`<anonymous type: int checkpointBytes, string hash, long revision>.checkpointBytes`；`<anonymous type: int checkpointBytes, string hash, long revision>.hash`；`<anonymous type: int checkpointBytes, string hash, long revision>.revision`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.RunCheckpoint()`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`
+**字段、属性、事件及方法组引用：** `<anonymous type: bool Host, string attempt, string phase, string reason>.attempt`；`<anonymous type: bool Host, string attempt, string phase, string reason>.phase`；`<anonymous type: bool Host, string attempt, string phase, string reason>.reason`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.checkpointBytes`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.hp`；`<anonymous type: int checkpointBytes, int CurrentActIndex, long RunTime, int visited, int[] hp>.visited`；`<anonymous type: int checkpointBytes, string hash, long revision>.checkpointBytes`；`<anonymous type: int checkpointBytes, string hash, long revision>.hash`；`<anonymous type: int checkpointBytes, string hash, long revision>.revision`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Hash(byte[])`；`NationalSpire.Coop.CoopNativeRun.Encode(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopNativeRun.Validate(MegaCrit.Sts2.Core.Saves.SerializableRun)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.RunCheckpoint()`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -976,7 +1004,7 @@ private string _waitingStage = "";
 - `NationalSpire.Coop.CoopWorld.RunCheckpoint()`；输入表达式：`session.World.RunCheckpoint()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = session.World.RunCheckpoint()`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.autosave.skipped", new { session.Host, attempt = session.World?.Run?.Attempt, phase = session.World?.Run?.Phase, reason = !session.Host ? "client" : session.World?.Run == null ? "no-run" : "paused" });`
 - `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World, "autosave-committed", new { checkpointBytes = bytes.Length, hash = CoopJson.Hash(bytes), revision = session.World.Revision })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World, "autosave-committed", new { checkpointBytes = bytes.Length, hash = CoopJson.Hash(bytes), revision = session.World.Revision });`
-- `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,              save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,              save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() });`
+- `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,             save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World, "autosave-entry", new { checkpointBytes = session.NativeSave?.Length ?? 0,             save.CurrentActIndex, save.RunTime, visited = save.VisitedMapCoords.Count, hp = save.Players.Select(p => p.CurrentHp).ToArray() });`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`save.Players.Select(p => p.CurrentHp)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: save.Players.Select(p => p.CurrentHp).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`save.Players.Select(p => p.CurrentHp).ToArray()`；返回值紧邻使用处：`AnonymousObjectMemberDeclaratorSyntax: hp = save.Players.Select(p => p.CurrentHp).ToArray()`
 
@@ -988,7 +1016,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Fail(System.Exception) — private void Fail(Exception e)`
 
-来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 367 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun()`](CoopNativeRun.cs.md#symbol-77d1b0a8ef74)；[`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.Coop.CoopNativeRun.Host()`](CoopNativeRun.cs.md#symbol-5e85a7e716a1)；[`NationalSpire.Coop.CoopNativeRun.Join(string, bool)`](CoopNativeRun.cs.md#symbol-a3ff2d717caf)；[`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)
 
@@ -1013,7 +1041,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.Close() — public void Close()`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 374 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Update()`](CoopNativeRun.cs.md#symbol-f8b6c697410f)；[`NationalSpire.Coop.CoopRuntime._Process(double)`](CoopRuntime.cs.md#symbol-ec1513bd09b1)；[`NationalSpire.Coop.CoopRuntime.Disconnect()`](CoopRuntime.cs.md#symbol-a4550fd42c36)；[`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)
 
@@ -1051,7 +1079,7 @@ private string _waitingStage = "";
 
 ## `NationalSpire.Coop.CoopNativeRun.PlayerChanged(NationalSpire.Coop.NativeLobbyApi.Member, bool) — private void PlayerChanged(NativeLobbyApi.Member player, bool isRandomCharacterResolution)`
 
-来源：源码第 372 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 383 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.Callback(System.Reflection.MethodInfo, object?[])`](CoopNativeRun.cs.md#symbol-2cd18e0c472c)
 
@@ -1062,7 +1090,7 @@ private string _waitingStage = "";
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`player.Character.Id.ToString()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = player.Character.Id.ToString()`
-- `NationalSpire.Coop.CoopCoordinator.ApplyReceived(System.Action)`；输入表达式：`session.ApplyReceived(() =>          {          if (generation != _generation || session.World?.Epoch != epoch || session.World.Run is not { } run || run.Attempt != attempt || run.ResumeCount != resume || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;          // 原版大厅已统一确定结果，存档只记录实际角色，恢复时不再随机。          run.Characters[player.Id] = character;          var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = character;          })`；返回值紧邻使用处：`ExpressionStatementSyntax: session.ApplyReceived(() =>          {          if (generation != _generation || session.World?.Epoch != epoch || session.World.Run is not { } run || run.Attempt != attempt || run.ResumeCount != resume || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;          // 原版大厅已统一确定结果，存档只记录实际角色，恢复时不再随机。          run.Characters[player.Id] = character;          var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = character;          });`
+- `NationalSpire.Coop.CoopCoordinator.ApplyReceived(System.Action)`；输入表达式：`session.ApplyReceived(() =>         {         if (generation != _generation || session.World?.Epoch != epoch || session.World.Run is not { } run || run.Attempt != attempt || run.ResumeCount != resume || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;         // 原版大厅已统一确定结果，存档只记录实际角色，恢复时不再随机。         run.Characters[player.Id] = character;         var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = character;         })`；返回值紧邻使用处：`ExpressionStatementSyntax: session.ApplyReceived(() =>         {         if (generation != _generation || session.World?.Epoch != epoch || session.World.Run is not { } run || run.Attempt != attempt || run.ResumeCount != resume || run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice) return;         // 原版大厅已统一确定结果，存档只记录实际角色，恢复时不再随机。         run.Characters[player.Id] = character;         var member = session.World.Members.Single(m => m.SteamId == player.Id); member.Character = character;         });`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`session.World.Members.Single(m => m.SteamId == player.Id)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = session.World.Members.Single(m => m.SteamId == player.Id)`
 - `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；输入表达式：`run.Characters.GetValueOrDefault(player.Id)`；返回值紧邻使用处：`BinaryExpressionSyntax: run.Characters.GetValueOrDefault(player.Id) != CareerEngine.RandomCharacterChoice`
 

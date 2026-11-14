@@ -139,18 +139,21 @@ public partial class CareerScreen
         int i=d.Results.IndexOf(result);
         void Page(int index) { AcknowledgeReview(d); _reviewId=d.Results[index].MatchId; _scroll.ScrollVertical=0;Render(); }
         bool hasNext=i>=0 && i<d.Results.Count-1;
-        if(i>0 || hasNext)
+        if(hasNext)
         {
             var bar=TabStrip(_content,14);
             if(i>0)bar.AddChild(FramedAction("上一场",()=>Page(i-1),"chevron-left",width:140,height:40));
             if(hasNext)bar.AddChild(FramedAction("下一场",()=>Page(i+1),"chevron-right",trailing:true,width:140,height:40));
         }
-        if(!hasNext)actions.AddChild(FramedAction("返回赛场",()=>
+        if(hasNext)return;
+        var column=new VBoxContainer();column.AddThemeConstantOverride("separation",6);actions.AddChild(column);
+        column.AddChild(FramedAction("返回赛场",()=>
         {
             AcknowledgeReview(d);
             if(d.Matches.FirstOrDefault(m=>m.Id==result.MatchId && m.DateGame?.ReturnPending==true) is { } date && ResumeSettledDate(d,date)) return;
             _reviewId=""; _arenaMatchId=""; _tab="赛事"; _backHistory.Clear();_scroll.ScrollVertical=0;Render();
         },"chevron-right",trailing:true,width:140,height:40));
+        if(i>0)column.AddChild(FramedAction("上一场",()=>Page(i-1),"chevron-left",width:140,height:40));
     }
     private static string ArenaCharacterName(string id)
     {

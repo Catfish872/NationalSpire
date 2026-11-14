@@ -22,6 +22,7 @@ public sealed class CoopLive(CoopCoordinator session)
     public void Close() { if (_hud != null && GodotObject.IsInstanceValid(_hud)) _hud.QueueFree(); _broadcast?.Dispose(); _broadcast = null; _heard.Clear(); foreach (var map in _maps.Values.Where(GodotObject.IsInstanceValid)) map.QueueFree(); _maps.Clear(); _blitzMap?.Dispose(); _blitzMap = null; _hud = null; _attached = ""; }
     public void Update()
     {
+        if (LeagueNativeMatch.InFinal||session.World?.Run?.LeagueTeam==true) return;
         if (session.World?.Run is not { } live || !RunManager.Instance.IsInProgress || NRun.Instance == null) { Close(); return; }
         var state = RunManager.Instance.DebugOnlyGetState();
         if (state == null || state.Rng.StringSeed != live.Seed || !state.Players.Select(p => p.NetId).Order().SequenceEqual(live.Characters.Keys.Order())) return;
