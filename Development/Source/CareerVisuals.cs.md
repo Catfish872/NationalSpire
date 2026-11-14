@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BE6ACB74E7084CBF10CD6536ADAF62A5764820B1EA43D6908944A7FB730F59F9`。来源：[源码](../../CareerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`962D6862CA9A55E1917208D1A3819174EFC7C482B165E582CBC0D69B27AB8BA4`。来源：[源码](../../CareerVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -101,7 +101,7 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 
 来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerDropdownLayer.Open(Godot.Button, Godot.PopupMenu, System.Action?)`](CareerDropdownLayer.cs.md#symbol-bf23af955811)；[`NationalSpire.CareerScreen.ArenaIconButton(string, string, System.Action, bool)`](MatchArenaScreen.cs.md#symbol-a95468bbc287)；[`NationalSpire.CareerScreen.ArenaTextAction(string, string, Godot.Color, System.Action)`](MatchArenaScreen.cs.md#symbol-2b8f5772ff95)；[`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.DashboardTheme()`](DashboardControls.cs.md#symbol-72d1c6b180c3)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.RosterCandidate(NationalSpire.CareerData, Godot.VBoxContainer, string, string)`](ClubRosterScreen.cs.md#symbol-e2f1b514a2f4)；[`NationalSpire.CareerScreen.TextLink(string, System.Action, int, bool, string?)`](DashboardControls.cs.md#symbol-d545a37403bd)；[`NationalSpire.CareerVisuals.CashFont()`](CareerVisuals.cs.md#symbol-0a825f4f143c)；[`NationalSpire.CareerVisuals.CreateTheme()`](CareerVisuals.cs.md#symbol-a5f88af9f360)；[`NationalSpire.LeagueRivalPlays._Ready()`](LeagueBattleVisuals.cs.md#symbol-7006c99a5fe9)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-eaa8c36beede)
+**调用者：** [`NationalSpire.CalendarDayButton._Ready()`](CalendarDayButton.cs.md#symbol-48874665eb45)；[`NationalSpire.CareerDropdownLayer.Open(Godot.Button, Godot.PopupMenu, System.Action?)`](CareerDropdownLayer.cs.md#symbol-bf23af955811)；[`NationalSpire.CareerScreen.ArenaIconButton(string, string, System.Action, bool)`](MatchArenaScreen.cs.md#symbol-a95468bbc287)；[`NationalSpire.CareerScreen.ArenaTextAction(string, string, Godot.Color, System.Action)`](MatchArenaScreen.cs.md#symbol-2b8f5772ff95)；[`NationalSpire.CareerScreen.BuildDashboardShell()`](CareerDashboard.cs.md#symbol-168b77d78644)；[`NationalSpire.CareerScreen.DashboardTheme()`](DashboardControls.cs.md#symbol-72d1c6b180c3)；[`NationalSpire.CareerScreen.Home(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-059910dfde25)；[`NationalSpire.CareerScreen.LeagueExitButton(System.Action)`](LeaguePresentation.cs.md#symbol-6a784448b41b)；[`NationalSpire.CareerScreen.RosterCandidate(NationalSpire.CareerData, Godot.VBoxContainer, string, string)`](ClubRosterScreen.cs.md#symbol-e2f1b514a2f4)；[`NationalSpire.CareerScreen.TextLink(string, System.Action, int, bool, string?)`](DashboardControls.cs.md#symbol-d545a37403bd)；[`NationalSpire.CareerVisuals.CashFont()`](CareerVisuals.cs.md#symbol-0a825f4f143c)；[`NationalSpire.CareerVisuals.CreateTheme()`](CareerVisuals.cs.md#symbol-a5f88af9f360)；[`NationalSpire.LeagueRivalPlays._Ready()`](LeagueBattleVisuals.cs.md#symbol-7006c99a5fe9)；[`Participant(string, string, string, bool, string?)`](MatchArenaScreen.cs.md#symbol-eaa8c36beede)
 
 **调用：** [`NationalSpire.CareerVisuals.InterfaceFont()`](CareerVisuals.cs.md#symbol-4b83714363d0)；`Godot.FontVariation.FontVariation()`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Resource.Duplicate(bool)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`
 
@@ -244,7 +244,7 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 
 **调用：** [`NationalSpire.CareerVisuals.Box(string, string, int, int)`](CareerVisuals.cs.md#symbol-96a89aa3b493)；[`NationalSpire.CareerVisuals.InterfaceText(int, int)`](CareerVisuals.cs.md#symbol-a7767494d113)；`Godot.Color.Color(string)`；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Image.Image()`；`Godot.Image.LoadSvgFromString(string, float)`；`Godot.ImageTexture.CreateFromImage(Godot.Image)`；`Godot.Theme.SetColor(Godot.StringName, Godot.StringName, Godot.Color)`；`Godot.Theme.SetConstant(Godot.StringName, Godot.StringName, int)`；`Godot.Theme.SetFontSize(Godot.StringName, Godot.StringName, int)`；`Godot.Theme.SetIcon(Godot.StringName, Godot.StringName, Godot.Texture2D)`；`Godot.Theme.SetStylebox(Godot.StringName, Godot.StringName, Godot.StyleBox)`；`Godot.Theme.Theme()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerVisuals._theme`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.InterfaceText(int, int)`；`NationalSpire.CareerVisuals.Muted`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerFocusOutline.ThemeMarker`；`NationalSpire.CareerVisuals._theme`；`NationalSpire.CareerVisuals.Box(string, string, int, int)`；`NationalSpire.CareerVisuals.Gold`；`NationalSpire.CareerVisuals.Ink`；`NationalSpire.CareerVisuals.InterfaceText(int, int)`；`NationalSpire.CareerVisuals.Muted`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -270,6 +270,7 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 - `Godot.Theme.SetConstant(Godot.StringName, Godot.StringName, int)`；输入表达式：`theme.SetConstant("h_separation","CheckButton",8)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetConstant("h_separation","CheckButton",8);`
 - `Godot.Theme.SetConstant(Godot.StringName, Godot.StringName, int)`；输入表达式：`theme.SetConstant("separation", "HBoxContainer", 16)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetConstant("separation", "HBoxContainer", 16);`
 - `Godot.Theme.SetConstant(Godot.StringName, Godot.StringName, int)`；输入表达式：`theme.SetConstant("separation", "VBoxContainer", 12)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetConstant("separation", "VBoxContainer", 12);`
+- `Godot.Theme.SetConstant(Godot.StringName, Godot.StringName, int)`；输入表达式：`theme.SetConstant(CareerFocusOutline.ThemeMarker, "Control", 1)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetConstant(CareerFocusOutline.ThemeMarker, "Control", 1);`
 - `Godot.Theme.SetFontSize(Godot.StringName, Godot.StringName, int)`；输入表达式：`theme.SetFontSize("font_size","CheckButton",15)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetFontSize("font_size","CheckButton",15);`
 - `Godot.Theme.SetIcon(Godot.StringName, Godot.StringName, Godot.Texture2D)`；输入表达式：`theme.SetIcon(key,"CheckButton",icon)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetIcon(key,"CheckButton",icon);`
 - `Godot.Theme.SetIcon(Godot.StringName, Godot.StringName, Godot.Texture2D)`；输入表达式：`theme.SetIcon(state + "_disabled", "CheckBox", icon)`；返回值紧邻使用处：`ExpressionStatementSyntax: theme.SetIcon(state + "_disabled", "CheckBox", icon);`
@@ -323,7 +324,7 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 
 ## `NationalSpire.CareerArt.Compact — public bool Compact`
 
-来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -341,7 +342,7 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 
 ## `NationalSpire.CareerArt._Ready() — public override void _Ready()`
 
-来源：源码第 173 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -361,11 +362,11 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 
 ## `NationalSpire.CareerArt._Draw() — public override void _Draw()`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 175 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`P(float, float)`](CareerVisuals.cs.md#symbol-eb46d8e158e8)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
+**调用：** [`P(float, float)`](CareerVisuals.cs.md#symbol-f3c5a004cd49)；`Godot.CanvasItem.DrawArc(Godot.Vector2, float, float, float, int, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawCircle(Godot.Vector2, float, Godot.Color)`；`Godot.CanvasItem.DrawColoredPolygon(Godot.Vector2[], Godot.Color, Godot.Vector2[], Godot.Texture2D)`；`Godot.CanvasItem.DrawLine(Godot.Vector2, Godot.Vector2, Godot.Color, float, bool)`；`Godot.CanvasItem.DrawPolyline(System.ReadOnlySpan<Godot.Vector2>, Godot.Color, float, bool)`；`Godot.Color.Color(float, float, float, float)`；`Godot.Color.Color(string)`；`Godot.Vector2.Vector2(float, float)`；`System.Math.Min(float, float)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerArt.Compact`；`NationalSpire.CareerVisuals.Gold`；`P(float, float)`
 
@@ -408,11 +409,11 @@ public static readonly Color Ink = new("f2f6fa"), Muted = new("aabecb"), Gold = 
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-eb46d8e158e8"></a>
+<a id="symbol-f3c5a004cd49"></a>
 
 ## `P(float, float) — Vector2 P(float x, float y)`
 
-来源：源码第 183 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 184 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerArt._Draw()`](CareerVisuals.cs.md#symbol-867304600ece)
 

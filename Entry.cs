@@ -35,6 +35,7 @@ public static class Entry
         CardKnowledge.Source = GameCardKnowledge.Read;
         CardKnowledge.SourceVersion = () => MegaCrit.Sts2.Core.Localization.LocManager.Instance.Language;
         ScriptManagerBridge.LookupScriptsInAssembly(typeof(Entry).Assembly);
+        Callable.From(() => ((SceneTree)Engine.GetMainLoop()).Root.AddChild(new CareerFocusOutline())).CallDeferred();
         LiveCompatibility.Install(new Harmony("nationalspire.career"), typeof(Entry).Assembly);
         GD.Print("[NationalSpire] 生涯与社区模块已加载");
     }

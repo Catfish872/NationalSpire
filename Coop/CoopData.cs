@@ -34,7 +34,7 @@ public static class CoopJson
 
 public sealed class CoopWorld
 {
-    public const int Protocol = 1;
+    public const int Protocol = 2;
     public int Schema { get; set; } = 1;
     public string Id { get; set; } = Guid.NewGuid().ToString("N");
     public string Name { get; set; } = "共同生涯";

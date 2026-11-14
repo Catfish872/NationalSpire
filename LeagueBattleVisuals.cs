@@ -1,6 +1,7 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -15,6 +16,7 @@ namespace NationalSpire;
 public static partial class LeagueNativeMatch {
     private static Action<NCreature,float,double> _sizePet=null!;
     private static void InstallVisuals(Harmony h){
+        h.Patch(AccessTools.DeclaredMethod(typeof(CardPileCmd),nameof(CardPileCmd.Add),[typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)]),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(RivalPlayPileVisuals)));
         // 原生控件需要从场上角色找到持有者；仅在负责显示球和排列随从的入口补足敌方身份。
         void Owner(Type t,string m)=>h.Patch(AccessTools.DeclaredMethod(t,m),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));
         Owner(typeof(NOrbManager),"Create");Owner(typeof(NOrbManager),"get_Player");Owner(typeof(NCombatRoom),"AddCreature");
@@ -24,6 +26,11 @@ public static partial class LeagueNativeMatch {
         var size=AccessTools.DeclaredMethod(typeof(NCreature),"ScaleAndPositionOsty")??AccessTools.DeclaredMethod(typeof(NCreature),"OstyScaleToSize");
         _sizePet=size.CreateDelegate<Action<NCreature,float,double>>();h.Patch(size,postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetGrew)));
         h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"BeforeCardPlayed"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ShowPlayedCard)));
+    }
+    // 自动出牌有时先把牌移入出牌区，随后才通知出牌。敌方在通知时已有专属展示。
+    private static void RivalPlayPileVisuals(CardPile newPile,ref bool skipVisuals){
+        if(!skipVisuals&&newPile.Type==PileType.Play&&Current!=null)
+            skipVisuals=Fighters.Any(f=>f.Rival.PlayerCombatState?.PlayPile==newPile);
     }
     private static void OrbDisplay(NCreature __instance){
         if(__instance.Entity?.Monster is not LeagueOpponent monster||(monster.Fighter??Current)?.Rival is not {} r)return;

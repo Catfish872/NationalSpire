@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Nodes.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -31,6 +33,8 @@ public static partial class LeagueNativeMatch
     private static bool _installed,_opener,_returning;
     private static ICareerSession? _session;
     private static RunState? _run;
+    private static LeagueEncounter? _matchVenue;
+    internal static ActModel MusicAct(IRunState run)=>ReferenceEquals(run,_run)&&_matchVenue!=null?_matchVenue.Chapter:run.Act;
     public static async Task Start(CharacterModel first,CardModel[] cards,CharacterModel other,CardModel[] rival,int seed,ICareerSession? session,string opponentName,int tier,IReadOnlyDictionary<string,int>? upgrades=null,Dictionary<string,int>? rivalUpgrades=null,int playerTier=0,string? style=null)
     {
         if(RunManager.Instance.IsInProgress)throw new InvalidOperationException("请先结束当前对局。");
@@ -46,14 +50,15 @@ public static partial class LeagueNativeMatch
             var game=NGame.Instance!;bool opening=CareerScreen.UseOpening();
             if(!opening)await game.Transition.FadeOut(.24f);
             RunManager.Instance.SetUpNewSingleplayer(run,false);await PreloadManager.LoadRunAssets([first,other]);
-            await PreloadManager.LoadActAssets(acts[0]);RunManager.Instance.Launch();
+            var encounter=_matchVenue=LeagueEncounter.ForMatch(run,seed);
+            await PreloadManager.LoadActAssets(run.Act);RunManager.Instance.Launch();
             var scene=EnterMatchScene(game,run);
             scene.TreeExiting+=()=>{if(_run==run&&!_returning){Release();_session?.Dispose();_session=null;}};
-            await RunManager.Instance.SetActInternal(0);
+            await RunManager.Instance.SetActInternal(run.CurrentActIndex);
             CombatManager.Instance.CombatEnded+=Ended;
             CombatManager.Instance.TurnStarted+=PlayerTurn;
             InstallExit(scene);
-            var room=(CombatRoom)await RunManager.Instance.EnterRoomDebug(RoomType.Monster,model:ModelDb.Encounter<LeagueEncounter>().ToMutable(),showTransition:false);
+            var room=(CombatRoom)await RunManager.Instance.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false);
             if(_run!=run||_returning)return;_room=room;if(!opening)await game.Transition.FadeIn(.24f);
         }catch(Exception ex){Diagnostics.Error("league-match",ex);await Return("对决未能开始 · "+ex.GetBaseException().Message);}
     }
@@ -84,19 +89,32 @@ public static partial class LeagueNativeMatch
             if(hit.Doom){
                 var ctx=new BlockingPlayerChoiceContext();int blocked=Math.Min(receiver.Block,(int)hit.Amount);int extra=(int)hit.Amount-blocked;
                 if(blocked>0)await LeagueBattleApi.SpendGuard(ctx,receiver,blocked,hit.Dealer);
-                if(extra>0){Task application;_passApplication=true;
-                    try{application=MegaCrit.Sts2.Core.Commands.PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DoomPower>(ctx,receiver,extra,hit.Dealer,hit.DoomSource);}
-                    finally{_passApplication=false;}await application;}
-                if(hit.DoomSource?.Id.Entry=="END_OF_DAYS")await MegaCrit.Sts2.Core.Models.Powers.DoomPower.DoomKill(MegaCrit.Sts2.Core.Models.Powers.DoomPower.GetDoomedCreatures([receiver]));
+                if(extra>0)(duel.DeferredDoom??=new()).Enqueue(hit with {Amount=extra});
             }else await LeagueBattleApi.Deliver(hit);
             if(duel.Rival.Creature.Monster is LeagueOpponent active)Refresh(active);
         }
         if(duel.Rival.Creature.Monster is LeagueOpponent foe)Refresh(foe);
     }
+    internal static async Task ApplyDeferredDoom(PlayerChoiceContext ctx){
+        if(Current?.DeferredDoom is not {} queue)return;
+        while(queue.TryDequeue(out var hit)){
+            if(!hit.Target.IsAlive)continue;
+            Task applied;_passApplication=true;
+            try{applied=MegaCrit.Sts2.Core.Commands.PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.DoomPower>(ctx,hit.Target,hit.Amount,hit.Dealer,hit.DoomSource);}
+            finally{_passApplication=false;}
+            await applied;
+        }
+    }
     private static void Install(){
         if(_installed)return;var h=new Harmony("nationalspire.league.native");
         try{
             LeagueBattleApi.Install(h);FinalEndHooks.Install(h);
+            h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController),"GetTrack"),prefix:new HarmonyMethod(typeof(LeagueEncounter),nameof(LeagueEncounter.MusicRoom)));
+            foreach(var method in new[]{"UpdateMusic","UpdateAmbience"})
+                h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController),method),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(SelectMusicAct)));
+            h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Models.Powers.ColossusPower),"ModifyDamageMultiplicative"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DeferColossus)));
+            foreach(var method in new[]{"ApplyInternal","RemoveInternal"})
+                h.Patch(AccessTools.DeclaredMethod(typeof(PowerModel),method),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DefenseChanged)));
             if(AccessTools.DeclaredMethod(typeof(CombatManager),"RunTurnLoopAfter") is {} loop)
                 h.Patch(loop,postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ObserveCombat)));
             h.Patch(AccessTools.Method(typeof(SaveManager),nameof(SaveManager.UpdateProgressAfterCombatWon)),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepAdventureStats)));
@@ -109,6 +127,12 @@ public static partial class LeagueNativeMatch
             }
             OwnerPatch("Commands.Builders.AttackCommand","Execute");
             OwnerPatch("Models.Powers.HellraiserPower","BeforeAttack",false);
+            // 这些卡从战斗记录的执行者读取玩家身份。只适配实际使用这种读取方式的计数条件。
+            foreach(var card in new[]{typeof(MegaCrit.Sts2.Core.Models.Cards.HelixDrill),typeof(MegaCrit.Sts2.Core.Models.Cards.Voltaic)})
+                foreach(var method in Nested(card).SelectMany(AccessTools.GetDeclaredMethods))
+                    if(method.GetMethodBody()!=null && method.GetParameters().Any(p=>typeof(MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry).IsAssignableFrom(p.ParameterType))
+                        && PatchProcessor.ReadMethodBody(method).Any(op=>Equals(op.Value,AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.Player)))))
+                        h.Patch(method,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));
             var tune=typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Powers.TunePower");
             if(tune!=null){var m=AccessTools.DeclaredMethod(tune,"AfterSideTurnEnd");h.Patch(m,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(MelodySide)));}
             var eyes=typeof(CardModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Cards.GoForTheEyes");
@@ -120,6 +144,8 @@ public static partial class LeagueNativeMatch
     private static void RemoveBattlePatches(Harmony h){
         h.UnpatchAll(h.Id);EffectPatches.Clear();SeenPowers.Clear();_installed=false;
     }
+    private static IEnumerable<CodeInstruction> SelectMusicAct(IEnumerable<CodeInstruction> instructions)=>instructions.MethodReplacer(
+        AccessTools.PropertyGetter(typeof(IRunState),nameof(IRunState.Act)),AccessTools.Method(typeof(LeagueNativeMatch),nameof(MusicAct)));
     private static bool StunFighter(Creature creature,ref Task __result){
         if(Current is not {} duel||For(creature)==null&&_run?.Players.Any(p=>p.Creature==creature)!=true)return true;
         if(creature.IsAlive)duel.Stunned.Add(creature);
@@ -152,24 +178,39 @@ public static partial class LeagueNativeMatch
     }
     private static bool HasAttack(Creature c)=>Current is {} duel&&c.CombatState==duel.Rival.Creature.CombatState?duel.Pending.Any(h=>h.Dealer==c&&h.Amount>0):c.Monster?.IntendsToAttack==true;
     private static Button? _exit;
-    private static ConfirmationDialog? _exitDialog;
+    private static NGenericPopup? _exitDialog;
+    private static bool _interrupted;
     private static void ObserveCombat(Task __result){if(Current is {} duel)_=NoticeFailure(__result,duel);}
     private static async Task NoticeFailure(Task running,LeagueDuel duel){
         try{await running;}
         catch(Exception error) when(error is not OperationCanceledException){
             if(Current!=duel||_returning)return;
             if(InFinal){Diagnostics.Error("league-match",error);await FinishFinal(null);return;}
-            if(!GodotObject.IsInstanceValid(_exitDialog))return;
+            if(!GodotObject.IsInstanceValid(_exit))return;
             Diagnostics.Error("league-match",error);
-            _exit!.Text="对战中断 · 返回";_exitDialog!.Title="本场对战中断";_exitDialog.DialogText="游戏无法继续本回合。可以返回集卡重新匹配，本场不记录胜负或积分。";
-            _exitDialog.OkButtonText="返回集卡";_exitDialog.CancelButtonText="留在战场";_exitDialog.PopupCentered();
+            _interrupted=true;_exit!.Text="返回赛场";ShowExit();
         }catch(OperationCanceledException){}
     }
     private static void InstallExit(NRun scene){
-        var layer=new CanvasLayer{Layer=75};scene.AddChild(layer);var button=new Button{Text="退出联赛",TooltipText="中止本场，返回集卡对战",FocusMode=Control.FocusModeEnum.None};layer.AddChild(button);
-        button.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopRight);button.OffsetLeft=-167;button.OffsetRight=-30;button.OffsetTop=82;button.OffsetBottom=122;
-        var dialog=new ConfirmationDialog{Title="退出本场联赛",DialogText="返回集卡对战。本场中止，不记录胜负或积分。",OkButtonText="退出对战",CancelButtonText="继续对战"};layer.AddChild(dialog);_exit=button;_exitDialog=dialog;
-        button.Pressed+=()=>dialog.PopupCentered();dialog.Confirmed+=()=>{if(Current!=null&&!_returning){if(IsTeamMatch)_=Coop.CoopRuntime.Current!.Pause();else{_returning=true;_=Return("本场已中止。");}}};
+        var button=CareerScreen.LeagueExitButton(ShowExit);_exit=button;scene.AddChild(button);
+        button.TooltipText="退出本场对战";button.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopRight);
+        button.OffsetLeft=-186;button.OffsetRight=-40;button.OffsetTop=90;button.OffsetBottom=134;
+    }
+    private static void ShowExit(){
+        var modals=NModalContainer.Instance;
+        if(Current==null||_returning||modals==null)return;
+        if(modals.OpenModal!=null&&modals.OpenModal!=_exitDialog)return;
+        bool create=!GodotObject.IsInstanceValid(_exitDialog)||_exitDialog!.IsQueuedForDeletion();
+        if(create){_exitDialog=NGenericPopup.Create()!;modals.Add(_exitDialog);}
+        var panel=_exitDialog!.GetNode<NVerticalPopup>("VerticalPopup");
+        panel.SetText(_interrupted?"本场对战中断":"退出本场对战？",(_interrupted?"本回合无法继续。":"")+(IsTeamMatch?"退出后，全队结束本场对战。":"退出后将返回集卡赛场。")+"本场不记录胜负或积分。");
+        if(!create)return;
+        LocManager.Instance.GetTable("main_menu_ui").MergeWith(new(){["NATIONAL_SPIRE.LEAGUE_STAY"]="留在战场",["NATIONAL_SPIRE.LEAGUE_EXIT"]="退出对战"});
+        panel.InitNoButton(new("main_menu_ui","NATIONAL_SPIRE.LEAGUE_STAY"),_=>{});
+        panel.InitYesButton(new("main_menu_ui","NATIONAL_SPIRE.LEAGUE_EXIT"),b=>{
+            if(Current==null||_returning)return;
+            if(IsTeamMatch)_=Coop.CoopRuntime.Current!.Pause();else{_returning=true;_=Return("本场已中止。");}
+        });
     }
     private static bool KeepAdventureStats(CombatRoom combatRoom)=>Current==null||combatRoom!=_room;
     private static bool ArrowOwner(PowerModel __instance,Creature? applier,ref Task __result){
@@ -177,12 +218,21 @@ public static partial class LeagueNativeMatch
         ((MegaCrit.Sts2.Core.Localization.DynamicVars.StringVar)__instance.DynamicVars["Applier"]).StringValue=shooter.OpponentName;
         __result=Task.CompletedTask;return false;
     }
+    [ThreadStatic] private static bool _recordingIntent;
+    private static bool DeferColossus(ref decimal __result){if(!_recordingIntent)return true;__result=1;return false;}
+    private static void DefenseChanged(PowerModel __instance){
+        if(__instance is not (MegaCrit.Sts2.Core.Models.Powers.IntangiblePower or MegaCrit.Sts2.Core.Models.Powers.ColossusPower or MegaCrit.Sts2.Core.Models.Powers.VulnerablePower))return;
+        if(Current is {Pending.Count:>0} duel && __instance.Owner?.CombatState==_room?.CombatState && duel.Rival.Creature.Monster is LeagueOpponent opponent)Refresh(opponent);
+    }
     internal static bool QueueHits(IEnumerable<(Creature Target,string? Vfx,bool Center)> targets,decimal amount,ValueProp props,Creature? dealer,CardModel? source,CardPlay? play,ModifyDamageHookType modifiers,ref Task<IEnumerable<DamageResult>> result){
         if(Current==null||_room==null||dealer==null||dealer.CombatState!=_room.CombatState)return true;
         var items=targets.ToArray();if(items.Length==0||items.Any(t=>t.Target.Side==dealer.Side))return true;
         foreach(var item in items){
-            var val=Hook.ModifyDamage(_run!,_room.CombatState,item.Target,dealer,amount,props,source,play,modifiers,CardPreviewMode.None,out _);
-            Current.Pending.Add(new(dealer,item.Target,Math.Max(0,val),props,item.Vfx,item.Center));
+            // 力量和易伤按出牌时计算；每击上限留到防守方结束行动时判断。
+            decimal val;bool previous=_recordingIntent;_recordingIntent=true;
+            try{val=Hook.ModifyDamage(_run!,_room.CombatState,item.Target,dealer,amount,props,source,play,modifiers&~ModifyDamageHookType.Cap,CardPreviewMode.None,out _);}
+            finally{_recordingIntent=previous;}
+            Current.Pending.Add(new(dealer,item.Target,Math.Max(0,val),props,item.Vfx,item.Center){Cap=modifiers&ModifyDamageHookType.Cap,AllowColossus=modifiers.HasFlag(ModifyDamageHookType.Multiplicative)});
         }
         if(Current.Rival.Creature.Monster is LeagueOpponent foe)Refresh(foe);
         result=Task.FromResult<IEnumerable<DamageResult>>(items.Select(t=>new DamageResult(t.Target,props)).ToList());return false;
@@ -205,9 +255,9 @@ public static partial class LeagueNativeMatch
                 NIntent icon;
                 if(i<shown)icon=line.GetChild<NIntent>(i);
                 else{icon=NIntent.Create(i*.3f);line.AddChild(icon);line.MoveChild(icon,i);}
-                var hit=hits[i];icon.UpdateIntent(hit.Doom?new DoomIntent((int)hit.Amount):new RecordedIntent((int)hit.Amount),[hit.Target],hit.Dealer);
+                var hit=hits[i];icon.UpdateIntent(hit.Doom?new DoomIntent(hit.Shown):new RecordedIntent(hit.Shown),[hit.Target],hit.Dealer);
             }
-            sum.Text=hits.Any(h=>h.Doom)?$"（伤害 {hits.Where(h=>!h.Doom).Sum(h=>(int)h.Amount)} · 灾厄 {hits.Where(h=>h.Doom).Sum(h=>(int)h.Amount)}）":$"（{hits.Sum(h=>(int)h.Amount)}）";sum.Visible=!team;line.Visible=hits.Length>0;
+            sum.Text=hits.Any(h=>h.Doom)?$"（伤害 {hits.Where(h=>!h.Doom).Sum(h=>h.Shown)} · 灾厄 {hits.Where(h=>h.Doom).Sum(h=>h.Shown)}）":$"（{hits.Sum(h=>h.Shown)}）";sum.Visible=!team;line.Visible=hits.Length>0;
             line.ResetSize();var anchor=node.IntentContainer;
             float orbit=LeaguePlayer(creature)?.PlayerCombatState?.OrbQueue.Capacity>0?106:0;
             line.Position=anchor.Position+anchor.Size*.5f-new Vector2(line.Size.X/2,line.Size.Y-32+orbit);
@@ -237,11 +287,11 @@ public static partial class LeagueNativeMatch
             who.AddThemeFontSizeOverride("font_size",15);col.AddChild(who);
             var total=new Label{Name="IncomingTotal"};total.AddThemeColorOverride("font_color",new Color("ffc082"));total.AddThemeFontSizeOverride("font_size",21);col.AddChild(total);
         }
-        int damage=hits.Where(h=>!h.Doom&&h.Target==target).Sum(h=>(int)h.Amount),doom=hits.Where(h=>h.Doom&&h.Target==target).Sum(h=>(int)h.Amount);
-        var pet=hits.Where(h=>h.Target!=target).Sum(h=>(int)h.Amount);
+        int damage=hits.Where(h=>!h.Doom&&h.Target==target).Sum(h=>h.Shown),doom=hits.Where(h=>h.Doom&&h.Target==target).Sum(h=>h.Shown);
+        var pet=hits.Where(h=>h.Target!=target).Sum(h=>h.Shown);
         var value=badge.GetChild(0).GetChild(1).GetChild<Label>(1);
         value.Text="来袭 "+damage+(doom>0?"  灾厄 "+doom:"")+(pet>0?"  随从 "+pet:"");
-        badge.TooltipText=string.Join("\n",hits.GroupBy(h=>(h.Dealer,h.Target)).Select(g=>TargetName(g.Key.Dealer)+" → "+TargetName(g.Key.Target)+"  "+string.Join(" + ",g.Select(h=>(h.Doom?"灾厄 ":"")+(int)h.Amount))));
+        badge.TooltipText=string.Join("\n",hits.GroupBy(h=>(h.Dealer,h.Target)).Select(g=>TargetName(g.Key.Dealer)+" → "+TargetName(g.Key.Target)+"  "+string.Join(" + ",g.Select(h=>(h.Doom?"灾厄 ":"")+h.Shown))));
         badge.Show();badge.ResetSize();badge.Position=new(-badge.Size.X/2,42);
     }
     // 伤害已在出牌时计算；原生意图只需根据这个结果选择图标。
@@ -253,7 +303,9 @@ public static partial class LeagueNativeMatch
     }
     private static void Ended(CombatRoom room){if(room==_room&&!_returning){_returning=true;bool won=_run!.Players[0].Creature.IsAlive;Callable.From(()=>{_=Return(won?"对决胜利":"对决结束 · 惜败",won);}).CallDeferred();}}
     private static void Release(){
-        CombatManager.Instance.CombatEnded-=Ended;CombatManager.Instance.TurnStarted-=PlayerTurn;foreach(var f in Fighters)f.Rival.PlayerCombatState?.AfterCombatEnd();Team.Clear();Opened.Clear();Current=null;_room=null;_run=null;_exit=null;_exitDialog=null;
+        _matchVenue=null;
+        if(_exitDialog!=null&&NModalContainer.Instance?.OpenModal==_exitDialog)NModalContainer.Instance.Clear();
+        CombatManager.Instance.CombatEnded-=Ended;CombatManager.Instance.TurnStarted-=PlayerTurn;foreach(var f in Fighters)f.Rival.PlayerCombatState?.AfterCombatEnd();Team.Clear();Opened.Clear();Current=null;_room=null;_run=null;_exit=null;_exitDialog=null;_interrupted=false;
         if(_installed)RemoveBattlePatches(_leagueHarmony);
     }
     private static async Task Return(string? result,bool? won=null){
@@ -266,6 +318,41 @@ public static partial class LeagueNativeMatch
 }
 public sealed class LeagueEncounter : EncounterModel
 {
+    private RoomType _musicRoom;
+    internal ActModel Chapter {get;private set;}=null!;
+    private string _bossMusic="";
+    public override string CustomBgm=>_bossMusic;
+    // 房间本身始终是联赛战斗；只有音乐控制器读取场地对应的战斗段落。
+    internal static void MusicRoom(ref RoomType roomType){
+        if(roomType==RoomType.Monster&&RunManager.Instance.DebugOnlyGetState()?.CurrentRoom is CombatRoom {Encounter:LeagueEncounter duel})roomType=duel._musicRoom;
+    }
+    internal static LeagueEncounter ForMatch(RunState run,int seed){
+        var rng=new Random(CareerEngine.StableHash(seed.ToString(System.Globalization.CultureInfo.InvariantCulture)+":venue"));
+        var chapter=run.Acts[rng.Next(Math.Min(3,run.Acts.Count))];
+        int roll=rng.Next(5);
+        if(roll!=4)return Venue(run,chapter,roll==3?RoomType.Elite:RoomType.Monster,null);
+        var bosses=chapter.AllBossEncounters.OrderBy(b=>b.Id.Entry,StringComparer.Ordinal).ToArray();
+        return bosses.Length==0?Venue(run,chapter,RoomType.Monster,null):Venue(run,chapter,RoomType.Boss,bosses[rng.Next(bosses.Length)]);
+    }
+    internal static LeagueEncounter ForFinal(RunState run){
+        var last=run.MapPointHistory.ElementAtOrDefault(run.CurrentActIndex)?.SelectMany(f=>f.Rooms).LastOrDefault(r=>r.RoomType==RoomType.Boss);
+        var boss=last?.ModelId is {} id?ModelDb.GetByIdOrNull<AbstractModel>(id) as EncounterModel:null;
+        return boss?.RoomType==RoomType.Boss?Venue(run,run.Act,RoomType.Boss,boss):Venue(run,run.Act,RoomType.Monster,null);
+    }
+    private static LeagueEncounter Venue(RunState run,ActModel chapter,RoomType music,EncounterModel? boss){
+        var duel=(LeagueEncounter)ModelDb.Encounter<LeagueEncounter>().ToMutable();
+        duel._musicRoom=music;duel.Chapter=chapter;
+        if(boss!=null){
+            duel._bossMusic=boss.CustomBgm;
+            // 预加载和绘制都从同一遭遇实例读取这份背景，首领及其战斗脚本不进入联赛。
+            Background.Cache(duel)=Background.Read(boss.ToMutable(),chapter,NCombatRoom.GenerateBackgroundRngForCurrentPoint(run));
+        }else if(chapter!=run.Act)Background.Cache(duel)=chapter.GenerateBackgroundAssets(NCombatRoom.GenerateBackgroundRngForCurrentPoint(run));
+        return duel;
+    }
+    private static class Background {
+        internal static readonly AccessTools.FieldRef<EncounterModel,BackgroundAssets> Cache=AccessTools.FieldRefAccess<EncounterModel,BackgroundAssets>("_backgroundAssets");
+        internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.Rng,BackgroundAssets> Read=AccessTools.DeclaredMethod(typeof(EncounterModel),"GetBackgroundAssets").CreateDelegate<Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.Rng,BackgroundAssets>>();
+    }
     public override RoomType RoomType=>RoomType.Monster;
     public override bool ShouldGiveRewards=>false;
     public override IEnumerable<MonsterModel> AllPossibleMonsters=>[ModelDb.Monster<LeagueOpponent>()];
@@ -286,6 +373,7 @@ public sealed class LeagueOpponent : MonsterModel
     public override Task AfterAddedToRoom(){LeagueNativeMatch.Bind(this);return Task.CompletedTask;}
     public override Task AfterPlayerTurnStartEarly(PlayerChoiceContext context,Player player)=>player.NetId!=LeagueNativeMatch.HumanLead||LeagueNativeMatch.For(player)!=null?Task.CompletedTask:LeagueNativeMatch.First(this);
     public override Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)=>ReferenceEquals(this,LeagueNativeMatch.FirstLiving)?LeagueNativeMatch.Resolve(side):Task.CompletedTask;
+    public override Task AfterSideTurnEndLate(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)=>ReferenceEquals(this,LeagueNativeMatch.FirstLiving)?LeagueNativeMatch.ApplyDeferredDoom(context):Task.CompletedTask;
 }
 public partial class CareerScreen
 {

@@ -2,11 +2,11 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`8132E4DCDFC8A2EC999D84F65A8674020D9E371774F1E65482B4E22B723A4C92`。来源：[源码](../../LeagueBattleApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`8B93F11FAC662EE7F5781C1C3AF97619691F2B3EAAAFD6ED30C9F92E6EB1E291`。来源：[源码](../../LeagueBattleApi.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
-类型：`NationalSpire.LeagueBattleApi`、`NationalSpire.LeagueBattleApi.Detailed<T>`。
+类型：`NationalSpire.LeagueBattleApi`、`NationalSpire.LeagueBattleApi.IncomingIntent`、`NationalSpire.LeagueBattleApi.Detailed<T>`。
 
 字段、事件及初始值（源码原样）：
 
@@ -17,7 +17,7 @@ private static MethodInfo? _damage;
 private static bool _detailed;
 private static Func<LeagueDuel.Hit,Task>? _deliverWithEffects;
 [ThreadStatic] private static bool _delivery;
-private static Creature? _settling;
+private static LeagueDuel.Hit? _settling;
 private static readonly MethodInfo LoseBlockCommand=typeof(CreatureCmd).GetMethods().Single(m=>m.Name=="LoseBlock");
 private static readonly Send Damage=_damage!.CreateDelegate<Send>();
 private static readonly Func<T,(Creature,string?,bool)> Unpack;
@@ -43,11 +43,49 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 - `_delivery` = `false`
 
+<a id="symbol-d409b3764c99"></a>
+
+## `NationalSpire.LeagueBattleApi.IncomingIntent.Matches(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?) — internal bool Matches(Creature target,Creature? dealer)`
+
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueBattleApi.OwnTurnLoss(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task)`](LeagueBattleApi.cs.md#symbol-48a60121f860)
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Target`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-48a60121f860"></a>
+
+## `NationalSpire.LeagueBattleApi.OwnTurnLoss(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, ref System.Threading.Tasks.Task) — private static bool OwnTurnLoss(PlayerChoiceContext choiceContext,Creature target,Creature? dealer,CardModel? cardSource,ref Task __result)`
+
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** [`NationalSpire.LeagueBattleApi.IncomingIntent.Matches(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`](LeagueBattleApi.cs.md#symbol-d409b3764c99)
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi.IncomingIntent.Matches(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `NationalSpire.LeagueBattleApi.IncomingIntent.Matches(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；输入表达式：`hit.Matches(target,dealer)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !hit.Matches(target,dealer)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `__result` = `Task.CompletedTask`
+
 <a id="symbol-3002944bf337"></a>
 
 ## `NationalSpire.LeagueBattleApi.SpendGuard(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, int, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — internal static Task SpendGuard(PlayerChoiceContext context,Creature target,int amount,Creature source)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Resolve(MegaCrit.Sts2.Core.Combat.CombatSide)`](LeagueNativeMatch.cs.md#symbol-bea557065b97)
 
@@ -67,7 +105,7 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Create(MegaCrit.Sts2.Core.Entities.Players.Player[], System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, string) — public static RunState Create(Player[] players,List<ActModel> acts,string seed)`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
@@ -87,7 +125,7 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Animator(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Bindings.MegaSpine.MegaSprite, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — public static CreatureAnimator Animator(CharacterModel role,MegaSprite sprite,Creature creature)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueOpponent.GenerateAnimator(MegaCrit.Sts2.Core.Bindings.MegaSpine.MegaSprite)`](LeagueNativeMatch.cs.md#symbol-ff658a1871b3)
 
@@ -107,22 +145,25 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony) — public static void Install(Harmony h)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
 
 **调用：** `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SingleOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Reflection.MethodBase.GetParameters()`；`System.Reflection.MethodInfo.CreateDelegate<T>()`；`System.Type.GetGenericTypeDefinition()`；`System.Type.GetMethods()`；`System.Type.MakeGenericType(params System.Type[])`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._damage`；`NationalSpire.LeagueBattleApi._deliverWithEffects`；`NationalSpire.LeagueBattleApi._detailed`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._damage`；`NationalSpire.LeagueBattleApi._deliverWithEffects`；`NationalSpire.LeagueBattleApi._detailed`；`NationalSpire.LeagueOwnTurnLoss.Effects`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived))`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(type,"Deliver")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: AccessTools.DeclaredMethod(type,"Deliver").CreateDelegate<Func<LeagueDuel.Hit,Task>>`
 - `HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage))`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage))`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(_damage,prefix:new HarmonyMethod(type,"Record"))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(_damage,prefix:new HarmonyMethod(type,"Record"));`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount)));`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(type,"Record")`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(type,"Record")`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount))`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss))`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`methods.Single(m=>m.GetParameters().Length==7)`；返回值紧邻使用处：`BinaryExpressionSyntax: methods.SingleOrDefault(m=>m.GetParameters()[1].ParameterType.GenericTypeArguments[0].Name=="DamageTargetData")??methods.Single(m=>m.GetParameters().Length==7)`
 - `System.Collections.Generic.IEnumerable<TSource>.SingleOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`methods.SingleOrDefault(m=>m.GetParameters()[1].ParameterType.GenericTypeArguments[0].Name=="DamageTargetData")`；返回值紧邻使用处：`BinaryExpressionSyntax: methods.SingleOrDefault(m=>m.GetParameters()[1].ParameterType.GenericTypeArguments[0].Name=="DamageTargetData")??methods.Single(m=>m.GetParameters().Length==7)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`typeof(CreatureCmd).GetMethods().Where(m=>m.Name=="Damage"&&m.GetParameters() is [_,var targets,var amount,..]&&amount.ParameterType==typeof(decimal)&&targets.ParameterType.IsGenericType&&targets.ParameterType.GetGenericTypeDefinition()==typeof(IEnumerable<>)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =typeof(CreatureCmd).GetMethods().Where(m=>m.Name=="Damage"&&m.GetParameters() is [_,var targets,var amount,..]&&amount.ParameterType==typeof(decimal)&&targets.ParameterType.IsGenericType&&targets.ParameterType.GetGenericTypeDefinition()==typeof(IEnumerable<>)).ToArray()`
@@ -146,7 +187,7 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Record(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>?, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>) — private static bool Record(IEnumerable<Creature>? targets,decimal amount,ValueProp props,Creature? dealer,CardModel? cardSource,CardPlay? cardPlay,ref Task<IEnumerable<DamageResult>> __result)`
 
-来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -167,13 +208,13 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.FixedAmount(MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Models.CardModel?, ref MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType) — private static bool FixedAmount(Creature? dealer,CardPlay? cardPlay,CardModel? cardSource,ref ModifyDamageHookType modifyDamageHookType)`
 
-来源：源码第 51 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 61 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** 无已绑定显式调用。
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._settling`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._settling`；`NationalSpire.LeagueDuel.Hit.Cap`；`NationalSpire.LeagueDuel.Hit.Dealer`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -181,31 +222,31 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 **赋值（含属性/字段和局部值）：**
 
 - `_settling` = `null`
-- `modifyDamageHookType` = `ModifyDamageHookType.None`
+- `modifyDamageHookType` = `hit.Cap`
 
 <a id="symbol-0e3bd31351e4"></a>
 
 ## `NationalSpire.LeagueBattleApi.Deliver(NationalSpire.LeagueDuel.Hit) — public static async Task Deliver(LeagueDuel.Hit hit)`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Resolve(MegaCrit.Sts2.Core.Combat.CombatSide)`](LeagueNativeMatch.cs.md#symbol-bea557065b97)
 
-**调用：** [`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；`MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；`NationalSpire.LeagueBattleApi.IncomingIntent.IncomingIntent(NationalSpire.LeagueDuel.Hit)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._damage`；`NationalSpire.LeagueBattleApi._deliverWithEffects`；`NationalSpire.LeagueBattleApi._delivery`；`NationalSpire.LeagueBattleApi._detailed`；`NationalSpire.LeagueBattleApi._settling`；`NationalSpire.LeagueDuel.Hit.Amount`；`NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Props`；`NationalSpire.LeagueDuel.Hit.Target`；`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi._damage`；`NationalSpire.LeagueBattleApi._deliverWithEffects`；`NationalSpire.LeagueBattleApi._delivery`；`NationalSpire.LeagueBattleApi._detailed`；`NationalSpire.LeagueBattleApi._settling`；`NationalSpire.LeagueDuel.Hit.BeforeCap`；`NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Props`；`NationalSpire.LeagueDuel.Hit.Target`；`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；输入表达式：`new BlockingPlayerChoiceContext()`；返回值紧邻使用处：`ArgumentSyntax: new BlockingPlayerChoiceContext()`
-- `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(_damage!,null,new BlockingPlayerChoiceContext(),new[]{hit.Target},hit.Amount,hit.Props,hit.Dealer,null,null)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: RuntimeApi.Invoke(_damage!,null,new BlockingPlayerChoiceContext(),new[]{hit.Target},hit.Amount,hit.Props,hit.Dealer,null,null)!`
+- `NationalSpire.LeagueBattleApi.IncomingIntent.IncomingIntent(NationalSpire.LeagueDuel.Hit)`；输入表达式：`new IncomingIntent(hit)`；返回值紧邻使用处：`ArgumentSyntax: new IncomingIntent(hit)`
+- `NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`；输入表达式：`RuntimeApi.Invoke(_damage!,null,new IncomingIntent(hit),new[]{hit.Target},hit.BeforeCap,hit.Props,hit.Dealer,null,null)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: RuntimeApi.Invoke(_damage!,null,new IncomingIntent(hit),new[]{hit.Target},hit.BeforeCap,hit.Props,hit.Dealer,null,null)!`
 - `System.Func<T, TResult>.Invoke(T)`；输入表达式：`_deliverWithEffects!(hit)`；返回值紧邻使用处：`AssignmentExpressionSyntax: work=_deliverWithEffects!(hit)`
 
 **赋值（含属性/字段和局部值）：**
 
 - `_delivery` = `false`
 - `_delivery` = `true`
-- `_settling` = `hit.Dealer`
+- `_settling` = `hit`
 - `_settling` = `null`
 - `work` = `_deliverWithEffects!(hit)`
 
@@ -213,7 +254,7 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Detailed<T>.Detailed() — static Detailed()`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -254,7 +295,7 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Detailed<T>.Record(System.Collections.Generic.IEnumerable<T>?, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>) — private static bool Record(IEnumerable<T>? targetData,decimal amount,ValueProp props,Creature? dealer,CardModel? cardSource,CardPlay? cardPlay,ModifyDamageHookType modifyDamageHookType,ref Task<IEnumerable<DamageResult>> __result)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -275,18 +316,18 @@ private static readonly Func<Creature,string?,bool,T> Pack;
 
 ## `NationalSpire.LeagueBattleApi.Detailed<T>.Deliver(NationalSpire.LeagueDuel.Hit) — internal static Task Deliver(LeagueDuel.Hit hit)`
 
-来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 87 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** `MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；`NationalSpire.LeagueBattleApi.Detailed<T>.Send.Invoke(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<T>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType)`（委托实际目标见流程文档）；`System.Func<T1, T2, T3, TResult>.Invoke(T1, T2, T3)`（委托实际目标见流程文档）
+**调用：** `NationalSpire.LeagueBattleApi.Detailed<T>.Send.Invoke(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<T>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType)`（委托实际目标见流程文档）；`NationalSpire.LeagueBattleApi.IncomingIntent.IncomingIntent(NationalSpire.LeagueDuel.Hit)`；`System.Func<T1, T2, T3, TResult>.Invoke(T1, T2, T3)`（委托实际目标见流程文档）
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi.Detailed<T>.Damage`；`NationalSpire.LeagueBattleApi.Detailed<T>.Pack`；`NationalSpire.LeagueDuel.Hit.Amount`；`NationalSpire.LeagueDuel.Hit.Center`；`NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Props`；`NationalSpire.LeagueDuel.Hit.Target`；`NationalSpire.LeagueDuel.Hit.Vfx`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueBattleApi.Detailed<T>.Damage`；`NationalSpire.LeagueBattleApi.Detailed<T>.Pack`；`NationalSpire.LeagueDuel.Hit.BeforeCap`；`NationalSpire.LeagueDuel.Hit.Cap`；`NationalSpire.LeagueDuel.Hit.Center`；`NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Props`；`NationalSpire.LeagueDuel.Hit.Target`；`NationalSpire.LeagueDuel.Hit.Vfx`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；输入表达式：`new BlockingPlayerChoiceContext()`；返回值紧邻使用处：`ArgumentSyntax: new BlockingPlayerChoiceContext()`
-- `NationalSpire.LeagueBattleApi.Detailed<T>.Send.Invoke(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<T>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType)`；输入表达式：`Damage(new BlockingPlayerChoiceContext(),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.Amount,hit.Props,hit.Dealer,null,null,ModifyDamageHookType.None)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>Damage(new BlockingPlayerChoiceContext(),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.Amount,hit.Props,hit.Dealer,null,null,ModifyDamageHookType.None)`
+- `NationalSpire.LeagueBattleApi.Detailed<T>.Send.Invoke(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<T>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType)`；输入表达式：`Damage(new IncomingIntent(hit),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.BeforeCap,hit.Props,hit.Dealer,null,null,hit.Cap)`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>Damage(new IncomingIntent(hit),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.BeforeCap,hit.Props,hit.Dealer,null,null,hit.Cap)`
+- `NationalSpire.LeagueBattleApi.IncomingIntent.IncomingIntent(NationalSpire.LeagueDuel.Hit)`；输入表达式：`new IncomingIntent(hit)`；返回值紧邻使用处：`ArgumentSyntax: new IncomingIntent(hit)`
 - `System.Func<T1, T2, T3, TResult>.Invoke(T1, T2, T3)`；输入表达式：`Pack(hit.Target,hit.Vfx,hit.Center)`；返回值紧邻使用处：`ExpressionElementSyntax: Pack(hit.Target,hit.Vfx,hit.Center)`
 
 **赋值（含属性/字段和局部值）：**

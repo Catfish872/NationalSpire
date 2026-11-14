@@ -49,10 +49,11 @@ public static partial class LeagueNativeMatch {
             if(!opening)await game.Transition.FadeOut(.24f);
             mgr.SetUpNewMultiplayer(run,lobby,false);lobby.CleanUp(false);
             await PreloadManager.LoadRunAssets(roster.Select(p=>p.Character).Concat(Team.Select(f=>f.Rival.Character)).Distinct().ToList());
+            var encounter=_matchVenue=LeagueEncounter.ForMatch(run,seed);
             await PreloadManager.LoadActAssets(run.Act);mgr.Launch();var scene=EnterMatchScene(game,run);
             scene.TreeExiting+=()=>{if(_run==run&&!_returning){_teamAttempt=null;Release();}};
-            await mgr.SetActInternal(0);CombatManager.Instance.TurnStarted+=PlayerTurn;InstallExit(scene);
-            _room=(CombatRoom)await mgr.EnterRoomDebug(RoomType.Monster,model:ModelDb.Encounter<LeagueEncounter>().ToMutable(),showTransition:false);
+            await mgr.SetActInternal(run.CurrentActIndex);CombatManager.Instance.TurnStarted+=PlayerTurn;InstallExit(scene);
+            _room=(CombatRoom)await mgr.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false);
             if(!opening)await game.Transition.FadeIn(.24f);
         }
     }

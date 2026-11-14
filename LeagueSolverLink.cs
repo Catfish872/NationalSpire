@@ -25,30 +25,41 @@ internal sealed class LeagueSolverLink : IDisposable
             return GetLoadContext(host)!.Assemblies.Concat(AppDomain.CurrentDomain.GetAssemblies()).FirstOrDefault(a=>AssemblyName.ReferenceMatchesDefinition(a.GetName(),name));
         }
     }
-    private readonly Func<decimal[],int[],Task<CardModel?>>? _choose;
+    private readonly Func<decimal[],int[],bool[],int[],Task<CardModel?>>? _choose;
     private readonly IDisposable? _session;
     private readonly Func<int>? _aim;
-    private readonly Func<(CardModel,int)[]>? _rest;
+    private readonly Func<int[]>? _choices;
+    internal int[] Choices=>_choices?.Invoke()??[];
+    private static Func<CardModel[],int,string,int,int,int,int[]>? _actual;
+    private static Func<IEnumerable<CardModel>,int>? _menu;
+    internal static int Menu(IEnumerable<CardModel> cards)=>_menu?.Invoke(cards)??0;
+    internal static int[] SelectActual(CardModel[] cards,int pile,string purpose,int effect,int min,int max)=>_actual?.Invoke(cards,pile,purpose,effect,min,max)??Enumerable.Range(0,Math.Min(min,cards.Length)).ToArray();
+    private readonly Func<bool>? _endTurn;
+    internal bool EndTurn=>!_failed&&_endTurn?.Invoke()==true;
+    private readonly Func<(CardModel,int,int[])[]>? _rest;
     internal int Aim=>_aim?.Invoke()??-1;
-    internal (CardModel,int)[] Rest()=>_rest?.Invoke()??[];
+    internal (CardModel,int,int[])[] Rest()=>_rest?.Invoke()??[];
     private bool _failed;
     private LeagueSolverLink(){}
-    private LeagueSolverLink(object session){_session=(IDisposable)session;_aim=session.GetType().GetProperty("LastAim")!.GetMethod!.CreateDelegate<Func<int>>(session);_rest=session.GetType().GetMethod("Continuation")!.CreateDelegate<Func<(CardModel,int)[]>>(session);_choose=session.GetType().GetMethod("Choose")!.CreateDelegate<Func<decimal[],int[],Task<CardModel?>>>(session);}
+    private LeagueSolverLink(object session){_session=(IDisposable)session;_choices=session.GetType().GetProperty("LastChoices")!.GetMethod!.CreateDelegate<Func<int[]>>(session);_aim=session.GetType().GetProperty("LastAim")!.GetMethod!.CreateDelegate<Func<int>>(session);_endTurn=session.GetType().GetProperty("EndTurn")!.GetMethod!.CreateDelegate<Func<bool>>(session);_rest=session.GetType().GetMethod("Continuation")!.CreateDelegate<Func<(CardModel,int,int[])[]>>(session);_choose=session.GetType().GetMethod("Choose")!.CreateDelegate<Func<decimal[],int[],bool[],int[],Task<CardModel?>>>(session);}
     private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
         try{using var stream=typeof(LeagueSolverLink).Assembly.GetManifestResourceStream("NationalSpire.LeagueSolver.dll")!;
             var type=new EngineContext().LoadFromStream(stream).GetType("NationalSpire.Solver.LeagueForecast",true)!;
-            type.GetMethod("Prepare")!.Invoke(null,null);return type;
+            type.GetMethod("Prepare")!.Invoke(null,null);
+            _actual=type.GetMethod("SelectActual")!.CreateDelegate<Func<CardModel[],int,string,int,int,int,int[]>>();
+            _menu=type.GetMethod("MenuKey")!.CreateDelegate<Func<IEnumerable<CardModel>,int>>();return type;
         }catch(Exception e){Diagnostics.Error("league-solver",e.GetBaseException());return null;}
     }));
     public static void Prepare()=>_=Ready.Value;
+    internal static Task PrepareChoices()=>Ready.Value;
     public static async Task<LeagueSolverLink> Open(Player rival,int tier,string[] setup,int preference){
         try{var adapter=await Ready.Value;if(adapter==null)return new();
             return new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)!);
         }catch(Exception e){Diagnostics.Error("league-solver",e.GetBaseException());return new();}
     }
-    public async Task<CardModel?> Choose(decimal[] amounts,int[] properties){
+    public async Task<CardModel?> Choose(decimal[] amounts,int[] properties,bool[] capped,int[] dealers){
         if(_failed||_choose==null)return null;
-        try{return await _choose(amounts,properties);}catch(Exception e){_failed=true;Diagnostics.Error("league-solver",e.GetBaseException());return null;}
+        try{return await _choose(amounts,properties,capped,dealers);}catch(Exception e){_failed=true;Diagnostics.Error("league-solver",e.GetBaseException());return null;}
     }
     public void Dispose()=>_session?.Dispose();
 }

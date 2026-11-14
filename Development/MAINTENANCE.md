@@ -12,6 +12,41 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 每次更新 GitHub 时，必须同步更新根目录 README.md 中的已完成清单，记录本次实际完成的功能、修复与优化。发布验收须核对远程 README.md 中的本次完成条目。
 
+## 游戏与求解器更新检查表
+
+**先确定更新的是哪一层。** 游戏更新时，核对游戏接口和牌效，并核对下表中相应的求解器实现；只升级内置求解器时，从打包、加载开始，核对局面复制、出牌、选牌和结束回合。若某张牌只改了触发时机，游戏和模组仍可能编译通过，此时要比较这张牌在推演和实战中各触发了几次、作用于谁、何时生效。
+
+当前维护基线为国运尖塔 1.1.2。单人和多人开赛按实际方法签名选择处理方式。镜面对决另有独立判断：[LeagueSolverLink.Supported](../LeagueSolverLink.cs) 检查游戏是否提供愚者箭槽类型和 RunState.RunModels 属性。0.107.1 保留开包、收藏、交易、组卡和建筑师原对话，镜面匹配与建筑师对决入口不可选；0.113.0 提供对决。两个成员存在，只决定是否开放入口。新游戏即使通过这项判断，仍须核对下列战斗接口和牌效。玩家是否订阅独立求解器不参与判断。
+
+### 游戏更新时按玩法核对
+
+| 玩家从哪里进入 | 查哪段源码、核对什么 | 怎样发现不兼容 |
+| --- | --- | --- |
+| 正式开赛、重赛、约会切磋 | [GameCompatibility](../GameCompatibility.cs)、[GameBridge](../GameBridge.cs)、[MatchModes](../MatchModes.cs)。核对创建玩家和对局的参数、角色解锁资料、进阶、模式、种子及章节随机流。多人另查 [NativeLobbyApi](../Coop/NativeLobbyApi.cs) 的建房、加入、随机职业回调和大厅生成玩家的顺序。 | 同一个模组 DLL 分别加载目标游戏分支。单人开赛后继续存档、重赛；多人由房主和客机进场，核对角色、种子、模式及进阶。[逐项签名及新旧分支](GAME_AND_UI.md#游戏接口的多版本适配) |
+| 赛中地图、弹幕、日程及约会 | [LiveCompatibility](../LiveCompatibility.cs)、[LiveRunBridge](../LiveRunBridge.cs)、[LiveMaps](../LiveMaps.cs)。检查地图房间与楼层的读取、战斗通知、对手位置刷新，以及暂停和恢复冒险时使用的当前房间。 | 走过一个房间后查看路线、对手头像和弹幕；极速模式查看小地图。触发一次约会暂停再返回原局，核对原楼层及进度。[地图与转播](GAME_AND_UI.md#地图与转播依赖) · [多人检查点](PERSISTENCE_AND_COOP.md#多人检查点的保存与恢复) |
+| 开包、收藏、组卡 | [LeagueCards](../LeagueCards.cs)、[LeagueCardFace](../LeagueCardFace.cs)。检查角色与牌池枚举、稀有度、同名牌编号、原生卡面场景和升级后的预览。游戏卸载某个角色后，旧收藏仍按原编号保存。 | 在有、无该角色的分支间切换，检查可选牌池和可见卡面；切回后检查持有数量。此项可独立于战斗验收。[联赛收藏与牌组](DATA_CONTRACTS.md#联赛收藏与牌组) |
+| 匹配入场、角色和场景 | [LeagueNativeMatch](../LeagueNativeMatch.cs)、[LeagueBattleApi](../LeagueBattleApi.cs)、[LeagueBattleVisuals](../LeagueBattleVisuals.cs)。核对创建对局、角色动画、召唤物、球槽、意图图标和逐击数值；场地、首领曲及章节环境音还依赖遭遇和音乐控制器。 | 从匹配入口进入战场，区分普通场地和带专曲的首领场地；对手出牌后检查目标、逐击意图与来袭合计。退出后再进普通冒险，确认决斗专用补丁已解除。[集卡与镜面对决](GAME_AND_UI.md#集卡与镜面对决) |
+| 出牌、挂意图、回合结束 | [LeagueEffectTargets](../LeagueEffectTargets.cs) 修正自动出牌和卡牌、能力、遗物等效果读取的阵营；[LeagueBattleApi](../LeagueBattleApi.cs) 识别逐击伤害接口；[LeagueNativeMatch](../LeagueNativeMatch.cs) 处理登记、显示、格挡和回合末结算。检查方法的参数，也检查异步方法内部是否仍按原顺序读取目标、发出通知。 | 重点比较自动翻牌、球或毒、临时减伤，以及下表列出的自己回合失血和灾厄。分别查看攻击者、承受者、头顶意图和实际生命，不能只看出牌完成记录。[战斗流程](GAME_AND_UI.md#集卡与镜面对决) |
+| 建筑师选项、前进箭头、继续后续章节 | [ArchitectFinal](../ArchitectFinal.cs)。检查事件开始与移交、战斗胜负通知、前进按钮、退出战场、恢复冒险资料及结果记录。音乐另查游戏音乐控制器的 Proxy 节点、实际播放实例 `_musicEv`、曲名 `_currentTrack` 以及设置房间音乐段落的 UpdateTrack。 | 实际击败对手或被击败，再点击前进；比较决斗前后的曲目或安静状态，核对遗物、药水及原建筑师选项。读档后可重选；其他模组提供后续幕时，继续进入下一幕。控制台直接判胜会绕过实战结束路径。[建筑师流程](GAME_AND_UI.md#正式赛的建筑师对决) · [存档结果](DATA_CONTRACTS.md#建筑师对决结果) |
+| 联机团体匹配、建筑师团队对决 | [LeagueTeamMatch](../LeagueTeamMatch.cs)、[LeagueDuel](../LeagueDuel.cs)、[ArchitectFinal](../ArchitectFinal.cs)。核对房主推演、卡牌和目标编号、中途选牌资料、游戏的选牌同步通道、团队选择及战后确认。修改消息格式时同时核对 [联机协议](../Coop/CoopData.cs)。 | 用两个客户端比较同一回合各次出牌、目标和选牌，再确认双方返回同一房间。候选和目标随已确定的牌序发送，客机不重新搜索。本机联机结果与跨网络测量分别记录。[传输顺序与检查点](PERSISTENCE_AND_COOP.md#建筑师的团队选择与敌方出牌) |
+
+### 求解器更新时从打包查到实战
+
+| 顺序 | 实现位置 | 更新时必须对照的两端 |
+| --- | --- | --- |
+| 1．打包与加载 | [EnginePackage.targets](../Compatibility/LeagueSolver/EnginePackage.targets)、[LeagueSolver.csproj](../Compatibility/LeagueSolver/LeagueSolver.csproj)、[主项目](../NationalSpire.csproj)、[LeagueSolverLink](../LeagueSolverLink.cs) | 当前内置 CombatSolver 0.51.4、STS2-RitsuLib 0.6.12 的 0.113.0 组件。升级时同步核对下载地址、归档名、SHA-256、包内子目录及最终嵌入主 DLL 的资源。使用干净的构建中间目录确认实际打包版本。独立加载环境须共用游戏类型，但从内置包加载求解器及其辅助库；分别检查未订阅和同时订阅独立求解器的启动方式。 |
+| 2．实战局面交给推演 | [LeagueForecast](../Compatibility/LeagueSolver/LeagueForecast.cs)、[LeagueForecast.History](../Compatibility/LeagueSolver/LeagueForecast.History.cs) | 核对上游复制战场、逐击伤害模拟、回合历史和卡牌实例的入口；逐项检查生命、格挡、手牌与牌堆顺序、能量、星星、球、箭和召唤物。历史事件字段或归属变化时，用依赖计数的牌检查 AI 与真人各自的记录；读取成功但计数恒为零也会改变出牌。 |
+| 3．推演中途选择，实战执行同一选择 | [LeagueForecast.Choices](../Compatibility/LeagueSolver/LeagueForecast.Choices.cs)、[LeagueCardChoices](../LeagueCardChoices.cs)、[LeagueSolverLink](../LeagueSolverLink.cs) | 核对上游的待选请求、候选生成、分支重放，与游戏的手牌、牌堆、升级和选项列表。检查编号、升级等级、同名牌在候选中的次序和选择数量。用生存者弃奇巧、武装升级、全息影像取回弃牌区分三种来源；候选变化时应按实际列表重选。 |
+| 4．攻防与停止出牌 | [LeagueForecast](../Compatibility/LeagueSolver/LeagueForecast.cs)、[LeagueOwnTurnLoss](../LeagueOwnTurnLoss.cs)、[LeagueTurnPlan](../LeagueTurnPlan.cs)、[LeagueDuel](../LeagueDuel.cs) | 对照实战和模拟中伤害、能力层数及触发先后。撕裂、狱火、恶魔之舌应区分来袭意图和主动失血。普通灾厄按意图顺序消耗格挡，游戏先检查已有层数，再添加余量；末日降临在出牌时检查已有层数。分别检验玩家侧和敌方，游戏对双方执行自然处决的回调不同。区分求解器主动停手与推演失败后启用基础选牌；查看 `league-solver` 诊断和实际牌序，避免把基础选牌成功误记为求解器正常。 |
+| 5．推演结果送回游戏 | [LeagueSolverLink](../LeagueSolverLink.cs)、[LeagueDuel](../LeagueDuel.cs)、[LeagueForecast](../Compatibility/LeagueSolver/LeagueForecast.cs) | 主模组按名称绑定准备、选牌、目标、后续牌序及停手结果。核对传参顺序、返回类型、未知抽牌后重新计算的时机。比较首次准备与后续搜索的耗时，并确认房主发送的仍是每段已确定的牌序，选牌不新增逐张网络回执。 |
+
+### 怎样执行并留下结果
+
+1. 记录目标游戏分支和版本、游戏程序集与模组 DLL 的 SHA-256、内置求解器及辅助库版本。在维护工作区用同一份发布 DLL，对每个受支持分支的实际 `sts2.dll` 执行 `NationalSpire.CompatibilityTests`。该工具的 README 提供命令。它检查主 DLL 的成员签名、类型加载及部分原生调用；内嵌求解器的运行时绑定、补丁插入位置、场景资源和音乐需按上表另查。
+2. 改动游戏方法时，同时查正常调用、按名称查找的成员、异步方法内部和事件订阅。由[源码索引](SOURCE_MAP.md)找到调用者，再核对 [LiveCompatibility](../LiveCompatibility.cs)、LeagueNativeMatch.Install、FinalEndHooks.Install 及 LeagueForecast.Prepare 等实际安装位置。上游卡效即使保留原签名，也要查伤害来源、目标和回调顺序是否改变。
+3. 选择和变更相关的真实玩家流程。维护工作区的 `NationalSpire.MultiplayerTests/LeaguePreview` 提供 Sparring、FinalTeamReview 和 Run-Sparring.ps1。已有定向入口包括 `LEAGUE_NATIVE_DOOM`、`LEAGUE_OWN_TURN_LOSS`、`LEAGUE_DECISION_CASE`、`LEAGUE_ARCHITECT`，以及配合建筑师场地检查的 `LEAGUE_ARCHITECT_AUDIO`。核对正式灾厄数值时启用 `LEAGUE_SHIPPING=1`，避免使用实验换算。记录实际游戏版本、输入局面、预期与实得结果，并分列静态检查、单人实机、本机双客户端和未验证范围。
+4. 以后新增或改动游戏补丁、反射成员、场景节点、求解器接口或双方共用的战斗规则，在同一次修改中更新本表相应行、详细流程和函数索引。新增接入点归入具体玩家入口或求解器步骤；移除接入点时同步删除旧说明。
+
 ## 开始修改前
 
 1. 阅读目录、负责章节及函数索引，核对源码摘要与当前文件。

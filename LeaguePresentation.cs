@@ -6,6 +6,12 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private enum LeagueControl { Action,Primary,Filter,Step,Back }
+    internal static Button LeagueExitButton(Action pressed){
+        var button=LeagueButton("退出联赛",pressed,140,kind:LeagueControl.Back);
+        button.AddThemeConstantOverride(CareerFocusOutline.ThemeMarker,1);
+        button.AddThemeFontOverride("font",CareerVisuals.InterfaceText(600));
+        return button;
+    }
     private static Button LeagueButton(string title,Action pressed,float width,bool selected=false,string accent="d9ba83",Texture2D? emblem=null,LeagueControl kind=LeagueControl.Action){
         bool primary=kind==LeagueControl.Primary,flat=kind is LeagueControl.Filter or LeagueControl.Back,step=kind==LeagueControl.Step;
         var button=new Button{Text=CareerMoney.Display(title),CustomMinimumSize=new(width,step?38:flat?42:52),MouseDefaultCursorShape=CursorShape.PointingHand,

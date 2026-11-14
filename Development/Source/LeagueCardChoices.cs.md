@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`4B9C6314A9AEE21CE0833A418FF8CB17E9AD916217D731E0151E557B7BCB38C8`。来源：[源码](../../LeagueCardChoices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`CAF529C100F28B2DE04E23B1B74E94E85C98E2C3093BB7BEAAB5A347AF627D7A`。来源：[源码](../../LeagueCardChoices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,6 +11,9 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
+private int[] _choicePlan=[];
+private int _choiceIndex;
+private bool _choicesChanged;
 private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=[];
 ```
 
@@ -34,36 +37,49 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 - `duel` = `LeagueNativeMatch.For(p)!`
 
-<a id="symbol-a1487c99eed1"></a>
+<a id="symbol-251ed5837391"></a>
 
-## `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int) — private static Task<IEnumerable<CardModel>> Choose(IEnumerable<CardModel> cards,int min,int max)`
+## `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string) — private CardModel[] SelectActual(IEnumerable<CardModel> candidates,PileType pile,int min,int max,string purpose="")`
 
-来源：源码第 13 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.GridChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-d8e8571f3ace)；[`NationalSpire.LeagueDuel.HandChoice(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-0e62aaaafd9c)；[`NationalSpire.LeagueDuel.PileChoice(MegaCrit.Sts2.Core.Entities.Cards.CardPile, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-8409991ce13b)
+**调用者：** [`NationalSpire.LeagueDuel.GridChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-d8e8571f3ace)；[`NationalSpire.LeagueDuel.HandChoice(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-0e62aaaafd9c)；[`NationalSpire.LeagueDuel.OneChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, bool, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>)`](LeagueCardChoices.cs.md#symbol-e80c9634744d)；[`NationalSpire.LeagueDuel.PileChoice(MegaCrit.Sts2.Core.Entities.Cards.CardPile, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-8409991ce13b)；[`NationalSpire.LeagueDuel.UpgradeChoice(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>)`](LeagueCardChoices.cs.md#symbol-4c49c75f8136)
 
-**调用：** `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
+**调用：** [`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`](LeagueSolverLink.cs.md#symbol-f476bafa7737)；[`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`](LeagueSolverLink.cs.md#symbol-306fe0a674de)；`MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(int)`；`System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel._choiceIndex`；`NationalSpire.LeagueDuel._choicePlan`；`NationalSpire.LeagueDuel._choicesChanged`；`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`；`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`cards.Take(min>0?min:max)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: cards.Take(min>0?min:max).ToArray`
-- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`cards.Take(min>0?min:max).ToArray()`；返回值紧邻使用处：`ArgumentSyntax: cards.Take(min>0?min:max).ToArray()`
-- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult<IEnumerable<CardModel>>(cards.Take(min>0?min:max).ToArray())`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>Task.FromResult<IEnumerable<CardModel>>(cards.Take(min>0?min:max).ToArray())`
+- `MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(int)`；输入表达式：`MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(plan[i++])`；返回值紧邻使用处：`EqualsValueClauseSyntax: =MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(plan[i++])`
+- `NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`；输入表达式：`LeagueSolverLink.Menu(cards)`；返回值紧邻使用处：`BinaryExpressionSyntax: menu==LeagueSolverLink.Menu(cards)`
+- `NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`；输入表达式：`LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；输入表达式：`cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level).ElementAtOrDefault(occurrence)`；返回值紧邻使用处：`IsPatternExpressionSyntax: cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level).ElementAtOrDefault(occurrence) is not {} match`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select(i=>cards[i])`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select(i=>cards[i]).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`candidates.ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =candidates.ToArray()`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select(i=>cards[i]).ToArray()`；返回值紧邻使用处：`ReturnStatementSyntax: return LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select(i=>cards[i]).ToArray();`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level).ElementAtOrDefault`
+- `System.Math.Min(int, int)`；输入表达式：`Math.Min(min,cards.Length)`；返回值紧邻使用处：`BinaryExpressionSyntax: count>=Math.Min(min,cards.Length)`
 
 **赋值（含属性/字段和局部值）：**
 
+- `_choiceIndex` = `0`
+- `_choiceIndex` = `i`
+- `_choicePlan` = `[]`
+- `_choicesChanged` = `true`
+- `chosen[k]` = `match`
+- `effect` = `plannedEffect`
+- `found` = `false`
 
 <a id="symbol-de6736b83858"></a>
 
 ## `NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony) — internal static void InstallSelections(Harmony h)`
 
-来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
 
-**调用：** [`Apply(System.Type, string, string, int)`](LeagueCardChoices.cs.md#symbol-5d0e0df97524)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.Assembly.GetType(string)`
+**调用：** [`Apply(System.Type, string, string, int)`](LeagueCardChoices.cs.md#symbol-9723c2d721c0)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.Assembly.GetType(string)`
 
 **字段、属性、事件及方法组引用：** `Apply(System.Type, string, string, int)`
 
@@ -84,11 +100,11 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-5d0e0df97524"></a>
+<a id="symbol-9723c2d721c0"></a>
 
 ## `Apply(System.Type, string, string, int) — void Apply(Type type,string method,string hook,int parameters)`
 
-来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`](LeagueCardChoices.cs.md#symbol-de6736b83858)
 
@@ -111,7 +127,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.RivalSelectionStack(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Collections.Generic.Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector>) — private static bool RivalSelectionStack(Player player,ref Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> __result)`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -131,109 +147,115 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.UpgradeChoice(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>) — private static bool UpgradeChoice(Player player,ref Task<CardModel?> __result)`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
+**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；[`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`](LeagueCardChoices.cs.md#symbol-251ed5837391)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out _)`
-- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.PlayerCombatState!.Hand.Cards.FirstOrDefault(c=>c.IsUpgradable)`；返回值紧邻使用处：`ArgumentSyntax: player.PlayerCombatState!.Hand.Cards.FirstOrDefault(c=>c.IsUpgradable)`
-- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult(player.PlayerCombatState!.Hand.Cards.FirstOrDefault(c=>c.IsUpgradable))`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult(player.PlayerCombatState!.Hand.Cards.FirstOrDefault(c=>c.IsUpgradable))`
+- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out var duel)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out var duel)`
+- `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`；输入表达式：`duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault()`；返回值紧邻使用处：`ArgumentSyntax: duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault()`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable)`；返回值紧邻使用处：`ArgumentSyntax: player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable)`
+- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault())`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault())`
 
 **赋值（含属性/字段和局部值）：**
 
-- `__result` = `Task.FromResult(player.PlayerCombatState!.Hand.Cards.FirstOrDefault(c=>c.IsUpgradable))`
+- `__result` = `Task.FromResult(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>c.IsUpgradable),PileType.Hand,1,1,"TO_UPGRADE").FirstOrDefault())`
 
 <a id="symbol-0e62aaaafd9c"></a>
 
 ## `NationalSpire.LeagueDuel.HandChoice(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool HandChoice(Player player,CardSelectorPrefs prefs,Func<CardModel,bool>? filter,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`](LeagueCardChoices.cs.md#symbol-a1487c99eed1)；[`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；[`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`](LeagueCardChoices.cs.md#symbol-251ed5837391)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；输入表达式：`Choose(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Choose(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`
-- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out _)`
+- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out var duel)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out var duel)`
+- `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`；输入表达式：`duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),PileType.Hand,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`；返回值紧邻使用处：`ArgumentSyntax: duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),PileType.Hand,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true)`；返回值紧邻使用处：`ArgumentSyntax: player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true)`
 - `System.Func<T, TResult>.Invoke(T)`；输入表达式：`.Invoke(c)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: filter?.Invoke(c)`
+- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),PileType.Hand,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),PileType.Hand,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `__result` = `Choose(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`
+- `__result` = `Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(player.PlayerCombatState!.Hand.Cards.Where(c=>filter?.Invoke(c)??true),PileType.Hand,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 <a id="symbol-d8e8571f3ace"></a>
 
 ## `NationalSpire.LeagueDuel.GridChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool GridChoice(IReadOnlyList<CardModel> cardsIn,Player player,CardSelectorPrefs prefs,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`](LeagueCardChoices.cs.md#symbol-a1487c99eed1)；[`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)
+**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；[`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`](LeagueCardChoices.cs.md#symbol-251ed5837391)；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；输入表达式：`Choose(cardsIn,prefs.MinSelect,prefs.MaxSelect)`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Choose(cardsIn,prefs.MinSelect,prefs.MaxSelect)`
-- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out _)`
+- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out var duel)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out var duel)`
+- `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`；输入表达式：`duel.SelectActual(cardsIn,PileType.None,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`；返回值紧邻使用处：`ArgumentSyntax: duel.SelectActual(cardsIn,PileType.None,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`
+- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(cardsIn,PileType.None,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(cardsIn,PileType.None,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `__result` = `Choose(cardsIn,prefs.MinSelect,prefs.MaxSelect)`
+- `__result` = `Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(cardsIn,PileType.None,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 <a id="symbol-8409991ce13b"></a>
 
 ## `NationalSpire.LeagueDuel.PileChoice(MegaCrit.Sts2.Core.Entities.Cards.CardPile, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool PileChoice(CardPile pile,Player player,CardSelectorPrefs prefs,Func<CardModel,bool>? filter,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 39 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`](LeagueCardChoices.cs.md#symbol-a1487c99eed1)；[`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）
+**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；[`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`](LeagueCardChoices.cs.md#symbol-251ed5837391)；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Func<T, TResult>.Invoke(T)`（委托实际目标见流程文档）；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.LeagueDuel.Choose(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, int, int)`；输入表达式：`Choose(pile.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Choose(pile.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`
-- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out _)`
+- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out var duel)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out var duel)`
+- `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`；输入表达式：`duel.SelectActual(pile.Cards.Where(c=>filter?.Invoke(c)??true),pile.Type,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`；返回值紧邻使用处：`ArgumentSyntax: duel.SelectActual(pile.Cards.Where(c=>filter?.Invoke(c)??true),pile.Type,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey)`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`pile.Cards.Where(c=>filter?.Invoke(c)??true)`；返回值紧邻使用处：`ArgumentSyntax: pile.Cards.Where(c=>filter?.Invoke(c)??true)`
 - `System.Func<T, TResult>.Invoke(T)`；输入表达式：`.Invoke(c)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: filter?.Invoke(c)`
+- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(pile.Cards.Where(c=>filter?.Invoke(c)??true),pile.Type,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(pile.Cards.Where(c=>filter?.Invoke(c)??true),pile.Type,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 **赋值（含属性/字段和局部值）：**
 
-- `__result` = `Choose(pile.Cards.Where(c=>filter?.Invoke(c)??true),prefs.MinSelect,prefs.MaxSelect)`
+- `__result` = `Task.FromResult<IEnumerable<CardModel>>(duel.SelectActual(pile.Cards.Where(c=>filter?.Invoke(c)??true),pile.Type,prefs.MinSelect,prefs.MaxSelect,prefs.Prompt.LocEntryKey))`
 
 <a id="symbol-e80c9634744d"></a>
 
 ## `NationalSpire.LeagueDuel.OneChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, bool, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>) — private static bool OneChoice(IReadOnlyList<CardModel> cards,Player player,bool canSkip,ref Task<CardModel?> __result)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
+**调用：** [`NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`](LeagueCardChoices.cs.md#symbol-3bed2d6b33ef)；[`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`](LeagueCardChoices.cs.md#symbol-251ed5837391)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Threading.Tasks.Task.FromResult<TResult>(TResult)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；`NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
-- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out _)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out _)`
-- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`cards.FirstOrDefault()`；返回值紧邻使用处：`ArgumentSyntax: cards.FirstOrDefault()`
-- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult(cards.FirstOrDefault())`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult(cards.FirstOrDefault())`
+- `NationalSpire.LeagueDuel.Find(MegaCrit.Sts2.Core.Entities.Players.Player, out NationalSpire.LeagueDuel)`；输入表达式：`Find(player,out var duel)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Find(player,out var duel)`
+- `NationalSpire.LeagueDuel.SelectActual(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, int, int, string)`；输入表达式：`duel.SelectActual(cards,PileType.None,canSkip?0:1,1)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；输入表达式：`duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault()`；返回值紧邻使用处：`ArgumentSyntax: duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault()`
+- `System.Threading.Tasks.Task.FromResult<TResult>(TResult)`；输入表达式：`Task.FromResult(duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault())`；返回值紧邻使用处：`AssignmentExpressionSyntax: __result=Task.FromResult(duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault())`
 
 **赋值（含属性/字段和局部值）：**
 
-- `__result` = `Task.FromResult(cards.FirstOrDefault())`
+- `__result` = `Task.FromResult(duel.SelectActual(cards,PileType.None,canSkip?0:1,1).FirstOrDefault())`

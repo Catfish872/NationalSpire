@@ -151,6 +151,18 @@ public static partial class LeagueNativeMatch {
         return (await sync.WaitForRemoteChoice(host,id)).AsIndexes();
     }
     private sealed class Adventure(RunState run){
+        internal bool? Outcome;
+        // 章节曲名不会随首领专属曲切换。这里保留建筑师房间实际播放的曲目，空串表示静音。
+        private static Node? MusicProxy=>MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController.Instance?.GetNodeOrNull<Node>("Proxy");
+        private static string? PlayingTrack(Node? proxy)=>proxy==null?null:
+            proxy.Get("_musicEv").AsGodotObject()==null?"":proxy.Get("_currentTrack").AsString();
+        private readonly string? entryTrack=PlayingTrack(MusicProxy);
+        internal void RestoreMusic(){
+            var proxy=MusicProxy;
+            if(proxy==null||entryTrack==null||PlayingTrack(proxy)==entryTrack)return;
+            if(entryTrack.Length==0)proxy.Call("stop_music");
+            else MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController.Instance!.PlayCustomMusic(entryTrack);
+        }
         readonly bool replay=RunManager.Instance.CombatReplayWriter.IsEnabled;
         readonly SerializablePlayer[] players=run.Players.Select(p=>p.ToSerializable()).ToArray();
         readonly SerializableRunRngSet rng=run.Rng.ToSerializable();
@@ -185,13 +197,14 @@ public static partial class LeagueNativeMatch {
                     var nodes=LiveMaps.Read(run,match,world!=null);
                     var route=RivalSimulation.Route(nodes,world==null?npc:CareerEngine.Person(data,ids[0])!,match.Seed);
                     live=RivalSimulation.Create(match,npc,route,GameCharacterNames.StartingHp(npc.Character));
-                }int tier=npc.MaxAscension>=10?3:npc.MaxAscension>=9?2:npc.MaxAscension>=6?1:0;
+                }int tier=npc.MaxAscension>=6?1:0;
                 var deck=LeagueLadder.BuildFor(role,rng,tier,npc.Style,true).ToArray();var plan=LeagueArchetypes.Resolve(role.Id.Entry,npc.Style);
                 ulong netId=ulong.MaxValue-(ulong)Team.Count;while(run.Players.Any(p=>p.NetId==netId)||Team.Any(f=>f.Rival.NetId==netId))netId--;
                 var bot=Player.CreateForNewRun(role,run.Players[0].UnlockState,netId);bot.RunState=run;bot.InitializeSeed(seed+":"+id);
                 Team.Add(new(bot,deck,rng.Next(),npc.PublicName,tier,LeagueLadder.Upgrades(deck,plan,tier,rng,true),pending){OpeningMax=live.MaxHp+100,OpeningHp=live.Steps[^1].HpAfter+100,SetupCards=plan.Anchors});
             }
             Current=Team[0];var time=MatchRules.Compare(new(true,0,ArchitectFinal.Arrival),new(match.OpponentWon,match.OpponentFloor,match.OpponentSeconds!.Value));_opener=time<0||time==0&&LeagueLadder.RivalOpens(seed);
+            var encounter=LeagueEncounter.ForFinal(run);
             _adventure=new(run);_adventure.Begin();
             if(NRun.Instance is {} scene)scene.TreeExiting+=OnAdventureExit;
             if(run.Players.Count>1){
@@ -201,12 +214,45 @@ public static partial class LeagueNativeMatch {
             }
             CombatManager.Instance.TurnStarted+=PlayerTurn;
             await MegaCrit.Sts2.Core.Assets.PreloadManager.LoadRunAssets(run.Players.Select(p=>p.Character).Concat(Team.Select(f=>f.Rival.Character)).Distinct().ToList());
-            await mgr.EnterRoom(new CombatRoom(ModelDb.Encounter<LeagueEncounter>().ToMutable(),run));
+            await mgr.EnterRoom(new CombatRoom(encounter,run));
         }catch(Exception e){Diagnostics.Error("league-match",e);await FinishFinal(null);}
     }
     private static void OnAdventureExit(){
         if(_adventure==null)return;
         _adventure.Restore();_adventure=null;Release();ArchitectFinal.Destination=null;ArchitectFinal.Returning=false;
+    }
+    internal static bool OwnsFinal(CombatState state)=>_adventure!=null&&ReferenceEquals(_room?.CombatState,state);
+    internal static void AwaitFinalProceed(bool won){
+        var adventure=_adventure!;
+        if(adventure.Outcome.HasValue)return;
+        adventure.Outcome=won;
+        Callable.From(()=>{
+            if(_adventure!=adventure||_returning)return;
+            var view=NCombatRoom.Instance!;
+            view.Ui.Deactivate();
+            var arrow=view.ProceedButton;
+            arrow.Released+=button=>{
+                if(!arrow.IsEnabled)return;
+                arrow.Disable();
+                _=MegaCrit.Sts2.Core.Helpers.TaskHelper.RunSafely(Proceed());
+            };
+            arrow.Show();arrow.Enable();
+        }).CallDeferred();
+        async Task Proceed(){
+            var run=_run!;
+            if(run.Players.Count>1){
+                var sync=RunManager.Instance.PlayerChoiceSynchronizer;
+                var ready=new List<Task>();
+                foreach(var player in run.Players){
+                    var id=sync.ReserveChoiceId(player);
+                    if(MegaCrit.Sts2.Core.Context.LocalContext.IsMe(player))
+                        sync.SyncLocalChoice(player,id,MegaCrit.Sts2.Core.GameActions.PlayerChoiceResult.FromIndexes([]));
+                    else ready.Add(sync.WaitForRemoteChoice(player,id));
+                }
+                await Task.WhenAll(ready);
+            }
+            if(_adventure==adventure)await FinishFinal(won);
+        }
     }
     internal static async Task FinishFinal(bool? won){
         if(_returning)return;_returning=true;var run=_run!;
@@ -217,8 +263,12 @@ public static partial class LeagueNativeMatch {
             await (Task)AccessTools.Method(typeof(RunManager),"ExitCurrentRoom").Invoke(RunManager.Instance,null)!;
         }
         if(NRun.Instance is {} scene)scene.TreeExiting-=OnAdventureExit;
-        _adventure?.Restore();_adventure=null;Release();
+        var adventure=_adventure;adventure?.Restore();_adventure=null;Release();
         if(won.HasValue)ArchitectFinal.Record(run,won.Value);
+        adventure?.RestoreMusic();
+        // 重新进入房间时游戏会自行选择音乐段落；原场景续接对话时才需要主动更新。
+        if(ArchitectFinal.Destination is {} destination&&ReferenceEquals(run.CurrentRoom,destination))
+            MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController.Instance?.UpdateTrack();
         await ArchitectFinal.Continue();
     }
 }
@@ -237,10 +287,10 @@ internal static class FinalEndHooks {
     }
     static bool KeepCheckpoint(ref Task __result){if(!LeagueNativeMatch.InFinal)return true;__result=Task.CompletedTask;return false;}
     static bool Check(CombatManager __instance,ref Task<bool> __result){
-        if(!(LeagueNativeMatch.InFinal||LeagueNativeMatch.IsTeamMatch)||!__instance.IsEnding)return true;
+        if(!LeagueNativeMatch.IsTeamMatch||!__instance.IsEnding)return true;
         bool won=RunManager.Instance.DebugOnlyGetState()!.Players.Any(p=>p.Creature.IsAlive);
         StopLoop(__instance);
-        Callable.From(()=>{_=MegaCrit.Sts2.Core.Helpers.TaskHelper.RunSafely(LeagueNativeMatch.IsTeamMatch?LeagueNativeMatch.EndTeam(won):LeagueNativeMatch.FinishFinal(won));}).CallDeferred();
+        Callable.From(()=>{_=MegaCrit.Sts2.Core.Helpers.TaskHelper.RunSafely(LeagueNativeMatch.EndTeam(won));}).CallDeferred();
         __result=Task.FromResult(true);return false;
     }
     static IEnumerable<CodeInstruction> KeepAdventure(IEnumerable<CodeInstruction> code){
@@ -254,4 +304,28 @@ internal static class FinalEndHooks {
         }
     }
     static bool EndAdventure(bool original)=>original&&!LeagueNativeMatch.InFinal&&!LeagueNativeMatch.IsTeamMatch;
+}
+
+// 在游戏已经决定胜负时接管正式对决。常驻入口按战斗实例识别房间，读档和前一场的回调互不干扰。
+[HarmonyPatch]
+internal static class ArchitectCombatOutcome {
+    static bool Prepare()=>LeagueSolverLink.Supported;
+    internal static readonly Type? Turn=typeof(CombatManager).Assembly.GetType("MegaCrit.Sts2.Core.Combat.CombatTurnState");
+    static MethodBase TargetMethod()=>AccessTools.DeclaredMethod(typeof(CombatManager),"EndCombatInternal",[Turn!]);
+    internal static bool Handle(object turn,bool won){
+        if(!LeagueNativeMatch.InFinal||!LeagueNativeMatch.OwnsFinal((CombatState)AccessTools.Property(Turn,"State").GetValue(turn)!))return true;
+        AccessTools.Property(Turn,"IsInProgress").SetValue(turn,false);
+        if(!won)AccessTools.Property(Turn,"PendingLoss").SetValue(turn,null);
+        LeagueNativeMatch.AwaitFinalProceed(won);return false;
+    }
+    static bool Prefix(object __0,ref Task __result){
+        if(Handle(__0,true))return true;
+        __result=Task.CompletedTask;return false;
+    }
+}
+[HarmonyPatch]
+internal static class ArchitectCombatLoss {
+    static bool Prepare()=>LeagueSolverLink.Supported;
+    static MethodBase TargetMethod()=>AccessTools.DeclaredMethod(typeof(CombatManager),"ProcessPendingLoss",[ArchitectCombatOutcome.Turn!]);
+    static bool Prefix(object __0)=>ArchitectCombatOutcome.Handle(__0,false);
 }

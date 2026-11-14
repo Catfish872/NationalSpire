@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`AA3F53BCB094E8B7EBBEC77B26B1F2CC1A9AB3659C256E8B82AB031E2B34D996`。来源：[源码](../../LeagueTeamMatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`41D3298775292E502B15C77217062B97A5131E67BAEC2ADD6B6897AE820F2DA3`。来源：[源码](../../LeagueTeamMatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -143,28 +143,27 @@ private string? _teamReceipt;
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
-**调用：** [`NationalSpire.CareerScreen.CloseCurrent()`](CareerSession.cs.md#symbol-5830f879d8f9)；[`NationalSpire.CareerScreen.UseOpening(string?)`](LeagueArenaScreen.cs.md#symbol-714fe2bbacbd)；[`NationalSpire.Coop.CoopScreen.CloseCurrent()`](Coop/CoopScreen.cs.md#symbol-3f7660e3fc51)；[`NationalSpire.LeagueNativeMatch.EnterMatchScene(MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Runs.RunState)`](LeagueNativeMatch.cs.md#symbol-4d22b3101f75)；[`NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun)`](LeagueNativeMatch.cs.md#symbol-c7bf6cbb732d)；[`NationalSpire.LeagueNativeMatch.Release()`](LeagueNativeMatch.cs.md#symbol-242512cbc319)；`MegaCrit.Sts2.Core.Assets.PreloadManager.LoadActAssets(MegaCrit.Sts2.Core.Models.ActModel)`；`MegaCrit.Sts2.Core.Assets.PreloadManager.LoadRunAssets(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>)`；`MegaCrit.Sts2.Core.Models.EncounterModel.ToMutable()`；`MegaCrit.Sts2.Core.Models.ModelDb.Encounter<T>()`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.CleanUp(bool, MegaCrit.Sts2.Core.Entities.Multiplayer.NetError)`；`MegaCrit.Sts2.Core.Nodes.Multiplayer.NRemoteMouseCursorContainer.Initialize(MegaCrit.Sts2.Core.Multiplayer.Game.PeerInput.PeerInputSynchronizer, System.Collections.Generic.IEnumerable<ulong>)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；`MegaCrit.Sts2.Core.Runs.RunManager.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType, MegaCrit.Sts2.Core.Map.MapPointType, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Runs.RunManager.Launch()`；`MegaCrit.Sts2.Core.Runs.RunManager.SetActInternal(int)`；`MegaCrit.Sts2.Core.Runs.RunManager.SetUpNewMultiplayer(MegaCrit.Sts2.Core.Runs.RunState, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, bool, System.DateTimeOffset?)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
+**调用：** [`NationalSpire.CareerScreen.CloseCurrent()`](CareerSession.cs.md#symbol-5830f879d8f9)；[`NationalSpire.CareerScreen.UseOpening(string?)`](LeagueArenaScreen.cs.md#symbol-714fe2bbacbd)；[`NationalSpire.Coop.CoopScreen.CloseCurrent()`](Coop/CoopScreen.cs.md#symbol-3f7660e3fc51)；[`NationalSpire.LeagueEncounter.ForMatch(MegaCrit.Sts2.Core.Runs.RunState, int)`](LeagueNativeMatch.cs.md#symbol-fa5ea0b30eea)；[`NationalSpire.LeagueNativeMatch.EnterMatchScene(MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Runs.RunState)`](LeagueNativeMatch.cs.md#symbol-4d22b3101f75)；[`NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun)`](LeagueNativeMatch.cs.md#symbol-c7bf6cbb732d)；[`NationalSpire.LeagueNativeMatch.Release()`](LeagueNativeMatch.cs.md#symbol-242512cbc319)；`MegaCrit.Sts2.Core.Assets.PreloadManager.LoadActAssets(MegaCrit.Sts2.Core.Models.ActModel)`；`MegaCrit.Sts2.Core.Assets.PreloadManager.LoadRunAssets(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>)`；`MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.CleanUp(bool, MegaCrit.Sts2.Core.Entities.Multiplayer.NetError)`；`MegaCrit.Sts2.Core.Nodes.Multiplayer.NRemoteMouseCursorContainer.Initialize(MegaCrit.Sts2.Core.Multiplayer.Game.PeerInput.PeerInputSynchronizer, System.Collections.Generic.IEnumerable<ulong>)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；`MegaCrit.Sts2.Core.Runs.RunManager.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType, MegaCrit.Sts2.Core.Map.MapPointType, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Runs.RunManager.Launch()`；`MegaCrit.Sts2.Core.Runs.RunManager.SetActInternal(int)`；`MegaCrit.Sts2.Core.Runs.RunManager.SetUpNewMultiplayer(MegaCrit.Sts2.Core.Runs.RunState, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, bool, System.DateTimeOffset?)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.CloseCurrent()`；`NationalSpire.CareerScreen.UseOpening(string?)`；`NationalSpire.Coop.CoopScreen.CloseCurrent()`；`NationalSpire.LeagueDuel.Rival`；`NationalSpire.LeagueNativeMatch._returning`；`NationalSpire.LeagueNativeMatch._room`；`NationalSpire.LeagueNativeMatch._run`；`NationalSpire.LeagueNativeMatch._teamAttempt`；`NationalSpire.LeagueNativeMatch.EnterMatchScene(MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Runs.RunState)`；`NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun)`；`NationalSpire.LeagueNativeMatch.PlayerTurn(MegaCrit.Sts2.Core.Combat.CombatState)`；`NationalSpire.LeagueNativeMatch.Release()`；`NationalSpire.LeagueNativeMatch.Team`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen.CloseCurrent()`；`NationalSpire.CareerScreen.UseOpening(string?)`；`NationalSpire.Coop.CoopScreen.CloseCurrent()`；`NationalSpire.LeagueDuel.Rival`；`NationalSpire.LeagueEncounter.ForMatch(MegaCrit.Sts2.Core.Runs.RunState, int)`；`NationalSpire.LeagueNativeMatch._matchVenue`；`NationalSpire.LeagueNativeMatch._returning`；`NationalSpire.LeagueNativeMatch._room`；`NationalSpire.LeagueNativeMatch._run`；`NationalSpire.LeagueNativeMatch._teamAttempt`；`NationalSpire.LeagueNativeMatch.EnterMatchScene(MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Runs.RunState)`；`NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun)`；`NationalSpire.LeagueNativeMatch.PlayerTurn(MegaCrit.Sts2.Core.Combat.CombatState)`；`NationalSpire.LeagueNativeMatch.Release()`；`NationalSpire.LeagueNativeMatch.Team`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Assets.PreloadManager.LoadActAssets(MegaCrit.Sts2.Core.Models.ActModel)`；输入表达式：`PreloadManager.LoadActAssets(run.Act)`；返回值紧邻使用处：`AwaitExpressionSyntax: await PreloadManager.LoadActAssets(run.Act)`
 - `MegaCrit.Sts2.Core.Assets.PreloadManager.LoadRunAssets(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CharacterModel>)`；输入表达式：`PreloadManager.LoadRunAssets(roster.Select(p=>p.Character).Concat(Team.Select(f=>f.Rival.Character)).Distinct().ToList())`；返回值紧邻使用处：`AwaitExpressionSyntax: await PreloadManager.LoadRunAssets(roster.Select(p=>p.Character).Concat(Team.Select(f=>f.Rival.Character)).Distinct().ToList())`
-- `MegaCrit.Sts2.Core.Models.EncounterModel.ToMutable()`；输入表达式：`ModelDb.Encounter<LeagueEncounter>().ToMutable()`；返回值紧邻使用处：`ArgumentSyntax: model:ModelDb.Encounter<LeagueEncounter>().ToMutable()`
-- `MegaCrit.Sts2.Core.Models.ModelDb.Encounter<T>()`；输入表达式：`ModelDb.Encounter<LeagueEncounter>()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ModelDb.Encounter<LeagueEncounter>().ToMutable`
 - `MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby.CleanUp(bool, MegaCrit.Sts2.Core.Entities.Multiplayer.NetError)`；输入表达式：`lobby.CleanUp(false)`；返回值紧邻使用处：`ExpressionStatementSyntax: lobby.CleanUp(false);`
 - `MegaCrit.Sts2.Core.Nodes.Multiplayer.NRemoteMouseCursorContainer.Initialize(MegaCrit.Sts2.Core.Multiplayer.Game.PeerInput.PeerInputSynchronizer, System.Collections.Generic.IEnumerable<ulong>)`；输入表达式：`game.RemoteCursorContainer.Initialize(lobby.InputSynchronizer,roster.Select(p=>p.NetId))`；返回值紧邻使用处：`ExpressionStatementSyntax: game.RemoteCursorContainer.Initialize(lobby.InputSynchronizer,roster.Select(p=>p.NetId));`
 - `MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；输入表达式：`game.Transition.FadeIn(.24f)`；返回值紧邻使用处：`AwaitExpressionSyntax: await game.Transition.FadeIn(.24f)`
 - `MegaCrit.Sts2.Core.Nodes.NTransition.FadeOut(float, string, System.Threading.CancellationToken?)`；输入表达式：`game.Transition.FadeOut(.24f)`；返回值紧邻使用处：`AwaitExpressionSyntax: await game.Transition.FadeOut(.24f)`
 - `MegaCrit.Sts2.Core.Nodes.Reaction.NReactionContainer.InitializeNetworking(MegaCrit.Sts2.Core.Multiplayer.Game.INetGameService)`；输入表达式：`game.ReactionContainer.InitializeNetworking(lobby.NetService)`；返回值紧邻使用处：`ExpressionStatementSyntax: game.ReactionContainer.InitializeNetworking(lobby.NetService);`
-- `MegaCrit.Sts2.Core.Runs.RunManager.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType, MegaCrit.Sts2.Core.Map.MapPointType, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；输入表达式：`mgr.EnterRoomDebug(RoomType.Monster,model:ModelDb.Encounter<LeagueEncounter>().ToMutable(),showTransition:false)`；返回值紧邻使用处：`AwaitExpressionSyntax: await mgr.EnterRoomDebug(RoomType.Monster,model:ModelDb.Encounter<LeagueEncounter>().ToMutable(),showTransition:false)`
+- `MegaCrit.Sts2.Core.Runs.RunManager.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType, MegaCrit.Sts2.Core.Map.MapPointType, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；输入表达式：`mgr.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false)`；返回值紧邻使用处：`AwaitExpressionSyntax: await mgr.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false)`
 - `MegaCrit.Sts2.Core.Runs.RunManager.Launch()`；输入表达式：`mgr.Launch()`；返回值紧邻使用处：`ExpressionStatementSyntax: mgr.Launch();`
-- `MegaCrit.Sts2.Core.Runs.RunManager.SetActInternal(int)`；输入表达式：`mgr.SetActInternal(0)`；返回值紧邻使用处：`AwaitExpressionSyntax: await mgr.SetActInternal(0)`
+- `MegaCrit.Sts2.Core.Runs.RunManager.SetActInternal(int)`；输入表达式：`mgr.SetActInternal(run.CurrentActIndex)`；返回值紧邻使用处：`AwaitExpressionSyntax: await mgr.SetActInternal(run.CurrentActIndex)`
 - `MegaCrit.Sts2.Core.Runs.RunManager.SetUpNewMultiplayer(MegaCrit.Sts2.Core.Runs.RunState, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, bool, System.DateTimeOffset?)`；输入表达式：`mgr.SetUpNewMultiplayer(run,lobby,false)`；返回值紧邻使用处：`ExpressionStatementSyntax: mgr.SetUpNewMultiplayer(run,lobby,false);`
 - `NationalSpire.CareerScreen.CloseCurrent()`；输入表达式：`CareerScreen.CloseCurrent()`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerScreen.CloseCurrent();`
 - `NationalSpire.CareerScreen.UseOpening(string?)`；输入表达式：`CareerScreen.UseOpening()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =CareerScreen.UseOpening()`
 - `NationalSpire.Coop.CoopScreen.CloseCurrent()`；输入表达式：`CoopScreen.CloseCurrent()`；返回值紧邻使用处：`ExpressionStatementSyntax: CoopScreen.CloseCurrent();`
+- `NationalSpire.LeagueEncounter.ForMatch(MegaCrit.Sts2.Core.Runs.RunState, int)`；输入表达式：`LeagueEncounter.ForMatch(run,seed)`；返回值紧邻使用处：`AssignmentExpressionSyntax: _matchVenue=LeagueEncounter.ForMatch(run,seed)`
 - `NationalSpire.LeagueNativeMatch.EnterMatchScene(MegaCrit.Sts2.Core.Nodes.NGame, MegaCrit.Sts2.Core.Runs.RunState)`；输入表达式：`EnterMatchScene(game,run)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =EnterMatchScene(game,run)`
 - `NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun)`；输入表达式：`InstallExit(scene)`；返回值紧邻使用处：`ExpressionStatementSyntax: InstallExit(scene);`
 - `NationalSpire.LeagueNativeMatch.Release()`；输入表达式：`Release()`；返回值紧邻使用处：`ExpressionStatementSyntax: Release();`
@@ -177,7 +176,8 @@ private string? _teamReceipt;
 
 **赋值（含属性/字段和局部值）：**
 
-- `_room` = `(CombatRoom)await mgr.EnterRoomDebug(RoomType.Monster,model:ModelDb.Encounter<LeagueEncounter>().ToMutable(),showTransition:false)`
+- `_matchVenue` = `LeagueEncounter.ForMatch(run,seed)`
+- `_room` = `(CombatRoom)await mgr.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false)`
 - `_teamAttempt` = `null`
 - `CombatManager.Instance.TurnStarted` += `PlayerTurn`
 - `scene.TreeExiting` += `()=>{if(_run==run&&!_returning){_teamAttempt=null;Release();}}`
@@ -186,7 +186,7 @@ private string? _teamReceipt;
 
 ## `NationalSpire.LeagueNativeMatch.EndTeam(bool) — internal static async Task EndTeam(bool won)`
 
-来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.FinalEndHooks.Check(MegaCrit.Sts2.Core.Combat.CombatManager, ref System.Threading.Tasks.Task<bool>)`](ArchitectFinal.cs.md#symbol-45c020867c72)
 
@@ -211,7 +211,7 @@ private string? _teamReceipt;
 
 ## `NationalSpire.CareerScreen.OpenTeamReceipt(Godot.Control, NationalSpire.ICareerSession, string) — internal static void OpenTeamReceipt(Control menu,ICareerSession view,string id)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.EndTeam(bool)`](LeagueTeamMatch.cs.md#symbol-20c50965f995)
 
@@ -233,7 +233,7 @@ private string? _teamReceipt;
 
 ## `NationalSpire.CareerScreen.PresentTeamReceipt() — private void PresentTeamReceipt()`
 
-来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 73 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.OpenTeamReceipt(Godot.Control, NationalSpire.ICareerSession, string)`](LeagueTeamMatch.cs.md#symbol-36421958cb8a)
 

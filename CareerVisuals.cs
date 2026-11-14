@@ -100,6 +100,7 @@ public static class CareerVisuals
     {
         if (_theme != null && GodotObject.IsInstanceValid(_theme)) return _theme;
         var theme = new Theme { DefaultFontSize = 19 };
+        theme.SetConstant(CareerFocusOutline.ThemeMarker, "Control", 1);
         theme.DefaultFont = InterfaceText(tracking: 0);
         foreach (string type in new[] { "Button", "OptionButton", "MenuButton", "CheckBox" })
         {

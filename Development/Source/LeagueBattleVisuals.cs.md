@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`BF4F556FB9CDF9978C4CB95E8B96817379458A6594F47AA22E0252C2F46CACBF`。来源：[源码](../../LeagueBattleVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`5DECA53295B131F4207794EAA7AA0A8DE2EE9D60FF554EE97F284CF74BF144F9`。来源：[源码](../../LeagueBattleVisuals.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,22 +22,24 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony) — private static void InstallVisuals(Harmony h)`
 
-来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
 
-**调用：** [`Owner(System.Type, string)`](LeagueBattleVisuals.cs.md#symbol-ae3310a3b9fe)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.MethodInfo.CreateDelegate<T>()`
+**调用：** [`Owner(System.Type, string)`](LeagueBattleVisuals.cs.md#symbol-3295b7aebcbe)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.MethodInfo.CreateDelegate<T>()`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.LeagueNativeMatch._sizePet`；`Owner(System.Type, string)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(CardPileCmd),nameof(CardPileCmd.Add),[typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)])`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(CardPileCmd),nameof(CardPileCmd.Add),[typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)])`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"BeforeCardPlayed")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"BeforeCardPlayed")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(NCombatRoom),"AddCreature")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(NCombatRoom),"AddCreature")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(NCreature),"_Ready")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(NCreature),"_Ready")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(NCreature),"OstyScaleToSize")`；返回值紧邻使用处：`BinaryExpressionSyntax: AccessTools.DeclaredMethod(typeof(NCreature),"ScaleAndPositionOsty")??AccessTools.DeclaredMethod(typeof(NCreature),"OstyScaleToSize")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(NCreature),"ScaleAndPositionOsty")`；返回值紧邻使用处：`BinaryExpressionSyntax: AccessTools.DeclaredMethod(typeof(NCreature),"ScaleAndPositionOsty")??AccessTools.DeclaredMethod(typeof(NCreature),"OstyScaleToSize")`
 - `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(NOrbManager),"OnCombatSetup")`；返回值紧邻使用处：`ArgumentSyntax: AccessTools.DeclaredMethod(typeof(NOrbManager),"OnCombatSetup")`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(CardPileCmd),nameof(CardPileCmd.Add),[typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)]),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(RivalPlayPileVisuals)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(CardPileCmd),nameof(CardPileCmd.Add),[typeof(IEnumerable<CardModel>),typeof(CardPile),typeof(CardPilePosition),typeof(AbstractModel),typeof(bool),typeof(bool)]),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(RivalPlayPileVisuals)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"BeforeCardPlayed"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ShowPlayedCard)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"BeforeCardPlayed"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ShowPlayedCard)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(NCombatRoom),"AddCreature"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetAdded)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(NCombatRoom),"AddCreature"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetAdded)));`
 - `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`h.Patch(AccessTools.DeclaredMethod(typeof(NCreature),"_Ready"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(OrbDisplay)))`；返回值紧邻使用处：`ExpressionStatementSyntax: h.Patch(AccessTools.DeclaredMethod(typeof(NCreature),"_Ready"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(OrbDisplay)));`
@@ -46,6 +48,7 @@ private Tween? _motion,_captionMotion;
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(OrbDisplay))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(OrbDisplay))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetAdded))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetAdded))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetGrew))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PetGrew))`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(RivalPlayPileVisuals))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(RivalPlayPileVisuals))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(SetUpOrbSlots))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(SetUpOrbSlots))`
 - `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ShowPlayedCard))`；返回值紧邻使用处：`ArgumentSyntax: postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ShowPlayedCard))`
 - `Owner(System.Type, string)`；输入表达式：`Owner(typeof(NCombatRoom),"AddCreature")`；返回值紧邻使用处：`ExpressionStatementSyntax: Owner(typeof(NCombatRoom),"AddCreature");`
@@ -57,11 +60,11 @@ private Tween? _motion,_captionMotion;
 
 - `_sizePet` = `size.CreateDelegate<Action<NCreature,float,double>>()`
 
-<a id="symbol-ae3310a3b9fe"></a>
+<a id="symbol-3295b7aebcbe"></a>
 
 ## `Owner(System.Type, string) — void Owner(Type t,string m)`
 
-来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 21 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`](LeagueBattleVisuals.cs.md#symbol-12673676d8ef)
 
@@ -78,11 +81,31 @@ private Tween? _motion,_captionMotion;
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-7c6836b59d74"></a>
+
+## `NationalSpire.LeagueNativeMatch.RivalPlayPileVisuals(MegaCrit.Sts2.Core.Entities.Cards.CardPile, ref bool) — private static void RivalPlayPileVisuals(CardPile newPile,ref bool skipVisuals)`
+
+来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel.Rival`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.Fighters`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；输入表达式：`Fighters.Any(f=>f.Rival.PlayerCombatState?.PlayPile==newPile)`；返回值紧邻使用处：`AssignmentExpressionSyntax: skipVisuals=Fighters.Any(f=>f.Rival.PlayerCombatState?.PlayPile==newPile)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `skipVisuals` = `Fighters.Any(f=>f.Rival.PlayerCombatState?.PlayPile==newPile)`
+
 <a id="symbol-088a8c52e9b8"></a>
 
 ## `NationalSpire.LeagueNativeMatch.OrbDisplay(MegaCrit.Sts2.Core.Nodes.Combat.NCreature) — private static void OrbDisplay(NCreature __instance)`
 
-来源：源码第 28 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Bind(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-f78a44bdbc8e)；[`NationalSpire.LeagueNativeMatch.First(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-2e5d42d12c6a)
 
@@ -110,7 +133,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.SetUpOrbSlots(MegaCrit.Sts2.Core.Nodes.Orbs.NOrbManager) — private static bool SetUpOrbSlots(NOrbManager __instance)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 44 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -130,7 +153,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.PetAdded(MegaCrit.Sts2.Core.Nodes.Rooms.NCombatRoom, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static void PetAdded(NCombatRoom __instance,Creature creature)`
 
-来源：源码第 38 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -159,7 +182,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.PetGrew(MegaCrit.Sts2.Core.Nodes.Combat.NCreature) — private static void PetGrew(NCreature __instance)`
 
-来源：源码第 43 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -182,7 +205,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.ShowPlayedCard(MegaCrit.Sts2.Core.Entities.Cards.CardPlay, ref System.Threading.Tasks.Task) — private static void ShowPlayedCard(CardPlay cardPlay,ref Task __result)`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -203,7 +226,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueNativeMatch.RevealBeforePlay(System.Threading.Tasks.Task, MegaCrit.Sts2.Core.Models.CardModel, NationalSpire.LeagueDuel) — private static async Task RevealBeforePlay(Task before,CardModel card,LeagueDuel duel)`
 
-来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.ShowPlayedCard(MegaCrit.Sts2.Core.Entities.Cards.CardPlay, ref System.Threading.Tasks.Task)`](LeagueBattleVisuals.cs.md#symbol-21d742c9c5dc)
 
@@ -239,7 +262,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueRivalPlays._Ready() — public override void _Ready()`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -271,7 +294,7 @@ private Tween? _motion,_captionMotion;
 
 ## `NationalSpire.LeagueRivalPlays.Reveal(MegaCrit.Sts2.Core.Models.CardModel, Godot.Vector2) — internal void Reveal(CardModel model,Vector2 start)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.RevealBeforePlay(System.Threading.Tasks.Task, MegaCrit.Sts2.Core.Models.CardModel, NationalSpire.LeagueDuel)`](LeagueBattleVisuals.cs.md#symbol-f62bddf48704)
 

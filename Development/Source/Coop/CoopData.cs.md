@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`624729E7B62B908A4AE9BC1C566C0FAD5D67CB3A977B594053336BD318D6BDC7`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`4EF982FDB88FBBF25F4443AE0D3F7E1FFCC95C992C698CF27053B1C07713C1D4`。来源：[源码](../../../Coop/CoopData.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -13,7 +13,7 @@
 ```csharp
 public static readonly JsonSerializerOptions Options = new() { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 private static readonly JsonSerializerOptions PublicOptions = PublicSettings();
-public const int Protocol = 1;
+public const int Protocol = 2;
 ```
 
 <a id="symbol-2877259dff91"></a>

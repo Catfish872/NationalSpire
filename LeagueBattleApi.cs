@@ -26,7 +26,15 @@ internal static class LeagueBattleApi
     private static Func<LeagueDuel.Hit,Task>? _deliverWithEffects;
     [ThreadStatic] private static bool _delivery;
     private static bool Delivering(){var value=_delivery;_delivery=false;return value;}
-    private static Creature? _settling;
+    private static LeagueDuel.Hit? _settling;
+    private sealed class IncomingIntent(LeagueDuel.Hit hit) : BlockingPlayerChoiceContext
+    {
+        internal bool Matches(Creature target,Creature? dealer) => target==hit.Target && dealer==hit.Dealer;
+    }
+    private static bool OwnTurnLoss(PlayerChoiceContext choiceContext,Creature target,Creature? dealer,CardModel? cardSource,ref Task __result){
+        if(choiceContext is not IncomingIntent hit||cardSource!=null||!hit.Matches(target,dealer))return true;
+        __result=Task.CompletedTask;return false;
+    }
     private static readonly MethodInfo LoseBlockCommand=typeof(CreatureCmd).GetMethods().Single(m=>m.Name=="LoseBlock");
     internal static Task SpendGuard(PlayerChoiceContext context,Creature target,int amount,Creature source)=>
         (Task)RuntimeApi.Invoke(LoseBlockCommand,null,LoseBlockCommand.GetParameters().Length==2?[target,(decimal)amount]:[context,target,(decimal)amount,source])!;
@@ -44,20 +52,22 @@ internal static class LeagueBattleApi
         var type=_detailed?typeof(Detailed<>).MakeGenericType(_damage.GetParameters()[1].ParameterType.GenericTypeArguments[0]):typeof(LeagueBattleApi);
         if(_detailed)_deliverWithEffects=AccessTools.DeclaredMethod(type,"Deliver").CreateDelegate<Func<LeagueDuel.Hit,Task>>();
         h.Patch(_damage,prefix:new HarmonyMethod(type,"Record"));
+        foreach(var effect in LeagueOwnTurnLoss.Effects)
+            h.Patch(AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss)));
         if(!_detailed)h.Patch(AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount)));
     }
     private static bool Record(IEnumerable<Creature>? targets,decimal amount,ValueProp props,Creature? dealer,CardModel? cardSource,CardPlay? cardPlay,ref Task<IEnumerable<DamageResult>> __result)
         =>LeagueNativeMatch.Current==null||Delivering()||targets==null||LeagueNativeMatch.QueueHits(targets.Select(c=>(c,(string?)null,false)),amount,props,dealer,cardSource,cardPlay,ModifyDamageHookType.All,ref __result);
     private static bool FixedAmount(Creature? dealer,CardPlay? cardPlay,CardModel? cardSource,ref ModifyDamageHookType modifyDamageHookType){
-        if(_settling!=null&&dealer==_settling&&cardPlay==null&&cardSource==null){modifyDamageHookType=ModifyDamageHookType.None;_settling=null;}
+        if(_settling is {} hit&&dealer==hit.Dealer&&cardPlay==null&&cardSource==null){modifyDamageHookType=hit.Cap;_settling=null;}
         return true;
     }
     public static async Task Deliver(LeagueDuel.Hit hit){
         // 前缀在原生异步方法返回任务之前消耗标记。结算引发的反伤仍是独立的一击。
         _delivery=true;
         if(_detailed){Task work;try{work=_deliverWithEffects!(hit);}finally{_delivery=false;}await work;return;}
-        _settling=hit.Dealer;
-        try{await (Task)RuntimeApi.Invoke(_damage!,null,new BlockingPlayerChoiceContext(),new[]{hit.Target},hit.Amount,hit.Props,hit.Dealer,null,null)!;}
+        _settling=hit;
+        try{await (Task)RuntimeApi.Invoke(_damage!,null,new IncomingIntent(hit),new[]{hit.Target},hit.BeforeCap,hit.Props,hit.Dealer,null,null)!;}
         finally{_settling=null;_delivery=false;}
     }
     private static class Detailed<T> where T:struct{
@@ -74,6 +84,6 @@ internal static class LeagueBattleApi
         }
         private static bool Record(IEnumerable<T>? targetData,decimal amount,ValueProp props,Creature? dealer,CardModel? cardSource,CardPlay? cardPlay,ModifyDamageHookType modifyDamageHookType,ref Task<IEnumerable<DamageResult>> __result)
             =>LeagueNativeMatch.Current==null||Delivering()||targetData==null||LeagueNativeMatch.QueueHits(targetData.Select(Unpack),amount,props,dealer,cardSource,cardPlay,modifyDamageHookType,ref __result);
-        internal static Task Deliver(LeagueDuel.Hit hit)=>Damage(new BlockingPlayerChoiceContext(),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.Amount,hit.Props,hit.Dealer,null,null,ModifyDamageHookType.None);
+        internal static Task Deliver(LeagueDuel.Hit hit)=>Damage(new IncomingIntent(hit),[Pack(hit.Target,hit.Vfx,hit.Center)],hit.BeforeCap,hit.Props,hit.Dealer,null,null,hit.Cap);
     }
 }

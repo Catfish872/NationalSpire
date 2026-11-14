@@ -11,6 +11,7 @@
     <Sts2DataDir>$(Sts2Dir)/data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../LeagueOwnTurnLoss.cs" Link="LeagueOwnTurnLoss.cs" />
     <Reference Include="CombatSolver" HintPath="$(MSBuildProjectDirectory)/obj/packages/solver/CombatSolver.dll" Private="false" />
     <Reference Include="0Harmony" HintPath="$(Sts2DataDir)/0Harmony.dll" Private="false" />
     <Reference Include="sts2" HintPath="$(Sts2DataDir)/sts2.dll" Private="false" />

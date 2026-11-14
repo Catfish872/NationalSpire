@@ -37,7 +37,7 @@ public static class LeagueCards
     public const int PackCost=5000;
     public static readonly string[] Grades=["白卡","蓝卡","金卡","先古"];
     public static readonly int[] Bids=[60,700,8000,40000];
-    // 白卡按一个卡位，蓝、金按保底包数；先古按每五张金卡附送一张折算。
+    // 白卡按一个卡位，蓝、金按保底包数；先古挂牌基准沿用金卡的五倍。
     public static int Ask(CareerData d, Entry card){
         int basis=card.Tier switch{0=>PackCost,1=>PackCost*10*5,2=>PackCost*80*5,_=>PackCost*80*25};
         uint hash=(uint)CareerEngine.StableHash($"{(d.AvatarWorldId.Length>0?d.AvatarWorldId:d.WorldId)}:卡价:{d.Day}:{card.Id}");
@@ -180,7 +180,7 @@ public static class LeagueCards
                     void Ensure(int tier, int threshold,int wait){if(wait+1>=threshold&&!tiers.Contains(tier)){int i=Array.IndexOf(tiers,0); if(i<0)i=Array.FindIndex(tiers,t=>tiers.Count(v=>v==t)>1);tiers[i]=tier;}}
                     Ensure(1,10,a.BlueWait);Ensure(2,80,a.GoldWait);
                     a.BlueWait=tiers.Contains(1)?0:a.BlueWait+1;a.GoldWait=tiers.Contains(2)?0:a.GoldWait+1;
-                    foreach(int t in tiers) if(t==2 && rng.Next(5)==0) a.AncientPending++;
+                    foreach(int t in tiers) if(t==2 && rng.Next(10)==0) a.AncientPending++;
                     for(int i=0;i<5;i++)
                     {
                         int tier=tiers[i];if((tier==0||tier==1&&tiers.Count(x=>x==1)>1)&&a.AncientPending>0){tiers[i]=tier=3;a.AncientPending--;}
