@@ -54,12 +54,12 @@ internal sealed class LeagueSolverLink : IDisposable
     internal static Task PrepareChoices()=>Ready.Value;
     public static async Task<LeagueSolverLink> Open(Player rival,int tier,string[] setup,int preference){
         try{var adapter=await Ready.Value;if(adapter==null)return new();
-            return new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)!);
+            return new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference,LeagueNativeMatch.For(rival)?.Exit??default(CancellationToken))!);
         }catch(Exception e){Diagnostics.Error("league-solver",e.GetBaseException());return new();}
     }
     public async Task<CardModel?> Choose(decimal[] amounts,int[] properties,bool[] capped,int[] dealers){
         if(_failed||_choose==null)return null;
-        try{return await _choose(amounts,properties,capped,dealers);}catch(Exception e){_failed=true;Diagnostics.Error("league-solver",e.GetBaseException());return null;}
+        try{return await _choose(amounts,properties,capped,dealers);}catch(OperationCanceledException e) when(e.CancellationToken.IsCancellationRequested){throw;}catch(Exception e){_failed=true;Diagnostics.Error("league-solver",e.GetBaseException());return null;}
     }
     public void Dispose()=>_session?.Dispose();
 }

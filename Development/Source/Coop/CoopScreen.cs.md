@@ -184,7 +184,7 @@ private CoopCoordinator? _replySession;
 
 来源：源码第 50 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](../LeagueTeamMatch.cs.md#symbol-7113ab57a2bd)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-b889ef6fb033)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginSaved(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-dc951f669f46)
+**调用者：** [`Begin()`](../LeagueTeamMatch.cs.md#symbol-bf95642189e1)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-b889ef6fb033)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginSaved(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby, System.Threading.CancellationToken)`](CoopNativeRun.cs.md#symbol-dc951f669f46)
 
 **调用：** [`NationalSpire.Coop.CoopScreen.Close()`](CoopScreen.cs.md#symbol-96fa80fbf85e)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 

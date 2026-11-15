@@ -366,6 +366,7 @@ public partial class CareerScreen : Control, IScreenContext
         EventCards(data,eventColumn,data.Day);
         if(eventColumn.GetChildCount()>0) due.AddChild(eventColumn); else eventColumn.Free();
         if(SeasonCeremony.ShowInvitation(data)) CeremonyInvitation(data,due);
+        bool hasClubInvitation=HomeClubInvitation(data,due);
         if(due.GetChildCount()>0) _content.AddChild(due); else due.Free();
         string person=string.IsNullOrEmpty(next?.Person) ? "player" : next.Person;
         int day=next?.Day??data.Day;
@@ -384,7 +385,7 @@ public partial class CareerScreen : Control, IScreenContext
         var focus = new HBoxContainer(); focus.AddThemeConstantOverride("separation",12); hero.AddChild(focus);
         var words=new VBoxContainer {SizeFlagsHorizontal=SizeFlags.ExpandFill,Alignment=BoxContainer.AlignmentMode.Center}; words.AddThemeConstantOverride("separation",15); focus.AddChild(words);
         words.AddChild(DashboardLabel("下一项安排"+(next==null?"":" · "+(day==data.Day?"今天":GameCalendar.Date(data,day).ToString("M/d"))),15,CareerVisuals.Teal));
-        var headline=DashboardLabel(next?.Match is {Event.Length:>0} scheduled ? scheduled.Event : next?.Title??"暂无待处理的安排",38,_ink,true);
+        var headline=DashboardLabel(next?.Match is {Event.Length:>0} scheduled ? scheduled.Event : next?.Title??(hasClubInvitation?"暂无已安排的比赛或约会":"暂无待处理的安排"),38,_ink,true);
         headline.Name="NextTitle"; headline.AddThemeFontOverride("font",CareerVisuals.InterfaceText(tracking:2)); words.AddChild(headline);
         if(next!=null)
         {

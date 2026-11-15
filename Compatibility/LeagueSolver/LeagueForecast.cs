@@ -1,7 +1,9 @@
 using CombatSolver;
 using CombatSolver.Engine.Common;
+using CombatSolver.Engine.InCombat.Mirrors.Orbs;
 using CombatSolver.Engine.InCombat.Mirrors;
 using CombatSolver.Engine.InCombat.Mirrors.Hooks.Damage;
+using CombatSolver.Engine.InCombat.Mirrors.Hooks.Card;
 using CombatSolver.Engine.InCombat.Simulation;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -35,7 +37,7 @@ public sealed partial class LeagueForecast : IDisposable
     public (CardModel,int,int[])[] Continuation(){var result=_route.TakeWhile(x=>x.Live!=null).Select(x=>(x.Live!,x.Aim,x.Choices)).ToArray();_route.Clear();return result;}
     public int LastAim {get;private set;}=-1;
     public bool EndTurn {get;private set;}
-    private sealed record Branch(CombatPredictionSimulator Sim,List<Play> Route,decimal Score,decimal Setup=0);
+    private sealed record Branch(CombatPredictionSimulator Sim,List<Play> Route,decimal Score);
     private readonly Queue<Play> _route=[];
     private readonly Dictionary<CardModel,CardModel> _originals=new(ReferenceEqualityComparer.Instance);
     private Player? _actor;
@@ -43,7 +45,9 @@ public sealed partial class LeagueForecast : IDisposable
     private readonly HashSet<string> _setup;
     private static Func<int,int> _addedDoom=null!;
     private readonly int _preferredTarget;
-    public LeagueForecast(Player rival,int tier,string[] setup,Func<int,int> addedDoom,int preference){
+    private readonly CancellationToken _exit;
+    public LeagueForecast(Player rival,int tier,string[] setup,Func<int,int> addedDoom,int preference,CancellationToken exit=default){
+        _exit=exit;
         _preferredTarget=preference;
         _addedDoom=addedDoom;
         _setup=new(setup);
@@ -61,6 +65,8 @@ public sealed partial class LeagueForecast : IDisposable
         CombatSolver.Engine.InCombat.Mirrors.Cards.OnPlay.CardOnPlayMirrors.AllowInference=true;
         var method=AccessTools.Method(typeof(CombatPredictionSimulator),"Damage",[typeof(IReadOnlyList<Creature>),typeof(decimal),typeof(ValueProp),typeof(Creature),typeof(PredictedCard),typeof(CardPlay),typeof(ModifyDamageHookType)]);
         harmony.Patch(method,prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(Intent)));
+        harmony.Patch(AccessTools.DeclaredMethod(typeof(AfterCardPlayedMirrors),"HandleStranglePower"),transpiler:new HarmonyMethod(typeof(LeagueForecast),nameof(StrangleSource)));
+        harmony.Patch(AccessTools.DeclaredMethod(typeof(PowerLifecycleSupport),"ResolvePowerAmountChanges"),transpiler:new HarmonyMethod(typeof(LeagueForecast),nameof(FleshSource)));
         foreach(var effect in LeagueOwnTurnLoss.Effects)
             harmony.Patch(AccessTools.DeclaredMethod(typeof(AfterDamageReceivedMirrors),"Handle"+effect.Name),prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(OwnTurnLoss)));
         harmony.Patch(AccessTools.Method(typeof(SimulatedCombatState),"ModifyPowerAmountForRelics"),postfix:new HarmonyMethod(typeof(LeagueForecast),nameof(SimDoom)));
@@ -87,15 +93,44 @@ public sealed partial class LeagueForecast : IDisposable
         if(patch.owner!="nationalspire.league.native"||patch.PatchMethod.DeclaringType?.FullName!="NationalSpire.LeagueNativeMatch")return true;
         if(patch.PatchMethod.Name=="IntentReader")return target.DeclaringType?.DeclaringType!=typeof(MegaCrit.Sts2.Core.Models.Cards.GoForTheEyes);
         // 推演里的 AI 本来就在玩家一侧，原有敌方名单正是联赛持有者的对面。
+        if(target.DeclaringType==typeof(StranglePower)||target.DeclaringType==typeof(OblivionPower)||target.DeclaringType?.DeclaringType==typeof(StranglePower))
+            if(patch.PatchMethod.Name is "LeagueOwner" or "EndCardMark" or "StrangleDamage")return false;
+        if(patch.PatchMethod.Name=="FleshOpponent"&&target.DeclaringType?.DeclaringType==typeof(SleightOfFleshPower))return false;
         return patch.PatchMethod.Name!="ResolveEffectSides";
     }
+    // 上游仍负责逐张配对与叠层；只有紧勒原本匿名的失血交给联赛的意图记录。
+    private static IEnumerable<CodeInstruction> StrangleSource(IEnumerable<CodeInstruction> code){
+        foreach(var i in code){
+            if(i.operand is System.Reflection.MethodInfo m&&m.DeclaringType==typeof(CombatPredictionSimulator)&&m.Name=="Damage"&&m.GetParameters() is [var first,_,_,_]&&first.ParameterType==typeof(Creature)){
+                yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Ldarg_0).MoveLabelsFrom(i).MoveBlocksFrom(i);
+                yield return new CodeInstruction(System.Reflection.Emit.OpCodes.Call,AccessTools.Method(typeof(LeagueForecast),nameof(StrangleIntent)));
+            }else yield return i;
+        }
+    }
+    private static IReadOnlyList<DamageResult> StrangleIntent(CombatPredictionSimulator sim,Creature target,decimal amount,ValueProp props,Creature? dealer,StranglePower power)=>
+        PowerIntent(sim,target,amount,props&~ValueProp.Unblockable,power.Applier??dealer);
+    private static IEnumerable<CodeInstruction> FleshSource(IEnumerable<CodeInstruction> code){
+        bool flesh=false;
+        foreach(var i in code){
+            if(i.opcode==System.Reflection.Emit.OpCodes.Ldstr&&Equals(i.operand,nameof(SleightOfFleshPower)))flesh=true;
+            if(flesh&&i.operand is System.Reflection.MethodInfo m&&m.DeclaringType==typeof(CombatPredictionSimulator)&&m.Name=="Damage"&&m.GetParameters() is [var t,_,_,_]&&t.ParameterType==typeof(Creature)){
+                i.opcode=System.Reflection.Emit.OpCodes.Call;i.operand=AccessTools.Method(typeof(LeagueForecast),nameof(PowerIntent));flesh=false;
+            }
+            yield return i;
+        }
+    }
+    private static IReadOnlyList<DamageResult> PowerIntent(CombatPredictionSimulator sim,Creature target,decimal amount,ValueProp props,Creature? dealer)=>
+        sim.Damage([target],amount,props,dealer,null,null);
     private static bool Intent(CombatPredictionSimulator __instance,IReadOnlyList<Creature> targets,decimal amount,ValueProp props,Creature? dealer,
         PredictedCard? cardSource,CardPlay? cardPlay,ModifyDamageHookType modifyDamageHookType,ref IReadOnlyList<DamageResult> __result){
         if(!Damage.TryGetValue(__instance,out var log)||modifyDamageHookType==ModifyDamageHookType.None)return true;
         var kind=__instance.ResolveDamageSource(cardSource).Kind;
         if(kind==CombatDamageSourceKind.Poison&&targets.Count>0){props&=~ValueProp.Unblockable;dealer=__instance.State.CombatState.GetOpponentsOf(targets[0]).FirstOrDefault(c=>c.IsAlive);}
         if(dealer==null||targets.Any(t=>t.Side==dealer.Side))return true;
-        foreach(var t in targets)log.Hits[t]=log.Hits.GetValueOrDefault(t)+Math.Max(0,HookMirrors.ModifyDamage(__instance,t,dealer,amount,props,cardSource,cardPlay,modifyDamageHookType&~ModifyDamageHookType.Cap));
+        foreach(var t in targets){
+            var value=Math.Max(0,HookMirrors.ModifyDamage(__instance,t,dealer,amount,props,cardSource,cardPlay,modifyDamageHookType&~ModifyDamageHookType.Cap));
+            log.Hits[t]=log.Hits.GetValueOrDefault(t)+value;
+        }
         __result=targets.Select(t=>new DamageResult(t,props)).ToArray();return false;
     }
     public async Task<CardModel?> Choose(decimal[] amounts,int[] properties,bool[] capped,int[] dealers){
@@ -115,9 +150,20 @@ public sealed partial class LeagueForecast : IDisposable
             long allocated=report==null?0:GC.GetAllocatedBytesForCurrentThread();long started=Stopwatch.GetTimestamp();
             try{
             var clock=Stopwatch.StartNew();var me=root.State.GetCreature(actor.Creature);
-            decimal EndHealth(CombatPredictionSimulator sim){
-                if(amounts.Length==0){var hp=sim.State.GetCreature(actor.Creature).CurrentHp;return ((SimulatedCombatState)sim.State.CombatState).GetAmount<DoomPower>(actor.Creature)>=hp?0:hp;}
-                var end=sim.Fork();var defending=end.State.GetCreature(actor.Creature);int added=0;
+            bool OutOfTime(){_exit.ThrowIfCancellationRequested();return clock.Elapsed.TotalMilliseconds>=18+6*_tier;}
+            decimal EndHealth(CombatPredictionSimulator sim,out Ledger mark){
+                mark=Damage.GetOrCreateValue(sim);
+                bool orbs=sim.State.GetPlayerCombatState(actor).OrbQueue.Orbs.Count!=0;
+                var end=orbs||amounts.Length!=0?sim.Fork():sim;
+                if(orbs){
+                    var projected=Damage.GetOrCreateValue(end);projected.Copy(mark);
+                    if(OrbLifecycleSupport.TriggerBeforeTurnEnd(end,(SimulatedCombatState)end.State.CombatState,actor))mark=projected;
+                    else end=sim.Fork();
+                    // 来袭意图在这个副本上真实扣血，不能再次记为下一轮的攻击。
+                    Damage.Remove(end);
+                }
+                if(amounts.Length==0){var hp=end.State.GetCreature(actor.Creature).CurrentHp;return ((SimulatedCombatState)end.State.CombatState).GetAmount<DoomPower>(actor.Creature)>=hp?0:hp;}
+                var defending=end.State.GetCreature(actor.Creature);int added=0;
                 for(int k=0;k<amounts.Length&&end.State.GetCreature(actor.Creature).IsAlive;k++)
                     if(properties[k]==-1){added+=(int)(amounts[k]-defending.DamageBlock(amounts[k],ValueProp.Move));}else{
                         var state=(SimulatedCombatState)end.State.CombatState;var props=(ValueProp)properties[k];decimal amount=amounts[k];
@@ -138,7 +184,30 @@ public sealed partial class LeagueForecast : IDisposable
                 // 每层狂喜可在下个回合转化一张悲伤；其余悲伤会继续占用手牌位置。
                 return cards.Count-sadness-Math.Max(0,sadness-state.GetAmount<EcstasyPower>(actor.Creature));
             }
-            var baseLife=EndHealth(root);int hand=HandValue(root.State.GetPlayerCombatState(actor).Hand.Cards,initial);
+            var baseLife=EndHealth(root,out var pass);
+            var rootPlayer=root.State.GetPlayerCombatState(actor);
+            var cards=rootPlayer.Hand.Cards.Concat(rootPlayer.DrawPile.Cards).Concat(rootPlayer.DiscardPile.Cards).ToArray();
+            var future=StrategicEffectContext.Build(cards,targets.Sum(t=>root.State.GetCreature(t).CurrentHp),
+                (int)amounts.Where((_,i)=>properties[i]!=-1).Sum(),properties.Count(p=>p!=-1),
+                (StrategicEffectRequirements)(-1),initial.GetAmount<CorruptionPower>(actor.Creature)>0);
+            decimal Setup(CombatPredictionSimulator sim){
+                if(_tier==0)return 0;
+                var combat=(SimulatedCombatState)sim.State.CombatState;
+                var ps=sim.State.GetPlayerCombatState(actor);var powers=combat.EffectivePowers();
+                decimal value=0;
+                foreach(var power in powers){
+                    if(!StrategicEffectMirrors.Contributes(power,actor.Creature))continue;
+                    var ctx=power is DarkEmbracePower?future.WithExhaustDrawTiming(powers,ps.Hand.Cards,actor.Creature):future;
+                    decimal v=StrategicEffectModel.Evaluate(power,ctx).RetentionValue;
+                    // 空球栏保留集中以后启动的价值。已经成型的能力继续叠层时，边际收益渐减。
+                    if(power is FocusPower&&!ps.OrbQueue.Orbs.Any(o=>o is not MegaCrit.Sts2.Core.Models.Orbs.PlasmaOrb))v*=.35m;
+                    value+=16*v/(12+v);
+                }
+                return value+.5m*CombatBeamSolver.OrbRetentionValue(sim,ps.OrbQueue.Orbs,targets.Length);
+            }
+            decimal baseSetup=Setup(root);
+            decimal passPressure=targets.Sum(t=>Math.Min(root.State.GetCreature(t).CurrentHp+root.State.GetCreature(t).Block,pass.Hits.GetValueOrDefault(t)));
+            int hand=HandValue(root.State.GetPlayerCombatState(actor).Hand.Cards,initial);
             
             var front=new List<Branch>{new(root,[],0)};var chosen=front[0];var visited=new Dictionary<StateFingerprint,decimal>();
             // 能量和手牌在推演途中可以支持后续动作；回合结束后的普通手牌与未用能量不能当作已获得的收益。
@@ -163,23 +232,17 @@ public sealed partial class LeagueForecast : IDisposable
                     foreach(int i in Enumerable.Range(0,ps.Hand.Cards.Count).OrderBy(Order)){
                         var move=ps.Hand.Cards[i];if(!parent.Sim.CanPlay(move))continue;
                         foreach(var aim in move.Preview.TargetType==TargetType.AnyEnemy?aimOrder.Where(t=>parent.Sim.State.GetCreature(t).IsAlive).Cast<Creature?>():new Creature?[]{move.Preview.TargetType is TargetType.AnyAlly or TargetType.Self?actor.Creature:null}){
-                        if(attempted&&clock.Elapsed.TotalMilliseconds>=18+6*_tier){incomplete=true;return chosen;}
+                        if(attempted&&OutOfTime()){incomplete=true;return chosen;}
                         attempted=true;
                         // 直接出牌与每一种中途选择使用同一套攻防评分，复用上游的候选与动作回放。
-                        foreach(var result in PlayOptions(parent.Sim,i,aim,actor,3+2*_tier,()=>clock.Elapsed.TotalMilliseconds>=18+6*_tier,()=>incomplete=true)){
+                        foreach(var result in PlayOptions(parent.Sim,i,aim,actor,3+2*_tier,OutOfTime,()=>incomplete=true)){
                         var (sim,choices)=result;
-                        var mark=Damage.GetOrCreateValue(sim);
                         var handState=sim.State.GetPlayerCombatState(actor);var card=move;
                         expanded++;
                         var combat=(SimulatedCombatState)sim.State.CombatState;
                         var own=sim.State.GetCreature(actor.Creature);
-                        var life=EndHealth(sim);
-                        // 当回合可以安全建立的能力也有价值。计分只影响路线排序，不额外搜索未来回合。
-                        decimal setup=parent.Setup;
-                        if(_tier>0&&card.Preview.Type==CardType.Power){
-                            bool core=_setup.Contains(card.Preview.Id.Entry);
-                            setup+=core?5+3*_tier:2+_tier;
-                        }
+                        var life=EndHealth(sim,out var mark);
+                        decimal setup=Setup(sim)-baseSetup;
                         decimal pressure=0;bool lethal=true;
                         foreach(var target in targets){
                             var foe=root.State.GetCreature(target);var enemy=sim.State.GetCreature(target);int hp=foe.CurrentHp;
@@ -187,10 +250,11 @@ public sealed partial class LeagueForecast : IDisposable
                             int stacked=combat.GetAmount<DoomPower>(target)+mark.Stacks.GetValueOrDefault(target);
                             pressure+=(combat.GetAmount<PoisonPower>(target)-initial.GetAmount<PoisonPower>(target))*1.5m+(stacked-initial.GetAmount<DoomPower>(target))*.85m+Math.Min(hp+foe.Block,hit);
                             int activeDoom=combat.GetAmount<DoomPower>(target);
-                            if(activeDoom>0&&activeDoom>=enemy.CurrentHp-Math.Max(0,attack-foe.Block)&&life>0)pressure+=hp;
-                            lethal&=hit>=hp+foe.Block;
+                            decimal through=Math.Max(0,attack-foe.Block);
+                            if(activeDoom>0&&activeDoom>=enemy.CurrentHp-through&&life>0)pressure+=hp;
+                            lethal&=through>=enemy.CurrentHp;
                         }
-                        decimal end=pressure+setup+(life-baseLife)*1.6m+(life>0&&baseLife<=0?10000:life<=0&&baseLife>0?-10000:0)
+                        decimal end=pressure-passPressure+setup+(life-baseLife)*1.6m+(life>0&&baseLife<=0?10000:life<=0&&baseLife>0?-10000:0)
                             +(handState.Stars-liveStars)*.5m;
                         // 真实新增的有利状态可打破停手平局；不把玩家身上的虚弱倒算成已经登记的攻击减伤。
                         bool ImprovesStatus()=>combat.EffectivePowers().Any(p=>p.Amount>0&&
@@ -198,13 +262,15 @@ public sealed partial class LeagueForecast : IDisposable
                             p.Owner.Side!=actor.Creature.Side&&p.TypeForCurrentAmount==MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)
                             && !initial.EffectivePowers().Any(q=>q.Owner==p.Owner&&q.Id==p.Id&&q.Amount>=p.Amount));
                         decimal score=end+(HandValue(handState.Hand.Cards,combat)-hand)*.8m+(handState.Energy-liveEnergy)*1.25m;
-                        var route=new List<Play>(parent.Route){new(_originals.GetValueOrDefault(card.Original),card.Preview.Id.Entry,move.Preview.CurrentUpgradeLevel,aim==null?-1:_aims.GetValueOrDefault(aim,-1),choices)};var b=new Branch(sim,route,score,setup);
+                        var route=new List<Play>(parent.Route){new(_originals.GetValueOrDefault(card.Original),card.Preview.Id.Entry,move.Preview.CurrentUpgradeLevel,aim==null?-1:_aims.GetValueOrDefault(aim,-1),choices)};var b=new Branch(sim,route,score);
                         if(end>bestEnd||end==bestEnd&&(chosen.Route.Count==0?ImprovesStatus():score>chosen.Score)){chosen=b;bestEnd=end;}
                         if(lethal&&life>0)return b;
                         var fingerprint=new StateFingerprintBuilder();
                         fingerprint.Add(handState.Energy);fingerprint.Add(handState.Stars);fingerprint.Add(own.Block);fingerprint.Add(own.CurrentHp);
                         void Pile(IReadOnlyList<PredictedCard> cards){fingerprint.Add(cards.Count);foreach(var c in cards){fingerprint.Add(c.Preview.Id.Entry);fingerprint.Add(c.Preview.CurrentUpgradeLevel);}}
                         Pile(handState.Hand.Cards);Pile(handState.DrawPile.Cards);Pile(handState.DiscardPile.Cards);Pile(handState.ExhaustPile.Cards);
+                        fingerprint.Add(handState.OrbQueue.Capacity);
+                        foreach(var orb in handState.OrbQueue.Orbs){fingerprint.Add(orb.Id.Entry);fingerprint.Add(OrbMirrors.GetPassiveValue(sim,orb));fingerprint.Add(OrbMirrors.GetEvokeValue(sim,orb));}
                         foreach(var power in combat.EffectivePowers()){fingerprint.Add(power.Owner.CombatId??uint.MaxValue);fingerprint.Add(power.Id.Entry);fingerprint.Add(power.Amount);}
                         foreach(var target in targets){fingerprint.Add(mark.Hits.GetValueOrDefault(target));fingerprint.Add(mark.Stacks.GetValueOrDefault(target));}
                         var key=fingerprint.Finish();
@@ -218,6 +284,7 @@ public sealed partial class LeagueForecast : IDisposable
             return chosen;
             }finally{if(report!=null){searchMs=Stopwatch.GetElapsedTime(started).TotalMilliseconds;searchBytes=GC.GetAllocatedBytesForCurrentThread()-allocated;}}
         });
+        _exit.ThrowIfCancellationRequested();
         foreach(var id in best.Route)_route.Enqueue(id);
         EndTurn=best.Route.Count==0&&!incomplete&&expanded>0;
         if(report!=null)
@@ -228,7 +295,7 @@ public sealed partial class LeagueForecast : IDisposable
     private readonly Dictionary<Creature,int> _aims=[];
     private (CombatPredictionSimulator,Creature[]) Capture(bool attacking){
         var actor=Player.CreateForNewRun(_live.Character,_live.UnlockState,1);_actor=actor;
-        var run=RunState.CreateForNewRun([actor],_live.RunState.Acts.Select(a=>a.CanonicalInstance.ToMutable()).ToList(),[],GameMode.Standard,false,0,"league-forecast");
+        var run=RunState.CreateForNewRun([actor],_live.RunState.Acts.Select(a=>a.CanonicalInstance.ToMutable()).ToList(),[],GameMode.Standard,false,0,_live.RunState.Rng.StringSeed);
         var board=new CombatState(runState:run,badgeModels:run.BadgeModels,runModels:run.RunModels);board.AddPlayer(actor);actor.ResetCombatState();
         foreach(var r in actor.Relics.ToArray())actor.RemoveRelicInternal(r,true);
         foreach(var r in _live.Relics)actor.AddRelicInternal(RelicModel.FromSerializable(r.ToSerializable()),-1,true);
@@ -265,6 +332,7 @@ public sealed partial class LeagueForecast : IDisposable
         for(int i=0;i<targets.Length;i++)creatures.Add(realTargets[i],targets[i]);
         if(_live.Osty is {} sourcePet && actor.Osty is {} copyPet)creatures[sourcePet]=copyPet;
         board.RoundNumber=_live.Creature.CombatState!.RoundNumber;
+        run.Rng.LoadFromSerializable(_live.RunState.Rng.ToSerializable());
         _mappedHistory=MapHistory(board,actor,creatures);
         try{var root=new CombatPredictionSimulator(new SimulatedCombatState(board));Damage.GetOrCreateValue(root);return(root,targets);}
         finally{_mappedHistory=null;}

@@ -638,7 +638,7 @@ private const string SeedCharacters = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 来源：源码第 248 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`UpdateReward()`](CareerScreen.cs.md#symbol-99ca9a3eb8d4)
+**调用者：** [`NationalSpire.CareerEngine.FinishMatch(NationalSpire.CareerData, NationalSpire.CareerMatch, bool, bool, int, string, int, System.Collections.Generic.List<string>, double, System.Collections.Generic.List<string>?, NationalSpire.RunEvidence?, string, bool, bool, bool)`](CareerEngine.cs.md#symbol-bdca24d9114c)；[`UpdateReward()`](CareerScreen.cs.md#symbol-25c61d064659)
 
 **调用：** `System.Math.Clamp(int, int, int)`
 

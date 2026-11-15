@@ -73,6 +73,7 @@ public sealed class CareerData
     public long PendingSince { get; set; }
     public int Day { get; set; } = 1;
     public int Season { get; set; } = 1;
+    public LeagueSeasonRoster? LeagueRoster { get; set; }
     public int Rating { get; set; } = 1000;
     public int Fans { get; set; } = 28;
     public decimal Credits { get; set; } = 0;
@@ -95,6 +96,10 @@ public sealed class CareerData
     public List<SeasonRecap> SeasonHistory { get; set; } = [];
     public AiOptions Ai { get; set; } = new();
 }
+
+// 同档内按原打法描述合并保存选手编号；同一构筑可以对应多条生涯描述。
+public sealed record LeagueBracket(string Role,string Plan,int Tier,Dictionary<string,string[]> Styles);
+public sealed partial record LeagueSeasonRoster(int Season,LeagueBracket[] Brackets);
 
 public sealed class CareerStanding
 {

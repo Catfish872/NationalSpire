@@ -18,6 +18,7 @@ public partial class CareerScreen
         if (_worldSection == "俱乐部" && _clubDraft != null) { ClubWizard(data); return; }
         if (_worldSection == "俱乐部" && OwnedClubs.IsOwner(data)) { OwnedClubPanel(data); ClubPlanEntry(); return; }
         if (_worldSection == "颁奖盛典") { Ceremony(data); return; }
+        if (_worldSection == "俱乐部邀请") { ClubContracts(data); return; }
         if (_worldSection == "国运榜") { NationRanking(data); return; }
         if (_worldSection == "国家发展") { DevelopmentScreen(data); return; }
         if (_worldSection == "世界荣誉") { WorldHonors(data); return; }
@@ -114,9 +115,50 @@ public partial class CareerScreen
                 $"{EsportsWorld.ClubName(data,EsportsWorld.HistoricClub(data,c,entry.PersonId))}  ·  {entry.Wins} 胜  {entry.Draws} 平  {entry.Losses} 负  ·  {entry.Clears} 次通关",$"{entry.Points} 分",entry.PersonId,entry.PersonId=="player");
     }
     private int _clubLimit = 8;
+    private static List<ClubOffer> CurrentClubOffers(CareerData data) =>
+        data.Esports.Offers.Where(o => o.ExpiresDay >= data.Day).ToList();
+
+    private bool HomeClubInvitation(CareerData data, Container parent)
+    {
+        if (data.Esports.ClubId.Length != 0 || OwnedClubs.IsOwner(data)) return false;
+        var offers = CurrentClubOffers(data);
+        if (offers.Count == 0) return false;
+        var clubs = offers.Select(o => EsportsWorld.Club(data, o.ClubId)!).ToArray();
+        bool single = clubs.Length == 1;
+        var accent = single ? new Color(clubs[0].Color).Lerp(_gold, .28f) : _gold;
+        var card = Card(); card.Name = "HomeClubInvitation";
+        card.CustomMinimumSize = new(530, 0); card.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        var paper = CareerVisuals.Box("172b36", "51616a", 9, 18);
+        paper.BorderColor = new Color("263e49").Lerp(accent, .35f);
+        card.AddThemeStyleboxOverride("panel", paper); parent.AddChild(card);
+        var row = new HBoxContainer(); row.AddThemeConstantOverride("separation", 16); card.AddChild(row);
+        var seal = new PanelContainer { CustomMinimumSize = new(50, 54), SizeFlagsVertical = SizeFlags.ShrinkCenter };
+        var stamp = CareerVisuals.Box("273b43", "6e715f", 8, 11);
+        stamp.BgColor = new Color("172b36").Lerp(accent, .13f); stamp.BorderColor = paper.BorderColor;
+        seal.AddThemeStyleboxOverride("panel", stamp); seal.AddChild(Glyph("mail", 27, accent)); row.AddChild(seal);
+
+        var copy = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        copy.AddThemeConstantOverride("separation", 3); row.AddChild(copy);
+        int expires = offers.Min(o => o.ExpiresDay);
+        string until = expires == data.Day ? "今日截止" : $"{GameCalendar.Date(data, expires):M/d} 截止";
+        copy.AddChild(DashboardLabel("俱乐部来函   /   " + (single ? "" : "最早") + until, 14, _gold, true));
+        copy.AddChild(DashboardLabel(single ? $"{clubs[0].Name}邀请你加盟" : $"{clubs.Length} 家俱乐部邀请你加盟", 24, _ink, true));
+        copy.AddChild(DashboardLabel(single ? $"邀请剩余 {expires - data.Day + 1} 天" : string.Join("  ·  ", clubs.Select(c => c.Name)), 16, _muted, true));
+        var open = FramedAction(single ? "查看合同" : "比较合同", () => OpenWorldSection("俱乐部邀请"),
+            "arrow-right", trailing: true, width: 124, height: 43, ink: _gold);
+        open.SizeFlagsVertical = SizeFlags.ShrinkCenter; row.AddChild(open);
+        return true;
+    }
+
     private void Clubs(CareerData data)
     {
         ClubEntry(data);
+        ClubContracts(data);
+        ShowSponsors(data);
+        ClubDirectory(data);
+    }
+    private void ClubContracts(CareerData data)
+    {
         _content.AddChild(Text("合同与转会", 24, _gold));
         _content.AddChild(Text($"本季转会窗口：{GameCalendar.Range(data, SeasonCalendar.Start(data) + 1, SeasonCalendar.Start(data) + SeasonCalendar.LeagueDeadline(data))}。自由选手可随时签约；错过联赛报名期，将参加下季联赛。", 16, _muted));
         if (data.Esports.ClubId.Length > 0)
@@ -130,7 +172,7 @@ public partial class CareerScreen
             }
             ob.AddChild(TeamButton("退出俱乐部", ClubLeaveDialog, 190));
         }
-        var offers = data.Esports.Offers.Where(o => o.ExpiresDay >= data.Day).ToList();
+        var offers = CurrentClubOffers(data);
         if (offers.Count == 0)
         {
             if (data.Esports.License < 3 && data.Esports.PlayerContract == null && data.Esports.ClubId.Length == 0)
@@ -147,8 +189,6 @@ public partial class CareerScreen
             box.AddChild(Text($"邀请剩余 {offer.ExpiresDay - data.Day + 1} 天 · 每季津贴与目标奖励各领取一次", 16, _muted));
             box.AddChild(TeamButton("接受合同", () => { if (MultiplayerCommand("propose-club", offer.ClubId)) return; var error = EsportsWorld.AcceptOffer(data, offer); Render(); Notice(error ?? "签约成功！前往日程查看比赛。", error != null); }, 180));
         }
-        ShowSponsors(data);
-        ClubDirectory(data);
     }
     private void ClubDirectory(CareerData data)
     {

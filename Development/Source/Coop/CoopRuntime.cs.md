@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`66F5AE2FA578BAD52754148FFD7FB34C0F0EBE28CC00964A5364EDC1BB69D293`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`339753A15F9612477023995D95DE9CA44B288C11E9833792DD3E83C4D556F6F1`。来源：[源码](../../../Coop/CoopRuntime.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -657,9 +657,9 @@ private int _pausedCount;
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Pause()`](CoopRuntime.cs.md#symbol-4d6b5e85d748)
 
-**调用：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopLive.Close()`](CoopLive.cs.md#symbol-85319a2fb491)；[`NationalSpire.Coop.CoopNativeRun.Close()`](CoopNativeRun.cs.md#symbol-c8afc67dbfe3)；[`NationalSpire.Coop.CoopNativeRun.StopConnection()`](CoopNativeRun.cs.md#symbol-173b8340e058)；[`NationalSpire.Coop.CoopNativeRun.WaitForEntry()`](CoopNativeRun.cs.md#symbol-c81cf8511287)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`](CoopRules.cs.md#symbol-de0ba69e5b42)；[`NationalSpire.Coop.ICoopPauseScene.ReturnToMenu()`](CoopRuntime.cs.md#symbol-66f31117cc59)；[`NationalSpire.Coop.ICoopPauseScene.Reveal()`](CoopRuntime.cs.md#symbol-7904dd0288b5)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`](../MatchDiagnostics.cs.md#symbol-2f83ebe4626e)；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.GetTree()`；`System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；`System.TimeSpan.FromSeconds(long)`
+**调用：** [`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`](CoopCoordinator.cs.md#symbol-e1dfe22e8221)；[`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`](CoopCoordinator.cs.md#symbol-99375ad602b4)；[`NationalSpire.Coop.CoopJson.Copy<T>(T)`](CoopData.cs.md#symbol-38a51b2b1811)；[`NationalSpire.Coop.CoopLive.Close()`](CoopLive.cs.md#symbol-85319a2fb491)；[`NationalSpire.Coop.CoopNativeRun.Close()`](CoopNativeRun.cs.md#symbol-c8afc67dbfe3)；[`NationalSpire.Coop.CoopNativeRun.StopConnection()`](CoopNativeRun.cs.md#symbol-173b8340e058)；[`NationalSpire.Coop.CoopNativeRun.WaitForEntry()`](CoopNativeRun.cs.md#symbol-c81cf8511287)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`](CoopRules.cs.md#symbol-de0ba69e5b42)；[`NationalSpire.Coop.ICoopPauseScene.ReturnToMenu()`](CoopRuntime.cs.md#symbol-66f31117cc59)；[`NationalSpire.Coop.ICoopPauseScene.Reveal()`](CoopRuntime.cs.md#symbol-7904dd0288b5)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](../Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](../Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`](../MatchDiagnostics.cs.md#symbol-2f83ebe4626e)；[`NationalSpire.LeagueNativeMatch.StopMirrorTurns()`](../LeagueNativeMatch.cs.md#symbol-df0c55ce29c0)；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.GetTree()`；`System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；`System.TimeSpan.FromSeconds(long)`
 
-**字段、属性、事件及方法组引用：** `<anonymous type: bool Host, bool? remote>.remote`；`<anonymous type: bool Host, string Attempt, int ResumeCount, string Phase, bool? remote>.remote`；`<anonymous type: string epoch, string attempt, int resume>.attempt`；`<anonymous type: string epoch, string attempt, int resume>.epoch`；`<anonymous type: string epoch, string attempt, int resume>.resume`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopLive.Close()`；`NationalSpire.Coop.CoopNativeRun.Close()`；`NationalSpire.Coop.CoopNativeRun.LastError`；`NationalSpire.Coop.CoopNativeRun.PauseRequestedByHost`；`NationalSpire.Coop.CoopNativeRun.StopConnection()`；`NationalSpire.Coop.CoopNativeRun.WaitForEntry()`；`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.FailureReason`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopRun.Terminal`；`NationalSpire.Coop.CoopRuntime._completedPause`；`NationalSpire.Coop.CoopRuntime._live`；`NationalSpire.Coop.CoopRuntime._pausedCount`；`NationalSpire.Coop.CoopRuntime._pausing`；`NationalSpire.Coop.CoopRuntime._resumeRequired`；`NationalSpire.Coop.CoopRuntime.MenuReturn`；`NationalSpire.Coop.CoopRuntime.Native`；`NationalSpire.Coop.CoopRuntime.PauseScene`；`NationalSpire.Coop.CoopRuntime.Session`；`NationalSpire.Coop.CoopRuntime.Status`；`NationalSpire.Coop.CoopRuntime.StayAtResultMenu`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Proposal`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.ICoopPauseScene.NeedsReturn`；`NationalSpire.Coop.ICoopPauseScene.ReturnToMenu()`；`NationalSpire.Coop.ICoopPauseScene.Reveal()`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`
+**字段、属性、事件及方法组引用：** `<anonymous type: bool Host, bool? remote>.remote`；`<anonymous type: bool Host, string Attempt, int ResumeCount, string Phase, bool? remote>.remote`；`<anonymous type: string epoch, string attempt, int resume>.attempt`；`<anonymous type: string epoch, string attempt, int resume>.epoch`；`<anonymous type: string epoch, string attempt, int resume>.resume`；`NationalSpire.Coop.CoopCoordinator.Commit(NationalSpire.Coop.CoopWorld, byte[]?, bool)`；`NationalSpire.Coop.CoopCoordinator.Host`；`NationalSpire.Coop.CoopCoordinator.NativeSave`；`NationalSpire.Coop.CoopCoordinator.SendRun(string, object)`；`NationalSpire.Coop.CoopCoordinator.World`；`NationalSpire.Coop.CoopJson.Copy<T>(T)`；`NationalSpire.Coop.CoopLive.Close()`；`NationalSpire.Coop.CoopNativeRun.Close()`；`NationalSpire.Coop.CoopNativeRun.LastError`；`NationalSpire.Coop.CoopNativeRun.PauseRequestedByHost`；`NationalSpire.Coop.CoopNativeRun.StopConnection()`；`NationalSpire.Coop.CoopNativeRun.WaitForEntry()`；`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.FailureReason`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.Phase`；`NationalSpire.Coop.CoopRun.ResumeCount`；`NationalSpire.Coop.CoopRun.Terminal`；`NationalSpire.Coop.CoopRuntime._completedPause`；`NationalSpire.Coop.CoopRuntime._live`；`NationalSpire.Coop.CoopRuntime._pausedCount`；`NationalSpire.Coop.CoopRuntime._pausing`；`NationalSpire.Coop.CoopRuntime._resumeRequired`；`NationalSpire.Coop.CoopRuntime.MenuReturn`；`NationalSpire.Coop.CoopRuntime.Native`；`NationalSpire.Coop.CoopRuntime.PauseScene`；`NationalSpire.Coop.CoopRuntime.Session`；`NationalSpire.Coop.CoopRuntime.Status`；`NationalSpire.Coop.CoopRuntime.StayAtResultMenu`；`NationalSpire.Coop.CoopWorld.Epoch`；`NationalSpire.Coop.CoopWorld.Proposal`；`NationalSpire.Coop.CoopWorld.Revision`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.ICoopPauseScene.NeedsReturn`；`NationalSpire.Coop.ICoopPauseScene.ReturnToMenu()`；`NationalSpire.Coop.ICoopPauseScene.Reveal()`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`；`NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；`NationalSpire.LeagueNativeMatch.IsTeamMatch`；`NationalSpire.LeagueNativeMatch.StopMirrorTurns()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -683,6 +683,7 @@ private int _pausedCount;
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.pause.begin", new { session.Host, run.Attempt, run.ResumeCount, run.Phase, remote = native?.PauseRequestedByHost })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.pause.begin", new { session.Host, run.Attempt, run.ResumeCount, run.Phase, remote = native?.PauseRequestedByHost });`
 - `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("coop.pause.end", new { key })`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("coop.pause.end", new { key });`
 - `NationalSpire.Diagnostics.RecordMatch(NationalSpire.Coop.CoopWorld, string, object?, bool)`；输入表达式：`Diagnostics.RecordMatch(session.World!, "pause", new { session.Host, remote = native?.PauseRequestedByHost }, includePlan: true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.RecordMatch(session.World!, "pause", new { session.Host, remote = native?.PauseRequestedByHost }, includePlan: true);`
+- `NationalSpire.LeagueNativeMatch.StopMirrorTurns()`；输入表达式：`LeagueNativeMatch.StopMirrorTurns()`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueNativeMatch.StopMirrorTurns();`
 - `System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；输入表达式：`native.WaitForEntry().WaitAsync(TimeSpan.FromSeconds(8))`；返回值紧邻使用处：`AwaitExpressionSyntax: await native.WaitForEntry().WaitAsync(TimeSpan.FromSeconds(8))`
 - `System.Threading.Tasks.Task.WaitAsync(System.TimeSpan)`；输入表达式：`returning.WaitAsync(TimeSpan.FromSeconds(30))`；返回值紧邻使用处：`AwaitExpressionSyntax: await returning.WaitAsync(TimeSpan.FromSeconds(30))`
 - `System.TimeSpan.FromSeconds(long)`；输入表达式：`TimeSpan.FromSeconds(30)`；返回值紧邻使用处：`ArgumentSyntax: TimeSpan.FromSeconds(30)`
@@ -706,7 +707,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopRuntime.ResumeRequired — public bool ResumeRequired`
 
-来源：源码第 225 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -724,7 +725,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopRuntime.Disconnect() — public void Disconnect()`
 
-来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 227 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopLive.ConfirmStop()`](CoopLive.cs.md#symbol-30b59f1772bc)；[`NationalSpire.Coop.CoopScreen.Leave()`](CoopScreen.cs.md#symbol-187bb3392c96)；[`NationalSpire.Coop.CoopScreen.OpenSaved(Godot.Control, string)`](CoopScreen.cs.md#symbol-ea5fafed6b79)；[`NationalSpire.Coop.CoopScreen.Render()`](CoopScreen.cs.md#symbol-adc6058122f7)
 
@@ -754,7 +755,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory) — public void Complete(RunHistory history)`
 
-来源：源码第 232 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 233 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopHistoryPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunHistory)`](CoopRuntime.cs.md#symbol-1eda71dc88b5)
 
@@ -807,7 +808,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopRuntime.FinishTerminal() — private void FinishTerminal()`
 
-来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 271 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime._Process(double)`](CoopRuntime.cs.md#symbol-ec1513bd09b1)；[`NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory)`](CoopRuntime.cs.md#symbol-732476d12d29)
 
@@ -830,7 +831,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopMenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu) — public static void Postfix(NMainMenu __instance)`
 
-来源：源码第 281 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 282 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -866,7 +867,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopContextPatch.Postfix(ref MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext.IScreenContext?) — public static void Postfix(ref IScreenContext? __result)`
 
-来源：源码第 298 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -885,7 +886,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopPathPatch.Postfix(string, ref string) — public static void Postfix(string fileName, ref string __result)`
 
-来源：源码第 303 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 304 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -906,7 +907,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopSaveEntryPatch.TargetMethod() — public static MethodBase TargetMethod()`
 
-来源：源码第 312 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 313 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -925,7 +926,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopSaveEntryPatch.Prefix() — public static void Prefix()`
 
-来源：源码第 313 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 314 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -946,7 +947,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopSavePatch.TargetMethod() — public static MethodBase TargetMethod()`
 
-来源：源码第 324 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 325 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -965,7 +966,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopSavePatch.Prefix(MegaCrit.Sts2.Core.Saves.SerializableRun, bool, ref System.Threading.Tasks.Task) — public static bool Prefix(SerializableRun save, bool isMultiplayer, ref Task __result)`
 
-来源：源码第 325 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 326 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -988,7 +989,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopHistoryPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunHistory) — public static bool Prefix(RunHistory history)`
 
-来源：源码第 336 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 337 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1008,7 +1009,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopReturnPatch.Postfix(System.Threading.Tasks.Task) — public static void Postfix(Task __result)`
 
-来源：源码第 348 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 349 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1027,7 +1028,7 @@ private int _pausedCount;
 
 ## `NationalSpire.Coop.CoopDisconnectMenuPatch.Prefix(MegaCrit.Sts2.Core.Runs.RunManager, ref System.Threading.Tasks.Task) — public static bool Prefix(RunManager __instance, ref Task __result)`
 
-来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 357 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

@@ -471,6 +471,7 @@ public static partial class CoopRules
             if(!LeagueCards.Ready(album))return member.Name+"尚未准备好 35 张出战牌。";
             run.Characters[member.SteamId]=LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id.ToString();
         }
+        LeagueLadder.PrepareRoster(w.World);
         w.Run=run;return null;
     }
     internal static void FinishLeagueTeam(CoopCoordinator session,string attempt,bool? won){

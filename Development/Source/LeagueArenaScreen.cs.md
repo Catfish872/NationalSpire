@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`05829856D8D32ED9D355E051D11A96C1B0B8DC1D98DD016176A1B35E318B8B33`。来源：[源码](../../LeagueArenaScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`29857B342D24D90558849240B6979882BB091FFDEFAB1DEBE543CF1325196BE6`。来源：[源码](../../LeagueArenaScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -22,7 +22,7 @@ private static Opening? _opening;
 
 来源：源码第 8 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-09a84684a3e5)
+**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-6328aae85977)
 
 **调用：** `Godot.Vector2.Vector2(float, float)`；`NationalSpire.AvatarIdentity.AvatarIdentity(NationalSpire.AvatarFrame, int, string, string)`；`NationalSpire.CareerAvatar.CareerAvatar()`
 
@@ -257,33 +257,33 @@ private static Opening? _opening;
 
 **调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)
 
-**调用：** [`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueArchetypes.Name(string, string)`](LeagueArchetypes.cs.md#symbol-eed6465b998c)；[`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-330c11ebf6f4)；[`NationalSpire.LeagueCards.GroupName(string)`](LeagueCards.cs.md#symbol-92f715052b3d)；[`NationalSpire.LeagueLadder.Match(NationalSpire.CareerData, System.Random, int?)`](LeagueLadder.cs.md#symbol-4009feb05261)；[`NationalSpire.LeagueLadder.RivalOpens(int)`](LeagueLadder.cs.md#symbol-3b4c257e5975)；[`NationalSpire.LeagueLadder.Tier(int)`](LeagueLadder.cs.md#symbol-b15a71b48f9a)；[`NationalSpire.LeagueSolverLink.Prepare()`](LeagueSolverLink.cs.md#symbol-1ecd89ef590b)；[`NationalSpire.NpcCharacters.Index(string)`](NpcCharacters.cs.md#symbol-8f7f43f17d89)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.IsInsideTree()`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>.ToDictionary<TKey, TValue>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Exception.GetBaseException()`；`System.Linq.Enumerable.Repeat<TResult>(TResult, int)`；`System.Random.Next()`；`System.Random.Random()`
+**调用：** [`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`](CareerAvatars.cs.md#symbol-cd3d95caefab)；[`NationalSpire.CareerScreen.Notice(string, bool)`](CareerScreen.cs.md#symbol-04588f02c308)；[`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`NationalSpire.CareerScreen.Render()`](CareerScreen.cs.md#symbol-d4a4496fddb9)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueArchetypes.Name(string, string)`](LeagueArchetypes.cs.md#symbol-eed6465b998c)；[`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-330c11ebf6f4)；[`NationalSpire.LeagueCards.GroupName(string)`](LeagueCards.cs.md#symbol-92f715052b3d)；[`NationalSpire.LeagueLadder.Match(NationalSpire.LeagueSeasonRoster, NationalSpire.LeagueLadder.Draw, System.Random, int)`](LeagueLadder.cs.md#symbol-5aa41a3b4644)；[`NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`](LeagueLadder.cs.md#symbol-fc32b34df886)；[`NationalSpire.LeagueLadder.RivalOpens(int)`](LeagueLadder.cs.md#symbol-3b4c257e5975)；[`NationalSpire.LeagueLadder.Tier(int)`](LeagueLadder.cs.md#symbol-b15a71b48f9a)；[`NationalSpire.LeagueSolverLink.Prepare()`](LeagueSolverLink.cs.md#symbol-1ecd89ef590b)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；`Godot.Node.IsInsideTree()`；`NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；`NationalSpire.LeagueLadder.Draw.Draw(NationalSpire.CareerData)`；`System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>.ToDictionary<TKey, TValue>()`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Exception.GetBaseException()`；`System.Linq.Enumerable.Repeat<TResult>(TResult, int)`；`System.Random.Next()`；`System.Random.Random()`
 
-**字段、属性、事件及方法组引用：** `(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Name`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Role`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Style`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Tier`；`Begin()`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.People`；`NationalSpire.CareerLifeState.League`；`NationalSpire.CareerPerson.Character`；`NationalSpire.CareerPerson.Id`；`NationalSpire.CareerPerson.PublicName`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._leagueBusy`；`NationalSpire.CareerScreen._leagueRival`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueAlbum.Captain`；`NationalSpire.LeagueAlbum.Rating`；`NationalSpire.LeagueAlbum.Upgrades`；`NationalSpire.LeagueArchetypes.Name(string, string)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.GroupName(string)`；`NationalSpire.LeagueCards.Roles`；`NationalSpire.LeagueLadder.Match(NationalSpire.CareerData, System.Random, int?)`；`NationalSpire.LeagueLadder.RivalOpens(int)`；`NationalSpire.LeagueLadder.Tier(int)`；`NationalSpire.LeagueSolverLink.Prepare()`；`NationalSpire.NpcCharacters.Index(string)`
+**字段、属性、事件及方法组引用：** `(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Name`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).PersonId`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Role`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Style`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Tier`；`Begin()`；`NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；`NationalSpire.CareerData.LeagueRoster`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerLifeState.League`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._leagueBusy`；`NationalSpire.CareerScreen._leagueRival`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`；`NationalSpire.CareerScreen.Render()`；`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueAlbum.Captain`；`NationalSpire.LeagueAlbum.Rating`；`NationalSpire.LeagueAlbum.Upgrades`；`NationalSpire.LeagueArchetypes.Name(string, string)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.GroupName(string)`；`NationalSpire.LeagueCards.Roles`；`NationalSpire.LeagueLadder.Match(NationalSpire.LeagueSeasonRoster, NationalSpire.LeagueLadder.Draw, System.Random, int)`；`NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`；`NationalSpire.LeagueLadder.RivalOpens(int)`；`NationalSpire.LeagueLadder.Tier(int)`；`NationalSpire.LeagueSolverLink.Prepare()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`GodotObject.IsInstanceValid(this)`；返回值紧邻使用处：`BinaryExpressionSyntax: GodotObject.IsInstanceValid(this)&&IsInsideTree()`
 - `Godot.Node.IsInsideTree()`；输入表达式：`IsInsideTree()`；返回值紧邻使用处：`BinaryExpressionSyntax: GodotObject.IsInstanceValid(this)&&IsInsideTree()`
-- `NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；输入表达式：`new(rival.IconTexture,_gold,match.Name)`；返回值紧邻使用处：`ConditionalExpressionSyntax: person==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,person.Id)`
+- `NationalSpire.AvatarArt.AvatarArt(Godot.Texture2D?, Godot.Color, string)`；输入表达式：`new(rival.IconTexture,_gold,match.Name)`；返回值紧邻使用处：`ConditionalExpressionSyntax: match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId)`
 - `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(d,"player")`；返回值紧邻使用处：`ArgumentSyntax: CareerAvatars.ForPerson(d,"player")`
-- `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(d,person.Id)`；返回值紧邻使用处：`ConditionalExpressionSyntax: person==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,person.Id)`
+- `NationalSpire.CareerAvatars.ForPerson(NationalSpire.CareerData, string)`；输入表达式：`CareerAvatars.ForPerson(d,match.PersonId)`；返回值紧邻使用处：`ConditionalExpressionSyntax: match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId)`
 - `NationalSpire.CareerScreen.Notice(string, bool)`；输入表达式：`Notice(e.GetBaseException().Message,true)`；返回值紧邻使用处：`ExpressionStatementSyntax: Notice(e.GetBaseException().Message,true);`
-- `NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`；输入表达式：`OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",                  person==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,person.Id),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin)`；返回值紧邻使用处：`AwaitExpressionSyntax: await OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",                  person==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,person.Id),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin)`
+- `NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`；输入表达式：`OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",                  match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin)`；返回值紧邻使用处：`AwaitExpressionSyntax: await OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",                  match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin)`
 - `NationalSpire.CareerScreen.Render()`；输入表达式：`Render()`；返回值紧邻使用处：`ExpressionStatementSyntax: Render();`
+- `NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`；输入表达式：`CareerStore.Save(d)`；返回值紧邻使用处：`ExpressionStatementSyntax: CareerStore.Save(d);`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("league-match",e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("league-match",e);`
 - `NationalSpire.LeagueArchetypes.Name(string, string)`；输入表达式：`LeagueArchetypes.Name(rival.Id.Entry,match.Style)`；返回值紧邻使用处：`BinaryExpressionSyntax: match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style)`
 - `NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`；输入表达式：`LeagueCards.Deck(a)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: LeagueCards.Deck(a)!`
 - `NationalSpire.LeagueCards.GroupName(string)`；输入表达式：`LeagueCards.GroupName(rival.Id.Entry)`；返回值紧邻使用处：`ArgumentSyntax: LeagueCards.GroupName(rival.Id.Entry)`
 - `NationalSpire.LeagueCards.GroupName(string)`；输入表达式：`LeagueCards.GroupName(role.Id.Entry)`；返回值紧邻使用处：`ArgumentSyntax: LeagueCards.GroupName(role.Id.Entry)`
-- `NationalSpire.LeagueLadder.Match(NationalSpire.CareerData, System.Random, int?)`；输入表达式：`LeagueLadder.Match(d,rng)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =LeagueLadder.Match(d,rng)`
+- `NationalSpire.LeagueLadder.Draw.Draw(NationalSpire.CareerData)`；输入表达式：`new(d)`；返回值紧邻使用处：`ArgumentSyntax: new(d)`
+- `NationalSpire.LeagueLadder.Match(NationalSpire.LeagueSeasonRoster, NationalSpire.LeagueLadder.Draw, System.Random, int)`；输入表达式：`LeagueLadder.Match(d.LeagueRoster!,new(d),rng,LeagueLadder.Tier(a.Rating))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =LeagueLadder.Match(d.LeagueRoster!,new(d),rng,LeagueLadder.Tier(a.Rating))`
+- `NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`；输入表达式：`LeagueLadder.PrepareRoster(d)`；返回值紧邻使用处：`IfStatementSyntax: if(LeagueLadder.PrepareRoster(d))CareerStore.Save(d);`
 - `NationalSpire.LeagueLadder.RivalOpens(int)`；输入表达式：`LeagueLadder.RivalOpens(seed)`；返回值紧邻使用处：`ConditionalExpressionSyntax: LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手"`
 - `NationalSpire.LeagueLadder.Tier(int)`；输入表达式：`LeagueLadder.Tier(a.Rating)`；返回值紧邻使用处：`ArgumentSyntax: LeagueLadder.Tier(a.Rating)`
 - `NationalSpire.LeagueSolverLink.Prepare()`；输入表达式：`LeagueSolverLink.Prepare()`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueSolverLink.Prepare();`
-- `NationalSpire.NpcCharacters.Index(string)`；输入表达式：`NpcCharacters.Index(p.Character)`；返回值紧邻使用处：`BinaryExpressionSyntax: NpcCharacters.Index(p.Character)==NpcCharacters.Index(rival.Id.Entry)`
-- `NationalSpire.NpcCharacters.Index(string)`；输入表达式：`NpcCharacters.Index(rival.Id.Entry)`；返回值紧邻使用处：`BinaryExpressionSyntax: NpcCharacters.Index(p.Character)==NpcCharacters.Index(rival.Id.Entry)`
 - `System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>.ToDictionary<TKey, TValue>()`；输入表达式：`.ToDictionary()`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: a.Upgrades.GetValueOrDefault(a.Captain)?.ToDictionary()`
-- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`d.People.FirstOrDefault(p=>p.PublicName==match.Name&&NpcCharacters.Index(p.Character)==NpcCharacters.Index(rival.Id.Entry))`；返回值紧邻使用处：`EqualsValueClauseSyntax: =d.People.FirstOrDefault(p=>p.PublicName==match.Name&&NpcCharacters.Index(p.Character)==NpcCharacters.Index(rival.Id.Entry))`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value)).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`roles.Single(r=>r.Id.Entry==a.Captain)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =roles.Single(r=>r.Id.Entry==a.Captain)`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value)).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value)).ToArray()`
@@ -299,17 +299,17 @@ private static Opening? _opening;
 - `_leagueBusy` = `true`
 - `_leagueRival` = `match.Name`
 
-<a id="symbol-6efcffde32aa"></a>
+<a id="symbol-31eaa053f100"></a>
 
 ## `Begin() — async Task Begin()`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
 **调用：** [`NationalSpire.LeagueArchetypes.Resolve(string, string)`](LeagueArchetypes.cs.md#symbol-8cffe8f79fa2)；[`NationalSpire.LeagueLadder.Build(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string)`](LeagueLadder.cs.md#symbol-a46e08a27495)；[`NationalSpire.LeagueLadder.Tier(int)`](LeagueLadder.cs.md#symbol-b15a71b48f9a)；[`NationalSpire.LeagueLadder.UpgradePlan(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random)`](LeagueLadder.cs.md#symbol-8988ba35b084)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)；`Godot.Node.IsInsideTree()`；`System.Collections.Generic.List<T>.ToArray()`
 
-**字段、属性、事件及方法组引用：** `(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Style`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style).Tier`；`NationalSpire.CareerScreen._leagueRival`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.ICareerSession.Message`；`NationalSpire.LeagueAlbum.Rating`；`NationalSpire.LeagueArchetypes.Resolve(string, string)`；`NationalSpire.LeagueLadder.Build(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string)`；`NationalSpire.LeagueLadder.Tier(int)`；`NationalSpire.LeagueLadder.UpgradePlan(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random)`；`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`
+**字段、属性、事件及方法组引用：** `(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Style`；`(string Name, MegaCrit.Sts2.Core.Models.CharacterModel Role, int Tier, string Style, string? PersonId).Tier`；`NationalSpire.CareerScreen._leagueRival`；`NationalSpire.CareerScreen._multiplayer`；`NationalSpire.CareerScreen.Notice(string, bool)`；`NationalSpire.ICareerSession.Message`；`NationalSpire.LeagueAlbum.Rating`；`NationalSpire.LeagueArchetypes.Resolve(string, string)`；`NationalSpire.LeagueLadder.Build(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string)`；`NationalSpire.LeagueLadder.Tier(int)`；`NationalSpire.LeagueLadder.UpgradePlan(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random)`；`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -332,7 +332,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.Opening.Visible — internal bool Visible`
 
-来源：源码第 70 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -350,7 +350,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.Opening.LoadChapter(System.Threading.Tasks.Task) — internal async Task LoadChapter(Task assets)`
 
-来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 72 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpeningChapter(System.Threading.Tasks.Task)`](LeagueArenaScreen.cs.md#symbol-5f1f6efd38ec)
 
@@ -371,7 +371,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.Opening.Reveal() — internal void Reveal()`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.RevealOpening()`](LeagueArenaScreen.cs.md#symbol-bf9d7644463b)
 
@@ -392,7 +392,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.OpeningVisible — internal static bool OpeningVisible`
 
-来源：源码第 83 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -410,9 +410,9 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.UseOpening(string?) — internal static bool UseOpening(string? sound=null)`
 
-来源：源码第 84 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 85 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`Begin()`](LeagueTeamMatch.cs.md#symbol-7113ab57a2bd)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](Coop/CoopNativeRun.cs.md#symbol-b889ef6fb033)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)
+**调用者：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`Begin()`](LeagueTeamMatch.cs.md#symbol-bf95642189e1)；[`NationalSpire.Coop.CoopSteamRunPlatform.BeginNew(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>, string, int, System.Threading.CancellationToken)`](Coop/CoopNativeRun.cs.md#symbol-b889ef6fb033)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)
 
 **调用：** 无已绑定显式调用。
 
@@ -429,7 +429,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.OpeningChapter(System.Threading.Tasks.Task) — internal static Task OpeningChapter(Task assets)`
 
-来源：源码第 88 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.MatchStartLoadPatch.Postfix(System.Reflection.MethodBase, ref System.Threading.Tasks.Task)`](MatchStartWatch.cs.md#symbol-1823c1ed83e0)
 
@@ -448,7 +448,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.RevealOpening() — internal static void RevealOpening()`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.OpeningRoomReveal.Prefix(Godot.Control?)`](MatchStartWatch.cs.md#symbol-ded27ae4f0bc)
 
@@ -467,11 +467,11 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>) — internal async Task OpeningGate(string title,AvatarArt home,int homeTier,string homeName,string homeDetail,AvatarArt away,int awayTier,string awayName,string awayDetail,string note,Func<Task> begin)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-72880a76b76f)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
-**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-49528a7e8fde)；[`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`](MatchStartWatch.cs.md#symbol-a39a7334ee0a)；[`NationalSpire.MatchStartWatch.Finish()`](MatchStartWatch.cs.md#symbol-2b2800aa6a80)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-09a84684a3e5)；`Godot.CanvasLayer.CanvasLayer()`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetTree()`；`Godot.Node.QueueFree()`；`NationalSpire.CareerScreen.Opening.Opening(NationalSpire.LeagueGate, System.Func<System.Threading.Tasks.Task>)`；`NationalSpire.LeagueGate.LeagueGate()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
+**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-863798a2fc7f)；[`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`](MatchStartWatch.cs.md#symbol-a39a7334ee0a)；[`NationalSpire.MatchStartWatch.Finish()`](MatchStartWatch.cs.md#symbol-2b2800aa6a80)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-6328aae85977)；`Godot.CanvasLayer.CanvasLayer()`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetTree()`；`Godot.Node.QueueFree()`；`NationalSpire.CareerScreen.Opening.Opening(NationalSpire.LeagueGate, System.Func<System.Threading.Tasks.Task>)`；`NationalSpire.LeagueGate.LeagueGate()`；`System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
 
 **字段、属性、事件及方法组引用：** `Animate()`；`Caption(string, int, Godot.Color, float, float, float, float)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._opening`；`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`；`NationalSpire.MatchStartWatch.Finish()`；`NationalSpire.MatchStartWatch.IsActive`；`Side(bool, NationalSpire.AvatarArt, int, string, string)`
 
@@ -508,13 +508,13 @@ private static Opening? _opening;
 - `Name` = `"LeagueOpeningLayer"`
 - `Theme` = `Theme`
 
-<a id="symbol-49528a7e8fde"></a>
+<a id="symbol-863798a2fc7f"></a>
 
 ## `Caption(string, int, Godot.Color, float, float, float, float) — Label Caption(string copy,int size,Color color,float x,float y,float width,float height)`
 
-来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 97 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-01e70a34cb99)；[`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-09a84684a3e5)
+**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-e15cb10f1a37)；[`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)；[`Side(bool, NationalSpire.AvatarArt, int, string, string)`](LeagueArenaScreen.cs.md#symbol-6328aae85977)
 
 **调用：** [`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
@@ -540,13 +540,13 @@ private static Opening? _opening;
 - `label.TextOverrunBehavior` = `TextServer.OverrunBehavior.TrimEllipsis`
 - `label.VerticalAlignment` = `VerticalAlignment.Center`
 
-<a id="symbol-6589f0b1d1e0"></a>
+<a id="symbol-a07450397c0e"></a>
 
 ## `Pause(float) — async Task Pause(float time)`
 
-来源：源码第 102 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 103 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-01e70a34cb99)
+**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-e15cb10f1a37)
 
 **调用：** `Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.SceneTree.CreateTimer(double, bool, bool, bool)`
 
@@ -560,15 +560,15 @@ private static Opening? _opening;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-09a84684a3e5"></a>
+<a id="symbol-6328aae85977"></a>
 
 ## `Side(bool, NationalSpire.AvatarArt, int, string, string) — void Side(bool left,AvatarArt art,int tier,string name,string detail)`
 
-来源：源码第 106 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.OpeningGate(string, NationalSpire.AvatarArt, int, string, string, NationalSpire.AvatarArt, int, string, string, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-b602cebe9951)
 
-**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-49528a7e8fde)；[`NationalSpire.CareerScreen.LeaguePortrait(NationalSpire.AvatarArt, int, int)`](LeagueArenaScreen.cs.md#symbol-fff1f7f80e4d)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
+**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-863798a2fc7f)；[`NationalSpire.CareerScreen.LeaguePortrait(NationalSpire.AvatarArt, int, int)`](LeagueArenaScreen.cs.md#symbol-fff1f7f80e4d)；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`
 
 **字段、属性、事件及方法组引用：** `Caption(string, int, Godot.Color, float, float, float, float)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.LeaguePortrait(NationalSpire.AvatarArt, int, int)`
 
@@ -590,15 +590,15 @@ private static Opening? _opening;
 - `portrait.OffsetRight` = `portrait.OffsetBottom=39`
 - `portrait.OffsetTop` = `-39`
 
-<a id="symbol-01e70a34cb99"></a>
+<a id="symbol-e15cb10f1a37"></a>
 
 ## `Animate() — async Task Animate()`
 
-来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 119 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-49528a7e8fde)；[`NationalSpire.CareerScreen.LeagueSound(string)`](LeagueScreen.cs.md#symbol-74fb1d846f7f)；[`Pause(float)`](LeagueArenaScreen.cs.md#symbol-6589f0b1d1e0)；`Godot.Callable.From<T0>(System.Action<T0>)`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.MethodTweener.SetEase(Godot.Tween.EaseType)`；`Godot.MethodTweener.SetTrans(Godot.Tween.TransitionType)`；`Godot.Node.CreateTween()`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.TweenMethod(Godot.Callable, Godot.Variant, Godot.Variant, double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`
+**调用：** [`Caption(string, int, Godot.Color, float, float, float, float)`](LeagueArenaScreen.cs.md#symbol-863798a2fc7f)；[`NationalSpire.CareerScreen.LeagueSound(string)`](LeagueScreen.cs.md#symbol-74fb1d846f7f)；[`Pause(float)`](LeagueArenaScreen.cs.md#symbol-a07450397c0e)；`Godot.Callable.From<T0>(System.Action<T0>)`；`Godot.Color.Color(float, float, float, float)`；`Godot.GodotObject.ToSignal(Godot.GodotObject, Godot.StringName)`；`Godot.MethodTweener.SetEase(Godot.Tween.EaseType)`；`Godot.MethodTweener.SetTrans(Godot.Tween.TransitionType)`；`Godot.Node.CreateTween()`；`Godot.Tween.SetParallel(bool)`；`Godot.Tween.TweenMethod(Godot.Callable, Godot.Variant, Godot.Variant, double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`
 
 **字段、属性、事件及方法组引用：** `Caption(string, int, Godot.Color, float, float, float, float)`；`NationalSpire.CareerScreen._ink`；`NationalSpire.CareerScreen.LeagueSound(string)`；`NationalSpire.LeagueGate.Door`；`NationalSpire.LeagueGate.Impact`；`Pause(float)`
 
@@ -637,7 +637,7 @@ private static Opening? _opening;
 
 ## `NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>) — internal Task FormalGate(CareerData d,CareerMatch match,string character,Func<Task> begin)`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopNativeRun.BeginRun(string, System.Collections.Generic.List<MegaCrit.Sts2.Core.Models.ActModel>, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ModifierModel>)`](Coop/CoopNativeRun.cs.md#symbol-ddd22369fd06)；[`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)
 

@@ -9,20 +9,39 @@ internal static class LeagueLadder
     internal static int Tier(int points)=>Math.Max(0,Array.FindLastIndex(Thresholds,n=>points>=n));
     internal static int Health(CharacterModel role,int tier)=>role.StartingHp+30+20*tier;
     internal static bool RivalOpens(int seed)=>new Random(seed).Next(2)==1;
-    // 角色名称来自选手档案；没有该职业的选手时，由联赛提供匿名对手。
-    internal static (string Name,CharacterModel Role,int Tier,string Style) Match(CareerData d,Random rng,int? forTier=null){
-        var roles=LeagueCards.OriginalRoles;int tier=forTier??Tier(d.Life.League.Rating);
-        var candidates=d.People.Select(p=>(Person:p,Role:roles.FirstOrDefault(r=>NpcCharacters.Index(r.Id.Entry)==NpcCharacters.Index(p.Character))))
-            .Where(x=>x.Role!=null).Select(x=>(x.Person,x.Role,Tier:tier==3&&x.Person.MaxAscension>=10?3:x.Person.MaxAscension>=9?2:x.Person.MaxAscension>=6?1:0)).ToArray();
-        if(candidates.Length==0){var role=roles[rng.Next(roles.Length)];return ("联赛选手",role,tier,WorldPeople.PlayingStyle(NpcCharacters.Index(role.Id.Entry),rng.Next()));}
-        int distance=candidates.Min(x=>Math.Abs(x.Tier-tier));var group=candidates.Where(x=>Math.Abs(x.Tier-tier)==distance).ToArray();var pick=group[rng.Next(group.Length)];
-        return (pick.Person.PublicName,pick.Role!,tier==3?tier:pick.Tier,pick.Person.Style);
+    internal static bool PrepareRoster(CareerData world)=>world.LeagueRoster?.Season!=world.Season&&
+        LeagueSeasonRoster.Prepare(world,LeagueCards.OriginalRoles.Select(r=>r.Id.Entry).ToArray());
+    internal sealed class Draw(CareerData world){
+        internal readonly Dictionary<string,CareerPerson> People=world.People.ToDictionary(p=>p.Id);
+        internal readonly Dictionary<string,CharacterModel> Roles=LeagueCards.OriginalRoles.ToDictionary(r=>r.Id.Entry);
+        internal readonly HashSet<string> UsedPeople=[];
+        internal readonly HashSet<(string,string)> UsedPlans=[];
+    }
+    internal static (string Name,CharacterModel Role,int Tier,string Style,string? PersonId) Match(LeagueSeasonRoster roster,Draw draw,Random rng,int tier){
+        var available=roster.Brackets.Where(b=>b.Tier==tier&&draw.Roles.ContainsKey(b.Role))
+            .SelectMany(b=>b.Styles.SelectMany(s=>s.Value.Where(draw.People.ContainsKey).Select(id=>(b.Role,b.Plan,Style:s.Key,Id:id)))).ToArray();
+        if(available.Length==0){
+            var roles=draw.Roles.Values.OrderBy(r=>r.Id.Entry,StringComparer.Ordinal).ToArray();var role=roles[rng.Next(roles.Length)];
+            return ("联赛选手",role,tier,WorldPeople.PlayingStyle(NpcCharacters.Index(role.Id.Entry),rng.Next()),null);
+        }
+        // 先用尽本段位不同的选手；其中优先尚未在本场出战的职业与构筑组合。
+        var people=available.Where(x=>!draw.UsedPeople.Contains(x.Id)).ToArray();
+        if(people.Length==0)people=available;
+        var fresh=people.Where(x=>!draw.UsedPlans.Contains((x.Role,x.Plan))).ToArray();
+        var rolesInTier=(fresh.Length==0?people:fresh).GroupBy(x=>x.Role).ToArray();
+        var plans=rolesInTier[rng.Next(rolesInTier.Length)].GroupBy(x=>x.Plan).ToArray();
+        var players=plans[rng.Next(plans.Length)].ToArray();var pick=players[rng.Next(players.Length)];
+        draw.UsedPeople.Add(pick.Id);draw.UsedPlans.Add((pick.Role,pick.Plan));
+        return (draw.People[pick.Id].PublicName,draw.Roles[pick.Role],tier,pick.Style,pick.Id);
     }
     internal static Dictionary<string,int> UpgradePlan(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng){
         return Upgrades(cards,plan,tier,rng,false);
     }
+    // 建筑师的精英借用大师的运转目标，其余攻防与稀有度仍按出战段位选择。
+    private static int ConstructionTier(int tier,bool final)=>final&&tier==1?2:tier;
     internal static Dictionary<string,int> Upgrades(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng,bool final){
-        int left=final&&tier>=2?6:tier>=2?LeagueCards.UpgradeBudget:1+2*tier;var upgrades=new Dictionary<string,int>();
+        int build=ConstructionTier(tier,final);
+        int left=build>=2?(final?6:LeagueCards.UpgradeBudget):1+2*build;var upgrades=new Dictionary<string,int>();
         foreach(var card in cards.Where(c=>c.MaxUpgradeLevel>0).OrderByDescending(c=>(plan.Anchors.Contains(c.Id.Entry)?2:plan.Partners.Contains(c.Id.Entry)?1:0)+rng.NextDouble()*1.5)){
             var id=card.Id.Entry;int cost=LeagueCards.UpgradeCost(LeagueCards.Catalog[id]);if(cost>left)continue;
             upgrades[id]=upgrades.GetValueOrDefault(id)+1;left-=cost;if(left==0)break;
@@ -33,13 +52,14 @@ internal static class LeagueLadder
         return BuildFor(role,rng,tier,style,false);
     }
     internal static List<CardModel> BuildFor(CharacterModel role,Random rng,int tier,string style,bool final){
+        int build=ConstructionTier(tier,final);
         var plan=LeagueArchetypes.Resolve(role.Id.Entry,style);
         var pool=LeagueCards.Catalog.Values.Where(c=>(c.Group==role.Id.Entry||c.Group=="COLORLESS")&&GameCharacterNames.IsOriginal(c.Model.GetType())&&c.Model.MultiplayerConstraint.ToString()!="MultiplayerOnly").ToArray();
         var engine=LeagueArchetypes.Engines[role.Id.Entry];
         var deck=new Dictionary<string,int>();var result=new List<CardModel>(LeagueCards.DeckSize);
         var rarity=new int[4];int neutral=0;
         void Add(LeagueCards.Entry c){deck[c.Id]=deck.GetValueOrDefault(c.Id)+1;result.Add(c.Model);rarity[c.Tier]++;if(c.Group=="COLORLESS")neutral++;}
-        bool Available(LeagueCards.Entry c)=>result.Count<LeagueCards.DeckSize&&deck.GetValueOrDefault(c.Id)<Math.Max(2,LeagueCards.Fixed(c))&&
+        bool Available(LeagueCards.Entry c)=>result.Count<LeagueCards.DeckSize&&(c.Id!="BARRICADE"||!deck.ContainsKey(c.Id))&&deck.GetValueOrDefault(c.Id)<Math.Max(2,LeagueCards.Fixed(c))&&
             (c.Group!="COLORLESS"||neutral<LeagueCards.NeutralLimit)&&rarity[c.Tier]<(!final&&tier==3&&c.Tier==0?LeagueCards.DeckSize-LeagueCards.RarityLimits.Skip(1).Sum():LeagueCards.RarityLimits[c.Tier]);
         var core=pool.Where(c=>plan.Anchors.Contains(c.Id)).ToArray();
         var support=pool.Where(c=>plan.Partners.Contains(c.Id)).ToArray();
@@ -56,30 +76,35 @@ internal static class LeagueLadder
             foreach(var c in core.Where(c=>c.Id is "JEST" or "PUNCH_OF_JOY"))if(Available(c))Add(c);
         }
         if(tier>0){
-            foreach(var c in theme)if(Available(c))Add(c);
+            // 先让本打法的准备和兑现手段成对入组，再分配共用的运转名额。
+            foreach(var c in core)if(c.Tier<3&&Available(c)&&LeagueArchetypes.CanSupportAnother(c.Id,deck))Add(c);
             var (guards,sustain)=LeagueArchetypes.Defense[role.Id.Entry];
-            void Supply(HashSet<string> tools,int target){
-                int count=deck.Where(p=>tools.Contains(p.Key)&&LeagueArchetypes.Enabled(p.Key,deck)).Sum(p=>p.Value);
-                while(count<target){
-                    var options=common.Where(c=>tools.Contains(c.Id)&&LeagueArchetypes.Enabled(c.Id,deck)&&Available(c)).ToArray();
+            void Supply(HashSet<string> tools,int target,bool utility=false){
+                bool Counts(string id)=>tools.Contains(id)&&(!utility||LeagueArchetypes.Enabled(id,deck));
+                while(deck.Where(p=>Counts(p.Key)).Sum(p=>p.Value)<target){
+                    var options=common.Where(c=>Counts(c.Id)&&Available(c)&&LeagueArchetypes.CanSupportAnother(c.Id,deck)).ToArray();
                     if(options.Length==0)break;
-                    // 优先选能配合当前打法的牌，保留不同选手之间的变化。
-                    Add(options.MaxBy(c=>(theme.Contains(c)?1.1:0)+(c.Group==role.Id.Entry?.4:0)+rng.NextDouble()*2)!);count++;
+                    Add(options.MaxBy(c=>(theme.Contains(c)?1.1:0)+(c.Group==role.Id.Entry?.4:0)+rng.NextDouble()*2)!);
                 }
             }
-            Supply(guards.Split(' ').ToHashSet(),tier+2);
-            Supply(sustain.Split(' ').ToHashSet(),tier==1?1:2);
-            Supply(engine.Draw,1+2*tier);Supply(engine.Energy,tier==1?2:tier==2?3:5);
+            Supply(plan.Starters,2+build);
+            foreach(var c in core)if(c.Tier<3&&!deck.ContainsKey(c.Id)&&Available(c)&&LeagueArchetypes.CanSupportAnother(c.Id,deck))Add(c);
+            Supply(plan.Finishers,1+build);
+            Supply(guards.Split(' ').ToHashSet(),tier+2,true);
+            Supply(sustain.Split(' ').ToHashSet(),tier==1?1:2,true);
+            Supply(engine.Draw,1+2*build,true);Supply(engine.Energy,build==1?2:build==2?3:5,true);
         }
-        int target=tier switch{0=>5+rng.Next(4),1=>15+rng.Next(4),2=>(final?18:21)+rng.Next(4),_=>final?21+rng.Next(3):24};
+        int target=build switch{0=>5+rng.Next(4),1=>15+rng.Next(4),2=>(final?18:21)+rng.Next(4),_=>final?21+rng.Next(3):24};
         while(theme.Sum(c=>deck.GetValueOrDefault(c.Id))<target){
-            var options=theme.Where(Available).ToArray();if(options.Length==0)break;Add(options[rng.Next(options.Length)]);
+            var options=theme.Where(c=>Available(c)&&LeagueArchetypes.CanSupportAnother(c.Id,deck)).ToArray();if(options.Length==0)break;
+            // 已有同名能力时，优先给能够立即出牌的配合留位；仍允许选择可叠加的能力。
+            Add(options.MaxBy(c=>rng.NextDouble()*(c.Model.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Power&&deck.ContainsKey(c.Id)?.65:1))!);
         }
         // 通用数值牌与职业牌共享同一份名额；运转牌已在上一步按实际触发条件挑选。
-        var fillers=common.Where(c=>c.Group==role.Id.Entry||tier>0&&(c.Id is "DARK_SHACKLES" or "HAND_OF_GREED" or "ETERNAL_ARMOR" or "GOLD_AXE"||engine.Draw.Contains(c.Id)||engine.Energy.Contains(c.Id))&&LeagueArchetypes.Enabled(c.Id,deck)).ToArray();
+        var fillers=common.Where(c=>(c.Group==role.Id.Entry||tier>0&&(c.Id is "DARK_SHACKLES" or "HAND_OF_GREED" or "ETERNAL_ARMOR" or "GOLD_AXE"||engine.Draw.Contains(c.Id)||engine.Energy.Contains(c.Id))&&LeagueArchetypes.Enabled(c.Id,deck))).ToArray();
         while(result.Count<LeagueCards.DeckSize){
             int roll=rng.Next(100);int grade=roll<3+5*tier?2:roll<26+10*tier?1:0;
-            var options=fillers.Where(Available).ToArray();var preferred=options.Where(c=>c.Tier==grade).ToArray();
+            var options=fillers.Where(c=>Available(c)&&LeagueArchetypes.CanSupportAnother(c.Id,deck)).ToArray();var preferred=options.Where(c=>c.Tier==grade).ToArray();
             if(preferred.Length==0)preferred=options;Add(preferred[rng.Next(preferred.Length)]);
         }
         return result;

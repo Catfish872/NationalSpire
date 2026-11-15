@@ -235,7 +235,7 @@ private static readonly string[][] Brands = [
 
 来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)；[`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.PrivatePublicContext.AppendPlayerContract(System.Text.StringBuilder, NationalSpire.CareerData)`](PrivateCareerContext.cs.md#symbol-8d6d43dee6a4)
+**调用者：** [`NationalSpire.CareerScreen.ClubContracts(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-72d930e0d1e7)；[`NationalSpire.EsportsWorld.AcceptOffer(NationalSpire.CareerData, NationalSpire.ClubOffer)`](EsportsWorld.cs.md#symbol-09ff5941397c)；[`NationalSpire.PrivatePublicContext.AppendPlayerContract(System.Text.StringBuilder, NationalSpire.CareerData)`](PrivateCareerContext.cs.md#symbol-8d6d43dee6a4)
 
 **调用：** [`NationalSpire.CareerMoney.Format(decimal)`](LifeData.cs.md#symbol-c94be8205c96)
 
@@ -453,7 +453,7 @@ private static readonly string[][] Brands = [
 
 来源：源码第 163 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerScreen.Clubs(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-f5bb582dc7eb)
+**调用者：** [`NationalSpire.CareerCommerce.PlayerMatch(NationalSpire.CareerData, NationalSpire.CareerMatch)`](CareerCommerce.cs.md#symbol-61ee1540f58f)；[`NationalSpire.CareerScreen.ClubContracts(NationalSpire.CareerData)`](CareerWorldScreen.cs.md#symbol-72d930e0d1e7)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F539785C121A3AA9262741F764B767DEA17212AA4F156C29F2E292CCF1AFCB80`。来源：[源码](../../LeagueSolverLink.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`EC21D57A7ACBB26CA977066BE7E1879C74038E268CCC0B4A9A3EB0082A15A5B8`。来源：[源码](../../LeagueSolverLink.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -171,7 +171,7 @@ private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
 
 来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
+**调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
 **调用：** `System.Func<TResult>.Invoke()`（委托实际目标见流程文档）
 
@@ -263,7 +263,7 @@ private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
 
 来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
+**调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
 **调用：** 无已绑定显式调用。
 
@@ -281,18 +281,19 @@ private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
 
 来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
+**调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueSolverLink.LeagueSolverLink()`](LeagueSolverLink.cs.md#symbol-bebd33b71b8c)；[`NationalSpire.LeagueSolverLink.LeagueSolverLink(object)`](LeagueSolverLink.cs.md#symbol-8d93e22218d4)；`System.Activator.CreateInstance(System.Type, params object?[]?)`；`System.Exception.GetBaseException()`
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`](ArchitectFinal.cs.md#symbol-dfa68774ae32)；[`NationalSpire.LeagueSolverLink.LeagueSolverLink()`](LeagueSolverLink.cs.md#symbol-bebd33b71b8c)；[`NationalSpire.LeagueSolverLink.LeagueSolverLink(object)`](LeagueSolverLink.cs.md#symbol-8d93e22218d4)；`System.Activator.CreateInstance(System.Type, params object?[]?)`；`System.Exception.GetBaseException()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueNativeMatch.AddedDoom(int)`；`NationalSpire.LeagueSolverLink.Ready`
+**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueDuel.Exit`；`NationalSpire.LeagueNativeMatch.AddedDoom(int)`；`NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`；`NationalSpire.LeagueSolverLink.Ready`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("league-solver",e.GetBaseException())`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("league-solver",e.GetBaseException());`
+- `NationalSpire.LeagueNativeMatch.For(MegaCrit.Sts2.Core.Entities.Players.Player?)`；输入表达式：`LeagueNativeMatch.For(rival)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: LeagueNativeMatch.For(rival)?.Exit`
 - `NationalSpire.LeagueSolverLink.LeagueSolverLink()`；输入表达式：`new()`；返回值紧邻使用处：`ReturnStatementSyntax: return new();`
-- `NationalSpire.LeagueSolverLink.LeagueSolverLink(object)`；输入表达式：`new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)!)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)!);`
-- `System.Activator.CreateInstance(System.Type, params object?[]?)`；输入表达式：`Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference)!`
+- `NationalSpire.LeagueSolverLink.LeagueSolverLink(object)`；输入表达式：`new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference,LeagueNativeMatch.For(rival)?.Exit??default(CancellationToken))!)`；返回值紧邻使用处：`ReturnStatementSyntax: return new(Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference,LeagueNativeMatch.For(rival)?.Exit??default(CancellationToken))!);`
+- `System.Activator.CreateInstance(System.Type, params object?[]?)`；输入表达式：`Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference,LeagueNativeMatch.For(rival)?.Exit??default(CancellationToken))`；返回值紧邻使用处：`PostfixUnaryExpressionSyntax: Activator.CreateInstance(adapter,rival,tier,setup,(Func<int,int>)LeagueNativeMatch.AddedDoom,preference,LeagueNativeMatch.For(rival)?.Exit??default(CancellationToken))!`
 - `System.Exception.GetBaseException()`；输入表达式：`e.GetBaseException()`；返回值紧邻使用处：`ArgumentSyntax: e.GetBaseException()`
 
 **赋值（含属性/字段和局部值）：**
@@ -304,7 +305,7 @@ private static readonly Lazy<Task<Type?>> Ready=new(()=>Task.Run(()=>{
 
 来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
+**调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
 **调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；`System.Exception.GetBaseException()`；`System.Func<T1, T2, T3, T4, TResult>.Invoke(T1, T2, T3, T4)`（委托实际目标见流程文档）
 

@@ -48,13 +48,14 @@ public partial class CareerScreen
     private async Task LeagueMatch(CareerData d){
         _leagueBusy=true;LeagueSolverLink.Prepare();
         try{
-            var a=d.Life.League;var rng=new Random();var roles=LeagueCards.Roles;var role=roles.Single(r=>r.Id.Entry==a.Captain);var match=LeagueLadder.Match(d,rng);var rival=match.Role;_leagueRival=match.Name;
+            var a=d.Life.League;var rng=new Random();var roles=LeagueCards.Roles;var role=roles.Single(r=>r.Id.Entry==a.Captain);
+            if(LeagueLadder.PrepareRoster(d))CareerStore.Save(d);
+            var match=LeagueLadder.Match(d.LeagueRoster!,new(d),rng,LeagueLadder.Tier(a.Rating));var rival=match.Role;_leagueRival=match.Name;
             var upgrades=a.Upgrades.GetValueOrDefault(a.Captain)?.ToDictionary();
             var selected=LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value)).ToArray();
-            var person=d.People.FirstOrDefault(p=>p.PublicName==match.Name&&NpcCharacters.Index(p.Character)==NpcCharacters.Index(rival.Id.Entry));
             int seed=rng.Next();
             await OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",
-                person==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,person.Id),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin);
+                match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin);
             async Task Begin(){
                 var rivalCards=LeagueLadder.Build(rival,rng,match.Tier,match.Style).ToArray();var session=_multiplayer;
                 if(session!=null){session.Message-=Notice;_multiplayer=null;}

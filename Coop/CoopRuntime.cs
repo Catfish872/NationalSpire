@@ -181,6 +181,7 @@ public partial class CoopRuntime : Node
         _pausedCount = session.World?.Run?.ResumeCount ?? 0;
         try
         {
+            if(LeagueNativeMatch.IsTeamMatch)LeagueNativeMatch.StopMirrorTurns();
             // 中途退出恢复最近一次原版安全检查点，不能用半个战斗状态覆盖它。
             if (session.World?.Run is { Terminal: null } run)
             {

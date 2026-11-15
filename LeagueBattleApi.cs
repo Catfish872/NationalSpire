@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Linq.Expressions;
 
 namespace NationalSpire;
@@ -21,6 +22,10 @@ internal static class LeagueBattleApi
 {
     private static readonly MethodInfo NewRun=typeof(RunState).GetMethods().Single(m=>m.Name=="CreateForNewRun");
     private static readonly MethodInfo MakeAnimator=typeof(CharacterModel).GetMethods().Single(m=>m.Name=="GenerateAnimator");
+    private static readonly MethodInfo? CharacterVisuals=typeof(CharacterModel).GetProperty("VisualsPath",BindingFlags.Instance|BindingFlags.NonPublic|BindingFlags.Public)?.GetGetMethod(true);
+    // 只缓存接口，不缓存路径；皮肤模组可以在两场之间切换职业外观。
+    internal static string VisualsPath(CharacterModel role)=>CharacterVisuals?.Invoke(role,null) as string
+        ??"res://scenes/creature_visuals/"+role.Id.Entry.ToLowerInvariant()+".tscn";
     private static MethodInfo? _damage;
     private static bool _detailed;
     private static Func<LeagueDuel.Hit,Task>? _deliverWithEffects;
@@ -29,8 +34,31 @@ internal static class LeagueBattleApi
     private static LeagueDuel.Hit? _settling;
     private sealed class IncomingIntent(LeagueDuel.Hit hit) : BlockingPlayerChoiceContext
     {
+        private bool _checkedDealer;
+        internal bool StopForDeadDealer(Creature dealer){
+            if(_checkedDealer||dealer!=hit.Dealer)return dealer.IsDead;
+            _checkedDealer=true;
+            return dealer.IsDead && dealer.Monster is not MegaCrit.Sts2.Core.Models.Monsters.Osty;
+        }
         internal bool Matches(Creature target,Creature? dealer) => target==hit.Target && dealer==hit.Dealer;
     }
+    // 仅替换伤害入口对攻击者的检查。目标死亡、反伤和后续卡效仍由游戏各自判断。
+    private static IEnumerable<CodeInstruction> CommittedAttack(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod){
+        var state=__originalMethod.DeclaringType!;
+        var dealer=AccessTools.Field(state,"dealer");var context=AccessTools.Field(state,"choiceContext");
+        var dead=AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsDead));
+        bool readDealer=false;
+        foreach(var i in instructions){
+            if(readDealer&&i.Calls(dead)){
+                yield return new CodeInstruction(OpCodes.Ldarg_0).MoveLabelsFrom(i).MoveBlocksFrom(i);
+                yield return new CodeInstruction(OpCodes.Ldfld,context);
+                yield return CodeInstruction.Call(typeof(LeagueBattleApi),nameof(StopForDeadDealer));
+            }else yield return i;
+            readDealer=i.opcode==OpCodes.Ldfld&&Equals(i.operand,dealer);
+        }
+    }
+    private static bool StopForDeadDealer(Creature dealer,PlayerChoiceContext context)=>
+        context is IncomingIntent hit?hit.StopForDeadDealer(dealer):dealer.IsDead;
     private static bool OwnTurnLoss(PlayerChoiceContext choiceContext,Creature target,Creature? dealer,CardModel? cardSource,ref Task __result){
         if(choiceContext is not IncomingIntent hit||cardSource!=null||!hit.Matches(target,dealer))return true;
         __result=Task.CompletedTask;return false;
@@ -52,6 +80,7 @@ internal static class LeagueBattleApi
         var type=_detailed?typeof(Detailed<>).MakeGenericType(_damage.GetParameters()[1].ParameterType.GenericTypeArguments[0]):typeof(LeagueBattleApi);
         if(_detailed)_deliverWithEffects=AccessTools.DeclaredMethod(type,"Deliver").CreateDelegate<Func<LeagueDuel.Hit,Task>>();
         h.Patch(_damage,prefix:new HarmonyMethod(type,"Record"));
+        h.Patch(AccessTools.AsyncMoveNext(_damage),transpiler:new HarmonyMethod(typeof(LeagueBattleApi),nameof(CommittedAttack)));
         foreach(var effect in LeagueOwnTurnLoss.Effects)
             h.Patch(AccessTools.DeclaredMethod(effect,nameof(AbstractModel.AfterDamageReceived)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(OwnTurnLoss)));
         if(!_detailed)h.Patch(AccessTools.Method(typeof(Hook),nameof(Hook.ModifyDamage)),prefix:new HarmonyMethod(typeof(LeagueBattleApi),nameof(FixedAmount)));

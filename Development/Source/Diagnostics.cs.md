@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`D8DE184A7E36574F48CFCEE889C40C8E57F7AB9FCF1DF0574A7A28A2E0571529`。来源：[源码](../../Diagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D5360F894969E07B67C540A0238CAE4C1104E9F8090602F0642539EAB77E9D61`。来源：[源码](../../Diagnostics.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -11,7 +11,7 @@
 字段、事件及初始值（源码原样）：
 
 ```csharp
-public const string ModVersion = "1.1.2";
+public const string ModVersion = "1.1.3";
 private const int LogLimit = 2 * 1024 * 1024;
 private static readonly object Gate = new();
 private static readonly Queue<string> Events = new();

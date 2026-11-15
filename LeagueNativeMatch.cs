@@ -31,6 +31,8 @@ public static partial class LeagueNativeMatch
     internal static LeagueDuel? Current;
     private static CombatRoom? _room;
     private static bool _installed,_opener,_returning;
+    private static CancellationTokenSource? _mirrorExit;
+    internal static void StopMirrorTurns()=>_mirrorExit?.Cancel();
     private static ICareerSession? _session;
     private static RunState? _run;
     private static LeagueEncounter? _matchVenue;
@@ -44,7 +46,8 @@ public static partial class LeagueNativeMatch
         var run=LeagueBattleApi.Create([hero],acts,seed.ToString());
         bot.RunState=run;bot.InitializeSeed(seed.ToString());
         EquipDeck(run,hero,cards,upgrades,playerTier);
-        Current=new(bot,rival,seed,opponentName,tier,rivalUpgrades);Current.SetupCards=style==null?[]:LeagueArchetypes.Resolve(other.Id.Entry,style).Anchors;_run=run;_session=session;_opener=LeagueLadder.RivalOpens(seed);
+        _mirrorExit=new();
+        Current=new(bot,rival,seed,opponentName,tier,rivalUpgrades){Exit=_mirrorExit.Token};Current.SetupCards=style==null?[]:LeagueArchetypes.Resolve(other.Id.Entry,style).Anchors;_run=run;_session=session;_opener=LeagueLadder.RivalOpens(seed);
         _returning=false;
         try{
             var game=NGame.Instance!;bool opening=CareerScreen.UseOpening();
@@ -60,7 +63,7 @@ public static partial class LeagueNativeMatch
             InstallExit(scene);
             var room=(CombatRoom)await RunManager.Instance.EnterRoomDebug(RoomType.Monster,model:encounter,showTransition:false);
             if(_run!=run||_returning)return;_room=room;if(!opening)await game.Transition.FadeIn(.24f);
-        }catch(Exception ex){Diagnostics.Error("league-match",ex);await Return("对决未能开始 · "+ex.GetBaseException().Message);}
+        }catch(Exception ex){if(_run!=run||_returning)return;Diagnostics.Error("league-match",ex);await Return("对决未能开始 · "+ex.GetBaseException().Message);}
     }
     private static NRun EnterMatchScene(NGame game,RunState run){
         var scene=NRun.Create(run);
@@ -76,10 +79,15 @@ public static partial class LeagueNativeMatch
         var fighter=opponent.Fighter??Current!;if(_run?.CurrentMapPointHistoryEntry is {} floor&&fighter.Rival is {} rival&&!floor.PlayerStats.Any(p=>p.PlayerId==rival.NetId))
             floor.PlayerStats.Add(new(){PlayerId=rival.NetId});
         if(NCombatRoom.Instance?.GetCreatureNode(opponent.Creature) is {} view)OrbDisplay(view);
-        if(!_opener||!fighter.Rival.Creature.IsAlive||!Opened.Add(fighter))return;await fighter.Act();Refresh(opponent);
+        if(!_opener||!fighter.Rival.Creature.IsAlive||!Opened.Add(fighter))return;await fighter.Act();
+        if(fighter.Exit.IsCancellationRequested)return;
+        // 抢先行动不经过原版敌方回合结束事件，按施加者清理这一轮的出牌标记。
+        var actor=fighter.Rival.Creature;
+        foreach(var mark in actor.CombatState!.GetOpponentsOf(actor).SelectMany(c=>c.Powers).Where(p=>p.Applier==actor&&p is MegaCrit.Sts2.Core.Models.Powers.StranglePower or MegaCrit.Sts2.Core.Models.Powers.OblivionPower).ToArray())await PowerCmd.Remove(mark);
+        Refresh(opponent);
     }
     internal static async Task Enemy(LeagueOpponent opponent){
-        _opener=false;var fighter=opponent.Fighter??Current!;await fighter.Act();Refresh(opponent);
+        _opener=false;var fighter=opponent.Fighter??Current!;await fighter.Act();if(!fighter.Exit.IsCancellationRequested)Refresh(opponent);
     }
     internal static async Task Resolve(CombatSide side){
         var duel=Current;if(duel==null)return;
@@ -226,6 +234,7 @@ public static partial class LeagueNativeMatch
     }
     internal static bool QueueHits(IEnumerable<(Creature Target,string? Vfx,bool Center)> targets,decimal amount,ValueProp props,Creature? dealer,CardModel? source,CardPlay? play,ModifyDamageHookType modifiers,ref Task<IEnumerable<DamageResult>> result){
         if(Current==null||_room==null||dealer==null||dealer.CombatState!=_room.CombatState)return true;
+        if(dealer.Monster is MegaCrit.Sts2.Core.Models.Monsters.Osty && dealer.IsDead)return true;
         var items=targets.ToArray();if(items.Length==0||items.Any(t=>t.Target.Side==dealer.Side))return true;
         foreach(var item in items){
             // 力量和易伤按出牌时计算；每击上限留到防守方结束行动时判断。
@@ -303,6 +312,7 @@ public static partial class LeagueNativeMatch
     }
     private static void Ended(CombatRoom room){if(room==_room&&!_returning){_returning=true;bool won=_run!.Players[0].Creature.IsAlive;Callable.From(()=>{_=Return(won?"对决胜利":"对决结束 · 惜败",won);}).CallDeferred();}}
     private static void Release(){
+        StopMirrorTurns();_mirrorExit?.Dispose();_mirrorExit=null;
         _matchVenue=null;
         if(_exitDialog!=null&&NModalContainer.Instance?.OpenModal==_exitDialog)NModalContainer.Instance.Clear();
         CombatManager.Instance.CombatEnded-=Ended;CombatManager.Instance.TurnStarted-=PlayerTurn;foreach(var f in Fighters)f.Rival.PlayerCombatState?.AfterCombatEnd();Team.Clear();Opened.Clear();Current=null;_room=null;_run=null;_exit=null;_exitDialog=null;_interrupted=false;
@@ -310,6 +320,7 @@ public static partial class LeagueNativeMatch
     }
     private static async Task Return(string? result,bool? won=null){
         _returning=true;var session=_session;_session=null;
+        if(!won.HasValue)StopMirrorTurns();
         var finish=won.HasValue&&Current is {} d?new LeagueFinish(Guid.NewGuid().ToString("N"),d.OpponentName,d.Tier):null;
         var game=NGame.Instance!;if(_run!=null&&RunManager.Instance.DebugOnlyGetState()==_run)await game.ReturnToMainMenu();
         Release();
@@ -367,7 +378,7 @@ public sealed class LeagueOpponent : MonsterModel
     public override bool ShouldShowInCompendium=>false;
     public override LocString Title=>Role.Title;
     public override string DeathSfx=>Role.DeathSfx;
-    protected override string VisualsPath=>"res://scenes/creature_visuals/"+Role.Id.Entry.ToLowerInvariant()+".tscn";
+    protected override string VisualsPath=>LeagueBattleApi.VisualsPath(Role);
     public override CreatureAnimator GenerateAnimator(MegaSprite sprite)=>LeagueBattleApi.Animator(Role,sprite,Creature);
     protected override MonsterMoveStateMachine GenerateMoveStateMachine(){var move=new MoveState("LEAGUE_PLAY",_=>LeagueNativeMatch.Enemy(this));move.FollowUpState=move;return new([move],move);}
     public override Task AfterAddedToRoom(){LeagueNativeMatch.Bind(this);return Task.CompletedTask;}

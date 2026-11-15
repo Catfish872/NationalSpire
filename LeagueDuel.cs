@@ -16,6 +16,8 @@ public sealed partial class LeagueDuel
 {
     internal readonly Random _rng;
     internal readonly Player Rival;
+    // 保留建角时的职业实体供外观读取。实际手牌与伤害始终使用 Attach 绑定的敌方实体。
+    internal readonly Creature VisualCharacter;
     internal readonly CardModel[] Deck;
     internal readonly string OpponentName;
     internal readonly int Tier;
@@ -35,19 +37,28 @@ public sealed partial class LeagueDuel
             ?Math.Min(BeforeCap,p.ModifyDamageCap(Target,Props,Dealer,null,null)):BeforeCap);
     }
     private readonly Dictionary<string,int>? _upgrades;
-    internal LeagueDuel(Player rival,CardModel[] deck,int seed,string opponentName,int tier,Dictionary<string,int>? upgrades,List<Hit>? pending=null){Pending=pending??[];_upgrades=upgrades;Tier=tier;Rival=rival;Deck=deck;_rng=new(seed);OpponentName=opponentName;}
+    internal LeagueDuel(Player rival,CardModel[] deck,int seed,string opponentName,int tier,Dictionary<string,int>? upgrades,List<Hit>? pending=null){Pending=pending??[];_upgrades=upgrades;Tier=tier;Rival=rival;VisualCharacter=rival.Creature;Deck=deck;_rng=new(seed);OpponentName=opponentName;}
     internal void Attach(Creature actor){
         AccessTools.Field(typeof(Player),"<Creature>k__BackingField").SetValue(Rival,actor);
         Rival.ResetCombatState();
         var remaining=_upgrades?.ToDictionary();foreach(var c in Deck.OrderBy(_=>_rng.Next()))Rival.PlayerCombatState!.DrawPile.AddInternal(LeagueCards.ApplyAllocation(((CombatState)actor.CombatState!).CreateCard(c,Rival),remaining),-1,true);
     }
+    internal bool DisplayingTurn {get;private set;}
+    internal CancellationToken Exit {get;init;}
     internal async Task Act(){
+        if(Exit.IsCancellationRequested)return;
+        DisplayingTurn=true;
+        try{await PlayTurn();}catch(OperationCanceledException) when(Exit.IsCancellationRequested){}
+        finally{DisplayingTurn=false;if(!Exit.IsCancellationRequested)LeagueNativeMatch.EndPlayDisplay(this);}
+    }
+    private async Task PlayTurn(){
         var s=Rival.PlayerCombatState!;
         var state=Rival.Creature.CombatState!;
-        await LeagueSolverLink.PrepareChoices();
+        await LeagueSolverLink.PrepareChoices().WaitAsync(Exit);Exit.ThrowIfCancellationRequested();
         var context=new BlockingPlayerChoiceContext();
         if(Hook.ShouldPlayerResetEnergy(state,Rival))s.ResetEnergy();else s.AddMaxEnergyToCurrent();
         await Hook.AfterEnergyReset(state,Rival);
+        Exit.ThrowIfCancellationRequested();
         await Hook.BeforeHandDraw(state,Rival,context);
         decimal draw=Hook.ModifyHandDraw(state,Rival,5,out var modifiers);await Hook.AfterModifyingHandDraw(state,modifiers);
         if(s.TurnNumber==1){
@@ -57,9 +68,12 @@ public sealed partial class LeagueDuel
             foreach(var c in innate)s.DrawPile.MoveToTopInternal(c);
             draw=Math.Min(CardPile.MaxCardsInHand,Math.Max(draw,innate.Length));
         }
-        await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(context,draw,Rival,true);
+        Exit.ThrowIfCancellationRequested();await MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(context,draw,Rival,true);
+        Exit.ThrowIfCancellationRequested();
         await Hook.AfterPlayerTurnStart(state,context,Rival);
+        Exit.ThrowIfCancellationRequested();
         await s.OrbQueue.AfterTurnStart(context);
+        Exit.ThrowIfCancellationRequested();
         var incoming=Pending.Where(h=>h.Target==Rival.Creature).ToArray();var amounts=incoming.Select(h=>h.Amount).ToArray();var props=incoming.Select(h=>(int)h.Props).ToArray();var capped=incoming.Select(h=>h.Cap!=ModifyDamageHookType.None).ToArray();
         var dealers=incoming.Select(h=>h.AllowColossus&&!h.Doom?(int?)h.Dealer.CombatId??-1:-1).ToArray();
         var seen=new Dictionary<string,decimal>();var host=LeagueNativeMatch.PlanHost;
@@ -71,6 +85,7 @@ public sealed partial class LeagueDuel
             preference=(int)players[(seat+Math.Max(0,s.TurnNumber-1))%players.Length].CombatId!.Value;
         }
         using var advisor=host?await LeagueSolverLink.Open(Rival,Tier,SetupCards,preference):null;
+        Exit.ThrowIfCancellationRequested();
         var sequence=new Queue<(int Id,int Aim,int[] Choices)>();
         var identities=new Dictionary<CardModel,int>(ReferenceEqualityComparer.Instance);
         void Identify(){foreach(var pile in s.AllPiles)foreach(var instance in pile.Cards)identities.TryAdd(instance,identities.Count);}
@@ -85,6 +100,7 @@ public sealed partial class LeagueDuel
         }
         bool skip=LeagueNativeMatch.ConsumeStun(Rival.Creature);
         while(!skip&&Rival.Creature.IsAlive&&state.Allies.Any(c=>c.IsAlive)){
+            Exit.ThrowIfCancellationRequested();
             string key=s.Energy+":"+s.Stars+":"+string.Join(',',s.Hand.Cards.Select(c=>c.Id.Entry))+":"+s.DrawPile.Cards.Count;
             decimal queued=Pending.Where(h=>h.Dealer==Rival.Creature).Sum(h=>h.Amount);
             if(seen.TryGetValue(key,out var previous)&&(queued<=previous||queued>=state.Allies.Where(c=>c.IsAlive).Sum(c=>c.CurrentHp+c.Block)))break;seen[key]=queued;
@@ -93,7 +109,7 @@ public sealed partial class LeagueDuel
             if(card==null){
                 sequence.Clear();Identify();var wire=new List<int>();
                 if(host){
-                    var best=await advisor!.Choose(amounts,props,capped,dealers);int aim=best==null?-1:advisor.Aim;
+                    var best=await advisor!.Choose(amounts,props,capped,dealers);Exit.ThrowIfCancellationRequested();int aim=best==null?-1:advisor.Aim;
                     var chosen=best??(advisor.EndTurn?null:LeagueTurnPlan.Choose(Rival,Pending,Math.Min(Tier,2)));
                     if(chosen!=null){
                         if(aim<0&&chosen.TargetType==TargetType.AnyEnemy)aim=state.GetOpponentsOf(Rival.Creature).Any(t=>t.IsHittable&&(int?)t.CombatId==preference)?preference:(int)state.GetOpponentsOf(Rival.Creature).First(t=>t.IsHittable).CombatId!.Value;
@@ -103,28 +119,33 @@ public sealed partial class LeagueDuel
                         if(best!=null)foreach(var (instance,t,choices) in advisor.Rest()){if(!identities.TryGetValue(instance,out var next))break;Add(next,t,choices);}
                     }
                 }
-                wire=await LeagueNativeMatch.SharePlan(wire);
+                wire=await LeagueNativeMatch.SharePlan(wire).WaitAsync(Exit);Exit.ThrowIfCancellationRequested();
                 for(int j=0;j<wire.Count;){int id=wire[j++],aim=wire[j++],count=wire[j++];sequence.Enqueue((id,aim,count==0?[]:wire.GetRange(j,count).ToArray()));j+=count;}
                 (card,target)=ReadNext();if(card==null)break;
             }
             try{var (cost,stars)=await card.SpendResources();
+            Exit.ThrowIfCancellationRequested();
             await card.OnPlayWrapper(new BlockingPlayerChoiceContext(),target,true,new(){EnergySpent=cost,EnergyValue=cost,StarsSpent=stars,StarValue=stars},true);
             }finally{if(_choiceIndex!=_choicePlan.Length||_choicesChanged)sequence.Clear();_choicePlan=[];_choiceIndex=0;_choicesChanged=false;}
         }
-        await s.OrbQueue.BeforeTurnEnd(context);
+        Exit.ThrowIfCancellationRequested();await s.OrbQueue.BeforeTurnEnd(context);
+        Exit.ThrowIfCancellationRequested();
         var endings=s.Hand.Cards.Where(c=>c.HasTurnEndInHandEffect).ToArray();
         foreach(var c in s.Hand.Cards.Where(c=>!c.HasTurnEndInHandEffect&&c.Keywords.Contains(CardKeyword.Ethereal)&&Hook.ShouldEtherealTrigger(state,c)).ToArray())
-            await MegaCrit.Sts2.Core.Commands.CardCmd.Exhaust(context,c,true);
+            {Exit.ThrowIfCancellationRequested();await MegaCrit.Sts2.Core.Commands.CardCmd.Exhaust(context,c,true);}
         foreach(var c in endings)if(s.Hand.Cards.Contains(c)){
-            await CardPileCmd.Add(c,PileType.Play,skipVisuals:true);await c.OnTurnEndInHandWrapper(context);
+            Exit.ThrowIfCancellationRequested();await CardPileCmd.Add(c,PileType.Play,skipVisuals:true);
+            Exit.ThrowIfCancellationRequested();await c.OnTurnEndInHandWrapper(context);
+            Exit.ThrowIfCancellationRequested();
             if(c.Keywords.Contains(CardKeyword.Ethereal))await CardCmd.Exhaust(context,c,true,true);
             else await CardPileCmd.Add(c,PileType.Discard,skipVisuals:true);
         }
-        await Hook.BeforeFlush(state,Rival);
+        Exit.ThrowIfCancellationRequested();await Hook.BeforeFlush(state,Rival);
+        Exit.ThrowIfCancellationRequested();
         var discard=new List<CardModel>();var retain=new List<CardModel>();bool flush=Hook.ShouldFlush(state,Rival);
         foreach(var c in s.Hand.Cards)(flush&&!c.ShouldRetainThisTurn?discard:retain).Add(c);
         if(discard.Count>0)await MegaCrit.Sts2.Core.Commands.CardPileCmd.Add(discard,PileType.Discard,skipVisuals:true);
-        await Hook.AfterFlush(state,Rival,context,discard,retain);
-        s.EndOfTurnCleanup();s.IncrementTurnNumber();
+        Exit.ThrowIfCancellationRequested();await Hook.AfterFlush(state,Rival,context,discard,retain);
+        Exit.ThrowIfCancellationRequested();s.EndOfTurnCleanup();s.IncrementTurnNumber();
     }
 }

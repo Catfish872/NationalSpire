@@ -94,7 +94,7 @@ private static readonly Dictionary<string, string[]> RoleBios = new();
 
 来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)；[`NationalSpire.LeagueLadder.Match(NationalSpire.CareerData, System.Random, int?)`](LeagueLadder.cs.md#symbol-4009feb05261)；[`NationalSpire.OwnedClubs.EnsureMarket(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-3dba497c8606)
+**调用者：** [`NationalSpire.CircuitPeople.Add(NationalSpire.CareerData, string, string, string, string, int)`](CircuitPeople.cs.md#symbol-1bc89c911651)；[`NationalSpire.ContentPoolMigration.Refresh(NationalSpire.CareerData)`](ContentPoolMigration.cs.md#symbol-fb1d019899b2)；[`NationalSpire.LeagueLadder.Match(NationalSpire.LeagueSeasonRoster, NationalSpire.LeagueLadder.Draw, System.Random, int)`](LeagueLadder.cs.md#symbol-5aa41a3b4644)；[`NationalSpire.OwnedClubs.EnsureMarket(NationalSpire.CareerData)`](OwnedClubs.cs.md#symbol-3dba497c8606)
 
 **调用：** 无已绑定显式调用。
 

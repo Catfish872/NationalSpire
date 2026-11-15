@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -26,6 +27,12 @@ public static partial class LeagueNativeMatch {
         var thorns=typeof(MegaCrit.Sts2.Core.Models.Powers.ThornsPower);
         h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(thorns,"BeforeDamageReceived")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ThornDamage)));
         var asm=typeof(CardModel).Assembly;
+        foreach(var mark in new[]{typeof(StranglePower),typeof(OblivionPower)}){
+            h.Patch(AccessTools.DeclaredMethod(mark,"BeforeCardPlayed"),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(LeagueOwner)));
+            h.Patch(AccessTools.DeclaredMethod(mark,"AfterSideTurnEnd"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(EndCardMark)));
+        }
+        h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(StranglePower),"AfterCardPlayed")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(StrangleDamage)));
+        h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(SleightOfFleshPower),"AfterPowerAmountChanged")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(FleshOpponent)));
         h.Patch(AccessTools.Method(typeof(MegaCrit.Sts2.Core.Hooks.Hook),"ModifyPowerAmountReceived"),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelDoom)));
         h.Patch(AccessTools.GetDeclaredMethods(typeof(PowerCmd)).Single(m=>m.Name=="Apply"&&!m.IsGenericMethod),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingPower)));
         h.Patch(AccessTools.Method(typeof(PowerCmd),"ModifyAmount"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PendingStack)));
@@ -34,12 +41,12 @@ public static partial class LeagueNativeMatch {
                 var t=asm.GetType("MegaCrit.Sts2.Core.Models."+group+"."+n);if(t==null)continue;
                 foreach(var owner in Nested(t))foreach(var m in AccessTools.GetDeclaredMethods(owner)){
                     if(m.IsStatic||m.IsAbstract||m.GetMethodBody()==null||(!m.Name.Contains("OnPlay")&&owner==t&&m.Name.StartsWith("get_")))continue;
-                    if(!FindOwner(owner,t,out _)||!PatchProcessor.ReadMethodBody(m).Any(op=>op.Value is MethodInfo mi&&(mi.DeclaringType==typeof(ICombatState)&&(mi.Name=="get_HittableEnemies"||t.Name=="FrostOrb"&&mi.Name=="get_Players")||mi.DeclaringType==typeof(CreatureCmd)&&mi.Name=="Damage"&&(typeof(OrbModel).IsAssignableFrom(t)||t.Name=="PoisonPower"))))continue;
+                    if((!FindOwner(owner,t,out _)&&CardArgument(m)<0)||!PatchProcessor.ReadMethodBody(m).Any(op=>op.Value is MethodInfo mi&&(SideGetter(mi,t)||mi.DeclaringType==typeof(CreatureCmd)&&mi.Name=="Damage"&&(typeof(OrbModel).IsAssignableFrom(t)||t.Name=="PoisonPower"))))continue;
                     if(EffectPatches.Add(m))h.Patch(m,transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(ResolveEffectSides)));
                 }
             }
         }
-        Register("Cards","BeatDown BouncingFlask Chill Conflagration CrushUnder DaggerSpray Deathbringer DyingStar EchoingSlash EndOfDays Haze MementoMori Misery NegativePulse Outbreak PiercingWail Resonance Shiv Shockwave SovereignBlade Stomp SweepingBeam Thunderclap");
+        Register("Cards","BeatDown BouncingFlask Chill Conflagration CrushUnder DaggerSpray Deathbringer DyingStar EchoingSlash EndOfDays Haze HighFive Hyperbeam MementoMori MeteorShower Mirage Misery NegativePulse Outbreak PiercingWail Resonance Shiv Shockwave SovereignBlade Stomp SweepingBeam Thunderclap");
         Register("Powers","BlackHolePower CacophonyPower CorrosiveWavePower CountdownPower ExplosiveArrowsPower GodByrdPower GravityPower HailstormPower HauntPower HellraiserPower InfernoPower JuggernautPower NecroMasteryPower NoxiousFumesPower PanachePower RollingBoulderPower SerpentFormPower SmokestackPower SpeedsterPower TheBombPower ViolentChordPower");
         Register("Relics","CharonsAshes FestivePopper ForgottenSoul Kusarigama LetterOpener LostWisp Metronome MercuryHourglass MrStruggles ParryingShield ScreamingFlagon StoneCalendar Tingsha");
         Register("Powers","PoisonPower");
@@ -91,6 +98,38 @@ public static partial class LeagueNativeMatch {
         foreach(var i in instructions){var original=i.operand;if(IsOwnerPair(prev,original)){i.opcode=OpCodes.Call;i.operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(LeaguePlayer));}prev=original;yield return i;}
     }
     private static IEnumerable<Type> Nested(Type t){yield return t;foreach(var child in t.GetNestedTypes(BindingFlags.Public|BindingFlags.NonPublic))foreach(var item in Nested(child))yield return item;}
+    // 只替换血肉戏法判断受招者阵营的那一步。是否真的施加负面状态仍由原版通知决定。
+    private static IEnumerable<CodeInstruction> FleshOpponent(IEnumerable<CodeInstruction> code,MethodBase __originalMethod){
+        var power=AccessTools.GetDeclaredFields(__originalMethod.DeclaringType).Single(f=>f.FieldType==typeof(SleightOfFleshPower));
+        foreach(var i in code){
+            if(i.Calls(AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsEnemy)))){
+                yield return new CodeInstruction(OpCodes.Ldarg_0).MoveLabelsFrom(i).MoveBlocksFrom(i);
+                yield return new CodeInstruction(OpCodes.Ldfld,power);
+                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(LeagueNativeMatch),nameof(FleshTarget)));
+            }else yield return i;
+        }
+    }
+    private static bool FleshTarget(Creature target,SleightOfFleshPower power)=>_room!=null&&power.Owner.CombatState==_room.CombatState?target.Side!=power.Owner.Side:target.IsEnemy;
+    // 标记留在受招者身上，但只持续到施加者本回合结束。
+    private static bool EndCardMark(PowerModel __instance,CombatSide side,ref Task __result){
+        if(_room==null||__instance.Owner.CombatState!=_room.CombatState||__instance.Applier==null)return true;
+        __result=__instance.Applier.Side==side?PowerCmd.Remove(__instance):Task.CompletedTask;return false;
+    }
+    private static IEnumerable<CodeInstruction> StrangleDamage(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod){
+        var mark=AccessTools.GetDeclaredFields(__originalMethod.DeclaringType).Single(f=>f.FieldType==typeof(StranglePower));
+        foreach(var i in instructions){
+            if(i.operand is MethodInfo m&&m.DeclaringType==typeof(CreatureCmd)&&m.Name=="Damage"&&m.GetParameters().Length==6){
+                yield return new CodeInstruction(OpCodes.Ldarg_0).MoveLabelsFrom(i).MoveBlocksFrom(i);
+                yield return new CodeInstruction(OpCodes.Ldfld,mark);
+                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(LeagueNativeMatch),nameof(StrangleHit)));
+            }else yield return i;
+        }
+    }
+    private static Task<IEnumerable<DamageResult>> StrangleHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext ctx,Creature target,decimal amount,MegaCrit.Sts2.Core.ValueProps.ValueProp props,CardModel? source,MegaCrit.Sts2.Core.Entities.Cards.CardPlay? play,StranglePower mark){
+        Task<IEnumerable<DamageResult>> result=null!;
+        if(!QueueHits([(target,null,false)],amount,props&~MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable,mark.Applier,source,play,MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType.All,ref result))return result;
+        return CreatureCmd.Damage(ctx,target,amount,props,source,play);
+    }
     // 只改自动出牌缺少目标时使用的候选名单；手动指定的目标与卡牌自身生命代价保持原样。
     private static IEnumerable<CodeInstruction> AutoPlayTeams(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod){
         var card=AccessTools.GetDeclaredFields(__originalMethod.DeclaringType).Single(f=>f.FieldType==typeof(CardModel)&&f.Name=="card");
@@ -117,9 +156,11 @@ public static partial class LeagueNativeMatch {
         }
         return false;
     }
+    private static bool SideGetter(MethodInfo m,Type model)=>m.DeclaringType==typeof(ICombatState)&&(m.Name=="get_HittableEnemies"||m.Name=="get_Players"&&model.Name=="FrostOrb"||m.Name=="get_Enemies"&&model.Name is "Mirage" or "Hyperbeam");
+    private static int CardArgument(MethodBase m)=>m.GetParameters().FirstOrDefault(p=>p.ParameterType==typeof(CardModel)) is {} card?card.Position+(m.IsStatic?0:1):-1;
     private static IEnumerable<CodeInstruction> ResolveEffectSides(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod){
         var t=__originalMethod.DeclaringType!;var model=t;while(model.DeclaringType!=null)model=model.DeclaringType;
-        FindOwner(t,model,out var path);
+        bool captured=FindOwner(t,model,out var path);
         foreach(var i in instructions){
             if(i.operand is MethodInfo dmg&&dmg.DeclaringType==typeof(CreatureCmd)&&dmg.Name=="Damage"&&dmg.GetParameters() is [_,var targets,var amount,..] pars&&amount.ParameterType==typeof(decimal)){
                 if(model.Name=="PoisonPower"&&pars.Length==6)i.operand=AccessTools.Method(typeof(LeagueNativeMatch),nameof(PoisonHit));
@@ -127,10 +168,10 @@ public static partial class LeagueNativeMatch {
                     i.operand=AccessTools.Method(typeof(LeagueNativeMatch),targets.ParameterType==typeof(Creature)?nameof(OrbHit):nameof(EffectHit));
                 yield return i;continue;
             }
-            if(i.operand is MethodInfo m&&m.DeclaringType==typeof(ICombatState)&&(m.Name=="get_HittableEnemies"||m.Name=="get_Players"&&model.Name=="FrostOrb")){
-                yield return new CodeInstruction(OpCodes.Ldarg_0).MoveLabelsFrom(i).MoveBlocksFrom(i);
+            if(i.operand is MethodInfo m&&SideGetter(m,model)){
+                yield return CodeInstruction.LoadArgument(captured?0:CardArgument(__originalMethod)).MoveLabelsFrom(i).MoveBlocksFrom(i);
                 foreach(var field in path)yield return new CodeInstruction(OpCodes.Ldfld,field);
-                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(LeagueNativeMatch),m.Name=="get_Players"?nameof(TeamPlayers):nameof(EffectEnemies)));
+                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(LeagueNativeMatch),m.Name=="get_Players"?nameof(TeamPlayers):m.Name=="get_Enemies"?nameof(CardOpponents):nameof(EffectEnemies)));
             }else yield return i;
         }
     }
@@ -187,4 +228,5 @@ public static partial class LeagueNativeMatch {
         return enemy?state.GetOpponentsOf(rival.Creature).Where(c=>c.IsHittable).ToArray():state.HittableEnemies;
     }
     private static IReadOnlyList<Player> TeamPlayers(ICombatState state,OrbModel orb)=>For(orb.Owner)!=null?Fighters.Select(f=>f.Rival).Where(p=>p.Creature.IsAlive).ToArray():state.Players;
+    private static IReadOnlyList<Creature> CardOpponents(ICombatState state,CardModel card)=>For(card.Owner) is {} duel&&duel.Rival.Creature.CombatState==state?state.GetOpponentsOf(duel.Rival.Creature):state.Enemies;
 }

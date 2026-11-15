@@ -19,7 +19,7 @@
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
+**调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
 **调用：** [`Score(NationalSpire.LeagueTurnPlan.Path)`](LeagueTurnPlan.cs.md#symbol-ede99108bbc1)；`MegaCrit.Sts2.Core.Entities.Creatures.Creature.GetPowerAmount<T>()`；`MegaCrit.Sts2.Core.Models.CardModel.CanPlay()`；`NationalSpire.LeagueTurnPlan.Path.Path(ulong, int, int, int, decimal, decimal, decimal, int, int)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Min(int, int)`
 

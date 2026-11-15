@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../SOURCE_MAP.md)
 
-源码 SHA-256：`FC3E3E746B1FBB284B2406AA97966437A1A32BC0B57BCF71D986216472074FC5`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`1B93AF5B56D490B042FF992559F3B92668BA7CB7E7341C99256F074893FA22E8`。来源：[源码](../../../Coop/CoopRules.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -785,15 +785,16 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)
 
-**调用：** [`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](../LeagueCards.cs.md#symbol-66c78042d433)；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.Coop.CoopRun.CoopRun()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`
+**调用：** [`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](../LeagueCards.cs.md#symbol-66c78042d433)；[`NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`](../LeagueLadder.cs.md#symbol-fc32b34df886)；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`NationalSpire.Coop.CoopRun.CoopRun()`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerLifeState.League`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.Name`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Characters`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.Seed`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.LeagueAlbum.Captain`；`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.Roles`；`NationalSpire.LeagueSolverLink.Supported`；`NationalSpire.LeagueSolverLink.Unavailable`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerLifeState.League`；`NationalSpire.Coop.CoopMember.Life`；`NationalSpire.Coop.CoopMember.Name`；`NationalSpire.Coop.CoopMember.SteamId`；`NationalSpire.Coop.CoopRun.Attempt`；`NationalSpire.Coop.CoopRun.Characters`；`NationalSpire.Coop.CoopRun.LeagueTeam`；`NationalSpire.Coop.CoopRun.Seed`；`NationalSpire.Coop.CoopWorld.Members`；`NationalSpire.Coop.CoopWorld.Run`；`NationalSpire.Coop.CoopWorld.World`；`NationalSpire.LeagueAlbum.Captain`；`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.Roles`；`NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`；`NationalSpire.LeagueSolverLink.Supported`；`NationalSpire.LeagueSolverLink.Unavailable`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id.ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: run.Characters[member.SteamId]=LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id.ToString()`
 - `NationalSpire.Coop.CoopRun.CoopRun()`；输入表达式：`new CoopRun{LeagueTeam=true}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new CoopRun{LeagueTeam=true}`
 - `NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`；输入表达式：`LeagueCards.Ready(album)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !LeagueCards.Ready(album)`
+- `NationalSpire.LeagueLadder.PrepareRoster(NationalSpire.CareerData)`；输入表达式：`LeagueLadder.PrepareRoster(w.World)`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueLadder.PrepareRoster(w.World);`
 - `System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId).ToArray`
 - `System.Collections.Generic.IEnumerable<TSource>.Single<TSource>(System.Func<TSource, bool>)`；输入表达式：`LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id`
 - `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId).ToArray()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId).ToArray()`
@@ -811,7 +812,7 @@
 
 ## `NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?) — internal static void FinishLeagueTeam(CoopCoordinator session,string attempt,bool? won)`
 
-来源：源码第 476 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 477 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.PauseCore(string)`](CoopRuntime.cs.md#symbol-60fe2cb26a8e)；[`NationalSpire.LeagueNativeMatch.EndTeam(bool)`](../LeagueTeamMatch.cs.md#symbol-20c50965f995)
 
@@ -840,7 +841,7 @@
 
 ## `NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>) — private static string? ExecuteProposal(CoopWorld w, CoopProposal p, IReadOnlySet<string> characters)`
 
-来源：源码第 485 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 486 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)
 
@@ -893,7 +894,7 @@
 
 ## `NationalSpire.Coop.CoopRules.AddMoney(NationalSpire.Coop.CoopMember, decimal) — private static void AddMoney(CoopMember member, decimal amount)`
 
-来源：源码第 538 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 539 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Distribute(NationalSpire.Coop.CoopWorld, decimal, decimal?, System.Collections.Generic.IReadOnlySet<ulong>?)`](CoopRules.cs.md#symbol-1a8c8fbba94d)
 
@@ -914,7 +915,7 @@
 
 ## `NationalSpire.Coop.CoopRules.UseOwnerWallet(NationalSpire.Coop.CoopWorld) — private static void UseOwnerWallet(CoopWorld w)`
 
-来源：源码第 544 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 545 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)
 
@@ -938,7 +939,7 @@
 
 ## `NationalSpire.Coop.CoopRules.Distribute(NationalSpire.Coop.CoopWorld, decimal, decimal?, System.Collections.Generic.IReadOnlySet<ulong>?) — private static void Distribute(CoopWorld w, decimal amount, decimal? clubBefore = null, IReadOnlySet<ulong>? participants = null)`
 
-来源：源码第 551 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 552 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)
 
@@ -979,7 +980,7 @@
 
 ## `NationalSpire.Coop.CoopRules.PayClubMembers(NationalSpire.Coop.CoopWorld) — public static void PayClubMembers(CoopWorld w)`
 
-来源：源码第 570 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 571 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-bc24477e89ba)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.Distribute(NationalSpire.Coop.CoopWorld, decimal, decimal?, System.Collections.Generic.IReadOnlySet<ulong>?)`](CoopRules.cs.md#symbol-1a8c8fbba94d)
 
@@ -1026,7 +1027,7 @@
 
 ## `NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld) — public static void AdvanceMembers(CoopWorld w)`
 
-来源：源码第 595 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 596 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCoordinator.CoopCoordinator(NationalSpire.Coop.ICoopTransport, NationalSpire.Coop.CoopStorage, string, string, string, System.Collections.Generic.IReadOnlySet<string>, NationalSpire.Coop.CoopStorage.Checkpoint?)`](CoopCoordinator.cs.md#symbol-778097f34ec3)；[`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)；[`NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool)`](CoopRules.cs.md#symbol-926ebe8770ca)
 
@@ -1076,7 +1077,7 @@
 
 ## `NationalSpire.Coop.CoopRules.PayCeremonies(NationalSpire.Coop.CoopWorld) — public static void PayCeremonies(CoopWorld w)`
 
-来源：源码第 622 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 623 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.AdvanceMembers(NationalSpire.Coop.CoopWorld)`](CoopRules.cs.md#symbol-bc24477e89ba)
 
@@ -1120,7 +1121,7 @@
 
 ## `NationalSpire.Coop.CoopRules.Opponents(NationalSpire.Coop.CoopWorld, NationalSpire.CareerMatch) — public static List<CareerPerson> Opponents(CoopWorld w, CareerMatch match)`
 
-来源：源码第 646 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 647 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopCareerSession.Opponents(NationalSpire.CareerMatch)`](CoopCareerSession.cs.md#symbol-a5fdcb31eacc)；[`NationalSpire.Coop.CoopRules.Prepare(NationalSpire.Coop.CoopWorld, string, int, System.Collections.Generic.IReadOnlySet<string>, System.Collections.Generic.IReadOnlySet<ulong>?, string)`](CoopRules.cs.md#symbol-037a2d6843fd)
 
@@ -1141,7 +1142,7 @@
 
 ## `NationalSpire.Coop.CoopRules.Prepare(NationalSpire.Coop.CoopWorld, string, int, System.Collections.Generic.IReadOnlySet<string>, System.Collections.Generic.IReadOnlySet<ulong>?, string) — public static string? Prepare(CoopWorld w, string matchId, int ascension, IReadOnlySet<string> characters, IReadOnlySet<ulong>? participants = null, string mode = MatchModes.Standard)`
 
-来源：源码第 653 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 654 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.ExecuteProposal(NationalSpire.Coop.CoopWorld, NationalSpire.Coop.CoopProposal, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-fecbe30f550e)
 
@@ -1203,7 +1204,7 @@
 
 ## `NationalSpire.Coop.CoopRules.Settle(NationalSpire.Coop.CoopWorld, string, bool, bool, int, double, System.Collections.Generic.List<NationalSpire.Coop.CoopLivePlayer>, System.Collections.Generic.Dictionary<ulong, NationalSpire.CareerResult>?, bool, bool, bool) — public static CoopWorld Settle(CoopWorld original, string attempt, bool clear, bool abandoned, int floor, double seconds, List<CoopLivePlayer> players, Dictionary<ulong, CareerResult>? details = null, bool confirmFailure = false, bool forfeit = false, bool simulated = false)`
 
-来源：源码第 677 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 678 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRuntime.FinishTerminal()`](CoopRuntime.cs.md#symbol-9dbe454d0582)
 

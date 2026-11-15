@@ -47,7 +47,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-01e70a34cb99)；[`NationalSpire.CareerScreen.LeagueAward(NationalSpire.LeagueReceipt)`](LeagueArenaScreen.cs.md#symbol-9fa96420666c)；[`NationalSpire.CareerScreen.Opening.Reveal()`](LeagueArenaScreen.cs.md#symbol-a63c53a4d9b3)
+**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-e15cb10f1a37)；[`NationalSpire.CareerScreen.LeagueAward(NationalSpire.LeagueReceipt)`](LeagueArenaScreen.cs.md#symbol-9fa96420666c)；[`NationalSpire.CareerScreen.Opening.Reveal()`](LeagueArenaScreen.cs.md#symbol-a63c53a4d9b3)
 
 **调用：** `MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`
 
