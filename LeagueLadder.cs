@@ -42,8 +42,14 @@ internal static class LeagueLadder
     internal static Dictionary<string,int> Upgrades(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng,bool final){
         int build=ConstructionTier(tier,final);
         int left=build>=2?(final?6:LeagueCards.UpgradeBudget):1+2*build;var upgrades=new Dictionary<string,int>();
-        foreach(var card in cards.Where(c=>c.MaxUpgradeLevel>0).OrderByDescending(c=>(plan.Anchors.Contains(c.Id.Entry)?2:plan.Partners.Contains(c.Id.Entry)?1:0)+rng.NextDouble()*1.5)){
-            var id=card.Id.Entry;int cost=LeagueCards.UpgradeCost(LeagueCards.Catalog[id]);if(cost>left)continue;
+        IEnumerable<CardModel> candidates=cards.Where(c=>c.MaxUpgradeLevel>0).OrderByDescending(c=>(plan.Anchors.Contains(c.Id.Entry)?2:plan.Partners.Contains(c.Id.Entry)?1:0)+rng.NextDouble()*1.5);
+        Dictionary<string,int>? copies=null;
+        if(tier==3&&!final){
+            candidates=LeagueLegendDraft.ForgeOrder(cards,plan).Concat(candidates);
+            copies=cards.GroupBy(c=>c.Id.Entry).ToDictionary(g=>g.Key,g=>g.Count());
+        }
+        foreach(var card in candidates){
+            var id=card.Id.Entry;int cost=LeagueCards.UpgradeCost(LeagueCards.Catalog[id]);if(cost>left||copies!=null&&upgrades.GetValueOrDefault(id)>=copies[id])continue;
             upgrades[id]=upgrades.GetValueOrDefault(id)+1;left-=cost;if(left==0)break;
         }
         return upgrades;
@@ -55,6 +61,7 @@ internal static class LeagueLadder
         int build=ConstructionTier(tier,final);
         var plan=LeagueArchetypes.Resolve(role.Id.Entry,style);
         var pool=LeagueCards.Catalog.Values.Where(c=>(c.Group==role.Id.Entry||c.Group=="COLORLESS")&&GameCharacterNames.IsOriginal(c.Model.GetType())&&c.Model.MultiplayerConstraint.ToString()!="MultiplayerOnly").ToArray();
+        if(tier==3&&!final&&LeagueLegendDraft.Build(plan,pool,rng) is {} legend)return legend;
         var engine=LeagueArchetypes.Engines[role.Id.Entry];
         var deck=new Dictionary<string,int>();var result=new List<CardModel>(LeagueCards.DeckSize);
         var rarity=new int[4];int neutral=0;

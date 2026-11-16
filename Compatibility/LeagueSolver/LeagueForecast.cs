@@ -25,7 +25,7 @@ namespace NationalSpire.Solver;
 // 该程序集由主模组按需加载。每一条候选路线使用 CombatSolver 的独立模拟分支。
 public sealed partial class LeagueForecast : IDisposable
 {
-    private readonly Player _live;private readonly int _tier;
+    private readonly Player _live;private readonly int _tier;private readonly bool _legend;
     private static bool _installed;
     private sealed class Ledger {
         internal readonly Dictionary<Creature,decimal> Hits=[];internal readonly Dictionary<Creature,int> Stacks=[];
@@ -51,12 +51,13 @@ public sealed partial class LeagueForecast : IDisposable
         _preferredTarget=preference;
         _addedDoom=addedDoom;
         _setup=new(setup);
-        _live=rival;_tier=Math.Min(tier,2);
+        _live=rival;_tier=Math.Min(tier,2);_legend=tier==3;
         Prepare();
     }
     public static void Prepare(){
         if(_installed)return;
         var harmony=new Harmony("nationalspire.league.forecast");
+        InstallProjection(harmony);
         harmony.Patch(AccessTools.Method(typeof(RootCombatHistorySnapshot),"Capture"),prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(UseMappedHistory)));
         harmony.Patch(AccessTools.Method(typeof(PredictionModPatchAudit),"TryDescribeForeignPatch"),prefix:new HarmonyMethod(typeof(LeagueForecast),nameof(MirroredIntent)));
         // 独立加载的上游组件使用调试输出，不启动其普通模组的日志写入和回合订阅。
@@ -151,7 +152,9 @@ public sealed partial class LeagueForecast : IDisposable
             try{
             var clock=Stopwatch.StartNew();var me=root.State.GetCreature(actor.Creature);
             bool OutOfTime(){_exit.ThrowIfCancellationRequested();return clock.Elapsed.TotalMilliseconds>=18+6*_tier;}
-            decimal EndHealth(CombatPredictionSimulator sim,out Ledger mark){
+            bool summon=_legend&&actor.Character.Id.Entry=="NECROBINDER";
+            int LivingPet(CombatPredictionSimulator sim)=>summon&&sim.State.GetOsty(actor) is {} pet?sim.State.GetCreature(pet).CurrentHp:0;
+            decimal EndHealth(CombatPredictionSimulator sim,out Ledger mark,out int petAfterHits){
                 mark=Damage.GetOrCreateValue(sim);
                 bool orbs=sim.State.GetPlayerCombatState(actor).OrbQueue.Orbs.Count!=0;
                 var end=orbs||amounts.Length!=0?sim.Fork():sim;
@@ -162,7 +165,7 @@ public sealed partial class LeagueForecast : IDisposable
                     // 来袭意图在这个副本上真实扣血，不能再次记为下一轮的攻击。
                     Damage.Remove(end);
                 }
-                if(amounts.Length==0){var hp=end.State.GetCreature(actor.Creature).CurrentHp;return ((SimulatedCombatState)end.State.CombatState).GetAmount<DoomPower>(actor.Creature)>=hp?0:hp;}
+                if(amounts.Length==0){petAfterHits=LivingPet(end);var hp=end.State.GetCreature(actor.Creature).CurrentHp;return ((SimulatedCombatState)end.State.CombatState).GetAmount<DoomPower>(actor.Creature)>=hp?0:hp;}
                 var defending=end.State.GetCreature(actor.Creature);int added=0;
                 for(int k=0;k<amounts.Length&&end.State.GetCreature(actor.Creature).IsAlive;k++)
                     if(properties[k]==-1){added+=(int)(amounts[k]-defending.DamageBlock(amounts[k],ValueProp.Move));}else{
@@ -174,6 +177,7 @@ public sealed partial class LeagueForecast : IDisposable
                         try{end.Damage([actor.Creature],amount,props,attackerForHit,null,null,capped[k]?ModifyDamageHookType.Cap:ModifyDamageHookType.None);}
                         finally{_incoming=default;}
                     }
+                petAfterHits=LivingPet(end);
                 return !defending.IsAlive||((SimulatedCombatState)end.State.CombatState).GetAmount<DoomPower>(actor.Creature)>=defending.CurrentHp?0:Math.Max(.1m,defending.CurrentHp-added*.85m);
             }
             var initial=(SimulatedCombatState)root.State.CombatState;
@@ -184,12 +188,56 @@ public sealed partial class LeagueForecast : IDisposable
                 // 每层狂喜可在下个回合转化一张悲伤；其余悲伤会继续占用手牌位置。
                 return cards.Count-sadness-Math.Max(0,sadness-state.GetAmount<EcstasyPower>(actor.Creature));
             }
-            var baseLife=EndHealth(root,out var pass);
+            var baseLife=EndHealth(root,out var pass,out int basePet);
             var rootPlayer=root.State.GetPlayerCombatState(actor);
             var cards=rootPlayer.Hand.Cards.Concat(rootPlayer.DrawPile.Cards).Concat(rootPlayer.DiscardPile.Cards).ToArray();
             var future=StrategicEffectContext.Build(cards,targets.Sum(t=>root.State.GetCreature(t).CurrentHp),
                 (int)amounts.Where((_,i)=>properties[i]!=-1).Sum(),properties.Count(p=>p!=-1),
                 (StrategicEffectRequirements)(-1),initial.GetAmount<CorruptionPower>(actor.Creature)>0);
+            decimal petWeight=summon&&future.RemainingTurns>1?.5m+Math.Min(4,cards.Count(c=>c.Preview.Tags.Contains(CardTag.OstyAttack)))*.125m:0;
+            decimal reserve=Math.Max(me.MaxHp/3m,amounts.Sum());
+            bool forge=_legend&&actor.Character.Id.Entry=="REGENT";
+            bool bladePlan=forge&&cards.Any(c=>c.Preview is MegaCrit.Sts2.Core.Models.Cards.SummonForth or MegaCrit.Sts2.Core.Models.Cards.Conqueror or MegaCrit.Sts2.Core.Models.Cards.SwordSage);
+            // 按牌组里实际还会抽到的耗星牌估计需求。黑洞按产星或耗星的次数触发，星之子按花掉的星数触发。
+            decimal opportunities=Math.Min(Math.Max(0,future.RemainingTurns-1)*3,future.ReachableCards);
+            decimal Reach(int n)=>opportunities*n/Math.Max(1,cards.Length);
+            decimal spendEvents=forge?Reach(cards.Count(c=>c.Preview.CanonicalStarCost>0||c.Preview.HasStarCostX)):0;
+            decimal starDemand=forge?Reach(cards.Sum(c=>c.Preview.HasStarCostX?4:Math.Max(0,c.Preview.CanonicalStarCost))):0;
+            decimal printedGain=forge?Reach(cards.Count(c=>c.Preview.DynamicVars.ContainsKey("Stars"))):0;
+            // 每回合每种旋律最多触发一次。按剩余牌组中该旋律的张数，估算三张可出牌中出现该旋律的机会。
+            decimal MelodyChance(CardTag tag){
+                int count=cards.Count(c=>c.Preview.Tags.Contains(tag));decimal miss=1;
+                for(int i=0;i<Math.Min(3,cards.Length);i++)miss*=Math.Max(0,cards.Length-count-i)/(decimal)(cards.Length-i);
+                return 1-miss;
+            }
+            decimal melodies=_legend&&fool?(MelodyChance(CardTag.Wah)+MelodyChance(CardTag.Cho)+MelodyChance(CardTag.Ki))*Math.Max(0,future.RemainingTurns-1):0;
+            var upgradeValues=new Dictionary<(CardModel,int),decimal>();
+            decimal access=Math.Min(1m,Math.Max(0,future.RemainingTurns-1)*5m/Math.Max(1,cards.Length));
+            // 牌堆中真实发生的升级仍能在以后的抽牌中生效；已消耗的牌不再计入。
+            decimal KeptCards(SimPlayerCombatState ps){
+                if(!_legend||access<=0)return 0;
+                decimal bladeValue=0,upgrades=0;
+                void Visit(IReadOnlyList<PredictedCard> pile){
+                    for(int i=0;i<pile.Count;i++){var card=pile[i];var liveCard=card.Original;var next=card.Preview;
+                        if(bladePlan&&next is MegaCrit.Sts2.Core.Models.Cards.SovereignBlade blade&&!blade.IsDupe)
+                            bladeValue=Math.Max(bladeValue,blade.DynamicVars.Damage.BaseValue*blade.DynamicVars.HitCount.IntValue);
+                        if(ReferenceEquals(liveCard,next)||next.CurrentUpgradeLevel<=liveCard.CurrentUpgradeLevel)continue;
+                        var key=(liveCard,next.CurrentUpgradeLevel);
+                        if(!upgradeValues.TryGetValue(key,out var gain)){
+                            // 仅比较升级本身，避免把同一条路线里额外铸造的剑伤算成升级收益。
+                            var upgraded=new PredictedCard(liveCard);
+                            for(int j=liveCard.CurrentUpgradeLevel;j<next.CurrentUpgradeLevel;j++)upgraded.Upgrade();
+                            var after=upgraded.Preview;
+                            gain=(decimal)(CardChoiceSupport.CardValue(after)-CardChoiceSupport.CardValue(liveCard))
+                                +4*(liveCard.EnergyCost.GetWithModifiers(CostModifiers.None)-after.EnergyCost.GetWithModifiers(CostModifiers.None));
+                            upgradeValues[key]=gain;
+                        }
+                        upgrades+=gain;
+                    }
+                }
+                Visit(ps.Hand.Cards);Visit(ps.DrawPile.Cards);Visit(ps.DiscardPile.Cards);
+                return Math.Min(bladeValue,future.EnemyHp)*.65m+access*upgrades;
+            }
             decimal Setup(CombatPredictionSimulator sim){
                 if(_tier==0)return 0;
                 var combat=(SimulatedCombatState)sim.State.CombatState;
@@ -202,8 +250,25 @@ public sealed partial class LeagueForecast : IDisposable
                     // 空球栏保留集中以后启动的价值。已经成型的能力继续叠层时，边际收益渐减。
                     if(power is FocusPower&&!ps.OrbQueue.Orbs.Any(o=>o is not MegaCrit.Sts2.Core.Models.Orbs.PlasmaOrb))v*=.35m;
                     value+=16*v/(12+v);
+                    // 上游已估算剩余回合、可触发次数和敌方生命。只有后续回合确有收益才增加启动价值。
+                    if(_legend&&future.RemainingTurns>1&&v>12)value+=24*(v-12)/(36+v);
                 }
-                return value+.5m*CombatBeamSolver.OrbRetentionValue(sim,ps.OrbQueue.Orbs,targets.Length);
+                if(forge&&starDemand>0){
+                    int throne=combat.GetAmount<TheSealedThronePower>(actor.Creature),genesis=combat.GetAmount<GenesisPower>(actor.Creature);
+                    decimal events=(throne>0?opportunities:0)+(genesis>0?Math.Max(0,future.RemainingTurns-1):0);
+                    decimal supply=opportunities*throne+Math.Max(0,future.RemainingTurns-1)*genesis;
+                    // 有相应的耗星牌才能兑现资源。黑洞每个产星事件只触发一次，囤积星数不能重复计为伤害。
+                    decimal usable=Math.Min(starDemand,Math.Max(0,supply+printedGain+ps.Stars));
+                    value+=Math.Min(starDemand,supply)*1.5m
+                        +Math.Min(future.EnemyHp,combat.GetAmount<BlackHolePower>(actor.Creature)*(events+printedGain+Math.Min(usable,spendEvents)))*.65m
+                        +Math.Min(future.IncomingDamage,combat.GetAmount<ChildOfTheStarsPower>(actor.Creature)*usable)*.6m;
+                }
+                if(melodies>0){
+                    // 失落鲁特琴直接打出牌顶，曲中意只抽牌，不能把两种回报按同一价值计算。
+                    value+=Math.Min(future.EnemyHp,melodies*(combat.GetAmount<LostLutePower>(actor.Creature)*Math.Clamp(future.AverageCardValue,3,9)
+                        +combat.GetAmount<MotifPower>(actor.Creature)*2))*.8m;
+                }
+                return value+KeptCards(ps)+.5m*CombatBeamSolver.OrbRetentionValue(sim,ps.OrbQueue.Orbs,targets.Length);
             }
             decimal baseSetup=Setup(root);
             decimal passPressure=targets.Sum(t=>Math.Min(root.State.GetCreature(t).CurrentHp+root.State.GetCreature(t).Block,pass.Hits.GetValueOrDefault(t)));
@@ -220,6 +285,9 @@ public sealed partial class LeagueForecast : IDisposable
                     var beforePlay=(SimulatedCombatState)parent.Sim.State.CombatState;
                     int Order(int i){
                         var c=ps.Hand.Cards[i].Preview;
+                        // 先展开免费补充手牌或能量的分支，给同回合的准备牌和终结牌留出推演时间。
+                        if(_legend&&c.EnergyCost.GetAmountToSpend()==0&&(c.DynamicVars.ContainsKey("Energy")||c.DynamicVars.ContainsKey("Cards")))return -2;
+                        if(forge&&c is MegaCrit.Sts2.Core.Models.Cards.Conqueror&&ps.Hand.Cards.Any(p=>p.Preview is MegaCrit.Sts2.Core.Models.Cards.SovereignBlade))return -1;
                         if(c switch{
                         MegaCrit.Sts2.Core.Models.Cards.Radiate=>beforePlay.GetStarsGainedThisTurn(actor)==0,
                         MegaCrit.Sts2.Core.Models.Cards.HelixDrill=>beforePlay.GetEnergySpentThisTurn(actor)==0,
@@ -230,7 +298,8 @@ public sealed partial class LeagueForecast : IDisposable
                             c.DynamicVars.ContainsKey("VulnerablePower")||c.DynamicVars.ContainsKey("StrengthPower")?0:1;
                     }
                     foreach(int i in Enumerable.Range(0,ps.Hand.Cards.Count).OrderBy(Order)){
-                        var move=ps.Hand.Cards[i];if(!parent.Sim.CanPlay(move))continue;
+                        var move=ps.Hand.Cards[i];if(_unmodelledPlays.Contains(move.Preview.GetType())){incomplete=true;continue;}
+                        try{if(!parent.Sim.CanPlay(move))continue;}catch(NotSupportedException){incomplete=true;continue;}
                         foreach(var aim in move.Preview.TargetType==TargetType.AnyEnemy?aimOrder.Where(t=>parent.Sim.State.GetCreature(t).IsAlive).Cast<Creature?>():new Creature?[]{move.Preview.TargetType is TargetType.AnyAlly or TargetType.Self?actor.Creature:null}){
                         if(attempted&&OutOfTime()){incomplete=true;return chosen;}
                         attempted=true;
@@ -241,8 +310,9 @@ public sealed partial class LeagueForecast : IDisposable
                         expanded++;
                         var combat=(SimulatedCombatState)sim.State.CombatState;
                         var own=sim.State.GetCreature(actor.Creature);
-                        var life=EndHealth(sim,out var mark);
-                        decimal setup=Setup(sim)-baseSetup;
+                        var life=EndHealth(sim,out var mark,out int petAfterHits);
+                        // 已替主人承伤的生命不能重复计分。保留下来的奥斯提还能承伤，并能为后续出击提供伤害。
+                        decimal setup=Setup(sim)-baseSetup+(petAfterHits-basePet)*petWeight;
                         decimal pressure=0;bool lethal=true;
                         foreach(var target in targets){
                             var foe=root.State.GetCreature(target);var enemy=sim.State.GetCreature(target);int hp=foe.CurrentHp;
@@ -254,7 +324,9 @@ public sealed partial class LeagueForecast : IDisposable
                             if(activeDoom>0&&activeDoom>=enemy.CurrentHp-through&&life>0)pressure+=hp;
                             lethal&=through>=enemy.CurrentHp;
                         }
-                        decimal end=pressure-passPressure+setup+(life-baseLife)*1.6m+(life>0&&baseLife<=0?10000:life<=0&&baseLife>0?-10000:0)
+                        // 生命宽裕时，只有确实换到持续收益，才可接受一部分本能挡下的失血。
+                        decimal investment=_legend&&setup>0&&life>reserve?Math.Max(0,Math.Min(setup,Math.Min(life-reserve,me.CurrentHp-life)))*.6m:0;
+                        decimal end=pressure-passPressure+setup+investment+(life-baseLife)*1.6m+(life>0&&baseLife<=0?10000:life<=0&&baseLife>0?-10000:0)
                             +(handState.Stars-liveStars)*.5m;
                         // 真实新增的有利状态可打破停手平局；不把玩家身上的虚弱倒算成已经登记的攻击减伤。
                         bool ImprovesStatus()=>combat.EffectivePowers().Any(p=>p.Amount>0&&
@@ -267,7 +339,9 @@ public sealed partial class LeagueForecast : IDisposable
                         if(lethal&&life>0)return b;
                         var fingerprint=new StateFingerprintBuilder();
                         fingerprint.Add(handState.Energy);fingerprint.Add(handState.Stars);fingerprint.Add(own.Block);fingerprint.Add(own.CurrentHp);
-                        void Pile(IReadOnlyList<PredictedCard> cards){fingerprint.Add(cards.Count);foreach(var c in cards){fingerprint.Add(c.Preview.Id.Entry);fingerprint.Add(c.Preview.CurrentUpgradeLevel);}}
+                        if(summon){fingerprint.Add(LivingPet(sim));fingerprint.Add(combat.GetOstyMaxHp(sim,actor));}
+                        void Pile(IReadOnlyList<PredictedCard> cards){fingerprint.Add(cards.Count);foreach(var c in cards){var preview=c.Preview;fingerprint.Add(preview.Id.Entry);fingerprint.Add(preview.CurrentUpgradeLevel);
+                            if(forge&&preview is MegaCrit.Sts2.Core.Models.Cards.SovereignBlade){fingerprint.Add(preview.DynamicVars.Damage.BaseValue);fingerprint.Add(preview.DynamicVars.HitCount.IntValue);}}}
                         Pile(handState.Hand.Cards);Pile(handState.DrawPile.Cards);Pile(handState.DiscardPile.Cards);Pile(handState.ExhaustPile.Cards);
                         fingerprint.Add(handState.OrbQueue.Capacity);
                         foreach(var orb in handState.OrbQueue.Orbs){fingerprint.Add(orb.Id.Entry);fingerprint.Add(OrbMirrors.GetPassiveValue(sim,orb));fingerprint.Add(OrbMirrors.GetEvokeValue(sim,orb));}
@@ -288,7 +362,7 @@ public sealed partial class LeagueForecast : IDisposable
         foreach(var id in best.Route)_route.Enqueue(id);
         EndTurn=best.Route.Count==0&&!incomplete&&expanded>0;
         if(report!=null)
-            File.AppendAllText(Path.Combine(report,"solver-review.txt"),$"{_captured++} capture={capture:F1}ms total={watch.Elapsed.TotalMilliseconds:F1}ms search={searchMs:F1}ms captureBytes={captureBytes} searchBytes={searchBytes} expanded={expanded} route={string.Join(' ',_route.Select(s=>s.Id+(s.Level>0?"+":"")))}\n");
+            File.AppendAllText(Path.Combine(report,"solver-review.txt"),$"{_captured++} capture={capture:F1}ms total={watch.Elapsed.TotalMilliseconds:F1}ms search={searchMs:F1}ms captureBytes={captureBytes} searchBytes={searchBytes} expanded={expanded} orbs={string.Join(',',root.State.GetPlayerCombatState(actor).OrbQueue.Orbs.Select(o=>o.Id.Entry+"="+OrbMirrors.GetEvokeValue(root,o)))} route={string.Join(' ',_route.Select(s=>s.Id+(s.Level>0?"+":"")))}\n");
         return Take();
     }
     private int liveEnergy,liveStars;
@@ -296,6 +370,7 @@ public sealed partial class LeagueForecast : IDisposable
     private (CombatPredictionSimulator,Creature[]) Capture(bool attacking){
         var actor=Player.CreateForNewRun(_live.Character,_live.UnlockState,1);_actor=actor;
         var run=RunState.CreateForNewRun([actor],_live.RunState.Acts.Select(a=>a.CanonicalInstance.ToMutable()).ToList(),[],GameMode.Standard,false,0,_live.RunState.Rng.StringSeed);
+        ProjectRunRules(run);
         var board=new CombatState(runState:run,badgeModels:run.BadgeModels,runModels:run.RunModels);board.AddPlayer(actor);actor.ResetCombatState();
         foreach(var r in actor.Relics.ToArray())actor.RemoveRelicInternal(r,true);
         foreach(var r in _live.Relics)actor.AddRelicInternal(RelicModel.FromSerializable(r.ToSerializable()),-1,true);
@@ -334,7 +409,7 @@ public sealed partial class LeagueForecast : IDisposable
         board.RoundNumber=_live.Creature.CombatState!.RoundNumber;
         run.Rng.LoadFromSerializable(_live.RunState.Rng.ToSerializable());
         _mappedHistory=MapHistory(board,actor,creatures);
-        try{var root=new CombatPredictionSimulator(new SimulatedCombatState(board));Damage.GetOrCreateValue(root);return(root,targets);}
+        try{using var projection=new CaptureProjection(run,board,_unmodelledPlays);var root=new CombatPredictionSimulator(new SimulatedCombatState(board));Damage.GetOrCreateValue(root);return(root,targets);}
         finally{_mappedHistory=null;}
     }
     public void Dispose(){_aims.Clear();_originals.Clear();_actor?.PlayerCombatState?.AfterCombatEnd();_actor=null;}

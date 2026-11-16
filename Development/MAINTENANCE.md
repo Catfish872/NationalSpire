@@ -18,7 +18,7 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 **先确定更新的是哪一层。** 游戏更新时，核对游戏接口和牌效，并核对下表中相应的求解器实现；只升级内置求解器时，从打包、加载开始，核对局面复制、出牌、选牌和结束回合。若某张牌只改了触发时机，游戏和模组仍可能编译通过，此时要比较这张牌在推演和实战中各触发了几次、作用于谁、何时生效。
 
-当前维护基线为国运尖塔 1.1.3。单人和多人开赛按实际方法签名选择处理方式。镜面对决另有独立判断：[LeagueSolverLink.Supported](../LeagueSolverLink.cs) 检查游戏是否提供愚者箭槽类型和 RunState.RunModels 属性。0.107.1 保留开包、收藏、交易、组卡和建筑师原对话，镜面匹配与建筑师对决入口不可选；0.113.0 提供对决。两个成员存在，只决定是否开放入口。新游戏即使通过这项判断，仍须核对下列战斗接口和牌效。玩家是否订阅独立求解器不参与判断。
+当前维护基线为国运尖塔 1.1.4。单人和多人开赛按实际方法签名选择处理方式。镜面对决另有独立判断：[LeagueSolverLink.Supported](../LeagueSolverLink.cs) 检查游戏是否提供愚者箭槽类型和 RunState.RunModels 属性。0.107.1 保留开包、收藏、交易、组卡和建筑师原对话，镜面匹配与建筑师对决入口不可选；0.113.0 提供对决。两个成员存在，只决定是否开放入口。新游戏即使通过这项判断，仍须核对下列战斗接口和牌效。玩家是否订阅独立求解器不参与判断。
 
 ### 游戏更新时按玩法核对
 
@@ -26,7 +26,7 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 | --- | --- | --- |
 | 正式开赛、重赛、约会切磋 | [GameCompatibility](../GameCompatibility.cs)、[GameBridge](../GameBridge.cs)、[MatchModes](../MatchModes.cs)。核对创建玩家和对局的参数、角色解锁资料、进阶、模式、种子及章节随机流。多人另查 [NativeLobbyApi](../Coop/NativeLobbyApi.cs) 的建房、加入、随机职业回调和大厅生成玩家的顺序。 | 同一个模组 DLL 分别加载目标游戏分支。单人开赛后继续存档、重赛；多人由房主和客机进场，核对角色、种子、模式及进阶。[逐项签名及新旧分支](GAME_AND_UI.md#游戏接口的多版本适配) |
 | 赛中地图、弹幕、日程及约会 | [LiveCompatibility](../LiveCompatibility.cs)、[LiveRunBridge](../LiveRunBridge.cs)、[LiveMaps](../LiveMaps.cs)。检查地图房间与楼层的读取、战斗通知、对手位置刷新，以及暂停和恢复冒险时使用的当前房间。 | 走过一个房间后查看路线、对手头像和弹幕；极速模式查看小地图。触发一次约会暂停再返回原局，核对原楼层及进度。[地图与转播](GAME_AND_UI.md#地图与转播依赖) · [多人检查点](PERSISTENCE_AND_COOP.md#多人检查点的保存与恢复) |
-| 对手组牌与锻造 | [LeagueArchetypes](../LeagueArchetypes.cs)、[LeagueLadder](../LeagueLadder.cs)。更新后核对卡牌编号、职业、稀有度、多人限制及触发条件。核心、配合、运转、防御分别检查；正式赛精英复用大师运转目标。 | 在建筑师房间实际进入一场对决；同一打法用不同比赛种子检查牌组差异、核心及前置牌。比较段位时固定陪练牌组与锻造，交换先后手，直接交手时也交换双方位置。[对手牌组与单回合推演](GAME_AND_UI.md#对手牌组与单回合推演) |
+| 对手组牌与锻造 | [LeagueArchetypes](../LeagueArchetypes.cs)、[LeagueLadder](../LeagueLadder.cs)、[传奇构筑](../LeagueLegendDraft.cs)。更新后核对卡牌编号、职业、稀有度、多人限制及触发条件。核心、配合、运转、防御分别检查；正式赛精英复用大师运转目标。 | 在建筑师房间实际进入一场对决；同一打法用不同比赛种子检查牌组差异、核心及前置牌。游戏更新后用 LeaguePreview 的 CheckKit 核对每个传奇专用搭配在当前版本的职业、四档稀有度和单挑资格。Run-BuildBenchmark 使用固定的恶魔形态战士和触媒毒猎，同一副传奇牌组交换先后手，双方开局均为该传奇职业满生命。检查战报胜负、剩余生命、实际出牌与核心启动回合；掉线、超时或未返回战报另列。比较段位时固定陪练牌组与锻造，交换先后手，直接交手时也交换双方位置。[对手牌组与单回合推演](GAME_AND_UI.md#对手牌组与单回合推演) |
 | 开包、收藏、组卡 | [LeagueCards](../LeagueCards.cs)、[LeagueCardFace](../LeagueCardFace.cs)。检查角色与牌池枚举、稀有度、同名牌编号、原生卡面场景和升级后的预览。游戏卸载某个角色后，旧收藏仍按原编号保存。 | 在有、无该角色的分支间切换，检查可选牌池和可见卡面；切回后检查持有数量。此项可独立于战斗验收。[联赛收藏与牌组](DATA_CONTRACTS.md#联赛收藏与牌组) |
 | 匹配入场、角色和场景 | [LeagueNativeMatch](../LeagueNativeMatch.cs)、[LeagueBattleApi](../LeagueBattleApi.cs)、[LeagueBattleVisuals](../LeagueBattleVisuals.cs)。皮肤兼容需核对 CharacterModel.VisualsPath 的实际返回值；检查 NCreature.SetAnimationTrigger 调用前后的节点身份，确认原版和皮肤都能选择动作且结束后恢复敌方实体。房主与客机使用不同外观，同场核对本机模型、出牌目标与最终生命。核对创建对局、角色动画、召唤物、球槽、意图图标和逐击数值；场地、首领曲及章节环境音还依赖遭遇和音乐控制器。 | 从匹配入口进入战场，区分普通场地和带专曲的首领场地；对手出牌后检查目标、逐击意图与来袭合计。退出后再进普通冒险，确认决斗专用补丁已解除。[集卡与镜面对决](GAME_AND_UI.md#集卡与镜面对决) |
 | 出牌、挂意图、回合结束 | [LeagueEffectTargets](../LeagueEffectTargets.cs) 修正自动出牌和卡牌、能力、遗物等效果读取的阵营；[LeagueBattleApi](../LeagueBattleApi.cs) 识别逐击伤害接口；更新后核对 CreatureCmd.Damage 异步入口是否仍从 dealer 读取 IsDead，用碎骨验证奥斯提牺牲后已登记的一击仍能消耗格挡并扣血；[LeagueNativeMatch](../LeagueNativeMatch.cs) 处理登记、显示、格挡和回合末结算。检查方法的参数，也检查异步方法内部是否仍按原顺序读取目标、发出通知。 | 重点比较自动翻牌、球或毒、临时减伤，以及下表列出的自己回合失血和灾厄。分别查看攻击者、承受者、头顶意图和实际生命，不能只看出牌完成记录。[战斗流程](GAME_AND_UI.md#集卡与镜面对决) |
@@ -34,6 +34,10 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 | 联机团体匹配、建筑师团队对决 | [LeagueTeamMatch](../LeagueTeamMatch.cs)、[LeagueDuel](../LeagueDuel.cs)、[ArchitectFinal](../ArchitectFinal.cs)。核对房主推演、卡牌和目标编号、中途选牌资料、游戏的选牌同步通道、团队选择及战后确认。修改消息格式时同时核对 [联机协议](../Coop/CoopData.cs)。 | 用两个客户端比较同一回合各次出牌、目标和选牌，再确认双方返回同一房间。候选和目标随已确定的牌序发送，客机不重新搜索。本机联机结果与跨网络测量分别记录。[传输顺序与检查点](PERSISTENCE_AND_COOP.md#建筑师的团队选择与敌方出牌) |
 
 ### 求解器更新时从打包查到实战
+
+升级内置求解器时，同时对照 LeagueForecast.Projection 的 ProjectRunRules 与上游 SimulatedCombatState 构造函数中接受的 RunModel 类型；核对 RunState.set_RunModels、ModHelper 的两种订阅者枚举、PredictionModHookSubscriberCapture.ValidateSubscriber、PredictionModPatchAudit.AuditCardOnPlay 的补丁和适配返回值，以及 PredictionCoverage.DescribeGap 的风险来源。卡牌审查与求解器补丁只安装在内置程序集；两处原版 ModHelper 枚举仅在临时战场与线程都匹配时才返回该战场的名单。
+
+复核入口为 LeaguePreview/Sparring.Run。设置 LEAGUE_PROJECTION_HERO=plain、installed 或 mod，搭配 LEAGUE_WHITE_DUEL=1；第一种只启用陪练工具与国运尖塔，后两种加载同一套职业模组，第三种实际使用其中的模组职业。比较同种子的传奇黑暗蓄能机器人的 solver-review.txt 和 fight.jsonl：核对球的激发值、每次搜索返回的整段牌序、游戏实际出牌及逐击伤害，并分别统计首次推演、后续推演与备用选牌次数。测试输出只在指定隔离目录时启用。
 
 | 顺序 | 实现位置 | 更新时必须对照的两端 |
 | --- | --- | --- |

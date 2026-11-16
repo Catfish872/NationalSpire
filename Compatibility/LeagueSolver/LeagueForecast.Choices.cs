@@ -26,7 +26,7 @@ public sealed partial class LeagueForecast {
                 _move=mark;
                 try{complete=sim.ManualPlay(card,target,out _);}
                 finally{_move=null;state.EndActionChoices();}
-            }catch(Exception e) when(e is InvalidPlannedChoiceBranchException or PredictionUnsupportedException){incomplete();continue;}
+            }catch(Exception e) when(e is InvalidPlannedChoiceBranchException or NotSupportedException){incomplete();continue;}
             if(state.PendingTurnStartChoice is {} req){
                 var spec=TurnStartChoiceSupport.BuildPendingSpec(sim,state,actor);
                 var options=CardChoiceSupport.BuildChoices(spec,Names,width,width);
@@ -41,7 +41,11 @@ public sealed partial class LeagueForecast {
                     (pending??=new()).Push(([..branch.path,choice],wire));
                 }
                 if(options.Count==0)incomplete();
-            }else if(complete&&!sim.HasPendingChoice&&(!sim.HasRisk||!PredictionCoverage.Collect(sim).Any(g=>!g.Compensated)))yield return(sim,branch.wire);
+            }else if(complete&&!sim.HasPendingChoice&&(!sim.HasRisk||sim.History.OfType<CombatPredictionRiskEntry>().All(risk=>
+                // 玩家代理身上的第三方能力仍保留层数。某个额外回调无法预测时，只略去该回调的收益。
+                risk.Trace?.Source is PowerModel {IsMutable:true} power && power.GetType().Assembly!=typeof(PowerModel).Assembly
+                    && power.Owner is {} owner && owner.Side!=actor.Creature.Side
+                ||PredictionCoverage.DescribeGap(risk).Compensated)))yield return(sim,branch.wire);
             else incomplete();
         }while(pending!=null&&pending.TryPop(out branch));
     }

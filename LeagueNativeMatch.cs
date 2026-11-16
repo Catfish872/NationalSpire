@@ -71,9 +71,12 @@ public static partial class LeagueNativeMatch
         game.RootSceneContainer.SetCurrentScene(scene);
         return scene;
     }
-    internal static void Bind(LeagueOpponent opponent){
+    internal static async Task Bind(LeagueOpponent opponent){
         if(Current==null)return;_room=_run?.CurrentRoom as CombatRoom;var fighter=opponent.Fighter??Current;fighter.Attach(opponent.Creature);if(fighter.OpeningHp is {} hp){opponent.Creature.SetMaxHpInternal(fighter.OpeningMax);opponent.Creature.SetCurrentHpInternal(hp);}
         if(NCombatRoom.Instance?.GetCreatureNode(opponent.Creature) is {} view)OrbDisplay(view);
+        // 原版入房通知只遍历实际玩家。对手绑定自己的战斗状态后，交还其遗物原有的入房效果。
+        if(fighter.Rival.RunState.CurrentRoom is CombatRoom room&&!fighter.Rival.RunState.Players.Contains(fighter.Rival))
+            foreach(var relic in fighter.Rival.Relics.Where(r=>!r.IsMelted).ToArray()){await relic.AfterRoomEntered(room);relic.InvokeExecutionFinished();}
     }
     internal static async Task First(LeagueOpponent opponent){
         var fighter=opponent.Fighter??Current!;if(_run?.CurrentMapPointHistoryEntry is {} floor&&fighter.Rival is {} rival&&!floor.PlayerStats.Any(p=>p.PlayerId==rival.NetId))
@@ -381,7 +384,7 @@ public sealed class LeagueOpponent : MonsterModel
     protected override string VisualsPath=>LeagueBattleApi.VisualsPath(Role);
     public override CreatureAnimator GenerateAnimator(MegaSprite sprite)=>LeagueBattleApi.Animator(Role,sprite,Creature);
     protected override MonsterMoveStateMachine GenerateMoveStateMachine(){var move=new MoveState("LEAGUE_PLAY",_=>LeagueNativeMatch.Enemy(this));move.FollowUpState=move;return new([move],move);}
-    public override Task AfterAddedToRoom(){LeagueNativeMatch.Bind(this);return Task.CompletedTask;}
+    public override Task AfterAddedToRoom()=>LeagueNativeMatch.Bind(this);
     public override Task AfterPlayerTurnStartEarly(PlayerChoiceContext context,Player player)=>player.NetId!=LeagueNativeMatch.HumanLead||LeagueNativeMatch.For(player)!=null?Task.CompletedTask:LeagueNativeMatch.First(this);
     public override Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)=>ReferenceEquals(this,LeagueNativeMatch.FirstLiving)?LeagueNativeMatch.Resolve(side):Task.CompletedTask;
     public override Task AfterSideTurnEndLate(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)=>ReferenceEquals(this,LeagueNativeMatch.FirstLiving)?LeagueNativeMatch.ApplyDeferredDoom(context):Task.CompletedTask;

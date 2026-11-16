@@ -17,6 +17,7 @@ public static partial class LeagueNativeMatch {
     private static readonly HashSet<Type> SeenPowers=[];
     private static Harmony _leagueHarmony=null!;
     private static void InstallEffectTargets(Harmony h){
+        h.Patch(AccessTools.PropertyGetter(typeof(Creature),nameof(Creature.IsSecondaryEnemy)),postfix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(DuelPet)));
         _leagueHarmony=h;
         h.Patch(AccessTools.AsyncMoveNext(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay")),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(AutoPlayTeams)));
         h.Patch(AccessTools.DeclaredMethod(typeof(CardCmd),"AutoPlay"),prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(PrepareAutoPlay)));
@@ -53,6 +54,10 @@ public static partial class LeagueNativeMatch {
         Register("Orbs","LightningOrb DarkOrb GlassOrb FrostOrb");
     }
     // 原版在每次事件开始前收集场上的卡牌、球、药水及其效果。敌方选手既有怪物行动，也有自己的手牌，两者各登记一次。
+    // 原版以次要敌人随队退场；联赛只给敌方选手本人召唤的随从补齐这一身份。
+    private static void DuelPet(Creature __instance,ref bool __result){
+        if(!__result&&Current!=null&&__instance.IsEnemy&&__instance.PetOwner is {} owner&&For(owner)!=null)__result=true;
+    }
     private static IEnumerable<CodeInstruction> FighterListeners(IEnumerable<CodeInstruction> instructions,MethodBase __originalMethod){
         int list=__originalMethod.GetMethodBody()!.LocalVariables.Single(v=>v.LocalType==typeof(List<AbstractModel>)).LocalIndex;
         foreach(var i in instructions){
