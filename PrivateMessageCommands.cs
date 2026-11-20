@@ -4,6 +4,7 @@ namespace NationalSpire;
 
 public sealed class PrivateMessageCommand
 {
+    public bool MirrorAppointment { get; set; }
     public bool? ToolMode { get; set; }
     public DateSceneRequest? Scene { get; set; }
     public bool SceneAttendance { get; set; }
@@ -170,7 +171,7 @@ public static class PrivateMessageCommands
                 { if (offer.State != "待确认") return "已发布的帖子请在社区查看。"; offer.State = "已取消"; ConsumerAttachments.Resolve(data, offer, false); return null; }
                 if (kind == "dm-decline") return offer.Kind == "contract" && offer.State != "待确认" ? "已签订的合同请在选手档案中管理。" : PrivateAppointments.Cancel(data, offer);
                 if (offer.Kind == "publish") { var result = PrivateProfileChanges.Publish(data, person, offer); if (result == null) SpireArbitration.Merge(data, PrivateMessages.Mailbox(data)); return result; }
-                string? confirmationError = offer.Kind == "match" ? PrivateAppointments.Confirm(data, person, offer) : PrivateContracts.Confirm(data, person, offer, command.Replacement);
+                string? confirmationError = offer.Kind == "match" ? PrivateAppointments.Confirm(data, person, offer, command.MirrorAppointment) : PrivateContracts.Confirm(data, person, offer, command.Replacement);
                 if (confirmationError != null) RecordFailure(data, person, command, confirmationError);
                 else offer.Detail = "";
                 return confirmationError;

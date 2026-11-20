@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../../../SOURCE_MAP.md)
 
-源码 SHA-256：`9D7F4DA2FB0A1AD25085727633DBB570CC191A225B69188CDA013857EE0FE801`。来源：[源码](../../../../Compatibility/LeagueSolver/LeagueForecast.Choices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D999F312CF8A47959C929EB39CF33BA1DF8E4166B9F4DEA39BEB029B0BB21FD8`。来源：[源码](../../../../Compatibility/LeagueSolver/LeagueForecast.Choices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -14,11 +14,32 @@
 private static readonly SolverDisplayNames Names=new([],new("DINGY_DAGGER","DINGY_DAGGER","DINGY_DAGGER"),[],[],[],[],[],[],[],false,false);
 ```
 
+<a id="symbol-e507895faeee"></a>
+
+## `NationalSpire.Solver.LeagueForecast.ReportRuns(int[]) — public static (int Start,int Period,int Count)[] ReportRuns(int[] actions)`
+
+来源：源码第 14 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `CombatSolver.SolverActionRuns.Capture<T>(System.Collections.Generic.IReadOnlyList<T>, System.Func<T, T, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `CombatSolver.SolverActionRuns.Capture<T>(System.Collections.Generic.IReadOnlyList<T>, System.Func<T, T, bool>)`；输入表达式：`SolverActionRuns.Capture(actions,(a,b)=>a==b)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: SolverActionRuns.Capture(actions,(a,b)=>a==b).Select`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`SolverActionRuns.Capture(actions,(a,b)=>a==b).Select(r=>(r.Start,r.Period,r.Repetitions))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: SolverActionRuns.Capture(actions,(a,b)=>a==b).Select(r=>(r.Start,r.Period,r.Repetitions)).ToArray`
+- `System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；输入表达式：`SolverActionRuns.Capture(actions,(a,b)=>a==b).Select(r=>(r.Start,r.Period,r.Repetitions)).ToArray()`；返回值紧邻使用处：`ArrowExpressionClauseSyntax: =>          SolverActionRuns.Capture(actions,(a,b)=>a==b).Select(r=>(r.Start,r.Period,r.Repetitions)).ToArray()`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-0be8b41d9374"></a>
 
 ## `NationalSpire.Solver.LeagueForecast.PlayOptions(CombatSolver.Engine.InCombat.Simulation.CombatPredictionSimulator, int, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Entities.Players.Player, int, System.Func<bool>, System.Action) — private static IEnumerable<(CombatPredictionSimulator,int[])> PlayOptions(CombatPredictionSimulator parent,int slot,Creature? target,Player actor,int width,Func<bool> expired,Action incomplete)`
 
-来源：源码第 15 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 18 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Solver.LeagueForecast.Choose(decimal[], int[], bool[], int[])`](LeagueForecast.cs.md#symbol-25d92d14be68)
 
@@ -68,7 +89,7 @@ private static readonly SolverDisplayNames Names=new([],new("DINGY_DAGGER","DING
 
 ## `NationalSpire.Solver.LeagueForecast.MenuKey(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>) — public static int MenuKey(IEnumerable<CardModel> cards)`
 
-来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.Solver.LeagueForecast.PlayOptions(CombatSolver.Engine.InCombat.Simulation.CombatPredictionSimulator, int, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Entities.Players.Player, int, System.Func<bool>, System.Action)`](LeagueForecast.Choices.cs.md#symbol-0be8b41d9374)
 
@@ -89,7 +110,7 @@ private static readonly SolverDisplayNames Names=new([],new("DINGY_DAGGER","DING
 
 ## `NationalSpire.Solver.LeagueForecast.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int) — public static int[] SelectActual(CardModel[] cards,int pile,string purpose,int effect,int min,int max)`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

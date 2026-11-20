@@ -2,6 +2,7 @@ namespace NationalSpire;
 
 public sealed class RunEvidence
 {
+    public DuelReport? Duel { get; set; }
     public int? FinalHp { get; set; }
     public int? MaxHp { get; set; }
     public int? PotionSlots { get; set; }
@@ -16,14 +17,14 @@ public sealed class RunEvidence
     public List<RunEncounter>? DefeatedEncounters { get; set; }
     public RunEvidence PlainText() => new()
     {
-        FinalHp = FinalHp, MaxHp = MaxHp, PotionSlots = PotionSlots, PotionsUsed = PotionsUsed,
+        Duel = Duel, FinalHp = FinalHp, MaxHp = MaxHp, PotionSlots = PotionSlots, PotionsUsed = PotionsUsed,
         PotionsObtained = PotionsObtained, GoldGained = GoldGained, RemainingGold = RemainingGold,
         PotionsRecorded = PotionsRecorded, RemainingPotions = RemainingPotions.Select(GameText.Plain).ToList(),
         Badges = Badges.Select(b => new RunBadge { Name = GameText.Plain(b.Name), Description = GameText.Plain(b.Description), Rarity = b.Rarity }).ToList(),
         DefeatedEncounters = DefeatedEncounters?.Select(e => e with { Name = GameText.Plain(e.Name) }).ToList()
     };
     // 存档保留内部记录标志；AI 只接收已记录且含义明确的对局数据。
-    public Dictionary<string, object?> ForPrompt()
+    public Dictionary<string, object?> ForPrompt(IEnumerable<string>? providedCards = null)
     {
         var plain = PlainText();
         var fields = new Dictionary<string, object?>
@@ -38,6 +39,7 @@ public sealed class RunEvidence
         if (PotionsObtained is not null) fields[nameof(PotionsObtained)] = PotionsObtained;
         if (GoldGained is not null) fields[nameof(GoldGained)] = GoldGained;
         if (RemainingGold is not null) fields[nameof(RemainingGold)] = RemainingGold;
+        if (Duel != null) fields["对决战报"] = Duel.Describe(providedCards);
         return fields;
     }
     public string EncounterSummary() => DefeatedEncounters is not { Count: > 0 } ? "" : string.Join("；",
@@ -61,6 +63,7 @@ public sealed class RunEvidence
     public string Summary()
     {
         var parts = new List<string>();
+        if (Duel != null) parts.Add(Duel.Describe());
         if (ResourceSummary() is { Length: > 0 } resources) parts.Add(resources);
         if (Badges.Count > 0) parts.Add("结算徽章：" + string.Join("；", Badges.Select(b => b.Name + "（" + b.Description + "）")));
         if (EncounterSummary() is { Length: > 0 } encounters) parts.Add(encounters);

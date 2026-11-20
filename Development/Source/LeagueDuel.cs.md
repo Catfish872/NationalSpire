@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`F1EE37DCF37898A13D32B43733422D9B02A8F6B9E29F8A2A51E6263CAC70D112`。来源：[源码](../../LeagueDuel.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`13CA1619A7C3A19AB32382534495B3E6F440B54EC2B204B1FEB6B8D0B344AAC9`。来源：[源码](../../LeagueDuel.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -17,6 +17,7 @@ internal readonly Creature VisualCharacter;
 internal readonly CardModel[] Deck;
 internal readonly string OpponentName;
 internal readonly int Tier;
+internal string? PersonId;
 internal string[] SetupCards=[];
 internal readonly HashSet<Creature> Stunned=[];
 internal int? OpeningHp;
@@ -30,7 +31,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.Cap — public ModifyDamageHookType Cap`
 
-来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -48,7 +49,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.AllowColossus — public bool AllowColossus`
 
-来源：源码第 32 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -66,7 +67,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.DoomSource — public CardModel? DoomSource`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -84,7 +85,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.Doom — public bool Doom`
 
-来源：源码第 33 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -102,7 +103,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.BeforeCap — internal decimal BeforeCap`
 
-来源：源码第 34 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 35 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -122,7 +123,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Hit.Shown — internal int Shown`
 
-来源：源码第 36 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -143,9 +144,9 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.LeagueDuel(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, System.Collections.Generic.Dictionary<string, int>?, System.Collections.Generic.List<NationalSpire.LeagueDuel.Hit>?) — internal LeagueDuel(Player rival,CardModel[] deck,int seed,string opponentName,int tier,Dictionary<string,int>? upgrades,List<Hit>? pending=null)`
 
-来源：源码第 40 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** `System.Random.Random(int)`
 
@@ -170,7 +171,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Attach(MegaCrit.Sts2.Core.Entities.Creatures.Creature) — internal void Attach(Creature actor)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Bind(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-f78a44bdbc8e)
 
@@ -197,7 +198,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.DisplayingTurn — internal bool DisplayingTurn`
 
-来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -215,7 +216,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Exit — internal CancellationToken Exit`
 
-来源：源码第 47 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -233,7 +234,7 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.Act() — internal async Task Act()`
 
-来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 49 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Enemy(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-531731d36b7d)；[`NationalSpire.LeagueNativeMatch.First(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-2e5d42d12c6a)
 
@@ -255,11 +256,11 @@ private readonly Dictionary<string,int>? _upgrades;
 
 ## `NationalSpire.LeagueDuel.PlayTurn() — private async Task PlayTurn()`
 
-来源：源码第 54 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.Act()`](LeagueDuel.cs.md#symbol-0b7f3276ecd9)
 
-**调用：** [`Add(int, int, int[])`](LeagueDuel.cs.md#symbol-96169a306886)；[`Identify()`](LeagueDuel.cs.md#symbol-12fb310bde24)；[`NationalSpire.LeagueNativeMatch.ConsumeStun(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueNativeMatch.cs.md#symbol-1ebfa08e7076)；[`NationalSpire.LeagueNativeMatch.SharePlan(System.Collections.Generic.List<int>)`](ArchitectFinal.cs.md#symbol-09629ccb5931)；[`NationalSpire.LeagueSolverLink.Choose(decimal[], int[], bool[], int[])`](LeagueSolverLink.cs.md#symbol-09769e33fa77)；[`NationalSpire.LeagueSolverLink.Open(MegaCrit.Sts2.Core.Entities.Players.Player, int, string[], int)`](LeagueSolverLink.cs.md#symbol-09cdebc60677)；[`NationalSpire.LeagueSolverLink.PrepareChoices()`](LeagueSolverLink.cs.md#symbol-ce2e91f8951a)；[`NationalSpire.LeagueSolverLink.Rest()`](LeagueSolverLink.cs.md#symbol-f083c8d9e98a)；[`NationalSpire.LeagueTurnPlan.Choose(MegaCrit.Sts2.Core.Entities.Players.Player, System.Collections.Generic.List<NationalSpire.LeagueDuel.Hit>, int)`](LeagueTurnPlan.cs.md#symbol-173bc625b792)；[`ReadNext()`](LeagueDuel.cs.md#symbol-0de7ca51d14b)；`MegaCrit.Sts2.Core.Combat.ICombatState.GetOpponentsOf(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`；`MegaCrit.Sts2.Core.Commands.CardCmd.Exhaust(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Models.CardModel, bool, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Add(MegaCrit.Sts2.Core.Models.CardModel, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Add(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, decimal, MegaCrit.Sts2.Core.Entities.Players.Player, bool)`；`MegaCrit.Sts2.Core.Entities.Cards.CardPile.MoveToBottomInternal(MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Entities.Cards.CardPile.MoveToTopInternal(MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Entities.Cards.ResourceInfo.ResourceInfo()`；`MegaCrit.Sts2.Core.Entities.Orbs.OrbQueue.AfterTurnStart(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Entities.Orbs.OrbQueue.BeforeTurnEnd(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.AddMaxEnergyToCurrent()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.EndOfTurnCleanup()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.IncrementTurnNumber()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.ResetEnergy()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterEnergyReset(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IReadOnlyCollection<MegaCrit.Sts2.Core.Models.CardModel>, System.Collections.Generic.IReadOnlyCollection<MegaCrit.Sts2.Core.Models.CardModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterModifyingHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.AbstractModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterPlayerTurnStart(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.BeforeFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.BeforeHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Hooks.Hook.ModifyHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, decimal, out System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.AbstractModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldEtherealTrigger(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldPlayerResetEnergy(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Models.CardModel.CanPlay()`；`MegaCrit.Sts2.Core.Models.CardModel.OnPlayWrapper(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, bool, MegaCrit.Sts2.Core.Entities.Cards.ResourceInfo, bool)`；`MegaCrit.Sts2.Core.Models.CardModel.OnTurnEndInHandWrapper(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Models.CardModel.SpendResources()`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.GetRange(int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`；`System.Collections.Generic.Queue<T>.Clear()`；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.Collections.Generic.Queue<T>.Queue()`；`System.Math.Max(decimal, decimal)`；`System.Math.Max(int, int)`；`System.Math.Min(decimal, decimal)`；`System.Math.Min(int, int)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.Tasks.Task.WaitAsync(System.Threading.CancellationToken)`；`System.Threading.Tasks.Task<TResult>.WaitAsync(System.Threading.CancellationToken)`
+**调用：** [`Add(int, int, int[])`](LeagueDuel.cs.md#symbol-0df83f8bffe3)；[`Identify()`](LeagueDuel.cs.md#symbol-a08f27e6a7f1)；[`NationalSpire.LeagueNativeMatch.ConsumeStun(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueNativeMatch.cs.md#symbol-1ebfa08e7076)；[`NationalSpire.LeagueNativeMatch.SharePlan(System.Collections.Generic.List<int>)`](ArchitectFinal.cs.md#symbol-09629ccb5931)；[`NationalSpire.LeagueSolverLink.Choose(decimal[], int[], bool[], int[])`](LeagueSolverLink.cs.md#symbol-09769e33fa77)；[`NationalSpire.LeagueSolverLink.Open(MegaCrit.Sts2.Core.Entities.Players.Player, int, string[], int)`](LeagueSolverLink.cs.md#symbol-09cdebc60677)；[`NationalSpire.LeagueSolverLink.PrepareChoices()`](LeagueSolverLink.cs.md#symbol-ce2e91f8951a)；[`NationalSpire.LeagueSolverLink.Rest()`](LeagueSolverLink.cs.md#symbol-f083c8d9e98a)；[`NationalSpire.LeagueTurnPlan.Choose(MegaCrit.Sts2.Core.Entities.Players.Player, System.Collections.Generic.List<NationalSpire.LeagueDuel.Hit>, int)`](LeagueTurnPlan.cs.md#symbol-173bc625b792)；[`ReadNext()`](LeagueDuel.cs.md#symbol-a7318627d735)；`MegaCrit.Sts2.Core.Combat.ICombatState.GetOpponentsOf(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`；`MegaCrit.Sts2.Core.Commands.CardCmd.Exhaust(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Models.CardModel, bool, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Add(MegaCrit.Sts2.Core.Models.CardModel, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Add(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Cards.CardPilePosition, MegaCrit.Sts2.Core.Models.AbstractModel?, bool)`；`MegaCrit.Sts2.Core.Commands.CardPileCmd.Draw(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, decimal, MegaCrit.Sts2.Core.Entities.Players.Player, bool)`；`MegaCrit.Sts2.Core.Entities.Cards.CardPile.MoveToBottomInternal(MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Entities.Cards.CardPile.MoveToTopInternal(MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Entities.Cards.ResourceInfo.ResourceInfo()`；`MegaCrit.Sts2.Core.Entities.Orbs.OrbQueue.AfterTurnStart(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Entities.Orbs.OrbQueue.BeforeTurnEnd(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.AddMaxEnergyToCurrent()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.EndOfTurnCleanup()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.IncrementTurnNumber()`；`MegaCrit.Sts2.Core.Entities.Players.PlayerCombatState.ResetEnergy()`；`MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext.BlockingPlayerChoiceContext()`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterEnergyReset(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IReadOnlyCollection<MegaCrit.Sts2.Core.Models.CardModel>, System.Collections.Generic.IReadOnlyCollection<MegaCrit.Sts2.Core.Models.CardModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterModifyingHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.AbstractModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.AfterPlayerTurnStart(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.BeforeFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.BeforeHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Hooks.Hook.ModifyHandDraw(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player, decimal, out System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.AbstractModel>)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldEtherealTrigger(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Models.CardModel)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldFlush(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Hooks.Hook.ShouldPlayerResetEnergy(MegaCrit.Sts2.Core.Combat.ICombatState, MegaCrit.Sts2.Core.Entities.Players.Player)`；`MegaCrit.Sts2.Core.Models.CardModel.CanPlay()`；`MegaCrit.Sts2.Core.Models.CardModel.OnPlayWrapper(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, bool, MegaCrit.Sts2.Core.Entities.Cards.ResourceInfo, bool)`；`MegaCrit.Sts2.Core.Models.CardModel.OnTurnEndInHandWrapper(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext)`；`MegaCrit.Sts2.Core.Models.CardModel.SpendResources()`；`string.Join<T>(char, System.Collections.Generic.IEnumerable<T>)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary(System.Collections.Generic.IEqualityComparer<TKey>?)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Except<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.First<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, decimal>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.TakeWhile<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlySet<T>.Contains(T)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.GetRange(int, int)`；`System.Collections.Generic.List<T>.List()`；`System.Collections.Generic.List<T>.ToArray()`；`System.Collections.Generic.Queue<T>.Clear()`；`System.Collections.Generic.Queue<T>.Enqueue(T)`；`System.Collections.Generic.Queue<T>.Queue()`；`System.Math.Max(decimal, decimal)`；`System.Math.Max(int, int)`；`System.Math.Min(decimal, decimal)`；`System.Math.Min(int, int)`；`System.Threading.CancellationToken.ThrowIfCancellationRequested()`；`System.Threading.Tasks.Task.WaitAsync(System.Threading.CancellationToken)`；`System.Threading.Tasks.Task<TResult>.WaitAsync(System.Threading.CancellationToken)`
 
 **字段、属性、事件及方法组引用：** `Add(int, int, int[])`；`Identify()`；`NationalSpire.LeagueDuel._choiceIndex`；`NationalSpire.LeagueDuel._choicePlan`；`NationalSpire.LeagueDuel._choicesChanged`；`NationalSpire.LeagueDuel.Exit`；`NationalSpire.LeagueDuel.Hit.AllowColossus`；`NationalSpire.LeagueDuel.Hit.Amount`；`NationalSpire.LeagueDuel.Hit.Cap`；`NationalSpire.LeagueDuel.Hit.Dealer`；`NationalSpire.LeagueDuel.Hit.Doom`；`NationalSpire.LeagueDuel.Hit.Props`；`NationalSpire.LeagueDuel.Hit.Target`；`NationalSpire.LeagueDuel.Pending`；`NationalSpire.LeagueDuel.Rival`；`NationalSpire.LeagueDuel.SetupCards`；`NationalSpire.LeagueDuel.Tier`；`NationalSpire.LeagueNativeMatch.ConsumeStun(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`；`NationalSpire.LeagueNativeMatch.Fighters`；`NationalSpire.LeagueNativeMatch.PlanHost`；`NationalSpire.LeagueNativeMatch.SharePlan(System.Collections.Generic.List<int>)`；`NationalSpire.LeagueSolverLink.Aim`；`NationalSpire.LeagueSolverLink.Choices`；`NationalSpire.LeagueSolverLink.Choose(decimal[], int[], bool[], int[])`；`NationalSpire.LeagueSolverLink.EndTurn`；`NationalSpire.LeagueSolverLink.Open(MegaCrit.Sts2.Core.Entities.Players.Player, int, string[], int)`；`NationalSpire.LeagueSolverLink.PrepareChoices()`；`NationalSpire.LeagueSolverLink.Rest()`；`NationalSpire.LeagueTurnPlan.Choose(MegaCrit.Sts2.Core.Entities.Players.Player, System.Collections.Generic.List<NationalSpire.LeagueDuel.Hit>, int)`；`ReadNext()`
 
@@ -389,11 +390,11 @@ private readonly Dictionary<string,int>? _upgrades;
 - `var (cost,stars)` = `await card.SpendResources()`
 - `wire` = `await LeagueNativeMatch.SharePlan(wire).WaitAsync(Exit)`
 
-<a id="symbol-12fb310bde24"></a>
+<a id="symbol-a08f27e6a7f1"></a>
 
 ## `Identify() — void Identify()`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
@@ -408,11 +409,11 @@ private readonly Dictionary<string,int>? _upgrades;
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-0de7ca51d14b"></a>
+<a id="symbol-a7318627d735"></a>
 
 ## `ReadNext() — (CardModel?,Creature?) ReadNext()`
 
-来源：源码第 93 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 94 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 
@@ -433,11 +434,11 @@ private readonly Dictionary<string,int>? _upgrades;
 - `_choiceIndex` = `0`
 - `_choicePlan` = `move.Choices`
 
-<a id="symbol-96169a306886"></a>
+<a id="symbol-0df83f8bffe3"></a>
 
 ## `Add(int, int, int[]) — void Add(int id,int targetId,int[] choices)`
 
-来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 118 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)
 

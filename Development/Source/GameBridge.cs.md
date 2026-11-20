@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`0ECF102049E302C22C33AEA3E5F642BDD79B22410EEA26959945A2C81D6B508E`。来源：[源码](../../GameBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`61241102CBF441B18FAB84246A68A2E36C928B61997D1A078954536D166B865B`。来源：[源码](../../GameBridge.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -95,7 +95,7 @@
 
 来源：源码第 27 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Launch()`](CareerScreen.cs.md#symbol-55a039f448cc)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)；[`NationalSpire.Coop.CoopNativeRun.Character()`](Coop/CoopNativeRun.cs.md#symbol-5f0977f165e0)
+**调用者：** [`Launch()`](CareerScreen.cs.md#symbol-a97a4c74cb24)；[`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)；[`NationalSpire.Coop.CoopNativeRun.Character()`](Coop/CoopNativeRun.cs.md#symbol-5f0977f165e0)
 
 **调用：** `MegaCrit.Sts2.Core.Models.ModelDb.Character<T>()`
 
@@ -114,7 +114,7 @@
 
 来源：源码第 29 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)
+**调用者：** [`NationalSpire.GameBridge.StartMatch(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](GameBridge.cs.md#symbol-b93ed89d4fc6)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)
 
 **调用：** [`NationalSpire.GameCompatibility.ActRng(string)`](GameCompatibility.cs.md#symbol-68363869a9cf)
 
@@ -133,7 +133,7 @@
 
 来源：源码第 31 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Launch()`](CareerScreen.cs.md#symbol-55a039f448cc)；[`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)
+**调用者：** [`Launch()`](CareerScreen.cs.md#symbol-a97a4c74cb24)；[`NationalSpire.CareerScreen.LaunchDateGame(NationalSpire.CareerMatch, MegaCrit.Sts2.Core.Models.CharacterModel, int)`](DateGameScreen.cs.md#symbol-60cf62536a73)；[`NationalSpire.CareerScreen.ResolveFailure(string)`](FailureScreen.cs.md#symbol-64d5a395c405)
 
 **调用：** [`Begin()`](GameBridge.cs.md#symbol-906d064eb34a)；[`NationalSpire.CareerScreen.FormalGate(NationalSpire.CareerData, NationalSpire.CareerMatch, string, System.Func<System.Threading.Tasks.Task>)`](LeagueArenaScreen.cs.md#symbol-72880a76b76f)；[`NationalSpire.CareerStore.Save(NationalSpire.CareerData?)`](CareerStore.cs.md#symbol-ad8f6e4706a1)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；[`NationalSpire.Diagnostics.RecordStartFailure(string, System.Exception, System.Collections.Generic.IReadOnlyDictionary<string, System.Func<object?>>, string)`](Diagnostics.cs.md#symbol-a50687dc715c)；[`NationalSpire.EsportsWorld.EntryReason(NationalSpire.CareerData, NationalSpire.CareerMatch)`](EsportsWorld.cs.md#symbol-4b9f3e1bf70a)；[`NationalSpire.GameBridge.CreateActSelectionRng(string)`](GameBridge.cs.md#symbol-e22050f58fa0)；[`NationalSpire.GameCompatibility.SingleplayerStart(System.Type)`](GameCompatibility.cs.md#symbol-90b5831e6fff)；[`NationalSpire.GameCompatibility.Version()`](GameCompatibility.cs.md#symbol-f20a223e98d6)；[`NationalSpire.MatchFailure.Locked(NationalSpire.CareerData)`](FailureDecision.cs.md#symbol-7f4fa41ad4c0)；[`NationalSpire.MatchModes.NativeAscension(string, int)`](MatchModes.cs.md#symbol-b712e7af8426)；[`NationalSpire.MatchModes.Preferred(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchModes.cs.md#symbol-a20fef0677c1)；[`NationalSpire.MatchModes.Select(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`](MatchModes.cs.md#symbol-51d0719d4fbb)；[`NationalSpire.MatchModes.Valid(string, int, int)`](MatchModes.cs.md#symbol-29ba5300e7ae)；[`NationalSpire.MatchRules.PrepareSeed(NationalSpire.CareerData, NationalSpire.CareerMatch)`](MatchRules.cs.md#symbol-27c230d3a150)；[`NationalSpire.MatchStartWatch.Begin(Godot.Node, string, System.Func<bool>, System.Action)`](MatchStartWatch.cs.md#symbol-a39a7334ee0a)；[`NationalSpire.MatchStartWatch.Finish()`](MatchStartWatch.cs.md#symbol-2b2800aa6a80)；[`NationalSpire.MatchStartWatch.Stage(string)`](MatchStartWatch.cs.md#symbol-ad0a1e036443)；[`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`](PlayerArchive.cs.md#symbol-9ab35bc5f38f)；[`NationalSpire.RuntimeApi.Bind(System.Type, string, bool, params System.Type[])`](RuntimeApi.cs.md#symbol-8426661c18c8)；[`NationalSpire.RuntimeApi.Invoke(System.Reflection.MethodInfo, object?, params object?[])`](RuntimeApi.cs.md#symbol-65f56c93bd1a)；[`NationalSpire.StartDiagnostics.Finish(string?)`](StartDiagnostics.cs.md#symbol-a9ee66195dc4)；[`NationalSpire.StartDiagnostics.Stage(string)`](StartDiagnostics.cs.md#symbol-6350d395f8c5)；[`NationalSpire.StartDiagnostics.StartDiagnostics(NationalSpire.CareerData, NationalSpire.CareerMatch, string, int)`](StartDiagnostics.cs.md#symbol-2a19f756d610)；[`NationalSpire.StartDiagnostics.Write(string, object?)`](StartDiagnostics.cs.md#symbol-7005259dbbc6)；`Godot.GD.PushError(string)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`MegaCrit.Sts2.Core.Nodes.NGame.ReturnToMainMenuWithInternalError(System.Exception)`；`MegaCrit.Sts2.Core.Nodes.NTransition.FadeIn(float, string, System.Threading.CancellationToken?)`；`MegaCrit.Sts2.Core.Random.Rng.NextItem<T>(System.Collections.Generic.IEnumerable<T>)`；`MegaCrit.Sts2.Core.Saves.SaveManager.GenerateUnlockStateFromProgress()`；`object.GetType()`；`object.ToString()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Diagnostics.Stopwatch.StartNew()`；`System.Exception.ToString()`；`System.InvalidOperationException.InvalidOperationException(string?)`；`System.NotSupportedException.NotSupportedException(string?)`；`System.Type.IsAssignableFrom(System.Type?)`
 
@@ -335,9 +335,9 @@
 
 **调用者：** [`NationalSpire.Coop.CoopRuntime.Complete(MegaCrit.Sts2.Core.Runs.RunHistory)`](Coop/CoopRuntime.cs.md#symbol-732476d12d29)；[`NationalSpire.GameBridge.CompleteHistory(MegaCrit.Sts2.Core.Runs.RunHistory)`](GameBridge.cs.md#symbol-4495455c88ce)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`](GameBridge.cs.md#symbol-0910b7cd5c5f)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`](PlayerArchive.cs.md#symbol-9ab35bc5f38f)；`MegaCrit.Sts2.Core.Localization.LocString.Exists(string, string)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Localization.LocString.LocString(string, string)`；`MegaCrit.Sts2.Core.Models.CardModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard)`；`MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`MegaCrit.Sts2.Core.Models.PotionModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializablePotion)`；`NationalSpire.CareerResult.CareerResult()`；`NationalSpire.RunBadge.RunBadge()`；`NationalSpire.RunEvidence.RunEvidence()`；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`
+**调用：** [`NationalSpire.ArchitectFinal.Report(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry>>)`](ArchitectFinal.cs.md#symbol-833efec7ee8d)；[`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.DuelRecorder.CardFace(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard?)`](DuelRecorder.cs.md#symbol-c3056ade97b7)；[`NationalSpire.DuelRecorder.SelectDeck<T>(System.Collections.Generic.IEnumerable<T>, System.Func<T, int>, System.Func<T, int>, System.Func<T, MegaCrit.Sts2.Core.Models.ModelId?>)`](DuelRecorder.cs.md#symbol-6f69544656aa)；[`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`](GameBridge.cs.md#symbol-0910b7cd5c5f)；[`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；[`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`](PlayerArchive.cs.md#symbol-9ab35bc5f38f)；`MegaCrit.Sts2.Core.Localization.LocString.Exists(string, string)`；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`MegaCrit.Sts2.Core.Localization.LocString.LocString(string, string)`；`MegaCrit.Sts2.Core.Models.CardModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard)`；`MegaCrit.Sts2.Core.Models.ModelId.ToString()`；`MegaCrit.Sts2.Core.Models.PotionModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializablePotion)`；`NationalSpire.CareerResult.CareerResult()`；`NationalSpire.RunBadge.RunBadge()`；`NationalSpire.RunEvidence.RunEvidence()`；`string.ToLowerInvariant()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.List()`；`System.Enum.ToString()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerResult.Cards`；`NationalSpire.CareerResult.Character`；`NationalSpire.CareerResult.CharacterId`；`NationalSpire.CareerResult.DeckSummary`；`NationalSpire.CareerResult.Evidence`；`NationalSpire.CareerResult.Mode`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`；`NationalSpire.GameText.Plain(string)`；`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`；`NationalSpire.RunBadge.Description`；`NationalSpire.RunBadge.Name`；`NationalSpire.RunBadge.Rarity`；`NationalSpire.RunEvidence.Badges`；`NationalSpire.RunEvidence.DefeatedEncounters`；`NationalSpire.RunEvidence.FinalHp`；`NationalSpire.RunEvidence.GoldGained`；`NationalSpire.RunEvidence.MaxHp`；`NationalSpire.RunEvidence.PotionSlots`；`NationalSpire.RunEvidence.PotionsObtained`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.PotionsUsed`；`NationalSpire.RunEvidence.RemainingGold`；`NationalSpire.RunEvidence.RemainingPotions`
+**字段、属性、事件及方法组引用：** `NationalSpire.ArchitectFinal.Report(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry>>)`；`NationalSpire.CareerResult.Cards`；`NationalSpire.CareerResult.Character`；`NationalSpire.CareerResult.CharacterId`；`NationalSpire.CareerResult.DeckSummary`；`NationalSpire.CareerResult.Evidence`；`NationalSpire.CareerResult.Mode`；`NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.DuelRecorder.CardFace(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard?)`；`NationalSpire.DuelRecorder.SelectDeck<T>(System.Collections.Generic.IEnumerable<T>, System.Func<T, int>, System.Func<T, int>, System.Func<T, MegaCrit.Sts2.Core.Models.ModelId?>)`；`NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`；`NationalSpire.GameText.Plain(string)`；`NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`；`NationalSpire.RunBadge.Description`；`NationalSpire.RunBadge.Name`；`NationalSpire.RunBadge.Rarity`；`NationalSpire.RunEvidence.Badges`；`NationalSpire.RunEvidence.DefeatedEncounters`；`NationalSpire.RunEvidence.Duel`；`NationalSpire.RunEvidence.FinalHp`；`NationalSpire.RunEvidence.GoldGained`；`NationalSpire.RunEvidence.MaxHp`；`NationalSpire.RunEvidence.PotionSlots`；`NationalSpire.RunEvidence.PotionsObtained`；`NationalSpire.RunEvidence.PotionsRecorded`；`NationalSpire.RunEvidence.PotionsUsed`；`NationalSpire.RunEvidence.RemainingGold`；`NationalSpire.RunEvidence.RemainingPotions`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -348,41 +348,38 @@
 - `MegaCrit.Sts2.Core.Localization.LocString.LocString(string, string)`；输入表达式：`new LocString("badges", badge.Id + (tiered ? "." + prefix + "Description" : ".description"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new LocString("badges", badge.Id + (tiered ? "." + prefix + "Description" : ".description")).GetFormattedText`
 - `MegaCrit.Sts2.Core.Localization.LocString.LocString(string, string)`；输入表达式：`new LocString("badges", badge.Id + (tiered ? "." + prefix + "Title" : ".title"))`；返回值紧邻使用处：`MemberAccessExpressionSyntax: new LocString("badges", badge.Id + (tiered ? "." + prefix + "Title" : ".title")).GetFormattedText`
 - `MegaCrit.Sts2.Core.Models.CardModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard)`；输入表达式：`CardModel.FromSerializable(serialized)`；返回值紧邻使用处：`EqualsValueClauseSyntax: = CardModel.FromSerializable(serialized)`
-- `MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(MegaCrit.Sts2.Core.Entities.Cards.PileType, MegaCrit.Sts2.Core.Entities.Creatures.Creature?)`；输入表达式：`card.GetDescriptionForPile(PileType.None)`；返回值紧邻使用处：`BinaryExpressionSyntax: card.Title + "：" + card.GetDescriptionForPile(PileType.None)`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`player.Character.ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: CharacterId = player.Character.ToString()`
 - `MegaCrit.Sts2.Core.Models.ModelId.ToString()`；输入表达式：`serialized.Id!.ToString()`；返回值紧邻使用处：`ArgumentSyntax: serialized.Id!.ToString()`
 - `MegaCrit.Sts2.Core.Models.PotionModel.FromSerializable(MegaCrit.Sts2.Core.Saves.Runs.SerializablePotion)`；输入表达式：`PotionModel.FromSerializable(potion)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: PotionModel.FromSerializable(potion).Title`
+- `NationalSpire.ArchitectFinal.Report(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Runs.History.MapPointHistoryEntry>>)`；输入表达式：`ArchitectFinal.Report(history.MapPointHistory)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Duel = ArchitectFinal.Report(history.MapPointHistory)`
 - `NationalSpire.CareerResult.CareerResult()`；输入表达式：`new() { Character = PlayerArchive.CharacterName(player.Character), CharacterId = player.Character.ToString(), Mode = history.GameMode.ToString(), Cards = cards, DeckSummary = deckSummary, Evidence = evidence }`；返回值紧邻使用处：`ReturnStatementSyntax: return new() { Character = PlayerArchive.CharacterName(player.Character), CharacterId = player.Character.ToString(), Mode = history.GameMode.ToString(), Cards = cards, DeckSummary = deckSummary, Evidence = evidence };`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("history.encounters", e)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("history.encounters", e);`
+- `NationalSpire.DuelRecorder.CardFace(MegaCrit.Sts2.Core.Saves.Runs.SerializableCard?)`；输入表达式：`DuelRecorder.CardFace(serialized)`；返回值紧邻使用处：`IsPatternExpressionSyntax: DuelRecorder.CardFace(serialized) is {Length:>0} text`
+- `NationalSpire.DuelRecorder.SelectDeck<T>(System.Collections.Generic.IEnumerable<T>, System.Func<T, int>, System.Func<T, int>, System.Func<T, MegaCrit.Sts2.Core.Models.ModelId?>)`；输入表达式：`DuelRecorder.SelectDeck(player.Deck,c=>c.CurrentUpgradeLevel,c=>c.FloorAddedToDeck??0,c=>c.Id)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var serialized in DuelRecorder.SelectDeck(player.Deck,c=>c.CurrentUpgradeLevel,c=>c.FloorAddedToDeck??0,c=>c.Id))          {              if(DuelRecorder.CardFace(serialized) is {Length:>0} text)cards.Add(text);          }`
 - `NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?)`；输入表达式：`ReadDefeatedEncounters(history, match)`；返回值紧邻使用处：`AssignmentExpressionSyntax: evidence.DefeatedEncounters = ReadDefeatedEncounters(history, match)`
-- `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(card.Title + "：" + card.GetDescriptionForPile(PileType.None))`；返回值紧邻使用处：`EqualsValueClauseSyntax: = GameText.Plain(card.Title + "：" + card.GetDescriptionForPile(PileType.None))`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(card.Title)`；返回值紧邻使用处：`ArgumentSyntax: GameText.Plain(card.Title)`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(description)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Description = GameText.Plain(description)`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(name)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Name = GameText.Plain(name)`
 - `NationalSpire.GameText.Plain(string)`；输入表达式：`GameText.Plain(PotionModel.FromSerializable(potion).Title.GetFormattedText())`；返回值紧邻使用处：`ArgumentSyntax: GameText.Plain(PotionModel.FromSerializable(potion).Title.GetFormattedText())`
 - `NationalSpire.PlayerArchive.CharacterName(MegaCrit.Sts2.Core.Models.ModelId)`；输入表达式：`PlayerArchive.CharacterName(player.Character)`；返回值紧邻使用处：`AssignmentExpressionSyntax: Character = PlayerArchive.CharacterName(player.Character)`
 - `NationalSpire.RunBadge.RunBadge()`；输入表达式：`new() { Name = GameText.Plain(name), Description = GameText.Plain(description), Rarity = badge.Rarity.ToString() }`；返回值紧邻使用处：`ArgumentSyntax: new() { Name = GameText.Plain(name), Description = GameText.Plain(description), Rarity = badge.Rarity.ToString() }`
-- `NationalSpire.RunEvidence.RunEvidence()`；输入表达式：`new RunEvidence { PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new RunEvidence { PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount }`
+- `NationalSpire.RunEvidence.RunEvidence()`；输入表达式：`new RunEvidence { Duel = ArchitectFinal.Report(history.MapPointHistory), PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount }`；返回值紧邻使用处：`EqualsValueClauseSyntax: = new RunEvidence { Duel = ArchitectFinal.Report(history.MapPointHistory), PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount }`
 - `string.ToLowerInvariant()`；输入表达式：`badge.Rarity.ToString().ToLowerInvariant()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = badge.Rarity.ToString().ToLowerInvariant()`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；输入表达式：`g.Count()`；返回值紧邻使用处：`BinaryExpressionSyntax: g.Key + " ×" + g.Count()`
 - `System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；输入表达式：`s.PotionChoices.Count(p => p.wasPicked)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: s => s.PotionChoices.Count(p => p.wasPicked)`
-- `System.Collections.Generic.IEnumerable<TSource>.DistinctBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)              .DistinctBy(c => c.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)              .DistinctBy(c => c.Id).Take`
 - `System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`deckNames.GroupBy(name => name)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: deckNames.GroupBy(name => name).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；输入表达式：`roomStats.LastOrDefault()`；返回值紧邻使用处：`IsPatternExpressionSyntax: roomStats.LastOrDefault() is { } finalStats`
 - `System.Collections.Generic.IEnumerable<TSource>.LastOrDefault<TSource>()`；输入表达式：`roomStats.LastOrDefault()`；返回值紧邻使用处：`IsPatternExpressionSyntax: roomStats.LastOrDefault() is { MaxHp: > 0 } last`
-- `System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count())`；返回值紧邻使用处：`MemberAccessExpressionSyntax: deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count()).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where`
 - `System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；输入表达式：`history.MapPointHistory.SelectMany(a => a)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: history.MapPointHistory.SelectMany(a => a).SelectMany`
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`roomStats.Sum(s => s.GoldGained)`；返回值紧邻使用处：`AssignmentExpressionSyntax: evidence.GoldGained = roomStats.Sum(s => s.GoldGained)`
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`roomStats.Sum(s => s.PotionChoices.Count(p => p.wasPicked))`；返回值紧邻使用处：`AssignmentExpressionSyntax: evidence.PotionsObtained = roomStats.Sum(s => s.PotionChoices.Count(p => p.wasPicked))`
 - `System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；输入表达式：`roomStats.Sum(s => s.PotionUsed.Count)`；返回值紧邻使用处：`AssignmentExpressionSyntax: evidence.PotionsUsed = roomStats.Sum(s => s.PotionUsed.Count)`
-- `System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；输入表达式：`player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)              .DistinctBy(c => c.Id).Take(6)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var serialized in player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)              .DistinctBy(c => c.Id).Take(6))          {              try              {                  var card = CardModel.FromSerializable(serialized);                  string text = GameText.Plain(card.Title + "：" + card.GetDescriptionForPile(PileType.None));                  cards.Add(text);              }              catch { /* 已卸载的 Mod 卡牌不阻止结算。 */ }          }`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count()).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count()).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；输入表达式：`history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList()`；返回值紧邻使用处：`EqualsValueClauseSyntax: = history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList()`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.Deck.Where(c => c.Id != null)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var serialized in player.Deck.Where(c => c.Id != null))          {              try { var card = CardModel.FromSerializable(serialized); deckNames.Add(GameText.Plain(card.Title)); }              catch { deckNames.Add(serialized.Id!.ToString()); }          }`
-- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.Deck.Where(c => c.Id != null)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: player.Deck.Where(c => c.Id != null)              .OrderByDescending`
 - `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`player.Potions.Where(p => p.Id != null)`；返回值紧邻使用处：`ForEachStatementSyntax: foreach (var potion in player.Potions.Where(p => p.Id != null))          {              try { evidence.RemainingPotions.Add(GameText.Plain(PotionModel.FromSerializable(potion).Title.GetFormattedText())); }              catch { evidence.RemainingPotions.Add("未识别药水"); }          }`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`cards.Add(text)`；返回值紧邻使用处：`ExpressionStatementSyntax: cards.Add(text);`
 - `System.Collections.Generic.List<T>.Add(T)`；输入表达式：`deckNames.Add(GameText.Plain(card.Title))`；返回值紧邻使用处：`ExpressionStatementSyntax: deckNames.Add(GameText.Plain(card.Title));`
@@ -394,7 +391,6 @@
 - `System.Enum.ToString()`；输入表达式：`badge.Rarity.ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Rarity = badge.Rarity.ToString()`
 - `System.Enum.ToString()`；输入表达式：`badge.Rarity.ToString()`；返回值紧邻使用处：`MemberAccessExpressionSyntax: badge.Rarity.ToString().ToLowerInvariant`
 - `System.Enum.ToString()`；输入表达式：`history.GameMode.ToString()`；返回值紧邻使用处：`AssignmentExpressionSyntax: Mode = history.GameMode.ToString()`
-- `System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；输入表达式：`player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: player.Deck.Where(c => c.Id != null)              .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)              .DistinctBy`
 
 **赋值（含属性/字段和局部值）：**
 
@@ -403,6 +399,7 @@
 - `CharacterId` = `player.Character.ToString()`
 - `DeckSummary` = `deckSummary`
 - `Description` = `GameText.Plain(description)`
+- `Duel` = `ArchitectFinal.Report(history.MapPointHistory)`
 - `evidence.DefeatedEncounters` = `ReadDefeatedEncounters(history, match)`
 - `evidence.FinalHp` = `last.CurrentHp`
 - `evidence.GoldGained` = `roomStats.Sum(s => s.GoldGained)`
@@ -421,7 +418,7 @@
 
 ## `NationalSpire.GameBridge.ReadDefeatedEncounters(MegaCrit.Sts2.Core.Runs.RunHistory, NationalSpire.CareerMatch?) — private static List<RunEncounter> ReadDefeatedEncounters(RunHistory history, CareerMatch? match)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 228 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.GameBridge.ReadPlayerHistory(MegaCrit.Sts2.Core.Runs.RunHistory, MegaCrit.Sts2.Core.Runs.RunHistoryPlayer, NationalSpire.CareerMatch?)`](GameBridge.cs.md#symbol-3b790044a598)
 
@@ -460,7 +457,7 @@
 
 ## `NationalSpire.GameBridge.RecoverPending() — public static void RecoverPending()`
 
-来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 261 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)；[`NationalSpire.GameBridge.ReleaseMissingRun()`](GameBridge.cs.md#symbol-0d1c45a81336)；[`NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu)`](GameBridge.cs.md#symbol-6939e359db40)
 
@@ -487,7 +484,7 @@
 
 ## `NationalSpire.GameBridge.ReleaseMissingRun() — public static void ReleaseMissingRun()`
 
-来源：源码第 292 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 284 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.Matches(NationalSpire.CareerData)`](CareerScreen.cs.md#symbol-c8051d511377)
 
@@ -509,7 +506,7 @@
 
 ## `NationalSpire.MenuPatch.Postfix(MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NMainMenu) — public static void Postfix(NMainMenu __instance)`
 
-来源：源码第 307 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 299 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -549,7 +546,7 @@
 
 ## `NationalSpire.HistoryPatch.Postfix(MegaCrit.Sts2.Core.Runs.RunHistory) — public static void Postfix(RunHistory history)`
 
-来源：源码第 331 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 323 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -570,7 +567,7 @@
 
 ## `NationalSpire.CareerContextPatch.Postfix(ref MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext.IScreenContext?) — public static void Postfix(ref IScreenContext? __result)`
 
-来源：源码第 341 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 333 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

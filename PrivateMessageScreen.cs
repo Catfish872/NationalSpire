@@ -488,7 +488,7 @@ public partial class CareerScreen
     }
     private void PrivateMatchPicker()
     {
-        var data = ViewData; int season = data.Season, day = 0; int ascension = 0; string mode = "切磋";
+        var data = ViewData; int season = data.Season, day = 0; int ascension = 0; string mode = "切磋"; bool mirror = false;
         Label? selected = null; VBoxContainer? calendar = null; Label? error = null;
         void Calendar()
         {
@@ -498,7 +498,7 @@ public partial class CareerScreen
         }
         ShowCareerDialog("约一局", "已有赛程显示在日历中。选好后附到消息。", () =>
         {
-            var request = new PrivateOffer { Kind = "match", Season = season, Day = day, Ascension = ascension, Mode = mode };
+            var request = new PrivateOffer { Kind = "match", Season = season, Day = day, Ascension = mirror ? 0 : ascension, Mode = mode, MirrorAppointment = mirror, MatchFormatChosen = true };
             if (PrivateAppointments.Error(ViewData, _privatePerson, request) is { } reason) { error!.Text = reason; return false; }
             AttachPrivate(request); return true;
         }, "添加到消息", box =>
@@ -507,12 +507,24 @@ public partial class CareerScreen
             var seasonPicker = new OptionButton(); seasonPicker.AddItem("本赛季"); seasonPicker.AddItem("下赛季"); row.AddChild(seasonPicker);
             seasonPicker.ItemSelected += index => { season = data.Season + (int)index; day = 0; selected!.Text = "请选择日期"; Calendar(); };
             var asc = new SpinBox { MinValue = 0, MaxValue = 10, Prefix = "进阶", CustomMinimumSize = new(160, 45) }; asc.ValueChanged += value => ascension = (int)value; row.AddChild(asc);
+            MatchFormats(box,value=>{ mirror=value; asc.Visible=!value; });
             var modes = new OptionButton(); modes.AddItem("朋友切磋"); modes.AddItem("公开挑战"); modes.ItemSelected += index => mode = index == 0 ? "切磋" : "挑战"; row.AddChild(modes);
             selected = Text("请选择日期", 17, CareerVisuals.Teal); box.AddChild(selected);
-            var scroll = new ScrollContainer { CustomMinimumSize = new(740, 440), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
+            var scroll = new ScrollContainer { CustomMinimumSize = new(740, Math.Clamp(_stage.Size.Y-365,260,440)), HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled }; box.AddChild(scroll);
             calendar = new VBoxContainer { SizeFlagsHorizontal = SizeFlags.ExpandFill }; calendar.AddThemeConstantOverride("separation", 12); scroll.AddChild(calendar); Calendar();
             error = Text("", 15, new Color("ee929d")); box.AddChild(error);
         });
+    }
+    private static void MatchFormats(VBoxContainer box, Action<bool> changed)
+    {
+        var row=TabStrip(box,12);
+        void Select(bool mirror){
+            CareerVisuals.ClearContent(row);
+            row.AddChild(UnderlineTab("正常爬塔",()=>Select(false),!mirror,145,19));
+            row.AddChild(UnderlineTab("镜面对决",()=>Select(true),mirror,145,19));
+            changed(mirror);
+        }
+        Select(false);
     }
     private void OpenPrivateOfferCalendar(PrivateOffer offer)
     {
@@ -595,7 +607,7 @@ public partial class CareerScreen
         var card = new PanelContainer(); card.AddThemeStyleboxOverride("panel", CareerVisuals.Box("2c3947", "b89e67", 8, 16)); _privateBody!.AddChild(card);
         var box = Inner(card); box.AddThemeConstantOverride("separation", 14);
         box.AddChild(Text((offer.Kind == "match" ? "约战" : "合同报价") + " · " + offer.State, 20, _gold));
-        if (offer.Kind == "match") box.AddChild(Text($"{GameCalendar.Text(data, PrivateAppointments.Date(data, offer))} · 进阶{offer.Ascension} · {offer.Mode}", 17, _ink));
+        if (offer.Kind == "match") box.AddChild(Text($"{GameCalendar.Text(data, PrivateAppointments.Date(data, offer))} · {PrivateAppointments.InvitationFormat(offer)} · {offer.Mode}", 17, _ink));
         else
         {
             box.AddChild(PrivateText($"签字费 ${offer.Signing:#,0.##}  ·  周薪 ${offer.Wage:#,0.##}\n胜场奖金 ${offer.WinBonus:#,0.##}  ·  {offer.Weeks}周  ·  {offer.Role}", 17, _ink));
@@ -621,16 +633,18 @@ public partial class CareerScreen
                 }
             }
             var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 14); box.AddChild(actions);
-            var confirm = PrivateButton(offer.Kind == "match" ? "确认安排" : "确认签约", () =>
+            bool chooseFormat=offer.Kind=="match" && !offer.MatchFormatChosen;
+            var confirm = PrivateButton(chooseFormat ? "确认爬塔" : offer.Kind == "match" ? "确认安排" : "确认签约", () =>
             {
-                string detail = offer.Kind == "match" ? $"{GameCalendar.Text(data, PrivateAppointments.Date(data, offer))} · 进阶{offer.Ascension} · {offer.Mode}"
+                string detail = offer.Kind == "match" ? $"{GameCalendar.Text(data, PrivateAppointments.Date(data, offer))} · {PrivateAppointments.InvitationFormat(offer)} · {offer.Mode}"
                     : $"首次支付 ${(offer.Signing + (CareerEngine.Person(ViewData, _privatePerson) is { ClubId.Length: > 0 } p ? OwnedClubs.TransferFee(p) * 10 : 0)):#,0.##}；每周 ${offer.Wage:#,0.##}，每次获胜 ${offer.WinBonus:#,0.##}。合同 {offer.Weeks} 周，进入{offer.Role}阵容。";
-                if (offer.Kind == "match") { PrivateCommand("dm-confirm", new() { Offer = offer.Id }); return; }
+                if (offer.Kind == "match") { PrivateCommand("dm-confirm", new() { Offer = offer.Id, MirrorAppointment = offer.MirrorAppointment }); return; }
                 ShowCareerDialog("确认" + (offer.Kind == "match" ? "约战" : "合同"), detail, () => { PrivateCommand("dm-confirm", new() { Offer = offer.Id, Replacement = replacement }); return true; });
             }, 160);
             if (offer.Kind == "contract") confirm.Disabled = !OwnedClubs.CanOperate(data) || needsReplacement;
             if (replacementPicker != null) replacementPicker.ItemSelected += _ => confirm.Disabled = OwnedClubs.StarterReplacementError(data, replacement) != null;
             actions.AddChild(confirm);
+            if(chooseFormat)actions.AddChild(PrivateButton("确认镜面对决",()=>PrivateCommand("dm-confirm",new(){Offer=offer.Id,MirrorAppointment=true}),160));
             actions.AddChild(PrivateButton("拒绝", () => PrivateCommand("dm-decline", new() { Offer = offer.Id }), 110));
         }
         else if (offer.State == "已确认" && offer.Kind == "match" && data.Matches.Any(m => m.Id == offer.MatchId && m.Status == "待赛"))

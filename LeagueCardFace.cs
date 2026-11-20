@@ -55,7 +55,7 @@ public partial class LeagueCardFace : Control
         Identity=(model,upgraded);
         if(reuse!=null){_face=reuse;AddChild(reuse);}else{
         _face=ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<NCard>();
-        var copy=model.ToMutable();_face.Model=upgraded?LeagueCards.Improve(copy):copy;_face.Ready+=()=>Finish(model,grade,tint);AddChild(_face);}
+        var copy=model.IsMutable?model:model.ToMutable();_face.Model=upgraded?LeagueCards.Improve(copy):copy;_face.Ready+=()=>Finish(model,grade,tint);AddChild(_face);}
         MountEdge(grade,tint);Resized+=Arrange;Arrange();
     }
     private void Finish(CardModel model,int grade,Color tint){

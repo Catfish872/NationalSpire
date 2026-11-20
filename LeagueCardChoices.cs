@@ -14,6 +14,7 @@ public sealed partial class LeagueDuel
     private int _choiceIndex;
     private bool _choicesChanged;
     private CardModel[] SelectActual(IEnumerable<CardModel> candidates,PileType pile,int min,int max,string purpose=""){
+        LeagueNativeMatch.RecordSelection(Rival);
         var cards=candidates.ToArray();if(cards.Length==0)return [];
         int effect=-1;
         if(_choiceIndex<_choicePlan.Length){

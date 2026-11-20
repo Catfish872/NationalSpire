@@ -20,8 +20,9 @@ public static partial class AiService
     };
     private static object? MatchContext(CareerData data, CommunityPost post)
     {
-        var result = data.Results.FirstOrDefault(r => post.EventKey == "match" + r.MatchId && r.OfficialAscensionVerified);
+        var result = data.Results.FirstOrDefault(r => post.EventKey == "match" + r.MatchId && (r.OfficialAscensionVerified || r.MirrorAppointment));
         if (result == null) return null;
+        if (result.MirrorAppointment) return new { result.Event, result.Outcome, 对决战报 = result.Evidence.Duel!.Describe() };
         var match = data.Matches.FirstOrDefault(m => m.Id == result.MatchId);
         var opponent = post.PeopleAtEvent.FirstOrDefault(p => p.Id == result.OpponentId);
         var previous = data.Results.TakeWhile(r => !ReferenceEquals(r, result)).Where(r => r.OfficialAscensionVerified && r.Kind != "private-friendly").ToList();
@@ -31,7 +32,7 @@ public static partial class AiService
             cooperative = data.CooperativeMembers > 1 ? new { members = data.HumanIds.Select(id => new { id, name = CareerEngine.DisplayName(data, id), gender = IdentityGender.Of(data, id) }),
                 facts = AiGeneratedText.Source(post), rule = "同队玩家共同爬塔，对方也是等人数队伍；通关和胜负属于整队，不能解读为个人单挑。" } : null,
             player = new { name = CareerEngine.Name(data), gender = data.PlayerGender, Character = CharacterIdentity.ForResult(result), cleared = result.Win, result.Floor, elapsed = MatchRules.Time(result.RunSeconds),
-                ratingChange = result.RatingDelta, deck = result.DeckSummary.Select(GameText.Plain), keyCards = result.Cards.Take(5).Select(GameText.Plain), finishEvidence = result.Evidence.ForPrompt() },
+                ratingChange = result.RatingDelta, deck = result.DeckSummary.Select(GameText.Plain), keyCards = result.Cards.Take(5).Select(GameText.Plain), finishEvidence = result.Evidence.ForPrompt(result.Cards.Take(5)) },
             opponent = new { name = result.Opponent, gender = IdentityGender.Of(data, result.OpponentId), character = opponent == null ? null : CharacterIdentity.Name(data, opponent.Character), style = opponent?.Style, role = opponent?.Role,
                 bestAscension = opponent?.MaxAscension, profileAsOfDay = opponent == null ? (int?)null : result.Day, rating = opponent?.Rating, recentForm = opponent?.Form,
                 cleared = match?.OpponentWon, floor = match?.OpponentFloor, elapsed = MatchRules.Time(match?.OpponentSeconds),

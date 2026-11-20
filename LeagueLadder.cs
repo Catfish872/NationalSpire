@@ -34,6 +34,17 @@ internal static class LeagueLadder
         draw.UsedPeople.Add(pick.Id);draw.UsedPlans.Add((pick.Role,pick.Plan));
         return (draw.People[pick.Id].PublicName,draw.Roles[pick.Role],tier,pick.Style,pick.Id);
     }
+    internal static (string Name,CharacterModel Role,int Tier,string Style,string? PersonId)? Invited(LeagueSeasonRoster roster,Draw draw,string personId){
+        if(!draw.People.TryGetValue(personId,out var person))return null;
+        foreach(var bracket in roster.Brackets){
+            if(!draw.Roles.TryGetValue(bracket.Role,out var role))continue;
+            foreach(var style in bracket.Styles.Where(s=>s.Value.Contains(personId))){
+                draw.UsedPeople.Add(personId);draw.UsedPlans.Add((bracket.Role,bracket.Plan));
+                return (person.PublicName,role,bracket.Tier,style.Key,personId);
+            }
+        }
+        return null;
+    }
     internal static Dictionary<string,int> UpgradePlan(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng){
         return Upgrades(cards,plan,tier,rng,false);
     }

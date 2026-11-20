@@ -33,6 +33,10 @@ public partial class CareerScreen
         bool draw = result.Outcome == "平局" || match?.Draw == true;
         bool won = result.Outcome == "获胜" || result.Outcome.Length == 0 && (match?.PlayerWon ?? result.Win);
         var accent = draw ? CareerVisuals.Teal : won ? _gold : new Color("a5bcd5");
+        if(result.MirrorAppointment){
+            MatchArena(data,result.Event,result.OpponentId,result.Opponent,won?"胜利":"失败",result.Character,accent,out var buttons,result.Day,source:"镜面约战");
+            ReviewPager(data,result,buttons);DuelReportView(_content,result.Evidence.Duel!,false);return;
+        }
         string ownPerformance=MatchRules.Performance(result.Win,result.Floor,result.RunSeconds)
             + (!result.Win && result.RunSeconds>0 ? " · "+MatchRules.Time(result.RunSeconds) : "");
         string rivalPerformance=result.Settlement?.OpponentPerformance ??
@@ -40,6 +44,18 @@ public partial class CareerScreen
         MatchArena(data,result.Event,result.OpponentId,result.Opponent,draw?"平局":won?"胜利":"失败",result.Character,accent,out var heroActions,result.Day,
             playerPerformance:ownPerformance,rivalPerformance:rivalPerformance,source:IsLatestReview(data)?"本场战报":"历史战报");
         if (!pendingFailure) ReviewPager(data,result,heroActions);
+        void DetailHeading()
+        {
+            var heading = new HBoxContainer();
+            heading.AddThemeConstantOverride("separation", 16);
+            _content.AddChild(heading);
+            var title = DashboardLabel("详细战报", 24, _ink);
+            title.SizeFlagsHorizontal = SizeFlags.ShrinkBegin;
+            title.SizeFlagsVertical = SizeFlags.ShrinkCenter;
+            heading.AddChild(title);
+            if (result.Evidence.Duel is {} duel)
+                heading.AddChild(FramedAction("建筑师对决战报", () => ShowDuelReport(duel), "swords-start", width:170, height:36));
+        }
         RenderTeam();
         var evidence = new List<string>();
         if (result.Evidence.FinalHp != null && result.Evidence.MaxHp > 0) evidence.Add($"生命 {result.Evidence.FinalHp}/{result.Evidence.MaxHp}");
@@ -58,6 +74,7 @@ public partial class CareerScreen
                 if (choice.Item2 == "confirm") button.AddThemeStyleboxOverride("normal", CareerVisuals.Box("263b49", "71889b", 8, 16));
             }
             if (_multiplayer is { Host: false }) body.AddChild(Text("等待房主选择。", 16, _muted));
+            if (result.Evidence.Duel != null) DetailHeading();
             return;
         }
         var rewards = new GridContainer { Columns = 3, SizeFlagsHorizontal = SizeFlags.ExpandFill }; rewards.AddThemeConstantOverride("h_separation", 18); _content.AddChild(rewards);
@@ -75,7 +92,7 @@ public partial class CareerScreen
         Reward("选手评分", $"{result.RatingDelta:+0;-0;0}", result.Settlement is { } record ? $"赛后评分 {record.Rating}" : "本场评分变化");
         _content.AddChild(DashboardLabel(IsLatestReview(data)?"本场成绩已记录":"历史战报 · "+GameCalendar.Text(data,result.Day),16,_muted));
         _content.AddChild(new HSeparator());
-        _content.AddChild(DashboardLabel("详细战报",24,_ink));
+        DetailHeading();
         var report=new HBoxContainer {Name="SettlementReport"}; report.AddThemeConstantOverride("separation",25); _content.AddChild(report);
         VBoxContainer Column(string title)
         {

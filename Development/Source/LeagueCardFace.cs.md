@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`E05C84E0A00C36A5EEF26D961C308ACF1FE7D3A622940013F228BF505A2940E4`。来源：[源码](../../LeagueCardFace.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`68F7B786B0AF1F6964BC4AC69D3C1A4055DAAB345883BDDE788DAA7D22BD56F3`。来源：[源码](../../LeagueCardFace.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -219,7 +219,7 @@ private static Shader? _edge;
 - `Godot.PackedScene.Instantiate<T>(Godot.PackedScene.GenEditState)`；输入表达式：`ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<NCard>()`；返回值紧邻使用处：`AssignmentExpressionSyntax: _face=ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<NCard>()`
 - `Godot.ResourceLoader.Load<T>(string, string, Godot.ResourceLoader.CacheMode)`；输入表达式：`ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn")`；返回值紧邻使用处：`MemberAccessExpressionSyntax: ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn").Instantiate<NCard>`
 - `Godot.Vector2.Vector2(float, float)`；输入表达式：`new(180,272)`；返回值紧邻使用处：`AssignmentExpressionSyntax: CustomMinimumSize=new(180,272)`
-- `MegaCrit.Sts2.Core.Models.CardModel.ToMutable()`；输入表达式：`model.ToMutable()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =model.ToMutable()`
+- `MegaCrit.Sts2.Core.Models.CardModel.ToMutable()`；输入表达式：`model.ToMutable()`；返回值紧邻使用处：`ConditionalExpressionSyntax: model.IsMutable?model:model.ToMutable()`
 - `NationalSpire.LeagueCardFace.Arrange()`；输入表达式：`Arrange()`；返回值紧邻使用处：`ExpressionStatementSyntax: Arrange();`
 - `NationalSpire.LeagueCardFace.Finish(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color)`；输入表达式：`Finish(model,grade,tint)`；返回值紧邻使用处：`ParenthesizedLambdaExpressionSyntax: ()=>Finish(model,grade,tint)`
 - `NationalSpire.LeagueCardFace.MountEdge(int, Godot.Color)`；输入表达式：`MountEdge(grade,tint)`；返回值紧邻使用处：`ExpressionStatementSyntax: MountEdge(grade,tint);`

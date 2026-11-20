@@ -103,10 +103,13 @@ public static partial class PrivatePublicContext
             bool team = r.PlayerParticipants.Count > 1 || r.OpponentParticipants.Count > 1 || d.HumanIds.Count > 1;
             string player = team ? string.Join("、", r.PlayerParticipants.Count > 0 ? r.PlayerParticipants.Select(id => Name(d, id)) : d.HumanIds.Select(id => Name(d, id))) + "所在队伍" : CareerEngine.Name(d);
             string npc = team ? (r.OpponentParticipants.Count > 0 ? string.Join("、", r.OpponentParticipants.Select(id => Name(d, id))) : Name(d, r.OpponentId)) + "所在队伍" : p.PublicName;
+            if(r.MirrorAppointment){
+                records.Add((key,r.Day,index,$"{PrivateAppointments.DateText(d,r.Day)}，{type}。{r.Evidence.Duel!.Describe()}")); continue;
+            }
             string other = r.Settlement?.OpponentPerformance is { Length: > 0 } performance ? performance : (match?.Status == "已结算" && match.OpponentPrepared
                 ? MatchRules.Performance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds) : "爬塔表现未记录");
             string ascension = ActualAscension(r) >= 0 ? "进阶" + ActualAscension(r) : "进阶未记录";
-            records.Add((key, r.Day, index, $"{PrivateAppointments.DateText(d, r.Day)}，{player}与{npc}完成{type}。{player}挑战{ascension}，使用{CharacterIdentity.ForResult(r)}，{MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}；{npc}挑战进阶{r.Ascension}，{other}。{player}的对战结果为{r.Outcome}。"));
+            records.Add((key, r.Day, index, $"{PrivateAppointments.DateText(d, r.Day)}，{player}与{npc}完成{type}。{player}挑战{ascension}，使用{CharacterIdentity.ForResult(r)}，{MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}；{npc}挑战进阶{r.Ascension}，{other}。{player}的对战结果为{r.Outcome}。" + (r.Evidence.Duel is {} duel ? "\n"+duel.Describe() : "")));
         }
         var recent = records.OrderByDescending(r => r.Day).ThenByDescending(r => r.Order).Take(3).Reverse().ToArray();
         if (recent.Length > 0) b.AppendLine($"\n{p.PublicName}实际参加的近期比赛（从旧到新）\n" + string.Join("\n", recent.Select(r => r.Text)));

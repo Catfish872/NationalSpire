@@ -126,20 +126,23 @@ public partial class CoopScreen : Control, IScreenContext
         Button(row, confirmText, () => { shade.QueueFree(); _dialog = null; try { action(); } catch (Exception e) { _message = e.Message; } });
         Button(row, "取消", () => { shade.QueueFree(); _dialog = null; });
     }
-    private async Task Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "", NpcGenerationSetup? npcSetup = null, bool reportToSetup = false)
+    private async Task Connect(bool host, string name, int capacity = 2, string country = "中国", string code = "", string saved = "", NpcGenerationSetup? npcSetup = null, Control? setupStage = null)
     {
         if (host && saved.Length == 0 && npcSetup == null)
         {
-            CareerScreen.SelectNpcGeneration(this, AiSettingsStore.Load(new()), plan => Connect(host, name, capacity, country, code, saved, plan, true), Runtime.CancelConnection, country); return;
+            CareerScreen.SelectNpcGeneration(this, AiSettingsStore.Load(new()),
+                (plan, stage) => Connect(host, name, capacity, country, code, saved, plan, stage), Runtime.CancelConnection, country);
+            return;
         }
         if (_working) return; _personal = new(); _openingDisplayed = false; _working = true; _message = "正在连接 Steam 房间……";
         try
         {
-            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved, npcSetup, (world,plan)=>OpeningClubEditor.Choose(this,world,plan));
+            await Runtime.Connect(host, name, name.Trim() + "的队伍", capacity, country, code, saved, npcSetup,
+                setupStage == null ? null : (world, plan) => OpeningClubEditor.Choose(setupStage, world, plan));
             if (!IsInstanceValid(this) || IsQueuedForDeletion()) return;
             _entrySequence = Session?.World?.EntrySequence ?? -1; _message = "房间已创建，请先邀请队友。"; if (!host) _message = "已加入房间，正在等待队友。"; Render();
         }
-        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; if (reportToSetup) throw; }
+        catch (Exception e) { if (IsInstanceValid(this) && !IsQueuedForDeletion()) _message = e.Message; if (setupStage != null) throw; }
         finally { _working = false; }
     }
     private void Submit(string kind, string target = "")

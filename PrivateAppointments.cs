@@ -12,7 +12,7 @@ public static class PrivateAppointments
         string player = CareerEngine.Name(data);
         var matches = data.Matches.Where(m => m.Day == date && m.Status is "待赛" or "进行中"
             && (m.Registered || m.Id == data.PendingMatchId || !m.RegistrationDeclined && EsportsWorld.EntryReason(data, m) == null))
-            .Select(m => new ScheduleEntry(date, m.Event, m.Id == data.PendingMatchId || m.Status == "进行中"
+            .Select(m => new ScheduleEntry(date, m.Event, m.MirrorAppointment ? $"{player}与{CareerEngine.DisplayName(data,m.OpponentId)}约好使用收藏牌组进行镜面对决。" : m.Id == data.PendingMatchId || m.Status == "进行中"
                 ? $"{player}正在参加{m.Event}，对手为{CareerEngine.DisplayName(data, m.OpponentId)}，进阶{m.RequiredAscension}。"
                 : m.Registered ? $"{player}已报名{m.Event}，对手为{CareerEngine.DisplayName(data, m.OpponentId)}，进阶{m.RequiredAscension}，比赛尚未开始。"
                 : $"{player}可以报名{m.Event}，目前尚未报名；报名后预定对手为{CareerEngine.DisplayName(data, m.OpponentId)}，进阶{m.RequiredAscension}。", m.Registered || m.Id == data.PendingMatchId || m.Status == "进行中"));
@@ -71,7 +71,10 @@ public static class PrivateAppointments
         if (date < data.Day) return "不能安排已经过去的日期。";
         return null;
     }
-    public static string? Confirm(CareerData data, string person, PrivateOffer offer)
+    public static string Format(PrivateOffer offer) => offer.MirrorAppointment ? "镜面对决" : $"正常爬塔 · 进阶{offer.Ascension}";
+    public static string ProtocolFormat(PrivateOffer offer) => offer.MirrorAppointment ? "镜面对决（约战单进阶字段为0）" : Format(offer);
+    public static string InvitationFormat(PrivateOffer offer) => offer.MatchFormatChosen || offer.State=="已确认" ? Format(offer) : "确认时可选爬塔或镜面对决";
+    public static string? Confirm(CareerData data, string person, PrivateOffer offer, bool mirror = false)
     {
         if (offer.State != "待确认") return "这项邀约已处理。";
         if (Error(data, person, offer) is { } error) return error;
@@ -81,7 +84,11 @@ public static class PrivateAppointments
             var previous = PrivateMessages.Conversation(data, person).Offers.FirstOrDefault(o => o.Id == offer.ReplacesOfferId);
             if (previous != null && Cancel(data, previous) is { } cancellationError) return cancellationError;
         }
-        var match = CreateMatch(data, person, Date(data, offer), offer.Ascension, offer.Mode, "私信");
+        if (!offer.MatchFormatChosen) offer.MirrorAppointment = mirror;
+        if (offer.MirrorAppointment) offer.Ascension = 0;
+        offer.MatchFormatChosen = true;
+        var match = CreateMatch(data, person, Date(data, offer), offer.Ascension, offer.Mode, offer.MirrorAppointment ? "镜面约战 · " : "私信");
+        match.MirrorAppointment = offer.MirrorAppointment;
         offer.MatchId = match.Id; offer.State = "已确认";
         if (PrivateMessages.Conversation(data, person).Turns.FirstOrDefault(t => t.Id == offer.TurnId) is { } turn)
             PrivateInteractionHistory.Record(data, person, turn, before);
@@ -92,6 +99,23 @@ public static class PrivateAppointments
         var match = new CareerMatch { Day = day, Event = source + mode + " · " + CareerEngine.DisplayName(data, person), OpponentId = person,
             Kind = mode == "挑战" ? "private-challenge" : "private-friendly", RequiredAscension = ascension, Registered = true, Prize = 0 };
         data.Matches.Add(match); return match;
+    }
+    internal static CareerResult? SettleMirror(CareerData data, CareerMatch match, DuelReport report)
+    {
+        if (match.Status != "待赛" || !match.MirrorAppointment) return null;
+        var hero = report.People.First(p=>!p.Opponent);
+        match.Status="已结算"; match.PlayerWon=report.PlayersWon;
+        var result=new CareerResult {
+            MatchId=match.Id, Kind=match.Kind, Event=match.Event, Day=data.Day, OpponentId=match.OpponentId,
+            Opponent=CareerEngine.DisplayName(data,match.OpponentId), Character=hero.Character,
+            MirrorAppointment=true, Outcome=report.PlayersWon?"获胜":"失利", OfficialAscensionVerified=false, Evidence=new(){Duel=report},
+            PlayerParticipants=report.People.Where(p=>!p.Opponent).Select(p=>p.PersonId).ToList(),
+            OpponentParticipants=report.People.Where(p=>p.Opponent && p.PersonId.Length>0).Select(p=>p.PersonId).ToList()
+        };
+        data.Results.Add(result); data.PendingSettlementId=match.Id;
+        if(match.Kind=="private-challenge")
+            CareerEngine.Publish(data,"match"+match.Id,match.Event+" · "+result.Outcome,MatchRules.Report(match,result),"约战",true,result.OpponentParticipants,match);
+        return result;
     }
     public static void Respond(CareerData data, PrivateConversation c, PrivateTurn turn, Dictionary<string, string> fields, string action)
     {
@@ -105,12 +129,14 @@ public static class PrivateAppointments
         var previous = active.LastOrDefault(o => o.Season == Read("Season", -1) && o.Day == Read("Day", -1)) ?? active.LastOrDefault();
         var basis = request ?? previous;
         var offer = new PrivateOffer { Kind = "match", ResponseAction = action, TurnId = turn.Id,
+            MirrorAppointment = request?.MirrorAppointment ?? (action == "改期" && previous?.MirrorAppointment == true),
+            MatchFormatChosen = request != null || action == "改期" && previous?.MatchFormatChosen == true,
             Season = Read("Season", basis?.Season ?? data.Season), Day = Read("Day", basis?.Day ?? SeasonCalendar.Day(data, data.Day)),
             Ascension = Read("Ascension", 0), Mode = string.IsNullOrWhiteSpace(fields.GetValueOrDefault("Mode")) ? "切磋" : fields["Mode"] };
         if (action == "拒绝")
         {
             // 玩家本轮附件是独立提议，不因拒绝新提议而取消另一项已约好的比赛。
-            if (request != null) previous = active.LastOrDefault(o => o.Season == request.Season && o.Day == request.Day && o.Ascension == request.Ascension && o.Mode == request.Mode);
+            if (request != null) previous = active.LastOrDefault(o => o.Season == request.Season && o.Day == request.Day && o.Ascension == request.Ascension && o.Mode == request.Mode && o.MirrorAppointment == request.MirrorAppointment);
             else if (fields.ContainsKey("Day")) previous = active.LastOrDefault(o => o.Season == offer.Season && o.Day == offer.Day);
             if (previous != null)
             {
@@ -127,7 +153,7 @@ public static class PrivateAppointments
         }
         else
         {
-            var same = active.LastOrDefault(o => o.Season == offer.Season && o.Day == offer.Day && o.Ascension == offer.Ascension && o.Mode == offer.Mode);
+            var same = active.LastOrDefault(o => o.Season == offer.Season && o.Day == offer.Day && o.Ascension == offer.Ascension && o.Mode == offer.Mode && o.MirrorAppointment == offer.MirrorAppointment);
             if (same != null) { same.ResponseAction = action; return; }
         }
         c.Offers.Add(offer);

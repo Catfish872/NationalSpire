@@ -11,18 +11,27 @@ public partial class CareerScreen
     }
     private static string LeagueScore(LeagueReceipt r)=>$"{r.Before} → {r.After} 分   ·   {LeagueLadder.Names[LeagueLadder.Tier(r.After)]}";
     private static string LeaguePrize(LeagueReceipt r)=>r.Prize==0?"本场无奖金":"胜场奖金   +"+CareerMoney.Format(r.Prize);
-    private void LeagueAward(LeagueReceipt r){
-        var shade=new ColorRect{Name="LeagueResult",Color=new("08111ce8"),ZIndex=115,MouseFilter=MouseFilterEnum.Stop};_stage.AddChild(shade);shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        var center=new CenterContainer();shade.AddChild(center);center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
-        var card=Card();card.CustomMinimumSize=new(520,0);center.AddChild(card);var body=Inner(card);body.AddThemeConstantOverride("separation",14);
-        var ink=r.Won?_gold:_muted;
-        void Line(string s,int size,Color color){var label=Text(s,size,color);label.HorizontalAlignment=HorizontalAlignment.Center;body.AddChild(label);}
-        Line("国运尖塔   /   联赛战报",18,ink);Line(r.Won?"对决胜利":"对决惜败",52,ink);
-        Line($"{LeagueLadder.Names[r.Fight.Tier]}对手   ·   {r.Fight.Opponent}",21,_ink);
-        Line(LeagueScore(r),26,_ink);Line(LeaguePrize(r),24,ink);
-        var close=LeagueButton("返回对战",()=>shade.QueueFree(),180,kind:LeagueControl.Primary);body.AddChild(close);close.GrabFocus();
-        card.Modulate=new(1,1,1,0);card.CreateTween().TweenProperty(card,"modulate:a",1,.34);
-        if(r.Won){LeagueSound("event:/sfx/ui/timeline/ui_timeline_unlock");var seal=new LeagueSeal{Burst=true,Ink=_gold,MouseFilter=MouseFilterEnum.Ignore};shade.AddChild(seal);seal.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);}
+    private void LeagueAward(LeagueReceipt receipt)=>RankedReport(receipt,true);
+    private void RankedReport(LeagueReceipt receipt,bool justFinished){
+        ShowCareerDialog(receipt.Won?"对决胜利":"对决惜败","",()=>true,"返回对战",box=>{
+            var panel=ReportPanel("1c2c36","49606a",12);panel.Name="LeagueRankSummary";box.AddChild(panel);
+            var row=new HBoxContainer();row.AddThemeConstantOverride("separation",12);panel.AddChild(row);
+            row.AddChild(Glyph("trophy",28,_gold));
+            var points=Text(LeagueScore(receipt),24,_gold);points.AutowrapMode=TextServer.AutowrapMode.Off;row.AddChild(points);
+            var prize=Text(LeaguePrize(receipt),17,_muted);prize.HorizontalAlignment=HorizontalAlignment.Right;row.AddChild(prize);
+            if(receipt.Fight.Report is {} report)DuelReportView(box,report,true);
+            if(justFinished){
+                panel.Modulate=new(1,1,1,0);panel.CreateTween().TweenProperty(panel,"modulate:a",1,.34);
+                if(receipt.Won){
+                    LeagueSound("event:/sfx/ui/timeline/ui_timeline_unlock");
+                    var seal=new LeagueSeal{Burst=true,Ink=_gold,MouseFilter=MouseFilterEnum.Ignore};
+                    panel.AddChild(seal);seal.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+                }
+            }
+        },showCancel:false);
+    }
+    private void ShowDuelReport(DuelReport report){
+        ShowCareerDialog("对决战报","",()=>true,"返回",box=>DuelReportView(box,report,true),showCancel:false);
     }
     private void LeagueArena(CareerData d)
     {
@@ -43,23 +52,55 @@ public partial class CareerScreen
             var start=LeagueButton(!LeagueSolverLink.Supported?LeagueSolverLink.Unavailable:_multiplayer==null?"匹配对手":"团体匹配",()=>{if(MultiplayerCommand("propose-league-team"))return;if(!_leagueBusy)_=LeagueMatch(d);},LeagueSolverLink.Supported?195:300,kind:LeagueControl.Primary);
             start.Disabled=!LeagueSolverLink.Supported||_multiplayer is {Host:false}||_leagueBusy||!LeagueCards.Ready(a)||!LeagueCards.Roles.Any(r=>r.Id.Entry==a.Captain);line.AddChild(start);
         }
-        if(a.LastDuel is {} last){var panel=Card();_content.AddChild(panel);var box=Inner(panel);box.AddChild(Text("上场对决   /   "+(last.Won?"胜利":"惜败"),26,last.Won?_gold:_muted));box.AddChild(Text($"{last.Fight.Opponent}   ·   {LeagueLadder.Names[last.Fight.Tier]}对手     /     {LeagueScore(last)}     /     {LeaguePrize(last)}",20,_ink));}
+        if(a.LastDuel is {} last)
+        {
+            var panel=Card();
+            _content.AddChild(panel);
+            var box=Inner(panel);
+            var heading=LeagueRow(box);
+            heading.AddChild(Text("上场对决   /   "+(last.Won?"胜利":"惜败"),26,last.Won?_gold:_muted));
+            heading.AddChild(TextLink("查看战报",()=>RankedReport(last,false),16,icon:"arrow-up-right"));
+            box.AddChild(Text($"{last.Fight.Opponent}   ·   {LeagueLadder.Names[last.Fight.Tier]}对手     /     {LeagueScore(last)}     /     {LeaguePrize(last)}",20,_ink));
+        }
     }
-    private async Task LeagueMatch(CareerData d){
+    private void MirrorAppointmentArena(CareerData data,CareerMatch match){
+        bool future=match.Day>data.Day;
+        var album=data.Life.League;
+        async void Launch(){
+            if(future){
+                if(!MultiplayerCommand("propose-advance","direct",number:match.Day)){CareerEngine.AdvanceToDay(data,match.Day);Render();}
+                return;
+            }
+            if(!LeagueSolverLink.Supported || !LeagueCards.Ready(album)){Notice(!LeagueSolverLink.Supported?LeagueSolverLink.Unavailable:"请先准备 35 张出战牌。",true);return;}
+            if(!MultiplayerCommand("propose-start",match.Id) && !_leagueBusy)await LeagueMatch(data,match);
+        }
+        string role=LeagueCards.GroupName(album.Captain);
+        MatchArena(data,match.Event,match.OpponentId,CareerEngine.DisplayName(data,match.OpponentId),
+            future?"前往比赛日":"开始镜面对决",role,CareerVisuals.Teal,out var controls,match.Day,Launch,seed:match.Seed);
+        controls.AddChild(LeagueButton("调整牌组",()=>LeagueGo("组卡"),145));
+        if(!future && (!LeagueSolverLink.Supported || !LeagueCards.Ready(album))){
+            foreach(var name in new[]{"ArenaStart","ArenaStateAction"})
+                if(_content.FindChild(name,true,false) is Button b)b.Disabled=true;
+            controls.AddChild(Text(!LeagueSolverLink.Supported?LeagueSolverLink.Unavailable:"请先准备 35 张出战牌。",18,_muted));
+        }
+    }
+    private async Task LeagueMatch(CareerData d,CareerMatch? appointment=null){
         _leagueBusy=true;LeagueSolverLink.Prepare();
         try{
             var a=d.Life.League;var rng=new Random();var roles=LeagueCards.Roles;var role=roles.Single(r=>r.Id.Entry==a.Captain);
             if(LeagueLadder.PrepareRoster(d))CareerStore.Save(d);
-            var match=LeagueLadder.Match(d.LeagueRoster!,new(d),rng,LeagueLadder.Tier(a.Rating));var rival=match.Role;_leagueRival=match.Name;
+            var draw=new LeagueLadder.Draw(d);
+            var match=appointment==null ? LeagueLadder.Match(d.LeagueRoster!,draw,rng,LeagueLadder.Tier(a.Rating))
+                : LeagueLadder.Invited(d.LeagueRoster!,draw,appointment.OpponentId) ?? throw new InvalidOperationException("这位选手的职业暂时无法参加镜面对决。");var rival=match.Role;_leagueRival=match.Name;
             var upgrades=a.Upgrades.GetValueOrDefault(a.Captain)?.ToDictionary();
             var selected=LeagueCards.Deck(a)!.SelectMany(x=>Enumerable.Repeat(LeagueCards.Catalog[x.Key].Model,x.Value)).ToArray();
             int seed=rng.Next();
-            await OpeningGate("国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",
+            await OpeningGate(appointment?.Event ?? "国运尖塔   /   联赛邀请赛",CareerAvatars.ForPerson(d,"player"),LeagueLadder.Tier(a.Rating),LeagueCards.GroupName(role.Id.Entry),"我的牌组",
                 match.PersonId==null?new(rival.IconTexture,_gold,match.Name):CareerAvatars.ForPerson(d,match.PersonId),match.Tier,LeagueCards.GroupName(rival.Id.Entry),match.Name+" · "+LeagueArchetypes.Name(rival.Id.Entry,match.Style),LeagueLadder.RivalOpens(seed)?"对手先手":"你方先手", Begin);
             async Task Begin(){
                 var rivalCards=LeagueLadder.Build(rival,rng,match.Tier,match.Style).ToArray();var session=_multiplayer;
                 if(session!=null){session.Message-=Notice;_multiplayer=null;}
-                try{await LeagueNativeMatch.Start(role,selected,rival,rivalCards,seed,session,_leagueRival,match.Tier,upgrades,LeagueLadder.UpgradePlan(rivalCards,LeagueArchetypes.Resolve(rival.Id.Entry,match.Style),match.Tier,rng),LeagueLadder.Tier(a.Rating),match.Style);}
+                try{await LeagueNativeMatch.StartMirror(role,selected,rival,rivalCards,seed,session,_leagueRival,match.Tier,upgrades,LeagueLadder.UpgradePlan(rivalCards,LeagueArchetypes.Resolve(rival.Id.Entry,match.Style),match.Tier,rng),LeagueLadder.Tier(a.Rating),match.Style,match.PersonId,appointment?.Id);}
                 catch{if(session!=null&&IsInsideTree()){_multiplayer=session;session.Message+=Notice;}throw;}
             }
         }catch(Exception e){Diagnostics.Error("league-match",e);Notice(e.GetBaseException().Message,true);}

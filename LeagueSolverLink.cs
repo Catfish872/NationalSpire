@@ -31,6 +31,9 @@ internal sealed class LeagueSolverLink : IDisposable
     private readonly Func<int[]>? _choices;
     internal int[] Choices=>_choices?.Invoke()??[];
     private static Func<CardModel[],int,string,int,int,int,int[]>? _actual;
+    private static Func<int[],(int Start,int Period,int Count)[]>? _reportRuns;
+    internal static (int Start,int Period,int Count)[] ReportRuns(int[] actions) =>
+        _reportRuns?.Invoke(actions) ?? actions.Select((_,i)=>(i,1,1)).ToArray();
     private static Func<IEnumerable<CardModel>,int>? _menu;
     internal static int Menu(IEnumerable<CardModel> cards)=>_menu?.Invoke(cards)??0;
     internal static int[] SelectActual(CardModel[] cards,int pile,string purpose,int effect,int min,int max)=>_actual?.Invoke(cards,pile,purpose,effect,min,max)??Enumerable.Range(0,Math.Min(min,cards.Length)).ToArray();
@@ -47,6 +50,7 @@ internal sealed class LeagueSolverLink : IDisposable
             var type=new EngineContext().LoadFromStream(stream).GetType("NationalSpire.Solver.LeagueForecast",true)!;
             type.GetMethod("Prepare")!.Invoke(null,null);
             _actual=type.GetMethod("SelectActual")!.CreateDelegate<Func<CardModel[],int,string,int,int,int,int[]>>();
+            _reportRuns=type.GetMethod("ReportRuns")!.CreateDelegate<Func<int[],(int,int,int)[]>>();
             _menu=type.GetMethod("MenuKey")!.CreateDelegate<Func<IEnumerable<CardModel>,int>>();return type;
         }catch(Exception e){Diagnostics.Error("league-solver",e.GetBaseException());return null;}
     }));

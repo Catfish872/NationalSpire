@@ -201,7 +201,7 @@ public partial class CareerScreen
         string title = o.Kind switch { "match" => "约战", "contract" => "合同报价", "activity" => o.Title, "publish" => "社区发帖", "training" => "训练计划", "lineup" => "阵容调整", "favour" => "好感调整", _ => o.Kind };
         box.AddChild(PrivateText(GroupChats.Name(ViewData, e.Person) + " · " + title + " · " + o.State, 18, _gold));
         if (o.Kind == "contract") box.AddChild(PrivateText($"签字费 ${o.Signing:#,0.##} · 周薪 ${o.Wage:#,0.##}\n胜场奖金 ${o.WinBonus:#,0.##} · {o.Weeks}周 · {o.Role}", 16, _ink));
-        if (o.Kind is "match" or "activity") box.AddChild(PrivateText($"{GameCalendar.Text(ViewData, PrivateAppointments.Date(ViewData, o))}" + (o.Kind == "match" ? $" · A{o.Ascension} · {o.Mode}" : " · " + string.Join("、", o.Participants.Select(id => GroupChats.Name(ViewData, id)))), 16, _ink));
+        if (o.Kind is "match" or "activity") box.AddChild(PrivateText($"{GameCalendar.Text(ViewData, PrivateAppointments.Date(ViewData, o))}" + (o.Kind == "match" ? $" · {PrivateAppointments.InvitationFormat(o)} · {o.Mode}" : " · " + string.Join("、", o.Participants.Select(id => GroupChats.Name(ViewData, id)))), 16, _ink));
         if (o.Kind == "publish") box.AddChild(PrivateText(o.Title, 19, _ink));
         if (o.Kind == "favour") box.AddChild(PrivateText($"对{GroupChats.Name(ViewData, e.Target.Length > 0 ? e.Target : e.Human)}的好感 {o.FavourBefore} → {o.FavourTargets.LastOrDefault()}", 17, _ink));
         if (o.Detail.Length > 0) box.AddChild(PrivateSelectableText(o.Detail, 16, _ink));
@@ -213,11 +213,13 @@ public partial class CareerScreen
             foreach (var id in ids) choices.AddItem(GroupChats.Name(ViewData, id)); choices.ItemSelected += n => replacement = n > 0 ? ids[(int)n - 1] : ""; box.AddChild(choices);
         }
         var actions = new HBoxContainer(); actions.AddThemeConstantOverride("separation", 12); box.AddChild(actions);
-        void Action(string label, string kind) => actions.AddChild(PrivateButton(label, () => GroupCommand("group-offer-" + kind, new() { Lane = e.Lane, Interaction = new() { Offer = o.Id, Replacement = replacement } }), 110));
+        bool mirror=o.MirrorAppointment;
+        bool chooseFormat=o.Kind=="match" && !o.MatchFormatChosen;
+        void Action(string label, string kind, bool? chosen=null) => actions.AddChild(PrivateButton(label, () => GroupCommand("group-offer-" + kind, new() { Lane = e.Lane, Interaction = new() { Offer = o.Id, Replacement = replacement, MirrorAppointment=chosen??mirror } }), 110));
         if (o.Kind == "publish" && CommunityThreads.All(ViewData).FirstOrDefault(p => p.Id == o.MatchId) is { } post) actions.AddChild(PrivateButton("查看帖子 ↗", () => { ClosePrivateMessages(); OpenPost(post); }, 140));
         if (e.Human == GroupChats.Human(ViewData))
         {
-            if (o.State == "待确认") { Action(o.Kind == "favour" ? "应用" : o.Kind == "publish" ? "确认发布" : "确认", "confirm"); Action(o.Kind == "favour" ? "保留原值" : "拒绝", "decline"); }
+            if (o.State == "待确认") { Action(o.Kind == "favour" ? "应用" : o.Kind == "publish" ? "确认发布" : chooseFormat ? "确认爬塔" : "确认", "confirm"); if(chooseFormat)Action("确认镜面对决","confirm",true); Action(o.Kind == "favour" ? "保留原值" : "拒绝", "decline"); }
             if (o.Kind == "activity" && o.State == "已确认" && PrivateAppointments.Date(ViewData, o) == ViewData.Day)
             {
                 string group=_privateGroup;

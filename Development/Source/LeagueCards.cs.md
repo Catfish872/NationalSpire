@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`B38A19D957194393D3FE3402B0E259E37C853792EDBE1788D8DA4CF331AF4BF1`。来源：[源码](../../LeagueCards.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`D19E8303D4BC6D1EE2AA4CF951D2FF15402AF86BA5926BB9565D4E440043EDFC`。来源：[源码](../../LeagueCards.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -335,6 +335,24 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 **赋值（含属性/字段和局部值）：**
 
 
+<a id="symbol-d57f3c8fff1d"></a>
+
+## `NationalSpire.LeagueFinish.Report — public DuelReport? Report`
+
+来源：源码第 26 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** 无已绑定显式调用。
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-a9a9bb870cd1"></a>
 
 ## `NationalSpire.LeagueCards.Entry.Id — public string Id`
@@ -510,7 +528,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 **调用者：** [`NationalSpire.LeagueCards.Catalog`](LeagueCards.cs.md#symbol-982f653da27b)
 
-**调用：** [`Add(MegaCrit.Sts2.Core.Models.CardModel, string)`](LeagueCards.cs.md#symbol-a0197b1f5cf3)；[`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`](GameCharacterNames.cs.md#symbol-67e74be938f6)；`MegaCrit.Sts2.Core.Models.ModelDb.CardPool<T>()`；`object.GetType()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`
+**调用：** [`Add(MegaCrit.Sts2.Core.Models.CardModel, string)`](LeagueCards.cs.md#symbol-6b27243bfa9f)；[`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`](GameCharacterNames.cs.md#symbol-67e74be938f6)；`MegaCrit.Sts2.Core.Models.ModelDb.CardPool<T>()`；`object.GetType()`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Enum.ToString()`
 
 **字段、属性、事件及方法组引用：** `Add(MegaCrit.Sts2.Core.Models.CardModel, string)`；`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`；`NationalSpire.LeagueCards.Roles`
 
@@ -529,7 +547,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a0197b1f5cf3"></a>
+<a id="symbol-6b27243bfa9f"></a>
 
 ## `Add(MegaCrit.Sts2.Core.Models.CardModel, string) — void Add(CardModel model,string group)`
 
@@ -537,28 +555,47 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 **调用者：** [`NationalSpire.LeagueCards.Build()`](LeagueCards.cs.md#symbol-3f3a683f5af2)
 
-**调用：** `NationalSpire.LeagueCards.Entry.Entry(MegaCrit.Sts2.Core.Models.CardModel, string, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Enum.ToString()`
+**调用：** [`NationalSpire.LeagueCards.CollectionTier(MegaCrit.Sts2.Core.Models.CardModel)`](LeagueCards.cs.md#symbol-18182181d83f)；`NationalSpire.LeagueCards.Entry.Entry(MegaCrit.Sts2.Core.Models.CardModel, string, int)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueCards.Membership`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueCards.CollectionTier(MegaCrit.Sts2.Core.Models.CardModel)`；`NationalSpire.LeagueCards.Membership`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
+- `NationalSpire.LeagueCards.CollectionTier(MegaCrit.Sts2.Core.Models.CardModel)`；输入表达式：`CollectionTier(model)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =CollectionTier(model)`
 - `NationalSpire.LeagueCards.Entry.Entry(MegaCrit.Sts2.Core.Models.CardModel, string, int)`；输入表达式：`new(model,group,tier)`；返回值紧邻使用处：`ArgumentSyntax: new(model,group,tier)`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryAdd(TKey, TValue)`；输入表达式：`cards.TryAdd(model.Id.Entry,new(model,group,tier))`；返回值紧邻使用处：`ExpressionStatementSyntax: cards.TryAdd(model.Id.Entry,new(model,group,tier));`
 - `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`Membership.TryGetValue(group,out var ids)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !Membership.TryGetValue(group,out var ids)`
 - `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`ids.Add(model.Id.Entry)`；返回值紧邻使用处：`ExpressionStatementSyntax: ids.Add(model.Id.Entry);`
-- `System.Enum.ToString()`；输入表达式：`model.Rarity.ToString()`；返回值紧邻使用处：`SwitchExpressionSyntax: model.Rarity.ToString() switch {"Common" or "Basic"=>0,"Uncommon"=>1,"Rare"=>2,"Ancient"=>3,_=>-1}`
 
 **赋值（含属性/字段和局部值）：**
 
 - `ids` = `[]`
 - `Membership[group]` = `ids=[]`
 
+<a id="symbol-18182181d83f"></a>
+
+## `NationalSpire.LeagueCards.CollectionTier(MegaCrit.Sts2.Core.Models.CardModel) — internal static int CollectionTier(CardModel model)`
+
+来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`Add(MegaCrit.Sts2.Core.Models.CardModel, string)`](LeagueCards.cs.md#symbol-6b27243bfa9f)；[`NationalSpire.CareerScreen.ReportCard(NationalSpire.DuelCardFace, out Godot.VBoxContainer)`](DuelReportScreen.cs.md#symbol-ca484e5b67df)
+
+**调用：** `System.Enum.ToString()`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Enum.ToString()`；输入表达式：`model.Rarity.ToString()`；返回值紧邻使用处：`SwitchExpressionSyntax: model.Rarity.ToString() switch {"Common" or "Basic"=>0,"Uncommon"=>1,"Rare"=>2,"Ancient"=>3,_=>-1}`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-5a63583066af"></a>
 
 ## `NationalSpire.LeagueCards.InRole(NationalSpire.LeagueCards.Entry, string) — internal static bool InRole(Entry c,string role)`
 
-来源：源码第 75 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)；[`NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-af27d1eb2fda)
 
@@ -578,7 +615,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string) — internal static bool Usable(Entry c,string role)`
 
-来源：源码第 76 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 77 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-66c78042d433)
 
@@ -597,7 +634,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Groups — private static IGrouping<string,Entry>[][] Groups`
 
-来源：源码第 78 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -625,9 +662,9 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.GroupName(string) — public static string GroupName(string id)`
 
-来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)
+**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.MirrorAppointmentArena(NationalSpire.CareerData, NationalSpire.CareerMatch)`](LeagueArenaScreen.cs.md#symbol-6ac7616bf9f0)
 
 **调用：** [`NationalSpire.GameText.Plain(string)`](GameText.cs.md#symbol-e2c48dec4564)；`MegaCrit.Sts2.Core.Localization.LocString.GetFormattedText()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 
@@ -646,7 +683,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Offers(NationalSpire.CareerData) — public static IEnumerable<Entry> Offers(CareerData d)`
 
-来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -667,9 +704,9 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum) — public static Dictionary<string,int>? Deck(LeagueAlbum a)`
 
-来源：源码第 81 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 82 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DeckSmith(NationalSpire.LeagueCards.Entry)`](LeagueDeckEditor.cs.md#symbol-92429c805c31)；[`NationalSpire.CareerScreen.DeckSwap(NationalSpire.LeagueCards.Entry, Godot.Control)`](LeagueDeckEditor.cs.md#symbol-19b872317e2a)；[`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-66c78042d433)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`NationalSpire.CareerScreen.DeckSmith(NationalSpire.LeagueCards.Entry)`](LeagueDeckEditor.cs.md#symbol-92429c805c31)；[`NationalSpire.CareerScreen.DeckSwap(NationalSpire.LeagueCards.Entry, Godot.Control)`](LeagueDeckEditor.cs.md#symbol-19b872317e2a)；[`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-66c78042d433)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** `System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
@@ -687,9 +724,9 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?) — public static int Fixed(Entry c,string? role=null)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-f4f2de497ffb)；[`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；[`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)；[`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-66c78042d433)；[`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`NationalSpire.LeagueLegendDraft.Build(NationalSpire.LeagueArchetypes.Plan, NationalSpire.LeagueCards.Entry[], System.Random)`](LeagueLegendDraft.cs.md#symbol-c210ac44d176)
+**调用者：** [`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-dc858d2fe947)；[`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；[`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)；[`NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-66c78042d433)；[`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`NationalSpire.LeagueLegendDraft.Build(NationalSpire.LeagueArchetypes.Plan, NationalSpire.LeagueCards.Entry[], System.Random)`](LeagueLegendDraft.cs.md#symbol-c210ac44d176)
 
 **调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`
 
@@ -707,11 +744,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string) — private static void PrepareDeck(LeagueAlbum a,string role)`
 
-来源：源码第 91 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 92 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
-**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-5dea23dd1847)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueCards.InRole(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-5a63583066af)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Enum.ToString()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Min(int, int)`
+**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-f53e4e2a89a7)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueCards.InRole(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-5a63583066af)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Enum.ToString()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Math.Min(int, int)`
 
 **字段、属性、事件及方法组引用：** `Add(NationalSpire.LeagueCards.Entry)`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.LeagueAlbum.Decks`；`NationalSpire.LeagueAlbum.Owned`；`NationalSpire.LeagueAlbum.StandardDecks`；`NationalSpire.LeagueAlbum.Upgrades`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.DeckSize`；`NationalSpire.LeagueCards.Entry.Id`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.Entry.Tier`；`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`；`NationalSpire.LeagueCards.InRole(NationalSpire.LeagueCards.Entry, string)`；`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`
 
@@ -755,11 +792,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 - `a.Decks[role]` = `deck`
 - `upgrades[id]` = `n`
 
-<a id="symbol-5dea23dd1847"></a>
+<a id="symbol-f53e4e2a89a7"></a>
 
 ## `Add(NationalSpire.LeagueCards.Entry) — void Add(Entry c)`
 
-来源：源码第 95 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 96 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)
 
@@ -781,9 +818,9 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Ready(NationalSpire.LeagueAlbum) — public static bool Ready(LeagueAlbum a)`
 
-来源：源码第 107 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.Coop.CoopRules.PrepareLeagueTeam(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>)`](Coop/CoopRules.cs.md#symbol-76bbf59d84a6)
+**调用者：** [`Launch()`](LeagueArenaScreen.cs.md#symbol-0e458038824c)；[`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.MirrorAppointmentArena(NationalSpire.CareerData, NationalSpire.CareerMatch)`](LeagueArenaScreen.cs.md#symbol-6ac7616bf9f0)；[`NationalSpire.Coop.CoopRules.PrepareMirror(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>, NationalSpire.CareerMatch?)`](Coop/CoopRules.cs.md#symbol-616076122cda)
 
 **调用：** [`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-330c11ebf6f4)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-af27d1eb2fda)；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.All<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Math.Max(int, int)`
 
@@ -810,7 +847,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.UpgradeCost(NationalSpire.LeagueCards.Entry) — public static int UpgradeCost(Entry entry)`
 
-来源：源码第 108 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeckSmith(NationalSpire.LeagueCards.Entry)`](LeagueDeckEditor.cs.md#symbol-92429c805c31)；[`NationalSpire.CareerScreen.DeckSwap(NationalSpire.LeagueCards.Entry, Godot.Control)`](LeagueDeckEditor.cs.md#symbol-19b872317e2a)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)；[`NationalSpire.LeagueCards.Points(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-86ddd4ab46bb)；[`NationalSpire.LeagueLadder.Upgrades(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random, bool)`](LeagueLadder.cs.md#symbol-1b55dcf28341)
 
@@ -828,7 +865,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Upgraded(NationalSpire.LeagueAlbum, string) — public static int Upgraded(LeagueAlbum a,string id)`
 
-来源：源码第 109 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.CareerScreen.DeckSmith(NationalSpire.LeagueCards.Entry)`](LeagueDeckEditor.cs.md#symbol-92429c805c31)；[`NationalSpire.CareerScreen.DeckSwap(NationalSpire.LeagueCards.Entry, Godot.Control)`](LeagueDeckEditor.cs.md#symbol-19b872317e2a)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)
 
@@ -848,7 +885,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Points(NationalSpire.LeagueAlbum) — public static int Points(LeagueAlbum a)`
 
-来源：源码第 110 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.CareerScreen.DeckSmith(NationalSpire.LeagueCards.Entry)`](LeagueDeckEditor.cs.md#symbol-92429c805c31)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)
 
@@ -870,9 +907,9 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Improve(MegaCrit.Sts2.Core.Models.CardModel) — public static CardModel Improve(CardModel instance)`
 
-来源：源码第 111 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`](LeagueCardFace.cs.md#symbol-50215c17339c)；[`NationalSpire.LeagueCards.ApplyAllocation(MegaCrit.Sts2.Core.Models.CardModel, System.Collections.Generic.Dictionary<string, int>?)`](LeagueCards.cs.md#symbol-4eb35465f771)
+**调用者：** [`NationalSpire.CareerScreen.ReportCard(NationalSpire.DuelCardFace, out Godot.VBoxContainer)`](DuelReportScreen.cs.md#symbol-ca484e5b67df)；[`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`](LeagueCardFace.cs.md#symbol-50215c17339c)；[`NationalSpire.LeagueCards.ApplyAllocation(MegaCrit.Sts2.Core.Models.CardModel, System.Collections.Generic.Dictionary<string, int>?)`](LeagueCards.cs.md#symbol-4eb35465f771)
 
 **调用：** `MegaCrit.Sts2.Core.Models.CardModel.FinalizeUpgradeInternal()`；`MegaCrit.Sts2.Core.Models.CardModel.UpgradeInternal()`
 
@@ -890,7 +927,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.ApplyAllocation(MegaCrit.Sts2.Core.Models.CardModel, System.Collections.Generic.Dictionary<string, int>?) — internal static CardModel ApplyAllocation(CardModel live,Dictionary<string,int>? remaining)`
 
-来源：源码第 112 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 113 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.Attach(MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueDuel.cs.md#symbol-af76d282a609)；[`NationalSpire.LeagueNativeMatch.EquipDeck(MegaCrit.Sts2.Core.Runs.RunState, MegaCrit.Sts2.Core.Entities.Players.Player, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>, System.Collections.Generic.IReadOnlyDictionary<string, int>?, int)`](LeagueTeamMatch.cs.md#symbol-40715405ce22)
 
@@ -910,7 +947,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int) — public static bool AdjustUpgrade(LeagueAlbum a,Entry e,int change)`
 
-来源：源码第 116 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 117 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -939,7 +976,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Reserved(NationalSpire.LeagueAlbum, string) — public static int Reserved(LeagueAlbum a,string id)`
 
-来源：源码第 123 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -961,11 +998,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?) — public static string? Limit(Dictionary<string,int> deck,Entry e,string? outgoing=null,string? role=null)`
 
-来源：源码第 124 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 125 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)
 
-**调用：** [`Count(System.Func<NationalSpire.LeagueCards.Entry, bool>)`](LeagueCards.cs.md#symbol-904b2bbf351e)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`
+**调用：** [`Count(System.Func<NationalSpire.LeagueCards.Entry, bool>)`](LeagueCards.cs.md#symbol-37629c77d9c8)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `Count(System.Func<NationalSpire.LeagueCards.Entry, bool>)`；`NationalSpire.LeagueCards.DeckSize`；`NationalSpire.LeagueCards.Entry.Group`；`NationalSpire.LeagueCards.Entry.Id`；`NationalSpire.LeagueCards.Entry.Tier`；`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`；`NationalSpire.LeagueCards.Grades`；`NationalSpire.LeagueCards.NeutralLimit`；`NationalSpire.LeagueCards.RarityLimits`
 
@@ -981,11 +1018,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-904b2bbf351e"></a>
+<a id="symbol-37629c77d9c8"></a>
 
 ## `Count(System.Func<NationalSpire.LeagueCards.Entry, bool>) — int Count(Func<Entry,bool> match)`
 
-来源：源码第 128 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 129 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)
 
@@ -1006,7 +1043,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry) — public static bool CanReplace(LeagueAlbum a,string old,Entry next)`
 
-来源：源码第 132 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 133 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.CareerScreen.DeckSwap(NationalSpire.LeagueCards.Entry, Godot.Control)`](LeagueDeckEditor.cs.md#symbol-19b872317e2a)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -1032,7 +1069,7 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.RemoveOne(NationalSpire.LeagueAlbum, System.Collections.Generic.Dictionary<string, int>, string) — private static void RemoveOne(LeagueAlbum a,Dictionary<string,int> deck,string id)`
 
-来源：源码第 138 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 139 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -1057,11 +1094,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 
 ## `NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int) — public static string? Apply(CareerData d,string action,string id,int n)`
 
-来源：源码第 144 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 145 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueAction(string, string, int, Godot.Control?)`](LeagueScreen.cs.md#symbol-c5858ab8fb69)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`](Coop/CoopRules.cs.md#symbol-de0ba69e5b42)
+**调用者：** [`NationalSpire.CareerScreen.LeagueAction(string, string, int, Godot.Control?)`](LeagueScreen.cs.md#symbol-c5858ab8fb69)；[`NationalSpire.Coop.CoopRules.Apply(NationalSpire.Coop.CoopWorld, ulong, NationalSpire.Coop.CoopCommand, System.Collections.Generic.IReadOnlySet<ulong>, System.Collections.Generic.IReadOnlySet<string>)`](Coop/CoopRules.cs.md#symbol-71eae0adc0d0)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?, NationalSpire.DuelReport?)`](Coop/CoopRules.cs.md#symbol-32aed8cb856a)
 
-**调用：** [`Ensure(int, int, int)`](LeagueCards.cs.md#symbol-e02cfa2f5407)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)；[`NationalSpire.LeagueCards.Ask(NationalSpire.CareerData, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-de594f00e6a0)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-330c11ebf6f4)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；[`NationalSpire.LeagueCards.Offers(NationalSpire.CareerData)`](LeagueCards.cs.md#symbol-bad4f2bcbcee)；[`NationalSpire.LeagueCards.Pool(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-0192fefb8352)；[`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)；[`NationalSpire.LeagueCards.RemoveOne(NationalSpire.LeagueAlbum, System.Collections.Generic.Dictionary<string, int>, string)`](LeagueCards.cs.md#symbol-ed27c1c3a4a7)；[`NationalSpire.LeagueCards.Reserved(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-532fff3c1eac)；[`NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-af27d1eb2fda)；[`Pay(decimal, string)`](LeagueCards.cs.md#symbol-d384505020b1)；`NationalSpire.LeagueReceipt.LeagueReceipt(NationalSpire.LeagueFinish, bool, int, int, int)`；`string.IsNullOrEmpty(string?)`；`string.Split(char, int, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ElementAt<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
+**调用：** [`Ensure(int, int, int)`](LeagueCards.cs.md#symbol-930b4e889a1c)；[`NationalSpire.CareerEngine.StableHash(string)`](CareerEngine.cs.md#symbol-8e24f8ce19fb)；[`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`](LifeData.cs.md#symbol-de5af63fa4e7)；[`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`](LeagueCards.cs.md#symbol-ab1c8ff6fb5d)；[`NationalSpire.LeagueCards.Ask(NationalSpire.CareerData, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-de594f00e6a0)；[`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`](LeagueCards.cs.md#symbol-a4faf18d19e7)；[`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-330c11ebf6f4)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`](LeagueCards.cs.md#symbol-ee6cdcfca4b6)；[`NationalSpire.LeagueCards.Offers(NationalSpire.CareerData)`](LeagueCards.cs.md#symbol-bad4f2bcbcee)；[`NationalSpire.LeagueCards.Pool(NationalSpire.LeagueAlbum)`](LeagueCards.cs.md#symbol-0192fefb8352)；[`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-91440ab7fb30)；[`NationalSpire.LeagueCards.RemoveOne(NationalSpire.LeagueAlbum, System.Collections.Generic.Dictionary<string, int>, string)`](LeagueCards.cs.md#symbol-ed27c1c3a4a7)；[`NationalSpire.LeagueCards.Reserved(NationalSpire.LeagueAlbum, string)`](LeagueCards.cs.md#symbol-532fff3c1eac)；[`NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string)`](LeagueCards.cs.md#symbol-af27d1eb2fda)；[`Pay(decimal, string)`](LeagueCards.cs.md#symbol-1292cbecafd4)；`NationalSpire.LeagueReceipt.LeagueReceipt(NationalSpire.LeagueFinish, bool, int, int, int)`；`string.IsNullOrEmpty(string?)`；`string.Split(char, int, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Clear()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Append<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Count<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ElementAt<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToList<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Math.Max(int, int)`；`System.Math.Min(int, int)`；`System.Random.Next(int, int)`；`System.Random.Next(int)`；`System.Random.Random(int)`；`System.Text.Json.JsonSerializer.Deserialize<TValue>(string, System.Text.Json.JsonSerializerOptions?)`
 
 **字段、属性、事件及方法组引用：** `Ensure(int, int, int)`；`NationalSpire.CareerData.Day`；`NationalSpire.CareerData.Life`；`NationalSpire.CareerData.LocalHumanId`；`NationalSpire.CareerData.WorldId`；`NationalSpire.CareerEngine.StableHash(string)`；`NationalSpire.CareerLifeState.League`；`NationalSpire.CareerMoney.Balance(NationalSpire.CareerData)`；`NationalSpire.LeagueAlbum.AncientPending`；`NationalSpire.LeagueAlbum.BlueWait`；`NationalSpire.LeagueAlbum.Captain`；`NationalSpire.LeagueAlbum.DuelLosses`；`NationalSpire.LeagueAlbum.DuelWins`；`NationalSpire.LeagueAlbum.GoldWait`；`NationalSpire.LeagueAlbum.LastDuel`；`NationalSpire.LeagueAlbum.Latest`；`NationalSpire.LeagueAlbum.MarketDay`；`NationalSpire.LeagueAlbum.Owned`；`NationalSpire.LeagueAlbum.PackRoles`；`NationalSpire.LeagueAlbum.Packs`；`NationalSpire.LeagueAlbum.Purchased`；`NationalSpire.LeagueAlbum.Rating`；`NationalSpire.LeagueCards.AdjustUpgrade(NationalSpire.LeagueAlbum, NationalSpire.LeagueCards.Entry, int)`；`NationalSpire.LeagueCards.Ask(NationalSpire.CareerData, NationalSpire.LeagueCards.Entry)`；`NationalSpire.LeagueCards.Bids`；`NationalSpire.LeagueCards.CanReplace(NationalSpire.LeagueAlbum, string, NationalSpire.LeagueCards.Entry)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.Deck(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.Entry.Id`；`NationalSpire.LeagueCards.Entry.Tier`；`NationalSpire.LeagueCards.Entry.Title`；`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`；`NationalSpire.LeagueCards.Groups`；`NationalSpire.LeagueCards.Limit(System.Collections.Generic.Dictionary<string, int>, NationalSpire.LeagueCards.Entry, string?, string?)`；`NationalSpire.LeagueCards.Offers(NationalSpire.CareerData)`；`NationalSpire.LeagueCards.PackCost`；`NationalSpire.LeagueCards.Pool(NationalSpire.LeagueAlbum)`；`NationalSpire.LeagueCards.PrepareDeck(NationalSpire.LeagueAlbum, string)`；`NationalSpire.LeagueCards.RemoveOne(NationalSpire.LeagueAlbum, System.Collections.Generic.Dictionary<string, int>, string)`；`NationalSpire.LeagueCards.Reserved(NationalSpire.LeagueAlbum, string)`；`NationalSpire.LeagueCards.Roles`；`NationalSpire.LeagueCards.Usable(NationalSpire.LeagueCards.Entry, string)`；`NationalSpire.LeagueFinish.Match`；`NationalSpire.LeagueFinish.Tier`；`NationalSpire.LeagueLadder.Names`；`NationalSpire.LeagueReceipt.Fight`；`Pay(decimal, string)`
 
@@ -1159,11 +1196,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 - `tiers[i]` = `roll<3?2:roll<43?1:0`
 - `tiers[i]` = `tier=3`
 
-<a id="symbol-d384505020b1"></a>
+<a id="symbol-1292cbecafd4"></a>
 
 ## `Pay(decimal, string) — void Pay(decimal units,string title)`
 
-来源：源码第 147 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 148 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 
@@ -1179,11 +1216,11 @@ private static readonly Lazy<Dictionary<string,Dictionary<string,int>>> Basics=n
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e02cfa2f5407"></a>
+<a id="symbol-930b4e889a1c"></a>
 
 ## `Ensure(int, int, int) — void Ensure(int tier, int threshold,int wait)`
 
-来源：源码第 180 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 181 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueCards.Apply(NationalSpire.CareerData, string, string, int)`](LeagueCards.cs.md#symbol-4da370a40a7a)
 

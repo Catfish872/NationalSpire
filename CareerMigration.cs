@@ -17,6 +17,7 @@ public static class CareerMigration
             data.Esports.License = Math.Max(data.Esports.License, 3);
         foreach (var result in data.Results)
         {
+            if(result.MirrorAppointment)continue;
             var match = data.Matches.FirstOrDefault(m => m.Id == result.MatchId);
             result.PlayedAscension ??= match?.PlayedAscension ?? result.Ascension;
             int? official = match?.RequiredAscension ?? result.Kind switch

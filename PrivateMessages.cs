@@ -154,8 +154,9 @@ public static class PrivateMessages
             else if (a.Kind == "result")
             {
                 var r = data.Results.FirstOrDefault(r => r.MatchId == a.MatchId); if (r == null) return "这份比赛记录已不存在。";
+                if(r.MirrorAppointment){a.Detail=$"{GameCalendar.Text(data,r.Day)} · {r.Event} · {r.Outcome}\n"+r.Evidence.Duel!.Describe(); continue;}
                 a.Detail = $"{GameCalendar.Text(data, r.Day)} · {r.Event} · {r.Outcome} · 进阶{r.PlayedAscension ?? r.Ascension} · {MatchRules.Performance(r.Win, r.Floor, r.RunSeconds)}"
-                    + (r.Win ? "" : " · " + MatchRules.Time(r.RunSeconds)) + "\n" + string.Join("、", r.Cards.Take(8));
+                    + (r.Win ? "" : " · " + MatchRules.Time(r.RunSeconds)) + "\n" + string.Join("、", r.Cards.Take(8)) + (r.Evidence.Duel is {} duel ? "\n"+duel.Describe(r.Cards.Take(8)) : "");
             }
             else if (a.Kind == "post")
             {
@@ -192,7 +193,7 @@ public static class PrivateMessages
         DateGames.AttachmentKind => "对局邀请 · 一起开一局",
         OathAttachments.Kind => "解除誓约",
         "gift" => $"赠送 {a.Title} × {a.Quantity}", "activity" => $"{a.Title} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))}",
-        "match" => $"{a.Mode} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))} · A{a.Ascension}",
+        "match" => $"{a.Mode} · {GameCalendar.Text(data, PrivateAppointments.Date(data, a))} · {PrivateAppointments.Format(a)}",
         "lineup" => "阵容调整", "training" => $"训练计划 · {a.Weeks}周", "contract" => "商谈合同", "result" => "复盘比赛", "post" => "分享帖子",
         CommunitySharing.Kind => a.Quote?.ReplyId.Length > 0 ? "分享评论" : "分享主楼",
         CommunityReporting.Kind => a.Quote?.ReplyId.Length > 0 ? "举报评论" : "举报主楼", "advice" => "附加文字", _ => "附件"

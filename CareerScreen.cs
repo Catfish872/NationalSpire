@@ -72,6 +72,9 @@ public partial class CareerScreen : Control, IScreenContext
         {
             if (e is InputEventKey { Pressed: true, Echo: false, Keycode: Key.Escape })
             {
+                if (_dialogOverlay.GetNodeOrNull<Control>("LeagueCardInspection") is {} inspection){
+                    GetViewport().SetInputAsHandled();inspection.QueueFree();return;
+                }
                 if (GetViewport().GuiGetFocusOwner() is LineEdit { Name: var inputName } && inputName == "CareerSaveNameInput") return;
                 GetViewport().SetInputAsHandled(); _returnDialog?.Invoke();
             }
@@ -824,6 +827,7 @@ public partial class CareerScreen : Control, IScreenContext
         if (match != null)
         {
             var box=new VBoxContainer(); box.AddThemeConstantOverride("separation",14); _content.AddChild(box);
+            if(match.MirrorAppointment){MirrorAppointmentArena(data,match);return;}
             var chars = GameBridge.Characters();
             var selection = Card(); selection.Name = "MatchCharacterSelection";
             selection.AddThemeStyleboxOverride("panel", CareerVisuals.Box("102b39", "47788a", 10, 20)); box.AddChild(selection);

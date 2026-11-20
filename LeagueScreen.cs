@@ -141,7 +141,7 @@ public partial class CareerScreen
         inspect.Pressed+=inspectAction??(()=>LeagueInspect(card,upgraded));return tile;
     }
     private void LeagueInspect(LeagueCards.Entry card,bool upgraded=false){
-        var shade=new ColorRect{Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110};_stage.AddChild(shade);shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
+        var shade=new ColorRect{Name="LeagueCardInspection",Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110};(_dialogOverlay??_stage).AddChild(shade);shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         var center=new CenterContainer();shade.AddChild(center);center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         var column=new VBoxContainer();column.AddThemeConstantOverride("separation",16);center.AddChild(column);
         if(card.PartyHint.Length>0)column.AddChild(LeagueNumber(card.PartyHint,320,_gold));

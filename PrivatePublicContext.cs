@@ -64,7 +64,7 @@ public static partial class PrivatePublicContext
         b.AppendLine($"{player}是{(person == null ? "本次故事中的" : "与你聊天的")}玩家，性别为{d.PlayerGender}，来自{d.Esports.Country}；职业为{d.PlayerCard?.Role ?? EsportsWorld.LicenseName(d)}，参赛资格为{EsportsWorld.LicenseName(d)}。");
         b.AppendLine(PlayerCompetitionRecord(d));
         b.AppendLine($"{player}的评分{d.Rating}，关注{d.Fans}。");
-        var results = d.Results.Where(r => r.Day <= d.Day && r.Kind != "private-friendly").ToArray();
+        var results = d.Results.Where(r => r.Day <= d.Day && r.Kind != "private-friendly" && !r.MirrorAppointment).ToArray();
         int highest = results.Where(r => r.Win).Select(ActualAscension).Append(d.LocalHumanId.Length == 0 ? d.Esports.BestClear : -1).Max();
         b.AppendLine(highest >= 0 ? $"{player}的生涯最高通关：进阶{highest}。" : $"{player}尚无已确认的生涯通关进阶记录。");
         if (d.AvatarHighestClear > highest) b.AppendLine($"{player}的游戏档案最高通关：进阶{d.AvatarHighestClear}（包含本生涯以外的游戏记录）。");

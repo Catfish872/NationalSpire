@@ -182,6 +182,7 @@ public static partial class LeagueNativeMatch {
     }
     private static bool QueueDoom(PowerModel power,Creature target,decimal amount,Creature? applier,CardModel? source){
         if(power is not MegaCrit.Sts2.Core.Models.Powers.DoomPower||amount<=0||applier==null||applier.Side==target.Side||Current is not {} duel||target.CombatState!=duel.Rival.Creature.CombatState||!target.CanReceivePowers)return false;
+        _report?.Declare(applier,(int)amount,true);
         duel.Pending.Add(new(applier,target,amount,(MegaCrit.Sts2.Core.ValueProps.ValueProp)(-1),null,false){ DoomSource=source,Doom=true });
         if(duel.Rival.Creature.Monster is LeagueOpponent active)Refresh(active);return true;
     }

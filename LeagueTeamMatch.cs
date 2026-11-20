@@ -30,19 +30,22 @@ public static partial class LeagueNativeMatch {
         var draw=new LeagueLadder.Draw(world.World);
         // 更新前已建立的对局没有随开局记录保存名单，使用同一份共同世界补建。
         LeagueLadder.PrepareRoster(world.World);
+        var appointment=world.World.Matches.FirstOrDefault(m=>m.Id==record.MatchId&&m.MirrorAppointment);
+        _appointmentId=appointment?.Id;
         foreach(var p in roster.OrderBy(p=>p.NetId)){
             var member=world.Members.Single(m=>m.SteamId==p.NetId);var a=member.Life.League;
             EquipDeck(run,p,LeagueCards.Deck(a)!.SelectMany(k=>Enumerable.Repeat(LeagueCards.Catalog[k.Key].Model,k.Value)),a.Upgrades.GetValueOrDefault(a.Captain),LeagueLadder.Tier(a.Rating));
             var rng=new Random(CareerEngine.StableHash(record.Seed+":"+p.NetId));
-            var rival=LeagueLadder.Match(world.World.LeagueRoster!,draw,rng,LeagueLadder.Tier(a.Rating));var cards=LeagueLadder.Build(rival.Role,rng,rival.Tier,rival.Style).ToArray();
+            var rival=Team.Count==0 && appointment!=null ? LeagueLadder.Invited(world.World.LeagueRoster!,draw,appointment.OpponentId)!.Value
+                : LeagueLadder.Match(world.World.LeagueRoster!,draw,rng,LeagueLadder.Tier(a.Rating));var cards=LeagueLadder.Build(rival.Role,rng,rival.Tier,rival.Style).ToArray();
             var plan=LeagueArchetypes.Resolve(rival.Role.Id.Entry,rival.Style);
             ulong botId=ulong.MaxValue-(ulong)Team.Count;while(roster.Any(h=>h.NetId==botId)||Team.Any(f=>f.Rival.NetId==botId))botId--;
             var bot=Player.CreateForNewRun(rival.Role,p.UnlockState,botId);bot.RunState=run;bot.InitializeSeed(record.Seed+":"+botId);
             int hp=LeagueLadder.Health(rival.Role,rival.Tier);
-            Team.Add(new(bot,cards,rng.Next(),rival.Name,rival.Tier,LeagueLadder.UpgradePlan(cards,plan,rival.Tier,rng),pending){Exit=_mirrorExit.Token,OpeningMax=hp,OpeningHp=hp,SetupCards=plan.Anchors});
+            Team.Add(new(bot,cards,rng.Next(),rival.Name,rival.Tier,LeagueLadder.UpgradePlan(cards,plan,rival.Tier,rng),pending){PersonId=rival.PersonId,Exit=_mirrorExit.Token,OpeningMax=hp,OpeningHp=hp,SetupCards=plan.Anchors});
         }
         Current=Team[0];var lead=world.Members.Single(m=>m.SteamId==session.Self);var first=Team[0];
-        if(CareerScreen.Current is {} screen)await screen.OpeningGate("镜面对决   /   团体匹配",CareerAvatars.ForPerson(world.World,lead.PersonId),LeagueLadder.Tier(lead.Life.League.Rating),
+        if(CareerScreen.Current is {} screen)await screen.OpeningGate(appointment?.Event ?? "镜面对决   /   团体匹配",CareerAvatars.ForPerson(world.World,lead.PersonId),LeagueLadder.Tier(lead.Life.League.Rating),
             world.Name,string.Join(" · ",world.Members.Where(m=>record.Characters.ContainsKey(m.SteamId)).Select(m=>m.Name)),new(first.Rival.Character.IconTexture,CareerVisuals.Teal,first.OpponentName),first.Tier,"联赛对手",string.Join(" · ",Team.Select(f=>f.OpponentName)),_opener?"对手先手":"你方先手",Begin);
         else await Begin();
         async Task Begin(){
@@ -65,9 +68,10 @@ public static partial class LeagueNativeMatch {
     internal static async Task EndTeam(bool won){
         if(_returning||_teamAttempt==null)return;_returning=true;
         var id=_teamAttempt;var session=CoopRuntime.Current!.Session!;
-        CoopRules.FinishLeagueTeam(session,id,won);
+        bool appointment=_appointmentId!=null;
+        CoopRules.FinishLeagueTeam(session,id,won,session.Host?_report?.Finish(won):null);
         var game=NGame.Instance!;await game.ReturnToMainMenu();Release();_teamAttempt=null;
-        if(game.MainMenu is {} menu){var view=new CoopCareerSession(session,menu);CareerScreen.OpenTeamReceipt(menu,view,id);}
+        if(game.MainMenu is {} menu){var view=new CoopCareerSession(session,menu);if(appointment)CareerScreen.OpenView(menu,view,"结算");else CareerScreen.OpenTeamReceipt(menu,view,id);}
     }
 }
 public partial class CareerScreen {

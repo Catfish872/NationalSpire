@@ -338,7 +338,7 @@ Signing、Wage、WinBonus 分别为签字费、周薪和胜场奖金，单位为
                 "改期" => $"{npc}向{player}提出改期",
                 _ => $"{npc}与{player}有一项约战提议"
             };
-            return $"{origin}，日期为{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}，进阶{o.Ascension}，方式为{o.Mode}。{(fromPlayer ? $"等待{npc}答复" : state)}。";
+            return $"{origin}，日期为{GameCalendar.Text(data, PrivateAppointments.Date(data, o))}，{(o.MatchFormatChosen || fromPlayer ? PrivateAppointments.ProtocolFormat(o) + "，" : "")}方式为{o.Mode}。{(fromPlayer ? $"等待{npc}答复" : state)}。";
         }
         if (fromPlayer) return $"{player}邀请{npc}商谈俱乐部合同，等待{npc}报价。";
         return $"{npc}向{player}提出合同报价：签字费{o.Signing}美元、周薪{o.Wage}美元、胜场奖金{o.WinBonus}美元，合同{o.Weeks}周，席位为{o.Role}。{state}。";

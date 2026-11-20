@@ -21,6 +21,7 @@ public sealed partial class LeagueDuel
     internal readonly CardModel[] Deck;
     internal readonly string OpponentName;
     internal readonly int Tier;
+    internal string? PersonId;
     internal string[] SetupCards=[];
     internal readonly HashSet<Creature> Stunned=[];
     internal int? OpeningHp;internal int OpeningMax;

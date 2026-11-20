@@ -29,6 +29,8 @@ namespace NationalSpire;
 public static partial class LeagueNativeMatch
 {
     internal static LeagueDuel? Current;
+    private static DuelRecorder? _report;
+    internal static void RecordSelection(Player player)=>_report?.Choice(player);
     private static CombatRoom? _room;
     private static bool _installed,_opener,_returning;
     private static CancellationTokenSource? _mirrorExit;
@@ -37,7 +39,10 @@ public static partial class LeagueNativeMatch
     private static RunState? _run;
     private static LeagueEncounter? _matchVenue;
     internal static ActModel MusicAct(IRunState run)=>ReferenceEquals(run,_run)&&_matchVenue!=null?_matchVenue.Chapter:run.Act;
-    public static async Task Start(CharacterModel first,CardModel[] cards,CharacterModel other,CardModel[] rival,int seed,ICareerSession? session,string opponentName,int tier,IReadOnlyDictionary<string,int>? upgrades=null,Dictionary<string,int>? rivalUpgrades=null,int playerTier=0,string? style=null)
+    private static string? _appointmentId;
+    public static Task Start(CharacterModel first,CardModel[] cards,CharacterModel other,CardModel[] rival,int seed,ICareerSession? session,string opponentName,int tier,IReadOnlyDictionary<string,int>? upgrades=null,Dictionary<string,int>? rivalUpgrades=null,int playerTier=0,string? style=null)
+        => StartMirror(first,cards,other,rival,seed,session,opponentName,tier,upgrades,rivalUpgrades,playerTier,style,null,null);
+    internal static async Task StartMirror(CharacterModel first,CardModel[] cards,CharacterModel other,CardModel[] rival,int seed,ICareerSession? session,string opponentName,int tier,IReadOnlyDictionary<string,int>? upgrades,Dictionary<string,int>? rivalUpgrades,int playerTier,string? style,string? personId,string? appointmentId)
     {
         if(RunManager.Instance.IsInProgress)throw new InvalidOperationException("请先结束当前对局。");
         Install();var unlock=SaveManager.Instance.GenerateUnlockStateFromProgress();
@@ -46,8 +51,8 @@ public static partial class LeagueNativeMatch
         var run=LeagueBattleApi.Create([hero],acts,seed.ToString());
         bot.RunState=run;bot.InitializeSeed(seed.ToString());
         EquipDeck(run,hero,cards,upgrades,playerTier);
-        _mirrorExit=new();
-        Current=new(bot,rival,seed,opponentName,tier,rivalUpgrades){Exit=_mirrorExit.Token};Current.SetupCards=style==null?[]:LeagueArchetypes.Resolve(other.Id.Entry,style).Anchors;_run=run;_session=session;_opener=LeagueLadder.RivalOpens(seed);
+        _appointmentId=appointmentId;_mirrorExit=new();
+        Current=new(bot,rival,seed,opponentName,tier,rivalUpgrades){PersonId=personId,Exit=_mirrorExit.Token};Current.SetupCards=style==null?[]:LeagueArchetypes.Resolve(other.Id.Entry,style).Anchors;_run=run;_session=session;_opener=LeagueLadder.RivalOpens(seed);
         _returning=false;
         try{
             var game=NGame.Instance!;bool opening=CareerScreen.UseOpening();
@@ -73,6 +78,10 @@ public static partial class LeagueNativeMatch
     }
     internal static async Task Bind(LeagueOpponent opponent){
         if(Current==null)return;_room=_run?.CurrentRoom as CombatRoom;var fighter=opponent.Fighter??Current;fighter.Attach(opponent.Creature);if(fighter.OpeningHp is {} hp){opponent.Creature.SetMaxHpInternal(fighter.OpeningMax);opponent.Creature.SetCurrentHpInternal(hp);}
+        if (_run != null) {
+            _report ??= new DuelRecorder(_run, _opener);
+            _report.Register(fighter.Rival, fighter.OpponentName, fighter.Rival.PlayerCombatState!.DrawPile.Cards, true, fighter.PersonId);
+        }
         if(NCombatRoom.Instance?.GetCreatureNode(opponent.Creature) is {} view)OrbDisplay(view);
         // 原版入房通知只遍历实际玩家。对手绑定自己的战斗状态后，交还其遗物原有的入房效果。
         if(fighter.Rival.RunState.CurrentRoom is CombatRoom room&&!fighter.Rival.RunState.Players.Contains(fighter.Rival))
@@ -99,7 +108,7 @@ public static partial class LeagueNativeMatch
             if(NCombatRoom.Instance?.GetCreatureNode(hit.Dealer)?.GetNodeOrNull<GridContainer>("LeagueAttackOrder") is {} icons && icons.GetChildCount()>1 && icons.GetChild(0) is NIntent icon)icon.PlayPerform();
             if(hit.Doom){
                 var ctx=new BlockingPlayerChoiceContext();int blocked=Math.Min(receiver.Block,(int)hit.Amount);int extra=(int)hit.Amount-blocked;
-                if(blocked>0)await LeagueBattleApi.SpendGuard(ctx,receiver,blocked,hit.Dealer);
+                if(blocked>0){await LeagueBattleApi.SpendGuard(ctx,receiver,blocked,hit.Dealer);_report?.Block(receiver,blocked);}
                 if(extra>0)(duel.DeferredDoom??=new()).Enqueue(hit with {Amount=extra});
             }else await LeagueBattleApi.Deliver(hit);
             if(duel.Rival.Creature.Monster is LeagueOpponent active)Refresh(active);
@@ -244,6 +253,7 @@ public static partial class LeagueNativeMatch
             decimal val;bool previous=_recordingIntent;_recordingIntent=true;
             try{val=Hook.ModifyDamage(_run!,_room.CombatState,item.Target,dealer,amount,props,source,play,modifiers&~ModifyDamageHookType.Cap,CardPreviewMode.None,out _);}
             finally{_recordingIntent=previous;}
+            _report?.Declare(dealer,(int)Math.Max(0,val),false);
             Current.Pending.Add(new(dealer,item.Target,Math.Max(0,val),props,item.Vfx,item.Center){Cap=modifiers&ModifyDamageHookType.Cap,AllowColossus=modifiers.HasFlag(ModifyDamageHookType.Multiplicative)});
         }
         if(Current.Rival.Creature.Monster is LeagueOpponent foe)Refresh(foe);
@@ -315,6 +325,7 @@ public static partial class LeagueNativeMatch
     }
     private static void Ended(CombatRoom room){if(room==_room&&!_returning){_returning=true;bool won=_run!.Players[0].Creature.IsAlive;Callable.From(()=>{_=Return(won?"对决胜利":"对决结束 · 惜败",won);}).CallDeferred();}}
     private static void Release(){
+        _report?.Dispose();_report=null;_appointmentId=null;
         StopMirrorTurns();_mirrorExit?.Dispose();_mirrorExit=null;
         _matchVenue=null;
         if(_exitDialog!=null&&NModalContainer.Instance?.OpenModal==_exitDialog)NModalContainer.Instance.Clear();
@@ -322,12 +333,21 @@ public static partial class LeagueNativeMatch
         if(_installed)RemoveBattlePatches(_leagueHarmony);
     }
     private static async Task Return(string? result,bool? won=null){
-        _returning=true;var session=_session;_session=null;
+        _returning=true;var session=_session;_session=null;var appointment=_appointmentId;
         if(!won.HasValue)StopMirrorTurns();
-        var finish=won.HasValue&&Current is {} d?new LeagueFinish(Guid.NewGuid().ToString("N"),d.OpponentName,d.Tier):null;
+        var finish=won.HasValue&&Current is {} d?new LeagueFinish(Guid.NewGuid().ToString("N"),d.OpponentName,d.Tier){Report=_report?.Finish(won.Value)}:null;
         var game=NGame.Instance!;if(_run!=null&&RunManager.Instance.DebugOnlyGetState()==_run)await game.ReturnToMainMenu();
         Release();
-        if(game.MainMenu is {} menu&&result!=null)CareerScreen.OpenLeagueResult(menu,session,result,won,finish);
+        if(game.MainMenu is {} menu&&result!=null){
+            if(appointment==null)CareerScreen.OpenLeagueResult(menu,session,result,won,finish);
+            else {
+                var data=CareerStore.Data;
+                if(finish?.Report is {} report && data.Matches.FirstOrDefault(m=>m.Id==appointment) is {} match){
+                    PrivateAppointments.SettleMirror(data,match,report);CareerStore.Save(data);
+                }
+                CareerScreen.OpenView(menu,session,finish==null?"赛事":"结算");
+            }
+        }
     }
 }
 public sealed class LeagueEncounter : EncounterModel

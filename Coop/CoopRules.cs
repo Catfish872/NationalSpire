@@ -459,26 +459,44 @@ public static partial class CoopRules
         "league-team" => "使用各自的收藏牌组参加团体镜面对决", "enter" => "全员进入多人生涯", "auto" => number == 1 ? "开启选拔赛自动报名" : "暂停选拔赛自动报名",
         "simulate" => "模拟 " + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
         "resume" => "从共同检查点继续比赛", "advance" => $"一起推进到{GameCalendar.Text(w.World, number)}", "register" => (number == 1 ? "报名 " : "取消报名 ") + w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event,
-        "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "leave-club" => "全队退出 " + EsportsWorld.ClubName(w.World, target), "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
+        "club" => "全队签约 " + EsportsWorld.ClubName(w.World, target), "leave-club" => "全队退出 " + EsportsWorld.ClubName(w.World, target), "start" when w.World.Matches.FirstOrDefault(m=>m.Id==target) is {MirrorAppointment:true} mirror => "开始 "+mirror.Event, "start" => $"开始 {w.World.Matches.FirstOrDefault(m => m.Id == target)?.Event} · 挑战进阶 {number}", _ => "团队安排"
     };
-    internal static string? PrepareLeagueTeam(CoopWorld w,IReadOnlySet<ulong> participants){
+    internal static string? PrepareLeagueTeam(CoopWorld w,IReadOnlySet<ulong> participants)=>PrepareMirror(w,participants,null);
+    private static string? PrepareMirror(CoopWorld w,IReadOnlySet<ulong> participants,CareerMatch? appointment){
         if(!LeagueSolverLink.Supported)return LeagueSolverLink.Unavailable;
         var roster=w.Members.Where(m=>participants.Contains(m.SteamId)).OrderBy(m=>m.SteamId).ToArray();
         if(w.Run!=null||roster.Length<2)return "需要至少两名在线队员，并先结束当前对局。";
-        var run=new CoopRun{LeagueTeam=true};run.Seed="NS-CARDS-"+run.Attempt[..12];
+        if(appointment!=null && (!appointment.Registered || appointment.Status!="待赛" || appointment.Day!=w.World.Day))return "请在约定的比赛日开始镜面对决。";
+        var run=new CoopRun{LeagueTeam=true,MatchId=appointment?.Id??""};run.Seed="NS-CARDS-"+run.Attempt[..12];
         foreach(var member in roster){
             var album=member.Life.League;
             if(!LeagueCards.Ready(album))return member.Name+"尚未准备好 35 张出战牌。";
             run.Characters[member.SteamId]=LeagueCards.Roles.Single(r=>r.Id.Entry==album.Captain).Id.ToString();
         }
         LeagueLadder.PrepareRoster(w.World);
+        if(appointment!=null && LeagueLadder.Invited(w.World.LeagueRoster!,new(w.World),appointment.OpponentId)==null)return "这位选手的职业暂时无法参加镜面对决。";
         w.Run=run;return null;
     }
-    internal static void FinishLeagueTeam(CoopCoordinator session,string attempt,bool? won){
+    private static void KeepMemberResult(CoopMember member,CareerResult result){
+        member.Results.Add(result);
+        if(member.Results.Count>200)member.Results.RemoveAt(0);
+    }
+    internal static void FinishLeagueTeam(CoopCoordinator session,string attempt,bool? won,DuelReport? report=null){
         if(!session.Host||session.World?.Run is not {LeagueTeam:true} run||run.Attempt!=attempt)return;
         var next=CoopJson.Copy(session.World);next.Revision++;
-        if(won.HasValue)foreach(var member in next.Members.Where(m=>run.Characters.ContainsKey(m.SteamId))){
-            var album=member.Life.League;var finish=new LeagueFinish(attempt,"团体镜面对手",LeagueLadder.Tier(album.Rating));
+        if(run.MatchId.Length>0){
+            if(won.HasValue && report!=null && next.World.Matches.FirstOrDefault(m=>m.Id==run.MatchId) is {} appointment &&
+                PrivateAppointments.SettleMirror(next.World,appointment,report) is {} result){
+                foreach(var member in next.Members.Where(m=>run.Characters.ContainsKey(m.SteamId))){
+                    var personal=CoopJson.Copy(result);
+                    personal.CharacterId=run.Characters[member.SteamId];
+                    personal.Character=report.People.First(p=>p.PersonId==member.PersonId).Character;
+                    KeepMemberResult(member,personal);
+                }
+            }
+        }
+        else if(won.HasValue)foreach(var member in next.Members.Where(m=>run.Characters.ContainsKey(m.SteamId))){
+            var album=member.Life.League;var finish=new LeagueFinish(attempt,"团体镜面对手",LeagueLadder.Tier(album.Rating)){Report=report};
             var view=View(next,member);LeagueCards.Apply(view,"result",System.Text.Json.JsonSerializer.Serialize(finish),won.Value?1:0);Capture(next,member,view);
         }
         next.Run=null;session.Commit(next,null);
@@ -527,9 +545,11 @@ public static partial class CoopRules
                 if (error == null) Distribute(w, d.Credits - credits);
                 return error;
             case "start":
+                if(d.Matches.FirstOrDefault(m=>m.Id==p.Target && m.MirrorAppointment) is {} appointment)return PrepareMirror(w,p.Participants,appointment);
                 if (d.Failure is { RetryRequested: true } && w.Run?.Phase == "decision") w.Run = null;
                 return Prepare(w, p.Target, p.Number, characters, p.Participants, p.Mode);
             case "simulate":
+                if(d.Matches.Any(m=>m.Id==p.Target && m.MirrorAppointment))return "镜面约战需要进入对决。";
                 var simulationError = Prepare(w, p.Target, p.Number, characters, p.Participants, p.Mode);
                 if (simulationError == null) w.Run!.Phase = "simulation";
                 return simulationError;
@@ -693,6 +713,7 @@ public static partial class CoopRules
         // 遭遇属于共同路线，世界战报保存一次；各人的生命、药水与牌组仍分别保存。
         var teamEvidence = new RunEvidence
         {
+            Duel = details?.Values.Select(p => p.Evidence.Duel).FirstOrDefault(r => r != null),
             DefeatedEncounters = details?.Values.FirstOrDefault(p => p.Evidence.DefeatedEncounters != null)?.Evidence.DefeatedEncounters?.ToList()
         };
         Diagnostics.RecordMatch(w, "settlement-input", new { clear, abandoned, floor, seconds, players, details }, includePlan: true);
@@ -723,7 +744,7 @@ public static partial class CoopRules
             var personal = CoopJson.Copy(record); personal.Character = member.Character; personal.CharacterId = member.Character;
             if (details?.TryGetValue(member.SteamId, out var detail) == true)
             { personal.Character = detail.Character; personal.CharacterId = detail.CharacterId.Length > 0 ? detail.CharacterId : member.Character; personal.Cards = detail.Cards; personal.DeckSummary = detail.DeckSummary; personal.Evidence = detail.Evidence; }
-            member.Results.Add(personal); if (member.Results.Count > 200) member.Results.RemoveAt(0);
+            KeepMemberResult(member,personal);
             var view = View(w, member);
             if (!PrivateAppointments.IsPrivate(match)) { CareerCommerce.PlayerMatch(view, match); CareerRelics.Match(view, match, view.Results.Last(), false, member.Rating - record.RatingDelta); }
             var personalResult = view.Results.Last();

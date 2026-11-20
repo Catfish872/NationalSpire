@@ -44,7 +44,7 @@ private static readonly Dictionary<Viewport,(int Count,bool Previous)> MenuOwner
 
 来源：源码第 19 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.Build()`](CareerScreen.cs.md#symbol-8b4784fe3138)；[`NationalSpire.CareerScreen.SelectNpcGeneration(Godot.Control, NationalSpire.AiOptions, System.Func<NationalSpire.NpcGenerationSetup, System.Threading.Tasks.Task>, System.Action?, string)`](NpcGenerationScreen.cs.md#symbol-e7adbd24ac76)；[`NationalSpire.Coop.CoopScreen._Ready()`](Coop/CoopScreen.cs.md#symbol-5affb9c9c17f)
+**调用者：** [`NationalSpire.CareerScreen.Build()`](CareerScreen.cs.md#symbol-8b4784fe3138)；[`NationalSpire.CareerScreen.SelectNpcGeneration(Godot.Control, NationalSpire.AiOptions, System.Func<NationalSpire.NpcGenerationSetup, Godot.Control, System.Threading.Tasks.Task>, System.Action?, string)`](NpcGenerationScreen.cs.md#symbol-ec30a649d8b9)；[`NationalSpire.Coop.CoopScreen._Ready()`](Coop/CoopScreen.cs.md#symbol-5affb9c9c17f)
 
 **调用：** [`Fit()`](DashboardViewport.cs.md#symbol-7a33ebcb443c)；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.DisplayServer.ScreenGetOrientation(int)`；`Godot.DisplayServer.ScreenSetOrientation(Godot.DisplayServer.ScreenOrientation, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.GetViewport()`；`Godot.OS.HasFeature(string)`；`NationalSpire.CareerDropdownLayer.CareerDropdownLayer()`；`System.Collections.Generic.Dictionary<TKey, TValue>.Remove(TKey)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey, TValue)`
 

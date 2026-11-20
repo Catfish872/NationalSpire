@@ -23,7 +23,7 @@ public sealed class LeagueAlbum
     public int MarketDay {get;set;}
     public HashSet<string> Purchased {get;set;} = [];
 }
-public sealed record LeagueFinish(string Match,string Opponent,int Tier);
+public sealed record LeagueFinish(string Match,string Opponent,int Tier) { public DuelReport? Report { get; init; } }
 public sealed record LeagueReceipt(LeagueFinish Fight,bool Won,int Before,int After,int Prize);
 
 public static class LeagueCards
@@ -61,7 +61,7 @@ public static class LeagueCards
         Dictionary<string,Entry> cards=[];
         void Add(CardModel model,string group)
         {
-            int tier=model.Rarity.ToString() switch {"Common" or "Basic"=>0,"Uncommon"=>1,"Rare"=>2,"Ancient"=>3,_=>-1};
+            int tier=CollectionTier(model);
             if(tier<0)return;
             if(!Membership.TryGetValue(group,out var ids))Membership[group]=ids=[];
             ids.Add(model.Id.Entry);cards.TryAdd(model.Id.Entry,new(model,group,tier));
@@ -72,6 +72,7 @@ public static class LeagueCards
         foreach(var c in ModelDb.AllCards.Where(c=>c.Rarity.ToString()=="Ancient"&&c.Pool.IsColorless)) Add(c,"COLORLESS");
         return cards;
     }
+    internal static int CollectionTier(CardModel model)=>model.Rarity.ToString() switch {"Common" or "Basic"=>0,"Uncommon"=>1,"Rare"=>2,"Ancient"=>3,_=>-1};
     internal static bool InRole(Entry c,string role)=>Membership.GetValueOrDefault(role)?.Contains(c.Id)==true;
     internal static bool Usable(Entry c,string role)=>InRole(c,role)||c.Group=="COLORLESS";
     private static IGrouping<string,Entry>[][]? _groups;

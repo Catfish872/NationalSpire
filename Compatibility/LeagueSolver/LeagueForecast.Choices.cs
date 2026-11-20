@@ -10,6 +10,9 @@ using MegaCrit.Sts2.Core.Multiplayer.Serialization;
 namespace NationalSpire.Solver;
 
 public sealed partial class LeagueForecast {
+    // 战报复用求解器显示循环的划分，只传递已经结算的动作编号。
+    public static (int Start,int Period,int Count)[] ReportRuns(int[] actions) =>
+        SolverActionRuns.Capture(actions,(a,b)=>a==b).Select(r=>(r.Start,r.Period,r.Repetitions)).ToArray();
     // 搜索只需要牌的编号；显示名称不参与评分，也不需要读取场景或本地化资源。
     private static readonly SolverDisplayNames Names=new([],new("DINGY_DAGGER","DINGY_DAGGER","DINGY_DAGGER"),[],[],[],[],[],[],[],false,false);
     private static IEnumerable<(CombatPredictionSimulator,int[])> PlayOptions(CombatPredictionSimulator parent,int slot,Creature? target,Player actor,int width,Func<bool> expired,Action incomplete){

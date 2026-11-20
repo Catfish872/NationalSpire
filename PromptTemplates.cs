@@ -227,10 +227,11 @@ BOSS：
         // 独立预设只覆盖其提供的模块；旧模板和玩家已保存的修改继续使用原有内容。
         while (Presets.TryGetValue(template, out var preset))
         {
-            if (preset.Text.Value.TryGetValue(id, out var presetText)) return EditableText(id, presetText);
+            if (preset.Text.Value.TryGetValue(id, out var presetText)) return BuiltIn(EditableText(id, presetText));
             template = preset.Parent;
         }
-        return (template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText;
+        return BuiltIn((template == "legacy" ? LegacySections : Sections).First(s => s.Id == id).DefaultText);
+        string BuiltIn(string text) => id == "world" ? text + "\n镜面对决是选手和玩家们平时玩的抽卡集卡对战。大家用收藏的卡组直接交手，既能参加排位，也能约朋友打一场。" : text;
     }
     public static void SelectTemplate(AiOptions options, string id)
     {

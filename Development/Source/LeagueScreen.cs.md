@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`791C41E0B9F87DCCA9F32CB24B02E056C7D9D8B7FACF7A279A53619AA5A19D92`。来源：[源码](../../LeagueScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`895F6B01ECA93ED348DE2CAA9E542B4B60F491C14CCE71FCC4B40D953F01B349`。来源：[源码](../../LeagueScreen.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -47,7 +47,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 来源：源码第 16 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-e15cb10f1a37)；[`NationalSpire.CareerScreen.LeagueAward(NationalSpire.LeagueReceipt)`](LeagueArenaScreen.cs.md#symbol-9fa96420666c)；[`NationalSpire.CareerScreen.Opening.Reveal()`](LeagueArenaScreen.cs.md#symbol-a63c53a4d9b3)
+**调用者：** [`Animate()`](LeagueArenaScreen.cs.md#symbol-920ca2d97f7a)；[`NationalSpire.CareerScreen.Opening.Reveal()`](LeagueArenaScreen.cs.md#symbol-a63c53a4d9b3)；[`NationalSpire.CareerScreen.RankedReport(NationalSpire.LeagueReceipt, bool)`](LeagueArenaScreen.cs.md#symbol-53c6da8a2b7e)
 
 **调用：** `MegaCrit.Sts2.Core.Commands.SfxCmd.Play(string, float)`
 
@@ -66,7 +66,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 来源：源码第 17 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.OpenLeagueResult(Godot.Control, NationalSpire.ICareerSession?, string, bool?, NationalSpire.LeagueFinish?)`](LeagueNativeMatch.cs.md#symbol-c1cb4b5f9df0)；[`NationalSpire.CareerScreen.OpenTeamReceipt(Godot.Control, NationalSpire.ICareerSession, string)`](LeagueTeamMatch.cs.md#symbol-36421958cb8a)
+**调用者：** [`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)；[`NationalSpire.CareerScreen.MirrorAppointmentArena(NationalSpire.CareerData, NationalSpire.CareerMatch)`](LeagueArenaScreen.cs.md#symbol-6ac7616bf9f0)；[`NationalSpire.CareerScreen.OpenLeagueResult(Godot.Control, NationalSpire.ICareerSession?, string, bool?, NationalSpire.LeagueFinish?)`](LeagueNativeMatch.cs.md#symbol-c1cb4b5f9df0)；[`NationalSpire.CareerScreen.OpenTeamReceipt(Godot.Control, NationalSpire.ICareerSession, string)`](LeagueTeamMatch.cs.md#symbol-36421958cb8a)
 
 **调用：** [`NationalSpire.CareerScreen.OpenLifePage(string)`](CareerDashboard.cs.md#symbol-0d80fbb19407)
 
@@ -598,7 +598,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 来源：源码第 130 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`Reveal()`](LeagueScreen.cs.md#symbol-a456cc8f8331)
+**调用者：** [`NationalSpire.CareerScreen.DeckEditor(NationalSpire.CareerData, System.Collections.Generic.Dictionary<string, int>)`](LeagueDeckEditor.cs.md#symbol-825b0bb2327f)；[`NationalSpire.CareerScreen.LeagueGrid(System.Collections.Generic.IEnumerable<NationalSpire.LeagueCards.Entry>, NationalSpire.CareerData, string, Godot.Control?)`](LeagueScreen.cs.md#symbol-315dac8c42bd)；[`NationalSpire.CareerScreen.ReportCard(NationalSpire.DuelCardFace, out Godot.VBoxContainer)`](DuelReportScreen.cs.md#symbol-ca484e5b67df)；[`Reveal()`](LeagueScreen.cs.md#symbol-31cea69eebc3)
 
 **调用：** [`NationalSpire.CareerScreen.LeagueInspect(NationalSpire.LeagueCards.Entry, bool)`](LeagueScreen.cs.md#symbol-69ed9740453e)；[`NationalSpire.CareerScreen.TakeFace(MegaCrit.Sts2.Core.Models.CardModel, bool)`](LeagueScreen.cs.md#symbol-27f378d7dc3d)；[`NationalSpire.LeagueCardFace.Highlight(bool)`](LeagueCardFace.cs.md#symbol-2232c5fe9aae)；[`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`](LeagueCardFace.cs.md#symbol-50215c17339c)；`Godot.Button.Button()`；`Godot.Color.Color(string)`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.AddThemeStyleboxOverride(Godot.StringName, Godot.StyleBox)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.AddToGroup(Godot.StringName, bool)`；`Godot.PanelContainer.PanelContainer()`；`Godot.StyleBoxEmpty.StyleBoxEmpty()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LeagueCardFace.LeagueCardFace()`
 
@@ -658,19 +658,19 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 **调用：** [`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`](LeaguePresentation.cs.md#symbol-3412750f7453)；[`NationalSpire.CareerScreen.LeagueNumber(string, int, Godot.Color)`](LeagueScreen.cs.md#symbol-c7e40485fba6)；[`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`](LeagueCardFace.cs.md#symbol-50215c17339c)；`Godot.CenterContainer.CenterContainer()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.GrabFocus()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.QueueFree()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LeagueCardFace.LeagueCardFace()`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`；`NationalSpire.CareerScreen.LeagueControl.Back`；`NationalSpire.CareerScreen.LeagueNumber(string, int, Godot.Color)`；`NationalSpire.CareerScreen.SuitColors`；`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.Entry.PartyHint`；`NationalSpire.LeagueCards.Entry.Tier`
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._dialogOverlay`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`；`NationalSpire.CareerScreen.LeagueControl.Back`；`NationalSpire.CareerScreen.LeagueNumber(string, int, Godot.Color)`；`NationalSpire.CareerScreen.SuitColors`；`NationalSpire.LeagueCardFace.ShowCard(MegaCrit.Sts2.Core.Models.CardModel, int, Godot.Color, bool, MegaCrit.Sts2.Core.Nodes.Cards.NCard?)`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.Entry.PartyHint`；`NationalSpire.LeagueCards.Entry.Tier`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.CenterContainer.CenterContainer()`；输入表达式：`new CenterContainer()`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new CenterContainer()`
 - `Godot.Color.Color(string)`；输入表达式：`new Color("09111bea")`；返回值紧邻使用处：`AssignmentExpressionSyntax: Color=new Color("09111bea")`
 - `Godot.Color.Color(string)`；输入表达式：`new Color(SuitColors[card.Tier])`；返回值紧邻使用处：`ArgumentSyntax: new Color(SuitColors[card.Tier])`
-- `Godot.ColorRect.ColorRect()`；输入表达式：`new ColorRect{Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new ColorRect{Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110}`
+- `Godot.ColorRect.ColorRect()`；输入表达式：`new ColorRect{Name="LeagueCardInspection",Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110}`；返回值紧邻使用处：`EqualsValueClauseSyntax: =new ColorRect{Name="LeagueCardInspection",Color=new Color("09111bea"),MouseFilter=MouseFilterEnum.Stop,ZIndex=110}`
 - `Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；输入表达式：`column.AddThemeConstantOverride("separation",16)`；返回值紧邻使用处：`ExpressionStatementSyntax: column.AddThemeConstantOverride("separation",16);`
 - `Godot.Control.GrabFocus()`；输入表达式：`close.GrabFocus()`；返回值紧邻使用处：`ExpressionStatementSyntax: close.GrabFocus();`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: center.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
 - `Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；输入表达式：`shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect)`；返回值紧邻使用处：`ExpressionStatementSyntax: shade.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);`
-- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`_stage.AddChild(shade)`；返回值紧邻使用处：`ExpressionStatementSyntax: _stage.AddChild(shade);`
+- `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`(_dialogOverlay??_stage).AddChild(shade)`；返回值紧邻使用处：`ExpressionStatementSyntax: (_dialogOverlay??_stage).AddChild(shade);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`center.AddChild(column)`；返回值紧邻使用处：`ExpressionStatementSyntax: center.AddChild(column);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`column.AddChild(close)`；返回值紧邻使用处：`ExpressionStatementSyntax: column.AddChild(close);`
 - `Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；输入表达式：`column.AddChild(face)`；返回值紧邻使用处：`ExpressionStatementSyntax: column.AddChild(face);`
@@ -690,6 +690,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 - `Color` = `new Color("09111bea")`
 - `face.CustomMinimumSize` = `new(400,558)`
 - `MouseFilter` = `MouseFilterEnum.Stop`
+- `Name` = `"LeagueCardInspection"`
 - `shade.GuiInput` += `e=>{if(e is InputEventMouseButton {Pressed:true,ButtonIndex:MouseButton.Left})shade.QueueFree();}`
 - `ZIndex` = `110`
 
@@ -699,7 +700,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 来源：源码第 153 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Reveal()`](LeagueScreen.cs.md#symbol-a456cc8f8331)；[`ShowAll()`](LeagueScreen.cs.md#symbol-4ac7fb82d231)
+**调用者：** [`Reveal()`](LeagueScreen.cs.md#symbol-31cea69eebc3)；[`ShowAll()`](LeagueScreen.cs.md#symbol-3bc4c46bb4f4)
 
 **调用：** `Godot.AudioStreamMP3.AudioStreamMP3()`；`Godot.AudioStreamPlayer.AudioStreamPlayer()`；`Godot.AudioStreamPlayer.Play(float)`；`Godot.Mathf.LinearToDb(float)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`System.IO.MemoryStream.MemoryStream()`；`System.IO.MemoryStream.ToArray()`；`System.IO.Stream.CopyTo(System.IO.Stream)`；`System.Math.Min(int, int)`；`System.Reflection.Assembly.GetManifestResourceStream(string)`
 
@@ -734,7 +735,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 **调用者：** [`Done()`](LeagueScreen.cs.md#symbol-d964f7e2b387)；[`NationalSpire.CareerScreen.LeagueScreen(NationalSpire.CareerData)`](LeagueScreen.cs.md#symbol-6b4f6cdfeec1)
 
-**调用：** [`HighestFrom(int)`](LeagueScreen.cs.md#symbol-de494a045a21)；[`NationalSpire.CareerScreen.LeagueRow(Godot.Control, int)`](LeagueScreen.cs.md#symbol-df3facf7c8b0)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Reveal()`](LeagueScreen.cs.md#symbol-a456cc8f8331)；`Godot.CenterContainer.CenterContainer()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.LeagueSeal.LeagueSeal()`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`
+**调用：** [`HighestFrom(int)`](LeagueScreen.cs.md#symbol-714f28298263)；[`NationalSpire.CareerScreen.LeagueRow(Godot.Control, int)`](LeagueScreen.cs.md#symbol-df3facf7c8b0)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`Reveal()`](LeagueScreen.cs.md#symbol-31cea69eebc3)；`Godot.CenterContainer.CenterContainer()`；`Godot.Color.Color(string)`；`Godot.ColorRect.ColorRect()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.VBoxContainer.VBoxContainer()`；`NationalSpire.LeagueSeal.LeagueSeal()`；`System.Collections.Generic.List<T>.List()`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `HighestFrom(int)`；`NationalSpire.CareerScreen._gold`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.LeagueRow(Godot.Control, int)`；`NationalSpire.CareerScreen.SuitColors`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.LeagueSeal.Ink`；`Reveal()`
 
@@ -771,13 +772,13 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 - `MouseFilter` = `MouseFilterEnum.Stop`
 - `ZIndex` = `100`
 
-<a id="symbol-de494a045a21"></a>
+<a id="symbol-714f28298263"></a>
 
 ## `HighestFrom(int) — int HighestFrom(int start)`
 
 来源：源码第 165 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueReveal(string[], bool)`](LeagueScreen.cs.md#symbol-d1f631d136b9)；[`ShowAll()`](LeagueScreen.cs.md#symbol-4ac7fb82d231)
+**调用者：** [`NationalSpire.CareerScreen.LeagueReveal(string[], bool)`](LeagueScreen.cs.md#symbol-d1f631d136b9)；[`ShowAll()`](LeagueScreen.cs.md#symbol-3bc4c46bb4f4)
 
 **调用：** `System.Collections.Generic.IEnumerable<int>.Max()`；`System.Collections.Generic.IEnumerable<TSource>.DefaultIfEmpty<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
 
@@ -794,15 +795,15 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-a456cc8f8331"></a>
+<a id="symbol-31cea69eebc3"></a>
 
 ## `Reveal() — void Reveal()`
 
 来源：源码第 172 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueReveal(string[], bool)`](LeagueScreen.cs.md#symbol-d1f631d136b9)；[`Reveal()`](LeagueScreen.cs.md#symbol-a456cc8f8331)
+**调用者：** [`NationalSpire.CareerScreen.LeagueReveal(string[], bool)`](LeagueScreen.cs.md#symbol-d1f631d136b9)；[`Reveal()`](LeagueScreen.cs.md#symbol-31cea69eebc3)
 
-**调用：** [`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`](LeaguePresentation.cs.md#symbol-3412750f7453)；[`NationalSpire.CareerScreen.LeagueTile(NationalSpire.LeagueCards.Entry, out Godot.VBoxContainer, bool, System.Action?)`](LeagueScreen.cs.md#symbol-3fa69e107266)；[`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`](LeagueScreen.cs.md#symbol-7bcdb9dae8c1)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Reveal()`](LeagueScreen.cs.md#symbol-a456cc8f8331)；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.GetChildCount(bool)`；`Godot.PropertyTweener.SetEase(Godot.Tween.EaseType)`；`Godot.PropertyTweener.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.Kill()`；`Godot.Tween.TweenCallback(Godot.Callable)`；`Godot.Tween.TweenInterval(double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LeagueFoil.LeagueFoil()`；`NationalSpire.LeagueSeal.LeagueSeal()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Math.Max(int, int)`
+**调用：** [`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`](LeaguePresentation.cs.md#symbol-3412750f7453)；[`NationalSpire.CareerScreen.LeagueTile(NationalSpire.LeagueCards.Entry, out Godot.VBoxContainer, bool, System.Action?)`](LeagueScreen.cs.md#symbol-3fa69e107266)；[`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`](LeagueScreen.cs.md#symbol-7bcdb9dae8c1)；[`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`](CareerScreen.cs.md#symbol-c08624e2a07c)；[`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`](CareerVisuals.cs.md#symbol-561d8fe38106)；[`Reveal()`](LeagueScreen.cs.md#symbol-31cea69eebc3)；`Godot.Callable.From(System.Action)`；`Godot.CanvasItem.Hide()`；`Godot.CanvasItem.Show()`；`Godot.Color.Color(string)`；`Godot.Control.Control()`；`Godot.Control.SetAnchorsAndOffsetsPreset(Godot.Control.LayoutPreset, Godot.Control.LayoutPresetMode, int)`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.Node.CreateTween()`；`Godot.Node.GetChildCount(bool)`；`Godot.PropertyTweener.SetEase(Godot.Tween.EaseType)`；`Godot.PropertyTweener.SetTrans(Godot.Tween.TransitionType)`；`Godot.Tween.Kill()`；`Godot.Tween.TweenCallback(Godot.Callable)`；`Godot.Tween.TweenInterval(double)`；`Godot.Tween.TweenProperty(Godot.GodotObject, Godot.NodePath, Godot.Variant, double)`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.LeagueFoil.LeagueFoil()`；`NationalSpire.LeagueSeal.LeagueSeal()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Take<TSource>(int)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.List<T>.Add(T)`；`System.Collections.Generic.List<T>.Clear()`；`System.Math.Max(int, int)`
 
 **字段、属性、事件及方法组引用：** `NationalSpire.CareerScreen._muted`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.LeagueButton(string, System.Action, float, bool, string, Godot.Texture2D?, NationalSpire.CareerScreen.LeagueControl)`；`NationalSpire.CareerScreen.LeagueTile(NationalSpire.LeagueCards.Entry, out Godot.VBoxContainer, bool, System.Action?)`；`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`；`NationalSpire.CareerScreen.SuitColors`；`NationalSpire.CareerScreen.Text(string, int, Godot.Color)`；`NationalSpire.CareerVisuals.ClearContent(Godot.Node)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.Entry.Tier`；`NationalSpire.LeagueFoil.Ink`；`NationalSpire.LeagueSeal.Burst`；`NationalSpire.LeagueSeal.Ink`；`Reveal()`；`ShowAll()`
 
@@ -866,7 +867,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 - `Ink` = `new Color(SuitColors[card.Tier])`
 - `MouseFilter` = `MouseFilterEnum.Ignore`
 
-<a id="symbol-4ac7fb82d231"></a>
+<a id="symbol-3bc4c46bb4f4"></a>
 
 ## `ShowAll() — void ShowAll()`
 
@@ -874,7 +875,7 @@ private static readonly AudioStreamMP3?[] PackSounds=new AudioStreamMP3?[3];
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
-**调用：** [`HighestFrom(int)`](LeagueScreen.cs.md#symbol-de494a045a21)；[`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`](LeagueScreen.cs.md#symbol-7bcdb9dae8c1)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.QueueFree()`；`Godot.Tween.Kill()`
+**调用：** [`HighestFrom(int)`](LeagueScreen.cs.md#symbol-714f28298263)；[`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`](LeagueScreen.cs.md#symbol-7bcdb9dae8c1)；`Godot.GodotObject.IsQueuedForDeletion()`；`Godot.Node.QueueFree()`；`Godot.Tween.Kill()`
 
 **字段、属性、事件及方法组引用：** `HighestFrom(int)`；`NationalSpire.CareerScreen._stage`；`NationalSpire.CareerScreen.PlayPackSound(Godot.Control, int)`
 

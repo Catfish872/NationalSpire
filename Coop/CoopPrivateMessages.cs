@@ -228,7 +228,7 @@ public static partial class CoopRules
                 if (w.Proposal != null) return "请先完成当前团队安排。";
                 if (command.Kind == "dm-confirm" && PrivateAppointments.Error(w.World, command.Target, offer) is { } error) return error;
                 var arrangement = new CoopProposal { Kind = "dm-match", Target = member.SteamId + "/" + command.Target + "/" + offer.Id,
-                    Number = command.Kind == "dm-confirm" ? 1 : 0, Votes = [member.SteamId],
+                    Mode = payload.MirrorAppointment ? "mirror" : "standard", Number = command.Kind == "dm-confirm" ? 1 : 0, Votes = [member.SteamId],
                     Label = (command.Kind == "dm-confirm" ? "安排" : "取消") + $"与{CareerEngine.DisplayName(w.World, command.Target)}的{offer.Mode} · {GameCalendar.Text(w.World, PrivateAppointments.Date(w.World, offer))} · 进阶{offer.Ascension}" };
                 return ConfirmPrivateMatch(w, arrangement);
             }
@@ -260,7 +260,7 @@ public static partial class CoopRules
         if (offer == null) return "约战邀约已经失效。";
         var view = View(w, member!);
         var local = PrivateMessages.Conversation(view, ids[1]).Offers.Single(o => o.Id == ids[2]);
-        string? error = proposal.Number == 1 ? PrivateAppointments.Confirm(view, ids[1], local) : PrivateAppointments.Cancel(view, local);
+        string? error = proposal.Number == 1 ? PrivateAppointments.Confirm(view, ids[1], local, proposal.Mode == "mirror") : PrivateAppointments.Cancel(view, local);
         if (error == null) { Capture(w, member!, view); w.World.Matches = view.Matches; }
         return error;
     }

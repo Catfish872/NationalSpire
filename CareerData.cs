@@ -123,6 +123,7 @@ public sealed record DreadActFact(string Boss, string Description);
 
 public sealed class CareerMatch
 {
+    public bool MirrorAppointment { get; set; }
     public DateGameState? DateGame { get; set; }
     public List<string> CommentatorIds { get; set; } = [];
     public bool RegistrationDeclined { get; set; }
@@ -283,6 +284,7 @@ public sealed class CommunityMemory
 
 public sealed class CareerResult
 {
+    public bool MirrorAppointment { get; set; }
     public string Mode { get; set; } = MatchModes.Standard;
     public bool Simulated { get; set; }
     public List<string> PlayerParticipants { get; set; } = [];

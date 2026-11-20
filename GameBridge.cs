@@ -188,7 +188,7 @@ public static class GameBridge
             catch { deckNames.Add(serialized.Id!.ToString()); }
         }
         var deckSummary = deckNames.GroupBy(name => name).Select(g => g.Key + " ×" + g.Count()).ToList();
-        var evidence = new RunEvidence { PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount };
+        var evidence = new RunEvidence { Duel = ArchitectFinal.Report(history.MapPointHistory), PotionsRecorded = true, PotionSlots = player.MaxPotionSlotCount };
         try { evidence.DefeatedEncounters = ReadDefeatedEncounters(history, match); }
         catch (Exception e) { Diagnostics.Error("history.encounters", e); }
         var roomStats = history.MapPointHistory.SelectMany(a => a).SelectMany(e => e.PlayerStats).Where(s => s.PlayerId == player.Id).ToList();
@@ -218,17 +218,9 @@ public static class GameBridge
             catch { /* 缺少本地化的徽章不伪造描述，也不阻止结算。 */ }
         }
         // 优先保留升级牌和后续获得的牌，并从序列化状态恢复实际牌面。
-        foreach (var serialized in player.Deck.Where(c => c.Id != null)
-            .OrderByDescending(c => c.CurrentUpgradeLevel).ThenByDescending(c => c.FloorAddedToDeck ?? 0)
-            .DistinctBy(c => c.Id).Take(6))
+        foreach (var serialized in DuelRecorder.SelectDeck(player.Deck,c=>c.CurrentUpgradeLevel,c=>c.FloorAddedToDeck??0,c=>c.Id))
         {
-            try
-            {
-                var card = CardModel.FromSerializable(serialized);
-                string text = GameText.Plain(card.Title + "：" + card.GetDescriptionForPile(PileType.None));
-                cards.Add(text);
-            }
-            catch { /* 已卸载的 Mod 卡牌不阻止结算。 */ }
+            if(DuelRecorder.CardFace(serialized) is {Length:>0} text)cards.Add(text);
         }
         return new() { Character = PlayerArchive.CharacterName(player.Character), CharacterId = player.Character.ToString(), Mode = history.GameMode.ToString(), Cards = cards, DeckSummary = deckSummary, Evidence = evidence };
     }

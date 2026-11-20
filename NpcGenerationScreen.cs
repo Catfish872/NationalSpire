@@ -5,12 +5,12 @@ namespace NationalSpire;
 public partial class CareerScreen
 {
     private bool _npcSetupOpening;
-    internal static void SelectNpcGeneration(Control parent, AiOptions ai, Func<NpcGenerationSetup, Task> selected, Action? cancelled = null, string country = "中国")
+    internal static void SelectNpcGeneration(Control parent, AiOptions ai, Func<NpcGenerationSetup, Control, Task> selected, Action? cancelled = null, string country = "中国")
     {
         var screen = new CareerScreen { Theme = CareerVisuals.CreateTheme() }; parent.AddChild(screen); screen.SetProcess(false); screen.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
         screen._stage = LandscapeViewport.Mount(screen);
         bool complete = false;
-        screen.OpenNpcGeneration(ai, _ => { }, selectedAsync: async plan => { await selected(plan); complete = true; }, team: true, country: country);
+        screen.OpenNpcGeneration(ai, _ => { }, selectedAsync: async plan => { await selected(plan, screen._stage); complete = true; }, team: true, country: country);
         screen._dialogOverlay!.TreeExiting += () => { if (!complete) cancelled?.Invoke(); if (!screen.IsQueuedForDeletion()) screen.QueueFree(); };
     }
 

@@ -2,6 +2,14 @@
 
 ## 建筑师对决结果
 
+DuelCardFace 保存模型编号、当时的卡面说明和升级等级。带附魔或额外属性的牌另存原版 SerializableCard 的资料，供本地还原整卡。AI 只读取已选牌面的文字。GetDescriptionForPile 与收藏卡框分别由原版模型和 LeagueCardFace 负责。旧战报仍可显示原来的牌名和牌效。
+
+DuelRecorder 订阅原版战斗历史，仅处理新增条目。以卡牌开始记录确定顺序，以完成记录确认实际打出。攻击与灾厄分别统计声明数值、实际失血、消耗格挡和实际施加的层数。召唤物通过 PetOwner 归属选手。释放对局时解除订阅。结算时从本局内存整理一次 DuelReport。AI 简报包含参赛者、各回合数值、至多两个完整回合的出牌顺序及相关牌面。优先选择击倒或同一选手连续打出不同牌的回合，第二回合优先展示不同牌。与正式战报共用 SelectDeck 节选牌组，再补入关键牌序的牌面。实战连段复用内置求解器的重复动作识别。
+
+玩家回看读取同一份赛果中的可选 DuelReport.Replay。Register 按参赛者顺序登记起始牌组，每张牌引用本场 Faces 中的编号；相同存档牌面共用编号。Finish 将每回合所有已完成的出牌按开始顺序写入 Rounds，保留出牌者、当时牌名、牌面编号、目标与战中生成标记。空回合同样保留。牌面编号只在所属战报中使用。Replay 随已有赛果保存和传输；Describe 只读节选字段。旧档缺少 Replay 时使用历史节选。
+
+建筑师胜负记录的 Variables 同时保存 nationalSpireDuel。GameBridge 从最终楼层历史读取 RunEvidence.Duel。回到选择前的检查点重赛时，通关记录随最终完成的那一次对决产生。镜面约战保存 CareerResult.MirrorAppointment 与 Evidence.Duel。排位战报属于个人收藏的 LastDuel.Fight.Report，下一场排位结算时替换。旧档可缺省以上字段。
+
 ArchitectFinal.Record 把 FINAL_CHOICE_EVENT.result.win 或 FINAL_CHOICE_EVENT.result.loss 写入实际完成对决的楼层。字段复用游戏的 EventChoices，随原生存档、多人检查点和通关历史保存。游戏进入选择时保存原建筑师房间；对决不覆盖这份检查点。胜负确定到点击前进之间，结果只保存在本场 Adventure 中。退出本局时随本场资料清除；正常返回建筑师时才写入恢复后的楼层历史。读回选择前的进度即可重新选择。下一章的存档则包含已经完成的对决。
 
 游戏写入通关历史时，单人 GameBridge.CompleteHistory 与多人 CoopRuntime.Complete 从同一份楼层记录读取结果。双方通关才把对决胜负交给 CareerEngine.FinishMatch。表演赛不改变比赛结果。没有对决记录的旧档按原规则计算。FailureDecision.FinalDuelWon 保留待确认的比赛成绩；确认时沿用该成绩，重赛时清除。正式赛不改变集卡排位积分、钱包和胜负场数。

@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`CAF529C100F28B2DE04E23B1B74E94E85C98E2C3093BB7BEAAB5A347AF627D7A`。来源：[源码](../../LeagueCardChoices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`494A2C16D61FFA11E4A0C858AAF27D184D764E639B7781D2C0E9F485279CFB5B`。来源：[源码](../../LeagueCardChoices.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -45,13 +45,14 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 **调用者：** [`NationalSpire.LeagueDuel.GridChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-d8e8571f3ace)；[`NationalSpire.LeagueDuel.HandChoice(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-0e62aaaafd9c)；[`NationalSpire.LeagueDuel.OneChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, bool, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>)`](LeagueCardChoices.cs.md#symbol-e80c9634744d)；[`NationalSpire.LeagueDuel.PileChoice(MegaCrit.Sts2.Core.Entities.Cards.CardPile, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>)`](LeagueCardChoices.cs.md#symbol-8409991ce13b)；[`NationalSpire.LeagueDuel.UpgradeChoice(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>)`](LeagueCardChoices.cs.md#symbol-4c49c75f8136)
 
-**调用：** [`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`](LeagueSolverLink.cs.md#symbol-f476bafa7737)；[`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`](LeagueSolverLink.cs.md#symbol-306fe0a674de)；`MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(int)`；`System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
+**调用：** [`NationalSpire.LeagueNativeMatch.RecordSelection(MegaCrit.Sts2.Core.Entities.Players.Player)`](LeagueNativeMatch.cs.md#symbol-e6f333245e4e)；[`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`](LeagueSolverLink.cs.md#symbol-f476bafa7737)；[`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`](LeagueSolverLink.cs.md#symbol-306fe0a674de)；`MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(int)`；`System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Math.Min(int, int)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel._choiceIndex`；`NationalSpire.LeagueDuel._choicePlan`；`NationalSpire.LeagueDuel._choicesChanged`；`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`；`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`
+**字段、属性、事件及方法组引用：** `NationalSpire.LeagueDuel._choiceIndex`；`NationalSpire.LeagueDuel._choicePlan`；`NationalSpire.LeagueDuel._choicesChanged`；`NationalSpire.LeagueDuel.Rival`；`NationalSpire.LeagueNativeMatch.RecordSelection(MegaCrit.Sts2.Core.Entities.Players.Player)`；`NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`；`NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(int)`；输入表达式：`MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(plan[i++])`；返回值紧邻使用处：`EqualsValueClauseSyntax: =MegaCrit.Sts2.Core.Multiplayer.Serialization.ModelIdSerializationCache.GetEntryForNetId(plan[i++])`
+- `NationalSpire.LeagueNativeMatch.RecordSelection(MegaCrit.Sts2.Core.Entities.Players.Player)`；输入表达式：`LeagueNativeMatch.RecordSelection(Rival)`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueNativeMatch.RecordSelection(Rival);`
 - `NationalSpire.LeagueSolverLink.Menu(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>)`；输入表达式：`LeagueSolverLink.Menu(cards)`；返回值紧邻使用处：`BinaryExpressionSyntax: menu==LeagueSolverLink.Menu(cards)`
 - `NationalSpire.LeagueSolverLink.SelectActual(MegaCrit.Sts2.Core.Models.CardModel[], int, string, int, int, int)`；输入表达式：`LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: LeagueSolverLink.SelectActual(cards,(int)pile,purpose,effect,min,max).Select`
 - `System.Collections.Generic.IEnumerable<TSource>.ElementAtOrDefault<TSource>(int)`；输入表达式：`cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level).ElementAtOrDefault(occurrence)`；返回值紧邻使用处：`IsPatternExpressionSyntax: cards.Where(c=>c.Id.Entry==id&&c.CurrentUpgradeLevel==level).ElementAtOrDefault(occurrence) is not {} match`
@@ -75,11 +76,11 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony) — internal static void InstallSelections(Harmony h)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
 
-**调用：** [`Apply(System.Type, string, string, int)`](LeagueCardChoices.cs.md#symbol-9723c2d721c0)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.Assembly.GetType(string)`
+**调用：** [`Apply(System.Type, string, string, int)`](LeagueCardChoices.cs.md#symbol-a6cb79b90717)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`System.Reflection.Assembly.GetType(string)`
 
 **字段、属性、事件及方法组引用：** `Apply(System.Type, string, string, int)`
 
@@ -100,11 +101,11 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-9723c2d721c0"></a>
+<a id="symbol-a6cb79b90717"></a>
 
 ## `Apply(System.Type, string, string, int) — void Apply(Type type,string method,string hook,int parameters)`
 
-来源：源码第 45 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 46 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`](LeagueCardChoices.cs.md#symbol-de6736b83858)
 
@@ -127,7 +128,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.RivalSelectionStack(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Collections.Generic.Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector>) — private static bool RivalSelectionStack(Player player,ref Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> __result)`
 
-来源：源码第 55 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 56 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -147,7 +148,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.UpgradeChoice(MegaCrit.Sts2.Core.Entities.Players.Player, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>) — private static bool UpgradeChoice(Player player,ref Task<CardModel?> __result)`
 
-来源：源码第 58 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 59 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -171,7 +172,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.HandChoice(MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool HandChoice(Player player,CardSelectorPrefs prefs,Func<CardModel,bool>? filter,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 62 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 63 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -195,7 +196,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.GridChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool GridChoice(IReadOnlyList<CardModel> cardsIn,Player player,CardSelectorPrefs prefs,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 64 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 65 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -217,7 +218,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.PileChoice(MegaCrit.Sts2.Core.Entities.Cards.CardPile, MegaCrit.Sts2.Core.Entities.Players.Player, MegaCrit.Sts2.Core.CardSelection.CardSelectorPrefs, System.Func<MegaCrit.Sts2.Core.Models.CardModel, bool>?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Models.CardModel>>) — private static bool PileChoice(CardPile pile,Player player,CardSelectorPrefs prefs,Func<CardModel,bool>? filter,ref Task<IEnumerable<CardModel>> __result)`
 
-来源：源码第 66 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 67 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -241,7 +242,7 @@ private readonly Stack<MegaCrit.Sts2.Core.TestSupport.ICardSelector> _selectors=
 
 ## `NationalSpire.LeagueDuel.OneChoice(System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.CardModel>, MegaCrit.Sts2.Core.Entities.Players.Player, bool, ref System.Threading.Tasks.Task<MegaCrit.Sts2.Core.Models.CardModel?>) — private static bool OneChoice(IReadOnlyList<CardModel> cards,Player player,bool canSkip,ref Task<CardModel?> __result)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 

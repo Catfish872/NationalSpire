@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`1574C4C68E434882A95DF9E427229738245A6EF25B8B852B1453B213E1D0E8E0`。来源：[源码](../../LeagueLadder.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`56F9A328FB1A439CFCFAE05A0399514CA247EDB34A6AF434FEDEFB1942CBE3A3`。来源：[源码](../../LeagueLadder.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -25,7 +25,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 来源：源码第 9 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-31eaa053f100)；[`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.CareerScreen.LeagueScore(NationalSpire.LeagueReceipt)`](LeagueArenaScreen.cs.md#symbol-bd915636fa04)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?)`](Coop/CoopRules.cs.md#symbol-de0ba69e5b42)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-8456a000aa0c)；[`NationalSpire.CareerScreen.LeagueArena(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-59be112523d9)；[`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.CareerScreen.LeagueScore(NationalSpire.LeagueReceipt)`](LeagueArenaScreen.cs.md#symbol-bd915636fa04)；[`NationalSpire.Coop.CoopRules.FinishLeagueTeam(NationalSpire.Coop.CoopCoordinator, string, bool?, NationalSpire.DuelReport?)`](Coop/CoopRules.cs.md#symbol-32aed8cb856a)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** `System.Array.FindLastIndex<T>(T[], System.Predicate<T>)`；`System.Math.Max(int, int)`
 
@@ -63,7 +63,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 来源：源码第 11 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.LeagueNativeMatch.Start(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?)`](LeagueNativeMatch.cs.md#symbol-5db2520de882)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** `System.Random.Next(int)`；`System.Random.Random(int)`
 
@@ -83,7 +83,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.Coop.CoopRules.PrepareLeagueTeam(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>)`](Coop/CoopRules.cs.md#symbol-76bbf59d84a6)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.Coop.CoopRules.PrepareMirror(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>, NationalSpire.CareerMatch?)`](Coop/CoopRules.cs.md#symbol-616076122cda)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** [`NationalSpire.LeagueSeasonRoster.Prepare(NationalSpire.CareerData, System.Collections.Generic.IReadOnlyList<string>)`](LeagueSeasonRoster.cs.md#symbol-b1e9bbf26da3)；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`
 
@@ -104,7 +104,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 来源：源码第 20 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData)`](LeagueArenaScreen.cs.md#symbol-c9e06b5e2f9d)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** [`NationalSpire.NpcCharacters.Index(string)`](NpcCharacters.cs.md#symbol-8f7f43f17d89)；[`NationalSpire.WorldPeople.PlayingStyle(int, int)`](ExpandedPeople.cs.md#symbol-d239e2d11a5b)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.GroupBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderBy<TSource, TKey>(System.Func<TSource, TKey>, System.Collections.Generic.IComparer<TKey>?)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Random.Next()`；`System.Random.Next(int)`
 
@@ -146,13 +146,37 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 - `people` = `available`
 
+<a id="symbol-9dbd4f842c20"></a>
+
+## `NationalSpire.LeagueLadder.Invited(NationalSpire.LeagueSeasonRoster, NationalSpire.LeagueLadder.Draw, string) — internal static (string Name,CharacterModel Role,int Tier,string Style,string? PersonId)? Invited(LeagueSeasonRoster roster,Draw draw,string personId)`
+
+来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.CareerScreen.LeagueMatch(NationalSpire.CareerData, NationalSpire.CareerMatch?)`](LeagueArenaScreen.cs.md#symbol-601c9785c32a)；[`NationalSpire.Coop.CoopRules.PrepareMirror(NationalSpire.Coop.CoopWorld, System.Collections.Generic.IReadOnlySet<ulong>, NationalSpire.CareerMatch?)`](Coop/CoopRules.cs.md#symbol-616076122cda)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+
+**调用：** `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.HashSet<T>.Add(T)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.CareerPerson.PublicName`；`NationalSpire.LeagueBracket.Plan`；`NationalSpire.LeagueBracket.Role`；`NationalSpire.LeagueBracket.Styles`；`NationalSpire.LeagueBracket.Tier`；`NationalSpire.LeagueLadder.Draw.People`；`NationalSpire.LeagueLadder.Draw.Roles`；`NationalSpire.LeagueLadder.Draw.UsedPeople`；`NationalSpire.LeagueLadder.Draw.UsedPlans`；`NationalSpire.LeagueSeasonRoster.Brackets`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`draw.People.TryGetValue(personId,out var person)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !draw.People.TryGetValue(personId,out var person)`
+- `System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；输入表达式：`draw.Roles.TryGetValue(bracket.Role,out var role)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !draw.Roles.TryGetValue(bracket.Role,out var role)`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`draw.UsedPeople.Add(personId)`；返回值紧邻使用处：`ExpressionStatementSyntax: draw.UsedPeople.Add(personId);`
+- `System.Collections.Generic.HashSet<T>.Add(T)`；输入表达式：`draw.UsedPlans.Add((bracket.Role,bracket.Plan))`；返回值紧邻使用处：`ExpressionStatementSyntax: draw.UsedPlans.Add((bracket.Role,bracket.Plan));`
+- `System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；输入表达式：`s.Value.Contains(personId)`；返回值紧邻使用处：`SimpleLambdaExpressionSyntax: s=>s.Value.Contains(personId)`
+- `System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；输入表达式：`bracket.Styles.Where(s=>s.Value.Contains(personId))`；返回值紧邻使用处：`ForEachStatementSyntax: foreach(var style in bracket.Styles.Where(s=>s.Value.Contains(personId))){                  draw.UsedPeople.Add(personId);draw.UsedPlans.Add((bracket.Role,bracket.Plan));                  return (person.PublicName,role,bracket.Tier,style.Key,personId);              }`
+
+**赋值（含属性/字段和局部值）：**
+
+
 <a id="symbol-8988ba35b084"></a>
 
 ## `NationalSpire.LeagueLadder.UpgradePlan(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random) — internal static Dictionary<string,int> UpgradePlan(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng)`
 
-来源：源码第 37 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 48 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-31eaa053f100)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-8456a000aa0c)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** [`NationalSpire.LeagueLadder.Upgrades(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random, bool)`](LeagueLadder.cs.md#symbol-1b55dcf28341)
 
@@ -169,7 +193,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 ## `NationalSpire.LeagueLadder.ConstructionTier(int, bool) — private static int ConstructionTier(int tier,bool final)`
 
-来源：源码第 41 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 52 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`NationalSpire.LeagueLadder.Upgrades(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random, bool)`](LeagueLadder.cs.md#symbol-1b55dcf28341)
 
@@ -187,7 +211,7 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 ## `NationalSpire.LeagueLadder.Upgrades(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random, bool) — internal static Dictionary<string,int> Upgrades(CardModel[] cards,LeagueArchetypes.Plan plan,int tier,Random rng,bool final)`
 
-来源：源码第 42 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 53 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueLadder.UpgradePlan(MegaCrit.Sts2.Core.Models.CardModel[], NationalSpire.LeagueArchetypes.Plan, int, System.Random)`](LeagueLadder.cs.md#symbol-8988ba35b084)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)
 
@@ -224,9 +248,9 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 ## `NationalSpire.LeagueLadder.Build(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string) — internal static List<CardModel> Build(CharacterModel role,Random rng,int tier,string style)`
 
-来源：源码第 57 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-31eaa053f100)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
+**调用者：** [`Begin()`](LeagueArenaScreen.cs.md#symbol-8456a000aa0c)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
 **调用：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)
 
@@ -243,11 +267,11 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 ## `NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool) — internal static List<CardModel> BuildFor(CharacterModel role,Random rng,int tier,string style,bool final)`
 
-来源：源码第 60 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 71 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueLadder.Build(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string)`](LeagueLadder.cs.md#symbol-a46e08a27495)；[`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)
 
-**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-1449bdf4f6c2)；[`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-f4f2de497ffb)；[`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`](GameCharacterNames.cs.md#symbol-67e74be938f6)；[`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-4a2f709b2968)；[`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)；[`NationalSpire.LeagueArchetypes.Resolve(string, string)`](LeagueArchetypes.cs.md#symbol-8cffe8f79fa2)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueLadder.ConstructionTier(int, bool)`](LeagueLadder.cs.md#symbol-411d383d97fe)；[`NationalSpire.LeagueLegendDraft.Build(NationalSpire.LeagueArchetypes.Plan, NationalSpire.LeagueCards.Entry[], System.Random)`](LeagueLegendDraft.cs.md#symbol-c210ac44d176)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-e1e2777b8721)；`object.GetType()`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.List(int)`；`System.Enum.ToString()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Random.Next()`；`System.Random.Next(int)`；`System.Random.NextDouble()`
+**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-899debc8b5b3)；[`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-dc858d2fe947)；[`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`](GameCharacterNames.cs.md#symbol-67e74be938f6)；[`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-4a2f709b2968)；[`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)；[`NationalSpire.LeagueArchetypes.Resolve(string, string)`](LeagueArchetypes.cs.md#symbol-8cffe8f79fa2)；[`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；[`NationalSpire.LeagueLadder.ConstructionTier(int, bool)`](LeagueLadder.cs.md#symbol-411d383d97fe)；[`NationalSpire.LeagueLegendDraft.Build(NationalSpire.LeagueArchetypes.Plan, NationalSpire.LeagueCards.Entry[], System.Random)`](LeagueLegendDraft.cs.md#symbol-c210ac44d176)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-62785f74805d)；`object.GetType()`；`string.Split(char, System.StringSplitOptions)`；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.Dictionary<TKey, TValue>.Dictionary()`；`System.Collections.Generic.HashSet<T>.Contains(T)`；`System.Collections.Generic.IEnumerable<TSource>.Concat<TSource>(System.Collections.Generic.IEnumerable<TSource>)`；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.Distinct<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.OrderByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.ToHashSet<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.List(int)`；`System.Enum.ToString()`；`System.Linq.IOrderedEnumerable<TSource>.ThenBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Linq.IOrderedEnumerable<TSource>.ThenByDescending<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Random.Next()`；`System.Random.Next(int)`；`System.Random.NextDouble()`
 
 **字段、属性、事件及方法组引用：** `Add(NationalSpire.LeagueCards.Entry)`；`Available(NationalSpire.LeagueCards.Entry)`；`NationalSpire.GameCharacterNames.IsOriginal(System.Type)`；`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.LeagueArchetypes.Defense`；`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.LeagueArchetypes.Engine.Draw`；`NationalSpire.LeagueArchetypes.Engine.Energy`；`NationalSpire.LeagueArchetypes.Engines`；`NationalSpire.LeagueArchetypes.Plan.Anchors`；`NationalSpire.LeagueArchetypes.Plan.Finishers`；`NationalSpire.LeagueArchetypes.Plan.Partners`；`NationalSpire.LeagueArchetypes.Plan.Starters`；`NationalSpire.LeagueArchetypes.Resolve(string, string)`；`NationalSpire.LeagueCards.Catalog`；`NationalSpire.LeagueCards.DeckSize`；`NationalSpire.LeagueCards.Entry.Group`；`NationalSpire.LeagueCards.Entry.Id`；`NationalSpire.LeagueCards.Entry.Model`；`NationalSpire.LeagueCards.Entry.Tier`；`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`；`NationalSpire.LeagueLadder.ConstructionTier(int, bool)`；`NationalSpire.LeagueLegendDraft.Build(NationalSpire.LeagueArchetypes.Plan, NationalSpire.LeagueCards.Entry[], System.Random)`；`Supply(System.Collections.Generic.HashSet<string>, int, bool)`
 
@@ -341,13 +365,13 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 - `preferred` = `options`
 - `var (guards,sustain)` = `LeagueArchetypes.Defense[role.Id.Entry]`
 
-<a id="symbol-1449bdf4f6c2"></a>
+<a id="symbol-899debc8b5b3"></a>
 
 ## `Add(NationalSpire.LeagueCards.Entry) — void Add(LeagueCards.Entry c)`
 
-来源：源码第 68 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 79 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-e1e2777b8721)
+**调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-62785f74805d)
 
 **调用：** `System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Collections.Generic.List<T>.Add(T)`
 
@@ -362,13 +386,13 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 
 - `deck[c.Id]` = `deck.GetValueOrDefault(c.Id)+1`
 
-<a id="symbol-f4f2de497ffb"></a>
+<a id="symbol-dc858d2fe947"></a>
 
 ## `Available(NationalSpire.LeagueCards.Entry) — bool Available(LeagueCards.Entry c)`
 
-来源：源码第 69 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 80 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-e1e2777b8721)
+**调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)；[`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-62785f74805d)
 
 **调用：** [`NationalSpire.LeagueCards.Fixed(NationalSpire.LeagueCards.Entry, string?)`](LeagueCards.cs.md#symbol-b5fd3c07325e)；`System.Collections.Generic.Dictionary<TKey, TValue>.ContainsKey(TKey)`；`System.Collections.Generic.IEnumerable<int>.Sum()`；`System.Collections.Generic.IEnumerable<TSource>.Skip<TSource>(int)`；`System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>.GetValueOrDefault<TKey, TValue>(TKey)`；`System.Math.Max(int, int)`
 
@@ -386,15 +410,15 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-e1e2777b8721"></a>
+<a id="symbol-62785f74805d"></a>
 
 ## `Supply(System.Collections.Generic.HashSet<string>, int, bool) — void Supply(HashSet<string> tools,int target,bool utility=false)`
 
-来源：源码第 89 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 100 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueLadder.BuildFor(MegaCrit.Sts2.Core.Models.CharacterModel, System.Random, int, string, bool)`](LeagueLadder.cs.md#symbol-005dadfed015)
 
-**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-1449bdf4f6c2)；[`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-f4f2de497ffb)；[`Counts(string)`](LeagueLadder.cs.md#symbol-d2930979918a)；[`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-4a2f709b2968)；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Random.NextDouble()`
+**调用：** [`Add(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-899debc8b5b3)；[`Available(NationalSpire.LeagueCards.Entry)`](LeagueLadder.cs.md#symbol-dc858d2fe947)；[`Counts(string)`](LeagueLadder.cs.md#symbol-46ae9fc8bdac)；[`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-4a2f709b2968)；`System.Collections.Generic.IEnumerable<TSource>.Contains<TSource>(TSource)`；`System.Collections.Generic.IEnumerable<TSource>.MaxBy<TSource, TKey>(System.Func<TSource, TKey>)`；`System.Collections.Generic.IEnumerable<TSource>.Sum<TSource>(System.Func<TSource, int>)`；`System.Collections.Generic.IEnumerable<TSource>.ToArray<TSource>()`；`System.Collections.Generic.IEnumerable<TSource>.Where<TSource>(System.Func<TSource, bool>)`；`System.Random.NextDouble()`
 
 **字段、属性、事件及方法组引用：** `Add(NationalSpire.LeagueCards.Entry)`；`Available(NationalSpire.LeagueCards.Entry)`；`Counts(string)`；`NationalSpire.LeagueArchetypes.CanSupportAnother(string, System.Collections.Generic.Dictionary<string, int>)`；`NationalSpire.LeagueCards.Entry.Group`；`NationalSpire.LeagueCards.Entry.Id`
 
@@ -416,13 +440,13 @@ internal readonly HashSet<(string,string)> UsedPlans=[];
 **赋值（含属性/字段和局部值）：**
 
 
-<a id="symbol-d2930979918a"></a>
+<a id="symbol-46ae9fc8bdac"></a>
 
 ## `Counts(string) — bool Counts(string id)`
 
-来源：源码第 90 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 101 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-e1e2777b8721)
+**调用者：** [`Supply(System.Collections.Generic.HashSet<string>, int, bool)`](LeagueLadder.cs.md#symbol-62785f74805d)
 
 **调用：** [`NationalSpire.LeagueArchetypes.Enabled(string, System.Collections.Generic.Dictionary<string, int>)`](LeagueArchetypes.cs.md#symbol-0609e465e6ba)；`System.Collections.Generic.HashSet<T>.Contains(T)`
 

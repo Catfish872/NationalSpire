@@ -39,9 +39,18 @@ internal static class ArchitectFinal {
         }
         return null;
     }
-    internal static void Record(RunState run,bool won){
+    internal static DuelReport? Report(IEnumerable<IEnumerable<MapPointHistoryEntry>> history){
+        foreach(var e in history.SelectMany(a=>a).SelectMany(f=>f.PlayerStats).SelectMany(p=>p.EventChoices))
+            if(e.Title?.LocTable=="events" && e.Title.LocEntryKey is WinKey or LossKey && e.Variables?.GetValueOrDefault("nationalSpireDuel") is string json)
+                return System.Text.Json.JsonSerializer.Deserialize<DuelReport>(json);
+        return null;
+    }
+    internal static void Record(RunState run,bool won,DuelReport? report=null){
         if(run.CurrentMapPointHistoryEntry is {} floor)
-            foreach(var p in floor.PlayerStats)p.EventChoices.Add(new(){Title=new LocString("events",won?WinKey:LossKey)});
+            foreach(var p in floor.PlayerStats){
+                p.EventChoices.Add(new(){Title=new LocString("events",won?WinKey:LossKey), Variables= report==null ? null : new(){["nationalSpireDuel"]=System.Text.Json.JsonSerializer.Serialize(report)}});
+                report=null;
+            }
     }
     internal static CareerMatch? Match(RunState run){
         var session=CoopRuntime.Current?.Session;
@@ -201,7 +210,7 @@ public static partial class LeagueNativeMatch {
                 var deck=LeagueLadder.BuildFor(role,rng,tier,npc.Style,true).ToArray();var plan=LeagueArchetypes.Resolve(role.Id.Entry,npc.Style);
                 ulong netId=ulong.MaxValue-(ulong)Team.Count;while(run.Players.Any(p=>p.NetId==netId)||Team.Any(f=>f.Rival.NetId==netId))netId--;
                 var bot=Player.CreateForNewRun(role,run.Players[0].UnlockState,netId);bot.RunState=run;bot.InitializeSeed(seed+":"+id);
-                Team.Add(new(bot,deck,rng.Next(),npc.PublicName,tier,LeagueLadder.Upgrades(deck,plan,tier,rng,true),pending){OpeningMax=live.MaxHp+100,OpeningHp=live.Steps[^1].HpAfter+100,SetupCards=plan.Anchors});
+                Team.Add(new(bot,deck,rng.Next(),npc.PublicName,tier,LeagueLadder.Upgrades(deck,plan,tier,rng,true),pending){PersonId=id,OpeningMax=live.MaxHp+100,OpeningHp=live.Steps[^1].HpAfter+100,SetupCards=plan.Anchors});
             }
             Current=Team[0];var time=MatchRules.Compare(new(true,0,ArchitectFinal.Arrival),new(match.OpponentWon,match.OpponentFloor,match.OpponentSeconds!.Value));_opener=time<0||time==0&&LeagueLadder.RivalOpens(seed);
             var encounter=LeagueEncounter.ForFinal(run);
@@ -256,6 +265,9 @@ public static partial class LeagueNativeMatch {
     }
     internal static async Task FinishFinal(bool? won){
         if(_returning)return;_returning=true;var run=_run!;
+        var report=won is bool victory?_report?.Finish(victory):null;
+        if(report!=null && ArchitectFinal.Match(run) is {OpponentWon:false} match)
+            report.Note="因为"+CareerEngine.DisplayName(Coop.CoopRuntime.Current?.Session?.World?.World??CareerStore.Data,match.OpponentId)+"没有通关，所以最后对决为表演赛，不影响比赛结果。";
         // 离开战场先完成原版清理，再恢复药水、遗物计数、路线记录和生命。
         if(run.CurrentRoom==_room&&_room!=null){
             foreach(var player in run.Players)player.AfterCombatEnd();
@@ -264,7 +276,7 @@ public static partial class LeagueNativeMatch {
         }
         if(NRun.Instance is {} scene)scene.TreeExiting-=OnAdventureExit;
         var adventure=_adventure;adventure?.Restore();_adventure=null;Release();
-        if(won.HasValue)ArchitectFinal.Record(run,won.Value);
+        if(won.HasValue)ArchitectFinal.Record(run,won.Value,report);
         adventure?.RestoreMusic();
         // 重新进入房间时游戏会自行选择音乐段落；原场景续接对话时才需要主动更新。
         if(ArchitectFinal.Destination is {} destination&&ReferenceEquals(run.CurrentRoom,destination))

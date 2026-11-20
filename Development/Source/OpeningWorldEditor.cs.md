@@ -19,7 +19,7 @@
 
 来源：源码第 7 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`DrawDraft()`](NpcGenerationScreen.cs.md#symbol-d79d22cd9ca9)
+**调用者：** [`DrawDraft()`](NpcGenerationScreen.cs.md#symbol-8d6d178945ff)
 
 **调用：** [`Field(string)`](OpeningWorldEditor.cs.md#symbol-21822c8432b7)；[`Nation()`](OpeningWorldEditor.cs.md#symbol-171a8e241cb0)；[`NationalSpire.CareerScreen.Glyph(string, int, Godot.Color)`](DashboardControls.cs.md#symbol-23c9e2f4b76f)；[`NationalSpire.OpeningControls.Chip(Godot.Container, Godot.ButtonGroup, string, bool, System.Action)`](OpeningControls.cs.md#symbol-93105b3962ff)；[`NationalSpire.OpeningControls.Field(Godot.Container, string)`](OpeningControls.cs.md#symbol-bd0e4ff57612)；[`NationalSpire.OpeningControls.Label(string, int, Godot.Color?)`](OpeningControls.cs.md#symbol-1a0d93051996)；[`NationalSpire.OpeningControls.Section(Godot.Container, string, string, string, bool, Godot.Color?)`](OpeningControls.cs.md#symbol-c7ec3402431e)；[`Terms()`](OpeningWorldEditor.cs.md#symbol-594d83774a62)；`Godot.ButtonGroup.ButtonGroup()`；`Godot.Control.AddThemeConstantOverride(Godot.StringName, int)`；`Godot.GridContainer.GridContainer()`；`Godot.HBoxContainer.HBoxContainer()`；`Godot.HFlowContainer.HFlowContainer()`；`Godot.LineEdit.LineEdit()`；`Godot.Node.AddChild(Godot.Node, bool, Godot.Node.InternalMode)`；`Godot.SpinBox.SpinBox()`；`Godot.VBoxContainer.VBoxContainer()`；`Godot.Vector2.Vector2(float, float)`；`NationalSpire.BroadcastButton.BroadcastButton()`；`System.Collections.Generic.Dictionary<TKey, TValue>.TryGetValue(TKey, out TValue)`；`System.Collections.Generic.IEnumerable<TSource>.ToDictionary<TSource, TKey, TElement>(System.Func<TSource, TKey>, System.Func<TSource, TElement>)`
 

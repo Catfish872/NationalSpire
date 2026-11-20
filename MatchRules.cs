@@ -264,6 +264,7 @@ public static class MatchRules
             : null;
     public static string Report(CareerMatch match, CareerResult result, bool cooperative = false)
     {
+        if(result.MirrorAppointment)return result.Evidence.Duel!.Describe();
         string own = Performance(result.Win, result.Floor, result.RunSeconds);
         string other = Performance(match.OpponentWon, match.OpponentFloor, match.OpponentSeconds);
         string details = (CareerEngine.StableHash(match.Seed) % 4) switch
@@ -273,6 +274,6 @@ public static class MatchRules
             2 => $"{result.Opponent}交出{other}的成绩；你的战报为{own}。最终你{result.Outcome}。",
             _ => $"双方战报已确认：你{own}，{result.Opponent}{other}。本场结果：你{result.Outcome}。"
         };
-        return (result.Simulated ? "模拟赛果。" : "") + $"赛事进阶 {match.RequiredAscension}。" + ChallengeNote(result, cooperative) + details + match.Decider;
+        return (result.Simulated ? "模拟赛果。" : "") + $"赛事进阶 {match.RequiredAscension}。" + ChallengeNote(result, cooperative) + details + match.Decider + (result.Evidence.Duel is {} duel ? "\n" + duel.Describe() : "");
     }
 }

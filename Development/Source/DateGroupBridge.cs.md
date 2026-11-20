@@ -78,7 +78,7 @@
 
 来源：源码第 12 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
-**调用者：** [`Enter(bool)`](GroupChatScreen.cs.md#symbol-1a1dfee88b1f)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
+**调用者：** [`Enter(bool)`](GroupChatScreen.cs.md#symbol-6e6951415242)；[`NationalSpire.DateGroupBridge.Begin(NationalSpire.CareerData, NationalSpire.GroupChat, NationalSpire.PrivateOffer, bool)`](DateGroupBridge.cs.md#symbol-5d930edf4c6f)
 
 **调用：** [`NationalSpire.PrivateMessages.Mailbox(NationalSpire.CareerData)`](PrivateMessages.cs.md#symbol-2e8d90d01925)；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`
 

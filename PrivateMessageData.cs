@@ -177,6 +177,8 @@ public sealed class PrivateSummary
 }
 public sealed class PrivateOffer
 {
+    public bool MirrorAppointment { get; set; }
+    public bool MatchFormatChosen { get; set; }
     public string ConsumerAttachmentId { get; set; } = "";
     public string DateSourceGroup { get; set; } = "";
     public string DateSourceOffer { get; set; } = "";
