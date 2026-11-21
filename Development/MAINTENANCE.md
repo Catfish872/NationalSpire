@@ -28,7 +28,7 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 
 **先确定更新的是哪一层。** 游戏更新时，核对游戏接口和牌效，并核对下表中相应的求解器实现；只升级内置求解器时，从打包、加载开始，核对局面复制、出牌、选牌和结束回合。若某张牌只改了触发时机，游戏和模组仍可能编译通过，此时要比较这张牌在推演和实战中各触发了几次、作用于谁、何时生效。
 
-当前维护基线为国运尖塔 1.1.5。单人和多人开赛按实际方法签名选择处理方式。镜面对决另有独立判断：[LeagueSolverLink.Supported](../LeagueSolverLink.cs) 检查游戏是否提供愚者箭槽类型和 RunState.RunModels 属性。0.107.1 保留开包、收藏、交易、组卡和建筑师原对话，镜面匹配与建筑师对决入口不可选；0.113.0 提供对决。两个成员存在，只决定是否开放入口。新游戏即使通过这项判断，仍须核对下列战斗接口和牌效。玩家是否订阅独立求解器不参与判断。
+当前维护基线为国运尖塔 1.1.6。单人和多人开赛按实际方法签名选择处理方式。镜面对决另有独立判断：[LeagueSolverLink.Supported](../LeagueSolverLink.cs) 检查游戏是否提供愚者箭槽类型和 RunState.RunModels 属性。0.107.1 保留开包、收藏、交易、组卡和建筑师原对话，镜面匹配与建筑师对决入口不可选；0.113.0 提供对决。两个成员存在，只决定是否开放入口。新游戏即使通过这项判断，仍须核对下列战斗接口和牌效。玩家是否订阅独立求解器不参与判断。
 
 ### 游戏更新时按玩法核对
 
@@ -44,6 +44,12 @@ README 是目录与当前实现的查询入口；MODULES 负责模块边界；DA
 | 联机团体匹配、建筑师团队对决 | [LeagueTeamMatch](../LeagueTeamMatch.cs)、[LeagueDuel](../LeagueDuel.cs)、[ArchitectFinal](../ArchitectFinal.cs)。核对房主推演、卡牌和目标编号、中途选牌资料、游戏的选牌同步通道、团队选择及战后确认。修改消息格式时同时核对 [联机协议](../Coop/CoopData.cs)。 | 用两个客户端比较同一回合各次出牌、目标和选牌，再确认双方返回同一房间。候选和目标随已确定的牌序发送，客机不重新搜索。本机联机结果与跨网络测量分别记录。[传输顺序与检查点](PERSISTENCE_AND_COOP.md#建筑师的团队选择与敌方出牌) |
 
 ### 求解器更新时从打包查到实战
+
+**玩家订阅的战斗路线求解器**与国运尖塔内置的对手求解器分别核对。游戏或外部求解器更新后，检查 [InstallExternalTurnSetup 与 KeepNativeDuelSetup](../LeagueNativeMatch.cs)。安装时从游戏 `CombatManager.SetupPlayerTurn` 的 Harmony 注册表查找外部模组实际加载的 `CombatSolver.PlayerTurnSetupPatch.Prefix`。兼容入口只使用该静态方法的布尔返回值和第三个参数 Player。更新时还须阅读方法体，确认接管判断的含义。外部 `TryInterceptSetup` 返回 `false` 后，外部 `Prefix` 应向 Harmony 返回 `true`，游戏才会执行原有回合准备。完成注册后用 Harmony 重新生成游戏的 SetupPlayerTurn 调用入口。原有补丁名单和顺序沿用注册记录；已编译入口可能已将旧 Prefix 内联，单独修改 Prefix 无法改变这类旧入口。版本号不参与匹配。若新版本自行支持对决或更换接管方式，重新审阅补丁的必要性；签名或注册入口不匹配时，在联赛诊断中查找跳过记录。
+
+实机验收保留玩家启用的模组和自动计算设置。带烘焙手套进入普通战斗，确认外部求解器仍能接管回合准备。再从建筑师选项进入对决，核对手套消耗一张牌并给予力量、起手发牌、实际出牌、正常胜负和前进按钮。镜面匹配走相同的房间判断。返回普通战斗时再次核对外部求解器。测试从玩家能点击的入口进入，记录实际结算；控制台判胜会绕过出牌和回合准备。
+
+1.1.6 在游戏 0.113.1、外部求解器 0.51.9 的隔离客户端验收。复制故障当场的建筑师存档和启用的模组，从继续游戏点击对决。烘焙手套选牌后手牌 5 张、消耗堆 1 张、力量 1，玩家实际打出 EXPECT_A_FIGHT。第 10 回合分出胜负，点击前进返回原版建筑师，正式通关记录收到表演赛战报。普通战斗对照使用同局前一房间的首领备份，在测试副本中将该房间从已完成恢复为战斗，沿用原牌组和遗物。外部求解器在手套选牌界面开始搜索，玩家出牌并结束回合。镜面排位另从匹配入口打完并查看战报。三个入口分别验证；普通战斗对照在独立进程运行。
 
 升级内置求解器时，同时对照 LeagueForecast.Projection 的 ProjectRunRules 与上游 SimulatedCombatState 构造函数中接受的 RunModel 类型；核对 RunState.set_RunModels、ModHelper 的两种订阅者枚举、PredictionModHookSubscriberCapture.ValidateSubscriber、PredictionModPatchAudit.AuditCardOnPlay 的补丁和适配返回值，以及 PredictionCoverage.DescribeGap 的风险来源。卡牌审查与求解器补丁只安装在内置程序集；两处原版 ModHelper 枚举仅在临时战场与线程都匹配时才返回该战场的名单。
 

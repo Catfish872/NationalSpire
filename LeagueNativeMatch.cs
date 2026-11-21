@@ -128,7 +128,7 @@ public static partial class LeagueNativeMatch
     private static void Install(){
         if(_installed)return;var h=new Harmony("nationalspire.league.native");
         try{
-            LeagueBattleApi.Install(h);FinalEndHooks.Install(h);
+            LeagueBattleApi.Install(h);FinalEndHooks.Install(h);InstallExternalTurnSetup(h);
             h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController),"GetTrack"),prefix:new HarmonyMethod(typeof(LeagueEncounter),nameof(LeagueEncounter.MusicRoom)));
             foreach(var method in new[]{"UpdateMusic","UpdateAmbience"})
                 h.Patch(AccessTools.DeclaredMethod(typeof(MegaCrit.Sts2.Core.Nodes.Audio.NRunMusicController),method),transpiler:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(SelectMusicAct)));
@@ -163,6 +163,33 @@ public static partial class LeagueNativeMatch
     }
     private static void RemoveBattlePatches(Harmony h){
         h.UnpatchAll(h.Id);EffectPatches.Clear();SeenPowers.Clear();_installed=false;
+    }
+    private static void InstallExternalTurnSetup(Harmony harmony){
+        var solver=MegaCrit.Sts2.Core.Modding.ModManager.Mods.FirstOrDefault(mod=>
+            mod.manifest?.id=="CombatSolver" && mod.state==MegaCrit.Sts2.Core.Modding.ModLoadState.Loaded);
+        if(solver==null)return;
+        try{
+            var setup=AccessTools.DeclaredMethod(typeof(CombatManager),"SetupPlayerTurn");
+            var prefix=setup==null?null:Harmony.GetPatchInfo(setup)?.Prefixes.Select(p=>p.PatchMethod)
+                .FirstOrDefault(m=>m.DeclaringType?.FullName=="CombatSolver.PlayerTurnSetupPatch"
+                    && solver.assemblies.Contains(m.Module.Assembly) && m.Name=="Prefix" && m.IsStatic
+                    && m.ReturnType==typeof(bool) && m.GetParameters() is [_,_,var player,..]
+                    && player.ParameterType==typeof(Player));
+            if(prefix==null){
+                Diagnostics.Record("league-match","未找到外部求解器已注册的回合准备 Prefix，跳过本项兼容。");
+                return;
+            }
+            harmony.Patch(prefix,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepNativeDuelSetup)));
+            // 刷新已生成的游戏入口，使它调用现在的外部 Prefix；原有补丁和顺序沿用注册表。
+            harmony.CreateProcessor(setup!).Patch();
+        }catch(Exception error){Diagnostics.Error("league-match",error);}
+    }
+    private static bool KeepNativeDuelSetup(Player __2,ref bool __result){
+        if(__2.Creature.CombatState is not CombatState {Encounter:LeagueEncounter} ||
+            !MegaCrit.Sts2.Core.Context.LocalContext.IsMe(__2))return true;
+        // 外部 Prefix 返回 true，Harmony 才会执行游戏原有的玩家回合准备。
+        __result=true;
+        return false;
     }
     private static IEnumerable<CodeInstruction> SelectMusicAct(IEnumerable<CodeInstruction> instructions)=>instructions.MethodReplacer(
         AccessTools.PropertyGetter(typeof(IRunState),nameof(IRunState.Act)),AccessTools.Method(typeof(LeagueNativeMatch),nameof(MusicAct)));
@@ -205,7 +232,7 @@ public static partial class LeagueNativeMatch
         try{await running;}
         catch(Exception error) when(error is not OperationCanceledException){
             if(Current!=duel||_returning)return;
-            if(InFinal){Diagnostics.Error("league-match",error);await FinishFinal(null);return;}
+            if(InFinal){Diagnostics.Error("league-match",error);return;}
             if(!GodotObject.IsInstanceValid(_exit))return;
             Diagnostics.Error("league-match",error);
             _interrupted=true;_exit!.Text="返回赛场";ShowExit();

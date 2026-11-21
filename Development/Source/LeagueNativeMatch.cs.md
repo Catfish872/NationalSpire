@@ -2,7 +2,7 @@
 
 [返回文件依赖索引](../SOURCE_MAP.md)
 
-源码 SHA-256：`391696D169D01AE378C0B082B384946EE1690E18D709310142015B87C9BDAF8A`。来源：[源码](../../LeagueNativeMatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
+源码 SHA-256：`F8AE14CD7887F25DA77406F5F2E260CD3CC1DA9783173083F9428BF97EA9FB67`。来源：[源码](../../LeagueNativeMatch.cs)。匿名函数计入所属成员，局部函数单列；静态调用没有表达执行条件和先后次序。属性可能有副作用。
 
 ## 类型与字段
 
@@ -350,9 +350,9 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)；[`NationalSpire.LeagueNativeMatch.StartTeam(NationalSpire.Coop.CoopCoordinator, MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby, System.Collections.Generic.IReadOnlyList<MegaCrit.Sts2.Core.Models.ActModel>)`](LeagueTeamMatch.cs.md#symbol-81e11d18adc7)
 
-**调用：** [`NationalSpire.FinalEndHooks.Install(HarmonyLib.Harmony)`](ArchitectFinal.cs.md#symbol-e1677896058b)；[`NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony)`](LeagueBattleApi.cs.md#symbol-5be518807d86)；[`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`](LeagueCardChoices.cs.md#symbol-de6736b83858)；[`NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`](LeagueEffectTargets.cs.md#symbol-e5c8dd52e1ac)；[`NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`](LeagueBattleVisuals.cs.md#symbol-12673676d8ef)；[`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；[`NationalSpire.LeagueNativeMatch.RemoveBattlePatches(HarmonyLib.Harmony)`](LeagueNativeMatch.cs.md#symbol-38de57ce7505)；[`OwnerPatch(string, string, bool)`](LeagueNativeMatch.cs.md#symbol-7289cb2ce083)；`HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.Harmony.Harmony(string)`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`HarmonyLib.PatchProcessor.ReadMethodBody(System.Reflection.MethodBase)`；`object.Equals(object?, object?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Reflection.Assembly.GetType(string)`；`System.Reflection.MethodBase.GetMethodBody()`；`System.Reflection.MethodBase.GetParameters()`；`System.Type.IsAssignableFrom(System.Type?)`
+**调用：** [`NationalSpire.FinalEndHooks.Install(HarmonyLib.Harmony)`](ArchitectFinal.cs.md#symbol-e1677896058b)；[`NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony)`](LeagueBattleApi.cs.md#symbol-5be518807d86)；[`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`](LeagueCardChoices.cs.md#symbol-de6736b83858)；[`NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`](LeagueEffectTargets.cs.md#symbol-e5c8dd52e1ac)；[`NationalSpire.LeagueNativeMatch.InstallExternalTurnSetup(HarmonyLib.Harmony)`](LeagueNativeMatch.cs.md#symbol-8e306f3c2752)；[`NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`](LeagueBattleVisuals.cs.md#symbol-12673676d8ef)；[`NationalSpire.LeagueNativeMatch.Nested(System.Type)`](LeagueEffectTargets.cs.md#symbol-f360a5e17097)；[`NationalSpire.LeagueNativeMatch.RemoveBattlePatches(HarmonyLib.Harmony)`](LeagueNativeMatch.cs.md#symbol-38de57ce7505)；[`OwnerPatch(string, string, bool)`](LeagueNativeMatch.cs.md#symbol-d9d3e0ab4315)；`HarmonyLib.AccessTools.AsyncMoveNext(System.Reflection.MethodBase)`；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.Method(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.AccessTools.PropertyGetter(System.Type, string)`；`HarmonyLib.Harmony.Harmony(string)`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`HarmonyLib.PatchProcessor.ReadMethodBody(System.Reflection.MethodBase)`；`object.Equals(object?, object?)`；`System.Collections.Generic.IEnumerable<TSource>.Any<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.SelectMany<TSource, TResult>(System.Func<TSource, System.Collections.Generic.IEnumerable<TResult>>)`；`System.Reflection.Assembly.GetType(string)`；`System.Reflection.MethodBase.GetMethodBody()`；`System.Reflection.MethodBase.GetParameters()`；`System.Type.IsAssignableFrom(System.Type?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.FinalEndHooks.Install(HarmonyLib.Harmony)`；`NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony)`；`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch._installed`；`NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch.Nested(System.Type)`；`NationalSpire.LeagueNativeMatch.RemoveBattlePatches(HarmonyLib.Harmony)`；`OwnerPatch(string, string, bool)`
+**字段、属性、事件及方法组引用：** `NationalSpire.FinalEndHooks.Install(HarmonyLib.Harmony)`；`NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony)`；`NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch._installed`；`NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch.InstallExternalTurnSetup(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`；`NationalSpire.LeagueNativeMatch.Nested(System.Type)`；`NationalSpire.LeagueNativeMatch.RemoveBattlePatches(HarmonyLib.Harmony)`；`OwnerPatch(string, string, bool)`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
@@ -396,6 +396,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 - `NationalSpire.LeagueBattleApi.Install(HarmonyLib.Harmony)`；输入表达式：`LeagueBattleApi.Install(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueBattleApi.Install(h);`
 - `NationalSpire.LeagueDuel.InstallSelections(HarmonyLib.Harmony)`；输入表达式：`LeagueDuel.InstallSelections(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: LeagueDuel.InstallSelections(h);`
 - `NationalSpire.LeagueNativeMatch.InstallEffectTargets(HarmonyLib.Harmony)`；输入表达式：`InstallEffectTargets(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: InstallEffectTargets(h);`
+- `NationalSpire.LeagueNativeMatch.InstallExternalTurnSetup(HarmonyLib.Harmony)`；输入表达式：`InstallExternalTurnSetup(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: InstallExternalTurnSetup(h);`
 - `NationalSpire.LeagueNativeMatch.InstallVisuals(HarmonyLib.Harmony)`；输入表达式：`InstallVisuals(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: InstallVisuals(h);`
 - `NationalSpire.LeagueNativeMatch.Nested(System.Type)`；输入表达式：`Nested(card)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: Nested(card).SelectMany`
 - `NationalSpire.LeagueNativeMatch.RemoveBattlePatches(HarmonyLib.Harmony)`；输入表达式：`RemoveBattlePatches(h)`；返回值紧邻使用处：`ExpressionStatementSyntax: RemoveBattlePatches(h);`
@@ -416,7 +417,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 - `_installed` = `true`
 
-<a id="symbol-7289cb2ce083"></a>
+<a id="symbol-d9d3e0ab4315"></a>
 
 ## `OwnerPatch(string, string, bool) — void OwnerPatch(string type,string method,bool async=true)`
 
@@ -461,11 +462,62 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 - `_installed` = `false`
 
+<a id="symbol-8e306f3c2752"></a>
+
+## `NationalSpire.LeagueNativeMatch.InstallExternalTurnSetup(HarmonyLib.Harmony) — private static void InstallExternalTurnSetup(Harmony harmony)`
+
+来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** [`NationalSpire.LeagueNativeMatch.Install()`](LeagueNativeMatch.cs.md#symbol-8277ecd62500)
+
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.Diagnostics.Record(string, object)`](Diagnostics.cs.md#symbol-1b5632793cd0)；`HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；`HarmonyLib.Harmony.CreateProcessor(System.Reflection.MethodBase)`；`HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；`HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；`HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；`HarmonyLib.PatchProcessor.Patch()`；`System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；`System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；`System.Collections.Generic.List<T>.Contains(T)`；`System.Reflection.MethodBase.GetParameters()`
+
+**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.Diagnostics.Record(string, object)`
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `HarmonyLib.AccessTools.DeclaredMethod(System.Type, string, System.Type[], System.Type[])`；输入表达式：`AccessTools.DeclaredMethod(typeof(CombatManager),"SetupPlayerTurn")`；返回值紧邻使用处：`EqualsValueClauseSyntax: =AccessTools.DeclaredMethod(typeof(CombatManager),"SetupPlayerTurn")`
+- `HarmonyLib.Harmony.CreateProcessor(System.Reflection.MethodBase)`；输入表达式：`harmony.CreateProcessor(setup!)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: harmony.CreateProcessor(setup!).Patch`
+- `HarmonyLib.Harmony.GetPatchInfo(System.Reflection.MethodBase)`；输入表达式：`Harmony.GetPatchInfo(setup)`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Harmony.GetPatchInfo(setup)?.Prefixes.Select(p=>p.PatchMethod)                  .FirstOrDefault(m=>m.DeclaringType?.FullName=="CombatSolver.PlayerTurnSetupPatch"                      && solver.assemblies.Contains(m.Module.Assembly) && m.Name=="Prefix" && m.IsStatic                      && m.ReturnType==typeof(bool) && m.GetParameters() is [_,_,var player,..]                      && player.ParameterType==typeof(Player))`
+- `HarmonyLib.Harmony.Patch(System.Reflection.MethodBase, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod, HarmonyLib.HarmonyMethod)`；输入表达式：`harmony.Patch(prefix,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepNativeDuelSetup)))`；返回值紧邻使用处：`ExpressionStatementSyntax: harmony.Patch(prefix,prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepNativeDuelSetup)));`
+- `HarmonyLib.HarmonyMethod.HarmonyMethod(System.Type, string, System.Type[])`；输入表达式：`new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepNativeDuelSetup))`；返回值紧邻使用处：`ArgumentSyntax: prefix:new HarmonyMethod(typeof(LeagueNativeMatch),nameof(KeepNativeDuelSetup))`
+- `HarmonyLib.PatchProcessor.Patch()`；输入表达式：`harmony.CreateProcessor(setup!).Patch()`；返回值紧邻使用处：`ExpressionStatementSyntax: harmony.CreateProcessor(setup!).Patch();`
+- `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("league-match",error)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("league-match",error);`
+- `NationalSpire.Diagnostics.Record(string, object)`；输入表达式：`Diagnostics.Record("league-match","未找到外部求解器已注册的回合准备 Prefix，跳过本项兼容。")`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Record("league-match","未找到外部求解器已注册的回合准备 Prefix，跳过本项兼容。");`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`.Prefixes.Select(p=>p.PatchMethod)                  .FirstOrDefault(m=>m.DeclaringType?.FullName=="CombatSolver.PlayerTurnSetupPatch"                      && solver.assemblies.Contains(m.Module.Assembly) && m.Name=="Prefix" && m.IsStatic                      && m.ReturnType==typeof(bool) && m.GetParameters() is [_,_,var player,..]                      && player.ParameterType==typeof(Player))`；返回值紧邻使用处：`ConditionalAccessExpressionSyntax: Harmony.GetPatchInfo(setup)?.Prefixes.Select(p=>p.PatchMethod)                  .FirstOrDefault(m=>m.DeclaringType?.FullName=="CombatSolver.PlayerTurnSetupPatch"                      && solver.assemblies.Contains(m.Module.Assembly) && m.Name=="Prefix" && m.IsStatic                      && m.ReturnType==typeof(bool) && m.GetParameters() is [_,_,var player,..]                      && player.ParameterType==typeof(Player))`
+- `System.Collections.Generic.IEnumerable<TSource>.FirstOrDefault<TSource>(System.Func<TSource, bool>)`；输入表达式：`MegaCrit.Sts2.Core.Modding.ModManager.Mods.FirstOrDefault(mod=>              mod.manifest?.id=="CombatSolver" && mod.state==MegaCrit.Sts2.Core.Modding.ModLoadState.Loaded)`；返回值紧邻使用处：`EqualsValueClauseSyntax: =MegaCrit.Sts2.Core.Modding.ModManager.Mods.FirstOrDefault(mod=>              mod.manifest?.id=="CombatSolver" && mod.state==MegaCrit.Sts2.Core.Modding.ModLoadState.Loaded)`
+- `System.Collections.Generic.IEnumerable<TSource>.Select<TSource, TResult>(System.Func<TSource, TResult>)`；输入表达式：`.Prefixes.Select(p=>p.PatchMethod)`；返回值紧邻使用处：`MemberAccessExpressionSyntax: .Prefixes.Select(p=>p.PatchMethod)                  .FirstOrDefault`
+- `System.Collections.Generic.List<T>.Contains(T)`；输入表达式：`solver.assemblies.Contains(m.Module.Assembly)`；返回值紧邻使用处：`BinaryExpressionSyntax: m.DeclaringType?.FullName=="CombatSolver.PlayerTurnSetupPatch"                      && solver.assemblies.Contains(m.Module.Assembly)`
+- `System.Reflection.MethodBase.GetParameters()`；输入表达式：`m.GetParameters()`；返回值紧邻使用处：`IsPatternExpressionSyntax: m.GetParameters() is [_,_,var player,..]`
+
+**赋值（含属性/字段和局部值）：**
+
+
+<a id="symbol-4452a638a079"></a>
+
+## `NationalSpire.LeagueNativeMatch.KeepNativeDuelSetup(MegaCrit.Sts2.Core.Entities.Players.Player, ref bool) — private static bool KeepNativeDuelSetup(Player __2,ref bool __result)`
+
+来源：源码第 187 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+
+**调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
+
+**调用：** `MegaCrit.Sts2.Core.Context.LocalContext.IsMe(MegaCrit.Sts2.Core.Entities.Players.Player?)`
+
+**字段、属性、事件及方法组引用：** 无已绑定项目引用。
+
+**调用输入与返回值使用（源码表达式，不推测运行条件）：**
+
+- `MegaCrit.Sts2.Core.Context.LocalContext.IsMe(MegaCrit.Sts2.Core.Entities.Players.Player?)`；输入表达式：`MegaCrit.Sts2.Core.Context.LocalContext.IsMe(__2)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !MegaCrit.Sts2.Core.Context.LocalContext.IsMe(__2)`
+
+**赋值（含属性/字段和局部值）：**
+
+- `__result` = `true`
+
 <a id="symbol-6ffbff4293c4"></a>
 
 ## `NationalSpire.LeagueNativeMatch.SelectMusicAct(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> SelectMusicAct(IEnumerable<CodeInstruction> instructions)`
 
-来源：源码第 167 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -486,7 +538,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.StunFighter(MegaCrit.Sts2.Core.Entities.Creatures.Creature, ref System.Threading.Tasks.Task) — private static bool StunFighter(Creature creature,ref Task __result)`
 
-来源：源码第 169 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 196 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -508,7 +560,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.ConsumeStun(MegaCrit.Sts2.Core.Entities.Creatures.Creature) — internal static bool ConsumeStun(Creature creature)`
 
-来源：源码第 174 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 201 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueDuel.PlayTurn()`](LeagueDuel.cs.md#symbol-e8cbe8f2353a)；[`NationalSpire.LeagueNativeMatch.PlayerTurn(MegaCrit.Sts2.Core.Combat.CombatState)`](LeagueNativeMatch.cs.md#symbol-0389816f56fc)
 
@@ -529,7 +581,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.PlayerTurn(MegaCrit.Sts2.Core.Combat.CombatState) — private static void PlayerTurn(CombatState state)`
 
-来源：源码第 179 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 206 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -550,7 +602,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.LeagueOwner(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> LeagueOwner(IEnumerable<CodeInstruction> instructions)`
 
-来源：源码第 185 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 212 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -573,7 +625,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.LeaguePlayer(MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static Player? LeaguePlayer(Creature owner)`
 
-来源：源码第 192 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Refresh(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-5fb078947d8b)
 
@@ -592,7 +644,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.MelodySide(MegaCrit.Sts2.Core.Models.PowerModel, ref MegaCrit.Sts2.Core.Combat.CombatSide) — private static void MelodySide(PowerModel __instance,ref CombatSide side)`
 
-来源：源码第 193 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 220 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -612,7 +664,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.IntentReader(System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>) — private static IEnumerable<CodeInstruction> IntentReader(IEnumerable<CodeInstruction> instructions)`
 
-来源：源码第 194 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 221 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -640,7 +692,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.HasAttack(MegaCrit.Sts2.Core.Entities.Creatures.Creature) — private static bool HasAttack(Creature c)`
 
-来源：源码第 199 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 226 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -659,7 +711,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.ObserveCombat(System.Threading.Tasks.Task) — private static void ObserveCombat(Task __result)`
 
-来源：源码第 203 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 230 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -679,19 +731,18 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.NoticeFailure(System.Threading.Tasks.Task, NationalSpire.LeagueDuel) — private static async Task NoticeFailure(Task running,LeagueDuel duel)`
 
-来源：源码第 204 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 231 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.ObserveCombat(System.Threading.Tasks.Task)`](LeagueNativeMatch.cs.md#symbol-45c09f5d42b0)
 
-**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueNativeMatch.FinishFinal(bool?)`](ArchitectFinal.cs.md#symbol-eb8d4b32d343)；[`NationalSpire.LeagueNativeMatch.ShowExit()`](LeagueNativeMatch.cs.md#symbol-6a4d9168f088)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
+**调用：** [`NationalSpire.Diagnostics.Error(string, System.Exception)`](Diagnostics.cs.md#symbol-cb39203375a5)；[`NationalSpire.LeagueNativeMatch.ShowExit()`](LeagueNativeMatch.cs.md#symbol-6a4d9168f088)；`Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`
 
-**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueNativeMatch._exit`；`NationalSpire.LeagueNativeMatch._interrupted`；`NationalSpire.LeagueNativeMatch._returning`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.FinishFinal(bool?)`；`NationalSpire.LeagueNativeMatch.InFinal`；`NationalSpire.LeagueNativeMatch.ShowExit()`
+**字段、属性、事件及方法组引用：** `NationalSpire.Diagnostics.Error(string, System.Exception)`；`NationalSpire.LeagueNativeMatch._exit`；`NationalSpire.LeagueNativeMatch._interrupted`；`NationalSpire.LeagueNativeMatch._returning`；`NationalSpire.LeagueNativeMatch.Current`；`NationalSpire.LeagueNativeMatch.InFinal`；`NationalSpire.LeagueNativeMatch.ShowExit()`
 
 **调用输入与返回值使用（源码表达式，不推测运行条件）：**
 
 - `Godot.GodotObject.IsInstanceValid(Godot.GodotObject?)`；输入表达式：`GodotObject.IsInstanceValid(_exit)`；返回值紧邻使用处：`PrefixUnaryExpressionSyntax: !GodotObject.IsInstanceValid(_exit)`
 - `NationalSpire.Diagnostics.Error(string, System.Exception)`；输入表达式：`Diagnostics.Error("league-match",error)`；返回值紧邻使用处：`ExpressionStatementSyntax: Diagnostics.Error("league-match",error);`
-- `NationalSpire.LeagueNativeMatch.FinishFinal(bool?)`；输入表达式：`FinishFinal(null)`；返回值紧邻使用处：`AwaitExpressionSyntax: await FinishFinal(null)`
 - `NationalSpire.LeagueNativeMatch.ShowExit()`；输入表达式：`ShowExit()`；返回值紧邻使用处：`ExpressionStatementSyntax: ShowExit();`
 
 **赋值（含属性/字段和局部值）：**
@@ -703,7 +754,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.InstallExit(MegaCrit.Sts2.Core.Nodes.NRun) — private static void InstallExit(NRun scene)`
 
-来源：源码第 214 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 241 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Begin()`](LeagueTeamMatch.cs.md#symbol-7d973fd93537)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)
 
@@ -730,7 +781,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.ShowExit() — private static void ShowExit()`
 
-来源：源码第 219 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 246 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.NoticeFailure(System.Threading.Tasks.Task, NationalSpire.LeagueDuel)`](LeagueNativeMatch.cs.md#symbol-a4936685f05f)
 
@@ -769,7 +820,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.KeepAdventureStats(MegaCrit.Sts2.Core.Rooms.CombatRoom) — private static bool KeepAdventureStats(CombatRoom combatRoom)`
 
-来源：源码第 235 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -787,7 +838,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.ArrowOwner(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, ref System.Threading.Tasks.Task) — private static bool ArrowOwner(PowerModel __instance,Creature? applier,ref Task __result)`
 
-来源：源码第 236 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 263 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -808,7 +859,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.DeferColossus(ref decimal) — private static bool DeferColossus(ref decimal __result)`
 
-来源：源码第 242 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 269 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -827,7 +878,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.DefenseChanged(MegaCrit.Sts2.Core.Models.PowerModel) — private static void DefenseChanged(PowerModel __instance)`
 
-来源：源码第 243 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 270 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -846,7 +897,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.QueueHits(System.Collections.Generic.IEnumerable<(MegaCrit.Sts2.Core.Entities.Creatures.Creature Target, string? Vfx, bool Center)>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>) — internal static bool QueueHits(IEnumerable<(Creature Target,string? Vfx,bool Center)> targets,decimal amount,ValueProp props,Creature? dealer,CardModel? source,CardPlay? play,ModifyDamageHookType modifiers,ref Task<IEnumerable<DamageResult>> result)`
 
-来源：源码第 247 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 274 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueBattleApi.Detailed<T>.Record(System.Collections.Generic.IEnumerable<T>?, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>)`](LeagueBattleApi.cs.md#symbol-ed3c116afc58)；[`NationalSpire.LeagueBattleApi.Record(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>?, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>)`](LeagueBattleApi.cs.md#symbol-91446c9c5697)；[`NationalSpire.LeagueNativeMatch.EffectHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature)`](LeagueEffectTargets.cs.md#symbol-71ee665e8771)；[`NationalSpire.LeagueNativeMatch.PoisonHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?)`](LeagueEffectTargets.cs.md#symbol-ee7b115c5652)；[`NationalSpire.LeagueNativeMatch.StrangleHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Models.Powers.StranglePower)`](LeagueEffectTargets.cs.md#symbol-f254d1716b55)；[`NationalSpire.LeagueNativeMatch.ThornHit(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?)`](LeagueEffectTargets.cs.md#symbol-4719d5d30a29)
 
@@ -884,7 +935,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.Refresh(NationalSpire.LeagueOpponent) — private static void Refresh(LeagueOpponent foe)`
 
-来源：源码第 262 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 289 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.DefenseChanged(MegaCrit.Sts2.Core.Models.PowerModel)`](LeagueNativeMatch.cs.md#symbol-b66840ef642f)；[`NationalSpire.LeagueNativeMatch.Enemy(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-531731d36b7d)；[`NationalSpire.LeagueNativeMatch.First(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-2e5d42d12c6a)；[`NationalSpire.LeagueNativeMatch.QueueDoom(MegaCrit.Sts2.Core.Models.PowerModel, MegaCrit.Sts2.Core.Entities.Creatures.Creature, decimal, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?)`](LeagueEffectTargets.cs.md#symbol-ebb77af45201)；[`NationalSpire.LeagueNativeMatch.QueueHits(System.Collections.Generic.IEnumerable<(MegaCrit.Sts2.Core.Entities.Creatures.Creature Target, string? Vfx, bool Center)>, decimal, MegaCrit.Sts2.Core.ValueProps.ValueProp, MegaCrit.Sts2.Core.Entities.Creatures.Creature?, MegaCrit.Sts2.Core.Models.CardModel?, MegaCrit.Sts2.Core.Entities.Cards.CardPlay?, MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType, ref System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.DamageResult>>)`](LeagueNativeMatch.cs.md#symbol-699665317746)；[`NationalSpire.LeagueNativeMatch.Resolve(MegaCrit.Sts2.Core.Combat.CombatSide)`](LeagueNativeMatch.cs.md#symbol-bea557065b97)
 
@@ -958,7 +1009,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.ShowTeamIntent(MegaCrit.Sts2.Core.Entities.Creatures.Creature, MegaCrit.Sts2.Core.Nodes.Combat.NCreature) — private static void ShowTeamIntent(Creature target,NCreature node)`
 
-来源：源码第 291 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 318 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Refresh(NationalSpire.LeagueOpponent)`](LeagueNativeMatch.cs.md#symbol-5fb078947d8b)
 
@@ -1043,7 +1094,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.DoomIntent.GetTexture(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — public override Texture2D GetTexture(IEnumerable<Creature> targets,Creature owner)`
 
-来源：源码第 321 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 348 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1062,7 +1113,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.RecordedIntent.GetTotalDamage(System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>, MegaCrit.Sts2.Core.Entities.Creatures.Creature) — public override int GetTotalDamage(IEnumerable<Creature> targets,Creature owner)`
 
-来源：源码第 324 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 351 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1081,7 +1132,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.Ended(MegaCrit.Sts2.Core.Rooms.CombatRoom) — private static void Ended(CombatRoom room)`
 
-来源：源码第 326 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 353 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1104,7 +1155,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.Release() — private static void Release()`
 
-来源：源码第 327 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 354 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Begin()`](LeagueTeamMatch.cs.md#symbol-7d973fd93537)；[`NationalSpire.LeagueNativeMatch.EndTeam(bool)`](LeagueTeamMatch.cs.md#symbol-20c50965f995)；[`NationalSpire.LeagueNativeMatch.FinishFinal(bool?)`](ArchitectFinal.cs.md#symbol-eb8d4b32d343)；[`NationalSpire.LeagueNativeMatch.OnAdventureExit()`](ArchitectFinal.cs.md#symbol-86926a42c207)；[`NationalSpire.LeagueNativeMatch.Return(string?, bool?)`](LeagueNativeMatch.cs.md#symbol-1b324a0cbccb)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)
 
@@ -1142,7 +1193,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueNativeMatch.Return(string?, bool?) — private static async Task Return(string? result,bool? won=null)`
 
-来源：源码第 335 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 362 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Ended(MegaCrit.Sts2.Core.Rooms.CombatRoom)`](LeagueNativeMatch.cs.md#symbol-f9884d853b57)；[`NationalSpire.LeagueNativeMatch.ShowExit()`](LeagueNativeMatch.cs.md#symbol-6a4d9168f088)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)
 
@@ -1176,7 +1227,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.Chapter — internal ActModel Chapter`
 
-来源：源码第 356 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 383 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1194,7 +1245,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.CustomBgm — public override string CustomBgm`
 
-来源：源码第 358 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 385 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1212,7 +1263,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.MusicRoom(ref MegaCrit.Sts2.Core.Rooms.RoomType) — internal static void MusicRoom(ref RoomType roomType)`
 
-来源：源码第 360 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 387 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1232,7 +1283,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.ForMatch(MegaCrit.Sts2.Core.Runs.RunState, int) — internal static LeagueEncounter ForMatch(RunState run,int seed)`
 
-来源：源码第 363 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 390 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`Begin()`](LeagueTeamMatch.cs.md#symbol-7d973fd93537)；[`NationalSpire.LeagueNativeMatch.StartMirror(MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], MegaCrit.Sts2.Core.Models.CharacterModel, MegaCrit.Sts2.Core.Models.CardModel[], int, NationalSpire.ICareerSession?, string, int, System.Collections.Generic.IReadOnlyDictionary<string, int>?, System.Collections.Generic.Dictionary<string, int>?, int, string?, string?, string?)`](LeagueNativeMatch.cs.md#symbol-a60b957088cc)
 
@@ -1262,7 +1313,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.ForFinal(MegaCrit.Sts2.Core.Runs.RunState) — internal static LeagueEncounter ForFinal(RunState run)`
 
-来源：源码第 371 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 398 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.StartFinal()`](ArchitectFinal.cs.md#symbol-bdca44c3d251)
 
@@ -1286,7 +1337,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.Venue(MegaCrit.Sts2.Core.Runs.RunState, MegaCrit.Sts2.Core.Models.ActModel, MegaCrit.Sts2.Core.Rooms.RoomType, MegaCrit.Sts2.Core.Models.EncounterModel?) — private static LeagueEncounter Venue(RunState run,ActModel chapter,RoomType music,EncounterModel? boss)`
 
-来源：源码第 376 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 403 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueEncounter.ForFinal(MegaCrit.Sts2.Core.Runs.RunState)`](LeagueNativeMatch.cs.md#symbol-3e81b2d050ae)；[`NationalSpire.LeagueEncounter.ForMatch(MegaCrit.Sts2.Core.Runs.RunState, int)`](LeagueNativeMatch.cs.md#symbol-fa5ea0b30eea)
 
@@ -1317,7 +1368,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.RoomType — public override RoomType RoomType`
 
-来源：源码第 390 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 417 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1335,7 +1386,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.ShouldGiveRewards — public override bool ShouldGiveRewards`
 
-来源：源码第 391 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 418 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1353,7 +1404,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.AllPossibleMonsters — public override IEnumerable<MonsterModel> AllPossibleMonsters`
 
-来源：源码第 392 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 419 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1372,7 +1423,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueEncounter.GenerateMonsters() — protected override IReadOnlyList<(MonsterModel,string?)> GenerateMonsters()`
 
-来源：源码第 393 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 420 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1391,7 +1442,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.Fighter — internal LeagueDuel? Fighter`
 
-来源：源码第 397 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 424 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1409,7 +1460,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.Role — private CharacterModel Role`
 
-来源：源码第 398 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 425 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1428,7 +1479,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.MinInitialHp — public override int MinInitialHp`
 
-来源：源码第 399 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 426 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1447,7 +1498,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.MaxInitialHp — public override int MaxInitialHp`
 
-来源：源码第 400 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 427 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1465,7 +1516,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.ShouldShowInCompendium — public override bool ShouldShowInCompendium`
 
-来源：源码第 401 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 428 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1483,7 +1534,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.Title — public override LocString Title`
 
-来源：源码第 402 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 429 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1501,7 +1552,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.DeathSfx — public override string DeathSfx`
 
-来源：源码第 403 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 430 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1519,7 +1570,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.VisualsPath — protected override string VisualsPath`
 
-来源：源码第 404 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 431 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1538,7 +1589,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.GenerateAnimator(MegaCrit.Sts2.Core.Bindings.MegaSpine.MegaSprite) — public override CreatureAnimator GenerateAnimator(MegaSprite sprite)`
 
-来源：源码第 405 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 432 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1557,7 +1608,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.GenerateMoveStateMachine() — protected override MonsterMoveStateMachine GenerateMoveStateMachine()`
 
-来源：源码第 406 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 433 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1579,7 +1630,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.AfterAddedToRoom() — public override Task AfterAddedToRoom()`
 
-来源：源码第 407 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 434 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1598,7 +1649,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.AfterPlayerTurnStartEarly(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Entities.Players.Player) — public override Task AfterPlayerTurnStartEarly(PlayerChoiceContext context,Player player)`
 
-来源：源码第 408 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 435 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1618,7 +1669,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.BeforeSideTurnEndVeryEarly(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Combat.CombatSide, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>) — public override Task BeforeSideTurnEndVeryEarly(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)`
 
-来源：源码第 409 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 436 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1638,7 +1689,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.LeagueOpponent.AfterSideTurnEndLate(MegaCrit.Sts2.Core.GameActions.Multiplayer.PlayerChoiceContext, MegaCrit.Sts2.Core.Combat.CombatSide, System.Collections.Generic.IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature>) — public override Task AfterSideTurnEndLate(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)`
 
-来源：源码第 410 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 437 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** 未发现已绑定直接调用；仍需检查方法组、事件、反射和游戏入口。
 
@@ -1658,7 +1709,7 @@ internal static readonly Func<EncounterModel,ActModel,MegaCrit.Sts2.Core.Random.
 
 ## `NationalSpire.CareerScreen.OpenLeagueResult(Godot.Control, NationalSpire.ICareerSession?, string, bool?, NationalSpire.LeagueFinish?) — internal static void OpenLeagueResult(Control menu,ICareerSession? session,string result,bool? won,LeagueFinish? finish)`
 
-来源：源码第 414 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
+来源：源码第 441 行。签名列出参数、默认值和返回类型。输出业务用途见流程文档。
 
 **调用者：** [`NationalSpire.LeagueNativeMatch.Return(string?, bool?)`](LeagueNativeMatch.cs.md#symbol-1b324a0cbccb)
 
